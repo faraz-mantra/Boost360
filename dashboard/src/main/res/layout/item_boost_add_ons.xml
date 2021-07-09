@@ -11,8 +11,8 @@
     android:orientation="vertical">
 
     <View
-      android:id="@+id/view"
       android:layout_width="match_parent"
+      android:id="@+id/view"
       android:layout_height="@dimen/size_10" />
 
     <com.framework.views.customViews.CustomCardView
@@ -53,9 +53,9 @@
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="1"
+            tools:text="Customer Orders &amp; Enquiries"
             android:textColor="@color/greyish_brown"
-            app:textType="HEADING_6"
-            tools:text="Customer Orders &amp; Enquiries" />
+            app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/img_arrow"
@@ -77,10 +77,10 @@
           android:ellipsize="end"
           android:includeFontPadding="false"
           android:maxLines="2"
+          tools:text="One place to manage all patient interactions."
           android:textColor="@color/warm_grey"
           app:fontFamily="@font/regular"
-          app:textType="CAPTION"
-          tools:text="One place to manage all patient interactions." />
+          app:textType="CAPTION" />
 
       </androidx.appcompat.widget.LinearLayoutCompat>
     </com.framework.views.customViews.CustomCardView>

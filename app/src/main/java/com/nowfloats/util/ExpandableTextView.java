@@ -73,14 +73,14 @@ public class ExpandableTextView extends androidx.appcompat.widget.AppCompatTextV
         return originalText;
     }
 
-    public int getTrimLength() {
-        return trimLength;
-    }
-
     public void setTrimLength(int trimLength) {
         this.trimLength = trimLength;
         trimmedText = getTrimmedText(originalText);
         setText();
+    }
+
+    public int getTrimLength() {
+        return trimLength;
     }
 
     ///////////for applying font style

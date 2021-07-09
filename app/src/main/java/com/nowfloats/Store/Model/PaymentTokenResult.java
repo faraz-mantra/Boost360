@@ -19,42 +19,54 @@ public class PaymentTokenResult {
     private Integer statusCode;
 
     /**
-     * @return The error
+     *
+     * @return
+     * The error
      */
     public Error getError() {
         return error;
     }
 
     /**
-     * @param error The Error
+     *
+     * @param error
+     * The Error
      */
     public void setError(Error error) {
         this.error = error;
     }
 
     /**
-     * @return The result
+     *
+     * @return
+     * The result
      */
     public PaymentTokenModel getResult() {
         return result;
     }
 
     /**
-     * @param result The Result
+     *
+     * @param result
+     * The Result
      */
     public void setResult(PaymentTokenModel result) {
         this.result = result;
     }
 
     /**
-     * @return The statusCode
+     *
+     * @return
+     * The statusCode
      */
     public Integer getStatusCode() {
         return statusCode;
     }
 
     /**
-     * @param statusCode The StatusCode
+     *
+     * @param statusCode
+     * The StatusCode
      */
     public void setStatusCode(Integer statusCode) {
         this.statusCode = statusCode;

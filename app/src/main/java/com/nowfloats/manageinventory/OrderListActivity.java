@@ -7,13 +7,11 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -54,76 +52,7 @@ import retrofit.client.Response;
 public class OrderListActivity extends AppCompatActivity implements OrdersRvAdapter.PaginationAdapterCallback,
         OrdersRvAdapter.OnRecyclerViewItemClickListener, View.OnClickListener {
 
-    private static final int LIMIT = 20;
-    private static final int PAGE_START = 1;
-    private static final String ORDER_SEARCH = "ORDER_SEARCH";
-    RecyclerView rvOrderList;
-    Toolbar toolbar;
-    LinearLayout llRevealLayout;
-    RevealFrameLayout rflOverLay;
-
-//    public enum OrderStatus {
-//        NOT_INITIATED,
-//        PROCESSING,
-//        ACCEPTED,
-//        DISPATCHED,
-//        TRANSIT,
-//        DELIVERED,
-//        RETURNED,
-//        CANCELLED
-//    }
-    View mCurrSelectedView;
-    ProgressBar pbLoading;
-    LinearLayout llEmptyView;
-    TextView tvEmptyText;
-    MaterialSearchView searchView;
     private Bus mBusEvent;
-    private String mQuery, orderStatus = "", emptyMsg = "";
-    private long mSkip = 0;
-    private boolean isLoading = false, isSearching = false;
-    private boolean isLastPage = false;
-    private boolean mHidden = true;
-    private int currentPage = PAGE_START;
-    private UserSessionManager mSession;
-    //private List<OrderModel> mOrderList = new ArrayList<>();
-    //private Map<String, List<ProductModel>> mProductMap = new HashMap<>();
-    private OrdersRvAdapter mAdapter;
-    public Callback<OrderDataModel> orderStatusCallback = new Callback<OrderDataModel>() {
-
-        @Override
-        public void success(OrderDataModel orderDataModel, Response response) {
-
-            pbLoading.setVisibility(View.GONE);
-            mAdapter.clearAdapter();
-            if (orderDataModel == null || orderDataModel.getData() == null || orderDataModel.getData().getOrders() == null
-                    || orderDataModel.getData().getOrders().size() == 0) {
-                showEmptyLayout(emptyMsg);
-            } else {
-                refreshOrders(orderDataModel);
-            }
-        }
-
-        @Override
-        public void failure(RetrofitError error) {
-            Toast.makeText(OrderListActivity.this, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
-            pbLoading.setVisibility(View.GONE);
-            showEmptyLayout(emptyMsg);
-        }
-    };
-    private ArrayList<Order> visibleOrders;
-
-    public static <T> Collection<T> filter(Collection<T> col, Predicate<T> predicate) {
-
-        Collection<T> result = new ArrayList<T>();
-        if (col != null) {
-            for (T element : col) {
-                if (predicate.apply(element)) {
-                    result.add(element);
-                }
-            }
-        }
-        return result;
-    }
 
     @Override
     public void retryPageLoad() {
@@ -186,6 +115,79 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         mSkip = 0;
         getOrders(mQuery, mSkip, LIMIT);
     }
+
+    public enum OrderType {
+        TOTAL, RECEIVED, SUCCESSFUL, CANCELLED, RETURNED, ABANDONED, ESCALATED
+    }
+
+//    public enum OrderStatus {
+//        NOT_INITIATED,
+//        PROCESSING,
+//        ACCEPTED,
+//        DISPATCHED,
+//        TRANSIT,
+//        DELIVERED,
+//        RETURNED,
+//        CANCELLED
+//    }
+
+
+    public enum PaymentStatus {
+        NOT_INITIATED,
+        FAILED,
+        PENDING,
+        SUCCESS,
+        REFUNDED
+    }
+
+    public enum DeliveryStatus {
+        NOT_INITIATED,
+        ORDER_RECEIVED,
+        DISPATCHED,
+        TRANSIT,
+        DELIVERED,
+        RETURNED,
+        CANCELLED
+    }
+
+    public static class OrderStatus {
+        public static final String INITIATED = "INITIATED";
+        public static final String PLACED = "PLACED";
+        public static final String CONFIRMED = "CONFIRMED";
+        public static final String COMPLETED = "COMPLETED";
+        public static final String CANCELLED = "CANCELLED";
+        public static final String ESCALATED = "ESCALATED";
+    }
+
+    private String mQuery, orderStatus = "", emptyMsg = "";
+    private long mSkip = 0;
+    private static final int LIMIT = 20;
+
+    private static final int PAGE_START = 1;
+
+    private boolean isLoading = false, isSearching = false;
+    private boolean isLastPage = false;
+    private boolean mHidden = true;
+
+    private int currentPage = PAGE_START;
+
+    private UserSessionManager mSession;
+    //private List<OrderModel> mOrderList = new ArrayList<>();
+    //private Map<String, List<ProductModel>> mProductMap = new HashMap<>();
+    private OrdersRvAdapter mAdapter;
+
+    RecyclerView rvOrderList;
+    Toolbar toolbar;
+    LinearLayout llRevealLayout;
+    RevealFrameLayout rflOverLay;
+    View mCurrSelectedView;
+    ProgressBar pbLoading;
+    LinearLayout llEmptyView;
+    TextView tvEmptyText;
+    MaterialSearchView searchView;
+
+    private ArrayList<Order> visibleOrders;
+    //View dropDownView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,13 +291,14 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
             }
         });
     }
-    //View dropDownView;
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mBusEvent.unregister(this);
     }
+
+    private static final String ORDER_SEARCH = "ORDER_SEARCH";
 
     private void searchByOrderId(final String searchText) {
 
@@ -500,6 +503,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         mCurrSelectedView.setBackgroundColor(Color.parseColor("#E8E8E8"));
     }
 
+
     private void getOrders(final String orderQuery, final long skip, final int limit) {
         hideEmptyLayout();
 
@@ -515,6 +519,47 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
             callInterface.getOrdersList(hashMap, skip, limit, orderStatusCallback);
         }
     }
+
+
+    public interface Predicate<T> {
+        boolean apply(T type);
+    }
+
+    public static <T> Collection<T> filter(Collection<T> col, Predicate<T> predicate) {
+
+        Collection<T> result = new ArrayList<T>();
+        if (col != null) {
+            for (T element : col) {
+                if (predicate.apply(element)) {
+                    result.add(element);
+                }
+            }
+        }
+        return result;
+    }
+
+    public Callback<OrderDataModel> orderStatusCallback = new Callback<OrderDataModel>() {
+
+        @Override
+        public void success(OrderDataModel orderDataModel, Response response) {
+
+            pbLoading.setVisibility(View.GONE);
+            mAdapter.clearAdapter();
+            if (orderDataModel == null || orderDataModel.getData() == null || orderDataModel.getData().getOrders() == null
+                    || orderDataModel.getData().getOrders().size() == 0) {
+                showEmptyLayout(emptyMsg);
+            } else {
+                refreshOrders(orderDataModel);
+            }
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            Toast.makeText(OrderListActivity.this, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
+            pbLoading.setVisibility(View.GONE);
+            showEmptyLayout(emptyMsg);
+        }
+    };
 
     private void hideEmptyLayout() {
         llEmptyView.setVisibility(View.GONE);
@@ -584,41 +629,6 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
                 Toast.makeText(OrderListActivity.this, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public enum OrderType {
-        TOTAL, RECEIVED, SUCCESSFUL, CANCELLED, RETURNED, ABANDONED, ESCALATED
-    }
-
-    public enum PaymentStatus {
-        NOT_INITIATED,
-        FAILED,
-        PENDING,
-        SUCCESS,
-        REFUNDED
-    }
-
-    public enum DeliveryStatus {
-        NOT_INITIATED,
-        ORDER_RECEIVED,
-        DISPATCHED,
-        TRANSIT,
-        DELIVERED,
-        RETURNED,
-        CANCELLED
-    }
-
-    public interface Predicate<T> {
-        boolean apply(T type);
-    }
-
-    public static class OrderStatus {
-        public static final String INITIATED = "INITIATED";
-        public static final String PLACED = "PLACED";
-        public static final String CONFIRMED = "CONFIRMED";
-        public static final String COMPLETED = "COMPLETED";
-        public static final String CANCELLED = "CANCELLED";
-        public static final String ESCALATED = "ESCALATED";
     }
 
 

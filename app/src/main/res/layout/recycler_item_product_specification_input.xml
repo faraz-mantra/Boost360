@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margin_5"
-    android:layout_marginBottom="@dimen/margin_5"
-    android:orientation="horizontal">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:orientation="horizontal">
 
-    <LinearLayout
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:background="@drawable/white_rectangle_background"
-      android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/white_rectangle_background"
+            android:orientation="horizontal" >
 
-      <EditText
-        android:id="@+id/editKey"
-        style="@style/ProductEditTextStyle"
-        android:layout_width="150dp"
-        android:background="@null" />
+            <EditText
+                android:id="@+id/editKey"
+                style="@style/ProductEditTextStyle"
+                android:background="@null"
+                android:layout_width="150dp" />
 
-      <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/secondaryLightTextColor" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/secondaryLightTextColor"/>
 
-      <EditText
-        android:id="@+id/editValue"
-        style="@style/ProductEditTextStyle"
-        android:background="@null" />
+            <EditText
+                android:id="@+id/editValue"
+                style="@style/ProductEditTextStyle"
+                android:background="@null" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/ib_remove"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@android:color/transparent"
+            android:layout_gravity="end|center"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/margin_10"
+            app:srcCompat="@drawable/ic_cancel" />
 
     </LinearLayout>
-
-    <ImageButton
-      android:id="@+id/ib_remove"
-      android:layout_width="24dp"
-      android:layout_height="24dp"
-      android:layout_gravity="end|center"
-      android:layout_marginStart="@dimen/margin_10"
-      android:background="@android:color/transparent"
-      android:visibility="gone"
-      app:srcCompat="@drawable/ic_cancel" />
-
-  </LinearLayout>
 
 </layout>

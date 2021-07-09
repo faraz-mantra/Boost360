@@ -39,7 +39,7 @@
         android:layout_gravity="end"
         android:layout_marginTop="@dimen/size_1"
         android:elevation="2dp"
-        app:srcCompat="@drawable/ic_tick_ok_d" />
+        app:srcCompat="@drawable/ic_tick_ok_d"/>
     </FrameLayout>
 
 

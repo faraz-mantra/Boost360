@@ -28,7 +28,7 @@ import io.separ.neural.inputmethod.indic.SubtypeSwitcher;
 
 /**
  * "Preferences" settings sub screen.
- * <p>
+ *
  * This settings sub screen handles the following input preferences.
  * - Auto-capitalization
  * - Double-space period

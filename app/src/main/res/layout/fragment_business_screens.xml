@@ -1,63 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:card="http://schemas.android.com/apk/res-auto"
-  android:id="@+id/business_screen_cardview"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:layout_gravity="center"
-  card:cardCornerRadius="2dp"
-  card:cardElevation="3dp">
-
-  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:id="@+id/business_screen_cardview"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    card:cardCornerRadius="2dp"
+    android:layout_gravity="center"
+    card:cardElevation="3dp">
 
     <LinearLayout
-      android:id="@+id/llayout"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1.9"
-      android:background="#e8e8e8"
-      android:gravity="center_horizontal">
-
-      <ImageView
-        android:id="@+id/imageview_circle"
+        android:orientation="vertical"
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:scaleType="fitEnd"
-        android:src="@drawable/businessapp_fourth" />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1.9"
+            android:id="@+id/llayout"
+            android:gravity="center_horizontal"
+            android:background="#e8e8e8"
+            android:layout_height="0dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:id="@+id/imageview_circle"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/businessapp_fourth"
+                android:scaleType="fitEnd"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:id="@+id/busines_screen_text_layout"
+            android:gravity="center"
+            android:background="@color/white"
+            android:layout_height="0dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/primary_color"
+                android:id="@+id/business_screen_bold_text"
+                android:text="@string/my_business_apps"
+                android:textSize="20sp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/business_apps"
+                android:id="@+id/business_screen_small_text"
+                android:textSize="13sp"/>
+
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-      android:id="@+id/busines_screen_text_layout"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      android:background="@color/white"
-      android:gravity="center"
-      android:orientation="vertical">
-
-      <TextView
-        android:id="@+id/business_screen_bold_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:text="@string/my_business_apps"
-        android:textColor="@color/primary_color"
-        android:textSize="20sp" />
-
-      <TextView
-        android:id="@+id/business_screen_small_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/business_apps"
-        android:textSize="13sp" />
-
-    </LinearLayout>
-  </LinearLayout>
 </androidx.cardview.widget.CardView>

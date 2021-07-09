@@ -62,45 +62,59 @@ import io.separ.neural.inputmethod.indic.R;
 
 /**
  * Handler for the update process.
- * <p>
+ *
  * This class is in charge of coordinating the update process for the various dictionaries
  * stored in the dictionary pack.
  */
 public final class UpdateHandler {
+    static final String TAG = "DictionaryProvider:" + UpdateHandler.class.getSimpleName();
+    private static final boolean DEBUG = DictionaryProvider.DEBUG;
+
+    // Used to prevent trying to read the id of the downloaded file before it is written
+    static final Object sSharedIdProtector = new Object();
+
     // Value used to mean this is not a real DownloadManager downloaded file id
     // DownloadManager uses as an ID numbers returned out of an AUTOINCREMENT column
     // in SQLite, so it should never return anything < 0.
     public static final int NOT_AN_ID = -1;
     public static final int MAXIMUM_SUPPORTED_FORMAT_VERSION = 2;
-    // Name of the category for the main dictionary
-    public static final String MAIN_DICTIONARY_CATEGORY = "main";
-    public static final int DOWNLOAD_OVER_METERED_SETTING_UNKNOWN = 0;
-    public static final int DOWNLOAD_OVER_METERED_ALLOWED = 1;
-    public static final int DOWNLOAD_OVER_METERED_DISALLOWED = 2;
-    static final String TAG = "DictionaryProvider:" + UpdateHandler.class.getSimpleName();
-    // Used to prevent trying to read the id of the downloaded file before it is written
-    static final Object sSharedIdProtector = new Object();
+
+    // Arbitrary. Probably good if it's a power of 2, and a couple thousand bytes long.
+    private static final int FILE_COPY_BUFFER_SIZE = 8192;
+
     // Table fixed values for metadata / downloads
     final static String METADATA_NAME = "metadata";
     final static int METADATA_TYPE = 0;
     final static int WORDLIST_TYPE = 1;
-    // The id for the "dictionary available" notification.
-    static final int DICT_AVAILABLE_NOTIFICATION_ID = 1;
-    private static final boolean DEBUG = DictionaryProvider.DEBUG;
-    // Arbitrary. Probably good if it's a power of 2, and a couple thousand bytes long.
-    private static final int FILE_COPY_BUFFER_SIZE = 8192;
+
     // Suffix for generated dictionary files
     private static final String DICT_FILE_SUFFIX = ".dict";
+    // Name of the category for the main dictionary
+    public static final String MAIN_DICTIONARY_CATEGORY = "main";
+
+    // The id for the "dictionary available" notification.
+    static final int DICT_AVAILABLE_NOTIFICATION_ID = 1;
+
+    /**
+     * An interface for UIs or services that want to know when something happened.
+     *
+     * This is chiefly used by the dictionary manager UI.
+     */
+    public interface UpdateEventListener {
+        void downloadedMetadata(boolean succeeded);
+        void wordListDownloadFinished(String wordListId, boolean succeeded);
+        void updateCycleCompleted();
+    }
+
     /**
      * The list of currently registered listeners.
      */
     private static final List<UpdateEventListener> sUpdateEventListeners
             = Collections.synchronizedList(new LinkedList<UpdateEventListener>());
-    private static final String DOWNLOAD_OVER_METERED_SETTING_PREFS_KEY = "downloadOverMetered";
 
     /**
      * Register a new listener to be notified of updates.
-     * <p>
+     *
      * Don't forget to call unregisterUpdateEventListener when done with it, or
      * it will leak the register.
      */
@@ -115,23 +129,29 @@ public final class UpdateHandler {
         sUpdateEventListeners.remove(listener);
     }
 
+    private static final String DOWNLOAD_OVER_METERED_SETTING_PREFS_KEY = "downloadOverMetered";
+
     /**
      * Write the DownloadManager ID of the currently downloading metadata to permanent storage.
      *
-     * @param context    to open shared prefs
-     * @param uri        the uri of the metadata
+     * @param context to open shared prefs
+     * @param uri the uri of the metadata
      * @param downloadId the id returned by DownloadManager
      */
     private static void writeMetadataDownloadId(final Context context, final String uri,
-                                                final long downloadId) {
+            final long downloadId) {
         MetadataDbHelper.registerMetadataDownloadId(context, uri, downloadId);
     }
+
+    public static final int DOWNLOAD_OVER_METERED_SETTING_UNKNOWN = 0;
+    public static final int DOWNLOAD_OVER_METERED_ALLOWED = 1;
+    public static final int DOWNLOAD_OVER_METERED_DISALLOWED = 2;
 
     /**
      * Sets the setting that tells us whether we may download over a metered connection.
      */
     public static void setDownloadOverMeteredSetting(final Context context,
-                                                     final boolean shouldDownloadOverMetered) {
+            final boolean shouldDownloadOverMetered) {
         final SharedPreferences prefs = CommonPreferences.getCommonPreferences(context);
         final SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(DOWNLOAD_OVER_METERED_SETTING_PREFS_KEY, shouldDownloadOverMetered
@@ -141,7 +161,7 @@ public final class UpdateHandler {
 
     /**
      * Gets the setting that tells us whether we may download over a metered connection.
-     * <p>
+     *
      * This returns one of the constants above.
      */
     public static int getDownloadOverMeteredSetting(final Context context) {
@@ -152,8 +172,7 @@ public final class UpdateHandler {
 
     /**
      * Download latest metadata from the server through DownloadManager for all known clients
-     *
-     * @param context   The context for retrieving resources
+     * @param context The context for retrieving resources
      * @param updateNow Whether we should update NOW, or respect bandwidth policies
      * @return true if an update successfully started, false otherwise.
      */
@@ -193,12 +212,12 @@ public final class UpdateHandler {
     /**
      * Download latest metadata from the server through DownloadManager for all relevant clients
      *
-     * @param context     The context for retrieving resources
-     * @param updateNow   Whether we should update NOW, or respect bandwidth policies
+     * @param context The context for retrieving resources
+     * @param updateNow Whether we should update NOW, or respect bandwidth policies
      * @param metadataUri The client to update
      */
     private static void updateClientsWithMetadataUri(final Context context,
-                                                     final boolean updateNow, final String metadataUri) {
+            final boolean updateNow, final String metadataUri) {
         PrivateLog.log("Update for metadata URI " + DebugLogUtils.s(metadataUri));
         // Adding a disambiguator to circumvent a bug in older versions of DownloadManager.
         // DownloadManager also stupidly cuts the extension to replace with its own that it
@@ -247,15 +266,15 @@ public final class UpdateHandler {
 
     /**
      * Cancels downloading a file, if there is one for this URI.
-     * <p>
+     *
      * If we are not currently downloading the file at this URI, this is a no-op.
      *
-     * @param context     the context to open the database on
+     * @param context the context to open the database on
      * @param metadataUri the URI to cancel
-     * @param manager     an wrapped instance of DownloadManager
+     * @param manager an wrapped instance of DownloadManager
      */
     private static void cancelUpdateWithDownloadManager(final Context context,
-                                                        final String metadataUri, final DownloadManagerWrapper manager) {
+            final String metadataUri, final DownloadManagerWrapper manager) {
         synchronized (sSharedIdProtector) {
             final long metadataDownloadId =
                     MetadataDbHelper.getMetadataDownloadIdForURI(context, metadataUri);
@@ -272,11 +291,11 @@ public final class UpdateHandler {
 
     /**
      * Cancels a pending update for this client, if there is one.
-     * <p>
+     *
      * If we are not currently updating metadata for this client, this is a no-op. This is a helper
      * method that gets the download manager service and the metadata URI for this client.
      *
-     * @param context  the context, to get an instance of DownloadManager
+     * @param context the context, to get an instance of DownloadManager
      * @param clientId the ID of the client we want to cancel the update of
      */
     public static void cancelUpdate(final Context context, final String clientId) {
@@ -287,7 +306,7 @@ public final class UpdateHandler {
 
     /**
      * Registers a download request and flags it as downloading in the metadata table.
-     * <p>
+     *
      * This is a helper method that exists to avoid race conditions where DownloadManager might
      * finish downloading the file before the data is committed to the database.
      * It registers the request with the DownloadManager service and also updates the metadata
@@ -298,13 +317,13 @@ public final class UpdateHandler {
      *
      * @param manager a wrapped download manager service to register the request with.
      * @param request the request to register.
-     * @param db      the metadata database.
-     * @param id      the id of the word list.
+     * @param db the metadata database.
+     * @param id the id of the word list.
      * @param version the version of the word list.
      * @return the download id returned by the download manager.
      */
     public static long registerDownloadRequest(final DownloadManagerWrapper manager,
-                                               final Request request, final SQLiteDatabase db, final String id, final int version) {
+            final Request request, final SQLiteDatabase db, final String id, final int version) {
         DebugLogUtils.l("RegisterDownloadRequest for word list id : ", id, ", version ", version);
         final long downloadId;
         synchronized (sSharedIdProtector) {
@@ -359,7 +378,7 @@ public final class UpdateHandler {
     private static ArrayList<DownloadRecord> getDownloadRecordsForCompletedDownloadInfo(
             final Context context, final CompletedDownloadInfo downloadInfo) {
         // Get and check the ID of the file we are waiting for, compare them to downloaded ones
-        synchronized (sSharedIdProtector) {
+        synchronized(sSharedIdProtector) {
             final ArrayList<DownloadRecord> downloadRecords =
                     MetadataDbHelper.getDownloadRecordsForDownloadId(context,
                             downloadInfo.mDownloadId);
@@ -381,7 +400,7 @@ public final class UpdateHandler {
 
     /**
      * Take appropriate action after a download finished, in success or in error.
-     * <p>
+     *
      * This is called by the system upon broadcast from the DownloadManager that a file
      * has been downloaded successfully.
      * After a simple check that this is actually the file we are waiting for, this
@@ -389,10 +408,9 @@ public final class UpdateHandler {
      * the computation of the list of actions that should be taken then executes them.
      *
      * @param context The context for this action.
-     * @param intent  The intent from the DownloadManager containing details about the download.
+     * @param intent The intent from the DownloadManager containing details about the download.
      */
-    /* package */
-    static void downloadFinished(final Context context, final Intent intent) {
+    /* package */ static void downloadFinished(final Context context, final Intent intent) {
         // Get and check the ID of the file that was downloaded
         final long fileId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, NOT_AN_ID);
         PrivateLog.log("Download finished with id " + fileId);
@@ -435,18 +453,18 @@ public final class UpdateHandler {
 
     /**
      * Sends a broadcast informing listeners that the dictionaries were updated.
-     * <p>
+     *
      * This will call all local listeners through the UpdateEventListener#downloadedMetadata
      * callback (for example, the dictionary provider interface uses this to stop the Loading
      * animation) and send a broadcast about the metadata having been updated. For a client of
      * the dictionary pack like Latin IME, this means it should re-query the dictionary pack
      * for any relevant new data.
      *
-     * @param context            the context, to send the broadcast.
+     * @param context the context, to send the broadcast.
      * @param downloadSuccessful whether the download of the metadata was successful or not.
      */
     public static void publishUpdateMetadataCompleted(final Context context,
-                                                      final boolean downloadSuccessful) {
+            final boolean downloadSuccessful) {
         // We need to warn all listeners of what happened. But some listeners may want to
         // remove themselves or re-register something in response. Hence we should take a
         // snapshot of the listener list and warn them all. This also prevents any
@@ -458,10 +476,10 @@ public final class UpdateHandler {
     }
 
     private static void publishUpdateWordListCompleted(final Context context,
-                                                       final boolean downloadSuccessful, final long fileId,
-                                                       final SQLiteDatabase db, final ContentValues downloadedFileRecord,
-                                                       final String clientId) {
-        synchronized (sSharedIdProtector) {
+            final boolean downloadSuccessful, final long fileId,
+            final SQLiteDatabase db, final ContentValues downloadedFileRecord,
+            final String clientId) {
+        synchronized(sSharedIdProtector) {
             if (downloadSuccessful) {
                 final ActionBatch actions = new ActionBatch();
                 actions.add(new ActionBatch.InstallAfterDownloadAction(clientId,
@@ -474,7 +492,7 @@ public final class UpdateHandler {
         // See comment above about #linkedCopyOfLists
         for (UpdateEventListener listener : linkedCopyOfList(sUpdateEventListeners)) {
             listener.wordListDownloadFinished(downloadedFileRecord.getAsString(
-                    MetadataDbHelper.WORDLISTID_COLUMN), downloadSuccessful);
+                            MetadataDbHelper.WORDLISTID_COLUMN), downloadSuccessful);
         }
         publishUpdateCycleCompletedEvent(context);
     }
@@ -490,8 +508,8 @@ public final class UpdateHandler {
     }
 
     private static boolean handleDownloadedFile(final Context context,
-                                                final DownloadRecord downloadRecord, final DownloadManagerWrapper manager,
-                                                final long fileId) {
+            final DownloadRecord downloadRecord, final DownloadManagerWrapper manager,
+            final long fileId) {
         try {
             // {@link handleWordList(Context,InputStream,ContentValues)}.
             // Handle the downloaded file according to its type
@@ -531,7 +549,7 @@ public final class UpdateHandler {
 
     /**
      * Returns a copy of the specified list, with all elements copied.
-     * <p>
+     *
      * This returns a linked list.
      */
     private static <T> List<T> linkedCopyOfList(final List<T> src) {
@@ -552,16 +570,15 @@ public final class UpdateHandler {
 
     /**
      * Parse metadata and take appropriate action (that is, upgrade dictionaries).
-     *
-     * @param context  the context to read settings.
-     * @param stream   an input stream pointing to the downloaded data. May not be null.
-     *                 Will be closed upon finishing.
+     * @param context the context to read settings.
+     * @param stream an input stream pointing to the downloaded data. May not be null.
+     *  Will be closed upon finishing.
      * @param clientId the ID of the client to update
      * @throws BadFormatException if the metadata is not in a known format.
-     * @throws IOException        if the downloaded file can't be read from the disk
+     * @throws IOException if the downloaded file can't be read from the disk
      */
     private static void handleMetadata(final Context context, final InputStream stream,
-                                       final String clientId) throws IOException, BadFormatException {
+            final String clientId) throws IOException, BadFormatException {
         DebugLogUtils.l("Entering handleMetadata");
         final List<WordListMetadata> newMetadata;
         final InputStreamReader reader = new InputStreamReader(stream);
@@ -583,16 +600,15 @@ public final class UpdateHandler {
 
     /**
      * Handle a word list: put it in its right place, and update the passed content values.
-     *
-     * @param context        the context for opening files.
-     * @param inputStream    an input stream pointing to the downloaded data. May not be null.
-     *                       Will be closed upon finishing.
+     * @param context the context for opening files.
+     * @param inputStream an input stream pointing to the downloaded data. May not be null.
+     *  Will be closed upon finishing.
      * @param downloadRecord the content values to fill the file name in.
-     * @throws IOException        if files can't be read or written.
+     * @throws IOException if files can't be read or written.
      * @throws BadFormatException if the md5 checksum doesn't match the metadata.
      */
     private static void handleWordList(final Context context,
-                                       final InputStream inputStream, final DownloadRecord downloadRecord)
+            final InputStream inputStream, final DownloadRecord downloadRecord)
             throws IOException, BadFormatException {
 
         // DownloadManager does not have the ability to put the file directly where we want
@@ -647,11 +663,11 @@ public final class UpdateHandler {
 
     /**
      * Copies in to out using FileChannels.
-     * <p>
+     *
      * This tries to use channels for fast copying. If it doesn't work, fall back to
      * copyFileFallBack below.
      *
-     * @param in  the stream to copy from.
+     * @param in the stream to copy from.
      * @param out the stream to copy to.
      * @throws IOException if both the normal and fallback methods raise exceptions.
      */
@@ -677,7 +693,7 @@ public final class UpdateHandler {
     /**
      * Copies in to out with read/write methods, not FileChannels.
      *
-     * @param in  the stream to copy from.
+     * @param in the stream to copy from.
      * @param out the stream to copy to.
      * @throws IOException if a read or a write fails.
      */
@@ -691,9 +707,8 @@ public final class UpdateHandler {
 
     /**
      * Creates and returns a new file to store a dictionary
-     *
      * @param context the context to use to open the file.
-     * @param locale  the locale for this dictionary, to make the file name more readable.
+     * @param locale the locale for this dictionary, to make the file name more readable.
      * @return the file name, or throw an exception.
      * @throws IOException if the file cannot be created.
      */
@@ -708,19 +723,19 @@ public final class UpdateHandler {
 
     /**
      * Compare metadata (collections of word lists).
-     * <p>
+     *
      * This method takes whole metadata sets directly and compares them, matching the wordlists in
      * each of them on the id. It creates an ActionBatch object that can be .execute()'d to perform
      * the actual upgrade from `from' to `to'.
      *
-     * @param context  the context to open databases on.
+     * @param context the context to open databases on.
      * @param clientId the id of the client.
-     * @param from     the dictionary descriptor (as a list of wordlists) to upgrade from.
-     * @param to       the dictionary descriptor (as a list of wordlists) to upgrade to.
+     * @param from the dictionary descriptor (as a list of wordlists) to upgrade from.
+     * @param to the dictionary descriptor (as a list of wordlists) to upgrade to.
      * @return an ordered list of runnables to be called to upgrade.
      */
     private static ActionBatch compareMetadataForUpgrade(final Context context,
-                                                         final String clientId, List<WordListMetadata> from, List<WordListMetadata> to) {
+            final String clientId, List<WordListMetadata> from, List<WordListMetadata> to) {
         final ActionBatch actions = new ActionBatch();
         // Upgrade existing word lists
         DebugLogUtils.l("Comparing dictionaries");
@@ -737,7 +752,7 @@ public final class UpdateHandler {
             // inside findWordListById.
             final WordListMetadata newInfo = null == metadataInfo
                     || metadataInfo.mFormatVersion > MAXIMUM_SUPPORTED_FORMAT_VERSION
-                    ? null : metadataInfo;
+                            ? null : metadataInfo;
             DebugLogUtils.l("Considering updating ", id, "currentInfo =", currentInfo);
 
             if (null == currentInfo && null == newInfo) {
@@ -790,7 +805,7 @@ public final class UpdateHandler {
                 } else if (DEBUG) {
                     Log.i(TAG, "Not updating word list " + id
                             + " : current list timestamp is " + currentInfo.mLastUpdate
-                            + " ; new list timestamp is " + newInfo.mLastUpdate);
+                                    + " ; new list timestamp is " + newInfo.mLastUpdate);
                 }
             }
         }
@@ -799,14 +814,13 @@ public final class UpdateHandler {
 
     /**
      * Computes an upgrade from the current state of the dictionaries to some desired state.
-     *
-     * @param context     the context for reading settings and files.
-     * @param clientId    the id of the client.
+     * @param context the context for reading settings and files.
+     * @param clientId the id of the client.
      * @param newMetadata the state we want to upgrade to.
      * @return the upgrade from the current state to the desired state, ready to be executed.
      */
     public static ActionBatch computeUpgradeTo(final Context context, final String clientId,
-                                               final List<WordListMetadata> newMetadata) {
+            final List<WordListMetadata> newMetadata) {
         final List<WordListMetadata> currentMetadata =
                 MetadataHandler.getCurrentMetadata(context, clientId);
         return compareMetadataForUpgrade(context, clientId, currentMetadata, newMetadata);
@@ -814,12 +828,12 @@ public final class UpdateHandler {
 
     /**
      * Shows the notification that informs the user a dictionary is available.
-     * <p>
+     *
      * When this notification is clicked, the dialog for downloading the dictionary
      * over a metered connection is shown.
      */
     private static void showDictionaryAvailableNotification(final Context context,
-                                                            final String clientId, final ContentValues installCandidate) {
+            final String clientId, final ContentValues installCandidate) {
         final String localeString = installCandidate.getAsString(MetadataDbHelper.LOCALE_COLUMN);
         final Intent intent = new Intent();
         intent.setClass(context, DownloadOverMeteredDialog.class);
@@ -862,7 +876,7 @@ public final class UpdateHandler {
 
     /**
      * Installs a word list if it has never been requested.
-     * <p>
+     *
      * This is called when a word list is requested, and is available but not installed. It checks
      * the conditions for auto-installation: if the dictionary is a main dictionary for this
      * language, and it has never been opted out through the dictionary interface, then we start
@@ -877,7 +891,7 @@ public final class UpdateHandler {
     // list because it may only install the latest version we know about for this specific
     // word list ID / client ID combination.
     public static void installIfNeverRequested(final Context context, final String clientId,
-                                               final String wordlistId, final boolean mayPrompt) {
+            final String wordlistId, final boolean mayPrompt) {
         final String[] idArray = wordlistId.split(DictionaryProvider.ID_CATEGORY_SEPARATOR);
         // If we have a new-format dictionary id (category:manual_id), then use the
         // specified category. Otherwise, it is a main dictionary, so force the
@@ -912,7 +926,7 @@ public final class UpdateHandler {
 
         if (mayPrompt
                 && DOWNLOAD_OVER_METERED_SETTING_UNKNOWN
-                == getDownloadOverMeteredSetting(context)) {
+                        == getDownloadOverMeteredSetting(context)) {
             final ConnectivityManager cm =
                     (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             if (ConnectivityManagerCompatUtils.isActiveNetworkMetered(cm)) {
@@ -950,25 +964,25 @@ public final class UpdateHandler {
 
     /**
      * Marks the word list with the passed id as used.
-     * <p>
+     *
      * This will download/install the list as required. The action will see that the destination
      * word list is a valid list, and take appropriate action - in this case, mark it as used.
-     *
-     * @param context                    the context for using action batches.
-     * @param clientId                   the id of the client.
-     * @param wordlistId                 the id of the word list to mark as installed.
-     * @param version                    the version of the word list to mark as installed.
-     * @param status                     the current status of the word list.
-     * @param allowDownloadOnMeteredData whether to download even on metered data connection
      * @see ActionBatch.Action#execute
+     *
+     * @param context the context for using action batches.
+     * @param clientId the id of the client.
+     * @param wordlistId the id of the word list to mark as installed.
+     * @param version the version of the word list to mark as installed.
+     * @param status the current status of the word list.
+     * @param allowDownloadOnMeteredData whether to download even on metered data connection
      */
     // The version argument is not used yet, because we don't need it to retrieve the information
     // we need. However, the pair (id, version) being the primary key to a word list in the database
     // it feels better for consistency to pass it, and some methods retrieving information about a
     // word list need it so we may need it in the future.
     public static void markAsUsed(final Context context, final String clientId,
-                                  final String wordlistId, final int version,
-                                  final int status, final boolean allowDownloadOnMeteredData) {
+            final String wordlistId, final int version,
+            final int status, final boolean allowDownloadOnMeteredData) {
         final List<WordListMetadata> currentMetadata =
                 MetadataHandler.getCurrentMetadata(context, clientId);
         WordListMetadata wordList = MetadataHandler.findWordListById(currentMetadata, wordlistId);
@@ -989,21 +1003,21 @@ public final class UpdateHandler {
 
     /**
      * Marks the word list with the passed id as unused.
-     * <p>
+     *
      * This leaves the file on the disk for ulterior use. The action will see that the destination
      * word list is null, and take appropriate action - in this case, mark it as unused.
-     *
-     * @param context    the context for using action batches.
-     * @param clientId   the id of the client.
-     * @param wordlistId the id of the word list to mark as installed.
-     * @param version    the version of the word list to mark as installed.
-     * @param status     the current status of the word list.
      * @see ActionBatch.Action#execute
+     *
+     * @param context the context for using action batches.
+     * @param clientId the id of the client.
+     * @param wordlistId the id of the word list to mark as installed.
+     * @param version the version of the word list to mark as installed.
+     * @param status the current status of the word list.
      */
     // The version and status arguments are not used yet, but this method matches its interface to
     // markAsUsed for consistency.
     public static void markAsUnused(final Context context, final String clientId,
-                                    final String wordlistId, final int version, final int status) {
+            final String wordlistId, final int version, final int status) {
         final List<WordListMetadata> currentMetadata =
                 MetadataHandler.getCurrentMetadata(context, clientId);
         final WordListMetadata wordList =
@@ -1017,7 +1031,7 @@ public final class UpdateHandler {
 
     /**
      * Marks the word list with the passed id as deleting.
-     * <p>
+     *
      * This basically means that on the next chance there is (right away if Android Keyboard
      * happens to be up, or the next time it gets up otherwise) the dictionary pack will
      * supply an empty dictionary to it that will replace whatever dictionary is installed.
@@ -1025,14 +1039,14 @@ public final class UpdateHandler {
      * empty dictionary takes up), and override a built-in default dictionary so that we
      * can fake delete a built-in dictionary.
      *
-     * @param context    the context to open the database on.
-     * @param clientId   the id of the client.
+     * @param context the context to open the database on.
+     * @param clientId the id of the client.
      * @param wordlistId the id of the word list to mark as deleted.
-     * @param version    the version of the word list to mark as deleted.
-     * @param status     the current status of the word list.
+     * @param version the version of the word list to mark as deleted.
+     * @param status the current status of the word list.
      */
     public static void markAsDeleting(final Context context, final String clientId,
-                                      final String wordlistId, final int version, final int status) {
+            final String wordlistId, final int version, final int status) {
         final List<WordListMetadata> currentMetadata =
                 MetadataHandler.getCurrentMetadata(context, clientId);
         final WordListMetadata wordList =
@@ -1047,17 +1061,17 @@ public final class UpdateHandler {
 
     /**
      * Marks the word list with the passed id as actually deleted.
-     * <p>
+     *
      * This reverts to available status or deletes the row as appropriate.
      *
-     * @param context    the context to open the database on.
-     * @param clientId   the id of the client.
+     * @param context the context to open the database on.
+     * @param clientId the id of the client.
      * @param wordlistId the id of the word list to mark as deleted.
-     * @param version    the version of the word list to mark as deleted.
-     * @param status     the current status of the word list.
+     * @param version the version of the word list to mark as deleted.
+     * @param status the current status of the word list.
      */
     public static void markAsDeleted(final Context context, final String clientId,
-                                     final String wordlistId, final int version, final int status) {
+            final String wordlistId, final int version, final int status) {
         final List<WordListMetadata> currentMetadata =
                 MetadataHandler.getCurrentMetadata(context, clientId);
         final WordListMetadata wordList =
@@ -1071,33 +1085,20 @@ public final class UpdateHandler {
 
     /**
      * Marks the word list with the passed id as broken.
-     * <p>
+     *
      * This effectively deletes the entry from the metadata. It doesn't prevent the same
      * word list to be downloaded again at a later time if the same or a new version is
      * available the next time we download the metadata.
      *
-     * @param context    the context to open the database on.
-     * @param clientId   the id of the client.
+     * @param context the context to open the database on.
+     * @param clientId the id of the client.
      * @param wordlistId the id of the word list to mark as broken.
-     * @param version    the version of the word list to mark as deleted.
+     * @param version the version of the word list to mark as deleted.
      */
     public static void markAsBroken(final Context context, final String clientId,
-                                    final String wordlistId, final int version) {
+            final String wordlistId, final int version) {
         // TODO: do this on another thread to avoid blocking the UI.
         MetadataDbHelper.deleteEntry(MetadataDbHelper.getDb(context, clientId),
                 wordlistId, version);
-    }
-
-    /**
-     * An interface for UIs or services that want to know when something happened.
-     * <p>
-     * This is chiefly used by the dictionary manager UI.
-     */
-    public interface UpdateEventListener {
-        void downloadedMetadata(boolean succeeded);
-
-        void wordListDownloadFinished(String wordListId, boolean succeeded);
-
-        void updateCycleCompleted();
     }
 }

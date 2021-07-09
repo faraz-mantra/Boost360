@@ -32,9 +32,7 @@ import android.graphics.Point;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-
 import androidx.annotation.RequiresApi;
-
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -46,13 +44,13 @@ import com.thinksity.R;
 
 
 public class BubbleLayout extends BubbleBaseLayout {
-    private static final int TOUCH_TIME_THRESHOLD = 150;
     private float initialTouchX;
     private float initialTouchY;
     private int initialX;
     private int initialY;
     private OnBubbleRemoveListener onBubbleRemoveListener;
     private OnBubbleClickListener onBubbleClickListener;
+    private static final int TOUCH_TIME_THRESHOLD = 150;
     private long lastTouchDown, lastRemoved;
     private MoveAnimator animator;
     private int width, height, maxWidth, height60;
@@ -60,7 +58,19 @@ public class BubbleLayout extends BubbleBaseLayout {
     private float initAlpha = 0;
     private boolean shouldStickToWall = true;
     private BUBBLE_TYPE bubble_type;
-    private ImageView ivBubble;
+
+    public enum BUBBLE_TYPE {
+        WHATSAPP_BUBBLE,
+        CUSTOMER_ASSISTANT
+    }
+
+    public void setOnBubbleRemoveListener(OnBubbleRemoveListener listener) {
+        onBubbleRemoveListener = listener;
+    }
+
+    public void setOnBubbleClickListener(OnBubbleClickListener listener) {
+        onBubbleClickListener = listener;
+    }
 
     public BubbleLayout(Context context, BUBBLE_TYPE bubble_type) {
         super(context);
@@ -84,14 +94,6 @@ public class BubbleLayout extends BubbleBaseLayout {
         initializeView();
     }
 
-    public void setOnBubbleRemoveListener(OnBubbleRemoveListener listener) {
-        onBubbleRemoveListener = listener;
-    }
-
-    public void setOnBubbleClickListener(OnBubbleClickListener listener) {
-        onBubbleClickListener = listener;
-    }
-
     public void setShouldStickToWall(boolean shouldStick) {
         this.shouldStickToWall = shouldStick;
     }
@@ -101,6 +103,8 @@ public class BubbleLayout extends BubbleBaseLayout {
             onBubbleRemoveListener.onBubbleRemoved(this);
         }
     }
+
+    private ImageView ivBubble;
 
     private void initializeView() {
         setClickable(true);
@@ -225,6 +229,14 @@ public class BubbleLayout extends BubbleBaseLayout {
         height60 = ((metrics.heightPixels * 40) / 100) - this.getHeight() - 10;
     }
 
+    public interface OnBubbleRemoveListener {
+        void onBubbleRemoved(BubbleLayout bubble);
+    }
+
+    public interface OnBubbleClickListener {
+        void onBubbleClick(BubbleLayout bubble);
+    }
+
     public void goToWall() {
         if (shouldStickToWall) {
             int middle = width / 2;
@@ -259,19 +271,6 @@ public class BubbleLayout extends BubbleBaseLayout {
     public void applyAlpha() {
         ivBubble.setAlpha(initAlpha);
         ivBubble.invalidate();
-    }
-
-    public enum BUBBLE_TYPE {
-        WHATSAPP_BUBBLE,
-        CUSTOMER_ASSISTANT
-    }
-
-    public interface OnBubbleRemoveListener {
-        void onBubbleRemoved(BubbleLayout bubble);
-    }
-
-    public interface OnBubbleClickListener {
-        void onBubbleClick(BubbleLayout bubble);
     }
 
     private class MoveAnimator implements Runnable {

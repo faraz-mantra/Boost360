@@ -29,7 +29,7 @@ import java.io.FileNotFoundException;
 
 /**
  * A class to help with calling DownloadManager methods.
- * <p>
+ *
  * Mostly, the problem here is that most methods from DownloadManager may throw SQL exceptions if
  * they can't open the database on disk. We want to avoid crashing in these cases but can't do
  * much more, so this class insulates the callers from these. SQLiteException also inherit from

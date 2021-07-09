@@ -11,8 +11,7 @@ import com.onboarding.nowfloats.model.digitalCard.DigitalCardData
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
-class VisitingCardFiveViewHolder(binding: ItemVisitingCardFiveBinding) :
-  AppBaseRecyclerViewHolder<ItemVisitingCardFiveBinding>(binding) {
+class VisitingCardFiveViewHolder(binding: ItemVisitingCardFiveBinding) : AppBaseRecyclerViewHolder<ItemVisitingCardFiveBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)

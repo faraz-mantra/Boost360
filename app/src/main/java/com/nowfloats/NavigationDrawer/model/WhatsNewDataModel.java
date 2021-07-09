@@ -8,7 +8,7 @@ public class WhatsNewDataModel {
     public String headerText;
     public String bodyText;
 
-    public WhatsNewDataModel(int resourceId, String headerText, String bodyText) {
+    public WhatsNewDataModel(int resourceId, String headerText, String bodyText){
         this.imageResource = resourceId;
         this.headerText = headerText;
         this.bodyText = bodyText;

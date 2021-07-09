@@ -29,4 +29,4 @@ data class VideoGallery(
   var websiteid: String? = null,
   @SerializedName("youtube_link")
   var youtubeLink: String? = null
-) : Serializable
+): Serializable

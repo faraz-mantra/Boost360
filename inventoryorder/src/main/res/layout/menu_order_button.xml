@@ -7,7 +7,8 @@
 
   </data>
 
-  <FrameLayout style="@style/match_wrap">
+  <FrameLayout
+    style="@style/match_wrap">
 
     <androidx.appcompat.widget.LinearLayoutCompat
       style="@style/match_wrap"

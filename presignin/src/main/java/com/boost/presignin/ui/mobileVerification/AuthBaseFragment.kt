@@ -24,8 +24,7 @@ import com.framework.pref.saveAccessTokenAuth
 import com.framework.webengageconstant.*
 import java.util.HashMap
 
-abstract class AuthBaseFragment<Binding : ViewDataBinding> :
-  AppBaseFragment<Binding, LoginSignUpViewModel>() {
+abstract class  AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Binding, LoginSignUpViewModel>() {
 
   protected lateinit var session: UserSessionManager
 
@@ -45,12 +44,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> :
   protected fun AuthTokenDataItem.createAccessTokenAuth() {
     showProgress()
     WebEngageController.initiateUserLogin(resultLogin()?.loginId)
-    WebEngageController.setUserContactAttributes(
-      resultLogin()?.profileProperties?.userEmail,
-      resultLogin()?.profileProperties?.userMobile,
-      resultLogin()?.profileProperties?.userName,
-      resultLogin()?.sourceClientId
-    )
+    WebEngageController.setUserContactAttributes(resultLogin()?.profileProperties?.userEmail, resultLogin()?.profileProperties?.userMobile, resultLogin()?.profileProperties?.userName, resultLogin()?.sourceClientId)
     WebEngageController.setFPTag(this.floatingPointTag)
     WebEngageController.trackEvent(PS_LOGIN_SUCCESS, LOGIN_SUCCESS, NO_EVENT_VALUE)
     session.userProfileId = resultLogin()?.loginId
@@ -62,11 +56,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> :
     session.storeFPID(this.floatingPointId)
     session.storeFpTag(this.floatingPointTag)
     session.setUserLogin(true)
-    val request = AccessTokenRequest(
-      authToken = this.authenticationToken,
-      clientId = clientId,
-      fpId = this.floatingPointId
-    )
+    val request = AccessTokenRequest(authToken = this.authenticationToken, clientId = clientId, fpId = this.floatingPointId)
     viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner, {
       val result = it as? AccessTokenResponse
       if (it?.isSuccess() == true && result?.result != null) {
@@ -97,11 +87,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> :
   }
 
   private fun AuthTokenDataItem.storeFpDetails() {
-    WebEngageController.trackEvent(
-      PS_BUSINESS_ACCOUNT_CHOOSE,
-      CHOOSE_BUSINESS,
-      this.floatingPointId ?: ""
-    )
+    WebEngageController.trackEvent(PS_BUSINESS_ACCOUNT_CHOOSE, CHOOSE_BUSINESS, this.floatingPointId ?: "")
     val map = HashMap<String, String>()
     map["clientId"] = clientId
     viewModel?.getFpDetails(this.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner, {
@@ -123,14 +109,12 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> :
 
   protected fun startDashboard() {
     try {
-      val dashboardIntent =
-        Intent(baseActivity, Class.forName("com.dashboard.controller.DashboardActivity"))
+      val dashboardIntent = Intent(baseActivity, Class.forName("com.dashboard.controller.DashboardActivity"))
       dashboardIntent.putExtras(requireActivity().intent)
       val bundle = Bundle()
       bundle.putParcelableArrayList("message", ArrayList())
       dashboardIntent.putExtras(bundle)
-      dashboardIntent.flags =
-        Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+      dashboardIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
       startActivity(dashboardIntent)
       baseActivity.finish()
       hideProgress()

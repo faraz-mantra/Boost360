@@ -32,7 +32,7 @@ public final class ApplicationUtils {
     }
 
     public static int getActivityTitleResId(final Context context,
-                                            final Class<? extends Activity> cls) {
+            final Class<? extends Activity> cls) {
         final ComponentName cn = new ComponentName(context, cls);
         try {
             final ActivityInfo ai = context.getPackageManager().getActivityInfo(cn, 0);
@@ -47,7 +47,6 @@ public final class ApplicationUtils {
 
     /**
      * A utility method to get the application's PackageInfo.versionName
-     *
      * @return the application's PackageInfo.versionName
      */
     public static String getVersionName(final Context context) {
@@ -66,7 +65,6 @@ public final class ApplicationUtils {
 
     /**
      * A utility method to get the application's PackageInfo.versionCode
-     *
      * @return the application's PackageInfo.versionCode
      */
     public static int getVersionCode(final Context context) {

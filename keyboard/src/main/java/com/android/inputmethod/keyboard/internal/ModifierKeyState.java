@@ -74,14 +74,10 @@ import android.util.Log;
 
     protected String toString(int state) {
         switch (state) {
-            case RELEASING:
-                return "RELEASING";
-            case PRESSING:
-                return "PRESSING";
-            case CHORDING:
-                return "CHORDING";
-            default:
-                return "UNKNOWN";
+        case RELEASING: return "RELEASING";
+        case PRESSING: return "PRESSING";
+        case CHORDING: return "CHORDING";
+        default: return "UNKNOWN";
         }
     }
 }

@@ -3,16 +3,16 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.appcompat.widget.LinearLayoutCompat
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/textView"
+      tools:text="@tools:sample/lorem"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:padding="@dimen/size_4"
-      tools:text="@tools:sample/lorem" />
+      android:padding="@dimen/size_4" />
 
   </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

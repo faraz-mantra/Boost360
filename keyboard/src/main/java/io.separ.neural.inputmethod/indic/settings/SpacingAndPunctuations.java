@@ -30,18 +30,18 @@ import io.separ.neural.inputmethod.indic.PunctuationSuggestions;
 import io.separ.neural.inputmethod.indic.R;
 
 public final class SpacingAndPunctuations {
-    public final int[] mSortedWordSeparators;
-    public final PunctuationSuggestions mSuggestPuncList;
-    public final String mSentenceSeparatorAndSpace;
-    public final boolean mCurrentLanguageHasSpaces;
-    public final boolean mUsesAmericanTypography;
-    public final boolean mUsesGermanRules;
     private final int[] mSortedSymbolsPrecededBySpace;
     private final int[] mSortedSymbolsFollowedBySpace;
     private final int[] mSortedSymbolsClusteringTogether;
     private final int[] mSortedWordConnectors;
+    public final int[] mSortedWordSeparators;
     private final int[] mSortedSentenceTerminators;
+    public final PunctuationSuggestions mSuggestPuncList;
     private final int mSentenceSeparator;
+    public final String mSentenceSeparatorAndSpace;
+    public final boolean mCurrentLanguageHasSpaces;
+    public final boolean mUsesAmericanTypography;
+    public final boolean mUsesGermanRules;
 
     public SpacingAndPunctuations(final Resources res) {
         // To be able to binary search the code point. See {@link #isUsuallyPrecededBySpace(int)}.
@@ -74,7 +74,7 @@ public final class SpacingAndPunctuations {
 
     @UsedForTesting
     public SpacingAndPunctuations(final SpacingAndPunctuations model,
-                                  final int[] overrideSortedWordSeparators) {
+            final int[] overrideSortedWordSeparators) {
         mSortedSymbolsPrecededBySpace = model.mSortedSymbolsPrecededBySpace;
         mSortedSymbolsFollowedBySpace = model.mSortedSymbolsFollowedBySpace;
         mSortedSymbolsClusteringTogether = model.mSortedSymbolsClusteringTogether;

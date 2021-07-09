@@ -24,8 +24,7 @@ import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import java.util.*
 
 
-class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) :
-  AppBaseRecyclerViewHolder<ItemVideoConsultOrderBinding>(binding) {
+class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRecyclerViewHolder<ItemVideoConsultOrderBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -38,22 +37,14 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) :
       setDataResponse(it)
     }
     binding.mainView.setOnClickListener {
-      listener?.onItemClick(
-        adapterPosition,
-        data,
-        RecyclerViewActionType.VIDEO_CONSULT_ITEM_CLICKED.ordinal
-      )
+      listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.VIDEO_CONSULT_ITEM_CLICKED.ordinal)
     }
   }
 
   private fun setDataResponse(order: OrderItem) {
     val statusValue = OrderStatusValue.fromStatusConsultation(order.status())?.value
-    if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status()
-        .toUpperCase(Locale.ROOT)
-    ) {
-      if (order.PaymentDetails?.status()
-          ?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name
-      ) {
+    if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT)) {
+      if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
         binding.orderType.text = OrderStatusValue.ESCALATED_3.value
       } else binding.orderType.text = statusValue.plus(order.cancelledTextVideo())
     } else if (order.isConfirmConsultBtn()) binding.orderType.text = "Upcoming Consult"
@@ -61,25 +52,15 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) :
 
     binding.bookingId.text = "# ${order.ReferenceNumber}"
     order.BillingDetails?.let { bill ->
-      val currency =
-        takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() }
-          ?: "INR"
+      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding.createDate.value.text = parseDate(
-      order.CreatedOn,
-      FORMAT_SERVER_DATE,
-      FORMAT_SERVER_TO_LOCAL,
-      timeZone = TimeZone.getTimeZone("IST")
-    )
+    binding.createDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL, timeZone = TimeZone.getTimeZone("IST"))
     binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
-    binding.duration.value.text =
-      order.firstItemForAptConsult()?.Product?.extraItemProductConsultation()?.durationTxt()
-        ?: "0 Minute"
+    binding.duration.value.text = order.firstItemForAptConsult()?.Product?.extraItemProductConsultation()?.durationTxt() ?: "0 Minute"
     val sizeItem = if (order.firstItemForAptConsult() != null) 1 else 0
     binding.itemCount.text = takeIf { sizeItem > 1 }?.let { "Details" } ?: "Detail"
-    val details =
-      order.firstItemForAptConsult()?.Product?.extraItemProductConsultation()?.detailsConsultation()
+    val details = order.firstItemForAptConsult()?.Product?.extraItemProductConsultation()?.detailsConsultation()
     binding.itemDesc.text = details
 
     val scheduleDate = order.firstItemForAptConsult()?.scheduledStartDate()
@@ -102,54 +83,28 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) :
         OrderSummaryModel.OrderStatus.ORDER_CANCELLED -> {
           binding.textErrorCall.gone()
           binding.btnCall.gone()
-          changeBackground(
-            View.GONE,
-            View.VISIBLE,
-            R.drawable.cancel_order_bg,
-            R.color.primary_grey,
-            R.color.primary_grey
-          )
+          changeBackground(View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey, R.color.primary_grey)
         }
         else -> {
           checkConfirmBtn(order)
-          changeBackground(
-            View.VISIBLE,
-            View.GONE,
-            R.drawable.ic_apt_order_bg,
-            R.color.watermelon_light,
-            R.color.light_green
-          )
+          changeBackground(View.VISIBLE, View.GONE, R.drawable.ic_apt_order_bg, R.color.watermelon_light, R.color.light_green)
         }
       }
     }
-    binding.itemMore.paintFlags.or(Paint.UNDERLINE_TEXT_FLAG)
-      .let { binding.itemMore.paintFlags = it }
+    binding.itemMore.paintFlags.or(Paint.UNDERLINE_TEXT_FLAG).let { binding.itemMore.paintFlags = it }
   }
 
   private fun checkConfirmBtn(order: OrderItem) {
     if (order.isConfirmConsultBtn()) {
       binding.btnCall.visible()
-      binding.btnCall.setOnClickListener {
-        listener?.onItemClick(
-          adapterPosition,
-          order,
-          RecyclerViewActionType.VIDEO_CONSULT_CALL_CLICKED.ordinal
-        )
-      }
-      binding.btnCopyLink.setOnClickListener {
-        listener?.onItemClick(
-          adapterPosition,
-          order,
-          RecyclerViewActionType.VIDEO_CONSULT_COPY_CLICKED.ordinal
-        )
-      }
+      binding.btnCall.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.VIDEO_CONSULT_CALL_CLICKED.ordinal) }
+      binding.btnCopyLink.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.VIDEO_CONSULT_COPY_CLICKED.ordinal) }
 //      binding.btnCopyLink.visibility = View.VISIBLE
       binding.textErrorCall.gone()
     } else {
       binding.btnCall.gone()
 //      binding.btnCopyLink.visibility = View.GONE
-      binding.textErrorCall.visibility =
-        if (!order.isConsultErrorText()) View.VISIBLE else View.GONE
+      binding.textErrorCall.visibility = if (!order.isConsultErrorText()) View.VISIBLE else View.GONE
     }
   }
 
@@ -157,20 +112,9 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) :
     binding.detailsOrder.visibility = detail
     binding.next2.visibility = btn
 //    binding.btnCopyLink.visibility = View.GONE
-    setColorView(
-      primaryGrey,
-      binding.consultDate.title,
-      binding.payment.title,
-      binding.duration.title,
-      binding.bookingId,
-      binding.txtRupees,
-      binding.consultDate.value,
-      binding.payment.value,
-      binding.duration.value,
-      binding.itemCount,
-      binding.itemDesc,
-      binding.itemMore
-    )
+    setColorView(primaryGrey, binding.consultDate.title, binding.payment.title, binding.duration.title, binding.bookingId,
+        binding.txtRupees, binding.consultDate.value, binding.payment.value, binding.duration.value, binding.itemCount,
+        binding.itemDesc, binding.itemMore)
     activity?.let { binding.orderType.background = ContextCompat.getDrawable(it, orderBg) }
   }
 
@@ -178,13 +122,7 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) :
     activity?.let { ac -> view.forEach { it.setTextColor(ContextCompat.getColor(ac, color)) } }
   }
 
-  private fun changeBackground(
-    detail: Int,
-    btn: Int,
-    orderBg: Int,
-    rupeesColor: Int,
-    dateColor: Int
-  ) {
+  private fun changeBackground(detail: Int, btn: Int, orderBg: Int, rupeesColor: Int, dateColor: Int) {
     binding.detailsOrder.visibility = detail
     binding.next2.visibility = btn
     activity?.let {

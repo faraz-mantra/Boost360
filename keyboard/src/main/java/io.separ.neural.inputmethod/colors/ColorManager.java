@@ -14,13 +14,20 @@ import static io.separ.neural.inputmethod.Utils.ColorUtils.getColor;
 public class ColorManager {
     private static ColorProfile lastProfile;
     private static List<OnColorChange> observers;
+    private final OnFinishCalculateProfile masterObserver;
+
+    public interface OnColorChange {
+        void onColorChange(ColorProfile colorProfile);
+    }
+
+    public interface OnFinishCalculateProfile {
+        void finishCalculatingProfile();
+    }
 
     static {
         observers = new ArrayList();
         lastProfile = new ColorProfile();
     }
-
-    private final OnFinishCalculateProfile masterObserver;
 
     public ColorManager(OnFinishCalculateProfile masterObserver) {
         this.masterObserver = masterObserver;
@@ -58,13 +65,5 @@ public class ColorManager {
             notifyObservers();
         }
         this.masterObserver.finishCalculatingProfile();
-    }
-
-    public interface OnColorChange {
-        void onColorChange(ColorProfile colorProfile);
-    }
-
-    public interface OnFinishCalculateProfile {
-        void finishCalculatingProfile();
     }
 }

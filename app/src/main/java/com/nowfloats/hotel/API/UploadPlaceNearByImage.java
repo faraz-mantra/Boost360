@@ -2,21 +2,35 @@ package com.nowfloats.hotel.API;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.nowfloats.NavigationDrawer.RoundCorners_image;
 import com.nowfloats.hotel.Interfaces.PlaceNearByDetailsListener;
+import com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by NowFloatsDev on 29/05/2015.

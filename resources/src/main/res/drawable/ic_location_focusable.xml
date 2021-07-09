@@ -1,4 +1,4 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:drawable="@drawable/ic_location_orange" android:state_focused="true" />
-  <item android:drawable="@drawable/ic_location" android:state_focused="false" />
+  <item android:state_focused="true" android:drawable="@drawable/ic_location_orange" />
+  <item android:state_focused="false" android:drawable="@drawable/ic_location" />
 </selector>

@@ -20,8 +20,8 @@ public interface Facebook_Interface {
     //  https://graph.facebook.com
 
     @GET("/me?fields=picture,id,name,gender,email")
-    void get_Me_Details(@QueryMap Map<String, String> map, Callback<JSONObject> callback);
+    void get_Me_Details(@QueryMap Map<String,String> map, Callback<JSONObject> callback);
 
     @GET("/{page_id}?fields=picture,id,name,location,description&type=large")
-    void get_Me_Accounts_Details(@Path("page_id") String page_id, @QueryMap Map<String, String> map, Callback<Facebook_Data_Model> callback);
+    void get_Me_Accounts_Details(@Path("page_id") String page_id,@QueryMap Map<String,String> map, Callback<Facebook_Data_Model> callback);
 }

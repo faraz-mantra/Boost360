@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:background="@color/gray"
-  android:fitsSystemWindows="true"
-  android:orientation="vertical">
-
-  <ImageView
-    android:id="@+id/facebook"
-    android:layout_width="40dp"
-    android:layout_height="40dp"
-    android:padding="10dp"
-    android:src="@drawable/facebook_round" />
-
-  <ImageView
-    android:id="@+id/quikr"
-    android:layout_width="40dp"
-    android:layout_height="40dp"
-    android:padding="10dp"
-    android:src="@drawable/quikr" />
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:background="@color/gray"
+    android:fitsSystemWindows="true"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/facebook"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="10dp"
+        android:src="@drawable/facebook_round"/>
+    <ImageView
+        android:id="@+id/quikr"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="10dp"
+        android:src="@drawable/quikr"/>
 
 </LinearLayout>

@@ -31,14 +31,30 @@ import retrofit.RetrofitError;
  * Created by Dell on 11-02-2015.
  */
 public class Fetch_Home_Data {
-    public int interfaceType = 0;
-    public Fetch_Home_Data_Interface fetchHomeDataInterface = null;
     Activity appActivity;
     private FloatsMessageModel sendJson = null;
     private boolean dataExists = false;
     private boolean newPost = false, interfaceInvoke = true;
     private DbController mDbController;
     private UserSessionManager sessionManager;
+
+    public int getInterfaceType() {
+        return interfaceType;
+    }
+
+    public void setInterfaceType(int interfaceType) {
+        this.interfaceType = interfaceType;
+    }
+
+    public int interfaceType = 0;
+
+    public interface Fetch_Home_Data_Interface {
+        public void dataFetched(int skip, boolean isNewMessage);
+
+        public void sendFetched(FloatsMessageModel jsonObject);
+    }
+
+    public Fetch_Home_Data_Interface fetchHomeDataInterface = null;
 
     public Fetch_Home_Data(Activity activity, int type) {
         appActivity = activity;
@@ -54,14 +70,6 @@ public class Fetch_Home_Data {
         super();
         appActivity = context;
         sessionManager = session;
-    }
-
-    public int getInterfaceType() {
-        return interfaceType;
-    }
-
-    public void setInterfaceType(int interfaceType) {
-        this.interfaceType = interfaceType;
     }
 
     public void setFetchDataListener(Fetch_Home_Data_Interface fetchHomeDataInterface) {
@@ -197,6 +205,7 @@ public class Fetch_Home_Data {
         }
     }
 
+
     public void getVisitors() {
         /**
          * Create calendar instance
@@ -300,6 +309,7 @@ public class Fetch_Home_Data {
         });
     }
 
+
     /**
      * Convert local date to UTC date
      *
@@ -312,6 +322,7 @@ public class Fetch_Home_Data {
 
         return new Date(sdf.format(date));
     }
+
 
     /**
      * Count total visitors
@@ -351,11 +362,5 @@ public class Fetch_Home_Data {
         }
 
         return sum;
-    }
-
-    public interface Fetch_Home_Data_Interface {
-        public void dataFetched(int skip, boolean isNewMessage);
-
-        public void sendFetched(FloatsMessageModel jsonObject);
     }
 }

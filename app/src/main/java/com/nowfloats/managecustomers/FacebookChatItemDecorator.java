@@ -2,10 +2,8 @@ package com.nowfloats.managecustomers;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +16,8 @@ import com.thinksity.R;
  */
 
 public class FacebookChatItemDecorator extends RecyclerView.ItemDecoration {
-    private final int headerOffset;
-    private final boolean sticky;
+    private final int             headerOffset;
+    private final boolean         sticky;
     private final SectionCallback sectionCallback;
 
     private View headerView;

@@ -2,12 +2,10 @@ package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -65,25 +63,29 @@ import retrofit.client.Response;
 
 public class Contact_Info_Activity extends BaseActivity implements View.OnTouchListener {
 
+    private Toolbar toolbar;
     public static TextView saveTextView;
-    public static EditText primaryNumber, alternateNumber_1, alternateNumber_2, alternateNumber_3, emailAddress, websiteAddress, facebookPage;
-    public static String msgtxt4_email = null, msgtxt4website = null, msgtxt4fbpage = null, msgtxt4primaryno = null, msgtxt4alternateno1 = null, msgtxtalternate2 = null, msgtxtalternate3 = null;
-    public static String primary = "", alternate1 = "", alternate2 = "", alternate3 = "";
+
+    private GMBHandler gmbHandler;
+
     UserSessionManager session;
     Bus bus;
     ImageView ivProtoColSpinner;
-    Boolean flag4emailaddress = false, flag4websiteaddress = false, flag4fbagename = false, flag4alternate1 = false, flag4alternate3 = false, flag4primaryno = false, flag4alternate2 = false, flag4digitlimit0 = false, flag4digitlimit1 = false, flag4digitlimit = false, flag4digitlimit2 = false;
-    String[] profilesattr = new String[20];
-    Spinner protocolSpinner;
-    EditText otpEditText;
-    private Toolbar toolbar;
-    private GMBHandler gmbHandler;
     private String[] mProtoCols = {"http://", "https://"};
+
+    public static EditText primaryNumber, alternateNumber_1, alternateNumber_2, alternateNumber_3, emailAddress, websiteAddress, facebookPage;
+    Boolean flag4emailaddress = false, flag4websiteaddress = false, flag4fbagename = false, flag4alternate1 = false, flag4alternate3 = false, flag4primaryno = false, flag4alternate2 = false, flag4digitlimit0 = false, flag4digitlimit1 = false, flag4digitlimit = false, flag4digitlimit2 = false;
+    public static String msgtxt4_email = null, msgtxt4website = null, msgtxt4fbpage = null, msgtxt4primaryno = null, msgtxt4alternateno1 = null, msgtxtalternate2 = null, msgtxtalternate3 = null;
+    String[] profilesattr = new String[20];
     private TextView titleTextView;
     private TextView tvEmailChangeLevel;
+
+    public static String primary = "", alternate1 = "", alternate2 = "", alternate3 = "";
     private boolean allBoundaryCondtn = true;
+    Spinner protocolSpinner;
     private boolean VMN_Dialog;
     private int mSelectionCounter = 0;
+    EditText otpEditText;
     private MaterialDialog otpDialog, progressbar;
     private TextView primaryTextView, alternateTextView1, alternateTextView2, alternateTextView3;
     private MaterialDialog dialog;
@@ -176,10 +178,14 @@ public class Contact_Info_Activity extends BaseActivity implements View.OnTouchL
         protocolSpinner.setAdapter(new ArrayAdapter<>(this, R.layout.protocol_spinner_bg, mProtoCols));
         initializeData();
 
-        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+        {
             tvEmailChangeLevel.setVisibility(View.VISIBLE);
             emailAddress.setEnabled(false);
-        } else {
+        }
+
+        else
+        {
             tvEmailChangeLevel.setVisibility(View.GONE);
             emailAddress.setEnabled(true);
         }

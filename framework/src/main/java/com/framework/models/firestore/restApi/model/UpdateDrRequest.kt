@@ -14,4 +14,4 @@ data class UpdateDrRequest(
   var key: String? = null,
   @SerializedName("value")
   var value: Any? = null
-) : BaseRequest(), Serializable
+):BaseRequest(),Serializable

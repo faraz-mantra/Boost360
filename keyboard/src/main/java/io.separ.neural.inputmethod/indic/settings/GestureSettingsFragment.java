@@ -22,7 +22,7 @@ import io.separ.neural.inputmethod.indic.R;
 
 /**
  * "Gesture typing preferences" settings sub screen.
- * <p>
+ *
  * This settings sub screen handles the following gesture typing preferences.
  * - Enable gesture typing
  * - Dynamic floating preview

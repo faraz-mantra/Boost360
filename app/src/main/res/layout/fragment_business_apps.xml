@@ -1,54 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:attrs="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="@color/gray_transparent"
-  android:clipToPadding="false">
-
-  <androidx.viewpager.widget.ViewPager
-    android:id="@+id/ps_pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_above="@+id/ps_indicator">
+    xmlns:attrs="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gray_transparent"
+    android:clipToPadding="false">
 
-  </androidx.viewpager.widget.ViewPager>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/ps_pager"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/ps_indicator"
+        android:layout_height="match_parent">
 
-  <com.rd.PageIndicatorView
-    android:id="@+id/ps_indicator"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_above="@+id/customer_apps_get_store_link_button"
-    android:layout_centerHorizontal="true"
-    android:layout_marginBottom="5dp"
-    android:padding="5dp"
-    attrs:piv_animationType="slide"
-    attrs:piv_count="3"
-    attrs:piv_radius="4dp"
-    attrs:piv_selectedColor="@color/business_button_black"
-    attrs:piv_unselectedColor="@color/business_button_gray" />
-  <!-- <com.viewpagerindicator.CirclePageIndicator
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       android:id="@+id/ps_indicator"
-       android:padding="5dp"
-       android:layout_marginBottom="5dp"
-       android:layout_above="@+id/customer_apps_get_store_link_button"
-       android:layout_height="wrap_content"
-       android:layout_width="match_parent" />-->
+    </androidx.viewpager.widget.ViewPager>
+    <com.rd.PageIndicatorView
+        android:id="@+id/ps_indicator"
+        android:layout_width="wrap_content"
+        android:padding="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@+id/customer_apps_get_store_link_button"
+        android:layout_height="wrap_content"
+        attrs:piv_animationType="slide"
+        attrs:piv_unselectedColor="@color/business_button_gray"
+        attrs:piv_selectedColor="@color/business_button_black"
+        attrs:piv_radius="4dp"
+        attrs:piv_count="3"/>
+   <!-- <com.viewpagerindicator.CirclePageIndicator
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ps_indicator"
+        android:padding="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@+id/customer_apps_get_store_link_button"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />-->
 
-  <TextView
-    android:id="@+id/customer_apps_get_store_link_button"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_marginStart="15dp"
-    android:layout_marginEnd="15dp"
-    android:layout_marginBottom="15dp"
-    android:background="@drawable/ria_positive_btn"
-    android:gravity="center"
-    android:padding="10dp"
-    android:text="@string/getlink"
-    android:textColor="@drawable/yellow_btn_hover_text_color"
-    android:textSize="15sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:text="@string/getlink"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ria_positive_btn"
+        android:textColor="@drawable/yellow_btn_hover_text_color"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="15dp"
+        android:id="@+id/customer_apps_get_store_link_button"
+        android:layout_marginStart="15dp" />
 
 </RelativeLayout>

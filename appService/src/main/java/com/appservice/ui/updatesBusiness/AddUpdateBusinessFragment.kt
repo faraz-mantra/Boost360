@@ -45,8 +45,7 @@ const val isFirstTimeSendToSubscriber = "isFirstTimeSendToSubscriber"
 const val msgPost = "msg_post"
 const val imagePost = "image_post"
 
-class AddUpdateBusinessFragment :
-  AppBaseFragment<AddUpdateBusinessFragmentBinding, UpdatesViewModel>() {
+class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBinding, UpdatesViewModel>() {
 
   private val REQ_CODE_SPEECH_INPUT = 122
   private var isUpdate: Boolean = false
@@ -90,31 +89,16 @@ class AddUpdateBusinessFragment :
     isUpdate = updateFloat != null && updateFloat!!.id.isNullOrEmpty().not()
     WebEngageController.trackEvent(EVENT_NAME_UPDATE_CREATE, PAGE_VIEW, sessionLocal.fpTag)
     setOnClickListener(
-      binding?.btnCamera,
-      binding?.btnEditPhoto,
-      binding?.btnFpStatus,
-      binding?.btnFpPageStatus,
-      binding?.btnGoogleVoice,
-      binding?.btnRemovePhoto,
-      binding?.btnSubscription,
-      binding?.btnTwitter
+      binding?.btnCamera, binding?.btnEditPhoto, binding?.btnFpStatus, binding?.btnFpPageStatus, binding?.btnGoogleVoice,
+      binding?.btnRemovePhoto, binding?.btnSubscription, binding?.btnTwitter
     )
-    binding?.edtDesc?.afterTextChanged { str ->
-      if (isUpdate.not()) sessionLocal.storeFPDetails(
-        msgPost,
-        str
-      )
-    }
+    binding?.edtDesc?.afterTextChanged { str -> if (isUpdate.not()) sessionLocal.storeFPDetails(msgPost, str) }
     localDataView()
-    baseActivity.onBackPressedDispatcher.addCallback(
-      viewLifecycleOwner,
-      object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-          if (isUpdate.not() && binding?.edtDesc?.text.isNullOrEmpty()
-              .not() && postImage != null
-          ) onBackPress() else baseActivity.finish()
-        }
-      })
+    baseActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+      override fun handleOnBackPressed() {
+        if (isUpdate.not() && binding?.edtDesc?.text.isNullOrEmpty().not() && postImage != null) onBackPress() else baseActivity.finish()
+      }
+    })
     initializeSocial()
   }
 
@@ -131,47 +115,24 @@ class AddUpdateBusinessFragment :
       binding?.edtDesc?.setText(updateFloat?.message ?: "")
       if (updateFloat?.imageUri.isNullOrEmpty().not()) {
         binding?.imageView?.visible()
-        activity?.glideLoad(
-          binding?.postImage!!,
-          updateFloat?.imageUri ?: "",
-          R.drawable.placeholder_image_n
-        )
+        activity?.glideLoad(binding?.postImage!!, updateFloat?.imageUri ?: "", R.drawable.placeholder_image_n)
       } else binding?.imageView?.invisible()
     }
   }
 
 
   private fun initializeSocial() {
-    if (sessionLocal.facebookName.isNullOrEmpty()
-        .not() && (sessionLocal.getIntDetails("fbStatus") == 1 || sessionLocal.getIntDetails("fbStatus") == 3)
-    ) {
+    if (sessionLocal.facebookName.isNullOrEmpty().not() && (sessionLocal.getIntDetails("fbStatus") == 1 || sessionLocal.getIntDetails("fbStatus") == 3)) {
       fbStatusEnabled = true
-      binding?.btnFpStatus?.setTintColor(
-        ContextCompat.getColor(
-          baseActivity,
-          if (fbStatusEnabled) R.color.colorAccent else R.color.grey_A1A1A1
-        )
-      )
+      binding?.btnFpStatus?.setTintColor(ContextCompat.getColor(baseActivity, if (fbStatusEnabled) R.color.colorAccent else R.color.grey_A1A1A1))
     }
-    if (sessionLocal.facebookPage.isNullOrEmpty()
-        .not() && sessionLocal.getIntDetails("fbPageStatus") == 1
-    ) {
+    if (sessionLocal.facebookPage.isNullOrEmpty().not() && sessionLocal.getIntDetails("fbPageStatus") == 1) {
       fbPageStatusEnable = true
-      binding?.btnFpPageStatus?.setTintColor(
-        ContextCompat.getColor(
-          baseActivity,
-          if (fbPageStatusEnable) R.color.colorAccent else R.color.grey_A1A1A1
-        )
-      )
+      binding?.btnFpPageStatus?.setTintColor(ContextCompat.getColor(baseActivity, if (fbPageStatusEnable) R.color.colorAccent else R.color.grey_A1A1A1))
     }
     if (mSharedPreferences?.getBoolean(PREF_KEY_TWITTER_LOGIN, false) == true) {
       twitterSharingEnabled = true
-      binding?.btnTwitter?.setTintColor(
-        ContextCompat.getColor(
-          baseActivity,
-          if (twitterSharingEnabled) R.color.colorAccent else R.color.grey_A1A1A1
-        )
-      )
+      binding?.btnTwitter?.setTintColor(ContextCompat.getColor(baseActivity, if (twitterSharingEnabled) R.color.colorAccent else R.color.grey_A1A1A1))
     }
   }
 
@@ -195,81 +156,40 @@ class AddUpdateBusinessFragment :
             .setTitle(R.string.send_to_subscribers)
             .setMessage(R.string.unable_to_send_website_updates_to_subscribers)
             .setPositiveButton(R.string.enable) { _: DialogInterface, _: Int ->
-              WebEngageController.trackEvent(
-                SUBSCRIBER_SHARING_ACTIVATED,
-                HAS_CLICKED_SUBSCRIBER_SHARING_ON,
-                sessionLocal.fpTag
-              )
+              WebEngageController.trackEvent(SUBSCRIBER_SHARING_ACTIVATED, HAS_CLICKED_SUBSCRIBER_SHARING_ON, sessionLocal.fpTag)
               sessionLocal.storeBooleanDetails(isFirstTimeSendToSubscriber, true)
               toSubscribers = toSubscribers.not()
-              binding?.btnSubscription?.setTintColor(
-                ContextCompat.getColor(
-                  baseActivity,
-                  if (toSubscribers) R.color.colorAccent else R.color.grey_A1A1A1
-                )
-              )
+              binding?.btnSubscription?.setTintColor(ContextCompat.getColor(baseActivity, if (toSubscribers) R.color.colorAccent else R.color.grey_A1A1A1))
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
         } else {
           toSubscribers = toSubscribers.not()
-          binding?.btnSubscription?.setTintColor(
-            ContextCompat.getColor(
-              baseActivity,
-              if (toSubscribers) R.color.colorAccent else R.color.grey_A1A1A1
-            )
-          )
+          binding?.btnSubscription?.setTintColor(ContextCompat.getColor(baseActivity, if (toSubscribers) R.color.colorAccent else R.color.grey_A1A1A1))
         }
       }
 
       binding?.btnGoogleVoice -> promptSpeechInput()
       binding?.btnFpStatus -> {
-        if (sessionLocal.facebookName.isNullOrEmpty()
-            .not() && (sessionLocal.getIntDetails("fbStatus") == 1 || sessionLocal.getIntDetails("fbStatus") == 3)
-        ) {
+        if (sessionLocal.facebookName.isNullOrEmpty().not() && (sessionLocal.getIntDetails("fbStatus") == 1 || sessionLocal.getIntDetails("fbStatus") == 3)) {
           fbStatusEnabled = fbStatusEnabled.not()
-          binding?.btnFpStatus?.setTintColor(
-            ContextCompat.getColor(
-              baseActivity,
-              if (fbStatusEnabled) R.color.colorAccent else R.color.grey_A1A1A1
-            )
-          )
+          binding?.btnFpStatus?.setTintColor(ContextCompat.getColor(baseActivity, if (fbStatusEnabled) R.color.colorAccent else R.color.grey_A1A1A1))
           showShortToast(getString(if (fbStatusEnabled) R.string.fb_enabled else R.string.fb_disabled))
         } else baseActivity.startDigitalChannel(sessionLocal)
       }
       binding?.btnFpPageStatus -> {
-        if (sessionLocal.facebookPage.isNullOrEmpty()
-            .not() && sessionLocal.getIntDetails("fbPageStatus") == 1
-        ) {
+        if (sessionLocal.facebookPage.isNullOrEmpty().not() && sessionLocal.getIntDetails("fbPageStatus") == 1) {
           fbPageStatusEnable = fbPageStatusEnable.not()
-          binding?.btnFpPageStatus?.setTintColor(
-            ContextCompat.getColor(
-              baseActivity,
-              if (fbPageStatusEnable) R.color.colorAccent else R.color.grey_A1A1A1
-            )
-          )
-          if (fbPageStatusEnable) WebEngageController.trackEvent(
-            FB_PAGE_SHARING_ACTIVATED,
-            HAS_CLICKED_FB_PAGE_SHARING_ON,
-            sessionLocal.fpTag
-          )
+          binding?.btnFpPageStatus?.setTintColor(ContextCompat.getColor(baseActivity, if (fbPageStatusEnable) R.color.colorAccent else R.color.grey_A1A1A1))
+          if (fbPageStatusEnable) WebEngageController.trackEvent(FB_PAGE_SHARING_ACTIVATED, HAS_CLICKED_FB_PAGE_SHARING_ON, sessionLocal.fpTag)
           showShortToast(getString(if (fbPageStatusEnable) R.string.facebook_page_enabled else R.string.facebook_page_disabled))
         } else baseActivity.startDigitalChannel(sessionLocal)
       }
       binding?.btnTwitter -> {
         if (mSharedPreferences?.getBoolean(PREF_KEY_TWITTER_LOGIN, false) == true) {
           twitterSharingEnabled = twitterSharingEnabled.not()
-          binding?.btnTwitter?.setTintColor(
-            ContextCompat.getColor(
-              baseActivity,
-              if (twitterSharingEnabled) R.color.colorAccent else R.color.grey_A1A1A1
-            )
-          )
-          if (twitterSharingEnabled) WebEngageController.trackEvent(
-            TWITTER_SHARING_ACTIVATED,
-            HAS_CLICKED_TWITTER_SHARING_ON,
-            sessionLocal.fpTag
-          )
+          binding?.btnTwitter?.setTintColor(ContextCompat.getColor(baseActivity, if (twitterSharingEnabled) R.color.colorAccent else R.color.grey_A1A1A1))
+          if (twitterSharingEnabled) WebEngageController.trackEvent(TWITTER_SHARING_ACTIVATED, HAS_CLICKED_TWITTER_SHARING_ON, sessionLocal.fpTag)
           showShortToast(getString(if (twitterSharingEnabled) R.string.twitter_enabled else R.string.twitter_disabled))
         } else baseActivity.startDigitalChannel(sessionLocal)
       }
@@ -278,10 +198,7 @@ class AddUpdateBusinessFragment :
 
   private fun promptSpeechInput() {
     val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-    intent.putExtra(
-      RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-      RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-    )
+    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
     intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
     intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.speech_prompt))
     try {
@@ -294,10 +211,7 @@ class AddUpdateBusinessFragment :
   private fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
     filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(
-      this@AddUpdateBusinessFragment.parentFragmentManager,
-      ImagePickerBottomSheet::class.java.name
-    )
+    filterSheet.show(this@AddUpdateBusinessFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   private fun openImagePicker(it: ClickType) {
@@ -341,10 +255,7 @@ class AddUpdateBusinessFragment :
       showShortToast(getString(R.string.null_string_exception))
       return false
     }
-    if (sessionLocal.iSEnterprise == "false" && hasHTMLTags(
-        binding?.edtDesc?.text?.toString() ?: ""
-      )
-    ) {
+    if (sessionLocal.iSEnterprise == "false" && hasHTMLTags(binding?.edtDesc?.text?.toString() ?: "")) {
       showShortToast(getString(R.string.html_tags_exception))
       return false
     }
@@ -361,15 +272,7 @@ class AddUpdateBusinessFragment :
     val merchantId = if (sessionLocal.iSEnterprise == "true") null else sessionLocal.fPID
     val parentId = if (sessionLocal.iSEnterprise == "true") sessionLocal.fPParentId else null
     val isPictureMessage = postImage != null
-    val request = PostUpdateTaskRequest(
-      clientId,
-      binding?.edtDesc?.text?.toString(),
-      isPictureMessage,
-      merchantId,
-      parentId,
-      toSubscribers,
-      socialShare
-    )
+    val request = PostUpdateTaskRequest(clientId, binding?.edtDesc?.text?.toString(), isPictureMessage, merchantId, parentId, toSubscribers, socialShare)
     viewModel?.putBizMessageUpdate(request)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess() && it.stringResponse.isNullOrEmpty().not()) {
         if (isPictureMessage) {
@@ -409,10 +312,8 @@ class AddUpdateBusinessFragment :
   }
 
   private fun getRequestBizImage(postImage: File?): RequestBody {
-    val responseBody =
-      postImage?.readBytes()?.let { it.toRequestBody("image/png".toMediaTypeOrNull(), 0, it.size) }
-    val fileName = takeIf { postImage?.name.isNullOrEmpty().not() }?.let { postImage?.name }
-      ?: "biz_message_${Date().time}.png"
+    val responseBody = postImage?.readBytes()?.let { it.toRequestBody("image/png".toMediaTypeOrNull(), 0, it.size) }
+    val fileName = takeIf { postImage?.name.isNullOrEmpty().not() }?.let { postImage?.name } ?: "biz_message_${Date().time}.png"
     return responseBody!!
   }
 
@@ -447,39 +348,22 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelTy
     bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.fpTag)
     bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.fP_AppExperienceCode)
     bundle.putBoolean(Key_Preferences.IS_UPDATE, true)
-    bundle.putString(
-      Key_Preferences.BUSINESS_NAME,
-      session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
-    )
-    bundle.putString(
-      Key_Preferences.CONTACT_NAME,
-      session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME)
-    )
+    bundle.putString(Key_Preferences.BUSINESS_NAME, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
+    bundle.putString(Key_Preferences.CONTACT_NAME, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME))
     var imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl)
     if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
     }
     bundle.putString(Key_Preferences.BUSINESS_IMAGE, imageUri)
-    bundle.putString(
-      Key_Preferences.BUSINESS_TYPE,
-      session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)
-    )
+    bundle.putString(Key_Preferences.BUSINESS_TYPE, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
 
     val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
     val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
-    bundle.putString(
-      Key_Preferences.LOCATION,
-      if (city.isNullOrEmpty().not() && country.isNullOrEmpty()
-          .not()
-      ) "$city, $country" else "$city$country"
-    )
+    bundle.putString(Key_Preferences.LOCATION, if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country")
     bundle.putString(Key_Preferences.WEBSITE_URL, session.getDomainName(false))
     bundle.putString(Key_Preferences.PRIMARY_NUMBER, session.userPrimaryMobile)
     bundle.putString(Key_Preferences.PRIMARY_EMAIL, session.fPEmail)
-    bundle.putString(
-      com.onboarding.nowfloats.constant.IntentConstant.CHANNEL_TYPE.name,
-      channelType
-    )
+    bundle.putString(com.onboarding.nowfloats.constant.IntentConstant.CHANNEL_TYPE.name, channelType)
     startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()

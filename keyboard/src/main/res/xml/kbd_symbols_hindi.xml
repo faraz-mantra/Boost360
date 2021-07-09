@@ -18,6 +18,6 @@
 -->
 
 <Keyboard xmlns:latin="http://schemas.android.com/apk/res-auto"
-  latin:touchPositionCorrectionData="@array/touch_position_correction_data_default">
-  <include latin:keyboardLayout="@xml/rows_symbols_hindi" />
+    latin:touchPositionCorrectionData="@array/touch_position_correction_data_default">
+    <include latin:keyboardLayout="@xml/rows_symbols_hindi" />
 </Keyboard>

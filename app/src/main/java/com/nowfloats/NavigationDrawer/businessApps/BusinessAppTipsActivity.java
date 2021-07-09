@@ -2,14 +2,12 @@ package com.nowfloats.NavigationDrawer.businessApps;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -25,11 +23,10 @@ import com.thinksity.R;
  * Created by Admin on 02-06-2017.
  */
 
-public class BusinessAppTipsActivity extends AppCompatActivity implements DeepLinkAdapter.DeepLinkOnclick {
+public class BusinessAppTipsActivity extends AppCompatActivity implements DeepLinkAdapter.DeepLinkOnclick{
 
     RecyclerView list;
     LinearLayout parentLayout;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,24 +34,24 @@ public class BusinessAppTipsActivity extends AppCompatActivity implements DeepLi
         parentLayout = (LinearLayout) findViewById(R.id.parent_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        String[] mainText = getResources().getStringArray(R.array.business_app_tips);
-        String[] descriptions = getResources().getStringArray(R.array.business_app_tips_description);
-        if (getSupportActionBar() != null) {
+        String[] mainText = getResources().getStringArray( R.array.business_app_tips);
+        String[] descriptions = getResources().getStringArray( R.array.business_app_tips_description);
+        if(getSupportActionBar()!= null ){
             setTitle(getString(R.string.tips_for_business_app_completeness));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         list = (RecyclerView) findViewById(R.id.list);
         list.setHasFixedSize(true);
-        list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
-        list.setAdapter(new DeepLinkAdapter(this, mainText, descriptions));
+        list.setAdapter(new DeepLinkAdapter(this,mainText,descriptions));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == android.R.id.home) {
+        if(item.getItemId() == android.R.id.home){
             onBackPressed();
             return true;
         }
@@ -64,14 +61,14 @@ public class BusinessAppTipsActivity extends AppCompatActivity implements DeepLi
     @Override
     public void onBackPressed() {
         FragmentManager manager = getSupportFragmentManager();
-        if (manager.getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
+        if (manager.getBackStackEntryCount()>0) {
+           getSupportFragmentManager().popBackStack();
             parentLayout.setVisibility(View.GONE);
             list.setVisibility(View.VISIBLE);
             setTitle(getString(R.string.tips_for_business_app_completeness));
-        } else {
+        }else {
             super.onBackPressed();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
         }
 
     }
@@ -79,7 +76,7 @@ public class BusinessAppTipsActivity extends AppCompatActivity implements DeepLi
     @Override
     public void onDeepLinkClick(int pos) {
         Intent intent = null;
-        switch (pos) {
+        switch (pos){
             case 0:
                 intent = new Intent(BusinessAppTipsActivity.this, Create_Message_Activity.class);
                 break;

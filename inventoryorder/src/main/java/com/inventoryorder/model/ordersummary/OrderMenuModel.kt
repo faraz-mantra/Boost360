@@ -8,8 +8,8 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
 class OrderMenuModel(
-  var type: String? = null,
-  var endLine: Boolean = true,
+    var type: String? = null,
+    var endLine: Boolean = true,
 ) : BaseResponse(), Serializable, AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
@@ -48,8 +48,7 @@ class OrderMenuModel(
     START_APPOINTMENT("Start Appointment", R.color.black_4a4a4a);
 
     companion object {
-      fun from(type: String?): MenuStatus? =
-        values().firstOrNull { it.name.equals(type, ignoreCase = true) }
+      fun from(type: String?): MenuStatus? = values().firstOrNull { it.name.equals(type, ignoreCase = true) }
     }
   }
 }

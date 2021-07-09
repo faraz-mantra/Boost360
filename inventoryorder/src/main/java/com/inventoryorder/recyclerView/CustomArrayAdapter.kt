@@ -13,8 +13,7 @@ import com.inventoryorder.model.spaAppointment.ServiceItem
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CustomArrayAdapter(context: Context, resource: Int, var list: ArrayList<ServiceItem>) :
-  ArrayAdapter<ServiceItem>(context, resource, list) {
+class CustomArrayAdapter(context: Context, resource: Int, var list: ArrayList<ServiceItem>) : ArrayAdapter<ServiceItem>(context, resource, list) {
 
   private var copyList: ArrayList<ServiceItem> = list
   private var filteredList: ArrayList<ServiceItem>? = null
@@ -37,8 +36,7 @@ class CustomArrayAdapter(context: Context, resource: Int, var list: ArrayList<Se
     }
     val serviceItem: ServiceItem = list[position]
     val customerNameLabel = v?.findViewById<View>(R.id.text_service) as? TextView
-    customerNameLabel?.text =
-      fromHtml("<b><color='#2a2a2a'>${serviceItem.Name}</color></b> <color='#adadad'>(${serviceItem.Currency}${serviceItem.DiscountedPrice} for ${serviceItem.Duration}min)</color>")
+    customerNameLabel?.text = fromHtml("<b><color='#2a2a2a'>${serviceItem.Name}</color></b> <color='#adadad'>(${serviceItem.Currency}${serviceItem.DiscountedPrice} for ${serviceItem.Duration}min)</color>")
     return v!!
   }
 
@@ -49,8 +47,7 @@ class CustomArrayAdapter(context: Context, resource: Int, var list: ArrayList<Se
   private var nameFilter: Filter = object : Filter() {
     override fun convertResultToString(resultValue: Any): String {
       val item = (resultValue as ServiceItem)
-      val res =
-        fromHtml("<b><color='#2a2a2a'>${item.Name}</color></b> <color='#adadad'>(${item.Currency}${item.DiscountedPrice} for ${item.Duration}min)</color>")
+      val res = fromHtml("<b><color='#2a2a2a'>${item.Name}</color></b> <color='#adadad'>(${item.Currency}${item.DiscountedPrice} for ${item.Duration}min)</color>")
       return res.toString()
     }
 
@@ -59,9 +56,7 @@ class CustomArrayAdapter(context: Context, resource: Int, var list: ArrayList<Se
       filteredList = ArrayList()
       if (searchString.isNotEmpty()) {
         for (item in copyList) {
-          if (item.Name?.toLowerCase(Locale.ROOT)
-              ?.contains(searchString.toString().toLowerCase(Locale.ROOT)) == true
-          ) {
+          if (item.Name?.toLowerCase(Locale.ROOT)?.contains(searchString.toString().toLowerCase(Locale.ROOT)) == true) {
             filteredList?.add(item)
           }
         }

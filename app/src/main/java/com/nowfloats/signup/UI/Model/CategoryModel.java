@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Admin on 03-07-2017.
  */
 
-public class CategoryModel implements Serializable {
+public class CategoryModel implements Serializable{
     public String Value;
     public String Key;
 

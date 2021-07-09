@@ -34,8 +34,7 @@ import kotlin.collections.ArrayList
 
 const val LAST_SEEN_TEXT = "Last Seen"
 
-class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, AddOnsViewModel>(),
-  RecyclerItemClickListener {
+class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, AddOnsViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
   private var searchView: SearchView? = null
@@ -75,17 +74,9 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
   private fun getBoostAddOnsData() {
     viewModel?.getBoostAddOns(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? ManageAddOnsBusinessResponse
-      val dataAction = response?.data?.firstOrNull { it1 ->
-        it1.type.equals(
-          session?.fP_AppExperienceCode,
-          ignoreCase = true
-        )
-      }
+      val dataAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
       if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
-        dataAction.actionItem?.forEach { it2 ->
-          it2.manageBusinessList =
-            ArrayList(it2.manageBusinessList?.filter { it3 -> !it3.isHide } ?: ArrayList())
-        }
+        dataAction.actionItem?.forEach { it2 -> it2.manageBusinessList = ArrayList(it2.manageBusinessList?.filter { it3 -> !it3.isHide } ?: ArrayList()) }
         dataAction.actionItem?.map { it2 ->
           it2.manageBusinessList?.map { it3 ->
             if (it3.premiumCode.isNullOrEmpty().not()) {
@@ -100,8 +91,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
         addOnsListFilter.addAll(list)
         if (adapterAddOns == null) {
           binding?.rvBoostAddOns?.apply {
-            adapterAddOns =
-              AppBaseRecyclerViewAdapter(baseActivity, list, this@AllBoostAddonsFragment)
+            adapterAddOns = AppBaseRecyclerViewAdapter(baseActivity, list, this@AllBoostAddonsFragment)
             adapter = adapterAddOns
           }
         } else adapterAddOns?.notify(list)
@@ -112,10 +102,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
 
   private fun setLastSeenData(data: ArrayList<AllBoostAddOnsData>): ArrayList<AllBoostAddOnsData> {
     val listAddOns = ManageBusinessData().getLastSeenData()
-    if (listAddOns.isNotEmpty()) data.add(
-      0,
-      AllBoostAddOnsData(title = LAST_SEEN_TEXT, manageBusinessList = listAddOns, isLastSeen = true)
-    )
+    if (listAddOns.isNotEmpty()) data.add(0, AllBoostAddOnsData(title = LAST_SEEN_TEXT, manageBusinessList = listAddOns, isLastSeen = true))
     return data
   }
 
@@ -126,9 +113,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
         ManageBusinessData().saveLastSeenData(data)
         ManageBusinessData.BusinessType.fromName(data.businessType)?.let {
           if (it == ManageBusinessData.BusinessType.domain_name_ssl) {
-            if (DomainDetailResponse().getDomainDetail() != null) baseActivity.startDomainDetail(
-              session
-            ) else getDomainDetail(true)
+            if (DomainDetailResponse().getDomainDetail() != null) baseActivity.startDomainDetail(session) else getDomainDetail(true)
 
           } else businessAddOnsClick(it, baseActivity, session)
         }
@@ -142,8 +127,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
     val searchItem = menu.findItem(R.id.menu_item_search)
     if (searchItem != null) {
       searchView = searchItem.actionView as SearchView
-      val searchAutoComplete =
-        searchView?.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
+      val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
       searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
       searchAutoComplete?.setTextColor(getColor(R.color.white))
       searchView?.setIconifiedByDefault(true)
@@ -166,30 +150,22 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       val list = ArrayList<ManageBusinessData>()
       addOnsListFilter.forEach { it0 ->
         if (it0.title.equals(LAST_SEEN_TEXT).not())
-          it0.manageBusinessList?.forEach {
-            if (it.title?.toLowerCase(Locale.ROOT)?.contains(query) == true) list.add(it)
-          }
+          it0.manageBusinessList?.forEach { if (it.title?.toLowerCase(Locale.ROOT)?.contains(query) == true) list.add(it) }
       }
       val listAddOns = ArrayList<AllBoostAddOnsData>()
-      if (list.isNotEmpty()) listAddOns.add(
-        AllBoostAddOnsData(
-          title = "Boost Add-ons",
-          manageBusinessList = list
-        )
-      )
+      if (list.isNotEmpty()) listAddOns.add(AllBoostAddOnsData(title = "Boost Add-ons", manageBusinessList = list))
       adapterAddOns?.notify(listAddOns)
     } else adapterAddOns?.notify(addOnsListFilter)
   }
 
   private fun getDomainDetail(isClick: Boolean = false) {
     if (isClick) showProgress()
-    viewModel?.getDomainDetailsForFloatingPoint(session?.fpTag, getDomainDetailsParam())
-      ?.observeOnce(viewLifecycleOwner, {
-        if (isClick) hideProgress()
-        val response = it as? DomainDetailResponse
-        if (response?.isSuccess() == true) response.saveDomainDetail()
-        if (isClick) baseActivity.startDomainDetail(session)
-      })
+    viewModel?.getDomainDetailsForFloatingPoint(session?.fpTag, getDomainDetailsParam())?.observeOnce(viewLifecycleOwner, {
+      if (isClick) hideProgress()
+      val response = it as? DomainDetailResponse
+      if (response?.isSuccess() == true) response.saveDomainDetail()
+      if (isClick) baseActivity.startDomainDetail(session)
+    })
   }
 
   private fun getDomainDetailsParam(): HashMap<String, String>? {
@@ -199,35 +175,18 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
   }
 }
 
-fun businessAddOnsClick(
-  type: ManageBusinessData.BusinessType,
-  baseActivity: AppCompatActivity,
-  session: UserSessionManager?
-) {
+fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: AppCompatActivity, session: UserSessionManager?) {
   when (type) {
     ManageBusinessData.BusinessType.ic_customer_call_d,
     ManageBusinessData.BusinessType.ic_customer_call_tracker_d,
     -> baseActivity.startVmnCallCard(session)
-    ManageBusinessData.BusinessType.ic_customer_enquiries_d -> baseActivity.startBusinessEnquiry(
-      session
-    )
-    ManageBusinessData.BusinessType.ic_daily_business_update_d -> session?.let {
-      baseActivity.startUpdateLatestStory(
-        it
-      )
-    }
+    ManageBusinessData.BusinessType.ic_customer_enquiries_d -> baseActivity.startBusinessEnquiry(session)
+    ManageBusinessData.BusinessType.ic_daily_business_update_d -> session?.let { baseActivity.startUpdateLatestStory(it) }
     ManageBusinessData.BusinessType.ic_product_cataloge_d,
     ManageBusinessData.BusinessType.ic_service_cataloge_d,
     -> baseActivity.startListServiceProduct(session)
-    ManageBusinessData.BusinessType.ic_customer_testimonial_d -> baseActivity.startTestimonial(
-      session,
-      false
-    )
-    ManageBusinessData.BusinessType.ic_business_keyboard_d -> session?.let {
-      baseActivity.startKeyboardActivity(
-        it
-      )
-    }
+    ManageBusinessData.BusinessType.ic_customer_testimonial_d -> baseActivity.startTestimonial(session, false)
+    ManageBusinessData.BusinessType.ic_business_keyboard_d -> session?.let { baseActivity.startKeyboardActivity(it) }
     ManageBusinessData.BusinessType.clinic_logo -> baseActivity.startBusinessLogo(session)
     ManageBusinessData.BusinessType.featured_image_video -> baseActivity.startFeatureLogo(session)
     ManageBusinessData.BusinessType.business_hours -> baseActivity.startBusinessHours(session)
@@ -235,71 +194,35 @@ fun businessAddOnsClick(
     ManageBusinessData.BusinessType.faculty_profiles_d,
     -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
     ManageBusinessData.BusinessType.contact_details -> baseActivity.startBusinessInfoEmail(session)
-    ManageBusinessData.BusinessType.content_sync_acros_channels -> session?.let {
-      baseActivity.startDigitalChannel(
-        it
-      )
-    }
-    ManageBusinessData.BusinessType.ic_custom_page_add -> baseActivity.startCustomPage(
-      session,
-      false
-    )
-    ManageBusinessData.BusinessType.in_clinic_appointments -> baseActivity.startOrderAptConsultList(
-      session,
-      isConsult = false
-    )
+    ManageBusinessData.BusinessType.content_sync_acros_channels -> session?.let { baseActivity.startDigitalChannel(it) }
+    ManageBusinessData.BusinessType.ic_custom_page_add -> baseActivity.startCustomPage(session, false)
+    ManageBusinessData.BusinessType.in_clinic_appointments -> baseActivity.startOrderAptConsultList(session, isConsult = false)
     ManageBusinessData.BusinessType.customer_order_d,
     ManageBusinessData.BusinessType.customer_booking_d,
     -> baseActivity.startOrderAptConsultList(session, isOrder = true)
-    ManageBusinessData.BusinessType.video_consultations -> baseActivity.startOrderAptConsultList(
-      session,
-      isConsult = true
-    )
+    ManageBusinessData.BusinessType.video_consultations -> baseActivity.startOrderAptConsultList(session, isConsult = true)
     ManageBusinessData.BusinessType.newsletter_subscription -> baseActivity.startSubscriber(session)
     ManageBusinessData.BusinessType.picture_gallery,
     ManageBusinessData.BusinessType.client_logos_d,
     -> baseActivity.startAddImageGallery(session, false)
-    ManageBusinessData.BusinessType.ria_digital_assistant -> session?.let {
-      baseActivity.startHelpAndSupportActivity(
-        it
-      )
-    }
-    ManageBusinessData.BusinessType.custom_payment_gateway -> baseActivity.startSelfBrandedGateway(
-      session
-    )
-    ManageBusinessData.BusinessType.business_kyc_verification -> baseActivity.startBusinessKycBoost(
-      session
-    )
+    ManageBusinessData.BusinessType.ria_digital_assistant -> session?.let { baseActivity.startHelpAndSupportActivity(it) }
+    ManageBusinessData.BusinessType.custom_payment_gateway -> baseActivity.startSelfBrandedGateway(session)
+    ManageBusinessData.BusinessType.business_kyc_verification -> baseActivity.startBusinessKycBoost(session)
     ManageBusinessData.BusinessType.my_bank_account -> baseActivity.startMyBankAccount(session)
-    ManageBusinessData.BusinessType.ic_digital_brochures -> baseActivity.startListDigitalBrochure(
-      session
-    )
+    ManageBusinessData.BusinessType.ic_digital_brochures -> baseActivity.startListDigitalBrochure(session)
     ManageBusinessData.BusinessType.places_look_around_d -> baseActivity.startNearByView(session)
-    ManageBusinessData.BusinessType.trip_advisor_reviews_d -> baseActivity.startListTripAdvisor(
-      session
-    )
+    ManageBusinessData.BusinessType.trip_advisor_reviews_d -> baseActivity.startListTripAdvisor(session)
     ManageBusinessData.BusinessType.team_page_d -> baseActivity.startListProjectAndTeams(session)
     ManageBusinessData.BusinessType.upcoming_batches_d -> baseActivity.startListBatches(session)
     ManageBusinessData.BusinessType.toppers_institute_d -> baseActivity.startListToppers(session)
-    ManageBusinessData.BusinessType.website_visits_visitors -> baseActivity.startSiteViewAnalytic(
-      session,
-      "TOTAL",
-      WEBSITE_REPORT_ALL_VISITS_CLICK
-    )
+    ManageBusinessData.BusinessType.website_visits_visitors -> baseActivity.startSiteViewAnalytic(session, "TOTAL", WEBSITE_REPORT_ALL_VISITS_CLICK)
     ManageBusinessData.BusinessType.business_name_d,
     ManageBusinessData.BusinessType.clinic_basic_info,
     ManageBusinessData.BusinessType.business_description_d,
     -> baseActivity.startBusinessProfileDetailEdit(session)
-    ManageBusinessData.BusinessType.ic_my_business_faqs -> baseActivity.startMobileSite(
-      session,
-      "https://www.getboost360.com/faqs/"
-    )
-    ManageBusinessData.BusinessType.website_social_share_plugin -> baseActivity.startBoostExtension(
-      session
-    )
-    ManageBusinessData.BusinessType.project_portfolio_d -> baseActivity.startListProjectAndTeams(
-      session
-    )
+    ManageBusinessData.BusinessType.ic_my_business_faqs -> baseActivity.startMobileSite(session, "https://www.getboost360.com/faqs/")
+    ManageBusinessData.BusinessType.website_social_share_plugin -> baseActivity.startBoostExtension(session)
+    ManageBusinessData.BusinessType.project_portfolio_d -> baseActivity.startListProjectAndTeams(session)
     ManageBusinessData.BusinessType.table_reservations_d -> baseActivity.startBookTable(session)
     ManageBusinessData.BusinessType.sales_analytics -> baseActivity.startAptOrderSummary(session)
     ManageBusinessData.BusinessType.search_analytics -> baseActivity.startSearchQuery(session)
@@ -327,11 +250,7 @@ fun businessAddOnsClick(
     ManageBusinessData.BusinessType.membership_plans,
     ManageBusinessData.BusinessType.restaurant_story_d,
     -> {
-      Toast.makeText(
-        baseActivity,
-        AppDashboardApplication.instance.getString(R.string.coming_soon),
-        Toast.LENGTH_SHORT
-      ).show()
+      Toast.makeText(baseActivity, AppDashboardApplication.instance.getString(R.string.coming_soon), Toast.LENGTH_SHORT).show()
     }
   }
 }

@@ -25,13 +25,11 @@
       android:orientation="vertical"
       android:paddingTop="@dimen/size_10">
 
-      <com.airbnb.lottie.LottieAnimationView
+      <com.framework.views.customViews.CustomImageView
         android:layout_width="@dimen/size_70"
         android:layout_height="@dimen/size_70"
         android:layout_gravity="center_horizontal"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/green_success" />
+        android:src="@drawable/ic_success" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/txt_message"
@@ -144,7 +142,6 @@
           android:layout_height="@dimen/size_36"
           android:layout_marginStart="@dimen/size_4"
           android:padding="@dimen/size_3"
-          android:visibility="gone"
           app:srcCompat="@drawable/ic_facebook_service" />
 
 

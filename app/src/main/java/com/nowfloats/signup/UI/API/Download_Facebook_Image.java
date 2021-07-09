@@ -48,6 +48,7 @@ public class Download_Facebook_Image extends AsyncTask<String, Void, Bitmap> {
         }
 
 
+
         return bitmap;
     }
 
@@ -56,8 +57,8 @@ public class Download_Facebook_Image extends AsyncTask<String, Void, Bitmap> {
         // Set the bitmap into ImageView
         //image.setImageBitmap(result);
         // Close progressdialog
-        // mProgressDialog.dismiss();
-        if (!Util.isNullOrEmpty(mFpId)) {
+       // mProgressDialog.dismiss();
+        if(!Util.isNullOrEmpty(mFpId)) {
             uploadFeaturedImage_Facebook uploadFacebookImage = new uploadFeaturedImage_Facebook(result, mFpId);
             uploadFacebookImage.execute();
         }

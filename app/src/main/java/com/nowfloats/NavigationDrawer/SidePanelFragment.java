@@ -631,7 +631,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //About Boost Event Trigger
-                WebEngageController.trackEvent(CLICKED_ON_REFER_A_FRIEND, BUTTON, CLICKED);
+                WebEngageController.trackEvent(CLICKED_ON_REFER_A_FRIEND , BUTTON, CLICKED);
 
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.referrals_button));
 //                String name = session.getUserProfileName();

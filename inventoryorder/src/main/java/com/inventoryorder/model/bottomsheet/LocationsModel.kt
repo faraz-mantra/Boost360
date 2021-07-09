@@ -4,10 +4,9 @@ import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 
-class LocationsModel(
-  val serviceOptionSelectedIcon: Int? = null,
-  val serviceOptionSelectedName: String? = null,
-  var isSelected: Boolean = false
+class LocationsModel(val serviceOptionSelectedIcon: Int? = null,
+                     val serviceOptionSelectedName: String? = null,
+                     var isSelected: Boolean = false
 ) : AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {

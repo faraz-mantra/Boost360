@@ -10,8 +10,7 @@ package com.android.volley.tests;
 public final class R {
     public static final class attr {
     }
-
     public static final class raw {
-        public static final int large_jpeg_1024_500 = 0x7f020000;
+        public static final int large_jpeg_1024_500=0x7f020000;
     }
 }

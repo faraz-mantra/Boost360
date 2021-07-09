@@ -12,7 +12,8 @@ import com.nowfloats.webactions.WebAction;
 import com.nowfloats.webactions.models.ProductImage;
 import com.nowfloats.webactions.models.WebActionError;
 
-public class MultipleFileUpload extends AsyncTask<Void, String, String> {
+public class MultipleFileUpload extends AsyncTask<Void, String, String>
+{
     private String TAG = MultipleFileUpload.class.getSimpleName();
 
     private String productId;
@@ -20,7 +21,8 @@ public class MultipleFileUpload extends AsyncTask<Void, String, String> {
     private WebAction mWebAction;
     private ProductImage image;
 
-    public MultipleFileUpload(String productId, UserSessionManager session, WebAction webAction, ProductImage image) {
+    public MultipleFileUpload(String productId, UserSessionManager session, WebAction webAction, ProductImage image)
+    {
         this.productId = productId;
         this.session = session;
         this.mWebAction = webAction;
@@ -28,42 +30,50 @@ public class MultipleFileUpload extends AsyncTask<Void, String, String> {
     }
 
     @Override
-    protected void onPreExecute() {
+    protected void onPreExecute()
+    {
         super.onPreExecute();
         Log.d(TAG, "onPreExecute");
     }
 
     @Override
-    protected String doInBackground(Void... strings) {
+    protected String doInBackground(Void... strings)
+    {
         uploadFile(image);
         return null;
     }
 
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(String result)
+    {
         super.onPostExecute(result);
         Log.d(TAG, "onPostExecute");
     }
 
-    private void uploadFile(final ProductImage image) {
+    private void uploadFile(final ProductImage image)
+    {
         mWebAction.uploadFile(image.url, new WebAction.WebActionCallback<String>() {
 
             @Override
-            public void onSuccess(String result) {
+            public void onSuccess(String result)
+            {
                 Log.d(TAG, "Result: " + result);
                 addImageData(result, image);
             }
 
             @Override
-            public void onFailure(WebActionError error) {
+            public void onFailure(WebActionError error)
+            {
                 Log.d(TAG, "Fail: Image Upload Fail");
             }
         }, new Handler(Looper.getMainLooper()));
     }
 
 
-    private void addImageData(final String result, final ProductImage image) {
-        if (!TextUtils.isEmpty(result)) {
+    private void addImageData(final String result, final ProductImage image)
+    {
+        if (!TextUtils.isEmpty(result))
+        {
             final ProductImageRequestModel productImageRequestModel = new ProductImageRequestModel();
             productImageRequestModel._pid = productId;
             productImageRequestModel.image = new ProductImage(result, image.description != null ? image.description : "");
@@ -77,7 +87,8 @@ public class MultipleFileUpload extends AsyncTask<Void, String, String> {
                 }
 
                 @Override
-                public void onFailure(WebActionError error) {
+                public void onFailure(WebActionError error)
+                {
                     Log.d(TAG, "IMAGE RESPONSE FAIL");
                 }
             });

@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/image_preview_popup_outer_layout"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="#1d000000"
-  android:clickable="true"
-  android:focusable="true"
-  android:orientation="vertical">
-
-  <androidx.viewpager2.widget.ViewPager2
-    android:id="@+id/preview_pager"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/image_preview_popup_outer_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true" />
+    android:layout_height="match_parent"
+    android:background="#1d000000"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/preview_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
 
 
-  <!--    <ImageView-->
-  <!--        android:id="@+id/preview_left"-->
-  <!--        android:layout_width="@dimen/_60sdp"-->
-  <!--        android:layout_height="@dimen/_60sdp"-->
-  <!--        android:padding="@dimen/_10sdp"-->
-  <!--        android:src="@drawable/arrow_white"-->
-  <!--        android:layout_centerVertical="true"/>-->
+<!--    <ImageView-->
+<!--        android:id="@+id/preview_left"-->
+<!--        android:layout_width="@dimen/_60sdp"-->
+<!--        android:layout_height="@dimen/_60sdp"-->
+<!--        android:padding="@dimen/_10sdp"-->
+<!--        android:src="@drawable/arrow_white"-->
+<!--        android:layout_centerVertical="true"/>-->
 
-  <!--    <ImageView-->
-  <!--        android:id="@+id/preview_right"-->
-  <!--        android:layout_width="@dimen/_60sdp"-->
-  <!--        android:layout_height="@dimen/_60sdp"-->
-  <!--        android:padding="@dimen/_10sdp"-->
-  <!--        android:src="@drawable/ic_arrow_right_white"-->
-  <!--        android:layout_centerVertical="true"-->
-  <!--        android:layout_alignParentEnd="true"/>-->
+<!--    <ImageView-->
+<!--        android:id="@+id/preview_right"-->
+<!--        android:layout_width="@dimen/_60sdp"-->
+<!--        android:layout_height="@dimen/_60sdp"-->
+<!--        android:padding="@dimen/_10sdp"-->
+<!--        android:src="@drawable/ic_arrow_right_white"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_alignParentEnd="true"/>-->
 
 
-  <TextView
-    android:id="@+id/preview_current_position"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fontFamily="@font/open_sans_semibold"
-    android:gravity="center"
-    android:text="1/1"
-    android:textColor="@color/white"
-    android:textSize="@dimen/_15sdp" />
+    <TextView
+        android:id="@+id/preview_current_position"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_semibold"
+        android:gravity="center"
+        android:text="1/1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15sdp" />
 
 
 </RelativeLayout>

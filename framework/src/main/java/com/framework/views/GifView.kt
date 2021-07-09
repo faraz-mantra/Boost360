@@ -12,11 +12,7 @@ import com.framework.R
 /**
  * Gifview
  */
-class GifView @JvmOverloads constructor(
-  context: Context,
-  attrs: AttributeSet? = null,
-  defStyle: Int = R.styleable.CustomTheme_gifViewStyle
-) : View(context, attrs, defStyle) {
+class GifView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = R.styleable.CustomTheme_gifViewStyle) : View(context, attrs, defStyle) {
 
   private var movieMovieResourceId: Int = 0
   private var movie: Movie? = null
@@ -54,8 +50,7 @@ class GifView @JvmOverloads constructor(
   private fun setViewAttributes(context: Context, attrs: AttributeSet?, defStyle: Int) {
     setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 
-    val array =
-      context.obtainStyledAttributes(attrs, R.styleable.GifView, defStyle, R.style.Widget_GifView)
+    val array = context.obtainStyledAttributes(attrs, R.styleable.GifView, defStyle, R.style.Widget_GifView)
 
     //-1 is default value
     movieMovieResourceId = array.getResourceId(R.styleable.GifView_gif, -1)

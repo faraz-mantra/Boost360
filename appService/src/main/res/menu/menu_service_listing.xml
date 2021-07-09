@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <item
-    android:id="@+id/action_search"
-    android:icon="@drawable/ic_group_search_service"
-    android:title="Search"
-    app:actionViewClass="androidx.appcompat.widget.SearchView"
-    app:showAsAction="always|collapseActionView" />
-  <!--    <item-->
-  <!--        android:icon="@drawable/ic_service_configuration"-->
-  <!--        android:title="Item"-->
-  <!--        android:id="@+id/action_service_configuration"-->
-  <!--        app:showAsAction="always" />-->
-  <!--    <item-->
-  <!--        android:icon="@drawable/ic_menu_dotted"-->
-  <!--        android:title="More"-->
-  <!--        android:id="@+id/action_more"-->
-  <!--        app:showAsAction="always" />-->
+    <item
+        android:id="@+id/action_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:icon="@drawable/ic_group_search_service"
+        android:title="Search"
+        app:showAsAction="always|collapseActionView" />
+<!--    <item-->
+<!--        android:icon="@drawable/ic_service_configuration"-->
+<!--        android:title="Item"-->
+<!--        android:id="@+id/action_service_configuration"-->
+<!--        app:showAsAction="always" />-->
+<!--    <item-->
+<!--        android:icon="@drawable/ic_menu_dotted"-->
+<!--        android:title="More"-->
+<!--        android:id="@+id/action_more"-->
+<!--        app:showAsAction="always" />-->
 </menu>

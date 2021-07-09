@@ -20,98 +20,98 @@ enum class ApiStatus { LOADING, ERROR, DONE }
 
 open class BaseViewModel(application: Application) : AndroidViewModel(application) {
 
-  // The internal MutableLiveData that stores the status of the most recent request
-  protected val _isError = MutableLiveData<Boolean>()
+    // The internal MutableLiveData that stores the status of the most recent request
+    protected val _isError = MutableLiveData<Boolean>()
 
-  // The external immutable LiveData for the request status
-  val isError: LiveData<Boolean>
-    get() = _isError
+    // The external immutable LiveData for the request status
+    val isError: LiveData<Boolean>
+        get() = _isError
 
-  // The external immutable LiveData for the request status
-  lateinit var errorMessage: String
+    // The external immutable LiveData for the request status
+    lateinit var errorMessage: String
 
-  // The external immutable LiveData for the request status
-  lateinit var successMessage: String
+    // The external immutable LiveData for the request status
+    lateinit var successMessage: String
 
-  // The internal MutableLiveData that stores the status of the most recent request
-  protected val _apiStatus = MutableLiveData<ApiStatus>()
-
-
-  // The external immutable LiveData for the request status
-  val apiStatus: LiveData<ApiStatus>
-    get() = _apiStatus
+    // The internal MutableLiveData that stores the status of the most recent request
+    protected val _apiStatus = MutableLiveData<ApiStatus>()
 
 
-  /***************************************** Job and  Coroutine ***********************************************/
-
-  // Create a Coroutine scope using a job to be able to cancel when needed
-  private var viewModelJob = Job()
-
-  // the Coroutine runs using the Main (UI) dispatcher
-  protected val coroutineScope = CoroutineScope(Dispatchers.IO + viewModelJob)
+    // The external immutable LiveData for the request status
+    val apiStatus: LiveData<ApiStatus>
+        get() = _apiStatus
 
 
-  override fun onCleared() {
-    super.onCleared()
-    viewModelJob.cancel()
-  }
 
-  /**
-   * Set default error status
-   *
-   */
-  fun clearError() {
-    _isError.postValue(false)
-    errorMessage = ""
-  }
+    /***************************************** Job and  Coroutine ***********************************************/
 
-  /**
-   * Set default error status
-   *
-   */
-  fun clearApiStatus() {
-    _apiStatus.postValue(null)
-    errorMessage = ""
-  }
+    // Create a Coroutine scope using a job to be able to cancel when needed
+    private var viewModelJob = Job()
 
-  protected fun handleNetworkException(e: Exception) {
-    when (e) {
-      is HttpException -> {
+    // the Coroutine runs using the Main (UI) dispatcher
+    protected val coroutineScope = CoroutineScope(Dispatchers.IO + viewModelJob)
+
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
+    /**
+     * Set default error status
+     *
+     */
+    fun clearError() {
+        _isError.postValue(false)
+        errorMessage = ""
+    }
+
+    /**
+     * Set default error status
+     *
+     */
+    fun clearApiStatus() {
+        _apiStatus.postValue(null)
+        errorMessage = ""
+    }
+
+    protected fun handleNetworkException(e: Exception) {
+        when (e) {
+            is HttpException -> {
 //                parseError(e.response()!!.errorBody()?.string())
-        parseError(e.response()!!.errorBody()?.toString())
-      }
-      is ConnectException -> {
-        errorMessage = getApplication<Application>().getString(R.string.no_internet)
-        _apiStatus.postValue(ApiStatus.ERROR)
-      }
-      else -> {
-        errorMessage = getApplication<Application>().getString(R.string.exception)
-        _apiStatus.postValue(ApiStatus.ERROR)
-      }
+                parseError(e.response()!!.errorBody()?.toString())
+            }
+            is ConnectException -> {
+                errorMessage = getApplication<Application>().getString(R.string.no_internet)
+                _apiStatus.postValue(ApiStatus.ERROR)
+            }
+            else -> {
+                errorMessage = getApplication<Application>().getString(R.string.exception)
+                _apiStatus.postValue(ApiStatus.ERROR)
+            }
+        }
     }
-  }
 
-  private fun parseError(errorString: String?) {
-    try {
-      val message = JsonParser().parse(errorString)
-        .asJsonObject["message"]
-        .asString
-      errorMessage = message
-      _apiStatus.postValue(ApiStatus.ERROR)
-    } catch (e: Exception) {
-      Log.i("parseError >>>>", e.toString())
+    private fun parseError(errorString: String?) {
+        try {
+            val message = JsonParser().parse(errorString)
+                .asJsonObject["message"]
+                .asString
+            errorMessage = message
+            _apiStatus.postValue(ApiStatus.ERROR)
+        } catch (e: Exception) {
+            Log.i("parseError >>>>",e.toString())
+        }
     }
-  }
+    fun isValidPassword(password: String): Boolean {
 
-  fun isValidPassword(password: String): Boolean {
+        val pattern: Pattern
+        val matcher: Matcher
+        val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$)$"
+        pattern = Pattern.compile(PASSWORD_PATTERN)
+        matcher = pattern.matcher(password)
 
-    val pattern: Pattern
-    val matcher: Matcher
-    val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$)$"
-    pattern = Pattern.compile(PASSWORD_PATTERN)
-    matcher = pattern.matcher(password)
+        return matcher.matches()
 
-    return matcher.matches()
-
-  }
+    }
 }

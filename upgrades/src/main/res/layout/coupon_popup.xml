@@ -1,106 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/coupon_popup_outer_layout"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="#1d000000"
-  android:clickable="true"
-  android:focusable="true"
-  android:orientation="vertical">
-
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/enter_coupon_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/curve_top_bg"
-    android:paddingStart="@dimen/_15sdp"
-    android:paddingTop="@dimen/_10sdp"
-    android:paddingEnd="@dimen/_15sdp"
-    android:paddingBottom="@dimen/_10sdp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
+    android:layout_height="match_parent"
+    android:background="#1d000000"
+    android:id="@+id/coupon_popup_outer_layout"
+    android:clickable="true"
+    android:focusable="true">
 
-    <TextView
-      android:id="@+id/coupon_layout_title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:fontFamily="@font/open_sans_semibold"
-      android:paddingTop="@dimen/_5sdp"
-      android:paddingEnd="@dimen/_5sdp"
-      android:paddingBottom="@dimen/_15sdp"
-      android:text="Have a coupon code?"
-      android:textColor="@color/common_text_color"
-      android:textSize="@dimen/_15sdp"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/enter_coupon_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/curve_top_bg"
+        android:paddingStart="@dimen/_15sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_15sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <EditText
-      android:id="@+id/entered_coupon_value"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@drawable/edittext_bottom_line_bg"
-      android:focusable="true"
-      android:hint="Type coupon code here"
-      android:imeOptions="actionDone"
-      android:inputType="textCapCharacters"
-      android:paddingBottom="@dimen/_5sdp"
-      android:textColorHint="#bbbbbb"
-      android:textCursorDrawable="@drawable/color_cursor"
-      android:textSize="@dimen/_12sdp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/coupon_layout_title" />
+        <TextView
+            android:id="@+id/coupon_layout_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Have a coupon code?"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_15sdp"
+            android:textColor="@color/common_text_color"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-      android:id="@+id/coupon_description"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/_10sdp"
-      android:paddingEnd="@dimen/_10sdp"
-      android:text="This section is only for coupons only. Gifts &amp; e-Vouchers need to be selected as a payment method on ‘Select Payment method’’ screen."
-      android:textColor="#747474"
-      android:textSize="@dimen/_8sdp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/entered_coupon_value" />
+        <EditText
+            android:id="@+id/entered_coupon_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type coupon code here"
+            android:paddingBottom="@dimen/_5sdp"
+            android:focusable="true"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:background="@drawable/edittext_bottom_line_bg"
+            android:inputType="textCapCharacters"
+            android:textSize="@dimen/_12sdp"
+            android:textColorHint="#bbbbbb"
+            android:imeOptions="actionDone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/coupon_layout_title" />
 
-    <TextView
-      android:id="@+id/coupon_invalid"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:drawableRight="@drawable/ic_error_status_icon"
-      android:drawablePadding="@dimen/_5sdp"
-      android:fontFamily="@font/open_sans_semibold"
-      android:text="Coupon code invalid"
-      android:textColor="#f24747"
-      android:textSize="@dimen/_8sdp"
-      android:visibility="gone"
-      app:layout_constraintBottom_toBottomOf="@id/entered_coupon_value"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="@id/entered_coupon_value"
-      tools:visibility="visible" />
+        <TextView
+            android:id="@+id/coupon_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:text="This section is only for coupons only. Gifts &amp; e-Vouchers need to be selected as a payment method on ‘Select Payment method’’ screen."
+            android:textColor="#747474"
+            android:textSize="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/entered_coupon_value" />
 
-    <TextView
-      android:id="@+id/coupon_submit"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/_30sdp"
-      android:background="@drawable/orange_button_click_effect"
-      android:fontFamily="@font/open_sans_semibold"
-      android:gravity="center"
-      android:paddingTop="@dimen/_10sdp"
-      android:paddingBottom="@dimen/_10sdp"
-      android:text="Apply Code"
-      android:textAllCaps="true"
-      android:textColor="@color/white"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/coupon_description" />
+        <TextView
+            android:id="@+id/coupon_invalid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/entered_coupon_value"
+            app:layout_constraintBottom_toBottomOf="@id/entered_coupon_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Coupon code invalid"
+            android:textColor="#f24747"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textSize="@dimen/_8sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:drawableRight="@drawable/ic_error_status_icon"/>
+
+        <TextView
+            android:id="@+id/coupon_submit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@drawable/orange_button_click_effect"
+            android:fontFamily="@font/open_sans_semibold"
+            android:gravity="center"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:text="Apply Code"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/coupon_description" />
 
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

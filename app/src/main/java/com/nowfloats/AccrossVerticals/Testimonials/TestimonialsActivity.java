@@ -45,7 +45,6 @@ import retrofit.converter.GsonConverter;
 
 public class TestimonialsActivity extends AppCompatActivity implements TestimonialsListener {
 
-    public static List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
     TextView addTestimonialsButton;
     ProgressDialog vmnProgressBar;
     List<TestimonialData> dataList = new ArrayList<>();
@@ -54,6 +53,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     TextView title;
     private String headerToken = "59c89bbb5d64370a04c9aea1";
     private String testimonialType = "testimonials";
+    public static List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
     private LinearLayout mainLayout, secondaryLayout;
     private com.framework.pref.UserSessionManager session;
     private TestimonialsAdapter testimonialsAdapter;
@@ -254,7 +254,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         } else {
             subDomain = "all-services";
         }
-        ContentSharing.Companion.shareTestimonial(this, data.getDescription(), data.getUsername(), session.getRootAliasURI() + "/testimonials", session.getRootAliasURI() + "/" + subDomain, session.getFPPrimaryContactNumber(), false);
+        ContentSharing.Companion.shareTestimonial(this,data.getDescription(), data.getUsername(), session.getRootAliasURI() + "/testimonials", session.getRootAliasURI() + "/"+subDomain, session.getFPPrimaryContactNumber(), false);
     }
 
     void updateRecyclerMenuOption(int pos, boolean status) {

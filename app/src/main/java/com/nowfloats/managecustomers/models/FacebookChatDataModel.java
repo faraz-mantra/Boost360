@@ -157,7 +157,6 @@ public class FacebookChatDataModel {
         }
 
     }
-
     public static class UserData {
 
         @SerializedName("id")

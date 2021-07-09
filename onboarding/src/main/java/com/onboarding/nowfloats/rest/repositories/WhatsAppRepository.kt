@@ -16,21 +16,12 @@ object WhatsAppRepository : AppBaseRepository<WebActionRemoteDataSource, AppBase
     return WebActionRemoteDataSource::class.java
   }
 
-  fun postUpdateWhatsappRequest(
-    request: UpdateChannelActionDataRequest,
-    auth: String
-  ): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.updateWhatsAppNumber(auth = auth, request = request),
-      Taskcode.POST_CREATE_BUSINESS_WHATSAPP
-    )
+  fun postUpdateWhatsappRequest(request: UpdateChannelActionDataRequest, auth: String): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.updateWhatsAppNumber(auth = auth, request = request), Taskcode.POST_CREATE_BUSINESS_WHATSAPP)
   }
 
   fun getWhatsappBusiness(request: String?, auth: String): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.getWhatsAppBusiness(auth = auth, request = request),
-      Taskcode.GET_BUSINESS_WHATSAPP
-    )
+    return makeRemoteRequest(remoteDataSource.getWhatsAppBusiness(auth = auth, request = request), Taskcode.GET_BUSINESS_WHATSAPP)
   }
 
   override fun getApiClient(): Retrofit {

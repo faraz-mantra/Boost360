@@ -26,9 +26,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.os.Handler;
-
 import androidx.annotation.NonNull;
-
 import android.util.SparseArray;
 
 import com.android.inputmethod.keyboard.PointerTracker;
@@ -40,15 +38,16 @@ public final class GestureTrailsDrawingPreview extends AbstractDrawingPreview im
     private final SparseArray<GestureTrailDrawingPoints> mGestureTrails = new SparseArray<>();
     private final GestureTrailDrawingParams mDrawingParams;
     private final Paint mGesturePaint;
-    private final Canvas mOffscreenCanvas = new Canvas();
-    private final Rect mOffscreenSrcRect = new Rect();
-    private final Rect mDirtyRect = new Rect();
-    private final Rect mGestureTrailBoundsRect = new Rect(); // per trail
-    private final Handler mDrawingHandler = new Handler();
     private int mOffscreenWidth;
     private int mOffscreenHeight;
     private int mOffscreenOffsetY;
     private Bitmap mOffscreenBuffer;
+    private final Canvas mOffscreenCanvas = new Canvas();
+    private final Rect mOffscreenSrcRect = new Rect();
+    private final Rect mDirtyRect = new Rect();
+    private final Rect mGestureTrailBoundsRect = new Rect(); // per trail
+
+    private final Handler mDrawingHandler = new Handler();
 
     public GestureTrailsDrawingPreview(final TypedArray mainKeyboardViewAttr) {
         mDrawingParams = new GestureTrailDrawingParams(mainKeyboardViewAttr);
@@ -62,7 +61,7 @@ public final class GestureTrailsDrawingPreview extends AbstractDrawingPreview im
     public void setKeyboardViewGeometry(@NonNull final int[] originCoords, final int width,
                                         final int height) {
         super.setKeyboardViewGeometry(originCoords, width, height);
-        mOffscreenOffsetY = (int) (height
+        mOffscreenOffsetY = (int)(height
                 * GestureStrokeRecognitionPoints.EXTRA_GESTURE_TRAIL_AREA_ABOVE_KEYBOARD_RATIO);
         mOffscreenWidth = width;
         mOffscreenHeight = mOffscreenOffsetY + height;
@@ -110,7 +109,7 @@ public final class GestureTrailsDrawingPreview extends AbstractDrawingPreview im
             final int trailsCount = mGestureTrails.size();
             for (int index = 0; index < trailsCount; index++) {
                 final GestureTrailDrawingPoints trail = mGestureTrails.valueAt(index);
-                needsUpdatingGestureTrail |= trail.drawGestureTrail(context, offscreenCanvas, paint,
+                needsUpdatingGestureTrail |= trail.drawGestureTrail(context,offscreenCanvas, paint,
                         mGestureTrailBoundsRect, mDrawingParams);
                 // {@link #mGestureTrailBoundsRect} has bounding box of the trail.
                 dirtyRect.union(mGestureTrailBoundsRect);
@@ -127,9 +126,8 @@ public final class GestureTrailsDrawingPreview extends AbstractDrawingPreview im
 
     /**
      * Draws the preview
-     *
      * @param context
-     * @param canvas  The canvas where the preview is drawn.
+     * @param canvas The canvas where the preview is drawn.
      */
     @Override
     public void drawPreview(Context context, @NonNull final Canvas canvas) {
@@ -156,7 +154,6 @@ public final class GestureTrailsDrawingPreview extends AbstractDrawingPreview im
 
     /**
      * Set the position of the preview.
-     *
      * @param tracker The new location of the preview is based on the points in PointerTracker.
      */
     @Override

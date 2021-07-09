@@ -24,7 +24,7 @@ public final class TypingTimeRecorder {
     private long mLastBatchInputTime;
 
     public TypingTimeRecorder(final int staticTimeThresholdAfterFastTyping,
-                              final int suppressKeyPreviewAfterBatchInputDuration) {
+            final int suppressKeyPreviewAfterBatchInputDuration) {
         mStaticTimeThresholdAfterFastTyping = staticTimeThresholdAfterFastTyping;
         mSuppressKeyPreviewAfterBatchInputDuration = suppressKeyPreviewAfterBatchInputDuration;
     }

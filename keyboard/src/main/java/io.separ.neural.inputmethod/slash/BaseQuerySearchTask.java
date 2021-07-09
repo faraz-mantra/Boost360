@@ -11,20 +11,13 @@ import java.util.List;
  */
 
 public abstract class BaseQuerySearchTask extends Task {
-    private final String query;
-    private final String service;
     private String authorizedStatus;
     private List<RSearchItem> items;
     private volatile boolean mCanceled;
     private boolean mItemsSetCalled;
     private boolean networkError;
-
-    public BaseQuerySearchTask(String service, String query) {
-        this.mItemsSetCalled = false;
-        this.service = service;
-        this.query = query;
-        this.items = new ArrayList();
-    }
+    private final String query;
+    private final String service;
 
     public boolean isNetworkError() {
         return this.networkError;
@@ -32,6 +25,13 @@ public abstract class BaseQuerySearchTask extends Task {
 
     public void setNetworkError(boolean networkError) {
         this.networkError = networkError;
+    }
+
+    public BaseQuerySearchTask(String service, String query) {
+        this.mItemsSetCalled = false;
+        this.service = service;
+        this.query = query;
+        this.items = new ArrayList();
     }
 
     public String getService() {
@@ -50,7 +50,7 @@ public abstract class BaseQuerySearchTask extends Task {
         this.mItemsSetCalled = true;
         this.items = items;
         this.authorizedStatus = authorizedStatus;
-        for (RSearchItem i : items) {
+        for(RSearchItem i : items){
             i.setPreviewUrl(i.getUrl());
         }
     }

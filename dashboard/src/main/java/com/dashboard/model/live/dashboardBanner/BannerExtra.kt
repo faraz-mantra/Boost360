@@ -11,4 +11,4 @@ data class BannerExtra(
   var pageSize: Int? = null,
   @SerializedName("TotalCount")
   var totalCount: Int? = null
-) : Serializable
+): Serializable

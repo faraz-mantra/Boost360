@@ -22,19 +22,16 @@ public interface WildFireApis {
     String WILD_FIRE_END_POINT = "http://wmt.withfloats.com/wildfire/api";
     RestAdapter adapter = new RestAdapter.Builder().setEndpoint(WILD_FIRE_END_POINT)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
 
-    @GET("/v1/account/keywordstats")
-// google keywords data
+    @GET("/v1/account/keywordstats")// google keywords data
     void getGoogleStats(@QueryMap Map map, Callback<ArrayList<WildFireKeyStatsModel>> response);
 
     //@GET("/WildFire/v1/account/detailswithexternalsourceid/{sourceId}")
     @GET("/v1/account/detailswithexternalsourceid/{sourceId}")
     void getWildFireData(@Path("sourceId") String sourceId, @Query("clientId") String clientId, Callback<WildFireDataModel> response);
 
-    @GET("/v1/account/wildfirechanneltype")
-// ads enabled channel types
+    @GET("/v1/account/wildfirechanneltype")// ads enabled channel types
     void getWildFireChannels(@Query("clientId") String clientId, @Query("wfId") String accountId, Callback<ArrayList<String>> response);
 
-    @GET("/v2/account/facebookadStats")
-        // facebook keywords data
+    @GET("/v2/account/facebookadStats") // facebook keywords data
     void getFacebookStats(@QueryMap Map map, Callback<ArrayList<FacebookWildFireDataModel>> response);
 }

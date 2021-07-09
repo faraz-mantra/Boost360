@@ -1,351 +1,309 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical"
-  tools:context="com.nowfloats.manageinventory.fragments.APEligibilityCheckerFragment">
-
-  <LinearLayout
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:background="#808080">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.nowfloats.manageinventory.fragments.APEligibilityCheckerFragment">
+    <LinearLayout
+        android:background="#808080"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:text="Assured Purchase Eligibility"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="1dp" />
+        <ImageView
+            android:id="@+id/iv_close"
+            android:visibility="gone"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:tint="@color/white"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_close_black_24dp"/>
+    </LinearLayout>
 
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:layout_marginStart="16dp"
-      android:text="Assured Purchase Eligibility"
-      android:textColor="@color/white"
-      android:textSize="16sp" />
+    <LinearLayout
+        android:id="@+id/ll_addr_pincode"
+        android:background="?attr/selectableItemBackground"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_num_1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:background="@drawable/circular_tv_bg"
+            android:text="1"/>
+        <TextView
+            android:id="@+id/tv_st_addr_pin_code"
+            android:layout_marginStart="15dp"
+            android:textSize="15sp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/address_pincode"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="1dp" />
 
+        <ProgressBar
+            android:id="@+id/pb_addr_pin_code"
+            android:layout_width="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="20dp" />
+        <ImageView
+            android:id="@+id/iv_addr_pincode"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/tick_right"/>
+    </LinearLayout>
     <View
-      android:layout_width="0dp"
-      android:layout_height="1dp"
-      android:layout_weight="1" />
-
-    <ImageView
-      android:id="@+id/iv_close"
-      android:layout_width="30dp"
-      android:layout_height="30dp"
-      android:layout_gravity="center_vertical"
-      android:layout_marginEnd="16dp"
-      android:src="@drawable/ic_close_black_24dp"
-      android:tint="@color/white"
-      android:visibility="gone" />
-  </LinearLayout>
-
-  <LinearLayout
-    android:id="@+id/ll_addr_pincode"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:padding="16dp">
-
-    <TextView
-      android:id="@+id/tv_num_1"
-      android:layout_width="30dp"
-      android:layout_height="30dp"
-      android:layout_gravity="center_vertical"
-      android:background="@drawable/circular_tv_bg"
-      android:gravity="center"
-      android:text="1"
-      android:textSize="20sp" />
-
-    <TextView
-      android:id="@+id/tv_st_addr_pin_code"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:layout_marginStart="15dp"
-      android:text="@string/address_pincode"
-      android:textSize="15sp" />
-
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/light_gray"
+        android:layout_height="1dp" />
+    <LinearLayout
+        android:id="@+id/ll_subscription_status"
+        android:padding="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_num_2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:background="@drawable/circular_tv_bg"
+            android:text="2"/>
+        <TextView
+            android:id="@+id/tv_st_subscription_status"
+            android:layout_marginStart="15dp"
+            android:textSize="15sp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/subscription_status"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="1dp" />
+        <ProgressBar
+            android:id="@+id/pb_subscription_status"
+            android:layout_width="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_centerInParent="true"
+            android:layout_height="20dp" />
+        <ImageView
+            android:id="@+id/iv_subscription_status"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/tick_right"/>
+    </LinearLayout>
     <View
-      android:layout_width="0dp"
-      android:layout_height="1dp"
-      android:layout_weight="1" />
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/light_gray"
+        android:layout_height="1dp" />
 
-    <ProgressBar
-      android:id="@+id/pb_addr_pin_code"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:layout_gravity="center_vertical" />
+    <LinearLayout
+        android:id="@+id/ll_custom_domain"
+        android:padding="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+       <TextView
+           android:id="@+id/tv_num_3"
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:textSize="20sp"
+           android:layout_gravity="center_vertical"
+           android:gravity="center"
+           android:background="@drawable/circular_tv_bg"
+           android:text="3"/>
+       <TextView
+           android:id="@+id/tv_st_custom_domain"
+           android:layout_marginStart="15dp"
+           android:textSize="15sp"
+           android:layout_gravity="center_vertical"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/custom_domain"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="1dp" />
+        <ProgressBar
+            android:id="@+id/pb_custom_domain"
+            android:layout_gravity="center_vertical"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+        <ImageView
+            android:id="@+id/iv_custom_domain"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/tick_right"/>
 
-    <ImageView
-      android:id="@+id/iv_addr_pincode"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:layout_gravity="center_vertical"
-      android:src="@drawable/tick_right"
-      android:visibility="gone" />
-  </LinearLayout>
-
-  <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    android:background="@color/light_gray" />
-
-  <LinearLayout
-    android:id="@+id/ll_subscription_status"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:padding="16dp">
-
-    <TextView
-      android:id="@+id/tv_num_2"
-      android:layout_width="30dp"
-      android:layout_height="30dp"
-      android:layout_gravity="center_vertical"
-      android:background="@drawable/circular_tv_bg"
-      android:gravity="center"
-      android:text="2"
-      android:textSize="20sp" />
-
-    <TextView
-      android:id="@+id/tv_st_subscription_status"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:layout_marginStart="15dp"
-      android:text="@string/subscription_status"
-      android:textSize="15sp" />
-
+    </LinearLayout>
     <View
-      android:layout_width="0dp"
-      android:layout_height="1dp"
-      android:layout_weight="1" />
-
-    <ProgressBar
-      android:id="@+id/pb_subscription_status"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:layout_centerInParent="true"
-      android:layout_gravity="center_vertical" />
-
-    <ImageView
-      android:id="@+id/iv_subscription_status"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:layout_gravity="center_vertical"
-      android:src="@drawable/tick_right"
-      android:visibility="gone" />
-  </LinearLayout>
-
-  <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    android:background="@color/light_gray" />
-
-  <LinearLayout
-    android:id="@+id/ll_custom_domain"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:padding="16dp">
-
-    <TextView
-      android:id="@+id/tv_num_3"
-      android:layout_width="30dp"
-      android:layout_height="30dp"
-      android:layout_gravity="center_vertical"
-      android:background="@drawable/circular_tv_bg"
-      android:gravity="center"
-      android:text="3"
-      android:textSize="20sp" />
-
-    <TextView
-      android:id="@+id/tv_st_custom_domain"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:layout_marginStart="15dp"
-      android:text="@string/custom_domain"
-      android:textSize="15sp" />
-
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/light_gray"
+        android:layout_height="1dp" />
+    <LinearLayout
+        android:id="@+id/ll_site_appearance"
+        android:padding="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_num_4"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:background="@drawable/circular_tv_bg"
+            android:text="4"/>
+        <TextView
+            android:id="@+id/tv_st_site_appearance"
+            android:layout_marginStart="15dp"
+            android:textSize="15sp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/site_appearance"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+        <ProgressBar
+            android:id="@+id/pb_site_appearance"
+            android:layout_width="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="20dp" />
+        <ImageView
+            android:id="@+id/iv_site_appearance"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/tick_right"/>
+    </LinearLayout>
     <View
-      android:layout_width="0dp"
-      android:layout_height="1dp"
-      android:layout_weight="1" />
-
-    <ProgressBar
-      android:id="@+id/pb_custom_domain"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:layout_gravity="center_vertical" />
-
-    <ImageView
-      android:id="@+id/iv_custom_domain"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:layout_gravity="center_vertical"
-      android:src="@drawable/tick_right"
-      android:visibility="gone" />
-
-  </LinearLayout>
-
-  <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    android:background="@color/light_gray" />
-
-  <LinearLayout
-    android:id="@+id/ll_site_appearance"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:padding="16dp">
-
-    <TextView
-      android:id="@+id/tv_num_4"
-      android:layout_width="30dp"
-      android:layout_height="30dp"
-      android:layout_gravity="center_vertical"
-      android:background="@drawable/circular_tv_bg"
-      android:gravity="center"
-      android:text="4"
-      android:textSize="20sp" />
-
-    <TextView
-      android:id="@+id/tv_st_site_appearance"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:layout_marginStart="15dp"
-      android:text="@string/site_appearance"
-      android:textSize="15sp" />
-
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/light_gray"
+        android:layout_height="1dp" />
+    <LinearLayout
+        android:id="@+id/ll_shipping_metrics"
+        android:padding="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_num_5"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:background="@drawable/circular_tv_bg"
+            android:text="5"/>
+        <TextView
+            android:id="@+id/tv_st_shipping_metrics"
+            android:layout_marginStart="15dp"
+            android:textSize="15sp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shipping_metrics"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+        <ProgressBar
+            android:id="@+id/pb_shipping_metrics"
+            android:layout_width="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="20dp" />
+        <ImageView
+            android:id="@+id/iv_shipping_metrics"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/tick_right"/>
+    </LinearLayout>
     <View
-      android:layout_width="0dp"
-      android:layout_height="1dp"
-      android:layout_weight="1" />
-
-    <ProgressBar
-      android:id="@+id/pb_site_appearance"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:layout_gravity="center_vertical" />
-
-    <ImageView
-      android:id="@+id/iv_site_appearance"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:layout_gravity="center_vertical"
-      android:src="@drawable/tick_right"
-      android:visibility="gone" />
-  </LinearLayout>
-
-  <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    android:background="@color/light_gray" />
-
-  <LinearLayout
-    android:id="@+id/ll_shipping_metrics"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:padding="16dp">
-
-    <TextView
-      android:id="@+id/tv_num_5"
-      android:layout_width="30dp"
-      android:layout_height="30dp"
-      android:layout_gravity="center_vertical"
-      android:background="@drawable/circular_tv_bg"
-      android:gravity="center"
-      android:text="5"
-      android:textSize="20sp" />
-
-    <TextView
-      android:id="@+id/tv_st_shipping_metrics"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:layout_marginStart="15dp"
-      android:text="@string/shipping_metrics"
-      android:textSize="15sp" />
-
-    <View
-      android:layout_width="0dp"
-      android:layout_height="1dp"
-      android:layout_weight="1" />
-
-    <ProgressBar
-      android:id="@+id/pb_shipping_metrics"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:layout_gravity="center_vertical" />
-
-    <ImageView
-      android:id="@+id/iv_shipping_metrics"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:layout_gravity="center_vertical"
-      android:src="@drawable/tick_right"
-      android:visibility="gone" />
-  </LinearLayout>
-
-  <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    android:background="@color/light_gray" />
-
-  <LinearLayout
-    android:id="@+id/ll_bank_details"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:padding="16dp">
-
-    <TextView
-      android:id="@+id/tv_num_6"
-      android:layout_width="30dp"
-      android:layout_height="30dp"
-      android:layout_gravity="center_vertical"
-      android:background="@drawable/circular_tv_bg"
-      android:gravity="center"
-      android:text="6"
-      android:textSize="20sp" />
-
-    <TextView
-      android:id="@+id/tv_st_bank_details"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:layout_marginStart="15dp"
-      android:text="@string/bank_details"
-      android:textSize="15sp" />
-
-    <View
-      android:layout_width="0dp"
-      android:layout_height="1dp"
-      android:layout_weight="1" />
-
-    <ProgressBar
-      android:id="@+id/pb_bank_details"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:layout_gravity="center_vertical" />
-
-    <ImageView
-      android:id="@+id/iv_bank_details"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:layout_gravity="center_vertical"
-      android:src="@drawable/tick_right"
-      android:visibility="gone" />
-  </LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/light_gray"
+        android:layout_height="1dp" />
+    <LinearLayout
+        android:id="@+id/ll_bank_details"
+        android:padding="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_num_6"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:background="@drawable/circular_tv_bg"
+            android:text="6"/>
+        <TextView
+            android:id="@+id/tv_st_bank_details"
+            android:layout_marginStart="15dp"
+            android:textSize="15sp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bank_details"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+        <ProgressBar
+            android:id="@+id/pb_bank_details"
+            android:layout_width="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="20dp" />
+        <ImageView
+            android:id="@+id/iv_bank_details"
+            android:visibility="gone"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/tick_right"/>
+    </LinearLayout>
 
 </LinearLayout>

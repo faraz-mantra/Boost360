@@ -1,26 +1,22 @@
 package com.nowfloats.signup.UI.Places;
 
 import android.content.Context;
-
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-
 import android.util.AttributeSet;
 
 import com.nowfloats.signup.UI.Model.PlacesModel;
 
 import java.util.ArrayList;
 
-/**
- * Customizing AutoCompleteTextView to return Place Description
- * corresponding to the selected item
+/** Customizing AutoCompleteTextView to return Place Description   
+ *  corresponding to the selected item
  */
 public class CustomAutoCompleteTextView extends AppCompatAutoCompleteTextView {
     ArrayList<PlacesModel> Places = new ArrayList<>();
-
-    public CustomAutoCompleteTextView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-    /** Returns the place description corresponding to the selected item */
+	public CustomAutoCompleteTextView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
+	/** Returns the place description corresponding to the selected item */
 	/*@Override
 	protected CharSequence convertSelectionToString(Object selectedItem) {
 		*//** Each item in the autocompetetextview suggestionList list is a hashmap object *//*
@@ -41,11 +37,7 @@ public class CustomAutoCompleteTextView extends AppCompatAutoCompleteTextView {
 
    /* @Override
     protected CharSequence convertSelectionToString(Object selectedItem) {
-        */
-
-    /**
-     * Each item in the autocompetetextview suggestionList list is a hashmap object
-     *//*
+        *//** Each item in the autocompetetextview suggestionList list is a hashmap object *//*
         HashMap<String, ArrayList<PlacesModel>> hm = (HashMap<String, ArrayList<PlacesModel>>) selectedItem;
         String result = " ";
         try {
@@ -54,6 +46,9 @@ public class CustomAutoCompleteTextView extends AppCompatAutoCompleteTextView {
 
         return result;
     }*/
+
+
+
     public CustomAutoCompleteTextView(Context context) {
         super(context);
         // TODO Auto-generated constructor stub

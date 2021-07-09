@@ -35,5 +35,5 @@ pipelines:
           - ./gradlew assemblepartone
 
 definitions:
-  caches:
-    android-sdk: android-sdk
+    caches:
+      android-sdk: android-sdk

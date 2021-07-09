@@ -47,12 +47,13 @@ public class EmojIconActions {
     /**
      * Constructor
      *
-     * @param ctx The context of current activity
+     * @param ctx              The context of current activity
      */
     public EmojIconActions(Context ctx) {
         this.context = ctx;
         this.popup = new EmojiconsPopup(ctx, useSystemEmoji);
     }
+
 
 
     /**
@@ -143,20 +144,23 @@ public class EmojIconActions {
     }
 
 
+
+
     public void closeEmojIcon() {
         if (popup != null && popup.isShowing())
             popup.dismiss();
 
     }
 
-    public void setKeyboardListener(KeyboardListener listener) {
-        this.keyboardListener = listener;
-    }
 
     public interface KeyboardListener {
         void onKeyboardOpen();
 
         void onKeyboardClose();
+    }
+
+    public void setKeyboardListener(KeyboardListener listener) {
+        this.keyboardListener = listener;
     }
 
 }

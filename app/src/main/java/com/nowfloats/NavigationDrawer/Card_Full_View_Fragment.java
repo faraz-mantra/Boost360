@@ -16,11 +16,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.cardview.widget.CardView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,9 +53,9 @@ public class Card_Full_View_Fragment extends Fragment {
     public static final String UrlKey = "UrlKey";
     private static final int STORAGE_CODE = 120;
     static View.OnClickListener mylongOnClickListener;
+    private Activity appContext;
     String mainText;
     String imagePath;
-    private Activity appContext;
 
     public Card_Full_View_Fragment() {
         // Required empty public constructor
@@ -84,7 +82,7 @@ public class Card_Full_View_Fragment extends Fragment {
 
 
         if (bundle != null) {
-            imagePath = bundle.getString(ImageKey);
+              imagePath = bundle.getString(ImageKey);
             mainText = bundle.getString(MainTextKey);
             String dateText = bundle.getString(DateTextKey);
             String messageid = bundle.getString(MessageIdKey);
@@ -92,14 +90,15 @@ public class Card_Full_View_Fragment extends Fragment {
 
             //Log.d("Card Frag", "Card Fragment : "+imagePath+" , "+mainText+ " , "+dateText);
             //Log.d("Card Frag","Main View : "+mainView);
-            setValues(mainView, imagePath, mainText, dateText, messageid, urlKey);
+            setValues(mainView, imagePath, mainText, dateText,messageid,urlKey);
 
         }
 
 
-        shareFacebook.setOnClickListener(v -> shareContent("facebook", imagePath));
-        shareWhatsapp.setOnClickListener(v -> shareContent("whatsapp", imagePath));
-        share.setOnClickListener(v -> shareContent("default", imagePath));
+        shareFacebook.setOnClickListener(v -> shareContent("facebook",imagePath));
+        shareWhatsapp.setOnClickListener(v -> shareContent("whatsapp",imagePath));
+        share.setOnClickListener(v -> shareContent("default",imagePath));
+
 
 
         cardView.setOnClickListener(new View.OnClickListener() {
@@ -143,13 +142,17 @@ public class Card_Full_View_Fragment extends Fragment {
         });
 
 
-        // mylongOnClickListener = new MyLongClickListener(getActivity());
+
+       // mylongOnClickListener = new MyLongClickListener(getActivity());
+
+
 
 
         return mainView;
     }
 
-    void shareContent(String type, String imageShare) {
+    void shareContent(String type,String imageShare)
+    {
         MixPanelController.track("SharePost", null);
         if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
 
@@ -161,7 +164,8 @@ public class Card_Full_View_Fragment extends Fragment {
             return;
         }
         final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        switch (type) {
+        switch (type)
+        {
             case "whatsapp":
                 shareIntent.setPackage(getString(R.string.whatsapp_package));
                 break;
@@ -211,7 +215,7 @@ public class Card_Full_View_Fragment extends Fragment {
                     }
 
                     @Override
-                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
 
                         Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
 
@@ -251,168 +255,32 @@ public class Card_Full_View_Fragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        appContext = (Activity) context;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        getActivity().setTitle("Home");
-
-    }
-
-    private void setValues(View mainView, final String imageUri, final String mainText, String dateText, final String msgID, final String updateUrl) {
-        //Log.d("Set Values","values  :"+imagePath+" , "+mainText+" , "+dateText);
-        ImageView imageView = (ImageView) mainView.findViewById(R.id.mainImageView);
-        TextView mainTextView = (TextView) mainView.findViewById(R.id.headingTextView);
-        TextView dateTextView = (TextView) mainView.findViewById(R.id.dateTextView);
-        TextView messageTag = (TextView) mainView.findViewById(R.id.messagetag);
-
-        mainView.findViewById(R.id.shareData).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                        Methods.showDialog(appContext, getString(R.string.storage_permission), "To share your image we need storage permission.");
-                    } else {
-                        ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE);
-                    }
-                    return;
-                }
-                MixPanelController.track("SharePost", null);
-                // final Intent shareIntent = null;
-                final ProgressDialog pd = ProgressDialog.show(appContext, "", "Sharing . . .");
-
-                final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                if (!Util.isNullOrEmpty(imageUri) && !imageUri.contains("/Tile/deal.png")) {
-                    if (Methods.isOnline(appContext)) {
-                        String url;
-                        if (imageUri.contains("BizImages")) {
-                            url = Constants.NOW_FLOATS_API_URL + "" + imageUri;
-                        } else {
-                            url = imageUri;
-                        }
-                        Picasso.get()
-                                .load(url)
-                                .into(new Target() {
-                                    @Override
-                                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                                        pd.dismiss();
-                                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-                                        View view = new View(appContext);
-                                        view.draw(new Canvas(mutableBitmap));
-                                        try {
-                                            String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
-                                            BoostLog.d("Path is:", path);
-                                            Uri uri = Uri.parse(path);
-                                            shareIntent.putExtra(Intent.EXTRA_TEXT, mainText + " View more at: " + updateUrl);
-                                            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                                            shareIntent.setType("image/*");
-
-
-                                            if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                                                appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
-                                            } else {
-                                                Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
-                                            }
-                                        } catch (Exception e) {
-                                            ActivityCompat.requestPermissions(appContext, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA}, 2);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                                        pd.dismiss();
-                                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
-
-                                    }
-
-                                    @Override
-                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                                    }
-                                });
-
-
-                    } else {
-                        pd.dismiss();
-                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
-                    }
-
-
-                } else {
-                    pd.dismiss();
-                    shareIntent.setType("text/plain");
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, mainText + " View more at: " + updateUrl);
-                    if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                        appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
-                    } else {
-                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
-                    }
-
-                }
-            }
-
-        });
-        MessageTag_Async_Task tag = new MessageTag_Async_Task(getActivity(), messageTag, msgID);
-        tag.execute();
-
-        Typeface myCustomFont = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
-        Typeface myCustomFont_Medium = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf");
-        String baseName = "";
-
-        mainTextView.setTypeface(myCustomFont);
-        dateTextView.setTypeface(myCustomFont_Medium);
-
-        mainTextView.setText(mainText);
-        dateTextView.setText(dateText);
-
-        if (Util.isNullOrEmpty(imageUri)) {
-            imageView.setVisibility(View.GONE);
-        } else if (imageUri.contains("deal.png") || Util.isNullOrEmpty(imageUri)) {
-            imageView.setVisibility(View.GONE);
-        } else if (imageUri.contains("BizImages")) {
-            imageView.setVisibility(View.VISIBLE);
-            baseName = Constants.BASE_IMAGE_URL + "" + imageUri;
-            Picasso.get().load(baseName).noPlaceholder().into(imageView);
-//                        imageLoader.displayImage(baseName,imageView,options);
-        } else if (imageUri.contains("/storage/emulated") || imageUri.contains("/mnt/sdcard")) {
-            imageView.setVisibility(View.VISIBLE);
-            Bitmap bmp = Util.getBitmap(imageUri.toString(), getActivity());
-            imageView.setImageBitmap(bmp);
-        } else {
-            imageView.setVisibility(View.VISIBLE);
-            baseName = imageUri;
-            Glide.with(this).load(baseName).into(imageView);
-//                        imageLoader.displayImage(baseName,imageView,options);
-        }
+        appContext = (Activity)context;
     }
 
     public class MyLongClickListener implements View.OnClickListener {
         private final Context context;
 
 
-        private MyLongClickListener(Context context) {
+        private MyLongClickListener(Context context)
+        {
             this.context = context;
         }
 
         @Override
         public void onClick(View v) {
 
-            final String[] INTENT_FILTER = new String[]{
+            final String[] INTENT_FILTER = new String[] {
                     "com.twitter.android",
                     getString(R.string.facebook_package)
             };
 
-            List<Intent> targetShareIntents = new ArrayList<Intent>();
-            Intent shareIntent = new Intent();
+            List<Intent> targetShareIntents=new ArrayList<Intent>();
+            Intent shareIntent=new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
-            List<ResolveInfo> resInfos = getActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
-            if (!resInfos.isEmpty()) {
+            List<ResolveInfo> resInfos=getActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
+            if(!resInfos.isEmpty()) {
                 System.out.println("Have package");
                 for (ResolveInfo resInfo : resInfos) {
                     String packageName = resInfo.activityInfo.packageName;
@@ -444,5 +312,153 @@ public class Card_Full_View_Fragment extends Fragment {
         }
 
 
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getActivity().setTitle("Home");
+
+    }
+
+    private void setValues(View mainView, final String imageUri, final String mainText, String dateText, final String msgID, final String updateUrl) {
+        //Log.d("Set Values","values  :"+imagePath+" , "+mainText+" , "+dateText);
+        ImageView imageView = (ImageView) mainView.findViewById(R.id.mainImageView);
+        TextView mainTextView = (TextView) mainView.findViewById(R.id.headingTextView);
+        TextView dateTextView = (TextView) mainView.findViewById(R.id.dateTextView);
+        TextView messageTag = (TextView) mainView.findViewById(R.id.messagetag);
+
+        mainView.findViewById(R.id.shareData).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(appContext,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                        Methods.showDialog(appContext,getString(R.string.storage_permission), "To share your image we need storage permission.");
+                    }else{
+                        ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},STORAGE_CODE);
+                    }
+                    return;
+                }
+                MixPanelController.track("SharePost", null);
+                // final Intent shareIntent = null;
+                final ProgressDialog pd = ProgressDialog.show(appContext, "", "Sharing . . .");
+
+                final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                if (!Util.isNullOrEmpty(imageUri) && !imageUri.contains("/Tile/deal.png")) {
+                    if (Methods.isOnline(appContext)) {
+                        String url;
+                        if (imageUri.contains("BizImages")) {
+                            url = Constants.NOW_FLOATS_API_URL + "" + imageUri;
+                        } else {
+                            url = imageUri;
+                        }
+                        Picasso.get()
+                                .load(url)
+                                .into(new Target() {
+                                    @Override
+                                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                                        pd.dismiss();
+                                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                                        View view = new View(appContext);
+                                        view.draw(new Canvas(mutableBitmap));
+                                        try {
+                                            String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
+                                            BoostLog.d("Path is:", path);
+                                            Uri uri = Uri.parse(path);
+                                            shareIntent.putExtra(Intent.EXTRA_TEXT, mainText + " View more at: " +updateUrl);
+                                            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                                            shareIntent.setType("image/*");
+
+
+                                            if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                                                appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
+                                            } else {
+                                                Methods.showSnackBarNegative(appContext,appContext.getString(R.string.no_app_available_for_action));
+                                            }
+                                        }catch (Exception e){
+                                            ActivityCompat.requestPermissions(appContext, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA}, 2);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
+                                        pd.dismiss();
+                                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
+
+                                    }
+
+                                    @Override
+                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                    }
+                                });
+
+
+                    } else {
+                        pd.dismiss();
+                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
+                    }
+
+
+                } else {
+                    pd.dismiss();
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, mainText + " View more at: " +updateUrl);
+                    if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                        appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
+                    } else {
+                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
+                    }
+
+                }
+            }
+
+        });
+        MessageTag_Async_Task tag = new MessageTag_Async_Task(getActivity(),messageTag,msgID);
+        tag.execute();
+
+        Typeface myCustomFont = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
+        Typeface myCustomFont_Medium = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf");
+        String baseName = "";
+
+        mainTextView.setTypeface(myCustomFont);
+        dateTextView.setTypeface(myCustomFont_Medium);
+
+        mainTextView.setText(mainText);
+        dateTextView.setText(dateText);
+
+        if(Util.isNullOrEmpty(imageUri))
+        {
+            imageView.setVisibility(View.GONE);
+        }
+        else if(imageUri.contains("deal.png") || Util.isNullOrEmpty(imageUri))
+        {
+            imageView.setVisibility(View.GONE);
+        }
+        else if(imageUri.contains("BizImages") )
+        {
+            imageView.setVisibility(View.VISIBLE);
+            baseName = Constants.BASE_IMAGE_URL+"" + imageUri;
+            Picasso.get().load(baseName).noPlaceholder().into(imageView);
+//                        imageLoader.displayImage(baseName,imageView,options);
+        }
+
+        else if(imageUri.contains("/storage/emulated") || imageUri.contains("/mnt/sdcard") )
+        {
+            imageView.setVisibility(View.VISIBLE);
+            Bitmap bmp = Util.getBitmap(imageUri.toString(),getActivity());
+            imageView.setImageBitmap(bmp);
+        }
+        else
+        {
+            imageView.setVisibility(View.VISIBLE);
+            baseName = imageUri ;
+            Glide.with(this).load(baseName).into(imageView);
+//                        imageLoader.displayImage(baseName,imageView,options);
+        }
     }
 }

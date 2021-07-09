@@ -68,10 +68,7 @@ class ScanPanCardFragment : AppBaseFragment<FragmentScanPanCardBinding, BaseView
           outputStream.flush()
           outputStream.close()
           val bundle = Bundle()
-          bundle.putBoolean(
-            "isInstaMojoAccount",
-            arguments?.getBoolean("isInstaMojoAccount") ?: false
-          )
+          bundle.putBoolean("isInstaMojoAccount", arguments?.getBoolean("isInstaMojoAccount") ?: false)
           bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
           bundle.putBoolean(IntentConstant.IS_EDIT.name, isEdit)
           startFragmentPaymentActivity(FragmentType.CROP_IMAGE, bundle, isResult = isEdit)
@@ -102,34 +99,15 @@ class ScanPanCardFragment : AppBaseFragment<FragmentScanPanCardBinding, BaseView
   }
 
   private fun checkAndAskPermissions() {
-    if (ActivityCompat.checkSelfPermission(
-        baseActivity,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-      ) != PackageManager.PERMISSION_GRANTED &&
-      ActivityCompat.checkSelfPermission(
-        baseActivity,
-        Manifest.permission.READ_EXTERNAL_STORAGE
-      ) != PackageManager.PERMISSION_GRANTED
-    ) {
-      requestPermissions(
-        arrayOf(
-          Manifest.permission.READ_EXTERNAL_STORAGE,
-          Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ), STORAGE_PERMISSIONS_CODE
-      )
+    if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
+        ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+      requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSIONS_CODE)
     }
   }
 
   private fun openImagePicker() {
-    if (ActivityCompat.checkSelfPermission(
-        baseActivity,
-        Manifest.permission.READ_EXTERNAL_STORAGE
-      ) != PackageManager.PERMISSION_GRANTED
-    ) {
-      requestPermissions(
-        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-        STORAGE_PERMISSIONS_CODE
-      )
+    if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+      requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), STORAGE_PERMISSIONS_CODE)
     } else startImagePickerIntent()
   }
 
@@ -152,31 +130,20 @@ class ScanPanCardFragment : AppBaseFragment<FragmentScanPanCardBinding, BaseView
       startFragmentPaymentActivity(FragmentType.CROP_IMAGE, bundle, isResult = isEdit)
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
       val output = Intent()
-      output.putExtra(
-        IntentConstant.PAN_CARD_IMAGE.name,
-        data?.getStringExtra(IntentConstant.PAN_CARD_IMAGE.name)
-      )
+      output.putExtra(IntentConstant.PAN_CARD_IMAGE.name, data?.getStringExtra(IntentConstant.PAN_CARD_IMAGE.name))
       baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
       baseActivity.finish()
     }
   }
 
-  override fun onRequestPermissionsResult(
-    requestCode: Int,
-    permissions: Array<out String>,
-    grantResults: IntArray
-  ) {
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     when (requestCode) {
       CAMERA_PERMISSIONS_CODE -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
           Log.d("CAMERA PERMISSION", "PERMISSION GRANTED")
         } else {
-          Toast.makeText(
-            context,
-            getString(R.string.please_provide_the_camera_permission_to_proceed),
-            Toast.LENGTH_LONG
-          ).show()
+          Toast.makeText(context, getString(R.string.please_provide_the_camera_permission_to_proceed), Toast.LENGTH_LONG).show()
         }
       }
       STORAGE_PERMISSIONS_CODE -> {
@@ -184,11 +151,7 @@ class ScanPanCardFragment : AppBaseFragment<FragmentScanPanCardBinding, BaseView
           Log.d(getString(R.string.storage_permission), "PERMISSION GRANTED")
           //startImagePickerIntent()
         } else {
-          Toast.makeText(
-            context,
-            getString(R.string.please_provide_the_storage_permissions_to_proceed),
-            Toast.LENGTH_LONG
-          ).show()
+          Toast.makeText(context, getString(R.string.please_provide_the_storage_permissions_to_proceed), Toast.LENGTH_LONG).show()
           checkAndAskPermissions()
         }
       }

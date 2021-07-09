@@ -17,9 +17,7 @@
 package io.separ.neural.inputmethod.indic;
 
 import android.content.Context;
-
 import androidx.core.content.ContextCompat;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.LruCache;
@@ -65,31 +63,37 @@ import io.separ.neural.inputmethod.indic.settings.SpacingAndPunctuations;
 // TODO: Consolidate dictionaries in native code.
 public class DictionaryFacilitator {
     public static final String TAG = DictionaryFacilitator.class.getSimpleName();
-    public static final Map<String, Class<? extends ExpandableBinaryDictionary>>
-            DICT_TYPE_TO_CLASS = new HashMap<>();
-    public static final String[] ALL_DICTIONARY_TYPES = new String[]{
-            Dictionary.TYPE_MAIN,
-            Dictionary.TYPE_CONTACTS,
-            Dictionary.TYPE_USER_HISTORY,
-            Dictionary.TYPE_USER};
+
     // HACK: This threshold is being used when adding a capitalized entry in the User History
     // dictionary.
     private static final int CAPITALIZED_FORM_MAX_PROBABILITY_FOR_INSERT = 140;
+
+    private Dictionaries mDictionaries = new Dictionaries();
+    private boolean mIsUserDictEnabled = false;
+    private volatile CountDownLatch mLatchForWaitingLoadingMainDictionary = new CountDownLatch(0);
+    // To synchronize assigning mDictionaries to ensure closing dictionaries.
+    private final Object mLock = new Object();
+    private final DistracterFilter mDistracterFilter;
+
+    private LruCache<String, Boolean> mValidSpellingWordReadCache;
+    private LruCache<String, Boolean> mValidSpellingWordWriteCache;
+
+    public void setValidSpellingWordReadCache(final LruCache<String, Boolean> cache) {
+        mValidSpellingWordReadCache = cache;
+    }
+
     private static final String[] DICT_TYPES_ORDERED_TO_GET_SUGGESTIONS =
-            new String[]{
-                    Dictionary.TYPE_MAIN,
-                    Dictionary.TYPE_USER_HISTORY,
-                    Dictionary.TYPE_PERSONALIZATION,
-                    Dictionary.TYPE_USER,
-                    Dictionary.TYPE_CONTACTS,
-                    Dictionary.TYPE_CONTEXTUAL
+            new String[] {
+                Dictionary.TYPE_MAIN,
+                Dictionary.TYPE_USER_HISTORY,
+                Dictionary.TYPE_PERSONALIZATION,
+                Dictionary.TYPE_USER,
+                Dictionary.TYPE_CONTACTS,
+                Dictionary.TYPE_CONTEXTUAL
             };
-    private static final String DICT_FACTORY_METHOD_NAME = "getDictionary";
-    private static final Class<?>[] DICT_FACTORY_METHOD_ARG_TYPES =
-            new Class[]{Context.class, Locale.class, File.class, String.class};
-    private static final String[] SUB_DICT_TYPES =
-            Arrays.copyOfRange(DICT_TYPES_ORDERED_TO_GET_SUGGESTIONS, 1 /* start */,
-                    DICT_TYPES_ORDERED_TO_GET_SUGGESTIONS.length);
+
+    public static final Map<String, Class<? extends ExpandableBinaryDictionary>>
+            DICT_TYPE_TO_CLASS = new HashMap<>();
 
     static {
         DICT_TYPE_TO_CLASS.put(Dictionary.TYPE_USER_HISTORY, UserHistoryDictionary.class);
@@ -99,55 +103,21 @@ public class DictionaryFacilitator {
         DICT_TYPE_TO_CLASS.put(Dictionary.TYPE_CONTEXTUAL, ContextualDictionary.class);
     }
 
-    // To synchronize assigning mDictionaries to ensure closing dictionaries.
-    private final Object mLock = new Object();
-    private final DistracterFilter mDistracterFilter;
-    private Dictionaries mDictionaries = new Dictionaries();
-    private boolean mIsUserDictEnabled = false;
-    private volatile CountDownLatch mLatchForWaitingLoadingMainDictionary = new CountDownLatch(0);
-    private LruCache<String, Boolean> mValidSpellingWordReadCache;
-    private LruCache<String, Boolean> mValidSpellingWordWriteCache;
+    private static final String DICT_FACTORY_METHOD_NAME = "getDictionary";
+    private static final Class<?>[] DICT_FACTORY_METHOD_ARG_TYPES =
+            new Class[] { Context.class, Locale.class, File.class, String.class };
 
-    public DictionaryFacilitator() {
-        mDistracterFilter = DistracterFilter.EMPTY_DISTRACTER_FILTER;
-    }
-
-    public DictionaryFacilitator(final DistracterFilter distracterFilter) {
-        mDistracterFilter = distracterFilter;
-    }
-
-    private static ExpandableBinaryDictionary getSubDict(final String dictType,
-                                                         final Context context, final Locale locale, final File dictFile,
-                                                         final String dictNamePrefix) {
-        final Class<? extends ExpandableBinaryDictionary> dictClass =
-                DICT_TYPE_TO_CLASS.get(dictType);
-        if (dictClass == null) {
-            return null;
-        }
-        try {
-            final Method factoryMethod = dictClass.getMethod(DICT_FACTORY_METHOD_NAME,
-                    DICT_FACTORY_METHOD_ARG_TYPES);
-            final Object dict = factoryMethod.invoke(null /* obj */,
-                    context, locale, dictFile, dictNamePrefix);
-            return (ExpandableBinaryDictionary) dict;
-        } catch (final NoSuchMethodException | SecurityException | IllegalAccessException
-                | IllegalArgumentException | InvocationTargetException e) {
-            Log.e(TAG, "Cannot create dictionary: " + dictType, e);
-            return null;
-        }
-    }
-
-    public void setValidSpellingWordReadCache(final LruCache<String, Boolean> cache) {
-        mValidSpellingWordReadCache = cache;
-    }
+    private static final String[] SUB_DICT_TYPES =
+            Arrays.copyOfRange(DICT_TYPES_ORDERED_TO_GET_SUGGESTIONS, 1 /* start */,
+                    DICT_TYPES_ORDERED_TO_GET_SUGGESTIONS.length);
 
     public void setValidSpellingWordWriteCache(final LruCache<String, Boolean> cache) {
         mValidSpellingWordWriteCache = cache;
     }
 
     public void unlearnFromUserHistory(final String word,
-                                       @Nonnull final NgramContext ngramContext, final long timeStampInSeconds,
-                                       final int eventType) {
+                                @Nonnull final NgramContext ngramContext, final long timeStampInSeconds,
+                                final int eventType){
         // TODO: Decide whether or not to remove the word on EVENT_BACKSPACE.
         if (eventType != Constants.EVENT_BACKSPACE) {
             removeWord(Dictionary.TYPE_USER_HISTORY, word);
@@ -157,6 +127,12 @@ public class DictionaryFacilitator {
         // and appear in no other language model are not considered valid.
         putWordIntoValidSpellingWordCache("unlearnFromUserHistory", word.toLowerCase());
     }
+
+    public static final String[] ALL_DICTIONARY_TYPES = new String[] {
+            Dictionary.TYPE_MAIN,
+            Dictionary.TYPE_CONTACTS,
+            Dictionary.TYPE_USER_HISTORY,
+            Dictionary.TYPE_USER};
 
     private boolean isValidWord(final String word, final String[] dictionariesToCheck) {
         if (TextUtils.isEmpty(word)) {
@@ -209,6 +185,89 @@ public class DictionaryFacilitator {
         mValidSpellingWordWriteCache.put(capitalWord, capitalValid);
     }
 
+    /**
+     * Class contains dictionaries for a locale.
+     */
+    private static class Dictionaries {
+        public final Locale mLocale;
+        private Dictionary mMainDict;
+        public final ConcurrentHashMap<String, ExpandableBinaryDictionary> mSubDictMap =
+                new ConcurrentHashMap<>();
+
+        public Dictionaries() {
+            mLocale = null;
+        }
+
+        public Dictionaries(final Locale locale, final Dictionary mainDict,
+                final Map<String, ExpandableBinaryDictionary> subDicts) {
+            mLocale = locale;
+            // Main dictionary can be asynchronously loaded.
+            setMainDict(mainDict);
+            for (final Map.Entry<String, ExpandableBinaryDictionary> entry : subDicts.entrySet()) {
+                setSubDict(entry.getKey(), entry.getValue());
+            }
+        }
+
+        private void setSubDict(final String dictType, final ExpandableBinaryDictionary dict) {
+            if (dict != null) {
+                mSubDictMap.put(dictType, dict);
+            }
+        }
+
+        public void setMainDict(final Dictionary mainDict) {
+            // Close old dictionary if exists. Main dictionary can be assigned multiple times.
+            final Dictionary oldDict = mMainDict;
+            mMainDict = mainDict;
+            if (oldDict != null && mainDict != oldDict) {
+                oldDict.close();
+            }
+        }
+
+        public Dictionary getDict(final String dictType) {
+            if (Dictionary.TYPE_MAIN.equals(dictType)) {
+                return mMainDict;
+            } else {
+                return getSubDict(dictType);
+            }
+        }
+
+        public ExpandableBinaryDictionary getSubDict(final String dictType) {
+            return mSubDictMap.get(dictType);
+        }
+
+        public boolean hasDict(final String dictType) {
+            if (Dictionary.TYPE_MAIN.equals(dictType)) {
+                return mMainDict != null;
+            } else {
+                return mSubDictMap.containsKey(dictType);
+            }
+        }
+
+        public void closeDict(final String dictType) {
+            final Dictionary dict;
+            if (Dictionary.TYPE_MAIN.equals(dictType)) {
+                dict = mMainDict;
+            } else {
+                dict = mSubDictMap.remove(dictType);
+            }
+            if (dict != null) {
+                dict.close();
+            }
+        }
+    }
+
+    public interface DictionaryInitializationListener {
+        void onUpdateMainDictionaryAvailability(boolean isMainDictionaryAvailable);
+    }
+
+    public DictionaryFacilitator() {
+        mDistracterFilter = DistracterFilter.EMPTY_DISTRACTER_FILTER;
+    }
+
+    public DictionaryFacilitator(final DistracterFilter distracterFilter) {
+        mDistracterFilter = distracterFilter;
+    }
+
     public void updateEnabledSubtypes(final List<InputMethodSubtype> enabledSubtypes) {
         mDistracterFilter.updateEnabledSubtypes(enabledSubtypes);
     }
@@ -217,19 +276,40 @@ public class DictionaryFacilitator {
         return mDictionaries.mLocale;
     }
 
+    private static ExpandableBinaryDictionary getSubDict(final String dictType,
+            final Context context, final Locale locale, final File dictFile,
+            final String dictNamePrefix) {
+        final Class<? extends ExpandableBinaryDictionary> dictClass =
+                DICT_TYPE_TO_CLASS.get(dictType);
+        if (dictClass == null) {
+            return null;
+        }
+        try {
+            final Method factoryMethod = dictClass.getMethod(DICT_FACTORY_METHOD_NAME,
+                    DICT_FACTORY_METHOD_ARG_TYPES);
+            final Object dict = factoryMethod.invoke(null /* obj */,
+                    context, locale, dictFile, dictNamePrefix);
+            return (ExpandableBinaryDictionary) dict;
+        } catch (final NoSuchMethodException | SecurityException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException e) {
+            Log.e(TAG, "Cannot create dictionary: " + dictType, e);
+            return null;
+        }
+    }
+
     public void resetDictionaries(final Context context, final Locale newLocale,
-                                  final boolean useContactsDict, final boolean usePersonalizedDicts,
-                                  final boolean forceReloadMainDictionary,
-                                  final DictionaryInitializationListener listener) {
+            final boolean useContactsDict, final boolean usePersonalizedDicts,
+            final boolean forceReloadMainDictionary,
+            final DictionaryInitializationListener listener) {
         resetDictionariesWithDictNamePrefix(context, newLocale, useContactsDict,
                 usePersonalizedDicts, forceReloadMainDictionary, listener, "" /* dictNamePrefix */);
     }
 
     public void resetDictionariesWithDictNamePrefix(final Context context, final Locale newLocale,
-                                                    final boolean useContactsDict, final boolean usePersonalizedDicts,
-                                                    final boolean forceReloadMainDictionary,
-                                                    final DictionaryInitializationListener listener,
-                                                    final String dictNamePrefix) {
+            final boolean useContactsDict, final boolean usePersonalizedDicts,
+            final boolean forceReloadMainDictionary,
+            final DictionaryInitializationListener listener,
+            final String dictNamePrefix) {
         final boolean localeHasBeenChanged = !newLocale.equals(mDictionaries.mLocale);
         // We always try to have the main dictionary. Other dictionaries can be unused.
         final boolean reloadMainDictionary = localeHasBeenChanged || forceReloadMainDictionary;
@@ -303,7 +383,7 @@ public class DictionaryFacilitator {
     }
 
     private void asyncReloadMainDictionary(final Context context, final Locale locale,
-                                           final DictionaryInitializationListener listener) {
+            final DictionaryInitializationListener listener) {
         final CountDownLatch latchForWaitingLoadingMainDictionary = new CountDownLatch(1);
         mLatchForWaitingLoadingMainDictionary = latchForWaitingLoadingMainDictionary;
         ExecutorUtils.getExecutor("InitializeBinaryDictionary").execute(new Runnable() {
@@ -329,8 +409,8 @@ public class DictionaryFacilitator {
 
     @UsedForTesting
     public void resetDictionariesForTesting(final Context context, final Locale locale,
-                                            final ArrayList<String> dictionaryTypes, final HashMap<String, File> dictionaryFiles,
-                                            final Map<String, Map<String, String>> additionalDictAttributes) {
+            final ArrayList<String> dictionaryTypes, final HashMap<String, File> dictionaryFiles,
+            final Map<String, Map<String, String>> additionalDictAttributes) {
         Dictionary mainDictionary = null;
         final Map<String, ExpandableBinaryDictionary> subDicts = new HashMap<>();
 
@@ -420,8 +500,8 @@ public class DictionaryFacilitator {
     }
 
     public void addToUserHistory(final String suggestion, final boolean wasAutoCapitalized,
-                                 final PrevWordsInfo prevWordsInfo, final int timeStampInSeconds,
-                                 final boolean blockPotentiallyOffensive) {
+            final PrevWordsInfo prevWordsInfo, final int timeStampInSeconds,
+            final boolean blockPotentiallyOffensive) {
         putWordIntoValidSpellingWordCache("addToUserHistory", suggestion);
         final Dictionaries dictionaries = mDictionaries;
         final String[] words = suggestion.split(Constants.WORD_SEPARATOR);
@@ -437,8 +517,8 @@ public class DictionaryFacilitator {
     }
 
     private void addWordToUserHistory(final Dictionaries dictionaries,
-                                      final PrevWordsInfo prevWordsInfo, final String word, final boolean wasAutoCapitalized,
-                                      final int timeStampInSeconds, final boolean blockPotentiallyOffensive) {
+            final PrevWordsInfo prevWordsInfo, final String word, final boolean wasAutoCapitalized,
+            final int timeStampInSeconds, final boolean blockPotentiallyOffensive) {
         final ExpandableBinaryDictionary userHistoryDictionary =
                 dictionaries.getSubDict(Dictionary.TYPE_USER_HISTORY);
         if (userHistoryDictionary == null) {
@@ -471,7 +551,7 @@ public class DictionaryFacilitator {
             // TODO: Remove this hack when ready.
             final int lowerCaseFreqInMainDict = dictionaries.hasDict(Dictionary.TYPE_MAIN) ?
                     dictionaries.getDict(Dictionary.TYPE_MAIN).getFrequency(lowerCasedWord) :
-                    Dictionary.NOT_A_PROBABILITY;
+                            Dictionary.NOT_A_PROBABILITY;
             if (maxFreq < lowerCaseFreqInMainDict
                     && lowerCaseFreqInMainDict >= CAPITALIZED_FORM_MAX_PROBABILITY_FOR_INSERT) {
                 // Use lower cased word as the word can be a distracter of the popular word.
@@ -504,13 +584,13 @@ public class DictionaryFacilitator {
 
     // TODO: Revise the way to fusion suggestion results.
     public SuggestionResults getSuggestionResults(final WordComposer composer,
-                                                  final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
-                                                  final SettingsValuesForSuggestion settingsValuesForSuggestion, final int sessionId) {
+            final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
+            final SettingsValuesForSuggestion settingsValuesForSuggestion, final int sessionId) {
         final Dictionaries dictionaries = mDictionaries;
         final SuggestionResults suggestionResults = new SuggestionResults(
                 dictionaries.mLocale, SuggestedWords.MAX_SUGGESTIONS,
                 prevWordsInfo.mPrevWordsInfo[0].mIsBeginningOfSentence);
-        final float[] languageWeight = new float[]{Dictionary.NOT_A_LANGUAGE_WEIGHT};
+        final float[] languageWeight = new float[] { Dictionary.NOT_A_LANGUAGE_WEIGHT };
         for (final String dictType : DICT_TYPES_ORDERED_TO_GET_SUGGESTIONS) {
             final Dictionary dictionary = dictionaries.getDict(dictType);
             if (null == dictionary) continue;
@@ -550,7 +630,7 @@ public class DictionaryFacilitator {
     }
 
     private int getFrequencyInternal(final String word,
-                                     final boolean isGettingMaxFrequencyOfExactMatches) {
+            final boolean isGettingMaxFrequencyOfExactMatches) {
         if (TextUtils.isEmpty(word)) {
             return Dictionary.NOT_A_PROBABILITY;
         }
@@ -630,7 +710,7 @@ public class DictionaryFacilitator {
     }
 
     public void addPhraseToContextualDictionary(final String[] phrase, final int probability,
-                                                final int bigramProbabilityForWords, final int bigramProbabilityForPhrases) {
+            final int bigramProbabilityForWords, final int bigramProbabilityForPhrases) {
         final ExpandableBinaryDictionary contextualDict =
                 mDictionaries.getSubDict(Dictionary.TYPE_CONTEXTUAL);
         if (contextualDict == null) {
@@ -672,80 +752,5 @@ public class DictionaryFacilitator {
             return;
         }
         dictToDump.dumpAllWordsForDebug();
-    }
-
-    public interface DictionaryInitializationListener {
-        void onUpdateMainDictionaryAvailability(boolean isMainDictionaryAvailable);
-    }
-
-    /**
-     * Class contains dictionaries for a locale.
-     */
-    private static class Dictionaries {
-        public final Locale mLocale;
-        public final ConcurrentHashMap<String, ExpandableBinaryDictionary> mSubDictMap =
-                new ConcurrentHashMap<>();
-        private Dictionary mMainDict;
-
-        public Dictionaries() {
-            mLocale = null;
-        }
-
-        public Dictionaries(final Locale locale, final Dictionary mainDict,
-                            final Map<String, ExpandableBinaryDictionary> subDicts) {
-            mLocale = locale;
-            // Main dictionary can be asynchronously loaded.
-            setMainDict(mainDict);
-            for (final Map.Entry<String, ExpandableBinaryDictionary> entry : subDicts.entrySet()) {
-                setSubDict(entry.getKey(), entry.getValue());
-            }
-        }
-
-        private void setSubDict(final String dictType, final ExpandableBinaryDictionary dict) {
-            if (dict != null) {
-                mSubDictMap.put(dictType, dict);
-            }
-        }
-
-        public void setMainDict(final Dictionary mainDict) {
-            // Close old dictionary if exists. Main dictionary can be assigned multiple times.
-            final Dictionary oldDict = mMainDict;
-            mMainDict = mainDict;
-            if (oldDict != null && mainDict != oldDict) {
-                oldDict.close();
-            }
-        }
-
-        public Dictionary getDict(final String dictType) {
-            if (Dictionary.TYPE_MAIN.equals(dictType)) {
-                return mMainDict;
-            } else {
-                return getSubDict(dictType);
-            }
-        }
-
-        public ExpandableBinaryDictionary getSubDict(final String dictType) {
-            return mSubDictMap.get(dictType);
-        }
-
-        public boolean hasDict(final String dictType) {
-            if (Dictionary.TYPE_MAIN.equals(dictType)) {
-                return mMainDict != null;
-            } else {
-                return mSubDictMap.containsKey(dictType);
-            }
-        }
-
-        public void closeDict(final String dictType) {
-            final Dictionary dict;
-            if (Dictionary.TYPE_MAIN.equals(dictType)) {
-                dict = mMainDict;
-            } else {
-                dict = mSubDictMap.remove(dictType);
-            }
-            if (dict != null) {
-                dict.close();
-            }
-        }
     }
 }

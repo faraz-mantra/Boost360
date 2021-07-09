@@ -1,121 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:fillViewport="true"
-  tools:context=".JioSignupActivity">
-
-  <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    tools:context=".JioSignupActivity"
+    android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.Guideline
-      android:id="@+id/startGuideline"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      app:layout_constraintGuide_begin="@dimen/_20sdp" />
-
-    <androidx.constraintlayout.widget.Guideline
-      android:id="@+id/endGuideline"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      app:layout_constraintGuide_end="@dimen/_20sdp" />
-
-    <ImageView
-      android:id="@+id/back_button"
-      android:layout_width="@dimen/_60sdp"
-      android:layout_height="@dimen/_60sdp"
-      android:padding="@dimen/_22sdp"
-      android:src="@drawable/ic_back_arrow"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/ready_to_login"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:fontFamily="@font/open_sans_bold"
-      android:gravity="center"
-      android:text="@string/signup_using_jio_id"
-      android:textColor="#F5A640"
-      android:textSize="@dimen/_20ssp"
-      app:layout_constraintStart_toStartOf="@+id/startGuideline"
-      app:layout_constraintTop_toBottomOf="@+id/back_button" />
-
-
-    <androidx.appcompat.widget.AppCompatEditText
-      android:id="@+id/user_name"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/_20sdp"
-      android:background="@drawable/edt_bg_selector"
-      android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
-      android:drawableStart="@drawable/ic_user"
-      android:drawablePadding="@dimen/_10sdp"
-      android:fontFamily="@font/open_sans"
-      android:hint="@string/your_jio_id_mobile"
-      android:inputType="phone"
-      app:layout_constraintEnd_toStartOf="@+id/endGuideline"
-      app:layout_constraintStart_toStartOf="@+id/startGuideline"
-      app:layout_constraintTop_toBottomOf="@+id/ready_to_login" />
-
-
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/login_button"
-      style="@style/CreateAccountButtonStyle"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/_30sdp"
-      android:fontFamily="@font/open_sans_bold"
-      android:text="@string/proceed"
-      app:layout_constraintEnd_toEndOf="@id/endGuideline"
-      app:layout_constraintStart_toStartOf="@id/startGuideline"
-      app:layout_constraintTop_toBottomOf="@+id/user_name" />
-
-    <LinearLayout
-      android:id="@+id/create_jio_secure_id_section"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/_25sdp"
-      android:background="#FB2361"
-      android:clickable="true"
-      android:orientation="vertical"
-      android:padding="@dimen/_20sdp"
-      app:layout_constraintTop_toBottomOf="@+id/login_button">
-
-      <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/startGuideline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_20sdp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/endGuideline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_20sdp" />
 
         <ImageView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:src="@drawable/ic_facebook" />
+            android:id="@+id/back_button"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:padding="@dimen/_22sdp"
+            android:src="@drawable/ic_back_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_10sdp"
-          android:text="@string/dont_have_jio_id"
-          android:textColor="@color/white"
-          android:textSize="@dimen/_14sdp" />
-      </LinearLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/ready_to_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_bold"
+            android:gravity="center"
+            android:textColor="#F5A640"
+            android:textSize="@dimen/_20ssp"
+            app:layout_constraintStart_toStartOf="@+id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/back_button"
+            android:text="@string/signup_using_jio_id" />
 
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:text="@string/no_jio_id_description"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_13sdp" />
-    </LinearLayout>
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/user_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/edt_bg_selector"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+            android:drawableStart="@drawable/ic_user"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans"
+            android:hint="@string/your_jio_id_mobile"
+            android:inputType="phone"
+            app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+            app:layout_constraintStart_toStartOf="@+id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/ready_to_login" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/login_button"
+            style="@style/CreateAccountButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="@string/proceed"
+            app:layout_constraintEnd_toEndOf="@id/endGuideline"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/user_name" />
+
+        <LinearLayout
+            android:id="@+id/create_jio_secure_id_section"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/_25sdp"
+            android:padding="@dimen/_20sdp"
+            android:background="#FB2361"
+            app:layout_constraintTop_toBottomOf="@+id/login_button">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_facebook"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:text="@string/dont_have_jio_id"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="@string/no_jio_id_description"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

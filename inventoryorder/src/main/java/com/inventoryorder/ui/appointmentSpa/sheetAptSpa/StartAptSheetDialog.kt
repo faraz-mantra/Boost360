@@ -56,22 +56,11 @@ class StartAptSheetDialog : BaseBottomSheetDialog<BottomSheetStartAptBinding, Ba
     when (v) {
       binding?.buttonDone -> {
         val date = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_SERVER_DATE)
-        val address = Address(
-          addressLine1 = orderItem?.BuyerDetails?.address()?.addressLine1(),
-          addressLine2 = orderItem?.BuyerDetails?.address()?.AddressLine2,
-          city = orderItem?.BuyerDetails?.address()?.City,
-          country = orderItem?.BuyerDetails?.address()?.Country,
-          region = orderItem?.BuyerDetails?.address()?.Region,
-          zipcode = orderItem?.BuyerDetails?.address()?.Zipcode
-        )
-        onClicked(
-          MarkAsShippedRequest(
-            orderId = orderItem?._id,
-            shippedOn = date,
-            address = address,
-            shippedBy = MarkAsShippedRequest.ShippedBy.SELLER.value
-          )
-        )
+        val address = Address(addressLine1 = orderItem?.BuyerDetails?.address()?.addressLine1(),
+            addressLine2 = orderItem?.BuyerDetails?.address()?.AddressLine2, city = orderItem?.BuyerDetails?.address()?.City,
+            country = orderItem?.BuyerDetails?.address()?.Country, region = orderItem?.BuyerDetails?.address()?.Region,
+            zipcode = orderItem?.BuyerDetails?.address()?.Zipcode)
+        onClicked(MarkAsShippedRequest(orderId = orderItem?._id,shippedOn = date, address = address, shippedBy = MarkAsShippedRequest.ShippedBy.SELLER.value))
       }
     }
   }

@@ -7,8 +7,7 @@ import com.inventoryorder.model.ordersummary.OrderMenuModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class OrderMenuHolder(binding: ItemOrderMenuBinding) :
-  AppBaseRecyclerViewHolder<ItemOrderMenuBinding>(binding) {
+class OrderMenuHolder(binding: ItemOrderMenuBinding) : AppBaseRecyclerViewHolder<ItemOrderMenuBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -17,12 +16,6 @@ class OrderMenuHolder(binding: ItemOrderMenuBinding) :
     binding.title.text = menuType.title
     getColor(menuType.color)?.let { binding.title.setTextColor(it) }
     binding.line1.visibility = if (data.endLine) View.VISIBLE else View.GONE
-    binding.mainContent.setOnClickListener {
-      listener?.onItemClick(
-        position,
-        data,
-        RecyclerViewActionType.ORDER_DROPDOWN_CLICKED.ordinal
-      )
-    }
+    binding.mainContent.setOnClickListener { listener?.onItemClick(position,data, RecyclerViewActionType.ORDER_DROPDOWN_CLICKED.ordinal) }
   }
 }

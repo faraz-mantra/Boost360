@@ -10,28 +10,9 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 public class EventBusExt {
     private static EventBusExt instance;
-
-    static {
-        instance = new EventBusExt();
-    }
-
     private EventBus eventBus;
 
-    public EventBusExt() {
-        this.eventBus = new EventBus();
-        this.eventBus.register(new ErrorListener());
-    }
-
-    public static EventBus getDefault() {
-        return instance.eventBus;
-    }
-
     public static class ErrorListener {
-
-        @Subscribe(threadMode = ThreadMode.BACKGROUND)
-        public void onEvent(SubscriberExceptionEvent exceptionEvent) {
-            new C03411(exceptionEvent.throwable).start();
-        }
 
         /* renamed from: co.touchlab.android.threading.eventbus.EventBusExt.ErrorListener.1 */
         static class C03411 extends Thread {
@@ -51,5 +32,23 @@ public class EventBusExt {
                 }
             }
         }
+
+        @Subscribe(threadMode = ThreadMode.BACKGROUND)
+        public void onEvent(SubscriberExceptionEvent exceptionEvent) {
+            new C03411(exceptionEvent.throwable).start();
+        }
+    }
+
+    static {
+        instance = new EventBusExt();
+    }
+
+    public EventBusExt() {
+        this.eventBus = new EventBus();
+        this.eventBus.register(new ErrorListener());
+    }
+
+    public static EventBus getDefault() {
+        return instance.eventBus;
     }
 }

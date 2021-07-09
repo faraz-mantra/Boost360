@@ -2,11 +2,9 @@ package com.nowfloats.ProductGallery.fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.appcompat.app.AlertDialog;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -59,17 +57,20 @@ public class ProductPickupAddressFragment extends DialogFragment {
         return fragment;
     }
 
-    public void setAddress(AddressInformation address) {
+    public void setAddress(AddressInformation address)
+    {
         this.address = address;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(Bundle savedInstanceState)
+    {
         return new Dialog(requireActivity());
     }
 
@@ -115,7 +116,8 @@ public class ProductPickupAddressFragment extends DialogFragment {
 
         btnSave.setOnClickListener(v -> {
 
-            if (isValid()) {
+            if(isValid())
+            {
                 listener.onSave(initAddressInformation());
                 dismiss();
             }
@@ -129,18 +131,20 @@ public class ProductPickupAddressFragment extends DialogFragment {
             fileChooser.onFileRemove();
         });
 
-        String title = address == null ? "Add New Address" : "Edit Address";
+        String title = address ==  null ? "Add New Address" : "Edit Address";
         tvTitle.setText(String.valueOf(title));
 
-        String subTitle = address == null ? "" : (address.areaName != null ? address.areaName : "");
+        String subTitle = address ==  null ? "" : (address.areaName != null ? address.areaName : "");
         tvWarehouse.setText(String.valueOf(subTitle));
 
         setAddressData(address);
         return view;
     }
 
-    private void setAddressData(AddressInformation address) {
-        if (address == null) {
+    private void setAddressData(AddressInformation address)
+    {
+        if(address == null)
+        {
             return;
         }
 
@@ -153,24 +157,29 @@ public class ProductPickupAddressFragment extends DialogFragment {
     }
 
 
-    public void setFileName(String fileName) {
+    public void setFileName(String fileName)
+    {
         tvFileName.setText(fileName);
         btnFileChooser.setVisibility(View.GONE);
         layoutFileName.setVisibility(View.VISIBLE);
     }
 
-    public void removeFile() {
+    public void removeFile()
+    {
         tvFileName.setText("");
         btnFileChooser.setVisibility(View.VISIBLE);
         layoutFileName.setVisibility(View.GONE);
     }
 
-    public void isFileSelected(boolean isFileSelected) {
+    public void isFileSelected(boolean isFileSelected)
+    {
         this.isFileSelected = isFileSelected;
     }
 
-    private AddressInformation initAddressInformation() {
-        if (address == null) {
+    private AddressInformation initAddressInformation()
+    {
+        if(address == null)
+        {
             address = new AddressInformation();
         }
 
@@ -185,49 +194,58 @@ public class ProductPickupAddressFragment extends DialogFragment {
     }
 
 
-    public boolean isValid() {
-        if (editWarehouseName.getText().toString().trim().length() == 0) {
+    public boolean isValid()
+    {
+        if(editWarehouseName.getText().toString().trim().length() == 0)
+        {
             editWarehouseName.requestFocus();
             Toast.makeText(getContext(), "Enter warehouse name", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (editContactNumber.getText().toString().trim().length() == 0) {
+        if(editContactNumber.getText().toString().trim().length() == 0)
+        {
             editContactNumber.requestFocus();
             Toast.makeText(getContext(), "Enter warehouse contact number", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (!isFileSelected) {
+        if(!isFileSelected)
+        {
             Toast.makeText(getContext(), "Address proof required", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (editBuildingName.getText().toString().trim().length() == 0) {
+        if(editBuildingName.getText().toString().trim().length() == 0)
+        {
             editBuildingName.requestFocus();
             Toast.makeText(getContext(), "Enter building/plot no. and street address", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (editCity.getText().toString().trim().length() == 0) {
+        if(editCity.getText().toString().trim().length() == 0)
+        {
             editCity.requestFocus();
             Toast.makeText(getContext(), "Enter city", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (editState.getText().toString().trim().length() == 0) {
+        if(editState.getText().toString().trim().length() == 0)
+        {
             editState.requestFocus();
             Toast.makeText(getContext(), "Enter state", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (editCountry.getText().toString().trim().length() == 0) {
+        if(editCountry.getText().toString().trim().length() == 0)
+        {
             editCountry.requestFocus();
             Toast.makeText(getContext(), "Select country", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (!checkAcceptance.isChecked()) {
+        if(!checkAcceptance.isChecked())
+        {
             Toast.makeText(getContext(), "Please confirm entered details", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -236,21 +254,28 @@ public class ProductPickupAddressFragment extends DialogFragment {
     }
 
 
-    private void loadCountryCodeandCountryNameMap() {
+    private void loadCountryCodeandCountryNameMap()
+    {
         Thread thread = new Thread() {
 
             @Override
-            public void run() {
-                try {
+            public void run()
+            {
+                try
+                {
                     String[] locales = Locale.getISOCountries();
 
-                    for (String countryCode : locales) {
+                    for (String countryCode : locales)
+                    {
                         Locale obj = new Locale("", countryCode);
                         signUpCountryList.add(obj.getDisplayCountry());
                     }
 
                     Collections.sort(signUpCountryList);
-                } catch (Exception e) {
+                }
+
+                catch (Exception e)
+                {
                     e.printStackTrace();
                 }
             }
@@ -280,10 +305,10 @@ public class ProductPickupAddressFragment extends DialogFragment {
 
         lvItems.setOnItemClickListener((parent, v, position, id) -> {
 
-            String strVal = adapter.getItem(position);
-            dialog.dismiss();
+                String strVal = adapter.getItem(position);
+                dialog.dismiss();
 
-            editCountry.setText(strVal);
+                editCountry.setText(strVal);
         });
 
         edtSearch.addTextChangedListener(new TextWatcher() {
@@ -299,7 +324,8 @@ public class ProductPickupAddressFragment extends DialogFragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s)
+            {
                 adapter.getFilter().filter(s.toString().toLowerCase());
             }
         });
@@ -307,36 +333,41 @@ public class ProductPickupAddressFragment extends DialogFragment {
         dialog.setCancelable(false);
     }
 
-    public void setOnClickListener(OnSaveAddress listener) {
+    public void setOnClickListener(OnSaveAddress listener)
+    {
         this.listener = listener;
     }
 
-    public void setFileChooserListener(OnFileChooser fileChooser) {
+    public interface OnSaveAddress
+    {
+        void onSave(AddressInformation addressInformation);
+    }
+
+    public void setFileChooserListener(OnFileChooser fileChooser)
+    {
         this.fileChooser = fileChooser;
     }
 
+    public interface OnFileChooser
+    {
+        void openDialog();
+        void onFileRemove();
+    }
+
+
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
 
         Dialog dialog = getDialog();
 
-        if (dialog != null) {
+        if (dialog != null)
+        {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
 
             dialog.getWindow().setLayout(width, height);
         }
-    }
-
-    public interface OnSaveAddress {
-        void onSave(AddressInformation addressInformation);
-    }
-
-
-    public interface OnFileChooser {
-        void openDialog();
-
-        void onFileRemove();
     }
 }

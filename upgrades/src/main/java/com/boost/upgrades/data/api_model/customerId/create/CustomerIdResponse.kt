@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class CustomerIdResponse(
-  @SerializedName("CustomerId")
-  @Expose
-  val CustomerId: String
+    @SerializedName("CustomerId")
+    @Expose
+    val CustomerId: String
 )

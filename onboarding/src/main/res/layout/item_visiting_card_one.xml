@@ -68,9 +68,9 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-              <include
-                android:id="@+id/item_channels_group"
-                layout="@layout/item_card_channel" />
+              <include layout="@layout/item_card_channel"
+                  android:id="@+id/item_channels_group"
+                  />
             </LinearLayout>
           </LinearLayout>
 
@@ -213,12 +213,12 @@
                   android:ellipsize="end"
                   android:gravity="center_vertical"
                   android:maxLines="1"
+                  app:fontFamily="@font/semi_bold"
                   android:textColor="@color/white"
                   app:autoSizeMaxTextSize="11sp"
                   app:autoSizeMinTextSize="6sp"
                   app:autoSizeStepGranularity="1sp"
                   app:autoSizeTextType="uniform"
-                  app:fontFamily="@font/semi_bold"
                   tools:text="https://plastoindiaandpolymers.com" />
               </LinearLayout>
             </LinearLayout>

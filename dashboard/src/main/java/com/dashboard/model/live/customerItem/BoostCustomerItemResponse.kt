@@ -8,4 +8,4 @@ import java.io.Serializable
 data class BoostCustomerItemResponse(
   @SerializedName("data")
   var `data`: ArrayList<CustomerItem>? = null
-) : BaseResponse(), Serializable
+):BaseResponse(),Serializable

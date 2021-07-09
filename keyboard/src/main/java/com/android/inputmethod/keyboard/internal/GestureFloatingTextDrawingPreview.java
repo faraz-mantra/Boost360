@@ -23,9 +23,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Rect;
 import android.graphics.RectF;
-
 import androidx.annotation.NonNull;
-
 import android.text.TextUtils;
 
 import com.android.inputmethod.keyboard.PointerTracker;
@@ -50,12 +48,66 @@ import io.separ.neural.inputmethod.indic.SuggestedWords;
  * @attr ref R.styleable#KeyboardView_gestureFloatingPreviewRoundRadius
  */
 public class GestureFloatingTextDrawingPreview extends AbstractDrawingPreview {
+    protected static final class GesturePreviewTextParams {
+        public final int mGesturePreviewTextOffset;
+        public final int mGesturePreviewTextHeight;
+        public final float mGesturePreviewHorizontalPadding;
+        public final float mGesturePreviewVerticalPadding;
+        public final float mGesturePreviewRoundRadius;
+        public final int mDisplayWidth;
+
+        private final int mGesturePreviewTextSize;
+        private final int mGesturePreviewTextColor;
+        private final int mGesturePreviewColor;
+        private final Paint mPaint = new Paint();
+
+        private static final char[] TEXT_HEIGHT_REFERENCE_CHAR = { 'M' };
+
+        public GesturePreviewTextParams(final TypedArray mainKeyboardViewAttr) {
+            mGesturePreviewTextSize = mainKeyboardViewAttr.getDimensionPixelSize(
+                    R.styleable.MainKeyboardView_gestureFloatingPreviewTextSize, 0);
+            mGesturePreviewTextColor = mainKeyboardViewAttr.getColor(
+                    R.styleable.MainKeyboardView_gestureFloatingPreviewTextColor, 0);
+            mGesturePreviewTextOffset = mainKeyboardViewAttr.getDimensionPixelOffset(
+                    R.styleable.MainKeyboardView_gestureFloatingPreviewTextOffset, 0);
+            mGesturePreviewColor = mainKeyboardViewAttr.getColor(
+                    R.styleable.MainKeyboardView_gestureFloatingPreviewColor, 0);
+            mGesturePreviewHorizontalPadding = mainKeyboardViewAttr.getDimension(
+                    R.styleable.MainKeyboardView_gestureFloatingPreviewHorizontalPadding, 0.0f);
+            mGesturePreviewVerticalPadding = mainKeyboardViewAttr.getDimension(
+                    R.styleable.MainKeyboardView_gestureFloatingPreviewVerticalPadding, 0.0f);
+            mGesturePreviewRoundRadius = mainKeyboardViewAttr.getDimension(
+                    R.styleable.MainKeyboardView_gestureFloatingPreviewRoundRadius, 0.0f);
+            mDisplayWidth = mainKeyboardViewAttr.getResources().getDisplayMetrics().widthPixels;
+
+            final Paint textPaint = getTextPaint();
+            final Rect textRect = new Rect();
+            textPaint.getTextBounds(TEXT_HEIGHT_REFERENCE_CHAR, 0, 1, textRect);
+            mGesturePreviewTextHeight = textRect.height();
+        }
+
+        public Paint getTextPaint() {
+            mPaint.setAntiAlias(true);
+            mPaint.setTextAlign(Align.CENTER);
+            mPaint.setTextSize(mGesturePreviewTextSize);
+            mPaint.setColor(mGesturePreviewTextColor);
+            mPaint.setTypeface(FontUtils.getTypeface());
+            return mPaint;
+        }
+
+        public Paint getBackgroundPaint() {
+            mPaint.setColor(mGesturePreviewColor);
+            return mPaint;
+        }
+    }
+
     private final GesturePreviewTextParams mParams;
     private final RectF mGesturePreviewRectangle = new RectF();
-    private final int[] mLastPointerCoords = CoordinateUtils.newInstance();
     private int mPreviewTextX;
     private int mPreviewTextY;
     private SuggestedWords mSuggestedWords = SuggestedWords.EMPTY;
+    private final int[] mLastPointerCoords = CoordinateUtils.newInstance();
+
     public GestureFloatingTextDrawingPreview(final TypedArray mainKeyboardViewAttr) {
         mParams = new GesturePreviewTextParams(mainKeyboardViewAttr);
     }
@@ -84,9 +136,8 @@ public class GestureFloatingTextDrawingPreview extends AbstractDrawingPreview {
 
     /**
      * Draws gesture preview text
-     *
      * @param context
-     * @param canvas  The canvas where preview text is drawn.
+     * @param canvas The canvas where preview text is drawn.
      */
     @Override
     public void drawPreview(Context context, @NonNull final Canvas canvas) {
@@ -127,60 +178,9 @@ public class GestureFloatingTextDrawingPreview extends AbstractDrawingPreview {
                 - mParams.mGesturePreviewTextOffset - rectHeight;
         rectangle.set(rectX, rectY, rectX + rectWidth, rectY + rectHeight);
 
-        mPreviewTextX = (int) (rectX + hPad + textWidth / 2.0f);
-        mPreviewTextY = (int) (rectY + vPad) + textHeight;
+        mPreviewTextX = (int)(rectX + hPad + textWidth / 2.0f);
+        mPreviewTextY = (int)(rectY + vPad) + textHeight;
         // TODO: Should narrow the invalidate region.
         invalidateDrawingView();
-    }
-
-    protected static final class GesturePreviewTextParams {
-        private static final char[] TEXT_HEIGHT_REFERENCE_CHAR = {'M'};
-        public final int mGesturePreviewTextOffset;
-        public final int mGesturePreviewTextHeight;
-        public final float mGesturePreviewHorizontalPadding;
-        public final float mGesturePreviewVerticalPadding;
-        public final float mGesturePreviewRoundRadius;
-        public final int mDisplayWidth;
-        private final int mGesturePreviewTextSize;
-        private final int mGesturePreviewTextColor;
-        private final int mGesturePreviewColor;
-        private final Paint mPaint = new Paint();
-
-        public GesturePreviewTextParams(final TypedArray mainKeyboardViewAttr) {
-            mGesturePreviewTextSize = mainKeyboardViewAttr.getDimensionPixelSize(
-                    R.styleable.MainKeyboardView_gestureFloatingPreviewTextSize, 0);
-            mGesturePreviewTextColor = mainKeyboardViewAttr.getColor(
-                    R.styleable.MainKeyboardView_gestureFloatingPreviewTextColor, 0);
-            mGesturePreviewTextOffset = mainKeyboardViewAttr.getDimensionPixelOffset(
-                    R.styleable.MainKeyboardView_gestureFloatingPreviewTextOffset, 0);
-            mGesturePreviewColor = mainKeyboardViewAttr.getColor(
-                    R.styleable.MainKeyboardView_gestureFloatingPreviewColor, 0);
-            mGesturePreviewHorizontalPadding = mainKeyboardViewAttr.getDimension(
-                    R.styleable.MainKeyboardView_gestureFloatingPreviewHorizontalPadding, 0.0f);
-            mGesturePreviewVerticalPadding = mainKeyboardViewAttr.getDimension(
-                    R.styleable.MainKeyboardView_gestureFloatingPreviewVerticalPadding, 0.0f);
-            mGesturePreviewRoundRadius = mainKeyboardViewAttr.getDimension(
-                    R.styleable.MainKeyboardView_gestureFloatingPreviewRoundRadius, 0.0f);
-            mDisplayWidth = mainKeyboardViewAttr.getResources().getDisplayMetrics().widthPixels;
-
-            final Paint textPaint = getTextPaint();
-            final Rect textRect = new Rect();
-            textPaint.getTextBounds(TEXT_HEIGHT_REFERENCE_CHAR, 0, 1, textRect);
-            mGesturePreviewTextHeight = textRect.height();
-        }
-
-        public Paint getTextPaint() {
-            mPaint.setAntiAlias(true);
-            mPaint.setTextAlign(Align.CENTER);
-            mPaint.setTextSize(mGesturePreviewTextSize);
-            mPaint.setColor(mGesturePreviewTextColor);
-            mPaint.setTypeface(FontUtils.getTypeface());
-            return mPaint;
-        }
-
-        public Paint getBackgroundPaint() {
-            mPaint.setColor(mGesturePreviewColor);
-            return mPaint;
-        }
     }
 }

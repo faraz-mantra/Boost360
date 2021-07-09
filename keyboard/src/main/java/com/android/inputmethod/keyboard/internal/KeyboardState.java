@@ -44,6 +44,47 @@ public final class KeyboardState {
     private static final String TAG = KeyboardState.class.getSimpleName();
     private static final boolean DEBUG_EVENT = false;
     private static final boolean DEBUG_ACTION = false;
+
+    public interface SwitchActions {
+        void setAlphabetKeyboard();
+
+        void setAlphabetManualShiftedKeyboard();
+
+        void setAlphabetAutomaticShiftedKeyboard();
+
+        void setAlphabetShiftLockedKeyboard();
+
+        void setAlphabetShiftLockShiftedKeyboard();
+
+        void setEmojiKeyboard();
+
+        void setSymbolsKeyboard();
+
+        void setSymbolsShiftedKeyboard();
+
+        void setMainLayoutTwo();
+
+        void setMainLayoutThree();
+
+        /**
+         * Request to call back {@link KeyboardState#onUpdateShiftState(int, int)}.
+         */
+        void requestUpdatingShiftState(final int currentAutoCapsState,
+                                       final int currentRecapitalizeState);
+
+        void startDoubleTapShiftKeyTimer();
+
+        boolean isInDoubleTapShiftKeyTimeout();
+
+        void cancelDoubleTapShiftKeyTimer();
+    }
+
+    private final SwitchActions mSwitchActions;
+
+    private final ShiftKeyState mShiftKeyState = new ShiftKeyState("Shift");
+    private final ModifierKeyState mSymbolKeyState = new ModifierKeyState("Symbol");
+    private final ModifierKeyState mSwitchScreenMainKeyState = new ModifierKeyState("switchScreen");
+
     // TODO: Merge {@link #mSwitchState}, {@link #mIsAlphabetMode}, {@link #mAlphabetShiftState},
     // {@link #mIsSymbolShifted}, {@link #mPrevMainKeyboardWasShiftLocked}, and
     // {@link #mPrevSymbolsKeyboardWasShifted} into single state variable.
@@ -53,69 +94,50 @@ public final class KeyboardState {
     private static final int SWITCH_STATE_MOMENTARY_ALPHA_AND_SYMBOL = 3;
     private static final int SWITCH_STATE_MOMENTARY_SYMBOL_AND_MORE = 4;
     private static final int SWITCH_STATE_MOMENTARY_ALPHA_SHIFT = 5;
-    private static final int UNSHIFT = 0;
-    private static final int MANUAL_SHIFT = 1;
-    private static final int AUTOMATIC_SHIFT = 2;
-    private static final int SHIFT_LOCK_SHIFTED = 3;
-    private final SwitchActions mSwitchActions;
-    private final ShiftKeyState mShiftKeyState = new ShiftKeyState("Shift");
-    private final ModifierKeyState mSymbolKeyState = new ModifierKeyState("Symbol");
-    private final ModifierKeyState mSwitchScreenMainKeyState = new ModifierKeyState("switchScreen");
-    private final AlphabetShiftState mAlphabetShiftState = new AlphabetShiftState();
-    private final SavedKeyboardState mSavedKeyboardState = new SavedKeyboardState();
     private int mSwitchState = SWITCH_STATE_ALPHA;
+
     // TODO: Consolidate these two mode booleans into one integer to distinguish between alphabet,
     // symbols, and emoji mode.
     private boolean mIsAlphabetMode;
     private boolean mIsEmojiMode;
+    private final AlphabetShiftState mAlphabetShiftState = new AlphabetShiftState();
     private boolean mIsSymbolShifted;
     private boolean mPrevMainKeyboardWasShiftLocked;
     private boolean mPrevSymbolsKeyboardWasShifted;
     private int mRecapitalizeMode;
+
     // For handling double tap.
     private boolean mIsInAlphabetUnshiftedFromShifted;
     private boolean mIsInDoubleTapShiftKey;
     private int screenNumber = 1;
 
+    private final SavedKeyboardState mSavedKeyboardState = new SavedKeyboardState();
+
+    static final class SavedKeyboardState {
+        public boolean mIsValid;
+        public boolean mIsAlphabetMode;
+        public boolean mIsAlphabetShiftLocked;
+        public boolean mIsEmojiMode;
+        public int mShiftMode;
+        public int screenNumber;
+
+        @Override
+        public String toString() {
+            if (!mIsValid) return "INVALID";
+            if (mIsAlphabetMode) {
+                if (mIsAlphabetShiftLocked) return "ALPHABET_SHIFT_LOCKED";
+                return "ALPHABET_" + shiftModeToString(mShiftMode);
+            } else if (mIsEmojiMode) {
+                return "EMOJI";
+            } else {
+                return "SYMBOLS_" + shiftModeToString(mShiftMode);
+            }
+        }
+    }
+
     public KeyboardState(final SwitchActions switchActions) {
         mSwitchActions = switchActions;
         mRecapitalizeMode = RecapitalizeStatus.NOT_A_RECAPITALIZE_MODE;
-    }
-
-    private static boolean isSpaceOrEnter(final int c) {
-        return c == Constants.CODE_SPACE || c == Constants.CODE_ENTER;
-    }
-
-    static String shiftModeToString(final int shiftMode) {
-        switch (shiftMode) {
-            case UNSHIFT:
-                return "UNSHIFT";
-            case MANUAL_SHIFT:
-                return "MANUAL";
-            case AUTOMATIC_SHIFT:
-                return "AUTOMATIC";
-            default:
-                return null;
-        }
-    }
-
-    private static String switchStateToString(final int switchState) {
-        switch (switchState) {
-            case SWITCH_STATE_ALPHA:
-                return "ALPHA";
-            case SWITCH_STATE_SYMBOL_BEGIN:
-                return "SYMBOL-BEGIN";
-            case SWITCH_STATE_SYMBOL:
-                return "SYMBOL";
-            case SWITCH_STATE_MOMENTARY_ALPHA_AND_SYMBOL:
-                return "MOMENTARY-ALPHA-SYMBOL";
-            case SWITCH_STATE_MOMENTARY_SYMBOL_AND_MORE:
-                return "MOMENTARY-SYMBOL-MORE";
-            case SWITCH_STATE_MOMENTARY_ALPHA_SHIFT:
-                return "MOMENTARY-ALPHA_SHIFT";
-            default:
-                return null;
-        }
     }
 
     public void onLoadKeyboard(final int currentAutoCapsState,
@@ -132,6 +154,11 @@ public final class KeyboardState {
         mSwitchScreenMainKeyState.onRelease();
         onRestoreKeyboardState(currentAutoCapsState, currentRecapitalizeState);
     }
+
+    private static final int UNSHIFT = 0;
+    private static final int MANUAL_SHIFT = 1;
+    private static final int AUTOMATIC_SHIFT = 2;
+    private static final int SHIFT_LOCK_SHIFTED = 3;
 
     public void onSaveKeyboardState() {
         final SavedKeyboardState state = mSavedKeyboardState;
@@ -668,6 +695,10 @@ public final class KeyboardState {
         }
     }
 
+    private static boolean isSpaceOrEnter(final int c) {
+        return c == Constants.CODE_SPACE || c == Constants.CODE_ENTER;
+    }
+
     public void onCodeInput(final int code, final int currentAutoCapsState,
                             final int currentRecapitalizeState) {
         if (DEBUG_EVENT) {
@@ -725,6 +756,38 @@ public final class KeyboardState {
         }
     }
 
+    static String shiftModeToString(final int shiftMode) {
+        switch (shiftMode) {
+            case UNSHIFT:
+                return "UNSHIFT";
+            case MANUAL_SHIFT:
+                return "MANUAL";
+            case AUTOMATIC_SHIFT:
+                return "AUTOMATIC";
+            default:
+                return null;
+        }
+    }
+
+    private static String switchStateToString(final int switchState) {
+        switch (switchState) {
+            case SWITCH_STATE_ALPHA:
+                return "ALPHA";
+            case SWITCH_STATE_SYMBOL_BEGIN:
+                return "SYMBOL-BEGIN";
+            case SWITCH_STATE_SYMBOL:
+                return "SYMBOL";
+            case SWITCH_STATE_MOMENTARY_ALPHA_AND_SYMBOL:
+                return "MOMENTARY-ALPHA-SYMBOL";
+            case SWITCH_STATE_MOMENTARY_SYMBOL_AND_MORE:
+                return "MOMENTARY-SYMBOL-MORE";
+            case SWITCH_STATE_MOMENTARY_ALPHA_SHIFT:
+                return "MOMENTARY-ALPHA_SHIFT";
+            default:
+                return null;
+        }
+    }
+
     @Override
     public String toString() {
         return "[keyboard=" + (mIsAlphabetMode ? mAlphabetShiftState.toString()
@@ -732,61 +795,5 @@ public final class KeyboardState {
                 + " shift=" + mShiftKeyState
                 + " symbol=" + mSymbolKeyState
                 + " switch=" + switchStateToString(mSwitchState) + ']';
-    }
-
-    public interface SwitchActions {
-        void setAlphabetKeyboard();
-
-        void setAlphabetManualShiftedKeyboard();
-
-        void setAlphabetAutomaticShiftedKeyboard();
-
-        void setAlphabetShiftLockedKeyboard();
-
-        void setAlphabetShiftLockShiftedKeyboard();
-
-        void setEmojiKeyboard();
-
-        void setSymbolsKeyboard();
-
-        void setSymbolsShiftedKeyboard();
-
-        void setMainLayoutTwo();
-
-        void setMainLayoutThree();
-
-        /**
-         * Request to call back {@link KeyboardState#onUpdateShiftState(int, int)}.
-         */
-        void requestUpdatingShiftState(final int currentAutoCapsState,
-                                       final int currentRecapitalizeState);
-
-        void startDoubleTapShiftKeyTimer();
-
-        boolean isInDoubleTapShiftKeyTimeout();
-
-        void cancelDoubleTapShiftKeyTimer();
-    }
-
-    static final class SavedKeyboardState {
-        public boolean mIsValid;
-        public boolean mIsAlphabetMode;
-        public boolean mIsAlphabetShiftLocked;
-        public boolean mIsEmojiMode;
-        public int mShiftMode;
-        public int screenNumber;
-
-        @Override
-        public String toString() {
-            if (!mIsValid) return "INVALID";
-            if (mIsAlphabetMode) {
-                if (mIsAlphabetShiftLocked) return "ALPHABET_SHIFT_LOCKED";
-                return "ALPHABET_" + shiftModeToString(mShiftMode);
-            } else if (mIsEmojiMode) {
-                return "EMOJI";
-            } else {
-                return "SYMBOLS_" + shiftModeToString(mShiftMode);
-            }
-        }
     }
 }

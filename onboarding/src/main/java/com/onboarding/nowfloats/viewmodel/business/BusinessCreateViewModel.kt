@@ -22,17 +22,11 @@ import org.json.JSONObject
 
 class BusinessCreateViewModel : BaseViewModel() {
 
-  fun putCreateBusinessOnboarding(
-    profileId: String?,
-    request: BusinessCreateRequest
-  ): LiveData<BaseResponse> {
+  fun putCreateBusinessOnboarding(profileId: String?, request: BusinessCreateRequest): LiveData<BaseResponse> {
     return BusinessCreateRepository.putCreateBusinessOnboarding(profileId, request).toLiveData()
   }
 
-  fun postActivatePurchasedOrder(
-    clientId: String?,
-    request: ActivatePurchasedOrderRequest
-  ): LiveData<BaseResponse> {
+  fun postActivatePurchasedOrder(clientId: String?, request: ActivatePurchasedOrderRequest): LiveData<BaseResponse> {
     return BusinessCreateRepository.postActivatePurchasedOrder(clientId, request).toLiveData()
   }
 
@@ -40,16 +34,12 @@ class BusinessCreateViewModel : BaseViewModel() {
     return ChannelRepository.updateChannelAccessTokens(request).toLiveData()
   }
 
-  fun postUpdateWhatsappRequest(
-    request: UpdateChannelActionDataRequest,
-    auth: String
-  ): LiveData<BaseResponse> {
+  fun postUpdateWhatsappRequest(request: UpdateChannelActionDataRequest, auth: String): LiveData<BaseResponse> {
     return WhatsAppRepository.postUpdateWhatsappRequest(auth = auth, request = request).toLiveData()
   }
 
   fun getWhatsappBusiness(request: String?, auth: String): LiveData<BaseResponse> {
-    return WhatsAppRepository.getWhatsappBusiness(auth = auth, request = getJsonRequest(request))
-      .toLiveData()
+    return WhatsAppRepository.getWhatsappBusiness(auth = auth, request = getJsonRequest(request)).toLiveData()
   }
 
   fun postCheckBusinessDomain(request: BusinessDomainRequest): LiveData<BaseResponse> {
@@ -81,13 +71,11 @@ class BusinessCreateViewModel : BaseViewModel() {
   }
 
   fun validateUsersEmail(requestValidateEmail: RequestValidateEmail?): LiveData<BaseResponse> {
-    return BusinessCreateRepository.validateUsersEmail(requestValidateEmail = requestValidateEmail)
-      .toLiveData()
+    return BusinessCreateRepository.validateUsersEmail(requestValidateEmail = requestValidateEmail).toLiveData()
   }
 
   fun validateUsersPhone(requestValidatePhone: RequestValidatePhone?): LiveData<BaseResponse> {
-    return BusinessCreateRepository.validateUsersPhone(requestValidatePhone = requestValidatePhone)
-      .toLiveData()
+    return BusinessCreateRepository.validateUsersPhone(requestValidatePhone = requestValidatePhone).toLiveData()
   }
 
   fun getCategoriesPlan(context: Context): LiveData<BaseResponse> {

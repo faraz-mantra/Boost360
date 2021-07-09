@@ -12,8 +12,7 @@ import com.inventoryorder.databinding.BottomSheetConfirmOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
 
-class ConfirmBottomSheetDialog :
-  BaseBottomSheetDialog<BottomSheetConfirmOrderBinding, BaseViewModel>() {
+class ConfirmBottomSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmOrderBinding, BaseViewModel>() {
 
   var isCheckLink: Boolean = true
   var onClicked: (isCheckLink: Boolean) -> Unit = {}
@@ -32,12 +31,7 @@ class ConfirmBottomSheetDialog :
   }
 
   override fun onCreateView() {
-    setOnClickListener(
-      binding?.buttonDone,
-      binding?.buttonDoneN,
-      binding?.tvCancel,
-      binding?.tvCancelN
-    )
+    setOnClickListener(binding?.buttonDone, binding?.buttonDoneN, binding?.tvCancel, binding?.tvCancelN)
     binding?.tvSubTitle?.text = "Order ID #${orderItem?.ReferenceNumber ?: ""}"
     val method = PaymentDetailsN.METHOD.fromType(orderItem?.PaymentDetails?.method())
     val statusPayment = PaymentDetailsN.STATUS.from(orderItem?.PaymentDetails?.status())
@@ -54,24 +48,12 @@ class ConfirmBottomSheetDialog :
     } else binding?.checkboxEmail?.gone()
 
 
-    val isPaymentDone =
-      (method == PaymentDetailsN.METHOD.FREE || (method != PaymentDetailsN.METHOD.FREE && statusPayment == PaymentDetailsN.STATUS.SUCCESS))
-    binding?.txtDeliveryMode?.text =
-      fromHtml("Delivery mode: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.deliveryType()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
-    binding?.txtPaymentMode?.text =
-      fromHtml("Payment mode: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.PaymentDetails?.methodValue()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
-    binding?.txtPaymentStatus?.text =
-      fromHtml("Payment status: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.PaymentDetails?.status()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
-    val iconPayment = ContextCompat.getDrawable(
-      baseActivity,
-      if (isPaymentDone) R.drawable.ic_order_status_success else R.drawable.ic_order_status_pending
-    )
-    binding?.txtPaymentStatus?.setCompoundDrawablesWithIntrinsicBounds(
-      iconPayment,
-      null,
-      null,
-      null
-    )
+    val isPaymentDone = (method == PaymentDetailsN.METHOD.FREE || (method != PaymentDetailsN.METHOD.FREE && statusPayment == PaymentDetailsN.STATUS.SUCCESS))
+    binding?.txtDeliveryMode?.text = fromHtml("Delivery mode: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.deliveryType()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
+    binding?.txtPaymentMode?.text = fromHtml("Payment mode: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.PaymentDetails?.methodValue()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
+    binding?.txtPaymentStatus?.text = fromHtml("Payment status: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.PaymentDetails?.status()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
+    val iconPayment = ContextCompat.getDrawable(baseActivity, if (isPaymentDone) R.drawable.ic_order_status_success else R.drawable.ic_order_status_pending)
+    binding?.txtPaymentStatus?.setCompoundDrawablesWithIntrinsicBounds(iconPayment, null, null, null)
     if (isPaymentDone.not()) {
       checkUi()
       binding?.btnCheckOnlineLink?.setOnClickListener {
@@ -84,8 +66,7 @@ class ConfirmBottomSheetDialog :
       binding?.btnCheckOnlineLink?.gone()
       binding?.btnVertical?.gone()
       binding?.btnHorizontal?.visible()
-      binding?.txtNote?.text =
-        "${getString(R.string.boost_will_send_an_email_and_an_sms_confirmation_of_this_order)}."
+      binding?.txtNote?.text = "${getString(R.string.boost_will_send_an_email_and_an_sms_confirmation_of_this_order)}."
     }
   }
 
@@ -95,29 +76,15 @@ class ConfirmBottomSheetDialog :
       binding?.btnVertical?.visible()
       binding?.btnHorizontal?.gone()
       binding?.line?.gone()
-      binding?.btnCheckOnlineLink?.setCompoundDrawablesWithIntrinsicBounds(
-        R.drawable.ic_order_online_link_check,
-        0,
-        0,
-        0
-      )
-      binding?.txtNote?.text =
-        "${getString(R.string.boost_will_send_an_email_and_an_sms_confirmation_of_this_order)} ${
-          getString(R.string.boost_along_payment_order)
-        }"
+      binding?.btnCheckOnlineLink?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_order_online_link_check, 0, 0, 0)
+      binding?.txtNote?.text = "${getString(R.string.boost_will_send_an_email_and_an_sms_confirmation_of_this_order)} ${getString(R.string.boost_along_payment_order)}"
     } else {
       binding?.onlinePaymentLinkCheck?.gone()
       binding?.btnVertical?.gone()
       binding?.btnHorizontal?.visible()
       binding?.line?.visible()
-      binding?.btnCheckOnlineLink?.setCompoundDrawablesWithIntrinsicBounds(
-        R.drawable.ic_order_online_link_uncheck,
-        0,
-        0,
-        0
-      )
-      binding?.txtNote?.text =
-        "${getString(R.string.boost_will_send_an_email_and_an_sms_confirmation_of_this_order)}."
+      binding?.btnCheckOnlineLink?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_order_online_link_uncheck, 0, 0, 0)
+      binding?.txtNote?.text = "${getString(R.string.boost_will_send_an_email_and_an_sms_confirmation_of_this_order)}."
 
     }
   }

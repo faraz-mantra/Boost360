@@ -36,7 +36,7 @@ public class MenuInScrollViewActivity extends Activity implements FloatingAction
         menus = new ArrayList<FloatingActionMenu>();
 
         // add 20 views into body, each with a menu attached
-        for (int i = 0; i < 20; i++) {
+        for(int i=0; i<20; i++) {
             LinearLayout item = (LinearLayout) inflater.inflate(R.layout.item_scroll_view, null, false);
 
             scrollViewBody.addView(item);
@@ -122,7 +122,7 @@ public class MenuInScrollViewActivity extends Activity implements FloatingAction
     @Override
     public void onMenuOpened(FloatingActionMenu menu) {
         // Only allow one menu to stay open
-        for (FloatingActionMenu iMenu : menus) {
+        for(FloatingActionMenu iMenu : menus) {
             iMenu.close(true);
         }
         // update our current menu reference
@@ -140,7 +140,7 @@ public class MenuInScrollViewActivity extends Activity implements FloatingAction
         // ScrollView is scrolled,
         // coordinates of main action view has changed.
         // We need to update item coordinates of the current open menu.
-        if (currentMenu != null) {
+        if(currentMenu != null) {
             currentMenu.updateItemPositions();
         }
     }
@@ -148,7 +148,7 @@ public class MenuInScrollViewActivity extends Activity implements FloatingAction
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
         // update the position of the menu when the main layout changes size on events like soft keyboard open/close
-        if (right - left != 0 && bottom - top != 0 &&
+        if(right - left != 0 && bottom - top != 0 &&
                 (oldLeft != left || oldTop != top || oldRight != right || oldBottom != bottom) && bottomMenu != null) {
             bottomMenu.updateItemPositions();
         }

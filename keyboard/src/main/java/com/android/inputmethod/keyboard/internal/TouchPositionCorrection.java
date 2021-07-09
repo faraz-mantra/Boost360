@@ -26,12 +26,6 @@ public final class TouchPositionCorrection {
     private float[] mYs;
     private float[] mRadii;
 
-    public static float getX(final int row) {
-        return 0.0f;
-        // Touch position correction data for X coordinate is obsolete.
-        // return mXs[row];
-    }
-
     public void load(final String[] data) {
         final int dataLength = data.length;
         if (dataLength % TOUCH_POSITION_CORRECTION_RECORD_SIZE != 0) {
@@ -83,6 +77,12 @@ public final class TouchPositionCorrection {
 
     public int getRows() {
         return mRadii.length;
+    }
+
+    public static float getX(final int row) {
+        return 0.0f;
+        // Touch position correction data for X coordinate is obsolete.
+        // return mXs[row];
     }
 
     public float getY(final int row) {

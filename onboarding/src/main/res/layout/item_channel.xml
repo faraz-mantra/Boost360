@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:android="http://schemas.android.com/apk/res/android">
 
   <com.framework.views.customViews.CustomCardView
     android:layout_width="@dimen/size_40"
@@ -9,13 +9,13 @@
     android:layout_marginStart="@dimen/size_4"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/size_20"
-    app:cardElevation="2dp">
+      app:cardElevation="2dp">
 
     <com.framework.views.customViews.CustomImageView
       android:id="@+id/image"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      app:srcCompat="@drawable/ic_google_n" />
+        app:srcCompat="@drawable/ic_google_n" />
 
   </com.framework.views.customViews.CustomCardView>
 </layout>

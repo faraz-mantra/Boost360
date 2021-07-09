@@ -8,8 +8,7 @@ import com.inventoryorder.databinding.BottomSheetSendFeedbackAptBinding
 import com.inventoryorder.model.orderRequest.feedback.FeedbackRequest
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class SendFeedbackAptSheetDialog :
-  BaseBottomSheetDialog<BottomSheetSendFeedbackAptBinding, BaseViewModel>() {
+class SendFeedbackAptSheetDialog : BaseBottomSheetDialog<BottomSheetSendFeedbackAptBinding, BaseViewModel>() {
 
   private var orderItem: OrderItem? = null
   var onClicked: (request: FeedbackRequest) -> Unit = { }
@@ -35,12 +34,7 @@ class SendFeedbackAptSheetDialog :
     super.onClick(v)
     dismiss()
     when (v) {
-      binding?.buttonDone -> onClicked(
-        FeedbackRequest(
-          orderItem?._id,
-          binding?.txtReason?.text?.toString() ?: ""
-        )
-      )
+      binding?.buttonDone -> onClicked(FeedbackRequest(orderItem?._id,binding?.txtReason?.text?.toString() ?: ""))
     }
   }
 

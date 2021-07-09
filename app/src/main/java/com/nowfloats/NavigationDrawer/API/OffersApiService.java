@@ -18,17 +18,15 @@ import retrofit.client.Response;
 
 public class OffersApiService {
     Bus mBus;
-
-    public OffersApiService(Bus bus) {
+    public OffersApiService(Bus bus){
         this.mBus = bus;
     }
-
-    public void postOffers(HashMap<String, String> data) {
+    public void postOffers(HashMap<String, String> data){
         OffersInterface offersInterface = Constants.restAdapter.create(OffersInterface.class);
         offersInterface.postOffer(data, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                if (s != null) {
+                if(s!=null) {
                     mBus.post(new PostOfferEvent(true, s));
                 }
             }
@@ -40,12 +38,12 @@ public class OffersApiService {
         });
     }
 
-    public void getAllOffers(HashMap<String, String> data) {
+    public void getAllOffers(HashMap<String, String> data){
         OffersInterface offersInterfac = Constants.restAdapter.create(OffersInterface.class);
         offersInterfac.getAllOffers(data, new Callback<OfferModel>() {
             @Override
             public void success(OfferModel offerModel, Response response) {
-                if (offerModel != null) {
+                if(offerModel!=null) {
                     offerModel.response = true;
                     mBus.post(offerModel);
                 }

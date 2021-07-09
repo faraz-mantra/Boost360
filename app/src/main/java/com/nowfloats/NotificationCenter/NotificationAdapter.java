@@ -45,22 +45,22 @@ import retrofit.client.Response;
  * Created by guru on 27-04-2015.
  */
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
+    private SimpleDateFormat format;
+    private PorterDuffColorFilter primaryColorFilter, defaultColorFilter;
+    private int imageId;
     Activity appContext;
     View displayView;
     ArrayList<AlertModel> alertData;
+    private LayoutInflater mInflater;
+    private HashMap<String, Integer> alertImageMap;
     DeepLinkInterface linkInterface;
     NotificationInterface alertInterface;
     UserSessionManager session;
     Bus bus;
-    private SimpleDateFormat format;
-    private PorterDuffColorFilter primaryColorFilter, defaultColorFilter;
-    private int imageId;
-    private LayoutInflater mInflater;
-    private HashMap<String, Integer> alertImageMap;
     private String currentUrl;
     private String ruleId;
 
-    public NotificationAdapter(Activity appContext, ArrayList<AlertModel> alertData, NotificationInterface alertInterface, UserSessionManager session, Bus bus, DeepLinkInterface linkInterface) {
+    public NotificationAdapter(Activity appContext, ArrayList<AlertModel> alertData, NotificationInterface alertInterface, UserSessionManager session, Bus bus,DeepLinkInterface linkInterface) {
         loadImages();
         this.appContext = appContext;
         this.alertData = alertData;
@@ -74,6 +74,25 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         format.setTimeZone(TimeZone.getDefault());
         imageId = R.drawable.alert_default;
         this.linkInterface = linkInterface;
+    }
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        // each data item is just a string in this case
+        public ImageView imageView;
+        public TextView titleText, descText, date;
+        public Button alertBtn;
+        public LinearLayout full_layout;
+
+        public ViewHolder(View v) {
+            super(v);
+            imageView = (ImageView) itemView.findViewById(R.id.storeDataIcon);
+            titleText = (TextView) itemView.findViewById(R.id.titleText);
+            descText = (TextView) itemView.findViewById(R.id.descText);
+            date = (TextView) itemView.findViewById(R.id.created_date);
+            alertBtn = (Button) itemView.findViewById(R.id.alert_btn);
+            full_layout = (LinearLayout) itemView.findViewById(R.id.full_layout);
+        }
     }
 
     @Override
@@ -267,24 +286,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             alertImageMap.put("REFER", R.drawable.alert_refer);
             alertImageMap.put("DOTCOM", R.drawable.alert_dot_com);
             alertImageMap.put("BIZAROUNDYOU", R.drawable.alert_store);
-        }
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public ImageView imageView;
-        public TextView titleText, descText, date;
-        public Button alertBtn;
-        public LinearLayout full_layout;
-
-        public ViewHolder(View v) {
-            super(v);
-            imageView = (ImageView) itemView.findViewById(R.id.storeDataIcon);
-            titleText = (TextView) itemView.findViewById(R.id.titleText);
-            descText = (TextView) itemView.findViewById(R.id.descText);
-            date = (TextView) itemView.findViewById(R.id.created_date);
-            alertBtn = (Button) itemView.findViewById(R.id.alert_btn);
-            full_layout = (LinearLayout) itemView.findViewById(R.id.full_layout);
         }
     }
 }

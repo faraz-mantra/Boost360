@@ -41,7 +41,7 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
 
-    private void loadData() {
+    private void loadData(){
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
             title.setText(extra.getString("url"));

@@ -8,12 +8,11 @@ import com.inventoryorder.databinding.BottomSheetEditCustomerInfoBinding
 import com.inventoryorder.model.orderRequest.ContactDetails
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class EditCustomerInfoBottomSheetDialog(private val contactDetails: ContactDetails) :
-  BaseBottomSheetDialog<BottomSheetEditCustomerInfoBinding, BaseViewModel>() {
+class EditCustomerInfoBottomSheetDialog(private val contactDetails: ContactDetails) : BaseBottomSheetDialog<BottomSheetEditCustomerInfoBinding, BaseViewModel>() {
 
   private var cancellingEntity: String? = OrderItem.CancellingEntity.BUYER.name
   private var orderItem: OrderItem? = null
-  var onClicked: (contactDetails: ContactDetails) -> Unit = { contactDetails: ContactDetails -> }
+  var onClicked: (contactDetails: ContactDetails) -> Unit = { contactDetails : ContactDetails -> }
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_edit_customer_info
@@ -54,15 +53,12 @@ class EditCustomerInfoBottomSheetDialog(private val contactDetails: ContactDetai
           return
         }
 
-        if (email.isNullOrEmpty().not() && android.util.Patterns.EMAIL_ADDRESS.matcher(email)
-            .matches().not()
-        ) {
+        if (email.isNullOrEmpty().not() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches().not()) {
           showShortToast(getString(R.string.please_enter_valid_email))
           return
         }
 
-        var contactDetails =
-          ContactDetails(emailId = email!!, fullName = name!!, primaryContactNumber = phone!!)
+        var contactDetails = ContactDetails(emailId = email!!, fullName = name!!, primaryContactNumber = phone!!)
         onClicked(contactDetails)
       }
     }

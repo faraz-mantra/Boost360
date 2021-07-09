@@ -29,6 +29,55 @@ import java.util.TreeSet;
 import io.separ.neural.inputmethod.indic.Constants;
 
 public class KeyboardParams {
+    public KeyboardId mId;
+    public int mThemeId;
+
+    /** Total height and width of the keyboard, including the paddings and keys */
+    public int mOccupiedHeight;
+    public int mOccupiedWidth;
+
+    /** Base height and width of the keyboard used to calculate rows' or keys' heights and
+     *  widths
+     */
+    public int mBaseHeight;
+    public int mBaseWidth;
+
+    public int mTopPadding;
+    public int mBottomPadding;
+    public int mLeftPadding;
+    public int mRightPadding;
+
+    public KeyVisualAttributes mKeyVisualAttributes;
+
+    public int mDefaultRowHeight;
+    public int mDefaultKeyWidth;
+    public int mHorizontalGap;
+    public int mVerticalGap;
+
+    public int mMoreKeysTemplate;
+    public int mMaxMoreKeysKeyboardColumn;
+
+    public int GRID_WIDTH;
+    public int GRID_HEIGHT;
+
+    // Keys are sorted from top-left to bottom-right order.
+    public final SortedSet<Key> mSortedKeys = new TreeSet<>(ROW_COLUMN_COMPARATOR);
+    public final ArrayList<Key> mShiftKeys = new ArrayList<>();
+    public final ArrayList<Key> mAltCodeKeysWhileTyping = new ArrayList<>();
+    public final KeyboardIconsSet mIconsSet = new KeyboardIconsSet();
+    public final KeyboardTextsSet mTextsSet = new KeyboardTextsSet();
+    public final KeyStylesSet mKeyStyles = new KeyStylesSet(mTextsSet);
+
+    public KeysCache mKeysCache;
+
+    public int mMostCommonKeyHeight = 0;
+    public int mMostCommonKeyWidth = 0;
+
+    public boolean mProximityCharsCorrectionEnabled;
+
+    public final TouchPositionCorrection mTouchPositionCorrection =
+            new TouchPositionCorrection();
+
     // Comparator to sort {@link Key}s from top-left to bottom-right order.
     private static final Comparator<Key> ROW_COLUMN_COMPARATOR = new Comparator<Key>() {
         @Override
@@ -40,56 +89,6 @@ public class KeyboardParams {
             return 0;
         }
     };
-    // Keys are sorted from top-left to bottom-right order.
-    public final SortedSet<Key> mSortedKeys = new TreeSet<>(ROW_COLUMN_COMPARATOR);
-    public final ArrayList<Key> mShiftKeys = new ArrayList<>();
-    public final ArrayList<Key> mAltCodeKeysWhileTyping = new ArrayList<>();
-    public final KeyboardIconsSet mIconsSet = new KeyboardIconsSet();
-    public final KeyboardTextsSet mTextsSet = new KeyboardTextsSet();
-    public final KeyStylesSet mKeyStyles = new KeyStylesSet(mTextsSet);
-    public final TouchPositionCorrection mTouchPositionCorrection =
-            new TouchPositionCorrection();
-    private final SparseIntArray mHeightHistogram = new SparseIntArray();
-    private final SparseIntArray mWidthHistogram = new SparseIntArray();
-    public KeyboardId mId;
-    public int mThemeId;
-    /**
-     * Total height and width of the keyboard, including the paddings and keys
-     */
-    public int mOccupiedHeight;
-    public int mOccupiedWidth;
-    /**
-     * Base height and width of the keyboard used to calculate rows' or keys' heights and
-     * widths
-     */
-    public int mBaseHeight;
-    public int mBaseWidth;
-    public int mTopPadding;
-    public int mBottomPadding;
-    public int mLeftPadding;
-    public int mRightPadding;
-    public KeyVisualAttributes mKeyVisualAttributes;
-    public int mDefaultRowHeight;
-    public int mDefaultKeyWidth;
-    public int mHorizontalGap;
-    public int mVerticalGap;
-    public int mMoreKeysTemplate;
-    public int mMaxMoreKeysKeyboardColumn;
-    public int GRID_WIDTH;
-    public int GRID_HEIGHT;
-    public KeysCache mKeysCache;
-    public int mMostCommonKeyHeight = 0;
-    public int mMostCommonKeyWidth = 0;
-    public boolean mProximityCharsCorrectionEnabled;
-    private int mMaxHeightCount = 0;
-    private int mMaxWidthCount = 0;
-
-    private static int updateHistogramCounter(final SparseIntArray histogram, final int key) {
-        final int index = histogram.indexOfKey(key);
-        final int count = (index >= 0 ? histogram.get(key) : 0) + 1;
-        histogram.put(key, count);
-        return count;
-    }
 
     protected void clearKeys() {
         mSortedKeys.clear();
@@ -117,6 +116,11 @@ public class KeyboardParams {
         }
     }
 
+    private int mMaxHeightCount = 0;
+    private int mMaxWidthCount = 0;
+    private final SparseIntArray mHeightHistogram = new SparseIntArray();
+    private final SparseIntArray mWidthHistogram = new SparseIntArray();
+
     private void clearHistogram() {
         mMostCommonKeyHeight = 0;
         mMaxHeightCount = 0;
@@ -125,6 +129,13 @@ public class KeyboardParams {
         mMaxWidthCount = 0;
         mMostCommonKeyWidth = 0;
         mWidthHistogram.clear();
+    }
+
+    private static int updateHistogramCounter(final SparseIntArray histogram, final int key) {
+        final int index = histogram.indexOfKey(key);
+        final int count = (index >= 0 ? histogram.get(key) : 0) + 1;
+        histogram.put(key, count);
+        return count;
     }
 
     private void updateHistogram(final Key key) {

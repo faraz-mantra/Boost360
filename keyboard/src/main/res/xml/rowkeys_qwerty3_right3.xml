@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
 **
 ** Copyright 2014, The Android Open Source Project
@@ -17,10 +18,14 @@
 */
 -->
 
-<merge xmlns:latin="http://schemas.android.com/apk/res-auto">
-  <Key latin:keySpec="b" />
-  <Key
-    latin:keySpec="n"
-    latin:moreKeys="!text/morekeys_n" />
-  <Key latin:keySpec="m" />
+<merge
+    xmlns:latin="http://schemas.android.com/apk/res-auto"
+>
+    <Key
+        latin:keySpec="b" />
+    <Key
+        latin:keySpec="n"
+        latin:moreKeys="!text/morekeys_n" />
+    <Key
+        latin:keySpec="m" />
 </merge>

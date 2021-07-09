@@ -10,50 +10,50 @@ import com.boost.upgrades.data.model.WidgetModel
 
 
 class UPIAdapter(itemList: List<WidgetModel>?) :
-  RecyclerView.Adapter<UPIAdapter.upgradeViewHolder>(), View.OnClickListener {
+    RecyclerView.Adapter<UPIAdapter.upgradeViewHolder>(), View.OnClickListener {
 
-  private var list = ArrayList<WidgetModel>()
-  private lateinit var context: Context
+    private var list = ArrayList<WidgetModel>()
+    private lateinit var context: Context
 
-  init {
-    this.list = itemList as ArrayList<WidgetModel>
-  }
+    init {
+        this.list = itemList as ArrayList<WidgetModel>
+    }
 
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
-    val itemView = LayoutInflater.from(parent?.context).inflate(
-      R.layout.upi_payment_item, parent, false
-    )
-    context = itemView.context
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
+        val itemView = LayoutInflater.from(parent?.context).inflate(
+            R.layout.upi_payment_item, parent, false
+        )
+        context = itemView.context
 
 
-    itemView.setOnClickListener(this)
-    return upgradeViewHolder(itemView)
-  }
+        itemView.setOnClickListener(this)
+        return upgradeViewHolder(itemView)
+    }
 
-  override fun getItemCount(): Int {
-    return list.size
-  }
+    override fun getItemCount(): Int {
+        return list.size
+    }
 
-  override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
-    holder.view.visibility = View.GONE
-  }
+        holder.view.visibility = View.GONE
+    }
 
-  override fun onClick(v: View?) {
+    override fun onClick(v: View?) {
 
-  }
+    }
 
-  fun addupdates(upgradeModel: List<WidgetModel>) {
-    val initPosition = list.size
-    list.clear()
-    list.addAll(upgradeModel)
-    notifyItemRangeInserted(initPosition, list.size)
-  }
+    fun addupdates(upgradeModel: List<WidgetModel>) {
+        val initPosition = list.size
+        list.clear()
+        list.addAll(upgradeModel)
+        notifyItemRangeInserted(initPosition, list.size)
+    }
 
-  class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    var view = itemView.findViewById<View>(R.id.upi_view_dummy)!!
-    //        private var image = itemView.findViewById<ImageView>(R.id.single_freeaddon_image)!!
+        var view = itemView.findViewById<View>(R.id.upi_view_dummy)!!
+        //        private var image = itemView.findViewById<ImageView>(R.id.single_freeaddon_image)!!
 //
 //        private var context: Context = itemView.context
 //
@@ -61,5 +61,5 @@ class UPIAdapter(itemList: List<WidgetModel>?) :
 //        fun upgradeListItem(updateModel: UpdatesModel) {
 //
 //        }
-  }
+    }
 }

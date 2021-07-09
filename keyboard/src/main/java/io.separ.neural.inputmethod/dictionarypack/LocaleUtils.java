@@ -25,14 +25,15 @@ import java.util.Locale;
 
 /**
  * A class to help with handling Locales in string form.
- * <p>
+ *
  * This file has the same meaning and features (and shares all of its code) with the one with the
  * same name in Latin IME. They need to be kept synchronized; for any update/bugfix to
  * this file, consider also updating/fixing the version in Latin IME.
  */
 public final class LocaleUtils {
-    // Nothing matches.
-    public static final int LOCALE_NO_MATCH = 0;
+    private LocaleUtils() {
+        // Intentional empty constructor for utility class.
+    }
 
     // Locale match level constants.
     // A higher level of match is guaranteed to have a higher numerical value.
@@ -40,6 +41,9 @@ public final class LocaleUtils {
     // in the future, for example differentiating between the case where the countries
     // are both present and different, and the case where one of the locales does not
     // specify the countries. This difference is not needed now.
+
+    // Nothing matches.
+    public static final int LOCALE_NO_MATCH = 0;
     // The languages matches, but the country are different. Or, the reference locale requires a
     // country and the tested locale does not have one.
     public static final int LOCALE_LANGUAGE_MATCH_COUNTRY_DIFFER = 3;
@@ -57,21 +61,18 @@ public final class LocaleUtils {
     public static final int LOCALE_LANGUAGE_AND_COUNTRY_MATCH = 20;
     // The compared locales are fully identical. This is the best match level.
     public static final int LOCALE_FULL_MATCH = 30;
+
     // The level at which a match is "normally" considered a locale match with standard algorithms.
     // Don't use this directly, use #isMatch to test.
     private static final int LOCALE_MATCH = LOCALE_ANY_MATCH;
+
     // Make this match the maximum match level. If this evolves to have more than 2 digits
     // when written in base 10, also adjust the getMatchLevelSortedString method.
     private static final int MATCH_LEVEL_MAX = 30;
-    private static final HashMap<String, Locale> sLocaleCache = new HashMap<>();
-
-    private LocaleUtils() {
-        // Intentional empty constructor for utility class.
-    }
 
     /**
      * Return how well a tested locale matches a reference locale.
-     * <p>
+     *
      * This will check the tested locale against the reference locale and return a measure of how
      * a well it matches the reference. The general idea is that the tested locale has to match
      * every specified part of the required locale. A full match occur when they are equal, a
@@ -100,7 +101,7 @@ public final class LocaleUtils {
      * "" <=> en_US => LOCALE_ANY_MATCH
      *
      * @param referenceLocale the reference locale to test against.
-     * @param testedLocale    the locale to test.
+     * @param testedLocale the locale to test.
      * @return a constant that measures how well the tested locale matches the reference locale.
      */
     public static int getMatchLevel(final String referenceLocale, final String testedLocale) {
@@ -113,23 +114,22 @@ public final class LocaleUtils {
         // By spec of String#split, [0] cannot be null and length cannot be 0.
         if (!referenceParams[0].equals(testedParams[0])) return LOCALE_NO_MATCH;
         switch (referenceParams.length) {
-            case 1:
-                return 1 == testedParams.length ? LOCALE_FULL_MATCH : LOCALE_LANGUAGE_MATCH;
-            case 2:
-                if (1 == testedParams.length) return LOCALE_LANGUAGE_MATCH_COUNTRY_DIFFER;
-                if (!referenceParams[1].equals(testedParams[1]))
-                    return LOCALE_LANGUAGE_MATCH_COUNTRY_DIFFER;
-                if (3 == testedParams.length) return LOCALE_LANGUAGE_AND_COUNTRY_MATCH;
-                return LOCALE_FULL_MATCH;
-            case 3:
-                if (1 == testedParams.length) return LOCALE_LANGUAGE_MATCH_COUNTRY_DIFFER;
-                if (!referenceParams[1].equals(testedParams[1]))
-                    return LOCALE_LANGUAGE_MATCH_COUNTRY_DIFFER;
-                if (2 == testedParams.length)
-                    return LOCALE_LANGUAGE_AND_COUNTRY_MATCH_VARIANT_DIFFER;
-                if (!referenceParams[2].equals(testedParams[2]))
-                    return LOCALE_LANGUAGE_AND_COUNTRY_MATCH_VARIANT_DIFFER;
-                return LOCALE_FULL_MATCH;
+        case 1:
+            return 1 == testedParams.length ? LOCALE_FULL_MATCH : LOCALE_LANGUAGE_MATCH;
+        case 2:
+            if (1 == testedParams.length) return LOCALE_LANGUAGE_MATCH_COUNTRY_DIFFER;
+            if (!referenceParams[1].equals(testedParams[1]))
+                return LOCALE_LANGUAGE_MATCH_COUNTRY_DIFFER;
+            if (3 == testedParams.length) return LOCALE_LANGUAGE_AND_COUNTRY_MATCH;
+            return LOCALE_FULL_MATCH;
+        case 3:
+            if (1 == testedParams.length) return LOCALE_LANGUAGE_MATCH_COUNTRY_DIFFER;
+            if (!referenceParams[1].equals(testedParams[1]))
+                return LOCALE_LANGUAGE_MATCH_COUNTRY_DIFFER;
+            if (2 == testedParams.length) return LOCALE_LANGUAGE_AND_COUNTRY_MATCH_VARIANT_DIFFER;
+            if (!referenceParams[2].equals(testedParams[2]))
+                return LOCALE_LANGUAGE_AND_COUNTRY_MATCH_VARIANT_DIFFER;
+            return LOCALE_FULL_MATCH;
         }
         // It should be impossible to come here
         return LOCALE_NO_MATCH;
@@ -137,7 +137,7 @@ public final class LocaleUtils {
 
     /**
      * Return a string that represents this match level, with better matches first.
-     * <p>
+     *
      * The strings are sorted in lexicographic order: a better match will always be less than
      * a worse match when compared together.
      */
@@ -149,7 +149,7 @@ public final class LocaleUtils {
 
     /**
      * Find out whether a match level should be considered a match.
-     * <p>
+     *
      * This method takes a match level as returned by the #getMatchLevel method, and returns whether
      * it should be considered a match in the usual sense with standard Locale functions.
      *
@@ -163,7 +163,7 @@ public final class LocaleUtils {
     /**
      * Sets the system locale for this process.
      *
-     * @param res       the resources to use. Pass current resources.
+     * @param res the resources to use. Pass current resources.
      * @param newLocale the locale to change to.
      * @return the old locale.
      */
@@ -174,6 +174,8 @@ public final class LocaleUtils {
         res.updateConfiguration(conf, res.getDisplayMetrics());
         return saveLocale;
     }
+
+    private static final HashMap<String, Locale> sLocaleCache = new HashMap<>();
 
     /**
      * Creates a locale from a string specification.

@@ -36,11 +36,7 @@ class WebViewTNCDialog : DialogFragment() {
     this.title = title
   }
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     binding = DataBindingUtil.inflate(inflater, R.layout.dialog_webview_tnc, container, false)
     return binding.root
   }
@@ -92,11 +88,7 @@ class WebViewTNCDialog : DialogFragment() {
         binding.progressBar.gone()
       }
 
-      override fun onReceivedError(
-        view: WebView?,
-        request: WebResourceRequest?,
-        error: WebResourceError?
-      ) {
+      override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
         super.onReceivedError(view, request, error)
         binding.progressBar.gone()
       }

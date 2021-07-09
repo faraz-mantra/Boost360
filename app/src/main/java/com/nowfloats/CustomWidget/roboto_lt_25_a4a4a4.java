@@ -15,7 +15,6 @@ public class roboto_lt_25_a4a4a4 extends TextView {
         super(context);
         init(context);
     }
-
     public roboto_lt_25_a4a4a4(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -25,9 +24,9 @@ public class roboto_lt_25_a4a4a4 extends TextView {
         super(context, attrs, defStyle);
         init(context);
     }
-
-    public void init(Context context) {
-        setCustomFont(context, "Roboto-Light.ttf");
+    public void init(Context context)
+    {
+        setCustomFont(context,"Roboto-Light.ttf");
         setTextColor(getResources().getColor(R.color.light_black_color));
         setTextSize(12);
 

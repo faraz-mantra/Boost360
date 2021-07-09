@@ -23,9 +23,9 @@
         <com.framework.views.customViews.CustomImageView
           android:layout_width="@dimen/size_34"
           android:layout_height="@dimen/size_34"
-          android:layout_marginStart="@dimen/size_6"
           android:tint="@color/colorAccent"
-          app:srcCompat="@drawable/ic_filter_n" />
+          app:srcCompat="@drawable/ic_filter_n"
+          android:layout_marginStart="@dimen/size_6"/>
 
         <com.framework.views.customViews.CustomTextView
           style="@style/wrap_wrap"

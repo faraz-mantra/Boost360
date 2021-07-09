@@ -14,42 +14,41 @@
     android:orientation="vertical">
 
     <LinearLayout
-      android:id="@+id/filter_btn"
       android:layout_width="match_parent"
       android:layout_height="@dimen/size_36"
       android:background="@color/white"
+      android:gravity="center_vertical"
+      android:id="@+id/filter_btn"
       android:clickable="true"
       android:focusable="true"
       android:foreground="?attr/selectableItemBackground"
-      android:gravity="center_vertical"
       android:paddingStart="@dimen/size_16"
       android:paddingEnd="@dimen/size_22">
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/title_filter"
-        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="0dp"
         android:drawableStart="@drawable/ic_calendar_d"
         android:drawablePadding="@dimen/size_6"
+        android:layout_weight="1"
+        tools:text="Till date"
         android:textColor="@color/black_4a4a4a"
-        app:textType="BODY_1"
-        tools:text="Till date" />
-
+        app:textType="BODY_1" />
       <com.framework.views.customViews.CustomImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:tint="@color/black_4a4a4a"
-        app:srcCompat="@drawable/ic_arrow_down_d" />
+        app:srcCompat="@drawable/ic_arrow_down_d"/>
     </LinearLayout>
 
     <com.framework.views.viewgroups.BaseRecyclerView
       android:id="@+id/rv_customer"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:orientation="vertical"
       android:layout_marginTop="@dimen/size_2"
       android:clipToPadding="false"
-      android:orientation="vertical"
       android:paddingBottom="@dimen/size_20"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
       tools:listitem="@layout/item_customer_patient_item" />

@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class ChannelInsightsResponse(
-  @SerializedName("channel")
-  var channel: String? = null,
-  @SerializedName("data")
-  var `data`: InsightsData? = null,
-  @SerializedName("nowfloats_id")
-  var nowfloatsId: String? = null,
-  @SerializedName("success")
-  var success: Boolean? = null,
+    @SerializedName("channel")
+    var channel: String? = null,
+    @SerializedName("data")
+    var `data`: InsightsData? = null,
+    @SerializedName("nowfloats_id")
+    var nowfloatsId: String? = null,
+    @SerializedName("success")
+    var success: Boolean? = null,
 ) : BaseResponse(), Serializable

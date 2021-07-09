@@ -45,7 +45,7 @@ public class InputTransaction {
     private boolean mDidAutoCorrect = false;
 
     public InputTransaction(final SettingsValues settingsValues, final Event event,
-                            final long timestamp, final int spaceState, final int shiftState) {
+            final long timestamp, final int spaceState, final int shiftState) {
         mSettingsValues = settingsValues;
         mEvent = event;
         mTimestamp = timestamp;
@@ -55,7 +55,6 @@ public class InputTransaction {
 
     /**
      * Indicate that this transaction requires some type of shift update.
-     *
      * @param updateType What type of shift update this requires.
      */
     public void requireShiftUpdate(final int updateType) {
@@ -64,7 +63,6 @@ public class InputTransaction {
 
     /**
      * Gets what type of shift update this transaction requires.
-     *
      * @return The shift update type.
      */
     public int getRequiredShiftUpdate() {
@@ -80,7 +78,6 @@ public class InputTransaction {
 
     /**
      * Find out whether this transaction requires updating the suggestions.
-     *
      * @return Whether this transaction requires updating the suggestions.
      */
     public boolean requiresUpdateSuggestions() {
@@ -96,7 +93,6 @@ public class InputTransaction {
 
     /**
      * Find out whether this transaction affected contents of the editor.
-     *
      * @return Whether this transaction affected contents of the editor.
      */
     public boolean didAffectContents() {
@@ -112,7 +108,6 @@ public class InputTransaction {
 
     /**
      * Find out whether this transaction performed an auto-correction.
-     *
      * @return Whether this transaction performed an auto-correction.
      */
     public boolean didAutoCorrect() {

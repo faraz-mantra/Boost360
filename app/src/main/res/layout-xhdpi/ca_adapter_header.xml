@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:gravity="center">
-
-  <View
     android:layout_width="match_parent"
-    android:layout_height="0.5dp"
-    android:layout_gravity="center"
-    android:background="#9E9E9E" />
-
-  <TextView
-    android:id="@+id/tvHeader"
-    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="left"
-    android:layout_marginStart="@dimen/margin_20"
-    android:background="@drawable/ca_section_header"
-    android:fontFamily="sans-serif"
-    android:gravity="center"
-    android:text="@string/expiry_in_3_days"
-    android:textColor="#fff" />
+    android:gravity="center">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_gravity="center"
+        android:background="#9E9E9E" />
+
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginStart="@dimen/margin_20"
+        android:background="@drawable/ca_section_header"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="@string/expiry_in_3_days"
+        android:textColor="#fff" />
 </FrameLayout>

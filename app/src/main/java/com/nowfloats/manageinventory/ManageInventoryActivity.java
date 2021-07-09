@@ -4,7 +4,6 @@ package com.nowfloats.manageinventory;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -69,7 +68,7 @@ public class ManageInventoryActivity extends AppCompatActivity {
 
     }
 
-    private String getFragmentTitle() {
+    private String getFragmentTitle(){
         return "";
     }
 

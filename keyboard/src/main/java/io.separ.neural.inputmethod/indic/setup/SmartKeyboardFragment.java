@@ -2,10 +2,8 @@ package io.separ.neural.inputmethod.indic.setup;
 
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatCheckBox;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +15,19 @@ import io.separ.neural.inputmethod.indic.R;
 
 public class SmartKeyboardFragment extends AnimatedBackgroundGradientFragment {
     private AppCompatCheckBox checkBox;
+
+    /* renamed from: org.smc.inputmethod.indic.appintro.SmartKeyboardFragment.1 */
+    static class C06081 implements OnCheckedChangeListener {
+        final /* synthetic */ WebView val$webView;
+
+        C06081(WebView webView) {
+            this.val$webView = webView;
+        }
+
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            this.val$webView.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+        }
+    }
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,18 +44,5 @@ public class SmartKeyboardFragment extends AnimatedBackgroundGradientFragment {
 
     public void onDestroy() {
         super.onDestroy();
-    }
-
-    /* renamed from: org.smc.inputmethod.indic.appintro.SmartKeyboardFragment.1 */
-    static class C06081 implements OnCheckedChangeListener {
-        final /* synthetic */ WebView val$webView;
-
-        C06081(WebView webView) {
-            this.val$webView = webView;
-        }
-
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            this.val$webView.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-        }
     }
 }

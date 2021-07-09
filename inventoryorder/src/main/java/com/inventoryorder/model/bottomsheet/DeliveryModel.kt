@@ -4,10 +4,9 @@ import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 
-class DeliveryModel(
-  val deliveryOptionSelectedIcon: Int? = null,
-  val deliveryOptionSelectedName: String? = null,
-  var isSelected: Boolean = false
+class DeliveryModel(val deliveryOptionSelectedIcon: Int? = null,
+                    val deliveryOptionSelectedName: String? = null,
+                    var isSelected: Boolean = false
 ) : AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
@@ -15,8 +14,7 @@ class DeliveryModel(
   }
 
   fun getIcon(): Int? {
-    return takeIf { isSelected }?.let { R.drawable.ic_option_selected }
-      ?: deliveryOptionSelectedIcon
+    return takeIf { isSelected }?.let { R.drawable.ic_option_selected } ?: deliveryOptionSelectedIcon
   }
 
   fun getColor(): Int {

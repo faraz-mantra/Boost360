@@ -1,9 +1,7 @@
 package com.android.inputmethod.keyboard.top.services;
 
 import android.content.Context;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
@@ -32,7 +30,7 @@ import static io.separ.neural.inputmethod.slash.RSearchItem.PERMISSION_REQUIRED_
  * Created by sepehr on 3/2/17.
  */
 
-public class SearchItemArrayAdapter extends ArrayAdapter<RSearchItem, SearchItemArrayAdapter.SearchItemViewHolder> {
+public class SearchItemArrayAdapter extends ArrayAdapter<RSearchItem, SearchItemArrayAdapter.SearchItemViewHolder>{
     public static final int RESULT_TYPE_CONNECT_TO_USE = 5;
     public static final int RESULT_TYPE_DEFAULT = 0;
     public static final int RESULT_TYPE_GENERIC_MESSAGE = 6;
@@ -44,6 +42,103 @@ public class SearchItemArrayAdapter extends ArrayAdapter<RSearchItem, SearchItem
     private float mImageHeight;
     private Runnable mLoadNextPage;
     private RServiceItem mServiceItem;
+
+    public interface IOnClickListener {
+        void onClick(boolean z, boolean z2, boolean z3, int i);
+    }
+
+    public static class SearchItemViewHolder extends RecyclerView.ViewHolder implements Runnable {
+        private final SpinKitView loading;
+        TextView bottom;
+        Button connectButton;
+        TextView header;
+        SimpleDraweeView imageView;
+        public boolean isBottomEmpty;
+        private IOnClickListener mClickListener;
+        private int mPosition;
+        ImageButton preview;
+        TextView subheader;
+        View titleContainer;
+
+        /* renamed from: co.touchlab.inputmethod.latin.monkey.ui.adapter.SearchItemArrayAdapter.SearchItemViewHolder.1 */
+        class C04441 implements View.OnClickListener {
+            C04441() {
+            }
+
+            public void onClick(View v) {
+                if (SearchItemViewHolder.this.mClickListener != null) {
+                    SearchItemViewHolder.this.mClickListener.onClick(false, true, false, SearchItemViewHolder.this.mPosition);
+                }
+            }
+        }
+
+        /* renamed from: co.touchlab.inputmethod.latin.monkey.ui.adapter.SearchItemArrayAdapter.SearchItemViewHolder.2 */
+        class C04452 implements View.OnClickListener {
+            C04452() {
+            }
+
+            public void onClick(View v) {
+                if (SearchItemViewHolder.this.mClickListener != null) {
+                    SearchItemViewHolder.this.mClickListener.onClick(false, false, true, SearchItemViewHolder.this.mPosition);
+                }
+            }
+        }
+
+        /* renamed from: co.touchlab.inputmethod.latin.monkey.ui.adapter.SearchItemArrayAdapter.SearchItemViewHolder.3 */
+        class C04463 implements View.OnClickListener {
+            C04463() {
+            }
+
+            public void onClick(View v) {
+                if (SearchItemViewHolder.this.mClickListener != null) {
+                    SearchItemViewHolder.this.mClickListener.onClick(true, false, false, SearchItemViewHolder.this.mPosition);
+                }
+            }
+        }
+
+        public SearchItemViewHolder(View view, IOnClickListener clickListener) {
+            super(view);
+            this.mClickListener = clickListener;
+            this.imageView = (SimpleDraweeView) view.findViewById(R.id.item_image);
+            this.header = (TextView) view.findViewById(R.id.header);
+            this.subheader = (TextView) view.findViewById(R.id.subheader);
+            this.titleContainer = view.findViewById(R.id.title_container);
+            this.bottom = (TextView) view.findViewById(R.id.item_bottom);
+            this.preview = (ImageButton) view.findViewById(R.id.preview);
+            this.connectButton = (Button) view.findViewById(R.id.connect_button);
+            if (this.connectButton != null) {
+                this.connectButton.setOnClickListener(new C04452());
+            }
+            this.loading = (SpinKitView) view.findViewById(R.id.service_loading_container);
+            if (this.preview != null) {
+                this.preview.setOnClickListener(new C04441());
+            }
+            view.setOnClickListener(new C04463());
+        }
+
+        public void updatePosition(RSearchItem item, int position) {
+            this.mPosition = position;
+            if (this.preview == null) {
+                return;
+            }
+            if (TextUtils.isEmpty(item.getPreviewUrl())) {
+                this.preview.setVisibility(View.GONE);
+            } else {
+                this.preview.setVisibility(View.VISIBLE);
+            }
+        }
+
+        public void run() {
+            if (this.header.getLineCount() < SearchItemArrayAdapter.RESULT_TYPE_IMAGE_NO_BORDER) {
+                return;
+            }
+            if (this.isBottomEmpty) {
+                this.subheader.setMaxLines(3);
+            } else {
+                this.subheader.setMaxLines(SearchItemArrayAdapter.RESULT_TYPE_IMAGE_NO_BORDER);
+            }
+        }
+    }
 
     public SearchItemArrayAdapter(Context context) {
         super(context);
@@ -152,15 +247,15 @@ public class SearchItemArrayAdapter extends ArrayAdapter<RSearchItem, SearchItem
                 updateActionRequiredItem(vh, RServiceItem.serviceItemHashMap.get(item.getService()), item.getOutput(), item.getTitle(), getContext().getString(R.string.allow_permission));
                 break;
         }
-        if (vh.header != null)
+        if(vh.header != null)
             vh.header.setTextColor(colorProfile.getText());
-        if (vh.subheader != null)
+        if(vh.subheader != null)
             vh.subheader.setTextColor(colorProfile.getText());
-        if (vh.bottom != null)
+        if(vh.bottom != null)
             vh.bottom.setTextColor(colorProfile.getText());
-        if (vh.titleContainer != null)
+        if(vh.titleContainer != null)
             vh.titleContainer.setBackgroundColor(colorProfile.getPrimary());
-        if (vh.preview != null)
+        if(vh.preview != null)
             vh.preview.setColorFilter(colorProfile.getIcon());
         if (pos > getItemCount() - 2 && this.mLoadNextPage != null) {
             this.mLoadNextPage.run();
@@ -260,112 +355,15 @@ public class SearchItemArrayAdapter extends ArrayAdapter<RSearchItem, SearchItem
     public int getItemViewType(int r7) {
         RSearchItem item = getItem(r7);
         String displayType = item.getDisplayType();
-        if (displayType.equals(GENERIC_MESSAGE_TYPE))
+        if(displayType.equals(GENERIC_MESSAGE_TYPE))
             return RESULT_TYPE_GENERIC_MESSAGE;
-        else if (displayType.equals(MEDIA_TYPE))
+        else if(displayType.equals(MEDIA_TYPE))
             return RESULT_TYPE_IMAGE;
-        else if (displayType.equals(LOADING_TYPE))
+        else if(displayType.equals(LOADING_TYPE))
             return RESULT_TYPE_LOADING;
-        else if (displayType.equals(PERMISSION_REQUIRED_TYPE))
+        else if(displayType.equals(PERMISSION_REQUIRED_TYPE))
             return RESULT_TYPE_PERMISSION_REQUIRED;
         else
             return RESULT_TYPE_DEFAULT;
-    }
-
-    public interface IOnClickListener {
-        void onClick(boolean z, boolean z2, boolean z3, int i);
-    }
-
-    public static class SearchItemViewHolder extends RecyclerView.ViewHolder implements Runnable {
-        private final SpinKitView loading;
-        public boolean isBottomEmpty;
-        TextView bottom;
-        Button connectButton;
-        TextView header;
-        SimpleDraweeView imageView;
-        ImageButton preview;
-        TextView subheader;
-        View titleContainer;
-        private IOnClickListener mClickListener;
-        private int mPosition;
-
-        public SearchItemViewHolder(View view, IOnClickListener clickListener) {
-            super(view);
-            this.mClickListener = clickListener;
-            this.imageView = (SimpleDraweeView) view.findViewById(R.id.item_image);
-            this.header = (TextView) view.findViewById(R.id.header);
-            this.subheader = (TextView) view.findViewById(R.id.subheader);
-            this.titleContainer = view.findViewById(R.id.title_container);
-            this.bottom = (TextView) view.findViewById(R.id.item_bottom);
-            this.preview = (ImageButton) view.findViewById(R.id.preview);
-            this.connectButton = (Button) view.findViewById(R.id.connect_button);
-            if (this.connectButton != null) {
-                this.connectButton.setOnClickListener(new C04452());
-            }
-            this.loading = (SpinKitView) view.findViewById(R.id.service_loading_container);
-            if (this.preview != null) {
-                this.preview.setOnClickListener(new C04441());
-            }
-            view.setOnClickListener(new C04463());
-        }
-
-        public void updatePosition(RSearchItem item, int position) {
-            this.mPosition = position;
-            if (this.preview == null) {
-                return;
-            }
-            if (TextUtils.isEmpty(item.getPreviewUrl())) {
-                this.preview.setVisibility(View.GONE);
-            } else {
-                this.preview.setVisibility(View.VISIBLE);
-            }
-        }
-
-        public void run() {
-            if (this.header.getLineCount() < SearchItemArrayAdapter.RESULT_TYPE_IMAGE_NO_BORDER) {
-                return;
-            }
-            if (this.isBottomEmpty) {
-                this.subheader.setMaxLines(3);
-            } else {
-                this.subheader.setMaxLines(SearchItemArrayAdapter.RESULT_TYPE_IMAGE_NO_BORDER);
-            }
-        }
-
-        /* renamed from: co.touchlab.inputmethod.latin.monkey.ui.adapter.SearchItemArrayAdapter.SearchItemViewHolder.1 */
-        class C04441 implements View.OnClickListener {
-            C04441() {
-            }
-
-            public void onClick(View v) {
-                if (SearchItemViewHolder.this.mClickListener != null) {
-                    SearchItemViewHolder.this.mClickListener.onClick(false, true, false, SearchItemViewHolder.this.mPosition);
-                }
-            }
-        }
-
-        /* renamed from: co.touchlab.inputmethod.latin.monkey.ui.adapter.SearchItemArrayAdapter.SearchItemViewHolder.2 */
-        class C04452 implements View.OnClickListener {
-            C04452() {
-            }
-
-            public void onClick(View v) {
-                if (SearchItemViewHolder.this.mClickListener != null) {
-                    SearchItemViewHolder.this.mClickListener.onClick(false, false, true, SearchItemViewHolder.this.mPosition);
-                }
-            }
-        }
-
-        /* renamed from: co.touchlab.inputmethod.latin.monkey.ui.adapter.SearchItemArrayAdapter.SearchItemViewHolder.3 */
-        class C04463 implements View.OnClickListener {
-            C04463() {
-            }
-
-            public void onClick(View v) {
-                if (SearchItemViewHolder.this.mClickListener != null) {
-                    SearchItemViewHolder.this.mClickListener.onClick(true, false, false, SearchItemViewHolder.this.mPosition);
-                }
-            }
-        }
     }
 }

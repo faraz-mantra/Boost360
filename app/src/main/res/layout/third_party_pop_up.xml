@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:background="@drawable/rounded_corner_boundary"
-  android:orientation="vertical">
-
-  <TextView
-    android:id="@+id/tvDate"
-    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="?android:selectableItemBackground"
-    android:padding="15dp"
-    android:text="@string/datev1" />
-
-  <TextView
-    android:id="@+id/tvExpire"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?android:selectableItemBackground"
-    android:padding="15dp"
-    android:text="@string/expiry" />
-
-  <TextView
-    android:id="@+id/tvSource"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?android:selectableItemBackground"
-    android:padding="15dp"
-    android:text="@string/source" />
+    android:background="@drawable/rounded_corner_boundary">
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="@string/datev1"/>
+    <TextView
+        android:id="@+id/tvExpire"
+        android:layout_width="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="@string/expiry"/>
+    <TextView
+        android:id="@+id/tvSource"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:padding="15dp"
+        android:text="@string/source"/>
 </LinearLayout>

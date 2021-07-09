@@ -21,9 +21,9 @@ class CustomImageView : AppCompatImageView {
   }
 
   constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
-    context,
-    attrs,
-    defStyle
+      context,
+      attrs,
+      defStyle
   ) {
     setCustomAttrs(context, attrs)
   }

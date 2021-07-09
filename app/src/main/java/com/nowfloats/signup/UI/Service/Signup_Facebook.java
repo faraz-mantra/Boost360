@@ -47,8 +47,8 @@ public class Signup_Facebook {
 //        }
 
         *//**
-     * Only call authorize if the access_token has expired.
-     *//*
+         * Only call authorize if the access_token has expired.
+         *//*
         if (!facebook.isSessionValid()) {
 
             facebook.authorize(activity, new String[] {}, new Facebook.DialogListener() {
@@ -178,6 +178,7 @@ public class Signup_Facebook {
            // Connectiontimeout = true;
         }
     }*/
+
 
 
 }

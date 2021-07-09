@@ -4,18 +4,15 @@ import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 
-class ChoosePurposeModel(
-  val choosePurposeSelectedName: String? = null,
-  var isSelected: Boolean = false
-) : AppBaseRecyclerViewItem {
+class ChoosePurposeModel(val choosePurposeSelectedName: String? = null,
+                         var isSelected: Boolean = false) : AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
     return RecyclerViewItemType.ITEM_CHOOSE_PURPOSE.getLayout()
   }
 
   fun getIcon(): Int? {
-    return takeIf { isSelected }?.let { R.drawable.ic_option_selected_orange }
-      ?: R.drawable.ic_option_unselected
+    return takeIf { isSelected }?.let { R.drawable.ic_option_selected_orange } ?: R.drawable.ic_option_unselected
   }
 
   fun getColor(): Int {

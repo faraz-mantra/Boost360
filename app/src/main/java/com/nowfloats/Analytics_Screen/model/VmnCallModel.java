@@ -156,16 +156,16 @@ public class VmnCallModel {
         return fpTag;
     }
 
-    public void setFpTag(Object fpTag) {
-        this.fpTag = fpTag;
-    }
-
     public int getViewType() {
         return viewType;
     }
 
     public void setViewType(int viewType) {
         this.viewType = viewType;
+    }
+
+    public void setFpTag(Object fpTag) {
+        this.fpTag = fpTag;
     }
 
     public String getMerchantActualNumber() {

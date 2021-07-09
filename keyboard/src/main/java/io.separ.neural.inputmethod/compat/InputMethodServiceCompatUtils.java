@@ -31,7 +31,7 @@ public final class InputMethodServiceCompatUtils {
     }
 
     public static boolean enableHardwareAcceleration(final InputMethodService ims) {
-        return (Boolean) CompatUtils.invoke(ims, false /* defaultValue */,
+        return (Boolean)CompatUtils.invoke(ims, false /* defaultValue */,
                 METHOD_enableHardwareAcceleration);
     }
 }

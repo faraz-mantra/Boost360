@@ -14,7 +14,7 @@ import retrofit.mime.TypedFile;
  */
 public interface ImageUpload_Interface {
 
-    public static final String BASE_URL = Constants.NOW_FLOATS_API_URL + "";
+    public static final String BASE_URL = Constants.NOW_FLOATS_API_URL+"";
 
 
 //    @Multipart
@@ -30,11 +30,12 @@ public interface ImageUpload_Interface {
     @Multipart
     @PUT("/Discover/v1/floatingPoint/createImage?reqType=sequential&totalChunks=1&currentChunkNumber=1")
     void put_uploadIMAGEURI(@Query("clientId") String clientId,
-                            @Query("fpid") String fpid,
-                            @Query("reqtId") String reqtId,
-                            @Part("myfile") TypedFile file,
+                             @Query("fpid") String fpid,
+                             @Query("reqtId") String reqtId,
+                             @Part("myfile") TypedFile file,
 
-                            Callback<String> callback);
+                             Callback<String> callback);
+
 
 
 }

@@ -28,6 +28,15 @@ import io.separ.neural.inputmethod.indic.R;
  * Radio Button preference
  */
 public class RadioButtonPreference extends Preference {
+    interface OnRadioButtonClickedListener {
+        /**
+         * Called when this preference needs to be saved its state.
+         *
+         * @param preference This preference.
+         */
+        void onRadioButtonClicked(RadioButtonPreference preference);
+    }
+
     private boolean mIsSelected;
     private RadioButton mRadioButton;
     private OnRadioButtonClickedListener mListener;
@@ -39,6 +48,7 @@ public class RadioButtonPreference extends Preference {
             }
         }
     };
+
     public RadioButtonPreference(final Context context) {
         this(context, null);
     }
@@ -48,7 +58,7 @@ public class RadioButtonPreference extends Preference {
     }
 
     public RadioButtonPreference(final Context context, final AttributeSet attrs,
-                                 final int defStyleAttr) {
+            final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setWidgetLayoutResource(R.layout.radio_button_preference_widget);
     }
@@ -60,7 +70,7 @@ public class RadioButtonPreference extends Preference {
     @Override
     protected void onBindView(final View view) {
         super.onBindView(view);
-        mRadioButton = (RadioButton) view.findViewById(R.id.radio_button);
+        mRadioButton = (RadioButton)view.findViewById(R.id.radio_button);
         mRadioButton.setChecked(mIsSelected);
         mRadioButton.setOnClickListener(mClickListener);
         view.setOnClickListener(mClickListener);
@@ -79,14 +89,5 @@ public class RadioButtonPreference extends Preference {
             mRadioButton.setChecked(selected);
         }
         notifyChanged();
-    }
-
-    interface OnRadioButtonClickedListener {
-        /**
-         * Called when this preference needs to be saved its state.
-         *
-         * @param preference This preference.
-         */
-        void onRadioButtonClicked(RadioButtonPreference preference);
     }
 }

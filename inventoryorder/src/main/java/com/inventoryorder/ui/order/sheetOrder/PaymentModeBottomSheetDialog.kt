@@ -10,13 +10,11 @@ import com.inventoryorder.databinding.BottomSheetDeliveryTypeBinding
 import com.inventoryorder.databinding.BottomSheetPaymentModeBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class PaymentModeBottomSheetDialog :
-  BaseBottomSheetDialog<BottomSheetPaymentModeBinding, BaseViewModel>() {
+class PaymentModeBottomSheetDialog : BaseBottomSheetDialog<BottomSheetPaymentModeBinding, BaseViewModel>() {
 
   private var cancellingEntity: String? = OrderItem.CancellingEntity.BUYER.name
   private var orderItem: OrderItem? = null
-  var onClicked: (cancellingEntity: String, reasonText: String) -> Unit =
-    { _: String, _: String -> }
+  var onClicked: (cancellingEntity: String,reasonText:String) -> Unit = { _: String, _: String -> }
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_payment_mode
@@ -31,8 +29,7 @@ class PaymentModeBottomSheetDialog :
   }
 
   override fun onCreateView() {
-    binding?.radioPaymentLink?.setOnCheckedChangeListener(object :
-      CompoundButton.OnCheckedChangeListener {
+    binding?.radioPaymentLink?.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
       override fun onCheckedChanged(p0: CompoundButton?, isChecked: Boolean) {
         if (isChecked) {
           binding?.radioPrepaid?.isChecked = false
@@ -41,8 +38,7 @@ class PaymentModeBottomSheetDialog :
       }
     })
 
-    binding?.radioPrepaid?.setOnCheckedChangeListener(object :
-      CompoundButton.OnCheckedChangeListener {
+    binding?.radioPrepaid?.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
       override fun onCheckedChanged(p0: CompoundButton?, isChecked: Boolean) {
         if (isChecked) {
           binding?.radioPaymentLink?.isChecked = false
@@ -65,7 +61,7 @@ class PaymentModeBottomSheetDialog :
     super.onClick(v)
     dismiss()
     when (v) {
-      // binding?.buttonDone -> onClicked(cancellingEntity?:"", (binding?.txtReason?.text?.toString()?:""))
+     // binding?.buttonDone -> onClicked(cancellingEntity?:"", (binding?.txtReason?.text?.toString()?:""))
     }
   }
 

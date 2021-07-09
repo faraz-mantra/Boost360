@@ -12,27 +12,27 @@ import io.reactivex.schedulers.Schedulers
 
 class HistoryDetailsViewModel(application: Application) : BaseViewModel(application) {
 
-  val updateResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+    val updateResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
 
-  val compositeDisposable = CompositeDisposable()
+    val compositeDisposable = CompositeDisposable()
 
-  fun getResult(): LiveData<List<FeaturesModel>> {
-    return updateResult
-  }
+    fun getResult():LiveData<List<FeaturesModel>>{
+        return updateResult
+    }
 
-  fun getDetailsOfWidgets(list: List<String>) {
-    compositeDisposable.add(
-      AppDatabase.getInstance(getApplication())!!
-        .featuresDao()
-        .getallFeaturesInList(list)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnSuccess {
-          updateResult.postValue(it)
-        }
-        .doOnError {
+    fun getDetailsOfWidgets(list: List<String>) {
+        compositeDisposable.add(
+                AppDatabase.getInstance(getApplication())!!
+                        .featuresDao()
+                        .getallFeaturesInList(list)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSuccess {
+                            updateResult.postValue(it)
+                        }
+                        .doOnError {
 
-        }
-        .subscribe())
-  }
+                        }
+                        .subscribe())
+    }
 }

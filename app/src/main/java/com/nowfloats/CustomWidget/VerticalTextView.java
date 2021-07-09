@@ -2,9 +2,7 @@ package com.nowfloats.CustomWidget;
 
 import android.content.Context;
 import android.graphics.Canvas;
-
 import androidx.appcompat.widget.AppCompatTextView;
-
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -16,34 +14,34 @@ import android.view.Gravity;
 public class VerticalTextView extends AppCompatTextView {
     final boolean topDown;
 
-    public VerticalTextView(Context context, AttributeSet attrs) {
+    public VerticalTextView(Context context, AttributeSet attrs){
         super(context, attrs);
         final int gravity = getGravity();
-        if (Gravity.isVertical(gravity) && (gravity & Gravity.VERTICAL_GRAVITY_MASK) == Gravity.BOTTOM) {
-            setGravity((gravity & Gravity.HORIZONTAL_GRAVITY_MASK) | Gravity.TOP);
+        if(Gravity.isVertical(gravity) && (gravity&Gravity.VERTICAL_GRAVITY_MASK) == Gravity.BOTTOM) {
+            setGravity((gravity&Gravity.HORIZONTAL_GRAVITY_MASK) | Gravity.TOP);
             topDown = false;
-        } else
+        }else
             topDown = true;
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
         super.onMeasure(heightMeasureSpec, widthMeasureSpec);
         setMeasuredDimension(getMeasuredHeight(), getMeasuredWidth());
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(Canvas canvas){
         TextPaint textPaint = getPaint();
         textPaint.setColor(getCurrentTextColor());
         textPaint.drawableState = getDrawableState();
 
         canvas.save();
 
-        if (topDown) {
+        if(topDown){
             canvas.translate(getWidth(), 0);
             canvas.rotate(90);
-        } else {
+        }else {
             canvas.translate(0, getHeight());
             canvas.rotate(-90);
         }

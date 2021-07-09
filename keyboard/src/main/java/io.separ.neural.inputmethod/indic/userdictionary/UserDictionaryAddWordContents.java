@@ -59,23 +59,19 @@ public class UserDictionaryAddWordContents {
     /* package */ static final int CODE_ALREADY_PRESENT = 2;
 
     private static final int FREQUENCY_FOR_USER_DICTIONARY_ADDS = 250;
-    private static final String[] HAS_WORD_PROJECTION = {UserDictionary.Words.WORD};
-    private static final String HAS_WORD_SELECTION_ONE_LOCALE = UserDictionary.Words.WORD
-            + "=? AND " + UserDictionary.Words.LOCALE + "=?";
-    private static final String HAS_WORD_SELECTION_ALL_LOCALES = UserDictionary.Words.WORD
-            + "=? AND " + UserDictionary.Words.LOCALE + " is null";
+
     private final int mMode; // Either MODE_EDIT or MODE_INSERT
     private final EditText mWordEditText;
     private final EditText mShortcutEditText;
+    private String mLocale;
     private final String mOldWord;
     private final String mOldShortcut;
-    private String mLocale;
     private String mSavedWord;
     private String mSavedShortcut;
 
     /* package */ UserDictionaryAddWordContents(final View view, final Bundle args) {
-        mWordEditText = (EditText) view.findViewById(R.id.user_dictionary_add_word_text);
-        mShortcutEditText = (EditText) view.findViewById(R.id.user_dictionary_add_shortcut);
+        mWordEditText = (EditText)view.findViewById(R.id.user_dictionary_add_word_text);
+        mShortcutEditText = (EditText)view.findViewById(R.id.user_dictionary_add_shortcut);
         if (!UserDictionarySettings.IS_SHORTCUT_API_SUPPORTED) {
             mShortcutEditText.setVisibility(View.GONE);
             view.findViewById(R.id.user_dictionary_add_shortcut_label).setVisibility(View.GONE);
@@ -104,20 +100,13 @@ public class UserDictionaryAddWordContents {
     }
 
     /* package */ UserDictionaryAddWordContents(final View view,
-                                                final UserDictionaryAddWordContents oldInstanceToBeEdited) {
-        mWordEditText = (EditText) view.findViewById(R.id.user_dictionary_add_word_text);
-        mShortcutEditText = (EditText) view.findViewById(R.id.user_dictionary_add_shortcut);
+            final UserDictionaryAddWordContents oldInstanceToBeEdited) {
+        mWordEditText = (EditText)view.findViewById(R.id.user_dictionary_add_word_text);
+        mShortcutEditText = (EditText)view.findViewById(R.id.user_dictionary_add_shortcut);
         mMode = MODE_EDIT;
         mOldWord = oldInstanceToBeEdited.mSavedWord;
         mOldShortcut = oldInstanceToBeEdited.mSavedShortcut;
         updateLocale(mLocale);
-    }
-
-    private static void addLocaleDisplayNameToList(final Context context,
-                                                   final ArrayList<LocaleRenderer> list, final String locale) {
-        if (null != locale) {
-            list.add(new LocaleRenderer(context, locale));
-        }
     }
 
     // locale may be null, this means default locale
@@ -201,23 +190,62 @@ public class UserDictionaryAddWordContents {
         return CODE_WORD_ADDED;
     }
 
+    private static final String[] HAS_WORD_PROJECTION = { UserDictionary.Words.WORD };
+    private static final String HAS_WORD_SELECTION_ONE_LOCALE = UserDictionary.Words.WORD
+            + "=? AND " + UserDictionary.Words.LOCALE + "=?";
+    private static final String HAS_WORD_SELECTION_ALL_LOCALES = UserDictionary.Words.WORD
+            + "=? AND " + UserDictionary.Words.LOCALE + " is null";
     private boolean hasWord(final String word, final Context context) {
         final Cursor cursor;
         // mLocale == "" indicates this is an entry for all languages. Here, mLocale can't
         // be null at all (it's ensured by the updateLocale method).
         if (mLocale != null && mLocale.isEmpty()) {
             cursor = context.getContentResolver().query(UserDictionary.Words.CONTENT_URI,
-                    HAS_WORD_PROJECTION, HAS_WORD_SELECTION_ALL_LOCALES,
-                    new String[]{word}, null /* sort order */);
+                      HAS_WORD_PROJECTION, HAS_WORD_SELECTION_ALL_LOCALES,
+                      new String[] { word }, null /* sort order */);
         } else {
             cursor = context.getContentResolver().query(UserDictionary.Words.CONTENT_URI,
-                    HAS_WORD_PROJECTION, HAS_WORD_SELECTION_ONE_LOCALE,
-                    new String[]{word, mLocale}, null /* sort order */);
+                      HAS_WORD_PROJECTION, HAS_WORD_SELECTION_ONE_LOCALE,
+                      new String[] { word, mLocale }, null /* sort order */);
         }
         try {
             return null != cursor && cursor.getCount() > 0;
         } finally {
             if (null != cursor) cursor.close();
+        }
+    }
+
+    public static class LocaleRenderer {
+        private final String mLocaleString;
+        private final String mDescription;
+        // LocaleString may NOT be null.
+        public LocaleRenderer(final Context context, final String localeString) {
+            mLocaleString = localeString;
+            if (null == localeString) {
+                mDescription = context.getString(R.string.user_dict_settings_more_languages);
+            } else if (localeString != null && localeString.isEmpty()) {
+                mDescription = context.getString(R.string.user_dict_settings_all_languages);
+            } else {
+                mDescription = LocaleUtils.constructLocaleFromString(localeString).getDisplayName();
+            }
+        }
+        @Override
+        public String toString() {
+            return mDescription;
+        }
+        public String getLocaleString() {
+            return mLocaleString;
+        }
+        // "More languages..." is null ; "All languages" is the empty string.
+        public boolean isMoreLanguages() {
+            return null == mLocaleString;
+        }
+    }
+
+    private static void addLocaleDisplayNameToList(final Context context,
+            final ArrayList<LocaleRenderer> list, final String locale) {
+        if (null != locale) {
+            list.add(new LocaleRenderer(context, locale));
         }
     }
 
@@ -251,36 +279,5 @@ public class UserDictionaryAddWordContents {
 
     public String getCurrentUserDictionaryLocale() {
         return mLocale;
-    }
-
-    public static class LocaleRenderer {
-        private final String mLocaleString;
-        private final String mDescription;
-
-        // LocaleString may NOT be null.
-        public LocaleRenderer(final Context context, final String localeString) {
-            mLocaleString = localeString;
-            if (null == localeString) {
-                mDescription = context.getString(R.string.user_dict_settings_more_languages);
-            } else if (localeString != null && localeString.isEmpty()) {
-                mDescription = context.getString(R.string.user_dict_settings_all_languages);
-            } else {
-                mDescription = LocaleUtils.constructLocaleFromString(localeString).getDisplayName();
-            }
-        }
-
-        @Override
-        public String toString() {
-            return mDescription;
-        }
-
-        public String getLocaleString() {
-            return mLocaleString;
-        }
-
-        // "More languages..." is null ; "All languages" is the empty string.
-        public boolean isMoreLanguages() {
-            return null == mLocaleString;
-        }
     }
 }

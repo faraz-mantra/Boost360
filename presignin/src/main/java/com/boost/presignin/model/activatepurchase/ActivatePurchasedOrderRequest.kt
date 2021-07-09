@@ -14,4 +14,4 @@ data class ActivatePurchasedOrderRequest(
   var purchaseOrderType: String? = null,
   @SerializedName("Widgets")
   var widgets: ArrayList<PurchasedWidget>? = null
-) : BaseRequest(), Serializable
+):BaseRequest(),Serializable

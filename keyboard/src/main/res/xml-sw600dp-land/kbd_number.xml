@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
 **
 ** Copyright 2011, The Android Open Source Project
@@ -17,10 +18,13 @@
 */
 -->
 
-<Keyboard xmlns:latin="http://schemas.android.com/apk/res-auto"
-  latin:keyWidth="18%p"
-  latin:keyboardLeftPadding="10%p"
-  latin:keyboardRightPadding="10%p"
-  latin:touchPositionCorrectionData="@array/touch_position_correction_data_default">
-  <include latin:keyboardLayout="@xml/rows_number" />
+<Keyboard
+    xmlns:latin="http://schemas.android.com/apk/res-auto"
+    latin:keyboardLeftPadding="10%p"
+    latin:keyboardRightPadding="10%p"
+    latin:keyWidth="18%p"
+    latin:touchPositionCorrectionData="@array/touch_position_correction_data_default"
+>
+    <include
+        latin:keyboardLayout="@xml/rows_number" />
 </Keyboard>

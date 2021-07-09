@@ -32,7 +32,7 @@ import io.separ.neural.inputmethod.indic.define.DebugFlags;
 
 /**
  * The more key specification object. The more keys are an array of {@link MoreKeySpec}.
- * <p>
+ *
  * The more keys specification is comma separated "key specification" each of which represents one
  * "more key".
  * The key specification might have label or string resource reference in it. These references are
@@ -43,13 +43,6 @@ import io.separ.neural.inputmethod.indic.define.DebugFlags;
  */
 // TODO: Should extend the key specification object.
 public final class MoreKeySpec {
-    private static final boolean DEBUG = DebugFlags.DEBUG_ENABLED;
-    // Constants for parsing.
-    private static final char COMMA = Constants.CODE_COMMA;
-    private static final char BACKSLASH = Constants.CODE_BACKSLASH;
-    private static final String ADDITIONAL_MORE_KEY_MARKER =
-            StringUtils.newSingleCodePointString(Constants.CODE_PERCENT);
-    private static final String[] EMPTY_STRING_ARRAY = new String[0];
     public final int mCode;
     public final String mLabel;
     public final String mOutputText;
@@ -76,6 +69,60 @@ public final class MoreKeySpec {
         mIconId = KeySpecParser.getIconId(moreKeySpec);
     }
 
+    public Key buildKey(final int x, final int y, final int labelFlags,
+                        final KeyboardParams params, final boolean isMoreKey) {
+        return new Key(mLabel, mIconId, mCode, mOutputText, null /* hintLabel */, labelFlags,
+                Key.BACKGROUND_TYPE_NORMAL, x, y, params.mDefaultKeyWidth, params.mDefaultRowHeight,
+                params.mHorizontalGap, params.mVerticalGap, isMoreKey);
+    }
+
+    public Key buildKey(final int x, final int y, final int labelFlags,
+            final KeyboardParams params) {
+        return buildKey(x, y, labelFlags, params, false);
+    }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 31 + mCode;
+        hashCode = hashCode * 31 + mIconId;
+        hashCode = hashCode * 31 + (mLabel == null ? 0 : mLabel.hashCode());
+        hashCode = hashCode * 31 + (mOutputText == null ? 0 : mOutputText.hashCode());
+        return hashCode;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o instanceof MoreKeySpec) {
+            final MoreKeySpec other = (MoreKeySpec)o;
+            return mCode == other.mCode
+                    && mIconId == other.mIconId
+                    && TextUtils.equals(mLabel, other.mLabel)
+                    && TextUtils.equals(mOutputText, other.mOutputText);
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        final String label = (mIconId == KeyboardIconsSet.ICON_UNDEFINED ? mLabel
+                : KeyboardIconsSet.PREFIX_ICON + KeyboardIconsSet.getIconName(mIconId));
+        final String output = (mCode == Constants.CODE_OUTPUT_TEXT ? mOutputText
+                : Constants.printableCode(mCode));
+        if (StringUtils.codePointCount(label) == 1 && label.codePointAt(0) == mCode) {
+            return output;
+        } else {
+            return label + '|' + output;
+        }
+    }
+
+    private static final boolean DEBUG = DebugFlags.DEBUG_ENABLED;
+    // Constants for parsing.
+    private static final char COMMA = Constants.CODE_COMMA;
+    private static final char BACKSLASH = Constants.CODE_BACKSLASH;
+    private static final String ADDITIONAL_MORE_KEY_MARKER =
+            StringUtils.newSingleCodePointString(Constants.CODE_PERCENT);
+
     /**
      * Split the text containing multiple key specifications separated by commas into an array of
      * key specifications.
@@ -94,7 +141,7 @@ public final class MoreKeySpec {
         final int size = text.length();
         // Optimization for one-letter key specification.
         if (size == 1) {
-            return text.charAt(0) == COMMA ? null : new String[]{text};
+            return text.charAt(0) == COMMA ? null : new String[] { text };
         }
 
         ArrayList<String> list = null;
@@ -121,13 +168,15 @@ public final class MoreKeySpec {
         }
         final String remain = (size - start > 0) ? text.substring(start) : null;
         if (list == null) {
-            return remain != null ? new String[]{remain} : null;
+            return remain != null ? new String[] { remain } : null;
         }
         if (remain != null) {
             list.add(remain);
         }
         return list.toArray(new String[list.size()]);
     }
+
+    private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     private static String[] filterOutEmptyString(final String[] array) {
         if (array == null) {
@@ -151,7 +200,7 @@ public final class MoreKeySpec {
     }
 
     public static String[] insertAdditionalMoreKeys(final String[] moreKeySpecs,
-                                                    final String[] additionalMoreKeySpecs) {
+            final String[] additionalMoreKeySpecs) {
         final String[] moreKeys = filterOutEmptyString(moreKeySpecs);
         final String[] additionalMoreKeys = filterOutEmptyString(additionalMoreKeySpecs);
         final int moreKeysCount = moreKeys.length;
@@ -215,7 +264,7 @@ public final class MoreKeySpec {
     }
 
     public static int getIntValue(final String[] moreKeys, final String key,
-                                  final int defaultValue) {
+            final int defaultValue) {
         if (moreKeys == null) {
             return defaultValue;
         }
@@ -255,52 +304,5 @@ public final class MoreKeySpec {
             value = true;
         }
         return value;
-    }
-
-    public Key buildKey(final int x, final int y, final int labelFlags,
-                        final KeyboardParams params, final boolean isMoreKey) {
-        return new Key(mLabel, mIconId, mCode, mOutputText, null /* hintLabel */, labelFlags,
-                Key.BACKGROUND_TYPE_NORMAL, x, y, params.mDefaultKeyWidth, params.mDefaultRowHeight,
-                params.mHorizontalGap, params.mVerticalGap, isMoreKey);
-    }
-
-    public Key buildKey(final int x, final int y, final int labelFlags,
-                        final KeyboardParams params) {
-        return buildKey(x, y, labelFlags, params, false);
-    }
-
-    @Override
-    public int hashCode() {
-        int hashCode = 31 + mCode;
-        hashCode = hashCode * 31 + mIconId;
-        hashCode = hashCode * 31 + (mLabel == null ? 0 : mLabel.hashCode());
-        hashCode = hashCode * 31 + (mOutputText == null ? 0 : mOutputText.hashCode());
-        return hashCode;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o instanceof MoreKeySpec) {
-            final MoreKeySpec other = (MoreKeySpec) o;
-            return mCode == other.mCode
-                    && mIconId == other.mIconId
-                    && TextUtils.equals(mLabel, other.mLabel)
-                    && TextUtils.equals(mOutputText, other.mOutputText);
-        }
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        final String label = (mIconId == KeyboardIconsSet.ICON_UNDEFINED ? mLabel
-                : KeyboardIconsSet.PREFIX_ICON + KeyboardIconsSet.getIconName(mIconId));
-        final String output = (mCode == Constants.CODE_OUTPUT_TEXT ? mOutputText
-                : Constants.printableCode(mCode));
-        if (StringUtils.codePointCount(label) == 1 && label.codePointAt(0) == mCode) {
-            return output;
-        } else {
-            return label + '|' + output;
-        }
     }
 }

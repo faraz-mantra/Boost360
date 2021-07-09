@@ -1,9 +1,7 @@
 package com.nowfloats.customerassistant.adapters;
 
 import android.content.Context;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,7 +28,6 @@ public class CAUpdatesAdapter extends RecyclerView.Adapter<CAUpdatesAdapter.View
     private Context mContext;
 
     private SuggestionSelectionListner mSuggestionSelectionListner;
-    private int MAX_LINE_COUNT = 3;
 
     public CAUpdatesAdapter(Context mContext,
                             ArrayList<SugUpdates> arrUpdates,
@@ -39,6 +36,8 @@ public class CAUpdatesAdapter extends RecyclerView.Adapter<CAUpdatesAdapter.View
         this.arrUpdates = arrUpdates;
         this.mSuggestionSelectionListner = mSuggestionSelectionListner;
     }
+
+    private int MAX_LINE_COUNT = 3;
 
     @Override
     public CAUpdatesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

@@ -1,385 +1,384 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:clickable="true"
-  android:focusable="true"
-  android:padding="5dp">
-
-  <ImageView
-    android:id="@+id/back_image"
-    android:layout_width="0dp"
-    android:layout_height="match_parent"
-    android:scaleType="centerCrop"
-    app:layout_constraintBottom_toTopOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-  <View
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/_100sdp"
-
-    app:layout_constraintBottom_toTopOf="@+id/back_image3"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent" />
-
-  <View
-    android:id="@+id/back_image3"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:padding="5dp"
+    android:focusable="true">
 
-    android:scaleType="center"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/back_image" />
-
-  <androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="55dp"
-    android:background="#FF9F00"
-    android:contentInsetStart="0dp"
-    android:contentInsetEnd="0dp"
-    android:visibility="gone"
-    app:contentInsetEnd="0dp"
-    app:contentInsetStart="0dp"
-    app:layout_collapseMode="parallax"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
-
-      <RelativeLayout
-        android:id="@+id/package_cart_icon"
+    <ImageView
+        android:id="@+id/back_image"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-          android:layout_width="20dp"
-          android:layout_height="20dp"
-          android:layout_centerInParent="true"
-          android:background="@drawable/cart48" />
-
-
-        <com.nex3z.notificationbadge.NotificationBadge
-          android:id="@+id/badge121"
-          android:layout_width="28dp"
-          android:layout_height="28dp"
-          android:layout_alignParentTop="true"
-          android:layout_alignParentEnd="true"
-          app:nbMaxTextLength="2" />
-      </RelativeLayout>
-
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_bold"
-        android:text="Package Details"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_11sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/package_cart_icon"
-        app:layout_constraintStart_toEndOf="@+id/package_back"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-      <LinearLayout
-        android:id="@+id/package_back"
-        android:layout_width="0dp"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        
+        app:layout_constraintBottom_toTopOf="@+id/back_image3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/back_image3"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:gravity="center"
+
+        android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/back_image" />
 
-        <ImageView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:background="@drawable/arrow_white" />
-      </LinearLayout>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-  </androidx.appcompat.widget.Toolbar>
-
-
-  <androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_marginBottom="5dp"
-    android:background="@drawable/all_side_curve_bg"
-    android:overScrollMode="never"
-    android:scrollbars="none"
-    app:layout_constraintBottom_toTopOf="@id/package_addCartNew"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/toolbar">
-
-    <!--<RelativeLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/_10sdp">-->
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@drawable/all_side_curve_bg"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
-
-      <RelativeLayout
-        android:id="@+id/rl_cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/all_side_curve_bg"
-        android:descendantFocusability="blocksDescendants"
+        android:layout_height="55dp"
+        android:contentInsetStart="0dp"
+        app:contentInsetStart="0dp"
+        android:contentInsetEnd="0dp"
+        app:contentInsetEnd="0dp"
+        android:visibility="gone"
+        android:background="#FF9F00"
+        app:layout_collapseMode="parallax"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <!--<androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="8dp"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0.0px"
-            android:clipToPadding="false"
-            android:clipChildren="false"
-            app:cardCornerRadius="10dp"
-            app:cardPreventCornerOverlap="false"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">-->
-        <androidx.cardview.widget.CardView
-          android:id="@+id/cardView"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="0dp"
-          android:layout_marginEnd="0dp"
-          android:layout_marginBottom="10dp"
-          android:background="@drawable/all_side_curve_bg"
-          android:clipChildren="true"
-          android:clipToPadding="true"
-          android:divider="@android:color/darker_gray"
-          android:paddingTop="10dp"
-          app:cardCornerRadius="10dp"
-          app:cardElevation="1dp"
-          app:cardPreventCornerOverlap="false"
-          app:cardUseCompatPadding="false"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
-          <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/package_main_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            <RelativeLayout
+                android:id="@+id/package_cart_icon"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/cart48" />
 
-            <ImageView
-              android:id="@+id/package_profile_image"
-              android:layout_width="@dimen/pad_70dp"
-              android:layout_height="@dimen/pad_70dp"
-              android:layout_margin="20dp"
-              android:src="@drawable/group"
 
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toTopOf="parent" />
+                <com.nex3z.notificationbadge.NotificationBadge
+                    android:id="@+id/badge121"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    app:nbMaxTextLength="2" />
+            </RelativeLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-              android:id="@+id/const_title"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:padding="@dimen/_7sdp"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintBottom_toTopOf="@+id/package_compare_layout"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toEndOf="@id/package_profile_image">
 
-              <TextView
-                android:id="@+id/package_title"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
-                android:maxLines="2"
-                android:text="ONLINE \nBUSINESS PRO"
+                android:text="Package Details"
                 android:textAllCaps="true"
-                android:textColor="@color/app_text_yellow"
-                android:textFontWeight="800"
-                android:textSize="@dimen/txt_18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/package_amount_layout"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/package_cart_icon"
+                app:layout_constraintStart_toEndOf="@+id/package_back"
+                app:layout_constraintTop_toTopOf="parent" />
 
-              <LinearLayout
-                android:id="@+id/package_amount_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+            <LinearLayout
+                android:id="@+id/package_back"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/package_title">
+                app:layout_constraintTop_toTopOf="parent">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/arrow_white" />
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@id/package_addCartNew"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/all_side_curve_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <!--<RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_10sdp">-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/all_side_curve_bg">
+
+                <RelativeLayout
+                    android:id="@+id/rl_cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@drawable/all_side_curve_bg"
+                    android:descendantFocusability="blocksDescendants">
+                <!--<androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="8dp"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="0.0px"
+                    android:clipToPadding="false"
+                    android:clipChildren="false"
+                    app:cardCornerRadius="10dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/all_side_curve_bg"
+                    app:cardCornerRadius="10dp"
+                    android:clipToPadding="true"
+                    android:clipChildren="true"
+                    android:paddingTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardElevation="1dp"
+                    android:divider="@android:color/darker_gray"
+                    app:cardUseCompatPadding="false"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/package_main_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/package_profile_image"
+                        android:layout_width="@dimen/pad_70dp"
+                        android:layout_height="@dimen/pad_70dp"
+                        android:src="@drawable/group"
+                        android:layout_margin="20dp"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/const_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_7sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/package_profile_image"
+                        app:layout_constraintBottom_toTopOf="@+id/package_compare_layout"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <TextView
+                            android:id="@+id/package_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_bold"
+                            android:text="ONLINE \nBUSINESS PRO"
+                            android:textFontWeight="800"
+                            android:textStyle="bold"
+                            android:textAllCaps="true"
+                            android:textColor="@color/app_text_yellow"
+                            android:textSize="@dimen/txt_18sp"
+                            android:maxLines="2"
+                            app:layout_constraintBottom_toTopOf="@id/package_amount_layout"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <LinearLayout
+                            android:id="@+id/package_amount_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/package_title">
+
+                            <TextView
+                                android:id="@+id/tv_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/open_sans"
+                                android:paddingStart="0dp"
+                                android:paddingEnd="@dimen/_5sdp"
+                                android:textStyle="bold"
+                                android:text="₹2,559/month"
+                                android:textColor="#4A4A4A"
+                                android:textFontWeight="600"
+                                android:textSize="@dimen/txt_12sp" />
+
+
+                        </LinearLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <LinearLayout
+                        android:id="@+id/package_compare_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="20dp"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/package_profile_image"
+                        >
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/ic_information" />
+                        <TextView
+                            android:id="@+id/parent_item_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans"
+                            android:text="Includes all free forever add-ons. Ideal for small businesses that want to get started with online sales."
+                            android:textColor="#4A4A4A"
+                            android:textFontWeight="400"
+                            android:layout_marginStart="@dimen/_7sdp"
+                            android:layout_marginEnd="@dimen/_9sdp"
+                            android:textSize="@dimen/txt_10sp"/>
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+                </RelativeLayout>
+                <View
+                    android:id="@+id/package_main_layout_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/material_grey_400"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/rl_cardView"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"/>
                 <TextView
-                  android:id="@+id/tv_price"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:fontFamily="@font/open_sans"
-                  android:paddingStart="0dp"
-                  android:paddingEnd="@dimen/_5sdp"
-                  android:text="₹2,559/month"
-                  android:textColor="#4A4A4A"
-                  android:textFontWeight="600"
-                  android:textSize="@dimen/txt_12sp"
-                  android:textStyle="bold" />
+                    android:id="@+id/tv_inlcuded_add_on"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Includes these 2 add-ons"
+                    android:textStyle="bold"
+                    android:textColor="#4A4A4A"
+                    android:paddingTop="10dp"
+
+                    android:textFontWeight="600"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rl_cardView"
+                    android:textSize="@dimen/txt_11sp"/>
+
+                <!--<androidx.core.widget.NestedScrollView
+                    android:id="@+id/ll_nested"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+android:fillViewport="true"
+                    android:overScrollMode="never"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_inlcuded_add_on">
+                <LinearLayout
+                    android:id="@+id/ll_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">-->
 
 
-              </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/child_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@drawable/bottom_side_curve_bg"
+                    app:layout_constraintTop_toBottomOf="@id/tv_inlcuded_add_on"
+
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    tools:listitem="@layout/compare_details_items"/>
+                <!--app:layout_constraintBottom_toTopOf="@+id/rl_main"-->
+                     <!--</LinearLayout>
+                </androidx.core.widget.NestedScrollView>-->
+
+
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--</RelativeLayout>-->
 
-            <LinearLayout
-              android:id="@+id/package_compare_layout"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_marginStart="20dp"
-              android:layout_marginTop="5dp"
-              android:paddingTop="10dp"
-              android:paddingBottom="10dp"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintTop_toBottomOf="@+id/package_profile_image">
+    </androidx.core.widget.NestedScrollView>
 
-              <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:src="@drawable/ic_information" />
 
-              <TextView
-                android:id="@+id/parent_item_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_7sdp"
-                android:layout_marginEnd="@dimen/_9sdp"
-                android:fontFamily="@font/open_sans"
-                android:text="Includes all free forever add-ons. Ideal for small businesses that want to get started with online sales."
-                android:textColor="#4A4A4A"
-                android:textFontWeight="400"
-                android:textSize="@dimen/txt_10sp" />
-            </LinearLayout>
-          </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-      </RelativeLayout>
-
-      <View
-        android:id="@+id/package_main_layout_view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@color/material_grey_400"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rl_cardView" />
-
-      <TextView
-        android:id="@+id/tv_inlcuded_add_on"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/package_addCartNew"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:fontFamily="@font/open_sans"
-        android:paddingTop="10dp"
-        android:text="Includes these 2 add-ons"
 
-        android:textColor="#4A4A4A"
-        android:textFontWeight="600"
-        android:textSize="@dimen/txt_11sp"
-        android:textStyle="bold"
+        android:background="@drawable/orange_button_click_effect"
+        android:fontFamily="@font/open_sans_semibold"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="Add Package to cart"
+        android:textSize="@dimen/txt_14sp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rl_cardView" />
-
-      <!--<androidx.core.widget.NestedScrollView
-          android:id="@+id/ll_nested"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:scrollbars="none"
-android:fillViewport="true"
-          android:overScrollMode="never"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tv_inlcuded_add_on">
-      <LinearLayout
-          android:id="@+id/ll_main"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="vertical">-->
-
-
-      <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/child_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_1sdp"
-        android:background="@drawable/bottom_side_curve_bg"
-        android:nestedScrollingEnabled="false"
-        android:overScrollMode="never"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@id/tv_inlcuded_add_on"
-        tools:listitem="@layout/compare_details_items" />
-      <!--app:layout_constraintBottom_toTopOf="@+id/rl_main"-->
-      <!--</LinearLayout>
- </androidx.core.widget.NestedScrollView>-->
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <!--</RelativeLayout>-->
-
-  </androidx.core.widget.NestedScrollView>
-
-
-  <TextView
-    android:id="@+id/package_addCartNew"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-
-    android:background="@drawable/orange_button_click_effect"
-    android:fontFamily="@font/open_sans_semibold"
-    android:gravity="center"
-    android:padding="@dimen/_10sdp"
-    android:text="Add Package to cart"
-    android:textColor="@color/white"
-    android:textSize="@dimen/txt_14sp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

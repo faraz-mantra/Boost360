@@ -1,173 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-  <data class="FacultyDetailsBinding">
+    <data class="FacultyDetailsBinding">
 
-    <variable
-      name="facultyData"
-      type="com.nowfloats.education.faculty.model.Data" />
-  </data>
+        <variable
+            name="facultyData"
+            type="com.nowfloats.education.faculty.model.Data" />
+    </data>
 
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/app_background_dark_color"
-    android:orientation="vertical"
-    tools:context="com.nowfloats.Testimonials.TestimonialsFeedbackActivity">
-
-
-    <include
-      android:id="@+id/app_bar"
-      layout="@layout/new_custome_app_bar" />
-
-    <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:overScrollMode="never"
-      android:scrollbars="none">
-
-      <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/app_background_dark_color"
         android:orientation="vertical"
-        android:padding="@dimen/_15sdp">
+        tools:context="com.nowfloats.Testimonials.TestimonialsFeedbackActivity">
 
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:text="@string/add_profile_image"
-          android:textColor="#747474"
-          android:textSize="@dimen/txt_12sp" />
 
-        <androidx.cardview.widget.CardView
-          android:id="@+id/card_primary_image"
-          android:layout_width="180dp"
-          android:layout_height="130dp"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:layout_marginTop="@dimen/_5sdp"
-          android:clickable="true"
-          android:padding="2dp"
-          app:cardCornerRadius="4dp">
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/new_custome_app_bar" />
 
-          <FrameLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/ic_image_placeholder">
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
-            <ImageView
-              android:id="@+id/faculty_profile_image"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:focusable="false"
-              android:scaleType="centerCrop"
-              android:src='@{facultyData.profileimage.url != null ? facultyData.profileimage.url : ""}' />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_15sdp">
 
-            <ImageButton
-              android:id="@+id/remove_faculty_profile_image"
-              android:layout_width="20dp"
-              android:layout_height="20dp"
-              android:layout_gravity="top|end"
-              android:layout_margin="@dimen/margin_5"
-              android:visibility="gone"
-              app:srcCompat="@drawable/ic_remove"
-              tools:visibility="visible" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:text="@string/add_profile_image"
+                    android:textColor="#747474"
+                    android:textSize="@dimen/txt_12sp" />
 
-          </FrameLayout>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_primary_image"
+                    android:layout_width="180dp"
+                    android:layout_height="130dp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:clickable="true"
+                    android:padding="2dp"
+                    app:cardCornerRadius="4dp">
 
-        </androidx.cardview.widget.CardView>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_image_placeholder">
 
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:layout_marginTop="@dimen/_15sdp"
-          android:text="@string/name"
-          android:textColor="#747474"
-          android:textSize="@dimen/txt_12sp" />
+                        <ImageView
+                            android:focusable="false"
+                            android:id="@+id/faculty_profile_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src='@{facultyData.profileimage.url != null ? facultyData.profileimage.url : ""}' />
 
-        <EditText
-          android:id="@+id/faculty_name"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:layout_marginTop="@dimen/_5sdp"
-          android:layout_marginEnd="@dimen/_5sdp"
-          android:background="@drawable/edit_text_bg_elevated_education"
-          android:elevation="@dimen/_2sdp"
-          android:hint="Enter Name"
-          android:text="@={facultyData.name}"
-          android:textSize="@dimen/txt_16sp" />
+                        <ImageButton
+                            tools:visibility="visible"
+                            android:id="@+id/remove_faculty_profile_image"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="top|end"
+                            android:layout_margin="@dimen/margin_5"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/ic_remove" />
 
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:layout_marginTop="@dimen/_15sdp"
-          android:text="@string/designation"
-          android:textColor="#747474"
-          android:textSize="@dimen/txt_12sp" />
+                    </FrameLayout>
 
-        <EditText
-          android:id="@+id/faculty_designation"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:layout_marginTop="@dimen/_5sdp"
-          android:layout_marginEnd="@dimen/_5sdp"
-          android:background="@drawable/edit_text_bg_elevated_education"
-          android:elevation="@dimen/_2sdp"
-          android:hint="Eg: Physics Teacher"
-          android:text="@={facultyData.title}"
-          android:textSize="@dimen/_12sdp" />
+                </androidx.cardview.widget.CardView>
 
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:layout_marginTop="@dimen/_15sdp"
-          android:text="Person Info"
-          android:textColor="#747474"
-          android:textSize="@dimen/txt_12sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/name"
+                    android:textColor="#747474"
+                    android:textSize="@dimen/txt_12sp" />
+
+                <EditText
+                    android:id="@+id/faculty_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:background="@drawable/edit_text_bg_elevated_education"
+                    android:elevation="@dimen/_2sdp"
+                    android:hint="Enter Name"
+                    android:text="@={facultyData.name}"
+                    android:textSize="@dimen/txt_16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/designation"
+                    android:textColor="#747474"
+                    android:textSize="@dimen/txt_12sp" />
+
+                <EditText
+                    android:id="@+id/faculty_designation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:background="@drawable/edit_text_bg_elevated_education"
+                    android:elevation="@dimen/_2sdp"
+                    android:hint="Eg: Physics Teacher"
+                    android:text="@={facultyData.title}"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Person Info"
+                    android:textColor="#747474"
+                    android:textSize="@dimen/txt_12sp" />
 
 
-        <EditText
-          android:id="@+id/review_description"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/_100sdp"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:layout_marginTop="@dimen/_5sdp"
-          android:layout_marginEnd="@dimen/_5sdp"
-          android:background="@drawable/edit_text_bg_elevated_education"
-          android:elevation="@dimen/_2sdp"
-          android:gravity="top"
-          android:hint="Enter Review Description"
-          android:text="@={facultyData.description}"
-          android:textSize="@dimen/_12sdp" />
+                <EditText
+                    android:id="@+id/review_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:background="@drawable/edit_text_bg_elevated_education"
+                    android:elevation="@dimen/_2sdp"
+                    android:gravity="top"
+                    android:hint="Enter Review Description"
+                    android:text="@={facultyData.description}"
+                    android:textSize="@dimen/_12sdp" />
 
 
-        <TextView
-          android:id="@+id/add_update_faculty"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_10sdp"
-          android:layout_marginTop="@dimen/_20sdp"
-          android:layout_marginEnd="@dimen/_10sdp"
-          android:layout_marginBottom="16dp"
-          android:background="@drawable/orange_button_click_effect"
-          android:elevation="@dimen/_2sdp"
-          android:fontFamily="@font/open_sans_semibold"
-          android:gravity="center"
-          android:paddingTop="@dimen/_10sdp"
-          android:paddingBottom="@dimen/_10sdp"
-          android:text="save"
-          android:textAllCaps="true"
-          android:textColor="@color/white" />
+                <TextView
+                    android:layout_marginBottom="16dp"
+                    android:id="@+id/add_update_faculty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/orange_button_click_effect"
+                    android:elevation="@dimen/_2sdp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="save"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white" />
 
-      </LinearLayout>
-    </ScrollView>
+            </LinearLayout>
+        </ScrollView>
 
-  </LinearLayout>
+    </LinearLayout>
 </layout>

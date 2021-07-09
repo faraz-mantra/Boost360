@@ -3,12 +3,12 @@ package com.inventoryorder.model.ordersdetails
 import java.io.Serializable
 
 data class PaymentDetailsN(
-  val ExtraProperties: Any,
-  val Method: String? = null,
-  val OnlinePaymentProvider: String? = null,
-  val Status: String? = null,
-  val TransactionId: String? = null,
-  val TransactionReferenceNo: String? = null,
+    val ExtraProperties: Any,
+    val Method: String? = null,
+    val OnlinePaymentProvider: String? = null,
+    val Status: String? = null,
+    val TransactionId: String? = null,
+    val TransactionReferenceNo: String? = null,
 ) : Serializable {
 
   fun status(): String {
@@ -36,28 +36,19 @@ data class PaymentDetailsN(
   }
 
   enum class METHOD(val value: String, val type: String) {
-    COD("COD", "COD"), ONLINEPAYMENT("ONLINE", "ONLINEPAYMENT"), FREE(
-      "FREE",
-      "FREE"
-    ),
-    ONLINE("ONLINE", "ONLINE");
+    COD("COD", "COD"), ONLINEPAYMENT("ONLINE", "ONLINEPAYMENT"), FREE("FREE", "FREE"), ONLINE("ONLINE", "ONLINE");
 
     companion object {
-      fun fromType(type: String?): METHOD? =
-        values().firstOrNull { it.type.equals(type, ignoreCase = true) }
+      fun fromType(type: String?): METHOD? = values().firstOrNull { it.type.equals(type, ignoreCase = true) }
     }
   }
 
   enum class STATUS(var title: String) {
     PENDING("PENDING"), INITIATED("INITIATED"), SUCCESS("RECEIVED"), INPROCESS("IN-PROCESS"),
-    SUBMITTEDFORREFUND("SUBMITFORREFUND"), REFUNDED("REFUNDED"), REFUNDDENIED("REFUND-DENIED"), FAILED(
-      "FAILED"
-    ),
-    CANCELLED("CANCELLED");
+    SUBMITTEDFORREFUND("SUBMITFORREFUND"), REFUNDED("REFUNDED"), REFUNDDENIED("REFUND-DENIED"), FAILED("FAILED"), CANCELLED("CANCELLED");
 
     companion object {
-      fun from(value: String?): STATUS? =
-        values().firstOrNull { it.name.equals(value, ignoreCase = true) }
+      fun from(value: String?): STATUS? = values().firstOrNull { it.name.equals(value, ignoreCase = true) }
     }
   }
 }

@@ -24,8 +24,7 @@ import com.inventoryorder.ui.tutorials.model.VIDEOSItem
 import com.inventoryorder.ui.tutorials.viewmodel.TutorialViewModel
 import java.util.*
 
-class LearnHowItWorkBottomSheet :
-  BaseBottomSheetDialog<BottomSheetLearnHowItWorksBinding, TutorialViewModel>() {
+class LearnHowItWorkBottomSheet : BaseBottomSheetDialog<BottomSheetLearnHowItWorksBinding, TutorialViewModel>() {
 
   private var data: LearnAboutAppointmentMgmt? = null
 
@@ -49,13 +48,7 @@ class LearnHowItWorkBottomSheet :
   }
 
   override fun onCreateView() {
-    setOnClickListener(
-      binding?.civClose,
-      binding?.civSpeakHowItWorks,
-      binding?.civSpeakTips,
-      binding?.actionContactSupport,
-      binding?.actionReadFaq
-    )
+    setOnClickListener(binding?.civClose, binding?.civSpeakHowItWorks, binding?.civSpeakTips, binding?.actionContactSupport, binding?.actionReadFaq)
     binding?.vpVideos?.clipToPadding = false
     binding?.vpVideos?.setPadding(40, 0, 40, 0)
     setData()
@@ -67,16 +60,11 @@ class LearnHowItWorkBottomSheet :
     viewModel?.getLearnStaffResponse()?.observeOnce(viewLifecycleOwner, {
       this.data = it
       binding?.ctvHowItWorksContent?.text = data?.contents?.description
-      val pagerAdapter = PagerAdapter(
-        childFragmentManager,
-        behavior = FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
-        data?.contents?.videos
-      )
+      val pagerAdapter = PagerAdapter(childFragmentManager, behavior = FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, data?.contents?.videos)
       binding?.vpVideos?.adapter = pagerAdapter
       binding?.diPagerIndicator?.setViewPager(binding?.vpVideos!!)
       loadTips(data!!)
-      binding?.ctvVideosHeading?.text =
-        "${if (data?.contents?.videos?.size ?: 0 > 1) "VIDEOS" else "VIDEO"} (${data?.contents?.videos?.size})"
+      binding?.ctvVideosHeading?.text = "${if (data?.contents?.videos?.size ?: 0 > 1) "VIDEOS" else "VIDEO"} (${data?.contents?.videos?.size})"
     })
   }
 
@@ -164,8 +152,7 @@ class LearnHowItWorkBottomSheet :
 
 }
 
-class PagerAdapter(fm: FragmentManager, behavior: Int, private val videos: List<VIDEOSItem?>?) :
-  FragmentStatePagerAdapter(fm, behavior) {
+class PagerAdapter(fm: FragmentManager, behavior: Int, private val videos: List<VIDEOSItem?>?) : FragmentStatePagerAdapter(fm, behavior) {
   override fun getCount(): Int {
     return videos?.size ?: 0
   }
@@ -208,10 +195,7 @@ class VideoFragment : AppBaseFragment<FragmentVideoPagerItemBinding, TutorialVie
     bundle.putSerializable(IntentConstant.VIDEO_ITEM.name, videosItem)
     tutorialVideosBottomSheet.arguments = bundle
     tutorialVideosBottomSheet.isCancelable = false
-    tutorialVideosBottomSheet.show(
-      parentFragmentManager,
-      TutorialVideosBottomSheet::class.java.name
-    )
+    tutorialVideosBottomSheet.show(parentFragmentManager, TutorialVideosBottomSheet::class.java.name)
   }
 
   private fun setView(videosItem: VIDEOSItem?) {

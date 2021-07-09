@@ -26,7 +26,6 @@ import android.inputmethodservice.InputMethodService;
 import android.net.Uri;
 import android.os.Build;
 import android.os.SystemClock;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RawRes;
@@ -34,7 +33,6 @@ import androidx.core.view.inputmethod.EditorInfoCompat;
 import androidx.core.view.inputmethod.InputConnectionCompat;
 import androidx.core.view.inputmethod.InputContentInfoCompat;
 import androidx.core.content.FileProvider;
-
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -87,9 +85,6 @@ import static io.separ.neural.inputmethod.Utils.SwipeUtils.changedLanguage;
  * for example.
  */
 public final class RichInputConnection {
-    public static final String MIME_TYPE_GIF = "image/gif";
-    public static final String MIME_TYPE_PNG = "image/png";
-    public static final String MIME_TYPE_WEBP = "image/webp";
     private static final String TAG = RichInputConnection.class.getSimpleName();
     private static final boolean DBG = false;
     private static final boolean DEBUG_PREVIOUS_TEXT = false;
@@ -100,49 +95,7 @@ public final class RichInputConnection {
             + Constants.MAX_PREV_WORD_COUNT_FOR_N_GRAM /* separators */;
     private static final int INVALID_CURSOR_POSITION = -1;
     private static final int NUM_CHARS_TO_GET_BEFORE_CURSOR = 40;
-    /**
-     * The amount of time a {@link #reloadTextCache} call needs to take for the keyboard to enter
-     * the {@link #hasSlowInputConnection} state.
-     */
-    private static final long SLOW_INPUT_CONNECTION_ON_FULL_RELOAD_MS = 1000;
-    /**
-     * The amount of time a {@link #getTextBeforeCursor} or {@link #getTextAfterCursor} call needs
-     * to take for the keyboard to enter the {@link #hasSlowInputConnection} state.
-     */
-    private static final long SLOW_INPUT_CONNECTION_ON_PARTIAL_RELOAD_MS = 200;
-    private static final int OPERATION_GET_TEXT_BEFORE_CURSOR = 0;
-    private static final int OPERATION_GET_TEXT_AFTER_CURSOR = 1;
-    private static final int OPERATION_GET_WORD_RANGE_AT_CURSOR = 2;
-    private static final int OPERATION_RELOAD_TEXT_CACHE = 3;
-    private static final String[] OPERATION_NAMES = new String[]{
-            "GET_TEXT_BEFORE_CURSOR",
-            "GET_TEXT_AFTER_CURSOR",
-            "GET_WORD_RANGE_AT_CURSOR",
-            "RELOAD_TEXT_CACHE"};
-    private static final String AUTHORITY = "io.separ.neural.inputmethod.inputcontent";
-    /**
-     * The amount of time the keyboard will persist in the {@link #hasSlowInputConnection} state
-     * after observing a slow InputConnection event.
-     */
-    private static final long SLOW_INPUTCONNECTION_PERSIST_MS = TimeUnit.MINUTES.toMillis(10);
-    /**
-     * This contains the committed text immediately preceding the cursor and the composing
-     * text if any. It is refreshed when the cursor moves by calling upon the TextView.
-     */
-    private final StringBuilder mCommittedTextBeforeComposingText = new StringBuilder();
-    /**
-     * This contains the currently composing text, as LatinIME thinks the TextView is seeing it.
-     */
-    private final StringBuilder mComposingText = new StringBuilder();
-    /**
-     * This variable is a temporary object used in
-     * {@link InputMethodService commitTextWithBackgroundColor(CharSequence, int, int)} to avoid object creation.
-     */
-    private final SpannableStringBuilder mTempObjectForCommitText = new SpannableStringBuilder();
-    private final InputMethodService mParent;
-    private final String twoCharEmojiRegex = "([🇦-🇿]){2}$"; //A to Z
-    InputConnection mIC;
-    int mNestLevel;
+
     /**
      * This variable contains an expected value for the selection start position. This is where the
      * cursor or selection start may end up after all the keyboard-triggered updates have passed. We
@@ -158,81 +111,41 @@ public final class RichInputConnection {
      */
     private int mExpectedSelEnd = INVALID_CURSOR_POSITION; // in chars, not code points
     /**
+     * This contains the committed text immediately preceding the cursor and the composing
+     * text if any. It is refreshed when the cursor moves by calling upon the TextView.
+     */
+    private final StringBuilder mCommittedTextBeforeComposingText = new StringBuilder();
+
+    public StringBuilder getmComposingText() {
+        return mComposingText;
+    }
+
+    /**
+     * This contains the currently composing text, as LatinIME thinks the TextView is seeing it.
+     */
+    private final StringBuilder mComposingText = new StringBuilder();
+
+    /**
+     * This variable is a temporary object used in
+     * {@link InputMethodService commitTextWithBackgroundColor(CharSequence, int, int)} to avoid object creation.
+     */
+    private final SpannableStringBuilder mTempObjectForCommitText = new SpannableStringBuilder();
+    /**
      * This variable is used to track whether the last committed text had the background color or
      * not.
      * TODO: Omit this flag if possible.
      */
     private boolean mLastCommittedTextHasBackgroundColor = false;
-    private boolean mCursorAnchorInfoMonitorEnabled = false;
-    private long mLastSlowInputConnectionTime = -SLOW_INPUTCONNECTION_PERSIST_MS;
+
+    private final InputMethodService mParent;
+
+    InputConnection mIC;
+    int mNestLevel;
 
     public RichInputConnection(final InputMethodService parent) {
         mParent = parent;
         mIC = null;
         mNestLevel = 0;
-    }
-
-    static int firstDivergence(String str1, String str2) {
-        int length = str1.length() > str2.length() ? str2.length() : str1.length();
-        for (int i = 0; i < length; i++) {
-            if (str1.charAt(i) != str2.charAt(i)) {
-                return i;
-            }
-        }
-        return length - 1; // Default
-    }
-
-    private static boolean isSeparator(final int code, final int[] sortedSeparators) {
-        return Arrays.binarySearch(sortedSeparators, code) >= 0;
-    }
-
-    private static boolean isPartOfCompositionForScript(final int codePoint,
-                                                        final SpacingAndPunctuations spacingAndPunctuations, final int scriptId, final boolean transliteration) {
-        // We always consider word connectors part of compositions.
-        return spacingAndPunctuations.isWordConnector(codePoint)
-                // Otherwise, it's part of composition if it's part of script and not a separator.
-                || (!spacingAndPunctuations.isWordSeparator(codePoint)
-                && (transliteration || ScriptUtils.isLetterPartOfScript(codePoint, scriptId)));
-    }
-
-    public static File getFileForResource(
-            @NonNull Context context, @RawRes int res, @NonNull File outputDir,
-            @NonNull String filename) {
-        final File outputFile = new File(outputDir, filename);
-        try {
-            InputStream resourceReader = null;
-            try {
-                resourceReader = context.getResources().openRawResource(res);
-                OutputStream dataWriter = null;
-                try {
-                    dataWriter = new FileOutputStream(outputFile);
-                    final byte[] buffer = new byte[4096];
-                    while (true) {
-                        final int numRead = resourceReader.read(buffer);
-                        if (numRead <= 0) {
-                            break;
-                        }
-                        dataWriter.write(buffer, 0, numRead);
-                    }
-                    return outputFile;
-                } finally {
-                    if (dataWriter != null) {
-                        dataWriter.flush();
-                        dataWriter.close();
-                    }
-                }
-            } finally {
-                if (resourceReader != null) {
-                    resourceReader.close();
-                }
-            }
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    public StringBuilder getmComposingText() {
-        return mComposingText;
     }
 
     private void checkConsistencyForDebug() {
@@ -278,7 +191,7 @@ public final class RichInputConnection {
             return (getTextAfterCursor(512, 0) != null ? getTextAfterCursor(512, 0).length() : 0)
                     + (getTextBeforeCursor(512, 0) != null ? getTextBeforeCursor(512, 0).length() : 0) + (selectedText == null ? 0
                     : selectedText.length());
-        } catch (Exception e) {
+        } catch (Exception e){
             return 0;
         }
     }
@@ -385,6 +298,16 @@ public final class RichInputConnection {
         if (null != mIC) {
             mIC.finishComposingText();
         }
+    }
+
+    static int firstDivergence(String str1, String str2) {
+        int length = str1.length() > str2.length() ? str2.length() : str1.length();
+        for (int i = 0; i < length; i++) {
+            if (str1.charAt(i) != str2.charAt(i)) {
+                return i;
+            }
+        }
+        return length - 1; // Default
     }
 
     /**
@@ -520,6 +443,8 @@ public final class RichInputConnection {
                 spacingAndPunctuations, hasSpaceBefore);
     }
 
+    private final String twoCharEmojiRegex = "([🇦-🇿]){2}$"; //A to Z
+
     public int getDeleteCountConsideringEmoji() {
         Matcher matchEmo = Pattern.compile(twoCharEmojiRegex).matcher(mCommittedTextBeforeComposingText.toString());
         if (matchEmo.find())
@@ -589,6 +514,22 @@ public final class RichInputConnection {
         detectLaggyConnection(operation, timeout, startTime);
         return result;
     }
+
+    /**
+     * The amount of time a {@link #reloadTextCache} call needs to take for the keyboard to enter
+     * the {@link #hasSlowInputConnection} state.
+     */
+    private static final long SLOW_INPUT_CONNECTION_ON_FULL_RELOAD_MS = 1000;
+    /**
+     * The amount of time a {@link #getTextBeforeCursor} or {@link #getTextAfterCursor} call needs
+     * to take for the keyboard to enter the {@link #hasSlowInputConnection} state.
+     */
+    private static final long SLOW_INPUT_CONNECTION_ON_PARTIAL_RELOAD_MS = 200;
+
+    private static final int OPERATION_GET_TEXT_BEFORE_CURSOR = 0;
+    private static final int OPERATION_GET_TEXT_AFTER_CURSOR = 1;
+    private static final int OPERATION_GET_WORD_RANGE_AT_CURSOR = 2;
+    private static final int OPERATION_RELOAD_TEXT_CACHE = 3;
 
     public CharSequence getTextAfterCursor(final int n, final int flags) {
         return getTextAfterCursorAndDetectLaggyConnection(
@@ -809,6 +750,19 @@ public final class RichInputConnection {
                 prev, spacingAndPunctuations, n);
     }
 
+    private static boolean isSeparator(final int code, final int[] sortedSeparators) {
+        return Arrays.binarySearch(sortedSeparators, code) >= 0;
+    }
+
+    private static boolean isPartOfCompositionForScript(final int codePoint,
+                                                        final SpacingAndPunctuations spacingAndPunctuations, final int scriptId, final boolean transliteration) {
+        // We always consider word connectors part of compositions.
+        return spacingAndPunctuations.isWordConnector(codePoint)
+                // Otherwise, it's part of composition if it's part of script and not a separator.
+                || (!spacingAndPunctuations.isWordSeparator(codePoint)
+                && (transliteration || ScriptUtils.isLetterPartOfScript(codePoint, scriptId)));
+    }
+
     /**
      * Returns the text surrounding the cursor.
      *
@@ -1016,6 +970,12 @@ public final class RichInputConnection {
         return StringUtils.isInsideDoubleQuoteOrAfterDigit(mCommittedTextBeforeComposingText);
     }
 
+    private static final String[] OPERATION_NAMES = new String[]{
+            "GET_TEXT_BEFORE_CURSOR",
+            "GET_TEXT_AFTER_CURSOR",
+            "GET_WORD_RANGE_AT_CURSOR",
+            "RELOAD_TEXT_CACHE"};
+
     private void detectLaggyConnection(final int operation, final long timeout, final long startTime) {
         final long duration = SystemClock.uptimeMillis() - startTime;
         if (duration >= timeout) {
@@ -1101,6 +1061,8 @@ public final class RichInputConnection {
         }
     }
 
+    private boolean mCursorAnchorInfoMonitorEnabled = false;
+
     /**
      * Requests the editor to call back {@link InputMethodManager#updateCursorAnchorInfo}.
      *
@@ -1128,6 +1090,11 @@ public final class RichInputConnection {
     public boolean isCursorAnchorInfoMonitorEnabled() {
         return mCursorAnchorInfoMonitorEnabled;
     }
+
+    public static final String MIME_TYPE_GIF = "image/gif";
+    public static final String MIME_TYPE_PNG = "image/png";
+    public static final String MIME_TYPE_WEBP = "image/webp";
+    private static final String AUTHORITY = "io.separ.neural.inputmethod.inputcontent";
 
     private boolean validatePackageName(@Nullable EditorInfo editorInfo) {
         if (editorInfo == null) {
@@ -1203,6 +1170,42 @@ public final class RichInputConnection {
             }
         }
         return false;
+    }
+
+    public static File getFileForResource(
+            @NonNull Context context, @RawRes int res, @NonNull File outputDir,
+            @NonNull String filename) {
+        final File outputFile = new File(outputDir, filename);
+        try {
+            InputStream resourceReader = null;
+            try {
+                resourceReader = context.getResources().openRawResource(res);
+                OutputStream dataWriter = null;
+                try {
+                    dataWriter = new FileOutputStream(outputFile);
+                    final byte[] buffer = new byte[4096];
+                    while (true) {
+                        final int numRead = resourceReader.read(buffer);
+                        if (numRead <= 0) {
+                            break;
+                        }
+                        dataWriter.write(buffer, 0, numRead);
+                    }
+                    return outputFile;
+                } finally {
+                    if (dataWriter != null) {
+                        dataWriter.flush();
+                        dataWriter.close();
+                    }
+                }
+            } finally {
+                if (resourceReader != null) {
+                    resourceReader.close();
+                }
+            }
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     public Intent doCommitContent(@NonNull String description, @NonNull String mimeType,
@@ -1300,6 +1303,14 @@ public final class RichInputConnection {
         return NgramContextUtils.getNgramContextFromNthPreviousWord(
                 prev, spacingAndPunctuations, n);
     }
+
+    /**
+     * The amount of time the keyboard will persist in the {@link #hasSlowInputConnection} state
+     * after observing a slow InputConnection event.
+     */
+    private static final long SLOW_INPUTCONNECTION_PERSIST_MS = TimeUnit.MINUTES.toMillis(10);
+
+    private long mLastSlowInputConnectionTime = -SLOW_INPUTCONNECTION_PERSIST_MS;
 
     public boolean hasSlowInputConnection() {
         return (SystemClock.uptimeMillis() - mLastSlowInputConnectionTime)

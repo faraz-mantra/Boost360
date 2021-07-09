@@ -1,310 +1,311 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-  <androidx.constraintlayout.widget.ConstraintLayout
-    style="@style/match_match"
-    android:background="@color/white">
-
-    <androidx.core.widget.NestedScrollView
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:background="@color/white"
-      android:fillViewport="true"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.0"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.0">
-
-      <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/match_match"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/size_16"
-        android:paddingTop="@dimen/size_16">
+        android:background="@color/white">
 
-        <com.framework.views.customViews.CustomTextView
-          style="@style/wrap_wrap"
-          android:paddingStart="@dimen/size_4"
-          android:text="@string/customer_information"
-          android:textColor="@color/orange"
-          app:fontFamily="@font/bold"
-          app:textType="BODY_3" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
-        <com.framework.views.customViews.CustomTextView
-          style="@style/wrap_wrap"
-          android:layout_marginStart="@dimen/size_3"
-          android:layout_marginTop="@dimen/size_16"
-          android:text="@string/name"
-          android:textColor="@color/grey_text_color"
-          app:fontFamily="@font/regular"
-          app:textType="BODY_3" />
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/match_match"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/size_16"
+                android:paddingTop="@dimen/size_16">
 
-        <com.framework.views.customViews.CustomTextField
-          android:id="@+id/eTName"
-          style="@style/match_wrap"
-          android:backgroundTint="@color/view_background_color"
-          android:hint="@string/rahul_chaudhary"
-          android:inputType="textCapWords"
-          android:paddingTop="@dimen/size_8"
-          android:paddingBottom="@dimen/size_16"
-          android:singleLine="true"
-          android:textColor="@color/warm_grey_10"
-          android:textColorHint="@color/primary_grey"
-          tools:ignore="UnusedAttribute" />
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:paddingStart="@dimen/size_4"
+                    android:text="@string/customer_information"
+                    android:textColor="@color/orange"
+                    app:fontFamily="@font/bold"
+                    app:textType="BODY_3" />
 
-        <com.framework.views.customViews.CustomTextView
-          style="@style/wrap_wrap"
-          android:layout_marginStart="@dimen/size_3"
-          android:layout_marginTop="@dimen/size_16"
-          android:text="@string/phone_number"
-          android:textColor="@color/grey_text_color"
-          app:fontFamily="@font/regular"
-          app:textType="BODY_3" />
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:layout_marginStart="@dimen/size_3"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:text="@string/name"
+                    android:textColor="@color/grey_text_color"
+                    app:fontFamily="@font/regular"
+                    app:textType="BODY_3" />
 
-        <FrameLayout style="@style/match_wrap">
+                <com.framework.views.customViews.CustomTextField
+                    android:id="@+id/eTName"
+                    style="@style/match_wrap"
+                    android:backgroundTint="@color/view_background_color"
+                    android:hint="@string/rahul_chaudhary"
+                    android:inputType="textCapWords"
+                    android:paddingTop="@dimen/size_8"
+                    android:paddingBottom="@dimen/size_16"
+                    android:singleLine="true"
+                    android:textColor="@color/warm_grey_10"
+                    android:textColorHint="@color/primary_grey"
+                    tools:ignore="UnusedAttribute" />
 
-          <com.framework.views.customViews.CustomTextView
-            style="@style/wrap_wrap"
-            android:layout_marginTop="@dimen/size_8"
-            android:backgroundTint="@color/view_background_color"
-            android:paddingStart="@dimen/size_3"
-            android:paddingEnd="@dimen/size_1"
-            android:text="@string/_91"
-            android:textColor="@color/warm_grey_10"
-            app:textType="BODY_3" />
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:layout_marginStart="@dimen/size_3"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:text="@string/phone_number"
+                    android:textColor="@color/grey_text_color"
+                    app:fontFamily="@font/regular"
+                    app:textType="BODY_3" />
 
-          <androidx.appcompat.widget.LinearLayoutCompat
-            style="@style/match_wrap"
-            android:orientation="horizontal">
+                <FrameLayout
+                    style="@style/match_wrap">
 
-            <com.framework.views.customViews.CustomTextField
-              android:id="@+id/eTPhoneNumber"
-              style="@style/match_wrap"
-              android:layout_marginStart="@dimen/size_5"
-              android:backgroundTint="@color/view_background_color"
-              android:hint="@string/xxxxxxxxxx"
-              android:inputType="number"
-              android:maxLength="10"
-              android:paddingStart="@dimen/size_32"
-              android:paddingTop="@dimen/size_8"
-              android:paddingBottom="@dimen/size_16"
-              android:singleLine="true"
-              android:textColor="@color/warm_grey_10"
-              android:textColorHint="@color/primary_grey"
-              tools:ignore="UnusedAttribute" />
+                    <com.framework.views.customViews.CustomTextView
+                        style="@style/wrap_wrap"
+                        android:layout_marginTop="@dimen/size_8"
+                        android:backgroundTint="@color/view_background_color"
+                        android:paddingStart="@dimen/size_3"
+                        android:paddingEnd="@dimen/size_1"
+                        android:text="@string/_91"
+                        android:textColor="@color/warm_grey_10"
+                        app:textType="BODY_3" />
 
-          </androidx.appcompat.widget.LinearLayoutCompat>
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        style="@style/match_wrap"
+                        android:orientation="horizontal">
 
-        </FrameLayout>
+                        <com.framework.views.customViews.CustomTextField
+                            android:id="@+id/eTPhoneNumber"
+                            style="@style/match_wrap"
+                            android:layout_marginStart="@dimen/size_5"
+                            android:backgroundTint="@color/view_background_color"
+                            android:hint="@string/xxxxxxxxxx"
+                            android:inputType="number"
+                            android:maxLength="10"
+                            android:paddingStart="@dimen/size_32"
+                            android:paddingTop="@dimen/size_8"
+                            android:paddingBottom="@dimen/size_16"
+                            android:singleLine="true"
+                            android:textColor="@color/warm_grey_10"
+                            android:textColorHint="@color/primary_grey"
+                            tools:ignore="UnusedAttribute" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </FrameLayout>
 
 
-        <com.framework.views.customViews.CustomTextView
-          style="@style/wrap_wrap"
-          android:layout_marginStart="@dimen/size_3"
-          android:layout_marginTop="@dimen/size_16"
-          android:inputType="none"
-          android:text="@string/email"
-          android:textColor="@color/grey_text_color"
-          app:fontFamily="@font/regular"
-          app:textType="BODY_3" />
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:layout_marginStart="@dimen/size_3"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:text="@string/email"
+                    android:inputType="none"
+                    android:textColor="@color/grey_text_color"
+                    app:fontFamily="@font/regular"
+                    app:textType="BODY_3" />
 
-        <com.framework.views.customViews.CustomTextField
-          android:id="@+id/etEmail"
-          style="@style/match_wrap"
-          android:backgroundTint="@color/view_background_color"
-          android:hint="@string/rahul_cantech_co"
-          android:inputType="textEmailAddress"
-          android:paddingTop="@dimen/size_8"
-          android:paddingBottom="@dimen/size_16"
-          android:singleLine="true"
-          android:textColor="@color/warm_grey_10"
-          android:textColorHint="@color/primary_grey"
-          tools:ignore="UnusedAttribute" />
+                <com.framework.views.customViews.CustomTextField
+                    android:id="@+id/etEmail"
+                    style="@style/match_wrap"
+                    android:backgroundTint="@color/view_background_color"
+                    android:hint="@string/rahul_cantech_co"
+                    android:inputType="textEmailAddress"
+                    android:paddingTop="@dimen/size_8"
+                    android:paddingBottom="@dimen/size_16"
+                    android:singleLine="true"
+                    android:textColor="@color/warm_grey_10"
+                    android:textColorHint="@color/primary_grey"
+                    tools:ignore="UnusedAttribute" />
 
-        <com.framework.views.customViews.CustomTextView
-          style="@style/wrap_wrap"
-          android:layout_marginStart="@dimen/size_3"
-          android:layout_marginTop="@dimen/size_16"
-          android:text="@string/gender"
-          android:textColor="@color/grey_text_color"
-          app:fontFamily="@font/regular"
-          app:textType="BODY_3" />
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:layout_marginStart="@dimen/size_3"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:text="@string/gender"
+                    android:textColor="@color/grey_text_color"
+                    app:fontFamily="@font/regular"
+                    app:textType="BODY_3" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llSelectGender"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:layout_marginEnd="@dimen/size_16"
+                    android:orientation="horizontal">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/tvSetGender"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_4"
+                        android:layout_weight="1"
+                        android:hint="@string/male"
+                        android:textColor="@color/warm_grey_10"
+                        android:textColorHint="@color/warm_grey_10"
+                        app:fontFamily="@font/regular"
+                        app:textType="BODY_3" />
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_10"
+                        android:layout_height="@dimen/size_6"
+                        app:srcCompat="@drawable/ic_spinner" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_1"
+                    android:layout_marginStart="@dimen/size_4"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:background="@color/view_background_color" />
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:layout_marginTop="@dimen/size_24"
+                    android:text="@string/payment_mode_capital"
+                    android:textColor="@color/orange"
+                    app:fontFamily="@ont/bold"
+                    app:textType="BODY_3" />
+
+                <com.framework.views.customViews.CustomCardView
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:layout_marginEnd="@dimen/size_16"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/size_4"
+                    app:cardElevation="0dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        style="@style/match_wrap"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/buttonPayOnline"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/size_38"
+                            android:layout_weight="1"
+                            android:background="@color/light_grey"
+                            android:gravity="center"
+                            android:stateListAnimator="@null"
+                            android:text="@string/online"
+                            android:textAllCaps="true"
+                            android:textColor="@color/warm_grey_10"
+                            app:fontFamily="@font/semi_bold"
+                            tools:ignore="UnusedAttribute" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/buttonPayAtClinic"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/size_38"
+                            android:layout_weight="1"
+                            android:background="@drawable/payment_bg_left"
+                            android:gravity="center"
+                            android:stateListAnimator="@null"
+                            android:text="@string/pay_at_clinic"
+                            android:textAllCaps="true"
+                            android:textColor="@color/primary_grey"
+                            app:fontFamily="@font/semi_bold"
+                            tools:ignore="UnusedAttribute" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </com.framework.views.customViews.CustomCardView>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <com.framework.views.customViews.CustomCheckBox
+                        android:id="@+id/sendPaymentLink"
+                        style="@style/wrap_wrap"
+                        app:buttonTint="@color/orange" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        style="@style/wrap_wrap"
+                        android:text="@string/send_payment_link"
+                        android:textColor="@color/black"
+                        app:fontFamily="@font/bold"
+                        app:textType="CAPTION" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_140" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:id="@+id/llSelectGender"
-          style="@style/match_wrap"
-          android:layout_marginTop="@dimen/size_8"
-          android:layout_marginEnd="@dimen/size_16"
-          android:orientation="horizontal">
+            style="@style/match_wrap"
+            android:layout_marginTop="@dimen/size_52"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tvSetGender"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_4"
-            android:layout_weight="1"
-            android:hint="@string/male"
-            android:textColor="@color/warm_grey_10"
-            android:textColorHint="@color/warm_grey_10"
-            app:fontFamily="@font/regular"
-            app:textType="BODY_3" />
+            <View
+                android:id="@+id/view_shadow"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_3"
+                android:background="@drawable/up_shadow" />
 
-          <com.framework.views.customViews.CustomImageView
-            android:layout_width="@dimen/size_10"
-            android:layout_height="@dimen/size_6"
-            app:srcCompat="@drawable/ic_spinner" />
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/match_match"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/size_16"
+                android:paddingBottom="@dimen/size_16"
+                android:weightSum="2">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tvBack"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_16"
+                    android:layout_weight="1"
+                    android:includeFontPadding="false"
+                    android:text="@string/back"
+                    android:textAllCaps="true"
+                    android:textColor="@color/orange"
+                    app:fontFamily="@font/bold"
+                    app:textType="CAPTION" />
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/buttonCreateBooking"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/size_38"
+                    android:layout_marginStart="@dimen/size_60"
+                    android:layout_marginEnd="@dimen/size_16"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_proceed"
+                    android:gravity="center"
+                    android:stateListAnimator="@null"
+                    android:text="@string/create_booking"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    app:textType="CAPTION"
+                    tools:ignore="UnusedAttribute" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <View
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/size_1"
-          android:layout_marginStart="@dimen/size_4"
-          android:layout_marginTop="@dimen/size_12"
-          android:background="@color/view_background_color" />
-
-        <com.framework.views.customViews.CustomTextView
-          style="@style/wrap_wrap"
-          android:layout_marginTop="@dimen/size_24"
-          android:text="@string/payment_mode_capital"
-          android:textColor="@color/orange"
-          app:fontFamily="@ont/bold"
-          app:textType="BODY_3" />
-
-        <com.framework.views.customViews.CustomCardView
-          style="@style/match_wrap"
-          android:layout_marginTop="@dimen/size_12"
-          android:layout_marginEnd="@dimen/size_16"
-          app:cardBackgroundColor="@color/white"
-          app:cardCornerRadius="@dimen/size_4"
-          app:cardElevation="0dp">
-
-          <androidx.appcompat.widget.LinearLayoutCompat
-            style="@style/match_wrap"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/buttonPayOnline"
-              android:layout_width="0dp"
-              android:layout_height="@dimen/size_38"
-              android:layout_weight="1"
-              android:background="@color/light_grey"
-              android:gravity="center"
-              android:stateListAnimator="@null"
-              android:text="@string/online"
-              android:textAllCaps="true"
-              android:textColor="@color/warm_grey_10"
-              app:fontFamily="@font/semi_bold"
-              tools:ignore="UnusedAttribute" />
-
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/buttonPayAtClinic"
-              android:layout_width="0dp"
-              android:layout_height="@dimen/size_38"
-              android:layout_weight="1"
-              android:background="@drawable/payment_bg_left"
-              android:gravity="center"
-              android:stateListAnimator="@null"
-              android:text="@string/pay_at_clinic"
-              android:textAllCaps="true"
-              android:textColor="@color/primary_grey"
-              app:fontFamily="@font/semi_bold"
-              tools:ignore="UnusedAttribute" />
-
-          </androidx.appcompat.widget.LinearLayoutCompat>
-        </com.framework.views.customViews.CustomCardView>
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-          style="@style/match_wrap"
-          android:layout_marginTop="@dimen/size_20"
-          android:orientation="horizontal"
-          android:weightSum="2">
-
-          <com.framework.views.customViews.CustomCheckBox
-            android:id="@+id/sendPaymentLink"
-            style="@style/wrap_wrap"
-            app:buttonTint="@color/orange" />
-
-          <com.framework.views.customViews.CustomTextView
-            style="@style/wrap_wrap"
-            android:text="@string/send_payment_link"
-            android:textColor="@color/black"
-            app:fontFamily="@font/bold"
-            app:textType="CAPTION" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <View
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/size_140" />
-
-      </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.core.widget.NestedScrollView>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-      style="@style/match_wrap"
-      android:layout_marginTop="@dimen/size_52"
-      android:background="@color/white"
-      android:orientation="vertical"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent">
-
-      <View
-        android:id="@+id/view_shadow"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_3"
-        android:background="@drawable/up_shadow" />
-
-      <androidx.appcompat.widget.LinearLayoutCompat
-        style="@style/match_match"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/size_16"
-        android:paddingBottom="@dimen/size_16"
-        android:weightSum="2">
-
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tvBack"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/size_16"
-          android:layout_weight="1"
-          android:includeFontPadding="false"
-          android:text="@string/back"
-          android:textAllCaps="true"
-          android:textColor="@color/orange"
-          app:fontFamily="@font/bold"
-          app:textType="CAPTION" />
-
-        <com.framework.views.customViews.CustomButton
-          android:id="@+id/buttonCreateBooking"
-          android:layout_width="0dp"
-          android:layout_height="@dimen/size_38"
-          android:layout_marginStart="@dimen/size_60"
-          android:layout_marginEnd="@dimen/size_16"
-          android:layout_weight="1"
-          android:background="@drawable/button_proceed"
-          android:gravity="center"
-          android:stateListAnimator="@null"
-          android:text="@string/create_booking"
-          android:textAllCaps="true"
-          android:textColor="@color/white"
-          app:textType="CAPTION"
-          tools:ignore="UnusedAttribute" />
-
-      </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-  </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

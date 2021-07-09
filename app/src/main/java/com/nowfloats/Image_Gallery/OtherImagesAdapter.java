@@ -23,34 +23,43 @@ import com.thinksity.R;
 
 public class OtherImagesAdapter extends BaseAdapter {
 
-    public Handler handler = null;
-    public Runnable runnable = null;
     private LayoutInflater mInflater;
     private Activity mContext;
 
-    public OtherImagesAdapter(Activity activity) {
+    public Handler handler = null;
+
+    public Runnable runnable = null;
+
+    public OtherImagesAdapter(Activity activity)
+    {
         mContext = activity;
         mInflater = LayoutInflater.from(mContext);
     }
 
-    public int getCount() {
-        if (Constants.storeSecondaryImages != null) {
+    public int getCount()
+    {
+        if (Constants.storeSecondaryImages != null)
+        {
             return Constants.storeSecondaryImages.size();
         }
 
         return 0;
     }
 
-    public Object getItem(int position) {
+    public Object getItem(int position)
+    {
         return null;
     }
 
-    public long getItemId(int position) {
+    public long getItemId(int position)
+    {
         return 0;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+        if (convertView == null)
+        {
             convertView = mInflater.inflate(R.layout.grid_view_list_item, null);
         }
 
@@ -60,24 +69,32 @@ public class OtherImagesAdapter extends BaseAdapter {
 
         String serverImage = null;
 
-        if (Constants.storeSecondaryImages != null) {
+        if (Constants.storeSecondaryImages != null)
+        {
             serverImage = Constants.storeSecondaryImages.get(position);
         }
 
         String baseName = serverImage;
 
-        if (serverImage != null && serverImage.length() > 0 && !serverImage.equals("null")) {
-            if (!serverImage.contains("http")) {
-                if (!serverImage.contains("Android")) {
+        if (serverImage != null && serverImage.length() > 0 && !serverImage.equals("null"))
+        {
+            if (!serverImage.contains("http"))
+            {
+                if (!serverImage.contains("Android"))
+                {
                     baseName = Constants.BASE_IMAGE_URL + "" + serverImage;
-                } else {
+                }
+
+                else
+                {
                     final int radius = 50;
                     final int margin = 0;
 
                     Transformation t = new Transformation() {
 
                         @Override
-                        public Bitmap transform(Bitmap source) {
+                        public Bitmap transform(Bitmap source)
+                        {
                             final Paint paint = new Paint();
                             paint.setAntiAlias(true);
                             paint.setShader(new BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
@@ -87,7 +104,8 @@ public class OtherImagesAdapter extends BaseAdapter {
                             canvas.drawRoundRect(new RectF(margin, margin, source.getWidth()
                                     - margin, source.getHeight() - margin), radius, radius, paint);
 
-                            if (source != output) {
+                            if (source != output)
+                            {
                                 source.recycle();
                             }
 
@@ -95,7 +113,8 @@ public class OtherImagesAdapter extends BaseAdapter {
                         }
 
                         @Override
-                        public String key() {
+                        public String key()
+                        {
                             return "rounded";
                         }
                     };
@@ -103,18 +122,24 @@ public class OtherImagesAdapter extends BaseAdapter {
                     Picasso.get().load("file://" + baseName).transform(t).placeholder(R.drawable.gal).into(imageView);
                     return convertView;
                 }
-            } else {
+            }
+
+            else
+            {
                 baseName = serverImage;
             }
 
             Picasso.get().load(baseName).placeholder(R.drawable.gal).resize(200, 0).into(imageView);
-        } else {
+        }
+
+        else
+        {
             Picasso.get().load(R.drawable.gal).into(imageView);
         }
 
         convertView.setTag(position);
         convertView.setTag(R.string.key_selected, llSelect);
-        convertView.setOnClickListener(v -> {
+        convertView.setOnClickListener(v-> {
 
             Intent fullImage = new Intent(mContext, FullScreen_Gallery_Image.class);
             fullImage.putExtra("currentPositon", (int) v.getTag());

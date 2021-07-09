@@ -28,22 +28,21 @@ public interface CustomPageInterface {
                             Callback<ArrayList<CustomPageModel>> callback);
 
     @POST("/Discover/v1/floatingpoint/custompage/create")
-    public void createPage(@Body CreatePageModel s, Callback<String> callback);
+    public void createPage(@Body CreatePageModel s,Callback<String> callback);
 
     @GET("/Discover/v1/floatingPoint/{FPTAG}/getcustompagedetails/{PAGEID}/{CLIENTID}")
     public void getPageDetail(@Path("FPTAG") String FPTAG,
                               @Path("PAGEID") String PAGEID,
                               @Path("CLIENTID") String CLIENTID,
                               Callback<List<PageDetail>> callback);
-
     @POST("/Discover/v1/floatingpoint/custompage/update")
-    public void updatePage(@Body HashMap<String, String> s, Callback<String> callback);
+    public void updatePage(@Body HashMap<String,String> s,Callback<String> callback);
 
     @POST("/v1")
-    void uploadImageToS3(@Body UploadImageToS3Model uploadImageToS3Model, Callback<UploadImageToS3ResponseModel> callback);
+    void uploadImageToS3(@Body UploadImageToS3Model uploadImageToS3Model , Callback<UploadImageToS3ResponseModel> callback);
 
     @GET("/api/KitsuneData/GetBusinessCustomPages")
-    void getPageUrl(@Query("tag") String tag, @Query("skip") int skip, @Query("limit") int limit, @Query("sortDirection") int sortDirection, Callback<CustomPageLink> callback);
+     void getPageUrl(@Query("tag") String tag,@Query("skip") int skip,@Query("limit") int limit, @Query("sortDirection") int sortDirection,Callback<CustomPageLink> callback);
 
 //    @DELETE("/Discover/v1/floatingpoint/custompage/delete")
 //    public void deletePage(@Body HashMap<String,String> s,Callback<String> callback);

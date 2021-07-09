@@ -1,9 +1,7 @@
 package com.nowfloats.Analytics_Screen;
 
 import android.content.Context;
-
 import androidx.core.content.ContextCompat;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-
 import com.nowfloats.Analytics_Screen.model.SubscriberModel;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
@@ -23,17 +20,16 @@ import java.util.ArrayList;
  * Created by Admin on 03-04-2017.
  */
 
-public class SpinnerAdapter extends BaseAdapter implements Filterable {
+public class SpinnerAdapter extends BaseAdapter implements Filterable{
     ArrayList<SubscriberModel> originalList;
     ArrayList<SubscriberModel> suggestions = new ArrayList<>();
     Context mContext;
     private Filter filter = new CustomFilter();
 
-    SpinnerAdapter(Context context, ArrayList<SubscriberModel> list) {
-        originalList = list;
+    SpinnerAdapter(Context context,ArrayList<SubscriberModel> list){
+        originalList =list;
         mContext = context;
     }
-
     @Override
     public int getCount() {
         return suggestions.size();
@@ -51,27 +47,27 @@ public class SpinnerAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return getCustomView(position, convertView, parent);
+        return getCustomView(position,convertView,parent);
     }
 
 
     private View getCustomView(int position, View convertView, ViewGroup parent) {
         Holder holder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.adapter_spinner_image_item, parent, false);
+        if(convertView == null){
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.adapter_spinner_image_item,parent,false);
             holder = new Holder();
             holder.email = (TextView) convertView.findViewById(R.id.subscriber_email);
             convertView.setTag(holder);
-        } else {
+        }else{
             holder = (Holder) convertView.getTag();
         }
         SubscriberModel model = suggestions.get(position);
 
         holder.email.setText(model.getUserMobile());
-        if (Integer.parseInt(model.getSubscriptionStatus()) == Constants.SubscriberStatus.SUBSCRIBED.value) {
-            holder.email.setTextColor(ContextCompat.getColor(mContext, R.color.primary_color));
-        } else {
-            holder.email.setTextColor(ContextCompat.getColor(mContext, R.color.gray));
+        if(Integer.parseInt(model.getSubscriptionStatus()) == Constants.SubscriberStatus.SUBSCRIBED.value){
+            holder.email.setTextColor(ContextCompat.getColor(mContext,R.color.primary_color));
+        }else{
+            holder.email.setTextColor(ContextCompat.getColor(mContext,R.color.gray));
         }
 
         return convertView;
@@ -85,7 +81,6 @@ public class SpinnerAdapter extends BaseAdapter implements Filterable {
     private class Holder {
         TextView email;
     }
-
     private class CustomFilter extends Filter {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {

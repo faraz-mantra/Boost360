@@ -21,5 +21,5 @@ public interface Restricted_FP_Interface {
     @GET("/Discover/v1/floatingPoint/{fpid}/requestplan?")
     void get_RenewSubscriptionIsInterested(
             @Path("fpid") String fpid,
-            @QueryMap Map<String, String> map, Callback<String> callback);
+            @QueryMap Map<String,String> map, Callback<String> callback);
 }

@@ -28,7 +28,7 @@ public class PersonalizationDictionaryUpdater {
     boolean mDictCleared = false;
 
     public PersonalizationDictionaryUpdater(final Context context,
-                                            final DictionaryFacilitator dictionaryFacilitator) {
+            final DictionaryFacilitator dictionaryFacilitator) {
         mContext = context;
         mDictionaryFacilitator = dictionaryFacilitator;
     }
@@ -38,7 +38,7 @@ public class PersonalizationDictionaryUpdater {
     }
 
     public void onLoadSettings(final boolean usePersonalizedDicts,
-                               final boolean isSystemLocaleSameAsLocaleOfAllEnabledSubtypesOfEnabledImes) {
+            final boolean isSystemLocaleSameAsLocaleOfAllEnabledSubtypesOfEnabledImes) {
         if (!mDictCleared) {
             // Clear and never update the personalization dictionary.
             PersonalizationHelper.removeAllPersonalizationDictionaries(mContext);

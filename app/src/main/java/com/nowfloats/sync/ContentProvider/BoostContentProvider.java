@@ -23,6 +23,9 @@ import com.nowfloats.sync.DbConstants;
  */
 public class BoostContentProvider extends ContentProvider {
 
+    private final String TAG = BoostContentProvider.class.getName();
+
+
     private static final int UPDATES = 1;
     private static final int ALERTS = 2;
     private static final int CUSTOM_PAGES = 3;
@@ -36,6 +39,7 @@ public class BoostContentProvider extends ContentProvider {
     private static final int PRODUCT_GALLERY_ID = 11;
     private static final int ALERT_DATA_MODEL = 12;
     private static final int SAM_BUBBLE = 13;
+
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
@@ -54,10 +58,11 @@ public class BoostContentProvider extends ContentProvider {
         sUriMatcher.addURI(Constants.AUTHORITY, DbConstants.IsamBubble.tableName, SAM_BUBBLE);
     }
 
-    private final String TAG = BoostContentProvider.class.getName();
-    Context context;
+
     private BoostDatabaseOpenHelper boostDatabaseHelper;
     private SQLiteDatabase db;
+    Context context;
+
 
     @Override
     public boolean onCreate() {
@@ -278,7 +283,7 @@ public class BoostContentProvider extends ContentProvider {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            try {
+            try{
                 db.execSQL(DbConstants.Iupdates.CREATE_UPDATES_TABLE);
                 db.execSQL(DbConstants.Ialerts.CREATE_ALERT_TABLE);
                 db.execSQL(DbConstants.Ialerts.IalertData.CREATE_ALERT_DATA_TABLE);
@@ -289,7 +294,7 @@ public class BoostContentProvider extends ContentProvider {
                 db.execSQL(DbConstants.IstoreActivePlans.CREATE_ACTIVE_PLANS_TABLE);
                 db.execSQL(DbConstants.IstoreImages.CREATE_STORE_IMAGES_TABLE);
                 db.execSQL(DbConstants.IsamBubble.CREATE_SAM_BUBBLE_TABLE);
-            } catch (SQLException e) {
+            }catch (SQLException e){
                 e.printStackTrace();
             }
         }
@@ -308,9 +313,9 @@ public class BoostContentProvider extends ContentProvider {
                 db.execSQL(DbConstants.IstoreActivePlans.DROP_ACTIVE_PLANS_TABLE);
                 db.execSQL(DbConstants.IstoreImages.DROP_STORE_IMAGES_TABLE);
                 onCreate(db);
-                SharedPreferences pref = context.getSharedPreferences(com.nowfloats.util.Constants.PREF_NAME, Context.MODE_PRIVATE);
-                pref.edit().putBoolean(com.nowfloats.util.Constants.SYNCED, false).apply();
-            } catch (SQLException e) {
+               SharedPreferences pref =  context.getSharedPreferences(com.nowfloats.util.Constants.PREF_NAME,Context.MODE_PRIVATE);
+                pref.edit().putBoolean(com.nowfloats.util.Constants.SYNCED,false).apply();
+            }catch (SQLException e){
                 e.printStackTrace();
             }
 

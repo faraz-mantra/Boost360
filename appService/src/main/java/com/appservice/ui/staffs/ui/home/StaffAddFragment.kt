@@ -32,16 +32,7 @@ class StaffAddFragment : BaseFragment<FragmentStaffAddBinding, BaseViewModel>() 
   }
 
   override fun onCreateView() {
-    binding?.btnAddStaff?.setOnClickListener {
-      startStaffFragmentActivity(
-        requireActivity(),
-        FragmentType.STAFF_DETAILS_FRAGMENT,
-        Bundle(),
-        clearTop = false,
-        isResult = false,
-        requestCode = Constants.REQUEST_CODE
-      )
-    }
+    binding?.btnAddStaff?.setOnClickListener { startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_DETAILS_FRAGMENT, Bundle(), clearTop = false, isResult = false, requestCode = Constants.REQUEST_CODE) }
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -53,14 +44,7 @@ class StaffAddFragment : BaseFragment<FragmentStaffAddBinding, BaseViewModel>() 
     return when (item.itemId) {
       R.id.menu_add -> {
         val bundle: Bundle = Bundle.EMPTY
-        startStaffFragmentActivity(
-          requireActivity(),
-          FragmentType.STAFF_DETAILS_FRAGMENT,
-          bundle,
-          clearTop = false,
-          isResult = false,
-          requestCode = Constants.REQUEST_CODE
-        )
+        startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_DETAILS_FRAGMENT, bundle, clearTop = false, isResult = false, requestCode = Constants.REQUEST_CODE)
         true
       }
       else -> super.onOptionsItemSelected(item)

@@ -9,19 +9,11 @@ import android.widget.EditText
 class InputFilterIntRange(min: Int, max: Int) : InputFilter, View.OnFocusChangeListener {
   private val min: Int
   private val max: Int
-  override fun filter(
-    source: CharSequence,
-    start: Int,
-    end: Int,
-    dest: Spanned,
-    dstart: Int,
-    dend: Int
-  ): CharSequence? {
+  override fun filter(source: CharSequence, start: Int, end: Int, dest: Spanned, dstart: Int, dend: Int): CharSequence? {
 
     // Determine the final string that will result from the attempted input
     val destString = dest.toString()
-    val inputString =
-      destString.substring(0, dstart) + source.toString() + destString.substring(dstart)
+    val inputString = destString.substring(0, dstart) + source.toString() + destString.substring(dstart)
 
     // Don't prevent - sign from being entered first if min is negative
     if (inputString.equals("-", ignoreCase = true) && min < 0) return null

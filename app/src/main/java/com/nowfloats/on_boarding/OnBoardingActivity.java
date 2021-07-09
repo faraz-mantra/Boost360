@@ -73,57 +73,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
     private CallbackManager callbackManager;
     private com.nowfloats.Login.MobileOtpVerificationFragment mobileOtpVerificationFragment;
     private boolean isOtpInForegrouond = false;
-    private CustomFirebaseAuthListeners customFirebaseAuthListeners = new CustomFirebaseAuthListeners() {
-        @Override
-        public void onSuccess(@Nullable VerificationRequestResult response) {
-            Log.i(OnBoardingActivity.class.getName(), new Gson().toJson(response));
-        }
 
-        @Override
-        public void onSuccess(@Nullable ConnectUserProfileResponse response) {
-
-            isOtpInForegrouond = false;
-
-            if (progressDialog != null && progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
-
-            Log.i(Login_MainActivity.class.getName(), new Gson().toJson(response));
-            if (response != null) {
-
-                if (channel.equals("OTP")) {
-                    while (getSupportFragmentManager().getBackStackEntryCount() != 0) {
-                        getSupportFragmentManager().popBackStackImmediate();
-                    }
-                }
-
-                Toast.makeText(OnBoardingActivity.this, "Connected", Toast.LENGTH_LONG).show();
-                ConnectUserProfileResult result = response.getResult();
-                session.isGoogleAuthDone(result.getChannels().getGOOGLE());
-                session.isFacebookAuthDone(result.getChannels().getFACEBOOK());
-                session.isOTPAuthDone(result.getChannels().getOTP());
-                adapter.refreshAfterComplete();
-
-            } else {
-                Toast.makeText(OnBoardingActivity.this, "Login failed", Toast.LENGTH_LONG).show();
-            }
-
-        }
-
-        @Override
-        public void onSuccess(@Nullable UserProfileResponse response, String uniqueId) {
-            Log.i(OnBoardingActivity.class.getName(), new Gson().toJson(response));
-        }
-
-        @Override
-        public void onFailure() {
-            isOtpInForegrouond = false;
-            if (progressDialog != null && progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
-            Toast.makeText(OnBoardingActivity.this, getString(R.string.failed_to_connect_account_please_try_again), Toast.LENGTH_SHORT).show();
-        }
-    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -200,29 +150,29 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                     OnBoardingApiCalls.updateData(session.getFpTag(), "welcome_aboard:true");
                 }
                 isSomethingChanged = true;
-                WebEngageController.trackEvent(DASHBOARD_LEARN, LEARN_HOW_TO_USE, NULL);
+                WebEngageController.trackEvent(DASHBOARD_LEARN, LEARN_HOW_TO_USE,NULL);
                 HelpCenterActivity.builder()
                         .show(this);
                 break;
             case 1:
-                WebEngageController.trackEvent(DASHBOARD_SITE_HEALTH, SITE_HEALTH_FROM_ONBOARDING_CARDS, NULL);
+                WebEngageController.trackEvent(DASHBOARD_SITE_HEALTH, SITE_HEALTH_FROM_ONBOARDING_CARDS,NULL);
                 intent = new Intent(this, FragmentsFactoryActivity.class);
                 intent.putExtra("fragmentName", "SiteMeterFragment");
                 isSomethingChanged = true;
                 break;
             case 2:
-                WebEngageController.trackEvent(DASHBOARD_CUSTOM_PAGE, EVENT_NAME_SITE_HEALTH_FROM_ONBOARDING_CARDS, NULL);
+                WebEngageController.trackEvent(DASHBOARD_CUSTOM_PAGE, EVENT_NAME_SITE_HEALTH_FROM_ONBOARDING_CARDS,NULL);
                 intent = new Intent(this, CustomPageActivity.class);
                 isSomethingChanged = true;
                 break;
             case 3:
-                WebEngageController.trackEvent(DASHBOARD_ADD_PRODUCT, EVENT_NAME_SITE_HEALTH_FROM_ONBOARDING_CARDS, NULL);
+                WebEngageController.trackEvent(DASHBOARD_ADD_PRODUCT, EVENT_NAME_SITE_HEALTH_FROM_ONBOARDING_CARDS,NULL);
                 intent = new Intent(this, ProductGalleryActivity.class);
                 isSomethingChanged = true;
                 break;
             case 4:
                 isSomethingChanged = true;
-                WebEngageController.trackEvent(DASHBOARD_ONBOARDING_CARDS_COMPLETE, NO_EVENT_LABLE, NULL);
+                WebEngageController.trackEvent(DASHBOARD_ONBOARDING_CARDS_COMPLETE, NO_EVENT_LABLE,NULL);
                 if (!screenData.isComplete()) {
                     screenData.setIsComplete(true);
                     adapter.refreshAfterComplete();
@@ -231,7 +181,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
                 return;
             case 5:
                 isSomethingChanged = true;
-                WebEngageController.trackEvent(DASHBOARD_SHARE_WEBSITE, SHARE_WEBSITE_FROM_ONBOARDING_CARDS, NULL);
+                WebEngageController.trackEvent(DASHBOARD_SHARE_WEBSITE, SHARE_WEBSITE_FROM_ONBOARDING_CARDS,NULL);
                 shareWebsite();
                 if (!screenData.isComplete()) {
                     screenData.setIsComplete(true);
@@ -243,7 +193,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
             default:
                 return;
         }
-        if (intent != null)
+        if(intent != null)
             startActivity(intent);
     }
 
@@ -258,6 +208,58 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
             }
         }
     }
+
+    private CustomFirebaseAuthListeners customFirebaseAuthListeners = new CustomFirebaseAuthListeners() {
+        @Override
+        public void onSuccess(@Nullable VerificationRequestResult response) {
+            Log.i(OnBoardingActivity.class.getName(), new Gson().toJson(response));
+        }
+
+        @Override
+        public void onSuccess(@Nullable ConnectUserProfileResponse response) {
+
+            isOtpInForegrouond = false;
+
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+
+            Log.i(Login_MainActivity.class.getName(), new Gson().toJson(response));
+            if(response != null) {
+
+                if(channel.equals("OTP")) {
+                   while(getSupportFragmentManager().getBackStackEntryCount() != 0) {
+                       getSupportFragmentManager().popBackStackImmediate();
+                   }
+                }
+
+                Toast.makeText(OnBoardingActivity.this, "Connected", Toast.LENGTH_LONG).show();
+                ConnectUserProfileResult result = response.getResult();
+                session.isGoogleAuthDone(result.getChannels().getGOOGLE());
+                session.isFacebookAuthDone(result.getChannels().getFACEBOOK());
+                session.isOTPAuthDone(result.getChannels().getOTP());
+                adapter.refreshAfterComplete();
+
+            }else{
+               Toast.makeText(OnBoardingActivity.this, "Login failed", Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+        @Override
+        public void onSuccess(@Nullable UserProfileResponse response, String uniqueId) {
+            Log.i(OnBoardingActivity.class.getName(), new Gson().toJson(response));
+        }
+
+        @Override
+        public void onFailure() {
+            isOtpInForegrouond = false;
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+            Toast.makeText(OnBoardingActivity.this, getString(R.string.failed_to_connect_account_please_try_again), Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     public void onBoardingComplete() {
@@ -343,7 +345,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
     @Override
     protected void onStart() {
         super.onStart();
-        if (!isOtpInForegrouond) {
+        if(!isOtpInForegrouond) {
             shrinkScreen();
         }
 

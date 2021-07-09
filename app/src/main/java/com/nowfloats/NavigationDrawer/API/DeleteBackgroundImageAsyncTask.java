@@ -27,45 +27,42 @@ import java.io.UnsupportedEncodingException;
 /**
  * Created by Dell on 03-03-2015.
  */
-public class DeleteBackgroundImageAsyncTask extends AsyncTask<Void, String, String> {
-    ProgressDialog pd = null;
-    Activity appContext;
-    UserSessionManager session;
+public class DeleteBackgroundImageAsyncTask extends AsyncTask<Void,String, String> {
     private String category;
+    ProgressDialog pd 				= null;
+    Activity appContext ;
+    UserSessionManager session;
 
-    public DeleteBackgroundImageAsyncTask(Activity appContext, UserSessionManager session) {
-        this.appContext = appContext;
+    public DeleteBackgroundImageAsyncTask(Activity appContext,UserSessionManager session)
+    {
+        this.appContext = appContext ;
         this.session = session;
     }
 
     @Override
     protected void onPreExecute() {
-        try {
-            pd = ProgressDialog.show(appContext, "", "Deleting image...");
+        try{
+            pd= ProgressDialog.show(appContext, "", "Deleting image...");
             pd.setCancelable(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        }catch(Exception e){e.printStackTrace();}
     }
 
     @Override
     protected void onPostExecute(String s) {
-        try {
+        try{
             appContext.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (pd != null)
+                    if (pd!=null)
                         pd.dismiss();
                 }
             });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        }catch(Exception e){e.printStackTrace();}
     }
 
     @Override
     protected String doInBackground(Void... params) {
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE))) {
+        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE))) {
             String backgroundimgid = (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)).replace("/Backgrounds/", "");
 
             JSONObject obj = new JSONObject();
@@ -90,7 +87,7 @@ public class DeleteBackgroundImageAsyncTask extends AsyncTask<Void, String, Stri
 
                 if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                     try {
-                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, "");
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE,"");
                         appContext.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

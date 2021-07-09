@@ -29,25 +29,27 @@ import java.util.concurrent.TimeUnit;
  */
 public class DictionaryDecayBroadcastReciever extends BroadcastReceiver {
     /**
-     * Interval to update for decaying dictionaries.
-     */
-    /* package */ static final long DICTIONARY_DECAY_INTERVAL = TimeUnit.MINUTES.toMillis(60);
-    /**
      * The root domain for the personalization.
      */
     private static final String PERSONALIZATION_DOMAIN =
             "io.separ.neural.inputmethod.indic.personalization";
+
     /**
      * The action of the intent to tell the time to decay dictionaries.
      */
     private static final String DICTIONARY_DECAY_INTENT_ACTION =
             PERSONALIZATION_DOMAIN + ".DICT_DECAY";
 
+    /**
+     * Interval to update for decaying dictionaries.
+     */
+    /* package */ static final long DICTIONARY_DECAY_INTERVAL = TimeUnit.MINUTES.toMillis(60);
+
     public static void setUpIntervalAlarmForDictionaryDecaying(Context context) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         final Intent updateIntent = new Intent(DICTIONARY_DECAY_INTENT_ACTION);
         updateIntent.setClass(context, DictionaryDecayBroadcastReciever.class);
-        final long alarmTime = System.currentTimeMillis() + DICTIONARY_DECAY_INTERVAL;
+        final long alarmTime =  System.currentTimeMillis() + DICTIONARY_DECAY_INTERVAL;
         final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0 /* requestCode */,
                 updateIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         if (null != alarmManager) alarmManager.setInexactRepeating(AlarmManager.RTC,

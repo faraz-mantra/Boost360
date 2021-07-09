@@ -8,4 +8,4 @@ data class UserDetail(
   var message: String? = null,
   @SerializedName("type")
   var type: String? = null
-) : Serializable
+):Serializable

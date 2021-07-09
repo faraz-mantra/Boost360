@@ -4,6 +4,7 @@
   <!-- A rule to generate the JAR for inclusion in an Android
        application. Output file will be bin/volley.jar -->
   <target name="jar" depends="-compile">
-    <jar basedir="bin/classes" destfile="bin/volley.jar" />
+    <jar destfile="bin/volley.jar"
+         basedir="bin/classes" />
   </target>
 </project>

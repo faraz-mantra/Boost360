@@ -35,7 +35,6 @@ public class PersonalizationHelper {
             sLangUserHistoryDictCache = new ConcurrentHashMap<>();
     private static final ConcurrentHashMap<String, SoftReference<PersonalizationDictionary>>
             sLangPersonalizationDictCache = new ConcurrentHashMap<>();
-    private static final int sCurrentTimestampForTesting = 0;
 
     public static UserHistoryDictionary getUserHistoryDictionary(
             final Context context, final Locale locale) {
@@ -59,10 +58,11 @@ public class PersonalizationHelper {
         }
     }
 
+    private static final int sCurrentTimestampForTesting = 0;
     public static void currentTimeChangedForTesting(final int currentTimestamp) {
         if (TimeUnit.MILLISECONDS.toSeconds(
                 DictionaryDecayBroadcastReciever.DICTIONARY_DECAY_INTERVAL)
-                < currentTimestamp - sCurrentTimestampForTesting) {
+                        < currentTimestamp - sCurrentTimestampForTesting) {
             runGCOnAllOpenedUserHistoryDictionaries();
             runGCOnAllOpenedPersonalizationDictionaries();
         }
@@ -77,8 +77,8 @@ public class PersonalizationHelper {
     }
 
     private static <T extends DecayingExpandableBinaryDictionaryBase>
-    void runGCOnAllDictionariesIfRequired(
-            final ConcurrentHashMap<String, SoftReference<T>> dictionaryMap) {
+            void runGCOnAllDictionariesIfRequired(
+                    final ConcurrentHashMap<String, SoftReference<T>> dictionaryMap) {
         for (final ConcurrentHashMap.Entry<String, SoftReference<T>> entry
                 : dictionaryMap.entrySet()) {
             final DecayingExpandableBinaryDictionaryBase dict = entry.getValue().get();

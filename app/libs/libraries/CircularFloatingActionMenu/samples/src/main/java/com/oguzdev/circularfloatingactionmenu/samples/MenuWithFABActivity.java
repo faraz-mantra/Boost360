@@ -40,12 +40,12 @@ public class MenuWithFABActivity extends Activity {
         // Build the menu with default options: light theme, 90 degrees, 72dp radius.
         // Set 4 default SubActionButtons
         FloatingActionMenu rightLowerMenu = new FloatingActionMenu.Builder(this)
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon1).build())
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon2).build())
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon3).build())
-                .addSubActionView(rLSubBuilder.setContentView(rlIcon4).build())
-                .attachTo(rightLowerButton)
-                .build();
+                                                .addSubActionView(rLSubBuilder.setContentView(rlIcon1).build())
+                                                .addSubActionView(rLSubBuilder.setContentView(rlIcon2).build())
+                                                .addSubActionView(rLSubBuilder.setContentView(rlIcon3).build())
+                                                .addSubActionView(rLSubBuilder.setContentView(rlIcon4).build())
+                                                .attachTo(rightLowerButton)
+                                                .build();
 
         // Set up the large red button on the center right side
         // With custom button and content sizes and margins
@@ -56,29 +56,29 @@ public class MenuWithFABActivity extends Activity {
         int redActionMenuRadius = getResources().getDimensionPixelSize(R.dimen.red_action_menu_radius);
         int blueSubActionButtonSize = getResources().getDimensionPixelSize(R.dimen.blue_sub_action_button_size);
         int blueSubActionButtonContentMargin = getResources().getDimensionPixelSize(R.dimen.blue_sub_action_button_content_margin);
-
+            
         ImageView fabIconStar = new ImageView(this);
         fabIconStar.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_important));
 
         FloatingActionButton.LayoutParams starParams = new FloatingActionButton.LayoutParams(redActionButtonSize, redActionButtonSize);
         starParams.setMargins(redActionButtonMargin,
-                redActionButtonMargin,
-                redActionButtonMargin,
-                redActionButtonMargin);
+                              redActionButtonMargin,
+                              redActionButtonMargin,
+                              redActionButtonMargin);
         fabIconStar.setLayoutParams(starParams);
 
         FloatingActionButton.LayoutParams fabIconStarParams = new FloatingActionButton.LayoutParams(redActionButtonContentSize, redActionButtonContentSize);
         fabIconStarParams.setMargins(redActionButtonContentMargin,
-                redActionButtonContentMargin,
-                redActionButtonContentMargin,
-                redActionButtonContentMargin);
+                                    redActionButtonContentMargin,
+                                    redActionButtonContentMargin,
+                                    redActionButtonContentMargin);
 
         FloatingActionButton leftCenterButton = new FloatingActionButton.Builder(this)
-                .setContentView(fabIconStar, fabIconStarParams)
-                .setBackgroundDrawable(R.drawable.button_action_red_selector)
-                .setPosition(FloatingActionButton.POSITION_LEFT_CENTER)
-                .setLayoutParams(starParams)
-                .build();
+                                                .setContentView(fabIconStar, fabIconStarParams)
+                                                .setBackgroundDrawable(R.drawable.button_action_red_selector)
+                                                .setPosition(FloatingActionButton.POSITION_LEFT_CENTER)
+                                                .setLayoutParams(starParams)
+                                                .build();
 
         // Set up customized SubActionButtons for the right center menu
         SubActionButton.Builder lCSubBuilder = new SubActionButton.Builder(this);
@@ -86,9 +86,9 @@ public class MenuWithFABActivity extends Activity {
 
         FrameLayout.LayoutParams blueContentParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         blueContentParams.setMargins(blueSubActionButtonContentMargin,
-                blueSubActionButtonContentMargin,
-                blueSubActionButtonContentMargin,
-                blueSubActionButtonContentMargin);
+                          blueSubActionButtonContentMargin,
+                          blueSubActionButtonContentMargin,
+                          blueSubActionButtonContentMargin);
         lCSubBuilder.setLayoutParams(blueContentParams);
         // Set custom layout params
         FrameLayout.LayoutParams blueParams = new FrameLayout.LayoutParams(blueSubActionButtonSize, blueSubActionButtonSize);

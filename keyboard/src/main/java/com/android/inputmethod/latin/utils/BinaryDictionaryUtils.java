@@ -33,21 +33,18 @@ import io.separ.neural.inputmethod.indic.personalization.PersonalizationHelper;
 public final class BinaryDictionaryUtils {
     private static final String TAG = BinaryDictionaryUtils.class.getSimpleName();
 
-    static {
-        JniUtils.loadNativeLibrary();
-    }
-
     private BinaryDictionaryUtils() {
         // This utility class is not publicly instantiable.
     }
 
+    static {
+        JniUtils.loadNativeLibrary();
+    }
+
     private static native boolean createEmptyDictFileNative(String filePath, long dictVersion,
-                                                            String locale, String[] attributeKeyStringArray, String[] attributeValueStringArray);
-
+            String locale, String[] attributeKeyStringArray, String[] attributeValueStringArray);
     private static native float calcNormalizedScoreNative(int[] before, int[] after, int score);
-
     private static native int editDistanceNative(int[] before, int[] after);
-
     private static native int setCurrentTimeForTestNative(int currentTime);
 
     public static DictionaryHeader getHeader(final File dictFile)
@@ -56,7 +53,7 @@ public final class BinaryDictionaryUtils {
     }
 
     public static DictionaryHeader getHeaderWithOffsetAndLength(final File dictFile,
-                                                                final long offset, final long length) throws IOException, UnsupportedFormatException {
+            final long offset, final long length) throws IOException, UnsupportedFormatException {
         // dictType is never used for reading the header. Passing an empty string.
         final BinaryDictionary binaryDictionary = new BinaryDictionary(
                 dictFile.getAbsolutePath(), offset, length,
@@ -97,7 +94,7 @@ public final class BinaryDictionaryUtils {
 
     @UsedForTesting
     public static boolean createEmptyDictFile(final String filePath, final long dictVersion,
-                                              final Locale locale, final Map<String, String> attributeMap) {
+            final Locale locale, final Map<String, String> attributeMap) {
         final String[] keyArray = new String[attributeMap.size()];
         final String[] valueArray = new String[attributeMap.size()];
         int index = 0;
@@ -111,7 +108,7 @@ public final class BinaryDictionaryUtils {
     }
 
     public static float calcNormalizedScore(final String before, final String after,
-                                            final int score) {
+            final int score) {
         return calcNormalizedScoreNative(StringUtils.toCodePointArray(before),
                 StringUtils.toCodePointArray(after), score);
     }

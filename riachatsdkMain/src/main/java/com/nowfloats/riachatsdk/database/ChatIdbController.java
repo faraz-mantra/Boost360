@@ -12,22 +12,18 @@ public interface ChatIdbController {
 
     /*
      * methods for Chat History
-     */
+    */
     String getChatHistory();
-
     String getChatNextNode();
-
-    Uri postChatHistory(String value, String nextNode);
+    Uri postChatHistory(String value,String nextNode);
 
     /*
-     * methods for Chat Data
-     */
+    * methods for Chat Data
+   */
     Map<String, String> getChatValues();
-
     Uri postChatData(String value);
 
     void clearData();
-
     void deleteDataBase();
 
 

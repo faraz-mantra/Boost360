@@ -36,8 +36,7 @@ class ScheduledBreaksFragmnt : AppBaseFragment<FragmentScheduleBreaksBinding, Ba
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(binding!!.flAddBreaks)
-    binding?.ctvHeading?.text =
-      Html.fromHtml(getString(R.string.add_a_leave_break_for_br_gaurav_sharma))
+    binding?.ctvHeading?.text = Html.fromHtml(getString(R.string.add_a_leave_break_for_br_gaurav_sharma))
   }
 
   override fun onClick(v: View) {

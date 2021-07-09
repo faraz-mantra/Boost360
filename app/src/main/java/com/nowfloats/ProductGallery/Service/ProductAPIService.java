@@ -23,11 +23,11 @@ import retrofit.client.Response;
  * Created by guru on 08-06-2015.
  */
 public class ProductAPIService {
-    public void getProductList(final Activity activity, final HashMap<String, String> map, final Bus bus) {
+    public void getProductList(final Activity activity, final HashMap<String,String> map, final Bus bus){
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (Product_Gallery_Fragment.progressLayout != null)
+                if (Product_Gallery_Fragment.progressLayout!=null)
                     Product_Gallery_Fragment.progressLayout.setVisibility(View.VISIBLE);
             }
         });
@@ -54,9 +54,7 @@ public class ProductAPIService {
                                 bus.post(new LoadMoreProductEvent(data));
                             }
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    }catch(Exception e){e.printStackTrace();}
                 }
 
                 @Override
@@ -64,28 +62,28 @@ public class ProductAPIService {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (Product_Gallery_Fragment.empty_layout != null)
+                            if (Product_Gallery_Fragment.empty_layout!=null)
                                 Product_Gallery_Fragment.empty_layout.setVisibility(View.VISIBLE);
-                            if (Product_Gallery_Fragment.progressLayout != null)
+                            if (Product_Gallery_Fragment.progressLayout!=null)
                                 Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
                             Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
                         }
                     });
                 }
             });
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (Product_Gallery_Fragment.progressLayout != null)
+                    if (Product_Gallery_Fragment.progressLayout!=null)
                         Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
-                    if (Product_Gallery_Fragment.productItemModelList != null)
+                    if (Product_Gallery_Fragment.productItemModelList!=null)
                         if (Product_Gallery_Fragment.productItemModelList.size() == 0) {
-                            if (Product_Gallery_Fragment.empty_layout != null)
+                            if (Product_Gallery_Fragment.empty_layout!=null)
                                 Product_Gallery_Fragment.empty_layout.setVisibility(View.VISIBLE);
                         } else {
-                            if (Product_Gallery_Fragment.empty_layout != null)
+                            if (Product_Gallery_Fragment.empty_layout!=null)
                                 Product_Gallery_Fragment.empty_layout.setVisibility(View.GONE);
                         }
                     Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));

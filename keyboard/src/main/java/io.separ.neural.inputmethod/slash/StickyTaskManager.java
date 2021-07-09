@@ -8,12 +8,11 @@ import android.os.Bundle;
 public class StickyTaskManager {
     public static final String CONTEXT_ID = "CONTEXT_ID";
     private static long idCounter;
+    protected final long affinityId;
 
     static {
         idCounter = System.currentTimeMillis();
     }
-
-    protected final long affinityId;
 
     public StickyTaskManager(Bundle inState) {
         UiThreadContext.assertUiThread();

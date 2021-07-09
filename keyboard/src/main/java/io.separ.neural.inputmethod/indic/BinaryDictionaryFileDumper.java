@@ -64,11 +64,11 @@ public final class BinaryDictionaryFileDumper {
     private static final int FILE_READ_BUFFER_SIZE = 8192;
     // TODO: make the following data common with the native code
     private static final byte[] MAGIC_NUMBER_VERSION_1 =
-            new byte[]{(byte) 0x78, (byte) 0xB1, (byte) 0x00, (byte) 0x00};
+            new byte[] { (byte)0x78, (byte)0xB1, (byte)0x00, (byte)0x00 };
     private static final byte[] MAGIC_NUMBER_VERSION_2 =
-            new byte[]{(byte) 0x9B, (byte) 0xC1, (byte) 0x3A, (byte) 0xFE};
+            new byte[] { (byte)0x9B, (byte)0xC1, (byte)0x3A, (byte)0xFE };
 
-    private static final String DICTIONARY_PROJECTION[] = {"id"};
+    private static final String DICTIONARY_PROJECTION[] = { "id" };
 
     private static final String QUERY_PARAMETER_MAY_PROMPT_USER = "mayPrompt";
     private static final String QUERY_PARAMETER_TRUE = "true";
@@ -96,7 +96,7 @@ public final class BinaryDictionaryFileDumper {
 
     /**
      * Returns a URI builder pointing to the dictionary pack.
-     * <p>
+     *
      * This creates a URI builder able to build a URI pointing to the dictionary
      * pack content provider for a specific dictionary id.
      */
@@ -107,21 +107,21 @@ public final class BinaryDictionaryFileDumper {
 
     /**
      * Gets the content URI builder for a specified type.
-     * <p>
+     *
      * Supported types include QUERY_PATH_DICT_INFO, which takes the locale as
      * the extraPath argument, and QUERY_PATH_DATAFILE, which needs a wordlist ID
      * as the extraPath argument.
      *
-     * @param clientId              the clientId to use
+     * @param clientId the clientId to use
      * @param contentProviderClient the instance of content provider client
-     * @param queryPathType         the path element encoding the type
-     * @param extraPath             optional extra argument for this type (typically word list id)
+     * @param queryPathType the path element encoding the type
+     * @param extraPath optional extra argument for this type (typically word list id)
      * @return a builder that can build the URI for the best supported protocol version
      * @throws RemoteException if the client can't be contacted
      */
     private static Uri.Builder getContentUriBuilderForType(final String clientId,
-                                                           final ContentProviderClient contentProviderClient, final String queryPathType,
-                                                           final String extraPath) throws RemoteException {
+            final ContentProviderClient contentProviderClient, final String queryPathType,
+            final String extraPath) throws RemoteException {
         // Check whether protocol v2 is supported by building a v2 URI and calling getType()
         // on it. If this returns null, v2 is not supported.
         final Uri.Builder uriV2Builder = getProviderUriBuilder(clientId);
@@ -139,7 +139,7 @@ public final class BinaryDictionaryFileDumper {
      * available to copy into Latin IME.
      */
     private static List<WordListInfo> getWordListWordListInfos(final Locale locale,
-                                                               final Context context, final boolean hasDefaultWordList) {
+            final Context context, final boolean hasDefaultWordList) {
         final String clientId = context.getString(R.string.dictionary_pack_client_id);
         final ContentProviderClient client = context.getContentResolver().
                 acquireContentProviderClient(getProviderUriBuilder("").build());
@@ -220,8 +220,8 @@ public final class BinaryDictionaryFileDumper {
      * and creating it (and its containing directory) if necessary.
      */
     private static void cacheWordList(final String wordlistId, final String locale,
-                                      final String rawChecksum, final ContentProviderClient providerClient,
-                                      final Context context) {
+            final String rawChecksum, final ContentProviderClient providerClient,
+            final Context context) {
         final int COMPRESSED_CRYPTED_COMPRESSED = 0;
         final int CRYPTED_COMPRESSED = 1;
         final int COMPRESSED_CRYPTED = 2;
@@ -391,20 +391,19 @@ public final class BinaryDictionaryFileDumper {
 
     /**
      * Queries a content provider for word list data for some locale and cache the returned files
-     * <p>
+     *
      * This will query a content provider for word list data for a given locale, and copy the
      * files locally so that they can be mmap'ed. This may overwrite previously cached word lists
      * with newer versions if a newer version is made available by the content provider.
-     *
      * @throw FileNotFoundException if the provider returns non-existent data.
      * @throw IOException if the provider-returned data could not be read.
      */
     public static void cacheWordListsFromContentProvider(final Locale locale,
-                                                         final Context context, final boolean hasDefaultWordList) {
+            final Context context, final boolean hasDefaultWordList) {
         final ContentProviderClient providerClient;
         try {
             providerClient = context.getContentResolver().
-                    acquireContentProviderClient(getProviderUriBuilder("").build());
+                acquireContentProviderClient(getProviderUriBuilder("").build());
         } catch (final SecurityException e) {
             Log.e(TAG, "No permission to communicate with the dictionary provider", e);
             return;
@@ -426,16 +425,16 @@ public final class BinaryDictionaryFileDumper {
 
     /**
      * Copies the data in an input stream to a target file if the magic number matches.
-     * <p>
+     *
      * If the magic number does not match the expected value, this method throws an
      * IOException. Other usual conditions for IOException or FileNotFoundException
      * also apply.
      *
-     * @param input  the stream to be copied.
+     * @param input the stream to be copied.
      * @param output an output stream to copy the data to.
      */
     public static void checkMagicAndCopyFileTo(final BufferedInputStream input,
-                                               final BufferedOutputStream output) throws IOException {
+            final BufferedOutputStream output) throws IOException {
         // Check the magic number
         final int length = MAGIC_NUMBER_VERSION_2.length;
         final byte[] magicNumberBuffer = new byte[length];
@@ -459,7 +458,7 @@ public final class BinaryDictionaryFileDumper {
     }
 
     private static void reinitializeClientRecordInDictionaryContentProvider(final Context context,
-                                                                            final ContentProviderClient client, final String clientId) throws RemoteException {
+            final ContentProviderClient client, final String clientId) throws RemoteException {
         final String metadataFileUri = MetadataFileUriGetter.getMetadataUri(context);
         final String metadataAdditionalId = MetadataFileUriGetter.getMetadataAdditionalId(context);
         // Tell the content provider to reset all information about this client id
@@ -492,11 +491,11 @@ public final class BinaryDictionaryFileDumper {
 
     /**
      * Initialize a client record with the dictionary content provider.
-     * <p>
+     *
      * This merely acquires the content provider and calls
      * #reinitializeClientRecordInDictionaryContentProvider.
      *
-     * @param context  the context for resources and providers.
+     * @param context the context for resources and providers.
      * @param clientId the client ID to use.
      */
     public static void initializeClientRecordHelper(final Context context, final String clientId) {

@@ -37,8 +37,9 @@
       android:name="com.appservice.ui.staffs.ui.StaffFragmentContainerActivity"
       android:configChanges="keyboardHidden|orientation|screenSize"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme_staff_home"
-      android:windowSoftInputMode="adjustPan" />
+      android:windowSoftInputMode="adjustPan"
+      android:theme="@style/AppTheme_staff_home" />
+
 
 
     <activity

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,18 +47,18 @@ import retrofit.client.Response;
  * Created by Admin on 21-12-2017.
  */
 
-public class FacebookWildFireActivity extends AppCompatActivity implements WildFireDialogFragment.OnMenuDialogOptionSelection, View.OnClickListener {
-    private final int PROCESS_ITEMS = 10;
+public class FacebookWildFireActivity extends AppCompatActivity implements WildFireDialogFragment.OnMenuDialogOptionSelection, View.OnClickListener{
     private ProgressDialog progressDialog;
     private ArrayList<FacebookWildFireDataModel> wildFireList = new ArrayList<>();
     private GoogleWildFireAdapter adapter;
     private Menu menu;
     private boolean stop;
+    private final int PROCESS_ITEMS = 10;
     private FrameLayout fragLayout;
-    private String pattern = "yyyy-MM-dd", calendarPattern = "d MMMM yyyy";
+    private String pattern = "yyyy-MM-dd",calendarPattern = "d MMMM yyyy";
     private SimpleDateFormat formatter = new SimpleDateFormat(pattern, Locale.ENGLISH);
     private SimpleDateFormat calendarFormatter = new SimpleDateFormat(calendarPattern, Locale.ENGLISH);
-    private HashMap<String, Object> map = new HashMap<>();
+    private HashMap<String,Object> map = new HashMap<>();
     private WildFireDialogFragment.SortType currentSortType = WildFireDialogFragment.SortType.ALPHABETIC;
     private boolean isMenuVisible;
     private String dateSelectedPeriod;
@@ -70,23 +68,23 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
     @Override
     public void onSortOptionSelect(WildFireDialogFragment.SortType type) {
         currentSortType = type;
-        sort(wildFireList, type);
+        sort(wildFireList,type);
         onBackPressed();
     }
 
     @Override
     public void onFilterOptionSelect() {
         FragmentManager manager = getSupportFragmentManager();
-        if (manager.getBackStackEntryCount() > 0) {
+        if (manager.getBackStackEntryCount()>0){
             manager.popBackStack();
         }
         Fragment frag = manager.findFragmentByTag("calendarFrag");
-        if (frag == null) {
+        if (frag == null){
             frag = new WildFireCalenderFragment();
         }
         manager.beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-                .replace(R.id.layout_fragment, frag, "calendarFrag")
+                .replace(R.id.layout_fragment,frag,"calendarFrag")
                 .addToBackStack(null)
                 .commit();
     }
@@ -94,9 +92,9 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
     @Override
     public void onDateSelected(String start_end) {
         String[] dates = start_end.split("_");
-        String newDatePeriod = String.format(Locale.ENGLISH, "%s_%s",
-                calendarFormatter.format(Long.valueOf(dates[0])), calendarFormatter.format(Long.valueOf(dates[1])));
-        if (TextUtils.isEmpty(dateSelectedPeriod) || !dateSelectedPeriod.equals(newDatePeriod)) {
+        String newDatePeriod = String.format(Locale.ENGLISH,"%s_%s",
+                calendarFormatter.format(Long.valueOf(dates[0])),calendarFormatter.format(Long.valueOf(dates[1])));
+        if(TextUtils.isEmpty(dateSelectedPeriod) || !dateSelectedPeriod.equals(newDatePeriod))  {
             filterByMonth = WildFireFilterFragment.DATE_SELECT;
             map.put("endDate", formatter.format(Long.valueOf(dates[1])));
             map.put("startDate", formatter.format(Long.valueOf(dates[0])));
@@ -145,7 +143,7 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
         setContentView(R.layout.activity_wildfire);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
+        if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -154,11 +152,11 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
         Typeface tf = Typeface.createFromAsset(getAssets(), "Roboto-Medium.ttf");
         title.setPaintFlags(title.getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG);
         title.setTypeface(tf);
-        ((ImageView) toolbar.findViewById(R.id.image1)).setImageResource(R.drawable.ic_facebook_app_logo);
+        ((ImageView)toolbar.findViewById(R.id.image1)).setImageResource(R.drawable.ic_facebook_app_logo);
         title.setText("Ads");
         String wildFireId = getIntent().getStringExtra("WILDFIRE_ID");
-        map.put("count", PROCESS_ITEMS);
-        map.put("clientId", Constants.clientId);
+        map.put("count",PROCESS_ITEMS);
+        map.put("clientId",Constants.clientId);
         map.put("accountId", wildFireId);
         progressDialog = new ProgressDialog(this);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -172,7 +170,7 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
         keywordRv.setVisibility(View.VISIBLE);
         keywordRv.setLayoutManager(new LinearLayoutManager(this));
         adapter.setFacebookModelList(wildFireList);
-        keywordRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        keywordRv.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         keywordRv.setAdapter(adapter);
         keywordRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -185,7 +183,7 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
                 super.onScrolled(recyclerView, dx, dy);
                 LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 int count = manager.getItemCount();
-                if (manager.findLastVisibleItemPosition() >= count - 2 && !stop) {
+                if (manager.findLastVisibleItemPosition()>= count-2 && !stop){
                     getKeyWordStats(map);
                 }
             }
@@ -194,8 +192,8 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
         getKeyWordStats(map);
     }
 
-    private void getKeyWordStats(HashMap<String, Object> map) {
-        map.put("start", wildFireList.size());
+    private void getKeyWordStats(HashMap<String, Object> map){
+        map.put("start",wildFireList.size());
         stop = true;
         showProgress();
         //int start = wildFireList.size() == 0 ? 0 : wildFireList.size()-1;
@@ -204,34 +202,34 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
             @Override
             public void success(ArrayList<FacebookWildFireDataModel> wildFireKeyStatsModels, Response response) {
                 hideProgress();
-                if (wildFireKeyStatsModels == null) {
-                    Methods.showSnackBarNegative(FacebookWildFireActivity.this, getString(R.string.something_went_wrong));
-                    title.setText(wildFireList.size() == 0 ? "Ads" : "Ads (" + wildFireList.size() + ")");
+                if (wildFireKeyStatsModels == null){
+                    Methods.showSnackBarNegative(FacebookWildFireActivity.this,getString(R.string.something_went_wrong));
+                    title.setText(wildFireList.size() == 0?"Ads":"Ads ("+wildFireList.size()+")");
                     return;
                 }
-                if (!isMenuVisible) {
+                if (!isMenuVisible){
                     showMenu();
                 }
                 wildFireList.addAll(wildFireKeyStatsModels);
                 sort(wildFireList, currentSortType);
-                if (wildFireKeyStatsModels.size() == PROCESS_ITEMS) {
+                if (wildFireKeyStatsModels.size()==PROCESS_ITEMS){
                     stop = false;
                 }
-                title.setText(wildFireList.size() == 0 ? "Ads" : "Ads (" + wildFireList.size() + ")");
+                title.setText(wildFireList.size() == 0?"Ads":"Ads ("+wildFireList.size()+")");
             }
 
             @Override
             public void failure(RetrofitError error) {
                 hideProgress();
-                title.setText(wildFireList.size() == 0 ? "Ads" : "Ads (" + wildFireList.size() + ")");
+                title.setText(wildFireList.size() == 0?"Ads":"Ads ("+wildFireList.size()+")");
             }
         });
     }
 
     private void showMenu() {
         isMenuVisible = true;
-        getMenuInflater().inflate(R.menu.wildfire_menu, menu);
-        MenuItem myActionMenuItem = menu.findItem(R.id.item_search);
+        getMenuInflater().inflate(R.menu.wildfire_menu,menu);
+        MenuItem myActionMenuItem = menu.findItem( R.id.item_search);
         SearchView searchView = (SearchView) myActionMenuItem.getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -248,21 +246,19 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
         });
     }
 
-    private void showProgress() {
-        if (!progressDialog.isShowing()) {
+    private void showProgress(){
+        if (!progressDialog.isShowing()){
             progressDialog.show();
         }
     }
-
-    private void hideProgress() {
-        if (progressDialog.isShowing()) {
+    private void hideProgress(){
+        if (progressDialog.isShowing()){
             progressDialog.dismiss();
         }
     }
-
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
+        switch (view.getId()){
             case R.id.llayout_wildfire:
                 startActivity(new Intent(FacebookWildFireActivity.this, NewPricingPlansActivity.class));
                 break;
@@ -274,12 +270,11 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
                 break;
         }
     }
-
-    private void sort(ArrayList<FacebookWildFireDataModel> keywordModelList, final WildFireDialogFragment.SortType sortType) {
+    private void sort(ArrayList<FacebookWildFireDataModel> keywordModelList, final WildFireDialogFragment.SortType sortType){
         Collections.sort(keywordModelList, new Comparator<FacebookWildFireDataModel>() {
             @Override
             public int compare(FacebookWildFireDataModel o1, FacebookWildFireDataModel o2) {
-                switch (sortType) {
+                switch (sortType){
                     case ALPHABETIC:
                         return o1.getAdName().compareToIgnoreCase(o2.getAdName());
                     case DATE:
@@ -287,31 +282,30 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
                     default:
                         int o1_click = Integer.valueOf(o1.getClicks());
                         int o2_click = Integer.valueOf(o2.getClicks());
-                        if (o1_click < o2_click) {
+                        if (o1_click<o2_click){
                             return 1;
-                        } else if (o1_click == o2_click) {
+                        }else if(o1_click == o2_click){
                             return 0;
-                        } else return -1;
+                        }else return -1;
 
                 }
             }
         });
         adapter.notifyDataSetChanged();
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         FragmentManager manager = getSupportFragmentManager();
-        switch (item.getItemId()) {
+        switch (item.getItemId()){
             case android.R.id.home:
                 onBackPressed();
                 break;
             case R.id.item_sort:
 
-                if (manager.getBackStackEntryCount() > 0) {
+                if (manager.getBackStackEntryCount()>0){
                     manager.popBackStack();
                     fragLayout.setVisibility(View.GONE);
-                } else {
+                }else {
                     fragLayout.setVisibility(View.VISIBLE);
                     Bundle b = new Bundle();
                     b.putString("sortType", currentSortType.toString());
@@ -322,14 +316,14 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
                 }
                 break;
             case R.id.item_filter:
-                if (manager.getBackStackEntryCount() > 0) {
+                if (manager.getBackStackEntryCount()>0){
                     manager.popBackStack();
                     fragLayout.setVisibility(View.GONE);
-                } else {
+                }else {
                     fragLayout.setVisibility(View.VISIBLE);
                     Bundle b = new Bundle();
-                    b.putInt("monthSelected", filterByMonth);
-                    b.putString("datePeriod", dateSelectedPeriod);
+                    b.putInt("monthSelected",filterByMonth);
+                    b.putString("datePeriod",dateSelectedPeriod);
                     manager.beginTransaction()
                             .replace(R.id.layout_fragment, WildFireFilterFragment.getInstance(b))
                             .addToBackStack(null)
@@ -351,11 +345,11 @@ public class FacebookWildFireActivity extends AppCompatActivity implements WildF
     @Override
     public void onBackPressed() {
         FragmentManager manager = getSupportFragmentManager();
-        if (manager.getBackStackEntryCount() > 0) {
+        if (manager.getBackStackEntryCount()>0){
             manager.popBackStack();
             fragLayout.setVisibility(View.GONE);
 
-        } else {
+        }else {
             super.onBackPressed();
         }
     }

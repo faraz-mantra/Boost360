@@ -9,11 +9,7 @@ import java.io.InputStreamReader
 
 open class BaseLocalService {
 
-  fun <T : BaseResponse> fromJsonRes(
-    context: Context,
-    @RawRes id: Int,
-    classOfT: Class<T>
-  ): Observable<BaseResponse> {
+  fun <T : BaseResponse> fromJsonRes(context: Context, @RawRes id: Int, classOfT: Class<T>): Observable<BaseResponse> {
     return try {
       Observable.just(Gson().fromJson(getLocalJsonReader(context, id), classOfT).apply { status = 200 })
     } catch (e: Exception) {

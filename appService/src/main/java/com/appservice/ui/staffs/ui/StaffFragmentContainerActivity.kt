@@ -30,8 +30,7 @@ import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
-class StaffFragmentContainerActivity :
-  AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var fragmentType: FragmentType? = null
   private var staffAddFragment: StaffAddFragment? = null
@@ -87,8 +86,7 @@ class StaffFragmentContainerActivity :
   override fun onCreate(savedInstanceState: Bundle?) {
     when (intent.extras) {
       null -> fragmentType = FragmentType.STAFF_HOME_FRAGMENT
-      else -> intent?.extras?.getInt(FRAGMENT_TYPE)
-        ?.let { fragmentType = FragmentType.values()[it] }
+      else -> intent?.extras?.getString(FRAGMENT_TYPE)?.let { fragmentType = FragmentType.valueOf(it) }
     }
     super.onCreate(savedInstanceState)
   }
@@ -222,12 +220,7 @@ class StaffFragmentContainerActivity :
 }
 
 
-fun Fragment.startStaffFragmentActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false,
-  isResult: Boolean = false
-) {
+fun Fragment.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
   val intent = Intent(activity, StaffFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -235,29 +228,15 @@ fun Fragment.startStaffFragmentActivity(
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startStaffFragmentActivity(
-  activity: Activity,
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean,
-  isResult: Boolean = false,
-  requestCode: Int = Constants.REQUEST_CODE
-) {
+fun startStaffFragmentActivity(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false, requestCode: Int = Constants.REQUEST_CODE) {
   val intent = Intent(activity, StaffFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-  if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(
-    intent,
-    requestCode
-  )
+  if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(intent, requestCode)
 }
 
-fun AppCompatActivity.startStaffFragmentActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false
-) {
+fun AppCompatActivity.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(this, StaffFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -266,6 +245,6 @@ fun AppCompatActivity.startStaffFragmentActivity(
 }
 
 fun Intent.setFragmentType(type: FragmentType): Intent {
-  return this.putExtra(FRAGMENT_TYPE, type.ordinal)
+  return this.putExtra(FRAGMENT_TYPE, type.name)
 }
 

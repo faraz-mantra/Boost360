@@ -18,7 +18,7 @@ public class TenorQuerySearchTask extends BaseQuerySearchTask {
 
     protected void run(Context context) throws Exception {
         SearchResult result;
-        if (TextUtils.isEmpty(query))
+        if(TextUtils.isEmpty(query))
             result = TenorApiManager.getInstance(true).getTrending().toSearchResult();
         else
             result = TenorApiManager.getInstance(true).getSearchResults(query).toSearchResult();

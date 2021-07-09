@@ -34,14 +34,11 @@ import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 
-class RegistrationBusinessTwitterDetailsFragment :
-  BaseRegistrationFragment<FragmentRegistrationBusinessTwitterDetailsBinding>(), TwitterLoginHelper,
-  TwitterUserHelper {
+class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<FragmentRegistrationBusinessTwitterDetailsBinding>(), TwitterLoginHelper, TwitterUserHelper {
 
   private val twitterAuthClient = TwitterAuthClient()
   private var selectedChannel: List<ChannelModel>? = null
-  private var channelAccessToken =
-    ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.twitter.name.toLowerCase())
+  private var channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.twitter.name.toLowerCase())
   private var twitterChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
   private var isShowProfile = false
 
@@ -59,14 +56,11 @@ class RegistrationBusinessTwitterDetailsFragment :
     checkIsUpdate()
     binding?.twitterChannels?.post {
       (binding?.twitterChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn()))
-        ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
-        ?.doOnComplete {
-          if (isShowProfile) setProfileDetails(
-            channelAccessToken.userAccountName,
-            channelAccessToken.profilePicture
-          )
-        }?.andThen(binding?.linkTwitter?.fadeIn(500L))
-        ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
+          ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
+          ?.doOnComplete {
+            if (isShowProfile) setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
+          }?.andThen(binding?.linkTwitter?.fadeIn(500L))
+          ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
     }
     setOnClickListener(binding?.skip, binding?.linkTwitter)
     setSelectedTwitterChannels(channels)
@@ -85,9 +79,7 @@ class RegistrationBusinessTwitterDetailsFragment :
   }
 
   override fun setSavedData() {
-    val channelAccessToken =
-      requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == channelAccessToken.getType() }
-        ?: return
+    val channelAccessToken = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == channelAccessToken.getType() } ?: return
     setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
     requestFloatsModel?.channelAccessTokens?.remove(channelAccessToken)
     this.channelAccessToken = channelAccessToken
@@ -98,8 +90,7 @@ class RegistrationBusinessTwitterDetailsFragment :
       it.recyclerViewType = RecyclerViewItemType.SELECTED_CHANNEL_ITEM.getLayout(); it
     }
     selectedChannel?.let { channels ->
-      twitterChannelsAdapter =
-        binding?.twitterChannels?.setGridRecyclerViewAdapter(baseActivity, channels.size, channels)
+      twitterChannelsAdapter = binding?.twitterChannels?.setGridRecyclerViewAdapter(baseActivity, channels.size, channels)
       twitterChannelsAdapter?.notifyDataSetChanged()
     }
   }
@@ -122,9 +113,7 @@ class RegistrationBusinessTwitterDetailsFragment :
   }
 
   private fun gotoNextScreen(isSkip: Boolean = false) {
-    if (channelAccessToken.isLinked() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(
-      channelAccessToken
-    )
+    if (channelAccessToken.isLinked() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
 
     if (channels.haveWhatsAppChannels()) gotoWhatsAppCallDetails() else gotoBusinessApiCallDetails()
   }
@@ -146,27 +135,19 @@ class RegistrationBusinessTwitterDetailsFragment :
   }
 
   override fun setProfileDetails(name: String?, profilePicture: String?) {
-    requestFloatsModel?.fpTag?.let {
-      WebEngageController.trackEvent(
-        TWITTER_CONNECTED,
-        DIGITAL_CHANNELS,
-        it
-      )
-    }
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(TWITTER_CONNECTED, DIGITAL_CHANNELS, it) }
     val binding = binding?.twitterSuccess ?: return
     this.binding?.skip?.gone()
     binding.maimView.visible()
     binding.maimView.alpha = 1F
     binding.disconnect.setOnClickListener { disconnectTwitter(binding) }
     this.binding?.title?.text = resources.getString(R.string.twitter_connected)
-    this.binding?.subTitle?.text =
-      resources.getString(R.string.twitter_allows_digital_business_boost)
+    this.binding?.subTitle?.text = resources.getString(R.string.twitter_allows_digital_business_boost)
     this.binding?.linkTwitter?.text = resources.getString(R.string.save_continue)
     binding.profileTitle.text = name
     selectedChannel?.let { channels ->
       if (channels.isNotEmpty()) {
-        channels[0].getDrawable(baseActivity)
-          ?.let { img -> binding.channelType.setImageDrawable(img) }
+        channels[0].getDrawable(baseActivity)?.let { img -> binding.channelType.setImageDrawable(img) }
       }
     }
     if (profilePicture?.isNotBlank() == true) {

@@ -32,25 +32,6 @@ public final class AlphabetShiftState {
 
     private int mState = UNSHIFTED;
 
-    private static String toString(int state) {
-        switch (state) {
-            case UNSHIFTED:
-                return "UNSHIFTED";
-            case MANUAL_SHIFTED:
-                return "MANUAL_SHIFTED";
-            case MANUAL_SHIFTED_FROM_AUTO:
-                return "MANUAL_SHIFTED_FROM_AUTO";
-            case AUTOMATIC_SHIFTED:
-                return "AUTOMATIC_SHIFTED";
-            case SHIFT_LOCKED:
-                return "SHIFT_LOCKED";
-            case SHIFT_LOCK_SHIFTED:
-                return "SHIFT_LOCK_SHIFTED";
-            default:
-                return "UNKNOWN";
-        }
-    }
-
     public void setShifted(boolean newShiftState) {
         IS_SHIFTED = newShiftState;
         final int oldState = mState;
@@ -82,22 +63,6 @@ public final class AlphabetShiftState {
             Log.d(TAG, "setShifted(" + newShiftState + "): " + toString(oldState) + " > " + this);
     }
 
-    public void setAutomaticShifted() {
-        final int oldState = mState;
-        mState = AUTOMATIC_SHIFTED;
-        IS_SHIFTED = true;
-        if (DEBUG)
-            Log.d(TAG, "setAutomaticShifted: " + toString(oldState) + " > " + this);
-    }
-
-    public boolean isShiftedOrShiftLocked() {
-        return mState != UNSHIFTED;
-    }
-
-    public boolean isShiftLocked() {
-        return mState == SHIFT_LOCKED || mState == SHIFT_LOCK_SHIFTED;
-    }
-
     public void setShiftLocked(boolean newShiftLockState) {
         final int oldState = mState;
         if (newShiftLockState) {
@@ -115,6 +80,22 @@ public final class AlphabetShiftState {
         if (DEBUG)
             Log.d(TAG, "setShiftLocked(" + newShiftLockState + "): " + toString(oldState)
                     + " > " + this);
+    }
+
+    public void setAutomaticShifted() {
+        final int oldState = mState;
+        mState = AUTOMATIC_SHIFTED;
+        IS_SHIFTED = true;
+        if (DEBUG)
+            Log.d(TAG, "setAutomaticShifted: " + toString(oldState) + " > " + this);
+    }
+
+    public boolean isShiftedOrShiftLocked() {
+        return mState != UNSHIFTED;
+    }
+
+    public boolean isShiftLocked() {
+        return mState == SHIFT_LOCKED || mState == SHIFT_LOCK_SHIFTED;
     }
 
     public boolean isShiftLockShifted() {
@@ -137,5 +118,24 @@ public final class AlphabetShiftState {
     @Override
     public String toString() {
         return toString(mState);
+    }
+
+    private static String toString(int state) {
+        switch (state) {
+            case UNSHIFTED:
+                return "UNSHIFTED";
+            case MANUAL_SHIFTED:
+                return "MANUAL_SHIFTED";
+            case MANUAL_SHIFTED_FROM_AUTO:
+                return "MANUAL_SHIFTED_FROM_AUTO";
+            case AUTOMATIC_SHIFTED:
+                return "AUTOMATIC_SHIFTED";
+            case SHIFT_LOCKED:
+                return "SHIFT_LOCKED";
+            case SHIFT_LOCK_SHIFTED:
+                return "SHIFT_LOCK_SHIFTED";
+            default:
+                return "UNKNOWN";
+        }
     }
 }

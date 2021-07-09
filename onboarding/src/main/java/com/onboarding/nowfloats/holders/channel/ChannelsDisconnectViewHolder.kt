@@ -14,8 +14,7 @@ import com.onboarding.nowfloats.model.channel.isGoogleBusinessChannel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
-class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBinding) :
-  AppBaseRecyclerViewHolder<ItemChannelsDisconnectBinding>(binding) {
+class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBinding) : AppBaseRecyclerViewHolder<ItemChannelsDisconnectBinding>(binding) {
 
   private var model: ChannelModel? = null
 
@@ -28,26 +27,16 @@ class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBi
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-      binding.card -> listener?.onItemClick(
-        adapterPosition,
-        model,
-        RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal
-      )
-      binding.whysync -> listener?.onItemClick(
-        adapterPosition,
-        model,
-        RecyclerViewActionType.CHANNEL_DISCONNECT_WHY_CLICKED.ordinal
-      )
+      binding.card -> listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal)
+      binding.whysync -> listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_DISCONNECT_WHY_CLICKED.ordinal)
     }
   }
 
   @SuppressLint("SetTextI18n")
   private fun setViews(model: ChannelModel) {
     setClickListeners(binding.card, binding.whysync)
-    binding.title.text =
-      if (model.isGoogleBusinessChannel()) activity?.resources?.getString(R.string.google_maps) else model.getName()
-    binding.whysync.text =
-      "Why Sync on ${if (model.isGoogleBusinessChannel()) activity?.resources?.getString(R.string.google_business_n) else model.getName()}"
+    binding.title.text = if (model.isGoogleBusinessChannel()) activity?.resources?.getString(R.string.google_maps) else model.getName()
+    binding.whysync.text = "Why Sync on ${if (model.isGoogleBusinessChannel()) activity?.resources?.getString(R.string.google_business_n) else model.getName()}"
     binding.whysync.underlineText(0, binding.whysync.text.length - 1)
     setSelection(model)
   }
@@ -64,13 +53,7 @@ class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBi
       binding.check.setImageResource(R.drawable.ic_selected_blue)
     }
     if (model.isSelectedClick) {
-      Handler().postDelayed({
-        listener?.onItemClick(
-          adapterPosition,
-          model,
-          RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal
-        )
-      }, 1000)
+      Handler().postDelayed({ listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal) }, 1000)
     }
   }
 }

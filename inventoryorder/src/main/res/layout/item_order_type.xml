@@ -8,29 +8,29 @@
   </data>
 
   <androidx.appcompat.widget.LinearLayoutCompat
-    android:id="@+id/main_view"
-    style="@style/wrap_wrap"
-    android:layout_margin="@dimen/size_6"
-    android:background="@drawable/bg_rounded_30"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+      android:id="@+id/main_view"
+      style="@style/wrap_wrap"
+      android:layout_margin="@dimen/size_6"
+      android:background="@drawable/bg_rounded_30"
+      android:gravity="center_vertical"
+      android:orientation="horizontal">
 
     <com.framework.views.customViews.CustomTextView
-      android:id="@+id/title"
-      style="@style/wrap_wrap"
-      android:textColor="@color/black"
-      app:textType="BODY_2"
-      tools:text="Delayed" />
+        android:id="@+id/title"
+        style="@style/wrap_wrap"
+        tools:text="Delayed"
+        android:textColor="@color/black"
+        app:textType="BODY_2" />
 
     <com.framework.views.customViews.CustomTextView
-      android:id="@+id/count"
-      style="@style/wrap_wrap"
-      android:layout_marginStart="@dimen/size_6"
-      android:background="@drawable/bg_rounded_20"
-      android:backgroundTint="@color/colorAccent"
-      android:includeFontPadding="false"
-      android:textColor="@color/white"
-      app:textType="BODY_1"
-      tools:text="10" />
+        android:id="@+id/count"
+        style="@style/wrap_wrap"
+        android:layout_marginStart="@dimen/size_6"
+        android:background="@drawable/bg_rounded_20"
+        android:backgroundTint="@color/colorAccent"
+        android:includeFontPadding="false"
+        tools:text="10"
+        android:textColor="@color/white"
+        app:textType="BODY_1" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

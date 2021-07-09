@@ -31,7 +31,7 @@ import io.separ.neural.inputmethod.dictionarypack.DictionaryPackConstants;
 
 /**
  * Receives broadcasts pertaining to dictionary management and takes the appropriate action.
- * <p>
+ *
  * This object receives three types of broadcasts.
  * - Package installed/added. When a dictionary provider application is added or removed, we
  * need to query the dictionaries.

@@ -8,7 +8,6 @@ import com.nowfloats.util.Constants;
 import com.squareup.otto.Bus;
 
 import java.util.HashMap;
-
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -18,7 +17,8 @@ import retrofit.client.Response;
  */
 public class Verify_Tag_Service {
 
-    public Verify_Tag_Service(Activity activity, String fpTag, String fpName, String clientId, final Bus bus) {
+    public Verify_Tag_Service(Activity activity,String fpTag,String fpName,String clientId,final Bus bus)
+    {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("fpTag", fpTag);
         params.put("fpName", fpName);
@@ -26,7 +26,7 @@ public class Verify_Tag_Service {
 
         Retro_Signup_Interface verifyTag = Constants.restAdapter.create(Retro_Signup_Interface.class);
 
-        verifyTag.post_verifyTag(params, new Callback<String>() {
+        verifyTag.post_verifyTag(params,new Callback<String>() {
             @Override
             public void success(String s, Response response) {
                 bus.post(new Verifty_Unique_Tag_Event(s));

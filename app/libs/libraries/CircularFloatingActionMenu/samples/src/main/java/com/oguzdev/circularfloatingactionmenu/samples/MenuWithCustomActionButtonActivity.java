@@ -65,30 +65,14 @@ public class MenuWithCustomActionButtonActivity extends Activity {
             Button centerActionButton = (Button) rootView.findViewById(R.id.centerActionButton);
 
             // Add some items to the menu. They are regular views as well!
-            TextView a = new TextView(getActivity());
-            a.setText("a");
-            a.setBackgroundResource(android.R.drawable.btn_default_small);
-            TextView b = new TextView(getActivity());
-            b.setText("b");
-            b.setBackgroundResource(android.R.drawable.btn_default_small);
-            TextView c = new TextView(getActivity());
-            c.setText("c");
-            c.setBackgroundResource(android.R.drawable.btn_default_small);
-            TextView d = new TextView(getActivity());
-            d.setText("d");
-            d.setBackgroundResource(android.R.drawable.btn_default_small);
-            TextView e = new TextView(getActivity());
-            e.setText("e");
-            e.setBackgroundResource(android.R.drawable.btn_default_small);
-            TextView f = new TextView(getActivity());
-            f.setText("f");
-            f.setBackgroundResource(android.R.drawable.btn_default_small);
-            TextView g = new TextView(getActivity());
-            g.setText("g");
-            g.setBackgroundResource(android.R.drawable.btn_default_small);
-            TextView h = new TextView(getActivity());
-            h.setText("h");
-            h.setBackgroundResource(android.R.drawable.btn_default_small);
+            TextView a = new TextView(getActivity()); a.setText("a"); a.setBackgroundResource(android.R.drawable.btn_default_small);
+            TextView b = new TextView(getActivity()); b.setText("b"); b.setBackgroundResource(android.R.drawable.btn_default_small);
+            TextView c = new TextView(getActivity()); c.setText("c"); c.setBackgroundResource(android.R.drawable.btn_default_small);
+            TextView d = new TextView(getActivity()); d.setText("d"); d.setBackgroundResource(android.R.drawable.btn_default_small);
+            TextView e = new TextView(getActivity()); e.setText("e"); e.setBackgroundResource(android.R.drawable.btn_default_small);
+            TextView f = new TextView(getActivity()); f.setText("f"); f.setBackgroundResource(android.R.drawable.btn_default_small);
+            TextView g = new TextView(getActivity()); g.setText("g"); g.setBackgroundResource(android.R.drawable.btn_default_small);
+            TextView h = new TextView(getActivity()); h.setText("h"); h.setBackgroundResource(android.R.drawable.btn_default_small);
             FrameLayout.LayoutParams tvParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
             a.setLayoutParams(tvParams);
             b.setLayoutParams(tvParams);

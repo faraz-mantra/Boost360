@@ -7,8 +7,7 @@ import com.inventoryorder.model.bottomsheet.AppointMentTypeModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class AppointmentTypeViewHolder(binding: ItemBottomSheetAppointmentTypeBinding) :
-  AppBaseRecyclerViewHolder<ItemBottomSheetAppointmentTypeBinding>(binding) {
+class AppointmentTypeViewHolder(binding: ItemBottomSheetAppointmentTypeBinding) : AppBaseRecyclerViewHolder<ItemBottomSheetAppointmentTypeBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -21,11 +20,7 @@ class AppointmentTypeViewHolder(binding: ItemBottomSheetAppointmentTypeBinding) 
     binding.tvOptionSelected.text = model.appointmentTypeSelectedName
     binding.mainView.background = activity?.let { ContextCompat.getDrawable(it, model.getColor()) }
     binding.mainView.setOnClickListener {
-      listener?.onItemClick(
-        adapterPosition,
-        model,
-        RecyclerViewActionType.APPOINTMENT_ITEM_CLICKED.ordinal
-      )
+      listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.APPOINTMENT_ITEM_CLICKED.ordinal)
     }
   }
 

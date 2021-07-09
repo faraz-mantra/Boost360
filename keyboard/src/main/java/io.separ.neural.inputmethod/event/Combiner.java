@@ -27,12 +27,12 @@ import javax.annotation.Nonnull;
 public interface Combiner {
     /**
      * Process an event, possibly combining it with the existing state and return the new event.
-     * <p>
+     *
      * If this event does not result in any new event getting passed down the chain, this method
      * returns null. It may also modify the previous event list if appropriate.
      *
      * @param previousEvents the previous events in this composition.
-     * @param event          the event to combine with the existing state.
+     * @param event the event to combine with the existing state.
      * @return the resulting event.
      */
     @Nonnull
@@ -40,7 +40,6 @@ public interface Combiner {
 
     /**
      * Get the feedback that should be shown to the user for the current state of this combiner.
-     *
      * @return A CharSequence representing the feedback to show users. It may include styles.
      */
     CharSequence getCombiningStateFeedback();

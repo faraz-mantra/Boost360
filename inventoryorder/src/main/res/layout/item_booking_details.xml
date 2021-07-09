@@ -56,8 +56,8 @@
           android:ellipsize="end"
           android:gravity="start"
           android:maxLines="1"
-          android:textColor="@color/greyish_brown"
           android:visibility="gone"
+          android:textColor="@color/greyish_brown"
           app:fontFamily="@font/semi_bold"
           app:textType="CAPTION"
           tools:text="Thu, 18 June, 05:10 AM" />

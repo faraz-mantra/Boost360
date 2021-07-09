@@ -10,17 +10,6 @@ import android.os.Parcelable;
 
 public class ChatConfig implements Parcelable {
 
-    public static final Creator<ChatConfig> CREATOR = new Creator<ChatConfig>() {
-        @Override
-        public ChatConfig createFromParcel(Parcel in) {
-            return new ChatConfig(in);
-        }
-
-        @Override
-        public ChatConfig[] newArray(int size) {
-            return new ChatConfig[size];
-        }
-    };
     public Bitmap botImage;
     public String botName = "Ria";
     public String chatBgColor = "#ffffff";
@@ -28,7 +17,7 @@ public class ChatConfig implements Parcelable {
     public String userBubbleColor = "#FAFAFA";
     public String chatTextColor = "#808080";
 
-    public ChatConfig() {
+    public ChatConfig(){
 
     }
 
@@ -40,6 +29,18 @@ public class ChatConfig implements Parcelable {
         userBubbleColor = in.readString();
         chatTextColor = in.readString();
     }
+
+    public static final Creator<ChatConfig> CREATOR = new Creator<ChatConfig>() {
+        @Override
+        public ChatConfig createFromParcel(Parcel in) {
+            return new ChatConfig(in);
+        }
+
+        @Override
+        public ChatConfig[] newArray(int size) {
+            return new ChatConfig[size];
+        }
+    };
 
     @Override
     public int describeContents() {

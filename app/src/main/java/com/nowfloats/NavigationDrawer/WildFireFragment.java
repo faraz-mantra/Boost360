@@ -47,13 +47,13 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage(getString(R.string.please_wait));
-        MixPanelController.track(MixPanelController.WILDFIRE_CLICK, null);
+        MixPanelController.track(MixPanelController.WILDFIRE_CLICK,null);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_wildfire, container, false);
+        return inflater.inflate(R.layout.fragment_wildfire,container,false);
     }
 
     @Override
@@ -64,40 +64,38 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        if (!isAdded()) return;
+        if (!isAdded())  return;
         showDefaultPage(view);
     }
 
-    private void showDefaultPage(View view) {
+    private void showDefaultPage(View view){
 
         TextView wildfireDefinitionTv = view.findViewById(R.id.wildfire_definition);
         view.findViewById(R.id.llayout_wildfire).setOnClickListener(this);
         view.findViewById(R.id.llayout_know_more).setOnClickListener(this);
         wildfireDefinitionTv.setText(Methods.fromHtml(getString(R.string.wildfire_definition)));
         ArrayList<ArrayList<String>> childList = new ArrayList<>(3);
-        ArrayList<String> parentList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.wildfire_parents)));
+        ArrayList<String> parentList =new ArrayList<>(Arrays.asList( getResources().getStringArray(R.array.wildfire_parents)));
         childList.add(new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.wildfire_parent_0))));
         childList.add(new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.wildfire_parent_1))));
         childList.add(new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.wildfire_parent_2))));
 
         ExpandableListView expandableListView = view.findViewById(R.id.info_exlv);
-        expandableListView.setAdapter(new TextExpandableAdapter(mContext, childList, parentList));
+        expandableListView.setAdapter(new TextExpandableAdapter(mContext,childList,parentList));
         expandableListView.expandGroup(0);
         hideProgress();
     }
 
-    private void showProgress() {
-        if (!progressDialog.isShowing()) {
+    private void showProgress(){
+        if (!progressDialog.isShowing()){
             progressDialog.show();
         }
     }
-
-    private void hideProgress() {
-        if (progressDialog.isShowing()) {
+    private void hideProgress(){
+        if (progressDialog.isShowing()){
             progressDialog.dismiss();
         }
     }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -105,7 +103,6 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
             HomeActivity.headerText.setText("WildFire");
         }
     }
-
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -118,34 +115,33 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
             sendEmailForWildFire();
         }
     }
-
-    private void sendEmailForWildFire() {
+    private void sendEmailForWildFire(){
         showProgress();
-        MixPanelController.track(MixPanelController.REQUEST_FOR_WILDFIRE_PLAN, null);
-        UserSessionManager manager = new UserSessionManager(mContext, getActivity());
+        MixPanelController.track(MixPanelController.REQUEST_FOR_WILDFIRE_PLAN,null);
+        UserSessionManager manager = new UserSessionManager(mContext,getActivity());
         ArrayList<String> emailsList = new ArrayList<String>(2);
         emailsList.add(getString(R.string.pranav_email));
         emailsList.add(getString(R.string.wildfire_email));
         MailModel model = new MailModel(Constants.clientId,
-                getString(R.string.client_with_fp_tag) + manager.getFpTag() + getString(R.string.has_requested_a_meeting),
-                getString(R.string.wildfire_meeting_is_requested) + manager.getFpTag(),
-                emailsList);
+               getString(R.string.client_with_fp_tag)+manager.getFpTag()+getString(R.string.has_requested_a_meeting),
+                 getString(R.string.wildfire_meeting_is_requested)+manager.getFpTag(),
+                 emailsList);
         StoreInterface anInterface = Constants.restAdapter.create(StoreInterface.class);
         anInterface.mail(model, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
                 hideProgress();
-                if (response.getStatus() == 200 && !TextUtils.isEmpty(s)) {
-                    Methods.materialDialog(getActivity(), getString(R.string.request_for_wildfire_plan), getString(R.string.your_meeting_request_has_been_sent));
-                } else {
-                    Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
+                if (response.getStatus() == 200 && !TextUtils.isEmpty(s)){
+                    Methods.materialDialog(getActivity(),getString(R.string.request_for_wildfire_plan),getString(R.string.your_meeting_request_has_been_sent));
+                }else{
+                    Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong_try_again));
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
                 hideProgress();
-                Methods.showSnackBarNegative(getActivity(), getString(R.string.server_error));
+                Methods.showSnackBarNegative(getActivity(),getString(R.string.server_error));
             }
         });
 

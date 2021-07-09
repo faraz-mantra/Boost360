@@ -1,10 +1,8 @@
 package com.nowfloats.Image_Gallery;
 
 import android.os.Bundle;
-
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,8 +17,8 @@ import com.thinksity.R;
 
 public class FullScreenImage extends AppCompatActivity {
 
-    ViewPager viewPager;
     private FullScreenImageAdapter adapter;
+    ViewPager viewPager;
     private int currentPos;
     //Activity context;
 

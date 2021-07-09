@@ -29,7 +29,7 @@ import io.separ.neural.inputmethod.annotations.UsedForTesting;
 
 /**
  * Utility class for a word with a probability.
- * <p>
+ *
  * This is chiefly used to iterate a dictionary.
  */
 public final class WordProperty implements Comparable<WordProperty> {
@@ -48,9 +48,9 @@ public final class WordProperty implements Comparable<WordProperty> {
 
     @UsedForTesting
     public WordProperty(final String word, final ProbabilityInfo probabilityInfo,
-                        final ArrayList<WeightedString> shortcutTargets,
-                        final ArrayList<WeightedString> bigrams,
-                        final boolean isNotAWord, final boolean isBlacklistEntry) {
+            final ArrayList<WeightedString> shortcutTargets,
+            final ArrayList<WeightedString> bigrams,
+            final boolean isNotAWord, final boolean isBlacklistEntry) {
         mWord = word;
         mProbabilityInfo = probabilityInfo;
         mShortcutTargets = shortcutTargets;
@@ -62,14 +62,22 @@ public final class WordProperty implements Comparable<WordProperty> {
         mHasShortcuts = shortcutTargets != null && !shortcutTargets.isEmpty();
     }
 
+    private static ProbabilityInfo createProbabilityInfoFromArray(final int[] probabilityInfo) {
+      return new ProbabilityInfo(
+              probabilityInfo[BinaryDictionary.FORMAT_WORD_PROPERTY_PROBABILITY_INDEX],
+              probabilityInfo[BinaryDictionary.FORMAT_WORD_PROPERTY_TIMESTAMP_INDEX],
+              probabilityInfo[BinaryDictionary.FORMAT_WORD_PROPERTY_LEVEL_INDEX],
+              probabilityInfo[BinaryDictionary.FORMAT_WORD_PROPERTY_COUNT_INDEX]);
+    }
+
     // Construct word property using information from native code.
     // This represents invalid word when the probability is BinaryDictionary.NOT_A_PROBABILITY.
     public WordProperty(final int[] codePoints, final boolean isNotAWord,
-                        final boolean isBlacklisted, final boolean hasBigram, final boolean hasShortcuts,
-                        final boolean isBeginningOfSentence, final int[] probabilityInfo,
-                        final ArrayList<int[]> bigramTargets, final ArrayList<int[]> bigramProbabilityInfo,
-                        final ArrayList<int[]> shortcutTargets,
-                        final ArrayList<Integer> shortcutProbabilities) {
+            final boolean isBlacklisted, final boolean hasBigram, final boolean hasShortcuts,
+            final boolean isBeginningOfSentence, final int[] probabilityInfo,
+            final ArrayList<int[]> bigramTargets, final ArrayList<int[]> bigramProbabilityInfo,
+            final ArrayList<int[]> shortcutTargets,
+            final ArrayList<Integer> shortcutProbabilities) {
         mWord = StringUtils.getStringFromNullTerminatedCodePointArray(codePoints);
         mProbabilityInfo = createProbabilityInfoFromArray(probabilityInfo);
         mShortcutTargets = new ArrayList<>();
@@ -97,16 +105,12 @@ public final class WordProperty implements Comparable<WordProperty> {
         }
     }
 
-    private static ProbabilityInfo createProbabilityInfoFromArray(final int[] probabilityInfo) {
-        return new ProbabilityInfo(
-                probabilityInfo[BinaryDictionary.FORMAT_WORD_PROPERTY_PROBABILITY_INDEX],
-                probabilityInfo[BinaryDictionary.FORMAT_WORD_PROPERTY_TIMESTAMP_INDEX],
-                probabilityInfo[BinaryDictionary.FORMAT_WORD_PROPERTY_LEVEL_INDEX],
-                probabilityInfo[BinaryDictionary.FORMAT_WORD_PROPERTY_COUNT_INDEX]);
+    public int getProbability() {
+        return mProbabilityInfo.mProbability;
     }
 
     private static int computeHashCode(WordProperty word) {
-        return Arrays.hashCode(new Object[]{
+        return Arrays.hashCode(new Object[] {
                 word.mWord,
                 word.mProbabilityInfo,
                 word.mShortcutTargets.hashCode(),
@@ -116,13 +120,9 @@ public final class WordProperty implements Comparable<WordProperty> {
         });
     }
 
-    public int getProbability() {
-        return mProbabilityInfo.mProbability;
-    }
-
     /**
      * Three-way comparison.
-     * <p>
+     *
      * A Word x is greater than a word y if x has a higher frequency. If they have the same
      * frequency, they are sorted in lexicographic order.
      */
@@ -135,7 +135,7 @@ public final class WordProperty implements Comparable<WordProperty> {
 
     /**
      * Equality test.
-     * <p>
+     *
      * Words are equal if they have the same frequency, the same spellings, and the same
      * attributes.
      */
@@ -143,7 +143,7 @@ public final class WordProperty implements Comparable<WordProperty> {
     public boolean equals(Object o) {
         if (o == this) return true;
         if (!(o instanceof WordProperty)) return false;
-        WordProperty w = (WordProperty) o;
+        WordProperty w = (WordProperty)o;
         return mProbabilityInfo.equals(w.mProbabilityInfo) && mWord.equals(w.mWord)
                 && mShortcutTargets.equals(w.mShortcutTargets) && mBigrams.equals(w.mBigrams)
                 && mIsNotAWord == w.mIsNotAWord && mIsBlacklistEntry == w.mIsBlacklistEntry

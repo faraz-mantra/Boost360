@@ -1,9 +1,7 @@
 package com.nowfloats.riachatsdk.adapters;
 
 import android.content.Context;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,8 +72,24 @@ public class RvButtonsAdapter extends RecyclerView.Adapter<RvButtonsAdapter.Butt
         return mButtonList.size();
     }
 
+    public class ButtonViewHolder extends RecyclerView.ViewHolder {
+
+        TextView tvButtonText;
+        View view;
+
+        public ButtonViewHolder(View itemView) {
+            super(itemView);
+            tvButtonText = (TextView) itemView.findViewById(R.id.tv_btn_text);
+            view = itemView;
+        }
+    }
+
     public void setOnCItemClickListener(OnItemClickListener itemClickListener) {
         this.mOnItemClickListener = itemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 
     public void notifyDataSetChangedRequest() {
@@ -111,21 +125,5 @@ public class RvButtonsAdapter extends RecyclerView.Adapter<RvButtonsAdapter.Butt
                 break;
         }
 
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
-
-    public class ButtonViewHolder extends RecyclerView.ViewHolder {
-
-        TextView tvButtonText;
-        View view;
-
-        public ButtonViewHolder(View itemView) {
-            super(itemView);
-            tvButtonText = (TextView) itemView.findViewById(R.id.tv_btn_text);
-            view = itemView;
-        }
     }
 }

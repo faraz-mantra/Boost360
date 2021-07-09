@@ -27,8 +27,7 @@ import com.onboarding.nowfloats.ui.channel.ChannelPickerActivity
 import com.onboarding.nowfloats.utils.WebEngageController
 import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 
-class CategorySelectorFragment :
-  AppBaseFragment<FragmentCategorySelectorBinding, CategoryViewModel>(), RecyclerItemClickListener {
+class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding, CategoryViewModel>(), RecyclerItemClickListener {
 
   private var requestFloatsModel: RequestFloatsModel? = RequestFloatsModel()
   private var baseAdapter: AppBaseRecyclerViewAdapter<CategoryDataModel>? = null
@@ -53,8 +52,7 @@ class CategorySelectorFragment :
   }
 
   override fun onCreateView() {
-    viewModel?.getCategories(baseActivity)
-      ?.observeOnce(viewLifecycleOwner, Observer { onGetCategories(it) })
+    viewModel?.getCategories(baseActivity)?.observeOnce(viewLifecycleOwner, Observer { onGetCategories(it) })
     setOnClickListener(binding?.next)
 
     NavigatorManager.getRequest()?.let { requestFloatsModel = it }
@@ -101,8 +99,7 @@ class CategorySelectorFragment :
 
         //Business Category Event Tracker.
         category?.category_Name?.let {
-          WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_CLICK, CATEGORY, it)
-        }
+          WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_CLICK, CATEGORY, it) }
 
         binding?.next?.visible()
         baseAdapter?.notifyDataSetChanged()
@@ -127,12 +124,7 @@ class CategorySelectorFragment :
   private fun gotoChannelPicker() {
     category?.let { requestFloatsModel?.categoryDataModel = it }
     val bundle = Bundle()
-    NavigatorManager.pushToStackAndSaveRequest(
-      ScreenModel(
-        ScreenModel.Screen.CATEGORY_SELECT,
-        getToolbarTitle()
-      ), requestFloatsModel
-    )
+    NavigatorManager.pushToStackAndSaveRequest(ScreenModel(ScreenModel.Screen.CATEGORY_SELECT, getToolbarTitle()), requestFloatsModel)
     navigator?.startActivity(ChannelPickerActivity::class.java, bundle)
   }
 }

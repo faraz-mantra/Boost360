@@ -1,88 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="50dp"
-  android:background="@color/primaryColor"
-  app:contentInsetLeft="0dp"
-  app:contentInsetStart="0dp"
-  app:contentInsetStartWithNavigation="0dp"
-  app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-  app:theme="@style/MyCustomToolBarTheme">
-
-  <LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
-
+    android:layout_height="50dp"
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp"
+    app:contentInsetStartWithNavigation="0dp"
+    android:background="@color/primaryColor"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    app:theme="@style/MyCustomToolBarTheme">
     <LinearLayout
-      android:id="@+id/back_layout"
-      android:layout_width="wrap_content"
-      android:layout_height="50dp"
-      android:gravity="center_vertical">
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:id="@+id/back_layout"
+            android:gravity="center_vertical">
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:padding="12dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/icon_action_back"
+                android:background="?android:selectableItemBackground" />
+            <ImageView
+                android:id="@+id/facebook_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                android:src="@drawable/facebook_round"
+                />
+            <com.makeramen.RoundedImageView
+                android:id="@+id/img_chat_user"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:visibility="gone"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_user"
+                app:riv_border_color="#ffffff"
+                app:riv_border_width="2dip"
+                app:riv_corner_radius="30dip"
+                app:riv_mutate_background="true"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_chat_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:gravity="end"
+                android:text="" />
+            <TextView
+                android:id="@+id/tv_chat_user_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:layout_marginEnd="10dp"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:layout_marginTop="-3dp"
+                android:gravity="top"
+                android:textStyle="italic"
+                android:text="" />
+        </LinearLayout>
 
-      <ImageView
-        android:id="@+id/img_back"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="?android:selectableItemBackground"
-        android:padding="12dp"
-        android:src="@drawable/icon_action_back" />
 
-      <ImageView
-        android:id="@+id/facebook_icon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/facebook_round"
-        android:visibility="gone" />
-
-      <com.makeramen.RoundedImageView
-        android:id="@+id/img_chat_user"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:scaleType="centerCrop"
-        android:visibility="gone"
-        app:riv_border_color="#ffffff"
-        app:riv_border_width="2dip"
-        app:riv_corner_radius="30dip"
-        app:riv_mutate_background="true"
-        app:srcCompat="@drawable/ic_user" />
     </LinearLayout>
-
-    <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-      android:layout_marginStart="10dp"
-      android:gravity="center_vertical"
-      android:orientation="vertical">
-
-      <TextView
-        android:id="@+id/tv_chat_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="marquee"
-        android:gravity="end"
-        android:singleLine="true"
-        android:text=""
-        android:textColor="@color/white"
-        android:textSize="18sp" />
-
-      <TextView
-        android:id="@+id/tv_chat_user_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-3dp"
-        android:layout_marginEnd="10dp"
-        android:ellipsize="marquee"
-        android:gravity="top"
-        android:singleLine="true"
-        android:text=""
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        android:textStyle="italic" />
-    </LinearLayout>
-
-
-  </LinearLayout>
 
 
 </androidx.appcompat.widget.Toolbar>

@@ -6,8 +6,8 @@
   <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
     android:layout_height="@dimen/_120sdp"
-    android:background="@android:color/transparent"
     android:gravity="center"
+    android:background="@android:color/transparent"
     android:orientation="vertical">
 
     <com.framework.views.customViews.CustomCardView

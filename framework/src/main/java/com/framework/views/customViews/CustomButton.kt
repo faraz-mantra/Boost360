@@ -19,11 +19,7 @@ class CustomButton : AppCompatButton {
     setCustomAttrs(context, attrs)
   }
 
-  constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
-    context,
-    attrs,
-    defStyle
-  ) {
+  constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
     setCustomAttrs(context, attrs)
   }
 

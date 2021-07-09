@@ -3,27 +3,27 @@ package com.framework.exoFullScreen
 import android.content.Context
 import com.google.android.exoplayer2.SimpleExoPlayer
 
-object MediaPlayer {
+object MediaPlayer{
 
-  var exoPlayer: SimpleExoPlayer? = null
+    var exoPlayer: SimpleExoPlayer? = null
 
-  fun initialize(context: Context?) {
-    if (context != null)
-      exoPlayer = SimpleExoPlayer.Builder(context).build()
-  }
+    fun initialize(context: Context?){
+        if (context != null)
+            exoPlayer = SimpleExoPlayer.Builder(context).build()
+    }
 
-  fun pausePlayer() {
-    exoPlayer?.playWhenReady = false
-    exoPlayer?.playbackState
-  }
+    fun pausePlayer() {
+        exoPlayer?.playWhenReady = false
+        exoPlayer?.playbackState
+    }
 
-  fun startPlayer() {
-    exoPlayer?.playWhenReady = true
-    exoPlayer?.playbackState
-  }
+    fun startPlayer() {
+        exoPlayer?.playWhenReady = true
+        exoPlayer?.playbackState
+    }
 
-  fun stopPlayer() {
-    exoPlayer?.stop()
-  }
+    fun stopPlayer() {
+        exoPlayer?.stop()
+    }
 
 }

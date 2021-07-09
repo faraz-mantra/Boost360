@@ -2,7 +2,8 @@ package com.nowfloats.Analytics_Screen.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class SearchAnalytics {
+public class SearchAnalytics
+{
     @SerializedName("AveragePosition")
     private int averagePosition;
 

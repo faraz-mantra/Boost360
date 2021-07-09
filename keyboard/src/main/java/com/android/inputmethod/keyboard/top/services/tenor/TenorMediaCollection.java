@@ -5,7 +5,7 @@ package com.android.inputmethod.keyboard.top.services.tenor;
  */
 public class TenorMediaCollection {
     public TenorMedia gif;
-    public TenorMedia tinygif;
     private TenorMedia mp4;
+    public TenorMedia tinygif;
     private TenorMedia webm;
 }

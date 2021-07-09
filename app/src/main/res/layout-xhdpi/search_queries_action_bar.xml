@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="?attr/actionBarSize"
-  android:background="?attr/colorPrimary"
-  app:theme="@style/CustomToolbarTheme">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    app:theme="@style/CustomToolbarTheme"
+    android:background="?attr/colorPrimary"
+    >
 
-  <com.nowfloats.CustomWidget.roboto_md_48_white
-    android:id="@+id/titleTextView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:textColor="@color/white"
-    android:textSize="18sp"
-    android:textStyle="bold" />
+    <com.nowfloats.CustomWidget.roboto_md_48_white
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        />
 </androidx.appcompat.widget.Toolbar>
 

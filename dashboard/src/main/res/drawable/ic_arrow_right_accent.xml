@@ -1,18 +1,18 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:top="1dp">
-    <vector
-      android:width="12dp"
-      android:height="17dp"
-      android:viewportWidth="5"
-      android:viewportHeight="8">
-      <path
-        android:fillColor="#00000000"
-        android:pathData="M1,6.99997L4,3.99997L1,0.99997"
-        android:strokeWidth="1"
-        android:strokeColor="#ffb900"
-        android:strokeLineCap="round"
-        android:strokeLineJoin="round" />
-    </vector>
-  </item>
+    <item android:top="1dp">
+        <vector
+            android:width="12dp"
+            android:height="17dp"
+            android:viewportWidth="5"
+            android:viewportHeight="8">
+            <path
+                android:fillColor="#00000000"
+                android:pathData="M1,6.99997L4,3.99997L1,0.99997"
+                android:strokeWidth="1"
+                android:strokeColor="#ffb900"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round" />
+        </vector>
+    </item>
 </layer-list>
 

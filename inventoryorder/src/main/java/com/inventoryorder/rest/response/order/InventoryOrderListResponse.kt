@@ -5,7 +5,7 @@ import com.inventoryorder.model.ordersdetails.InventoryOrderModel
 import java.io.Serializable
 
 data class InventoryOrderListResponse(
-  val Data: InventoryOrderModel? = null,
-  val Message: Any? = null,
-  val Status: String? = null
+    val Data: InventoryOrderModel? = null,
+    val Message: Any? = null,
+    val Status: String? = null
 ) : Serializable, BaseResponse()

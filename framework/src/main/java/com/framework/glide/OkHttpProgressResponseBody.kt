@@ -7,9 +7,9 @@ import okio.*
 import java.io.IOException
 
 class OkHttpProgressResponseBody internal constructor(
-  private val url: HttpUrl,
-  private val responseBody: ResponseBody,
-  private val progressListener: ResponseProgressListener
+    private val url: HttpUrl,
+    private val responseBody: ResponseBody,
+    private val progressListener: ResponseProgressListener
 ) : ResponseBody() { //1
 
   //2

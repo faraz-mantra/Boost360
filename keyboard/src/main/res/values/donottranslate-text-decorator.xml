@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
 **
 ** Copyright 2014, The Android Open Source Project
@@ -18,58 +19,58 @@
 -->
 
 <resources>
-  <!-- The extra margin in dp around the hit area of the commit/add-to-dictionary indicator -->
-  <integer name="text_decorator_hit_area_margin_in_dp">
-    4
-  </integer>
+    <!-- The extra margin in dp around the hit area of the commit/add-to-dictionary indicator -->
+    <integer name="text_decorator_hit_area_margin_in_dp">
+        4
+    </integer>
 
-  <!-- Background color to be used to highlight the target text when the add-to-dictionary
-       indicator is visible. -->
-  <color name="text_decorator_add_to_dictionary_indicator_text_highlight_color">
-    #D1E7B7
-  </color>
+    <!-- Background color to be used to highlight the target text when the add-to-dictionary
+         indicator is visible. -->
+    <color name="text_decorator_add_to_dictionary_indicator_text_highlight_color">
+        #D1E7B7
+    </color>
 
-  <!-- Foreground color of the commit indicator. -->
-  <color name="text_decorator_add_to_dictionary_indicator_background_color">
-    #4EB848
-  </color>
+    <!-- Foreground color of the commit indicator. -->
+    <color name="text_decorator_add_to_dictionary_indicator_background_color">
+        #4EB848
+    </color>
 
-  <!-- Foreground color of the add-to-dictionary indicator. -->
-  <color name="text_decorator_add_to_dictionary_indicator_foreground_color">
-    #FFFFFF
-  </color>
+    <!-- Foreground color of the add-to-dictionary indicator. -->
+    <color name="text_decorator_add_to_dictionary_indicator_foreground_color">
+        #FFFFFF
+    </color>
 
-  <!-- Viewport size of "text_decorator_add_to_dictionary_indicator_path". -->
-  <integer name="text_decorator_add_to_dictionary_indicator_path_size">
-    480
-  </integer>
+    <!-- Viewport size of "text_decorator_add_to_dictionary_indicator_path". -->
+    <integer name="text_decorator_add_to_dictionary_indicator_path_size">
+        480
+    </integer>
 
-  <!-- Coordinates of the closed path to be used to render the add-to-dictionary indicator.
-       The format is: X[0], Y[0], X[1], Y[1], ..., X[N-1], Y[N-1] -->
-  <integer-array name="text_decorator_add_to_dictionary_indicator_path">
-    <item>380</item>
-    <item>260</item>
-    <item>260</item>
-    <item>260</item>
-    <item>260</item>
-    <item>380</item>
-    <item>220</item>
-    <item>380</item>
-    <item>220</item>
-    <item>260</item>
-    <item>100</item>
-    <item>260</item>
-    <item>100</item>
-    <item>220</item>
-    <item>220</item>
-    <item>220</item>
-    <item>220</item>
-    <item>100</item>
-    <item>260</item>
-    <item>100</item>
-    <item>260</item>
-    <item>220</item>
-    <item>380</item>
-    <item>220</item>
-  </integer-array>
+    <!-- Coordinates of the closed path to be used to render the add-to-dictionary indicator.
+         The format is: X[0], Y[0], X[1], Y[1], ..., X[N-1], Y[N-1] -->
+    <integer-array name="text_decorator_add_to_dictionary_indicator_path">
+        <item>380</item>
+        <item>260</item>
+        <item>260</item>
+        <item>260</item>
+        <item>260</item>
+        <item>380</item>
+        <item>220</item>
+        <item>380</item>
+        <item>220</item>
+        <item>260</item>
+        <item>100</item>
+        <item>260</item>
+        <item>100</item>
+        <item>220</item>
+        <item>220</item>
+        <item>220</item>
+        <item>220</item>
+        <item>100</item>
+        <item>260</item>
+        <item>100</item>
+        <item>260</item>
+        <item>220</item>
+        <item>380</item>
+        <item>220</item>
+    </integer-array>
 </resources>

@@ -33,6 +33,16 @@ public final class ThemeSettingsFragment extends SubScreenFragment
         implements OnRadioButtonClickedListener {
     private String mSelectedThemeId;
 
+    static class KeyboardThemePreference extends RadioButtonPreference {
+        final String mThemeId;
+
+        KeyboardThemePreference(final Context context, final String name, final String id) {
+            super(context);
+            setTitle(name);
+            mThemeId = id;
+        }
+    }
+
     static void updateKeyboardThemeSummary(final Preference pref) {
         //final Resources res = pref.getContext().getResources();
         //final SharedPreferences prefs = pref.getSharedPreferences();
@@ -70,7 +80,7 @@ public final class ThemeSettingsFragment extends SubScreenFragment
     @Override
     public void onRadioButtonClicked(final RadioButtonPreference preference) {
         if (preference instanceof KeyboardThemePreference) {
-            final KeyboardThemePreference pref = (KeyboardThemePreference) preference;
+            final KeyboardThemePreference pref = (KeyboardThemePreference)preference;
             mSelectedThemeId = pref.mThemeId;
             updateSelected();
         }
@@ -95,20 +105,10 @@ public final class ThemeSettingsFragment extends SubScreenFragment
         for (int index = 0; index < count; index++) {
             final Preference preference = screen.getPreference(index);
             if (preference instanceof KeyboardThemePreference) {
-                final KeyboardThemePreference pref = (KeyboardThemePreference) preference;
+                final KeyboardThemePreference pref = (KeyboardThemePreference)preference;
                 final boolean selected = mSelectedThemeId.equals(pref.mThemeId);
                 pref.setSelected(selected);
             }
-        }
-    }
-
-    static class KeyboardThemePreference extends RadioButtonPreference {
-        final String mThemeId;
-
-        KeyboardThemePreference(final Context context, final String name, final String id) {
-            super(context);
-            setTitle(name);
-            mThemeId = id;
         }
     }
 }

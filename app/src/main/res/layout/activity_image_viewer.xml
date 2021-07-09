@@ -1,120 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/black"
-    android:orientation="vertical">
-
-    <FrameLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="15dp"
-      android:orientation="horizontal">
-
-      <ImageView
-        android:id="@+id/galleryCancel"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="10dp"
-        android:onClick="onClose"
-        android:padding="7dp"
-        android:src="@drawable/gallery_cancel" />
-
-      <ImageView
-        android:id="@+id/delete"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_gravity="end"
-        android:layout_marginEnd="10dp"
-        android:onClick="onDelete"
-        android:padding="6dp"
-        android:src="@drawable/ic_menu_delete" />
-
-    </FrameLayout>
-
-    <androidx.viewpager.widget.ViewPager
-      android:id="@+id/pager"
-      android:layout_width="fill_parent"
-      android:layout_height="0dp"
-      android:layout_margin="10dp"
-      android:layout_weight="1" />
-
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom"
-      android:layout_marginBottom="10dp"
-      android:background="#ff000000"
-      android:gravity="bottom"
-      android:orientation="horizontal">
-
-      <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom|center"
-        android:gravity="bottom|center"
-        android:orientation="horizontal"
-        android:paddingStart="25dp"
-        android:paddingRight="25dp">
+        android:orientation="vertical"
+        android:background="@android:color/black"
+        android:id="@+id/main">
 
-        <ImageView
-          android:id="@+id/previous"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="left"
-          android:onClick="onPreviousClick"
-          android:padding="5dp"
-          android:src="@drawable/ic_action_previous_item" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
 
-        <TextView
-          android:id="@+id/current"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_marginEnd="35dp"
-          android:text="1"
-          android:textColor="@color/white"
-          android:textSize="20sp"
-          android:visibility="visible" />
+            <ImageView
+                android:id="@+id/galleryCancel"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/gallery_cancel"
+                android:onClick="onClose"
+                android:layout_marginStart="10dp"
+                android:padding="7dp" />
 
-        <TextView
-          android:id="@+id/of"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:text="@string/of"
-          android:textColor="@color/white"
-          android:textSize="20sp"
-          android:visibility="visible" />
+            <ImageView
+                android:id="@+id/delete"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_menu_delete"
+                android:layout_gravity="end"
+                android:padding="6dp"
+                android:onClick="onDelete"
+                android:layout_marginEnd="10dp" />
 
-        <TextView
-          android:id="@+id/maxCount"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_marginStart="35dp"
-          android:text="20"
-          android:textColor="@color/white"
-          android:textSize="20sp"
-          android:visibility="visible" />
+        </FrameLayout>
 
-        <ImageView
-          android:id="@+id/next"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="end"
-          android:layout_marginStart="10dp"
-          android:onClick="onNextClick"
-          android:padding="5dp"
-          android:src="@drawable/ic_action_next_item" />
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1" />
 
-      </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:background="#ff000000"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|center"
+                android:gravity="bottom|center"
+                android:orientation="horizontal"
+                android:paddingStart="25dp"
+                android:paddingRight="25dp">
+
+                <ImageView
+                    android:id="@+id/previous"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:padding="5dp"
+                    android:onClick="onPreviousClick"
+                    android:src="@drawable/ic_action_previous_item"/>
+
+                <TextView
+                    android:id="@+id/current"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:text="1"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="35dp"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/of"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/of"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:visibility="visible"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/maxCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20"
+                    android:textSize="20sp"
+                    android:visibility="visible"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="35dp"
+                    android:textColor="@color/white"/>
+
+                <ImageView
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:padding="5dp"
+                    android:onClick="onNextClick"
+                    android:src="@drawable/ic_action_next_item"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
-
-  </LinearLayout>
 
 </layout>

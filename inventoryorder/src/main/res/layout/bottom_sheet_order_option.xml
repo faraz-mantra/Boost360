@@ -1,58 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_wrap">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/match_wrap">
 
-    <com.framework.views.customViews.CustomRadioButton
-      android:id="@+id/radio_btn"
-      style="@style/RadioButtonStyle"
-      android:layout_width="wrap_content"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+        <com.framework.views.customViews.CustomRadioButton
+            android:id="@+id/radio_btn"
+            style="@style/RadioButtonStyle"
+            android:layout_width="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-      android:id="@+id/linear_layout"
-      style="@style/match_wrap"
-      android:orientation="vertical"
-      android:paddingStart="@dimen/size_60"
-      android:paddingTop="@dimen/size_18"
-      android:paddingBottom="@dimen/size_18"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            style="@style/match_wrap"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/size_60"
+            android:paddingTop="@dimen/size_18"
+            android:paddingBottom="@dimen/size_18"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/option_title"
-        style="@style/wrap_wrap"
-        android:fontFamily="@font/regular"
-        android:text="@string/store_pickup"
-        android:textColor="@color/black_2A2A2A"
-        android:textSize="18sp" />
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/option_title"
+                style="@style/wrap_wrap"
+                android:fontFamily="@font/regular"
+                android:text="@string/store_pickup"
+                android:textColor="@color/black_2A2A2A"
+                android:textSize="18sp" />
 
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/option_desc"
-        style="@style/wrap_wrap"
-        android:fontFamily="@font/regular"
-        android:text="@string/ask_customer_to_pick_the_order_from_your_store"
-        android:textColor="#747474"
-        android:textSize="12sp" />
-    </LinearLayout>
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/option_desc"
+                style="@style/wrap_wrap"
+                android:fontFamily="@font/regular"
+                android:text="@string/ask_customer_to_pick_the_order_from_your_store"
+                android:textColor="#747474"
+                android:textSize="12sp" />
+        </LinearLayout>
 
-    <com.framework.views.DashedDividerView
-      android:layout_width="match_parent"
-      android:layout_height="0.8dp"
-      android:layout_marginStart="@dimen/size_10"
-      android:layout_marginTop="@dimen/size_10"
-      android:layout_marginEnd="@dimen/size_10"
-      android:layout_marginBottom="@dimen/size_5"
-      android:textColor="@color/black_2A2A2A"
-      app:dividerDashColor="@color/light_grey_2"
-      app:dividerDashGap="@dimen/size_2"
-      app:dividerDashWidth="@dimen/size_3"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
-  </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.framework.views.DashedDividerView
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:layout_marginTop="@dimen/size_10"
+            android:layout_marginStart="@dimen/size_10"
+            android:layout_marginEnd="@dimen/size_10"
+            android:layout_marginBottom="@dimen/size_5"
+            android:textColor="@color/black_2A2A2A"
+            app:dividerDashColor="@color/light_grey_2"
+            app:dividerDashGap="@dimen/size_2"
+            app:dividerDashWidth="@dimen/size_3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

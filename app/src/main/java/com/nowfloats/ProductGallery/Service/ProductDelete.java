@@ -57,6 +57,11 @@ public class ProductDelete extends AsyncTask<String, String, String> {
         flag = false;
     }
 
+    public interface DeleteProductGalleryInterface {
+        public void galleryProductDeleted();
+    }
+
+
     @Override
     protected void onPreExecute() {
         materialProgress = new MaterialDialog.Builder(activity)
@@ -73,7 +78,7 @@ public class ProductDelete extends AsyncTask<String, String, String> {
             materialProgress.dismiss();
         if (flag) {
             if (arrSelectedProducts != null && arrSelectedProducts.size() > 0) {
-                if (deleteProductGalleryInterface != null) {
+                if(deleteProductGalleryInterface!=null){
                     deleteProductGalleryInterface.galleryProductDeleted();
                 }
             } else {
@@ -141,9 +146,5 @@ public class ProductDelete extends AsyncTask<String, String, String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public interface DeleteProductGalleryInterface {
-        public void galleryProductDeleted();
     }
 }

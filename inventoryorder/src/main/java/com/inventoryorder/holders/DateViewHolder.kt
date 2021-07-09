@@ -10,8 +10,7 @@ import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class DateViewHolder(binding: ItemDateViewBinding) :
-  AppBaseRecyclerViewHolder<ItemDateViewBinding>(binding) {
+class DateViewHolder(binding: ItemDateViewBinding) : AppBaseRecyclerViewHolder<ItemDateViewBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)

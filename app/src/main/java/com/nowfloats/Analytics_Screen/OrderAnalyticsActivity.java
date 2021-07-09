@@ -3,14 +3,12 @@ package com.nowfloats.Analytics_Screen;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
 import android.widget.TextView;
 
 import com.nowfloats.Login.UserSessionManager;
@@ -28,7 +26,6 @@ import static com.framework.webengageconstant.EventValueKt.NULL;
 public class OrderAnalyticsActivity extends AppCompatActivity {
 
     String svc_code;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

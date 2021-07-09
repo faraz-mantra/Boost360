@@ -1,182 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="#FBFBFB"
-  android:clickable="true"
-  android:focusable="true"
-  android:orientation="vertical">
-
-  <include
-    android:id="@+id/app_bar"
-    layout="@layout/new_custome_app_bar"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-  <ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:scrollbars="none">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FBFBFB"
+    android:clickable="true"
+    android:focusable="true">
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical">
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/new_custome_app_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-      <TextView
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/add_image"
-        android:textColor="#747474" />
+        android:scrollbars="none">
 
-      <androidx.cardview.widget.CardView
-        android:id="@+id/card_primary_image"
-        android:layout_width="180dp"
-        android:layout_height="130dp"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:clickable="true"
-        android:padding="2dp"
-        app:cardCornerRadius="4dp">
-
-        <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="@drawable/ic_image_placeholder">
-
-          <ImageView
-            android:id="@+id/iv_primary_image"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-          <ImageButton
-            android:id="@+id/ib_remove_product_image"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="top|end"
-            android:layout_margin="@dimen/margin_5"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_remove" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_image"
+                android:textColor="#747474"
+                android:fontFamily="@font/open_sans"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_15sdp"/>
 
-        </FrameLayout>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_primary_image"
+                android:layout_width="180dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:padding="2dp"
+                android:clickable="true"
+                app:cardCornerRadius="4dp"
+                android:layout_marginStart="@dimen/_15sdp">
 
-      </androidx.cardview.widget.CardView>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_image_placeholder">
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/place_name"
-        android:textColor="#747474" />
+                    <ImageView
+                        android:id="@+id/iv_primary_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"/>
 
-      <EditText
-        android:id="@+id/place_name"
-        style="@style/EditTextCustomeStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edittext_bg_elevated"
-        android:elevation="@dimen/_2sdp"
-        android:hint="@string/enter_name"
-        android:singleLine="true" />
+                    <ImageButton
+                        android:id="@+id/ib_remove_product_image"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="@dimen/margin_5"
+                        android:layout_gravity="top|end"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_remove"/>
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/alt_tag"
-        android:textColor="#747474" />
+                </FrameLayout>
 
+            </androidx.cardview.widget.CardView>
 
-      <EditText
-        android:id="@+id/place_description"
-        style="@style/EditTextCustomeStyle"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_70sdp"
-        android:background="@drawable/edittext_bg_elevated"
-        android:elevation="@dimen/_2sdp"
-        android:gravity="top"
-        android:hint="@string/alt_tag_is_nothing_but_a_description_of_this_image_that_helps_search_engines_find_this_image_n_200_characters_max"
-        android:maxLength="200"
-        android:maxLines="50"
-        android:overScrollMode="always"
-        android:scrollbarStyle="insideInset"
-        android:scrollbars="vertical" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/place_name"
+                android:textColor="#747474"
+                android:fontFamily="@font/open_sans"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/address"
-        android:textColor="#747474" />
+            <EditText
+                android:id="@+id/place_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_name"
+                style="@style/EditTextCustomeStyle"
+                android:singleLine="true"
+                android:background="@drawable/edittext_bg_elevated"
+                android:elevation="@dimen/_2sdp"/>
 
-
-      <EditText
-        android:id="@+id/place_address"
-        style="@style/EditTextCustomeStyle"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_70sdp"
-        android:background="@drawable/edittext_bg_elevated"
-        android:elevation="@dimen/_2sdp"
-        android:gravity="top"
-        android:hint="@string/enter_address_n_100_characters_max"
-        android:maxLength="100"
-        android:maxLines="50"
-        android:overScrollMode="always"
-        android:scrollbarStyle="insideInset"
-        android:scrollbars="vertical" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/distance_from_hotel"
-        android:textColor="#747474" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/alt_tag"
+                android:textColor="#747474"
+                android:fontFamily="@font/open_sans"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
 
 
-      <EditText
-        android:id="@+id/place_distance"
-        style="@style/EditTextCustomeStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edittext_bg_elevated"
-        android:elevation="@dimen/_2sdp"
-        android:hint="@string/enter_distance_in_mt_km"
-        android:singleLine="true" />
+            <EditText
+                android:id="@+id/place_description"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_70sdp"
+                android:hint="@string/alt_tag_is_nothing_but_a_description_of_this_image_that_helps_search_engines_find_this_image_n_200_characters_max"
+                style="@style/EditTextCustomeStyle"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:maxLength="200"
+                android:maxLines="50"
+                android:background="@drawable/edittext_bg_elevated"
+                android:elevation="@dimen/_2sdp"
+                android:gravity="top"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address"
+                android:textColor="#747474"
+                android:fontFamily="@font/open_sans"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
 
 
-      <TextView
-        android:id="@+id/save_review"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
-        android:background="@drawable/orange_button_click_effect"
-        android:elevation="@dimen/_2sdp"
-        android:fontFamily="@font/open_sans_semibold"
-        android:gravity="center"
-        android:paddingTop="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:text="@string/save"
-        android:textAllCaps="true"
-        android:textColor="@color/white" />
+            <EditText
+                android:id="@+id/place_address"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_70sdp"
+                android:hint="@string/enter_address_n_100_characters_max"
+                style="@style/EditTextCustomeStyle"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:maxLength="100"
+                android:maxLines="50"
+                android:background="@drawable/edittext_bg_elevated"
+                android:elevation="@dimen/_2sdp"
+                android:gravity="top"/>
 
-    </LinearLayout>
-  </ScrollView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/distance_from_hotel"
+                android:textColor="#747474"
+                android:fontFamily="@font/open_sans"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+
+            <EditText
+                android:id="@+id/place_distance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_distance_in_mt_km"
+                style="@style/EditTextCustomeStyle"
+                android:singleLine="true"
+                android:background="@drawable/edittext_bg_elevated"
+                android:elevation="@dimen/_2sdp" />
+
+
+            <TextView
+                android:id="@+id/save_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/orange_button_click_effect"
+                android:fontFamily="@font/open_sans_semibold"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:gravity="center"
+                android:text="@string/save"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:elevation="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_20sdp"/>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

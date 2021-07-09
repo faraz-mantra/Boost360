@@ -54,37 +54,74 @@ import io.separ.neural.inputmethod.indic.settings.SettingsValuesForSuggestion;
  */
 public final class AndroidSpellCheckerService extends SpellCheckerService
         implements SharedPreferences.OnSharedPreferenceChangeListener {
-    public static final String PREF_USE_CONTACTS_KEY = "pref_spellcheck_use_contacts";
-    public static final String SINGLE_QUOTE = "\u0027";
-    public static final String APOSTROPHE = "\u2019";
     private static final String TAG = AndroidSpellCheckerService.class.getSimpleName();
     private static final boolean DBG = false;
+
+    public static final String PREF_USE_CONTACTS_KEY = "pref_spellcheck_use_contacts";
+
     private static final int SPELLCHECKER_DUMMY_KEYBOARD_WIDTH = 480;
     private static final int SPELLCHECKER_DUMMY_KEYBOARD_HEIGHT = 368;
+
     private static final String DICTIONARY_NAME_PREFIX = "spellcheck_";
     private static final int WAIT_FOR_LOADING_MAIN_DICT_IN_MILLISECONDS = 1000;
     private static final int MAX_RETRY_COUNT_FOR_WAITING_FOR_LOADING_DICT = 5;
+
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
-    private static final int MAX_NUM_OF_THREADS_READ_DICTIONARY = 2;
-    private static final int MAX_DICTIONARY_FACILITATOR_COUNT = 3;
+
     private final HashSet<Locale> mCachedLocales = new HashSet<>();
+
+    private static final int MAX_NUM_OF_THREADS_READ_DICTIONARY = 2;
     private final Semaphore mSemaphore = new Semaphore(MAX_NUM_OF_THREADS_READ_DICTIONARY,
             true /* fair */);
     // TODO: Make each spell checker session has its own session id.
     private final ConcurrentLinkedQueue<Integer> mSessionIdPool = new ConcurrentLinkedQueue<>();
+
+    private static class DictionaryFacilitatorLruCache extends
+            LruCache<Locale, DictionaryFacilitator> {
+        private final HashSet<Locale> mCachedLocales;
+        public DictionaryFacilitatorLruCache(final HashSet<Locale> cachedLocales, int maxSize) {
+            super(maxSize);
+            mCachedLocales = cachedLocales;
+        }
+
+        @Override
+        protected void entryRemoved(boolean evicted, Locale key,
+                DictionaryFacilitator oldValue, DictionaryFacilitator newValue) {
+            if (oldValue != null && oldValue != newValue) {
+                oldValue.closeDictionaries();
+            }
+            if (key != null && newValue == null) {
+                // Remove locale from the cache when the dictionary facilitator for the locale is
+                // evicted and new facilitator is not set for the locale.
+                mCachedLocales.remove(key);
+                if (size() >= maxSize()) {
+                    Log.w(TAG, "DictionaryFacilitator for " + key.toString()
+                            + " has been evicted due to cache size limit."
+                            + " size: " + size() + ", maxSize: " + maxSize());
+                }
+            }
+        }
+    }
+
+    private static final int MAX_DICTIONARY_FACILITATOR_COUNT = 3;
     private final LruCache<Locale, DictionaryFacilitator> mDictionaryFacilitatorCache =
             new DictionaryFacilitatorLruCache(mCachedLocales, MAX_DICTIONARY_FACILITATOR_COUNT);
     private final ConcurrentHashMap<Locale, Keyboard> mKeyboardCache = new ConcurrentHashMap<>();
+
+    // The threshold for a suggestion to be considered "recommended".
+    private float mRecommendedThreshold;
+    // Whether to use the contacts dictionary
+    private boolean mUseContactsDictionary;
     // TODO: make a spell checker option to block offensive words or not
     private final SettingsValuesForSuggestion mSettingsValuesForSuggestion =
             new SettingsValuesForSuggestion(true /* blockPotentiallyOffensive */,
                     true /* spaceAwareGestureEnabled */,
                     null /* additionalFeaturesSettingValues */);
     private final Object mDictionaryLock = new Object();
-    // The threshold for a suggestion to be considered "recommended".
-    private float mRecommendedThreshold;
-    // Whether to use the contacts dictionary
-    private boolean mUseContactsDictionary;
+
+    public static final String SINGLE_QUOTE = "\u0027";
+    public static final String APOSTROPHE = "\u2019";
+
     public AndroidSpellCheckerService() {
         super();
         for (int i = 0; i < MAX_NUM_OF_THREADS_READ_DICTIONARY; i++) {
@@ -92,66 +129,7 @@ public final class AndroidSpellCheckerService extends SpellCheckerService
         }
     }
 
-    private static String getKeyboardLayoutNameForScript(final int script) {
-        switch (script) {
-            case ScriptUtils.SCRIPT_LATIN:
-                return "qwerty";
-            case ScriptUtils.SCRIPT_CYRILLIC:
-                return "east_slavic";
-            case ScriptUtils.SCRIPT_GREEK:
-                return "greek";
-            default:
-                throw new RuntimeException("Wrong script supplied: " + script);
-        }
-    }
-
-    /**
-     * Returns an empty SuggestionsInfo with flags signaling the word is not in the dictionary.
-     *
-     * @param reportAsTypo whether this should include the flag LOOKS_LIKE_TYPO, for red underline.
-     * @return the empty SuggestionsInfo with the appropriate flags set.
-     */
-    public static SuggestionsInfo getNotInDictEmptySuggestions(final boolean reportAsTypo) {
-        return new SuggestionsInfo(reportAsTypo ? SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO : 0,
-                EMPTY_STRING_ARRAY);
-    }
-
-    /**
-     * Returns an empty suggestionInfo with flags signaling the word is in the dictionary.
-     *
-     * @return the empty SuggestionsInfo with the appropriate flags set.
-     */
-    public static SuggestionsInfo getInDictEmptySuggestions() {
-        return new SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY,
-                EMPTY_STRING_ARRAY);
-    }
-
-    private static void resetDictionariesForLocale(final Context context,
-                                                   final DictionaryFacilitator dictionaryFacilitator, final Locale locale,
-                                                   final boolean useContactsDictionary) {
-        dictionaryFacilitator.resetDictionariesWithDictNamePrefix(context, locale,
-                useContactsDictionary, false /* usePersonalizedDicts */,
-                false /* forceReloadMainDictionary */, null /* listener */,
-                DICTIONARY_NAME_PREFIX);
-        for (int i = 0; i < MAX_RETRY_COUNT_FOR_WAITING_FOR_LOADING_DICT; i++) {
-            try {
-                dictionaryFacilitator.waitForLoadingMainDictionary(
-                        WAIT_FOR_LOADING_MAIN_DICT_IN_MILLISECONDS, TimeUnit.MILLISECONDS);
-                return;
-            } catch (final InterruptedException e) {
-                Log.i(TAG, "Interrupted during waiting for loading main dictionary.", e);
-                if (i < MAX_RETRY_COUNT_FOR_WAITING_FOR_LOADING_DICT - 1) {
-                    Log.i(TAG, "Retry", e);
-                } else {
-                    Log.w(TAG, "Give up retrying. Retried "
-                            + MAX_RETRY_COUNT_FOR_WAITING_FOR_LOADING_DICT + " times.", e);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onCreate() {
+    @Override public void onCreate() {
         super.onCreate();
         mRecommendedThreshold =
                 Float.parseFloat(getString(R.string.spellchecker_recommended_threshold_value));
@@ -164,24 +142,37 @@ public final class AndroidSpellCheckerService extends SpellCheckerService
         return mRecommendedThreshold;
     }
 
+    private static String getKeyboardLayoutNameForScript(final int script) {
+        switch (script) {
+        case ScriptUtils.SCRIPT_LATIN:
+            return "qwerty";
+        case ScriptUtils.SCRIPT_CYRILLIC:
+            return "east_slavic";
+        case ScriptUtils.SCRIPT_GREEK:
+            return "greek";
+        default:
+            throw new RuntimeException("Wrong script supplied: " + script);
+        }
+    }
+
     @Override
     public void onSharedPreferenceChanged(final SharedPreferences prefs, final String key) {
         if (!PREF_USE_CONTACTS_KEY.equals(key)) return;
-        final boolean useContactsDictionary = prefs.getBoolean(PREF_USE_CONTACTS_KEY, true);
-        if (useContactsDictionary != mUseContactsDictionary) {
-            mSemaphore.acquireUninterruptibly(MAX_NUM_OF_THREADS_READ_DICTIONARY);
-            try {
-                mUseContactsDictionary = useContactsDictionary;
-                for (final Locale locale : mCachedLocales) {
-                    final DictionaryFacilitator dictionaryFacilitator =
-                            mDictionaryFacilitatorCache.get(locale);
-                    resetDictionariesForLocale(this /* context  */,
-                            dictionaryFacilitator, locale, mUseContactsDictionary);
+            final boolean useContactsDictionary = prefs.getBoolean(PREF_USE_CONTACTS_KEY, true);
+            if (useContactsDictionary != mUseContactsDictionary) {
+                mSemaphore.acquireUninterruptibly(MAX_NUM_OF_THREADS_READ_DICTIONARY);
+                try {
+                    mUseContactsDictionary = useContactsDictionary;
+                    for (final Locale locale : mCachedLocales) {
+                        final DictionaryFacilitator dictionaryFacilitator =
+                                mDictionaryFacilitatorCache.get(locale);
+                        resetDictionariesForLocale(this /* context  */,
+                                dictionaryFacilitator, locale, mUseContactsDictionary);
+                    }
+                } finally {
+                    mSemaphore.release(MAX_NUM_OF_THREADS_READ_DICTIONARY);
                 }
-            } finally {
-                mSemaphore.release(MAX_NUM_OF_THREADS_READ_DICTIONARY);
             }
-        }
     }
 
     @Override
@@ -189,6 +180,25 @@ public final class AndroidSpellCheckerService extends SpellCheckerService
         // Should not refer to AndroidSpellCheckerSession directly considering
         // that AndroidSpellCheckerSession may be overlaid.
         return AndroidSpellCheckerSessionFactory.newInstance(this);
+    }
+
+    /**
+     * Returns an empty SuggestionsInfo with flags signaling the word is not in the dictionary.
+     * @param reportAsTypo whether this should include the flag LOOKS_LIKE_TYPO, for red underline.
+     * @return the empty SuggestionsInfo with the appropriate flags set.
+     */
+    public static SuggestionsInfo getNotInDictEmptySuggestions(final boolean reportAsTypo) {
+        return new SuggestionsInfo(reportAsTypo ? SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO : 0,
+                EMPTY_STRING_ARRAY);
+    }
+
+    /**
+     * Returns an empty suggestionInfo with flags signaling the word is in the dictionary.
+     * @return the empty SuggestionsInfo with the appropriate flags set.
+     */
+    public static SuggestionsInfo getInDictEmptySuggestions() {
+        return new SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY,
+                EMPTY_STRING_ARRAY);
     }
 
     public boolean isValidWord(final Locale locale, final String word) {
@@ -203,7 +213,7 @@ public final class AndroidSpellCheckerService extends SpellCheckerService
     }
 
     public SuggestionResults getSuggestionResults(final Locale locale, final WordComposer composer,
-                                                  final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo) {
+            final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo) {
         mSemaphore.acquireUninterruptibly();
         Integer sessionId = null;
         try {
@@ -242,6 +252,30 @@ public final class AndroidSpellCheckerService extends SpellCheckerService
                     locale, mUseContactsDictionary);
         }
         return dictionaryFacilitatorForLocale;
+    }
+
+    private static void resetDictionariesForLocale(final Context context,
+            final DictionaryFacilitator dictionaryFacilitator, final Locale locale,
+            final boolean useContactsDictionary) {
+        dictionaryFacilitator.resetDictionariesWithDictNamePrefix(context, locale,
+                useContactsDictionary, false /* usePersonalizedDicts */,
+                false /* forceReloadMainDictionary */, null /* listener */,
+                DICTIONARY_NAME_PREFIX);
+        for (int i = 0; i < MAX_RETRY_COUNT_FOR_WAITING_FOR_LOADING_DICT; i++) {
+            try {
+                dictionaryFacilitator.waitForLoadingMainDictionary(
+                        WAIT_FOR_LOADING_MAIN_DICT_IN_MILLISECONDS, TimeUnit.MILLISECONDS);
+                return;
+            } catch (final InterruptedException e) {
+                Log.i(TAG, "Interrupted during waiting for loading main dictionary.", e);
+                if (i < MAX_RETRY_COUNT_FOR_WAITING_FOR_LOADING_DICT - 1) {
+                    Log.i(TAG, "Retry", e);
+                } else {
+                    Log.w(TAG, "Give up retrying. Retried "
+                            + MAX_RETRY_COUNT_FOR_WAITING_FOR_LOADING_DICT + " times.", e);
+                }
+            }
+        }
     }
 
     @Override
@@ -287,33 +321,5 @@ public final class AndroidSpellCheckerService extends SpellCheckerService
         builder.setIsSpellChecker(true /* isSpellChecker */);
         builder.disableTouchPositionCorrectionData();
         return builder.build();
-    }
-
-    private static class DictionaryFacilitatorLruCache extends
-            LruCache<Locale, DictionaryFacilitator> {
-        private final HashSet<Locale> mCachedLocales;
-
-        public DictionaryFacilitatorLruCache(final HashSet<Locale> cachedLocales, int maxSize) {
-            super(maxSize);
-            mCachedLocales = cachedLocales;
-        }
-
-        @Override
-        protected void entryRemoved(boolean evicted, Locale key,
-                                    DictionaryFacilitator oldValue, DictionaryFacilitator newValue) {
-            if (oldValue != null && oldValue != newValue) {
-                oldValue.closeDictionaries();
-            }
-            if (key != null && newValue == null) {
-                // Remove locale from the cache when the dictionary facilitator for the locale is
-                // evicted and new facilitator is not set for the locale.
-                mCachedLocales.remove(key);
-                if (size() >= maxSize()) {
-                    Log.w(TAG, "DictionaryFacilitator for " + key.toString()
-                            + " has been evicted due to cache size limit."
-                            + " size: " + size() + ", maxSize: " + maxSize());
-                }
-            }
-        }
     }
 }

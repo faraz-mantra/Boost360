@@ -15,8 +15,7 @@ import com.inventoryorder.model.orderRequest.shippedRequest.DeliveryPersonDetail
 import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class ShippedBottomSheetDialog :
-  BaseBottomSheetDialog<BottomSheetShippedOrderBinding, BaseViewModel>() {
+class ShippedBottomSheetDialog : BaseBottomSheetDialog<BottomSheetShippedOrderBinding, BaseViewModel>() {
 
   private var orderItem: OrderItem? = null
   private var deliveryProvider: String = MarkAsShippedRequest.ShippedBy.LOCAL_PERSON.value
@@ -65,14 +64,10 @@ class ShippedBottomSheetDialog :
       binding?.buttonDone -> {
         val request: MarkAsShippedRequest
         val date = getCurrentDate().parseDate(FORMAT_SERVER_DATE)
-        val address = Address(
-          addressLine1 = orderItem?.BuyerDetails?.address()?.addressLine1(),
-          addressLine2 = orderItem?.BuyerDetails?.address()?.AddressLine2,
-          city = orderItem?.BuyerDetails?.address()?.City,
-          country = orderItem?.BuyerDetails?.address()?.Country,
-          region = orderItem?.BuyerDetails?.address()?.Region,
-          zipcode = orderItem?.BuyerDetails?.address()?.Zipcode
-        )
+        val address = Address(addressLine1 = orderItem?.BuyerDetails?.address()?.addressLine1(),
+            addressLine2 = orderItem?.BuyerDetails?.address()?.AddressLine2, city = orderItem?.BuyerDetails?.address()?.City,
+            country = orderItem?.BuyerDetails?.address()?.Country, region = orderItem?.BuyerDetails?.address()?.Region,
+            zipcode = orderItem?.BuyerDetails?.address()?.Zipcode)
         if (deliveryProvider == MarkAsShippedRequest.ShippedBy.LOCAL_PERSON.value) {
           val name = binding?.tvDeliveryPersonName?.text?.toString() ?: ""
           val number = binding?.edtNumber?.text?.toString() ?: ""
@@ -88,14 +83,8 @@ class ShippedBottomSheetDialog :
             showShortToast(getString(R.string.invalid_delivery_person_number))
             return
           }
-          request = MarkAsShippedRequest(
-            orderId = orderItem?._id, shippedOn = date, deliveryProvider = deliveryProvider,
-            deliveryPersonDetails = DeliveryPersonDetails(
-              fullName = name,
-              primaryContactNumber = number,
-              emailId = ""
-            ), address = address
-          )
+          request = MarkAsShippedRequest(orderId = orderItem?._id, shippedOn = date, deliveryProvider = deliveryProvider,
+              deliveryPersonDetails = DeliveryPersonDetails(fullName = name, primaryContactNumber = number, emailId = ""), address = address)
         } else {
           val id = binding?.edtConsignmentId?.text?.toString() ?: ""
           val url = binding?.edtTrackingUrl?.text?.toString() ?: ""
@@ -107,10 +96,8 @@ class ShippedBottomSheetDialog :
             showShortToast(getString(R.string.consignment_tracking_url_cant_be_empty))
             return
           }
-          request = MarkAsShippedRequest(
-            orderId = orderItem?._id, shippedOn = date, deliveryProvider = deliveryProvider,
-            trackingNumber = id, trackingURL = url, address = address
-          )
+          request = MarkAsShippedRequest(orderId = orderItem?._id, shippedOn = date, deliveryProvider = deliveryProvider,
+              trackingNumber = id, trackingURL = url, address = address)
         }
         dismiss()
         onClicked(request)

@@ -4,9 +4,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
-
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;

@@ -8,9 +8,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-
 import androidx.annotation.NonNull;
-
 import android.text.SpannableStringBuilder;
 import android.text.style.DynamicDrawableSpan;
 import android.util.AttributeSet;
@@ -21,10 +19,11 @@ import com.android.inputmethod.keyboard.emoji.EmojiconHandler;
 import io.separ.neural.inputmethod.indic.R;
 
 public class EmojiView extends View implements Drawable.Callback {
-    private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private String emoji;
     private Drawable drawable;
     private boolean scaleDown = false;
+
+    private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 
     public EmojiView(Context context, boolean scaleDown) {
         this(context, null);
@@ -43,10 +42,6 @@ public class EmojiView extends View implements Drawable.Callback {
         super(context, attrs, defStyleAttr);
     }
 
-    public String getEmoji() {
-        return emoji;
-    }
-
     public void setEmoji(String emoji) {
         this.emoji = emoji;
         SpannableStringBuilder builder = new SpannableStringBuilder(emoji);
@@ -59,6 +54,10 @@ public class EmojiView extends View implements Drawable.Callback {
 //        this.drawable = EmojiProvider.getInstance(getContext())
 //                .getEmojiDrawable(emoji);
         postInvalidate();
+    }
+
+    public String getEmoji() {
+        return emoji;
     }
 
     @Override

@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class UpgradePremiumFeatureResponse(
-  @SerializedName("Data")
+    @SerializedName("Data")
   var `data`: ArrayList<PremiumFeatureData>? = null,
-  @SerializedName("Extra")
+    @SerializedName("Extra")
   var extra: PremiumNExtra? = null
-) : BaseResponse(), Serializable {
+):BaseResponse(),Serializable{
 
 }

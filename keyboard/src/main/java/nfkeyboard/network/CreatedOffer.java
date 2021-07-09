@@ -18,9 +18,6 @@ public class CreatedOffer {
     @SerializedName("Message")
     @Expose
     String message;
-    @SerializedName("Data")
-    @Expose
-    Data data;
 
     public Data getData() {
         return data;
@@ -29,6 +26,10 @@ public class CreatedOffer {
     public void setData(Data data) {
         this.data = data;
     }
+
+    @SerializedName("Data")
+    @Expose
+    Data data;
 
     public static class Data {
 
@@ -65,46 +66,6 @@ public class CreatedOffer {
         @SerializedName("SellerId")
         @Expose
         String sellerId;
-
-        public double getPrice() {
-            return price;
-        }
-
-        public void setPrice(double price) {
-            this.price = price;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public String getExpiresOn() {
-            return expiresOn;
-        }
-
-        public void setExpiresOn(String expiresOn) {
-            this.expiresOn = expiresOn;
-        }
-
-        public String getCreatedOn() {
-            return createdOn;
-        }
-
-        public void setCreatedOn(String createdOn) {
-            this.createdOn = createdOn;
-        }
-
-        public Product getProduct() {
-            return product;
-        }
-
-        public void setProduct(Product product) {
-            this.product = product;
-        }
 
         public static class Product {
 
@@ -153,18 +114,45 @@ public class CreatedOffer {
             @SerializedName("ExternalSourceId")
             @Expose
             String extSourceId;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
             @SerializedName("Name")
             @Expose
             String name;
             @SerializedName("Description")
             @Expose
             String description;
+
+            public double getPrice() {
+                return price;
+            }
+
+            public void setPrice(double price) {
+                this.price = price;
+            }
+
             @SerializedName("Price")
             @Expose
             double price;
             @SerializedName("DiscountAmount")
             @Expose
             double discountAmount;
+
+            public String getCurrencyCode() {
+                return currencyCode;
+            }
+
+            public void setCurrencyCode(String currencyCode) {
+                this.currencyCode = currencyCode;
+            }
+
             @SerializedName("CurrencyCode")
             @Expose
             String currencyCode;
@@ -189,30 +177,48 @@ public class CreatedOffer {
             @SerializedName("IsAvailable")
             @Expose
             boolean isAvailable;
+        }
 
-            public String getName() {
-                return name;
-            }
+        public double getPrice() {
+            return price;
+        }
 
-            public void setName(String name) {
-                this.name = name;
-            }
+        public void setPrice(double price) {
+            this.price = price;
+        }
 
-            public double getPrice() {
-                return price;
-            }
 
-            public void setPrice(double price) {
-                this.price = price;
-            }
+        public String getUrl() {
+            return url;
+        }
 
-            public String getCurrencyCode() {
-                return currencyCode;
-            }
+        public void setUrl(String url) {
+            this.url = url;
+        }
 
-            public void setCurrencyCode(String currencyCode) {
-                this.currencyCode = currencyCode;
-            }
+
+        public String getExpiresOn() {
+            return expiresOn;
+        }
+
+        public void setExpiresOn(String expiresOn) {
+            this.expiresOn = expiresOn;
+        }
+
+        public String getCreatedOn() {
+            return createdOn;
+        }
+
+        public void setCreatedOn(String createdOn) {
+            this.createdOn = createdOn;
+        }
+
+        public Product getProduct() {
+            return product;
+        }
+
+        public void setProduct(Product product) {
+            this.product = product;
         }
 
     }

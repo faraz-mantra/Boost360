@@ -1,26 +1,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:orientation="horizontal"
-  android:padding="@dimen/_6dp">
-
-  <com.framework.views.customViews.CustomImageView
-    android:id="@+id/civ_dot"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
-    android:layout_marginStart="@dimen/size_8"
-    tools:drawable="@drawable/ic_infinite" />
+    android:padding="@dimen/_6dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal">
 
-  <com.framework.views.customViews.CustomTextView
-    android:id="@+id/ctv_option"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_marginStart="@dimen/size_8"
-    android:layout_weight="0.7"
-    android:gravity="start|center_vertical"
-    android:textColor="@color/gray_text_hint"
-    android:textSize="14sp" />
+    <com.framework.views.customViews.CustomImageView
+        android:id="@+id/civ_dot"
+        android:layout_width="wrap_content"
+        tools:drawable="@drawable/ic_infinite"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/size_8" />
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_option"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_8"
+        android:layout_weight="0.7"
+        android:layout_gravity="center"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/gray_text_hint"
+        android:textSize="14sp" />
 </LinearLayout>

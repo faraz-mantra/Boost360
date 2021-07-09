@@ -10,26 +10,21 @@ import retrofit.http.*
 
 interface RestaurantsAPIInterfaces {
 
-  @Headers("Authorization: 5ad9c3d480f2510538ebde38")
-  @GET("/api/v1/ordernow/get-data")
-  fun getBookTable(
-    @Query("query") query: JSONObject?,
-    @Query("skip") skip: Int,
-    @Query("limit") limit: Int,
-    response: Callback<GetBookTableData?>?
-  )
+    @Headers("Authorization: 5ad9c3d480f2510538ebde38")
+    @GET("/api/v1/ordernow/get-data")
+    fun getBookTable(@Query("query") query: JSONObject?, @Query("skip") skip: Int, @Query("limit") limit: Int, response: Callback<GetBookTableData?>?)
 
 
-  @Headers("Authorization: 5ad9c3d480f2510538ebde38", "Content-Type: application/json")
-  @POST("/api/v1/ordernow/add-data")
-  fun addBookTable(@Body body: AddBookTableData?, response: Callback<String?>?)
+    @Headers("Authorization: 5ad9c3d480f2510538ebde38", "Content-Type: application/json")
+    @POST("/api/v1/ordernow/add-data")
+    fun addBookTable(@Body body: AddBookTableData?, response: Callback<String?>?)
 
-  @Headers("Authorization: 5ad9c3d480f2510538ebde38", "Content-Type: application/json")
-  @POST("/api/v1/ordernow/update-data")
-  fun updateBookTable(@Body body: UpdateBookTableData?, response: Callback<String?>?)
+    @Headers("Authorization: 5ad9c3d480f2510538ebde38", "Content-Type: application/json")
+    @POST("/api/v1/ordernow/update-data")
+    fun updateBookTable(@Body body: UpdateBookTableData?, response: Callback<String?>?)
 
-  @Headers("Authorization: 5ad9c3d480f2510538ebde38", "Content-Type: application/json")
-  @POST("/api/v1/ordernow/update-data")
-  fun deleteBookTable(@Body body: DeleteBookTableData?, response: Callback<String?>?)
+    @Headers("Authorization: 5ad9c3d480f2510538ebde38", "Content-Type: application/json")
+    @POST("/api/v1/ordernow/update-data")
+    fun deleteBookTable(@Body body: DeleteBookTableData?, response: Callback<String?>?)
 
 }

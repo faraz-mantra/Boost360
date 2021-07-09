@@ -1,237 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:clickable="true"
-  android:focusable="true"
-  android:focusableInTouchMode="true"
-  android:gravity="center">
-
-  <include
-    android:id="@+id/app_bar"
-    layout="@layout/new_custome_app_bar" />
-
-
-  <RelativeLayout
-    android:id="@+id/info_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/app_bar">
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:gravity="center">
 
-    <View
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/_150sdp"
-      android:background="?attr/colorPrimary" />
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/new_custome_app_bar" />
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/_10sdp"
-      android:background="@drawable/all_side_curve_bg"
-      android:elevation="@dimen/_2sdp"
-      android:gravity="center_horizontal"
-      android:orientation="vertical"
-      android:padding="@dimen/_30sdp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
 
-      <ImageView
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
-        app:srcCompat="@drawable/ic_trip_advisor" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:fontFamily="@font/open_sans"
-        android:gravity="center"
-        android:text="@string/showcase_tripadvisor_ratings_on_your_boost_business_website"
-        android:textColor="#747474"
-        android:textSize="@dimen/_15sdp" />
-    </LinearLayout>
-
-  </RelativeLayout>
-
-  <RelativeLayout
-    android:id="@+id/empty_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/_20sdp"
-    android:visibility="gone"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/info_layout"
-    tools:visibility="gone">
-
-    <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentTop="true"
-      android:layout_centerHorizontal="true"
-      android:background="@drawable/circle_feature_bg"
-      android:elevation="@dimen/_2sdp"
-      android:gravity="center">
-
-      <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:srcCompat="@drawable/ic_expiry_lock" />
-    </LinearLayout>
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="50dp"
-      android:gravity="center"
-      android:orientation="vertical"
-      android:paddingStart="@dimen/_10sdp"
-      android:paddingTop="70dp"
-      android:paddingRight="@dimen/_10sdp"
-      android:paddingBottom="@dimen/_20sdp">
-
-      <TextView
-        android:id="@+id/feature_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_semibold"
-        android:text="@string/feature_locked"
-        android:textColor="@color/common_text_color"
-        android:textSize="@dimen/_16sdp" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:fontFamily="@font/open_sans_semibold"
-        android:gravity="center"
-        android:text="@string/looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_if_you_ve_added_it_before_and_have_not_reviewed_it_please_renew_it_to_start_showing_making_changes_to_this_script"
-        android:textSize="@dimen/_11sdp" />
-
-      <TextView
-        android:id="@+id/buy_item"
+    <RelativeLayout
+        android:id="@+id/info_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"
+            android:background="?attr/colorPrimary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/all_side_curve_bg"
+            android:elevation="@dimen/_2sdp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/_30sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                app:srcCompat="@drawable/ic_trip_advisor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:fontFamily="@font/open_sans"
+                android:textColor="#747474"
+                android:text="@string/showcase_tripadvisor_ratings_on_your_boost_business_website"
+                android:textSize="@dimen/_15sdp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/empty_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_20sdp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_layout"
+        tools:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/circle_feature_bg"
+            android:elevation="@dimen/_2sdp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_expiry_lock" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="70dp"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_20sdp">
+
+            <TextView
+                android:id="@+id/feature_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/feature_locked"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/_16sdp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="center"
+                android:text="@string/looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_if_you_ve_added_it_before_and_have_not_reviewed_it_please_renew_it_to_start_showing_making_changes_to_this_script"
+                android:textSize="@dimen/_11sdp" />
+
+            <TextView
+                android:id="@+id/buy_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/orange_button_click_effect"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="center"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:text="@string/view_in_add_on_store"
+                android:textColor="@color/white" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/primary_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_10sdp"
-        android:background="@drawable/orange_button_click_effect"
-        android:fontFamily="@font/open_sans_semibold"
-        android:gravity="center"
-        android:paddingTop="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:text="@string/view_in_add_on_store"
-        android:textColor="@color/white" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_layout">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:textColor="#747474"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/widget_visiblity" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/setting_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:padding="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:src="@drawable/right_arrow"
+                    android:textOn="YES"
+                    android:textOff="NO"
+                    android:text="@string/show_this_widget"
+                    android:showText="true"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="#747474"
+                    app:theme="@style/BrandedSwitch.control"
+                    android:textSize="@dimen/_13sdp"
+                    android:background="@drawable/all_side_small_curve_bg"
+                    android:elevation="@dimen/_2sdp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="#747474"
+                    android:text="@string/widget_snippet" />
+
+                <EditText
+                    android:id="@+id/widget_snippet"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@drawable/edittext_bg_elevated"
+                    android:elevation="@dimen/_2sdp"
+                    android:gravity="top"
+                    android:textColor="#747474"
+                    android:fontFamily="@font/open_sans"
+                    android:hint="@string/paste_your_script_here"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/save_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_30sdp"
+                    android:background="@drawable/orange_button_click_effect"
+                    android:elevation="@dimen/_2sdp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="@string/save"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
-
-  </RelativeLayout>
-
-  <LinearLayout
-    android:id="@+id/primary_layout"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_marginStart="@dimen/_10sdp"
-    android:layout_marginEnd="@dimen/_10sdp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/info_layout">
-
-    <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:overScrollMode="never"
-      android:scrollbars="none">
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_15sdp"
-          android:layout_marginTop="@dimen/_15sdp"
-          android:layout_marginEnd="@dimen/_15sdp"
-          android:fontFamily="@font/open_sans"
-          android:text="@string/widget_visiblity"
-          android:textColor="#747474" />
-
-        <androidx.appcompat.widget.SwitchCompat
-          android:id="@+id/setting_switch"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_15sdp"
-          android:layout_marginTop="@dimen/_5sdp"
-          android:layout_marginEnd="@dimen/_15sdp"
-          android:background="@drawable/all_side_small_curve_bg"
-          android:elevation="@dimen/_2sdp"
-          android:fontFamily="@font/open_sans"
-          android:gravity="center_vertical"
-          android:padding="@dimen/_10sdp"
-          android:showText="true"
-          android:src="@drawable/right_arrow"
-          android:text="@string/show_this_widget"
-          android:textColor="#747474"
-          android:textOff="NO"
-          android:textOn="YES"
-          android:textSize="@dimen/_13sdp"
-          app:theme="@style/BrandedSwitch.control" />
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_15sdp"
-          android:layout_marginTop="@dimen/_15sdp"
-          android:layout_marginEnd="@dimen/_15sdp"
-          android:fontFamily="@font/open_sans"
-          android:text="@string/widget_snippet"
-          android:textColor="#747474" />
-
-        <EditText
-          android:id="@+id/widget_snippet"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/_100sdp"
-          android:layout_marginStart="@dimen/_15sdp"
-          android:layout_marginTop="@dimen/_5sdp"
-          android:layout_marginEnd="@dimen/_15sdp"
-          android:background="@drawable/edittext_bg_elevated"
-          android:elevation="@dimen/_2sdp"
-          android:fontFamily="@font/open_sans"
-          android:gravity="top"
-          android:hint="@string/paste_your_script_here"
-          android:textColor="#747474"
-          android:textSize="@dimen/_12sdp" />
-
-        <TextView
-          android:id="@+id/save_button"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_10sdp"
-          android:layout_marginTop="@dimen/_30sdp"
-          android:layout_marginEnd="@dimen/_10sdp"
-          android:layout_marginBottom="@dimen/_30sdp"
-          android:background="@drawable/orange_button_click_effect"
-          android:elevation="@dimen/_2sdp"
-          android:fontFamily="@font/open_sans_semibold"
-          android:gravity="center"
-          android:paddingTop="@dimen/_10sdp"
-          android:paddingBottom="@dimen/_10sdp"
-          android:text="@string/save"
-          android:textAllCaps="true"
-          android:textColor="@color/white" />
-
-      </LinearLayout>
-    </ScrollView>
-  </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

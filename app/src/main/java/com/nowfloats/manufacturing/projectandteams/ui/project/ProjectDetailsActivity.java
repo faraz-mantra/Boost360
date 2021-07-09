@@ -83,11 +83,6 @@ import retrofit.converter.GsonConverter;
 
 public class ProjectDetailsActivity extends AppCompatActivity implements ProjectDetailsListener {
 
-    private static final int GALLERY_PHOTO = 2;
-    private static final int CAMERA_PHOTO = 1;
-    final Calendar myCalendar = Calendar.getInstance();
-    private final int gallery_req_id = 0;
-    private final int media_req_id = 1;
     RecyclerView recyclerView;
     String ScreenType = "", itemId = "";
     ProjectDetailsImageAdapter adapter;
@@ -98,11 +93,18 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     TextView saveButton, inProgressText, completedText, withdrawText;
     RelativeLayout addImageButton;
     View dummyView1, dummyView2, dummyView3;
+
+    private final int gallery_req_id = 0;
+    private final int media_req_id = 1;
+    private static final int GALLERY_PHOTO = 2;
+    private static final int CAMERA_PHOTO = 1;
     Uri imageUri;
     List<String> path = new ArrayList();
+    private ProgressDialog progressDialog;
+
     String projectResultStatus = "IN PROGRESS";
     LinearLayout inProgressButton, completedButton, withdrawButton;
-    private ProgressDialog progressDialog;
+    final Calendar myCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -165,7 +167,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (path.size() > 0) {
+                if (path.size()>0) {
                     showLoader(getString(R.string.uploading_image_please_wait));
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -569,7 +571,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                     hideLoader();
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deleteTeams ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_deleted_));
+                        Methods.showSnackBarPositive(ProjectDetailsActivity.this,  getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -580,7 +582,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                 public void failure(RetrofitError error) {
                     hideLoader();
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_deleted_));
+                        Methods.showSnackBarPositive(ProjectDetailsActivity.this,  getString(R.string.successfully_deleted_));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
@@ -765,9 +767,9 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     @Override
     public void uploadImageURL(String url) {
         imageURLs.add(url);
-        if (path.size() != imageURLs.size()) {
+        if(path.size() != imageURLs.size()){
             uploadImageToServer();
-        } else {
+        }else{
             uploadDataToServer();
         }
     }
@@ -777,14 +779,14 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
             if (validateInput()) {
                 String fname = "Project" + System.currentTimeMillis();
                 if (path.size() > 0) {
-                    if (path.get(imageURLs.size()).startsWith("https")) {
+                    if(path.get(imageURLs.size()).startsWith("https")){
                         imageURLs.add(path.get(imageURLs.size()));
-                        if (path.size() != imageURLs.size()) {
+                        if(path.size() != imageURLs.size()){
                             uploadImageToServer();
-                        } else {
+                        }else{
                             uploadDataToServer();
                         }
-                    } else {
+                    }else {
                         new UploadProjectImage(ProjectDetailsActivity.this, this, path.get(imageURLs.size()), fname).execute().get();
                     }
                 } else {

@@ -27,7 +27,7 @@ public final class ConnectivityManagerCompatUtils {
             ConnectivityManager.class, "isActiveNetworkMetered");
 
     public static boolean isActiveNetworkMetered(final ConnectivityManager manager) {
-        return (Boolean) CompatUtils.invoke(manager,
+        return (Boolean)CompatUtils.invoke(manager,
                 // If the API telling whether the network is metered or not is not available,
                 // then the closest thing is "if it's a mobile connection".
                 manager.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_MOBILE,

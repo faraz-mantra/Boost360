@@ -41,8 +41,8 @@ public final class InputView extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         final SuggestionStripView suggestionStripView =
-                (SuggestionStripView) findViewById(R.id.suggestion_strip_view);
-        mMainKeyboardView = (MainKeyboardView) findViewById(R.id.keyboard_view);
+                (SuggestionStripView)findViewById(R.id.suggestion_strip_view);
+        mMainKeyboardView = (MainKeyboardView)findViewById(R.id.keyboard_view);
         mKeyboardTopPaddingForwarder = new KeyboardTopPaddingForwarder(
                 mMainKeyboardView, suggestionStripView);
     }
@@ -63,8 +63,8 @@ public final class InputView extends FrameLayout {
         final Rect rect = mInputViewRect;
         getGlobalVisibleRect(rect);
         final int index = me.getActionIndex();
-        final int x = (int) me.getX(index) + rect.left;
-        final int y = (int) me.getY(index) + rect.top;
+        final int x = (int)me.getX(index) + rect.left;
+        final int y = (int)me.getY(index) + rect.top;
 
         // The touch events that hit the top padding of keyboard should be forwarded to
         // {@link SuggestionStripView}.
@@ -86,8 +86,8 @@ public final class InputView extends FrameLayout {
         final Rect rect = mInputViewRect;
         getGlobalVisibleRect(rect);
         final int index = me.getActionIndex();
-        final int x = (int) me.getX(index) + rect.left;
-        final int y = (int) me.getY(index) + rect.top;
+        final int x = (int)me.getX(index) + rect.left;
+        final int y = (int)me.getY(index) + rect.top;
         return mActiveForwarder.onTouchEvent(x, y, me);
     }
 
@@ -95,12 +95,12 @@ public final class InputView extends FrameLayout {
      * This class forwards series of {@link MotionEvent}s from <code>SenderView</code> to
      * <code>ReceiverView</code>.
      *
-     * @param <SenderView>   a {@link View} that may send a {@link MotionEvent} to <ReceiverView>.
+     * @param <SenderView> a {@link View} that may send a {@link MotionEvent} to <ReceiverView>.
      * @param <ReceiverView> a {@link View} that receives forwarded {@link MotionEvent} from
-     *                       <SenderView>.
+     *     <SenderView>.
      */
     private static abstract class
-    MotionEventForwarder<SenderView extends View, ReceiverView extends View> {
+            MotionEventForwarder<SenderView extends View, ReceiverView extends View> {
         protected final SenderView mSenderView;
         protected final ReceiverView mReceiverView;
 
@@ -126,8 +126,7 @@ public final class InputView extends FrameLayout {
         }
 
         // Callback when a {@link MotionEvent} is forwarded.
-        protected void onForwardingEvent(final MotionEvent me) {
-        }
+        protected void onForwardingEvent(final MotionEvent me) {}
 
         // Returns true if a {@link MotionEvent} is needed to be forwarded to
         // <code>ReceiverView</code>. Otherwise returns false.
@@ -175,7 +174,7 @@ public final class InputView extends FrameLayout {
         private int mKeyboardTopPadding;
 
         public KeyboardTopPaddingForwarder(final MainKeyboardView mainKeyboardView,
-                                           final SuggestionStripView suggestionStripView) {
+                final SuggestionStripView suggestionStripView) {
             super(mainKeyboardView, suggestionStripView);
         }
 
@@ -193,7 +192,7 @@ public final class InputView extends FrameLayout {
             // Because the visibility of {@link MainKeyboardView} is controlled by its parent
             // view in {@link KeyboardSwitcher#setMainKeyboardFrame()}, we should check the
             // visibility of the parent view.
-            final View mainKeyboardFrame = (View) mSenderView.getParent();
+            final View mainKeyboardFrame = (View)mSenderView.getParent();
             return mainKeyboardFrame.getVisibility() == View.VISIBLE && isInKeyboardTopPadding(y);
         }
 

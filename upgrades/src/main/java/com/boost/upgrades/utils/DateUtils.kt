@@ -38,13 +38,7 @@ object DateUtils {
     return ""
   }
 
-  fun parseDate(
-    time: String?,
-    format: String?,
-    required: String?,
-    locale: Locale = Locale.getDefault(),
-    timeZone: TimeZone? = null
-  ): String? {
+  fun parseDate(time: String?, format: String?, required: String?, locale: Locale = Locale.getDefault(), timeZone: TimeZone? = null): String? {
     try {
       val timeFormat: DateFormat = SimpleDateFormat(format, locale)
       timeZone?.let { timeFormat.timeZone = it }
@@ -60,11 +54,7 @@ object DateUtils {
     return SimpleDateFormat(format, locale).format(this)
   }
 
-  fun String.parseDate(
-    format: String,
-    locale: Locale = Locale.getDefault(),
-    timeZone: TimeZone? = null
-  ): Date? {
+  fun String.parseDate(format: String, locale: Locale = Locale.getDefault(), timeZone: TimeZone? = null): Date? {
     return try {
       val timeFormat: DateFormat = SimpleDateFormat(format, locale)
       timeZone?.let { timeFormat.timeZone = it }

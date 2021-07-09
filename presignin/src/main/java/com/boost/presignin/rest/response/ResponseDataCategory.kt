@@ -4,5 +4,5 @@ import com.boost.presignin.model.category.CategoryDataModel
 import com.framework.base.BaseResponse
 
 class ResponseDataCategory(
-  val data: List<CategoryDataModel>? = null
+        val data: List<CategoryDataModel>? = null
 ) : BaseResponse()

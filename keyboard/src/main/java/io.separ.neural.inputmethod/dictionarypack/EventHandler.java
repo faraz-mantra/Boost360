@@ -23,7 +23,7 @@ import android.content.Intent;
 public final class EventHandler extends BroadcastReceiver {
     /**
      * Receives a intent broadcast.
-     * <p>
+     *
      * We receive every day a broadcast indicating that date changed.
      * Then we wait a random amount of time before actually registering
      * the download, to avoid concentrating too many accesses around
@@ -36,7 +36,7 @@ public final class EventHandler extends BroadcastReceiver {
      * Also @see {@link BroadcastReceiver#onReceive(Context, Intent)}
      *
      * @param context the context of the application.
-     * @param intent  the intent that was broadcast.
+     * @param intent the intent that was broadcast.
      */
     @Override
     public void onReceive(final Context context, final Intent intent) {

@@ -5,7 +5,7 @@ package com.nowfloats.customerassistant.models;
  */
 
 public class SharedSuggestionsDO {
-    String name = "", url = "", image = "";
+    String name="", url="",image="";
 
     public SharedSuggestionsDO(String name, String url) {
         this.name = name;
@@ -38,16 +38,16 @@ public class SharedSuggestionsDO {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof SharedSuggestionsDO) {
+        if(obj instanceof  SharedSuggestionsDO){
             SharedSuggestionsDO data = (SharedSuggestionsDO) obj;
             return getName().equals(data.getName()) && getUrl().equals(data.getUrl()) && getImage().equals(data.getImage());
-        } else {
+        }else{
             return false;
         }
     }
 
     @Override
     public int hashCode() {
-        return getUrl().hashCode() + getName().hashCode() + getImage().hashCode();
+        return getUrl().hashCode()+getName().hashCode()+getImage().hashCode();
     }
 }

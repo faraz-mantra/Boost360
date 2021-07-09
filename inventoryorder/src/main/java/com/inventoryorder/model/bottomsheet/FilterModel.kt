@@ -7,9 +7,8 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.util.*
 import kotlin.collections.ArrayList
 
-class FilterModel(
-  val type: String? = null,
-  var isSelected: Boolean = false
+class FilterModel(val type: String? = null,
+                  var isSelected: Boolean = false
 ) : AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
@@ -17,8 +16,7 @@ class FilterModel(
   }
 
   fun getIcon(): Int? {
-    return takeIf { isSelected }?.let { R.drawable.ic_option_selected }
-      ?: R.drawable.ic_option_unselected
+    return takeIf { isSelected }?.let { R.drawable.ic_option_selected } ?: R.drawable.ic_option_unselected
   }
 
   fun getColor(): Int {
@@ -64,14 +62,8 @@ class FilterModel(
     //TODO for Consultation
     ALL_CONSULTATIONS("All Consultations", ""),
     UPCOMING_CONSULT("Upcoming Consultations", OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name),
-    COMPLETED_CONSULTATIONS(
-      "Completed Consultations",
-      OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
-    ),
-    CANCEL_CONSULTATIONS(
-      "Cancel Consultations",
-      OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name
-    ),
+    COMPLETED_CONSULTATIONS("Completed Consultations", OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name),
+    CANCEL_CONSULTATIONS("Cancel Consultations", OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
 
     //TODO for order
     ALL_ORDERS("All Orders", ""),
@@ -82,11 +74,8 @@ class FilterModel(
     CANCELLED_ORDER("Cancelled", OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name);
 
     companion object {
-      fun fromType(type: String): FilterType? =
-        values().firstOrNull { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
-
-      fun fromValue(value: String): FilterType? =
-        values().firstOrNull { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+      fun fromType(type: String): FilterType? = values().firstOrNull { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
+      fun fromValue(value: String): FilterType? = values().firstOrNull { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
     }
   }
 }

@@ -14,12 +14,12 @@ import static io.separ.neural.inputmethod.indic.Constants.MAX_PREV_WORD_COUNT_FO
  * Created by sepehr on 3/11/17.
  */
 public final class NgramContextUtils {
-    private static final Pattern NEWLINE_REGEX = Pattern.compile("[\\r\\n]+");
-    private static final Pattern SPACE_REGEX = Pattern.compile("\\s+");
     private NgramContextUtils() {
         // Intentional empty constructor for utility class.
     }
 
+    private static final Pattern NEWLINE_REGEX = Pattern.compile("[\\r\\n]+");
+    private static final Pattern SPACE_REGEX = Pattern.compile("\\s+");
     // Get context information from nth word before the cursor. n = 1 retrieves the words
     // immediately before the cursor, n = 2 retrieves the words before that, and so on. This splits
     // on whitespace only.

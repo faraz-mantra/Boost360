@@ -17,56 +17,54 @@ import kotlinx.android.synthetic.main.feature_content_sheet.view.*
 import java.util.*
 import kotlin.concurrent.schedule
 
-class FeatureContentBuilder(
-  var context: BaseActivity<*, *>,
-  data: SectionsFeature, autoDismiss: Boolean = true
-) : ContentBuilder(), RecyclerItemClickListener {
+class FeatureContentBuilder(var context: BaseActivity<*, *>,
+                            data: SectionsFeature, autoDismiss: Boolean = true) : ContentBuilder(), RecyclerItemClickListener {
 
-  val feature: SectionsFeature by listenToUpdate(data, this)
-  var adapter: AppBaseRecyclerViewAdapter<DetailsFeature>? = null
+    val feature: SectionsFeature by listenToUpdate(data, this)
+    var adapter: AppBaseRecyclerViewAdapter<DetailsFeature>? = null
 
 
-  private lateinit var recyclerView: BaseRecyclerView
-  private lateinit var parentShimmerLayout: ShimmerFrameLayout
-  override val layoutRes: Int
-    get() = R.layout.feature_content_sheet
+    private lateinit var recyclerView: BaseRecyclerView
+    private lateinit var parentShimmerLayout: ShimmerFrameLayout
+    override val layoutRes: Int
+        get() = R.layout.feature_content_sheet
 
 
-  override fun init(view: View) {
-    recyclerView = view.recyclerView
-    parentShimmerLayout = view.parentShimmerLayout
-    Timer().schedule(100) { recyclerView.post { setShimmerView() } }
-  }
-
-  private fun setShimmerView() {
-    feature.let { it1 ->
-      parentShimmerLayout.post {
-        parentShimmerLayout.fadeIn(1000L).andThen {
-          parentShimmerLayout.visibility = View.VISIBLE
-          parentShimmerLayout.showShimmer(true)
-          if ((it1.details != null && it1.details.isNotEmpty()).not()) {
-            parentShimmerLayout.visibility = View.GONE
-          } else setChannelAdapter(it1.details!!)
-        }?.subscribe()
-      }
+    override fun init(view: View) {
+        recyclerView = view.recyclerView
+        parentShimmerLayout = view.parentShimmerLayout
+        Timer().schedule(100) { recyclerView.post { setShimmerView() } }
     }
-  }
 
-  private fun setChannelAdapter(details: ArrayList<DetailsFeature>) {
-    Timer().schedule(800) {
-      parentShimmerLayout.post {
-        parentShimmerLayout.visibility = View.GONE
-        parentShimmerLayout.hideShimmer()
-        recyclerView.visibility = View.VISIBLE
-        adapter = AppBaseRecyclerViewAdapter(context, details)
-        recyclerView.adapter = adapter
-      }
+    private fun setShimmerView() {
+        feature.let { it1 ->
+            parentShimmerLayout.post {
+                parentShimmerLayout.fadeIn(1000L).andThen {
+                    parentShimmerLayout.visibility = View.VISIBLE
+                    parentShimmerLayout.showShimmer(true)
+                    if ((it1.details != null && it1.details.isNotEmpty()).not()) {
+                        parentShimmerLayout.visibility = View.GONE
+                    } else setChannelAdapter(it1.details!!)
+                }?.subscribe()
+            }
+        }
     }
-  }
 
-  override fun updateContent(type: Int, data: Any?) {
-  }
+    private fun setChannelAdapter(details: ArrayList<DetailsFeature>) {
+        Timer().schedule(800) {
+            parentShimmerLayout.post {
+                parentShimmerLayout.visibility = View.GONE
+                parentShimmerLayout.hideShimmer()
+                recyclerView.visibility = View.VISIBLE
+                adapter = AppBaseRecyclerViewAdapter(context, details)
+                recyclerView.adapter = adapter
+            }
+        }
+    }
 
-  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-  }
+    override fun updateContent(type: Int, data: Any?) {
+    }
+
+    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    }
 }

@@ -1,10 +1,8 @@
 package com.nowfloats.ProductGallery.Adapter;
 
 import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,35 +15,41 @@ import com.thinksity.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpinnerItemCategoryAdapter extends BaseAdapter {
+public class SpinnerItemCategoryAdapter extends BaseAdapter
+{
     private Context context;
 
     private List<ItemCategory> itemCategoryList;
     private int mSelectedIndex = -1;
 
-    public SpinnerItemCategoryAdapter(Context context) {
+    public SpinnerItemCategoryAdapter(Context context)
+    {
         this.itemCategoryList = new ItemCategory().getList();
         this.context = context;
     }
 
-    public void setSelection(int position) {
-        mSelectedIndex = position;
+    public void setSelection(int position)
+    {
+        mSelectedIndex =  position;
         notifyDataSetChanged();
     }
 
     @Override
-    public Object getItem(int pos) {
+    public Object getItem(int pos)
+    {
         return itemCategoryList.get(pos);
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(int position)
+    {
         return position;
     }
 
 
     @NonNull
-    public View getView(int position, View itemView, @NonNull ViewGroup parent) {
+    public View getView(int position, View itemView, @NonNull ViewGroup parent)
+    {
         return initView(position, itemView, parent);
     }
 
@@ -54,7 +58,8 @@ public class SpinnerItemCategoryAdapter extends BaseAdapter {
 
         ItemCategory option = itemCategoryList.get(position);
 
-        if (itemView == null) {
+        if (itemView == null)
+        {
             itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item_item_category_option, null /*parent, false*/);
         }
 
@@ -70,14 +75,19 @@ public class SpinnerItemCategoryAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-        View itemView = super.getDropDownView(position, convertView, parent);
+    public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent)
+    {
+        View itemView =  super.getDropDownView(position, convertView, parent);
 
-        if (position == mSelectedIndex) {
+        if (position == mSelectedIndex)
+        {
             itemView.findViewById(R.id.layout_child).setBackgroundResource(R.drawable.spinner_selected_highlight);
-            ((ImageView) (itemView.findViewById(R.id.layout_child).findViewById(R.id.iv_icon))).setImageResource(itemCategoryList.get(position).selected_icon);
-        } else {
-            ((ImageView) (itemView.findViewById(R.id.layout_child).findViewById(R.id.iv_icon))).setImageResource(itemCategoryList.get(position).icon);
+            ((ImageView)(itemView.findViewById(R.id.layout_child).findViewById(R.id.iv_icon))).setImageResource(itemCategoryList.get(position).selected_icon);
+        }
+
+        else
+        {
+            ((ImageView)(itemView.findViewById(R.id.layout_child).findViewById(R.id.iv_icon))).setImageResource(itemCategoryList.get(position).icon);
         }
 
         return itemView;
@@ -93,18 +103,21 @@ public class SpinnerItemCategoryAdapter extends BaseAdapter {
         String title, body;
         int icon, selected_icon;
 
-        ItemCategory() {
+        ItemCategory()
+        {
 
         }
 
-        ItemCategory(String title, String body, int icon, int selected_icon) {
+        ItemCategory(String title, String body, int icon, int selected_icon)
+        {
             this.title = title;
             this.body = body;
             this.icon = icon;
             this.selected_icon = selected_icon;
         }
 
-        public List<ItemCategory> getList() {
+        public List<ItemCategory> getList()
+        {
             List<ItemCategory> paymentOptions = new ArrayList<>();
 
             paymentOptions.add(new ItemCategory("Physical Product", "Can be packaged and shipped to buyer. E.g. book, watch, toy, garment.", R.drawable.ic_product, R.drawable.ic_product_filled));

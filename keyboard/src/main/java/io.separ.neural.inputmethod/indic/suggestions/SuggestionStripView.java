@@ -20,9 +20,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-
 import androidx.core.view.ViewCompat;
-
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -59,27 +57,92 @@ import io.separ.neural.inputmethod.slash.EventBusExt;
 public final class SuggestionStripView extends RelativeLayout implements OnClickListener,
         OnLongClickListener, ColorManager.OnColorChange {
 
+    public void onColorChange(ColorProfile colorProfile) {
+      /*  setBackgroundColor(colorProfile.getSecondary());
+        mVoiceKey.setColorFilter(colorProfile.getTextColor());
+        mLayoutHelper.updateColor(colorProfile);
+        mServicesKey.setColorFilter(colorProfile.getTextColor());*/
+        setBackgroundColor(Color.parseColor("#424242"));
+        mVoiceKey.setColorFilter(Color.WHITE);
+        mLayoutHelper.updateColor(colorProfile);
+        //mServicesKey.setColorFilter(Color.WHITE);
+    }
+
+    public interface Listener {
+        void addWordToUserDictionary(String word);
+
+        void showImportantNoticeContents();
+
+        void pickSuggestionManually(SuggestedWordInfo word);
+
+        void onCodeInput(int primaryCode, int x, int y, boolean isKeyRepeat);
+    }
+
     static final boolean DBG = DebugFlags.DEBUG_ENABLED;
     private static final float DEBUG_INFO_TEXT_SIZE_IN_DIP = 6.0f;
+
     private final ViewGroup mSuggestionsStrip;
     private final ImageButton mVoiceKey;
     private final ImageView mServicesKey;
     private final ViewGroup mAddToDictionaryStrip;
-    private final ArrayList<TextView> mWordViews = new ArrayList<>();
-    private final ArrayList<TextView> mDebugInfoViews = new ArrayList<>();
-    private final SuggestionStripLayoutHelper mLayoutHelper;
-    private final StripVisibilityGroup mStripVisibilityGroup;
     //private final View mImportantNoticeStrip;
     MainKeyboardView mMainKeyboardView;
+
+    private final ArrayList<TextView> mWordViews = new ArrayList<>();
+    private final ArrayList<TextView> mDebugInfoViews = new ArrayList<>();
+
     Listener mListener;
     private SuggestedWords mSuggestedWords = SuggestedWords.EMPTY;
-    // Working variables for {@link onInterceptTouchEvent(MotionEvent)} and
-    // {@link onTouchEvent(MotionEvent)}.
-    private int mLastX;
-    private int mLastY;
-    private int mOriginX;
-    private int mOriginY;
-    private boolean mNeedsToTransformTouchEventToHoverEvent;
+
+    private final SuggestionStripLayoutHelper mLayoutHelper;
+    private final StripVisibilityGroup mStripVisibilityGroup;
+
+    private static class StripVisibilityGroup {
+        private final View mSuggestionStripView;
+        private final View mSuggestionsStrip;
+        private final View mAddToDictionaryStrip;
+        //private final View mImportantNoticeStrip;
+
+        public StripVisibilityGroup(final View suggestionStripView,
+                                    final ViewGroup suggestionsStrip, final ViewGroup addToDictionaryStrip) {
+            mSuggestionStripView = suggestionStripView;
+            mSuggestionsStrip = suggestionsStrip;
+            mAddToDictionaryStrip = addToDictionaryStrip;
+            //mImportantNoticeStrip = importantNoticeStrip;
+            showSuggestionsStrip();
+        }
+
+        public void setLayoutDirection(final boolean isRtlLanguage) {
+            final int layoutDirection = isRtlLanguage ? ViewCompat.LAYOUT_DIRECTION_RTL
+                    : ViewCompat.LAYOUT_DIRECTION_LTR;
+            ViewCompat.setLayoutDirection(mSuggestionStripView, layoutDirection);
+            ViewCompat.setLayoutDirection(mSuggestionsStrip, layoutDirection);
+            ViewCompat.setLayoutDirection(mAddToDictionaryStrip, layoutDirection);
+            //ViewCompat.setLayoutDirection(mImportantNoticeStrip, layoutDirection);
+        }
+
+        public void showSuggestionsStrip() {
+            mSuggestionsStrip.setVisibility(VISIBLE);
+            mAddToDictionaryStrip.setVisibility(INVISIBLE);
+            //mImportantNoticeStrip.setVisibility(INVISIBLE);
+        }
+
+        public void showAddToDictionaryStrip() {
+            mSuggestionsStrip.setVisibility(INVISIBLE);
+            mAddToDictionaryStrip.setVisibility(VISIBLE);
+            //mImportantNoticeStrip.setVisibility(INVISIBLE);
+        }
+
+        public void showImportantNoticeStrip() {
+            mSuggestionsStrip.setVisibility(INVISIBLE);
+            mAddToDictionaryStrip.setVisibility(INVISIBLE);
+            //mImportantNoticeStrip.setVisibility(VISIBLE);
+        }
+
+        public boolean isShowingAddToDictionaryStrip() {
+            return mAddToDictionaryStrip.getVisibility() == VISIBLE;
+        }
+    }
 
     /**
      * Construct a {@link SuggestionStripView} for showing suggestions to be picked by the user.
@@ -136,17 +199,6 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         mServicesKey.setOnClickListener(this);
     }
 
-    public void onColorChange(ColorProfile colorProfile) {
-      /*  setBackgroundColor(colorProfile.getSecondary());
-        mVoiceKey.setColorFilter(colorProfile.getTextColor());
-        mLayoutHelper.updateColor(colorProfile);
-        mServicesKey.setColorFilter(colorProfile.getTextColor());*/
-        setBackgroundColor(Color.parseColor("#424242"));
-        mVoiceKey.setColorFilter(Color.WHITE);
-        mLayoutHelper.updateColor(colorProfile);
-        //mServicesKey.setColorFilter(Color.WHITE);
-    }
-
     /**
      * A connection back to the input method.
      *
@@ -177,27 +229,6 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         mStripVisibilityGroup.showSuggestionsStrip();
     }
 
-    // This method checks if we should show the important notice (checks on permanent storage if
-    // it has been shown once already or not, and if in the setup wizard). If applicable, it shows
-    // the notice. In all cases, it returns true if it was shown, false otherwise.
-    /*public boolean maybeShowImportantNoticeTitle() {
-        if (!ImportantNoticeUtils.shouldShowImportantNotice(getContext())) {
-            return false;
-        }
-        if (getWidth() <= 0) {
-            return false;
-        }
-        final String importantNoticeTitle = ImportantNoticeUtils.getNextImportantNoticeTitle(
-                getContext());
-        if (TextUtils.isEmpty(importantNoticeTitle)) {
-            return false;
-        }
-        mLayoutHelper.layoutImportantNotice(mImportantNoticeStrip, importantNoticeTitle);
-        mStripVisibilityGroup.showImportantNoticeStrip();
-        mImportantNoticeStrip.setOnClickListener(this);
-        return true;
-    }*/
-
     public boolean isShowingAddToDictionaryHint() {
         return mStripVisibilityGroup.isShowingAddToDictionaryStrip();
     }
@@ -218,6 +249,27 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         }
         return false;
     }
+
+    // This method checks if we should show the important notice (checks on permanent storage if
+    // it has been shown once already or not, and if in the setup wizard). If applicable, it shows
+    // the notice. In all cases, it returns true if it was shown, false otherwise.
+    /*public boolean maybeShowImportantNoticeTitle() {
+        if (!ImportantNoticeUtils.shouldShowImportantNotice(getContext())) {
+            return false;
+        }
+        if (getWidth() <= 0) {
+            return false;
+        }
+        final String importantNoticeTitle = ImportantNoticeUtils.getNextImportantNoticeTitle(
+                getContext());
+        if (TextUtils.isEmpty(importantNoticeTitle)) {
+            return false;
+        }
+        mLayoutHelper.layoutImportantNotice(mImportantNoticeStrip, importantNoticeTitle);
+        mStripVisibilityGroup.showImportantNoticeStrip();
+        mImportantNoticeStrip.setOnClickListener(this);
+        return true;
+    }*/
 
     public void clear() {
         mSuggestionsStrip.removeAllViews();
@@ -241,6 +293,14 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
                 Constants.NOT_A_CODE, this);
         return false;
     }
+
+    // Working variables for {@link onInterceptTouchEvent(MotionEvent)} and
+    // {@link onTouchEvent(MotionEvent)}.
+    private int mLastX;
+    private int mLastY;
+    private int mOriginX;
+    private int mOriginY;
+    private boolean mNeedsToTransformTouchEventToHoverEvent;
 
     @Override
     public boolean dispatchPopulateAccessibilityEvent(final AccessibilityEvent event) {
@@ -320,62 +380,5 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         /*if (oldw <= 0 && w > 0) {
             maybeShowImportantNoticeTitle();
         }*/
-    }
-
-    public interface Listener {
-        void addWordToUserDictionary(String word);
-
-        void showImportantNoticeContents();
-
-        void pickSuggestionManually(SuggestedWordInfo word);
-
-        void onCodeInput(int primaryCode, int x, int y, boolean isKeyRepeat);
-    }
-
-    private static class StripVisibilityGroup {
-        private final View mSuggestionStripView;
-        private final View mSuggestionsStrip;
-        private final View mAddToDictionaryStrip;
-        //private final View mImportantNoticeStrip;
-
-        public StripVisibilityGroup(final View suggestionStripView,
-                                    final ViewGroup suggestionsStrip, final ViewGroup addToDictionaryStrip) {
-            mSuggestionStripView = suggestionStripView;
-            mSuggestionsStrip = suggestionsStrip;
-            mAddToDictionaryStrip = addToDictionaryStrip;
-            //mImportantNoticeStrip = importantNoticeStrip;
-            showSuggestionsStrip();
-        }
-
-        public void setLayoutDirection(final boolean isRtlLanguage) {
-            final int layoutDirection = isRtlLanguage ? ViewCompat.LAYOUT_DIRECTION_RTL
-                    : ViewCompat.LAYOUT_DIRECTION_LTR;
-            ViewCompat.setLayoutDirection(mSuggestionStripView, layoutDirection);
-            ViewCompat.setLayoutDirection(mSuggestionsStrip, layoutDirection);
-            ViewCompat.setLayoutDirection(mAddToDictionaryStrip, layoutDirection);
-            //ViewCompat.setLayoutDirection(mImportantNoticeStrip, layoutDirection);
-        }
-
-        public void showSuggestionsStrip() {
-            mSuggestionsStrip.setVisibility(VISIBLE);
-            mAddToDictionaryStrip.setVisibility(INVISIBLE);
-            //mImportantNoticeStrip.setVisibility(INVISIBLE);
-        }
-
-        public void showAddToDictionaryStrip() {
-            mSuggestionsStrip.setVisibility(INVISIBLE);
-            mAddToDictionaryStrip.setVisibility(VISIBLE);
-            //mImportantNoticeStrip.setVisibility(INVISIBLE);
-        }
-
-        public void showImportantNoticeStrip() {
-            mSuggestionsStrip.setVisibility(INVISIBLE);
-            mAddToDictionaryStrip.setVisibility(INVISIBLE);
-            //mImportantNoticeStrip.setVisibility(VISIBLE);
-        }
-
-        public boolean isShowingAddToDictionaryStrip() {
-            return mAddToDictionaryStrip.getVisibility() == VISIBLE;
-        }
     }
 }

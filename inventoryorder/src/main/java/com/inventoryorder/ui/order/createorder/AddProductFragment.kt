@@ -30,8 +30,7 @@ import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
 
-class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(),
-  RecyclerItemClickListener {
+class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), RecyclerItemClickListener {
 
   private var productList: ArrayList<ProductItem> = ArrayList()
   private var finalProductList: ArrayList<ProductItem> = ArrayList()
@@ -68,9 +67,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(),
         val query = str!!.trim().toLowerCase(Locale.ROOT)
         productList.clear()
         productList.addAll(finalProductList)
-        productList = productList.filter {
-          it.getNameValue().startsWith(query) || it.getNameValue().contains(query)
-        } as ArrayList<ProductItem>
+        productList = productList.filter { it.getNameValue().startsWith(query) || it.getNameValue().contains(query) } as ArrayList<ProductItem>
         setAdapterOrderList()
       }
       finalProductList.isNullOrEmpty().not() -> {
@@ -114,10 +111,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(),
     createOrderRequest.items = itemList
     val bundle = Bundle()
     bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
-    bundle.putSerializable(
-      IntentConstant.PREFERENCE_DATA.name,
-      arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name)
-    )
+    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name))
     startFragmentOrderActivity(FragmentType.ADD_CUSTOMER, bundle, isResult = true)
   }
 
@@ -127,8 +121,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(),
       hideProgress()
       if (it.isSuccess()) {
         val resp = (it.arrayResponse as? Array<ProductItem>)
-        finalProductList =
-          if (resp.isNullOrEmpty().not()) resp!!.toCollection(ArrayList()) else ArrayList()
+        finalProductList = if (resp.isNullOrEmpty().not()) resp!!.toCollection(ArrayList()) else ArrayList()
         if (finalProductList.isNotEmpty()) {
           productList.clear()
           productList.addAll(finalProductList)
@@ -144,19 +137,13 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(),
   }
 
   fun getBundleData(): Bundle {
-    return Bundle().apply {
-      putBoolean(
-        IntentConstant.IS_REFRESH.name,
-        (shouldReInitiate || shouldFinish)
-      )
-    }
+    return Bundle().apply { putBoolean(IntentConstant.IS_REFRESH.name, (shouldReInitiate || shouldFinish)) }
   }
 
   private fun setAdapterOrderList() {
     if (itemsAdapter == null) {
       binding?.productRecycler?.apply {
-        itemsAdapter =
-          AppBaseRecyclerViewAdapter(baseActivity, productList, this@AddProductFragment)
+        itemsAdapter = AppBaseRecyclerViewAdapter(baseActivity, productList, this@AddProductFragment)
         adapter = itemsAdapter
         itemsAdapter?.runLayoutAnimation(this)
       }
@@ -169,8 +156,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(),
         val product = item as? ProductItem
         val productItem = productList[position]
         productItem.productQuantityAdded = productItem.productQuantityAdded + 1
-        finalProductList.firstOrNull { product?._id.equals(it._id) }?.productQuantityAdded =
-          productItem.productQuantityAdded
+        finalProductList.firstOrNull { product?._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
         itemsAdapter?.notifyDataSetChanged()
         totalPrice = totalPrice.plus(product?.getPayablePrice() ?: 0.0)
         binding?.tvItemTotalPrice?.text = "${product?.getCurrencyCodeValue() ?: "INR"} $totalPrice"
@@ -184,8 +170,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(),
         val product = item as? ProductItem
         val productItem = productList[position]
         productItem.productQuantityAdded = productItem.productQuantityAdded + 1
-        finalProductList.firstOrNull { product?._id.equals(it._id) }?.productQuantityAdded =
-          productItem.productQuantityAdded
+        finalProductList.firstOrNull { product?._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
 
         itemsAdapter?.notifyDataSetChanged()
         totalPrice = totalPrice.plus(product?.getPayablePrice() ?: 0.0)
@@ -197,8 +182,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(),
         val product = item as? ProductItem
         val productItem = productList[position]
         productItem.productQuantityAdded = productItem.productQuantityAdded - 1
-        finalProductList.firstOrNull { product?._id.equals(it._id) }?.productQuantityAdded =
-          productItem.productQuantityAdded
+        finalProductList.firstOrNull { product?._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
         itemsAdapter?.notifyDataSetChanged()
         totalPrice = totalPrice.minus(product?.getPayablePrice() ?: 0.0)
         binding?.tvItemTotalPrice?.text = "${product?.getCurrencyCodeValue() ?: "INR"} $totalPrice"
@@ -223,8 +207,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(),
       } else if (addMore && req != null) {
         createOrderRequest = req
         finalProductList.forEach { prod ->
-          val addedProduct =
-            createOrderRequest.items?.firstOrNull { it.productOrOfferId.equals(prod._id) }
+          val addedProduct = createOrderRequest.items?.firstOrNull { it.productOrOfferId.equals(prod._id) }
           if (addedProduct != null) {
             totalPrice += addedProduct.getPayablePriceAmount()
             prod.productQuantityAdded = addedProduct.quantity
@@ -236,8 +219,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(),
         itemsAdapter?.notifyDataSetChanged()
         if (totalCartItems > 0) {
           val productD = createOrderRequest.items?.firstOrNull()?.productDetails
-          binding?.tvItemTotalPrice?.text =
-            "${productD?.getCurrencyCodeValue() ?: "INR"} $totalPrice"
+          binding?.tvItemTotalPrice?.text = "${productD?.getCurrencyCodeValue() ?: "INR"} $totalPrice"
           binding?.layoutTotalPricePanel?.visible()
         } else binding?.layoutTotalPricePanel?.gone()
       } else if (shouldReInitiate) {

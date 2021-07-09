@@ -10,8 +10,7 @@ import com.inventoryorder.databinding.BottomSheetDeliveredOrderBinding
 import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class DeliveredBottomSheetDialog :
-  BaseBottomSheetDialog<BottomSheetDeliveredOrderBinding, BaseViewModel>() {
+class DeliveredBottomSheetDialog : BaseBottomSheetDialog<BottomSheetDeliveredOrderBinding, BaseViewModel>() {
 
   private var orderItem: OrderItem? = null
   private var feedback: Boolean = true

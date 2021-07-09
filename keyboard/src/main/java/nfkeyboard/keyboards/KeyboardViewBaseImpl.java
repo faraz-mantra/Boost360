@@ -10,10 +10,8 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
-
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.content.res.AppCompatResources;
-
 import android.util.AttributeSet;
 import android.widget.PopupWindow;
 

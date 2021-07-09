@@ -16,8 +16,7 @@ import retrofit2.Retrofit
 import retrofit2.http.Body
 import java.io.File
 
-object WithFloatTwoRepository :
-  AppBaseRepository<WithFloatTwoRemoteData, DashboardLocalDataSource>() {
+object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, DashboardLocalDataSource>() {
 
   fun uploadBusinessLogo(
     clientId: String?, fpId: String?, reqType: String?, reqId: String?,
@@ -25,26 +24,17 @@ object WithFloatTwoRepository :
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.uploadBusinessImage(
-        clientId = clientId,
-        fpId = fpId,
-        reqType = reqType,
-        reqtId = reqId,
-        totalChunks = totalChunks,
-        currentChunkNumber = currentChunkNumber,
-        file = file
+        clientId = clientId, fpId = fpId, reqType = reqType,
+        reqtId = reqId, totalChunks = totalChunks, currentChunkNumber = currentChunkNumber, file = file
       ), TaskCode.UPLOAD_BUSINESS_IMAGE
     )
   }
-
   fun updateBusinessProfile(
-    profileUpdateRequest: BusinessProfileUpdateRequest
+     profileUpdateRequest: BusinessProfileUpdateRequest
   ): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.updateBusinessProfile(profileUpdateRequest = profileUpdateRequest),
-      TaskCode.UPADTE_BUSINESS_PROFILE
-    )
+    return makeRemoteRequest(remoteDataSource.
+    updateBusinessProfile(profileUpdateRequest = profileUpdateRequest),TaskCode.UPADTE_BUSINESS_PROFILE)
   }
-
   override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
     return WithFloatTwoRemoteData::class.java
   }

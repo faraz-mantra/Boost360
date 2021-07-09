@@ -52,12 +52,12 @@ final class AssetFileAddress {
      * Makes an AssetFileAddress. This may return null.
      *
      * @param filename the filename.
-     * @param offset   the offset.
-     * @param length   the length.
+     * @param offset the offset.
+     * @param length the length.
      * @return the address, or null if the file does not exist or the parameters are not valid.
      */
     public static AssetFileAddress makeFromFileNameAndOffset(final String filename,
-                                                             final long offset, final long length) {
+            final long offset, final long length) {
         if (null == filename) return null;
         final File f = new File(filename);
         if (!f.isFile()) return null;

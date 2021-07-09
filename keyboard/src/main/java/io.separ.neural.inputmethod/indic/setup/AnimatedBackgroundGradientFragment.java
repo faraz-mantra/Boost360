@@ -16,33 +16,9 @@ public abstract class AnimatedBackgroundGradientFragment extends Fragment {
     private boolean hasBeenScheduled;
     private Timer timer;
 
-    public AnimatedBackgroundGradientFragment() {
-        this.timer = new Timer();
-        this.hasBeenScheduled = false;
-    }
-
-    public void setupTransition(TransitionDrawable background) {
-        TransitionTimerTask transitionTimerTask = new TransitionTimerTask(background);
-        if (!this.hasBeenScheduled) {
-            this.hasBeenScheduled = true;
-            this.timer.schedule(transitionTimerTask, 0, 3000);
-        }
-    }
-
     public class TransitionTimerTask extends TimerTask {
-        private final TransitionDrawable trans;
         int f19i;
-
-        TransitionTimerTask(TransitionDrawable trans) {
-            this.f19i = 0;
-            this.trans = trans;
-        }
-
-        public void run() {
-            if (AnimatedBackgroundGradientFragment.this.getActivity() != null) {
-                AnimatedBackgroundGradientFragment.this.getActivity().runOnUiThread(new C06001());
-            }
-        }
+        private final TransitionDrawable trans;
 
         /* renamed from: org.smc.inputmethod.indic.appintro.AnimatedBackgroundGradientFragment.TransitionTimerTask.1 */
         class C06001 implements Runnable {
@@ -58,6 +34,30 @@ public abstract class AnimatedBackgroundGradientFragment extends Fragment {
                 TransitionTimerTask transitionTimerTask = TransitionTimerTask.this;
                 transitionTimerTask.f19i++;
             }
+        }
+
+        TransitionTimerTask(TransitionDrawable trans) {
+            this.f19i = 0;
+            this.trans = trans;
+        }
+
+        public void run() {
+            if (AnimatedBackgroundGradientFragment.this.getActivity() != null) {
+                AnimatedBackgroundGradientFragment.this.getActivity().runOnUiThread(new C06001());
+            }
+        }
+    }
+
+    public AnimatedBackgroundGradientFragment() {
+        this.timer = new Timer();
+        this.hasBeenScheduled = false;
+    }
+
+    public void setupTransition(TransitionDrawable background) {
+        TransitionTimerTask transitionTimerTask = new TransitionTimerTask(background);
+        if (!this.hasBeenScheduled) {
+            this.hasBeenScheduled = true;
+            this.timer.schedule(transitionTimerTask, 0, 3000);
         }
     }
 }

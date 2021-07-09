@@ -5,6 +5,6 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class WelcomeDashboardResponse(
-  @SerializedName("data")
-  var `data`: ArrayList<WelcomeActionData>? = null,
+    @SerializedName("data")
+    var `data`: ArrayList<WelcomeActionData>? = null,
 ) : BaseResponse(), Serializable

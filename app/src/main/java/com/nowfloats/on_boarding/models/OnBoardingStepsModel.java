@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Admin on 22-03-2018.
  */
 
-public class OnBoardingStepsModel {
+public class OnBoardingStepsModel{
     @SerializedName("fptag")
     @Expose
     private String fptag;

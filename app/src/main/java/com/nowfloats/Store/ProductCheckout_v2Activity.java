@@ -6,13 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -65,10 +63,11 @@ import retrofit.client.Response;
 public class ProductCheckout_v2Activity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnTouchListener {
 
     private static final int DIRECT_REQUEST_CODE = 2013;
-    public RadioGroup rgSalesman;
-//    private OrderDataModel mOrderData;
     private UserSessionManager mSessionManager;
+//    private OrderDataModel mOrderData;
+
     private String mNewPackage, mFinalAmount;
+
     private Toolbar toolbar;
     private MaterialDialog materialProgress;
     private TextView headerText, tvUserName, tvUserEmail, tvPhoneNumber, tvNetTotal, tvTaxes,
@@ -76,6 +75,8 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
     private RecyclerView rvItems;
     private TextView btnPayNow, btnOpcApply, btnDeleteOPC;
     private EditText etOpc, edtSalesman;
+    public RadioGroup rgSalesman;
+
     private TableRow trTanNo, trTdsAmount;
 
     private List<PackageDetails> mPurchasePlans;
@@ -90,8 +91,6 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
     private int tdsPercentage;
 
     private SalesmanModel salesmanModel;
-    private ArrayList<SalesmanModel> arrSalesman;
-    private ReceiveDraftInvoiceModel receiveDraftInvoiceModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,6 +221,8 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
         return false;
     }
 
+    private ArrayList<SalesmanModel> arrSalesman;
+
     private void getSalesmanList() {
         if (arrSalesman == null) {
             final ProgressDialog pd = ProgressDialog.show(this, "", getResources().getString(R.string.wait_while_loading_salesman));
@@ -332,9 +333,9 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
                 public void failure(RetrofitError error) {
                     hideDiscount();
                     if (error.getResponse().getStatus() == 400) {
-                        Toast.makeText(ProductCheckout_v2Activity.this, getString(R.string.coupon_does_not_exist), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProductCheckout_v2Activity.this,getString( R.string.coupon_does_not_exist), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ProductCheckout_v2Activity.this, getString(R.string.error_processing_the_request), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProductCheckout_v2Activity.this,getString( R.string.error_processing_the_request), Toast.LENGTH_SHORT).show();
                     }
                     hideLoader();
                 }
@@ -343,7 +344,7 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
             e.printStackTrace();
             hideDiscount();
             hideLoader();
-            Toast.makeText(ProductCheckout_v2Activity.this, getString(R.string.error_processing_the_request), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProductCheckout_v2Activity.this, getString( R.string.error_processing_the_request), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -402,6 +403,8 @@ public class ProductCheckout_v2Activity extends AppCompatActivity implements Com
         });
 
     }
+
+    private ReceiveDraftInvoiceModel receiveDraftInvoiceModel;
 
     private void preProcessAndDispatchPlans(final PricingPlansModel storeMainModel) {
         new Thread(new Runnable() {

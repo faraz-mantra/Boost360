@@ -23,4 +23,4 @@ data class SecondaryImage(
   var url: String? = null,
 //  @SerializedName("websiteid")
 //  var websiteid: String? = null
-) : Serializable
+): Serializable

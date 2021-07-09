@@ -23,12 +23,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class SelectDateTimeBottomSheetDialog(
-  private var bookingSlotResponse: BookingSlotResponse,
-  private var selectedService: ServiceItem,
-  private var dateCounter: Int,
-  private var dateChange: DateChangedListener,
-) : BaseBottomSheetDialog<BottomSheetSelectDateTimeBinding, BaseViewModel>(),
-  RecyclerItemClickListener {
+    private var bookingSlotResponse: BookingSlotResponse,
+    private var selectedService: ServiceItem,
+    private var dateCounter: Int,
+    private var dateChange: DateChangedListener,
+) : BaseBottomSheetDialog<BottomSheetSelectDateTimeBinding, BaseViewModel>(), RecyclerItemClickListener {
 
   private var staffAdapter: AppBaseRecyclerViewAdapter<Staff>? = null
   private var timeSlotsAdapter: AppBaseRecyclerViewAdapter<Slots>? = null
@@ -36,8 +35,7 @@ class SelectDateTimeBottomSheetDialog(
   private var dateChangedListener: DateChangedListener? = null
   private var selectedTimeSlot: Slots? = null
 
-  var onClicked: (appointmentRequestModel: AppointmentRequestModel, dateCounter: Int) -> Unit =
-    { _: AppointmentRequestModel, _: Int -> }
+  var onClicked: (appointmentRequestModel: AppointmentRequestModel, dateCounter: Int) -> Unit = { _: AppointmentRequestModel, _: Int -> }
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_select_date_time
@@ -49,12 +47,7 @@ class SelectDateTimeBottomSheetDialog(
 
 
   override fun onCreateView() {
-    setOnClickListener(
-      binding?.buttonDone,
-      binding?.tvCancel,
-      binding?.imageNext,
-      binding?.imagePrev
-    )
+    setOnClickListener(binding?.buttonDone, binding?.tvCancel, binding?.imageNext, binding?.imagePrev)
     binding?.textServiceName?.text = selectedService.Name
     binding?.textDuration?.text = "${selectedService.Duration} min"
     binding?.textSelectedDate?.text = getDisplayDate(getDateTime())
@@ -109,31 +102,21 @@ class SelectDateTimeBottomSheetDialog(
     appointmentRequestModel.endTime = selectedTimeSlot?.EndTime
     appointmentRequestModel.duration = selectedService.Duration?.toString()
     appointmentRequestModel.scheduledDateTime = getDateTime()
-    appointmentRequestModel.staffId =
-      if (bookingSlotResponse.Result?.get(0)?.Staff?.get(selectedStaffPosition)?.Name.equals(
-          "anybody",
-          true
-        )
-      ) null
-      else bookingSlotResponse.Result?.get(0)?.Staff?.get(selectedStaffPosition)?._id
+    appointmentRequestModel.staffId = if (bookingSlotResponse.Result?.get(0)?.Staff?.get(selectedStaffPosition)?.Name.equals("anybody", true)) null
+    else bookingSlotResponse.Result?.get(0)?.Staff?.get(selectedStaffPosition)?._id
 
-    appointmentRequestModel.staffName =
-      bookingSlotResponse.Result?.get(0)?.Staff?.get(selectedStaffPosition)?.Name
+    appointmentRequestModel.staffName = bookingSlotResponse.Result?.get(0)?.Staff?.get(selectedStaffPosition)?.Name
 
     onClicked(appointmentRequestModel, dateCounter)
   }
 
   private fun getSlotsAndStaff(): BookingSlotsRequest {
-    return BookingSlotsRequest(
-      BatchType = "DAILY",
-      ServiceId = selectedService._id ?: "",
-      DateRange = DateRange(StartDate = getDateTime(), EndDate = getDateTime())
-    )
+    return BookingSlotsRequest(BatchType = "DAILY", ServiceId = selectedService._id ?: "", DateRange = DateRange(StartDate = getDateTime(), EndDate = getDateTime()))
   }
 
   fun setData(
-    bookingSlotResp: BookingSlotResponse,
-    selected: ServiceItem,
+      bookingSlotResp: BookingSlotResponse,
+      selected: ServiceItem,
   ) {
     bookingSlotResponse = bookingSlotResp
     selectedService = selected
@@ -152,9 +135,7 @@ class SelectDateTimeBottomSheetDialog(
     }
 
     if (actionType == RecyclerViewActionType.TIME_SLOT_CLICKED.ordinal) {
-      for ((index, value) in bookingSlotResponse.Result?.get(0)?.Staff?.get(selectedStaffPosition)?.AppointmentSlots?.get(
-        0
-      )?.Slots?.withIndex()!!) {
+      for ((index, value) in bookingSlotResponse.Result?.get(0)?.Staff?.get(selectedStaffPosition)?.AppointmentSlots?.get(0)?.Slots?.withIndex()!!) {
         value.isSelected = position == index
         if (position == index) selectedTimeSlot = value
       }
@@ -170,10 +151,8 @@ class SelectDateTimeBottomSheetDialog(
       binding?.textNoStaffAvailable?.visibility = View.GONE
       binding?.recyclerStaff?.visibility = View.VISIBLE
 
-      staffAdapter =
-        AppBaseRecyclerViewAdapter(baseActivity, bookingSlotResponse.Result?.get(0)?.Staff!!, this)
-      binding?.recyclerStaff?.layoutManager =
-        LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL, false)
+      staffAdapter = AppBaseRecyclerViewAdapter(baseActivity, bookingSlotResponse.Result?.get(0)?.Staff!!, this)
+      binding?.recyclerStaff?.layoutManager = LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL, false)
       binding?.recyclerStaff?.adapter = staffAdapter
       binding?.recyclerStaff?.let { staffAdapter?.runLayoutAnimation(it) }
 
@@ -199,16 +178,11 @@ class SelectDateTimeBottomSheetDialog(
 
   private fun setTimeSlotsAdapter(position: Int) {
     if (bookingSlotResponse.Result?.get(0)?.Staff?.get(position)?.AppointmentSlots?.get(0)?.Slots != null &&
-      bookingSlotResponse.Result?.get(0)?.Staff?.get(position)?.AppointmentSlots?.get(0)?.Slots?.size!! > 0
-    ) {
+        bookingSlotResponse.Result?.get(0)?.Staff?.get(position)?.AppointmentSlots?.get(0)?.Slots?.size!! > 0) {
       binding?.textNoSlotsAvailable?.visibility = View.GONE
       binding?.recyclerTimeSlots?.visibility = View.VISIBLE
 
-      timeSlotsAdapter = AppBaseRecyclerViewAdapter(
-        baseActivity,
-        bookingSlotResponse.Result?.get(0)?.Staff?.get(position)?.AppointmentSlots?.get(0)?.Slots!!,
-        this
-      )
+      timeSlotsAdapter = AppBaseRecyclerViewAdapter(baseActivity, bookingSlotResponse.Result?.get(0)?.Staff?.get(position)?.AppointmentSlots?.get(0)?.Slots!!, this)
       binding?.recyclerTimeSlots?.layoutManager = GridLayoutManager(baseActivity, 4)
       binding?.recyclerTimeSlots?.adapter = timeSlotsAdapter
       binding?.recyclerTimeSlots?.let { staffAdapter?.runLayoutAnimation(it) }

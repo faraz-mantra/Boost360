@@ -29,9 +29,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
-
 import androidx.core.content.ContextCompat;
-
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -94,30 +92,37 @@ import static io.separ.neural.inputmethod.indic.Constants.CODE_UNSPECIFIED;
  * @attr ref R.styleable#Keyboard_Key_keyPreviewTextColor
  */
 public class KeyboardView extends View {
-    private static final float KET_TEXT_SHADOW_RADIUS_DISABLED = -1.0f;
-    // The maximum key label width in the proportion to the key width.
-    private static final float MAX_LABEL_RATIO = 0.90f;
-    public final String mKeyPopupHintLetter;
-    protected final Drawable mKeyBackground;
-    protected final KeyDrawParams mKeyDrawParams = new KeyDrawParams();
-    final TypedArray keyboardViewAttr;
     // XML attributes
     private final KeyVisualAttributes mKeyVisualAttributes;
     // Default keyLabelFlags from {@link KeyboardTheme}.
     // Currently only "alignHintLabelToBottom" is supported.
     private final int mDefaultKeyLabelFlags;
     private final float mKeyHintLetterPadding;
+    public final String mKeyPopupHintLetter;
     private final float mKeyPopupHintLetterPadding;
     private final float mKeyShiftedLetterHintPadding;
     private final float mKeyTextShadowRadius;
     private final float mVerticalCorrection;
+    protected final Drawable mKeyBackground;
     private final Drawable mFunctionalKeyBackground;
     private final Drawable mSpacebarBackground;
     private final Drawable mEnterKeyBackground;
     private final float mSpacebarIconWidthRatio;
     private final Rect mKeyBackgroundPadding = new Rect();
+    private static final float KET_TEXT_SHADOW_RADIUS_DISABLED = -1.0f;
+
+    // The maximum key label width in the proportion to the key width.
+    private static final float MAX_LABEL_RATIO = 0.90f;
+
+    // Main keyboard
+    private Keyboard mKeyboard;
+    protected final KeyDrawParams mKeyDrawParams = new KeyDrawParams();
 
     // Drawing
+    /**
+     * True if all keys should be drawn
+     */
+    private boolean mInvalidateAllKeys;
     /**
      * The keys that should be drawn
      */
@@ -127,21 +132,15 @@ public class KeyboardView extends View {
      */
     private final Rect mClipRect = new Rect();
     /**
+     * The keyboard bitmap buffer for faster updates
+     */
+    private Bitmap mOffscreenBuffer;
+    /**
      * The canvas for the above mutable keyboard bitmap
      */
     private final Canvas mOffscreenCanvas = new Canvas();
     private final Paint mPaint = new Paint();
     private final Paint.FontMetrics mFontMetrics = new Paint.FontMetrics();
-    // Main keyboard
-    private Keyboard mKeyboard;
-    /**
-     * True if all keys should be drawn
-     */
-    private boolean mInvalidateAllKeys;
-    /**
-     * The keyboard bitmap buffer for faster updates
-     */
-    private Bitmap mOffscreenBuffer;
 
     public KeyboardView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.keyboardViewStyle);
@@ -150,6 +149,8 @@ public class KeyboardView extends View {
     public KeyboardView(final Context context, final AttributeSet attrs, final int defStyle) {
         this(context, attrs, defStyle, false);
     }
+
+    final TypedArray keyboardViewAttr;
 
     public KeyboardView(final Context context, final AttributeSet attrs, final int defStyle, boolean isEmoji) {
         super(context, attrs, defStyle);
@@ -195,20 +196,32 @@ public class KeyboardView extends View {
         mPaint.setAntiAlias(true);
     }
 
+    public KeyVisualAttributes getKeyVisualAttribute() {
+        return mKeyVisualAttributes;
+    }
+
     private static void blendAlpha(final Paint paint, final int alpha) {
         final int color = paint.getColor();
         paint.setARGB((paint.getAlpha() * alpha) / Constants.Color.ALPHA_OPAQUE,
                 Color.red(color), Color.green(color), Color.blue(color));
     }
 
-    public KeyVisualAttributes getKeyVisualAttribute() {
-        return mKeyVisualAttributes;
-    }
-
     public void setHardwareAcceleratedDrawingEnabled(final boolean enabled) {
         if (!enabled) return;
         // TODO: Should use LAYER_TYPE_SOFTWARE when hardware acceleration is off?
         setLayerType(LAYER_TYPE_HARDWARE, null);
+    }
+
+    /**
+     * Attaches a keyboard to this view. The keyboard can be switched at any time and the
+     * view will re-layout itself to accommodate the keyboard.
+     *
+     * @param keyboard the keyboard to display in this view
+     * @see Keyboard
+     * @see #getKeyboard()
+     */
+    public void setKeyboard(final Keyboard keyboard) {
+        setKeyboard(keyboard, false);
     }
 
     public void setKeyboard(final Keyboard keyboard, boolean isEmoji) {
@@ -229,18 +242,6 @@ public class KeyboardView extends View {
      */
     public Keyboard getKeyboard() {
         return mKeyboard;
-    }
-
-    /**
-     * Attaches a keyboard to this view. The keyboard can be switched at any time and the
-     * view will re-layout itself to accommodate the keyboard.
-     *
-     * @param keyboard the keyboard to display in this view
-     * @see Keyboard
-     * @see #getKeyboard()
-     */
-    public void setKeyboard(final Keyboard keyboard) {
-        setKeyboard(keyboard, false);
     }
 
     protected float getVerticalCorrection() {

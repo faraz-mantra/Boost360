@@ -23,11 +23,7 @@ open class CustomEditText : AppCompatEditText {
     setCustomAttrs(context, attrs)
   }
 
-  constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
-    context,
-    attrs,
-    defStyle
-  ) {
+  constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
     setCustomAttrs(context, attrs)
   }
 
@@ -37,8 +33,7 @@ open class CustomEditText : AppCompatEditText {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomTextView)
     setTextStyle(typedArray)
 //    inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) importantForAutofill =
-      View.IMPORTANT_FOR_AUTOFILL_NO
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO
     this.requestLayout()
     this.invalidate()
     typedArray.recycle()

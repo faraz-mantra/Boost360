@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
 **
 ** Copyright 2013, The Android Open Source Project
@@ -22,36 +23,36 @@
      of some scripts. The files named res/xml/key_*.xml have this U+25CC hack, although the
      counterpart files named res/xml-v16/key_*.xml don't have this hack. -->
 <merge xmlns:latin="http://schemas.android.com/apk/res-auto">
-  <switch>
-    <case latin:keyboardLayoutSet="hindi">
-      <!-- U+25CC: "◌" DOTTED CIRCLE
-           U+093F/U+0902: "िं" DEVANAGARI VOWEL SIGN I/DEVANAGARI SIGN ANUSVARA -->
-      <key-style
-        latin:moreKeys="&#x093F;&#x25CC;&#x0902;|&#x093F;&#x0902;"
-        latin:styleName="moreKeysDevanagariVowelSignI" />
-    </case>
-    <case latin:keyboardLayoutSet="hindi_compact">
-      <!-- U+25CC: "◌" DOTTED CIRCLE
-           U+093F: "ि" DEVANAGARI VOWEL SIGN I -->
-      <key-style
-        latin:moreKeys="&#x25CC;&#x093F;|&#x093F;"
-        latin:styleName="moreKeysDevanagariVowelSignI" />
-    </case>
-    <case latin:keyboardLayoutSet="marathi">
-      <!-- U+0907: "इ" DEVANAGARI LETTER I -->
-      <key-style
-        latin:moreKeys="&#x0907;"
-        latin:styleName="moreKeysDevanagariVowelSignI" />
-    </case>
-    <default>
-      <key-style latin:styleName="moreKeysDevanagariVowelSignI" />
-    </default>
-  </switch>
-  <!-- U+25CC: "◌" DOTTED CIRCLE
-       U+093F: "ि" DEVANAGARI VOWEL SIGN I -->
-  <key-style
-    latin:keyLabelFlags="followKeyLetterRatio"
-    latin:keySpec="&#x25CC;&#x093F;|&#x093F;"
-    latin:parentStyle="moreKeysDevanagariVowelSignI"
-    latin:styleName="baseKeyDevanagariVowelSignI" />
+    <switch>
+        <case latin:keyboardLayoutSet="hindi">
+            <!-- U+25CC: "◌" DOTTED CIRCLE
+                 U+093F/U+0902: "िं" DEVANAGARI VOWEL SIGN I/DEVANAGARI SIGN ANUSVARA -->
+            <key-style
+                latin:styleName="moreKeysDevanagariVowelSignI"
+                latin:moreKeys="&#x093F;&#x25CC;&#x0902;|&#x093F;&#x0902;" />
+        </case>
+        <case latin:keyboardLayoutSet="hindi_compact">
+            <!-- U+25CC: "◌" DOTTED CIRCLE
+                 U+093F: "ि" DEVANAGARI VOWEL SIGN I -->
+            <key-style
+                latin:styleName="moreKeysDevanagariVowelSignI"
+                latin:moreKeys="&#x25CC;&#x093F;|&#x093F;" />
+        </case>
+        <case latin:keyboardLayoutSet="marathi">
+            <!-- U+0907: "इ" DEVANAGARI LETTER I -->
+            <key-style
+                latin:styleName="moreKeysDevanagariVowelSignI"
+                latin:moreKeys="&#x0907;" />
+        </case>
+        <default>
+            <key-style latin:styleName="moreKeysDevanagariVowelSignI" />
+        </default>
+    </switch>
+    <!-- U+25CC: "◌" DOTTED CIRCLE
+         U+093F: "ि" DEVANAGARI VOWEL SIGN I -->
+    <key-style
+        latin:styleName="baseKeyDevanagariVowelSignI"
+        latin:parentStyle="moreKeysDevanagariVowelSignI"
+        latin:keySpec="&#x25CC;&#x093F;|&#x093F;"
+        latin:keyLabelFlags="followKeyLetterRatio" />
 </merge>

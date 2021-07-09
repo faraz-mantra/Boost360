@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 
 data class RequestWeeklyAppointment(
 
-  @field:SerializedName("duration")
-  val duration: Int? = null,
+		@field:SerializedName("duration")
+		val duration: Int? = null,
 
-  @field:SerializedName("timings")
-  val timings: List<AppointmentModel?>? = null,
+		@field:SerializedName("timings")
+		val timings: List<AppointmentModel?>? = null,
 
-  @field:SerializedName("serviceId")
-  val serviceId: String? = null,
+		@field:SerializedName("serviceId")
+		val serviceId: String? = null,
 )
 

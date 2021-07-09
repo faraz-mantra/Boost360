@@ -3,14 +3,14 @@ package com.boost.upgrades.data.renewalcart
 import java.io.Serializable
 
 data class RenewalPurchasedRequest(
-  var floatingPointId: String? = null,
-  var clientId: String? = null,
-  var widgetStatus: String? = null,
-  var nextWidgetStatus: String? = null,
-  var dateFilter: String? = null,
-  var startDate: String? = null,
-  var endDate: String? = null,
-  var widgetKey: String? = null
+    var floatingPointId: String? = null,
+    var clientId: String? = null,
+    var widgetStatus: String? = null,
+    var nextWidgetStatus: String? = null,
+    var dateFilter: String? = null,
+    var startDate: String? = null,
+    var endDate: String? = null,
+    var widgetKey: String? = null
 ) : Serializable {
 
   enum class WidgetStatus {

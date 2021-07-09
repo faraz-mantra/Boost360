@@ -9,8 +9,7 @@ import com.dashboard.databinding.DialogDrScoreDirectionBinding
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
 
-class DrScoreNewDashboardDialog :
-  BaseDialogFragment<DialogDrScoreDashboardBinding, BaseViewModel>() {
+class DrScoreNewDashboardDialog : BaseDialogFragment<DialogDrScoreDashboardBinding, BaseViewModel>() {
 
   var onClicked: () -> Unit = { }
 

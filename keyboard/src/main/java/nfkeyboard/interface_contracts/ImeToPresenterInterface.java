@@ -10,8 +10,6 @@ import android.view.inputmethod.EditorInfo;
 public interface ImeToPresenterInterface {
 
     View getCandidateView();
-
     View onCreateInputView();
-
     void onStartInputView(EditorInfo attribute, boolean restarting);
 }

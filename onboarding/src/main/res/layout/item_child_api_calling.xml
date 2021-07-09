@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <data>
 
   </data>
 
   <androidx.appcompat.widget.LinearLayoutCompat
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:orientation="horizontal">
 
     <com.framework.views.shadowview.ShadowLayout
-      android:layout_width="@dimen/size_36"
-      android:layout_height="@dimen/size_36"
-      android:layout_margin="@dimen/size_1"
-      app:shadowColor="@color/shadow"
-      app:shadowDx=".3dp"
-      app:shadowDy=".3dp"
-      app:shadowRadius="2dp"
-      app:shadowShape="oval"
-      app:shadowSide="all"
-      app:srcCompat="@drawable/ic_ria_circle">
+        android:layout_width="@dimen/size_36"
+        android:layout_height="@dimen/size_36"
+        android:layout_margin="@dimen/size_1"
+        app:shadowColor="@color/shadow"
+        app:shadowDx=".3dp"
+        app:shadowDy=".3dp"
+        app:shadowRadius="2dp"
+        app:shadowShape="oval"
+        app:shadowSide="all"
+        app:srcCompat="@drawable/ic_ria_circle">
 
       <com.framework.views.customViews.CustomImageView
-        android:id="@+id/image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/size_1"
-        app:srcCompat="@drawable/ic_google_n" />
+          android:id="@+id/image"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:padding="@dimen/size_1"
+          app:srcCompat="@drawable/ic_google_n" />
     </com.framework.views.shadowview.ShadowLayout>
 
     <com.framework.views.customViews.CustomTextView
-      android:id="@+id/title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:includeFontPadding="false"
-      android:text="@string/connecting_google_account"
-      android:textColor="@color/greyish_brown_40"
-      app:fontFamily="@font/semi_bold"
-      app:textType="SUBHEADING_1" />
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:text="@string/connecting_google_account"
+        android:textColor="@color/greyish_brown_40"
+        app:fontFamily="@font/semi_bold"
+        app:textType="SUBHEADING_1" />
 
   </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

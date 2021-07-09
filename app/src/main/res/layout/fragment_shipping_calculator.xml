@@ -1,159 +1,153 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical"
-
-  tools:context="com.nowfloats.ProductGallery.fragments.ShippingCalculatorFragment">
-
-  <LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="50dp"
-    android:background="#808080">
-
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:layout_marginStart="10dp"
-      android:text="@string/shipping_metric"
-      android:textColor="@color/white"
-      android:textSize="16sp" />
-
-    <View
-      android:layout_width="0dp"
-      android:layout_height="1dp"
-      android:layout_weight="1" />
-
-    <ImageView
-      android:id="@+id/iv_close"
-      android:layout_width="30dp"
-      android:layout_height="30dp"
-      android:layout_gravity="center_vertical"
-      android:layout_marginEnd="16dp"
-      android:tint="@color/white"
-      android:visibility="visible"
-      app:srcCompat="@drawable/ic_close_black_24dp" />
-
-  </LinearLayout>
-
-  <LinearLayout
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="10dp">
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-      android:id="@+id/et_length"
-      fontPath="Roboto-Light.ttf"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="5dp"
-      android:hint="@string/length_in_cm"
-      android:inputType="number|numberDecimal"
-      android:textColor="@color/main_text_color"
-      android:textColorHint="@color/primaryColor"
-      android:textSize="15sp"
-      app:met_floatingLabel="highlight"
-      app:met_primaryColor="@color/primaryColor"
-      app:met_singleLineEllipsis="true"
-      tools:ignore="MissingPrefix" />
-
-    <com.rengwuxian.materialedittext.MaterialEditText
-      android:id="@+id/et_width"
-      fontPath="Roboto-Light.ttf"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="5dp"
-      android:hint="@string/width_in_cm"
-      android:inputType="number|numberDecimal"
-      android:textColor="@color/main_text_color"
-      android:textColorHint="@color/primaryColor"
-      android:textSize="15sp"
-      app:met_floatingLabel="highlight"
-      app:met_primaryColor="@color/primaryColor"
-      app:met_singleLineEllipsis="true"
-      tools:ignore="MissingPrefix" />
-
-    <com.rengwuxian.materialedittext.MaterialEditText
-      android:id="@+id/et_height"
-      fontPath="Roboto-Light.ttf"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="5dp"
-      android:hint="@string/height_in_cm"
-      android:inputType="number|numberDecimal"
-      android:textColor="@color/main_text_color"
-      android:textColorHint="@color/primaryColor"
-      android:textSize="15sp"
-      app:met_floatingLabel="highlight"
-      app:met_primaryColor="@color/primaryColor"
-      app:met_singleLineEllipsis="true"
-      tools:ignore="MissingPrefix" />
-
-    <com.rengwuxian.materialedittext.MaterialEditText
-      android:id="@+id/et_weight"
-      fontPath="Roboto-Light.ttf"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="5dp"
-      android:hint="@string/weight_in_kgs"
-      android:inputType="number|numberDecimal"
-      android:textColor="@color/main_text_color"
-      android:textColorHint="@color/primaryColor"
-      android:textSize="15sp"
-      app:met_floatingLabel="highlight"
-      app:met_primaryColor="@color/primaryColor"
-      app:met_singleLineEllipsis="true"
-      tools:ignore="MissingPrefix" />
+    tools:context="com.nowfloats.ProductGallery.fragments.ShippingCalculatorFragment">
 
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+        android:background="#808080"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shipping_metric"
+            android:textColor="@color/white"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="1dp" />
+        <ImageView
+            android:id="@+id/iv_close"
+            android:visibility="visible"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:tint="@color/white"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_close_black_24dp"/>
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/shipping_charges" />
-
-      <TextView
-        android:id="@+id/tv_shipping_charge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
-        android:text="@string/inr_0"
-        android:textStyle="bold" />
     </LinearLayout>
 
-    <Button
-      android:id="@+id/btn_calculate_shipping_charges"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_horizontal"
-      android:layout_marginTop="15dp"
-      android:layout_marginBottom="10dp"
-      android:background="@drawable/btn_bg"
-      android:paddingStart="15dp"
-      android:paddingRight="15dp"
-      android:text="@string/calculate_shipping_charges"
-      android:textColor="@color/white" />
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-      android:id="@+id/btn_save_metrics"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_horizontal"
-      android:layout_marginTop="15dp"
-      android:layout_marginBottom="10dp"
-      android:background="@drawable/btn_bg"
-      android:paddingStart="15dp"
-      android:paddingRight="15dp"
-      android:text="@string/save_metrics"
-      android:textColor="@color/white"
-      android:visibility="gone" />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/et_length"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text_color"
+            android:textSize="15sp"
+            android:inputType="number|numberDecimal"
+            fontPath="Roboto-Light.ttf"
+            tools:ignore="MissingPrefix"
+            android:layout_marginBottom="5dp"
+            android:textColorHint="@color/primaryColor"
+            android:hint="@string/length_in_cm"
+            app:met_floatingLabel="highlight"
+            app:met_primaryColor="@color/primaryColor"
+            app:met_singleLineEllipsis="true" />
 
-  </LinearLayout>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/et_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text_color"
+            android:textSize="15sp"
+            android:inputType="number|numberDecimal"
+            fontPath="Roboto-Light.ttf"
+            tools:ignore="MissingPrefix"
+            android:layout_marginBottom="5dp"
+            android:textColorHint="@color/primaryColor"
+            android:hint="@string/width_in_cm"
+            app:met_floatingLabel="highlight"
+            app:met_primaryColor="@color/primaryColor"
+            app:met_singleLineEllipsis="true" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/et_height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text_color"
+            android:textSize="15sp"
+            android:inputType="number|numberDecimal"
+            fontPath="Roboto-Light.ttf"
+            tools:ignore="MissingPrefix"
+            android:layout_marginBottom="5dp"
+            android:textColorHint="@color/primaryColor"
+            android:hint="@string/height_in_cm"
+            app:met_floatingLabel="highlight"
+            app:met_primaryColor="@color/primaryColor"
+            app:met_singleLineEllipsis="true" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/et_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_text_color"
+            android:textSize="15sp"
+            android:inputType="number|numberDecimal"
+            fontPath="Roboto-Light.ttf"
+            tools:ignore="MissingPrefix"
+            android:layout_marginBottom="5dp"
+            android:textColorHint="@color/primaryColor"
+            android:hint="@string/weight_in_kgs"
+            app:met_floatingLabel="highlight"
+            app:met_primaryColor="@color/primaryColor"
+            app:met_singleLineEllipsis="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/shipping_charges"/>
+            <TextView
+                android:layout_marginStart="7dp"
+                android:id="@+id/tv_shipping_charge"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/inr_0"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_marginTop="15dp"
+            android:id="@+id/btn_calculate_shipping_charges"
+            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:paddingStart="15dp"
+            android:paddingRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_bg"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/calculate_shipping_charges"/>
+        <Button
+            android:visibility="gone"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/white"
+            android:paddingStart="15dp"
+            android:paddingRight="15dp"
+            android:id="@+id/btn_save_metrics"
+            android:background="@drawable/btn_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/save_metrics"/>
+
+    </LinearLayout>
+
 
 
 </LinearLayout>

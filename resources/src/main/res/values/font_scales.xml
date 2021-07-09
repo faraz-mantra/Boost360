@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <dimen name="title">88sp</dimen> <!--123sp-->
-  <dimen name="subtitle">92sp</dimen> <!--92sp-->
-  <dimen name="heading_1">40sp</dimen> <!--70sp-->
-  <dimen name="heading_2">30sp</dimen> <!--50sp-->
-  <dimen name="heading_3">28sp</dimen> <!--40sp-->
-  <dimen name="heading_4">22sp</dimen> <!--38sp-->
-  <dimen name="heading_5">20sp</dimen> <!--36sp-->
-  <dimen name="heading_6">16sp</dimen> <!--32sp-->
-  <dimen name="heading_7">18sp</dimen> <!--32sp-->
+    <dimen name="title">88sp</dimen> <!--123sp-->
+    <dimen name="subtitle">92sp</dimen> <!--92sp-->
+    <dimen name="heading_1">40sp</dimen> <!--70sp-->
+    <dimen name="heading_2">30sp</dimen> <!--50sp-->
+    <dimen name="heading_3">28sp</dimen> <!--40sp-->
+    <dimen name="heading_4">22sp</dimen> <!--38sp-->
+    <dimen name="heading_5">20sp</dimen> <!--36sp-->
+    <dimen name="heading_6">16sp</dimen> <!--32sp-->
+    <dimen name="heading_7">18sp</dimen> <!--32sp-->
 
-  <dimen name="subheading_1">14sp</dimen> <!--30sp-->
-  <dimen name="subheading_2">12sp</dimen> <!--26sp-->
+    <dimen name="subheading_1">14sp</dimen> <!--30sp-->
+    <dimen name="subheading_2">12sp</dimen> <!--26sp-->
 
   <dimen name="subtitle_1">14sp</dimen> <!--24sp-->
   <dimen name="subtitle_2">12sp</dimen> <!--22sp-->

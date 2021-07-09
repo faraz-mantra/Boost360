@@ -10,11 +10,9 @@ import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
-
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
-
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
@@ -80,16 +78,16 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
     String access_token;
     Bus bus;
     UserSessionManager session;
-    ProgressDialog progressDialog;
-    Typeface robotoRegular;
-    GraphResponse mMeResponse;
-    GraphResponse mAccountsResponse;
     private int pagesLengthSize;
     private ArrayList<String> pageItems;
     private JSONArray FbPageList;
     private String mFacebookEmail;
     private String mFacebookContactName;
-    private int permision_request_id = 0;
+    private int permision_request_id=0;
+    ProgressDialog progressDialog;
+    Typeface robotoRegular;
+    GraphResponse mMeResponse;
+    GraphResponse mAccountsResponse;
     private String[] permission = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private CallbackManager callbackManager;
 
@@ -228,8 +226,8 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         progressDialog = ProgressDialog.show(PreSignUp_MainActivity.this, "", getString(R.string.fetching_details));
         progressDialog.setCancelable(false);
 
-        List<String> readPermissions = Arrays.asList("email"
-                , "public_profile", "user_friends", "read_insights", "business_management");
+        List<String> readPermissions= Arrays.asList("email"
+                , "public_profile",  "user_friends", "read_insights", "business_management");
         final List<String> publishPermissions = Arrays.asList("publish_actions",
                 "publish_pages", "manage_pages");
         final LoginManager loginManager = LoginManager.getInstance();
@@ -238,9 +236,9 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
             public void onSuccess(LoginResult loginResult) {
                 Set permissions = loginResult.getAccessToken().getPermissions();
                 //String name = Profile.getCurrentProfile().getName();
-                if (!permissions.containsAll(new HashSet(publishPermissions))) {
+                if(!permissions.containsAll(new HashSet(publishPermissions))){
                     loginManager.logInWithPublishPermissions(PreSignUp_MainActivity.this, publishPermissions);
-                } else {
+                }else {
                     Bundle parameters = new Bundle();
                     parameters.putString("fields", "id,name,email");
                     GraphRequest meRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(),
@@ -263,7 +261,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
                                         public void onCompleted(GraphResponse response) {
                                             mAccountsResponse = response;
                                         }
-                                    })
+                            })
                     );
                     batch.addCallback(new GraphRequestBatch.Callback() {
                         @Override
@@ -297,7 +295,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
 
     private void processFbResponse(final GraphResponse mMeResponse, final GraphResponse mAccountsResponse) {
         final int[] selectPosition = {0};
-        if (mMeResponse != null && mAccountsResponse != null) {
+        if(mMeResponse!=null && mAccountsResponse!=null) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -327,9 +325,9 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
 
                         access_token = AccessToken.getCurrentAccessToken().getToken();
                         session.storeFacebookAccessToken(access_token);
-                    } catch (JSONException e) {
+                    }catch (JSONException e){
                         e.printStackTrace();
-                    } finally {
+                    }finally {
                         PreSignUp_MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -407,8 +405,8 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
                     }
                 }
             }).start();
-        } else {
-            Toast.makeText(this, getString(R.string.facebook_response_error), Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this, getString(R.string.facebook_response_error),Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -532,9 +530,8 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         callbackManager.onActivityResult(requestCode, resultCode, data);
         //facebook.authorizeCallback(requestCode, resultCode, data);
     }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
 
         switch (requestCode) {
             case 0: {
@@ -547,8 +544,8 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
             }
         }
 
-        // other 'case' lines to check for other
-        // permissions this app might request
+            // other 'case' lines to check for other
+            // permissions this app might request
     }
 
     @Override
@@ -564,13 +561,14 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
 
             ActivityCompat.requestPermissions(PreSignUp_MainActivity.this, permission, permision_request_id);
 
-        } else {
+        }else
+        {
             loc_provider = new LocationProvider(PreSignUp_MainActivity.this);
             if (!loc_provider.canGetLocation()) {
                 loc_provider.showSettingsAlert();
             }
-            Location location = null;
-            if (loc_provider.canGetLocation()) {
+            Location location =null;
+            if(loc_provider.canGetLocation()){
                 location = loc_provider.getLocation();
                 loc_provider.stopUsingGPS();
             }

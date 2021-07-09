@@ -15,7 +15,6 @@ public class roboto_lt_33__b6b6b6_383838_edittext extends EditText {
         super(context);
         init(context);
     }
-
     public roboto_lt_33__b6b6b6_383838_edittext(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -25,9 +24,9 @@ public class roboto_lt_33__b6b6b6_383838_edittext extends EditText {
         super(context, attrs, defStyle);
         init(context);
     }
-
-    public void init(Context context) {
-        setCustomFont(context, "Roboto-Light.ttf");
+    public void init(Context context)
+    {
+        setCustomFont(context,"Roboto-Light.ttf");
         setTextColor(getResources().getColor(R.color.text_color_roboto_lt_30_edittext));
         setHintTextColor(getResources().getColor(R.color.hint_color_roboto_lt_30_edittext));
         setTextSize(17);

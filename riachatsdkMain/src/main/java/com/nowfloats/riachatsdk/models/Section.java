@@ -109,9 +109,6 @@ public class Section implements Serializable {
     private List<Items> items = null;
 
     private int cardPos;
-    private RiaCardModel cardModel;
-    private boolean isAnimApplied = false;
-    private boolean isFromRia = true;
 
     public List<Items> getItems() {
         return items;
@@ -120,6 +117,8 @@ public class Section implements Serializable {
     public void setItems(List<Items> items) {
         this.items = items;
     }
+
+    private RiaCardModel cardModel;
 
     public Integer getOtpLength() {
         return otpLength;
@@ -136,6 +135,8 @@ public class Section implements Serializable {
     public void setCardModel(RiaCardModel cardModel) {
         this.cardModel = cardModel;
     }
+
+    private boolean isAnimApplied = false;
 
     public boolean isAnimApplied() {
         return isAnimApplied;
@@ -157,16 +158,16 @@ public class Section implements Serializable {
         return showDate;
     }
 
-    public void setShowDate(boolean showDate) {
-        this.showDate = showDate;
-    }
-
     public int getCardPos() {
         return cardPos;
     }
 
     public void setCardPos(int cardPos) {
         this.cardPos = cardPos;
+    }
+
+    public void setShowDate(boolean showDate) {
+        this.showDate = showDate;
     }
 
     public boolean isLoading() {
@@ -184,6 +185,8 @@ public class Section implements Serializable {
     public void setDisplayOpenInBrowserButton(boolean displayOpenInBrowserButton) {
         this.displayOpenInBrowserButton = displayOpenInBrowserButton;
     }
+
+    private boolean isFromRia = true;
 
     public boolean isFromRia() {
         return isFromRia;

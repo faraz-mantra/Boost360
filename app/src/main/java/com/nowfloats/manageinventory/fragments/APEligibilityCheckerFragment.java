@@ -45,7 +45,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class APEligibilityCheckerFragment extends DialogFragment implements View.OnClickListener {
+public class APEligibilityCheckerFragment extends DialogFragment implements View.OnClickListener{
 
 
     ProgressBar pbAddressPincode, pbSubscriptionStatus, pbCustomDomain, pbSiteAppearance, pbShippingMetrics, pbBankDetails;
@@ -114,9 +114,9 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if (activity instanceof EligibilityCheckCallBack) {
+        if(activity instanceof EligibilityCheckCallBack){
             mEligibilityCheckCallBack = (EligibilityCheckCallBack) activity;
-        } else {
+        }else {
             throw new RuntimeException(getString(R.string.implement_eligibility_check));
         }
     }
@@ -135,23 +135,24 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
     }
 
 
-    public void initChecking() {
+
+    public void initChecking(){
         int time = 500;
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 pbAddressPincode.setVisibility(View.GONE);
                 mShouldEnableAP &= !TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE));
-                if (TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE))) {
+                if(TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE))){
                     setNegativeStatusColor(ivAddressPinCode);
                     llAddressPincode.setOnClickListener(APEligibilityCheckerFragment.this);
-                } else {
+                }else {
                     setPositiveStatusColor(ivAddressPinCode);
                 }
             }
         }, time);
 
-        time += 500;
+        time+=500;
 
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -159,33 +160,33 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                 pbSubscriptionStatus.setVisibility(View.GONE);
                 mShouldEnableAP &= !TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE)) &&
                         mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1");
-                if (TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE)) ||
-                        !mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1")) {
+                if(TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE)) ||
+                        !mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1")){
                     setNegativeStatusColor(ivSubscriptionStatus);
                     llSubscriptionStatus.setOnClickListener(APEligibilityCheckerFragment.this);
-                } else {
+                }else {
                     setPositiveStatusColor(ivSubscriptionStatus);
                 }
             }
         }, time);
 
-        time += 500;
+        time+=500;
 
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 pbCustomDomain.setVisibility(View.GONE);
                 mShouldEnableAP &= !TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI));
-                if (TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
+                if(TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))){
                     setNegativeStatusColor(ivCustomDomain);
                     llCustomDomain.setOnClickListener(APEligibilityCheckerFragment.this);
-                } else {
+                }else {
                     setPositiveStatusColor(ivCustomDomain);
                 }
             }
         }, time);
 
-        time += 500;
+        time+=500;
 
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -193,17 +194,17 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                 pbSiteAppearance.setVisibility(View.GONE);
                 mShouldEnableAP &= !TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID)) &&
                         mSession.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID).equals("57c3c1a65d64370d7cf4eb17");
-                if (TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID)) ||
-                        !mSession.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID).equals("57c3c1a65d64370d7cf4eb17")) {
+                if(TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID)) ||
+                        !mSession.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID).equals("57c3c1a65d64370d7cf4eb17")){
                     setNegativeStatusColor(ivSiteAppearance);
                     llSiteAppearance.setOnClickListener(APEligibilityCheckerFragment.this);
-                } else {
+                }else {
                     setPositiveStatusColor(ivSiteAppearance);
                 }
             }
         }, time);
 
-        time += 500;
+        time+=500;
 
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -216,10 +217,10 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
 
     }
 
-    private void checkFpEligibility() {
+    private void checkFpEligibility(){
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(String.format(Constants.NOW_FLOATS_API_URL + "/ProductCatalogue/v1/floatingpoints/isFpNFPaymentEligible?fpId=%s&clientId=%s", mSession.getFPID(), Constants.clientId))
+                .url(String.format(Constants.NOW_FLOATS_API_URL+"/ProductCatalogue/v1/floatingpoints/isFpNFPaymentEligible?fpId=%s&clientId=%s", mSession.getFPID(), Constants.clientId))
                 .build();
         final Gson gson = new Gson();
         client.newCall(request).enqueue(new Callback() {
@@ -257,12 +258,13 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                                 setPositiveStatusColor(ivShippingMetrics);
                                 mShouldEnableAP &= true;
                                 checkBankDetails();
-                            } else {
+                            }else {
 
                                 //Toast.makeText(getActivity(), resp.Error.ErrorCode, Toast.LENGTH_SHORT).show();
                                 throw new NullPointerException("Response is Null");
                             }
-                        } catch (Exception e) {
+                        }catch (Exception e)
+                        {
                             setNegativeStatusColor(ivShippingMetrics);
                             mShouldEnableAP &= false;
                             llShippingMetrics.setOnClickListener(APEligibilityCheckerFragment.this);
@@ -277,10 +279,10 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
         });
     }
 
-    private void checkBankDetails() {
+    private void checkBankDetails(){
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(String.format(Constants.WA_BASE_URL + "merchant_profile3/aggregate-data?match={$and:[{merchant_id:'%s'}, {IsArchived:false}]}&group={_id:null, count:{$sum:1}}", mSession.getFPID()))
+                .url(String.format(Constants.WA_BASE_URL+"merchant_profile3/aggregate-data?match={$and:[{merchant_id:'%s'}, {IsArchived:false}]}&group={_id:null, count:{$sum:1}}", mSession.getFPID()))
                 .header("Authorization", Constants.WA_KEY)
                 .build();
         final Gson gson = new Gson();
@@ -316,19 +318,20 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                                     new TypeToken<WebActionModel<CountModel>>() {
                                     }.getType());
 
-                            if (ordersCountData != null && ordersCountData.getData().size() > 0 && ordersCountData.getData().get(0).getCount() > 0) {
+                            if (ordersCountData != null && ordersCountData.getData().size()>0 && ordersCountData.getData().get(0).getCount()>0) {
                                 setPositiveStatusColor(ivBankDetails);
                                 mShouldEnableAP &= true;
                                 mEligibilityCheckCallBack.onEligibiltyChecked(mShouldEnableAP);
                                 APEligibilityCheckerFragment.this.setCancelable(true);
                                 ivClose.setVisibility(View.VISIBLE);
-                                if (mShouldEnableAP) {
+                                if(mShouldEnableAP) {
                                     APEligibilityCheckerFragment.this.dismiss();
                                 }
-                            } else {
+                            }else {
                                 throw new NullPointerException(getString(R.string.order_count_is_null));
                             }
-                        } catch (Exception e) {
+                        }catch (Exception e)
+                        {
                             e.printStackTrace();
                             setNegativeStatusColor(ivBankDetails);
                             mShouldEnableAP &= false;
@@ -343,19 +346,19 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
         });
     }
 
-    private void setNegativeStatusColor(ImageView imageView) {
+    private void setNegativeStatusColor(ImageView imageView){
         imageView.setImageResource(R.drawable.cross_wrong);
         imageView.setVisibility(View.VISIBLE);
     }
 
-    private void setPositiveStatusColor(ImageView imageView) {
+    private void setPositiveStatusColor(ImageView imageView){
         imageView.setImageResource(R.drawable.tick_right);
         imageView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.ll_addr_pincode:
                 Intent baActivity = new Intent(getActivity(), Business_Address_Activity.class);
                 startActivity(baActivity);
@@ -390,7 +393,6 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                 fragment.show(getActivity().getFragmentManager(), "PaymentInfoEntryFragment");
         }
     }
-
     private void showDialog(String headText, String message, final String actionButton) {
         AlertDialog dialog = null;
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -412,8 +414,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
         textView.setTextColor(Color.parseColor("#808080"));
 
     }
-
-    public interface EligibilityCheckCallBack {
-        void onEligibiltyChecked(boolean isEligible);
+    public interface EligibilityCheckCallBack{
+         void onEligibiltyChecked(boolean isEligible);
     }
 }

@@ -32,13 +32,14 @@ import com.android.inputmethod.keyboard.PointerTracker;
 public class MoreKeysKeyboardAccessibilityDelegate
         extends KeyboardAccessibilityDelegate<MoreKeysKeyboardView> {
     private static final String TAG = MoreKeysKeyboardAccessibilityDelegate.class.getSimpleName();
-    private static final int CLOSING_INSET_IN_PIXEL = 1;
+
     private final Rect mMoreKeysKeyboardValidBounds = new Rect();
+    private static final int CLOSING_INSET_IN_PIXEL = 1;
     private int mOpenAnnounceResId;
     private int mCloseAnnounceResId;
 
     public MoreKeysKeyboardAccessibilityDelegate(final MoreKeysKeyboardView moreKeysKeyboardView,
-                                                 final KeyDetector keyDetector) {
+            final KeyDetector keyDetector) {
         super(moreKeysKeyboardView, keyDetector);
     }
 
@@ -65,8 +66,8 @@ public class MoreKeysKeyboardAccessibilityDelegate
         }
         super.onHoverEnter(event);
         final int actionIndex = event.getActionIndex();
-        final int x = (int) event.getX(actionIndex);
-        final int y = (int) event.getY(actionIndex);
+        final int x = (int)event.getX(actionIndex);
+        final int y = (int)event.getY(actionIndex);
         final int pointerId = event.getPointerId(actionIndex);
         final long eventTime = event.getEventTime();
         mKeyboardView.onDownEvent(x, y, pointerId, eventTime);
@@ -76,8 +77,8 @@ public class MoreKeysKeyboardAccessibilityDelegate
     protected void onHoverMove(final MotionEvent event) {
         super.onHoverMove(event);
         final int actionIndex = event.getActionIndex();
-        final int x = (int) event.getX(actionIndex);
-        final int y = (int) event.getY(actionIndex);
+        final int x = (int)event.getX(actionIndex);
+        final int y = (int)event.getY(actionIndex);
         final int pointerId = event.getPointerId(actionIndex);
         final long eventTime = event.getEventTime();
         mKeyboardView.onMoveEvent(x, y, pointerId, eventTime);
@@ -94,8 +95,8 @@ public class MoreKeysKeyboardAccessibilityDelegate
         }
         setLastHoverKey(null);
         final int actionIndex = event.getActionIndex();
-        final int x = (int) event.getX(actionIndex);
-        final int y = (int) event.getY(actionIndex);
+        final int x = (int)event.getX(actionIndex);
+        final int y = (int)event.getY(actionIndex);
         final int pointerId = event.getPointerId(actionIndex);
         final long eventTime = event.getEventTime();
         // A hover exit event at one pixel width or height area on the edges of more keys keyboard

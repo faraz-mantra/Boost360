@@ -5,5 +5,5 @@ import com.onboarding.nowfloats.model.category.CategoryModel
 
 @Deprecated("old")
 class CategoryListResponse(
-  var data: ArrayList<CategoryModel> = ArrayList()
+        var data: ArrayList<CategoryModel> = ArrayList()
 ) : BaseResponse()

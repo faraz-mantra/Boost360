@@ -23,12 +23,8 @@ import io.separ.neural.inputmethod.indic.SuggestedWords;
  */
 public interface SuggestionStripViewAccessor {
     void showAddToDictionaryHint(final String word);
-
     boolean isShowingAddToDictionaryHint();
-
     void dismissAddToDictionaryHint();
-
     void setNeutralSuggestionStrip();
-
     void showSuggestionStrip(final SuggestedWords suggestedWords);
 }

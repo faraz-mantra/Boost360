@@ -5,11 +5,9 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Paint;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.appcompat.widget.ListPopupWindow;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,34 +89,34 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
         }
     }
 
-    @Override
-    void unRegisterEventBus() {
-        super.unRegisterEventBus();
-        if (mEventHandler != null) {
-            this.mEventHandler.unregister();
-        }
-    }
-
     class ImageHolder extends RecyclerView.ViewHolder {
 
-        public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd'T'HH:mm:ss";
         private TextView nameTv, priceTv, discountTv, descriptionTv, productNameTv, productPriceTv, productDiscountTv,
                 keyboardCurrencyTv, offerCurrencyTv, selectedQuantityTv, selectedValidityTv/*, tvBack*/;
+
         private ImageView productImage/*, productIv*/;
         private AllSuggestionModel dataModel;
-        private ConstraintLayout constraintLayout, /*constraintLayoutFlipped,*/
-                offerCl, productsKeyboardCl;
+
+        private ConstraintLayout constraintLayout, /*constraintLayoutFlipped,*/ offerCl, productsKeyboardCl;
         private Button copyButton, makeOfferButton, createButton, cancelButton, oneButton,
                 twoButton, threeButton, fourButton, fiveButton, sixButton, sevenButton, eightButton,
                 nineButton, zeroButton, decimalButton, doneButton, cancelBtn;
+
         private EditText offerPriceEt, editText;
+
         private ListPopupWindow listPopupWindowValidity, listPopupWindowQuantity;
+
         private LinearLayout linearLayoutQuantity, linearLayoutValidity;
+
         private ImageButton delButton;
+
         private boolean hasDecimal, flippable;
+
         private int focusId, availableUnits;
+
         private String temp = null;
         private String[] validity, quantity;
+
         private int MIN_OFFER_PRICE = 10;
 
         @SuppressLint("ClickableViewAccessibility")
@@ -343,9 +341,13 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 @Override
                 public void onClick(View view) {
 
-                    if (TextUtils.isEmpty(dataModel.getUrl())) {
+                    if(TextUtils.isEmpty(dataModel.getUrl()))
+                    {
                         Toast.makeText(mContext, "Invalid Link", Toast.LENGTH_SHORT).show();
-                    } else {
+                    }
+
+                    else
+                    {
                         String url = onCopyClick(dataModel);
                         if (!url.equalsIgnoreCase("")) {
                             ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
@@ -432,12 +434,17 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
 
         }
 
-        void setModelData(AllSuggestionModel model) {
+        void setModelData(AllSuggestionModel model)
+        {
             dataModel = model;
 
-            if (!TextUtils.isEmpty(model.getImageUrl()) && !model.getImageUrl().equalsIgnoreCase("null")) {
+            if (!TextUtils.isEmpty(model.getImageUrl()) && !model.getImageUrl().equalsIgnoreCase("null"))
+            {
                 Glide.with(mContext).load(model.getImageUrl()).into(productImage);
-            } else {
+            }
+
+            else
+            {
                 Glide.with(mContext).load(R.drawable.default_product_image).into(productImage);
             }
 
@@ -452,7 +459,8 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             nameTv.setText(model.getText());
             descriptionTv.setText(model.getDescription());
 
-            try {
+            try
+            {
                 double price = TextUtils.isEmpty(model.getPrice()) ? 0 : Double.valueOf(model.getPrice());
                 double discount = TextUtils.isEmpty(model.getDiscount()) ? 0 : Double.valueOf(model.getDiscount());
 
@@ -460,7 +468,8 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 priceTv.setText(String.valueOf(model.getCurrencyCode() + " " + formattedPrice));
                 productPriceTv.setText(String.valueOf(model.getCurrencyCode() + " " + formattedPrice));
 
-                if (discount != 0) {
+                if(discount != 0)
+                {
                     discountTv.setVisibility(View.VISIBLE);
                     productDiscountTv.setVisibility(View.VISIBLE);
 
@@ -471,11 +480,17 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
 
                     discountTv.setText(String.valueOf(model.getCurrencyCode() + " " + formattedPrice));
                     productDiscountTv.setText(String.valueOf(model.getCurrencyCode() + " " + formattedPrice));
-                } else {
+                }
+
+                else
+                {
                     discountTv.setVisibility(View.INVISIBLE);
                     productDiscountTv.setVisibility(View.INVISIBLE);
                 }
-            } catch (Exception e) {
+            }
+
+            catch (Exception e)
+            {
                 discountTv.setVisibility(View.INVISIBLE);
                 productDiscountTv.setVisibility(View.INVISIBLE);
                 e.printStackTrace();
@@ -487,24 +502,34 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             offerCurrencyTv.setText(model.getCurrencyCode());
             availableUnits = model.getAvailableUnits();
 
-            if (Double.valueOf(model.getPrice()) >= MIN_OFFER_PRICE) {
+            if (Double.valueOf(model.getPrice()) >= MIN_OFFER_PRICE)
+            {
                 offerPriceEt.setText(model.getPrice());
-            } else {
+            }
+
+            else
+            {
                 offerPriceEt.setText("10");
             }
 
             String[] items;
 
-            if (availableUnits > 0) {
+            if (availableUnits > 0)
+            {
                 items = new String[availableUnits];
 
-                for (int i = 1; i <= availableUnits; i++) {
+                for (int i = 1; i <= availableUnits; i++)
+                {
                     items[i - 1] = Integer.toString(i);
                 }
-            } else {
+            }
+
+            else
+            {
                 items = new String[10];
 
-                for (int i = 1; i <= 10; i++) {
+                for (int i = 1; i <= 10; i++)
+                {
                     items[i - 1] = Integer.toString(i);
                 }
             }
@@ -512,22 +537,34 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             ListPopupWindowSetup(validity, items);
         }
 
-        void OnButtonClick(String number) {
+        void OnButtonClick(String number)
+        {
             int cursorStart = editText.getSelectionStart();
 
-            if (editText.getText().length() == 1 && editText.getText().toString().charAt(0) == '0') {
-                if (!number.equals("0")) {
+            if (editText.getText().length() == 1 && editText.getText().toString().charAt(0) == '0')
+            {
+                if (!number.equals("0"))
+                {
                     editText.setText(number);
                     editText.setSelection(cursorStart);
                 }
-            } else if (cursorStart == editText.getText().toString().length()) {
+            }
+
+            else if (cursorStart == editText.getText().toString().length())
+            {
                 temp = editText.getText().toString().replaceAll(",", "") + number;
                 String yourFormattedString = df.format(Double.valueOf(temp));
                 editText.setText(yourFormattedString);
                 editText.setSelection(yourFormattedString.length());
-            } else if (editText.length() == 0) {
+            }
+
+            else if (editText.length() == 0)
+            {
                 editText.append(number);
-            } else {
+            }
+
+            else
+            {
                 temp = editText.getText().insert(cursorStart, number).toString();
                 temp = editText.getText().toString().replaceAll(",", "");
                 String yourFormattedString = df.format(Double.valueOf(temp));
@@ -538,12 +575,16 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
 
         void AnimationFlip(final boolean endShare) {
 
-            if (constraintLayout.getVisibility() == View.VISIBLE && !endShare) {
+            if (constraintLayout.getVisibility() == View.VISIBLE && !endShare)
+            {
                 //constraintLayout.setVisibility(View.GONE);
                 //constraintLayoutFlipped.setVisibility(View.VISIBLE);
                 //constraintLayoutFlipped.setAlpha(1);
                 //offerCl.setVisibility(View.GONE);
-            } else {
+            }
+
+            else
+            {
                 //constraintLayout.setVisibility(View.VISIBLE);
                 //constraintLayoutFlipped.setVisibility(View.GONE);
                 //constraintLayoutFlipped.setAlpha(1);
@@ -710,6 +751,8 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
             return getParsedDate(calendar.getTime(), YYYY_MM_DD_HH_MM_SS);
         }
 
+        public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd'T'HH:mm:ss";
+
         public String getParsedDate(Date dateFormat, String format) {
             return new java.text.SimpleDateFormat(format).format(dateFormat);
         }
@@ -785,6 +828,7 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
         }
     }
 
+
     public class EventBusHandler {
         public void register() {
             if (!EventBusExt.getDefault().isRegistered(this)) {
@@ -820,6 +864,14 @@ class ProductAdapter extends BaseAdapter<AllSuggestionModel> {
                 mHolder.descriptionTv.setText(R.string.tv_description);
                 mHolder.doneButton.setText(R.string.tv_done);
             }
+        }
+    }
+
+    @Override
+    void unRegisterEventBus() {
+        super.unRegisterEventBus();
+        if (mEventHandler != null) {
+            this.mEventHandler.unregister();
         }
     }
 }

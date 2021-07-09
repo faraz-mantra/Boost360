@@ -65,10 +65,6 @@ import retrofit.converter.GsonConverter;
 
 public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDetailsListener {
 
-    private static final int GALLERY_PHOTO = 2;
-    private static final int CAMERA_PHOTO = 1;
-    private final int gallery_req_id = 0;
-    private final int media_req_id = 1;
     UserSessionManager session;
     Data existingItemData;
     String uploadedImageURL = "";
@@ -78,6 +74,10 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
     ImageView placeImage;
     ImageButton removePlaceImage;
     CardView placeImageLayout;
+    private final int gallery_req_id = 0;
+    private final int media_req_id = 1;
+    private static final int GALLERY_PHOTO = 2;
+    private static final int CAMERA_PHOTO = 1;
     Uri imageUri;
     String path = null;
     private ProgressDialog progressDialog;

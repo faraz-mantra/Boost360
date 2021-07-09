@@ -1,7 +1,6 @@
 package com.nowfloats.webactions.models;
 
 import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -15,19 +14,19 @@ public class WebActionDataResponse<T> {
     private Extra extra;
 
     public List<T> getData() {
-        return data;
+    return data;
     }
 
     public void setData(List<T> data) {
-        this.data = data;
+    this.data = data;
     }
 
     public Extra getExtra() {
-        return extra;
+    return extra;
     }
 
     public void setExtra(Extra extra) {
-        this.extra = extra;
+    this.extra = extra;
     }
 
 }

@@ -7,8 +7,7 @@ import com.dashboard.model.RoiSummaryData
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 
-class RoiSummaryViewHolder(binding: ItemRoiSummaryBinding) :
-  AppBaseRecyclerViewHolder<ItemRoiSummaryBinding>(binding) {
+class RoiSummaryViewHolder(binding: ItemRoiSummaryBinding) : AppBaseRecyclerViewHolder<ItemRoiSummaryBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -16,17 +15,10 @@ class RoiSummaryViewHolder(binding: ItemRoiSummaryBinding) :
     binding.txtSymbol.visibility = if (data.isRupeeSymbols) View.VISIBLE else View.GONE
     binding.txtTitle.text = data.title
     data.icon1?.let { binding.imgIcon.setImageResource(it) }
-    binding.txtDayTitle.visibility =
-      if (data.dayTitle.isNullOrEmpty().not()) View.VISIBLE else View.GONE
+    binding.txtDayTitle.visibility = if (data.dayTitle.isNullOrEmpty().not()) View.VISIBLE else View.GONE
     binding.txtDayTitle.text = data.dayTitle
     binding.txtAmount.text = if (data.value.equals("0")) "_" else data.value
-    binding.mainContent.setOnClickListener {
-      listener?.onItemClick(
-        position,
-        item,
-        RecyclerViewActionType.ROI_SUMMARY_CLICK.ordinal
-      )
-    }
+    binding.mainContent.setOnClickListener { listener?.onItemClick(position, item, RecyclerViewActionType.ROI_SUMMARY_CLICK.ordinal) }
   }
 
 }

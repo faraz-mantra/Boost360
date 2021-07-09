@@ -15,7 +15,7 @@ import retrofit.http.QueryMap;
  */
 
 public class AnalyticsFetch {
-    public interface FetchDetails {
+    public interface FetchDetails{
         @GET("/Dashboard/v1/{FPTAG}/details")
         void getDataCount(@Path("FPTAG") String tag, @QueryMap Map<String, String> data, Callback<DashboardResponse> response);
 

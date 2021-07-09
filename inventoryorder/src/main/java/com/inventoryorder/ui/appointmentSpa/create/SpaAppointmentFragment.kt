@@ -1,5 +1,4 @@
 package com.inventoryorder.ui.appointmentSpa.create
-
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -39,8 +38,7 @@ import java.util.*
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
-class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBinding>(),
-  SelectDateTimeBottomSheetDialog.DateChangedListener {
+class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBinding>(), SelectDateTimeBottomSheetDialog.DateChangedListener {
 
   private var serviceList: ArrayList<ServiceItem>? = null
   private var serviceAdapter: ArrayAdapter<ServiceItem>? = null
@@ -72,15 +70,8 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     getSearchListing()
     serviceList = ArrayList()
     startDate = getDateTime()
-    setOnClickListener(
-      binding?.buttonReviewDetails,
-      binding?.textAddApptDateTime,
-      binding?.buttonReviewDetails,
-      binding?.imageEdit,
-      binding?.layoutCustomer?.textAddCustomerGstin,
-      binding?.layoutCustomer?.tvRemove,
-      binding?.layoutBillingAddr?.editCity
-    )
+    setOnClickListener(binding?.buttonReviewDetails, binding?.textAddApptDateTime, binding?.buttonReviewDetails, binding?.imageEdit,
+        binding?.layoutCustomer?.textAddCustomerGstin, binding?.layoutCustomer?.tvRemove, binding?.layoutBillingAddr?.editCity)
   }
 
   override fun onClick(v: View) {
@@ -93,17 +84,9 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         dialog.show(parentFragmentManager, dialog.javaClass.name)
       }
       binding?.textAddApptDateTime -> {
-        selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(
-          bookingSlotResponse!!,
-          selectedService!!,
-          dateCounter,
-          this
-        )
+        selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!, selectedService!!, dateCounter, this)
         selectedDateTimeBottomSheetDialog?.onClicked = this::onDialogDoneClicked
-        selectedDateTimeBottomSheetDialog?.show(
-          this.parentFragmentManager,
-          SelectDateTimeBottomSheetDialog::class.java.name
-        )
+        selectedDateTimeBottomSheetDialog?.show(this.parentFragmentManager, SelectDateTimeBottomSheetDialog::class.java.name)
       }
 
       binding?.layoutCustomer?.textAddCustomerGstin -> {
@@ -127,17 +110,9 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
           }
         }
 
-        selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(
-          bookingSlotResponse!!,
-          selectedService!!,
-          dateCounter,
-          this
-        )
+        selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!, selectedService!!, dateCounter, this)
         selectedDateTimeBottomSheetDialog?.onClicked = this::onDialogDoneClicked
-        selectedDateTimeBottomSheetDialog?.show(
-          this.parentFragmentManager,
-          SelectDateTimeBottomSheetDialog::class.java.name
-        )
+        selectedDateTimeBottomSheetDialog?.show(this.parentFragmentManager, SelectDateTimeBottomSheetDialog::class.java.name)
       }
     }
   }
@@ -185,16 +160,12 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       return
     }
 
-    if (email.isNullOrEmpty().not() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        .not()
-    ) {
+    if (email.isNullOrEmpty().not() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches().not()) {
       showShortToast(getString(R.string.please_enter_valid_email))
       return
     }
     if (binding?.layoutCustomer?.lytCustomerGstn?.visibility == View.VISIBLE)
-      if (gstNo.isNullOrEmpty().not() && Pattern.compile(AppConstant.GST_VALIDATION_REGEX)
-          .matcher(gstNo).matches().not()
-      ) {
+      if (gstNo.isNullOrEmpty().not() && Pattern.compile(AppConstant.GST_VALIDATION_REGEX).matcher(gstNo).matches().not()) {
         showShortToast(getString(R.string.enter_valid_gstin_number))
         return
       }
@@ -224,37 +195,20 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
       return
     }
 
-    val contactDetails = ContactDetails(
-      fullName = name.toString(),
-      emailId = email.toString(),
-      primaryContactNumber = phone.toString()
-    )
+    val contactDetails = ContactDetails(fullName = name.toString(),
+        emailId = email.toString(),
+        primaryContactNumber = phone.toString())
 
-    val billingAddress = Address(
-      address.toString(),
-      city = city.toString(),
-      region = state.toString(),
-      zipcode = pinCode.toString()
-    )
-    val buyerDetails = BuyerDetails(
-      contactDetails = contactDetails,
-      address = billingAddress,
-      GSTIN = gstNo.toString()
-    )
+    val billingAddress = Address(address.toString(), city = city.toString(), region = state.toString(), zipcode = pinCode.toString())
+    val buyerDetails = BuyerDetails(contactDetails = contactDetails, address = billingAddress, GSTIN = gstNo.toString())
 
     val appointmentsList = ArrayList<AppointmentRequestModel>()
     appointmentsList.add(appointmentRequestModel)
 
-    val productDetails =
-      ProductDetails(extraProperties = ExtraProperties(appointment = appointmentsList))
+    val productDetails = ProductDetails(extraProperties = ExtraProperties(appointment = appointmentsList))
 
     val items = ArrayList<ItemsItem>()
-    val item = ItemsItem(
-      productOrOfferId = selectedService?._id,
-      quantity = 1,
-      type = "SERVICE",
-      productDetails = productDetails
-    )
+    val item = ItemsItem(productOrOfferId = selectedService?._id, quantity = 1, type = "SERVICE", productDetails = productDetails)
 
     items.add(item)
 
@@ -274,10 +228,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     startFragmentOrderActivity(FragmentType.REVIEW_SPA_DETAILS, bundle, isResult = true)
   }
 
-  private fun onDialogDoneClicked(
-    appointmentRequestModel: AppointmentRequestModel,
-    dateCounter: Int
-  ) {
+  private fun onDialogDoneClicked(appointmentRequestModel: AppointmentRequestModel, dateCounter: Int) {
     binding?.layoutShowSelectedSlot?.visibility = View.VISIBLE
     binding?.groupTiming?.visibility = View.GONE
 
@@ -291,29 +242,24 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
   private fun getSearchListing() {
     showProgress(getString(R.string.loading))
-    viewModel?.getSearchListing(preferenceData?.fpTag!!, "", "", 0, 100)
-      ?.observeOnce(viewLifecycleOwner, Observer {
-        hideProgress()
+    viewModel?.getSearchListing(preferenceData?.fpTag!!, "", "", 0, 100)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
 
-        if (it.error is NoNetworkException) {
-          showLongToast(resources.getString(R.string.internet_connection_not_available))
-          return@Observer
-        }
+      if (it.error is NoNetworkException) {
+        showLongToast(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
 
-        if (it.isSuccess()) {
-          val serviceListingResponse = (it as? GetServiceListingResponse)
-          if (serviceListingResponse != null) {
-            serviceList?.addAll(serviceListingResponse.Result?.Data!!)
-            setArrayAdapter()
-          }
-        } else {
-          showLongToast(
-            if (it.message()
-                .isNotEmpty()
-            ) it.message() else getString(R.string.not_able_to_get_services_list)
-          )
+      if (it.isSuccess()) {
+        val serviceListingResponse = (it as? GetServiceListingResponse)
+        if (serviceListingResponse != null) {
+          serviceList?.addAll(serviceListingResponse.Result?.Data!!)
+          setArrayAdapter()
         }
-      })
+      } else {
+        showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.not_able_to_get_services_list))
+      }
+    })
   }
 
 
@@ -329,11 +275,9 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         totalPrice = selectedService?.Price ?: 0.0
         discountedPrice = selectedService?.DiscountedPrice ?: 0.0
         currency = selectedService?.Currency ?: ""
-        val bookingSlotsRequest = BookingSlotsRequest(
-          BatchType = "DAILY",
-          ServiceId = serviceList?.get(pos)?._id!!,
-          DateRange = DateRange(StartDate = startDate, EndDate = startDate)
-        )
+        val bookingSlotsRequest = BookingSlotsRequest(BatchType = "DAILY",
+                ServiceId = serviceList?.get(pos)?._id!!,
+                DateRange = DateRange(StartDate = startDate, EndDate = startDate))
         getBookingSlots(bookingSlotsRequest)
       }
     }

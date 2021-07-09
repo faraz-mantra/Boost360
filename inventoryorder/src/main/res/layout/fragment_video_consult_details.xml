@@ -442,7 +442,7 @@
           android:padding="@dimen/size_14">
 
           <LinearLayout
-            android:id="@+id/ll_countdown"
+              android:id="@+id/ll_countdown"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_2"

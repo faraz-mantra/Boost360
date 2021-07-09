@@ -34,14 +34,14 @@ final class BubblesLayoutCoordinator {
     private BubblesService bubblesService;
     private CustomerAssistantService samBubblesService;
 
-    private BubblesLayoutCoordinator() {
-    }
-
     private static BubblesLayoutCoordinator getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new BubblesLayoutCoordinator();
         }
         return INSTANCE;
+    }
+
+    private BubblesLayoutCoordinator() {
     }
 
     public void notifyBubblePositionChanged(BubbleLayout bubble, int x, int y) {
@@ -105,10 +105,6 @@ final class BubblesLayoutCoordinator {
         }
     }
 
-    private View getTrashContent() {
-        return trashView.getChildAt(0);
-    }
-
     public static class Builder {
         private BubblesLayoutCoordinator layoutCoordinator;
 
@@ -135,5 +131,9 @@ final class BubblesLayoutCoordinator {
         public BubblesLayoutCoordinator build() {
             return layoutCoordinator;
         }
+    }
+
+    private View getTrashContent() {
+        return trashView.getChildAt(0);
     }
 }

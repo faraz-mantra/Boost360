@@ -12,8 +12,7 @@ import io.reactivex.Observable
 import okhttp3.MultipartBody
 import retrofit2.Retrofit
 
-object WebActionBoostKitRepository :
-  AppBaseRepository<WebActionBoostKitRemoteData, AppBaseLocalService>() {
+object WebActionBoostKitRepository : AppBaseRepository<WebActionBoostKitRemoteData, AppBaseLocalService>() {
 
   fun getKycData(auth: String?, query: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getKycData(auth, query), TaskCode.GET_KYC_DATA)
@@ -28,21 +27,11 @@ object WebActionBoostKitRepository :
   }
 
   fun updateKycData(auth: String?, request: UpdatePaymentKycRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.updateKycData(auth, request),
-      TaskCode.UPDATE_KYC_DATA
-    )
+    return makeRemoteRequest(remoteDataSource.updateKycData(auth, request), TaskCode.UPDATE_KYC_DATA)
   }
 
-  fun putUploadImageProfile(
-    auth: String?,
-    file: MultipartBody.Part?,
-    assetFileName: String?
-  ): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.putUploadImageProfile(auth, file, assetFileName),
-      TaskCode.POST_FILE_UPLOAD
-    )
+  fun putUploadImageProfile(auth: String?, file: MultipartBody.Part?, assetFileName: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.putUploadImageProfile(auth, file, assetFileName), TaskCode.POST_FILE_UPLOAD)
   }
 
   override fun getRemoteDataSourceClass(): Class<WebActionBoostKitRemoteData> {

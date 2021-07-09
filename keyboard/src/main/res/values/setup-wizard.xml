@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
 **
 ** Copyright 2013, The Android Open Source Project
@@ -17,5 +18,5 @@
 */
 -->
 <resources>
-  <bool name="config_setup_wizard_available">false</bool>
+    <bool name="config_setup_wizard_available">false</bool>
 </resources>

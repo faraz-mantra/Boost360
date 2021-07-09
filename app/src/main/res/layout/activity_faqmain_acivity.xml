@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical"
-  tools:context="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity">
-
-  <include
-    android:id="@+id/app_bar_faq_main"
-    layout="@layout/new_app_bar" />
-
-  <ListView
-    android:id="@+id/lv_faq_main"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity">
+    <include
+        android:id="@+id/app_bar_faq_main"
+        layout="@layout/new_app_bar" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lv_faq_main" />
 
 
 </LinearLayout>

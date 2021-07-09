@@ -18,8 +18,8 @@ public class ParserTask extends AsyncTask<String, Integer, ArrayList<String>> {
     JSONObject jObject;
     Activity activity;
 
-    public ParserTask(Activity activity) {
-        this.activity = activity;
+    public ParserTask(Activity activity){
+            this.activity = activity;
     }
 
     @Override
@@ -29,13 +29,13 @@ public class ParserTask extends AsyncTask<String, Integer, ArrayList<String>> {
 
         PlaceJSONParser placeJsonParser = new PlaceJSONParser();
 
-        try {
+        try{
             jObject = new JSONObject(jsonData[0]);
 
             // Getting the parsed data as a List construct
             places = placeJsonParser.parse(jObject);
 
-        } catch (Exception e) {
+        }catch(Exception e){
             Log.d("Exception", e.toString());
         }
         return places;
@@ -55,7 +55,7 @@ public class ParserTask extends AsyncTask<String, Integer, ArrayList<String>> {
 //        int[] to = new int[] { android.R.id.text1 };
 
         // Creating a SimpleAdapter for the AutoCompleteTextView
-        AutoCompleteAdapter autoCompleteAdapter = new AutoCompleteAdapter(activity, R.layout.design_single_text, result);
+        AutoCompleteAdapter autoCompleteAdapter = new AutoCompleteAdapter(activity, R.layout.design_single_text,result);
 //        SimpleAdapter adapter = new SimpleAdapter(activity, result, android.R.layout.simple_list_item_1, from, to);
 
         // Setting the adapter

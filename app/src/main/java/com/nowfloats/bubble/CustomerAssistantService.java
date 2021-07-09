@@ -70,30 +70,33 @@ import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
 
 
 public class CustomerAssistantService extends Service {
-    public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
-    public static final String ACTION_RESET_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_RESET_BUBBLE";
-    public static final String ACTION_GO_TO_RIGHT_WALL = "nowfloats.bubblebutton.bubble.ACTION_GO_TO_RIGHT_WALL";
-    public static final String ACTION_GO_TO_RIGHT_WALL_CARDS = "nowfloats.bubblebutton.bubble.ACTION_GO_TO_RIGHT_WALL_CARDS";
-    public static final String ACTION_ADD_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_ADD_BUBBLE";
-    public static final String ACTION_REMOVE_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_REMOVE_BUBBLE";
-    public static final String ACTION_REFRESH_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_REFRESH_DIALOG";
-    private final static int FOREGROUND_ID = 999;
     private List<BubbleLayout> bubbles = new ArrayList<BubbleLayout>();
     private BubbleTrashLayout bubblesTrash;
     private WindowManager windowManager;
     private BubblesLayoutCoordinator layoutCoordinator;
     private SharedPreferences pref;
+
     private IntentFilter addIntentFilter = new IntentFilter(ACTION_ADD_BUBBLE);
     private IntentFilter removeIntentFilter = new IntentFilter(ACTION_REMOVE_BUBBLE);
     private IntentFilter resertIntentFilters = new IntentFilter(ACTION_RESET_BUBBLE);
     private IntentFilter moveRightIntentFilters = new IntentFilter(ACTION_GO_TO_RIGHT_WALL);
     private IntentFilter moveSpecificIntentFilters = new IntentFilter(ACTION_GO_TO_RIGHT_WALL_CARDS);
+
     private float initAplha = 0.7f;
+
+    public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
+    public static final String ACTION_RESET_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_RESET_BUBBLE";
+    public static final String ACTION_GO_TO_RIGHT_WALL = "nowfloats.bubblebutton.bubble.ACTION_GO_TO_RIGHT_WALL";
+    public static final String ACTION_GO_TO_RIGHT_WALL_CARDS = "nowfloats.bubblebutton.bubble.ACTION_GO_TO_RIGHT_WALL_CARDS";
+
+    public static final String ACTION_ADD_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_ADD_BUBBLE";
+    public static final String ACTION_REMOVE_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_REMOVE_BUBBLE";
+    public static final String ACTION_REFRESH_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_REFRESH_DIALOG";
+
     private PowerManager.WakeLock cpuWakeLock = null;
-    private BubbleLayout bubbleView;
-    private String BUBBLE_CLASS_NAME = "com.nowfloats.managenotification.CallerInfoDialog";
-    private String BUBBLE_V2_CLASS_NAME = "com.nowfloats.swipecard.SuggestionsActivity";
-    private boolean shouldOpen = false;
+
+    private final static int FOREGROUND_ID = 999;
+
     BroadcastReceiver resetReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -163,6 +166,8 @@ public class CustomerAssistantService extends Service {
         return windowManager;
     }
 
+    private BubbleLayout bubbleView;
+
     public void addBubble(final int x, final int y) {
 
         try {
@@ -206,6 +211,9 @@ public class CustomerAssistantService extends Service {
 
     }
 
+    private String BUBBLE_CLASS_NAME = "com.nowfloats.managenotification.CallerInfoDialog";
+    private String BUBBLE_V2_CLASS_NAME = "com.nowfloats.swipecard.SuggestionsActivity";
+
     private boolean isDialogShowing() {
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
@@ -218,6 +226,8 @@ public class CustomerAssistantService extends Service {
         return (componentInfo.getClassName().equalsIgnoreCase(BUBBLE_CLASS_NAME)
                 || componentInfo.getClassName().equalsIgnoreCase(BUBBLE_V2_CLASS_NAME));
     }
+
+    private boolean shouldOpen = false;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

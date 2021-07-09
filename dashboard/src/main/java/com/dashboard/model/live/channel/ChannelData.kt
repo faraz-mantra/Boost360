@@ -6,7 +6,7 @@ import com.framework.base.BaseResponse
 import com.onboarding.nowfloats.model.channel.ChannelModel
 
 class ChannelData(
-  var channelData: ChannelModel? = null,
+    var channelData: ChannelModel? = null,
 ) : BaseResponse(), AppBaseRecyclerViewItem {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.CHANNEL_ITEM_VIEW.getLayout()

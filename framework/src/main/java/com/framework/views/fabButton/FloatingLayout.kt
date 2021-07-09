@@ -40,11 +40,7 @@ class FloatingLayout : FrameLayout {
 
   constructor(context: Context) : this(context, null, 0)
   constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-    context,
-    attrs,
-    defStyleAttr
-  ) {
+  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
     initTypedArray(attrs)
   }
 
@@ -53,12 +49,7 @@ class FloatingLayout : FrameLayout {
 
     val ta = context.theme.obtainStyledAttributes(attrs, R.styleable.FloatingActionButton, 0, 0)
 
-    fabAnimationStyle = FabMenuAnimation.getByIndex(
-      ta.getInt(
-        R.styleable.FloatingActionButton_fabMenuStyle,
-        FabMenuAnimation.ANIMATION_POP_UP.ordinal
-      )
-    )
+    fabAnimationStyle = FabMenuAnimation.getByIndex(ta.getInt(R.styleable.FloatingActionButton_fabMenuStyle, FabMenuAnimation.ANIMATION_POP_UP.ordinal))
     fabMenuGravity = ta.getInt(R.styleable.FloatingActionButton_android_gravity, Gravity.TOP)
     fabAnimateMenu = ta.getBoolean(R.styleable.FloatingActionButton_fabAnimateMenu, true)
     fabAnimateDuration = ta.getInt(R.styleable.FloatingActionButton_fabAnimateDuration, 300)
@@ -86,15 +77,13 @@ class FloatingLayout : FrameLayout {
           if (i == 0) {
             when (childView) {
               is FloatingActionButton -> childView.fabElevation = 11f
-              is com.google.android.material.floatingactionbutton.FloatingActionButton -> childView.compatElevation =
-                11f
+              is com.google.android.material.floatingactionbutton.FloatingActionButton -> childView.compatElevation = 11f
             }
           } else {
             childView.visibility = View.GONE
             when (childView) {
               is FloatingActionButton -> childView.fabElevation = 9f
-              is com.google.android.material.floatingactionbutton.FloatingActionButton -> childView.compatElevation =
-                9f
+              is com.google.android.material.floatingactionbutton.FloatingActionButton -> childView.compatElevation = 9f
             }
           }
 
@@ -121,24 +110,9 @@ class FloatingLayout : FrameLayout {
         } else {
           val marginFormMini = resources.getDimensionPixelSize(R.dimen.default_margin_for_mini)
           when (fabAnimationStyle) {
-            FabMenuAnimation.ANIMATION_POP_DOWN -> lp.setMargins(
-              marginFormMini,
-              margin,
-              marginFormMini,
-              margin
-            )
-            FabMenuAnimation.ANIMATION_POP_RIGHT -> lp.setMargins(
-              margin,
-              marginFormMini,
-              margin,
-              marginFormMini
-            )
-            FabMenuAnimation.ANIMATION_POP_LEFT -> lp.setMargins(
-              margin,
-              marginFormMini,
-              margin,
-              marginFormMini
-            )
+            FabMenuAnimation.ANIMATION_POP_DOWN -> lp.setMargins(marginFormMini, margin, marginFormMini, margin)
+            FabMenuAnimation.ANIMATION_POP_RIGHT -> lp.setMargins(margin, marginFormMini, margin, marginFormMini)
+            FabMenuAnimation.ANIMATION_POP_LEFT -> lp.setMargins(margin, marginFormMini, margin, marginFormMini)
             else -> lp.setMargins(marginFormMini, margin, marginFormMini, margin)
           }
         }
@@ -165,7 +139,7 @@ class FloatingLayout : FrameLayout {
 
     if (fabAnimateMenu) {
       ObjectAnimator.ofFloat(views[0], View.ROTATION, 45f, 0f)
-        .apply { duration = fabAnimateDuration.toLong() }.start()
+          .apply { duration = fabAnimateDuration.toLong() }.start()
     }
   }
 
@@ -176,8 +150,7 @@ class FloatingLayout : FrameLayout {
     for (i in views.size - 1 downTo 1) {
       val view = views[i]
       val animationSize = 160f
-      val viewAnimator =
-        ObjectAnimator.ofFloat(view, viewProperty, directionFactor * i * animationSize, 0f)
+      val viewAnimator = ObjectAnimator.ofFloat(view, viewProperty, directionFactor * i * animationSize, 0f)
           .apply {
             addListener(object : AnimatorListenerAdapter() {
               override fun onAnimationEnd(animation: Animator?) {
@@ -222,8 +195,7 @@ class FloatingLayout : FrameLayout {
     for (i in views.size - 1 downTo 1) {
       val view = views[i]
       val animationSize = 160f
-      val viewAnimator =
-        ObjectAnimator.ofFloat(view, viewProperty, 0f, directionFactor * i * animationSize)
+      val viewAnimator = ObjectAnimator.ofFloat(view, viewProperty, 0f, directionFactor * i * animationSize)
           .apply {
             addListener(object : AnimatorListenerAdapter() {
               override fun onAnimationStart(animation: Animator?) {

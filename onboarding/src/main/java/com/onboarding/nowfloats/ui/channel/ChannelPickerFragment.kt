@@ -35,8 +35,7 @@ import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
 import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.viewmodel.channel.ChannelPlanViewModel
 
-class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, ChannelPlanViewModel>(),
-  RecyclerItemClickListener {
+class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
 
   private var requestFloatsModel: RequestFloatsModel? = null
   private var channelFeaturesAdapter: AppBaseRecyclerViewAdapter<SectionsFeature>? = null
@@ -78,8 +77,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
     this.arguments = arguments
     requestFloatsModel = NavigatorManager.getRequest()
     requestFloatsModel?.categoryDataModel?.getChannelList()?.let { channelList.addAll(it) }
-    binding?.categorySelectedDesc?.text =
-      resources.getString(R.string.string_for) + categoryDataModel?.category_descriptor
+    binding?.categorySelectedDesc?.text = resources.getString(R.string.string_for) + categoryDataModel?.category_descriptor
   }
 
   override fun onCreateView() {
@@ -123,34 +121,17 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
         expandable = false
         peekHeightProportion = .8f
         mCancelable = false
-        contentHeader(
-          "${resources.getString(R.string.recommended_on)} ${list.size} ${
-            resources.getString(
-              R.string.channel
-            )
-          }", true
-        )
+        contentHeader("${resources.getString(R.string.recommended_on)} ${list.size} ${resources.getString(R.string.channel)}", true)
         channelMutableList(list) { _, position, item, isType ->
-          val action =
-            if (isType) RecyclerViewActionType.CHANNEL_ITEM_CLICKED.ordinal else RecyclerViewActionType.CHANNEL_ITEM_WHY_CLICKED.ordinal
+          val action = if (isType) RecyclerViewActionType.CHANNEL_ITEM_CLICKED.ordinal else RecyclerViewActionType.CHANNEL_ITEM_WHY_CLICKED.ordinal
           onItemClickBottomSheet(list, position, item, action)
         }
-        oneButton(
-          resources.getString(R.string.done),
-          fadDuration = 1500L,
-          drwableId = R.drawable.bg_button_orange,
-          autoDismiss = true
-        ) { onClick { onChannelSelected() } }
+        oneButton(resources.getString(R.string.done), fadDuration = 1500L, drwableId = R.drawable.bg_button_orange, autoDismiss = true) { onClick { onChannelSelected() } }
       }
     }
   }
 
-  private fun onItemClickBottomSheet(
-    list: ObservableList<ChannelModel>,
-    position: Int,
-    item: ChannelModel,
-    actionType: Int
-  ) {
+  private fun onItemClickBottomSheet(list: ObservableList<ChannelModel>, position: Int, item: ChannelModel, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.CHANNEL_ITEM_WHY_CLICKED.ordinal -> openWhyChannelDialog(item as? ChannelModel)
       RecyclerViewActionType.CHANNEL_ITEM_CLICKED.ordinal -> {
@@ -169,8 +150,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
           } else if (list[position].isFacebookShop()) {
             if (isSelected) {
               val isPage = list.isFbPageOrShop(ChannelType.FB_PAGE)
-              if (isPage != null && isPage.isSelected!!.not()) isPage.isSelected =
-                !isPage.isSelected!!
+              if (isPage != null && isPage.isSelected!!.not()) isPage.isSelected = !isPage.isSelected!!
             }
           }
           channelList.clear()
@@ -203,12 +183,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
         peekHeightProportion = .8f
         contentHeader(it, true)
         featureMutableList(it)
-        oneButton(
-          resources.getString(R.string.okay),
-          fadDuration = 1500L,
-          drwableId = R.drawable.bg_button_orange,
-          autoDismiss = true
-        )
+        oneButton(resources.getString(R.string.okay), fadDuration = 1500L, drwableId = R.drawable.bg_button_orange, autoDismiss = true)
       }
     }
   }
@@ -225,7 +200,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
   private fun setChannelAdapter(channels: ArrayList<ChannelModel>, animate: Boolean = true) {
     channelAdapter = AppBaseRecyclerViewAdapter(baseActivity, channels, this)
     val recyclerViewWidth =
-      ScreenUtils.instance.getWidth(baseActivity) - ConversionUtils.dp2px(32f, 20f, 24f, 16f, 16f)
+        ScreenUtils.instance.getWidth(baseActivity) - ConversionUtils.dp2px(32f, 20f, 24f, 16f, 16f)
     val itemWidth = ConversionUtils.dp2px(44f)
     val spanCount = recyclerViewWidth / itemWidth
     binding?.channelList?.layoutManager = GridLayoutManager(baseActivity, spanCount)
@@ -234,9 +209,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
       if (animate) channelAdapter?.runLayoutAnimation(it)
       else channelAdapter?.notifyDataSetChanged()
     }
-    val text = StringBuilder(
-      resources.getString(R.string.presence_on) + " ${channels.size} " + resources.getString(R.string.channel)
-    )
+    val text = StringBuilder(resources.getString(R.string.presence_on) + " ${channels.size} " + resources.getString(R.string.channel))
     if (channels.size > 1 || channels.size == 0) text.append(resources.getString(R.string.more_than_one_add_s))
     binding?.channelPresence?.text = text
   }
@@ -252,32 +225,17 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
       if (channels.haveWhatsAppChannels()) totalPages++
     }
     requestFloatsModel?.channels = ArrayList(selectedChannels)
-    NavigatorManager.pushToStackAndSaveRequest(
-      ScreenModel(CHANNEL_SELECT, getToolbarTitle()),
-      requestFloatsModel
-    )
+    NavigatorManager.pushToStackAndSaveRequest(ScreenModel(CHANNEL_SELECT, getToolbarTitle()), requestFloatsModel)
     bundle.addInt(IntentConstant.TOTAL_PAGES, totalPages).addInt(IntentConstant.CURRENT_PAGES, 1)
     if (requestFloatsModel?.isUpdate == false) {
       startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS, bundle)
     } else {
       val channels = requestFloatsModel?.channels ?: return
       when {
-        channels.haveFacebookPage() -> startFragmentActivity(
-          FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
-          bundle
-        )
-        channels.haveFacebookShop() -> startFragmentActivity(
-          FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
-          bundle
-        )
-        channels.haveTwitterChannels() -> startFragmentActivity(
-          FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS,
-          bundle
-        )
-        channels.haveWhatsAppChannels() -> startFragmentActivity(
-          FragmentType.REGISTRATION_BUSINESS_WHATSAPP,
-          bundle
-        )
+        channels.haveFacebookPage() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE, bundle)
+        channels.haveFacebookShop() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP, bundle)
+        channels.haveTwitterChannels() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS, bundle)
+        channels.haveWhatsAppChannels() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WHATSAPP, bundle)
       }
     }
   }

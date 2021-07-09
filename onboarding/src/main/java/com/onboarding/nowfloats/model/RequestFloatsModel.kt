@@ -10,16 +10,16 @@ import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.model.registration.BusinessInfoModel
 
 class RequestFloatsModel(
-  var categoryDataModel: CategoryDataModel? = null,
-  var channels: ArrayList<ChannelModel>? = null,
-  var contactInfo: BusinessInfoModel? = null,
-  var channelAccessTokens: ArrayList<ChannelAccessToken>? = ArrayList(),
-  var channelActionDatas: ArrayList<ChannelActionData>? = ArrayList(),
-  var floatingPointId: String? = null,
-  var fpTag: String? = null,
-  var isUpdate: Boolean? = false,
-  var whatsappEntransactional: Boolean? = null,
-  var isFpCreate: Boolean? = false,
+    var categoryDataModel: CategoryDataModel? = null,
+    var channels: ArrayList<ChannelModel>? = null,
+    var contactInfo: BusinessInfoModel? = null,
+    var channelAccessTokens: ArrayList<ChannelAccessToken>? = ArrayList(),
+    var channelActionDatas: ArrayList<ChannelActionData>? = ArrayList(),
+    var floatingPointId: String? = null,
+    var fpTag: String? = null,
+    var isUpdate: Boolean? = false,
+    var whatsappEntransactional: Boolean? = null,
+    var isFpCreate: Boolean? = false,
 ) : Parcelable {
   var websiteUrl: String? = ""
   var profileUrl: String? = null
@@ -29,20 +29,19 @@ class RequestFloatsModel(
     return if (isUpdate == true) fpTag else contactInfo?.domainName
   }
 
-  fun getConnectedAccessToken(): ArrayList<ChannelAccessToken> {
+  fun  getConnectedAccessToken():ArrayList<ChannelAccessToken>{
     return ArrayList(channelAccessTokens?.filter { it.isLinked() })
   }
 
   constructor(source: Parcel) : this(
-    source.readParcelable<CategoryDataModel>(CategoryDataModel::class.java.classLoader),
-    source.createTypedArrayList(ChannelModel.CREATOR),
-    source.readParcelable<BusinessInfoModel>(BusinessInfoModel::class.java.classLoader),
-    source.createTypedArrayList(ChannelAccessToken.CREATOR),
-    source.createTypedArrayList(ChannelActionData.CREATOR),
-    source.readString(),
-    source.readString(),
-    source.readValue(Boolean::class.java.classLoader) as? Boolean
-  ) {
+      source.readParcelable<CategoryDataModel>(CategoryDataModel::class.java.classLoader),
+      source.createTypedArrayList(ChannelModel.CREATOR),
+      source.readParcelable<BusinessInfoModel>(BusinessInfoModel::class.java.classLoader),
+      source.createTypedArrayList(ChannelAccessToken.CREATOR),
+      source.createTypedArrayList(ChannelActionData.CREATOR),
+      source.readString(),
+      source.readString(),
+      source.readValue(Boolean::class.java.classLoader) as? Boolean) {
     profileUrl = source.readString()
     businessUrl = source.readString()
   }

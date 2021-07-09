@@ -1,290 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical"
-  tools:ignore="MissingPrefix">
-
-  <include
-    android:id="@+id/toolbar"
-    layout="@layout/toolbar_seller_analytics"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-
-  <ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/margin_20">
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_marginBottom="@dimen/margin_20"
-      android:orientation="vertical"
-      tools:ignore="MissingPrefix">
-
-      <androidx.cardview.widget.CardView
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_seller_analytics"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_10"
-        android:background="@color/white"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="3dp"
-        app:contentPaddingBottom="10dp">
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/margin_20">
 
         <LinearLayout
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical">
-
-          <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#808080">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin_20"
+            android:orientation="vertical"
+            tools:ignore="MissingPrefix">
 
-            <TextView
-              android:id="@+id/topFeatureText"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/margin_5"
-              android:layout_marginBottom="@dimen/margin_5"
-              android:paddingStart="10dp"
-              android:paddingTop="8dp"
-              android:paddingBottom="8dp"
-              android:text="@string/pick_up_address"
-              android:textColor="#ffffff"
-              android:textSize="16sp" />
-            <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
-          </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10"
+                android:background="@color/white"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp"
+                app:contentPaddingBottom="10dp">
 
-          <include
-            layout="@layout/list_item_pick_up_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#808080">
+
+                        <TextView
+                            android:id="@+id/topFeatureText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_5"
+                            android:layout_marginTop="@dimen/margin_5"
+                            android:paddingBottom="8dp"
+                            android:paddingStart="10dp"
+                            android:paddingTop="8dp"
+                            android:text="@string/pick_up_address"
+                            android:textColor="#ffffff"
+                            android:textSize="16sp" />
+                        <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/list_item_pick_up_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10"
+                android:background="@color/white"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp"
+                app:contentPaddingBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#808080">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_5"
+                            android:layout_marginTop="@dimen/margin_5"
+                            android:paddingBottom="8dp"
+                            android:paddingStart="10dp"
+                            android:paddingTop="8dp"
+                            android:text="@string/site_appearance"
+                            android:textColor="#ffffff"
+                            android:textSize="16sp" />
+                        <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/list_item_site_appearance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10"
+                android:background="@color/white"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp"
+                app:contentPaddingBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#808080">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_5"
+                            android:layout_marginTop="@dimen/margin_5"
+                            android:paddingBottom="8dp"
+                            android:paddingStart="10dp"
+                            android:paddingTop="8dp"
+                            android:text="@string/bank_details"
+                            android:textColor="#ffffff"
+                            android:textSize="16sp" />
+                        <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/list_item_bank_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10"
+                android:background="@color/white"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp"
+                app:contentPaddingBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#808080">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_5"
+                            android:layout_marginTop="@dimen/margin_5"
+                            android:paddingBottom="8dp"
+                            android:paddingStart="10dp"
+                            android:paddingTop="8dp"
+                            android:text="@string/payment_methods"
+                            android:textColor="#ffffff"
+                            android:textSize="16sp" />
+                        <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/list_item_payment_methods"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10"
+                android:background="@color/white"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp"
+                app:contentPaddingBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#808080">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_5"
+                            android:layout_marginTop="@dimen/margin_5"
+                            android:paddingBottom="8dp"
+                            android:paddingStart="10dp"
+                            android:paddingTop="8dp"
+                            android:text="@string/delivery_methods"
+                            android:textColor="#ffffff"
+                            android:textSize="16sp" />
+                        <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/list_item_delivery_method"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10"
+                android:background="@color/white"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp"
+                app:contentPaddingBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#808080">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_5"
+                            android:layout_marginTop="@dimen/margin_5"
+                            android:paddingBottom="8dp"
+                            android:paddingStart="10dp"
+                            android:paddingTop="8dp"
+                            android:text="@string/gst_identification_number"
+                            android:textColor="#ffffff"
+                            android:textSize="16sp" />
+                        <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/list_item_gst"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
-
-      </androidx.cardview.widget.CardView>
-
-      <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_10"
-        android:background="@color/white"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="3dp"
-        app:contentPaddingBottom="10dp">
-
-        <LinearLayout
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical">
-
-          <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#808080">
-
-            <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/margin_5"
-              android:layout_marginBottom="@dimen/margin_5"
-              android:paddingStart="10dp"
-              android:paddingTop="8dp"
-              android:paddingBottom="8dp"
-              android:text="@string/site_appearance"
-              android:textColor="#ffffff"
-              android:textSize="16sp" />
-            <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
-          </LinearLayout>
-
-          <include
-            layout="@layout/list_item_site_appearance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-        </LinearLayout>
-
-      </androidx.cardview.widget.CardView>
-
-
-      <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_10"
-        android:background="@color/white"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="3dp"
-        app:contentPaddingBottom="10dp">
-
-        <LinearLayout
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical">
-
-          <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#808080">
-
-            <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/margin_5"
-              android:layout_marginBottom="@dimen/margin_5"
-              android:paddingStart="10dp"
-              android:paddingTop="8dp"
-              android:paddingBottom="8dp"
-              android:text="@string/bank_details"
-              android:textColor="#ffffff"
-              android:textSize="16sp" />
-            <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
-          </LinearLayout>
-
-          <include
-            layout="@layout/list_item_bank_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-        </LinearLayout>
-
-      </androidx.cardview.widget.CardView>
-
-      <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_10"
-        android:background="@color/white"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="3dp"
-        app:contentPaddingBottom="10dp">
-
-        <LinearLayout
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical">
-
-          <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#808080">
-
-            <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/margin_5"
-              android:layout_marginBottom="@dimen/margin_5"
-              android:paddingStart="10dp"
-              android:paddingTop="8dp"
-              android:paddingBottom="8dp"
-              android:text="@string/payment_methods"
-              android:textColor="#ffffff"
-              android:textSize="16sp" />
-            <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
-          </LinearLayout>
-
-          <include
-            layout="@layout/list_item_payment_methods"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-        </LinearLayout>
-
-      </androidx.cardview.widget.CardView>
-
-      <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_10"
-        android:background="@color/white"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="3dp"
-        app:contentPaddingBottom="10dp">
-
-        <LinearLayout
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical">
-
-          <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#808080">
-
-            <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/margin_5"
-              android:layout_marginBottom="@dimen/margin_5"
-              android:paddingStart="10dp"
-              android:paddingTop="8dp"
-              android:paddingBottom="8dp"
-              android:text="@string/delivery_methods"
-              android:textColor="#ffffff"
-              android:textSize="16sp" />
-            <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
-          </LinearLayout>
-
-          <include
-            layout="@layout/list_item_delivery_method"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-        </LinearLayout>
-
-      </androidx.cardview.widget.CardView>
-
-      <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_10"
-        android:background="@color/white"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="3dp"
-        app:contentPaddingBottom="10dp">
-
-        <LinearLayout
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical">
-
-          <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#808080">
-
-            <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/margin_5"
-              android:layout_marginBottom="@dimen/margin_5"
-              android:paddingStart="10dp"
-              android:paddingTop="8dp"
-              android:paddingBottom="8dp"
-              android:text="@string/gst_identification_number"
-              android:textColor="#ffffff"
-              android:textSize="16sp" />
-            <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
-          </LinearLayout>
-
-          <include
-            layout="@layout/list_item_gst"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-        </LinearLayout>
-
-      </androidx.cardview.widget.CardView>
-
-    </LinearLayout>
-  </ScrollView>
+    </ScrollView>
 </LinearLayout>

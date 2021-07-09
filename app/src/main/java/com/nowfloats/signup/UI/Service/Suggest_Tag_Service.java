@@ -20,7 +20,7 @@ import retrofit.client.Response;
  */
 public class Suggest_Tag_Service {
 
-    public Suggest_Tag_Service(final Activity activity, String name, String city, String country, String category, String cliendId, final Bus bus) {
+    public Suggest_Tag_Service(final Activity activity,String name,String city,String country,String category,String cliendId,final Bus bus){
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("name", name);
         params.put("city", city);
@@ -29,13 +29,12 @@ public class Suggest_Tag_Service {
         params.put("clientId", cliendId);
 
         Retro_Signup_Interface suggestTag = Constants.restAdapter.create(Retro_Signup_Interface.class);
-        suggestTag.post_SuggestTag(params, new Callback<String>() {
+        suggestTag.post_SuggestTag(params,new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                if (s != null && s.toString().trim().length() > 0)
+                if (s!=null && s.toString().trim().length()>0)
                     bus.post(new Suggest_Tag_Event(s));
-                else
-                    Methods.showSnackBarNegative(activity, activity.getString(R.string.suggest_tag_failed_try_again));
+                else  Methods.showSnackBarNegative(activity, activity.getString(R.string.suggest_tag_failed_try_again));
             }
 
             @Override

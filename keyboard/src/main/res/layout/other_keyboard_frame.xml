@@ -18,22 +18,22 @@
 -->
 
 <com.android.inputmethod.keyboard.RichMediaView xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:layout_gravity="bottom"
-  android:orientation="vertical">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="vertical">
 
-  <include
-    android:id="@+id/sticker_view"
-    layout="@layout/sticker_view"
-    android:visibility="gone" />
+    <include
+        android:id="@+id/sticker_view"
+        layout="@layout/sticker_view"
+        android:visibility="gone" />
 
-  <include
-    android:id="@+id/emoji_palettes_view"
-    layout="@layout/emoji_palettes_view" />
+    <include
+        android:id="@+id/emoji_palettes_view"
+        layout="@layout/emoji_palettes_view" />
 
-  <include
-    android:id="@+id/media_bottom_bar"
-    layout="@layout/media_bottom_bar"
-    android:visibility="gone" />
+    <include
+        android:id="@+id/media_bottom_bar"
+        layout="@layout/media_bottom_bar"
+        android:visibility="gone" />
 </com.android.inputmethod.keyboard.RichMediaView>

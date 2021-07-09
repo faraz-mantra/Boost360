@@ -22,11 +22,13 @@ import br.com.instachat.emojilibrary.model.Places;
 public class FragmentEmojiObjects extends FragmentEmoji {
 
     public static final String TAG = "FragmentEmojiObjects";
-    private static final String USE_SYSTEM_DEFAULT_KEY = "useSystemDefaults";
-    private static final String EMOJI_KEY = "emojic";
+
     private View mRootView;
     private Emoji[] mData;
     private boolean mUseSystemDefault = false;
+
+    private static final String USE_SYSTEM_DEFAULT_KEY = "useSystemDefaults";
+    private static final String EMOJI_KEY = "emojic";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

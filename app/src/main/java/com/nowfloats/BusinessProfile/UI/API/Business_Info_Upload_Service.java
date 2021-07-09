@@ -19,11 +19,12 @@ import retrofit.client.Response;
 public class Business_Info_Upload_Service {
 
 
-    public Business_Info_Upload_Service(Activity activity, JSONObject jsonObject, final Bus bus) {
+    public Business_Info_Upload_Service(Activity activity,JSONObject jsonObject,final Bus bus)
+    {
         Retro_Business_Profile_Interface uploadInterface = Constants.restAdapter.create(Retro_Business_Profile_Interface.class);
 
 
-        uploadInterface.post_updateBusinessDetails(jsonObject, new Callback<ArrayList<String>>() {
+        uploadInterface.post_updateBusinessDetails(jsonObject,new Callback<ArrayList<String>>() {
             @Override
             public void success(ArrayList<String> strings, Response response) {
                 bus.post(strings);

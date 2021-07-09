@@ -30,10 +30,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:layout_margin="@dimen/size_4"
-        android:background="@drawable/ic_card_polygon"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/size_20">
+        android:background="@drawable/ic_card_polygon"
+        android:paddingTop="@dimen/size_20"
+        android:orientation="vertical">
 
         <com.framework.views.customViews.CustomCardView
           android:id="@+id/profile_view"
@@ -86,9 +86,9 @@
           android:layout_marginTop="@dimen/size_5"
           android:orientation="vertical">
 
-          <include
-            android:id="@+id/item_channels_group"
-            layout="@layout/item_card_channel" />
+          <include layout="@layout/item_card_channel"
+              android:id="@+id/item_channels_group"
+              />
         </LinearLayout>
       </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -109,8 +109,8 @@
             android:id="@+id/img_logo"
             android:layout_width="@dimen/size_80"
             android:layout_height="@dimen/size_74"
+            android:layout_marginTop="@dimen/size_14"
             android:layout_marginStart="@dimen/size_10"
-            android:layout_marginTop="@dimen/size_16"
             app:srcCompat="@drawable/ic_business_card_spa_n" />
 
         </LinearLayout>
@@ -147,7 +147,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_4"
-          android:layout_marginBottom="@dimen/size_14"
+          android:layout_marginBottom="@dimen/size_10"
           android:ellipsize="end"
           android:gravity="end"
           android:maxLines="1"

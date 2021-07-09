@@ -33,6 +33,9 @@ import io.separ.neural.inputmethod.indic.define.DebugFlags;
  * A place to store the currently composing word with information such as adjacent key codes as well
  */
 public final class WordComposer {
+    private static final int MAX_WORD_LENGTH = Constants.DICTIONARY_MAX_WORD_LENGTH;
+    private static final boolean DBG = DebugFlags.DEBUG_ENABLED;
+
     public static final int CAPS_MODE_OFF = 0;
     // 1 is shift bit, 2 is caps bit, 4 is auto bit but this is just a convention as these bits
     // aren't used anywhere in the code
@@ -40,13 +43,13 @@ public final class WordComposer {
     public static final int CAPS_MODE_MANUAL_SHIFT_LOCKED = 0x3;
     public static final int CAPS_MODE_AUTO_SHIFTED = 0x5;
     public static final int CAPS_MODE_AUTO_SHIFT_LOCKED = 0x7;
-    private static final int MAX_WORD_LENGTH = Constants.DICTIONARY_MAX_WORD_LENGTH;
-    private static final boolean DBG = DebugFlags.DEBUG_ENABLED;
+
+    private CombinerChain mCombinerChain;
+    private String mCombiningSpec; // Memory so that we don't uselessly recreate the combiner chain
+
     // The list of events that served to compose this string.
     private final ArrayList<Event> mEvents;
     private final InputPointers mInputPointers = new InputPointers(MAX_WORD_LENGTH);
-    private CombinerChain mCombinerChain;
-    private String mCombiningSpec; // Memory so that we don't uselessly recreate the combiner chain
     private String mAutoCorrection;
     private boolean mIsResumed;
     private boolean mIsBatchMode;
@@ -86,19 +89,8 @@ public final class WordComposer {
         refreshTypedWordCache();
     }
 
-    static int firstDivergence(String str1, String str2) {
-        int length = str1.length() > str2.length() ? str2.length() : str1.length();
-        for (int i = 0; i < length; i++) {
-            if (str1.charAt(i) != str2.charAt(i)) {
-                return i;
-            }
-        }
-        return length - 1; // Default
-    }
-
     /**
      * Restart the combiners, possibly with a new spec.
-     *
      * @param combiningSpec The spec string for combining. This is found in the extra value.
      */
     public void restartCombining(final String combiningSpec) {
@@ -135,7 +127,6 @@ public final class WordComposer {
 
     /**
      * Number of keystrokes in the composing word.
-     *
      * @return the number of keystrokes
      */
     // This may be made public if need be, but right now it's not used anywhere
@@ -145,7 +136,7 @@ public final class WordComposer {
 
     /**
      * Copy the code points in the typed word to a destination array of ints.
-     * <p>
+     *
      * If the array is too small to hold the code points in the typed word, nothing is copied and
      * -1 is returned.
      *
@@ -189,7 +180,6 @@ public final class WordComposer {
 
     /**
      * Process an event and return an event, and return a processed event to apply.
-     *
      * @param event the unprocessed event.
      * @return the processed event. Never null, but may be marked as consumed.
      */
@@ -203,9 +193,19 @@ public final class WordComposer {
         return processedEvent;
     }
 
+    static int firstDivergence(String str1, String str2) {
+        int length = str1.length() > str2.length() ? str2.length() : str1.length();
+        for(int i = 0; i < length; i++) {
+            if(str1.charAt(i) != str2.charAt(i)) {
+                return i;
+            }
+        }
+        return length - 1; // Default
+    }
+
     /**
      * Apply a processed input event.
-     * <p>
+     *
      * All input events should be supported, including software/hardware events, characters as well
      * as deletions, multiple inputs and gestures.
      *
@@ -265,7 +265,7 @@ public final class WordComposer {
      * only update the cursor position.
      *
      * @param expectedMoveAmount How many java chars to move the cursor. Negative values move
-     *                           the cursor backward, positive values move the cursor forward.
+     * the cursor backward, positive values move the cursor forward.
      * @return true if the cursor is still inside the composing word, false otherwise.
      */
     public boolean moveCursorByAndReturnIfInsideComposingWord(final int expectedMoveAmount) {
@@ -319,8 +319,7 @@ public final class WordComposer {
     /**
      * Set the currently composing word to the one passed as an argument.
      * This will register NOT_A_COORDINATE for X and Ys, and use the passed keyboard for proximity.
-     *
-     * @param codePoints  the code points to set as the composing word.
+     * @param codePoints the code points to set as the composing word.
      * @param coordinates the x, y coordinates of the key in the CoordinateUtils format
      */
     public void setComposingWord(final int[] codePoints, final int[] coordinates) {
@@ -329,8 +328,8 @@ public final class WordComposer {
         for (int i = 0; i < length; ++i) {
             final Event processedEvent =
                     processEvent(Event.createEventForCodePointFromAlreadyTypedText(codePoints[i],
-                            CoordinateUtils.xFromArray(coordinates, i),
-                            CoordinateUtils.yFromArray(coordinates, i)));
+                    CoordinateUtils.xFromArray(coordinates, i),
+                    CoordinateUtils.yFromArray(coordinates, i)));
             applyProcessedEvent(processedEvent);
         }
         mIsResumed = true;
@@ -338,7 +337,6 @@ public final class WordComposer {
 
     /**
      * Returns the word as it was typed, without any correction applied.
-     *
      * @return the word that was typed so far. Never returns null.
      */
     public String getTypedWord() {
@@ -348,7 +346,7 @@ public final class WordComposer {
     /**
      * Whether this composer is composing or about to compose a word in which only the first letter
      * is a capital.
-     * <p>
+     *
      * If we do have a composing word, we just return whether the word has indeed only its first
      * character capitalized. If we don't, then we return a value based on the capitalized mode,
      * which tell us what is likely to happen for the next composing word.
@@ -362,7 +360,6 @@ public final class WordComposer {
 
     /**
      * Whether or not all of the user typed chars are upper case
-     *
      * @return true if all user typed chars are upper case, false otherwise
      */
     public boolean isAllUpperCase() {
@@ -395,14 +392,13 @@ public final class WordComposer {
 
     /**
      * Saves the caps mode at the start of composing.
-     * <p>
+     *
      * WordComposer needs to know about the caps mode for several reasons. The first is, we need
      * to know after the fact what the reason was, to register the correct form into the user
      * history dictionary: if the word was automatically capitalized, we should insert it in
      * all-lower case but if it's a manual pressing of shift, then it should be inserted as is.
      * Also, batch input needs to know about the current caps mode to display correctly
      * capitalized suggestions.
-     *
      * @param mode the mode at the time of start
      */
     public void setCapitalizedModeAtStartComposingTime(final int mode) {
@@ -411,11 +407,10 @@ public final class WordComposer {
 
     /**
      * Before fetching suggestions, we don't necessarily know about the capitalized mode yet.
-     * <p>
+     *
      * If we don't have a composing word yet, we take a note of this mode so that we can then
      * supply this information to the suggestion process. If we have a composing word, then
      * the previous mode has priority over this.
-     *
      * @param mode the mode just before fetching suggestions
      */
     public void adviseCapitalizedModeBeforeFetchingSuggestions(final int mode) {
@@ -426,7 +421,6 @@ public final class WordComposer {
 
     /**
      * Returns whether the word was automatically capitalized.
-     *
      * @return whether the word was automatically capitalized
      */
     public boolean wasAutoCapitalized() {
@@ -458,7 +452,7 @@ public final class WordComposer {
     // `type' should be one of the LastComposedWord.COMMIT_TYPE_* constants above.
     // committedWord should contain suggestion spans if applicable.
     public LastComposedWord commitWord(final int type, final CharSequence committedWord,
-                                       final String separatorString, final PrevWordsInfo prevWordsInfo) {
+            final String separatorString, final PrevWordsInfo prevWordsInfo) {
         // Note: currently, we come here whenever we commit a word. If it's a MANUAL_PICK
         // or a DECIDED_WORD we may cancel the commit later; otherwise, we should deactivate
         // the last composed word to ensure this does not happen.
@@ -503,11 +497,11 @@ public final class WordComposer {
         return mIsBatchMode;
     }
 
-    public String getRejectedBatchModeSuggestion() {
-        return mRejectedBatchModeSuggestion;
-    }
-
     public void setRejectedBatchModeSuggestion(final String rejectedSuggestion) {
         mRejectedBatchModeSuggestion = rejectedSuggestion;
+    }
+
+    public String getRejectedBatchModeSuggestion() {
+        return mRejectedBatchModeSuggestion;
     }
 }

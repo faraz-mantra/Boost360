@@ -2,10 +2,8 @@ package com.nowfloats.manageinventory.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -153,7 +151,9 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             } else {
                 productDetailsHolder.ivProductImg.setImageResource(R.drawable.default_product_image);
             }
-        } else if (holder instanceof OrderDetailsHolder) {
+        } else if (holder instanceof OrderDetailsHolder)
+
+        {
             OrderDetailsHolder orderDetailsHolder = (OrderDetailsHolder) holder;
             if (mOrder.getBillingDetails() != null) {
 //                orderDetailsHolder.tvTotalPrice.setText((mOrder.getBillingDetails().getGrossAmount() +

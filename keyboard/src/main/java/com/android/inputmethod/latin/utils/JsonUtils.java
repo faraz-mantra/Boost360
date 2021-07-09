@@ -76,9 +76,9 @@ public final class JsonUtils {
             for (final Object o : list) {
                 writer.beginObject();
                 if (o instanceof Integer) {
-                    writer.name(INTEGER_CLASS_NAME).value((Integer) o);
+                    writer.name(INTEGER_CLASS_NAME).value((Integer)o);
                 } else if (o instanceof String) {
-                    writer.name(STRING_CLASS_NAME).value((String) o);
+                    writer.name(STRING_CLASS_NAME).value((String)o);
                 }
                 writer.endObject();
             }

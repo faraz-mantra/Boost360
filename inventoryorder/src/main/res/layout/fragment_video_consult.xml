@@ -20,7 +20,8 @@
       android:background="@drawable/down_shadow"
       android:visibility="gone" />
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout style="@style/match_match">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+      style="@style/match_match">
 
       <com.framework.views.viewgroups.BaseRecyclerView
         android:id="@+id/booking_recycler"

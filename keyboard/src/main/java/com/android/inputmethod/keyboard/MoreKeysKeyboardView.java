@@ -39,23 +39,26 @@ import io.separ.neural.inputmethod.indic.R;
  * detecting key presses and touch movements.
  */
 public class MoreKeysKeyboardView extends KeyboardView implements MoreKeysPanel {
-    protected final KeyDetector mKeyDetector;
     private final int[] mCoordinates = CoordinateUtils.newInstance();
+
     private final Drawable mDivider;
-    protected KeyboardActionListener mListener;
-    protected MoreKeysKeyboardAccessibilityDelegate mAccessibilityDelegate;
+    protected final KeyDetector mKeyDetector;
     private Controller mController = EMPTY_CONTROLLER;
+    protected KeyboardActionListener mListener;
     private int mOriginX;
     private int mOriginY;
     private Key mCurrentKey;
+
     private int mActivePointerId;
+
+    protected MoreKeysKeyboardAccessibilityDelegate mAccessibilityDelegate;
 
     public MoreKeysKeyboardView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.moreKeysKeyboardViewStyle);
     }
 
     public MoreKeysKeyboardView(final Context context, final AttributeSet attrs,
-                                final int defStyle) {
+            final int defStyle) {
         super(context, attrs, defStyle);
         final TypedArray moreKeysKeyboardViewAttr = context.obtainStyledAttributes(attrs,
                 R.styleable.MoreKeysKeyboardView, defStyle, R.style.MoreKeysKeyboardView);
@@ -83,7 +86,7 @@ public class MoreKeysKeyboardView extends KeyboardView implements MoreKeysPanel 
 
     @Override
     protected void onDrawKeyTopVisuals(final Key key, final Canvas canvas, final Paint paint,
-                                       final KeyDrawParams params) {
+            final KeyDrawParams params) {
         if (!key.isSpacer() || !(key instanceof MoreKeysKeyboard.MoreKeyDivider)
                 || mDivider == null) {
             super.onDrawKeyTopVisuals(key, canvas, paint, params);
@@ -118,7 +121,7 @@ public class MoreKeysKeyboardView extends KeyboardView implements MoreKeysPanel 
 
     @Override
     public void showMoreKeysPanel(final View parentView, final Controller controller,
-                                  final int pointX, final int pointY, final KeyboardActionListener listener) {
+            final int pointX, final int pointY, final KeyboardActionListener listener) {
         mController = controller;
         mListener = listener;
         final View container = getContainerView();
@@ -150,7 +153,7 @@ public class MoreKeysKeyboardView extends KeyboardView implements MoreKeysPanel 
      * Returns the default x coordinate for showing this panel.
      */
     protected int getDefaultCoordX() {
-        return ((MoreKeysKeyboard) getKeyboard()).getDefaultCoordX();
+        return ((MoreKeysKeyboard)getKeyboard()).getDefaultCoordX();
     }
 
     @Override
@@ -262,21 +265,21 @@ public class MoreKeysKeyboardView extends KeyboardView implements MoreKeysPanel 
         final int action = me.getActionMasked();
         final long eventTime = me.getEventTime();
         final int index = me.getActionIndex();
-        final int x = (int) me.getX(index);
-        final int y = (int) me.getY(index);
+        final int x = (int)me.getX(index);
+        final int y = (int)me.getY(index);
         final int pointerId = me.getPointerId(index);
         switch (action) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_POINTER_DOWN:
-                onDownEvent(x, y, pointerId, eventTime);
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_POINTER_UP:
-                onUpEvent(x, y, pointerId, eventTime);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                onMoveEvent(x, y, pointerId, eventTime);
-                break;
+        case MotionEvent.ACTION_DOWN:
+        case MotionEvent.ACTION_POINTER_DOWN:
+            onDownEvent(x, y, pointerId, eventTime);
+            break;
+        case MotionEvent.ACTION_UP:
+        case MotionEvent.ACTION_POINTER_UP:
+            onUpEvent(x, y, pointerId, eventTime);
+            break;
+        case MotionEvent.ACTION_MOVE:
+            onMoveEvent(x, y, pointerId, eventTime);
+            break;
         }
         return true;
     }
@@ -295,7 +298,7 @@ public class MoreKeysKeyboardView extends KeyboardView implements MoreKeysPanel 
     }
 
     private View getContainerView() {
-        return (View) getParent();
+        return (View)getParent();
     }
 
     @Override
@@ -307,7 +310,7 @@ public class MoreKeysKeyboardView extends KeyboardView implements MoreKeysPanel 
     @Override
     public void removeFromParent() {
         final View containerView = getContainerView();
-        final ViewGroup currentParent = (ViewGroup) containerView.getParent();
+        final ViewGroup currentParent = (ViewGroup)containerView.getParent();
         if (currentParent != null) {
             currentParent.removeView(containerView);
         }

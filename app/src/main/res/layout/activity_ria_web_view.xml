@@ -1,50 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/activity_ria_web_view"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical"
-  tools:context="com.nowfloats.NavigationDrawer.RiaWebViewActivity">
-
-  <androidx.appcompat.widget.Toolbar
-    android:id="@+id/tb_web_view"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_ria_web_view"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    app:theme="@style/CustomToolbarTheme">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.nowfloats.NavigationDrawer.RiaWebViewActivity">
 
-    <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_web_view"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:theme="@style/CustomToolbarTheme"
+        android:background="?attr/colorPrimary">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_open_in_browser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:text="@string/open_in_browser"/>
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
 
-      <TextView
-        android:id="@+id/tv_open_in_browser"
-        android:layout_width="wrap_content"
+    <ProgressBar
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="10dp"
-        android:text="@string/open_in_browser"
-        android:textColor="@color/white"
-        android:textSize="17sp" />
-    </RelativeLayout>
-  </androidx.appcompat.widget.Toolbar>
+        android:progressTint="@color/primaryColor"
+        android:id="@+id/progressBar" />
 
-  <ProgressBar
-    android:id="@+id/progressBar"
-    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:progressTint="@color/primaryColor" />
-
-  <WebView
-    android:id="@+id/webview"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
 
 
-  </WebView>
+    </WebView>
 
 </LinearLayout>

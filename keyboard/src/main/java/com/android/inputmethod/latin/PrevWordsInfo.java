@@ -33,6 +33,55 @@ public class PrevWordsInfo {
             new PrevWordsInfo(WordInfo.EMPTY_WORD_INFO);
     public static final PrevWordsInfo BEGINNING_OF_SENTENCE =
             new PrevWordsInfo(WordInfo.BEGINNING_OF_SENTENCE);
+
+    /**
+     * Word information used to represent previous words information.
+     */
+    public static class WordInfo {
+        public static final WordInfo EMPTY_WORD_INFO = new WordInfo(null);
+        public static final WordInfo BEGINNING_OF_SENTENCE = new WordInfo();
+
+        // This is an empty char sequence when mIsBeginningOfSentence is true.
+        public final CharSequence mWord;
+        // TODO: Have sentence separator.
+        // Whether the current context is beginning of sentence or not. This is true when composing
+        // at the beginning of an input field or composing a word after a sentence separator.
+        public final boolean mIsBeginningOfSentence;
+
+        // Beginning of sentence.
+        public WordInfo() {
+            mWord = "";
+            mIsBeginningOfSentence = true;
+        }
+
+        public WordInfo(final CharSequence word) {
+            mWord = word;
+            mIsBeginningOfSentence = false;
+        }
+
+        public boolean isValid() {
+            return mWord != null;
+        }
+
+        @Override
+        public int hashCode() {
+            return Arrays.hashCode(new Object[] { mWord, mIsBeginningOfSentence } );
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof WordInfo)) return false;
+            final WordInfo wordInfo = (WordInfo)o;
+            if (mWord == null || wordInfo.mWord == null) {
+                return mWord == wordInfo.mWord
+                        && mIsBeginningOfSentence == wordInfo.mIsBeginningOfSentence;
+            }
+            return TextUtils.equals(mWord, wordInfo.mWord)
+                    && mIsBeginningOfSentence == wordInfo.mIsBeginningOfSentence;
+        }
+    }
+
     // The words immediately before the considered word. EMPTY_WORD_INFO element means we don't
     // have any context for that previous word including the "beginning of sentence context" - we
     // just don't know what to predict using the information. An example of that is after a comma.
@@ -67,7 +116,7 @@ public class PrevWordsInfo {
     }
 
     public void outputToArray(final int[][] codePointArrays,
-                              final boolean[] isBeginningOfSentenceArray) {
+            final boolean[] isBeginningOfSentenceArray) {
         for (int i = 0; i < mPrevWordsInfo.length; i++) {
             final WordInfo wordInfo = mPrevWordsInfo[i];
             if (wordInfo == null || !wordInfo.isValid()) {
@@ -89,7 +138,7 @@ public class PrevWordsInfo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PrevWordsInfo)) return false;
-        final PrevWordsInfo prevWordsInfo = (PrevWordsInfo) o;
+        final PrevWordsInfo prevWordsInfo = (PrevWordsInfo)o;
         return Arrays.equals(mPrevWordsInfo, prevWordsInfo.mPrevWordsInfo);
     }
 
@@ -111,53 +160,5 @@ public class PrevWordsInfo {
             builder.append(". ");
         }
         return builder.toString();
-    }
-
-    /**
-     * Word information used to represent previous words information.
-     */
-    public static class WordInfo {
-        public static final WordInfo EMPTY_WORD_INFO = new WordInfo(null);
-        public static final WordInfo BEGINNING_OF_SENTENCE = new WordInfo();
-
-        // This is an empty char sequence when mIsBeginningOfSentence is true.
-        public final CharSequence mWord;
-        // TODO: Have sentence separator.
-        // Whether the current context is beginning of sentence or not. This is true when composing
-        // at the beginning of an input field or composing a word after a sentence separator.
-        public final boolean mIsBeginningOfSentence;
-
-        // Beginning of sentence.
-        public WordInfo() {
-            mWord = "";
-            mIsBeginningOfSentence = true;
-        }
-
-        public WordInfo(final CharSequence word) {
-            mWord = word;
-            mIsBeginningOfSentence = false;
-        }
-
-        public boolean isValid() {
-            return mWord != null;
-        }
-
-        @Override
-        public int hashCode() {
-            return Arrays.hashCode(new Object[]{mWord, mIsBeginningOfSentence});
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof WordInfo)) return false;
-            final WordInfo wordInfo = (WordInfo) o;
-            if (mWord == null || wordInfo.mWord == null) {
-                return mWord == wordInfo.mWord
-                        && mIsBeginningOfSentence == wordInfo.mIsBeginningOfSentence;
-            }
-            return TextUtils.equals(mWord, wordInfo.mWord)
-                    && mIsBeginningOfSentence == wordInfo.mIsBeginningOfSentence;
-        }
     }
 }

@@ -25,19 +25,16 @@ class FirebaseDynamicLinksManager {
     val instance = FirebaseDynamicLinksManager()
   }
 
-  fun parseDeepLink(
-    activity: Activity,
-    onResult: (Exception?, HashMap<DynamicLinkParams, String>?) -> Unit
-  ) {
+  fun parseDeepLink(activity: Activity, onResult: (Exception?, HashMap<DynamicLinkParams, String>?) -> Unit) {
     FirebaseAnalytics.getInstance(activity)
     FirebaseDynamicLinks.getInstance()
-      .getDynamicLink(activity.intent)
-      .addOnSuccessListener(activity) { pendingDynamicLinkData ->
-        onResult(null, getDynamicLinkParams(pendingDynamicLinkData))
-      }.addOnFailureListener(activity) { e ->
-        e.printStackTrace()
-        onResult(e, null)
-      }
+        .getDynamicLink(activity.intent)
+        .addOnSuccessListener(activity) { pendingDynamicLinkData ->
+          onResult(null, getDynamicLinkParams(pendingDynamicLinkData))
+        }.addOnFailureListener(activity) { e ->
+          e.printStackTrace()
+          onResult(e, null)
+        }
   }
 
   private fun getDynamicLinkParams(link: PendingDynamicLinkData?): HashMap<DynamicLinkParams, String> {
@@ -57,8 +54,7 @@ class FirebaseDynamicLinksManager {
 
         if (value != null) {
           if (key == DynamicLinkParams.referrer) {
-            for (keyValuePairString in deepLink.getQueryParameter(param)?.split("&")
-              ?: ArrayList()) {
+            for (keyValuePairString in deepLink.getQueryParameter(param)?.split("&") ?: ArrayList()) {
               val pair = keyValuePairString.split("=")
               map[DynamicLinkParams.valueOf(pair.first())] = pair.last()
             }
@@ -76,16 +72,13 @@ class FirebaseDynamicLinksManager {
   fun createReferralLink(onResult: (Exception?, String?) -> Unit) {
     val uid = "PreferencesUtils.instance.gpuid"
     val link = "${"StoreUrl.PLAY.toString()"}&referral_code=$uid"
-    FirebaseDynamicLinks.getInstance().createDynamicLink().setLink(Uri.parse(link))
-      .setDomainUriPrefix("https://nowfloats.page.link")
-      .setAndroidParameters(
-        DynamicLink.AndroidParameters.Builder("com.biz2.nowfloats")
+    FirebaseDynamicLinks.getInstance().createDynamicLink().setLink(Uri.parse(link)).setDomainUriPrefix("https://nowfloats.page.link")
+        .setAndroidParameters(DynamicLink.AndroidParameters.Builder("com.biz2.nowfloats")
 //            .setMinimumVersion(BuildConfig.VERSION_CODE)
-          .build()
-      )
-      .buildShortDynamicLink().addOnSuccessListener { shortDynamicLink ->
-        onResult(null, shortDynamicLink.shortLink.toString())
-      }.addOnFailureListener { exception -> onResult(exception, null) }
+            .build())
+        .buildShortDynamicLink().addOnSuccessListener { shortDynamicLink ->
+          onResult(null, shortDynamicLink.shortLink.toString())
+        }.addOnFailureListener { exception -> onResult(exception, null) }
 
   }
 

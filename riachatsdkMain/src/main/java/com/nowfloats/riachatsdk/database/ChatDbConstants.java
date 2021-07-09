@@ -15,7 +15,7 @@ public class ChatDbConstants {
         String JSON_DATA = "json_data";
         String NEXT_NODE = "next_node";
         String CREATE_CHAT_HISTORY_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + JSON_DATA + " TEXT," + NEXT_NODE + " TEXT)";
+                + JSON_DATA + " TEXT,"+ NEXT_NODE + " TEXT)";
     }
 
     public interface IChatValues {

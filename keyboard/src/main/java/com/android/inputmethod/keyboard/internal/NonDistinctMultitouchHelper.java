@@ -28,21 +28,9 @@ public final class NonDistinctMultitouchHelper {
     private static final String TAG = NonDistinctMultitouchHelper.class.getSimpleName();
 
     private static final int MAIN_POINTER_TRACKER_ID = 0;
-    private final int[] mLastCoords = CoordinateUtils.newInstance();
     private int mOldPointerCount = 1;
     private Key mOldKey;
-
-    private static void injectMotionEvent(final int action, final float x, final float y,
-                                          final long downTime, final long eventTime, final PointerTracker tracker,
-                                          final KeyDetector keyDetector) {
-        final MotionEvent me = MotionEvent.obtain(
-                downTime, eventTime, action, x, y, 0 /* metaState */);
-        try {
-            tracker.processMotionEvent(me, keyDetector);
-        } finally {
-            me.recycle();
-        }
-    }
+    private final int[] mLastCoords = CoordinateUtils.newInstance();
 
     public void processMotionEvent(final MotionEvent me, final KeyDetector keyDetector) {
         final int pointerCount = me.getPointerCount();
@@ -92,8 +80,8 @@ public final class NonDistinctMultitouchHelper {
         if (oldPointerCount == 2 && pointerCount == 1) {
             // Send a down event for the latest pointer if the key is different from the previous
             // key.
-            final int x = (int) me.getX(index);
-            final int y = (int) me.getY(index);
+            final int x = (int)me.getX(index);
+            final int y = (int)me.getY(index);
             final Key newKey = mainTracker.getKeyOn(x, y);
             if (mOldKey != newKey) {
                 // Inject an artifact down event for the new key.
@@ -111,5 +99,17 @@ public final class NonDistinctMultitouchHelper {
 
         Log.w(TAG, "Unknown touch panel behavior: pointer count is "
                 + pointerCount + " (previously " + oldPointerCount + ')');
+    }
+
+    private static void injectMotionEvent(final int action, final float x, final float y,
+            final long downTime, final long eventTime, final PointerTracker tracker,
+            final KeyDetector keyDetector) {
+        final MotionEvent me = MotionEvent.obtain(
+                downTime, eventTime, action, x, y, 0 /* metaState */);
+        try {
+            tracker.processMotionEvent(me, keyDetector);
+        } finally {
+            me.recycle();
+        }
     }
 }

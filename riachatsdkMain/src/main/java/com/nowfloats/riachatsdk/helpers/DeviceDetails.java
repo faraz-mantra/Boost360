@@ -16,66 +16,52 @@ import java.util.TimeZone;
  */
 
 public class DeviceDetails {
-    public static String getDeviceId(Context context) {
+    public static String getDeviceId(Context context){
         return Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
     }
-
-    public static String getOs() {
+    public static String getOs(){
         return "Android";
     }
-
-    public static String getManufacturer() {
+    public static String getManufacturer(){
         return Build.MANUFACTURER;
     }
-
-    public static String getDeviceModel() {
+    public static String getDeviceModel(){
         return Build.MODEL;
     }
-
-    public static int getSDKVersion() {
+    public static int getSDKVersion(){
         return Build.VERSION.SDK_INT;
     }
-
-    public static String getOSVersion() {
+    public static String getOSVersion(){
         return Build.VERSION.BASE_OS;
     }
-
-    public static String getAndroidVersion() {
+    public static String getAndroidVersion(){
         return Build.VERSION.RELEASE;
     }
-
-    public static String getCodeName() {
+    public static String getCodeName(){
         return Build.VERSION.CODENAME;
     }
-
-    public static String getBrand() {
+    public static String getBrand(){
         return Build.BRAND;
     }
-
-    public static String getLibVersionName() {
+    public static String getLibVersionName(){
         return BuildConfig.VERSION_NAME;
     }
-
-    public static String getTimeZone() {
+    public static String getTimeZone(){
         TimeZone tz = TimeZone.getDefault();
         return tz.getDisplayName(false, TimeZone.SHORT) + "|" + tz.getID();
     }
-
-    public static String getLanguage() {
+    public static String getLanguage(){
         return Locale.getDefault().getDisplayLanguage();
     }
-
-    public static String getCountry() {
+    public static String getCountry(){
         return Locale.getDefault().getDisplayCountry();
     }
-
-    public static int getScreenWidth(Activity activity) {
+    public static int getScreenWidth(Activity activity){
         DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.widthPixels;
     }
-
-    public static int getScreenHeight(Activity activity) {
+    public static int getScreenHeight(Activity activity){
         DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.heightPixels;

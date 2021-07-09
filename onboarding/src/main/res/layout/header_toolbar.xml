@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/tool_bar"
-  android:layout_width="match_parent"
-  android:layout_height="@dimen/size_40"
-  android:background="?attr/bd_bg_color"
-  android:theme="@style/ToolbarTheme"
-  app:titleMarginStart="@dimen/size_10"
-  app:titleTextColor="?android:attr/textColorPrimary"
-  tools:title="@string/app_name" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tool_bar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_40"
+    android:background="?attr/bd_bg_color"
+    android:theme="@style/ToolbarTheme"
+    app:titleMarginStart="@dimen/size_10"
+    tools:title="@string/app_name"
+    app:titleTextColor="?android:attr/textColorPrimary" />

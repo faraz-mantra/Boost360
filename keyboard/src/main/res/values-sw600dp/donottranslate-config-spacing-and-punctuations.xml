@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
 **
 ** Copyright 2014, The Android Open Source Project
@@ -17,6 +18,6 @@
 */
 -->
 <resources>
-  <!-- Symbols that are suggested between words -->
-  <string name="suggested_punctuations">:,;,\",(,),\',-,/,@,_</string>
+    <!-- Symbols that are suggested between words -->
+    <string name="suggested_punctuations">:,;,\",(,),\',-,/,@,_</string>
 </resources>

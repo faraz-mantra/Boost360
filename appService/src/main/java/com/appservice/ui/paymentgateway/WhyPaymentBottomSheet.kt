@@ -12,8 +12,7 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
 
-class WhyPaymentBottomSheet :
-  BaseBottomSheetDialog<BottomSheetTermsPaymentGatewayBinding, BaseViewModel>() {
+class WhyPaymentBottomSheet : BaseBottomSheetDialog<BottomSheetTermsPaymentGatewayBinding, BaseViewModel>() {
 
 
   var onClicked: () -> Unit = { }

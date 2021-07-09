@@ -11,21 +11,21 @@ import java.io.Serializable
 const val AUTH_TOKEN_SAVE = "AUTH_TOKEN_SAVE"
 
 data class AuthTokenDataItem(
-  @SerializedName("AuthenticationToken")
-  var authenticationToken: String? = null,
-  @SerializedName("Description")
-  var description: String? = null,
-  @SerializedName("FloatingPointId")
-  var floatingPointId: String? = null,
-  @SerializedName("FloatingPointTag")
-  var floatingPointTag: String? = null,
-  @SerializedName("LogoUrl")
-  var logoUrl: String? = null,
-  @SerializedName("Name")
-  var name: String? = null,
-  @SerializedName("RootAliasUri")
-  var rootAliasUri: String? = null,
-  var isItemSelected: Boolean? = false,
+    @SerializedName("AuthenticationToken")
+    var authenticationToken: String? = null,
+    @SerializedName("Description")
+    var description: String? = null,
+    @SerializedName("FloatingPointId")
+    var floatingPointId: String? = null,
+    @SerializedName("FloatingPointTag")
+    var floatingPointTag: String? = null,
+    @SerializedName("LogoUrl")
+    var logoUrl: String? = null,
+    @SerializedName("Name")
+    var name: String? = null,
+    @SerializedName("RootAliasUri")
+    var rootAliasUri: String? = null,
+    var isItemSelected: Boolean? = false,
 ) : Serializable, AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {

@@ -10,18 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by NowFloats on 18-08-2017.
  */
 
-public class ShippingMetricsModel implements Parcelable {
-    public static final Creator<ShippingMetricsModel> CREATOR = new Creator<ShippingMetricsModel>() {
-        @Override
-        public ShippingMetricsModel createFromParcel(Parcel in) {
-            return new ShippingMetricsModel(in);
-        }
-
-        @Override
-        public ShippingMetricsModel[] newArray(int size) {
-            return new ShippingMetricsModel[size];
-        }
-    };
+public class ShippingMetricsModel implements Parcelable{
     @SerializedName("_id")
     @Expose
     private String id;
@@ -71,7 +60,7 @@ public class ShippingMetricsModel implements Parcelable {
     @Expose
     private Boolean isHidePrice = false;
 
-    public ShippingMetricsModel() {
+    public ShippingMetricsModel(){
 
     }
 
@@ -110,6 +99,18 @@ public class ShippingMetricsModel implements Parcelable {
     public int describeContents() {
         return 12;
     }
+
+    public static final Creator<ShippingMetricsModel> CREATOR = new Creator<ShippingMetricsModel>() {
+        @Override
+        public ShippingMetricsModel createFromParcel(Parcel in) {
+            return new ShippingMetricsModel(in);
+        }
+
+        @Override
+        public ShippingMetricsModel[] newArray(int size) {
+            return new ShippingMetricsModel[size];
+        }
+    };
 
     public String getId() {
         return id;

@@ -1,42 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
-
-  <include
-    android:id="@+id/facebook_toolbar"
-    layout="@layout/toolbar_facebook_chat"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-
-  <LinearLayout
-    android:id="@+id/chat_user_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:visibility="gone">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/facebook_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        layout="@layout/toolbar_facebook_chat"/>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-      android:id="@+id/sfl_list"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:visibility="visible">
-
-      <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_facebook_chat"
+    <LinearLayout
+        android:id="@+id/chat_user_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible" />
+        android:visibility="gone"
+        android:orientation="vertical">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/sfl_list"
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:id="@+id/rv_facebook_chat"/>
 
-  </LinearLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-  <FrameLayout
-    android:id="@+id/fragment_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:visibility="gone" />
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/fragment_layout"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

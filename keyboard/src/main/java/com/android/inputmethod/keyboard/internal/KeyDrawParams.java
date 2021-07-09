@@ -48,8 +48,7 @@ public final class KeyDrawParams {
 
     public int mAnimAlpha;
 
-    public KeyDrawParams() {
-    }
+    public KeyDrawParams() {}
 
     private KeyDrawParams(final KeyDrawParams copyFrom) {
         mTypeface = copyFrom.mTypeface;
@@ -78,39 +77,6 @@ public final class KeyDrawParams {
         mHintLabelOffCenterRatio = copyFrom.mHintLabelOffCenterRatio;
 
         mAnimAlpha = copyFrom.mAnimAlpha;
-    }
-
-    private static int selectTextSizeFromDimensionOrRatio(final int keyHeight,
-                                                          final int dimens, final float ratio, final int defaultDimens) {
-        if (ResourceUtils.isValidDimensionPixelSize(dimens)) {
-            return dimens;
-        }
-        if (ResourceUtils.isValidFraction(ratio)) {
-            return (int) (keyHeight * ratio);
-        }
-        return defaultDimens;
-    }
-
-    private static int selectTextSize(final int keyHeight, final float ratio,
-                                      final int defaultSize) {
-        if (ResourceUtils.isValidFraction(ratio)) {
-            return (int) (keyHeight * ratio);
-        }
-        return defaultSize;
-    }
-
-    private static int selectColor(final int attrColor, final int defaultColor) {
-        if (attrColor != 0) {
-            return attrColor;
-        }
-        return defaultColor;
-    }
-
-    private static float selectFloatIfNonZero(final float attrFloat, final float defaultFloat) {
-        if (attrFloat != 0) {
-            return attrFloat;
-        }
-        return defaultFloat;
     }
 
     public void updateParams(final int keyHeight, final KeyVisualAttributes attr) {
@@ -155,12 +121,45 @@ public final class KeyDrawParams {
     }
 
     public KeyDrawParams mayCloneAndUpdateParams(final int keyHeight,
-                                                 final KeyVisualAttributes attr) {
+            final KeyVisualAttributes attr) {
         if (attr == null) {
             return this;
         }
         final KeyDrawParams newParams = new KeyDrawParams(this);
         newParams.updateParams(keyHeight, attr);
         return newParams;
+    }
+
+    private static int selectTextSizeFromDimensionOrRatio(final int keyHeight,
+            final int dimens, final float ratio, final int defaultDimens) {
+        if (ResourceUtils.isValidDimensionPixelSize(dimens)) {
+            return dimens;
+        }
+        if (ResourceUtils.isValidFraction(ratio)) {
+            return (int)(keyHeight * ratio);
+        }
+        return defaultDimens;
+    }
+
+    private static int selectTextSize(final int keyHeight, final float ratio,
+            final int defaultSize) {
+        if (ResourceUtils.isValidFraction(ratio)) {
+            return (int)(keyHeight * ratio);
+        }
+        return defaultSize;
+    }
+
+    private static int selectColor(final int attrColor, final int defaultColor) {
+        if (attrColor != 0) {
+            return attrColor;
+        }
+        return defaultColor;
+    }
+
+    private static float selectFloatIfNonZero(final float attrFloat, final float defaultFloat) {
+        if (attrFloat != 0) {
+            return attrFloat;
+        }
+        return defaultFloat;
     }
 }

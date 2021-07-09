@@ -27,46 +27,27 @@ import java.util.ArrayList;
 
 public class FloatingActionMenu {
 
-    /**
-     * Reference to the view (usually a button) to trigger the menu to show
-     */
+    /** Reference to the view (usually a button) to trigger the menu to show */
     private View mainActionView;
-    /**
-     * The angle (in degrees, modulus 360) which the circular menu starts from
-     */
+    /** The angle (in degrees, modulus 360) which the circular menu starts from  */
     private int startAngle;
-    /**
-     * The angle (in degrees, modulus 360) which the circular menu ends at
-     */
+    /** The angle (in degrees, modulus 360) which the circular menu ends at  */
     private int endAngle;
-    /**
-     * Distance of menu items from mainActionView
-     */
+    /** Distance of menu items from mainActionView */
     private int radius;
-    /**
-     * List of menu items
-     */
+    /** List of menu items */
     private ArrayList<Item> subActionItems;
-    /**
-     * Reference to the preferred {@link MenuAnimationHandler} object
-     */
+    /** Reference to the preferred {@link MenuAnimationHandler} object */
     private MenuAnimationHandler animationHandler;
-    /**
-     * Reference to a listener that listens open/close actions
-     */
+    /** Reference to a listener that listens open/close actions */
     private MenuStateChangeListener stateChangeListener;
-    /**
-     * whether the openings and closings should be animated or not
-     */
+    /** whether the openings and closings should be animated or not */
     private boolean animated;
-    /**
-     * whether the menu is currently open or not
-     */
+    /** whether the menu is currently open or not */
     private boolean open;
 
     /**
      * Constructor that takes the parameters collected using {@link FloatingActionMenu.Builder}
-     *
      * @param mainActionView
      * @param startAngle
      * @param endAngle
@@ -101,13 +82,13 @@ public class FloatingActionMenu {
         this.mainActionView.setOnClickListener(new ActionViewClickListener());
 
         // Do not forget to set the menu as self to our customizable animation handler
-        if (animationHandler != null) {
+        if(animationHandler != null) {
             animationHandler.setMenu(this);
         }
 
         // Find items with undefined sizes
-        for (final Item item : subActionItems) {
-            if (item.width == 0 || item.height == 0) {
+        for(final Item item : subActionItems) {
+            if(item.width == 0 || item.height == 0) {
                 // Figure out the size by temporarily adding it to the Activity content view hierarchy
                 // and ask the size from the system
                 ((ViewGroup) getActivityContentView()).addView(item.view);
@@ -121,7 +102,6 @@ public class FloatingActionMenu {
 
     /**
      * Simply opens the menu by doing necessary calculations.
-     *
      * @param animated if true, this action is executed by the current {@link MenuAnimationHandler}
      */
     public void open(boolean animated) {
@@ -130,9 +110,9 @@ public class FloatingActionMenu {
         // populate destination x,y coordinates of Items
         calculateItemPositions();
 
-        if (animated && animationHandler != null) {
+        if(animated && animationHandler != null) {
             // If animations are enabled and we have a MenuAnimationHandler, let it do the heavy work
-            if (animationHandler.isAnimating()) {
+            if(animationHandler.isAnimating()) {
                 // Do not proceed if there is an animation currently going on.
                 return;
             }
@@ -153,7 +133,8 @@ public class FloatingActionMenu {
             }
             // Tell the current MenuAnimationHandler to animate from the center
             animationHandler.animateMenuOpening(center);
-        } else {
+        }
+        else {
             // If animations are disabled, just place each of the items to their calculated destination positions.
             for (int i = 0; i < subActionItems.size(); i++) {
                 // This is currently done by giving them large margins
@@ -168,25 +149,25 @@ public class FloatingActionMenu {
         // do not forget to specify that the menu is open.
         open = true;
 
-        if (stateChangeListener != null) {
+        if(stateChangeListener != null) {
             stateChangeListener.onMenuOpened(this);
         }
     }
 
     /**
      * Closes the menu.
-     *
      * @param animated if true, this action is executed by the current {@link MenuAnimationHandler}
      */
     public void close(boolean animated) {
         // If animations are enabled and we have a MenuAnimationHandler, let it do the heavy work
-        if (animated && animationHandler != null) {
-            if (animationHandler.isAnimating()) {
+        if(animated && animationHandler != null) {
+            if(animationHandler.isAnimating()) {
                 // Do not proceed if there is an animation currently going on.
                 return;
             }
             animationHandler.animateMenuClosing(getActionViewCenter());
-        } else {
+        }
+        else {
             // If animations are disabled, just detach each of the Item views from the Activity content view.
             for (int i = 0; i < subActionItems.size(); i++) {
                 ((ViewGroup) getActivityContentView()).removeView(subActionItems.get(i).view);
@@ -195,20 +176,20 @@ public class FloatingActionMenu {
         // do not forget to specify that the menu is now closed.
         open = false;
 
-        if (stateChangeListener != null) {
+        if(stateChangeListener != null) {
             stateChangeListener.onMenuClosed(this);
         }
     }
 
     /**
      * Toggles the menu
-     *
      * @param animated if true, the open/close action is executed by the current {@link MenuAnimationHandler}
      */
     public void toggle(boolean animated) {
-        if (open) {
+        if(open) {
             close(animated);
-        } else {
+        }
+        else {
             open(animated);
         }
     }
@@ -225,7 +206,7 @@ public class FloatingActionMenu {
      */
     public void updateItemPositions() {
         // Only update if the menu is currently open
-        if (!isOpen()) {
+        if(!isOpen()) {
             return;
         }
         // recalculate x,y coordinates of Items
@@ -244,15 +225,13 @@ public class FloatingActionMenu {
      * Gets the coordinates of the main action view
      * This method should only be called after the main layout of the Activity is drawn,
      * such as when a user clicks the action button.
-     *
      * @return a Point containing x and y coordinates of the top left corner of action view
      */
     private Point getActionViewCoordinates() {
         int[] coords = new int[2];
         // This method returns a x and y values that can be larger than the dimensions of the device screen.
         mainActionView.getLocationOnScreen(coords);
-        Rect activityFrame = new Rect();
-        getActivityContentView().getWindowVisibleDisplayFrame(activityFrame);
+        Rect activityFrame = new Rect(); getActivityContentView().getWindowVisibleDisplayFrame(activityFrame);
         // So, we need to deduce the offsets.
         coords[0] -= (getScreenSize().x - getActivityContentView().getMeasuredWidth());
         coords[1] -= (activityFrame.height() + activityFrame.top - getActivityContentView().getMeasuredHeight());
@@ -261,7 +240,6 @@ public class FloatingActionMenu {
 
     /**
      * Returns the center point of the main action view
-     *
      * @return
      */
     public Point getActionViewCenter() {
@@ -287,15 +265,16 @@ public class FloatingActionMenu {
 
         // Prevent overlapping when it is a full circle
         int divisor;
-        if (Math.abs(endAngle - startAngle) >= 360 || subActionItems.size() <= 1) {
+        if(Math.abs(endAngle - startAngle) >= 360 || subActionItems.size() <= 1) {
             divisor = subActionItems.size();
-        } else {
-            divisor = subActionItems.size() - 1;
+        }
+        else {
+            divisor = subActionItems.size() -1;
         }
 
         // Measure this path, in order to find points that have the same distance between each other
-        for (int i = 0; i < subActionItems.size(); i++) {
-            float[] coords = new float[]{0f, 0f};
+        for(int i=0; i<subActionItems.size(); i++) {
+            float[] coords = new float[] {0f, 0f};
             measure.getPosTan((i) * measure.getLength() / divisor, coords, null);
             // get the x and y values of these points and set them to each of sub action items.
             subActionItems.get(i).x = (int) coords[0] - subActionItems.get(i).width / 2;
@@ -319,21 +298,19 @@ public class FloatingActionMenu {
 
     /**
      * Finds and returns the main content view from the Activity context.
-     *
      * @return the main content view
      */
     public View getActivityContentView() {
-        return ((Activity) mainActionView.getContext()).getWindow().getDecorView().findViewById(android.R.id.content);
+        return ((Activity)mainActionView.getContext()).getWindow().getDecorView().findViewById(android.R.id.content);
     }
 
     /**
      * Retrieves the screen size from the Activity context
-     *
      * @return the screen size as a Point object
      */
     private Point getScreenSize() {
         Point size = new Point();
-        ((Activity) mainActionView.getContext()).getWindowManager().getDefaultDisplay().getSize(size);
+        ((Activity)mainActionView.getContext()).getWindowManager().getDefaultDisplay().getSize(size);
         return size;
     }
 
@@ -342,12 +319,46 @@ public class FloatingActionMenu {
     }
 
     /**
-     * A listener to listen open/closed state changes of the Menu
+     * A simple click listener used by the main action view
      */
-    public static interface MenuStateChangeListener {
-        public void onMenuOpened(FloatingActionMenu menu);
+    public class ActionViewClickListener implements View.OnClickListener {
 
-        public void onMenuClosed(FloatingActionMenu menu);
+        @Override
+        public void onClick(View v) {
+            toggle(animated);
+        }
+    }
+
+    /**
+     * This runnable calculates sizes of Item views that are added to the menu.
+     */
+    private class ItemViewQueueListener implements Runnable {
+
+        private static final int MAX_TRIES = 10;
+        private Item item;
+        private int tries;
+
+        public ItemViewQueueListener(Item item) {
+            this.item = item;
+            this.tries = 0;
+        }
+
+        @Override
+        public void run() {
+            // Wait until the the view can be measured but do not push too hard.
+            if(item.view.getMeasuredWidth() == 0 && tries < MAX_TRIES) {
+                item.view.post(this);
+                return;
+            }
+            // Measure the size of the item view
+            item.width = item.view.getMeasuredWidth();
+            item.height = item.view.getMeasuredHeight();
+
+            // Revert everything back to normal
+            item.view.setAlpha(1);
+            // Remove the item view from view hierarchy
+            ((ViewGroup) getActivityContentView()).removeView(item.view);
+        }
     }
 
     /**
@@ -368,6 +379,14 @@ public class FloatingActionMenu {
             x = 0;
             y = 0;
         }
+    }
+
+    /**
+     * A listener to listen open/closed state changes of the Menu
+     */
+    public static interface MenuStateChangeListener {
+        public void onMenuOpened(FloatingActionMenu menu);
+        public void onMenuClosed(FloatingActionMenu menu);
     }
 
     /**
@@ -416,7 +435,6 @@ public class FloatingActionMenu {
 
         /**
          * Adds a sub action view that is already alive, but not added to a parent View.
-         *
          * @param subActionView a view for the menu
          * @return
          */
@@ -426,8 +444,7 @@ public class FloatingActionMenu {
 
         /**
          * Inflates a new view from the specified resource id and adds it as a sub action view.
-         *
-         * @param resId   the resource id reference for the view
+         * @param resId the resource id reference for the view
          * @param context a valid context
          * @return
          */
@@ -440,7 +457,6 @@ public class FloatingActionMenu {
 
         /**
          * Sets the current animation handler to the specified MenuAnimationHandler child
-         *
          * @param animationHandler a MenuAnimationHandler child
          * @return
          */
@@ -467,7 +483,6 @@ public class FloatingActionMenu {
         /**
          * Attaches the whole menu around a main action view, usually a button.
          * All the calculations are made according to this action view.
-         *
          * @param actionView
          * @return
          */
@@ -478,56 +493,13 @@ public class FloatingActionMenu {
 
         public FloatingActionMenu build() {
             return new FloatingActionMenu(actionView,
-                    startAngle,
-                    endAngle,
-                    radius,
-                    subActionItems,
-                    animationHandler,
-                    animated,
-                    stateChangeListener);
-        }
-    }
-
-    /**
-     * A simple click listener used by the main action view
-     */
-    public class ActionViewClickListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            toggle(animated);
-        }
-    }
-
-    /**
-     * This runnable calculates sizes of Item views that are added to the menu.
-     */
-    private class ItemViewQueueListener implements Runnable {
-
-        private static final int MAX_TRIES = 10;
-        private Item item;
-        private int tries;
-
-        public ItemViewQueueListener(Item item) {
-            this.item = item;
-            this.tries = 0;
-        }
-
-        @Override
-        public void run() {
-            // Wait until the the view can be measured but do not push too hard.
-            if (item.view.getMeasuredWidth() == 0 && tries < MAX_TRIES) {
-                item.view.post(this);
-                return;
-            }
-            // Measure the size of the item view
-            item.width = item.view.getMeasuredWidth();
-            item.height = item.view.getMeasuredHeight();
-
-            // Revert everything back to normal
-            item.view.setAlpha(1);
-            // Remove the item view from view hierarchy
-            ((ViewGroup) getActivityContentView()).removeView(item.view);
+                                          startAngle,
+                                          endAngle,
+                                          radius,
+                                          subActionItems,
+                                          animationHandler,
+                                          animated,
+                                          stateChangeListener);
         }
     }
 }

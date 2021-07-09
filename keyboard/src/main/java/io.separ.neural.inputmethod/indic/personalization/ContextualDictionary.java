@@ -29,7 +29,7 @@ public class ContextualDictionary extends ExpandableBinaryDictionary {
     /* package */ static final String NAME = ContextualDictionary.class.getSimpleName();
 
     private ContextualDictionary(final Context context, final Locale locale,
-                                 final File dictFile) {
+            final File dictFile) {
         super(context, getDictName(NAME, locale, dictFile), locale, Dictionary.TYPE_CONTEXTUAL,
                 dictFile);
         // Always reset the contents.
@@ -38,7 +38,7 @@ public class ContextualDictionary extends ExpandableBinaryDictionary {
 
     @UsedForTesting
     public static ContextualDictionary getDictionary(final Context context, final Locale locale,
-                                                     final File dictFile, final String dictNamePrefix) {
+            final File dictFile, final String dictNamePrefix) {
         return new ContextualDictionary(context, locale, dictFile);
     }
 

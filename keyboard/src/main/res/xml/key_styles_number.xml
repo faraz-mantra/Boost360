@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
 **
 ** Copyright 2010, The Android Open Source Project
@@ -17,128 +18,130 @@
 */
 -->
 
-<merge xmlns:latin="http://schemas.android.com/apk/res-auto">
-  <key-style
-    latin:keyActionFlags="noKeyPreview"
-    latin:styleName="numKeyBaseStyle" />
-  <key-style
-    latin:keyLabelFlags="followKeyLargeLetterRatio"
-    latin:parentStyle="numKeyBaseStyle"
-    latin:styleName="numKeyStyle" />
-  <key-style
-    latin:keyLabelFlags="fontNormal|followKeyLetterRatio|followFunctionalTextColor"
-    latin:parentStyle="numKeyBaseStyle"
-    latin:styleName="numModeKeyStyle" />
-  <key-style
-    latin:backgroundType="functional"
-    latin:keyLabelFlags="followKeyLargeLetterRatio"
-    latin:parentStyle="numKeyBaseStyle"
-    latin:styleName="numFunctionalKeyStyle" />
-  <key-style
-    latin:keyLabelFlags="alignLabelOffCenter|hasHintLabel"
-    latin:parentStyle="numKeyStyle"
-    latin:styleName="numberKeyStyle" />
-  <key-style
-    latin:keyHintLabel="+"
-    latin:keySpec="0"
-    latin:parentStyle="numberKeyStyle"
-    latin:styleName="num0KeyStyle" />
-  <key-style
-    latin:keySpec="1"
-    latin:parentStyle="numberKeyStyle"
-    latin:styleName="num1KeyStyle" />
-  <key-style
-    latin:keyHintLabel="ABC"
-    latin:keySpec="2"
-    latin:parentStyle="numberKeyStyle"
-    latin:styleName="num2KeyStyle" />
-  <key-style
-    latin:keyHintLabel="DEF"
-    latin:keySpec="3"
-    latin:parentStyle="numberKeyStyle"
-    latin:styleName="num3KeyStyle" />
-  <key-style
-    latin:keyHintLabel="GHI"
-    latin:keySpec="4"
-    latin:parentStyle="numberKeyStyle"
-    latin:styleName="num4KeyStyle" />
-  <key-style
-    latin:keyHintLabel="JKL"
-    latin:keySpec="5"
-    latin:parentStyle="numberKeyStyle"
-    latin:styleName="num5KeyStyle" />
-  <key-style
-    latin:keyHintLabel="MNO"
-    latin:keySpec="6"
-    latin:parentStyle="numberKeyStyle"
-    latin:styleName="num6KeyStyle" />
-  <key-style
-    latin:keyHintLabel="PQRS"
-    latin:keySpec="7"
-    latin:parentStyle="numberKeyStyle"
-    latin:styleName="num7KeyStyle" />
-  <key-style
-    latin:keyHintLabel="TUV"
-    latin:keySpec="8"
-    latin:parentStyle="numberKeyStyle"
-    latin:styleName="num8KeyStyle" />
-  <key-style
-    latin:keyHintLabel="WXYZ"
-    latin:keySpec="9"
-    latin:parentStyle="numberKeyStyle"
-    latin:styleName="num9KeyStyle" />
-  <!-- U+FF0A: "＊" FULLWIDTH ASTERISK -->
-  <key-style
-    latin:keySpec="&#xFF0A;|*"
-    latin:parentStyle="numKeyStyle"
-    latin:styleName="numStarKeyStyle" />
-  <!-- Only for non-tablet device -->
-  <key-style
-    latin:keySpec="!text/keylabel_to_phone_symbols|!code/key_switch_alpha_symbol"
-    latin:parentStyle="numModeKeyStyle"
-    latin:styleName="numPhoneToSymbolKeyStyle" />
-  <key-style
-    latin:keySpec="!text/keylabel_to_phone_numeric|!code/key_switch_alpha_symbol"
-    latin:parentStyle="numModeKeyStyle"
-    latin:styleName="numPhoneToNumericKeyStyle" />
-  <key-style
-    latin:keyLabelFlags="followKeyHintLabelRatio|autoXScale"
-    latin:keySpec="!text/label_pause_key|,"
-    latin:parentStyle="numKeyBaseStyle"
-    latin:styleName="numPauseKeyStyle" />
-  <key-style
-    latin:keyLabelFlags="followKeyHintLabelRatio|autoXScale"
-    latin:keySpec="!text/label_wait_key|;"
-    latin:parentStyle="numKeyBaseStyle"
-    latin:styleName="numWaitKeyStyle" />
-  <key-style
-    latin:keyActionFlags="noKeyPreview"
-    latin:parentStyle="tabKeyStyle"
-    latin:styleName="numTabKeyStyle" />
-  <key-style
-    latin:keyActionFlags="enableLongPress"
-    latin:keyLabelFlags="alignIconToBottom"
-    latin:keySpec="!icon/space_key_for_number_layout|!code/key_space"
-    latin:parentStyle="numKeyBaseStyle"
-    latin:styleName="numSpaceKeyStyle" />
-  <!-- TODO: Consolidate these space key styles with numSpaceKeyStyle above by introducing <case>
-       predicator that checks device form-factor. -->
-  <switch>
-    <case latin:keyboardTheme="ICS|KLP">
-      <key-style
+<merge
+    xmlns:latin="http://schemas.android.com/apk/res-auto"
+>
+    <key-style
+        latin:styleName="numKeyBaseStyle"
+        latin:keyActionFlags="noKeyPreview" />
+    <key-style
+        latin:styleName="numKeyStyle"
+        latin:keyLabelFlags="followKeyLargeLetterRatio"
+        latin:parentStyle="numKeyBaseStyle" />
+    <key-style
+        latin:styleName="numModeKeyStyle"
+        latin:keyLabelFlags="fontNormal|followKeyLetterRatio|followFunctionalTextColor"
+        latin:parentStyle="numKeyBaseStyle" />
+    <key-style
+        latin:styleName="numFunctionalKeyStyle"
+        latin:keyLabelFlags="followKeyLargeLetterRatio"
         latin:backgroundType="functional"
+        latin:parentStyle="numKeyBaseStyle" />
+    <key-style
+        latin:styleName="numberKeyStyle"
+        latin:keyLabelFlags="alignLabelOffCenter|hasHintLabel"
+        latin:parentStyle="numKeyStyle" />
+    <key-style
+        latin:styleName="num0KeyStyle"
+        latin:keySpec="0"
+        latin:keyHintLabel="+"
+        latin:parentStyle="numberKeyStyle" />
+    <key-style
+        latin:styleName="num1KeyStyle"
+        latin:keySpec="1"
+        latin:parentStyle="numberKeyStyle" />
+    <key-style
+        latin:styleName="num2KeyStyle"
+        latin:keySpec="2"
+        latin:keyHintLabel="ABC"
+        latin:parentStyle="numberKeyStyle" />
+    <key-style
+        latin:styleName="num3KeyStyle"
+        latin:keySpec="3"
+        latin:keyHintLabel="DEF"
+        latin:parentStyle="numberKeyStyle" />
+    <key-style
+        latin:styleName="num4KeyStyle"
+        latin:keySpec="4"
+        latin:keyHintLabel="GHI"
+        latin:parentStyle="numberKeyStyle" />
+    <key-style
+        latin:styleName="num5KeyStyle"
+        latin:keySpec="5"
+        latin:keyHintLabel="JKL"
+        latin:parentStyle="numberKeyStyle" />
+    <key-style
+        latin:styleName="num6KeyStyle"
+        latin:keySpec="6"
+        latin:keyHintLabel="MNO"
+        latin:parentStyle="numberKeyStyle" />
+    <key-style
+        latin:styleName="num7KeyStyle"
+        latin:keySpec="7"
+        latin:keyHintLabel="PQRS"
+        latin:parentStyle="numberKeyStyle" />
+    <key-style
+        latin:styleName="num8KeyStyle"
+        latin:keySpec="8"
+        latin:keyHintLabel="TUV"
+        latin:parentStyle="numberKeyStyle" />
+    <key-style
+        latin:styleName="num9KeyStyle"
+        latin:keySpec="9"
+        latin:keyHintLabel="WXYZ"
+        latin:parentStyle="numberKeyStyle" />
+    <!-- U+FF0A: "＊" FULLWIDTH ASTERISK -->
+    <key-style
+        latin:styleName="numStarKeyStyle"
+        latin:keySpec="&#xFF0A;|*"
+        latin:parentStyle="numKeyStyle" />
+    <!-- Only for non-tablet device -->
+    <key-style
+        latin:styleName="numPhoneToSymbolKeyStyle"
+        latin:keySpec="!text/keylabel_to_phone_symbols|!code/key_switch_alpha_symbol"
+        latin:parentStyle="numModeKeyStyle" />
+    <key-style
+        latin:styleName="numPhoneToNumericKeyStyle"
+        latin:keySpec="!text/keylabel_to_phone_numeric|!code/key_switch_alpha_symbol"
+        latin:parentStyle="numModeKeyStyle" />
+    <key-style
+        latin:styleName="numPauseKeyStyle"
+        latin:keySpec="!text/label_pause_key|,"
+        latin:keyLabelFlags="followKeyHintLabelRatio|autoXScale"
+        latin:parentStyle="numKeyBaseStyle" />
+    <key-style
+        latin:styleName="numWaitKeyStyle"
+        latin:keySpec="!text/label_wait_key|;"
+        latin:keyLabelFlags="followKeyHintLabelRatio|autoXScale"
+        latin:parentStyle="numKeyBaseStyle" />
+    <key-style
+        latin:styleName="numTabKeyStyle"
+        latin:keyActionFlags="noKeyPreview"
+        latin:parentStyle="tabKeyStyle" />
+    <key-style
+        latin:styleName="numSpaceKeyStyle"
+        latin:keySpec="!icon/space_key_for_number_layout|!code/key_space"
+        latin:keyLabelFlags="alignIconToBottom"
         latin:keyActionFlags="enableLongPress"
-        latin:keySpec="!icon/space_key|!code/key_space"
-        latin:parentStyle="numKeyBaseStyle"
-        latin:styleName="tabletNumSpaceKeyStyle" />
-    </case>
-    <case latin:keyboardTheme="LXXLight|LXXDark">
-      <key-style
-        latin:backgroundType="spacebar"
-        latin:keyActionFlags="enableLongPress"
-        latin:keySpec="!icon/space_key|!code/key_space"
-        latin:parentStyle="numKeyBaseStyle"
-        latin:styleName="tabletNumSpaceKeyStyle" />
-    </case>
-  </switch>
+        latin:parentStyle="numKeyBaseStyle" />
+    <!-- TODO: Consolidate these space key styles with numSpaceKeyStyle above by introducing <case>
+         predicator that checks device form-factor. -->
+    <switch>
+        <case latin:keyboardTheme="ICS|KLP">
+            <key-style
+                latin:styleName="tabletNumSpaceKeyStyle"
+                latin:keySpec="!icon/space_key|!code/key_space"
+                latin:backgroundType="functional"
+                latin:keyActionFlags="enableLongPress"
+                latin:parentStyle="numKeyBaseStyle" />
+        </case>
+        <case latin:keyboardTheme="LXXLight|LXXDark">
+            <key-style
+                latin:styleName="tabletNumSpaceKeyStyle"
+                latin:keySpec="!icon/space_key|!code/key_space"
+                latin:backgroundType="spacebar"
+                latin:keyActionFlags="enableLongPress"
+                latin:parentStyle="numKeyBaseStyle" />
+        </case>
+    </switch>
 </merge>

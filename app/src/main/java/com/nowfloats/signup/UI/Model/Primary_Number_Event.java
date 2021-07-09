@@ -5,9 +5,10 @@ package com.nowfloats.signup.UI.Model;
  */
 public class Primary_Number_Event {
 
-    public Boolean model;
+    public Boolean model ;
 
-    public Primary_Number_Event(Boolean response) {
-        model = response;
+    public Primary_Number_Event(Boolean response)
+    {
+        model = response ;
     }
 }

@@ -11,7 +11,8 @@ public class BankInformation {
     @SerializedName("SellerId")
     public String sellerId;
 
-    public static class BankAccount {
+    public static class BankAccount
+    {
         @SerializedName("Number")
         public String number;
         @SerializedName("IFSC")

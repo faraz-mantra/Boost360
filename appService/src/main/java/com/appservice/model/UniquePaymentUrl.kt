@@ -9,4 +9,4 @@ data class UniquePaymentUrl(
   var description: String? = null,
   @SerializedName("url")
   var url: String? = null
-) : Serializable
+): Serializable

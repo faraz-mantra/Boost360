@@ -32,21 +32,9 @@ public final class ProbabilityInfo {
     public final int mLevel;
     public final int mCount;
 
-    public ProbabilityInfo(final int probability) {
-        this(probability, BinaryDictionary.NOT_A_VALID_TIMESTAMP, 0, 0);
-    }
-
-    public ProbabilityInfo(final int probability, final int timestamp, final int level,
-                           final int count) {
-        mProbability = probability;
-        mTimestamp = timestamp;
-        mLevel = level;
-        mCount = count;
-    }
-
     @UsedForTesting
     public static ProbabilityInfo max(final ProbabilityInfo probabilityInfo1,
-                                      final ProbabilityInfo probabilityInfo2) {
+            final ProbabilityInfo probabilityInfo2) {
         if (probabilityInfo1 == null) {
             return probabilityInfo2;
         }
@@ -60,6 +48,18 @@ public final class ProbabilityInfo {
         }
     }
 
+    public ProbabilityInfo(final int probability) {
+        this(probability, BinaryDictionary.NOT_A_VALID_TIMESTAMP, 0, 0);
+    }
+
+    public ProbabilityInfo(final int probability, final int timestamp, final int level,
+            final int count) {
+        mProbability = probability;
+        mTimestamp = timestamp;
+        mLevel = level;
+        mCount = count;
+    }
+
     public boolean hasHistoricalInfo() {
         return mTimestamp != BinaryDictionary.NOT_A_VALID_TIMESTAMP;
     }
@@ -67,9 +67,9 @@ public final class ProbabilityInfo {
     @Override
     public int hashCode() {
         if (hasHistoricalInfo()) {
-            return Arrays.hashCode(new Object[]{mProbability, mTimestamp, mLevel, mCount});
+            return Arrays.hashCode(new Object[] { mProbability, mTimestamp, mLevel, mCount });
         } else {
-            return Arrays.hashCode(new Object[]{mProbability});
+            return Arrays.hashCode(new Object[] { mProbability });
         }
     }
 
@@ -82,7 +82,7 @@ public final class ProbabilityInfo {
     public boolean equals(Object o) {
         if (o == this) return true;
         if (!(o instanceof ProbabilityInfo)) return false;
-        final ProbabilityInfo p = (ProbabilityInfo) o;
+        final ProbabilityInfo p = (ProbabilityInfo)o;
         if (!hasHistoricalInfo() && !p.hasHistoricalInfo()) {
             return mProbability == p.mProbability;
         }

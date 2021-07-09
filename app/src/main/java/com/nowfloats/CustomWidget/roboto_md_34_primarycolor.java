@@ -15,7 +15,6 @@ public class roboto_md_34_primarycolor extends TextView {
         super(context);
         init(context);
     }
-
     public roboto_md_34_primarycolor(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -25,9 +24,9 @@ public class roboto_md_34_primarycolor extends TextView {
         super(context, attrs, defStyle);
         init(context);
     }
-
-    public void init(Context context) {
-        setCustomFont(context, "Roboto-Medium.ttf");
+    public void init(Context context)
+    {
+        setCustomFont(context,"Roboto-Medium.ttf");
         setTextColor(getResources().getColor(R.color.primaryColor));
         setTextSize(17);
 

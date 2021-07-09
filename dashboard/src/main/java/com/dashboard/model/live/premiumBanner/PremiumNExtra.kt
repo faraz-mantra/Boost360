@@ -11,4 +11,4 @@ data class PremiumNExtra(
   var pageSize: Int? = null,
   @SerializedName("TotalCount")
   var totalCount: Int? = null
-) : Serializable
+): Serializable

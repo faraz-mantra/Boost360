@@ -22,14 +22,14 @@ import io.separ.neural.inputmethod.indic.DictionaryFacilitator;
 
 public class ContextualDictionaryUpdater {
     public ContextualDictionaryUpdater(final Context context,
-                                       final DictionaryFacilitator dictionaryFacilitator,
-                                       final Runnable onUpdateRunnable) {
+            final DictionaryFacilitator dictionaryFacilitator,
+            final Runnable onUpdateRunnable) {
     }
 
     public void onLoadSettings(final boolean usePersonalizedDicts) {
     }
 
-    public void onStartInputView(final String packageName) {
+    public void onStartInputView(final String  packageName) {
     }
 
     public void onDestroy() {

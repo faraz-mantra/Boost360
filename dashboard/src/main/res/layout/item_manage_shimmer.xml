@@ -22,7 +22,7 @@
         android:layout_gravity="start|center_vertical"
         android:layout_margin="@dimen/size_2"
         app:cardBackgroundColor="@color/placeholder_bg"
-        app:cardCornerRadius="@dimen/size_6" />
+        app:cardCornerRadius="@dimen/size_6"/>
 
       <com.framework.views.customViews.CustomCardView
         android:id="@+id/img_lock"
@@ -31,7 +31,7 @@
         android:layout_gravity="end|top"
         android:elevation="0dp"
         app:cardBackgroundColor="@color/placeholder_bg"
-        app:cardCornerRadius="@dimen/size_10" />
+        app:cardCornerRadius="@dimen/size_10"/>
     </FrameLayout>
 
     <View
@@ -40,7 +40,7 @@
       android:layout_height="@dimen/size_10"
       android:layout_marginTop="@dimen/size_3"
       android:layout_marginEnd="@dimen/size_4"
-      android:background="@color/placeholder_bg"
+     android:background="@color/placeholder_bg"
       android:ellipsize="end" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 

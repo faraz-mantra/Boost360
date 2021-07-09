@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
 **
 ** Copyright 2014, The Android Open Source Project
@@ -18,14 +19,14 @@
 -->
 
 <set xmlns:android="http://schemas.android.com/apk/res/android">
-  <objectAnimator
-    android:duration="53"
-    android:propertyName="scaleX"
-    android:valueFrom="1.00"
-    android:valueTo="0.94" />
-  <objectAnimator
-    android:duration="53"
-    android:propertyName="scaleY"
-    android:valueFrom="1.00"
-    android:valueTo="0.94" />
+    <objectAnimator
+        android:propertyName="scaleX"
+        android:duration="53"
+        android:valueFrom="1.00"
+        android:valueTo="0.94" />
+    <objectAnimator
+        android:propertyName="scaleY"
+        android:duration="53"
+        android:valueFrom="1.00"
+        android:valueTo="0.94" />
 </set>

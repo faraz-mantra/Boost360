@@ -1,384 +1,385 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:orientation="vertical"
-  app:cardBackgroundColor="@color/c_a3a3a3"
-  app:cardCornerRadius="2dp"
-  app:cardElevation="2dp">
-
-  <LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="2dp"
+    app:cardBackgroundColor="@color/c_a3a3a3"
+    app:cardElevation="2dp">
 
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingStart="10dp"
-      android:paddingTop="5dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="5dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-      <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Business Hours"
-        android:textColor="@color/white"
-        android:textSize="13sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingStart="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp">
 
-      <TextView
-        android:id="@+id/tv_hours_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/black_round_corner"
-        android:paddingStart="10dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp"
-        android:text="Edit"
-        android:textColor="@color/white"
-        android:textSize="12sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Business Hours"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_hours_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/black_round_corner"
+                android:paddingBottom="5dp"
+                android:paddingStart="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="Edit"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:text="Days"
+                    android:textSize="12sp"
+                    android:textStyle="italic|bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:gravity="center"
+                    android:text="Open"
+                    android:textSize="12sp"
+                    android:textStyle="italic|bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:gravity="center"
+                    android:text="Close"
+                    android:textSize="12sp"
+                    android:textStyle="italic|bold" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:text="@string/monday"
+                    android:textColor="#575757"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/et_mon_open"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/et_mon_close"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:focusable="false"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:text="@string/tuesday"
+                    android:textColor="#575757"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/et_tue_open"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/et_tue_close"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:text="@string/wednesday"
+                    android:textColor="#575757"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/et_wed_open"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/et_wed_close"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:text="@string/thursday"
+                    android:textColor="#575757"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/et_thu_open"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/et_thu_close"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:text="@string/friday"
+                    android:textColor="#575757"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/et_fri_open"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/et_fri_close"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:text="@string/saturday"
+                    android:textColor="#575757"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/et_sat_open"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/et_sat_close"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:text="@string/sunday"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/et_sun_open"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/et_sun_close"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight=".3"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="00:00"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/white"
-      android:orientation="vertical"
-      android:padding="10dp">
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="horizontal">
-
-        <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight=".4"
-          android:gravity="center_vertical"
-          android:text="Days"
-          android:textSize="12sp"
-          android:textStyle="italic|bold" />
-
-        <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:gravity="center"
-          android:text="Open"
-          android:textSize="12sp"
-          android:textStyle="italic|bold" />
-
-        <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:gravity="center"
-          android:text="Close"
-          android:textSize="12sp"
-          android:textStyle="italic|bold" />
-
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="bottom"
-        android:orientation="horizontal">
-
-        <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight=".4"
-          android:gravity="center_vertical"
-          android:text="@string/monday"
-          android:textColor="#575757"
-          android:textSize="12sp" />
-
-        <TextView
-          android:id="@+id/et_mon_open"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:focusable="false"
-          android:gravity="center"
-          android:inputType="none"
-          android:text="00:00"
-          android:textSize="12sp" />
-
-        <TextView
-          android:id="@+id/et_mon_close"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:focusable="false"
-          android:focusableInTouchMode="true"
-          android:gravity="center"
-          android:inputType="none"
-          android:text="00:00"
-          android:textSize="12sp" />
-
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="horizontal">
-
-        <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight=".4"
-          android:gravity="center_vertical"
-          android:text="@string/tuesday"
-          android:textColor="#575757"
-          android:textSize="12sp" />
-
-        <TextView
-          android:id="@+id/et_tue_open"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:focusable="false"
-          android:gravity="center"
-          android:inputType="none"
-          android:text="00:00"
-          android:textSize="12sp" />
-
-        <TextView
-          android:id="@+id/et_tue_close"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:focusable="false"
-          android:gravity="center"
-          android:inputType="none"
-          android:text="00:00"
-          android:textSize="12sp" />
-
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="horizontal">
-
-        <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight=".4"
-          android:gravity="center_vertical"
-          android:text="@string/wednesday"
-          android:textColor="#575757"
-          android:textSize="12sp" />
-
-        <TextView
-          android:id="@+id/et_wed_open"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:focusable="false"
-          android:gravity="center"
-          android:inputType="none"
-          android:text="00:00"
-          android:textSize="12sp" />
-
-        <TextView
-          android:id="@+id/et_wed_close"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:focusable="false"
-          android:gravity="center"
-          android:inputType="none"
-          android:text="00:00"
-          android:textSize="12sp" />
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="horizontal">
-
-        <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight=".4"
-          android:gravity="center_vertical"
-          android:text="@string/thursday"
-          android:textColor="#575757"
-          android:textSize="12sp" />
-
-        <TextView
-          android:id="@+id/et_thu_open"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:focusable="false"
-          android:gravity="center"
-          android:inputType="none"
-          android:text="00:00"
-          android:textSize="12sp" />
-
-        <TextView
-          android:id="@+id/et_thu_close"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:focusable="false"
-          android:gravity="center"
-          android:inputType="none"
-          android:text="00:00"
-          android:textSize="12sp" />
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="horizontal">
-
-        <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight=".4"
-          android:gravity="center_vertical"
-          android:text="@string/friday"
-          android:textColor="#575757"
-          android:textSize="12sp" />
-
-        <TextView
-          android:id="@+id/et_fri_open"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:focusable="false"
-          android:gravity="center"
-          android:inputType="none"
-          android:text="00:00"
-          android:textSize="12sp" />
-
-        <TextView
-          android:id="@+id/et_fri_close"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:focusable="false"
-          android:gravity="center"
-          android:inputType="none"
-          android:text="00:00"
-          android:textSize="12sp" />
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="horizontal">
-
-        <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight=".4"
-          android:gravity="center_vertical"
-          android:text="@string/saturday"
-          android:textColor="#575757"
-          android:textSize="12sp" />
-
-        <TextView
-          android:id="@+id/et_sat_open"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:focusable="false"
-          android:gravity="center"
-          android:inputType="none"
-          android:text="00:00"
-          android:textSize="12sp" />
-
-        <TextView
-          android:id="@+id/et_sat_close"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:focusable="false"
-          android:gravity="center"
-          android:inputType="none"
-          android:text="00:00"
-          android:textSize="12sp" />
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="horizontal">
-
-        <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight=".4"
-          android:gravity="center_vertical"
-          android:text="@string/sunday"
-          android:textSize="12sp" />
-
-        <TextView
-          android:id="@+id/et_sun_open"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:focusable="false"
-          android:gravity="center"
-          android:inputType="none"
-          android:text="00:00"
-          android:textSize="12sp" />
-
-        <TextView
-          android:id="@+id/et_sun_close"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="15dp"
-          android:layout_weight=".3"
-          android:focusable="false"
-          android:gravity="center"
-          android:inputType="none"
-          android:text="00:00"
-          android:textSize="12sp" />
-
-      </LinearLayout>
-    </LinearLayout>
-  </LinearLayout>
 
 
 </androidx.cardview.widget.CardView>

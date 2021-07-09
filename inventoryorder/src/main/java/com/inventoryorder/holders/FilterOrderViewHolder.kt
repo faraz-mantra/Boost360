@@ -7,8 +7,7 @@ import com.inventoryorder.model.bottomsheet.FilterModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class FilterOrderViewHolder(binding: ItemBottomSheetFilterBinding) :
-  AppBaseRecyclerViewHolder<ItemBottomSheetFilterBinding>(binding) {
+class FilterOrderViewHolder(binding: ItemBottomSheetFilterBinding) : AppBaseRecyclerViewHolder<ItemBottomSheetFilterBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -21,11 +20,7 @@ class FilterOrderViewHolder(binding: ItemBottomSheetFilterBinding) :
     binding.tvOptionSelected.text = model.type
     binding.mainView.background = activity?.let { ContextCompat.getDrawable(it, model.getColor()) }
     binding.mainView.setOnClickListener {
-      listener?.onItemClick(
-        adapterPosition,
-        model,
-        RecyclerViewActionType.FILTER_ACTION_ITEM.ordinal
-      )
+      listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.FILTER_ACTION_ITEM.ordinal)
     }
   }
 

@@ -20,9 +20,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-
 import androidx.core.content.ContextCompat;
-
 import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 
@@ -49,7 +47,7 @@ public final class SettingsValues {
     private static final String FLOAT_MAX_VALUE_MARKER_STRING = "floatMaxValue";
     private static final String FLOAT_NEGATIVE_INFINITY_MARKER_STRING = "floatNegativeInfinity";
     private static final int TIMEOUT_TO_GET_TARGET_PACKAGE = 5; // seconds
-    private static final String SUGGESTIONS_VISIBILITY_HIDE_VALUE_OBSOLETE = "2";
+
     // From resources:
     public final SpacingAndPunctuations mSpacingAndPunctuations;
     public final int mDelayInMillisecondsToUpdateOldSuggestions;
@@ -79,19 +77,27 @@ public final class SettingsValues {
     public final boolean mPhraseGestureEnabled;
     public final int mKeyLongpressTimeout;
     public final boolean mShouldShowUiToAcceptTypedWord;
+
     // From the input box
     public final InputAttributes mInputAttributes;
+
     // Deduced settings
     public final int mKeypressVibrationDuration;
     public final float mKeypressSoundVolume;
     public final int mKeyPreviewPopupDismissDelay;
+    private final boolean mAutoCorrectEnabled;
     public final float mAutoCorrectionThreshold;
     public final boolean mAutoCorrectionEnabledPerUserSettings;
+    private final boolean mSuggestionsEnabledPerUserSettings;
+    private final AsyncResultHolder<AppWorkaroundsUtils> mAppWorkarounds;
+
     // Setting values for additional features
     public final int[] mAdditionalFeaturesSettingValues =
             new int[AdditionalFeaturesSettingUtils.ADDITIONAL_FEATURES_SETTINGS_SIZE];
+
     // TextDecorator
     public final int mTextHighlightColorForAddToDictionaryIndicator;
+
     // Debug settings
     public final boolean mIsInternal;
     public final boolean mHasCustomKeyPreviewAnimationParams;
@@ -101,9 +107,6 @@ public final class SettingsValues {
     public final float mKeyPreviewShowUpStartYScale;
     public final float mKeyPreviewDismissEndXScale;
     public final float mKeyPreviewDismissEndYScale;
-    private final boolean mAutoCorrectEnabled;
-    private final boolean mSuggestionsEnabledPerUserSettings;
-    private final AsyncResultHolder<AppWorkaroundsUtils> mAppWorkarounds;
 
     public SettingsValues(final Context context, final SharedPreferences prefs, final Resources res,
                           final InputAttributes inputAttributes) {
@@ -204,6 +207,80 @@ public final class SettingsValues {
         }*/
     }
 
+    public boolean isApplicationSpecifiedCompletionsOn() {
+        return mInputAttributes.mApplicationSpecifiedCompletionOn;
+    }
+
+    public boolean needsToLookupSuggestions() {
+       // return true;
+       return mInputAttributes.mShouldShowSuggestions;
+//                && (mAutoCorrectionEnabledPerUserSettings || mSuggestionsEnabledPerUserSettings);
+    }
+
+    public boolean isSuggestionsEnabledPerUserSettings() {
+        return mSuggestionsEnabledPerUserSettings;
+    }
+
+    public boolean isWordSeparator(final int code) {
+        return mSpacingAndPunctuations.isWordSeparator(code);
+    }
+
+    public boolean isWordConnector(final int code) {
+        return mSpacingAndPunctuations.isWordConnector(code);
+    }
+
+    public boolean isWordCodePoint(final int code) {
+        return Character.isLetter(code) || isWordConnector(code)
+                || Character.COMBINING_SPACING_MARK == Character.getType(code);
+    }
+
+    public boolean isUsuallyPrecededBySpace(final int code) {
+        return mSpacingAndPunctuations.isUsuallyPrecededBySpace(code);
+    }
+
+    public boolean isUsuallyFollowedBySpace(final int code) {
+        return mSpacingAndPunctuations.isUsuallyFollowedBySpace(code);
+    }
+
+    public boolean shouldInsertSpacesAutomatically() {
+        return mInputAttributes.mShouldInsertSpacesAutomatically;
+    }
+
+    public boolean isLanguageSwitchKeyEnabled() {
+        if (!mShowsLanguageSwitchKey) {
+            return false;
+        }
+        final RichInputMethodManager imm = RichInputMethodManager.getInstance();
+        /*if (mIncludesOtherImesInLanguageSwitchList) {
+            return imm.hasMultipleEnabledIMEsOrSubtypes(false *//* include aux subtypes *//*);
+        } else {
+            return imm.hasMultipleEnabledSubtypesInThisIme(false *//* include aux subtypes *//*);
+        }*/
+        return true;
+    }
+
+    public boolean isSameInputType(final EditorInfo editorInfo) {
+        return mInputAttributes.isSameInputType(editorInfo);
+    }
+
+    public boolean hasSameOrientation(final Configuration configuration) {
+        return mDisplayOrientation == configuration.orientation;
+    }
+
+    public boolean isBeforeJellyBean() {
+        final AppWorkaroundsUtils appWorkaroundUtils
+                = mAppWorkarounds.get(null, TIMEOUT_TO_GET_TARGET_PACKAGE);
+        return null != appWorkaroundUtils && appWorkaroundUtils.isBeforeJellyBean();
+    }
+
+    public boolean isBrokenByRecorrection() {
+        final AppWorkaroundsUtils appWorkaroundUtils
+                = mAppWorkarounds.get(null, TIMEOUT_TO_GET_TARGET_PACKAGE);
+        return null != appWorkaroundUtils && appWorkaroundUtils.isBrokenByRecorrection();
+    }
+
+    private static final String SUGGESTIONS_VISIBILITY_HIDE_VALUE_OBSOLETE = "2";
+
     private static boolean readSuggestionsEnabled(final SharedPreferences prefs) {
         if (prefs.contains(Settings.PREF_SHOW_SUGGESTIONS_SETTING_OBSOLETE)) {
             final boolean alwaysHide = SUGGESTIONS_VISIBILITY_HIDE_VALUE_OBSOLETE.equals(
@@ -271,78 +348,6 @@ public final class SettingsValues {
                     .apply();
         }
         return prefs.getBoolean(Settings.PREF_VOICE_INPUT_KEY, true);
-    }
-
-    public boolean isApplicationSpecifiedCompletionsOn() {
-        return mInputAttributes.mApplicationSpecifiedCompletionOn;
-    }
-
-    public boolean needsToLookupSuggestions() {
-        // return true;
-        return mInputAttributes.mShouldShowSuggestions;
-//                && (mAutoCorrectionEnabledPerUserSettings || mSuggestionsEnabledPerUserSettings);
-    }
-
-    public boolean isSuggestionsEnabledPerUserSettings() {
-        return mSuggestionsEnabledPerUserSettings;
-    }
-
-    public boolean isWordSeparator(final int code) {
-        return mSpacingAndPunctuations.isWordSeparator(code);
-    }
-
-    public boolean isWordConnector(final int code) {
-        return mSpacingAndPunctuations.isWordConnector(code);
-    }
-
-    public boolean isWordCodePoint(final int code) {
-        return Character.isLetter(code) || isWordConnector(code)
-                || Character.COMBINING_SPACING_MARK == Character.getType(code);
-    }
-
-    public boolean isUsuallyPrecededBySpace(final int code) {
-        return mSpacingAndPunctuations.isUsuallyPrecededBySpace(code);
-    }
-
-    public boolean isUsuallyFollowedBySpace(final int code) {
-        return mSpacingAndPunctuations.isUsuallyFollowedBySpace(code);
-    }
-
-    public boolean shouldInsertSpacesAutomatically() {
-        return mInputAttributes.mShouldInsertSpacesAutomatically;
-    }
-
-    public boolean isLanguageSwitchKeyEnabled() {
-        if (!mShowsLanguageSwitchKey) {
-            return false;
-        }
-        final RichInputMethodManager imm = RichInputMethodManager.getInstance();
-        /*if (mIncludesOtherImesInLanguageSwitchList) {
-            return imm.hasMultipleEnabledIMEsOrSubtypes(false *//* include aux subtypes *//*);
-        } else {
-            return imm.hasMultipleEnabledSubtypesInThisIme(false *//* include aux subtypes *//*);
-        }*/
-        return true;
-    }
-
-    public boolean isSameInputType(final EditorInfo editorInfo) {
-        return mInputAttributes.isSameInputType(editorInfo);
-    }
-
-    public boolean hasSameOrientation(final Configuration configuration) {
-        return mDisplayOrientation == configuration.orientation;
-    }
-
-    public boolean isBeforeJellyBean() {
-        final AppWorkaroundsUtils appWorkaroundUtils
-                = mAppWorkarounds.get(null, TIMEOUT_TO_GET_TARGET_PACKAGE);
-        return null != appWorkaroundUtils && appWorkaroundUtils.isBeforeJellyBean();
-    }
-
-    public boolean isBrokenByRecorrection() {
-        final AppWorkaroundsUtils appWorkaroundUtils
-                = mAppWorkarounds.get(null, TIMEOUT_TO_GET_TARGET_PACKAGE);
-        return null != appWorkaroundUtils && appWorkaroundUtils.isBrokenByRecorrection();
     }
 
     public String dump() {

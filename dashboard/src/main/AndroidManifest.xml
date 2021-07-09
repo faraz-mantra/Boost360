@@ -11,8 +11,8 @@
     <activity
       android:name=".controller.DashboardActivity"
       android:label="@string/dashboard"
-      android:launchMode="singleTask"
       android:screenOrientation="portrait"
+      android:launchMode="singleTask"
       android:theme="@style/DashboardTheme"
       android:windowSoftInputMode="adjustPan">
       <intent-filter

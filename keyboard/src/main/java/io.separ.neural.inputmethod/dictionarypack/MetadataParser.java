@@ -46,7 +46,6 @@ public class MetadataParser {
 
     /**
      * Parse one JSON-formatted word list metadata.
-     *
      * @param reader the reader containing the data.
      * @return a WordListMetadata object from the parsed data.
      * @throws IOException if the underlying reader throws IOException during reading.
@@ -93,10 +92,9 @@ public class MetadataParser {
 
     /**
      * Parses metadata in the JSON format.
-     *
      * @param input a stream reader expected to contain JSON formatted metadata.
      * @return dictionary metadata, as an array of WordListMetadata objects.
-     * @throws IOException        if the underlying reader throws IOException during reading.
+     * @throws IOException if the underlying reader throws IOException during reading.
      * @throws BadFormatException if the data was not in the expected format.
      */
     public static List<WordListMetadata> parseMetadata(final InputStreamReader input)

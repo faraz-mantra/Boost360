@@ -3,9 +3,7 @@ package nfkeyboard.keyboards;
 import android.content.Context;
 import android.inputmethodservice.Keyboard;
 import android.os.Build;
-
 import androidx.core.content.ContextCompat;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;

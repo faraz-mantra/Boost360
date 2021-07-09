@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/main_navigation"
-  app:startDestination="@id/videoPlayerFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/videoPlayerFragment">
 
-  <fragment
-    android:id="@+id/videoPlayerFragment"
-    android:name="com.boost.presignup.ui.MainFragment"
-    android:label="VideoPlayerFragment">
-    <action
-      android:id="@+id/action_videoPlayerFragment_to_introFragment"
-      app:destination="@id/introFragment" />
-    <action
-      android:id="@+id/action_videoPlayerFragment_to_popUpFragment"
-      app:destination="@id/popUpFragment" />
-  </fragment>
-  <fragment
-    android:id="@+id/introFragment"
-    android:name="com.boost.presignup.ui.IntroFragment"
-    android:label="IntroFragment">
-    <action
-      android:id="@+id/action_introFragment_to_videoPlayerFragment"
-      app:destination="@id/videoPlayerFragment" />
-    <action
-      android:id="@+id/action_introFragment_to_popUpFragment"
-      app:destination="@id/popUpFragment" />
-  </fragment>
-  <fragment
-    android:id="@+id/popUpFragment"
-    android:name="com.boost.presignup.ui.PopUpDialogFragment"
-    android:label="PopUpFragment" />
+    <fragment
+        android:id="@+id/videoPlayerFragment"
+        android:name="com.boost.presignup.ui.MainFragment"
+        android:label="VideoPlayerFragment" >
+        <action
+            android:id="@+id/action_videoPlayerFragment_to_introFragment"
+            app:destination="@id/introFragment" />
+        <action
+            android:id="@+id/action_videoPlayerFragment_to_popUpFragment"
+            app:destination="@id/popUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="com.boost.presignup.ui.IntroFragment"
+        android:label="IntroFragment" >
+        <action
+            android:id="@+id/action_introFragment_to_videoPlayerFragment"
+            app:destination="@id/videoPlayerFragment" />
+        <action
+            android:id="@+id/action_introFragment_to_popUpFragment"
+            app:destination="@id/popUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/popUpFragment"
+        android:name="com.boost.presignup.ui.PopUpDialogFragment"
+        android:label="PopUpFragment" />
 </navigation>

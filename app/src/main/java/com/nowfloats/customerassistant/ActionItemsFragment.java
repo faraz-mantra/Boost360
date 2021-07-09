@@ -1,14 +1,12 @@
 package com.nowfloats.customerassistant;
 
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +24,11 @@ import com.thinksity.R;
 public class ActionItemsFragment extends Fragment {
 
 
-    public ProgressBar pbView;
     private RecyclerView rvList;
+
     private ActionItemsAdapter actionItemsAdapter;
+
+    public ProgressBar pbView;
 
     public ActionItemsFragment() {
 

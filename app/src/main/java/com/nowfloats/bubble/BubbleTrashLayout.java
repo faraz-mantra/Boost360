@@ -86,7 +86,7 @@ public class BubbleTrashLayout extends BubbleBaseLayout {
     }
 
     void vibrate() {
-        final Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        final Vibrator vibrator = (Vibrator)getContext().getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(VIBRATION_DURATION_IN_MS);
     }
 

@@ -18,38 +18,38 @@
 -->
 
 <merge xmlns:latin="http://schemas.android.com/apk/res-auto">
-  <!-- Because the font rendering system prior to API version 16 can't automatically
-       render dotted circle for incomplete combining letter of some scripts, different
-       set of Key definitions are needed based on the API version. -->
-  <Key
-    latin:keySpec="&#x092A;"
-    latin:moreKeys="पं,प्" />
-  <Key
-    latin:keySpec="&#x092B;"
-    latin:moreKeys="फ़,फं,फ्,फ़ं,फ़्" />
-  <Key
-    latin:keySpec="&#x092C;"
-    latin:moreKeys="बं,ब्" />
-  <Key
-    latin:keySpec="&#x092D;"
-    latin:moreKeys="भं,भ्" />
-  <Key
-    latin:keySpec="&#x092E;"
-    latin:moreKeys="मं,म्" />
-  <Key
-    latin:keySpec="&#x092F;"
-    latin:moreKeys="य़्,य़,यं,य्,य़ं" />
-  <Key
-    latin:keySpec="&#x0930;"
-    latin:moreKeys="्र,रं,र्" />
-  <Key
-    latin:keySpec="&#x0932;"
-    latin:moreKeys="लं,ल्" />
-  <Key
-    latin:keySpec="&#x0935;"
-    latin:moreKeys="वं,व्" />
-  <Key
-    latin:keySpec="&#x0936;"
-    latin:moreKeys="श्,शं" />
-  <!--<Key latin:keySpec="&#x0939;" />-->
+    <!-- Because the font rendering system prior to API version 16 can't automatically
+         render dotted circle for incomplete combining letter of some scripts, different
+         set of Key definitions are needed based on the API version. -->
+    <Key
+        latin:keySpec="&#x092A;"
+        latin:moreKeys="पं,प्" />
+    <Key
+        latin:keySpec="&#x092B;"
+        latin:moreKeys="फ़,फं,फ्,फ़ं,फ़्" />
+    <Key
+        latin:keySpec="&#x092C;"
+        latin:moreKeys="बं,ब्" />
+    <Key
+        latin:keySpec="&#x092D;"
+        latin:moreKeys="भं,भ्" />
+    <Key
+        latin:keySpec="&#x092E;"
+        latin:moreKeys="मं,म्" />
+    <Key
+        latin:keySpec="&#x092F;"
+        latin:moreKeys="य़्,य़,यं,य्,य़ं" />
+    <Key
+        latin:keySpec="&#x0930;"
+        latin:moreKeys="्र,रं,र्" />
+    <Key
+        latin:keySpec="&#x0932;"
+        latin:moreKeys="लं,ल्" />
+    <Key
+        latin:keySpec="&#x0935;"
+        latin:moreKeys="वं,व्" />
+    <Key
+        latin:keySpec="&#x0936;"
+        latin:moreKeys="श्,शं" />
+    <!--<Key latin:keySpec="&#x0939;" />-->
 </merge>

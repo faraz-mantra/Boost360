@@ -10,10 +10,8 @@ class OffsetPageTransformer : ViewPager2.PageTransformer {
 
   override fun transformPage(page: View, position: Float) {
     val viewPager = page.parent.parent as ViewPager2
-    val pageMarginPx =
-      viewPager.context?.resources?.getDimensionPixelOffset(R.dimen._6dp) ?: PAGE_MARGIN
-    val offsetPx =
-      viewPager.context?.resources?.getDimensionPixelOffset(R.dimen._14dp) ?: PAGE_OFFSET
+    val pageMarginPx = viewPager.context?.resources?.getDimensionPixelOffset(R.dimen._6dp) ?: PAGE_MARGIN
+    val offsetPx = viewPager.context?.resources?.getDimensionPixelOffset(R.dimen._14dp) ?: PAGE_OFFSET
     val offset = position * -(2 * offsetPx + pageMarginPx)
     if (viewPager.orientation == ViewPager2.ORIENTATION_HORIZONTAL) {
       if (ViewCompat.getLayoutDirection(viewPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {

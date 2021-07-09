@@ -5,8 +5,7 @@ package com.nowfloats.NavigationDrawer.model;
  */
 public class AlertCountEvent {
     public String count;
-
-    public AlertCountEvent(String count) {
+    public AlertCountEvent(String count){
         this.count = count;
     }
 }

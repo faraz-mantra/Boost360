@@ -32,16 +32,16 @@
           app:cardBackgroundColor="@color/white">
 
           <com.framework.views.customViews.CustomEditText
-            android:id="@+id/edt_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/size_6"
-            android:background="@null"
             android:gravity="top|left"
             android:hint="@string/update_regularly_keep_customers_informed_brand"
             android:inputType="textCapSentences|textMultiLine|textAutoCorrect"
             android:lines="10"
+            android:id="@+id/edt_desc"
             android:maxLines="10"
+            android:background="@null"
             android:minLines="6"
             android:padding="@dimen/size_10"
             android:scrollbars="vertical"
@@ -53,35 +53,35 @@
           android:layout_height="wrap_content">
 
           <FrameLayout
-            android:id="@+id/image_view"
             android:layout_width="@dimen/size_150"
             android:layout_height="@dimen/size_150"
-            android:layout_marginTop="@dimen/size_26"
-            android:visibility="invisible">
+            android:id="@+id/image_view"
+            android:visibility="invisible"
+            android:layout_marginTop="@dimen/size_26">
 
             <com.framework.views.customViews.CustomImageView
-              android:id="@+id/post_image"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:scaleType="centerCrop"
+              android:id="@+id/post_image"
               app:srcCompat="@drawable/placeholder_image_n" />
 
             <com.framework.views.customViews.CustomImageView
-              android:id="@+id/btn_edit_photo"
               android:layout_width="@dimen/size_28"
               android:layout_height="@dimen/size_28"
               android:layout_margin="@dimen/size_2"
               android:background="@color/warm_grey"
               android:padding="@dimen/size_7"
+              android:id="@+id/btn_edit_photo"
               app:srcCompat="@drawable/ic_edit_yellow"
               app:tint="@color/white" />
 
             <com.framework.views.customViews.CustomImageView
-              android:id="@+id/btn_remove_photo"
               android:layout_width="@dimen/size_28"
               android:layout_height="@dimen/size_28"
               android:layout_gravity="end"
               android:layout_margin="@dimen/size_2"
+              android:id="@+id/btn_remove_photo"
               android:background="@color/warm_grey"
               android:padding="@dimen/size_4"
               app:srcCompat="@drawable/ic_baseline_cancel_white" />
@@ -89,11 +89,11 @@
           </FrameLayout>
 
           <com.framework.views.customViews.CustomImageView
-            android:id="@+id/btn_google_voice"
             android:layout_width="@dimen/size_40"
             android:layout_height="@dimen/size_40"
             android:layout_gravity="end"
             android:layout_marginTop="@dimen/size_26"
+            android:id="@+id/btn_google_voice"
             android:background="@drawable/circle_bakground"
             android:backgroundTint="@color/grey_A1A1A1"
             android:padding="@dimen/size_5"
@@ -125,11 +125,11 @@
       app:layout_constraintEnd_toStartOf="parent">
 
       <com.framework.views.customViews.CustomImageView
-        android:id="@+id/btn_camera"
         android:layout_width="@dimen/size_40"
         android:layout_height="@dimen/size_40"
         android:layout_marginHorizontal="@dimen/size_10"
         android:padding="@dimen/size_5"
+        android:id="@+id/btn_camera"
         app:srcCompat="@drawable/create_message_camera_inactive" />
 
       <View
@@ -149,29 +149,29 @@
         app:textType="CAPTION" />
 
       <com.framework.views.customViews.CustomImageView
-        android:id="@+id/btn_subscription"
         android:layout_width="@dimen/size_40"
         android:layout_height="@dimen/size_40"
+        android:id="@+id/btn_subscription"
         app:srcCompat="@drawable/subscribe_icon" />
 
       <com.framework.views.customViews.CustomImageView
-        android:id="@+id/btn_fp_page_status"
         android:layout_width="@dimen/size_40"
         android:layout_height="@dimen/size_40"
         android:layout_marginStart="@dimen/size_6"
+        android:id="@+id/btn_fp_page_status"
         app:srcCompat="@drawable/facebook_icon_inactive" />
 
       <com.framework.views.customViews.CustomImageView
-        android:id="@+id/btn_fp_status"
         android:layout_width="@dimen/size_40"
         android:layout_height="@dimen/size_40"
         android:layout_marginStart="@dimen/size_6"
+        android:id="@+id/btn_fp_status"
         app:srcCompat="@drawable/facebookpage_icon_inactive" />
 
       <com.framework.views.customViews.CustomImageView
-        android:id="@+id/btn_twitter"
         android:layout_width="@dimen/size_40"
         android:layout_height="@dimen/size_40"
+        android:id="@+id/btn_twitter"
         android:layout_marginHorizontal="@dimen/size_6"
         app:srcCompat="@drawable/twitter_icon_inactive" />
     </androidx.appcompat.widget.LinearLayoutCompat>

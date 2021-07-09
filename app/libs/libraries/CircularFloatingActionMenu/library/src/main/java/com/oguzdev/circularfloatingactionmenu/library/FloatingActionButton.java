@@ -37,8 +37,7 @@ public class FloatingActionButton extends FrameLayout {
 
     /**
      * Constructor that takes parameters collected using {@link FloatingActionMenu.Builder}
-     *
-     * @param activity           a reference to the activity that will
+     * @param activity a reference to the activity that will
      * @param layoutParams
      * @param theme
      * @param backgroundDrawable
@@ -51,14 +50,14 @@ public class FloatingActionButton extends FrameLayout {
         setPosition(position, layoutParams);
 
         // If no custom backgroundDrawable is specified, use the background drawable of the theme.
-        if (backgroundDrawable == null) {
-            if (theme == THEME_LIGHT)
+        if(backgroundDrawable == null) {
+            if(theme == THEME_LIGHT)
                 backgroundDrawable = activity.getResources().getDrawable(R.drawable.button_action_selector);
             else
                 backgroundDrawable = activity.getResources().getDrawable(R.drawable.button_action_dark_selector);
         }
         setBackgroundResource(backgroundDrawable);
-        if (contentView != null) {
+        if(contentView != null) {
             setContentView(contentView, contentParams);
         }
         setClickable(true);
@@ -68,13 +67,12 @@ public class FloatingActionButton extends FrameLayout {
 
     /**
      * Sets the position of the button by calculating its Gravity from the position parameter
-     *
-     * @param position     one of 8 specified positions.
+     * @param position one of 8 specified positions.
      * @param layoutParams
      */
     public void setPosition(int position, FrameLayout.LayoutParams layoutParams) {
         int gravity;
-        switch (position) {
+        switch(position) {
             case POSITION_TOP_CENTER:
                 gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
                 break;
@@ -97,7 +95,7 @@ public class FloatingActionButton extends FrameLayout {
                 gravity = Gravity.TOP | Gravity.LEFT;
                 break;
             case POSITION_BOTTOM_RIGHT:
-            default:
+                default:
                 gravity = Gravity.BOTTOM | Gravity.RIGHT;
                 break;
         }
@@ -107,17 +105,17 @@ public class FloatingActionButton extends FrameLayout {
 
     /**
      * Sets a content view that will be displayed inside this FloatingActionButton.
-     *
      * @param contentView
      */
     public void setContentView(View contentView, FrameLayout.LayoutParams contentParams) {
         this.contentView = contentView;
         FrameLayout.LayoutParams params;
-        if (contentParams == null) {
-            params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+        if(contentParams == null ){
+            params =new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER);
             final int margin = getResources().getDimensionPixelSize(R.dimen.action_button_content_margin);
             params.setMargins(margin, margin, margin, margin);
-        } else {
+        }
+        else {
             params = contentParams;
         }
         params.gravity = Gravity.CENTER;
@@ -128,33 +126,32 @@ public class FloatingActionButton extends FrameLayout {
 
     /**
      * Attaches it to the Activity content view with specified LayoutParams.
-     *
      * @param layoutParams
      */
     public void attach(FrameLayout.LayoutParams layoutParams) {
-        ((ViewGroup) getActivityContentView()).addView(this, layoutParams);
+        ((ViewGroup)getActivityContentView()).addView(this, layoutParams);
     }
 
     /**
      * Detaches it from the Activity content view.
      */
     public void detach() {
-        ((ViewGroup) getActivityContentView()).removeView(this);
+        ((ViewGroup)getActivityContentView()).removeView(this);
     }
 
     /**
      * Finds and returns the main content view from the Activity context.
-     *
      * @return the main content view
      */
     public View getActivityContentView() {
-        return ((Activity) getContext()).getWindow().getDecorView().findViewById(android.R.id.content);
+        return ((Activity)getContext()).getWindow().getDecorView().findViewById(android.R.id.content);
     }
 
     private void setBackgroundResource(Drawable drawable) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             setBackground(drawable);
-        } else {
+        }
+        else {
             setBackgroundDrawable(drawable);
         }
     }
@@ -221,12 +218,12 @@ public class FloatingActionButton extends FrameLayout {
 
         public FloatingActionButton build() {
             return new FloatingActionButton(activity,
-                    layoutParams,
-                    theme,
-                    backgroundDrawable,
-                    position,
-                    contentView,
-                    contentParams);
+                                           layoutParams,
+                                           theme,
+                                           backgroundDrawable,
+                                           position,
+                                           contentView,
+                                           contentParams);
         }
     }
 

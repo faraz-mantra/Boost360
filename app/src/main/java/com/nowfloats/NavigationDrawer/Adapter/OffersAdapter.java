@@ -9,10 +9,8 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
-
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +41,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
     Activity activity;
     OnItemClickListener mItemClickListener;
 
-    public OffersAdapter(List<OfferFloatsModel> floatsModelList, Activity activity) {
+    public OffersAdapter(List<OfferFloatsModel> floatsModelList, Activity activity){
         this.mListOfferFloatsModel = floatsModelList;
         this.activity = activity;
     }
@@ -122,7 +120,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
                                                 Methods.showSnackBarNegative(activity,
                                                         activity.getString(R.string.no_app_available_for_action));
                                             }
-                                        } catch (Exception e) {
+                                        }catch (Exception e){
                                             ActivityCompat.requestPermissions(activity,
                                                     new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                                             android.Manifest.permission.CAMERA}, 2);
@@ -130,7 +128,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
                                     }
 
                                     @Override
-                                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
                                         pd.dismiss();
                                         Methods.showSnackBarNegative(activity,
                                                 activity.getString(R.string.failed_to_download_image));
@@ -157,7 +155,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mItemClickListener != null) {
+                if(mItemClickListener!=null){
                     mItemClickListener.onItemClick(v, position);
                 }
             }
@@ -170,15 +168,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
         return mListOfferFloatsModel.size();
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mItemClickListener = listener;
-    }
-
-    public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView ivMainOffer, ivShareOffer;
         public TextView tvOfferTitle, tvOfferContent, tvOfferTimeLine, tvOfferCreatedOn;
@@ -193,5 +183,13 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
             tvOfferCreatedOn = (TextView) itemView.findViewById(R.id.textViewEmail);
         }
 
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mItemClickListener = listener;
+    }
+
+    public interface OnItemClickListener{
+        public void onItemClick(View view, int position);
     }
 }

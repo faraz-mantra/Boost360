@@ -14,27 +14,27 @@ import kotlinx.android.synthetic.main.remove_addon_confirmation_fragment.*
 
 class RemoveAddonConfirmationFragment : BaseFragment() {
 
-  companion object {
-    fun newInstance() = RemoveAddonConfirmationFragment()
-  }
-
-  private lateinit var viewModel: RemoveAddonConfirmationViewModel
-
-  override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.remove_addon_confirmation_fragment, container, false)
-  }
-
-  override fun onActivityCreated(savedInstanceState: Bundle?) {
-    super.onActivityCreated(savedInstanceState)
-    viewModel = ViewModelProviders.of(this).get(RemoveAddonConfirmationViewModel::class.java)
-
-
-    remove_confirm_submit.setOnClickListener {
-      (activity as UpgradeActivity).popFragmentFromBackStack()
+    companion object {
+        fun newInstance() = RemoveAddonConfirmationFragment()
     }
-  }
+
+    private lateinit var viewModel: RemoveAddonConfirmationViewModel
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.remove_addon_confirmation_fragment, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this).get(RemoveAddonConfirmationViewModel::class.java)
+
+
+        remove_confirm_submit.setOnClickListener {
+            (activity as UpgradeActivity).popFragmentFromBackStack()
+        }
+    }
 
 }

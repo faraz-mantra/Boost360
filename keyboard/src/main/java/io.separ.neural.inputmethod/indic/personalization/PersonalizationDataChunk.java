@@ -28,7 +28,7 @@ public class PersonalizationDataChunk {
     public final Locale mlocale = null;
 
     public PersonalizationDataChunk(boolean inputByUser, final List<String> tokens,
-                                    final int timestampInSeconds, final String packageName) {
+            final int timestampInSeconds, final String packageName) {
         mInputByUser = inputByUser;
         mTokens = Collections.unmodifiableList(tokens);
         mTimestampInSeconds = timestampInSeconds;

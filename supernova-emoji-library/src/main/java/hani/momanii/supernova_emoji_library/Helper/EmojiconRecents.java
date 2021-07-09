@@ -22,6 +22,7 @@ import hani.momanii.supernova_emoji_library.emoji.Emojicon;
 
 /**
  * @author Daniele Ricci
+
  */
 
 public interface EmojiconRecents {

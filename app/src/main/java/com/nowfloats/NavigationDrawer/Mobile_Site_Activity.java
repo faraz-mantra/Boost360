@@ -8,9 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,8 +25,9 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 public class Mobile_Site_Activity extends AppCompatActivity {
 
-    String url;
     private WebView webView;
+
+    String url;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -42,10 +41,12 @@ public class Mobile_Site_Activity extends AppCompatActivity {
         Methods.isOnline(Mobile_Site_Activity.this);
         PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
+        if (extras != null)
+        {
             url = extras.getString("WEBSITE_NAME");
 
-            if (!TextUtils.isEmpty(url) && !url.startsWith("http://") && !url.startsWith("https://")) {
+            if (!TextUtils.isEmpty(url) && !url.startsWith("http://") && !url.startsWith("https://"))
+            {
                 url = "http://".concat(url);
             }
         }

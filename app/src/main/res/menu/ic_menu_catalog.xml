@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-  <item
-    android:id="@+id/menu_more"
-    android:icon="@drawable/ic_more_active_nav"
-    android:iconTint="@color/white"
-    android:title="More"
-    app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_more"
+        android:icon="@drawable/ic_more_active_nav"
+        android:iconTint="@color/white"
+        android:title="More"
+        app:showAsAction="always" />
 
-  <item
-    android:id="@+id/app_bar_search"
-    android:icon="@drawable/analytics_search"
-    android:title="Search"
-    app:actionViewClass="android.widget.SearchView"
-    app:showAsAction="always" />
-  <item
-    android:id="@+id/menu_add"
-    android:icon="@drawable/ic_more_vert"
-    android:iconTint="@color/white"
-    android:title="Settings"
-    app:showAsAction="always" />
+    <item
+        android:id="@+id/app_bar_search"
+        android:icon="@drawable/analytics_search"
+        android:title="Search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_add"
+        android:icon="@drawable/ic_more_vert"
+        android:iconTint="@color/white"
+        android:title="Settings"
+        app:showAsAction="always" />
 </menu>

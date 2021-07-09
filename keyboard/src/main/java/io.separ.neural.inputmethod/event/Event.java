@@ -23,7 +23,7 @@ import io.separ.neural.inputmethod.indic.SuggestedWords.SuggestedWordInfo;
 
 /**
  * Class representing a generic input event as handled by Latin IME.
- * <p>
+ *
  * This contains information about the origin of the event, but it is generalized and should
  * represent a software keypress, hardware keypress, or d-pad move alike.
  * Very importantly, this does not necessarily result in inputting one character, or even anything
@@ -70,39 +70,46 @@ public class Event {
     final private static int FLAG_REPEAT = 0x2;
     // This event has already been consumed.
     final private static int FLAG_CONSUMED = 0x4;
+
+    final private int mEventType; // The type of event - one of the constants above
     // The code point associated with the event, if relevant. This is a unicode code point, and
     // has nothing to do with other representations of the key. It is only relevant if this event
     // is of KEYPRESS type, but for a mode key like hankaku/zenkaku or ctrl, there is no code point
     // associated so this should be NOT_A_CODE_POINT to avoid unintentional use of its value when
     // it's not relevant.
     final public int mCodePoint;
+
     // If applicable, this contains the string that should be input.
     final public CharSequence mText;
+
     // The key code associated with the event, if relevant. This is relevant whenever this event
     // has been triggered by a key press, but not for a gesture for example. This has conceptually
     // no link to the code point, although keys that enter a straight code point may often set
     // this to be equal to mCodePoint for convenience. If this is not a key, this must contain
     // NOT_A_KEY_CODE.
     final public int mKeyCode;
+
     // Coordinates of the touch event, if relevant. If useful, we may want to replace this with
     // a MotionEvent or something in the future. This is only relevant when the keypress is from
     // a software keyboard obviously, unless there are touch-sensitive hardware keyboards in the
     // future or some other awesome sauce.
     final public int mX;
     final public int mY;
-    // If this is of type EVENT_TYPE_SUGGESTION_PICKED, this must not be null (and must be null in
-    // other cases).
-    final public SuggestedWordInfo mSuggestedWordInfo;
-    // The next event, if any. Null if there is no next event yet.
-    final public Event mNextEvent;
-    final private int mEventType; // The type of event - one of the constants above
+
     // Some flags that can't go into the key code. It's a bit field of FLAG_*
     final private int mFlags;
 
+    // If this is of type EVENT_TYPE_SUGGESTION_PICKED, this must not be null (and must be null in
+    // other cases).
+    final public SuggestedWordInfo mSuggestedWordInfo;
+
+    // The next event, if any. Null if there is no next event yet.
+    final public Event mNextEvent;
+
     // This method is private - to create a new event, use one of the create* utility methods.
     private Event(final int type, final CharSequence text, final int codePoint, final int keyCode,
-                  final int x, final int y, final SuggestedWordInfo suggestedWordInfo, final int flags,
-                  final Event next) {
+            final int x, final int y, final SuggestedWordInfo suggestedWordInfo, final int flags,
+            final Event next) {
         mEventType = type;
         mText = text;
         mCodePoint = codePoint;
@@ -128,13 +135,13 @@ public class Event {
     }
 
     public static Event createSoftwareKeypressEvent(final int codePoint, final int keyCode,
-                                                    final int x, final int y, final boolean isKeyRepeat) {
+            final int x, final int y, final boolean isKeyRepeat) {
         return new Event(EVENT_TYPE_INPUT_KEYPRESS, null /* text */, codePoint, keyCode, x, y,
                 null /* suggestedWordInfo */, isKeyRepeat ? FLAG_REPEAT : FLAG_NONE, null);
     }
 
     public static Event createHardwareKeypressEvent(final int codePoint, final int keyCode,
-                                                    final Event next, final boolean isKeyRepeat) {
+            final Event next, final boolean isKeyRepeat) {
         return new Event(EVENT_TYPE_INPUT_KEYPRESS, null /* text */, codePoint, keyCode,
                 Constants.EXTERNAL_KEYBOARD_COORDINATE, Constants.EXTERNAL_KEYBOARD_COORDINATE,
                 null /* suggestedWordInfo */, isKeyRepeat ? FLAG_REPEAT : FLAG_NONE, next);
@@ -152,7 +159,6 @@ public class Event {
      * Create an input event with nothing but a code point. This is the most basic possible input
      * event; it contains no information on many things the IME requires to function correctly,
      * so avoid using it unless really nothing is known about this input.
-     *
      * @param codePoint the code point.
      * @return an event for this code point.
      */
@@ -166,14 +172,13 @@ public class Event {
     /**
      * Creates an input event with a code point and x, y coordinates. This is typically used when
      * resuming a previously-typed word, when the coordinates are still known.
-     *
      * @param codePoint the code point to input.
-     * @param x         the X coordinate.
-     * @param y         the Y coordinate.
+     * @param x the X coordinate.
+     * @param y the Y coordinate.
      * @return an event for this code point and coordinates.
      */
     public static Event createEventForCodePointFromAlreadyTypedText(final int codePoint,
-                                                                    final int x, final int y) {
+            final int x, final int y) {
         // TODO: should we have a different type of event for this? After all, it's not a key press.
         return new Event(EVENT_TYPE_INPUT_KEYPRESS, null /* text */, codePoint, NOT_A_KEY_CODE,
                 x, y, null /* suggestedWordInfo */, FLAG_NONE, null /* next */);
@@ -181,7 +186,6 @@ public class Event {
 
     /**
      * Creates an input event representing the manual pick of a suggestion.
-     *
      * @return an event for this suggestion pick.
      */
     public static Event createSuggestionPickedEvent(final SuggestedWordInfo suggestedWordInfo) {
@@ -195,8 +199,7 @@ public class Event {
      * Creates an input event with a CharSequence. This is used by some software processes whose
      * output is a string, possibly with styling. Examples include press on a multi-character key,
      * or combination that outputs a string.
-     *
-     * @param text    the CharSequence associated with this event.
+     * @param text the CharSequence associated with this event.
      * @param keyCode the key code, or NOT_A_KEYCODE if not applicable.
      * @return an event for this text.
      */
@@ -208,7 +211,6 @@ public class Event {
 
     /**
      * Creates an input event representing the manual pick of a punctuation suggestion.
-     *
      * @return an event for this suggestion pick.
      */
     public static Event createPunctuationSuggestionPickedEvent(
@@ -222,7 +224,6 @@ public class Event {
 
     /**
      * Creates an event identical to the passed event, but that has already been consumed.
-     *
      * @param source the event to copy the properties of.
      * @return an identical event marked as consumed.
      */
@@ -255,13 +256,9 @@ public class Event {
         return 0 != (FLAG_REPEAT & mFlags);
     }
 
-    public boolean isConsumed() {
-        return 0 != (FLAG_CONSUMED & mFlags);
-    }
+    public boolean isConsumed() { return 0 != (FLAG_CONSUMED & mFlags); }
 
-    public boolean isGesture() {
-        return EVENT_TYPE_GESTURE == mEventType;
-    }
+    public boolean isGesture() { return EVENT_TYPE_GESTURE == mEventType; }
 
     // Returns whether this is a fake key press from the suggestion strip. This happens with
     // punctuation signs selected from the suggestion strip.
@@ -278,16 +275,16 @@ public class Event {
             return ""; // A consumed event should input no text.
         }
         switch (mEventType) {
-            case EVENT_TYPE_MODE_KEY:
-            case EVENT_TYPE_NOT_HANDLED:
-            case EVENT_TYPE_TOGGLE:
-                return "";
-            case EVENT_TYPE_INPUT_KEYPRESS:
-                return StringUtils.newSingleCodePointString(mCodePoint);
-            case EVENT_TYPE_GESTURE:
-            case EVENT_TYPE_SOFTWARE_GENERATED_STRING:
-            case EVENT_TYPE_SUGGESTION_PICKED:
-                return mText;
+        case EVENT_TYPE_MODE_KEY:
+        case EVENT_TYPE_NOT_HANDLED:
+        case EVENT_TYPE_TOGGLE:
+            return "";
+        case EVENT_TYPE_INPUT_KEYPRESS:
+            return StringUtils.newSingleCodePointString(mCodePoint);
+        case EVENT_TYPE_GESTURE:
+        case EVENT_TYPE_SOFTWARE_GENERATED_STRING:
+        case EVENT_TYPE_SUGGESTION_PICKED:
+            return mText;
         }
         throw new RuntimeException("Unknown event type: " + mEventType);
     }

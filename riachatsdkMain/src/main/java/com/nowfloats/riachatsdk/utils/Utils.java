@@ -22,9 +22,9 @@ public class Utils {
         return format.format(date);
     }
 
-    public static String getMapUrlFromLocation(String lattitude, String longitude) {
+    public static String getMapUrlFromLocation(String lattitude, String longitude){
 
-        String url = "http://maps.google.com/maps/api/staticmap?center=" + lattitude + ","
+        String url =  "http://maps.google.com/maps/api/staticmap?center=" + lattitude + ","
                 + longitude + "&zoom=19&size=1000x300&sensor=false" + "&key="
                 + Constants.MAP_KEY;
         Log.d("LatLong", url);

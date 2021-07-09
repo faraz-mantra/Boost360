@@ -72,7 +72,6 @@
           android:layout_width="@dimen/size_30"
           android:layout_height="@dimen/size_30"
           android:layout_marginEnd="@dimen/size_10"
-          android:visibility="gone"
           app:srcCompat="@drawable/facebook_icon_share" />
 
         <com.framework.views.customViews.CustomImageView

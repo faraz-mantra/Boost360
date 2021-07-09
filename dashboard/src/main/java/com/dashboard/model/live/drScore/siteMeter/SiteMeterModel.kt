@@ -6,13 +6,13 @@ import com.dashboard.utils.*
 import java.io.Serializable
 
 class SiteMeterModel(
-  var position: Int? = null,
-  var Title: String? = null,
-  var Desc: String? = null,
-  var Percentage: String? = null,
-  var status: Boolean? = null,
-  var sortChar: Int = 0,
-  var isPost: Boolean = false,
+    var position: Int? = null,
+    var Title: String? = null,
+    var Desc: String? = null,
+    var Percentage: String? = null,
+    var status: Boolean? = null,
+    var sortChar: Int = 0,
+    var isPost: Boolean = false,
 ) : AppBaseRecyclerViewItem, Serializable, Comparable<Any?> {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.ITEMS_CONTENT_SETUP_ITEM_VIEW.getLayout()

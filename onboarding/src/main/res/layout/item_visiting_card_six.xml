@@ -80,9 +80,8 @@
           android:layout_height="wrap_content"
           android:orientation="vertical">
 
-          <include
-            android:id="@+id/item_channels_group"
-            layout="@layout/item_card_channel" />
+          <include layout="@layout/item_card_channel"
+              android:id="@+id/item_channels_group"/>
         </LinearLayout>
       </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -166,8 +165,8 @@
           android:gravity="start"
           android:includeFontPadding="false"
           android:maxLines="1"
-          android:paddingTop="@dimen/size_3"
           android:paddingEnd="@dimen/size_2"
+          android:paddingTop="@dimen/size_3"
           android:textColor="@color/white_grey"
           app:autoSizeMaxTextSize="12sp"
           app:autoSizeMinTextSize="6sp"
@@ -175,8 +174,8 @@
           app:autoSizeTextType="uniform"
           app:layout_constraintStart_toEndOf="@+id/view_email"
           app:layout_constraintTop_toTopOf="@+id/view_email"
-          tools:ignore="RtlSymmetry"
-          tools:text="plastoindia@gmail.com" />
+          tools:text="plastoindia@gmail.com"
+          tools:ignore="RtlSymmetry" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/website"
@@ -187,8 +186,8 @@
           android:gravity="start"
           android:includeFontPadding="false"
           android:maxLines="1"
-          android:paddingTop="@dimen/size_2"
           android:paddingEnd="@dimen/size_2"
+          android:paddingTop="@dimen/size_2"
           android:textColor="@color/white_grey"
           app:autoSizeMaxTextSize="11sp"
           app:autoSizeMinTextSize="7sp"
@@ -197,8 +196,8 @@
           app:fontFamily="@font/semi_bold"
           app:layout_constraintStart_toEndOf="@+id/view_website"
           app:layout_constraintTop_toTopOf="@+id/view_website"
-          tools:ignore="RtlSymmetry"
-          tools:text="https://plastoindiaandpolymers.com" />
+          tools:text="https://plastoindiaandpolymers.com"
+          tools:ignore="RtlSymmetry" />
 
       </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>

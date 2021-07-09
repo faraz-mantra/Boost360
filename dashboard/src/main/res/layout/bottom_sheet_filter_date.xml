@@ -60,10 +60,10 @@
       android:id="@+id/recyclerView"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:clipToPadding="false"
-      android:paddingBottom="@dimen/size_42"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
       tools:itemCount="6"
+      android:clipToPadding="false"
+      android:paddingBottom="@dimen/size_42"
       tools:listitem="@layout/item_filter_date" />
 
     <com.framework.views.customViews.CustomButton
@@ -77,11 +77,11 @@
       android:fontFamily="@font/semi_bold"
       android:gravity="center"
       android:padding="@dimen/size_12"
+      android:visibility="gone"
       android:stateListAnimator="@null"
       android:text="@string/done"
       android:textAllCaps="true"
       android:textColor="@color/white"
-      android:visibility="gone"
       app:textType="HEADING_6" />
 
   </androidx.appcompat.widget.LinearLayoutCompat>

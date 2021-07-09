@@ -18,51 +18,51 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.framework.R
 
 abstract class BaseDotsIndicator @JvmOverloads constructor(
-  context: Context,
-  attrs: AttributeSet? = null,
-  defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) :
-  FrameLayout(context, attrs, defStyleAttr) {
+    FrameLayout(context, attrs, defStyleAttr) {
 
   companion object {
     const val DEFAULT_POINT_COLOR = Color.CYAN
   }
 
   enum class Type(
-    val defaultSize: Float,
-    val defaultSpacing: Float,
-    val styleableId: IntArray,
-    val dotsColorId: Int,
-    val dotsSizeId: Int,
-    val dotsSpacingId: Int,
-    val dotsCornerRadiusId: Int
+      val defaultSize: Float,
+      val defaultSpacing: Float,
+      val styleableId: IntArray,
+      val dotsColorId: Int,
+      val dotsSizeId: Int,
+      val dotsSpacingId: Int,
+      val dotsCornerRadiusId: Int
   ) {
     DEFAULT(
-      16f,
-      8f,
-      R.styleable.SpringDotsIndicator,
-      R.styleable.SpringDotsIndicator_dotsColor,
-      R.styleable.SpringDotsIndicator_dotsSize,
-      R.styleable.SpringDotsIndicator_dotsSpacing,
-      R.styleable.SpringDotsIndicator_dotsCornerRadius
+        16f,
+        8f,
+        R.styleable.SpringDotsIndicator,
+        R.styleable.SpringDotsIndicator_dotsColor,
+        R.styleable.SpringDotsIndicator_dotsSize,
+        R.styleable.SpringDotsIndicator_dotsSpacing,
+        R.styleable.SpringDotsIndicator_dotsCornerRadius
     ),
     SPRING(
-      16f,
-      4f,
-      R.styleable.DotsIndicator,
-      R.styleable.DotsIndicator_dotsColor,
-      R.styleable.DotsIndicator_dotsSize,
-      R.styleable.DotsIndicator_dotsSpacing,
-      R.styleable.DotsIndicator_dotsCornerRadius
+        16f,
+        4f,
+        R.styleable.DotsIndicator,
+        R.styleable.DotsIndicator_dotsColor,
+        R.styleable.DotsIndicator_dotsSize,
+        R.styleable.DotsIndicator_dotsSpacing,
+        R.styleable.DotsIndicator_dotsCornerRadius
     ),
     WORM(
-      16f,
-      4f,
-      R.styleable.WormDotsIndicator,
-      R.styleable.WormDotsIndicator_dotsColor,
-      R.styleable.WormDotsIndicator_dotsSize,
-      R.styleable.WormDotsIndicator_dotsSpacing,
-      R.styleable.WormDotsIndicator_dotsCornerRadius
+        16f,
+        4f,
+        R.styleable.WormDotsIndicator,
+        R.styleable.WormDotsIndicator_dotsColor,
+        R.styleable.WormDotsIndicator_dotsSize,
+        R.styleable.WormDotsIndicator_dotsSpacing,
+        R.styleable.WormDotsIndicator_dotsCornerRadius
     )
   }
 
@@ -191,8 +191,8 @@ abstract class BaseDotsIndicator @JvmOverloads constructor(
   fun setViewPager(viewPager: ViewPager) {
     if (viewPager.adapter == null) {
       throw IllegalStateException(
-        "You have to set an adapter to the view pager before " +
-            "initializing the dots indicator !"
+          "You have to set an adapter to the view pager before " +
+              "initializing the dots indicator !"
       )
     }
 
@@ -224,13 +224,13 @@ abstract class BaseDotsIndicator @JvmOverloads constructor(
       }
 
       override fun addOnPageChangeListener(
-        onPageChangeListenerHelper:
-        OnPageChangeListenerHelper
+          onPageChangeListenerHelper:
+          OnPageChangeListenerHelper
       ) {
         onPageChangeListener = object : OnPageChangeListener {
           override fun onPageScrolled(
-            position: Int, positionOffset: Float,
-            positionOffsetPixels: Int
+              position: Int, positionOffset: Float,
+              positionOffsetPixels: Int
           ) {
             onPageChangeListenerHelper.onPageScrolled(position, positionOffset)
           }
@@ -251,8 +251,8 @@ abstract class BaseDotsIndicator @JvmOverloads constructor(
   fun setViewPager2(viewPager2: ViewPager2) {
     if (viewPager2.adapter == null) {
       throw IllegalStateException(
-        "You have to set an adapter to the view pager before " +
-            "initializing the dots indicator !"
+          "You have to set an adapter to the view pager before " +
+              "initializing the dots indicator !"
       )
     }
 
@@ -285,12 +285,12 @@ abstract class BaseDotsIndicator @JvmOverloads constructor(
       }
 
       override fun addOnPageChangeListener(
-        onPageChangeListenerHelper: OnPageChangeListenerHelper
+          onPageChangeListenerHelper: OnPageChangeListenerHelper
       ) {
         onPageChangeCallback = object : OnPageChangeCallback() {
           override fun onPageScrolled(
-            position: Int, positionOffset: Float,
-            positionOffsetPixels: Int
+              position: Int, positionOffset: Float,
+              positionOffsetPixels: Int
           ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             onPageChangeListenerHelper.onPageScrolled(position, positionOffset)

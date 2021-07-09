@@ -10,7 +10,37 @@ import java.util.List;
  * Created by sepehr on 3/2/17.
  */
 
-public class RCategory {
+public class RCategory{
+    private String action;
+    @SerializedName("default")
+    private boolean defaultState;
+    private int id;
+    private String name;
+    private int order;
+    private String params;
+    private int service;
+    private String type;
+
+    public String getAction() {
+        return action;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public RCategory(){}
+
+    public RCategory(String name, String type, String action){
+        this.name = name;
+        this.type = type;
+        this.action = action;
+    }
+
     public final static HashMap<String, List<RCategory>> categoriesHashMap = new HashMap<>();
 
     static {
@@ -26,36 +56,5 @@ public class RCategory {
         categoriesHashMap.get("giphy").add(1, new RCategory("LoL", "sug", "lol"));
         categoriesHashMap.get("giphy").add(2, new RCategory("Cool", "sug", "cool"));
         categoriesHashMap.get("giphy").add(3, new RCategory("funny", "sug", "funny"));
-    }
-
-    private String action;
-    @SerializedName("default")
-    private boolean defaultState;
-    private int id;
-    private String name;
-    private int order;
-    private String params;
-    private int service;
-    private String type;
-
-    public RCategory() {
-    }
-
-    public RCategory(String name, String type, String action) {
-        this.name = name;
-        this.type = type;
-        this.action = action;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
     }
 }

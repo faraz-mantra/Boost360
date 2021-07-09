@@ -2,7 +2,6 @@ package com.nowfloats.Analytics_Screen.model;
 
 
 import android.os.Build;
-
 import androidx.annotation.RequiresApi;
 
 import com.google.gson.annotations.Expose;
@@ -77,9 +76,8 @@ public class SubscriberModel {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public int hashCode() {
-        return Objects.hash(userMobile, userCountryCode);
+        return Objects.hash(userMobile,userCountryCode);
     }
-
     @Override
     public String toString() {
         return getUserMobile();

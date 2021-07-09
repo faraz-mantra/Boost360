@@ -14,8 +14,8 @@ import com.nowfloats.riachatsdk.R;
 
 public class ChatWebViewActivity extends Activity {
 
-    public static final String KEY_URL = "URL";
     private WebView mWebView;
+    public static final String KEY_URL = "URL";
     private ProgressDialog progressDialog;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class ChatWebViewActivity extends Activity {
         setContentView(R.layout.activity_web_view);
 
         mWebView = (WebView) findViewById(R.id.webView1);
-        ImageView ivBack = (ImageView) findViewById(R.id.ivBack);
+        ImageView ivBack = (ImageView)findViewById(R.id.ivBack);
 
         progressDialog = ProgressDialog.show(ChatWebViewActivity.this, "Loading", getString(R.string.please_wait_), true);
         progressDialog.setCancelable(false);

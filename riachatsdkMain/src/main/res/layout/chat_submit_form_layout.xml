@@ -1,160 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:layout_margin="@dimen/margin_20"
-  android:background="@drawable/address_main_bg"
-  android:orientation="vertical">
-
-  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginStart="@dimen/margin_20"
-    android:layout_marginTop="@dimen/margin_20"
-    android:layout_marginEnd="@dimen/margin_20"
-    android:layout_marginBottom="@dimen/margin_10"
-    android:layout_weight="1"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_20"
+    android:background="@drawable/address_main_bg"
     android:orientation="vertical">
 
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fontFamily="sans-serif"
-      android:text="@string/business_name"
-      android:textAllCaps="true"
-      android:textColor="@color/light_gray"
-      android:textSize="@dimen/small_text_size" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_20"
+        android:layout_marginEnd="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_20"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <TextView
-      android:id="@+id/tvBusinessName"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fontFamily="sans-serif"
-      android:textColor="@android:color/black"
-      android:textSize="@dimen/large_text_size" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/business_name"
+            android:textAllCaps="true"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/small_text_size" />
 
-
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/margin_15"
-      android:fontFamily="sans-serif"
-      android:text="@string/phone_number"
-      android:textAllCaps="true"
-      android:textColor="@color/light_gray"
-      android:textSize="@dimen/small_text_size" />
-
-    <TextView
-      android:id="@+id/tvPhoneNumber"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fontFamily="sans-serif"
-      android:textColor="@android:color/black"
-      android:textSize="@dimen/large_text_size" />
-
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/margin_15"
-      android:fontFamily="sans-serif"
-      android:text="@string/category"
-      android:textAllCaps="true"
-      android:textColor="@color/light_gray"
-      android:textSize="@dimen/small_text_size" />
-
-    <TextView
-      android:id="@+id/tvCategory"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fontFamily="sans-serif"
-      android:textColor="@android:color/black"
-      android:textSize="@dimen/large_text_size" />
-
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/margin_15"
-      android:fontFamily="sans-serif"
-      android:text="@string/address"
-      android:textAllCaps="true"
-      android:textColor="@color/light_gray"
-      android:textSize="@dimen/small_text_size" />
-
-    <TextView
-      android:id="@+id/tvAddress"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fontFamily="sans-serif"
-      android:textColor="@android:color/black"
-      android:textSize="@dimen/large_text_size" />
-
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/margin_15"
-      android:fontFamily="sans-serif"
-      android:text="@string/email_address"
-      android:textAllCaps="true"
-      android:textColor="@color/light_gray"
-      android:textSize="@dimen/small_text_size" />
-
-    <TextView
-      android:id="@+id/tvEmailAddress"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fontFamily="sans-serif"
-      android:textColor="@android:color/black"
-      android:textSize="@dimen/large_text_size" />
+        <TextView
+            android:id="@+id/tvBusinessName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/large_text_size" />
 
 
-    <View
-      android:layout_width="match_parent"
-      android:layout_height="0.5dp"
-      android:layout_marginTop="@dimen/margin_15"
-      android:layout_marginBottom="@dimen/margin_15"
-      android:background="@color/light_gray" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15"
+            android:fontFamily="sans-serif"
+            android:text="@string/phone_number"
+            android:textAllCaps="true"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/small_text_size" />
+
+        <TextView
+            android:id="@+id/tvPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/large_text_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15"
+            android:fontFamily="sans-serif"
+            android:text="@string/category"
+            android:textAllCaps="true"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/small_text_size" />
+
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/large_text_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15"
+            android:fontFamily="sans-serif"
+            android:text="@string/address"
+            android:textAllCaps="true"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/small_text_size" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/large_text_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15"
+            android:fontFamily="sans-serif"
+            android:text="@string/email_address"
+            android:textAllCaps="true"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/small_text_size" />
+
+        <TextView
+            android:id="@+id/tvEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/large_text_size" />
 
 
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fontFamily="sans-serif"
-      android:text="@string/webiste_url"
-      android:textAllCaps="true"
-      android:textColor="@color/light_gray"
-      android:textSize="@dimen/small_text_size" />
-
-    <TextView
-      android:id="@+id/tvWebsiteURL"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fontFamily="sans-serif"
-      android:textColor="@android:color/black"
-      android:textSize="@dimen/large_text_size" />
-
-    <TextView
-      android:id="@+id/tvtermAndPolicy"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/margin_20"
-      android:autoLink="all"
-      android:textColor="@color/gray"
-      android:textColorHint="@color/primary"
-      android:textSize="@dimen/small_text_size"
-      android:textStyle="italic" />
-  </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginBottom="@dimen/margin_15"
+            android:layout_marginTop="@dimen/margin_15"
+            android:background="@color/light_gray" />
 
 
-  <Button
-    android:id="@+id/btnCreateWebsite"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_gravity="end"
-    android:layout_marginTop="@dimen/margin_10"
-    android:background="@drawable/done_button_bg"
-    android:fontFamily="sans-serif"
-    android:text="@string/create_my_website"
-    android:textColor="@color/white"
-    android:textSize="@dimen/medium_text_size" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="@string/webiste_url"
+            android:textAllCaps="true"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/small_text_size" />
+
+        <TextView
+            android:id="@+id/tvWebsiteURL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/large_text_size" />
+
+        <TextView
+            android:id="@+id/tvtermAndPolicy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:autoLink="all"
+            android:textColor="@color/gray"
+            android:textColorHint="@color/primary"
+            android:textSize="@dimen/small_text_size"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnCreateWebsite"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/margin_10"
+        android:background="@drawable/done_button_bg"
+        android:fontFamily="sans-serif"
+        android:text="@string/create_my_website"
+        android:textColor="@color/white"
+        android:textSize="@dimen/medium_text_size" />
 
 </LinearLayout>

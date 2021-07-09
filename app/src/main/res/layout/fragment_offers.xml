@@ -1,206 +1,198 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:fab="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="@color/screen_bg"
-  tools:context="com.nowfloats.NavigationDrawer.OffersFragment">
-
-  <LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/screen_bg"
-    android:orientation="vertical">
-
-    <com.nowfloats.util.ButteryProgressBar
-      android:id="@+id/progressbar"
-      android:layout_width="match_parent"
-      android:layout_height="7dp"
-      android:visibility="visible"></com.nowfloats.util.ButteryProgressBar>
-
-    <androidx.cardview.widget.CardView
-      android:id="@+id/progressCard"
-      android:layout_width="match_parent"
-      android:layout_height="60dp"
-      android:visibility="gone">
-
-      <LinearLayout
-        android:id="@+id/postRetryLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <LinearLayout
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:orientation="vertical">
-
-          <ImageView
-            android:id="@+id/retryPost"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:src="@drawable/retry_post" />
-
-          <TextView
-            fontPath="Roboto-Medium.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/retry"
-            android:textColor="@color/retry_txt"
-            android:textSize="18sp"
-            tools:ignore="MissingPrefix" />
-        </LinearLayout>
-
-        <LinearLayout
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:orientation="vertical">
-
-          <ImageView
-            android:id="@+id/cancelPost"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:src="@drawable/cancel_post" />
-
-          <TextView
-            fontPath="Roboto-Medium.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/cancel"
-            android:textColor="@color/retry_txt"
-            android:textSize="18sp"
-            tools:ignore="MissingPrefix" />
-        </LinearLayout>
-      </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/my_recycler_view"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/screen_bg"
-      android:scrollbars="vertical" />
-
-  </LinearLayout>
-
-  <LinearLayout
-    android:id="@+id/emptymsglayout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:visibility="visible">
-
-    <ImageView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:src="@drawable/home_zerothicon" />
-
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/dgts__padding_title"
-      android:layout_marginBottom="@dimen/dgts__padding_title"
-      android:text="@string/offers_soon"
-      android:textColor="@color/zeroth_grey_title"
-      android:textSize="@dimen/dgts__title_text_size"
-      android:textStyle="bold" />
-
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:text="@string/offers_empty"
-      android:textColor="@color/zeroth_grey"
-      android:textSize="15sp" />
-  </LinearLayout>
-
-  <!--<com.melnykov.fab.FloatingActionButton
-      android:id="@+id/fab"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom|right"
-      android:layout_margin="16dp"
-      android:src="@drawable/ic_add_white_24dp"
-      android:scaleType="fitCenter"
-      fab:fab_colorNormal="@color/primaryColor"
-      fab:fab_colorPressed="#fddc80"
-      fab:fab_colorRipple="@color/primaryColor" />-->
-  <com.github.clans.fab.FloatingActionMenu
-    android:id="@+id/fab"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="bottom|right"
-    android:elevation="2dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="16dp"
-    android:scaleType="fitCenter"
-    android:src="@drawable/ic_add_white_24dp"
-    fab:menu_animationDelayPerItem="40"
-    fab:menu_backgroundColor="#cc404040"
-    fab:menu_colorNormal="@color/primaryColor"
-    fab:menu_colorPressed="@color/primaryColor"
-    fab:menu_colorRipple="#fddc80"
-    fab:menu_labels_colorNormal="#404040"
-    fab:menu_labels_hideAnimation="@anim/fab_scale_down"
-    fab:menu_labels_showAnimation="@anim/fab_scale_up"
-    fab:menu_labels_textColor="#ffffff"
-    fab:menu_shadowColor="#444">
+    android:background="@color/screen_bg"
+    tools:context="com.nowfloats.NavigationDrawer.OffersFragment">
 
-    <!--<com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fab_event"
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/screen_bg"
+        android:orientation="vertical">
+        <com.nowfloats.util.ButteryProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:visibility="visible">
+        </com.nowfloats.util.ButteryProgressBar>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/progressCard"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="60dp">
+
+            <LinearLayout
+                android:id="@+id/postRetryLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/retryPost"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/retry_post"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        fontPath="Roboto-Medium.ttf"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:text="@string/retry"
+                        android:textColor="@color/retry_txt"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/cancelPost"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="0dp"
+                        android:src="@drawable/cancel_post" />
+                    <TextView
+                        fontPath="Roboto-Medium.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:text="@string/cancel"
+                        android:textColor="@color/retry_txt"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/screen_bg"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/emptymsglayout"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="visible"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/home_zerothicon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dgts__title_text_size"
+            android:textStyle="bold"
+            android:textColor="@color/zeroth_grey_title"
+            android:layout_marginTop="@dimen/dgts__padding_title"
+            android:layout_marginBottom="@dimen/dgts__padding_title"
+            android:text="@string/offers_soon"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/zeroth_grey"
+            android:gravity="center"
+            android:text="@string/offers_empty"/>
+    </LinearLayout>
+
+    <!--<com.melnykov.fab.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_email"
-        fab:fab_label="Event"
-        style="@style/MenuButtonsStyle" />-->
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add_white_24dp"
+        android:scaleType="fitCenter"
+        fab:fab_colorNormal="@color/primaryColor"
+        fab:fab_colorPressed="#fddc80"
+        fab:fab_colorRipple="@color/primaryColor" />-->
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fab"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|right"
+        android:src="@drawable/ic_add_white_24dp"
+        android:scaleType="fitCenter"
+        android:elevation="2dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        fab:menu_backgroundColor="#cc404040"
+        fab:menu_labels_colorNormal="#404040"
+        fab:menu_labels_textColor="#ffffff"
+        fab:menu_labels_showAnimation="@anim/fab_scale_up"
+        fab:menu_labels_hideAnimation="@anim/fab_scale_down"
+        fab:menu_animationDelayPerItem="40"
+        fab:menu_shadowColor="#444"
+        fab:menu_colorNormal="@color/primaryColor"
+        fab:menu_colorRipple="#fddc80"
+        fab:menu_colorPressed="@color/primaryColor">
 
-    <com.github.clans.fab.FloatingActionButton
-      android:id="@+id/fab_offer"
-      style="@style/MenuButtonsStyle"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:src="@drawable/ic_action_email"
-      fab:fab_label="Create Offer" />
+        <!--<com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_email"
+            fab:fab_label="Event"
+            style="@style/MenuButtonsStyle" />-->
 
-    <!--<com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fab_product_launch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_email"
-        fab:fab_label="Product Launch"
-        style="@style/MenuButtonsStyle" />
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fab_job_alert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_email"
-        fab:fab_label="Job Alert"
-        style="@style/MenuButtonsStyle" />
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fab_custom_review"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_email"
-        fab:fab_label="Customer Review"
-        style="@style/MenuButtonsStyle" />-->
-    <com.github.clans.fab.FloatingActionButton
-      android:id="@+id/fab_update"
-      style="@style/MenuButtonsStyle"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:src="@drawable/ic_action_email"
-      fab:fab_label="Create Update" />
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_offer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_email"
+            fab:fab_label="Create Offer"
+            style="@style/MenuButtonsStyle" />
+
+        <!--<com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_product_launch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_email"
+            fab:fab_label="Product Launch"
+            style="@style/MenuButtonsStyle" />
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_job_alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_email"
+            fab:fab_label="Job Alert"
+            style="@style/MenuButtonsStyle" />
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_custom_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_email"
+            fab:fab_label="Customer Review"
+            style="@style/MenuButtonsStyle" />-->
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_email"
+            fab:fab_label="Create Update"
+            style="@style/MenuButtonsStyle" />
 
 
-  </com.github.clans.fab.FloatingActionMenu>
+    </com.github.clans.fab.FloatingActionMenu>
 
 
 </FrameLayout>

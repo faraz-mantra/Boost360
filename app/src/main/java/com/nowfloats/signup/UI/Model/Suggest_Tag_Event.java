@@ -5,9 +5,10 @@ package com.nowfloats.signup.UI.Model;
  */
 public class Suggest_Tag_Event {
 
-    public String fpTag;
+    public String fpTag ;
 
-    public Suggest_Tag_Event(String response) {
-        fpTag = response;
+    public Suggest_Tag_Event(String response)
+    {
+        fpTag = response ;
     }
 }

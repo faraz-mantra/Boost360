@@ -1,33 +1,33 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  tools:context=".MainActivity">
-  <item
-    android:actionMenuTextColor="@color/gray"
-    android:orderInCategory="1"
-    android:title="@string/filter_by"
-    app:showAsAction="never" />
-
-  <group android:checkableBehavior="single">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
     <item
-      android:id="@+id/sort_date"
-      android:actionMenuTextColor="@color/gray"
-      android:orderInCategory="1"
-      android:title="@string/action_sort_date"
-      app:showAsAction="always" />
-    <item
-      android:id="@+id/sort_expiry"
-      android:orderInCategory="2"
-      android:title="@string/action_sort_expiry"
-      app:showAsAction="always" />
+        android:actionMenuTextColor="@color/gray"
+        android:orderInCategory="1"
+        app:showAsAction="never"
+        android:title="@string/filter_by" />
 
-    <item
-      android:id="@+id/sort_source"
-      android:orderInCategory="2"
-      android:title="@string/action_sort_source"
-      app:showAsAction="always" />
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/sort_date"
+            android:actionMenuTextColor="@color/gray"
+            android:orderInCategory="1"
+            app:showAsAction="always"
+            android:title="@string/action_sort_date" />
+        <item
+            android:id="@+id/sort_expiry"
+            android:orderInCategory="2"
+            app:showAsAction="always"
+            android:title="@string/action_sort_expiry" />
+
+        <item
+            android:id="@+id/sort_source"
+            android:orderInCategory="2"
+            app:showAsAction="always"
+            android:title="@string/action_sort_source" />
 
 
-  </group>
+    </group>
 </menu>

@@ -2,7 +2,6 @@ package com.nowfloats.accessbility;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nowfloats.bubble.BubblesService;

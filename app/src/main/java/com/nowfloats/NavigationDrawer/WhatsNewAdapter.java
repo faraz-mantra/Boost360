@@ -1,7 +1,6 @@
 package com.nowfloats.NavigationDrawer;
 
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,11 @@ import java.util.List;
 /**
  * Created by NowFloats on 02-08-2016.
  */
-public class WhatsNewAdapter extends RecyclerView.Adapter<WhatsNewAdapter.WhatsNewViewHolder> {
+public class WhatsNewAdapter extends RecyclerView.Adapter<WhatsNewAdapter.WhatsNewViewHolder>{
 
     private List<WhatsNewDataModel> modelList;
 
-    public WhatsNewAdapter(List<WhatsNewDataModel> modelList) {
+    public WhatsNewAdapter(List<WhatsNewDataModel> modelList){
         this.modelList = modelList;
     }
 
@@ -44,7 +43,7 @@ public class WhatsNewAdapter extends RecyclerView.Adapter<WhatsNewAdapter.WhatsN
         return modelList.size();
     }
 
-    public class WhatsNewViewHolder extends RecyclerView.ViewHolder {
+    public class WhatsNewViewHolder extends RecyclerView.ViewHolder{
 
         ImageView ivWhatsNew;
         TextView tvHeaderText, tvBodyText;

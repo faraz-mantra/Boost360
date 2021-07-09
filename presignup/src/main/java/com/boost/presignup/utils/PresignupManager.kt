@@ -2,24 +2,24 @@ package com.boost.presignup.utils
 
 import android.app.Activity
 
-public object PresignupManager {
+public object PresignupManager{
 
-  interface SignUpLoginHandler {
-    fun loginClicked(activity: Activity)
-  }
+    interface SignUpLoginHandler{
+        fun loginClicked( activity: Activity)
+    }
 
-  private var listener: SignUpLoginHandler? = null
+    private var listener: SignUpLoginHandler? = null
 
-  init {
-    println("Singleton class invoked.")
-  }
+    init {
+        println("Singleton class invoked.")
+    }
 
-  public fun setListener(listener: SignUpLoginHandler) {
-    this.listener = listener
-  }
+    public fun setListener(listener: SignUpLoginHandler) {
+        this.listener = listener
+    }
 
-  fun getListener(): SignUpLoginHandler? {
-    return listener
-  }
+    fun getListener(): SignUpLoginHandler?{
+        return listener
+    }
 
 }

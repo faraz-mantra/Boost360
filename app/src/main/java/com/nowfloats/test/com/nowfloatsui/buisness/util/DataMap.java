@@ -6,115 +6,118 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class DataMap extends com.nowfloats.Analytics_Screen.DataMap implements Map<String, Object> {
+public class DataMap extends com.nowfloats.Analytics_Screen.DataMap implements Map<String, Object>{
 
+	
+	Map map = null;
+	public DataMap()
+	{
+		map  = new LinkedHashMap<String,Object>();
+	}
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		map.clear();
+	};
 
-    Map map = null;
+	@Override
+	public boolean containsKey(Object key) {
+		
+		boolean flag = false;
+		if(map.containsKey(key))
+		{
+			flag = true;
+		}
+		
+		return flag;
+	}
 
-    public DataMap() {
-        map = new LinkedHashMap<String, Object>();
-    }
+	@Override
+	public boolean containsValue(Object value) {
+		boolean flag = false;
+		if(map.containsValue(value))
+		{
+			flag = true;
+		}
+		
+		return flag;
+	}
 
-    @Override
-    public void clear() {
-        // TODO Auto-generated method stub
-        map.clear();
-    }
+	@Override
+	public Set<Entry<String, Object>> entrySet() {
+		// TODO Auto-generated method stub
+		return map.entrySet();
 
-    ;
+	}
 
-    @Override
-    public boolean containsKey(Object key) {
+	@Override
+	public Object get(Object key) {
+		// TODO Auto-generated method stub
+		Object tmp = null;
+		if(map.containsKey(key))
+		{
+			tmp = map.get(key);
+		}
+		return tmp;
 
-        boolean flag = false;
-        if (map.containsKey(key)) {
-            flag = true;
-        }
+	}
 
-        return flag;
-    }
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		if(map.size()==0)
+		{
+			flag = true;
+		}
+		return false;
+	}
 
-    @Override
-    public boolean containsValue(Object value) {
-        boolean flag = false;
-        if (map.containsValue(value)) {
-            flag = true;
-        }
+	@Override
+	public Set<String> keySet() {
+		// TODO Auto-generated method stub
+		return map.keySet();
+	}
 
-        return flag;
-    }
+	@Override
+	public Object put(String key, Object value) {
+		// TODO Auto-generated method stub
+		if(!map.containsKey(key))
+		{
+			map.put(key, value);
+		}
+		
+		return null;
+	}
 
-    @Override
-    public Set<Entry<String, Object>> entrySet() {
-        // TODO Auto-generated method stub
-        return map.entrySet();
+	@Override
+	public void putAll(Map<? extends String, ? extends Object> arg0) {
+		// TODO Auto-generated method stub
+		map.putAll(arg0);
+	}
 
-    }
+	@Override
+	public Object remove(Object key) {
+		// TODO Auto-generated method stub
+		map.remove(key);
+		return null;
+	}
 
-    @Override
-    public Object get(Object key) {
-        // TODO Auto-generated method stub
-        Object tmp = null;
-        if (map.containsKey(key)) {
-            tmp = map.get(key);
-        }
-        return tmp;
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return map.size();
+	}
 
-    }
-
-    @Override
-    public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        boolean flag = false;
-        if (map.size() == 0) {
-            flag = true;
-        }
-        return false;
-    }
-
-    @Override
-    public Set<String> keySet() {
-        // TODO Auto-generated method stub
-        return map.keySet();
-    }
-
-    @Override
-    public Object put(String key, Object value) {
-        // TODO Auto-generated method stub
-        if (!map.containsKey(key)) {
-            map.put(key, value);
-        }
-
-        return null;
-    }
-
-    @Override
-    public void putAll(Map<? extends String, ? extends Object> arg0) {
-        // TODO Auto-generated method stub
-        map.putAll(arg0);
-    }
-
-    @Override
-    public Object remove(Object key) {
-        // TODO Auto-generated method stub
-        map.remove(key);
-        return null;
-    }
-
-    @Override
-    public int size() {
-        // TODO Auto-generated method stub
-        return map.size();
-    }
-
-    @Override
-    public Collection<Object> values() {
-        // TODO Auto-generated method stub
-        return map.values();
-    }
-
-    public Object get(int index) {
-        return (new ArrayList<String>(map.values())).get(index);
-    }
+	@Override
+	public Collection<Object> values() {
+		// TODO Auto-generated method stub
+		return map.values();
+	}
+	
+	public Object get(int index)
+	{
+		return (new ArrayList<String>(map.values())).get(index);
+	}
 
 }

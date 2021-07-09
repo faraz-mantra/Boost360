@@ -3,11 +3,9 @@ package com.nowfloats.BusinessProfile.UI.UI.FAQ;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.util.Linkify;
@@ -39,7 +37,7 @@ public class FAQ_QandA_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faq__qand_a_);
 
-        toolbar = (Toolbar) findViewById(R.id.app_bar_faq_qnada);
+        toolbar = (Toolbar)findViewById(R.id.app_bar_faq_qnada);
         setSupportActionBar(toolbar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
         headerText.setText(getResources().getString(R.string.faqs));
@@ -47,7 +45,7 @@ public class FAQ_QandA_Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        lv_q_and_a = (ListView) findViewById(R.id.lv_qanda);
+        lv_q_and_a = (ListView)findViewById(R.id.lv_qanda);
 
         int item_no = getIntent().getIntExtra("item_no", 0);
         Log.d("ILUD item_no", String.valueOf(item_no));
@@ -64,9 +62,13 @@ public class FAQ_QandA_Activity extends AppCompatActivity {
                     InflateAnsView(ans_values[position]);
                 }
             });
-        } catch (NoSuchFieldException e) {
+        }
+        catch (NoSuchFieldException e)
+        {
             e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e)
+        {
             e.printStackTrace();
         }
 //        switch (item_no)
@@ -80,7 +82,6 @@ public class FAQ_QandA_Activity extends AppCompatActivity {
 //            default:
 //        }
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -89,8 +90,8 @@ public class FAQ_QandA_Activity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    private void InflateAnsView(String ans) {
+    private void InflateAnsView(String ans)
+    {
         final WebView message = new WebView(this);
         //message.setPadding(48,16,48,16);
         final SpannableString s =
@@ -113,20 +114,20 @@ public class FAQ_QandA_Activity extends AppCompatActivity {
                 "    text-align: justify;" +
                 "}" +
                 "</style>" +
-                "</head><body text=\"" + "#808080" + "\">"
-                + "<p align=\"justify\">"
-                + ans
-                + "</p> "
-                + "</body></html>";
+                "</head><body text=\"" +"#808080" + "\">"
+                         + "<p align=\"justify\">"
+                         + ans
+                         + "</p> "
+                         + "</body></html>";
         message.loadData(text, "text/html", "utf-8");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(message, (int) (25 * dpi), (int) (5 * dpi), (int) (14 * dpi), (int) (5 * dpi))
+        builder.setView(message,(int)(25*dpi), (int)(5*dpi), (int)(14*dpi), (int)(5*dpi))
                 .setTitle(getResources().getString(R.string.answer))
                 .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        if (dialog != null)
+                        if(dialog!=null)
                             dialog.dismiss();
                     }
                 });

@@ -201,8 +201,8 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:gravity="center"
-      android:orientation="vertical"
-      android:visibility="gone">
+      android:visibility="gone"
+      android:orientation="vertical">
 
       <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_animation_refresh"

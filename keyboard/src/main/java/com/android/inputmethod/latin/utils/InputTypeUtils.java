@@ -20,7 +20,6 @@ import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
 
 public final class InputTypeUtils implements InputType {
-    public static final int IME_ACTION_CUSTOM_LABEL = EditorInfo.IME_MASK_ACTION + 1;
     private static final int WEB_TEXT_PASSWORD_INPUT_TYPE =
             TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_WEB_PASSWORD;
     private static final int WEB_TEXT_EMAIL_ADDRESS_INPUT_TYPE =
@@ -32,10 +31,11 @@ public final class InputTypeUtils implements InputType {
     private static final int TEXT_VISIBLE_PASSWORD_INPUT_TYPE =
             TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
     private static final int[] SUPPRESSING_AUTO_SPACES_FIELD_VARIATION = {
-            InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
-            InputType.TYPE_TEXT_VARIATION_PASSWORD,
-            InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD,
-            InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD};
+        InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
+        InputType.TYPE_TEXT_VARIATION_PASSWORD,
+        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD,
+        InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD };
+    public static final int IME_ACTION_CUSTOM_LABEL = EditorInfo.IME_MASK_ACTION + 1;
 
     private InputTypeUtils() {
         // This utility class is not publicly instantiable.

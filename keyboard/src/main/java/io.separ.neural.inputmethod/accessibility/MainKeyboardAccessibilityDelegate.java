@@ -46,7 +46,6 @@ public final class MainKeyboardAccessibilityDelegate
      * Map of keyboard modes to resource IDs.
      */
     private static final SparseIntArray KEYBOARD_MODE_RES_IDS = new SparseIntArray();
-    private static final int KEYBOARD_IS_HIDDEN = -1;
 
     static {
         KEYBOARD_MODE_RES_IDS.put(KeyboardId.MODE_DATE, R.string.keyboard_mode_date);
@@ -60,13 +59,15 @@ public final class MainKeyboardAccessibilityDelegate
         KEYBOARD_MODE_RES_IDS.put(KeyboardId.MODE_URL, R.string.keyboard_mode_url);
     }
 
-    // The rectangle region to ignore hover events.
-    private final Rect mBoundsToIgnoreHoverEvent = new Rect();
-    private final AccessibilityLongPressTimer mAccessibilityLongPressTimer;
     /**
      * The most recently set keyboard mode.
      */
     private int mLastKeyboardMode = KEYBOARD_IS_HIDDEN;
+    private static final int KEYBOARD_IS_HIDDEN = -1;
+    // The rectangle region to ignore hover events.
+    private final Rect mBoundsToIgnoreHoverEvent = new Rect();
+
+    private final AccessibilityLongPressTimer mAccessibilityLongPressTimer;
 
     public MainKeyboardAccessibilityDelegate(final MainKeyboardView mainKeyboardView,
                                              final KeyDetector keyDetector) {
@@ -125,8 +126,7 @@ public final class MainKeyboardAccessibilityDelegate
     private void announceKeyboardLanguage(final Keyboard keyboard) {
         if (keyboard != null && keyboard.mId != null && keyboard.mId.mSubtype != null) {
             final String languageText = SubtypeLocaleUtils.getSubtypeDisplayNameInSystemLocale(keyboard.mId.mSubtype);
-            if (languageText != null && !languageText.isEmpty())
-                sendWindowStateChanged(languageText);
+            if (languageText != null && !languageText.isEmpty()) sendWindowStateChanged(languageText);
         }
     }
 

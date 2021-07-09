@@ -1,9 +1,7 @@
 package nfkeyboard.adapter;
 
 import android.content.Context;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -17,36 +15,9 @@ import nfkeyboard.models.AllSuggestionModel;
 
 public class BaseAdapterManager {
     private ProductAdapter productAdapter;
-    private ArrayList<BaseAdapter<AllSuggestionModel>> adapterList;
-
-    public BaseAdapterManager(Context context, ItemClickListener listener) {
-        adapterList = new ArrayList<>();
-        makeSectionAdapterList(context, listener);
-    }
 
     public void unRegisterEventBus() {
         productAdapter.unRegisterEventBus();
-    }
-
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-        // may be we add adapter in hashmap here if position is not present
-        return adapterList.get(position).onCreateViewHolder(parent);
-    }
-
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, AllSuggestionModel node, int position) {
-        adapterList.get(position).onBindViewHolder(holder, node);
-    }
-
-    private void makeSectionAdapterList(Context context, ItemClickListener listener) {
-        adapterList.add(new ImageAdapter(context, listener));
-        adapterList.add(new TextAdapter(context, listener));
-        productAdapter = new ProductAdapter(context, listener);
-        adapterList.add(productAdapter);
-        adapterList.add(new EmptyListAdapter(context, listener));
-        adapterList.add(new LoginAdapter(context, listener));
-        adapterList.add(new LoaderAdapter(context, listener));
-        adapterList.add(new ImageShareAdapter(context, listener));
-        adapterList.add(new DetailsAdapter(context, listener));
     }
 
     public enum SectionTypeEnum {
@@ -62,5 +33,35 @@ public class BaseAdapterManager {
         public int getValue() {
             return val;
         }
+    }
+
+    private ArrayList<BaseAdapter<AllSuggestionModel>> adapterList;
+
+    public BaseAdapterManager(Context context, ItemClickListener listener) {
+        adapterList = new ArrayList<>();
+        makeSectionAdapterList(context, listener);
+    }
+
+
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
+        // may be we add adapter in hashmap here if position is not present
+        return adapterList.get(position).onCreateViewHolder(parent);
+    }
+
+
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, AllSuggestionModel node, int position) {
+        adapterList.get(position).onBindViewHolder(holder, node);
+    }
+
+    private void makeSectionAdapterList(Context context, ItemClickListener listener) {
+        adapterList.add(new ImageAdapter(context, listener));
+        adapterList.add(new TextAdapter(context, listener));
+        productAdapter = new ProductAdapter(context, listener);
+        adapterList.add(productAdapter);
+        adapterList.add(new EmptyListAdapter(context, listener));
+        adapterList.add(new LoginAdapter(context, listener));
+        adapterList.add(new LoaderAdapter(context, listener));
+        adapterList.add(new ImageShareAdapter(context, listener));
+        adapterList.add(new DetailsAdapter(context, listener));
     }
 }

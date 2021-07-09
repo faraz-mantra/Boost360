@@ -141,6 +141,63 @@ import static android.view.View.INVISIBLE;
 public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdapter.OnItemClickListener,
         IConfirmationCallback, IChatAnimCallback, FacebookHandler.FacebookCallbacks {
 
+    private boolean isTagCheck = false;
+    private String suggestedFP;
+
+    private Toolbar toolbar;
+
+    private RecyclerView rvChatData, rvButtonsContainer;
+    private LinearLayout cvChatInput;
+    private AutoCompleteTextView etChatInput;
+    private ImageView ivSendMessage, ivScrollDown, ivBack, ivScrollUp, ivScrollDownBtn;
+    private TextView tvPrefix, tvPostfix, tvSkip;
+    private Button mCurrButton, mDefaultButton;
+
+    private Handler mHandler = new Handler(Looper.getMainLooper());
+
+    private List<RiaCardModel> mAllNodes = new ArrayList<>(0);
+    private Map<String, String> mDataMap = new HashMap<>();
+    private List<Section> mSectionList = new ArrayList<>();
+    private List<Button> mButtonList = new ArrayList<>();
+
+    private String mCurrVarName = null, mNextNodeId = "-1", appVersion = "", mCurrNodeId, mCurrentDeepLink, mSessionId, mCurrFlowId;
+
+    private final String KEY_NEXT_NODE_ID = "NextNodeId";
+    private final String KEY_FP_CREATION_STATUSCODE = "FPCREATION_STATUSCODE";
+
+    private Map<String, String> mAutoComplDataHash;
+
+    private RvChatAdapter mAdapter;
+    private RvButtonsAdapter mButtonsAdapter;
+
+    private RequestQueue mRequestQueue;
+
+    private PickAddressFragment pickAddressFragment;
+
+    private FileUploadResultReceiver mReceiver;
+
+    private TextView tvRiaTyping;
+
+    private ProgressBar progressBar;
+
+    private DisplayMetrics displayMetrics;
+
+    private int FP_STATUS_CODE = -100;
+
+    private static final int FP_CREATED = 1;
+    private static final int FP_NOT_CREATED = -100;
+    private static final int AUDIO_REQUEST_CODE = 56;
+
+    private ChatManager.ChatType chatType;
+    private RelativeLayout rlButtons;
+    private SharedPreferences pref;
+
+    private static final String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
+
+    /*
+     **************************** CONSTANTS *******************************
+     */
+
     public static final String Save_Name = "nameKey";
     public static final String Save_Cat = "categoryKey";
     public static final String Save_Phone = "phoneNumberKey";
@@ -151,60 +208,34 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     public static final String Save_State = "stateKey";
     public static final String Save_Lat = "ria_latKey";
     public static final String Save_Lng = "ria_lngKey";
+
     public static final String Save_Website_Address = "websiteAdressKey";
     public static final String Save_Otp = "otpKey";
     public static final String Save_IS_FP_AVAILABLE = "isFPAvailable";
     public static final String Save_Pin_Code = "pincodeKey";
     public static final String Save_Street_Address = "streetAddressKey";
     public static final String Save_Locality = "localityKey";
-    private static final int FP_CREATED = 1;
-    private static final int FP_NOT_CREATED = -100;
-    private static final int AUDIO_REQUEST_CODE = 56;
-    private static final String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
-    private static final int RC_CAMERA = 3000;
+
+    /*
+     **************************** CONSTANTS *******************************
+     */
+
+    private Runnable mAutoCallRunnable = new Runnable() {
+        @Override
+        public void run() {
+            onItemClick(mDefaultButton);
+        }
+    };
+
+    private LinearLayoutManager buttonsLayoutManager;
+
     public static String NF_PREF_NAME = "nowfloatsPrefs";
-    private final String KEY_NEXT_NODE_ID = "NextNodeId";
-    private final String KEY_FP_CREATION_STATUSCODE = "FPCREATION_STATUSCODE";
+
+    private FacebookHandler facebookHandler;
+
     private final List<String> readPermissions = Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management", "pages_messaging");
     private final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
-    private boolean isTagCheck = false;
-    private String suggestedFP;
-    private Toolbar toolbar;
-    private RecyclerView rvChatData, rvButtonsContainer;
-    private LinearLayout cvChatInput;
-    private AutoCompleteTextView etChatInput;
-    private ImageView ivSendMessage, ivScrollDown, ivBack, ivScrollUp, ivScrollDownBtn;
-    private TextView tvPrefix, tvPostfix, tvSkip;
 
-    /*
-     **************************** CONSTANTS *******************************
-     */
-    private Button mCurrButton, mDefaultButton;
-    private Handler mHandler = new Handler(Looper.getMainLooper());
-    private List<RiaCardModel> mAllNodes = new ArrayList<>(0);
-    private Map<String, String> mDataMap = new HashMap<>();
-    private List<Section> mSectionList = new ArrayList<>();
-    private List<Button> mButtonList = new ArrayList<>();
-    private String mCurrVarName = null, mNextNodeId = "-1", appVersion = "", mCurrNodeId, mCurrentDeepLink, mSessionId, mCurrFlowId;
-    private Map<String, String> mAutoComplDataHash;
-    private RvChatAdapter mAdapter;
-    private RvButtonsAdapter mButtonsAdapter;
-    private RequestQueue mRequestQueue;
-    private PickAddressFragment pickAddressFragment;
-    private FileUploadResultReceiver mReceiver;
-    private TextView tvRiaTyping;
-    private ProgressBar progressBar;
-    private DisplayMetrics displayMetrics;
-
-    /*
-     **************************** CONSTANTS *******************************
-     */
-    private int FP_STATUS_CODE = -100;
-    private ChatManager.ChatType chatType;
-    private RelativeLayout rlButtons;
-    private SharedPreferences pref;
-    private LinearLayoutManager buttonsLayoutManager;
-    private FacebookHandler facebookHandler;
     private PermissionListener mPermissionListener = new PermissionListener() {
         @Override
         public void onPermissionGranted() {
@@ -226,38 +257,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             Toast.makeText(ChatViewActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
         }
     };
-    private int cardCount = 0;
-    private CameraImagePicker imagePicker;
-    private CustomDialogFragment customDialogFragment;
-    private Runnable mAutoCallRunnable = new Runnable() {
-        @Override
-        public void run() {
-            onItemClick(mDefaultButton);
-        }
-    };
-
-    public static boolean isNetworkStatusAvialable(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager != null) {
-            NetworkInfo netInfos = connectivityManager.getActiveNetworkInfo();
-            if (netInfos != null)
-                return netInfos.isConnected();
-        }
-        return false;
-    }
-
-    public static void showSnackBarNegative(Activity context, String msg) {
-        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG);
-        snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
-        snackBar.show();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getIntent().getExtras() != null) {
+        if (getIntent().getExtras() != null)
+        {
             chatType = (ChatManager.ChatType) getIntent().getExtras().get(Constants.CHAT_TYPE);
             pref = getSharedPreferences(NF_PREF_NAME, Context.MODE_PRIVATE);
         }
@@ -290,6 +296,18 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         //syncChatHistory();
 
         syncChat();
+    }
+
+
+    public static boolean isNetworkStatusAvialable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkInfo netInfos = connectivityManager.getActiveNetworkInfo();
+            if (netInfos != null)
+                return netInfos.isConnected();
+        }
+        return false;
     }
 
     private void initializeControls() {
@@ -526,6 +544,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     }
 
+    public static void showSnackBarNegative(Activity context, String msg) {
+        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG);
+        snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
+        snackBar.show();
+    }
+
     private boolean isValidInput(String input) {
         if (mCurrButton.getButtonType() == null)
             return false;
@@ -711,6 +735,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         section.setShowDate(true);
     }
 
+    private int cardCount = 0;
+
     private void replyToRia(String type, final RiaCardModel riaCardModel, boolean isReplace) {
 
         mHandler.removeCallbacks(mAutoCallRunnable);
@@ -776,7 +802,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         /**
          * For GetAddress type button button should not disappear on click
          */
-        if (!button.getButtonType().equals("GetAddress")) {
+        if(!button.getButtonType().equals("GetAddress"))
+        {
             mButtonList.clear();
             mButtonsAdapter.notifyDataSetChangedRequest();
             rvButtonsContainer.setVisibility(View.INVISIBLE);
@@ -924,6 +951,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         });
     }
 
+
     private void getUserAddress(final Button btn) {
 
         pickAddressFragment = PickAddressFragment.newInstance(PickAddressFragment.PICK_TYPE.MANUAL, (HashMap<String, String>) mDataMap);
@@ -994,6 +1022,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         pickAddressFragment.show(getSupportFragmentManager(), "Test");
     }
 
+
     public void showImageDilaog(String url) {
         final Dialog dialog = new Dialog(ChatViewActivity.this);
         dialog.setContentView(R.layout.image_dialog_layout);
@@ -1038,6 +1067,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         dialog.show();
     }
+
+    private CameraImagePicker imagePicker;
+    private static final int RC_CAMERA = 3000;
 
     private void getImage(Button btn) {
         mNextNodeId = btn.getNextNodeId();
@@ -1242,6 +1274,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         finish();
     }
+
 
     private void facebookAuth() {
         facebookHandler.getFacebookPermissions(ChatViewActivity.this, readPermissions, publishPermissions);
@@ -1704,31 +1737,39 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         /**
          * If last node/ login node
          */
-        if (node.getId() != null && node.getId().equals("59675de6b02a290bac836f0e")) {
+        if(node.getId() != null && node.getId().equals("59675de6b02a290bac836f0e"))
+        {
             autoLogin(node, 13500);
-        } else {
+        }
+
+        else
+        {
             autoLogin(node, 18500);
         }
     }
 
     /**
      * method for auto login
-     *
      * @param node
      */
-    private void autoLogin(RiaCardModel node, int duration) {
-        if (node.getButtons() != null) {
-            for (final Button button : node.getButtons()) {
+    private void autoLogin(RiaCardModel node, int duration)
+    {
+        if(node.getButtons() != null)
+        {
+            for(final Button button: node.getButtons())
+            {
                 /**
                  * if deeplink is login
                  */
-                if (button.getDeepLinkUrl() != null && button.getDeepLinkUrl().equals(Constants.DeepLinkUrl.LOGIN)) {
+                if(button.getDeepLinkUrl() != null && button.getDeepLinkUrl().equals(Constants.DeepLinkUrl.LOGIN))
+                {
                     /**
                      * execute login method after 13.5 second so that all login node message display before attempting login
                      */
                     new Handler().postDelayed(new Runnable() {
                         @Override
-                        public void run() {
+                        public void run()
+                        {
                             login();
                         }
                     }, duration);
@@ -1872,6 +1913,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mAdapter.notifyItemRemoved(mSectionList.size());
     }
 
+
     private void fetchChatJson() {
         /*if(null!=pg && !pg.isShowing())
             pg.show();*/
@@ -2010,13 +2052,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         startChat(mAllNodes.get(0));
     }
 
-    public void hideSoftKeyboard() {
+    public void hideSoftKeyboard()
+    {
         if (getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
-
     private void handleGetRequest(final RiaCardModel node) {
 
         progressBar.setVisibility(View.VISIBLE);
@@ -2035,6 +2077,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         urlBuilder.append("deviceId=" + DeviceDetails.getDeviceId(this));
 
 
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlBuilder.toString(), null,
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override
@@ -2042,7 +2085,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                         Log.d("ChatView", response.toString());
                         Iterator<?> keys = response.keys();
-                        while (keys.hasNext()) {
+                        while (keys.hasNext())
+                        {
                             String key = (String) keys.next();
 
                             if (key.equalsIgnoreCase(KEY_FP_CREATION_STATUSCODE)) {
@@ -2052,7 +2096,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                     mDataMap.put("[~" + key + "]", response.getString(key));
                                     //Log.d("Hello", mDataMap.toString());
 
-                                    if ((key.equals("SUGGESTED_TAG")) && !response.getString(key).isEmpty()) {
+                                    if((key.equals("SUGGESTED_TAG")) && !response.getString(key).isEmpty())
+                                    {
                                         isTagCheck = true;
                                         suggestedFP = response.getString(key);
 
@@ -2089,17 +2134,25 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 } else {
                                     //showNextNode(response.getString(KEY_NEXT_NODE_ID));
 
-                                    if (response.has("IsFPTagAvailable") && response.getBoolean("IsFPTagAvailable")) {
+                                    if(response.has("IsFPTagAvailable") && response.getBoolean("IsFPTagAvailable"))
+                                    {
                                         suggestedFP = response.getString("TAG");
                                         mDataMap.put("[~" + "TAG" + "]", suggestedFP);
 
-                                        if (isTagCheck) {
+                                        if(isTagCheck)
+                                        {
                                             isTagCheck = false;
                                             showNextNode(null);
-                                        } else {
+                                        }
+
+                                        else
+                                        {
                                             showNextNode(response.getString(KEY_NEXT_NODE_ID));
                                         }
-                                    } else {
+                                    }
+
+                                    else
+                                    {
                                         showNextNode(response.getString(KEY_NEXT_NODE_ID));
                                     }
                                 }
@@ -2317,7 +2370,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                 case Constants.ConfirmationType.FP_TAG_CONFIRM:
 
-                    if (isTagCheck) {
+                    if(isTagCheck)
+                    {
                         RiaCardModel model = getNextNode("58daf4c4c7d8bf2c80901c9c");
                         //model.setApiUrl("https://onboarding-boost.withfloats.com/plugin/api/Service/CheckFPTagAvailability");
                         model.getRequiredVariables().add("TAG");
@@ -2341,14 +2395,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     }
 
-    /*
-     * **************************************Facebook  Callbacks **************************
-     */
-
     @Override
     public void onAnimationend() {
 
     }
+
+    /*
+     * **************************************Facebook  Callbacks **************************
+     */
 
     @Override
     public void onError() {
@@ -2377,12 +2431,42 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     public void onProfilePages(JSONArray pages, ArrayList<String> pagesName) {
 
     }
+
+    @Override
+    public void onProfileConnected(JSONObject profile, AccessToken token) {
+
+    }
     /*
      * **************************************Facebook  Callbacks **************************
      */
 
-    @Override
-    public void onProfileConnected(JSONObject profile, AccessToken token) {
+    private class FileUploadResultReceiver extends ResultReceiver {
+
+        /**
+         * Create a new ResultReceive to receive results.  Your
+         * {@link #onReceiveResult} method will be called from the thread running
+         * <var>handler</var> if given, or from an arbitrary thread if null.
+         *
+         * @param handler
+         */
+        @SuppressLint("RestrictedApi")
+        public FileUploadResultReceiver(Handler handler) {
+            super(handler);
+
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            if (resultData != null && resultCode == Constants.RESULT_OK && mCurrVarName != null) {
+                mDataMap.put("[~" + mCurrVarName + "]", resultData.getString(Constants.KEY_FILE_URL));
+            }
+            mSectionList.get(mSectionList.size() - 1).setLoading(false);
+            mAdapter.notifyItemChanged(mSectionList.size() - 1);
+            //TODO: Start Next Node;
+            if (mNextNodeId != null) {
+                showNextNode(mNextNodeId);
+            }
+        }
 
     }
 
@@ -2390,6 +2474,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
+
+    private CustomDialogFragment customDialogFragment;
 
     public void showCustomDialog(final CustomDialogFragment.DialogFrom dialogFrom) {
 
@@ -2475,14 +2561,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             customDialogFragment = null;
         }
     }
-
-    private void syncChat() {
-        if (isNetworkStatusAvialable(ChatViewActivity.this)) {
-            fetchChatJson();
-        } else {
-            showCustomDialog(CustomDialogFragment.DialogFrom.NO_INTERNET);
-        }
-    }
 //    private void syncChatHistory() {
 //
 //        Type listType = new TypeToken<ArrayList<Section>>() {
@@ -2504,6 +2582,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 //        }
 //    }
 
+    private void syncChat() {
+        if (isNetworkStatusAvialable(ChatViewActivity.this)) {
+            fetchChatJson();
+        } else {
+            showCustomDialog(CustomDialogFragment.DialogFrom.NO_INTERNET);
+        }
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -2512,36 +2598,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    private class FileUploadResultReceiver extends ResultReceiver {
-
-        /**
-         * Create a new ResultReceive to receive results.  Your
-         * {@link #onReceiveResult} method will be called from the thread running
-         * <var>handler</var> if given, or from an arbitrary thread if null.
-         *
-         * @param handler
-         */
-        @SuppressLint("RestrictedApi")
-        public FileUploadResultReceiver(Handler handler) {
-            super(handler);
-
-        }
-
-        @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-            if (resultData != null && resultCode == Constants.RESULT_OK && mCurrVarName != null) {
-                mDataMap.put("[~" + mCurrVarName + "]", resultData.getString(Constants.KEY_FILE_URL));
-            }
-            mSectionList.get(mSectionList.size() - 1).setLoading(false);
-            mAdapter.notifyItemChanged(mSectionList.size() - 1);
-            //TODO: Start Next Node;
-            if (mNextNodeId != null) {
-                showNextNode(mNextNodeId);
-            }
-        }
-
     }
 
 //    private void updateChatHistory() {

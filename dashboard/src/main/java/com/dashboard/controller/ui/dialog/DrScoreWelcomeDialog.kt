@@ -39,28 +39,28 @@ class DrScoreWelcomeDialog : BaseDialogFragment<DialogDrWelcomeBinding, BaseView
     isCancelable = false
     binding?.root?.post {
       binding?.title?.fadeIn(0)?.mergeWith(binding?.lottyProgress?.fadeIn(10))
-        ?.andThen(tick(2))?.doOnComplete {
-          binding?.lottyProgress?.post {
-            binding?.lottyProgress?.gone()
-            binding?.lottyProgress?.cancelAnimation()
-            binding?.drScoreWelcomeAnim?.visible()
-            binding?.drScoreWelcomeAnim?.playAnimation()
+          ?.andThen(tick(2))?.doOnComplete {
+            binding?.lottyProgress?.post {
+              binding?.lottyProgress?.gone()
+              binding?.lottyProgress?.cancelAnimation()
+              binding?.drScoreWelcomeAnim?.visible()
+              binding?.drScoreWelcomeAnim?.playAnimation()
+            }
+          }?.andThen(binding?.drScoreWelcomeAnim?.fadeIn(50))
+          ?.andThen(tick(4))?.doOnComplete {
+            binding?.drScoreWelcomeAnim?.post {
+              binding?.title?.text = getString(R.string.ready_welcome_new_customers)
+              binding?.drScoreWelcomeAnim?.gone()
+              binding?.drScoreWelcomeAnim?.cancelAnimation()
+              binding?.imageIcon?.visible()
+            }
+          }?.andThen(binding?.imageIcon?.fadeIn(50))?.doOnComplete {
+            binding?.desc?.visible()
           }
-        }?.andThen(binding?.drScoreWelcomeAnim?.fadeIn(50))
-        ?.andThen(tick(4))?.doOnComplete {
-          binding?.drScoreWelcomeAnim?.post {
-            binding?.title?.text = getString(R.string.ready_welcome_new_customers)
-            binding?.drScoreWelcomeAnim?.gone()
-            binding?.drScoreWelcomeAnim?.cancelAnimation()
-            binding?.imageIcon?.visible()
+          ?.andThen(binding?.desc?.fadeIn(50))?.doOnComplete {
+            binding?.btnDone?.visible()
           }
-        }?.andThen(binding?.imageIcon?.fadeIn(50))?.doOnComplete {
-          binding?.desc?.visible()
-        }
-        ?.andThen(binding?.desc?.fadeIn(50))?.doOnComplete {
-          binding?.btnDone?.visible()
-        }
-        ?.andThen(binding?.btnDone?.fadeIn(50))?.subscribe()
+          ?.andThen(binding?.btnDone?.fadeIn(50))?.subscribe()
     }
     binding?.btnDone?.setOnClickListener {
       hideDialog()

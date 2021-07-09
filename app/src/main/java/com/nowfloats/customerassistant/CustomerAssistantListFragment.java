@@ -2,12 +2,10 @@ package com.nowfloats.customerassistant;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,8 +34,10 @@ public class CustomerAssistantListFragment extends android.app.Fragment
         implements RecyclerSectionItemDecoration.SectionCallback {
 
 
-    public List<SuggestionsDO> lsSuggestionsDOs;
     private RecyclerView rvSAMCustomerList;
+
+    public List<SuggestionsDO> lsSuggestionsDOs;
+
     private ImageView ivSort;
 
     private SectionType sectionType;
@@ -106,6 +106,12 @@ public class CustomerAssistantListFragment extends android.app.Fragment
         });
     }
 
+    public enum SectionType {
+        DATE,
+        EXPIRY,
+        SOURCE
+    }
+
     @Override
     public boolean isSection(int position) {
 
@@ -141,6 +147,22 @@ public class CustomerAssistantListFragment extends android.app.Fragment
         }
         return "";
     }
+
+    public class AssistantComparator implements Comparator<SuggestionsDO> {
+        public int compare(SuggestionsDO left, SuggestionsDO right) {
+            switch (sectionType) {
+                case DATE:
+                    return Methods.getFormattedDate(right.
+                            getDate()).compareTo(Methods.getFormattedDate(left.
+                            getDate()));
+                case EXPIRY:
+                    return (left.getExpiryDate()+"")
+                            .compareTo(right.getExpiryDate()+"");
+            }
+            return 0;
+        }
+    }
+
 
     public void showSortPopup() {
         Context wrapper = new ContextThemeWrapper(getActivity(), R.style.MyPopupMenuStyle);
@@ -184,26 +206,5 @@ public class CustomerAssistantListFragment extends android.app.Fragment
             }
         });
         popup.show();
-    }
-
-    public enum SectionType {
-        DATE,
-        EXPIRY,
-        SOURCE
-    }
-
-    public class AssistantComparator implements Comparator<SuggestionsDO> {
-        public int compare(SuggestionsDO left, SuggestionsDO right) {
-            switch (sectionType) {
-                case DATE:
-                    return Methods.getFormattedDate(right.
-                            getDate()).compareTo(Methods.getFormattedDate(left.
-                            getDate()));
-                case EXPIRY:
-                    return (left.getExpiryDate() + "")
-                            .compareTo(right.getExpiryDate() + "");
-            }
-            return 0;
-        }
     }
 }

@@ -33,8 +33,8 @@ import io.separ.neural.inputmethod.indic.settings.SettingsValuesForSuggestion;
  * Class for a collection of dictionaries that behave like one dictionary.
  */
 public final class DictionaryCollection extends Dictionary {
-    protected final CopyOnWriteArrayList<Dictionary> mDictionaries;
     private final String TAG = DictionaryCollection.class.getSimpleName();
+    protected final CopyOnWriteArrayList<Dictionary> mDictionaries;
 
     public DictionaryCollection(final String dictType) {
         super(dictType);
@@ -59,9 +59,9 @@ public final class DictionaryCollection extends Dictionary {
 
     @Override
     public ArrayList<SuggestedWordInfo> getSuggestions(final WordComposer composer,
-                                                       final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
-                                                       final SettingsValuesForSuggestion settingsValuesForSuggestion,
-                                                       final int sessionId, final float[] inOutLanguageWeight) {
+            final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
+            final SettingsValuesForSuggestion settingsValuesForSuggestion,
+            final int sessionId, final float[] inOutLanguageWeight) {
         final CopyOnWriteArrayList<Dictionary> dictionaries = mDictionaries;
         if (dictionaries.isEmpty()) return null;
         // To avoid creating unnecessary objects, we get the list out of the first
@@ -71,7 +71,7 @@ public final class DictionaryCollection extends Dictionary {
                 inOutLanguageWeight);
         if (null == suggestions) suggestions = new ArrayList<>();
         final int length = dictionaries.size();
-        for (int i = 1; i < length; ++i) {
+        for (int i = 1; i < length; ++ i) {
             final ArrayList<SuggestedWordInfo> sugg = dictionaries.get(i).getSuggestions(composer,
                     prevWordsInfo, proximityInfo, settingsValuesForSuggestion, sessionId,
                     inOutLanguageWeight);

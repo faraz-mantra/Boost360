@@ -47,8 +47,30 @@ public class WebAction {
         this.mWebActionName = webActionName;
     }
 
-    public String getWebActionName() {
-        return this.mWebActionName;
+
+    public static class WebActionBuilder {
+
+        private String authHeader;
+        private String webActionName;
+
+
+        public WebActionBuilder setAuthHeader(String authHeader) {
+            this.authHeader = authHeader;
+            return this;
+        }
+
+        public WebActionBuilder setWebActionName(String webActionName) {
+            this.webActionName = webActionName;
+            return this;
+        }
+
+        public WebAction build() throws RuntimeException{
+            if(TextUtils.isEmpty(authHeader)) {
+                throw new RuntimeException("AuthHeader for the webaction is not set");
+            }
+            WebActionNetworkModule networkModule = WebActionNetworkModule.init(Constants.WA_BASE_URL);
+            return new WebAction(networkModule, authHeader, webActionName);
+        }
     }
 
     public WebAction setWebActionName(String webActionName) {
@@ -56,27 +78,31 @@ public class WebAction {
         return this;
     }
 
+    public String getWebActionName() {
+        return this.mWebActionName;
+    }
+
     public void getAllWebActions(String webActionType, WebActionVisibility visibility,
                                  final WebActionCallback<List<com.nowfloats.webactions.models.WebAction>> webActionCallback) {
         Map<String, String> queryMap = new HashMap<>();
-        if (!TextUtils.isEmpty(webActionType)) {
+        if(!TextUtils.isEmpty(webActionType)) {
             queryMap.put("Type", webActionType);
         }
 
-        if (visibility != WebActionVisibility.NONE) {
-            queryMap.put("Visibility", visibility.getValue() + "");
+        if(visibility != WebActionVisibility.NONE) {
+            queryMap.put("Visibility", visibility.getValue()+"");
         }
         mNetworkModule.getWebActionService().getWebActionList(mAuthHeader, queryMap, new Callback<WebActionList>() {
             @Override
             public void success(WebActionList webActions, Response response) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
                 webActionCallback.onSuccess(webActions.getWebActions());
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
                 webActionCallback.onFailure(new WebActionError(error.getMessage()));
             }
@@ -88,9 +114,9 @@ public class WebAction {
         mNetworkModule.getWebActionService().getDataById(mAuthHeader, mWebActionName, id, new Callback<WebActionDataResponse<T>>() {
             @Override
             public void success(WebActionDataResponse<T> data, Response response) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
-                if (data != null && data.getData() != null && data.getData().size() > 0) {
+                if(data != null && data.getData() != null && data.getData().size() > 0) {
                     webActionCallback.onSuccess(data.getData().get(0));
                 } else {
                     webActionCallback.onSuccess(null);
@@ -100,7 +126,7 @@ public class WebAction {
 
             @Override
             public void failure(RetrofitError error) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
                 webActionCallback.onFailure(new WebActionError(error.getMessage()));
             }
@@ -114,9 +140,9 @@ public class WebAction {
         mNetworkModule.getWebActionService().getData(mAuthHeader, mWebActionName, query, new Callback<WebActionDataResponse<T>>() {
             @Override
             public void success(WebActionDataResponse<T> data, Response response) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
-                if (data != null && data.getData() != null && data.getData().size() > 0) {
+                if(data != null && data.getData() != null && data.getData().size() > 0) {
                     webActionCallback.onSuccess(data.getData().get(0));
                 } else {
                     webActionCallback.onSuccess(null);
@@ -125,12 +151,13 @@ public class WebAction {
 
             @Override
             public void failure(RetrofitError error) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
                 webActionCallback.onFailure(new WebActionError(error.getMessage()));
             }
         });
     }
+
 
     public void findProductKeywords(IFilter filter, final WebActionCallback<List<ProductKeywordResponseModel>> webActionCallback) {
         Map<String, String> query = new HashMap<>();
@@ -138,14 +165,14 @@ public class WebAction {
         mNetworkModule.getWebActionService().getProductKeywordsData(mAuthHeader, mWebActionName, query, new Callback<WebActionDataResponse<ProductKeywordResponseModel>>() {
             @Override
             public void success(WebActionDataResponse<ProductKeywordResponseModel> data, Response response) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
                 webActionCallback.onSuccess(data.getData());
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
                 webActionCallback.onFailure(new WebActionError(error.getMessage()));
             }
@@ -158,14 +185,14 @@ public class WebAction {
         mNetworkModule.getWebActionService().getProductImagesData(mAuthHeader, mWebActionName, query, new Callback<WebActionDataResponse<ProductImageResponseModel>>() {
             @Override
             public void success(WebActionDataResponse<ProductImageResponseModel> data, Response response) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
                 webActionCallback.onSuccess(data.getData());
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
                 webActionCallback.onFailure(new WebActionError(error.getMessage()));
             }
@@ -177,14 +204,14 @@ public class WebAction {
         mNetworkModule.getWebActionService().addData(mAuthHeader, mWebActionName, webActionData, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
                 webActionCallback.onSuccess(s);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
                 webActionCallback.onFailure(new WebActionError(error.getMessage()));
             }
@@ -196,14 +223,14 @@ public class WebAction {
         mNetworkModule.getWebActionService().updateData(mAuthHeader, mWebActionName, updateRequestModel, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
                 webActionCallback.onSuccess(true);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
                 webActionCallback.onSuccess(true);
             }
@@ -216,16 +243,16 @@ public class WebAction {
         mNetworkModule.getWebActionService().deleteData(mAuthHeader, mWebActionName, updateRequestModel, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
                 webActionCallback.onSuccess(true);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if (webActionCallback == null)
+                if(webActionCallback == null)
                     return;
-                if (error.getResponse().getStatus() == 200) {
+                if(error.getResponse().getStatus() == 200) {
                     webActionCallback.onSuccess(true);
                 } else {
                     webActionCallback.onFailure(new WebActionError(error.getMessage()));
@@ -306,35 +333,10 @@ public class WebAction {
         });*/
     }
 
+
     public interface WebActionCallback<T> {
         public void onSuccess(T result);
-
         public void onFailure(WebActionError error);
-    }
-
-    public static class WebActionBuilder {
-
-        private String authHeader;
-        private String webActionName;
-
-
-        public WebActionBuilder setAuthHeader(String authHeader) {
-            this.authHeader = authHeader;
-            return this;
-        }
-
-        public WebActionBuilder setWebActionName(String webActionName) {
-            this.webActionName = webActionName;
-            return this;
-        }
-
-        public WebAction build() throws RuntimeException {
-            if (TextUtils.isEmpty(authHeader)) {
-                throw new RuntimeException("AuthHeader for the webaction is not set");
-            }
-            WebActionNetworkModule networkModule = WebActionNetworkModule.init(Constants.WA_BASE_URL);
-            return new WebAction(networkModule, authHeader, webActionName);
-        }
     }
 
 

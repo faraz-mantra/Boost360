@@ -1,342 +1,342 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:background="@color/white"
-  android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-  <include
-    android:id="@+id/tool_bar_product_detail"
-    layout="@layout/tool_bar_card" />
+    <include
+        android:id="@+id/tool_bar_product_detail"
+        layout="@layout/tool_bar_card" />
 
-  <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <LinearLayout
-      android:id="@+id/productLayout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:padding="@dimen/margin_15">
-
-      <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="18dp"
-        android:background="#ECECEC"
-        android:orientation="vertical"
-        app:cardBackgroundColor="#ECECEC"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="5dp">
-
-        <ImageView
-          android:id="@+id/product_image"
-          android:layout_width="150dp"
-          android:layout_height="150dp"
-          android:scaleType="centerCrop"
-          android:src="@drawable/default_product_image" />
-
-      </androidx.cardview.widget.CardView>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-          android:id="@+id/product_name"
-          fontPath="Roboto-Light.ttf"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:background="@android:color/transparent"
-          android:hint="@string/product_detail_product_name"
-          android:inputType="textCapWords"
-          android:textColor="@color/main_text_color"
-          android:textColorHint="@color/primaryColor"
-          android:textSize="14sp"
-          app:met_floatingLabel="highlight"
-          app:met_primaryColor="@color/primaryColor"
-          app:met_singleLineEllipsis="true"
-          tools:ignore="MissingPrefix" />
-
-        <ImageView
-          android:id="@+id/iv_hint_product_name"
-          android:layout_width="25dp"
-          android:layout_height="25dp"
-          android:layout_gravity="center_vertical"
-          android:layout_marginStart="10dp"
-          android:onClick="onHintClicked"
-          android:src="@drawable/icon_info" />
-
-      </LinearLayout>
-
-      <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-          android:id="@+id/product_desc"
-          fontPath="Roboto-Light.ttf"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:hint="@string/product_detail_product_descr"
-          android:inputType="textCapSentences"
-          android:maxLines="3"
-          android:singleLine="false"
-          android:textColor="@color/main_text_color"
-          android:textColorHint="@color/primaryColor"
-          android:textSize="14sp"
-          app:met_floatingLabel="highlight"
-          app:met_primaryColor="@color/primaryColor"
-          tools:ignore="MissingPrefix" />
-
-        <ImageView
-          android:id="@+id/iv_hint_product_description"
-          android:layout_width="25dp"
-          android:layout_height="25dp"
-          android:layout_gravity="center_vertical"
-          android:layout_marginStart="10dp"
-          android:onClick="onHintClicked"
-          android:src="@drawable/icon_info" />
-
-      </LinearLayout>
-
-      <com.nowfloats.ProductGallery.widgets.NonScrollListView
-        android:id="@+id/lv_inventory_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_10"
-        android:layout_marginBottom="@dimen/margin_10"
-        android:divider="@null">
-
-      </com.nowfloats.ProductGallery.widgets.NonScrollListView>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5">
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-          android:id="@+id/product_currency"
-          fontPath="Roboto-Light.ttf"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:drawableEnd="@drawable/dropselect"
-          android:focusable="false"
-          android:focusableInTouchMode="false"
-          android:hint="@string/product_detail_currency"
-          android:imeOptions="flagNoExtractUi"
-          android:text="@string/currency_text"
-          android:textColor="@color/primaryColor"
-          android:textColorHint="@color/primaryColor"
-          android:textSize="14sp"
-          app:met_floatingLabel="highlight"
-          app:met_primaryColor="@color/primaryColor"
-          tools:ignore="MissingPrefix" />
-
-        <ImageView
-          android:id="@+id/iv_hint_select_currency"
-          android:layout_width="25dp"
-          android:layout_height="25dp"
-          android:layout_gravity="center_vertical"
-          android:layout_marginStart="10dp"
-          android:onClick="onHintClicked"
-          android:src="@drawable/icon_info" />
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-          android:id="@+id/product_retail_price"
-          fontPath="Roboto-Light.ttf"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:hint="@string/product_detail_product_price"
-          android:inputType="number|numberDecimal"
-          android:textColor="@color/main_text_color"
-          android:textColorHint="@color/primaryColor"
-          android:textSize="14sp"
-          app:met_floatingLabel="highlight"
-          app:met_primaryColor="@color/primaryColor"
-          app:met_singleLineEllipsis="true"
-          tools:ignore="MissingPrefix" />
-
-        <ImageView
-          android:id="@+id/iv_hint_product_price"
-          android:layout_width="25dp"
-          android:layout_height="25dp"
-          android:layout_gravity="center_vertical"
-          android:layout_marginStart="10dp"
-          android:onClick="onHintClicked"
-          android:src="@drawable/icon_info" />
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-          android:id="@+id/product_disc_price"
-          fontPath="Roboto-Light.ttf"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:hint="@string/product_details_discount"
-          android:inputType="number|numberDecimal"
-          android:textColor="@color/main_text_color"
-          android:textColorHint="@color/primaryColor"
-          android:textSize="15sp"
-          app:met_floatingLabel="highlight"
-          app:met_primaryColor="@color/primaryColor"
-          app:met_singleLineEllipsis="true"
-          tools:ignore="MissingPrefix" />
-
-        <ImageView
-          android:id="@+id/iv_hint_discount"
-          android:layout_width="25dp"
-          android:layout_height="25dp"
-          android:layout_gravity="center_vertical"
-          android:layout_marginStart="10dp"
-          android:onClick="onHintClicked"
-          android:src="@drawable/icon_info" />
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:id="@+id/layout_product_link"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-          android:id="@+id/product_link"
-          fontPath="Roboto-Light.ttf"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:hint="@string/product_detail_online_link"
-          android:inputType="textUri"
-          android:textColor="@color/main_text_color"
-          android:textColorHint="@color/primaryColor"
-          android:textSize="14sp"
-          app:met_floatingLabel="highlight"
-          app:met_primaryColor="@color/primaryColor"
-          app:met_singleLineEllipsis="true"
-          tools:ignore="MissingPrefix" />
-
-        <ImageView
-          android:id="@+id/iv_hint_product_link"
-          android:layout_width="25dp"
-          android:layout_height="25dp"
-          android:layout_gravity="center_vertical"
-          android:layout_marginStart="10dp"
-          android:onClick="onHintClicked"
-          android:src="@drawable/icon_info" />
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-          fontPath="Roboto-Light.ttf"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:singleLine="true"
-          android:text="@string/product_detail_availability"
-          android:textColor="@color/product_price"
-          android:textSize="14sp"
-          tools:ignore="MissingPrefix" />
-
         <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="end">
-
-          <Switch
-            android:id="@+id/switchView"
-            android:layout_width="wrap_content"
+            android:id="@+id/productLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:checked="true"
-            android:textColorHighlight="@color/product_price" />
+            android:padding="@dimen/margin_15"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:background="#ECECEC"
+                android:orientation="vertical"
+                app:cardBackgroundColor="#ECECEC"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp">
+
+                <ImageView
+                    android:id="@+id/product_image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/default_product_image" />
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/product_name"
+                    fontPath="Roboto-Light.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/product_detail_product_name"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/main_text_color"
+                    android:textColorHint="@color/primaryColor"
+                    android:textSize="14sp"
+                    app:met_floatingLabel="highlight"
+                    app:met_primaryColor="@color/primaryColor"
+                    app:met_singleLineEllipsis="true"
+                    tools:ignore="MissingPrefix" />
+
+                <ImageView
+                    android:id="@+id/iv_hint_product_name"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:onClick="onHintClicked"
+                    android:src="@drawable/icon_info" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/product_desc"
+                    fontPath="Roboto-Light.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="3"
+                    android:hint="@string/product_detail_product_descr"
+                    android:inputType="textCapSentences"
+                    android:singleLine="false"
+                    android:textColor="@color/main_text_color"
+                    android:textColorHint="@color/primaryColor"
+                    android:textSize="14sp"
+                    app:met_floatingLabel="highlight"
+                    app:met_primaryColor="@color/primaryColor"
+                    tools:ignore="MissingPrefix" />
+
+                <ImageView
+                    android:id="@+id/iv_hint_product_description"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:onClick="onHintClicked"
+                    android:src="@drawable/icon_info" />
+
+            </LinearLayout>
+
+            <com.nowfloats.ProductGallery.widgets.NonScrollListView
+                android:id="@+id/lv_inventory_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:divider="@null">
+
+            </com.nowfloats.ProductGallery.widgets.NonScrollListView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_5">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/product_currency"
+                    fontPath="Roboto-Light.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableEnd="@drawable/dropselect"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/product_detail_currency"
+                    android:imeOptions="flagNoExtractUi"
+                    android:text="@string/currency_text"
+                    android:textColor="@color/primaryColor"
+                    android:textColorHint="@color/primaryColor"
+                    android:textSize="14sp"
+                    app:met_floatingLabel="highlight"
+                    app:met_primaryColor="@color/primaryColor"
+                    tools:ignore="MissingPrefix" />
+
+                <ImageView
+                    android:id="@+id/iv_hint_select_currency"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:onClick="onHintClicked"
+                    android:src="@drawable/icon_info" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/product_retail_price"
+                    fontPath="Roboto-Light.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/product_detail_product_price"
+                    android:inputType="number|numberDecimal"
+                    android:textColor="@color/main_text_color"
+                    android:textColorHint="@color/primaryColor"
+                    android:textSize="14sp"
+                    app:met_floatingLabel="highlight"
+                    app:met_primaryColor="@color/primaryColor"
+                    app:met_singleLineEllipsis="true"
+                    tools:ignore="MissingPrefix" />
+
+                <ImageView
+                    android:id="@+id/iv_hint_product_price"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:onClick="onHintClicked"
+                    android:src="@drawable/icon_info" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/product_disc_price"
+                    fontPath="Roboto-Light.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/product_details_discount"
+                    android:inputType="number|numberDecimal"
+                    android:textColor="@color/main_text_color"
+                    android:textColorHint="@color/primaryColor"
+                    android:textSize="15sp"
+                    app:met_floatingLabel="highlight"
+                    app:met_primaryColor="@color/primaryColor"
+                    app:met_singleLineEllipsis="true"
+                    tools:ignore="MissingPrefix" />
+
+                <ImageView
+                    android:id="@+id/iv_hint_discount"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:onClick="onHintClicked"
+                    android:src="@drawable/icon_info" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_product_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" >
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/product_link"
+                    fontPath="Roboto-Light.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/product_detail_online_link"
+                    android:inputType="textUri"
+                    android:textColor="@color/main_text_color"
+                    android:textColorHint="@color/primaryColor"
+                    android:textSize="14sp"
+                    app:met_floatingLabel="highlight"
+                    app:met_primaryColor="@color/primaryColor"
+                    app:met_singleLineEllipsis="true"
+                    tools:ignore="MissingPrefix" />
+
+                <ImageView
+                    android:id="@+id/iv_hint_product_link"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:onClick="onHintClicked"
+                    android:src="@drawable/icon_info" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    fontPath="Roboto-Light.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/product_detail_availability"
+                    android:textColor="@color/product_price"
+                    android:textSize="14sp"
+                    tools:ignore="MissingPrefix" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end">
+
+                    <Switch
+                        android:id="@+id/switchView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:checked="true"
+                        android:textColorHighlight="@color/product_price" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    fontPath="Roboto-Light.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:singleLine="true"
+                    android:text="Hide Price"
+                    android:textColor="@color/product_price"
+                    android:textSize="14sp"
+                    tools:ignore="MissingPrefix" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end">
+
+                    <Switch
+                        android:id="@+id/switch_hide_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:checked="false"
+                        android:textColorHighlight="@color/product_price" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_calculate_shipping_charges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@drawable/btn_bg"
+                android:text="@string/shipping_details"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/delete_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/red_btn_bg"
+                android:text="@string/product_detail_delete_btn_text"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
-      </LinearLayout>
-
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <TextView
-          fontPath="Roboto-Light.ttf"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:singleLine="true"
-          android:text="Hide Price"
-          android:textColor="@color/product_price"
-          android:textSize="14sp"
-          tools:ignore="MissingPrefix" />
-
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="end">
-
-          <Switch
-            android:id="@+id/switch_hide_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:checked="false"
-            android:textColorHighlight="@color/product_price" />
-
-        </LinearLayout>
-
-      </LinearLayout>
-
-      <Button
-        android:id="@+id/btn_calculate_shipping_charges"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_10"
-        android:layout_marginBottom="@dimen/margin_10"
-        android:background="@drawable/btn_bg"
-        android:text="@string/shipping_details"
-        android:textColor="@color/white" />
-
-      <Button
-        android:id="@+id/delete_product"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/red_btn_bg"
-        android:text="@string/product_detail_delete_btn_text"
-        android:textColor="@color/white" />
-
-    </LinearLayout>
-
-  </ScrollView>
+    </ScrollView>
 
 </LinearLayout>

@@ -1,9 +1,7 @@
 package com.nowfloats.ProductGallery.Adapter;
 
 import android.content.Context;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,11 +39,11 @@ public class ProductImageAdapter extends RecyclerView.Adapter<ProductImageAdapte
         String path = mImages.get(position).path;
         //holder.ivProductImg.setImageDrawable(null);
         Log.d("path:", path);
-        if (path.contains("https://")) {
+        if(path.contains("https://")){
             Picasso.get().load(path)
                     .placeholder(R.drawable.post_update_normal_icon)
                     .resize(0, 500).into(holder.ivProductImg);
-        } else {
+        }else {
             Picasso.get().load("file://" + path)
                     .placeholder(R.drawable.post_update_normal_icon)
                     .resize(0, 500).into(holder.ivProductImg);
@@ -60,15 +58,7 @@ public class ProductImageAdapter extends RecyclerView.Adapter<ProductImageAdapte
         return mImages.size();
     }
 
-    public void setOnItemClickListener(ItemClickListener listener) {
-        this.mClickListener = listener;
-    }
-
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public ImageView ivProductImg;
         //public TextView tvImageName;
@@ -83,9 +73,17 @@ public class ProductImageAdapter extends RecyclerView.Adapter<ProductImageAdapte
 
         @Override
         public void onClick(View v) {
-            if (mClickListener != null) {
+            if(mClickListener!=null){
                 mClickListener.onItemClick(v, getAdapterPosition());
             }
         }
+    }
+
+    public void setOnItemClickListener(ItemClickListener listener){
+        this.mClickListener = listener;
+    }
+
+    public interface ItemClickListener{
+        void onItemClick(View view, int position);
     }
 }

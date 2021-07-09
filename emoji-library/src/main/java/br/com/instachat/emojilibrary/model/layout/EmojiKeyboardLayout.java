@@ -45,7 +45,7 @@ public class EmojiKeyboardLayout extends LinearLayout {
         curtain.setVisibility(LinearLayout.INVISIBLE);
     }
 
-    public void prepareKeyboard(EmojiCompatActivity activity, EmojiEditText input) {
+    public void prepareKeyboard (EmojiCompatActivity activity, EmojiEditText input) {
         new EmojiKeyboard(activity, input);
     }
 }

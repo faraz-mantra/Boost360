@@ -51,12 +51,12 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  * A simple {@link Fragment} subclass.
  */
 public class ManageInboxFragment extends Fragment {
-    TextView tvPaymentSetting, tvProductGallery, tvTotalNoOfOrders, tvTotalRevenue, tvSellerAnalytics, tvBusinessInquiries, tvBusinessCalls;
+    TextView tvPaymentSetting, tvProductGallery,tvTotalNoOfOrders,tvTotalRevenue, tvSellerAnalytics, tvBusinessInquiries, tvBusinessCalls;
     ImageView ivLockWidget, ivPaymentIcon;
-    UserSessionManager session;
-    SharedPreferences.Editor prefsEditor;
     //Typeface robotoLight;
     private SharedPreferences pref = null;
+    UserSessionManager session;
+    SharedPreferences.Editor prefsEditor;
     private Activity activity;
     private boolean mIsAPEnabled = false;
     private String mTransactionCharge = "9%";
@@ -85,10 +85,10 @@ public class ManageInboxFragment extends Fragment {
         return mainView;
     }
 
-    private void getPaymentSettings() {
+    private void getPaymentSettings(){
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(String.format(Constants.WA_BASE_URL + "merchant_profile3/get-data?query={merchant_id:'%s'}&limit=1", session.getFPID()))
+                .url(String.format(Constants.WA_BASE_URL+"merchant_profile3/get-data?query={merchant_id:'%s'}&limit=1", session.getFPID()))
                 .header("Authorization", Constants.WA_KEY)
                 .build();
         final Gson gson = new Gson();
@@ -101,8 +101,8 @@ public class ManageInboxFragment extends Fragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (getActivity() != null)
-                            Toast.makeText(getActivity(), getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
+                        if(getActivity() != null)
+                        Toast.makeText(getActivity(), getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -119,16 +119,17 @@ public class ManageInboxFragment extends Fragment {
                                     new TypeToken<WebActionModel<MerchantProfileModel>>() {
                                     }.getType());
 
-                            if (profile != null && profile.getData().size() > 0) {
-                                if (profile.getData().get(0).getPaymentType() == 0) {
+                            if (profile != null && profile.getData().size()>0) {
+                                if(profile.getData().get(0).getPaymentType() == 0){
                                     mIsAPEnabled = true;
                                     ivLockWidget.setVisibility(View.GONE);
                                 }
-                                mTransactionCharge = profile.getData().get(0).getApplicableTxnCharge() + "%";
-                            } else {
+                                mTransactionCharge = profile.getData().get(0).getApplicableTxnCharge()+"%";
+                            }else {
                                 throw new NullPointerException(getString(R.string.order_count_is_null));
                             }
-                        } catch (Exception e) {
+                        }catch (Exception e)
+                        {
                             e.printStackTrace();
                         }
                     }
@@ -154,7 +155,7 @@ public class ManageInboxFragment extends Fragment {
             //tvPaymentSetting.setTypeface(robotoMedium);
 
             tvProductGallery = (TextView) mainView.findViewById(R.id.tvProductGallery);
-            tvProductGallery.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)) ? getString(R.string.product_gallery) : session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY) + " Gallery");
+            tvProductGallery.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY))? getString(R.string.product_gallery):session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)+" Gallery");
             //tvProductGallery.setTypeface(robotoMedium);
 
             tvSellerAnalytics = (TextView) mainView.findViewById(R.id.tvSellerAnalytics);
@@ -175,15 +176,15 @@ public class ManageInboxFragment extends Fragment {
             });
 
             tvBusinessCalls.setOnClickListener(v -> {
-                if (Constants.StoreWidgets.contains("CALLTRACKER")) {
+                if(Constants.StoreWidgets.contains("CALLTRACKER")) {
                     Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                } else {
+                }else{
                     // show popup to user to Purchase this item.
                     Bundle bundle = new Bundle();
                     bundle.putString("itemName", "Customer Call Tracking");
-                    bundle.putString("buyItemKey", "CALLTRACKER");
+                    bundle.putString("buyItemKey","CALLTRACKER");
                     purchaseFeaturesPopup.setArguments(bundle);
                     purchaseFeaturesPopup.show(getActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
                 }
@@ -273,25 +274,34 @@ public class ManageInboxFragment extends Fragment {
     }
 
 
-    private void openSellerAnalyticsActivity() {
+    private void openSellerAnalyticsActivity()
+    {
         MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
         Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
         startActivity(i);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    private void startOrdersActivity() {
+    private void startOrdersActivity()
+    {
         /**
          * If not new pricing plan
          */
-        if (!WidgetKey.isNewPricingPlan) {
+        if(!WidgetKey.isNewPricingPlan)
+        {
             openSellerAnalyticsActivity();
-        } else {
+        }
+
+        else
+        {
             String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SHOPPING_CART, WidgetKey.WIDGET_PROPERTY_CART);
 
-            if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
+            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+            {
                 Toast.makeText(getContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
-            } else {
+            }
+            else
+            {
                 openSellerAnalyticsActivity();
             }
         }

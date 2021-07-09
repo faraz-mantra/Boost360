@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:alpha="0"
-  android:background="@color/white"
-  android:orientation="vertical"
-  tools:alpha="1"
-  tools:background="@drawable/bg_button_orange">
-
-  <Button
-    android:id="@+id/action_button"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/footer_button_height"
-    android:background="?attr/selectableItemBackground"
-    android:gravity="center"
-    android:textColor="#fff"
-    tools:text="ACTION" />
+    android:layout_height="wrap_content"
+    android:alpha="0"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:alpha="1"
+    tools:background="@drawable/bg_button_orange">
+
+    <Button
+        android:id="@+id/action_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/footer_button_height"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:textColor="#fff"
+        tools:text="ACTION" />
 </LinearLayout>

@@ -35,9 +35,7 @@ import com.framework.webengageconstant.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class ProductInformationFragment :
-  AppBaseFragment<FragmentProductInformationBinding, ServiceViewModel>(),
-  RecyclerItemClickListener {
+class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
   private var product: CatalogProduct? = null
   private var isEdit: Boolean? = null
@@ -70,34 +68,17 @@ class ProductInformationFragment :
     super.onCreateView()
     WebEngageController.trackEvent(PRODUCT_INFORMATION_CATALOGUE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
 
-    setOnClickListener(
-      binding?.btnAddTag,
-      binding?.btnAddSpecification,
-      binding?.btnConfirm,
-      binding?.btnClickPhoto,
-      binding?.edtGst,
-      binding?.civDecreseStock,
-      binding?.civIncreaseStock
-    )
+    setOnClickListener(binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst, binding?.civDecreseStock, binding?.civIncreaseStock)
     product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? GstData
-    secondaryImage =
-      (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
+    secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
         ?: ArrayList()
     tagList = product?.tags ?: ArrayList()
-    specList =
-      if (product?.otherSpecification.isNullOrEmpty()) arrayListOf(KeySpecification()) else product?.otherSpecification!!
+    specList = if (product?.otherSpecification.isNullOrEmpty()) arrayListOf(KeySpecification()) else product?.otherSpecification!!
     if (isEdit == true) {
-      secondaryDataImage =
-        arguments?.getSerializable(IntentConstant.PRODUCT_IMAGE.name) as? ArrayList<DataImage>
-      if (secondaryImage.isNullOrEmpty()) secondaryDataImage?.forEach {
-        secondaryImage.add(
-          FileModel(
-            pathUrl = it.image?.url
-          )
-        )
-      }
+      secondaryDataImage = arguments?.getSerializable(IntentConstant.PRODUCT_IMAGE.name) as? ArrayList<DataImage>
+      if (secondaryImage.isNullOrEmpty()) secondaryDataImage?.forEach { secondaryImage.add(FileModel(pathUrl = it.image?.url)) }
     }
     setUiText()
     serviceTagsSet()
@@ -125,10 +106,7 @@ class ProductInformationFragment :
       binding?.cetWeight?.setText("${gstProductData?.weight ?: 0.0}")
     }
     setAdapter()
-    val stockAdapter = mutableListOf(
-      SpinnerImageModel("Limited Stock" to true, R.drawable.ic_dot_green),
-      SpinnerImageModel("Unlimited Stock" to false, R.drawable.ic_infinite)
-    )
+    val stockAdapter = mutableListOf(SpinnerImageModel("Limited Stock" to true, R.drawable.ic_dot_green), SpinnerImageModel("Unlimited Stock" to false, R.drawable.ic_infinite))
     binding?.spinnerStock?.adapter = CustomDropDownAdapter(baseActivity, stockAdapter)
     when {
       availableStock < 0 -> binding?.spinnerStock?.setSelection(1)
@@ -253,8 +231,7 @@ class ProductInformationFragment :
 
   private fun specificationAdapter() {
     binding?.rvSpecification?.apply {
-      adapterSpec =
-        AppBaseRecyclerViewAdapter(baseActivity, specList, this@ProductInformationFragment)
+      adapterSpec = AppBaseRecyclerViewAdapter(baseActivity, specList, this@ProductInformationFragment)
       adapter = adapterSpec
     }
   }
@@ -298,20 +275,17 @@ class ProductInformationFragment :
     val filterSheet = ImagePickerBottomSheet()
     filterSheet.isHidePdf(true)
     filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(
-      this@ProductInformationFragment.parentFragmentManager,
-      ImagePickerBottomSheet::class.java.name
-    )
+    filterSheet.show(this@ProductInformationFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   private fun openImagePicker(it: ClickType) {
     val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
     ImagePicker.Builder(baseActivity)
-      .mode(type)
-      .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
-      .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
-      .scale(800, 800)
-      .enableDebuggingMode(true).build()
+        .mode(type)
+        .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
+        .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
+        .scale(800, 800)
+        .enableDebuggingMode(true).build()
   }
 
   private fun validateAnnGoBack() {
@@ -327,10 +301,8 @@ class ProductInformationFragment :
     val valueSpecification = binding?.specValue?.text?.toString() ?: ""
 
     val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
-    val otherSpec = (specList.filter {
-      it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not()
-    } as? ArrayList<KeySpecification>)
-      ?: ArrayList()
+    val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>)
+        ?: ArrayList()
     when {
 //      secondaryImage.isNullOrEmpty() -> {
 //        showLongToast("Please select at least one secondary image.")
@@ -392,11 +364,7 @@ class ProductInformationFragment :
   private fun serviceTagsSet() {
     binding?.chipsproduct?.removeAllViews()
     tagList.forEach { tag ->
-      val mChip: Chip = baseActivity.layoutInflater.inflate(
-        R.layout.item_chip,
-        binding?.chipsproduct,
-        false
-      ) as Chip
+      val mChip: Chip = baseActivity.layoutInflater.inflate(R.layout.item_chip, binding?.chipsproduct, false) as Chip
       mChip.text = tag
       mChip.setOnCloseIconClickListener {
         binding?.chipsproduct?.removeView(mChip)
@@ -430,8 +398,7 @@ class ProductInformationFragment :
   private fun setAdapter() {
     if (adapterImage == null) {
       binding?.rvAdditionalDocs?.apply {
-        adapterImage =
-          AppBaseRecyclerViewAdapter(baseActivity, secondaryImage, this@ProductInformationFragment)
+        adapterImage = AppBaseRecyclerViewAdapter(baseActivity, secondaryImage, this@ProductInformationFragment)
         adapter = adapterImage
       }
     } else adapterImage?.notifyDataSetChanged()
@@ -443,7 +410,7 @@ class ProductInformationFragment :
         val data = item as? FileModel
         if (isEdit == true && data?.pathUrl.isNullOrEmpty().not()) {
           val dataImage = secondaryDataImage?.firstOrNull { it.image?.url == data?.pathUrl }
-            ?: return
+              ?: return
           showProgress(resources.getString(R.string.removing_image))
           val request = ProductImageDeleteRequest()
           request.setQueryData(dataImage.id)
@@ -481,10 +448,7 @@ class ProductInformationFragment :
   private fun openGStDetail() {
     val gstSheet = GstDetailsBottomSheet()
     gstSheet.onClicked = { binding?.edtGst?.setText("$it %") }
-    gstSheet.show(
-      this@ProductInformationFragment.parentFragmentManager,
-      ImagePickerBottomSheet::class.java.name
-    )
+    gstSheet.show(this@ProductInformationFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   fun onNavPressed() {
@@ -498,12 +462,10 @@ class ProductInformationFragment :
 
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
-      .setTitle(resources.getString(R.string.information_not_saved))
-      .setMessage(resources.getString(R.string.you_have_unsaved_info))
-      .setNegativeButton(getString(R.string.no)) { d, _ -> d.dismiss() }
-      .setPositiveButton(getString(R.string.yes)) { d, _ ->
-        baseActivity.finish()
-        d.dismiss()
-      }.show()
+        .setTitle(resources.getString(R.string.information_not_saved)).setMessage(resources.getString(R.string.you_have_unsaved_info))
+        .setNegativeButton(getString(R.string.no)) { d, _ -> d.dismiss() }.setPositiveButton(getString(R.string.yes)) { d, _ ->
+          baseActivity.finish()
+          d.dismiss()
+        }.show()
   }
 }

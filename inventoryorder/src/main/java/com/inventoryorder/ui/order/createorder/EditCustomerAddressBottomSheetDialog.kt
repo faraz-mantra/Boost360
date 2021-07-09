@@ -10,8 +10,7 @@ import com.inventoryorder.model.ordersdetails.OrderItem
 import com.onboarding.nowfloats.model.CityDataModel
 import com.onboarding.nowfloats.ui.CitySearchDialog
 
-class EditCustomerAddressBottomSheetDialog(val address: Address) :
-  BaseBottomSheetDialog<BottomSheetEditCustomerAddressBinding, BaseViewModel>() {
+class EditCustomerAddressBottomSheetDialog(val address: Address) : BaseBottomSheetDialog<BottomSheetEditCustomerAddressBinding, BaseViewModel>() {
 
   private var cancellingEntity: String? = OrderItem.CancellingEntity.BUYER.name
   private var orderItem: OrderItem? = null
@@ -42,10 +41,8 @@ class EditCustomerAddressBottomSheetDialog(val address: Address) :
     when (v) {
       binding?.buttonDone -> {
         val addressN = Address(
-          addressLine = binding?.layoutAddress?.editAddress?.text.toString(),
-          city = binding?.layoutAddress?.editCity?.text.toString(),
-          region = binding?.layoutAddress?.editState?.text.toString(),
-          zipcode = binding?.layoutAddress?.editPin?.text.toString(),
+          addressLine = binding?.layoutAddress?.editAddress?.text.toString(), city = binding?.layoutAddress?.editCity?.text.toString(),
+          region = binding?.layoutAddress?.editState?.text.toString(), zipcode = binding?.layoutAddress?.editPin?.text.toString(),
         )
         onClicked(addressN)
         dismiss()

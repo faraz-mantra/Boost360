@@ -25,10 +25,6 @@ public class ColorProfile {
         setProfile(primary, primaryDark, accent);
     }
 
-    public static int getIcon(int primary) {
-        return Color.rgb(Color.red(primary) ^ 0x80, Color.green(primary) ^ 0x80, Color.blue(primary) ^ 0x80);
-    }
-
     public boolean isInvalid() {
         return this.primary == 1000 || ColorUtils.isDefaultColor(this.primary);
     }
@@ -62,6 +58,10 @@ public class ColorProfile {
         this.icon = getIcon(primary);
     }
 
+    public static int getIcon(int primary){
+        return Color.rgb(Color.red(primary) ^ 0x80, Color.green(primary) ^ 0x80, Color.blue(primary) ^ 0x80);
+    }
+
     public int getIconOnSecondary() {
         /*int tmp = getSecondary();
         return Color.rgb(Color.red(tmp) ^ 0x80, Color.green(tmp) ^ 0x80, Color.blue(tmp) ^ 0x80);*/
@@ -82,10 +82,6 @@ public class ColorProfile {
             return darkerColor(getAccent(), 0.4f);
         } else*/
         return icon;
-    }
-
-    public void setIcon(int icon) {
-        this.icon = icon;
     }
 
     public int getTextColor() {
@@ -110,15 +106,15 @@ public class ColorProfile {
         return this.primary;
     }
 
-    public void setPrimary(int primary) {
-        setProfile(primary, 1000, 1000);
-    }
-
     public int getPrimaryIgnore() {
         if (this.primary != 1000) {
             return primary;
         }
         return Color.parseColor(ColorUtils.MATERIAL_LIGHT);
+    }
+
+    public void setPrimary(int primary) {
+        setProfile(primary, 1000, 1000);
     }
 
     public int getPrimaryDark() {
@@ -146,10 +142,6 @@ public class ColorProfile {
         return lightColor(this.primary);
     }
 
-    public void setAccent(int accent) {
-        this.accent = accent;
-    }
-
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -166,5 +158,13 @@ public class ColorProfile {
 
     public int hashCode() {
         return (((this.primary * 31) + this.primaryDark) * 31) + this.accent;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
+    }
+
+    public void setAccent(int accent) {
+        this.accent = accent;
     }
 }

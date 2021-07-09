@@ -2,9 +2,7 @@ package com.nowfloats.managecustomers.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;

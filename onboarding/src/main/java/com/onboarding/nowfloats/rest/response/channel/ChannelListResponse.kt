@@ -5,5 +5,5 @@ import com.onboarding.nowfloats.model.channel.ChannelModel
 import java.io.Serializable
 
 data class ChannelListResponse(
-  var data: ArrayList<ChannelModel> = ArrayList()
+    var data: ArrayList<ChannelModel> = ArrayList()
 ) : BaseResponse(), Serializable

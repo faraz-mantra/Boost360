@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content">
-
-  <TextView
-    android:id="@+id/banner_title"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fontFamily="@font/open_sans"
-    android:paddingStart="@dimen/_5sdp"
-    android:paddingBottom="@dimen/_5sdp"
-    android:text="Independence Day Offer"
-    android:textColor="@color/common_text_color"
-    android:textFontWeight="600"
-    android:textSize="@dimen/txt_16sp"
-    android:textStyle="bold"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/banner_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:paddingStart="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="Independence Day Offer"
+        android:textColor="@color/common_text_color"
+        android:textStyle="bold"
+        android:textFontWeight="600"
+        android:textSize="@dimen/txt_16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-  <ImageView
-    android:id="@+id/package_primary_image"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:src="@drawable/group"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintDimensionRatio="16:9"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/banner_title" />
+    <ImageView
+        android:id="@+id/package_primary_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/group"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="16:9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/banner_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

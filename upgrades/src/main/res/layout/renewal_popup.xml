@@ -1,128 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/renew_popup_outer_layout"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="#1d000000"
-  android:clickable="true"
-  android:focusable="true"
-  android:orientation="vertical">
-
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/enter_card_renew_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/curve_top_bg"
-    android:paddingStart="@dimen/_15sdp"
-    android:paddingTop="@dimen/_10sdp"
-    android:paddingEnd="@dimen/_15sdp"
-    android:paddingBottom="@dimen/_10sdp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
+    android:layout_height="match_parent"
+    android:background="#1d000000"
+    android:id="@+id/renew_popup_outer_layout"
+    android:clickable="true"
+    android:focusable="true">
 
-    <TextView
-      android:id="@+id/renew_layout_title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:fontFamily="@font/open_sans_semibold"
-      android:paddingTop="@dimen/_5sdp"
-      android:paddingEnd="@dimen/_5sdp"
-      android:paddingBottom="@dimen/_15sdp"
-      android:text="How would you like to renew?"
-      android:textColor="@color/common_text_color"
-      android:textSize="@dimen/_15sdp"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
-
-    <RadioGroup
-      android:id="@+id/radioGrpOrdering"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:paddingTop="@dimen/_5sdp"
-      android:paddingEnd="@dimen/_5sdp"
-      android:paddingBottom="@dimen/_5sdp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/renew_layout_title">
-
-      <androidx.appcompat.widget.AppCompatRadioButton
-        android:id="@+id/actionAutoRenew"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/enter_card_renew_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:button="@drawable/radio_btn_drawable_selector"
-        android:fontFamily="@font/open_sans_semibold"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:paddingStart="@dimen/_12sdp"
-
-        android:text="Auto-renew (using credit card)"
-        android:textColor="@color/common_text_color"
-        android:textSize="@dimen/_12sdp" />
-
-      <TextView
-        android:id="@+id/autoRenewSubtext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:paddingTop="@dimen/_5sdp"
+        android:background="@drawable/curve_top_bg"
+        android:paddingStart="@dimen/_15sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_15sdp"
         android:paddingBottom="@dimen/_10sdp"
-        android:text="Your next auto-renewal date will be 12th july 2020. You can disable auto renewal of any feature/package at anytime."
-        android:textColor="#747474"
-        android:textSize="@dimen/_10sdp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-      <androidx.appcompat.widget.AppCompatRadioButton
-        android:id="@+id/actionRemindRenew"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:button="@drawable/radio_btn_drawable_selector"
-        android:fontFamily="@font/open_sans_semibold"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:paddingStart="@dimen/_12sdp"
-        android:text="Remind me to renew"
-        android:textColor="@color/common_text_color"
-        android:textSize="@dimen/_12sdp" />
-
-      <TextView
-        android:id="@+id/remindRenewSubtext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:text="We’ll send renewal reminder SMS and emailer 7 day prior to the day of expiry."
-        android:textColor="#747474"
-        android:textSize="@dimen/_10sdp" />
+        <TextView
+            android:id="@+id/renew_layout_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="How would you like to renew?"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_15sdp"
+            android:textColor="@color/common_text_color"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    </RadioGroup>
+        <RadioGroup
+            android:id="@+id/radioGrpOrdering"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/renew_layout_title">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/actionAutoRenew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:button="@drawable/radio_btn_drawable_selector"
+                android:fontFamily="@font/open_sans_semibold"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="@dimen/_12sdp"
+
+                android:text="Auto-renew (using credit card)"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/autoRenewSubtext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:text="Your next auto-renewal date will be 12th july 2020. You can disable auto renewal of any feature/package at anytime."
+                android:textSize="@dimen/_10sdp"
+                android:textColor="#747474"
+                android:layout_marginStart="@dimen/_24sdp"/>
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/actionRemindRenew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:button="@drawable/radio_btn_drawable_selector"
+                android:fontFamily="@font/open_sans_semibold"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="@dimen/_12sdp"
+                android:text="Remind me to renew"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/_12sdp" />
+            <TextView
+                android:id="@+id/remindRenewSubtext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_24sdp"
+                android:text="We’ll send renewal reminder SMS and emailer 7 day prior to the day of expiry."
+                android:textSize="@dimen/_10sdp"
+                android:textColor="#747474"/>
 
 
-    <TextView
-      android:id="@+id/renew_submit"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/_30sdp"
-      android:background="@drawable/orange_button_click_effect"
-      android:fontFamily="@font/open_sans_semibold"
-      android:gravity="center"
-      android:paddingTop="@dimen/_10sdp"
-      android:paddingBottom="@dimen/_10sdp"
-      android:text="Proceed Securely"
-      android:textAllCaps="true"
-      android:textColor="@color/white"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/radioGrpOrdering" />
+        </RadioGroup>
 
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/renew_submit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@drawable/orange_button_click_effect"
+            android:fontFamily="@font/open_sans_semibold"
+            android:gravity="center"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:text="Proceed Securely"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radioGrpOrdering" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,81 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
-
-  <include
-    android:id="@+id/facebook_toolbar"
-    layout="@layout/toolbar_facebook_chat"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-
-  <RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/rv_facebook_chat"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_above="@+id/input_layout"
-      android:layout_marginBottom="5dp" />
-
-    <LinearLayout
-      android:id="@+id/input_layout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:background="@color/white">
-
-      <EditText
-        android:id="@+id/et_facebook_chat"
-        android:layout_width="0dp"
+    <include
+        android:id="@+id/facebook_toolbar"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_weight="1"
-        android:background="@drawable/et_bg"
-        android:fadeScrollbars="false"
-        android:hint="Type to reply"
-        android:inputType="textCapSentences"
-        android:maxLines="5"
-        android:minHeight="40dp"
-        android:paddingStart="15dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:scrollbars="vertical"
-        android:textColor="@color/gray"
-        android:textColorHint="#406f6f6f" />
+        android:layout_width="match_parent"
+        layout="@layout/toolbar_facebook_chat"/>
 
-      <ImageView
-        android:id="@+id/iv_send_msg"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginEnd="10dp"
-        android:paddingStart="@dimen/margin_8"
-        android:paddingTop="@dimen/margin_8"
-        android:paddingRight="@dimen/margin_12"
-        android:paddingBottom="@dimen/margin_8"
-        android:src="@drawable/ic_send" />
-    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_above="@+id/input_layout"
+            android:id="@+id/rv_facebook_chat"/>
+        <LinearLayout
+            android:id="@+id/input_layout"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+            <EditText
+                android:id="@+id/et_facebook_chat"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:fadeScrollbars="false"
+                android:maxLines="5"
+                android:inputType="textCapSentences"
+                android:minHeight="40dp"
+                android:paddingStart="15dp"
+                android:paddingRight="10dp"
+                android:textColorHint="#406f6f6f"
+                android:scrollbars="vertical"
+                android:hint="Type to reply"
+                android:textColor="@color/gray"
+                android:background="@drawable/et_bg"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/iv_send_msg"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:paddingBottom="@dimen/margin_8"
+                android:paddingStart="@dimen/margin_8"
+                android:paddingRight="@dimen/margin_12"
+                android:paddingTop="@dimen/margin_8"
+                android:src="@drawable/ic_send"
+                android:layout_marginStart="@dimen/margin_10" />
+        </LinearLayout>
 
-    <ImageView
-      android:id="@+id/iv_scroll_down"
-      android:layout_width="35dp"
-      android:layout_height="35dp"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentBottom="true"
-      android:layout_marginEnd="20dp"
-      android:layout_marginBottom="80dp"
-      android:paddingTop="5dp"
-      android:tint="@color/white"
-      android:visibility="gone"
-      app:srcCompat="@drawable/ic_arrow_down" />
+        <ImageView
+            android:id="@+id/iv_scroll_down"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="80dp"
+            android:layout_marginEnd="20dp"
+            android:paddingTop="5dp"
+            app:srcCompat="@drawable/ic_arrow_down"
+            android:tint="@color/white"
+            android:visibility="gone" />
 
-  </RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>

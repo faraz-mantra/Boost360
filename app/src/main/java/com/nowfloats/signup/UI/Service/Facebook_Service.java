@@ -24,15 +24,16 @@ public class Facebook_Service {
     public static final RestAdapter facebookAdapter = new RestAdapter.Builder().setEndpoint("https://graph.facebook.com").build();
 
 
-    public Facebook_Service(final Activity activity, String accessToken, final Bus bus) {
+    public Facebook_Service(final Activity activity,String accessToken,final Bus bus)
+    {
         Facebook_Interface getFacebookDetails = facebookAdapter.create(Facebook_Interface.class);
         Map<String, String> params = new HashMap<String, String>();
         params.put("access_token", accessToken);
-        getFacebookDetails.get_Me_Details(params, new Callback<JSONObject>() {
+        getFacebookDetails.get_Me_Details(params,new Callback<JSONObject>() {
             @Override
             public void success(JSONObject s, Response response) {
 
-                Log.d("Response", "Response : " + s);
+                Log.d("Response","Response : "+s);
             }
 
             @Override

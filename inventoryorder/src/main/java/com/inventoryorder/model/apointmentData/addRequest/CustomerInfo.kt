@@ -13,4 +13,4 @@ data class CustomerInfo(
   var name: String? = null,
   @SerializedName("Address")
   var address: String? = null
-) : Serializable
+):Serializable

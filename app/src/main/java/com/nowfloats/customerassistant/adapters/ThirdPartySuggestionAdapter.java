@@ -1,9 +1,7 @@
 package com.nowfloats.customerassistant.adapters;
 
 import android.content.Context;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,28 +28,30 @@ import static com.nowfloats.customerassistant.ThirdPartySuggestionDetailActivity
 
 public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    ThirdPartyFragment callback;
     private Context mContext;
     private List<SugUpdates> updateList = new ArrayList<>();
     private List<SugProducts> productList = new ArrayList<>();
     private ListType listType;
+    ThirdPartyFragment callback;
     private ArrayList<Integer> checkList = new ArrayList<>();
 
-    public ThirdPartySuggestionAdapter(Context context, ListType listType) {
+    public enum ListType{
+        PRODUCTS,UPDATES
+    }
+    public ThirdPartySuggestionAdapter(Context context, ListType listType){
         mContext = context;
         this.listType = listType;
     }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        switch (listType) {
+        switch (listType){
             case UPDATES:
-                view = LayoutInflater.from(mContext).inflate(R.layout.adapter_update_third_party_item, parent, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.adapter_update_third_party_item,parent,false);
                 return new MyUpdatesViewHolder(view);
             case PRODUCTS:
             default:
-                view = LayoutInflater.from(mContext).inflate(R.layout.adapter_product_third_party_item, parent, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.adapter_product_third_party_item,parent,false);
                 return new MyProductsViewHolder(view);
         }
     }
@@ -59,7 +59,7 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if (holder instanceof MyProductsViewHolder) {
+        if(holder instanceof MyProductsViewHolder){
 
             MyProductsViewHolder productHolder = (MyProductsViewHolder) holder;
             Glide.with(mContext)
@@ -69,15 +69,15 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
             productHolder.frameLayout.setVisibility(checkList.contains(position) ? View.VISIBLE : View.GONE);
             productHolder.selectedImg.setVisibility(checkList.contains(position) ? View.VISIBLE : View.GONE);
 
-        } else if (holder instanceof MyUpdatesViewHolder) {
+        } else if (holder instanceof MyUpdatesViewHolder){
 
             MyUpdatesViewHolder updateHolder = (MyUpdatesViewHolder) holder;
-            if (!TextUtils.isEmpty(updateList.get(position).getImage())) {
+            if(!TextUtils.isEmpty(updateList.get(position).getImage())){
                 updateHolder.updateImage.setVisibility(View.VISIBLE);
                 Glide.with(mContext)
                         .load(updateList.get(position).getImage())
                         .into(updateHolder.updateImage);
-            } else {
+            }else{
                 updateHolder.updateImage.setVisibility(View.GONE);
             }
 
@@ -88,36 +88,26 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     public void sendSuggestions(int type) {
-        ((ThirdPartyCallbacks) mContext).addSuggestions(type, checkList);
+        ((ThirdPartyCallbacks)mContext).addSuggestions(type,checkList);
     }
 
-    public void setProductList(List<SugProducts> list, ThirdPartyFragment callback) {
+    public void setProductList(List<SugProducts> list,ThirdPartyFragment callback){
         productList = list;
         this.callback = callback;
     }
-
-    public void setUpdateList(List<SugUpdates> list, ThirdPartyFragment callback) {
+    public void setUpdateList(List<SugUpdates> list,ThirdPartyFragment callback){
         updateList = list;
         this.callback = callback;
     }
-
     @Override
     public int getItemCount() {
         return listType == ListType.PRODUCTS ? productList.size() : updateList.size();
     }
 
-    public enum ListType {
-        PRODUCTS, UPDATES
-    }
-
-    public interface ThirdPartyFragment {
-        void itemSelected(int type, int num);
-    }
-
-    private class MyProductsViewHolder extends RecyclerView.ViewHolder {
+    private class MyProductsViewHolder extends RecyclerView.ViewHolder{
 
         int viewType;
-        ImageView productImage, selectedImg;
+        ImageView productImage,selectedImg;
         TextView productName, productPrice;
         FrameLayout frameLayout;
 
@@ -132,11 +122,11 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (checkList.contains(getAdapterPosition())) {
-                        checkList.remove((Integer) getAdapterPosition());
+                    if(checkList.contains(getAdapterPosition())){
+                        checkList.remove((Integer)getAdapterPosition());
                         frameLayout.setVisibility(View.GONE);
                         selectedImg.setVisibility(View.GONE);
-                    } else {
+                    }else{
                         frameLayout.setVisibility(View.VISIBLE);
                         selectedImg.setVisibility(View.VISIBLE);
                         checkList.add(getAdapterPosition());
@@ -152,8 +142,7 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
         int viewType;
         TextView updateName;
         FrameLayout frameLayout;
-        ImageView updateImage, selectedImg;
-
+        ImageView updateImage,selectedImg;
         public MyUpdatesViewHolder(View itemView) {
             super(itemView);
             this.viewType = getItemViewType();
@@ -164,18 +153,22 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (checkList.contains(getAdapterPosition())) {
-                        checkList.remove((Integer) getAdapterPosition());
+                    if(checkList.contains(getAdapterPosition())){
+                        checkList.remove((Integer)getAdapterPosition());
                         frameLayout.setVisibility(View.GONE);
                         selectedImg.setVisibility(View.GONE);
-                    } else {
+                    }else{
                         frameLayout.setVisibility(View.VISIBLE);
                         selectedImg.setVisibility(View.VISIBLE);
                         checkList.add(getAdapterPosition());
                     }
-                    callback.itemSelected(ADD_UPDATES, checkList.size());
+                    callback.itemSelected(ADD_UPDATES,checkList.size());
                 }
             });
         }
+    }
+
+    public interface ThirdPartyFragment{
+        void itemSelected(int type,int num);
     }
 }

@@ -54,84 +54,64 @@ import io.separ.neural.inputmethod.indic.settings.SettingsValuesForSuggestion;
  * queries in native code. This binary dictionary is written to internal storage.
  */
 abstract public class ExpandableBinaryDictionary extends Dictionary {
+    private static final boolean DEBUG = false;
+
+    /** Used for Log actions from this class */
+    private static final String TAG = ExpandableBinaryDictionary.class.getSimpleName();
+
+    /** Whether to print debug output to log */
+    private static final boolean DBG_STRESS_TEST = false;
+
+    private static final int TIMEOUT_FOR_READ_OPS_IN_MILLISECONDS = 100;
+
+    private static final int DEFAULT_MAX_UNIGRAM_COUNT = 10000;
+    private static final int DEFAULT_MAX_BIGRAM_COUNT = 10000;
+
     /**
      * The maximum length of a word in this dictionary.
      */
     protected static final int MAX_WORD_LENGTH = Constants.DICTIONARY_MAX_WORD_LENGTH;
-    /* A extension for a binary dictionary file. */
-    protected static final String DICT_FILE_EXTENSION = ".dict";
-    private static final boolean DEBUG = false;
-    /**
-     * Used for Log actions from this class
-     */
-    private static final String TAG = ExpandableBinaryDictionary.class.getSimpleName();
-    /**
-     * Whether to print debug output to log
-     */
-    private static final boolean DBG_STRESS_TEST = false;
-    private static final int TIMEOUT_FOR_READ_OPS_IN_MILLISECONDS = 100;
-    private static final int DEFAULT_MAX_UNIGRAM_COUNT = 10000;
-    private static final int DEFAULT_MAX_BIGRAM_COUNT = 10000;
+
     private static final int DICTIONARY_FORMAT_VERSION = FormatSpec.VERSION4;
-    /**
-     * The application context.
-     */
+
+    /** The application context. */
     protected final Context mContext;
+
+    /**
+     * The binary dictionary generated dynamically from the fusion dictionary. This is used to
+     * answer unigram and bigram queries.
+     */
+    private BinaryDictionary mBinaryDictionary;
+
     /**
      * The name of this dictionary, used as a part of the filename for storing the binary
      * dictionary.
      */
     private final String mDictName;
 
-    /**
-     * Dictionary locale
-     */
+    /** Dictionary locale */
     private final Locale mLocale;
 
-    /**
-     * Dictionary file
-     */
+    /** Dictionary file */
     private final File mDictFile;
 
-    /**
-     * Indicates whether a task for reloading the dictionary has been scheduled.
-     */
+    /** Indicates whether a task for reloading the dictionary has been scheduled. */
     private final AtomicBoolean mIsReloading;
-    private final ReentrantReadWriteLock mLock;
-    /**
-     * The binary dictionary generated dynamically from the fusion dictionary. This is used to
-     * answer unigram and bigram queries.
-     */
-    private BinaryDictionary mBinaryDictionary;
-    /**
-     * Indicates whether the current dictionary needs to be recreated.
-     */
+
+    /** Indicates whether the current dictionary needs to be recreated. */
     private boolean mNeedsToRecreate;
+
+    private final ReentrantReadWriteLock mLock;
+
     private Map<String, String> mAdditionalAttributeMap = null;
 
+    /* A extension for a binary dictionary file. */
+    protected static final String DICT_FILE_EXTENSION = ".dict";
+
     /**
-     * Creates a new expandable binary dictionary.
-     *
-     * @param context  The application context of the parent.
-     * @param dictName The name of the dictionary. Multiple instances with the same
-     *                 name is supported.
-     * @param locale   the dictionary locale.
-     * @param dictType the dictionary type, as a human-readable string
-     * @param dictFile dictionary file path. if null, use default dictionary path based on
-     *                 dictionary type.
+     * Abstract method for loading initial contents of a given dictionary.
      */
-    public ExpandableBinaryDictionary(final Context context, final String dictName,
-                                      final Locale locale, final String dictType, final File dictFile) {
-        super(dictType);
-        mDictName = dictName;
-        mContext = context;
-        mLocale = locale;
-        mDictFile = getDictFile(context, dictName, dictFile);
-        mBinaryDictionary = null;
-        mIsReloading = new AtomicBoolean();
-        mNeedsToRecreate = false;
-        mLock = new ReentrantReadWriteLock();
-    }
+    protected abstract void loadInitialContentsLocked();
 
     private static boolean matchesExpectedBinaryDictFormatVersionForThisType(final int formatVersion) {
         return formatVersion == FormatSpec.VERSION4;
@@ -143,24 +123,43 @@ abstract public class ExpandableBinaryDictionary extends Dictionary {
         return formatVersion == FormatSpec.VERSION4_ONLY_FOR_TESTING;
     }
 
+    public boolean isValidDictionaryLocked() {
+        return mBinaryDictionary.isValidDictionary();
+    }
+
+    /**
+     * Creates a new expandable binary dictionary.
+     *
+     * @param context The application context of the parent.
+     * @param dictName The name of the dictionary. Multiple instances with the same
+     *        name is supported.
+     * @param locale the dictionary locale.
+     * @param dictType the dictionary type, as a human-readable string
+     * @param dictFile dictionary file path. if null, use default dictionary path based on
+     *        dictionary type.
+     */
+    public ExpandableBinaryDictionary(final Context context, final String dictName,
+            final Locale locale, final String dictType, final File dictFile) {
+        super(dictType);
+        mDictName = dictName;
+        mContext = context;
+        mLocale = locale;
+        mDictFile = getDictFile(context, dictName, dictFile);
+        mBinaryDictionary = null;
+        mIsReloading = new AtomicBoolean();
+        mNeedsToRecreate = false;
+        mLock = new ReentrantReadWriteLock();
+    }
+
     public static File getDictFile(final Context context, final String dictName,
-                                   final File dictFile) {
+            final File dictFile) {
         return (dictFile != null) ? dictFile
                 : new File(context.getFilesDir(), dictName + DICT_FILE_EXTENSION);
     }
 
     public static String getDictName(final String name, final Locale locale,
-                                     final File dictFile) {
+            final File dictFile) {
         return dictFile != null ? dictFile.getName() : name + '.' + locale.toString();
-    }
-
-    /**
-     * Abstract method for loading initial contents of a given dictionary.
-     */
-    protected abstract void loadInitialContentsLocked();
-
-    public boolean isValidDictionaryLocked() {
-        return mBinaryDictionary.isValidDictionary();
     }
 
     private void asyncExecuteTaskWithWriteLock(final Runnable task) {
@@ -179,7 +178,7 @@ abstract public class ExpandableBinaryDictionary extends Dictionary {
 
     // Execute task with lock when the result of preCheckTask is true or preCheckTask is null.
     private void asyncPreCheckAndExecuteTaskWithLock(final Lock lock,
-                                                     final Callable<Boolean> preCheckTask, final Runnable task) {
+            final Callable<Boolean> preCheckTask, final Runnable task) {
         ExecutorUtils.getExecutor(mDictName).execute(new MyRunnable(preCheckTask, lock, task));
     }
 
@@ -281,9 +280,9 @@ abstract public class ExpandableBinaryDictionary extends Dictionary {
      * Adds unigram information of a word to the dictionary. May overwrite an existing entry.
      */
     public void addUnigramEntryWithCheckingDistracter(final String word, final int frequency,
-                                                      final String shortcutTarget, final int shortcutFreq, final boolean isNotAWord,
-                                                      final boolean isBlacklisted, final int timestamp,
-                                                      final DistracterFilter distracterFilter) {
+            final String shortcutTarget, final int shortcutFreq, final boolean isNotAWord,
+            final boolean isBlacklisted, final int timestamp,
+            final DistracterFilter distracterFilter) {
         reloadDictionaryIfRequired();
         asyncPreCheckAndExecuteTaskWithWriteLock(
                 new Callable<Boolean>() {
@@ -307,8 +306,8 @@ abstract public class ExpandableBinaryDictionary extends Dictionary {
     }
 
     protected void addUnigramLocked(final String word, final int frequency,
-                                    final String shortcutTarget, final int shortcutFreq, final boolean isNotAWord,
-                                    final boolean isBlacklisted, final int timestamp) {
+            final String shortcutTarget, final int shortcutFreq, final boolean isNotAWord,
+            final boolean isBlacklisted, final int timestamp) {
         if (!mBinaryDictionary.addUnigramEntry(word, frequency, shortcutTarget, shortcutFreq,
                 false /* isBeginningOfSentence */, isNotAWord, isBlacklisted, timestamp)) {
             Log.e(TAG, "Cannot add unigram entry. word: " + word);
@@ -340,7 +339,7 @@ abstract public class ExpandableBinaryDictionary extends Dictionary {
      * Adds n-gram information of a word to the dictionary. May overwrite an existing entry.
      */
     public void addNgramEntry(final PrevWordsInfo prevWordsInfo, final String word,
-                              final int frequency, final int timestamp) {
+            final int frequency, final int timestamp) {
         reloadDictionaryIfRequired();
         asyncExecuteTaskWithWriteLock(new Runnable() {
             @Override
@@ -355,7 +354,7 @@ abstract public class ExpandableBinaryDictionary extends Dictionary {
     }
 
     protected void addNgramEntryLocked(final PrevWordsInfo prevWordsInfo, final String word,
-                                       final int frequency, final int timestamp) {
+            final int frequency, final int timestamp) {
         if (!mBinaryDictionary.addNgramEntry(prevWordsInfo, word, frequency, timestamp)) {
             if (DEBUG) {
                 Log.i(TAG, "Cannot add n-gram entry.");
@@ -387,6 +386,10 @@ abstract public class ExpandableBinaryDictionary extends Dictionary {
         });
     }
 
+    public interface AddMultipleDictionaryEntriesCallback {
+        void onFinished();
+    }
+
     /**
      * Dynamically add multiple entries to the dictionary.
      */
@@ -415,9 +418,9 @@ abstract public class ExpandableBinaryDictionary extends Dictionary {
 
     @Override
     public ArrayList<SuggestedWordInfo> getSuggestions(final WordComposer composer,
-                                                       final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
-                                                       final SettingsValuesForSuggestion settingsValuesForSuggestion, final int sessionId,
-                                                       final float[] inOutLanguageWeight) {
+            final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
+            final SettingsValuesForSuggestion settingsValuesForSuggestion, final int sessionId,
+            final float[] inOutLanguageWeight) {
         reloadDictionaryIfRequired();
         boolean lockAcquired = false;
         try {
@@ -431,7 +434,7 @@ abstract public class ExpandableBinaryDictionary extends Dictionary {
                         mBinaryDictionary.getSuggestions(composer, prevWordsInfo, proximityInfo,
                                 settingsValuesForSuggestion, sessionId, inOutLanguageWeight);
                 if (mBinaryDictionary.isCorrupted()) {
-                    Log.i(TAG, "Dictionary (" + mDictName + ") is corrupted. "
+                    Log.i(TAG, "Dictionary (" + mDictName +") is corrupted. "
                             + "Remove and regenerate it.");
                     removeBinaryDictionary();
                 }
@@ -494,6 +497,7 @@ abstract public class ExpandableBinaryDictionary extends Dictionary {
         return NOT_A_PROBABILITY;
     }
 
+
     protected boolean isValidNgramLocked(final PrevWordsInfo prevWordsInfo, final String word) {
         return mBinaryDictionary != null && mBinaryDictionary.isValidNgram(prevWordsInfo, word);
     }
@@ -540,6 +544,7 @@ abstract public class ExpandableBinaryDictionary extends Dictionary {
 
     /**
      * Marks that the dictionary needs to be recreated.
+     *
      */
     protected void setNeedsToRecreate() {
         mNeedsToRecreate = true;
@@ -582,7 +587,7 @@ abstract public class ExpandableBinaryDictionary extends Dictionary {
                             if (mBinaryDictionary != null && !(isValidDictionaryLocked()
                                     // TODO: remove the check below
                                     && matchesExpectedBinaryDictFormatVersionForThisType(
-                                    mBinaryDictionary.getFormatVersion()))) {
+                                            mBinaryDictionary.getFormatVersion()))) {
                                 // Binary dictionary or its format version is not valid. Regenerate
                                 // the dictionary file. createNewDictionaryLocked will remove the
                                 // existing files if appropriate.
@@ -663,10 +668,6 @@ abstract public class ExpandableBinaryDictionary extends Dictionary {
                 } while (token != 0);
             }
         });
-    }
-
-    public interface AddMultipleDictionaryEntriesCallback {
-        void onFinished();
     }
 
     private static class MyRunnable implements Runnable {

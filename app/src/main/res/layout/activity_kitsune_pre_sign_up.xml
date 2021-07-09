@@ -1,63 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/activity_kitsune_pre_sign_up"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context="com.nowfloats.PreSignUp.KitsunePreSignUpActivity">
-
-  <RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_kitsune_pre_sign_up"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_above="@+id/ll_kitsune_login"
-    android:layout_marginBottom="1dp">
+    tools:context="com.nowfloats.PreSignUp.KitsunePreSignUpActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_kitsune_login"
+        android:layout_marginBottom="1dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/kitsune_presign_up_bg"
+            android:scaleType="centerCrop"/>
+        <com.nowfloats.CustomWidget.roboto_lt_38_white
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_kitsune_pre_signup_text2"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="0dp"
+            android:text="@string/kitsune_pre_signup_text1"/>
+        <com.nowfloats.CustomWidget.roboto_lt_38_white
+            android:id="@+id/tv_kitsune_pre_signup_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
+            android:text="@string/kitsune_pre_signup_text2"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_kitsune_login"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:textSize="25sp"
+            android:textAllCaps="true"
+            android:textColor="@color/primaryColor"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"/>
 
-    <ImageView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:scaleType="centerCrop"
-      android:src="@drawable/kitsune_presign_up_bg" />
-
-    <com.nowfloats.CustomWidget.roboto_lt_38_white
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_above="@+id/tv_kitsune_pre_signup_text2"
-      android:layout_centerHorizontal="true"
-      android:layout_marginBottom="0dp"
-      android:text="@string/kitsune_pre_signup_text1"
-      android:textColor="@color/white"
-      android:textSize="20sp" />
-
-    <com.nowfloats.CustomWidget.roboto_lt_38_white
-      android:id="@+id/tv_kitsune_pre_signup_text2"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_centerHorizontal="true"
-      android:layout_marginBottom="40dp"
-      android:text="@string/kitsune_pre_signup_text2"
-      android:textColor="@color/white"
-      android:textSize="20sp" />
-  </RelativeLayout>
-
-  <LinearLayout
-    android:id="@+id/ll_kitsune_login"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_alignParentBottom="true"
-    android:orientation="horizontal">
-
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:gravity="center_horizontal"
-      android:text="@string/login"
-      android:textAllCaps="true"
-      android:textColor="@color/primaryColor"
-      android:textSize="25sp"
-      android:textStyle="bold" />
-
-  </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

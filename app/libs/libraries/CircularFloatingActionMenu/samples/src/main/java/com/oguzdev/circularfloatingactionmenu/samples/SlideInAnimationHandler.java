@@ -16,20 +16,14 @@ import com.oguzdev.circularfloatingactionmenu.library.animation.MenuAnimationHan
  * Created by oguzbilgener on 23/07/14.
  */
 public class SlideInAnimationHandler extends MenuAnimationHandler {
-    /**
-     * duration of animations, in milliseconds
-     */
+    /** duration of animations, in milliseconds */
     protected static final int DURATION = 700;
-    /**
-     * duration to wait between each of
-     */
+    /** duration to wait between each of  */
     protected static final int LAG_BETWEEN_ITEMS = 100;
 
     protected static final int DIST_Y = 1000;
 
-    /**
-     * holds the current state of animation
-     */
+    /** holds the current state of animation */
 
     private boolean animating;
 
@@ -63,14 +57,14 @@ public class SlideInAnimationHandler extends MenuAnimationHandler {
             animation.setInterpolator(new DecelerateInterpolator());
             animation.addListener(new SubActionItemAnimationListener(menu.getSubActionItems().get(i), ActionType.OPENING));
 
-            if (i == 0) {
+            if(i == 0) {
                 lastAnimation = animation;
             }
 
-            animation.setStartDelay(Math.abs(menu.getSubActionItems().size() / 2 - i) * LAG_BETWEEN_ITEMS);
+            animation.setStartDelay(Math.abs(menu.getSubActionItems().size()/2-i) * LAG_BETWEEN_ITEMS);
             animation.start();
         }
-        if (lastAnimation != null) {
+        if(lastAnimation != null) {
             lastAnimation.addListener(new LastAnimationListener());
         }
 
@@ -95,18 +89,19 @@ public class SlideInAnimationHandler extends MenuAnimationHandler {
             animation.setInterpolator(new AccelerateInterpolator());
             animation.addListener(new SubActionItemAnimationListener(menu.getSubActionItems().get(i), ActionType.CLOSING));
 
-            if (i == 0) {
+            if(i == 0) {
                 lastAnimation = animation;
             }
 
-            if (i <= menu.getSubActionItems().size() / 2) {
+            if(i <= menu.getSubActionItems().size()/2) {
                 animation.setStartDelay(i * LAG_BETWEEN_ITEMS);
-            } else {
+            }
+            else {
                 animation.setStartDelay((menu.getSubActionItems().size() - i) * LAG_BETWEEN_ITEMS);
             }
             animation.start();
         }
-        if (lastAnimation != null) {
+        if(lastAnimation != null) {
             lastAnimation.addListener(new LastAnimationListener());
         }
     }
@@ -146,8 +141,6 @@ public class SlideInAnimationHandler extends MenuAnimationHandler {
             restoreSubActionViewAfterAnimation(subActionItem, actionType);
         }
 
-        @Override
-        public void onAnimationRepeat(Animator animation) {
-        }
+        @Override public void onAnimationRepeat(Animator animation) {}
     }
 }

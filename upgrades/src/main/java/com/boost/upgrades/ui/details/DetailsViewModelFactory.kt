@@ -7,12 +7,12 @@ import com.boost.upgrades.ui.features.ViewAllFeaturesViewModel
 import java.lang.IllegalArgumentException
 
 class DetailsViewModelFactory(private val application: Application) :
-  ViewModelProvider.Factory {
-  override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-    if (modelClass.isAssignableFrom(DetailsViewModel::class.java)) {
-      return DetailsViewModel(application) as T
+    ViewModelProvider.Factory{
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if(modelClass.isAssignableFrom(DetailsViewModel::class.java)){
+            return DetailsViewModel (application) as T
+        }
+        throw IllegalArgumentException("Unknown View Model Class")
     }
-    throw IllegalArgumentException("Unknown View Model Class")
-  }
 
 }

@@ -1,13 +1,13 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-  android:width="25dp"
-  android:height="25dp"
-  android:viewportWidth="25"
-  android:viewportHeight="25">
+    android:width="25dp"
+    android:height="25dp"
+    android:viewportWidth="25"
+    android:viewportHeight="25">
   <path
-    android:fillColor="#9ABFFF"
-    android:pathData="M12.5,12.5m-12.5,0a12.5,12.5 0,1 1,25 0a12.5,12.5 0,1 1,-25 0" />
+      android:pathData="M12.5,12.5m-12.5,0a12.5,12.5 0,1 1,25 0a12.5,12.5 0,1 1,-25 0"
+      android:fillColor="#9ABFFF"/>
   <path
-    android:fillColor="#ffffff"
-    android:fillType="evenOdd"
-    android:pathData="M11.3177,16.6667V12.2336H10.4167V10.7641H11.3177V9.8755C11.3177,8.6768 11.676,7.8125 12.9884,7.8125H14.5497V9.2789H13.4503C12.8998,9.2789 12.7743,9.6448 12.7743,10.0279V10.7641H14.4686L14.2373,12.2336H12.7743V16.6667H11.3177Z" />
+      android:pathData="M11.3177,16.6667V12.2336H10.4167V10.7641H11.3177V9.8755C11.3177,8.6768 11.676,7.8125 12.9884,7.8125H14.5497V9.2789H13.4503C12.8998,9.2789 12.7743,9.6448 12.7743,10.0279V10.7641H14.4686L14.2373,12.2336H12.7743V16.6667H11.3177Z"
+      android:fillColor="#ffffff"
+      android:fillType="evenOdd"/>
 </vector>

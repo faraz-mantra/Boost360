@@ -35,11 +35,9 @@ import com.onboarding.nowfloats.rest.response.AccountLocationResponse
 import com.onboarding.nowfloats.ui.InternetErrorDialog
 import com.onboarding.nowfloats.utils.WebEngageController
 
-class RegistrationBusinessGoogleBusinessFragment :
-  BaseRegistrationFragment<FragmentRegistrationBusinessGoogleBinding>(), GoogleLoginHelper {
+class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<FragmentRegistrationBusinessGoogleBinding>(), GoogleLoginHelper {
 
-  private var channelAccessToken =
-    ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.googlemybusiness.name.toLowerCase())
+  private var channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.googlemybusiness.name.toLowerCase())
   private var googleChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
   private var isShowProfile = false
 
@@ -58,14 +56,11 @@ class RegistrationBusinessGoogleBusinessFragment :
     checkIsUpdate()
     binding?.googleChannels?.post {
       (binding?.googleChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn()))
-        ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
-        ?.doOnComplete {
-          if (isShowProfile) setProfileDetails(
-            channelAccessToken.userAccountName,
-            channelAccessToken.profilePicture
-          )
-        }?.andThen(binding?.linkGoogle?.fadeIn(500L))
-        ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
+          ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
+          ?.doOnComplete {
+            if (isShowProfile) setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
+          }?.andThen(binding?.linkGoogle?.fadeIn(500L))
+          ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
     }
     setOnClickListener(binding?.skip, binding?.linkGoogle)
     setSetSelectedGoogleChannels(channels)
@@ -85,22 +80,15 @@ class RegistrationBusinessGoogleBusinessFragment :
   }
 
   override fun setSavedData() {
-    val channelAccessToken =
-      requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == channelAccessToken.getType() }
-        ?: return
+    val channelAccessToken = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == channelAccessToken.getType() } ?: return
     setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
     requestFloatsModel?.channelAccessTokens?.remove(channelAccessToken)
     this.channelAccessToken = channelAccessToken
   }
 
   private fun setSetSelectedGoogleChannels(list: ArrayList<ChannelModel>) {
-    val selectedItems = list.filter { it.isGoogleBusinessChannel() }
-      .map { it.recyclerViewType = RecyclerViewItemType.SELECTED_CHANNEL_ITEM.getLayout(); it }
-    googleChannelsAdapter = binding?.googleChannels?.setGridRecyclerViewAdapter(
-      baseActivity,
-      selectedItems.size,
-      selectedItems
-    )
+    val selectedItems = list.filter { it.isGoogleBusinessChannel() }.map { it.recyclerViewType = RecyclerViewItemType.SELECTED_CHANNEL_ITEM.getLayout(); it }
+    googleChannelsAdapter = binding?.googleChannels?.setGridRecyclerViewAdapter(baseActivity, selectedItems.size, selectedItems)
     googleChannelsAdapter?.notifyDataSetChanged()
   }
 
@@ -108,11 +96,7 @@ class RegistrationBusinessGoogleBusinessFragment :
     super.onClick(v)
     when (v) {
       binding?.skip -> {
-        WebEngageController.trackEvent(
-          GOOGLE_MY_BUSINESS_CLICK_TO_SKIP,
-          GOOGLE_MY_BUSINESS,
-          NO_EVENT_VALUE
-        )
+        WebEngageController.trackEvent(GOOGLE_MY_BUSINESS_CLICK_TO_SKIP, GOOGLE_MY_BUSINESS, NO_EVENT_VALUE)
         gotoNextScreen(true)
       }
       binding?.linkGoogle -> {
@@ -121,11 +105,7 @@ class RegistrationBusinessGoogleBusinessFragment :
         } else if (!NetworkUtils.isNetworkConnected()) {
           InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
         } else {
-          WebEngageController.trackEvent(
-            GOOGLE_MY_BUSINESS_CLICK_TO_CONNECT,
-            GOOGLE_MY_BUSINESS,
-            NO_EVENT_VALUE
-          )
+          WebEngageController.trackEvent(GOOGLE_MY_BUSINESS_CLICK_TO_CONNECT, GOOGLE_MY_BUSINESS, NO_EVENT_VALUE)
           googleLoginCallback(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
         }
       }
@@ -133,9 +113,7 @@ class RegistrationBusinessGoogleBusinessFragment :
   }
 
   private fun gotoNextScreen(isSkip: Boolean = false) {
-    if (channelAccessToken.isLinkedGoogleBusiness() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(
-      channelAccessToken
-    )
+    if (channelAccessToken.isLinkedGoogleBusiness() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
     when {
       channels.haveFacebookPage() -> gotoFacebookPage()
       channels.haveFacebookShop() -> gotoFacebookShop()
@@ -152,8 +130,7 @@ class RegistrationBusinessGoogleBusinessFragment :
     binding.maimView.alpha = 1F
     binding.disconnect.setOnClickListener { disconnectGooglePage() }
     this.binding?.title?.text = resources.getString(R.string.google_page_connected)
-    this.binding?.subTitle?.text =
-      resources.getString(R.string.google_allows_digital_business_boost)
+    this.binding?.subTitle?.text = resources.getString(R.string.google_allows_digital_business_boost)
     this.binding?.linkGoogle?.text = resources.getString(R.string.save_continue)
     binding.profileTitle.text = name
     binding.channelType.setImageResource(R.drawable.ic_google_business_n)
@@ -163,16 +140,11 @@ class RegistrationBusinessGoogleBusinessFragment :
   }
 
   private fun disconnectGooglePage() {
-    WebEngageController.trackEvent(
-      GOOGLE_MY_BUSINESS_CLICK_TO_DISCONNECT,
-      GOOGLE_MY_BUSINESS,
-      NO_EVENT_VALUE
-    )
+    WebEngageController.trackEvent(GOOGLE_MY_BUSINESS_CLICK_TO_DISCONNECT, GOOGLE_MY_BUSINESS, NO_EVENT_VALUE)
     logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
     binding?.skip?.visible()
     binding?.googlePageSuccess?.maimView?.gone()
-    this.binding?.title?.text =
-      resources.getString(R.string.does_your_business_already_have_a_google_page)
+    this.binding?.title?.text = resources.getString(R.string.does_your_business_already_have_a_google_page)
     binding?.subTitle?.text = resources.getString(R.string.google_page_connect_later_Skip)
     binding?.linkGoogle?.text = resources.getString(R.string.sync_google_page)
     channelAccessToken.clear()
@@ -187,30 +159,20 @@ class RegistrationBusinessGoogleBusinessFragment :
   override fun onGoogleLoginSuccess(result: GoogleSignInAccount?) {
     showProgress()
     val userId = result?.id
-    val request = GoogleAuthTokenRequest(
-      GoogleGraphPath.SERVER_CLIENT_ID,
-      GoogleGraphPath.SERVER_CLIENT_SECRET,
-      result?.serverAuthCode
-    )
+    val request = GoogleAuthTokenRequest(GoogleGraphPath.SERVER_CLIENT_ID, GoogleGraphPath.SERVER_CLIENT_SECRET, result?.serverAuthCode)
     viewModel?.getGoogleAuthToken(request)?.observeOnce(viewLifecycleOwner, Observer {
       val response = it as? GoogleAuthResponse
       if (response != null && response.access_token.isNullOrEmpty().not()) {
-        viewModel?.getAccountLocationsGMB(response.getAuth(), userId)
-          ?.observeOnce(viewLifecycleOwner, Observer { it1 ->
-            hideProgress()
-            val responseLocation = it1 as? AccountLocationResponse
-            if ((it1.status == 200 || it1.status == 201 || it1.status == 202) && responseLocation?.locations.isNullOrEmpty()
-                .not()
-            ) {
-              selectLocation(result, response, responseLocation?.locations)
-            } else {
-              logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
-              GmbLocationAddDialog().show(
-                parentFragmentManager,
-                GmbLocationAddDialog::class.java.name
-              )
-            }
-          })
+        viewModel?.getAccountLocationsGMB(response.getAuth(), userId)?.observeOnce(viewLifecycleOwner, Observer { it1 ->
+          hideProgress()
+          val responseLocation = it1 as? AccountLocationResponse
+          if ((it1.status == 200 || it1.status == 201 || it1.status == 202) && responseLocation?.locations.isNullOrEmpty().not()) {
+            selectLocation(result, response, responseLocation?.locations)
+          } else {
+            logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
+            GmbLocationAddDialog().show(parentFragmentManager, GmbLocationAddDialog::class.java.name)
+          }
+        })
       } else {
         hideProgress()
         logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
@@ -220,48 +182,28 @@ class RegistrationBusinessGoogleBusinessFragment :
 
   }
 
-  private fun selectLocation(
-    result: GoogleSignInAccount?,
-    responseAuth: GoogleAuthResponse?,
-    locations: List<LocationNew>?
-  ) {
+  private fun selectLocation(result: GoogleSignInAccount?, responseAuth: GoogleAuthResponse?, locations: List<LocationNew>?) {
     val singleItems = ArrayList<String>()
     locations?.forEach { it.locationName?.let { it1 -> singleItems.add(it1) } }
     var checkedItem = 0
-    AlertDialog.Builder(baseActivity, R.style.DialogTheme)
-      .setTitle(getString(R.string.select_the_location_on_map))
-      .setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
-        dialog.dismiss()
-        val data = locations?.firstOrNull { singleItems[checkedItem] == it.locationName }
-        requestFloatsModel?.fpTag?.let {
-          WebEngageController.trackEvent(
-            GOOGLE_MY_BUSINESS_AND_GOOGLE_MAPS_CONNECTED,
-            DIGITAL_CHANNELS,
-            it
-          )
+    AlertDialog.Builder(baseActivity, R.style.DialogTheme).setTitle(getString(R.string.select_the_location_on_map))
+        .setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
+          dialog.dismiss()
+          val data = locations?.firstOrNull { singleItems[checkedItem] == it.locationName }
+          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(GOOGLE_MY_BUSINESS_AND_GOOGLE_MAPS_CONNECTED, DIGITAL_CHANNELS, it) }
+          setDataGoogle(result, responseAuth, data)
+          setProfileDetails(data?.locationName?.capitalizeWords(), result?.photoUrl?.toString())
+        }.setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+          logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
+          dialog.dismiss()
         }
-        setDataGoogle(result, responseAuth, data)
-        setProfileDetails(data?.locationName?.capitalizeWords(), result?.photoUrl?.toString())
-      }.setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
-        logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
-        dialog.dismiss()
-      }
-      .setSingleChoiceItems(singleItems.toTypedArray(), checkedItem) { _, position ->
-        checkedItem = position
-      }.setCancelable(false).show()
+        .setSingleChoiceItems(singleItems.toTypedArray(), checkedItem) { _, position ->
+          checkedItem = position
+        }.setCancelable(false).show()
   }
 
-  private fun setDataGoogle(
-    result: GoogleSignInAccount?,
-    responseAuth: GoogleAuthResponse?,
-    data: LocationNew?
-  ) {
-    val res = ChannelTokenResponse(
-      responseAuth?.access_token,
-      responseAuth?.token_type,
-      responseAuth?.expires_in,
-      responseAuth?.refresh_token
-    )
+  private fun setDataGoogle(result: GoogleSignInAccount?, responseAuth: GoogleAuthResponse?, data: LocationNew?) {
+    val res = ChannelTokenResponse(responseAuth?.access_token, responseAuth?.token_type, responseAuth?.expires_in, responseAuth?.refresh_token)
     channelAccessToken.token_expiry = responseAuth?.getExpiryDate()
     channelAccessToken.invalid = false
     channelAccessToken.token_response = res

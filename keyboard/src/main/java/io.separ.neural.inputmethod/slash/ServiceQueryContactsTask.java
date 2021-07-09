@@ -14,6 +14,11 @@ import java.util.ArrayList;
 public class ServiceQueryContactsTask extends BaseQuerySearchTask {
     private final SearchType searchType;
 
+    public enum SearchType {
+        Phone,
+        Email
+    }
+
     public ServiceQueryContactsTask(String name, SearchType searchType) {
         super("contacts", name);
         this.searchType = searchType;
@@ -54,10 +59,5 @@ public class ServiceQueryContactsTask extends BaseQuerySearchTask {
 
     protected boolean handleError(Context context, Throwable e) {
         return false;
-    }
-
-    public enum SearchType {
-        Phone,
-        Email
     }
 }

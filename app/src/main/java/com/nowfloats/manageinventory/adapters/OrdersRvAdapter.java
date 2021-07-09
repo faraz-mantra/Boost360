@@ -3,11 +3,9 @@ package com.nowfloats.manageinventory.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -281,15 +279,6 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
-    public interface PaginationAdapterCallback {
-
-        void retryPageLoad();
-    }
-
-    public interface OnRecyclerViewItemClickListener {
-        void onItemClick(View v, int position);
-    }
-
     protected class OrdersViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvOrderId, tvOrderDate, tvOrderTotalAmount, tvOrderStatusTag, tvExpDelivDate, tvItemsCount, tvHeadExp;
@@ -346,5 +335,15 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     break;
             }
         }
+    }
+
+
+    public interface PaginationAdapterCallback {
+
+        void retryPageLoad();
+    }
+
+    public interface OnRecyclerViewItemClickListener {
+        void onItemClick(View v, int position);
     }
 }

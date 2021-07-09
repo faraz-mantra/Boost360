@@ -1,221 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-  <data class="ToppersRowBinding">
+    <data class="ToppersRowBinding">
 
-    <variable
-      name="ourTopperResponseData"
-      type="com.nowfloats.education.toppers.model.Data" />
-  </data>
-
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:elevation="@dimen/_2sdp"
-    android:paddingStart="@dimen/_15sdp"
-    android:paddingTop="@dimen/_15sdp"
-    android:paddingEnd="@dimen/_15sdp">
+        <variable
+            name="ourTopperResponseData"
+            type="com.nowfloats.education.toppers.model.Data" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-      android:id="@+id/main_layout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/_5sdp"
-      android:background="@drawable/all_side_curve_bg"
-      android:elevation="@dimen/_2sdp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
-
-      <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:elevation="@dimen/_2sdp"
+        android:paddingStart="@dimen/_15sdp"
+        android:paddingTop="@dimen/_15sdp"
+        android:paddingEnd="@dimen/_15sdp">
 
-        <ImageView
-          android:id="@+id/topper_row_profile_image"
-          android:layout_width="40dp"
-          android:layout_height="40dp"
-          android:layout_margin="@dimen/_10sdp"
-          android:src="@{ourTopperResponseData.profileimage.url}"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          app:srcCompat="@drawable/ic_facebook_menu" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/all_side_curve_bg"
+            android:elevation="@dimen/_2sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/top_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/topper_row_profile_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:src="@{ourTopperResponseData.profileimage.url}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_facebook_menu" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="@id/topper_row_profile_image"
+                    app:layout_constraintEnd_toStartOf="@id/single_item_menu_button"
+                    app:layout_constraintStart_toEndOf="@id/topper_row_profile_image"
+                    app:layout_constraintTop_toTopOf="@id/topper_row_profile_image">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/open_sans"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="@{ourTopperResponseData.name}"
+                        android:textColor="#4A4A4A"
+                        android:textSize="@dimen/txt_16sp"
+                        android:textStyle="bold"
+                        tools:text="Suchi" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/user_rank"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text='@{ourTopperResponseData.rank != null &amp;&amp; ourTopperResponseData.rank!=""? ourTopperResponseData.rank : "-"}'
+                            android:textColor="#747474"
+                            android:textSize="@dimen/txt_12sp"
+                            tools:text="AIR 12" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="11dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@color/primary_color" />
+
+                        <TextView
+                            android:id="@+id/program_availed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text='@{ourTopperResponseData.programavailed!= null &amp;&amp; ourTopperResponseData.programavailed!=""? ourTopperResponseData.programavailed : "-"}'
+                            android:textColor="#747474"
+                            android:textSize="@dimen/txt_12sp"
+                            tools:text="MBA" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="11dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@color/primary_color" />
+
+                        <TextView
+                            android:id="@+id/duration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text='@{ourTopperResponseData.coursecategory!= null &amp;&amp; ourTopperResponseData.coursecategory!=""? ourTopperResponseData.coursecategory : "-"}'
+                            android:textColor="#747474"
+                            android:textSize="@dimen/txt_12sp"
+                            tools:text="1 Year" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/single_item_menu_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_dot_menu" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/dummy_view"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/dotted_line"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/top_layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dummy_view">
+
+                <ImageView
+                    android:id="@+id/topper_testimonial_image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@{ourTopperResponseData.testimonialimage.url}"
+                    app:srcCompat="@drawable/ic_facebook_menu" />
+
+                <TextView
+                    android:lineSpacingExtra="1dp"
+                    android:id="@+id/testimonials_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:text="@{ourTopperResponseData.testimonialtext}"
+                    android:textColor="#747474"
+                    android:textSize="12sp"
+                    tools:text="Excellent coach. Lorem Ipsum is simply dummy text. Excellent coach. Lorem Ipsum is simply dummy text. Excellent coach. Lorem Ipsum is simply dummy text" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_10sdp"
-          android:orientation="vertical"
-          app:layout_constraintBottom_toBottomOf="@id/topper_row_profile_image"
-          app:layout_constraintEnd_toStartOf="@id/single_item_menu_button"
-          app:layout_constraintStart_toEndOf="@id/topper_row_profile_image"
-          app:layout_constraintTop_toTopOf="@id/topper_row_profile_image">
-
-          <TextView
+            android:id="@+id/menu_options"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/open_sans"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:text="@{ourTopperResponseData.name}"
-            android:textColor="#4A4A4A"
-            android:textSize="@dimen/txt_16sp"
-            android:textStyle="bold"
-            tools:text="Suchi" />
-
-          <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_margin="@dimen/_15sdp"
+            android:background="@drawable/all_side_curve_bg"
+            android:elevation="@dimen/_4sdp"
+            android:orientation="vertical"
+            android:padding="@dimen/_10sdp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
 
             <TextView
-              android:id="@+id/user_rank"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text='@{ourTopperResponseData.rank != null &amp;&amp; ourTopperResponseData.rank!=""? ourTopperResponseData.rank : "-"}'
-              android:textColor="#747474"
-              android:textSize="@dimen/txt_12sp"
-              tools:text="AIR 12" />
-
-            <View
-              android:layout_width="1dp"
-              android:layout_height="11dp"
-              android:layout_gravity="center"
-              android:layout_marginStart="8dp"
-              android:layout_marginEnd="8dp"
-              android:background="@color/primary_color" />
+                android:id="@+id/edit_toppers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/edit"
+                android:textSize="@dimen/_12sdp" />
 
             <TextView
-              android:id="@+id/program_availed"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text='@{ourTopperResponseData.programavailed!= null &amp;&amp; ourTopperResponseData.programavailed!=""? ourTopperResponseData.programavailed : "-"}'
-              android:textColor="#747474"
-              android:textSize="@dimen/txt_12sp"
-              tools:text="MBA" />
+                android:id="@+id/delete_toppers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/delete_"
+                android:textAllCaps="true"
+                android:textColor="@color/red"
+                android:textSize="@dimen/_12sdp" />
 
-            <View
-              android:layout_width="1dp"
-              android:layout_height="11dp"
-              android:layout_gravity="center"
-              android:layout_marginStart="8dp"
-              android:layout_marginEnd="8dp"
-              android:background="@color/primary_color" />
-
-            <TextView
-              android:id="@+id/duration"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text='@{ourTopperResponseData.coursecategory!= null &amp;&amp; ourTopperResponseData.coursecategory!=""? ourTopperResponseData.coursecategory : "-"}'
-              android:textColor="#747474"
-              android:textSize="@dimen/txt_12sp"
-              tools:text="1 Year" />
-          </LinearLayout>
         </LinearLayout>
-
-        <ImageView
-          android:id="@+id/single_item_menu_button"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:padding="@dimen/_10sdp"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          app:srcCompat="@drawable/ic_dot_menu" />
-      </androidx.constraintlayout.widget.ConstraintLayout>
-
-      <View
-        android:id="@+id/dummy_view"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_3sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:background="@drawable/dotted_line"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_layout" />
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/_10sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dummy_view">
-
-        <ImageView
-          android:id="@+id/topper_testimonial_image"
-          android:layout_width="50dp"
-          android:layout_height="50dp"
-          android:src="@{ourTopperResponseData.testimonialimage.url}"
-          app:srcCompat="@drawable/ic_facebook_menu" />
-
-        <TextView
-          android:id="@+id/testimonials_text"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_10sdp"
-          android:layout_marginEnd="@dimen/_10sdp"
-          android:ellipsize="end"
-          android:lineSpacingExtra="1dp"
-          android:maxLines="3"
-          android:text="@{ourTopperResponseData.testimonialtext}"
-          android:textColor="#747474"
-          android:textSize="12sp"
-          tools:text="Excellent coach. Lorem Ipsum is simply dummy text. Excellent coach. Lorem Ipsum is simply dummy text. Excellent coach. Lorem Ipsum is simply dummy text" />
-
-      </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <LinearLayout
-      android:id="@+id/menu_options"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/_15sdp"
-      android:background="@drawable/all_side_curve_bg"
-      android:elevation="@dimen/_4sdp"
-      android:orientation="vertical"
-      android:padding="@dimen/_10sdp"
-      android:visibility="gone"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      tools:visibility="visible">
-
-      <TextView
-        android:id="@+id/edit_toppers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:padding="@dimen/_10sdp"
-        android:text="@string/edit"
-        android:textSize="@dimen/_12sdp" />
-
-      <TextView
-        android:id="@+id/delete_toppers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:padding="@dimen/_10sdp"
-        android:text="@string/delete_"
-        android:textAllCaps="true"
-        android:textColor="@color/red"
-        android:textSize="@dimen/_12sdp" />
-
-    </LinearLayout>
-  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

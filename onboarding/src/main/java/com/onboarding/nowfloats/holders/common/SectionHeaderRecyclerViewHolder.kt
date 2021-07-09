@@ -11,19 +11,18 @@ import com.onboarding.nowfloats.model.common.getInstance
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
-class SectionHeaderRecyclerViewHolder constructor(binding: ItemSectionHeaderBinding) :
-  AppBaseRecyclerViewHolder<ItemSectionHeaderBinding>(binding) {
+class SectionHeaderRecyclerViewHolder constructor(binding: ItemSectionHeaderBinding) : AppBaseRecyclerViewHolder<ItemSectionHeaderBinding>(binding) {
 
   private var model: SectionHeaderModel? = null
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     model = SectionHeaderModel.getInstance(
-      text = getResources()?.getString(R.string._or_),
-      textColor = getColor(R.color.warm_grey),
-      typeface = activity?.let { getFont(it, R.font.italic) },
-      textType = TextType.SUBTITLE_2,
-      gravity = Gravity.CENTER
+        text = getResources()?.getString(R.string._or_),
+        textColor = getColor(R.color.warm_grey),
+        typeface = activity?.let { getFont(it, R.font.italic) },
+        textType = TextType.SUBTITLE_2,
+        gravity = Gravity.CENTER
     )
     setViews(model)
   }

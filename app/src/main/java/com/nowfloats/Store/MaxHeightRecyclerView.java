@@ -2,9 +2,7 @@ package com.nowfloats.Store;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.AttributeSet;
 
 import com.thinksity.R;

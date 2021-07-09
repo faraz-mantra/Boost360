@@ -84,8 +84,7 @@ fun Context.openWebPage(url: String): Boolean {
 }
 
 fun Context.copyClipBoard(selectedText: String): Boolean {
-  val clipboard: ClipboardManager? =
-    getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+  val clipboard: ClipboardManager? = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
   val clip = ClipData.newPlainText("label", selectedText)
   if (clipboard == null || clip == null) return false
   clipboard.setPrimaryClip(clip)
@@ -94,13 +93,9 @@ fun Context.copyClipBoard(selectedText: String): Boolean {
 
 fun String.capitalizeUtil(): String {
   val capBuffer = StringBuffer()
-  val capMatcher: Matcher =
-    Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(this)
+  val capMatcher: Matcher = Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(this)
   while (capMatcher.find()) {
-    capMatcher.appendReplacement(capBuffer,
-      capMatcher.group(1).toUpperCase(Locale.getDefault()) + capMatcher.group(2)
-        .toLowerCase(Locale.getDefault())
-    )
+    capMatcher.appendReplacement(capBuffer, capMatcher.group(1).toUpperCase(Locale.getDefault()) + capMatcher.group(2).toLowerCase(Locale.getDefault()))
   }
   return capMatcher.appendTail(capBuffer).toString()
 }

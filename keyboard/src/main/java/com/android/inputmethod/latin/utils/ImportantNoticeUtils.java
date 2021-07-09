@@ -29,7 +29,11 @@ import io.separ.neural.inputmethod.annotations.UsedForTesting;
 import io.separ.neural.inputmethod.indic.R;
 
 public final class ImportantNoticeUtils {
-    public static final int VERSION_TO_ENABLE_PERSONALIZED_SUGGESTIONS = 1;
+    private static final String TAG = ImportantNoticeUtils.class.getSimpleName();
+
+    // {@link SharedPreferences} name to save the last important notice version that has been
+    // displayed to users.
+    private static final String PREFERENCE_NAME = "important_notice_pref";
     @UsedForTesting
     static final String KEY_IMPORTANT_NOTICE_VERSION = "important_notice_version";
     @UsedForTesting
@@ -37,10 +41,8 @@ public final class ImportantNoticeUtils {
             "timestamp_of_first_important_notice";
     @UsedForTesting
     static final long TIMEOUT_OF_IMPORTANT_NOTICE = TimeUnit.HOURS.toMillis(23);
-    private static final String TAG = ImportantNoticeUtils.class.getSimpleName();
-    // {@link SharedPreferences} name to save the last important notice version that has been
-    // displayed to users.
-    private static final String PREFERENCE_NAME = "important_notice_pref";
+    public static final int VERSION_TO_ENABLE_PERSONALIZED_SUGGESTIONS = 1;
+
     // Copy of the hidden {@link Settings.Secure#USER_SETUP_COMPLETE} settings key.
     // The value is zero until each multiuser completes system setup wizard.
     // Caveat: This is a hidden API.

@@ -34,13 +34,7 @@ class ConfirmKycBottomSheet : BaseBottomSheetDialog<BottomSheetConfirmKycBinding
     return BaseViewModel::class.java
   }
 
-  fun setData(
-    request: PaymentKycRequest?,
-    panCarImage: File?,
-    bankStatementImage: File?,
-    additionalDocs: ArrayList<FileModel>,
-    dataKyc: DataKyc?
-  ) {
+  fun setData(request: PaymentKycRequest?, panCarImage: File?, bankStatementImage: File?, additionalDocs: ArrayList<FileModel>, dataKyc: DataKyc?) {
     this.request = request
     this.panCarImage = panCarImage
     this.bankStatementImage = bankStatementImage
@@ -55,23 +49,15 @@ class ConfirmKycBottomSheet : BaseBottomSheetDialog<BottomSheetConfirmKycBinding
 
   private fun setDataView() {
     if (panCarImage == null) {
-      dataKyc?.panCardDocument?.let {
-        activity?.glideLoad(
-          binding?.ivPanCardImage!!,
-          it,
-          R.drawable.placeholder_image
-        )
-      }
+      dataKyc?.panCardDocument?.let { activity?.glideLoad(binding?.ivPanCardImage!!, it, R.drawable.placeholder_image) }
     } else panCarImage?.getBitmap()?.let { binding?.ivPanCardImage?.setImageBitmap(it) }
 
-    binding?.bankStatement?.text =
-      if (bankStatementImage != null) bankStatementImage?.absolutePath?.getFileName() else dataKyc?.bankAccountStatement?.getFileName()
+    binding?.bankStatement?.text = if (bankStatementImage != null) bankStatementImage?.absolutePath?.getFileName() else dataKyc?.bankAccountStatement?.getFileName()
 
     binding?.headingPanNumber?.text = request?.actionData?.panNumber
     binding?.headingPanName?.text = request?.actionData?.nameOfPanHolder
     binding?.headingAccount?.text = "A/C No. ${request?.actionData?.bankAccountNumber}"
-    binding?.tvBankBranchDetails?.text =
-      "${request?.actionData?.nameOfBank} - ${request?.actionData?.bankBranchName}"
+    binding?.tvBankBranchDetails?.text = "${request?.actionData?.nameOfBank} - ${request?.actionData?.bankBranchName}"
 
     if (additionalDocs.isNotEmpty()) {
       binding?.viewAddition?.visible()
@@ -85,15 +71,7 @@ class ConfirmKycBottomSheet : BaseBottomSheetDialog<BottomSheetConfirmKycBinding
 
   private fun setAdapter() {
     val list = ArrayList<FileModel>()
-    additionalDocs.forEach {
-      list.add(
-        FileModel(
-          path = it.path,
-          pathUrl = it.pathUrl,
-          recyclerViewItem = RecyclerViewItemType.ADDITIONAL_FILE_VIEW.getLayout()
-        )
-      )
-    }
+    additionalDocs.forEach { list.add(FileModel(path = it.path, pathUrl = it.pathUrl, recyclerViewItem = RecyclerViewItemType.ADDITIONAL_FILE_VIEW.getLayout())) }
     binding?.rvAdditionalDocs?.apply {
       val adapterImage = AppBaseRecyclerViewAdapter(baseActivity, list)
       adapter = adapterImage

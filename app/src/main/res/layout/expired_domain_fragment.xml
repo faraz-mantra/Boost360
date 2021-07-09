@@ -1,195 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="@color/grey_100"
-  android:orientation="vertical">
-
-  <LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:padding="@dimen/_20sdp">
+    android:layout_height="match_parent"
+    android:background="@color/grey_100"
+    android:orientation="vertical">
 
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@drawable/curved_grey_background"
-      android:elevation="@dimen/_2sdp"
-      android:gravity="center_vertical"
-      android:orientation="vertical"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
-
-      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp">
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:padding="@dimen/_20sdp">
 
-        <ImageView
-          android:layout_width="@dimen/_50sdp"
-          android:layout_height="@dimen/_50sdp"
-          app:srcCompat="@drawable/ic_active_domain" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/curved_grey_background"
+        android:elevation="@dimen/_2sdp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_20sdp"
-          android:orientation="vertical">
-
-          <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_semibold"
-            android:gravity="center"
-            android:text="thinkwalls.net"
-            android:textColor="@color/common_text_color"
-            android:textSize="@dimen/_15sdp" />
+            android:padding="@dimen/_10sdp">
 
-          <ImageView
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="@dimen/_5sdp"
-            app:srcCompat="@drawable/ic_domain_expired_status" />
+            <ImageView
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                app:srcCompat="@drawable/ic_active_domain" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:text="thinkwalls.net"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="@dimen/_15sdp" />
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:srcCompat="@drawable/ic_domain_expired_status" />
+            </LinearLayout>
         </LinearLayout>
-      </LinearLayout>
 
-      <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_3sdp"
-        android:background="@drawable/dotted_line" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_3sdp"
+            android:background="@drawable/dotted_line" />
 
-      <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp">
 
-        <TextView
-          android:id="@+id/booked_on_title"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="BOOKED ON"
-          android:textSize="@dimen/_8sdp"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/booked_on_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BOOKED ON"
+                android:textSize="@dimen/_8sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-          android:id="@+id/expired_on_title"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="EXPIRES ON"
-          android:textSize="@dimen/_8sdp"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/expired_on_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EXPIRES ON"
+                android:textSize="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-          android:id="@+id/booked_on_value"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="15-05-2017"
-          android:textColor="@color/common_text_color"
-          android:textSize="@dimen/_13sdp"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/booked_on_title" />
+            <TextView
+                android:id="@+id/booked_on_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15-05-2017"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/booked_on_title" />
 
-        <TextView
-          android:id="@+id/expired_on_value"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="20-05-2020"
-          android:textColor="@color/common_text_color"
-          android:textSize="@dimen/_13sdp"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/expired_on_title" />
-      </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/expired_on_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20-05-2020"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/expired_on_title" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
     <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/_20sdp"
-      android:text="Your domain ‘sales.thinkwalls.net’ has expired. Your website is currently running on ‘sales.thinkwalls.net’. Please renew your domain or link another domain to avail the advantages of having a personal domain." />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your domain ‘sales.thinkwalls.net’ has expired. Your website is currently running on ‘sales.thinkwalls.net’. Please renew your domain or link another domain to avail the advantages of having a personal domain."
+        android:layout_marginTop="@dimen/_20sdp"/>
 
 
     <TextView
-      android:id="@+id/existdomain_btn_proceed"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/_10sdp"
-      android:layout_marginTop="@dimen/_30sdp"
-      android:layout_marginEnd="@dimen/_10sdp"
-      android:background="@drawable/rounded_corner_button"
-      android:gravity="center"
-      android:padding="8dp"
-      android:text="renew domain"
-      android:textAllCaps="true"
-      android:textColor="@drawable/yellow_btn_hover_text_color"
-      android:textSize="18sp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/dummy_inst" />
+        android:id="@+id/existdomain_btn_proceed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@drawable/rounded_corner_button"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="renew domain"
+        android:textAllCaps="true"
+        android:textColor="@drawable/yellow_btn_hover_text_color"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dummy_inst" />
 
 
     <TextView
-      android:id="@+id/newdomain_btn_proceed"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/_10sdp"
-      android:layout_marginTop="@dimen/_20sdp"
-      android:layout_marginEnd="@dimen/_10sdp"
-      android:layout_marginBottom="@dimen/_15sdp"
-      android:background="@drawable/feature_deals_click_effect"
-      android:fontFamily="@font/open_sans_semibold"
-      android:gravity="center"
-      android:paddingTop="@dimen/_10sdp"
-      android:paddingBottom="@dimen/_10sdp"
-      android:text="link another domain"
-      android:textAllCaps="true"
-      android:textColor="@color/app_text_yellow"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/or_dummy" />
+        android:id="@+id/newdomain_btn_proceed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:background="@drawable/feature_deals_click_effect"
+        android:fontFamily="@font/open_sans_semibold"
+        android:gravity="center"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:text="link another domain"
+        android:textAllCaps="true"
+        android:textColor="@color/app_text_yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/or_dummy" />
 
-  </LinearLayout>
+</LinearLayout>
 
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="@dimen/_20sdp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/top_layout">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="@dimen/_20sdp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_layout">
 
-    <ImageView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      app:srcCompat="@drawable/ic_email_purchased" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_email_purchased" />
 
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/_10sdp"
-      android:fontFamily="@font/open_sans_semibold"
-      android:text="Your Business Emails"
-      android:textColor="@color/common_text_color"
-      android:textSize="@dimen/_16sdp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Your Business Emails"
+            android:textColor="@color/common_text_color"
+            android:textSize="@dimen/_16sdp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="You’ll be able to use the emails post your renew or link another domain."/>
 
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/_10sdp"
-      android:gravity="center"
-      android:text="You’ll be able to use the emails post your renew or link another domain." />
-
-  </LinearLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

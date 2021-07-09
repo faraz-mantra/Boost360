@@ -1,9 +1,7 @@
 package com.nowfloats.AccountDetails;
 
 import android.app.Activity;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +22,24 @@ import java.util.TimeZone;
 /**
  * Created by guru on 07-07-2015.
  */
-public class AccountInfoAdapter extends RecyclerView.Adapter<AccountInfoAdapter.MyViewHolder> {
+public class AccountInfoAdapter extends RecyclerView.Adapter<AccountInfoAdapter.MyViewHolder>{
     Activity activity;
     ArrayList<AccountDetailModel> detailModels;
     DateFormat dateFormat;
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView name,pur_date,exp_date,status,purchase;
 
-    public AccountInfoAdapter(Activity activity, ArrayList<AccountDetailModel> detailModels) {
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            this.name = (TextView) itemView.findViewById(R.id.account_plan_name);
+            this.pur_date = (TextView) itemView.findViewById(R.id.account_pur_date);
+            this.exp_date = (TextView) itemView.findViewById(R.id.account_exp_date);
+            this.status = (TextView) itemView.findViewById(R.id.account_status);
+            this.purchase = (TextView) itemView.findViewById(R.id.storebtn);
+        }
+    }
+
+    public AccountInfoAdapter(Activity activity, ArrayList<AccountDetailModel> detailModels){
         this.activity = activity;
         this.detailModels = detailModels;
         dateFormat = new SimpleDateFormat("MMM dd, yyyy");
@@ -45,17 +55,17 @@ public class AccountInfoAdapter extends RecyclerView.Adapter<AccountInfoAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        if (detailModels.size() > 0) {
+        if(detailModels.size()>0){
             AccountDetailModel detail = detailModels.get(position);
             try {
                 holder.purchase.setVisibility(View.GONE);
                 detail.ToBeActivatedOn = detail.ToBeActivatedOn.replace("/Date(", "").replace(")/", "");
                 Long epochTime = Long.parseLong(detail.ToBeActivatedOn);
-                Date date = new Date(epochTime), date1 = null;
+                Date date = new Date(epochTime),date1 = null;
                 holder.name.setText(detail.NameOfWidget);
                 String value = dateFormat.format(date);
                 holder.pur_date.setText(value);
-                if (detail.totalMonthsValidity != null) {
+                if(detail.totalMonthsValidity!=null){
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(date);
                     calendar.add(Calendar.MONTH, Integer.parseInt(detail.totalMonthsValidity));
@@ -63,43 +73,28 @@ public class AccountInfoAdapter extends RecyclerView.Adapter<AccountInfoAdapter.
                     detail.totalMonthsValidity = dateFormat.format(date1);
                 }
                 holder.exp_date.setText(detail.totalMonthsValidity);
-                if (Methods.compareDate(date1, new Date())) {
+                if(Methods.compareDate(date1,new Date())){
                     holder.status.setText(activity.getResources().getString(R.string.active));
                     holder.status.setTextColor(activity.getResources().getColor(R.color.green));
                     holder.purchase.setVisibility(View.GONE);
-                } else {
+                }else {
                     holder.status.setText(activity.getResources().getString(R.string.expired));
                     holder.status.setTextColor(activity.getResources().getColor(android.R.color.holo_red_light));
                     holder.purchase.setVisibility(View.VISIBLE);
                     holder.purchase.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            activity.finish();
-                            Constants.gotoStore = true;
+                           activity.finish();
+                           Constants.gotoStore = true;
                         }
                     });
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            }catch(Exception e){e.printStackTrace();}
         }
     }
 
     @Override
     public int getItemCount() {
         return detailModels.size();
-    }
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name, pur_date, exp_date, status, purchase;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            this.name = (TextView) itemView.findViewById(R.id.account_plan_name);
-            this.pur_date = (TextView) itemView.findViewById(R.id.account_pur_date);
-            this.exp_date = (TextView) itemView.findViewById(R.id.account_exp_date);
-            this.status = (TextView) itemView.findViewById(R.id.account_status);
-            this.purchase = (TextView) itemView.findViewById(R.id.storebtn);
-        }
     }
 }

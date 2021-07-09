@@ -2,9 +2,7 @@ package com.nowfloats.managecustomers.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,26 +26,25 @@ import java.util.Locale;
  * Created by Admin on 17-08-2017.
  */
 
-public class FacebookChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class FacebookChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     public static final String NO_MESSAGES = "no_messages";
-    final String TEXT = "text", IMAGE = "image";
-    final int EMPTY_LAYOUT = -1, MESSAGE_LAYOUT = -2;
     List<FacebookChatUsersModel.Datum> chatList;
     Context mContext;
+    final String TEXT = "text", IMAGE = "image";
+    final int EMPTY_LAYOUT = -1, MESSAGE_LAYOUT = -2;
 
-    public FacebookChatAdapter(Context context, List<FacebookChatUsersModel.Datum> list) {
+    public FacebookChatAdapter(Context context, List<FacebookChatUsersModel.Datum> list){
         chatList = list;
         mContext = context;
     }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        switch (viewType) {
+        switch(viewType) {
             case MESSAGE_LAYOUT:
-                view = LayoutInflater.from(mContext).inflate(R.layout.adapter_facebook_chat_item, parent, false);
-                return new MyUserViewHolder(view);
+            view = LayoutInflater.from(mContext).inflate(R.layout.adapter_facebook_chat_item, parent, false);
+            return new MyUserViewHolder(view);
             case EMPTY_LAYOUT:
                 view = LayoutInflater.from(mContext).inflate(R.layout.facebook_no_messages, parent, false);
                 return new MyEmptyViewHolder(view);
@@ -59,16 +56,16 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if (viewHolder == null) return;
-        if (viewHolder instanceof MyUserViewHolder) {
+        if(viewHolder == null) return;
+        if(viewHolder instanceof MyUserViewHolder) {
             MyUserViewHolder userViewHolder = (MyUserViewHolder) viewHolder;
             FacebookChatUsersModel.Datum data = chatList.get(position);
             String userName = "Unknown";
-            userName = TextUtils.isEmpty(data.getUserData().getFirstName()) ?
+            userName = TextUtils.isEmpty(data.getUserData().getFirstName())?
                     userName : data.getUserData().getFirstName();
-            if (!userName.equals("Unknown")) {
-                userName = TextUtils.isEmpty(data.getUserData().getLastName()) ?
-                        userName : userName + " " + data.getUserData().getLastName();
+            if(!userName.equals("Unknown")){
+                userName = TextUtils.isEmpty(data.getUserData().getLastName())?
+                        userName : userName +" "+data.getUserData().getLastName();
             }
 
             userViewHolder.userName.setText(userName);
@@ -91,21 +88,20 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     .resize(200, 0)
                     .placeholder(R.drawable.ic_user)
                     .into(userViewHolder.userPic);
-        } else if (viewHolder instanceof MyEmptyViewHolder) {
+        }else if(viewHolder instanceof MyEmptyViewHolder){
 
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        return chatList.get(position).getSender().equals(NO_MESSAGES) ? EMPTY_LAYOUT : MESSAGE_LAYOUT;
+        return chatList.get(position).getSender().equals(NO_MESSAGES)?EMPTY_LAYOUT:MESSAGE_LAYOUT;
     }
 
-    private String getFormattedTime(Long milliSecond) {
+    private String getFormattedTime(Long milliSecond){
 
         return new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(new Date(milliSecond));
     }
-
     @Override
     public int getItemCount() {
         return chatList.size();
@@ -122,12 +118,10 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         }
     }
+    public class MyUserViewHolder extends RecyclerView.ViewHolder{
 
-    public class MyUserViewHolder extends RecyclerView.ViewHolder {
-
-        TextView userName, message, date;
+        TextView userName,message,date;
         ImageView userPic;
-
         public MyUserViewHolder(View itemView) {
             super(itemView);
             userName = (TextView) itemView.findViewById(R.id.tv_chat_user);
@@ -137,14 +131,14 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(mContext, FacebookChatDetailActivity.class);
-                    i.putExtra("user_data", new Gson().toJson(chatList.get(getAdapterPosition()).getUserData()));
+                    Intent i = new Intent(mContext,FacebookChatDetailActivity.class);
+                    i.putExtra("user_data",new Gson().toJson(chatList.get(getAdapterPosition()).getUserData()));
                    /* i.putExtra("user_id",chatList.get(getAdapterPosition()).getUserId());
                     i.putExtra("profile_pic",chatList.get(getAdapterPosition()).getUserData().getProfilePic());
                     i.putExtra("user_name",chatList.get(getAdapterPosition()).getUserData().getFirstName()+" "+
                             chatList.get(getAdapterPosition()).getUserData().getLastName());*/
-                    ((FacebookChatActivity) mContext).startActivityForResult(i, 221);
-                    ((FacebookChatActivity) mContext).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    ((FacebookChatActivity) mContext).startActivityForResult(i,221);
+                    ((FacebookChatActivity)mContext).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
         }

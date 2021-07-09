@@ -53,6 +53,10 @@ public class HelpAndSupportFragment extends Fragment {
     private List<RiaSupportModel> mRiaSupportModelList;
     private ProgressDialog dialog;
 
+    enum MemberType {
+        CHC, WEB, TA, DEFAULT, WC
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,41 +114,6 @@ public class HelpAndSupportFragment extends Fragment {
 
     }
 
-    private void getRiaMembers(HashMap<String, String> map, final View view) {
-        showProgress();
-        RiaNetworkInterface riaNetworkInterface = Constants.riaRestAdapter.create(RiaNetworkInterface.class);
-        riaNetworkInterface.getAllMemberForFp(map, new Callback<List<RiaSupportModel>>() {
-            @Override
-            public void success(List<RiaSupportModel> list, Response response) {
-                if (list == null || list.size() == 0 ||
-                        response.getStatus() < 200 || response.getStatus() > 300) {
-                    addDefaultRiaData();
-                } else {
-                    for (RiaSupportModel model : list) {
-                        if (TextUtils.isEmpty(model.getType())) {
-                            model.setType(MemberType.WEB.toString());
-                            mRiaSupportModelList.add(model);
-                        } else if (MemberType.CHC.name().equals(model.getType())) {
-                            mRiaSupportModelList.add(0, model);
-                        } else if (MemberType.TA.name().equals(model.getType())) {
-                            model.setType(MemberType.TA.toString());
-                            mRiaSupportModelList.add(model);
-                        }
-                    }
-                }
-                setAdapterWithPager(view);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                addDefaultRiaData();
-                setAdapterWithPager(view);
-                Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
-
-            }
-        });
-    }
-
 //    protected void makeLinkClickable(TextView view) {
 //
 //        SpannableStringBuilder spanTxt = new SpannableStringBuilder("If your query is still unanswered, please check ");
@@ -162,6 +131,147 @@ public class HelpAndSupportFragment extends Fragment {
 //        view.setMovementMethod(LinkMovementMethod.getInstance());
 //        view.setText(spanTxt, TextView.BufferType.SPANNABLE);
 //    }
+
+
+    class GetMembers extends AsyncTask<String, String, List<RiaSupportModel>>
+    {
+        private int responseCode;
+        private View view;
+        private String url = "https://ria.withfloats.com/api/RIASupportTeam/GetAllMembersForFP?fpTag=";
+
+        private OkHttpClient client = MyOkHttpClient.getOkHttpClient();
+
+        private GetMembers(String clientId, String fpTag, final View view)
+        {
+            this.view = view;
+            this.url = this.url.concat(fpTag).concat("&clientId=").concat(clientId);
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            showProgress();
+        }
+
+
+        @Override
+        protected List<RiaSupportModel> doInBackground(String... strings)
+        {
+            List<RiaSupportModel> models = new ArrayList<>();
+
+            okhttp3.Request.Builder builder = new okhttp3.Request.Builder();
+            builder.url(url);
+            builder.get();
+
+            okhttp3.Request request = builder.build();
+
+            try
+            {
+                okhttp3.Response response = client.newCall(request).execute();
+                responseCode = response.code();
+
+                JSONArray array = new JSONArray(response.body().string());
+
+                for(int i=0; i<array.length(); i++)
+                {
+                    RiaSupportModel model = new Gson().fromJson(array.get(i).toString(), RiaSupportModel.class);
+                    models.add(model);
+                }
+            }
+
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            return models;
+        }
+
+        @Override
+        protected void onPostExecute(List<RiaSupportModel> response)
+        {
+            super.onPostExecute(response);
+
+            if (responseCode >= 200 && responseCode <= 300)
+            {
+                for (RiaSupportModel model : response)
+                {
+                    if (TextUtils.isEmpty(model.getType()))
+                    {
+                        model.setType(MemberType.WEB.toString());
+                        mRiaSupportModelList.add(model);
+                    }
+
+                    else if (MemberType.CHC.name().equals(model.getType()))
+                    {
+                        mRiaSupportModelList.add(0, model);
+                    }
+
+                    else if (MemberType.TA.name().equals(model.getType()))
+                    {
+                        model.setType(MemberType.TA.toString());
+                        mRiaSupportModelList.add(model);
+                    }
+
+                    else if (MemberType.WC.name().equals(model.getType()))
+                    {
+                        model.setType(MemberType.WC.toString());
+                        mRiaSupportModelList.add(model);
+                    }
+                }
+
+                if(mRiaSupportModelList.size() == 0)
+                {
+                    addDefaultRiaData();
+                }
+            }
+
+            else
+            {
+                addDefaultRiaData();
+                Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
+            }
+
+            setAdapterWithPager(view);
+        }
+    }
+
+
+    private void getRiaMembers(HashMap<String, String> map, final View view) {
+        showProgress();
+        RiaNetworkInterface riaNetworkInterface = Constants.riaRestAdapter.create(RiaNetworkInterface.class);
+        riaNetworkInterface.getAllMemberForFp(map, new Callback<List<RiaSupportModel>>() {
+            @Override
+            public void success(List<RiaSupportModel> list, Response response) {
+                if (list == null || list.size() == 0 ||
+                        response.getStatus() < 200 || response.getStatus() > 300) {
+                    addDefaultRiaData();
+                } else {
+                    for (RiaSupportModel model : list) {
+                        if (TextUtils.isEmpty(model.getType())) {
+                            model.setType(MemberType.WEB.toString());
+                            mRiaSupportModelList.add(model);
+                        } else if (MemberType.CHC.name().equals(model.getType())) {
+                            mRiaSupportModelList.add(0, model);
+                        }else if (MemberType.TA.name().equals(model.getType())) {
+                            model.setType(MemberType.TA.toString());
+                            mRiaSupportModelList.add(model);
+                        }
+                    }
+                }
+                setAdapterWithPager(view);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                addDefaultRiaData();
+                setAdapterWithPager(view);
+                Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
+
+            }
+        });
+    }
 
     @Override
     public void onResume() {
@@ -200,88 +310,6 @@ public class HelpAndSupportFragment extends Fragment {
         model.setGender(1);
         model.setType(MemberType.DEFAULT.toString());
         mRiaSupportModelList.add(model);
-    }
-
-    enum MemberType {
-        CHC, WEB, TA, DEFAULT, WC
-    }
-
-    class GetMembers extends AsyncTask<String, String, List<RiaSupportModel>> {
-        private int responseCode;
-        private View view;
-        private String url = "https://ria.withfloats.com/api/RIASupportTeam/GetAllMembersForFP?fpTag=";
-
-        private OkHttpClient client = MyOkHttpClient.getOkHttpClient();
-
-        private GetMembers(String clientId, String fpTag, final View view) {
-            this.view = view;
-            this.url = this.url.concat(fpTag).concat("&clientId=").concat(clientId);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            showProgress();
-        }
-
-
-        @Override
-        protected List<RiaSupportModel> doInBackground(String... strings) {
-            List<RiaSupportModel> models = new ArrayList<>();
-
-            okhttp3.Request.Builder builder = new okhttp3.Request.Builder();
-            builder.url(url);
-            builder.get();
-
-            okhttp3.Request request = builder.build();
-
-            try {
-                okhttp3.Response response = client.newCall(request).execute();
-                responseCode = response.code();
-
-                JSONArray array = new JSONArray(response.body().string());
-
-                for (int i = 0; i < array.length(); i++) {
-                    RiaSupportModel model = new Gson().fromJson(array.get(i).toString(), RiaSupportModel.class);
-                    models.add(model);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return models;
-        }
-
-        @Override
-        protected void onPostExecute(List<RiaSupportModel> response) {
-            super.onPostExecute(response);
-
-            if (responseCode >= 200 && responseCode <= 300) {
-                for (RiaSupportModel model : response) {
-                    if (TextUtils.isEmpty(model.getType())) {
-                        model.setType(MemberType.WEB.toString());
-                        mRiaSupportModelList.add(model);
-                    } else if (MemberType.CHC.name().equals(model.getType())) {
-                        mRiaSupportModelList.add(0, model);
-                    } else if (MemberType.TA.name().equals(model.getType())) {
-                        model.setType(MemberType.TA.toString());
-                        mRiaSupportModelList.add(model);
-                    } else if (MemberType.WC.name().equals(model.getType())) {
-                        model.setType(MemberType.WC.toString());
-                        mRiaSupportModelList.add(model);
-                    }
-                }
-
-                if (mRiaSupportModelList.size() == 0) {
-                    addDefaultRiaData();
-                }
-            } else {
-                addDefaultRiaData();
-                Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
-            }
-
-            setAdapterWithPager(view);
-        }
     }
 
     private class viewPagerAdapter extends FragmentStatePagerAdapter {

@@ -39,13 +39,11 @@ import com.framework.webengageconstant.*
 import java.util.*
 import kotlin.system.exitProcess
 
-private const val TIME_INTERVAL =
-  2000 // # milliseconds, desired time passed between two back presses.
+private const val TIME_INTERVAL = 2000 // # milliseconds, desired time passed between two back presses.
 
 private var mBackPressed: Long = 0
 
-class RegistrationSuccessFragment :
-  AppBaseFragment<FragmentRegistrationSuccessBinding, LoginSignUpViewModel>() {
+class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessBinding, LoginSignUpViewModel>() {
 
   private var floatsRequest: CategoryFloatsRequest? = null
   private var authToken: AuthTokenDataItem? = null
@@ -114,11 +112,7 @@ class RegistrationSuccessFragment :
   private fun createAccessTokenAuth() {
     showProgress(getString(R.string.business_setup_process))
     WebEngageController.trackEvent(PS_REGISTRATION_DASHBOARD_CLICK, CLICK, NO_EVENT_VALUE)
-    val request = AccessTokenRequest(
-      authToken = authToken?.authenticationToken,
-      clientId = clientId,
-      fpId = authToken?.floatingPointId
-    )
+    val request = AccessTokenRequest(authToken = authToken?.authenticationToken, clientId = clientId, fpId = authToken?.floatingPointId)
     viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner, {
       val result = it as? AccessTokenResponse
       if (it?.isSuccess() == true && result?.result != null) {
@@ -156,11 +150,7 @@ class RegistrationSuccessFragment :
       val request = getRequestPurchasedOrder(authToken?.floatingPointId!!, responsePlan)
       viewModel?.postActivatePurchasedOrder(clientId, request)?.observeOnce(viewLifecycleOwner, {
         if (it.isSuccess()) {
-          WebEngageController.trackEvent(
-            PS_ACTIVATE_FREE_PURCHASE_PLAN,
-            SIGNUP_SUCCESS,
-            NO_EVENT_VALUE
-          )
+          WebEngageController.trackEvent(PS_ACTIVATE_FREE_PURCHASE_PLAN, SIGNUP_SUCCESS, NO_EVENT_VALUE)
         } else showLongToast(getString(R.string.unable_to_activate_business_plan))
         storeFpDetails()
       })
@@ -170,30 +160,27 @@ class RegistrationSuccessFragment :
   private fun storeFpDetails() {
     val map = HashMap<String, String>()
     map["clientId"] = clientId
-    viewModel?.getFpDetails(authToken?.floatingPointId ?: "", map)
-      ?.observeOnce(viewLifecycleOwner, {
-        val response = it as? UserFpDetailsResponse
-        if (it.isSuccess() && response != null) {
-          ProcessFPDetails(session!!).storeFPDetails(response)
-          startService()
-          startDashboard()
-        } else {
-          hideProgress()
-          logout()
-        }
-      })
+    viewModel?.getFpDetails(authToken?.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner, {
+      val response = it as? UserFpDetailsResponse
+      if (it.isSuccess() && response != null) {
+        ProcessFPDetails(session!!).storeFPDetails(response)
+        startService()
+        startDashboard()
+      } else {
+        hideProgress()
+        logout()
+      }
+    })
   }
 
   private fun startDashboard() {
     try {
-      val dashboardIntent =
-        Intent(baseActivity, Class.forName("com.dashboard.controller.DashboardActivity"))
+      val dashboardIntent = Intent(baseActivity, Class.forName("com.dashboard.controller.DashboardActivity"))
       dashboardIntent.putExtras(requireActivity().intent)
       val bundle = Bundle()
       bundle.putParcelableArrayList("message", ArrayList())
       dashboardIntent.putExtras(bundle)
-      dashboardIntent.flags =
-        Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+      dashboardIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
       startActivity(dashboardIntent)
       baseActivity.finish()
       hideProgress()
@@ -202,26 +189,14 @@ class RegistrationSuccessFragment :
     }
   }
 
-  private fun getRequestPurchasedOrder(
-    floatingPointId: String,
-    responsePlan: Plan15DaysResponse?
-  ): ActivatePurchasedOrderRequest {
+  private fun getRequestPurchasedOrder(floatingPointId: String, responsePlan: Plan15DaysResponse?): ActivatePurchasedOrderRequest {
     val widList = ArrayList<PurchasedWidget>()
     floatsRequest?.categoryDataModel?.sections?.forEach {
       it.getWidList().forEach { key ->
         val widget = PurchasedWidget(
-          widgetKey = key,
-          name = it.title,
-          quantity = 1,
-          desc = it.desc,
-          recurringPaymentFrequency = "MONTHLY",
-          isCancellable = true,
-          isRecurringPayment = true,
-          discount = 0.0,
-          price = 0.0,
-          netPrice = 0.0,
-          consumptionConstraint = ConsumptionConstraint("DAYS", 30),
-          images = ArrayList(),
+          widgetKey = key, name = it.title, quantity = 1, desc = it.desc, recurringPaymentFrequency = "MONTHLY",
+          isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
+          consumptionConstraint = ConsumptionConstraint("DAYS", 30), images = ArrayList(),
           expiry = PurchasedExpiry("YEARS", 10)
         )
         widList.add(widget)
@@ -237,18 +212,9 @@ class RegistrationSuccessFragment :
         } else {
           widList.add(
             PurchasedWidget(
-              widgetKey = key,
-              name = "",
-              quantity = 1,
-              desc = "",
-              recurringPaymentFrequency = "MONTHLY",
-              isCancellable = true,
-              isRecurringPayment = true,
-              discount = 0.0,
-              price = 0.0,
-              netPrice = 0.0,
-              consumptionConstraint = ConsumptionConstraint("DAYS", 15),
-              images = ArrayList(),
+              widgetKey = key, name = "", quantity = 1, desc = "", recurringPaymentFrequency = "MONTHLY",
+              isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
+              consumptionConstraint = ConsumptionConstraint("DAYS", 15), images = ArrayList(),
               expiry = PurchasedExpiry("DAYS", 15)
             )
           )
@@ -263,18 +229,9 @@ class RegistrationSuccessFragment :
         } else {
           widList.add(
             PurchasedWidget(
-              widgetKey = keyValue.widget,
-              name = "",
-              quantity = 1,
-              desc = "",
-              recurringPaymentFrequency = "MONTHLY",
-              isCancellable = true,
-              isRecurringPayment = true,
-              discount = 0.0,
-              price = 0.0,
-              netPrice = 0.0,
-              consumptionConstraint = ConsumptionConstraint("DAYS", 15),
-              images = ArrayList(),
+              widgetKey = keyValue.widget, name = "", quantity = 1, desc = "", recurringPaymentFrequency = "MONTHLY",
+              isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
+              consumptionConstraint = ConsumptionConstraint("DAYS", 15), images = ArrayList(),
               expiry = PurchasedExpiry("DAYS", keyValue.value)
             )
           )
@@ -289,17 +246,15 @@ class RegistrationSuccessFragment :
   }
 
   private fun onBackPressed() {
-    activity?.onBackPressedDispatcher?.addCallback(
-      viewLifecycleOwner,
-      object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-          if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
-            exitProcess(0)
-          } else {
-            showShortToast(getString(R.string.press_again_exit))
-          }
-          mBackPressed = System.currentTimeMillis();
+    activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+      override fun handleOnBackPressed() {
+        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+          exitProcess(0)
+        } else {
+          showShortToast(getString(R.string.press_again_exit))
         }
-      })
+        mBackPressed = System.currentTimeMillis();
+      }
+    })
   }
 }

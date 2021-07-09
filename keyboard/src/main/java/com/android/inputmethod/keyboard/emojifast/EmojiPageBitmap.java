@@ -3,9 +3,7 @@ package com.android.inputmethod.keyboard.emojifast;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-
 import androidx.annotation.NonNull;
-
 import android.util.Log;
 
 import java.io.IOException;

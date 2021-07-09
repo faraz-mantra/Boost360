@@ -15,53 +15,43 @@ import org.koin.dsl.module
 
 val koinModules = module(override = true) {
 
-  single {
-    FileProvider(context = get())
-  }
+    single {
+        FileProvider(context = get())
+    }
 
-  single {
-    SaveImageHelper(context = get())
-  }
+    single {
+        SaveImageHelper(context = get())
+    }
 
-  single {
-    PictureUtils()
-  }
+    single {
+        PictureUtils()
+    }
 
-  single {
-    ExifInterfaceHelper(pictureUtils = get())
-  }
+    single {
+        ExifInterfaceHelper(pictureUtils = get())
+    }
 
-  viewModel {
-    BatchesDetailsViewModel(service = get())
-  }
+    viewModel {
+        BatchesDetailsViewModel(service = get())
+    }
 
-  viewModel {
-    BatchesViewModel(service = get())
-  }
+    viewModel {
+        BatchesViewModel(service = get())
+    }
 
-  viewModel {
-    FacultyDetailsViewModel(
-      service = get(),
-      fileProvider = get(),
-      saveImageHelper = get(),
-      exifInterfaceHelper = get()
-    )
-  }
+    viewModel {
+        FacultyDetailsViewModel(service = get(), fileProvider = get(), saveImageHelper = get(), exifInterfaceHelper = get())
+    }
 
-  viewModel {
-    FacultyManagementViewModel(service = get())
-  }
+    viewModel {
+        FacultyManagementViewModel(service = get())
+    }
 
-  viewModel {
-    ToppersViewModel(service = get())
-  }
+    viewModel {
+        ToppersViewModel(service = get())
+    }
 
-  viewModel {
-    TopperDetailsViewModel(
-      service = get(),
-      fileProvider = get(),
-      saveImageHelper = get(),
-      exifInterfaceHelper = get()
-    )
-  }
+    viewModel {
+        TopperDetailsViewModel(service = get(), fileProvider = get(), saveImageHelper = get(), exifInterfaceHelper = get())
+    }
 }

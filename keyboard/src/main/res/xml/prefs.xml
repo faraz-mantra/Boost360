@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2008 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2008 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,34 +15,33 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-  android:key="english_ime_settings">
-  <PreferenceScreen
-    android:fragment="io.separ.neural.inputmethod.indic.settings.PreferencesSettingsFragment"
-    android:key="screen_preferences"
-    android:title="@string/settings_screen_preferences" />
-  <PreferenceScreen
-    android:fragment="io.separ.neural.inputmethod.indic.settings.ThemeSettingsFragment"
-    android:key="screen_theme"
-    android:title="@string/settings_screen_theme" />
-  <!--xmlns:android="http://schemas.android.com/apk/res/android" />-->
-  <!--<PreferenceScreen
-      android:fragment="io.separ.neural.inputmethod.indic.settings.AppearanceSettingsFragment"
-      android:title="@string/settings_screen_appearance"
-      android:key="screen_appearance" />-->
-  <!--<PreferenceScreen
-      android:fragment="io.separ.neural.inputmethod.indic.settings.MultiLingualSettingsFragment"
-      android:title="@string/settings_screen_multilingual"
-      android:key="screen_multilingual" />-->
-  <!--<PreferenceScreen
-      android:fragment="io.separ.neural.inputmethod.indic.settings.GestureSettingsFragment"
-      android:title="@string/settings_screen_gesture"
-      android:key="screen_gesture" />-->
-  <PreferenceScreen
-    android:fragment="io.separ.neural.inputmethod.indic.settings.CorrectionSettingsFragment"
-    android:key="screen_correction"
-    android:title="@string/settings_screen_correction" />
-  <PreferenceScreen
-    android:fragment="io.separ.neural.inputmethod.indic.settings.AdvancedSettingsFragment"
-    android:key="screen_advanced"
-    android:title="@string/settings_screen_advanced" />
+    android:key="english_ime_settings">
+    <PreferenceScreen
+        android:fragment="io.separ.neural.inputmethod.indic.settings.PreferencesSettingsFragment"
+        android:title="@string/settings_screen_preferences"
+        android:key="screen_preferences" />
+    <PreferenceScreen android:fragment="io.separ.neural.inputmethod.indic.settings.ThemeSettingsFragment"
+        android:key="screen_theme"
+        android:title="@string/settings_screen_theme"/>
+        <!--xmlns:android="http://schemas.android.com/apk/res/android" />-->
+    <!--<PreferenceScreen
+        android:fragment="io.separ.neural.inputmethod.indic.settings.AppearanceSettingsFragment"
+        android:title="@string/settings_screen_appearance"
+        android:key="screen_appearance" />-->
+    <!--<PreferenceScreen
+        android:fragment="io.separ.neural.inputmethod.indic.settings.MultiLingualSettingsFragment"
+        android:title="@string/settings_screen_multilingual"
+        android:key="screen_multilingual" />-->
+    <!--<PreferenceScreen
+        android:fragment="io.separ.neural.inputmethod.indic.settings.GestureSettingsFragment"
+        android:title="@string/settings_screen_gesture"
+        android:key="screen_gesture" />-->
+    <PreferenceScreen
+        android:fragment="io.separ.neural.inputmethod.indic.settings.CorrectionSettingsFragment"
+        android:title="@string/settings_screen_correction"
+        android:key="screen_correction" />
+    <PreferenceScreen
+        android:fragment="io.separ.neural.inputmethod.indic.settings.AdvancedSettingsFragment"
+        android:title="@string/settings_screen_advanced"
+        android:key="screen_advanced" />
 </PreferenceScreen>

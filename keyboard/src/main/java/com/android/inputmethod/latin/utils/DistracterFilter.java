@@ -24,10 +24,26 @@ import java.util.List;
 import java.util.Locale;
 
 public interface DistracterFilter {
+    /**
+     * Determine whether a word is a distracter to words in dictionaries.
+     *
+     * @param prevWordsInfo the information of previous words.
+     * @param testedWord the word that will be tested to see whether it is a distracter to words
+     *                   in dictionaries.
+     * @param locale the locale of word.
+     * @return true if testedWord is a distracter, otherwise false.
+     */
+    boolean isDistracterToWordsInDictionaries(final PrevWordsInfo prevWordsInfo,
+                                              final String testedWord, final Locale locale);
+
+    void updateEnabledSubtypes(final List<InputMethodSubtype> enabledSubtypes);
+
+    void close();
+
     DistracterFilter EMPTY_DISTRACTER_FILTER = new DistracterFilter() {
         @Override
         public boolean isDistracterToWordsInDictionaries(PrevWordsInfo prevWordsInfo,
-                                                         String testedWord, Locale locale) {
+                String testedWord, Locale locale) {
             return false;
         }
 
@@ -39,20 +55,4 @@ public interface DistracterFilter {
         public void updateEnabledSubtypes(List<InputMethodSubtype> enabledSubtypes) {
         }
     };
-
-    /**
-     * Determine whether a word is a distracter to words in dictionaries.
-     *
-     * @param prevWordsInfo the information of previous words.
-     * @param testedWord    the word that will be tested to see whether it is a distracter to words
-     *                      in dictionaries.
-     * @param locale        the locale of word.
-     * @return true if testedWord is a distracter, otherwise false.
-     */
-    boolean isDistracterToWordsInDictionaries(final PrevWordsInfo prevWordsInfo,
-                                              final String testedWord, final Locale locale);
-
-    void updateEnabledSubtypes(final List<InputMethodSubtype> enabledSubtypes);
-
-    void close();
 }

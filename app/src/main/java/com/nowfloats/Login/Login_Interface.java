@@ -18,22 +18,22 @@ import retrofit.http.QueryMap;
  * Created by guru on 26-05-2015.
  */
 public interface Login_Interface {
-    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @Headers({"Content-Type: application/json","Accept: application/json"})
     @POST("/Discover/v1/floatingPoint/verifyLogin")
-    public void authenticationProcess(@Body HashMap<String, String> map, Callback<Login_Data_Model> callback);
+    public void authenticationProcess(@Body HashMap<String,String> map, Callback<Login_Data_Model> callback);
 
     @Headers({"Content-Type: application/json"})
     @PUT("/Discover/v1/floatingpoint/notification/unregisterChannel")
-    public void logoutUnsubcribeRIA(@Body HashMap<String, String> map, Callback<String> callback);
+    public void logoutUnsubcribeRIA(@Body HashMap<String,String> map,Callback<String> callback);
 
     @GET("/Discover/v1/floatingPoint/bizFloats")
-    public void getMessages(@QueryMap Map<String, String> map, Callback<MessageModel> callback);
+    public void getMessages(@QueryMap Map<String,String> map, Callback<MessageModel> callback);
 
     //Get new Available Updates
     @GET("/Discover/v1/floatingPoint/GetLatestBizFloatsFromMessage")
     public void getNewAvailableMessage(@QueryMap Map<String, String> map, Callback<MessageModel> callback);
 
-    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @Headers({"Content-Type: application/json","Accept: application/json"})
     @POST("/Discover/v1/floatingpoint/notification/registerChannel")
-    public void post_RegisterRia(@Body HashMap<String, String> map, Callback<String> callback);
+    public void post_RegisterRia(@Body HashMap<String,String> map, Callback<String> callback);
 }

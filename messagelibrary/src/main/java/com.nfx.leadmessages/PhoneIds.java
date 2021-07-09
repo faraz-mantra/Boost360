@@ -7,7 +7,17 @@ import android.os.Parcelable;
  * Created by NowFloats on 16-02-2017.
  */
 
-class PhoneIds implements Parcelable {
+class PhoneIds implements Parcelable{
+    public PhoneIds(){
+
+    }
+    public String phoneId,date;
+
+    protected PhoneIds(Parcel in) {
+        phoneId = in.readString();
+        date = in.readString();
+    }
+
     public static final Creator<PhoneIds> CREATOR = new Creator<PhoneIds>() {
         @Override
         public PhoneIds createFromParcel(Parcel in) {
@@ -19,16 +29,6 @@ class PhoneIds implements Parcelable {
             return new PhoneIds[size];
         }
     };
-    public String phoneId, date;
-
-    public PhoneIds() {
-
-    }
-
-    protected PhoneIds(Parcel in) {
-        phoneId = in.readString();
-        date = in.readString();
-    }
 
     public String getPhoneId() {
         return phoneId;
@@ -53,7 +53,7 @@ class PhoneIds implements Parcelable {
 
     @Override
     public String toString() {
-        return date + " " + phoneId;
+        return date+" "+phoneId;
     }
 
     @Override

@@ -28,14 +28,6 @@ public final class TargetPackageInfoGetterTask extends
         AsyncTask<String, Void, PackageInfo> {
     private static final int MAX_CACHE_ENTRIES = 64; // arbitrary
     private static final LruCache<String, PackageInfo> sCache = new LruCache<>(MAX_CACHE_ENTRIES);
-    private final AsyncResultHolder<AppWorkaroundsUtils> mResult;
-    private Context mContext;
-
-    public TargetPackageInfoGetterTask(final Context context,
-                                       final AsyncResultHolder<AppWorkaroundsUtils> result) {
-        mContext = context;
-        mResult = result;
-    }
 
     public static PackageInfo getCachedPackageInfo(final String packageName) {
         if (null == packageName) return null;
@@ -44,6 +36,15 @@ public final class TargetPackageInfoGetterTask extends
 
     public static void removeCachedPackageInfo(final String packageName) {
         sCache.remove(packageName);
+    }
+
+    private Context mContext;
+    private final AsyncResultHolder<AppWorkaroundsUtils> mResult;
+
+    public TargetPackageInfoGetterTask(final Context context,
+            final AsyncResultHolder<AppWorkaroundsUtils> result) {
+        mContext = context;
+        mResult = result;
     }
 
     @Override

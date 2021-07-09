@@ -11,16 +11,13 @@ import com.onboarding.nowfloats.ui.channel.ChannelPickerActivity
 import com.onboarding.nowfloats.ui.setFragmentType
 
 data class ScreenModel(
-  var title: String? = null,
-  var type: String? = Screen.CATEGORY_SELECT.name,
+    var title: String? = null,
+    var type: String? = Screen.CATEGORY_SELECT.name,
 ) : Parcelable {
 
-  constructor(parcel: Parcel) : this(
-    parcel.readString(),
-    parcel.readString() ?: Screen.CATEGORY_SELECT.name
-  )
+  constructor(parcel: Parcel) : this(parcel.readString(), parcel.readString() ?: Screen.CATEGORY_SELECT.name)
 
-  constructor(screen: Screen? = null, title: String? = null) : this(title, screen?.name)
+  constructor(screen: Screen? = null, title: String? = null, ) : this(title, screen?.name)
 
   enum class Screen {
     CATEGORY_SELECT,
@@ -40,42 +37,15 @@ data class ScreenModel(
     return when (Screen.values().firstOrNull { it.name == type }) {
       Screen.CATEGORY_SELECT -> Intent(context, CategorySelectorActivity::class.java)
       Screen.CHANNEL_SELECT -> Intent(context, ChannelPickerActivity::class.java)
-      Screen.BUSINESS_INFO -> Intent(
-        context,
-        AppFragmentContainerActivity::class.java
-      ).setFragmentType(FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS)
-      Screen.BUSINESS_SUBDOMAIN -> Intent(
-        context,
-        AppFragmentContainerActivity::class.java
-      ).setFragmentType(FragmentType.REGISTRATION_BUSINESS_WEBSITE)
-      Screen.BUSINESS_GOOGLE_PAGE -> Intent(
-        context,
-        AppFragmentContainerActivity::class.java
-      ).setFragmentType(FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE)
-      Screen.BUSINESS_FACEBOOK_PAGE -> Intent(
-        context,
-        AppFragmentContainerActivity::class.java
-      ).setFragmentType(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE)
-      Screen.BUSINESS_FACEBOOK_SHOP -> Intent(
-        context,
-        AppFragmentContainerActivity::class.java
-      ).setFragmentType(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP)
-      Screen.BUSINESS_TWITTER -> Intent(
-        context,
-        AppFragmentContainerActivity::class.java
-      ).setFragmentType(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS)
-      Screen.BUSINESS_WHATSAPP -> Intent(
-        context,
-        AppFragmentContainerActivity::class.java
-      ).setFragmentType(FragmentType.REGISTRATION_BUSINESS_WHATSAPP)
-      Screen.REGISTERING -> Intent(
-        context,
-        AppFragmentContainerActivity::class.java
-      ).setFragmentType(FragmentType.REGISTRATION_BUSINESS_API_CALL)
-      Screen.REGISTRATION_COMPLETE -> Intent(
-        context,
-        AppFragmentContainerActivity::class.java
-      ).setFragmentType(FragmentType.REGISTRATION_COMPLETE)
+      Screen.BUSINESS_INFO -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS)
+      Screen.BUSINESS_SUBDOMAIN -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_WEBSITE)
+      Screen.BUSINESS_GOOGLE_PAGE -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE)
+      Screen.BUSINESS_FACEBOOK_PAGE -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE)
+      Screen.BUSINESS_FACEBOOK_SHOP -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP)
+      Screen.BUSINESS_TWITTER -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS)
+      Screen.BUSINESS_WHATSAPP -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_WHATSAPP)
+      Screen.REGISTERING -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_API_CALL)
+      Screen.REGISTRATION_COMPLETE -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_COMPLETE)
       else -> null
     }
   }

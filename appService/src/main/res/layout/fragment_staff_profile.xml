@@ -169,8 +169,8 @@
           android:id="@+id/ctv_edit_leaves"
           style="@style/StaffProfileEditText"
           android:layout_below="@id/ll_timing_container"
-          android:layout_alignBaseline="@id/ctv_heading_leaves"
           android:visibility="gone"
+          android:layout_alignBaseline="@id/ctv_heading_leaves"
           app:fontFamily="@font/semi_bold" />
 
         <com.framework.views.customViews.CustomTextView

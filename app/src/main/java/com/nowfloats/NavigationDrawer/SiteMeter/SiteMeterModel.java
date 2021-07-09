@@ -10,8 +10,12 @@ public class SiteMeterModel implements Comparable {
     public boolean status;
     public int sortChar;
     public int position;
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    public void setSortChar(int c){this.sortChar = c;}
 
-    public SiteMeterModel(int position, String s, String s1, String s2, boolean status, int c) {
+    public SiteMeterModel(int position ,String s, String s1, String s2, boolean status,int c) {
         this.position = position;
         this.Title = s;
         this.Desc = s1;
@@ -20,17 +24,9 @@ public class SiteMeterModel implements Comparable {
         this.sortChar = c;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public void setSortChar(int c) {
-        this.sortChar = c;
-    }
-
     @Override
     public int compareTo(Object another) {
-        int cVal = ((SiteMeterModel) another).sortChar;
-        return (cVal) - this.sortChar;
+        int cVal = ((SiteMeterModel)another).sortChar;
+        return (cVal)-this.sortChar;
     }
 }

@@ -1,11 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  tools:context="com.nowfloats.ProductGallery.ProductCatalogActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.nowfloats.ProductGallery.ProductCatalogActivity">
 
-  <item
-    android:id="@+id/menu_delete"
-    android:icon="@drawable/ic_menu_delete"
-    android:title="@string/delete_"
-    app:showAsAction="always" />
+    <item  android:id="@+id/menu_delete"
+        android:title="@string/delete_"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_menu_delete"/>
 </menu>

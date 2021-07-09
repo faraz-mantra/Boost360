@@ -11,6 +11,15 @@ import com.google.gson.annotations.SerializedName;
 public class SmsVerifyModel {
     private boolean IsOTPValid;
     private boolean IsOTPSent;
+
+    public boolean isOTPValid() {
+        return IsOTPValid;
+    }
+
+    public boolean isOTPSent() {
+        return IsOTPSent;
+    }
+
     @SerializedName("error_code")
     @Expose
     private String errorCode;
@@ -23,14 +32,6 @@ public class SmsVerifyModel {
     @SerializedName("success")
     @Expose
     private Boolean success;
-
-    public boolean isOTPValid() {
-        return IsOTPValid;
-    }
-
-    public boolean isOTPSent() {
-        return IsOTPSent;
-    }
 
     public String getErrorCode() {
         return errorCode;

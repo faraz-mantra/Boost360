@@ -8,10 +8,8 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -46,6 +44,14 @@ public class BubbleInAppDialog extends AppCompatActivity {
         initialize();
     }
 
+    private class KillListener extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
+    }
+
     private void initialize() {
 
         killListener = new KillListener();
@@ -58,17 +64,17 @@ public class BubbleInAppDialog extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //if (pref.getBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, false)) {
-                MixPanelController.track(MixPanelController.BUBBLE_IN_APP_DIALOG_CLICKED, null);
-                showCustomToastView();
-                Intent i = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(i);
-                finish();
+                    MixPanelController.track(MixPanelController.BUBBLE_IN_APP_DIALOG_CLICKED, null);
+                    showCustomToastView();
+                    Intent i = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivity(i);
+                    finish();
                 //} else {
                    /* startActivity(new Intent(BubbleInAppDialog.this,ProductGalleryActivity.class));
                     stopService(new Intent(BubbleInAppDialog.this, BubblesService.class));
                     finish();*/
-                // }
+               // }
             }
         });
     }
@@ -100,13 +106,5 @@ public class BubbleInAppDialog extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         unregisterReceiver(killListener);
-    }
-
-    private class KillListener extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            finish();
-        }
     }
 }

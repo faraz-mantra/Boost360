@@ -55,6 +55,12 @@ import io.separ.neural.inputmethod.indic.settings.SettingsValuesForSuggestion;
  */
 // TODO: All methods which should be locked need to have a suffix "Locked".
 public final class BinaryDictionary extends Dictionary {
+    private static final String TAG = BinaryDictionary.class.getSimpleName();
+
+    // The cutoff returned by native for auto-commit confidence.
+    // Must be equal to CONFIDENCE_TO_AUTO_COMMIT in native/jni/src/defines.h
+    private static final int CONFIDENCE_TO_AUTO_COMMIT = 1000000;
+
     @UsedForTesting
     public static final String UNIGRAM_COUNT_QUERY = "UNIGRAM_COUNT";
     @UsedForTesting
@@ -63,19 +69,9 @@ public final class BinaryDictionary extends Dictionary {
     public static final String MAX_UNIGRAM_COUNT_QUERY = "MAX_UNIGRAM_COUNT";
     @UsedForTesting
     public static final String MAX_BIGRAM_COUNT_QUERY = "MAX_BIGRAM_COUNT";
+
     public static final int NOT_A_VALID_TIMESTAMP = -1;
-    // Format to get probability and historical info from native side via getWordPropertyNative().
-    public static final int FORMAT_WORD_PROPERTY_OUTPUT_PROBABILITY_INFO_COUNT = 4;
-    public static final int FORMAT_WORD_PROPERTY_PROBABILITY_INDEX = 0;
-    public static final int FORMAT_WORD_PROPERTY_TIMESTAMP_INDEX = 1;
-    public static final int FORMAT_WORD_PROPERTY_LEVEL_INDEX = 2;
-    public static final int FORMAT_WORD_PROPERTY_COUNT_INDEX = 3;
-    public static final String DICT_FILE_NAME_SUFFIX_FOR_MIGRATION = ".migrate";
-    public static final String DIR_NAME_SUFFIX_FOR_RECORD_MIGRATION = ".migrating";
-    private static final String TAG = BinaryDictionary.class.getSimpleName();
-    // The cutoff returned by native for auto-commit confidence.
-    // Must be equal to CONFIDENCE_TO_AUTO_COMMIT in native/jni/src/defines.h
-    private static final int CONFIDENCE_TO_AUTO_COMMIT = 1000000;
+
     // Format to get unigram flags from native side via getWordPropertyNative().
     private static final int FORMAT_WORD_PROPERTY_OUTPUT_FLAG_COUNT = 5;
     private static final int FORMAT_WORD_PROPERTY_IS_NOT_A_WORD_INDEX = 0;
@@ -84,32 +80,51 @@ public final class BinaryDictionary extends Dictionary {
     private static final int FORMAT_WORD_PROPERTY_HAS_SHORTCUTS_INDEX = 3;
     private static final int FORMAT_WORD_PROPERTY_IS_BEGINNING_OF_SENTENCE_INDEX = 4;
 
-    static {
-        JniUtils.loadNativeLibrary();
-    }
+    // Format to get probability and historical info from native side via getWordPropertyNative().
+    public static final int FORMAT_WORD_PROPERTY_OUTPUT_PROBABILITY_INFO_COUNT = 4;
+    public static final int FORMAT_WORD_PROPERTY_PROBABILITY_INDEX = 0;
+    public static final int FORMAT_WORD_PROPERTY_TIMESTAMP_INDEX = 1;
+    public static final int FORMAT_WORD_PROPERTY_LEVEL_INDEX = 2;
+    public static final int FORMAT_WORD_PROPERTY_COUNT_INDEX = 3;
 
+    public static final String DICT_FILE_NAME_SUFFIX_FOR_MIGRATION = ".migrate";
+    public static final String DIR_NAME_SUFFIX_FOR_RECORD_MIGRATION = ".migrating";
+
+    private long mNativeDict;
     private final Locale mLocale;
     private final long mDictSize;
     private final String mDictFilePath;
     private final boolean mUseFullEditDistance;
     private final boolean mIsUpdatable;
-    private final SparseArray<DicTraverseSession> mDicTraverseSessions = new SparseArray<>();
-    private long mNativeDict;
     private boolean mHasUpdated;
+
+    private final SparseArray<DicTraverseSession> mDicTraverseSessions = new SparseArray<>();
+
+    // TODO: There should be a way to remove used DicTraverseSession objects from
+    // {@code mDicTraverseSessions}.
+    private DicTraverseSession getTraverseSession(final int traverseSessionId) {
+        synchronized(mDicTraverseSessions) {
+            DicTraverseSession traverseSession = mDicTraverseSessions.get(traverseSessionId);
+            if (traverseSession == null) {
+                traverseSession = new DicTraverseSession(mLocale, mNativeDict, mDictSize);
+                mDicTraverseSessions.put(traverseSessionId, traverseSession);
+            }
+            return traverseSession;
+        }
+    }
 
     /**
      * Constructs binary dictionary using existing dictionary file.
-     *
-     * @param filename            the name of the file to read through native code.
-     * @param offset              the offset of the dictionary data within the file.
-     * @param length              the length of the binary data.
+     * @param filename the name of the file to read through native code.
+     * @param offset the offset of the dictionary data within the file.
+     * @param length the length of the binary data.
      * @param useFullEditDistance whether to use the full edit distance in suggestions
-     * @param dictType            the dictionary type, as a human-readable string
-     * @param isUpdatable         whether to open the dictionary file in writable mode.
+     * @param dictType the dictionary type, as a human-readable string
+     * @param isUpdatable whether to open the dictionary file in writable mode.
      */
     public BinaryDictionary(final String filename, final long offset, final long length,
-                            final boolean useFullEditDistance, final Locale locale, final String dictType,
-                            final boolean isUpdatable) {
+            final boolean useFullEditDistance, final Locale locale, final String dictType,
+            final boolean isUpdatable) {
         super(dictType);
         mLocale = locale;
         mDictSize = length;
@@ -122,16 +137,15 @@ public final class BinaryDictionary extends Dictionary {
 
     /**
      * Constructs binary dictionary on memory.
-     *
-     * @param filename            the name of the file used to flush.
+     * @param filename the name of the file used to flush.
      * @param useFullEditDistance whether to use the full edit distance in suggestions
-     * @param dictType            the dictionary type, as a human-readable string
-     * @param formatVersion       the format version of the dictionary
-     * @param attributeMap        the attributes of the dictionary
+     * @param dictType the dictionary type, as a human-readable string
+     * @param formatVersion the format version of the dictionary
+     * @param attributeMap the attributes of the dictionary
      */
     public BinaryDictionary(final String filename, final boolean useFullEditDistance,
-                            final Locale locale, final String dictType, final long formatVersion,
-                            final Map<String, String> attributeMap) {
+            final Locale locale, final String dictType, final long formatVersion,
+            final Map<String, String> attributeMap) {
         super(dictType);
         mLocale = locale;
         mDictSize = 0;
@@ -151,85 +165,56 @@ public final class BinaryDictionary extends Dictionary {
         mNativeDict = createOnMemoryNative(formatVersion, locale.toString(), keyArray, valueArray);
     }
 
-    private static native long openNative(String sourceDir, long dictOffset, long dictSize,
-                                          boolean isUpdatable);
 
-    private static native long createOnMemoryNative(long formatVersion,
-                                                    String locale, String[] attributeKeyStringArray, String[] attributeValueStringArray);
-
-    private static native void getHeaderInfoNative(long dict, int[] outHeaderSize,
-                                                   int[] outFormatVersion, ArrayList<int[]> outAttributeKeys,
-                                                   ArrayList<int[]> outAttributeValues);
-
-    private static native boolean flushNative(long dict, String filePath);
-
-    private static native boolean needsToRunGCNative(long dict, boolean mindsBlockByGC);
-
-    private static native boolean flushWithGCNative(long dict, String filePath);
-
-    private static native void closeNative(long dict);
-
-    private static native int getFormatVersionNative(long dict);
-
-    private static native int getProbabilityNative(long dict, int[] word);
-
-    private static native int getMaxProbabilityOfExactMatchesNative(long dict, int[] word);
-
-    private static native int getNgramProbabilityNative(long dict, int[][] prevWordCodePointArrays,
-                                                        boolean[] isBeginningOfSentenceArray, int[] word);
-
-    private static native void getWordPropertyNative(long dict, int[] word,
-                                                     boolean isBeginningOfSentence, int[] outCodePoints, boolean[] outFlags,
-                                                     int[] outProbabilityInfo, ArrayList<int[]> outBigramTargets,
-                                                     ArrayList<int[]> outBigramProbabilityInfo, ArrayList<int[]> outShortcutTargets,
-                                                     ArrayList<Integer> outShortcutProbabilities);
-
-    private static native int getNextWordNative(long dict, int token, int[] outCodePoints,
-                                                boolean[] outIsBeginningOfSentence);
-
-    private static native void getSuggestionsNative(long dict, long proximityInfo,
-                                                    long traverseSession, int[] xCoordinates, int[] yCoordinates, int[] times,
-                                                    int[] pointerIds, int[] inputCodePoints, int inputSize, int[] suggestOptions,
-                                                    int[][] prevWordCodePointArrays, boolean[] isBeginningOfSentenceArray,
-                                                    int[] outputSuggestionCount, int[] outputCodePoints, int[] outputScores,
-                                                    int[] outputIndices, int[] outputTypes, int[] outputAutoCommitFirstWordConfidence,
-                                                    float[] inOutLanguageWeight);
-
-    private static native boolean addUnigramEntryNative(long dict, int[] word, int probability,
-                                                        int[] shortcutTarget, int shortcutProbability, boolean isBeginningOfSentence,
-                                                        boolean isNotAWord, boolean isBlacklisted, int timestamp);
-
-    private static native boolean removeUnigramEntryNative(long dict, int[] word);
-
-    private static native boolean addNgramEntryNative(long dict,
-                                                      int[][] prevWordCodePointArrays, boolean[] isBeginningOfSentenceArray,
-                                                      int[] word, int probability, int timestamp);
-
-    private static native boolean removeNgramEntryNative(long dict,
-                                                         int[][] prevWordCodePointArrays, boolean[] isBeginningOfSentenceArray, int[] word);
-
-    private static native int addMultipleDictionaryEntriesNative(long dict,
-                                                                 LanguageModelParam[] languageModelParams, int startIndex);
-
-    private static native String getPropertyNative(long dict, String query);
-
-    private static native boolean isCorruptedNative(long dict);
-
-    private static native boolean migrateNative(long dict, String dictFilePath,
-                                                long newFormatVersion);
-
-    // TODO: There should be a way to remove used DicTraverseSession objects from
-    // {@code mDicTraverseSessions}.
-    private DicTraverseSession getTraverseSession(final int traverseSessionId) {
-        synchronized (mDicTraverseSessions) {
-            DicTraverseSession traverseSession = mDicTraverseSessions.get(traverseSessionId);
-            if (traverseSession == null) {
-                traverseSession = new DicTraverseSession(mLocale, mNativeDict, mDictSize);
-                mDicTraverseSessions.put(traverseSessionId, traverseSession);
-            }
-            return traverseSession;
-        }
+    static {
+        JniUtils.loadNativeLibrary();
     }
+
+    private static native long openNative(String sourceDir, long dictOffset, long dictSize,
+            boolean isUpdatable);
+    private static native long createOnMemoryNative(long formatVersion,
+            String locale, String[] attributeKeyStringArray, String[] attributeValueStringArray);
+    private static native void getHeaderInfoNative(long dict, int[] outHeaderSize,
+            int[] outFormatVersion, ArrayList<int[]> outAttributeKeys,
+            ArrayList<int[]> outAttributeValues);
+    private static native boolean flushNative(long dict, String filePath);
+    private static native boolean needsToRunGCNative(long dict, boolean mindsBlockByGC);
+    private static native boolean flushWithGCNative(long dict, String filePath);
+    private static native void closeNative(long dict);
+    private static native int getFormatVersionNative(long dict);
+    private static native int getProbabilityNative(long dict, int[] word);
+    private static native int getMaxProbabilityOfExactMatchesNative(long dict, int[] word);
+    private static native int getNgramProbabilityNative(long dict, int[][] prevWordCodePointArrays,
+            boolean[] isBeginningOfSentenceArray, int[] word);
+    private static native void getWordPropertyNative(long dict, int[] word,
+            boolean isBeginningOfSentence, int[] outCodePoints, boolean[] outFlags,
+            int[] outProbabilityInfo, ArrayList<int[]> outBigramTargets,
+            ArrayList<int[]> outBigramProbabilityInfo, ArrayList<int[]> outShortcutTargets,
+            ArrayList<Integer> outShortcutProbabilities);
+    private static native int getNextWordNative(long dict, int token, int[] outCodePoints,
+            boolean[] outIsBeginningOfSentence);
+    private static native void getSuggestionsNative(long dict, long proximityInfo,
+            long traverseSession, int[] xCoordinates, int[] yCoordinates, int[] times,
+            int[] pointerIds, int[] inputCodePoints, int inputSize, int[] suggestOptions,
+            int[][] prevWordCodePointArrays, boolean[] isBeginningOfSentenceArray,
+            int[] outputSuggestionCount, int[] outputCodePoints, int[] outputScores,
+            int[] outputIndices, int[] outputTypes, int[] outputAutoCommitFirstWordConfidence,
+            float[] inOutLanguageWeight);
+    private static native boolean addUnigramEntryNative(long dict, int[] word, int probability,
+            int[] shortcutTarget, int shortcutProbability, boolean isBeginningOfSentence,
+            boolean isNotAWord, boolean isBlacklisted, int timestamp);
+    private static native boolean removeUnigramEntryNative(long dict, int[] word);
+    private static native boolean addNgramEntryNative(long dict,
+            int[][] prevWordCodePointArrays, boolean[] isBeginningOfSentenceArray,
+            int[] word, int probability, int timestamp);
+    private static native boolean removeNgramEntryNative(long dict,
+            int[][] prevWordCodePointArrays, boolean[] isBeginningOfSentenceArray, int[] word);
+    private static native int addMultipleDictionaryEntriesNative(long dict,
+            LanguageModelParam[] languageModelParams, int startIndex);
+    private static native String getPropertyNative(long dict, String query);
+    private static native boolean isCorruptedNative(long dict);
+    private static native boolean migrateNative(long dict, String dictFilePath,
+            long newFormatVersion);
 
     // TODO: Move native dict into session
     private void loadDictionary(final String path, final long startOffset,
@@ -280,9 +265,9 @@ public final class BinaryDictionary extends Dictionary {
 
     @Override
     public ArrayList<SuggestedWordInfo> getSuggestions(final WordComposer composer,
-                                                       final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
-                                                       final SettingsValuesForSuggestion settingsValuesForSuggestion,
-                                                       final int sessionId, final float[] inOutLanguageWeight) {
+            final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
+            final SettingsValuesForSuggestion settingsValuesForSuggestion,
+            final int sessionId, final float[] inOutLanguageWeight) {
         if (!isValidDictionary()) {
             return null;
         }
@@ -420,6 +405,16 @@ public final class BinaryDictionary extends Dictionary {
                 outShortcutProbabilities);
     }
 
+    public static class GetNextWordPropertyResult {
+        public final WordProperty mWordProperty;
+        public final int mNextToken;
+
+        public GetNextWordPropertyResult(final WordProperty wordProperty, final int nextToken) {
+            mWordProperty = wordProperty;
+            mNextToken = nextToken;
+        }
+    }
+
     /**
      * Method to iterate all words in the dictionary for makedict.
      * If token is 0, this method newly starts iterating the dictionary.
@@ -436,9 +431,9 @@ public final class BinaryDictionary extends Dictionary {
 
     // Add a unigram entry to binary dictionary with unigram attributes in native code.
     public boolean addUnigramEntry(final String word, final int probability,
-                                   final String shortcutTarget, final int shortcutProbability,
-                                   final boolean isBeginningOfSentence, final boolean isNotAWord,
-                                   final boolean isBlacklisted, final int timestamp) {
+            final String shortcutTarget, final int shortcutProbability,
+            final boolean isBeginningOfSentence, final boolean isNotAWord,
+            final boolean isBlacklisted, final int timestamp) {
         if (word == null || (word.isEmpty() && !isBeginningOfSentence)) {
             return false;
         }
@@ -468,7 +463,7 @@ public final class BinaryDictionary extends Dictionary {
 
     // Add an n-gram entry to the binary dictionary with timestamp in native code.
     public boolean addNgramEntry(final PrevWordsInfo prevWordsInfo, final String word,
-                                 final int probability, final int timestamp) {
+            final int probability, final int timestamp) {
         if (!prevWordsInfo.isValid() || TextUtils.isEmpty(word)) {
             return false;
         }
@@ -558,9 +553,8 @@ public final class BinaryDictionary extends Dictionary {
 
     /**
      * Checks whether GC is needed to run or not.
-     *
      * @param mindsBlockByGC Whether to mind operations blocked by GC. We don't need to care about
-     *                       the blocking in some situations such as in idle time or just before closing.
+     * the blocking in some situations such as in idle time or just before closing.
      * @return whether GC is needed to run or not.
      */
     public boolean needsToRunGC(final boolean mindsBlockByGC) {
@@ -576,7 +570,7 @@ public final class BinaryDictionary extends Dictionary {
         if (isMigratingDir.exists()) {
             isMigratingDir.delete();
             Log.e(TAG, "Previous migration attempt failed probably due to a crash. "
-                    + "Giving up using the old dictionary (" + mDictFilePath + ").");
+                        + "Giving up using the old dictionary (" + mDictFilePath + ").");
             return false;
         }
         if (!isMigratingDir.mkdir()) {
@@ -646,16 +640,6 @@ public final class BinaryDictionary extends Dictionary {
             closeInternalLocked();
         } finally {
             super.finalize();
-        }
-    }
-
-    public static class GetNextWordPropertyResult {
-        public final WordProperty mWordProperty;
-        public final int mNextToken;
-
-        public GetNextWordPropertyResult(final WordProperty wordProperty, final int nextToken) {
-            mWordProperty = wordProperty;
-            mNextToken = nextToken;
         }
     }
 }

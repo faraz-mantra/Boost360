@@ -18,97 +18,97 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:layout_gravity="bottom"
-  android:animateLayoutChanges="true"
-  android:orientation="vertical">
-
-  <LinearLayout
-    android:id="@id/keyboard_top_area"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:animateLayoutChanges="true"
     android:orientation="vertical">
 
-    <!--<com.android.inputmethod.keyboard.top.services.ServiceResultsView
-        android:id="@id/suggestion_source_results"
-        style="?attr/suggestionStripViewStyle"
+    <LinearLayout
+        android:id="@id/keyboard_top_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" />-->
-    <!--<RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/action_row_container">-->
-    <com.android.inputmethod.keyboard.top.actionrow.ActionRowView
-      android:id="@+id/action_row"
-      android:layout_width="match_parent"
-      android:layout_height="45dp"
-      android:background="@color/white"
-      android:clickable="true"
-      android:gravity="center_vertical"
-      android:longClickable="false"
-      android:overScrollMode="never"
-      android:scrollbars="none"
-      android:visibility="gone" />
-    <!--<me.relex.circleindicator.CircleIndicator
-        android:id="@+id/actionrow_page_indicator"
+        android:orientation="vertical">
+
+        <!--<com.android.inputmethod.keyboard.top.services.ServiceResultsView
+            android:id="@id/suggestion_source_results"
+            style="?attr/suggestionStripViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />-->
+        <!--<RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/action_row_container">-->
+        <com.android.inputmethod.keyboard.top.actionrow.ActionRowView
+            android:id="@+id/action_row"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:longClickable="false"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:visibility="gone" />
+        <!--<me.relex.circleindicator.CircleIndicator
+            android:id="@+id/actionrow_page_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:layout_alignBottom="@id/action_row"/>--><!--TODO change this(12dp)-->
+        <!--</RelativeLayout>-->
+        <FrameLayout
+            android:id="@id/suggestion_strip_hacky_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <io.separ.neural.inputmethod.indic.suggestions.SuggestionStripView
+                android:id="@+id/suggestion_strip_view"
+                style="?attr/suggestionStripViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
+                android:visibility="visible" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="12dp"
-        android:layout_alignBottom="@id/action_row"/>--><!--TODO change this(12dp)-->
-    <!--</RelativeLayout>-->
-    <FrameLayout
-      android:id="@id/suggestion_strip_hacky_container"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#212121">
 
-      <io.separ.neural.inputmethod.indic.suggestions.SuggestionStripView
-        android:id="@+id/suggestion_strip_view"
-        style="?attr/suggestionStripViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:gravity="center_vertical"
-        android:visibility="visible" />
-    </FrameLayout>
-  </LinearLayout>
+        <com.android.inputmethod.keyboard.MainKeyboardView
+            android:id="@+id/keyboard_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
 
-  <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#212121">
-
-    <com.android.inputmethod.keyboard.MainKeyboardView
-      android:id="@+id/keyboard_view"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:visibility="visible" />
-
-    <include
-      android:id="@+id/sharelayout"
-      layout="@layout/layout_boost_share_keyboard"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom"
-      android:background="#212121"
-      android:visibility="gone" />
+        <include
+            android:id="@+id/sharelayout"
+            layout="@layout/layout_boost_share_keyboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#212121"
+            android:visibility="gone" />
 
 
-    <ProgressBar
-      android:id="@+id/pb_offer"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      android:visibility="gone" />
+        <ProgressBar
+            android:id="@+id/pb_offer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
 
-    <TextView
-      android:id="@+id/tv_images_not_supported"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      android:gravity="center"
-      android:text="@string/image_not_supported"
-      android:textColor="@color/white"
-      android:visibility="gone" />
-  </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_images_not_supported"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/image_not_supported"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+    </RelativeLayout>
 </LinearLayout>

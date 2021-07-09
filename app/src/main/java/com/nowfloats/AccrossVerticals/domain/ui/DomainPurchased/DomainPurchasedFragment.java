@@ -68,7 +68,7 @@ public class DomainPurchasedFragment extends Fragment {
     }
 
 
-    public void setHeader(View view) {
+    public void setHeader(View view){
         LinearLayout backButton;
         TextView title;
 

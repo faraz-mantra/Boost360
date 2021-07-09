@@ -24,23 +24,28 @@ public class SubActionButton extends FrameLayout {
         super(activity);
         setLayoutParams(layoutParams);
         // If no custom backgroundDrawable is specified, use the background drawable of the theme.
-        if (backgroundDrawable == null) {
-            if (theme == THEME_LIGHT) {
+        if(backgroundDrawable == null) {
+            if(theme == THEME_LIGHT) {
                 backgroundDrawable = activity.getResources().getDrawable(R.drawable.button_sub_action_selector);
-            } else if (theme == THEME_DARK) {
+            }
+            else if(theme == THEME_DARK) {
                 backgroundDrawable = activity.getResources().getDrawable(R.drawable.button_sub_action_dark_selector);
-            } else if (theme == THEME_LIGHTER) {
+            }
+            else if(theme == THEME_LIGHTER) {
                 backgroundDrawable = activity.getResources().getDrawable(R.drawable.button_action_selector);
-            } else if (theme == THEME_DARKER) {
+            }
+            else if(theme == THEME_DARKER) {
                 backgroundDrawable = activity.getResources().getDrawable(R.drawable.button_action_dark_selector);
-            } else {
+            }
+            else {
                 throw new RuntimeException("Unknown SubActionButton theme: " + theme);
             }
-        } else {
+        }
+        else {
             backgroundDrawable = backgroundDrawable.mutate().getConstantState().newDrawable();
         }
         setBackgroundResource(backgroundDrawable);
-        if (contentView != null) {
+        if(contentView != null) {
             setContentView(contentView, contentParams);
         }
         setClickable(true);
@@ -48,12 +53,11 @@ public class SubActionButton extends FrameLayout {
 
     /**
      * Sets a content view with custom LayoutParams that will be displayed inside this SubActionButton.
-     *
      * @param contentView
      * @param params
      */
     public void setContentView(View contentView, FrameLayout.LayoutParams params) {
-        if (params == null) {
+        if(params == null) {
             params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER);
             final int margin = getResources().getDimensionPixelSize(R.dimen.sub_action_button_content_margin);
             params.setMargins(margin, margin, margin, margin);
@@ -65,7 +69,6 @@ public class SubActionButton extends FrameLayout {
 
     /**
      * Sets a content view with default LayoutParams
-     *
      * @param contentView
      */
     public void setContentView(View contentView) {
@@ -75,7 +78,8 @@ public class SubActionButton extends FrameLayout {
     private void setBackgroundResource(Drawable drawable) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             setBackground(drawable);
-        } else {
+        }
+        else {
             setBackgroundDrawable(drawable);
         }
     }

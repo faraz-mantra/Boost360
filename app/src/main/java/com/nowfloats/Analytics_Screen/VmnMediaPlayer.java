@@ -13,24 +13,24 @@ import java.io.IOException;
  */
 
 public class VmnMediaPlayer {
-    private static VmnMediaPlayer vmnMediaPlayer;
     private MediaPlayer mediaPlayer;
     private Context mContext;
-    private boolean playOrPause;
+    private boolean  playOrPause;
+    private static VmnMediaPlayer vmnMediaPlayer;
 
     private VmnMediaPlayer(Context context) {
         mContext = context;
     }
 
-    public static VmnMediaPlayer getInstance(Context context) {
-        if (vmnMediaPlayer == null) {
+    public static VmnMediaPlayer getInstance(Context context){
+        if(vmnMediaPlayer == null){
             vmnMediaPlayer = new VmnMediaPlayer(context);
         }
         return vmnMediaPlayer;
     }
 
-    public void setUpPlayer(VmnCall_v2Adapter.ConnectToVmnPlayer implementer) {
-        if (mediaPlayer == null) {
+    public void setUpPlayer(VmnCall_v2Adapter.ConnectToVmnPlayer implementer){
+        if(mediaPlayer == null){
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setWakeMode(mContext, PowerManager.PARTIAL_WAKE_LOCK);
@@ -40,30 +40,30 @@ public class VmnMediaPlayer {
         }
     }
 
-    public void reset() {
+    public void reset(){
         mediaPlayer.reset();
     }
 
-    public void seekTo(int i) {
+    public void seekTo(int i){
         mediaPlayer.seekTo(seekToDuration(i));
     }
 
-    private int seekToDuration(int i) {
+    private int seekToDuration(int i){
         //int totalDuration = mediaPlayer.getDuration();
         return i;
     }
 
-    public int getCurrentPosition() {
-        return mediaPlayer != null ? mediaPlayer.getCurrentPosition() : -1;
+    public int getCurrentPosition(){
+        return mediaPlayer!=null? mediaPlayer.getCurrentPosition():-1;
     }
 
-    public int getDuration() {
-        return mediaPlayer != null ? mediaPlayer.getDuration() : -1;
+    public int getDuration(){
+        return  mediaPlayer!=null? mediaPlayer.getDuration():-1;
     }
 
-    public void setDataUrl(String url) {
+    public void setDataUrl(String url){
 
-        if (playOrPause) {
+        if(playOrPause){
             stop();
         }
         try {
@@ -71,38 +71,37 @@ public class VmnMediaPlayer {
             mediaPlayer.setDataSource(url);
             mediaPlayer.prepareAsync(); // might take long! (for buffering, etc)
         } catch (IOException e) {
-            Log.v("ggg", e.getMessage());
+            Log.v("ggg",e.getMessage());
         }
     }
 
-    public void pause() {
+    public void pause(){
         playOrPause = true;
 
         mediaPlayer.pause();
     }
-
-    public void start() {
+    public void start(){
 
         playOrPause = true;
         mediaPlayer.start();
     }
 
-    public void stop() {
+    public void stop(){
 
         playOrPause = false;
         mediaPlayer.stop();
         mediaPlayer.reset();
     }
 
-    public boolean isPlaying() {
+    public boolean isPlaying(){
 
         return mediaPlayer != null && mediaPlayer.isPlaying();
 
     }
 
-    public void release() {
-        if (mediaPlayer != null) {
-            if (mediaPlayer.isPlaying()) {
+    public void release(){
+        if(mediaPlayer != null){
+            if(mediaPlayer.isPlaying()){
                 mediaPlayer.stop();
             }
             mediaPlayer.release();

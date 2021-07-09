@@ -23,7 +23,8 @@ import retrofit.client.Response;
  */
 public class Create_Tag_Service {
 
-    public Create_Tag_Service(final WebSiteAddressActivity activity, HashMap<String, String> jsonObject, final Bus bus) {
+    public Create_Tag_Service(final WebSiteAddressActivity activity,HashMap<String, String> jsonObject,final Bus bus)
+    {
         Retro_Signup_Interface createStore = Constants.restAdapter.create(Retro_Signup_Interface.class);
 
         createStore.put_createStore(jsonObject, "jhghghgjghghjghghgj", new Callback<String>() {
@@ -48,8 +49,8 @@ public class Create_Tag_Service {
 
 
     }
-
-    public Create_Tag_Service(final PreSignUpActivityRia activity, String existingProfileId, HashMap<String, String> jsonObject, final Bus bus) {
+    public Create_Tag_Service(final PreSignUpActivityRia activity, String existingProfileId, HashMap<String, String> jsonObject, final Bus bus)
+    {
         Retro_Signup_Interface createStore = Constants.restAdapter.create(Retro_Signup_Interface.class);
 
         createStore.put_createStore(jsonObject, existingProfileId, new Callback<String>() {
@@ -65,10 +66,12 @@ public class Create_Tag_Service {
                 activity.runOnUiThread(new Runnable() {
 
                     @Override
-                    public void run() {
+                    public void run()
+                    {
                         Methods.showSnackBarNegative(activity, String.valueOf(error.getBody()));
 
-                        if (activity.pd != null) {
+                        if (activity.pd != null)
+                        {
                             activity.pd.dismiss();
                         }
                     }

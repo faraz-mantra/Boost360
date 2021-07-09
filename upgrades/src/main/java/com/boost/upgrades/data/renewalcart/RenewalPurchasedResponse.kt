@@ -4,10 +4,10 @@ package com.boost.upgrades.data.renewalcart
 import com.google.gson.annotations.SerializedName
 
 data class RenewalPurchasedResponse(
-  @SerializedName("Error")
-  var error: Error? = null,
-  @SerializedName("Result")
-  var result: List<RenewalResult>? = null,
-  @SerializedName("StatusCode")
-  var statusCode: Int? = null
+    @SerializedName("Error")
+    var error: Error? = null,
+    @SerializedName("Result")
+    var result: List<RenewalResult>? = null,
+    @SerializedName("StatusCode")
+    var statusCode: Int? = null
 )

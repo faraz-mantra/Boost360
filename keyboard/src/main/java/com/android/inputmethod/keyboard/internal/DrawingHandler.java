@@ -26,8 +26,15 @@ import io.separ.neural.inputmethod.indic.SuggestedWords;
 
 // TODO: Separate this class into KeyPreviewHandler and BatchInputPreviewHandler or so.
 public class DrawingHandler extends LeakGuardHandlerWrapper<Callbacks> {
+    public interface Callbacks {
+        void dismissKeyPreviewWithoutDelay(Key key);
+        void dismissAllKeyPreviews();
+        void showGestureFloatingPreviewText(SuggestedWords suggestedWords);
+    }
+
     private static final int MSG_DISMISS_KEY_PREVIEW = 0;
     private static final int MSG_DISMISS_GESTURE_FLOATING_PREVIEW_TEXT = 1;
+
     public DrawingHandler(final Callbacks ownerInstance) {
         super(ownerInstance);
     }
@@ -39,12 +46,12 @@ public class DrawingHandler extends LeakGuardHandlerWrapper<Callbacks> {
             return;
         }
         switch (msg.what) {
-            case MSG_DISMISS_KEY_PREVIEW:
-                callbacks.dismissKeyPreviewWithoutDelay((Key) msg.obj);
-                break;
-            case MSG_DISMISS_GESTURE_FLOATING_PREVIEW_TEXT:
-                callbacks.showGestureFloatingPreviewText(SuggestedWords.EMPTY);
-                break;
+        case MSG_DISMISS_KEY_PREVIEW:
+            callbacks.dismissKeyPreviewWithoutDelay((Key)msg.obj);
+            break;
+        case MSG_DISMISS_GESTURE_FLOATING_PREVIEW_TEXT:
+            callbacks.showGestureFloatingPreviewText(SuggestedWords.EMPTY);
+            break;
         }
     }
 
@@ -67,13 +74,5 @@ public class DrawingHandler extends LeakGuardHandlerWrapper<Callbacks> {
 
     public void cancelAllMessages() {
         cancelAllDismissKeyPreviews();
-    }
-
-    public interface Callbacks {
-        void dismissKeyPreviewWithoutDelay(Key key);
-
-        void dismissAllKeyPreviews();
-
-        void showGestureFloatingPreviewText(SuggestedWords suggestedWords);
     }
 }

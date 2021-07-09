@@ -18,13 +18,11 @@ package io.separ.neural.inputmethod.accessibility;
 
 import android.graphics.Rect;
 import android.os.Bundle;
-
 import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityEventCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.core.view.accessibility.AccessibilityNodeProviderCompat;
 import androidx.core.view.accessibility.AccessibilityRecordCompat;
-
 import android.util.Log;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
@@ -60,38 +58,28 @@ final class KeyboardAccessibilityNodeProvider<KV extends KeyboardView>
     private final KeyCodeDescriptionMapper mKeyCodeDescriptionMapper;
     private final AccessibilityUtils mAccessibilityUtils;
 
-    /**
-     * Temporary rect used to calculate in-screen bounds.
-     */
+    /** Temporary rect used to calculate in-screen bounds. */
     private final Rect mTempBoundsInScreen = new Rect();
 
-    /**
-     * The parent view's cached on-screen location.
-     */
+    /** The parent view's cached on-screen location. */
     private final int[] mParentLocation = CoordinateUtils.newInstance();
-    /**
-     * The keyboard view to provide an accessibility node info.
-     */
-    private final KV mKeyboardView;
-    /**
-     * The accessibility delegate.
-     */
-    private final KeyboardAccessibilityDelegate<KV> mDelegate;
-    /**
-     * The virtual view identifier for the focused node.
-     */
+
+    /** The virtual view identifier for the focused node. */
     private int mAccessibilityFocusedView = UNDEFINED;
-    /**
-     * The virtual view identifier for the hovering node.
-     */
+
+    /** The virtual view identifier for the hovering node. */
     private int mHoveringNodeId = UNDEFINED;
-    /**
-     * The current keyboard.
-     */
+
+    /** The keyboard view to provide an accessibility node info. */
+    private final KV mKeyboardView;
+    /** The accessibility delegate. */
+    private final KeyboardAccessibilityDelegate<KV> mDelegate;
+
+    /** The current keyboard. */
     private Keyboard mKeyboard;
 
     public KeyboardAccessibilityNodeProvider(final KV keyboardView,
-                                             final KeyboardAccessibilityDelegate<KV> delegate) {
+            final KeyboardAccessibilityDelegate<KV> delegate) {
         super();
         mKeyCodeDescriptionMapper = KeyCodeDescriptionMapper.getInstance();
         mAccessibilityUtils = AccessibilityUtils.getInstance();
@@ -143,7 +131,7 @@ final class KeyboardAccessibilityNodeProvider<KV extends KeyboardView>
      * Creates and populates an {@link AccessibilityEvent} for the specified key
      * and event type.
      *
-     * @param key       A key on the host keyboard view.
+     * @param key A key on the host keyboard view.
      * @param eventType The event type to create.
      * @return A populated {@link AccessibilityEvent} for the key.
      * @see AccessibilityEvent
@@ -276,7 +264,7 @@ final class KeyboardAccessibilityNodeProvider<KV extends KeyboardView>
 
     @Override
     public boolean performAction(final int virtualViewId, final int action,
-                                 final Bundle arguments) {
+            final Bundle arguments) {
         final Key key = getKeyOf(virtualViewId);
         return key != null && performActionForKey(key, action);
     }
@@ -284,39 +272,39 @@ final class KeyboardAccessibilityNodeProvider<KV extends KeyboardView>
     /**
      * Performs the specified accessibility action for the given key.
      *
-     * @param key    The on which to perform the action.
+     * @param key The on which to perform the action.
      * @param action The action to perform.
      * @return The result of performing the action, or false if the action is not supported.
      */
     boolean performActionForKey(final Key key, final int action) {
         switch (action) {
-            case AccessibilityNodeInfoCompat.ACTION_ACCESSIBILITY_FOCUS:
-                mAccessibilityFocusedView = getVirtualViewIdOf(key);
-                sendAccessibilityEventForKey(
-                        key, AccessibilityEventCompat.TYPE_VIEW_ACCESSIBILITY_FOCUSED);
-                return true;
-            case AccessibilityNodeInfoCompat.ACTION_CLEAR_ACCESSIBILITY_FOCUS:
-                mAccessibilityFocusedView = UNDEFINED;
-                sendAccessibilityEventForKey(
-                        key, AccessibilityEventCompat.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED);
-                return true;
-            case AccessibilityNodeInfoCompat.ACTION_CLICK:
-                sendAccessibilityEventForKey(key, AccessibilityEvent.TYPE_VIEW_CLICKED);
-                mDelegate.performClickOn(key);
-                return true;
-            case AccessibilityNodeInfoCompat.ACTION_LONG_CLICK:
-                sendAccessibilityEventForKey(key, AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);
-                mDelegate.performLongClickOn(key);
-                return true;
-            default:
-                return false;
+        case AccessibilityNodeInfoCompat.ACTION_ACCESSIBILITY_FOCUS:
+            mAccessibilityFocusedView = getVirtualViewIdOf(key);
+            sendAccessibilityEventForKey(
+                    key, AccessibilityEventCompat.TYPE_VIEW_ACCESSIBILITY_FOCUSED);
+            return true;
+        case AccessibilityNodeInfoCompat.ACTION_CLEAR_ACCESSIBILITY_FOCUS:
+            mAccessibilityFocusedView = UNDEFINED;
+            sendAccessibilityEventForKey(
+                    key, AccessibilityEventCompat.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED);
+            return true;
+        case AccessibilityNodeInfoCompat.ACTION_CLICK:
+            sendAccessibilityEventForKey(key, AccessibilityEvent.TYPE_VIEW_CLICKED);
+            mDelegate.performClickOn(key);
+            return true;
+        case AccessibilityNodeInfoCompat.ACTION_LONG_CLICK:
+            sendAccessibilityEventForKey(key, AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);
+            mDelegate.performLongClickOn(key);
+            return true;
+        default:
+            return false;
         }
     }
 
     /**
      * Sends an accessibility event for the given {@link Key}.
      *
-     * @param key       The key that's sending the event.
+     * @param key The key that's sending the event.
      * @param eventType The type of event to send.
      */
     void sendAccessibilityEventForKey(final Key key, final int eventType) {

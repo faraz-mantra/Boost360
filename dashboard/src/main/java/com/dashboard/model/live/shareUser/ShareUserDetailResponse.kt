@@ -7,4 +7,4 @@ import java.io.Serializable
 data class ShareUserDetailResponse(
   @SerializedName("data")
   var `data`: ArrayList<UserDetail>? = null
-) : BaseResponse(), Serializable
+):BaseResponse(),Serializable

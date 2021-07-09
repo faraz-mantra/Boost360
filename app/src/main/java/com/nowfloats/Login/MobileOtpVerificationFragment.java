@@ -29,8 +29,14 @@ public class MobileOtpVerificationFragment extends Fragment {
 
     private OtpView otpView;
 
-    private MobileOtpVerificationFragment() {
+    public interface OnOTPProvidedListener {
+        void onOTPProvided(String otp);
+        void onResend(String phoneNumber);
+
+        String getMobileEntered();
     }
+
+    private MobileOtpVerificationFragment(){}
 
     public MobileOtpVerificationFragment(OnOTPProvidedListener onOTPProvidedListener) {
         this.onOTPProvidedListener = onOTPProvidedListener;
@@ -57,9 +63,9 @@ public class MobileOtpVerificationFragment extends Fragment {
 
         String mobile = onOTPProvidedListener.getMobileEntered();
 
-        if (!TextUtils.isEmpty(mobile) && mobile.length() == 10) {
+        if(!TextUtils.isEmpty(mobile) && mobile.length() == 10) {
             String maskedMobile = mobile.substring(0, 2) + getString(R.string.xxxxxxx) + mobile.substring(8, 10);
-            tvHint.setText(tvHint.getText() + " " + maskedMobile);
+            tvHint.setText(tvHint.getText() + " "+maskedMobile);
         }
 
         startOTPResendOperation(v);
@@ -73,11 +79,11 @@ public class MobileOtpVerificationFragment extends Fragment {
         tvResendUnderline.setVisibility(View.GONE);
 
         new Handler().postDelayed(() -> {
-            if (null != getActivity()) {
+            if(null != getActivity()){
                 // getting crash here due to not being attached to context
                 String resendValue = getString(R.string.didnt_get_the_code);
                 SpannableString resendString = new SpannableString(resendValue);
-                resendString.setSpan(new UnderlineSpan(), resendValue.length() - 6, resendValue.length(), 0);
+                resendString.setSpan(new UnderlineSpan(),resendValue.length() - 6, resendValue.length(),0);
                 tvResend.setText(resendString);
             }
 //            tvResendUnderline.setVisibility(View.VISIBLE);
@@ -89,13 +95,5 @@ public class MobileOtpVerificationFragment extends Fragment {
         });
 
 
-    }
-
-    public interface OnOTPProvidedListener {
-        void onOTPProvided(String otp);
-
-        void onResend(String phoneNumber);
-
-        String getMobileEntered();
     }
 }

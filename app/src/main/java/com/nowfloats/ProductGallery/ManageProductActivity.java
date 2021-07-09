@@ -17,12 +17,14 @@ import com.thinksity.R;
 import com.thinksity.databinding.ActivityManageProductBinding;
 
 
-public class ManageProductActivity extends BaseActivity {
+public class ManageProductActivity extends BaseActivity
+{
     private ActivityManageProductBinding binding;
     private boolean doubleBackToExitPressedOnce = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_manage_product);
 
@@ -52,11 +54,13 @@ public class ManageProductActivity extends BaseActivity {
     }
 
 
-    public void setTitle(String title) {
+    public void setTitle(String title)
+    {
         binding.layoutToolbar.toolbarTitle.setText(String.valueOf(title));
     }
 
-    public void loadFragment(Fragment fragment, String tag) {
+    public void loadFragment(Fragment fragment, String tag)
+    {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         transaction
@@ -67,8 +71,10 @@ public class ManageProductActivity extends BaseActivity {
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
 
                 onHomePressed();
@@ -78,15 +84,21 @@ public class ManageProductActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void onHomePressed() {
-        if (isProductCategoryFragment()) {
+    private void onHomePressed()
+    {
+        if(isProductCategoryFragment())
+        {
             finish();
-        } else {
+        }
+
+        else
+        {
             confirm();
         }
     }
 
-    private void confirm() {
+    private void confirm()
+    {
         new MaterialDialog.Builder(this)
                 .title(R.string.information_not_saved)
                 .content(R.string.you_have_unsaved_information_do_you_still_want_to_close)
@@ -97,13 +109,15 @@ public class ManageProductActivity extends BaseActivity {
                 .callback(new MaterialDialog.ButtonCallback() {
 
                     @Override
-                    public void onPositive(MaterialDialog dialog) {
+                    public void onPositive(MaterialDialog dialog)
+                    {
                         super.onPositive(dialog);
                         dialog.dismiss();
                     }
 
                     @Override
-                    public void onNegative(MaterialDialog dialog) {
+                    public void onNegative(MaterialDialog dialog)
+                    {
                         super.onNegative(dialog);
                         dialog.dismiss();
                         finish();
@@ -114,7 +128,8 @@ public class ManageProductActivity extends BaseActivity {
 
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         confirm();
 
 //        if(isProductCategoryFragment())
@@ -137,7 +152,8 @@ public class ManageProductActivity extends BaseActivity {
     }
 
 
-    private boolean isProductCategoryFragment() {
+    private boolean isProductCategoryFragment()
+    {
         /*ProductCategoryFragment fragment = (ProductCategoryFragment)getSupportFragmentManager().findFragmentByTag("PRODUCT_CATEGORY");
 
         if (fragment != null && fragment.isVisible())
@@ -150,7 +166,8 @@ public class ManageProductActivity extends BaseActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fm_site_appearance);

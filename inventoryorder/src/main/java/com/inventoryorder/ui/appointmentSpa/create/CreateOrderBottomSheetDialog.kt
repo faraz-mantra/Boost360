@@ -13,11 +13,9 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 
-class CreateOrderBottomSheetDialog(val orderBottomSheet: OrderBottomSheet) :
-  BaseBottomSheetDialog<BottomSheetOrderBinding, BaseViewModel>(), RecyclerItemClickListener {
+class CreateOrderBottomSheetDialog(val orderBottomSheet: OrderBottomSheet) : BaseBottomSheetDialog<BottomSheetOrderBinding, BaseViewModel>(), RecyclerItemClickListener {
 
-  var onClicked: (bottomSheetOptionItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) -> Unit =
-    { bottomsheetOptionItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet -> }
+  var onClicked: (bottomSheetOptionItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) -> Unit = { bottomsheetOptionItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet -> }
   private var optionsAdapter: AppBaseRecyclerViewAdapter<BottomSheetOptionsItem>? = null
   private var layoutManagerN: LinearLayoutManager? = null
   private var currentOptionPosition = 0
@@ -55,11 +53,7 @@ class CreateOrderBottomSheetDialog(val orderBottomSheet: OrderBottomSheet) :
 
   private fun setUpRecyclerView() {
     binding?.recyclerOrderOptions?.apply {
-      optionsAdapter = AppBaseRecyclerViewAdapter(
-        baseActivity,
-        orderBottomSheet.items!!,
-        this@CreateOrderBottomSheetDialog
-      )
+      optionsAdapter = AppBaseRecyclerViewAdapter(baseActivity, orderBottomSheet.items!!, this@CreateOrderBottomSheetDialog)
       layoutManager = layoutManagerN
       adapter = optionsAdapter
     }
@@ -69,9 +63,7 @@ class CreateOrderBottomSheetDialog(val orderBottomSheet: OrderBottomSheet) :
     if (actionType == RecyclerViewActionType.ORDER_OPTION_SELECTED.ordinal) {
       currentOptionPosition = position
       currentSelectedItem = orderBottomSheet.items?.get(currentOptionPosition)
-      orderBottomSheet.items?.forEach {
-        it.isChecked = (it.serverValue == currentSelectedItem?.serverValue)
-      }
+      orderBottomSheet.items?.forEach { it.isChecked = (it.serverValue == currentSelectedItem?.serverValue) }
       optionsAdapter?.notifyDataSetChanged()
     }
   }

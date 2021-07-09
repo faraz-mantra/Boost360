@@ -43,7 +43,7 @@
           android:layout_marginBottom="@dimen/size_2"
           app:cardBackgroundColor="@color/placeholder_bg"
           app:cardCornerRadius="@dimen/size_10"
-          app:cardElevation="0dp" />
+          app:cardElevation="0dp"/>
       </RelativeLayout>
 
       <View

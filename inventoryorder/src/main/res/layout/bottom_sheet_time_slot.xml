@@ -23,8 +23,8 @@
         <com.framework.views.customViews.CustomImageView
           android:layout_width="@dimen/size_30"
           android:layout_height="@dimen/size_30"
-          android:layout_marginStart="@dimen/size_5"
           android:tint="@color/colorAccent"
+          android:layout_marginStart="@dimen/size_5"
           app:srcCompat="@drawable/ic_appointment_date_nd_time" />
 
         <com.framework.views.customViews.CustomTextView

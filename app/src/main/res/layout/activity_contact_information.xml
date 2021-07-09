@@ -405,8 +405,8 @@
                 android:id="@+id/edit_website_address"
                 style="@style/ProductEditTextStyle"
                 android:layout_weight="1"
-                android:inputType="text"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:inputType="text" />
 
             </LinearLayout>
 

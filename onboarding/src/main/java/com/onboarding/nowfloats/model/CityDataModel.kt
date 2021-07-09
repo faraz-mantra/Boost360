@@ -6,9 +6,9 @@ import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewItem
 import java.util.*
 
 class CityDataModel(
-  val id: Int? = null,
-  val name: String = "",
-  val state: String = ""
+    val id: Int? = null,
+    val name: String = "",
+    val state: String = ""
 ) : BaseResponse(), AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {

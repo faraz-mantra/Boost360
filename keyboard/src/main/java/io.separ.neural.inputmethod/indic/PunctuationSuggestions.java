@@ -24,7 +24,7 @@ import java.util.Arrays;
 
 /**
  * The extended {@link SuggestedWords} class to represent punctuation suggestions.
- * <p>
+ *
  * Each punctuation specification string is the key specification that can be parsed by
  * {@link KeySpecParser}.
  */
@@ -52,14 +52,6 @@ public final class PunctuationSuggestions extends SuggestedWords {
             puncuationsList.add(newHardCodedWordInfo(puncSpec));
         }
         return new PunctuationSuggestions(puncuationsList);
-    }
-
-    private static SuggestedWordInfo newHardCodedWordInfo(final String keySpec) {
-        return new SuggestedWordInfo(keySpec, SuggestedWordInfo.MAX_SCORE,
-                SuggestedWordInfo.KIND_HARDCODED,
-                Dictionary.DICTIONARY_HARDCODED,
-                SuggestedWordInfo.NOT_AN_INDEX /* indexOfTouchPointOfSecondWord */,
-                SuggestedWordInfo.NOT_A_CONFIDENCE /* autoCommitFirstWordConfidence */);
     }
 
     /**
@@ -99,7 +91,6 @@ public final class PunctuationSuggestions extends SuggestedWords {
 
     /**
      * The predicator to tell whether this object represents punctuation suggestions.
-     *
      * @return true if this object represents punctuation suggestions.
      */
     @Override
@@ -111,5 +102,13 @@ public final class PunctuationSuggestions extends SuggestedWords {
     public String toString() {
         return "PunctuationSuggestions: "
                 + " words=" + Arrays.toString(mSuggestedWordInfoList.toArray());
+    }
+
+    private static SuggestedWordInfo newHardCodedWordInfo(final String keySpec) {
+        return new SuggestedWordInfo(keySpec, SuggestedWordInfo.MAX_SCORE,
+                SuggestedWordInfo.KIND_HARDCODED,
+                Dictionary.DICTIONARY_HARDCODED,
+                SuggestedWordInfo.NOT_AN_INDEX /* indexOfTouchPointOfSecondWord */,
+                SuggestedWordInfo.NOT_A_CONFIDENCE /* autoCommitFirstWordConfidence */);
     }
 }

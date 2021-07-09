@@ -1,96 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/tools"
-  xmlns:fresco="http://schemas.android.com/apk/res/android"
-  fresco:id="@id/card_view"
-  fresco:layout_width="wrap_content"
-  fresco:layout_height="wrap_content"
-  fresco:layout_marginTop="6dp"
-  fresco:layout_marginEnd="8dp"
-  fresco:layout_marginBottom="3dp"
-  card_view:cardBackgroundColor="0x106000b"
-  card_view:cardCornerRadius="@dimen/card_search_item_radius"
-  card_view:cardElevation="2dp"
-  card_view:cardPreventCornerOverlap="false">
-
-  <RelativeLayout
+<androidx.cardview.widget.CardView fresco:id="@id/card_view"
     fresco:layout_width="wrap_content"
-    fresco:layout_height="wrap_content">
-
-    <com.facebook.drawee.view.SimpleDraweeView
-      fresco:id="@id/item_image"
-      fresco:layout_width="@dimen/icon_width"
-      fresco:layout_height="@dimen/icon_height"
-      fresco:layout_centerVertical="true"
-      card_view:actualImageScaleType="centerCrop"
-      card_view:roundBottomRight="false"
-      card_view:roundTopRight="false"
-      card_view:roundedCornerRadius="@dimen/card_search_item_radius" />
-
-    <RelativeLayout
-      fresco:id="@id/title_container"
-      fresco:layout_width="@dimen/search_result_width"
-      fresco:layout_height="@dimen/icon_height"
-      fresco:layout_centerVertical="true"
-      fresco:layout_toEndOf="@id/item_image"
-      fresco:layout_toRightOf="@id/item_image"
-      fresco:orientation="vertical"
-      fresco:paddingStart="8dp"
-      fresco:paddingLeft="8dp"
-      fresco:paddingTop="3dp"
-      fresco:paddingEnd="4dp"
-      fresco:paddingRight="4dp">
-
-      <TextView
-        fresco:id="@id/header"
-        fresco:layout_width="wrap_content"
-        fresco:layout_height="wrap_content"
-        fresco:ellipsize="end"
-        fresco:fontFamily="sans-serif-medium"
-        fresco:maxLines="2"
-        fresco:textColor="@color/header_color"
-        fresco:textSize="13sp" />
-
-      <TextView
-        fresco:id="@+id/subheader"
-        fresco:layout_width="wrap_content"
-        fresco:layout_height="wrap_content"
-        fresco:layout_below="@id/header"
-        fresco:layout_marginTop="6dp"
-        fresco:ellipsize="end"
-        fresco:fontFamily="sans-serif"
-        fresco:maxWidth="140dp"
-        fresco:maxLines="3"
-        fresco:paddingBottom="6dp"
-        fresco:textColor="@color/subheader_color"
-        fresco:textSize="12sp" />
-
-      <TextView
-        fresco:id="@+id/item_bottom"
-        fresco:layout_width="wrap_content"
-        fresco:layout_height="wrap_content"
-        fresco:layout_alignParentBottom="true"
-        fresco:layout_marginBottom="4dp"
-        fresco:ellipsize="end"
-        fresco:fontFamily="sans-serif"
-        fresco:maxWidth="140dp"
-        fresco:maxLines="1"
-        fresco:paddingBottom="4dp"
-        fresco:textColor="@color/item_bottom_color"
-        fresco:textSize="12sp" />
-
-      <ImageButton
-        fresco:id="@+id/preview"
-        fresco:layout_width="28dp"
-        fresco:layout_height="28dp"
-        fresco:layout_alignParentEnd="true"
-        fresco:layout_alignParentRight="true"
-        fresco:layout_alignParentBottom="true"
-        fresco:background="@color/preview_bg"
-        fresco:contentDescription="@string/result_preview_description"
-        fresco:maxLines="1"
-        fresco:padding="8dp"
-        fresco:src="@drawable/preview_icon"
-        card_view:scaleType="fitCenter" />
+    fresco:layout_height="wrap_content"
+    fresco:layout_marginTop="6dp"
+    fresco:layout_marginEnd="8dp"
+    fresco:layout_marginBottom="3dp"
+    xmlns:fresco="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools"
+    card_view:cardBackgroundColor="0x106000b"
+    card_view:cardCornerRadius="@dimen/card_search_item_radius"
+    card_view:cardElevation="2dp"
+    card_view:cardPreventCornerOverlap="false">
+    <RelativeLayout fresco:layout_width="wrap_content" fresco:layout_height="wrap_content">
+        <com.facebook.drawee.view.SimpleDraweeView fresco:id="@id/item_image" fresco:layout_width="@dimen/icon_width"
+            fresco:layout_height="@dimen/icon_height" fresco:layout_centerVertical="true" card_view:actualImageScaleType="centerCrop"
+            card_view:roundedCornerRadius="@dimen/card_search_item_radius" card_view:roundTopRight="false" card_view:roundBottomRight="false" />
+        <RelativeLayout fresco:orientation="vertical" fresco:id="@id/title_container" fresco:paddingStart="8dp" fresco:layout_toEndOf="@id/item_image"
+            fresco:paddingLeft="8dp" fresco:paddingTop="3dp" fresco:paddingEnd="4dp" fresco:paddingRight="4dp" fresco:layout_width="@dimen/search_result_width"
+            fresco:layout_height="@dimen/icon_height" fresco:layout_toRightOf="@id/item_image" fresco:layout_centerVertical="true">
+            <TextView fresco:textSize="13sp" fresco:textColor="@color/header_color" fresco:ellipsize="end" fresco:id="@id/header" fresco:layout_width="wrap_content" fresco:layout_height="wrap_content" fresco:maxLines="2" fresco:fontFamily="sans-serif-medium" />
+            <TextView fresco:textSize="12sp" fresco:textColor="@color/subheader_color" fresco:ellipsize="end" fresco:id="@+id/subheader" fresco:paddingBottom="6dp" fresco:layout_width="wrap_content" fresco:layout_height="wrap_content" fresco:layout_marginTop="6dp" fresco:maxWidth="140dp" fresco:maxLines="3" fresco:layout_below="@id/header" fresco:fontFamily="sans-serif" />
+            <TextView fresco:textSize="12sp" fresco:textColor="@color/item_bottom_color" fresco:ellipsize="end" fresco:id="@+id/item_bottom" fresco:paddingBottom="4dp" fresco:layout_width="wrap_content" fresco:layout_height="wrap_content" fresco:layout_marginBottom="4dp" fresco:maxWidth="140dp" fresco:maxLines="1" fresco:layout_alignParentBottom="true" fresco:fontFamily="sans-serif" />
+            <ImageButton fresco:id="@+id/preview" fresco:background="@color/preview_bg" fresco:padding="8dp" fresco:layout_width="28dp" fresco:layout_height="28dp" fresco:src="@drawable/preview_icon" fresco:maxLines="1" fresco:layout_alignParentRight="true" fresco:layout_alignParentBottom="true" fresco:layout_alignParentEnd="true"
+                fresco:contentDescription="@string/result_preview_description" card_view:scaleType="fitCenter"/>
+        </RelativeLayout>
     </RelativeLayout>
-  </RelativeLayout>
 </androidx.cardview.widget.CardView>

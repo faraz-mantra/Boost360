@@ -14,8 +14,7 @@ import com.inventoryorder.model.ordersdetails.OrderItem
 import java.math.BigDecimal
 import java.text.DecimalFormat
 
-class RequestPaymentAptSheetDialog :
-  BaseBottomSheetDialog<BottomSheetRequestPaymentAptBinding, BaseViewModel>() {
+class RequestPaymentAptSheetDialog : BaseBottomSheetDialog<BottomSheetRequestPaymentAptBinding, BaseViewModel>() {
 
   private var orderItem: OrderItem? = null
   var onClicked: () -> Unit = {}
@@ -35,15 +34,11 @@ class RequestPaymentAptSheetDialog :
   override fun onCreateView() {
     setOnClickListener(binding?.buttonDone, binding?.tvCancel)
     orderItem?.BillingDetails?.let { bill ->
-      val currency = takeIf {
-        bill.getCurrencyCodeValue().isNullOrEmpty().not()
-      }?.let { bill.getCurrencyCodeValue()?.trim() } ?: "INR"
-      val formatAmount =
-        "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.AmountPayableByBuyer!!))}"
+      val currency = takeIf { bill.getCurrencyCodeValue().isNullOrEmpty().not() }?.let { bill.getCurrencyCodeValue()?.trim() } ?: "INR"
+      val formatAmount = "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.AmountPayableByBuyer!!))}"
       val ss = SpannableString("$formatAmount")
       ss.setSpan(RelativeSizeSpan(0.5f), "$formatAmount".indexOf("."), "$formatAmount".length, 0)
-      binding?.tvSubTitle?.text =
-        "Collect $currency $ss for appointment ID #${orderItem?.ReferenceNumber ?: ""}"
+      binding?.tvSubTitle?.text = "Collect $currency $ss for appointment ID #${orderItem?.ReferenceNumber ?: ""}"
     }
 
     val number = orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber

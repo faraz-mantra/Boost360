@@ -32,17 +32,7 @@ public class MyanmarReordering implements Combiner {
     // U+200C ZERO WIDTH NON-JOINER
     // U+200B ZERO WIDTH SPACE
     private final static int ZERO_WIDTH_NON_JOINER = 0x200B; // should be 0x200C
-    // List of medials :
-    // U+103B MYANMAR CONSONANT SIGN MEDIAL YA
-    // U+103C MYANMAR CONSONANT SIGN MEDIAL RA
-    // U+103D MYANMAR CONSONANT SIGN MEDIAL WA
-    // U+103E MYANMAR CONSONANT SIGN MEDIAL HA
-    // U+105E MYANMAR CONSONANT SIGN MON MEDIAL NA
-    // U+105F MYANMAR CONSONANT SIGN MON MEDIAL MA
-    // U+1060 MYANMAR CONSONANT SIGN MON MEDIAL LA
-    // U+1082 MYANMAR CONSONANT SIGN SHAN MEDIAL WA
-    private static final int[] MEDIAL_LIST = {0x103B, 0x103C, 0x103D, 0x103E,
-            0x105E, 0x105F, 0x1060, 0x1082};
+
     private final ArrayList<Event> mCurrentEvents = new ArrayList<>();
 
     // List of consonants :
@@ -84,6 +74,17 @@ public class MyanmarReordering implements Combiner {
         return (codePoint >= 0x1000 && codePoint <= 0x1020) || 0x103F == codePoint;
     }
 
+    // List of medials :
+    // U+103B MYANMAR CONSONANT SIGN MEDIAL YA
+    // U+103C MYANMAR CONSONANT SIGN MEDIAL RA
+    // U+103D MYANMAR CONSONANT SIGN MEDIAL WA
+    // U+103E MYANMAR CONSONANT SIGN MEDIAL HA
+    // U+105E MYANMAR CONSONANT SIGN MON MEDIAL NA
+    // U+105F MYANMAR CONSONANT SIGN MON MEDIAL MA
+    // U+1060 MYANMAR CONSONANT SIGN MON MEDIAL LA
+    // U+1082 MYANMAR CONSONANT SIGN SHAN MEDIAL WA
+    private static final int[] MEDIAL_LIST = { 0x103B, 0x103C, 0x103D, 0x103E,
+            0x105E, 0x105F, 0x1060, 0x1082};
     private static boolean isMedial(final int codePoint) {
         return Arrays.binarySearch(MEDIAL_LIST, codePoint) >= 0;
     }
@@ -111,7 +112,6 @@ public class MyanmarReordering implements Combiner {
     /**
      * Clears the currently combining stream of events and returns the resulting software text
      * event corresponding to the stream. Optionally adds a new event to the cleared stream.
-     *
      * @param newEvent the new event to add to the stream. null if none.
      * @return the resulting software text event. Never null.
      */
@@ -150,8 +150,7 @@ public class MyanmarReordering implements Combiner {
             } else { // VOWEL_E == lastCodePoint. But if that was anything else this is correct too.
                 return clearAndGetResultingEvent(newEvent);
             }
-        }
-        if (isConsonant(codePoint)) {
+        } if (isConsonant(codePoint)) {
             final Event lastEvent = getLastEvent();
             if (null == lastEvent) {
                 mCurrentEvents.add(newEvent);

@@ -2,10 +2,8 @@ package com.nowfloats.NavigationDrawer;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +17,14 @@ import com.thinksity.R;
  * Created by Admin on 22-12-2017.
  */
 
-public class WildFireFilterFragment extends Fragment implements View.OnClickListener {
-    public static final int DATE_SELECT = -1, ALL_SELECTED = -2;
+public class WildFireFilterFragment extends Fragment implements View.OnClickListener{
     private RadioGroup mRadioGroup;
     private Context mContext;
+    public static final int DATE_SELECT = -1,ALL_SELECTED = -2;
     private int monthSelected;
     private String datePeriod;
 
-    public static WildFireFilterFragment getInstance(Bundle bundle) {
+    public static WildFireFilterFragment getInstance(Bundle bundle){
         WildFireFilterFragment frag = new WildFireFilterFragment();
         frag.setArguments(bundle);
         return frag;
@@ -50,7 +48,7 @@ public class WildFireFilterFragment extends Fragment implements View.OnClickList
         Bundle bundle = getArguments();
         monthSelected = bundle.getInt("monthSelected");
         datePeriod = bundle.getString("datePeriod");
-        return inflater.inflate(R.layout.layout_wildfire_filter_option, container, false);
+        return inflater.inflate(R.layout.layout_wildfire_filter_option,container,false);
     }
 
     @Override
@@ -58,7 +56,7 @@ public class WildFireFilterFragment extends Fragment implements View.OnClickList
         super.onViewCreated(view, savedInstanceState);
         mRadioGroup = view.findViewById(R.id.radioGroup);
 
-        if (!TextUtils.isEmpty(datePeriod)) {
+        if (!TextUtils.isEmpty(datePeriod)){
             view.findViewById(R.id.llayout_date_period).setVisibility(View.VISIBLE);
             TextView startDateTv = view.findViewById(R.id.tv_start_date);
             TextView endDateTv = view.findViewById(R.id.tv_end_date);
@@ -67,7 +65,7 @@ public class WildFireFilterFragment extends Fragment implements View.OnClickList
             endDateTv.setText(datePeriods[1]);
         }
         view.findViewById(R.id.rb_select_time).setOnClickListener(this);
-        switch (monthSelected) {
+        switch (monthSelected){
             case 7:
                 mRadioGroup.check(R.id.rb_fifteen_days);
                 break;

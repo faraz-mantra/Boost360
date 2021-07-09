@@ -1,186 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="#efefef"
-  android:clickable="true"
-  android:focusable="true">
-
-  <androidx.appcompat.widget.Toolbar
-    android:id="@+id/remove_toolbar"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/actionBarSize"
-    android:background="@color/white"
-    android:contentInsetStart="0dp"
-    android:contentInsetEnd="0dp"
-    android:elevation="@dimen/cardview_default_elevation"
-    app:contentInsetEnd="0dp"
-    app:contentInsetStart="0dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_height="match_parent"
+    android:background="#efefef"
+    android:clickable="true"
+    android:focusable="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
-
-      <LinearLayout
-        android:id="@+id/remove_back_button2"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/remove_toolbar"
+        android:layout_width="match_parent"
+        android:contentInsetStart="0dp"
+        app:contentInsetStart="0dp"
+        android:contentInsetEnd="0dp"
+        app:contentInsetEnd="0dp"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:background="@drawable/ic_back_arrow_black" />
-      </LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-      <TextView
-        android:id="@+id/remove_toolbar_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_semibold"
-        android:gravity="center"
-        android:text="Remove add ons"
-        android:textAllCaps="true"
-        android:textColor="@color/common_text_color"
-        android:textSize="@dimen/_11sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/remove_recommended_dummyview"
-        app:layout_constraintStart_toEndOf="@id/remove_back_button2"
-        app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:id="@+id/remove_back_button2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-      <View
-        android:id="@+id/remove_recommended_dummyview"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_back_arrow_black" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/remove_toolbar_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Remove add ons"
+                android:textAllCaps="true"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/_11sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/remove_recommended_dummyview"
+                app:layout_constraintStart_toEndOf="@id/remove_back_button2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/remove_recommended_dummyview"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-  </androidx.appcompat.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
-  <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:overScrollMode="never"
-    android:scrollbars="none"
-    app:layout_constraintBottom_toTopOf="@id/remove_addons_submit"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/remove_toolbar">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@id/remove_addons_submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/remove_toolbar">
 
     <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
-      <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/remove_recyclerDetails"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_15sdp"
-        android:background="@drawable/all_side_curve_bg"
-        android:elevation="@dimen/cardview_default_elevation"
-        android:nestedScrollingEnabled="false"
-        android:overScrollMode="never"
-        tools:listitem="@layout/remove_list_item" />
+        android:layout_height="wrap_content">
 
-      <LinearLayout
-        android:id="@+id/remove_addons_final_amount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/remove_recyclerDetails"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
-        android:background="@drawable/all_side_curve_bg"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/_8sdp"
-        android:paddingBottom="@dimen/_8sdp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/remove_recyclerDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_15sdp"
+            android:background="@drawable/all_side_curve_bg"
+            android:elevation="@dimen/cardview_default_elevation"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            tools:listitem="@layout/remove_list_item" />
 
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans"
-          android:text="Updated payable every month"
-          android:textColor="@color/common_text_color"
-          android:textSize="@dimen/_10sdp" />
+        <LinearLayout
+            android:id="@+id/remove_addons_final_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/remove_recyclerDetails"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:gravity="center"
+            android:background="@drawable/all_side_curve_bg">
 
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans"
-          android:text="₹813"
-          android:textColor="#0068e0"
-          android:textSize="@dimen/_30sdp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Updated payable every month"
+                android:fontFamily="@font/open_sans"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/_10sdp"/>
 
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_semibold"
-          android:text="₹1,213"
-          android:textColor="@color/common_text_color" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹813"
+                android:textColor="#0068e0"
+                android:fontFamily="@font/open_sans"
+                android:textSize="@dimen/_30sdp"/>
 
-      </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹1,213"
+                android:fontFamily="@font/open_sans_semibold"
+                android:textColor="@color/common_text_color"/>
 
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/remove_addons_final_amount"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:layout_marginBottom="@dimen/_25sdp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        </LinearLayout>
 
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_semibold"
-          android:text="Note: "
-          android:textSize="@dimen/_8sdp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_25sdp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_below="@id/remove_addons_final_amount">
 
         <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans"
-          android:text="the updated amount will be payable on "
-          android:textSize="@dimen/_8sdp" />
-      </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note: "
+            android:textSize="@dimen/_8sdp"
+            android:fontFamily="@font/open_sans_semibold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_8sdp"
+            android:text="the updated amount will be payable on "
+            android:fontFamily="@font/open_sans"/>
+        </LinearLayout>
     </RelativeLayout>
 
-  </ScrollView>
+    </ScrollView>
 
-  <Button
-    android:id="@+id/remove_addons_submit"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="32dp"
-    android:layout_marginTop="16dp"
-    android:layout_marginEnd="32dp"
-    android:layout_marginBottom="16dp"
-    android:background="@drawable/orange_button_click_effect"
-    android:paddingTop="@dimen/_10sdp"
-    android:paddingBottom="@dimen/_10sdp"
-    android:stateListAnimator="@null"
-    android:text="Pay ₹813 From next month"
-    android:textColor="@color/white"
-    android:textStyle="bold"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent" />
+    <Button
+        android:id="@+id/remove_addons_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:background="@drawable/orange_button_click_effect"
+        android:text="Pay ₹813 From next month"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:stateListAnimator="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

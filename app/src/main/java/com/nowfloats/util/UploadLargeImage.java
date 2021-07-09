@@ -15,21 +15,47 @@ public class UploadLargeImage {
     private Context mContext;
     private String uri;
     private ImageCompressed listner;
-    private int reqWidth, reqHeight;
-
-    public UploadLargeImage(Context context, ImageCompressed listner, String uri, int reqWidth, int reqHeight) {
+    private int reqWidth,reqHeight;
+    public UploadLargeImage(Context context, ImageCompressed listner, String uri, int reqWidth, int reqHeight){
         mContext = context;
         this.uri = uri;
         this.listner = listner;
-        this.reqHeight = reqHeight;
-        this.reqWidth = reqWidth;
+        this.reqHeight=reqHeight;
+        this.reqWidth=reqWidth;
     }
-
-    public void execute() {
+    public void execute(){
         //uri = getRealPathFromURI(mContext,Uri.parse(uri));
         new LoadImage().execute();
     }
+    private class LoadImage extends AsyncTask<Void ,Void,Bitmap>
+    {
+      private LoadImage(){
 
+      }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+
+            return Methods.decodeSampledBitmap(uri,reqWidth,reqHeight);
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if(bitmap != null) {
+                listner.onImageCompressed(bitmap);
+            }
+        }
+    }
+    public interface ImageCompressed{
+        void onImageCompressed(Bitmap bitmap);
+    }
     public String getRealPathFromURI(Context context, Uri contentUri) {
         if (contentUri == null) return null;
         Cursor cursor = null;
@@ -49,35 +75,5 @@ public class UploadLargeImage {
             }
         }
         return uri;
-    }
-
-    public interface ImageCompressed {
-        void onImageCompressed(Bitmap bitmap);
-    }
-
-    private class LoadImage extends AsyncTask<Void, Void, Bitmap> {
-        private LoadImage() {
-
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected Bitmap doInBackground(Void... params) {
-
-            return Methods.decodeSampledBitmap(uri, reqWidth, reqHeight);
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            if (bitmap != null) {
-                listner.onImageCompressed(bitmap);
-            }
-        }
     }
 }

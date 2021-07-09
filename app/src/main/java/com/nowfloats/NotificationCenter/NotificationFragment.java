@@ -40,44 +40,18 @@ import retrofit.client.Response;
  * Created by guru on 19-06-2015.
  */
 public class NotificationFragment extends Fragment implements DeepLinkInterface {
-    public static RecyclerView recyclerView;
     Activity activity;
     UserSessionManager session;
-    Bus bus;
-    NotificationInterface alertInterface;
+    public static RecyclerView recyclerView;
     private NotificationAdapter adapter;
+    Bus bus;
     private LinearLayout emptylayout, progress_layout;
+    NotificationInterface alertInterface;
     private boolean mIsAlertShown = false;
     private int readAlertsCount, unReadAlertCount;
     private boolean stop;
     private DeepLinkUtil deepLinkUtil;
     private ArrayList<AlertModel> alertModelsList = new ArrayList<>();
-
-    public static void getAlertCount(final UserSessionManager session, NotificationInterface notificationInterface, final Bus bus) {
-
-        try {
-            HashMap<String, String> map = new HashMap<>();
-            map.put("fpId", session.getFPID());
-            map.put("clientId", Constants.clientId);
-            map.put("isRead", "false");
-            notificationInterface.getAlertCount(map, new Callback<String>() {
-                @Override
-                public void success(String s, Response response) {
-                    Home_Fragment_Tab.alertCountVal = s;
-                    bus.post(new AlertCountEvent(s));
-                    MixPanelController.setProperties("AlertCount", s);
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    Home_Fragment_Tab.alertCountVal = "0";
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            bus.post(new AlertCountEvent("0"));
-        }
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -224,6 +198,14 @@ public class NotificationFragment extends Fragment implements DeepLinkInterface 
         }
     }
 
+
+    public class AlterDateComparator implements Comparator<AlertModel> {
+        public int compare(AlertModel left, AlertModel right) {
+            return Methods.getFormattedDate(right.CreatedOn).compareTo(Methods.getFormattedDate(left.CreatedOn));
+        }
+
+    }
+
     public void loadAlerts() {
         String offset = String.valueOf(unReadAlertCount);
         unReadAlertCount += 10;
@@ -280,10 +262,29 @@ public class NotificationFragment extends Fragment implements DeepLinkInterface 
         }
     }
 
-    public class AlterDateComparator implements Comparator<AlertModel> {
-        public int compare(AlertModel left, AlertModel right) {
-            return Methods.getFormattedDate(right.CreatedOn).compareTo(Methods.getFormattedDate(left.CreatedOn));
-        }
+    public static void getAlertCount(final UserSessionManager session, NotificationInterface notificationInterface, final Bus bus) {
 
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("fpId", session.getFPID());
+            map.put("clientId", Constants.clientId);
+            map.put("isRead", "false");
+            notificationInterface.getAlertCount(map, new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    Home_Fragment_Tab.alertCountVal = s;
+                    bus.post(new AlertCountEvent(s));
+                    MixPanelController.setProperties("AlertCount", s);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Home_Fragment_Tab.alertCountVal = "0";
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            bus.post(new AlertCountEvent("0"));
+        }
     }
 }

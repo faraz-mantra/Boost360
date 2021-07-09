@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:layout_gravity="center_vertical"
-  android:background="@android:color/transparent"
-  android:gravity="center"
-  android:orientation="vertical"
-  android:paddingStart="20dp"
-  android:paddingRight="10dp">
-
-  <RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:padding="5dp">
+    android:layout_gravity="center_vertical"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingRight="10dp">
 
-    <ImageView
-      android:id="@+id/img_question_plan_group"
-      android:layout_width="25dp"
-      android:layout_height="25dp"
-      android:gravity="center_vertical"
-      android:padding="5dp"
-      app:srcCompat="@drawable/ic_questions_circular_button" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="5dp">
 
-    <TextView
-      android:id="@+id/tv_group_item_name"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:layout_marginStart="@dimen/margin_10"
-      android:layout_marginTop="@dimen/margin_3"
-      android:layout_toRightOf="@+id/img_question_plan_group"
-      android:gravity="center_vertical"
-      android:textColor="@color/gray"
-      tools:text="Group item name" />
-  </RelativeLayout>
+        <ImageView
+            android:id="@+id/img_question_plan_group"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            app:srcCompat="@drawable/ic_questions_circular_button" />
+
+        <TextView
+            android:id="@+id/tv_group_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_3"
+            android:layout_toRightOf="@+id/img_question_plan_group"
+            android:gravity="center_vertical"
+            android:textColor="@color/gray"
+            tools:text="Group item name" />
+    </RelativeLayout>
 
 </RelativeLayout>

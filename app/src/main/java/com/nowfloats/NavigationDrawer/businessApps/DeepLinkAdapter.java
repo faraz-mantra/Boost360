@@ -1,9 +1,7 @@
 package com.nowfloats.NavigationDrawer.businessApps;
 
 import android.content.Context;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +16,12 @@ import com.thinksity.R;
 public class DeepLinkAdapter extends RecyclerView.Adapter<DeepLinkAdapter.MyHolder> {
 
     private Context mContext;
-    private String[] mainArray, descriptionArray;
-
-    DeepLinkAdapter(Context context, String[] main, String[] descriptions) {
+    private String[] mainArray,descriptionArray;
+    DeepLinkAdapter(Context context,String[] main,String[] descriptions){
         mContext = context;
         mainArray = main;
         descriptionArray = descriptions;
     }
-
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_subscribers_item, parent, false);
@@ -43,14 +39,9 @@ public class DeepLinkAdapter extends RecyclerView.Adapter<DeepLinkAdapter.MyHold
         return mainArray.length;
     }
 
-    public interface DeepLinkOnclick {
-        void onDeepLinkClick(int pos);
-    }
+    class MyHolder extends RecyclerView.ViewHolder{
 
-    class MyHolder extends RecyclerView.ViewHolder {
-
-        TextView mainText, descriptionText;
-
+        TextView mainText,descriptionText;
         MyHolder(View itemView) {
             super(itemView);
             mainText = (TextView) itemView.findViewById(R.id.subscriber_text);
@@ -58,9 +49,13 @@ public class DeepLinkAdapter extends RecyclerView.Adapter<DeepLinkAdapter.MyHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((DeepLinkOnclick) mContext).onDeepLinkClick(getAdapterPosition());
+                    ((DeepLinkOnclick)mContext).onDeepLinkClick(getAdapterPosition());
                 }
             });
         }
+    }
+
+    public interface DeepLinkOnclick{
+        void onDeepLinkClick(int pos);
     }
 }

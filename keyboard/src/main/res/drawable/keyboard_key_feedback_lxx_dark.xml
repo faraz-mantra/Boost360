@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2014 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2014 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,15 +14,23 @@
      limitations under the License.
 -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:latin="http://schemas.android.com/apk/res-auto">
-  <!-- Left edge -->
-  <item android:drawable="@drawable/keyboard_key_feedback_more_background_lxx_dark" latin:state_has_morekeys="true" latin:state_left_edge="true" />
-  <item android:drawable="@drawable/keyboard_key_feedback_background_lxx_dark" latin:state_left_edge="true" />
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:latin="http://schemas.android.com/apk/res-auto"
+>
+    <!-- Left edge -->
+    <item latin:state_left_edge="true" latin:state_has_morekeys="true"
+          android:drawable="@drawable/keyboard_key_feedback_more_background_lxx_dark" />
+    <item latin:state_left_edge="true"
+          android:drawable="@drawable/keyboard_key_feedback_background_lxx_dark" />
 
-  <!-- Right edge -->
-  <item android:drawable="@drawable/keyboard_key_feedback_more_background_lxx_dark" latin:state_has_morekeys="true" latin:state_right_edge="true" />
-  <item android:drawable="@drawable/keyboard_key_feedback_background_lxx_dark" latin:state_right_edge="true" />
+    <!-- Right edge -->
+    <item latin:state_right_edge="true" latin:state_has_morekeys="true"
+          android:drawable="@drawable/keyboard_key_feedback_more_background_lxx_dark" />
+    <item latin:state_right_edge="true"
+          android:drawable="@drawable/keyboard_key_feedback_background_lxx_dark" />
 
-  <item android:drawable="@drawable/keyboard_key_feedback_more_background_lxx_dark" latin:state_has_morekeys="true" />
-  <item android:drawable="@drawable/keyboard_key_feedback_background_lxx_dark" />
+    <item latin:state_has_morekeys="true"
+          android:drawable="@drawable/keyboard_key_feedback_more_background_lxx_dark" />
+    <item android:drawable="@drawable/keyboard_key_feedback_background_lxx_dark" />
 </selector>

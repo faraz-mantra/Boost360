@@ -19,7 +19,6 @@ public class ScreenShotsAdapter extends FragmentStatePagerAdapter {
         super(fm);
         this.list = list;
     }
-
     @Override
     public Fragment getItem(int position) {
         return ImageViewFragment.getInstance(list.get(position));

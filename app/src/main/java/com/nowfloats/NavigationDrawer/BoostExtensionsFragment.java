@@ -81,7 +81,7 @@ public class BoostExtensionsFragment extends Fragment {
 
                 LinearLayoutManager(mContext));
         mRecyclerView.setAdapter(adapter);
-    }
+     }
 
     private void showWordpressScript() {
         if (getActivity() == null) return;
@@ -118,7 +118,7 @@ public class BoostExtensionsFragment extends Fragment {
                         startActivity(Intent.createChooser(intent, getString(R.string.shared_from_boost)));
                     }
                 }).build();
-        EditText scriptText = (EditText) dialog.getCustomView().findViewById(R.id.boostx_script_body);
+        EditText scriptText = (EditText)dialog.getCustomView().findViewById(R.id.boostx_script_body);
         scriptText.setText(session.getFPID());
 
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -158,7 +158,7 @@ public class BoostExtensionsFragment extends Fragment {
                                 startActivity(Intent.createChooser(intent, getString(R.string.shared_from_boost)));
                             }
                         }).build();
-                EditText scriptText = (EditText) dialog2.getCustomView().findViewById(R.id.boostx_script_body);
+                EditText scriptText = (EditText)dialog2.getCustomView().findViewById(R.id.boostx_script_body);
                 scriptText.setText(Constants.boostx_script.replace("[[FPTAG]]", session.getFpTag()));
                 dialog2.show();
             }
@@ -208,7 +208,7 @@ public class BoostExtensionsFragment extends Fragment {
                     }
                 }).build();
 
-        EditText scriptText = (EditText) dialog.getCustomView().findViewById(R.id.boostx_script_body);
+        EditText scriptText = (EditText)dialog.getCustomView().findViewById(R.id.boostx_script_body);
         scriptText.setText(Constants.boostx_script.replace("[[FPTAG]]", session.getFpTag()));
 
         dialog.show();

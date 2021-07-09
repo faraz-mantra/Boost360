@@ -11,24 +11,19 @@ import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-object BusinessDomainRepository :
-  AppBaseRepository<BusinessDomainRemoteDataSource, AppBaseLocalService>() {
-  override fun getRemoteDataSourceClass(): Class<BusinessDomainRemoteDataSource> {
-    return BusinessDomainRemoteDataSource::class.java
-  }
+object BusinessDomainRepository: AppBaseRepository<BusinessDomainRemoteDataSource, AppBaseLocalService>() {
+    override fun getRemoteDataSourceClass(): Class<BusinessDomainRemoteDataSource> {
+        return BusinessDomainRemoteDataSource::class.java
+    }
 
-  override fun getLocalDataSourceInstance(): AppBaseLocalService {
-    return AppBaseLocalService()
-  }
+    override fun getLocalDataSourceInstance(): AppBaseLocalService {
+        return AppBaseLocalService()
+    }
 
-  fun postCheckBusinessDomain(request: BusinessDomainRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.checkBusinessDomain(request),
-      TaskCode.POST_CHECK_BUSINESS_DOMAIN
-    )
-  }
-
-  override fun getApiClient(): Retrofit {
-    return WithFloatsApiClient.shared.retrofit
-  }
+    fun postCheckBusinessDomain(request: BusinessDomainRequest): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.checkBusinessDomain(request), TaskCode.POST_CHECK_BUSINESS_DOMAIN)
+    }
+    override fun getApiClient(): Retrofit {
+        return WithFloatsApiClient.shared.retrofit
+    }
 }

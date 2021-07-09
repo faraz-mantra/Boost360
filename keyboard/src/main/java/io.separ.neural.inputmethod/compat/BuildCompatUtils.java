@@ -19,12 +19,10 @@ package io.separ.neural.inputmethod.compat;
 import android.os.Build;
 
 public final class BuildCompatUtils {
-    /**
-     * API version for L-release.
-     */
-    // TODO: Substitute this constant reference with Build.VERSION_CODES.L* once the *next* version
-    // becomes available.
-    public static final int VERSION_CODES_LXX = 21;
+    private BuildCompatUtils() {
+        // This utility class is not publicly instantiable.
+    }
+
     private static final boolean IS_RELEASE_BUILD = Build.VERSION.CODENAME.equals("REL");
 
     /**
@@ -36,7 +34,10 @@ public final class BuildCompatUtils {
             ? Build.VERSION.SDK_INT
             : Build.VERSION.SDK_INT + 1;
 
-    private BuildCompatUtils() {
-        // This utility class is not publicly instantiable.
-    }
+    /**
+     * API version for L-release.
+     */
+    // TODO: Substitute this constant reference with Build.VERSION_CODES.L* once the *next* version
+    // becomes available.
+    public static final int VERSION_CODES_LXX = 21;
 }

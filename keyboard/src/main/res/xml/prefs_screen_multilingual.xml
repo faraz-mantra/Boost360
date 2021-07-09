@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2014 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2014 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,20 +14,21 @@
      limitations under the License.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-  android:key="screen_multilingual"
-  android:title="@string/settings_screen_multilingual">
-  <CheckBoxPreference
-    android:defaultValue="true"
-    android:key="pref_show_language_switch_key"
-    android:persistent="true"
-    android:summary="@string/show_language_switch_key_summary"
-    android:title="@string/show_language_switch_key" />
-  <CheckBoxPreference
-    android:defaultValue="false"
-    android:dependency="pref_show_language_switch_key"
-    android:key="pref_include_other_imes_in_language_switch_list"
-    android:persistent="true"
-    android:summary="@string/include_other_imes_in_language_switch_list_summary"
-    android:title="@string/include_other_imes_in_language_switch_list" />
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/settings_screen_multilingual"
+    android:key="screen_multilingual">
+    <CheckBoxPreference
+        android:key="pref_show_language_switch_key"
+        android:title="@string/show_language_switch_key"
+        android:summary="@string/show_language_switch_key_summary"
+        android:defaultValue="true"
+        android:persistent="true" />
+    <CheckBoxPreference
+        android:key="pref_include_other_imes_in_language_switch_list"
+        android:dependency="pref_show_language_switch_key"
+        android:title="@string/include_other_imes_in_language_switch_list"
+        android:summary="@string/include_other_imes_in_language_switch_list_summary"
+        android:defaultValue="false"
+        android:persistent="true" />
 </PreferenceScreen>

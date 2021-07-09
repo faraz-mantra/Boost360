@@ -25,7 +25,7 @@ import static io.separ.neural.inputmethod.indic.Constants.CODE_UNSPECIFIED;
 
 /**
  * The string parser of the key specification.
- * <p>
+ *
  * Each key specification is one of the following:
  * - Label optionally followed by keyOutputText (keyLabel|keyOutputText).
  * - Label optionally followed by code point (keyLabel|!code/code_name).

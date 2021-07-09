@@ -17,7 +17,8 @@ public class WidgetPacks {
     public int Priority;
 
 
-    public static class Property {
+    public static class Property
+    {
         public String Key, Value;
     }
 }

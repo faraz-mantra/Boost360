@@ -16,21 +16,21 @@ import dev.patrickgold.florisboard.ime.core.FlorisApplication;
 
 public class ApiReLoadActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        BaseOrderApplication.apiInitialize();
-        BaseBoardingApplication.apiInitialize();
-        AppServiceApplication.apiInitialize();
-        AppDashboardApplication.apiInitialize();
-        AppPreSignInApplication.apiInitialize();
-        FlorisApplication.apiInitialize();
-      onBackPressed();
-    }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    BaseOrderApplication.apiInitialize();
+    BaseBoardingApplication.apiInitialize();
+    AppServiceApplication.apiInitialize();
+    AppDashboardApplication.apiInitialize();
+    AppPreSignInApplication.apiInitialize();
+    FlorisApplication.apiInitialize();
+    onBackPressed();
+  }
 
-    @Override
-    public void onBackPressed() {
-        setResult(Activity.RESULT_OK, new Intent());
-        finish();
-    }
+  @Override
+  public void onBackPressed() {
+    setResult(Activity.RESULT_OK, new Intent());
+    finish();
+  }
 }

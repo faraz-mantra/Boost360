@@ -22,7 +22,6 @@ import android.view.KeyEvent;
 final class SpecialKeyDetector {
     /**
      * Special physical key detector
-     *
      * @param context a context of this detector.
      */
     public SpecialKeyDetector(final Context context) {
@@ -30,7 +29,6 @@ final class SpecialKeyDetector {
 
     /**
      * Record a down key event.
-     *
      * @param keyEvent a down key event.
      */
     public void onKeyDown(final KeyEvent keyEvent) {
@@ -38,7 +36,6 @@ final class SpecialKeyDetector {
 
     /**
      * Record an up key event.
-     *
      * @param keyEvent an up key event.
      */
     public void onKeyUp(final KeyEvent keyEvent) {

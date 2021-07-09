@@ -1,14 +1,10 @@
 package com.nowfloats.manageinventory;
 
 import android.content.Intent;
-
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
 import androidx.appcompat.widget.Toolbar;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -86,10 +82,14 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
         init();
 
 
-        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
+        {
             revenueContainer.setVisibility(View.INVISIBLE);
             tvRevenueText.setVisibility(View.INVISIBLE);
-        } else {
+        }
+
+        else
+        {
             revenueContainer.setVisibility(View.VISIBLE);
             tvRevenueText.setVisibility(View.VISIBLE);
         }

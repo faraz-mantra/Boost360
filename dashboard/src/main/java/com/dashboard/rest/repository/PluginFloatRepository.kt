@@ -11,14 +11,8 @@ import retrofit2.Retrofit
 
 object PluginFloatRepository : AppBaseRepository<PluginFloatRemoteData, AppBaseLocalService>() {
 
-  fun getDomainDetailsForFloatingPoint(
-    fpTag: String?,
-    map: Map<String, String>?
-  ): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.getDomainDetailsForFloatingPoint(fpTag, map),
-      TaskCode.GET_DOMAIN_DETAIL
-    )
+  fun  getDomainDetailsForFloatingPoint(fpTag: String?,map: Map<String, String>?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getDomainDetailsForFloatingPoint(fpTag,map), TaskCode.GET_DOMAIN_DETAIL)
   }
 
   override fun getRemoteDataSourceClass(): Class<PluginFloatRemoteData> {

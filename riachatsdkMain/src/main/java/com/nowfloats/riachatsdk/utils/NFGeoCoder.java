@@ -30,7 +30,7 @@ public class NFGeoCoder {
             try {
                 Address address = null;
                 list = gc.getFromLocationName(param[0] + ","
-                        + param[1] + "," + param[2], 10);
+                        + param[1] + "," + param[2] , 10);
 
                 double lat = 0, lng = 0;
                 if (list != null && list.size() > 0) {

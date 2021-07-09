@@ -10,8 +10,7 @@ import com.onboarding.nowfloats.extensions.checkIsFile
 
 
 fun String.getWebViewUrl(): String {
-  return (takeIf { checkIsFile().not() }?.let { this }
-    ?: "https://docs.google.com/viewer?url=$this").checkHttp()
+  return (takeIf { checkIsFile().not() }?.let { this } ?: "https://docs.google.com/viewer?url=$this").checkHttp()
 }
 
 fun String.checkHttp(): String {

@@ -14,13 +14,11 @@ import com.nowfloats.riachatsdk.utils.Constants;
 
 public class ChatManager {
 
-    private static ChatManager sChatManager;
     ChatConfig mChatConfig = new ChatConfig();
+
     private Activity mContext;
 
-    private ChatManager(Activity context) {
-        mContext = context;
-    }
+    private static ChatManager sChatManager;
 
     public static ChatManager getInstance(Activity context) {
         if (sChatManager == null) {
@@ -29,6 +27,11 @@ public class ChatManager {
 
         return sChatManager;
     }
+
+    private ChatManager(Activity context) {
+        mContext = context;
+    }
+
 
     public void setBotImage(Bitmap bitmap) {
         mChatConfig.botImage = bitmap;
@@ -54,6 +57,11 @@ public class ChatManager {
         mChatConfig.chatTextColor = color;
     }
 
+    public enum ChatType {
+        CREATE_WEBSITE,
+        FEEDBACK
+    }
+
     public void startChat(ChatType chatType) {
         Intent i = new Intent(mContext, ChatViewActivity.class);
 //        mContext.overridePendingTransition(R.anim.ria_fade_in, R.anim.slide_out_up);
@@ -67,10 +75,5 @@ public class ChatManager {
         mChatConfig = null;
         mContext = null;
         sChatManager = null;
-    }
-
-    public enum ChatType {
-        CREATE_WEBSITE,
-        FEEDBACK
     }
 }

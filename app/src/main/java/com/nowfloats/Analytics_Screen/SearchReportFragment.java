@@ -2,10 +2,8 @@ package com.nowfloats.Analytics_Screen;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +26,9 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class SearchReportFragment extends Fragment {
-    List<SearchAnalyticsSummaryForFP> overViewSearchReport = new ArrayList<>();
     private Context mContext;
     private UserSessionManager mSession;
+    List<SearchAnalyticsSummaryForFP> overViewSearchReport = new ArrayList<>();
 
     @Nullable
     @Override

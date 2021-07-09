@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -20,7 +19,6 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -67,23 +65,29 @@ import java.util.ArrayList;
 public class CallToActionFragment extends Fragment {
 
 
-    private static final int MAX_RESPONDED = 3;
-    private final String ACTION_TYPE_NUMBER = "contactNumber";
-    private final String ACTION_TYPE_EMAIL = "email";
-    public ProgressBar pbView;
     private RecyclerView rvActionItems;
+
     private ViewPager vwSAM;
+
     private CallToActionAdapter actionItemsAdapter;
+
+    public ProgressBar pbView;
+
     private LinearLayout llProductView;
+
     private Button btnCall, btnShare;
+
     private SlidingTabLayout tabs;
+
+    private final String ACTION_TYPE_NUMBER = "contactNumber";
+
+    private final String ACTION_TYPE_EMAIL = "email";
+
+    private static final int MAX_RESPONDED = 3;
+
     private int noOfTimesResponded = 0;
 
     private String appVersion = "";
-    private int noOfStars = 0;
-    private SuggestionsDO suggestionsDO;
-    private Intent shareIntent = null;
-    private String selectedProducts = "";
 
     public CallToActionFragment() {
 
@@ -153,6 +157,8 @@ public class CallToActionFragment extends Fragment {
         }
 
     }
+
+    private int noOfStars = 0;
 
     private void showRating() {
 
@@ -264,6 +270,8 @@ public class CallToActionFragment extends Fragment {
         });
     }
 
+    private SuggestionsDO suggestionsDO;
+
     public void performAction(SuggestionsDO suggestionsDO) {
 
         FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), FirebaseLogger.SAMSTATUS.SELECTED_MESSAGES, suggestionsDO.getFpId(), appVersion);
@@ -293,6 +301,7 @@ public class CallToActionFragment extends Fragment {
 
     }
 
+
     public boolean isProductsVisible() {
         return llProductView.getVisibility() == View.VISIBLE;
     }
@@ -316,6 +325,15 @@ public class CallToActionFragment extends Fragment {
         v.setLayoutParams(params);
         v.invalidate();
     }
+
+    enum SHARE_VIA {
+        GMAIL,
+        SMS
+    }
+
+    private Intent shareIntent = null;
+    private String selectedProducts = "";
+
 
     private void prepareMessageForShare(SHARE_VIA share_via) {
 
@@ -398,7 +416,7 @@ public class CallToActionFragment extends Fragment {
                                     }
 
                                     @Override
-                                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
                                         Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_download_image));
 
                                     }
@@ -426,12 +444,6 @@ public class CallToActionFragment extends Fragment {
             }
         }
 
-    }
-
-
-    enum SHARE_VIA {
-        GMAIL,
-        SMS
     }
 
     public class SAMPagerAdapter extends PagerAdapter {

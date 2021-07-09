@@ -8,9 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
-
 import androidx.annotation.RequiresApi;
-
 import android.view.accessibility.AccessibilityEvent;
 
 import com.nowfloats.bubble.BubblesService;
@@ -39,7 +37,6 @@ public class DataAccessibilityServiceV8 extends AccessibilityService {
     private String BUBBLE_CLASS_NAME = "com.nowfloats.accessbility.BubbleDialog";
 
     private SharedPreferences pref;
-    private BubblesService.FROM bFrom;
 
     @Override
     protected void onServiceConnected() {
@@ -76,6 +73,8 @@ public class DataAccessibilityServiceV8 extends AccessibilityService {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
+
+    private BubblesService.FROM bFrom;
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
@@ -173,7 +172,7 @@ public class DataAccessibilityServiceV8 extends AccessibilityService {
         if (pref == null) {
             pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         }
-
+        
         pref.edit().putBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG, true).apply();
         pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false).apply();
         super.onDestroy();

@@ -14,7 +14,6 @@ public class roboto_md_30_ffffff_button extends Button {
         super(context);
         init(context);
     }
-
     public roboto_md_30_ffffff_button(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -24,9 +23,9 @@ public class roboto_md_30_ffffff_button extends Button {
         super(context, attrs, defStyle);
         init(context);
     }
-
-    public void init(Context context) {
-        setCustomFont(context, "Roboto-Medium.ttf");
+    public void init(Context context)
+    {
+        setCustomFont(context,"Roboto-Medium.ttf");
         setTextColor(getResources().getColor(R.color.white));
         setTextSize(15);
     }

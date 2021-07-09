@@ -14,8 +14,7 @@ import com.framework.utils.setNoDoubleClickListener
 
 const val BASE_IMAGE_URL = "https://content.withfloats.com"
 
-class UpdateBusinessViewHolder(binding: ItemUpdatesListBinding) :
-  AppBaseRecyclerViewHolder<ItemUpdatesListBinding>(binding) {
+class UpdateBusinessViewHolder(binding: ItemUpdatesListBinding) : AppBaseRecyclerViewHolder<ItemUpdatesListBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -34,33 +33,9 @@ class UpdateBusinessViewHolder(binding: ItemUpdatesListBinding) :
 
     binding.title.text = data.message
     binding.dateTxt.text = data.getDateValue()
-    binding.shareMore.setNoDoubleClickListener({
-      listener?.onItemClick(
-        position,
-        item,
-        RecyclerViewActionType.UPDATE_OTHER_SHARE.ordinal
-      )
-    })
-    binding.shareWhatsapp.setNoDoubleClickListener({
-      listener?.onItemClick(
-        position,
-        item,
-        RecyclerViewActionType.UPDATE_WHATS_APP_SHARE.ordinal
-      )
-    })
-    binding.shareFp.setNoDoubleClickListener({
-      listener?.onItemClick(
-        position,
-        item,
-        RecyclerViewActionType.UPDATE_FP_APP_SHARE.ordinal
-      )
-    })
-    binding.root.setNoDoubleClickListener({
-      listener?.onItemClick(
-        position,
-        item,
-        RecyclerViewActionType.UPDATE_BUSINESS_CLICK.ordinal
-      )
-    })
+    binding.shareMore.setNoDoubleClickListener({ listener?.onItemClick(position, item, RecyclerViewActionType.UPDATE_OTHER_SHARE.ordinal) })
+    binding.shareWhatsapp.setNoDoubleClickListener({ listener?.onItemClick(position, item, RecyclerViewActionType.UPDATE_WHATS_APP_SHARE.ordinal) })
+    binding.shareFp.setNoDoubleClickListener({ listener?.onItemClick(position, item, RecyclerViewActionType.UPDATE_FP_APP_SHARE.ordinal) })
+    binding.root.setNoDoubleClickListener({ listener?.onItemClick(position, item, RecyclerViewActionType.UPDATE_BUSINESS_CLICK.ordinal) })
   }
 }

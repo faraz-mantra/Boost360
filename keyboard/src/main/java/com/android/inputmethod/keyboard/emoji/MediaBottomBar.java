@@ -36,13 +36,13 @@ import static io.separ.neural.inputmethod.indic.Constants.NOT_A_COORDINATE;
 public class MediaBottomBar extends LinearLayout implements View.OnTouchListener, ColorManager.OnColorChange, View.OnClickListener {
     private final DeleteKeyOnTouchListener mDeleteKeyOnTouchListener;
     private final ModeSwitchOnTouchListenet mModeSwitchOnTouchListener;
-    private final int mFunctionalKeyBackgroundId;
     private ImageButton mDeleteKey;
     private ImageButton mStickerSwitch;
     private ImageButton mEmojiSwitch;
     private TextView mAlphabetKeyLeft;
     private KeyboardActionListener mKeyboardActionListener = KeyboardActionListener.EMPTY_LISTENER;
     private EmojiLayoutParams mEmojiLayoutParams;
+    private final int mFunctionalKeyBackgroundId;
     private ChangeRichModeListener mModeSwitchListener;
 
     public MediaBottomBar(final Context context, final AttributeSet attrs) {
@@ -64,14 +64,6 @@ public class MediaBottomBar extends LinearLayout implements View.OnTouchListener
         mModeSwitchOnTouchListener = new ModeSwitchOnTouchListenet();
     }
 
-    private static void setupAlphabetKey(final TextView alphabetKey, final String label,
-                                         final KeyDrawParams params) {
-        alphabetKey.setText(label);
-        //alphabetKey.setTextColor(params.mFunctionalTextColor);
-        //alphabetKey.setTextSize(TypedValue.COMPLEX_UNIT_PX, params.mLabelSize);
-        alphabetKey.setTypeface(FontUtils.getLocaleTypeface());
-    }
-
     @Override
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -85,20 +77,20 @@ public class MediaBottomBar extends LinearLayout implements View.OnTouchListener
     @Override
     protected void onFinishInflate() {
         mEmojiLayoutParams.setActionBarProperties(this);
-        mDeleteKey = (ImageButton) findViewById(R.id.emoji_keyboard_delete);
+        mDeleteKey = (ImageButton)findViewById(R.id.emoji_keyboard_delete);
         mDeleteKey.setBackgroundResource(mFunctionalKeyBackgroundId);
         mDeleteKey.setTag(Constants.CODE_DELETE);
         mDeleteKey.setOnTouchListener(mDeleteKeyOnTouchListener);
-        mAlphabetKeyLeft = (TextView) findViewById(R.id.emoji_keyboard_alphabet_left);
+        mAlphabetKeyLeft = (TextView)findViewById(R.id.emoji_keyboard_alphabet_left);
         mAlphabetKeyLeft.setBackgroundResource(mFunctionalKeyBackgroundId);
         mAlphabetKeyLeft.setTag(Constants.CODE_ALPHA_FROM_EMOJI);
         mAlphabetKeyLeft.setOnTouchListener(this);
         mAlphabetKeyLeft.setOnClickListener(this);
-        mEmojiSwitch = (ImageButton) findViewById(R.id.switch_to_emoji);
+        mEmojiSwitch = (ImageButton)findViewById(R.id.switch_to_emoji);
         mEmojiSwitch.setBackgroundResource(mFunctionalKeyBackgroundId);
         mEmojiSwitch.setOnTouchListener(mModeSwitchOnTouchListener);
         mEmojiSwitch.setTag("rich_emoji_mode");
-        mStickerSwitch = (ImageButton) findViewById(R.id.switch_to_sticker);
+        mStickerSwitch = (ImageButton)findViewById(R.id.switch_to_sticker);
         mStickerSwitch.setBackgroundResource(mFunctionalKeyBackgroundId);
         mStickerSwitch.setOnTouchListener(mModeSwitchOnTouchListener);
         mStickerSwitch.setTag("rich_sticker_mode");
@@ -107,24 +99,24 @@ public class MediaBottomBar extends LinearLayout implements View.OnTouchListener
         mStickerSwitch.setAlpha(0.5f);
     }
 
-    public void onColorChange(ColorProfile newProfile) {
+    public void onColorChange(ColorProfile newProfile){
         int secondary = newProfile.getSecondary();
         int iconColor = newProfile.getIconOnSecondary();
         setBackgroundColor(secondary);
-        if (mDeleteKey != null) {
+        if(mDeleteKey != null) {
             mDeleteKey.setBackgroundColor(secondary);
             mDeleteKey.setColorFilter(iconColor);
         }
-        if (mAlphabetKeyLeft != null) {
+        if(mAlphabetKeyLeft != null) {
             mAlphabetKeyLeft.setBackgroundColor(secondary);
             mAlphabetKeyLeft.setTextColor(iconColor);
             //mAlphabetKeyLeft.setText(mAlphabetKeyLeft.getText());
         }
-        if (mEmojiSwitch != null) {
+        if(mEmojiSwitch != null){
             mEmojiSwitch.setBackgroundColor(secondary);
             mEmojiSwitch.setColorFilter(iconColor);
         }
-        if (mStickerSwitch != null) {
+        if(mStickerSwitch != null){
             mStickerSwitch.setBackgroundColor(secondary);
             mStickerSwitch.setColorFilter(iconColor);
         }
@@ -138,8 +130,16 @@ public class MediaBottomBar extends LinearLayout implements View.OnTouchListener
         return super.dispatchTouchEvent(ev);
     }
 
+    private static void setupAlphabetKey(final TextView alphabetKey, final String label,
+                                         final KeyDrawParams params) {
+        alphabetKey.setText(label);
+        //alphabetKey.setTextColor(params.mFunctionalTextColor);
+        //alphabetKey.setTextSize(TypedValue.COMPLEX_UNIT_PX, params.mLabelSize);
+        alphabetKey.setTypeface(FontUtils.getLocaleTypeface());
+    }
+
     public void startMediaBottomBar(final String switchToAlphaLabel,
-                                    final KeyVisualAttributes keyVisualAttr, final KeyboardIconsSet iconSet) {
+                                   final KeyVisualAttributes keyVisualAttr, final KeyboardIconsSet iconSet) {
         final int deleteIconResId = iconSet.getIconResourceId(KeyboardIconsSet.NAME_DELETE_KEY);
         if (deleteIconResId != 0)
             mDeleteKey.setImageResource(deleteIconResId);
@@ -153,22 +153,22 @@ public class MediaBottomBar extends LinearLayout implements View.OnTouchListener
         mDeleteKeyOnTouchListener.setKeyboardActionListener(mKeyboardActionListener);
     }
 
-    @Override
-    public boolean onTouch(final View v, final MotionEvent event) {
-        if (event.getActionMasked() != MotionEvent.ACTION_DOWN) {
+        @Override
+        public boolean onTouch(final View v, final MotionEvent event) {
+            if (event.getActionMasked() != MotionEvent.ACTION_DOWN) {
+                return false;
+            }
+            final Object tag = v.getTag();
+            if (!(tag instanceof Integer)) {
+                return false;
+            }
+            final int code = (Integer) tag;
+            mKeyboardActionListener.onPressKey(
+                    code, 0 /* repeatCount */, true /* isSinglePointer */);
+            // It's important to return false here. Otherwise, {@link #onClick} and touch-down visual
+            // feedback stop working.
             return false;
         }
-        final Object tag = v.getTag();
-        if (!(tag instanceof Integer)) {
-            return false;
-        }
-        final int code = (Integer) tag;
-        mKeyboardActionListener.onPressKey(
-                code, 0 /* repeatCount */, true /* isSinglePointer */);
-        // It's important to return false here. Otherwise, {@link #onClick} and touch-down visual
-        // feedback stop working.
-        return false;
-    }
 
     @Override
     public void onClick(View v) {
@@ -182,28 +182,11 @@ public class MediaBottomBar extends LinearLayout implements View.OnTouchListener
         mKeyboardActionListener.onReleaseKey(code, false /* withSliding */);
     }
 
-    public void setSwitchActionListener(ChangeRichModeListener listener) {
-        mModeSwitchListener = listener;
-    }
-
     private static class DeleteKeyOnTouchListener implements OnTouchListener {
         static final long MAX_REPEAT_COUNT_TIME = TimeUnit.SECONDS.toMillis(30);
-        /**
-         * Key-repeat state.
-         */
-        private static final int KEY_REPEAT_STATE_INITIALIZED = 0;
-        // The key is touched but auto key-repeat is not started yet.
-        private static final int KEY_REPEAT_STATE_KEY_DOWN = 1;
-        // At least one key-repeat event has already been triggered and the key is not released.
-        private static final int KEY_REPEAT_STATE_KEY_REPEAT = 2;
         final long mKeyRepeatStartTimeout;
         final long mKeyRepeatInterval;
-        // TODO: Do the same things done in PointerTracker
-        private final CountDownTimer mTimer;
-        private KeyboardActionListener mKeyboardActionListener =
-                KeyboardActionListener.EMPTY_LISTENER;
-        private int mState = KEY_REPEAT_STATE_INITIALIZED;
-        private int mRepeatCount = 0;
+
         public DeleteKeyOnTouchListener(Context context) {
             final Resources res = context.getResources();
             mKeyRepeatStartTimeout = res.getInteger(R.integer.config_key_repeat_start_timeout);
@@ -217,13 +200,27 @@ public class MediaBottomBar extends LinearLayout implements View.OnTouchListener
                     }
                     onKeyRepeat();
                 }
-
                 @Override
                 public void onFinish() {
                     onKeyRepeat();
                 }
             };
         }
+
+        /** Key-repeat state. */
+        private static final int KEY_REPEAT_STATE_INITIALIZED = 0;
+        // The key is touched but auto key-repeat is not started yet.
+        private static final int KEY_REPEAT_STATE_KEY_DOWN = 1;
+        // At least one key-repeat event has already been triggered and the key is not released.
+        private static final int KEY_REPEAT_STATE_KEY_REPEAT = 2;
+
+        private KeyboardActionListener mKeyboardActionListener =
+                KeyboardActionListener.EMPTY_LISTENER;
+
+        // TODO: Do the same things done in PointerTracker
+        private final CountDownTimer mTimer;
+        private int mState = KEY_REPEAT_STATE_INITIALIZED;
+        private int mRepeatCount = 0;
 
         public void setKeyboardActionListener(final KeyboardActionListener listener) {
             mKeyboardActionListener = listener;
@@ -308,20 +305,25 @@ public class MediaBottomBar extends LinearLayout implements View.OnTouchListener
         }
     }
 
+    public void setSwitchActionListener(ChangeRichModeListener listener){
+        mModeSwitchListener = listener;
+    }
+
     private class ModeSwitchOnTouchListenet implements OnTouchListener {
         View v1, v2;
 
         @Override
         public boolean onTouch(final View v, final MotionEvent event) {
-            if (mModeSwitchListener != null) {
+            if(mModeSwitchListener != null) {
                 final Object tag = v.getTag();
                 if (!(tag instanceof String))
                     return false;
-                final int res = mModeSwitchListener.change((String) tag);
-                if (res == 1) {
+                final int res = mModeSwitchListener.change((String)tag);
+                if(res == 1){
                     v1.setAlpha(1.0f);
                     v2.setAlpha(0.5f);
-                } else if (res == 2) {
+                }
+                else if(res == 2){
                     v1.setAlpha(0.5f);
                     v2.setAlpha(1.0f);
                 }

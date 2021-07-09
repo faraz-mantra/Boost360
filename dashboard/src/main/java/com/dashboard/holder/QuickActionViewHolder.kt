@@ -7,8 +7,7 @@ import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 
-class QuickActionViewHolder(binding: ItemQuickActionBinding) :
-  AppBaseRecyclerViewHolder<ItemQuickActionBinding>(binding) {
+class QuickActionViewHolder(binding: ItemQuickActionBinding) : AppBaseRecyclerViewHolder<ItemQuickActionBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -17,13 +16,7 @@ class QuickActionViewHolder(binding: ItemQuickActionBinding) :
     binding.isNew.visibility = if (data.isNew) View.VISIBLE else View.INVISIBLE
     val type = QuickActionItem.QuickActionType.from(data.quickActionType)
     type?.icon?.let { binding.imgIcon.setImageResource(it) }
-    binding.mainContent.setOnClickListener {
-      listener?.onItemClick(
-        position,
-        data,
-        RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal
-      )
-    }
+    binding.mainContent.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal) }
   }
 }
 

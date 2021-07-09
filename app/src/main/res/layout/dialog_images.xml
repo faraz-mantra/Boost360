@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="@android:color/white">
-
-  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@android:color/white"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_width="match_parent">
 
-    <androidx.viewpager.widget.ViewPager
-      android:id="@+id/viewpager"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"></androidx.viewpager.widget.ViewPager>
-
-    <com.viewpagerindicator.CirclePageIndicator
-      android:id="@+id/ps_indicator"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:padding="5dp" />
-  </LinearLayout>
-
-  <ImageView
-    android:id="@+id/cancel"
-    android:layout_width="35dp"
-    android:layout_height="35dp"
-    android:layout_gravity="end"
-    android:padding="7dp"
-    android:src="@drawable/rect_cancel" />
+        <androidx.viewpager.widget.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/viewpager">
+        </androidx.viewpager.widget.ViewPager>
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/ps_indicator"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/cancel"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:padding="7dp"
+        android:layout_gravity="end"
+        android:src="@drawable/rect_cancel"/>
 </FrameLayout>
 

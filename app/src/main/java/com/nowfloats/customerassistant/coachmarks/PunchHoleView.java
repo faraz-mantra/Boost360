@@ -70,7 +70,7 @@ public class PunchHoleView extends LinearLayout {
      *
      * @param centerX circle's x coordinate
      * @param centerY circle's y coordinate
-     * @param radius  circle's radius
+     * @param radius circle's radius
      * @return true if value is changed
      */
     public boolean setCircle(int centerX, int centerY, float radius) {
@@ -94,7 +94,7 @@ public class PunchHoleView extends LinearLayout {
 
     /**
      * Set the punch hole's x coordinate.
-     * <p>
+     *
      * This needs to be public to do the horizontal translation animation.
      *
      * @param centerX circle's x coordinate

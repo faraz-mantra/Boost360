@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="white">#ffffff</color>
-  <color name="gray_light">#363636</color>
-  <color name="purple">#6A1B9A</color>
-  <color name="blue">#1565C0</color>
-  <color name="red">#FFFF0000</color>
-  <color name="lt_gray">#FFCCCCCC</color>
-  <color name="primary">#ffb900</color>
-  <color name="gray">#616161</color>
-  <color name="ria_popup_btn">#8A8A8A</color>
-  <color name="light_gray">#60616161</color>
+    <color name="white">#ffffff</color>
+    <color name="gray_light">#363636</color>
+    <color name="purple">#6A1B9A</color>
+    <color name="blue">#1565C0</color>
+    <color name="red">#FFFF0000</color>
+    <color name="lt_gray">#FFCCCCCC</color>
+    <color name="primary">#ffb900</color>
+    <color name="gray">#616161</color>
+    <color name="ria_popup_btn">#8A8A8A</color>
+    <color name="light_gray">#60616161</color>
 
 </resources>

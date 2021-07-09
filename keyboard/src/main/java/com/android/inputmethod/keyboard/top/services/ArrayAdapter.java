@@ -1,9 +1,7 @@
 package com.android.inputmethod.keyboard.top.services;
 
 import android.content.Context;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 
 import java.util.ArrayList;
@@ -17,9 +15,9 @@ import java.util.List;
  */
 
 public abstract class ArrayAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
-    private final Object mLock;
     private Context context;
     private LayoutInflater inflater;
+    private final Object mLock;
     private boolean mNotifyOnChange;
     private List<T> objects;
 

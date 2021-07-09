@@ -18,7 +18,7 @@ data class SetField(
   var notes: String? = "",
   @SerializedName("serviceId")
   var serviceId: String? = null
-) : Serializable {
+):Serializable{
 
   fun setCustomerInfo(info: CustomerInfo) {
     this.customerInfo = convertObjToString(info)

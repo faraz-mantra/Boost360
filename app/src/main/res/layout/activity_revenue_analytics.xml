@@ -1,127 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:card_view="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
-
-  <include
-    android:id="@+id/toolbar"
-    layout="@layout/order_analytics_toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-
-  <LinearLayout
-    android:id="@+id/linearlayout"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_marginStart="@dimen/margin_15"
-      android:layout_marginTop="@dimen/margin_10"
-      android:layout_marginEnd="@dimen/margin_15"
-      android:layout_weight="0.7"
-      android:background="#fff"
-      card_view:cardElevation="1dp">
-
-
-      <LinearLayout
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/order_analytics_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginEnd="@dimen/margin_10"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content" />
 
-        <ImageView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_weight="0.6"
-          android:src="@drawable/revenue" />
+    <LinearLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_15"
+            android:layout_marginEnd="@dimen/margin_15"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_weight="0.7"
+            android:background="#fff"
+            card_view:cardElevation="1dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:src="@drawable/revenue" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="23sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/total_revenue_till_date"
+                        android:textSize="15sp" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_weight="0.4"
-          android:orientation="vertical">
-
-          <TextView
-            android:id="@+id/tvAmount"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/primaryColor"
-            android:textSize="23sp" />
+            android:layout_marginStart="@dimen/margin_15"
+            android:layout_marginEnd="@dimen/margin_15"
+            android:layout_marginTop="@dimen/margin_10"
+            android:gravity="end"
+            android:paddingBottom="@dimen/margin_10">
 
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/total_revenue_till_date"
-            android:textSize="15sp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:gravity="center"
+                android:paddingStart="@dimen/margin_5"
+                android:paddingRight="@dimen/margin_5"
+                android:text="@string/Year"
+                android:textColor="#fafafa"
+                android:textSize="@dimen/small_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:layout_marginStart="@dimen/margin_15"
+            android:layout_marginEnd="@dimen/margin_15"
+            android:layout_weight="0.3"
+            android:background="#fff"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10"
+                android:gravity="center"
+                android:text="@string/revenue_distribution"
+                android:textColor="@color/primary"
+                android:textSize="@dimen/large_text_size" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_15"
+                android:layout_weight="0.3"
+                android:background="#fff" />
 
 
         </LinearLayout>
-      </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/margin_15"
-      android:layout_marginTop="@dimen/margin_10"
-      android:layout_marginEnd="@dimen/margin_15"
-      android:gravity="end"
-      android:paddingBottom="@dimen/margin_10">
-
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvYear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/dark_grey"
-        android:gravity="center"
-        android:paddingStart="@dimen/margin_5"
-        android:paddingRight="@dimen/margin_5"
-        android:text="@string/Year"
-        android:textColor="#fafafa"
-        android:textSize="@dimen/small_text_size" />
     </LinearLayout>
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_marginStart="@dimen/margin_15"
-      android:layout_marginEnd="@dimen/margin_15"
-      android:layout_marginBottom="@dimen/margin_10"
-      android:layout_weight="0.3"
-      android:background="#fff"
-      android:orientation="vertical">
-
-      <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_10"
-        android:layout_marginBottom="@dimen/margin_10"
-        android:gravity="center"
-        android:text="@string/revenue_distribution"
-        android:textColor="@color/primary"
-        android:textSize="@dimen/large_text_size" />
-
-      <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/margin_15"
-        android:layout_marginEnd="@dimen/margin_15"
-        android:layout_weight="0.3"
-        android:background="#fff" />
-
-
-    </LinearLayout>
-  </LinearLayout>
 </LinearLayout>

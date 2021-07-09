@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
 **
 ** Copyright 2012, The Android Open Source Project
@@ -17,9 +18,10 @@
 */
 -->
 
-<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
-  android:duration="3000"
-  android:propertyName="altCodeKeyWhileTypingAnimAlpha"
-  android:valueFrom="255"
-  android:valueTo="128"
-  android:valueType="intType" />
+<objectAnimator
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:propertyName="altCodeKeyWhileTypingAnimAlpha"
+    android:valueType="intType"
+    android:duration="3000"
+    android:valueFrom="255"
+    android:valueTo="128" />

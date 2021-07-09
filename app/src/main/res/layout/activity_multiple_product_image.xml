@@ -1,111 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:layout_gravity="center"
-  android:background="@android:color/transparent"
-  tools:context="com.nowfloats.ProductGallery.MultipleProductImageActivity">
-
-
-  <androidx.viewpager.widget.ViewPager
-    android:id="@+id/vp_product_images"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    app:layout_constraintBottom_toTopOf="@+id/guideline2"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/guideline">
-
-  </androidx.viewpager.widget.ViewPager>
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@android:color/transparent"
+    tools:context="com.nowfloats.ProductGallery.MultipleProductImageActivity">
 
 
-  <com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/fab_add_image"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="20dp"
-    android:layout_marginBottom="20dp"
-    android:src="@drawable/fab_add"
-    app:backgroundTint="@color/primary"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintRight_toLeftOf="parent" />
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/vp_product_images"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline">
 
-  <com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/fab_delete_image"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
-    android:layout_marginEnd="20dp"
-    android:src="@drawable/delete_dustbin_button"
-    app:backgroundTint="@color/primary"
-    app:layout_constraintRight_toLeftOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    </androidx.viewpager.widget.ViewPager>
 
-  <androidx.constraintlayout.widget.Guideline
-    android:id="@+id/guideline"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    app:layout_constraintGuide_percent="0.25"
-    app:layout_constraintTop_toTopOf="parent">
 
-  </androidx.constraintlayout.widget.Guideline>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/fab_add"
+        app:backgroundTint="@color/primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="parent" />
 
-  <androidx.constraintlayout.widget.Guideline
-    android:id="@+id/guideline2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    app:layout_constraintGuide_percent="0.75"
-    app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_delete_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        app:backgroundTint="@color/primary"
+        android:src="@drawable/delete_dustbin_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="parent" />
 
-  <TextView
-    android:id="@+id/tv_current_view_count"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:text="TextView"
-    android:textColor="@color/white"
-    android:textSize="18sp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/vp_product_images" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25"
+        app:layout_constraintTop_toTopOf="parent">
 
-  <ImageView
-    android:id="@+id/iv_nav_right"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:layout_marginEnd="10dp"
-    android:src="@drawable/right"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.Guideline>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-  <ImageView
-    android:id="@+id/iv_nav_left"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:layout_marginStart="10dp"
-    android:src="@drawable/left"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tv_current_view_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vp_product_images" />
 
-  <TextView
-    android:id="@+id/tv_add_images"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:text="@string/click_on_below_to_add_nimages_for_your_product"
-    android:textColor="@color/white"
-    android:textSize="20sp"
-    android:visibility="invisible"
-    app:layout_constraintBottom_toBottomOf="@id/vp_product_images"
-    app:layout_constraintEnd_toEndOf="@id/vp_product_images"
-    app:layout_constraintStart_toStartOf="@id/vp_product_images"
-    app:layout_constraintTop_toTopOf="@id/vp_product_images" />
+    <ImageView
+        android:id="@+id/iv_nav_right"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/right"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_nav_left"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/left"
+        android:layout_marginStart="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/tv_add_images"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="@string/click_on_below_to_add_nimages_for_your_product"
+        app:layout_constraintTop_toTopOf="@id/vp_product_images"
+        app:layout_constraintBottom_toBottomOf="@id/vp_product_images"
+        app:layout_constraintStart_toStartOf="@id/vp_product_images"
+        app:layout_constraintEnd_toEndOf="@id/vp_product_images"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

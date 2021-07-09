@@ -69,7 +69,8 @@
         </LinearLayout>
 
 
-        <androidx.appcompat.widget.LinearLayoutCompat style="@style/wrap_wrap">
+        <androidx.appcompat.widget.LinearLayoutCompat
+          style="@style/wrap_wrap">
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_product_Price"

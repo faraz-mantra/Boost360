@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -43,17 +41,16 @@ import retrofit.http.POST;
 
 public class LinkedinWebView extends AppCompatActivity {
 
+    private static final String LINKEDIN_END_POINT = "https://www.linkedin.com";
+    public static final String AUTH_URL = LINKEDIN_END_POINT+"/oauth/v2/authorization";
     public static final String TOKEN_URL = "/oauth/v2/accessToken";
     public static final String CLIENT_ID = "81pbf5p2a5eezm";
     public static final String SECRETS = "v3iMNbz9quAYbIlC";
     public static final int LINKEDIN_CODE = 101;
     public static final String REDIRECT_URL = "https://fabd21b6.ngrok.io/redirect_url";
-    private static final String LINKEDIN_END_POINT = "https://www.linkedin.com";
-    public static final String AUTH_URL = LINKEDIN_END_POINT + "/oauth/v2/authorization";
     WebView webView;
     ProgressDialog dialog;
     TextView text;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,26 +60,27 @@ public class LinkedinWebView extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        dialog = ProgressDialog.show(this, "", getString(R.string.please_wait), true);
+        dialog = ProgressDialog.show(this,"",getString(R.string.please_wait),true);
         dialog.setCanceledOnTouchOutside(false);
         webView = (WebView) findViewById(R.id.web_view);
         CookieManager cookieManager = CookieManager.getInstance();
-        if (Build.VERSION.SDK_INT >= 21) {
+        if(Build.VERSION.SDK_INT >= 21) {
             cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
                 @Override
                 public void onReceiveValue(Boolean aBoolean) {
 
                 }
             });
-        } else {
+        }
+        else{
             cookieManager.removeAllCookie();
         }
 
-        webView.setWebViewClient(new WebViewClient() {
+        webView.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if (dialog != null && !isFinishing() && dialog.isShowing()) {
+                if(dialog !=null && !isFinishing() && dialog.isShowing()){
                     dialog.dismiss();
                 }
             }
@@ -103,28 +101,28 @@ public class LinkedinWebView extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                if (dialog != null && !isFinishing() && !dialog.isShowing()) {
+                if(dialog !=null && !isFinishing() && !dialog.isShowing()){
                     dialog.show();
                 }
                 //check state code is same
-                if (request.getUrl().toString().startsWith(REDIRECT_URL)) {
+                if(request.getUrl().toString().startsWith(REDIRECT_URL)){
                     handleUri(request.getUrl());
                     //load our html page
                     return super.shouldOverrideUrlLoading(view, request);
-                } else {
+                }else {
                     return super.shouldOverrideUrlLoading(view, request);
                 }
             }
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (dialog != null && !isFinishing() && !dialog.isShowing()) {
+                if(dialog !=null && !isFinishing() && !dialog.isShowing()){
                     dialog.show();
                 }
-                if (url != null && url.startsWith(REDIRECT_URL)) {
+                if(url != null && url.startsWith(REDIRECT_URL)) {
                     handleUri(Uri.parse(url));
                     return super.shouldOverrideUrlLoading(view, url);
-                } else {
+                }else {
                     return super.shouldOverrideUrlLoading(view, url);
                 }
             }
@@ -132,52 +130,50 @@ public class LinkedinWebView extends AppCompatActivity {
         webView.loadUrl(getAuthorizationUrl());
     }
 
-    private void setResult(String token) {
-        Intent i = new Intent(this, Social_Sharing_Activity.class);
-        i.putExtra("token", token);
-        setResult(LINKEDIN_CODE, i);
+    private void setResult(String token){
+        Intent i =  new Intent(this,Social_Sharing_Activity.class);
+        i.putExtra("token",token);
+        setResult(LINKEDIN_CODE,i);
+    }
+    public String getAuthorizationUrl(){
+        return AUTH_URL+"?response_type=code"+"&client_id="+CLIENT_ID+"&redirect_uri="+
+                REDIRECT_URL+"&state=1234"+"&scope=r_basicprofile";
+
     }
 
-    public String getAuthorizationUrl() {
-        return AUTH_URL + "?response_type=code" + "&client_id=" + CLIENT_ID + "&redirect_uri=" +
-                REDIRECT_URL + "&state=1234" + "&scope=r_basicprofile";
-
-    }
-
-    private void handleUri(Uri loadUri) {
-        if (loadUri.getBooleanQueryParameter("code", false)) {
+    private void handleUri(Uri loadUri){
+        if(loadUri.getBooleanQueryParameter("code",false)){
             callAccessTokenApi(loadUri.getQueryParameter("code"));
             text.setVisibility(View.VISIBLE);
             text.setText(R.string.calling_access_token_api);
             //show html page
-        } else {
+        }else{
             setResult(null);
         }
     }
-
-    public void callAccessTokenApi(String code) {
-        if (dialog != null && !isFinishing() && !dialog.isShowing()) {
+    public void callAccessTokenApi(String code){
+        if(dialog !=null && !isFinishing() && !dialog.isShowing()){
             dialog.show();
         }
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint(LINKEDIN_END_POINT)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setLog(new AndroidLog("ggg"))
-                .build();
-        HashMap<String, String> map = new HashMap<>();
-        map.put("grant_type", "authorization_code");
-        map.put("code", code);
-        map.put("redirect_uri", REDIRECT_URL);
-        map.put("client_id", CLIENT_ID);
-        map.put("client_secret", SECRETS);
+       RestAdapter adapter = new RestAdapter.Builder().setEndpoint(LINKEDIN_END_POINT)
+        .setLogLevel(RestAdapter.LogLevel.FULL)
+        .setLog(new AndroidLog("ggg"))
+        .build();
+        HashMap<String,String> map = new HashMap<>();
+        map.put("grant_type","authorization_code");
+        map.put("code",code);
+        map.put("redirect_uri",REDIRECT_URL);
+        map.put("client_id",CLIENT_ID);
+        map.put("client_secret",SECRETS);
         adapter.create(AccessTokenApi.class).getAccessToken(map, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 text.setText(R.string.successfully_api_response);
-                if (dialog != null && !isFinishing() && dialog.isShowing()) {
+                if(dialog !=null && !isFinishing() && dialog.isShowing()){
                     dialog.dismiss();
                 }
                 String accessToken = null;
-                if (jsonObject != null) {
+                if(jsonObject != null){
                     accessToken = jsonObject.get("access_token").getAsString();
                 }
                 setResult(accessToken);
@@ -185,7 +181,7 @@ public class LinkedinWebView extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                if (dialog != null && !isFinishing() && dialog.isShowing()) {
+                if(dialog !=null && !isFinishing() && dialog.isShowing()){
                     dialog.dismiss();
                 }
                 text.setText("failed");
@@ -194,20 +190,20 @@ public class LinkedinWebView extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    interface AccessTokenApi {
+    interface AccessTokenApi{
 
         @FormUrlEncoded
         @POST(TOKEN_URL)
         void getAccessToken(@FieldMap Map map, Callback<JsonObject> response);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

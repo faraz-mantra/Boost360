@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
 **
 ** Copyright 2012, The Android Open Source Project
@@ -16,14 +17,19 @@
 ** limitations under the License.
 */
 -->
-<merge xmlns:latin="http://schemas.android.com/apk/res-auto">
-  <include latin:keyboardLayout="@xml/key_styles_less_greater" />
-  <Key latin:keySpec="!text/keyspec_comma" />
-  <Key latin:keyStyle="lessKeyStyle" />
-  <include latin:keyboardLayout="@xml/key_space_symbols" />
-  <Key latin:keyStyle="greaterKeyStyle" />
-  <!-- U+2026: "…" HORIZONTAL ELLIPSIS -->
-  <Key
-    latin:keySpec="."
-    latin:moreKeys="&#x2026;" />
+<merge xmlns:latin="http://schemas.android.com/apk/res-auto" >
+    <include
+        latin:keyboardLayout="@xml/key_styles_less_greater" />
+    <Key
+        latin:keySpec="!text/keyspec_comma" />
+    <Key
+        latin:keyStyle="lessKeyStyle" />
+    <include
+        latin:keyboardLayout="@xml/key_space_symbols" />
+    <Key
+        latin:keyStyle="greaterKeyStyle" />
+    <!-- U+2026: "…" HORIZONTAL ELLIPSIS -->
+    <Key
+        latin:keySpec="."
+        latin:moreKeys="&#x2026;" />
 </merge>

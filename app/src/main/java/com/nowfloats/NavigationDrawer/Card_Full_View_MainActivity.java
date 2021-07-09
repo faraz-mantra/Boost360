@@ -36,12 +36,12 @@ import static com.framework.webengageconstant.EventNameKt.DELETE_AN_UPDATE;
 public class Card_Full_View_MainActivity extends AppCompatActivity implements Home_View_Card_Delete.CardRefresh {
 
     PageAdapter pageAdapter;
-    ViewPager viewPager;
-    ImageView deleteButton;
-    int position;
+    ViewPager viewPager ;
     private boolean isDashboard;
     private Toolbar toolbar;
+    ImageView deleteButton;
     private String cardId;
+    int position;
     private ProgressDialog pd;
     private UserSessionManager session;
 
@@ -52,7 +52,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
 
     @Override
     protected void onResume() {
-        MixPanelController.track(EventKeysWL.MESSAGE_FULL_VIEW, null);
+        MixPanelController.track(EventKeysWL.MESSAGE_FULL_VIEW,null);
         super.onResume();
     }
 
@@ -74,7 +74,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == android.R.id.home) {
+        if(id==android.R.id.home){
             finish();
             return true;
         }
@@ -96,7 +96,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         position = extras.getInt("POSITION");
-        isDashboard = extras.getBoolean("IS_DASHBOARD", false);
+        isDashboard = extras.getBoolean("IS_DASHBOARD",false);
         BoostLog.d("POSITION: ", position + "");
 
         deleteButton = toolbar.findViewById(R.id.home_view_delete_card);
@@ -117,8 +117,8 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
-                                MixPanelController.track(EventKeysWL.MESSAGE_FULL_VIEW_DELETE, null);
-                                WebEngageController.trackEvent(DELETE_AN_UPDATE, EVENT_LABEL_NULL, null);
+                            MixPanelController.track(EventKeysWL.MESSAGE_FULL_VIEW_DELETE, null);
+                                WebEngageController.trackEvent(DELETE_AN_UPDATE,EVENT_LABEL_NULL,null);
 
                                 try {
                                     cardId = getMessageList(isDashboard).get(viewPager.getCurrentItem())._id;
@@ -127,8 +127,8 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
                                     content.put("clientId", Constants.clientId1);
 
 
-                                    Home_View_Card_Delete obj = new Home_View_Card_Delete(Card_Full_View_MainActivity.this,
-                                            Constants.DeleteCard, content, viewPager.getCurrentItem(), v, 0);
+                                    Home_View_Card_Delete obj =  new Home_View_Card_Delete(Card_Full_View_MainActivity.this,
+                                            Constants.DeleteCard,content,viewPager.getCurrentItem(),v,0);
 //                                    obj.CardRefresh_Listener(this);
                                     obj.setDashboard(isDashboard);
                                     obj.execute();
@@ -152,7 +152,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
             }
         });
         List<FloatsMessageModel> floatsMessageModels = new ArrayList<>(getMessageList(isDashboard));
-        pageAdapter = new PageAdapter(getSupportFragmentManager(), floatsMessageModels, Card_Full_View_MainActivity.this);
+        pageAdapter = new PageAdapter(getSupportFragmentManager(), floatsMessageModels,Card_Full_View_MainActivity.this);
         //  Log.d("View Pager", "View Pager  :"+viewPager+" , "+pageAdapter);
         viewPager.setAdapter(pageAdapter);
         pageAdapter.notifyDataSetChanged();
@@ -161,9 +161,9 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
 
     @Override
     public void cardrefresh(boolean flag) {
-        Log.d("full Activity", "True");
+        Log.d("full Activity","True");
         pd.dismiss();
-        CardAdapter_v2 adapter = new CardAdapter_v2(null, Card_Full_View_MainActivity.this);
+        CardAdapter_v2 adapter =  new CardAdapter_v2(null,Card_Full_View_MainActivity.this);
         adapter.notifyDataSetChanged();
         adapter.notifyItemRemoved(position);
         Card_Full_View_MainActivity.this.finish();
@@ -171,7 +171,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
 
     @Override
     public void error(boolean flag) {
-        Log.d("full Activity", "" + flag);
+        Log.d("full Activity",""+flag);
         pd.dismiss();
     }
 }

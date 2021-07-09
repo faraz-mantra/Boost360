@@ -21,15 +21,8 @@ class TestimonialViewModel : BaseViewModel() {
     return BoostKitDevRepository.getWebActionList(themeID, websiteId).toLiveData()
   }
 
-  fun getTestimonialsList(
-    token: String?,
-    testimonialType: String?,
-    query: JSONObject?,
-    skip: Int,
-    limit: Int
-  ): LiveData<BaseResponse> {
-    return BoostKitDevRepository.getTestimonialsList(token, testimonialType, query, skip, limit)
-      .toLiveData()
+  fun getTestimonialsList(token: String?, testimonialType: String?, query: JSONObject?, skip: Int, limit: Int): LiveData<BaseResponse> {
+    return BoostKitDevRepository.getTestimonialsList(token, testimonialType, query, skip, limit).toLiveData()
   }
 
 //  fun addTestimonials(token: String?, testimonialType: String?, body: AddTestimonialsData?): LiveData<BaseResponse> {
@@ -40,11 +33,7 @@ class TestimonialViewModel : BaseViewModel() {
 //    return BoostKitDevRepository.updateTestimonials(token, testimonialType, body).toLiveData()
 //  }
 
-  fun deleteTestimonials(
-    token: String?,
-    testimonialType: String?,
-    body: DeleteTestimonialRequest?
-  ): LiveData<BaseResponse> {
+  fun deleteTestimonials(token: String?, testimonialType: String?, body: DeleteTestimonialRequest?): LiveData<BaseResponse> {
     return BoostKitDevRepository.deleteTestimonials(token, testimonialType, body).toLiveData()
   }
 }

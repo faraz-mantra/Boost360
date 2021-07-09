@@ -51,7 +51,7 @@
   <string name="psn_login_to_boost_360">Login to Boost 360</string>
   <string name="psn_username_or_email">Enter your registered username/email ID and password</string>
   <string name="wrong_otp_tv">Please enter correct OTP</string>
-  <string name="login_et_hint">Username or Email ID</string>
+  <string name="login_et_hint">Username or Email Id</string>
   <string name="password">password</string>
   <string name="forgot">FORGOT?</string>
   <string name="psn_need_help_in_login"><u>Need help in Login?</u></string>
@@ -116,7 +116,7 @@
   <string name="sit_tight">SIT TIGHT.</string>
 
   <string name="boost360_terms_conditions" translatable="false"><![CDATA[Boost360 - Terms & Conditions]]></string>
-  <string name="enter_a_valid_website_name">Enter a valid website name</string>
+    <string name="enter_a_valid_website_name">Enter a valid website name</string>
   <string name="ensure_that_the_entered_username_and_password_">Ensure that the entered username and password is correct.</string>
   <string name="share_your_business">Share your business...</string>
   <string name="enter_valid_name">Enter valid name.</string>
@@ -144,7 +144,7 @@
   <string name="psn_login_now">LOGIN NOW</string>
   <string name="request_otp">Request OTP</string>
   <string name="get_boost_360_tnc">https://www.getboost360.com/tnc?v=224</string>
-  <string name="need_help_desc">Please feel free to <a href="mailto: ria@nowfloats.com">send an email at ria@nowfloats.com</a>. Alternatively you can <a href="tel:18601231233">call us at 1860 123 1233</a>.</string>
+  <string name="need_help_desc">Please feel free to <a href = "mailto: ria@nowfloats.com">send an email at ria@nowfloats.com</a>. Alternatively you can <a href="tel:18601231233">call us at 1860 123 1233</a>.</string>
   <string name="need_help_title">We\'re here to help.</string>
 
 </resources>

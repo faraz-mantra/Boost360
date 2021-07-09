@@ -30,8 +30,8 @@ open class BaseApiClient protected constructor(isAuthRemove: Boolean = false) {
     logging.level = HttpLoggingInterceptor.Level.BODY
     httpClient = OkHttpClient.Builder()
     httpClient.readTimeout(2, TimeUnit.MINUTES)
-      .connectTimeout(2, TimeUnit.MINUTES)
-      .writeTimeout(2, TimeUnit.MINUTES)
+        .connectTimeout(2, TimeUnit.MINUTES)
+        .writeTimeout(2, TimeUnit.MINUTES)
     httpClient.addInterceptor(authInterceptor).addInterceptor(logging)
 
     gson = GsonBuilder().setLenient().create()
@@ -39,10 +39,10 @@ open class BaseApiClient protected constructor(isAuthRemove: Boolean = false) {
 
   fun init(baseUrl: String) {
     retrofit = Retrofit.Builder()
-      .baseUrl(baseUrl)
-      .addConverterFactory(GsonConverterFactory.create(gson))
-      .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
-      .client(httpClient.build())
-      .build()
+        .baseUrl(baseUrl)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
+        .client(httpClient.build())
+        .build()
   }
 }

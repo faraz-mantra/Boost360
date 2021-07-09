@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
-
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
@@ -57,21 +56,23 @@ import static com.nowfloats.bubble.BubblesService.ACTION_KILL_DIALOG;
 public class Home_Fragment_Tab extends Fragment {
     private static final int PERM_REQUEST_CODE_DRAW_OVERLAYS = 122;
     public static ViewPager viewPager = null;
-    public static String alertCountVal = "0";
-    public Activity activity;
     TabPagerAdapter tabPagerAdapter;
     SlidingTabLayout tabs;
     UserSessionManager session;
     TextView alertCountTv;
+    public static String alertCountVal = "0";
+    private Bus bus;
+    public Activity activity;
     LinearLayout progressLayout;
+    private MaterialDialog materialDialog;
     LinearLayout bubbleOverlay;
     SharedPreferences pref;
     OnBoardingManager onBoardingManager;
-    private Bus bus;
-    private MaterialDialog materialDialog;
     private IntentFilter clickIntentFilters = new IntentFilter(ACTION_KILL_DIALOG);
     private MaterialDialog overLayDialog;
-    private boolean dialogAlreadyShown = false;
+    private boolean dialogAlreadyShown=false;
+
+    public static enum DrawOverLay {FromHome, FromTab};
 
     @Override
     public void onResume() {
@@ -85,16 +86,14 @@ public class Home_Fragment_Tab extends Fragment {
             if (Constants.createMsg) {
                 viewPager.setCurrentItem(0);
                 //if (Home_Main_Fragment.progressBar != null)
-                //Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
+                    //Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
                 Constants.createMsg = false;
             } else {
                 //if (Home_Main_Fragment.progressBar != null){}
-                //Home_Main_Fragment.progressBar.setVisibility(View.GONE);
+                    //Home_Main_Fragment.progressBar.setVisibility(View.GONE);
             }
         }
     }
-
-    ;
 
     @Override
     public void onPause() {
@@ -228,6 +227,7 @@ public class Home_Fragment_Tab extends Fragment {
         });
 
 
+
         viewPager.setAdapter(tabPagerAdapter);
         try {
             activity.setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
@@ -260,7 +260,7 @@ public class Home_Fragment_Tab extends Fragment {
             if (Constants.createMsg) {
                 viewPager.setCurrentItem(0);
                 //if (Home_Main_Fragment.progressBar != null)
-                // Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
+                   // Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
                 Constants.createMsg = false;
             } else if (Constants.deepLinkAnalytics) {
                 viewPager.setCurrentItem(1);
@@ -277,8 +277,8 @@ public class Home_Fragment_Tab extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 Log.d("Position", String.valueOf(position));
-                if (position == 1) {
-                    WebEngageController.trackEvent(CLICKED_ON_REPORTS, HOME_SCREEN, NULL);
+                if(position == 1){
+                    WebEngageController.trackEvent( CLICKED_ON_REPORTS, HOME_SCREEN, NULL);
                 }
             }
 
@@ -332,6 +332,21 @@ public class Home_Fragment_Tab extends Fragment {
 
     }
 
+//    private void showBubble() {
+//
+////        if (!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, false)) {
+//        addOverlay();
+//        pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, true).apply();
+////        }
+//
+//        int px = Methods.dpToPx(80, getActivity());
+//        Intent intent = new Intent(getActivity(), BubblesService.class);
+//        intent.putExtra(Key_Preferences.BUBBLE_POS_Y, px);
+//        intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.HOME_ACTIVITY);
+//        activity.startService(intent);
+//
+//    }
+
     public void checkOverlay(DrawOverLay from) {
 //        if (!isAdded() || getActivity() == null) {
 //            return;
@@ -354,21 +369,6 @@ public class Home_Fragment_Tab extends Fragment {
 //        }
 //        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
     }
-
-//    private void showBubble() {
-//
-////        if (!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, false)) {
-//        addOverlay();
-//        pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, true).apply();
-////        }
-//
-//        int px = Methods.dpToPx(80, getActivity());
-//        Intent intent = new Intent(getActivity(), BubblesService.class);
-//        intent.putExtra(Key_Preferences.BUBBLE_POS_Y, px);
-//        intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.HOME_ACTIVITY);
-//        activity.startService(intent);
-//
-//    }
 
     private void dialogForOverlayPath(DrawOverLay from) {
         if (getActivity() == null || !isAdded()) return;
@@ -461,13 +461,27 @@ public class Home_Fragment_Tab extends Fragment {
         getActivity().sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
     }
 
+
+//    private void addOverlay() {
+//        bubbleOverlay.setVisibility(View.VISIBLE);
+//        View view = LayoutInflater.from(getActivity()).inflate(R.layout.bubble_pointing_sign, bubbleOverlay);
+//        view.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                bubbleOverlay.removeAllViews();
+//                bubbleOverlay.setVisibility(View.GONE);
+//                //layout.setOnClickListener(null);
+//            }
+//        });
+//    }
+
     @Override
     public void onStart() {
         super.onStart();
 
-        if ((!session.isAllAuthSet() || !pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS, false && (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1") || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0")))) && !dialogAlreadyShown) {
-            onBoardingManager.getMerchantProfileCOnnection(session.getFpTag(), null);
-            dialogAlreadyShown = true;
+        if ((!session.isAllAuthSet() || !pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS, false && (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1") || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0"))))&& !dialogAlreadyShown) {
+            onBoardingManager.getMerchantProfileCOnnection(session.getFpTag(),null);
+            dialogAlreadyShown=true;
         }
         if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0") && alertCountTv != null) {
             if (Integer.parseInt(alertCountVal) > 99) {
@@ -489,24 +503,6 @@ public class Home_Fragment_Tab extends Fragment {
 //        }
     }
 
-
-//    private void addOverlay() {
-//        bubbleOverlay.setVisibility(View.VISIBLE);
-//        View view = LayoutInflater.from(getActivity()).inflate(R.layout.bubble_pointing_sign, bubbleOverlay);
-//        view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                bubbleOverlay.removeAllViews();
-//                bubbleOverlay.setVisibility(View.GONE);
-//                //layout.setOnClickListener(null);
-//            }
-//        });
-//    }
-
-    public int getCurrentItem() {
-        return viewPager.getCurrentItem();
-    }
-
 //    BroadcastReceiver clickReceiver = new BroadcastReceiver() {
 //        @Override
 //        public void onReceive(Context context, Intent intent) {
@@ -519,5 +515,8 @@ public class Home_Fragment_Tab extends Fragment {
 //    };
 
 
-    public static enum DrawOverLay {FromHome, FromTab}
+    public int getCurrentItem()
+    {
+        return viewPager.getCurrentItem();
+    }
 }

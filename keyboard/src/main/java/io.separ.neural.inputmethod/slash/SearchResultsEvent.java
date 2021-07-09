@@ -7,9 +7,9 @@ import java.util.List;
  * Created by sepehr on 3/2/17.
  */
 public class SearchResultsEvent {
-    public final String query;
     public String authorizedStatus;
     private List<RSearchItem> items;
+    public final String query;
     private String source;
 
     public SearchResultsEvent(String query, String source, RSearchItem item) {

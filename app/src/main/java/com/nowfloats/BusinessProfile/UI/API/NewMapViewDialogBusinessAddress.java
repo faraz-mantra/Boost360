@@ -7,12 +7,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.core.content.ContextCompat;
-
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -28,30 +26,30 @@ import com.nowfloats.util.Methods;
 import com.thinksity.R;
 import com.nowfloats.util.Constants;
 
-public class NewMapViewDialogBusinessAddress extends FragmentActivity {
-    public static boolean updatingPostionFromMap = false, savebuttonhide = false;
-    static GoogleMap googleMap = null;
-    private final int LOC_REQ_CODE = 6577;
+public class NewMapViewDialogBusinessAddress extends FragmentActivity{
     Context context = this;
-    TextView tv;
-    LatLng latlng;
-    Button cancelButton, okButton;
-    double lat, lon;
-    String address;
-    boolean flag = false, success = false;
+	TextView tv;
+	LatLng latlng;
+	Button cancelButton, okButton;
+	double lat, lon;
+	static GoogleMap googleMap = null;
+	String address;
+	boolean flag=false, success=false;
+    public static boolean updatingPostionFromMap=false,savebuttonhide=false;
+    private final int LOC_REQ_CODE = 6577;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        super.onCreate(savedInstanceState);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
         //final PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.mapview_dialog);
+		setContentView(R.layout.mapview_dialog);
         cancelButton = (Button) findViewById(R.id.mapview_cancel);
-        okButton = (Button) findViewById(R.id.mapview_confirm);
+        okButton 	 = (Button) findViewById(R.id.mapview_confirm);
         Methods.isOnline(NewMapViewDialogBusinessAddress.this);
-        ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.dialog_map))
+		((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.dialog_map))
                 .getMapAsync(new OnMapReadyCallback() {
                     @Override
                     public void onMapReady(GoogleMap googleMap) {
@@ -62,20 +60,20 @@ public class NewMapViewDialogBusinessAddress extends FragmentActivity {
         cancelButton.setBackgroundColor(getResources().getColor(R.color.primaryColor));
         okButton.setBackgroundColor(getResources().getColor(R.color.primaryColor));
         cancelButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                finish();
-            }
-        });
+			
+			@Override
+			public void onClick(View v) {
+				
+				finish();
+			}
+		});
         okButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                try {
-                    if (googleMap != null) {
+			
+			@Override
+			public void onClick(View v) {
+				
+				try{
+                    if(googleMap!=null) {
                         LatLng coordinates = googleMap.getCameraPosition().target;
                         double latitude = coordinates.latitude;
                         double longitude = coordinates.longitude;
@@ -86,25 +84,25 @@ public class NewMapViewDialogBusinessAddress extends FragmentActivity {
                         savebuttonhide = true;
                     }
 
-                    //	geolocationflag=true;
-                    //uploadBussinessAddress();
+                        //	geolocationflag=true;
+                        //uploadBussinessAddress();
 //					BusinessAddressUpdateAsyncTask Task = new BusinessAddressUpdateAsyncTask( latitude, longitude,  ,null,updatingPostionFromMap);
 //					Task.execute(); 
-                    finish();
+                        finish();
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+				}
+				catch(Exception e){
+		        	e.printStackTrace();
+		        }
+			}
+		});
 
 
-    }
-
-    private void setLocation() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+	}
+    private void setLocation(){
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOC_REQ_CODE);
-        } else {
+        }else {
             try {
                 googleMap.setMyLocationEnabled(true);
                 googleMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -166,11 +164,11 @@ public class NewMapViewDialogBusinessAddress extends FragmentActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
+        switch (requestCode){
             case LOC_REQ_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     setLocation();
-                } else {
+                }else {
                     return;
                 }
         }
@@ -182,11 +180,14 @@ public class NewMapViewDialogBusinessAddress extends FragmentActivity {
         Methods.isOnline(NewMapViewDialogBusinessAddress.this);
     }
 
-    private void drawMarker(Location location) {
-        googleMap.clear();
-        LatLng currentPosition = new LatLng(Constants.latitude, Constants.longitude);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 16));
-    }
+    private void drawMarker(Location location){
+	    googleMap.clear();
+	    LatLng currentPosition = new LatLng(Constants.latitude,Constants.longitude);
+	    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 16));
+	}
+
+
+
 
 
 }

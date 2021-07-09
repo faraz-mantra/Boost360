@@ -6,17 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by guru on 26-05-2015.
  */
-public class FloatsMessageModel implements Parcelable {
-    public static final Parcelable.Creator<FloatsMessageModel> CREATOR = new Parcelable.Creator<FloatsMessageModel>() {
-
-        public FloatsMessageModel createFromParcel(Parcel in) {
-            return new FloatsMessageModel(in);
-        }
-
-        public FloatsMessageModel[] newArray(int size) {
-            return new FloatsMessageModel[size];
-        }
-    };
+public class FloatsMessageModel implements Parcelable{
     public String _id;
     public String createdOn;
     public String imageUri;
@@ -32,10 +22,10 @@ public class FloatsMessageModel implements Parcelable {
         this.message = in.readString();
         this.tileImageUri = in.readString();
         this.type = in.readString();
-        this.url = in.readString();
+        this.url =in.readString();
     }
 
-    public FloatsMessageModel(String id, String createdOn, String imageUri, String message, String tileImageUri, String type, String url) {
+    public FloatsMessageModel(String id,String createdOn,String imageUri,String message,String tileImageUri,String type, String url) {
         this._id = id;
         this.createdOn = createdOn;
         this.imageUri = imageUri;
@@ -60,4 +50,15 @@ public class FloatsMessageModel implements Parcelable {
         parcel.writeString(type);
         parcel.writeString(url);
     }
+
+     public static final Parcelable.Creator<FloatsMessageModel> CREATOR = new Parcelable.Creator<FloatsMessageModel>() {
+
+        public FloatsMessageModel createFromParcel(Parcel in) {
+            return new FloatsMessageModel(in);
+        }
+
+        public FloatsMessageModel[] newArray(int size) {
+            return new FloatsMessageModel[size];
+        }
+    };
 }

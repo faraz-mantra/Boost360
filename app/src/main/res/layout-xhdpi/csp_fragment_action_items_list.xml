@@ -1,66 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:card_view="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/visitors_card"
-  android:layout_width="match_parent"
-  android:layout_height="70dp"
-  android:layout_gravity="center_horizontal"
-  android:layout_marginStart="10dp"
-  android:layout_marginTop="10dp"
-  android:layout_marginEnd="10dp"
-  android:elevation="3dp"
-  card_view:cardBackgroundColor="#FFFFFF"
-  card_view:cardCornerRadius="3dp">
-
-  <LinearLayout
-    android:id="@+id/numberOfVisitorsLinearLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/visitors_card"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="70dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="10dp"
+    android:elevation="3dp"
+    card_view:cardBackgroundColor="#FFFFFF"
+    card_view:cardCornerRadius="3dp">
 
-    <FrameLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:layout_marginStart="20dp">
+    <LinearLayout
+        android:id="@+id/numberOfVisitorsLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-
-      <ImageView
-        android:id="@+id/visitors_image_bg"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:src="@drawable/circle_bakground" />
-
-      <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/unique_visitors" />
-    </FrameLayout>
-
-    <com.nowfloats.CustomWidget.roboto_lt_24_212121
-      android:id="@+id/tvActionItemName"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:layout_marginStart="16dp"
-      android:layout_weight="1" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp">
 
 
-    <TextView
-      android:id="@+id/tvActionItemCount"
-      fontPath="Roboto-Medium.ttf"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:layout_marginEnd="@dimen/margin_20"
-      android:textColor="@color/primaryColor"
-      android:textSize="25sp"
-      android:visibility="visible"
-      tools:ignore="MissingPrefix" />
+            <ImageView
+                android:id="@+id/visitors_image_bg"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/circle_bakground" />
 
-  </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/unique_visitors" />
+        </FrameLayout>
+
+        <com.nowfloats.CustomWidget.roboto_lt_24_212121
+            android:id="@+id/tvActionItemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1" />
+
+
+        <TextView
+            android:id="@+id/tvActionItemCount"
+            fontPath="Roboto-Medium.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/margin_20"
+            android:textColor="@color/primaryColor"
+            android:textSize="25sp"
+            android:visibility="visible"
+            tools:ignore="MissingPrefix" />
+
+    </LinearLayout>
 
 
 </androidx.cardview.widget.CardView>

@@ -31,7 +31,7 @@ public class FragmentEmojiRecents extends FragmentEmoji implements FragmentEmoji
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
+        super.onCreateView(inflater,container,savedInstanceState);
         this.mRootView = inflater.inflate(R.layout.frag_emoji_recents, container, false);
         return this.mRootView;
     }
@@ -62,11 +62,12 @@ public class FragmentEmojiRecents extends FragmentEmoji implements FragmentEmoji
         }
 
 
+
     }
 
     @Override
     public void notifyEmojiAdded() {
-        if (mAdapter != null)
+        if(mAdapter!=null)
             mAdapter.notifyDataSetChanged();
     }
 }

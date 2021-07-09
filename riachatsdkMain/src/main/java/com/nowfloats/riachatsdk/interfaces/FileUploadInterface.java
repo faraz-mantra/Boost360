@@ -27,4 +27,6 @@ public interface FileUploadInterface {
     void uploadBinary(@Query("filename") String fileName, @Body RequestBody photo, Callback<FileResultModel> cb);
 
 
+
+
 }

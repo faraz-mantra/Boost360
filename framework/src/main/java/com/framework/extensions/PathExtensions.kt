@@ -3,10 +3,8 @@ package com.framework.extensions
 import android.graphics.Path
 import android.graphics.Point
 
-fun Path.cubicTo(
-  x1: Int, y1: Int, x2: Int, y2: Int,
-  x3: Int, y3: Int
-) {
+fun Path.cubicTo(x1: Int, y1: Int, x2: Int, y2: Int,
+                 x3: Int, y3: Int) {
   cubicTo(x1.toFloat(), y1.toFloat(), x2.toFloat(), y2.toFloat(), x3.toFloat(), y3.toFloat())
 }
 

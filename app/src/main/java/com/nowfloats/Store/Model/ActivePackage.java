@@ -10,9 +10,6 @@ import java.util.List;
  */
 
 public class ActivePackage {
-    @SerializedName("packageDetails")
-    @Expose
-    public List<PackageDetails> packageDetails;
     @SerializedName("ClientId")
     @Expose
     private String clientId;
@@ -76,9 +73,10 @@ public class ActivePackage {
     @SerializedName("paymentTransactionStatus")
     @Expose
     private int paymentStatus;
-    private String activeStatus = "";
-    private boolean isExpanded;
-    private String features;
+
+    @SerializedName("packageDetails")
+    @Expose
+    public List<PackageDetails> packageDetails;
 
     public List<PackageDetails> getPackageDetails() {
         return packageDetails;
@@ -87,6 +85,11 @@ public class ActivePackage {
     public void setPackageDetails(List<PackageDetails> packageDetails) {
         this.packageDetails = packageDetails;
     }
+
+    private String activeStatus = "";
+    private boolean isExpanded;
+
+    private String features;
 
     public String getActiveStatus() {
         return activeStatus;
@@ -98,10 +101,6 @@ public class ActivePackage {
 
     public Boolean getActive() {
         return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
     }
 
     public List<WidgetPacks> getWidgetPacks() {
@@ -118,6 +117,10 @@ public class ActivePackage {
 
     public void setFeatures(String features) {
         this.features = features;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     public boolean isExpanded() {

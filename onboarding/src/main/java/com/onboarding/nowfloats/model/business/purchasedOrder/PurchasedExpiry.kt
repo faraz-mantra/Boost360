@@ -9,4 +9,4 @@ data class PurchasedExpiry(
   var key: String? = null,
   @SerializedName("Value")
   var value: Int? = null
-) : Serializable
+): Serializable

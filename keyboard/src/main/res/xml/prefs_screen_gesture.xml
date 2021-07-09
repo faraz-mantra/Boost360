@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2014 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2014 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,33 +14,34 @@
      limitations under the License.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-  android:key="screen_gesture"
-  android:title="@string/settings_screen_gesture">
-  <CheckBoxPreference
-    android:defaultValue="true"
-    android:key="gesture_input"
-    android:persistent="true"
-    android:summary="@string/gesture_input_summary"
-    android:title="@string/gesture_input" />
-  <CheckBoxPreference
-    android:defaultValue="true"
-    android:dependency="gesture_input"
-    android:key="pref_gesture_floating_preview_text"
-    android:persistent="true"
-    android:summary="@string/gesture_floating_preview_text_summary"
-    android:title="@string/gesture_floating_preview_text" />
-  <CheckBoxPreference
-    android:defaultValue="true"
-    android:dependency="gesture_input"
-    android:key="pref_gesture_preview_trail"
-    android:persistent="true"
-    android:title="@string/gesture_preview_trail" />
-  <CheckBoxPreference
-    android:defaultValue="true"
-    android:dependency="gesture_input"
-    android:key="pref_gesture_space_aware"
-    android:persistent="true"
-    android:summary="@string/gesture_space_aware_summary"
-    android:title="@string/gesture_space_aware" />
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/settings_screen_gesture"
+    android:key="screen_gesture">
+    <CheckBoxPreference
+        android:key="gesture_input"
+        android:title="@string/gesture_input"
+        android:summary="@string/gesture_input_summary"
+        android:defaultValue="true"
+        android:persistent="true" />
+    <CheckBoxPreference
+        android:key="pref_gesture_floating_preview_text"
+        android:dependency="gesture_input"
+        android:title="@string/gesture_floating_preview_text"
+        android:summary="@string/gesture_floating_preview_text_summary"
+        android:defaultValue="true"
+        android:persistent="true" />
+    <CheckBoxPreference
+        android:key="pref_gesture_preview_trail"
+        android:dependency="gesture_input"
+        android:title="@string/gesture_preview_trail"
+        android:defaultValue="true"
+        android:persistent="true" />
+    <CheckBoxPreference
+        android:key="pref_gesture_space_aware"
+        android:dependency="gesture_input"
+        android:title="@string/gesture_space_aware"
+        android:summary="@string/gesture_space_aware_summary"
+        android:defaultValue="true"
+        android:persistent="true" />
 </PreferenceScreen>

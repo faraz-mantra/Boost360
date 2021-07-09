@@ -1,321 +1,316 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="@color/screen_bg">
-
-  <include
-    android:id="@+id/app_bar"
-    layout="@layout/tool_bar_business_profile" />
-
-  <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_above="@+id/float_a_picture_share_container"
-    android:layout_below="@+id/app_bar"
-    android:layout_margin="10dp"
-    android:fadeScrollbars="false"
-    android:scrollbarSize="5dp"
-    android:scrollbarStyle="insideOverlay"
-    android:scrollbarThumbVertical="@drawable/scrollbar">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/screen_bg">
 
-    <LinearLayout
-      android:id="@+id/relativeLayout1"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical">
-
-      <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/title_card"
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/tool_bar_business_profile" />
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:visibility="gone"
-        card_view:cardBackgroundColor="#FFFFFF"
-        card_view:cardCornerRadius="0dp">
+        android:layout_below="@+id/app_bar"
+        android:layout_above="@+id/float_a_picture_share_container"
+        android:layout_margin="10dp"
+        android:scrollbarSize="5dp"
+        android:fadeScrollbars="false"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbarThumbVertical="@drawable/scrollbar"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/title_card"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                card_view:cardBackgroundColor="#FFFFFF"
+                android:visibility="gone"
+                card_view:cardCornerRadius="0dp">
+                <com.nowfloats.CustomWidget.roboto_lt_33__b6b6b6_383838_edittext
+                    android:id="@+id/createTitleEditText"
+                    android:layout_width="match_parent"
+                    android:hint="@string/title_for_quikrr"
+                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:minLines="1"
+                    android:padding="10dp"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content" />
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/message_card_view"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardBackgroundColor="#FFFFFF"
+                card_view:cardCornerRadius="0dp">
+                <com.nowfloats.CustomWidget.roboto_lt_33__b6b6b6_383838_edittext
+                    android:id="@+id/createMessageEditText"
+                    android:layout_width="match_parent"
+                    android:hint="@string/update_your_website_to_increase_discoverability"
+                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:inputType="textCapSentences|textMultiLine|textAutoCorrect"
+                    android:minLines="5"
+                    android:autoText="true"
+                    android:padding="10dp"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content" />
 
-        <com.nowfloats.CustomWidget.roboto_lt_33__b6b6b6_383838_edittext
-          android:id="@+id/createTitleEditText"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="10dp"
-          android:background="@color/white"
-          android:gravity="center"
-          android:hint="@string/title_for_quikrr"
-          android:minLines="1"
-          android:padding="10dp" />
-      </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
+            <com.nowfloats.CustomWidget.CustomTagLayout
+                android:id="@+id/tag_layout"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+           <!-- <android.support.v7.widget.CardView
+                android:id="@+id/cv_keyword_suggestions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:visibility="gone"
+                custom:cardElevation="3dp">
+                <LinearLayout
+                    android:id="@+id/layout_keyword_suggestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                </LinearLayout>
+            </android.support.v7.widget.CardView>-->
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <androidx.cardview.widget.CardView
+                    xmlns:card="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/image_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    card:cardBackgroundColor="@color/gray"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="5dp">
+                    <ImageView
+                        android:id="@+id/imageIcon"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:src="@drawable/ic_action_camera"
+                        android:layout_gravity="bottom"
+                        android:scaleType="fitXY">
+                    </ImageView>
 
-      <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/message_card_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card_view:cardBackgroundColor="#FFFFFF"
-        card_view:cardCornerRadius="0dp">
+                    <ImageView
+                        android:id="@+id/img_edit"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="2dp"
+                        android:layout_margin="2dp"
+                        android:background="@color/gray"
+                        android:src="@drawable/pencil_white" />
 
-        <com.nowfloats.CustomWidget.roboto_lt_33__b6b6b6_383838_edittext
-          android:id="@+id/createMessageEditText"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="10dp"
-          android:autoText="true"
-          android:background="@color/white"
-          android:gravity="center"
-          android:hint="@string/update_your_website_to_increase_discoverability"
-          android:inputType="textCapSentences|textMultiLine|textAutoCorrect"
-          android:minLines="5"
-          android:padding="10dp" />
-
-      </androidx.cardview.widget.CardView>
-
-      <com.nowfloats.CustomWidget.CustomTagLayout
-        android:id="@+id/tag_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:visibility="gone" />
-      <!-- <android.support.v7.widget.CardView
-           android:id="@+id/cv_keyword_suggestions"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="7dp"
-           android:visibility="gone"
-           custom:cardElevation="3dp">
-           <LinearLayout
-               android:id="@+id/layout_keyword_suggestion"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal">
-           </LinearLayout>
-       </android.support.v7.widget.CardView>-->
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <androidx.cardview.widget.CardView xmlns:card="http://schemas.android.com/apk/res-auto"
-          android:id="@+id/image_card"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="1dp"
-          android:layout_marginTop="5dp"
-          android:visibility="gone"
-          card:cardBackgroundColor="@color/gray">
-
-          <ImageView
-            android:id="@+id/imageIcon"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="bottom"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_action_camera"></ImageView>
-
-          <ImageView
-            android:id="@+id/img_edit"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="2dp"
-            android:background="@color/gray"
-            android:padding="2dp"
-            android:src="@drawable/pencil_white" />
-
-          <ImageView
-            android:id="@+id/img_delete"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="end"
-            android:background="@color/gray"
-            android:src="@drawable/cancel1" />
+                    <ImageView
+                        android:id="@+id/img_delete"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="end"
+                        android:src="@drawable/cancel1"
+                        android:background="@color/gray"/>
 
 
-        </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/iv_speak_update"
+                    android:background="@drawable/round_btn_bg"
+                    android:padding="5dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:tint="@color/white"
+                    android:layout_gravity="end"
+                    app:srcCompat="@drawable/ic_keyboard_voice_black_24dp"/>
+            </LinearLayout>
 
-        <View
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1" />
+        </LinearLayout>
 
-        <ImageView
-          android:id="@+id/iv_speak_update"
-          android:layout_width="40dp"
-          android:layout_height="40dp"
-          android:layout_gravity="end"
-          android:background="@drawable/round_btn_bg"
-          android:padding="5dp"
-          android:tint="@color/white"
-          app:srcCompat="@drawable/ic_keyboard_voice_black_24dp" />
-      </LinearLayout>
-
-    </LinearLayout>
-
-  </ScrollView>
-
-  <TableLayout
-    android:id="@+id/float_a_picture_share_container"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentBottom="true"
-    android:background="@color/white"
-    android:stretchColumns="1,2,3">
-
-    <View
-      android:layout_width="wrap_content"
-      android:layout_height="2dp"
-      android:background="@color/grey" />
-
-    <View
-      android:layout_width="wrap_content"
-      android:layout_height="2dp"
-      android:background="@color/white" />
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@color/background_grey"
-      android:orientation="horizontal">
-
-      <LinearLayout
+    </ScrollView>
+    <TableLayout
+        android:id="@+id/float_a_picture_share_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="3dp"
-        android:weightSum="1">
-
-        <LinearLayout
-          android:id="@+id/addImageButton"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:gravity="center"
-          android:orientation="horizontal">
-
-
-          <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1">
-
-            <ImageView
-              android:id="@+id/create_mee_activity_facebokhome_button"
-              android:layout_width="@dimen/content_creation_icon_sizes"
-              android:layout_height="@dimen/content_creation_icon_sizes"
-              android:padding="5dp"
-              app:srcCompat="@drawable/create_message_camera_inactive" />
-          </LinearLayout>
-
-
-        </LinearLayout>
+        android:stretchColumns="1,2,3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <View
-          android:layout_width="2dp"
-          android:layout_height="match_parent"
-          android:layout_marginStart="10dp"
-          android:background="#ececec" />
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:background="@color/grey" />
 
-        <com.nowfloats.CustomWidget.roboto_md_24_a1a1a1
-          android:id="@+id/shareTextView"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_marginStart="16dp"
-          android:layout_weight="1"
-          android:text="@string/share"
-          android:textColor="#A1A1A1"
-          android:textSize="18sp" />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:background="@color/white" />
 
         <LinearLayout
-          android:id="@+id/socialSharingIconLayout"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="end|bottom"
-          android:layout_marginStart="10dp"
-          android:orientation="horizontal"
-          android:paddingTop="1dp">
-
-          <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-              android:id="@+id/create_message_subscribe_button"
-              android:layout_width="@dimen/content_creation_icon_sizes"
-              android:layout_height="@dimen/content_creation_icon_sizes"
-              android:src="@drawable/subscribe_icon" />
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/float_a_picture_share_fb_parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-              android:id="@+id/create_message_activity_facebokhome_button"
-              android:layout_width="@dimen/content_creation_icon_sizes"
-              android:layout_height="@dimen/content_creation_icon_sizes"
-              app:srcCompat="@drawable/facebook_icon_inactive" />
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/float_a_picture_share_fb_page_parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-              android:id="@+id/create_message_activity_facebokpage_button"
-              android:layout_width="@dimen/content_creation_icon_sizes"
-              android:layout_height="@dimen/content_creation_icon_sizes"
-              app:srcCompat="@drawable/facebookpage_icon_inactive" />
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/float_a_picture_share_twitter_parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-              android:id="@+id/create_message_activity_twitter_button"
-              android:layout_width="@dimen/content_creation_icon_sizes"
-              android:layout_height="@dimen/content_creation_icon_sizes"
-              app:srcCompat="@drawable/twitter_icon_inactive" />
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/float_a_picture_share_quikr_parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:background="@color/background_grey"
             android:orientation="horizontal"
-            android:visibility="gone">
+            >
 
-            <ImageView
-              android:id="@+id/create_message_activity_quikr_button"
-              android:layout_width="40dp"
-              android:layout_height="40dp"
-              app:srcCompat="@drawable/quikr_icon_deactivate" />
-          </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingBottom="3dp"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:id="@+id/addImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="10dp"
+                        >
+
+                        <ImageView
+                            android:id="@+id/create_mee_activity_facebokhome_button"
+                            android:layout_width="@dimen/content_creation_icon_sizes"
+                            android:layout_height="@dimen/content_creation_icon_sizes"
+                            app:srcCompat="@drawable/create_message_camera_inactive"
+                            android:padding="5dp"
+                            />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="2dp"
+                    android:background="#ececec"
+                    android:layout_marginStart="10dp"
+                    android:layout_height="match_parent"
+                    />
+
+                <com.nowfloats.CustomWidget.roboto_md_24_a1a1a1
+                    android:id="@+id/shareTextView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/share"
+                    android:textColor="#A1A1A1"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:id="@+id/socialSharingIconLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="end|bottom"
+                    android:paddingTop="1dp"
+                    android:orientation="horizontal" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/create_message_subscribe_button"
+                            android:layout_width="@dimen/content_creation_icon_sizes"
+                            android:layout_height="@dimen/content_creation_icon_sizes"
+                            android:src="@drawable/subscribe_icon" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/float_a_picture_share_fb_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/create_message_activity_facebokhome_button"
+                            android:layout_width="@dimen/content_creation_icon_sizes"
+                            android:layout_height="@dimen/content_creation_icon_sizes"
+                            app:srcCompat="@drawable/facebook_icon_inactive" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/float_a_picture_share_fb_page_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/create_message_activity_facebokpage_button"
+                            android:layout_width="@dimen/content_creation_icon_sizes"
+                            android:layout_height="@dimen/content_creation_icon_sizes"
+                            app:srcCompat="@drawable/facebookpage_icon_inactive" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/float_a_picture_share_twitter_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/create_message_activity_twitter_button"
+                            android:layout_width="@dimen/content_creation_icon_sizes"
+                            android:layout_height="@dimen/content_creation_icon_sizes"
+                            app:srcCompat="@drawable/twitter_icon_inactive" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/float_a_picture_share_quikr_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/create_message_activity_quikr_button"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:srcCompat="@drawable/quikr_icon_deactivate" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
-
-      </LinearLayout>
-    </LinearLayout>
-  </TableLayout>
+    </TableLayout>
 
 </RelativeLayout>

@@ -22,8 +22,7 @@ import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyDigitalChannelFragment
 
-class ContainerDigitalChannelActivity :
-  AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+class ContainerDigitalChannelActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var isStartActivity: Boolean? = null
 
@@ -62,10 +61,7 @@ class ContainerDigitalChannelActivity :
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.MY_DIGITAL_CHANNEL.name -> ContextCompat.getDrawable(
-        this,
-        R.drawable.ic_round_arrow_white_n
-      )
+      FragmentType.MY_DIGITAL_CHANNEL .name-> ContextCompat.getDrawable(this, R.drawable.ic_round_arrow_white_n)
       else -> super.getNavigationIcon()
     }
   }
@@ -147,11 +143,7 @@ class ContainerDigitalChannelActivity :
   }
 }
 
-fun Fragment.startFragmentChannelActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false
-) {
+fun Fragment.startFragmentChannelActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(activity, ContainerDigitalChannelActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -159,11 +151,7 @@ fun Fragment.startFragmentChannelActivity(
   startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentChannelActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false
-) {
+fun AppCompatActivity.startFragmentChannelActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(this, ContainerDigitalChannelActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

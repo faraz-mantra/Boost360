@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical"
-  android:padding="20dp">
-
-
-  <EditText
-    android:id="@+id/edtBusinessId"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="BUSINESS_ID"
-    android:textColor="#050706"
-    android:textSize="18sp"></EditText>
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
 
-  <EditText
-    android:id="@+id/edtBaseUrl"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="BaseURL"
-    android:textColor="#050706"
-    android:textSize="18sp"></EditText>
 
-  <EditText
-    android:id="@+id/edtFlowId"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="FLOW_ID"
-    android:textColor="#050706"
-    android:textSize="18sp"></EditText>
+    <EditText
+        android:id="@+id/edtBusinessId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BUSINESS_ID"
+        android:textColor="#050706"
+        android:textSize="18sp"></EditText>
 
-  <Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:onClick="startMainScreen"
-    android:text="Start Bot"
-    android:textColor="#050706"
-    android:textSize="18sp" />
+    <EditText
+        android:id="@+id/edtBaseUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BaseURL"
+        android:textColor="#050706"
+        android:textSize="18sp"></EditText>
 
-  <!--<ImageView-->
-  <!--android:layout_width="96dp"-->
-  <!--android:layout_height="96dp"-->
-  <!--android:src="@drawable/blume_logo"-->
-  <!--android:layout_centerInParent="true" />-->
+    <EditText
+        android:id="@+id/edtFlowId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FLOW_ID"
+        android:textColor="#050706"
+        android:textSize="18sp"></EditText>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="startMainScreen"
+        android:text="Start Bot"
+        android:textColor="#050706"
+        android:textSize="18sp" />
+
+    <!--<ImageView-->
+    <!--android:layout_width="96dp"-->
+    <!--android:layout_height="96dp"-->
+    <!--android:src="@drawable/blume_logo"-->
+    <!--android:layout_centerInParent="true" />-->
 </LinearLayout>

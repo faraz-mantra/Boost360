@@ -22,8 +22,8 @@ object NavigatorManager {
 
   fun initialize() {
     try {
-      val stackJson = PreferencesUtils.instance.getData(NAVIGATION_STACK, "") ?: return
-      stack = ArrayList(convertStringToList(stackJson) ?: ArrayList())
+      val stackJson = PreferencesUtils.instance.getData(NAVIGATION_STACK,"") ?: return
+      stack=  ArrayList(convertStringToList(stackJson)?:ArrayList())
     } catch (e: Exception) {
       e.printStackTrace()
     }
@@ -53,10 +53,7 @@ object NavigatorManager {
 
   fun getRequest(): RequestFloatsModel? {
     return try {
-      Gson().fromJson(
-        PreferencesUtils.instance.getData(REQUEST_FLOAT, "") ?: "",
-        RequestFloatsModel::class.java
-      )
+      Gson().fromJson(PreferencesUtils.instance.getData(REQUEST_FLOAT,"") ?: "", RequestFloatsModel::class.java)
     } catch (e: JsonSyntaxException) {
       e.printStackTrace()
       null

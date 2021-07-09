@@ -9,8 +9,7 @@ import com.inventoryorder.model.bottomsheet.FilterModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 
-class FilterBottomSheetDialog : BaseBottomSheetDialog<BottomSheetFilterBinding, BaseViewModel>(),
-  RecyclerItemClickListener {
+class FilterBottomSheetDialog : BaseBottomSheetDialog<BottomSheetFilterBinding, BaseViewModel>(), RecyclerItemClickListener {
 
   private var list = ArrayList<FilterModel>()
   private var adapter: AppBaseRecyclerViewAdapter<FilterModel>? = null
@@ -40,11 +39,7 @@ class FilterBottomSheetDialog : BaseBottomSheetDialog<BottomSheetFilterBinding, 
     }
   }
 
-  override fun onItemClick(
-    position: Int,
-    item: com.inventoryorder.recyclerView.BaseRecyclerViewItem?,
-    actionType: Int
-  ) {
+  override fun onItemClick(position: Int, item: com.inventoryorder.recyclerView.BaseRecyclerViewItem?, actionType: Int) {
     val filterItem = item as? FilterModel
     list.forEach { it.isSelected = (it.type == filterItem?.type) }
     adapter?.notifyDataSetChanged()

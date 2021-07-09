@@ -40,33 +40,23 @@ public final class MoreSuggestions extends Keyboard {
         mSuggestedWords = suggestedWords;
     }
 
-    static boolean isIndexSubjectToAutoCorrection(final SuggestedWords suggestedWords,
-                                                  final int index) {
-        return suggestedWords.mWillAutoCorrect && index == SuggestedWords.INDEX_OF_AUTO_CORRECTION;
-    }
-
     private static final class MoreSuggestionsParam extends KeyboardParams {
-        private static final int MAX_COLUMNS_IN_ROW = 3;
-        private static final int[][] COLUMN_ORDER_TO_NUMBER = {
-                {0}, // center
-                {1, 0}, // right-left
-                {1, 0, 2}, // center-left-right
-        };
         private final int[] mWidths = new int[SuggestedWords.MAX_SUGGESTIONS];
         private final int[] mRowNumbers = new int[SuggestedWords.MAX_SUGGESTIONS];
         private final int[] mColumnOrders = new int[SuggestedWords.MAX_SUGGESTIONS];
         private final int[] mNumColumnsInRow = new int[SuggestedWords.MAX_SUGGESTIONS];
+        private static final int MAX_COLUMNS_IN_ROW = 3;
+        private int mNumRows;
         public Drawable mDivider;
         public int mDividerWidth;
-        private int mNumRows;
 
         public MoreSuggestionsParam() {
             super();
         }
 
         public int layout(final SuggestedWords suggestedWords, final int fromIndex,
-                          final int maxWidth, final int minWidth, final int maxRow, final Paint paint,
-                          final Resources res) {
+                final int maxWidth, final int minWidth, final int maxRow, final Paint paint,
+                final Resources res) {
             clearKeys();
             mDivider = res.getDrawable(R.drawable.more_suggestions_divider);
             mDividerWidth = mDivider.getIntrinsicWidth();
@@ -86,7 +76,7 @@ public final class MoreSuggestions extends Keyboard {
                     word = suggestedWords.getLabel(index);
                 }
                 // TODO: Should take care of text x-scaling.
-                mWidths[index] = (int) (TypefaceUtils.getStringWidth(word, paint) + padding);
+                mWidths[index] = (int)(TypefaceUtils.getStringWidth(word, paint) + padding);
                 final int numColumn = index - rowStartIndex + 1;
                 final int columnWidth =
                         (maxWidth - mDividerWidth * (numColumn - 1)) / numColumn;
@@ -135,6 +125,12 @@ public final class MoreSuggestions extends Keyboard {
             return maxRowWidth;
         }
 
+        private static final int[][] COLUMN_ORDER_TO_NUMBER = {
+            { 0 }, // center
+            { 1, 0 }, // right-left
+            { 1, 0, 2 }, // center-left-right
+        };
+
         public int getNumColumnInRow(final int index) {
             return mNumColumnsInRow[mRowNumbers[index]];
         }
@@ -152,7 +148,7 @@ public final class MoreSuggestions extends Keyboard {
 
         public int getY(final int index) {
             final int row = mRowNumbers[index];
-            return (mNumRows - 1 - row) * mDefaultRowHeight + mTopPadding;
+            return (mNumRows -1 - row) * mDefaultRowHeight + mTopPadding;
         }
 
         public int getWidth(final int index) {
@@ -176,6 +172,11 @@ public final class MoreSuggestions extends Keyboard {
         }
     }
 
+    static boolean isIndexSubjectToAutoCorrection(final SuggestedWords suggestedWords,
+            final int index) {
+        return suggestedWords.mWillAutoCorrect && index == SuggestedWords.INDEX_OF_AUTO_CORRECTION;
+    }
+
     public static final class Builder extends KeyboardBuilder<MoreSuggestionsParam> {
         private final MoreSuggestionsView mPaneView;
         private SuggestedWords mSuggestedWords;
@@ -188,8 +189,8 @@ public final class MoreSuggestions extends Keyboard {
         }
 
         public Builder layout(final SuggestedWords suggestedWords, final int fromIndex,
-                              final int maxWidth, final int minWidth, final int maxRow,
-                              final Keyboard parentKeyboard) {
+                final int maxWidth, final int minWidth, final int maxRow,
+                final Keyboard parentKeyboard) {
             final int xmlId = R.xml.kbd_suggestions_pane_template;
             load(xmlId, parentKeyboard.mId);
             mParams.mVerticalGap = mParams.mTopPadding = parentKeyboard.mVerticalGap / 2;
@@ -238,7 +239,7 @@ public final class MoreSuggestions extends Keyboard {
         public final int mSuggestedWordIndex;
 
         public MoreSuggestionKey(final String word, final String info, final int index,
-                                 final MoreSuggestionsParam params) {
+                final MoreSuggestionsParam params) {
             super(word /* label */, KeyboardIconsSet.ICON_UNDEFINED, Constants.CODE_OUTPUT_TEXT,
                     word /* outputText */, info, 0 /* labelFlags */, Key.BACKGROUND_TYPE_NORMAL,
                     params.getX(index), params.getY(index), params.getWidth(index),
@@ -251,7 +252,7 @@ public final class MoreSuggestions extends Keyboard {
         private final Drawable mIcon;
 
         public Divider(final KeyboardParams params, final Drawable icon, final int x,
-                       final int y, final int width, final int height) {
+                final int y, final int width, final int height) {
             super(params, x, y, width, height);
             mIcon = icon;
         }

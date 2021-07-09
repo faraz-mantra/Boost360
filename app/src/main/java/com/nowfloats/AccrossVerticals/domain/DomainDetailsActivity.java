@@ -71,40 +71,65 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 public class DomainDetailsActivity extends AppCompatActivity implements View.OnClickListener, DomainApiService.DomainCallback {
 
+    private Toolbar toolbar;
+
+    private TextView headerText;
+
+    private UserSessionManager session;
+
+    private DomainApiService domainApiService;
+
+    private ProgressDialog progressDialog;
+
     private static final int DOMAIN_EXPIRY_GRACE_PERIOD = 30;
+
     private static final int EMAIL_BOOKING_NUM = 3;
     private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
-    private static final int LIGHT_HOUSE_EXPIRE = 0;
-    private static final int WILD_FIRE_EXPIRE = 1;
-    private static final int DEMO_EXPIRE = 3;
-    private static final int DEMO_DAYS_LEFT = 4;
-    private static final int LIGHT_HOUSE_DAYS_LEFT = 5;
+
+    private int domainExpiryDays = 0, planExpiryDays = 0;
+
+    private long currentTime, totalNoOfDays = 0;
+
+    private HashMap<String, Integer> hmPrices = new HashMap<>();
+
+    private ArrayList<String> arrDomainExtensions;
+
+    private String domainType = "", domainExpiryDate = "", domainCreatedDate = "", domainName = "";
+
     int totalBookedEmails, totalFailedEmails;
+    private boolean isLinkedDomain;
     SharedPreferences pref;
     EmailBookingModel bookingModelList;
     EmailAdapter emailAdapter;
+    private ArrayList<EmailBookingModel.AddEmailModel> emailBookedList = new ArrayList<>();
+    private boolean isDomainBookFailed = false;
     TextView domainNameTv, domainCreatedTv, domainExpiredTv, statusTv, expireMsgTv, bookedEmailTv;
     CardView domainDetailsCard, emailDetailsCard;
     LinearLayout expiredLayout, emptyLayout, secondaryLayout;
     TextView proceedBtn, confirmRequestTv, addEmail, buyItem, existingDomainProceed, newDomainProceed;
     ConstraintLayout chooseDomainLayout;
-    private Toolbar toolbar;
-    private TextView headerText;
-    private UserSessionManager session;
-    private DomainApiService domainApiService;
-    private ProgressDialog progressDialog;
-    private int domainExpiryDays = 0, planExpiryDays = 0;
-    private long currentTime, totalNoOfDays = 0;
-    private HashMap<String, Integer> hmPrices = new HashMap<>();
-    private ArrayList<String> arrDomainExtensions;
-    private String domainType = "", domainExpiryDate = "", domainCreatedDate = "", domainName = "";
+//    RadioButton chooseBtn;
+    private MaterialDialog domainBookDialog;
+
+    public enum EmailType {
+        ADDED, IN_PROCESS, FAILED, ADD_EMAIL;
+
+        public static EmailType getEmailType(int x) {
+            switch (x) {
+                case 0:
+                    return ADDED;
+                case 1:
+                    return IN_PROCESS;
+                case 2:
+                    return FAILED;
+                case 3:
+                    return ADD_EMAIL;
+            }
+            return null;
+        }
+    }
 
     ;
-    private boolean isLinkedDomain;
-    private ArrayList<EmailBookingModel.AddEmailModel> emailBookedList = new ArrayList<>();
-    private boolean isDomainBookFailed = false;
-    //    RadioButton chooseBtn;
-    private MaterialDialog domainBookDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +161,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         emptyLayout = (LinearLayout) findViewById(R.id.ll_empty_view);
         expiredLayout = (LinearLayout) findViewById(R.id.ll_plan_expired);
         expireMsgTv = (TextView) expiredLayout.findViewById(R.id.tv_expire_msg);
-        secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
+        secondaryLayout=(LinearLayout) findViewById(R.id.secondary_layout);
         buyItem = (TextView) findViewById(R.id.buy_item);
         bookedEmailTv = (TextView) emailDetailsCard.findViewById(R.id.tv_email_booked);
         proceedBtn = (TextView) findViewById(R.id.btn_proceed);
@@ -163,10 +188,10 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         newDomainProceed.setOnClickListener(this);
 
 
-        if (Constants.StoreWidgets.contains("DOMAINPURCHASE")) {
+        if(Constants.StoreWidgets.contains("DOMAINPURCHASE")) {
             secondaryLayout.setVisibility(View.GONE);
             loadData();
-        } else {
+        }else{
             secondaryLayout.setVisibility(View.VISIBLE);
         }
 
@@ -258,6 +283,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         return offersParam;
     }
 
+
     private HashMap<String, String> getDomainAvailabilityParam(String domainType) {
         HashMap<String, String> offersParam = new HashMap<>();
         offersParam.put("clientId", Constants.clientId);
@@ -315,6 +341,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         domainApiService.getDomainDetails(DomainDetailsActivity.this, session.getFpTag(), getDomainDetailsParam());
     }
 
+
     @Override
     public void getDomainDetails(DomainDetails domainDetails) {
         if ((domainDetails == null || !domainDetails.isHasDomain()) && session.getRootAliasURI() != null) {
@@ -328,12 +355,12 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
             Methods.showSnackBarNegative(this, getString(R.string.something_went_wrong));
             hideLoader();
         } else if (domainDetails.isFailed()) {
-            showCustomDialog(null, null, getString(R.string.domain_booking_failed),
+            showCustomDialog(null, null,getString(R.string.domain_booking_failed),
                     Methods.fromHtml(TextUtils.isEmpty(domainDetails.getErrorMessage()) ?
                             getString(R.string.drop_us_contact) : domainDetails.getErrorMessage()).toString(),
                     getString(R.string.ok), null, DialogFrom.DEFAULT);
         } else if (domainDetails.isPending()) {
-            showCustomDialog(null, null, getString(R.string.domain_booking_process),
+            showCustomDialog(null, null,getString(R.string.domain_booking_process),
                     getString(R.string.domain_booking_process_message),
                     getString(R.string.ok), null, DialogFrom.DEFAULT);
         } else if (!domainDetails.isHasDomain()) {
@@ -525,11 +552,11 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     private void enterEmailDialog(final String emailId) {
         final ArrayList<EmailBookingModel.EmailDomainName> emailDomainNames = (ArrayList<EmailBookingModel.EmailDomainName>) bookingModelList.getEmailDomainNames();
         class EmailInfo {
-            TextView userSuggestionEmail;
             private TextInputLayout usernameLayout, passwordLayout, rePasswordLayout, firstNameLayout, lastNameLayout;
             private TextInputEditText username, password, rePassword, firstName, lastName;
             private MaterialDialog dialog;
             private EmailBookingModel.EmailDomainName editModel;
+            TextView userSuggestionEmail;
 
             void addDialog(MaterialDialog dialog) {
                 this.dialog = dialog;
@@ -783,6 +810,12 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
             setDomainDetailsCard(true, null);
         }
     }
+
+    private static final int LIGHT_HOUSE_EXPIRE = 0;
+    private static final int WILD_FIRE_EXPIRE = 1;
+    private static final int DEMO_EXPIRE = 3;
+    private static final int DEMO_DAYS_LEFT = 4;
+    private static final int LIGHT_HOUSE_DAYS_LEFT = 5;
 
     private void setDomainDetailsCard(boolean active, String statusMessage) {
 
@@ -1173,6 +1206,16 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+    private enum DialogFrom {
+        DOMAIN_AVAILABLE,
+        CONTACTS_AND_EMAIL_REQUIRED,
+        CATEGORY_REQUIRED,
+        ADDRESS_REQUIRED,
+        DEFAULT,
+        FAILED,
+        NO_CLOSE
+    }
+
     private void showCustomDialog(final String domainName, final String domainType, String title, String message, String postiveBtn, String negativeBtn,
                                   final DialogFrom dialogFrom) {
 
@@ -1263,65 +1306,6 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                     response,
                     getString(R.string.ok), null, DialogFrom.DEFAULT);
         }
-    }
-
-    private void initiateBuyFromMarketplace() {
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        String status = getString(R.string.loading_please_wait);
-        progressDialog.setMessage(status);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        Intent intent = new Intent(this, UpgradeActivity.class);
-        intent.putExtra("expCode", session.getFP_AppExperienceCode());
-        intent.putExtra("fpName", session.getFPName());
-        intent.putExtra("fpid", session.getFPID());
-        intent.putExtra("fpTag", session.getFpTag());
-        intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
-        intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-        if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
-        } else {
-            intent.putExtra("email", "ria@nowfloats.com");
-        }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
-        } else {
-            intent.putExtra("mobileNo", "9160004303");
-        }
-        intent.putExtra("profileUrl", session.getFPLogo());
-        intent.putExtra("buyItemKey", "DOMAINPURCHASE");
-        startActivity(intent);
-        new Handler().postDelayed(() -> {
-            progressDialog.dismiss();
-        }, 1000);
-    }
-
-    public enum EmailType {
-        ADDED, IN_PROCESS, FAILED, ADD_EMAIL;
-
-        public static EmailType getEmailType(int x) {
-            switch (x) {
-                case 0:
-                    return ADDED;
-                case 1:
-                    return IN_PROCESS;
-                case 2:
-                    return FAILED;
-                case 3:
-                    return ADD_EMAIL;
-            }
-            return null;
-        }
-    }
-
-    private enum DialogFrom {
-        DOMAIN_AVAILABLE,
-        CONTACTS_AND_EMAIL_REQUIRED,
-        CATEGORY_REQUIRED,
-        ADDRESS_REQUIRED,
-        DEFAULT,
-        FAILED,
-        NO_CLOSE
     }
 
     private class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.MyWorkingEmailHolder> {
@@ -1480,6 +1464,37 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 });
             }
         }
+    }
+
+    private void initiateBuyFromMarketplace() {
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        String status = getString(R.string.loading_please_wait);
+        progressDialog.setMessage(status);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Intent intent = new Intent(this, UpgradeActivity.class);
+        intent.putExtra("expCode", session.getFP_AppExperienceCode());
+        intent.putExtra("fpName", session.getFPName());
+        intent.putExtra("fpid", session.getFPID());
+        intent.putExtra("fpTag", session.getFpTag());
+        intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
+        intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+        if (session.getFPEmail() != null) {
+            intent.putExtra("email", session.getFPEmail());
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com");
+        }
+        if (session.getFPPrimaryContactNumber() != null) {
+            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        } else {
+            intent.putExtra("mobileNo", "9160004303");
+        }
+        intent.putExtra("profileUrl", session.getFPLogo());
+        intent.putExtra("buyItemKey", "DOMAINPURCHASE");
+        startActivity(intent);
+        new Handler().postDelayed(() -> {
+            progressDialog.dismiss();
+        },1000);
     }
 
 }

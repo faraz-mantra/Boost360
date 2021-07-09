@@ -34,7 +34,7 @@ import io.separ.neural.inputmethod.slash.TaskQueueHelper;
  * Created by sepehr on 3/2/17.
  */
 
-public class ServiceResultsView extends LinearLayout implements ColorManager.OnColorChange {
+public class ServiceResultsView extends LinearLayout implements ColorManager.OnColorChange{
     private CategoriesRecyclerView mCategoriesList;
     private VisualSate mPreviousState;
     private ResultsRecyclerView mRecycler;
@@ -47,12 +47,17 @@ public class ServiceResultsView extends LinearLayout implements ColorManager.OnC
     private String currentSlash;
     private String currentContext;
 
-    public ServiceResultsView(Context context) {
-        this(context, null);
+    @Override
+    public void onColorChange(ColorProfile colorProfile) {
+        setBackgroundColor(colorProfile.getSecondary());
+        mSourceError.setTextColor(colorProfile.getIconOnSecondary());
     }
 
-    public ServiceResultsView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    private static class MyOnClickListener implements OnClickListener {
+        @Override
+        public void onClick(View view) {
+            EventBusExt.getDefault().post(new ServiceExitEvent());
+        }
     }
 
     /*class C04621 implements OnClickListener {
@@ -64,21 +69,23 @@ public class ServiceResultsView extends LinearLayout implements ColorManager.OnC
         }
     }*/
 
-    public ServiceResultsView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr);
-    }
+    class C04632 implements SearchItemArrayAdapter.IOnClickListener {
+        C04632() {
+        }
 
-    @TargetApi(21)
-    public ServiceResultsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs, defStyleAttr);
-    }
-
-    @Override
-    public void onColorChange(ColorProfile colorProfile) {
-        setBackgroundColor(colorProfile.getSecondary());
-        mSourceError.setTextColor(colorProfile.getIconOnSecondary());
+        public void onClick(boolean parentClicked, boolean previewClicked, boolean connectClicked, int position) {
+            if (ServiceResultsView.this.mRecycler.getAdapter().getItemCount() > position) {
+                if (parentClicked) {
+                    ServiceResultsView.this.onItemClicked(position);
+                }
+                if (previewClicked) {
+                    ServiceResultsView.this.onPreviewClicked(position);
+                }
+                if (connectClicked) {
+                    ServiceResultsView.this.onActionClick(position);
+                }
+            }
+        }
     }
 
     private void onActionClick(int position) {
@@ -93,6 +100,109 @@ public class ServiceResultsView extends LinearLayout implements ColorManager.OnC
     private void onPermissionClick(RSearchItem searchItem) {
         EventBusExt.getDefault().post(new LaunchSettingsEvent());
         //PermissionActivity.startActivity(getContext(), "android.permission.READ_CONTACTS");
+    }
+
+    class C04643 implements CategoriesArrayAdapter.IOnClickListener {
+        C04643() {
+        }
+
+        public void onClick(int position) {
+            if (position < ServiceResultsView.this.mCategoriesList.getAdapter().getItemCount()) {
+                RCategory category = ServiceResultsView.this.mCategoriesList.getAdapter().getItem(position);
+                ServiceResultsView.this.runSearch(category.getAction(), true);
+            }
+        }
+    }
+
+    class C04654 implements Runnable {
+        final String val$slash;
+
+        C04654(String str) {
+            this.val$slash = str;
+        }
+
+        public void run() {
+            ServiceResultsView.this.setServiceImage(this.val$slash);
+            ServiceResultsView.this.mSourceImageView.setRotationY(-90.0f);
+            ServiceResultsView.this.mSourceImageView.animate().rotationY(0.0f).setDuration(300).scaleX(SimpleItemTouchHelperCallback.ALPHA_FULL).scaleY(SimpleItemTouchHelperCallback.ALPHA_FULL);
+        }
+    }
+
+    static /* synthetic */ class C04687 {
+        static final /* synthetic */ int[] f932x310c8f71;
+
+        static {
+            f932x310c8f71 = new int[VisualSate.values().length];
+            try {
+                f932x310c8f71[VisualSate.Loading.ordinal()] = 1;
+            } catch (NoSuchFieldError e) {
+            }
+            try {
+                f932x310c8f71[VisualSate.ServiceError.ordinal()] = 2;
+            } catch (NoSuchFieldError e2) {
+            }
+            try {
+                f932x310c8f71[VisualSate.Hide.ordinal()] = 3;
+            } catch (NoSuchFieldError e3) {
+            }
+            try {
+                f932x310c8f71[VisualSate.GeneralError.ordinal()] = 4;
+            } catch (NoSuchFieldError e4) {
+            }
+            try {
+                f932x310c8f71[VisualSate.Results.ordinal()] = 5;
+            } catch (NoSuchFieldError e5) {
+            }
+        }
+    }
+
+    public enum VisualSate {
+        Hide,
+        Loading,
+        ServiceError,
+        GeneralError,
+        Results;
+
+        private String message;
+
+        VisualSate() {}
+
+        public VisualSate setMessage(String msg) {
+            this.message = msg;
+            return this;
+        }
+
+        public String getMessage() {
+            return this.message;
+        }
+    }
+
+    public ServiceResultsView(Context context) {
+        this(context, null);
+    }
+
+    public ServiceResultsView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public ServiceResultsView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context, attrs, defStyleAttr);
+    }
+
+    @TargetApi(21)
+    public ServiceResultsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs, defStyleAttr);
+    }
+
+    static class C04621 implements OnClickListener {
+        C04621() {
+        }
+
+        public void onClick(View v) {
+            ServiceRequestManager.getInstance().repostLastRequest();
+        }
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -146,7 +256,7 @@ public class ServiceResultsView extends LinearLayout implements ColorManager.OnC
         return this.mRecycler;
     }
 
-    public void startSearch(String slash, String context) {
+    public void startSearch(String slash, String context){
         setVisibility(VISIBLE);
         mSearchPlaceholder.setVisibility(VISIBLE);
         setService(slash);
@@ -160,10 +270,10 @@ public class ServiceResultsView extends LinearLayout implements ColorManager.OnC
         boolean useCaching = false;
         this.mCategoriesList.getAdapter().setSelectedItem(-1);
         if (TextUtils.isEmpty(searchString)) {
-            if (TextUtils.isEmpty(currentContext)) {
+            if(TextUtils.isEmpty(currentContext)) {
                 action = "prepopulate";
                 useCaching = true;
-            } else
+            }else
                 searchString = currentContext;
         }
         setSearchMirror(searchString);
@@ -268,7 +378,7 @@ public class ServiceResultsView extends LinearLayout implements ColorManager.OnC
     }
 
     private void onPreviewClicked(int position) {
-        ResultsRecyclerView.openPreview(getContext(), (String) this.mRecycler.getAdapter().getItem(position).getPreviewUrl());
+        ResultsRecyclerView.openPreview(getContext(), (String)this.mRecycler.getAdapter().getItem(position).getPreviewUrl());
     }
 
     private boolean isViewShown() {
@@ -345,117 +455,6 @@ public class ServiceResultsView extends LinearLayout implements ColorManager.OnC
                 break;
             default:
                 throw new RuntimeException("VisualSate " + state + " is not supported");
-        }
-    }
-
-    public enum VisualSate {
-        Hide,
-        Loading,
-        ServiceError,
-        GeneralError,
-        Results;
-
-        private String message;
-
-        VisualSate() {
-        }
-
-        public String getMessage() {
-            return this.message;
-        }
-
-        public VisualSate setMessage(String msg) {
-            this.message = msg;
-            return this;
-        }
-    }
-
-    private static class MyOnClickListener implements OnClickListener {
-        @Override
-        public void onClick(View view) {
-            EventBusExt.getDefault().post(new ServiceExitEvent());
-        }
-    }
-
-    static /* synthetic */ class C04687 {
-        static final /* synthetic */ int[] f932x310c8f71;
-
-        static {
-            f932x310c8f71 = new int[VisualSate.values().length];
-            try {
-                f932x310c8f71[VisualSate.Loading.ordinal()] = 1;
-            } catch (NoSuchFieldError e) {
-            }
-            try {
-                f932x310c8f71[VisualSate.ServiceError.ordinal()] = 2;
-            } catch (NoSuchFieldError e2) {
-            }
-            try {
-                f932x310c8f71[VisualSate.Hide.ordinal()] = 3;
-            } catch (NoSuchFieldError e3) {
-            }
-            try {
-                f932x310c8f71[VisualSate.GeneralError.ordinal()] = 4;
-            } catch (NoSuchFieldError e4) {
-            }
-            try {
-                f932x310c8f71[VisualSate.Results.ordinal()] = 5;
-            } catch (NoSuchFieldError e5) {
-            }
-        }
-    }
-
-    static class C04621 implements OnClickListener {
-        C04621() {
-        }
-
-        public void onClick(View v) {
-            ServiceRequestManager.getInstance().repostLastRequest();
-        }
-    }
-
-    class C04632 implements SearchItemArrayAdapter.IOnClickListener {
-        C04632() {
-        }
-
-        public void onClick(boolean parentClicked, boolean previewClicked, boolean connectClicked, int position) {
-            if (ServiceResultsView.this.mRecycler.getAdapter().getItemCount() > position) {
-                if (parentClicked) {
-                    ServiceResultsView.this.onItemClicked(position);
-                }
-                if (previewClicked) {
-                    ServiceResultsView.this.onPreviewClicked(position);
-                }
-                if (connectClicked) {
-                    ServiceResultsView.this.onActionClick(position);
-                }
-            }
-        }
-    }
-
-    class C04643 implements CategoriesArrayAdapter.IOnClickListener {
-        C04643() {
-        }
-
-        public void onClick(int position) {
-            if (position < ServiceResultsView.this.mCategoriesList.getAdapter().getItemCount()) {
-                RCategory category = ServiceResultsView.this.mCategoriesList.getAdapter().getItem(position);
-                ServiceResultsView.this.runSearch(category.getAction(), true);
-            }
-        }
-    }
-
-    class C04654 implements Runnable {
-        final String val$slash;
-
-        C04654(String str) {
-            this.val$slash = str;
-        }
-
-        public void run() {
-            ServiceResultsView.this.setServiceImage(this.val$slash);
-            ServiceResultsView.this.mSourceImageView.setRotationY(-90.0f);
-            ServiceResultsView.this.mSourceImageView.animate().rotationY(0.0f).setDuration(300).scaleX(SimpleItemTouchHelperCallback.ALPHA_FULL).scaleY(SimpleItemTouchHelperCallback.ALPHA_FULL);
         }
     }
 }

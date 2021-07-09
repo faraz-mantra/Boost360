@@ -11,4 +11,4 @@ data class BusinessUpdateResponse(
   var moreFloatsAvailable: Boolean? = null,
   @SerializedName("totalCount")
   var totalCount: Int? = null
-) : BaseResponse(), Serializable
+):BaseResponse(),Serializable

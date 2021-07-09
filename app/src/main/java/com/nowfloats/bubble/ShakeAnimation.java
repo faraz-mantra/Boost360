@@ -61,7 +61,7 @@ public class ShakeAnimation extends Animation {
 
         ViewGroup parentView = (ViewGroup) view.getParent(), rootView = (ViewGroup) view
                 .getRootView();
-        while (parentView != null && !parentView.equals(rootView)) {
+        while (parentView!=null && !parentView.equals(rootView)) {
             parentView.setClipChildren(false);
             parentView = (ViewGroup) parentView.getParent();
         }

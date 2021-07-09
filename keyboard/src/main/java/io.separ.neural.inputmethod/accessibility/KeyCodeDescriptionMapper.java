@@ -45,6 +45,11 @@ final class KeyCodeDescriptionMapper {
     private static final int OBSCURED_KEY_RES_ID = R.string.spoken_description_dot;
 
     private static final KeyCodeDescriptionMapper sInstance = new KeyCodeDescriptionMapper();
+
+    public static KeyCodeDescriptionMapper getInstance() {
+        return sInstance;
+    }
+
     // Sparse array of spoken description resource IDs indexed by key codes
     private final SparseIntArray mKeyCodeMap = new SparseIntArray();
 
@@ -75,159 +80,18 @@ final class KeyCodeDescriptionMapper {
         mKeyCodeMap.put(0x0130, R.string.spoken_letter_0130);
     }
 
-    public static KeyCodeDescriptionMapper getInstance() {
-        return sInstance;
-    }
-
-    /**
-     * Returns a context-specific description for the CODE_SWITCH_ALPHA_SYMBOL
-     * key or {@code null} if there is not a description provided for the
-     * current keyboard context.
-     *
-     * @param context  The package's context.
-     * @param keyboard The keyboard on which the key resides.
-     * @return a character sequence describing the action performed by pressing the key
-     */
-    private static String getDescriptionForSwitchAlphaSymbol(final Context context,
-                                                             final Keyboard keyboard) {
-        final KeyboardId keyboardId = keyboard.mId;
-        final int elementId = keyboardId.mElementId;
-        final int resId;
-
-        switch (elementId) {
-            case KeyboardId.ELEMENT_ALPHABET:
-            case KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED:
-            case KeyboardId.ELEMENT_ALPHABET_MANUAL_SHIFTED:
-            case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED:
-            case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED:
-                resId = R.string.spoken_description_to_symbol;
-                break;
-            case KeyboardId.ELEMENT_SYMBOLS:
-            case KeyboardId.ELEMENT_SYMBOLS_SHIFTED:
-                resId = R.string.spoken_description_to_alpha;
-                break;
-            case KeyboardId.ELEMENT_PHONE:
-                resId = R.string.spoken_description_to_symbol;
-                break;
-            case KeyboardId.ELEMENT_PHONE_SYMBOLS:
-                resId = R.string.spoken_description_to_numeric;
-                break;
-            default:
-                Log.e(TAG, "Missing description for keyboard element ID:" + elementId);
-                return null;
-        }
-        return context.getString(resId);
-    }
-
-    /**
-     * Returns a context-sensitive description of the "Shift" key.
-     *
-     * @param context  The package's context.
-     * @param keyboard The keyboard on which the key resides.
-     * @return A context-sensitive description of the "Shift" key.
-     */
-    private static String getDescriptionForShiftKey(final Context context,
-                                                    final Keyboard keyboard) {
-        final KeyboardId keyboardId = keyboard.mId;
-        final int elementId = keyboardId.mElementId;
-        final int resId;
-
-        switch (elementId) {
-            case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED:
-            case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED:
-                resId = R.string.spoken_description_caps_lock;
-                break;
-            case KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED:
-            case KeyboardId.ELEMENT_ALPHABET_MANUAL_SHIFTED:
-                resId = R.string.spoken_description_shift_shifted;
-                break;
-            case KeyboardId.ELEMENT_SYMBOLS:
-                resId = R.string.spoken_description_symbols_shift;
-                break;
-            case KeyboardId.ELEMENT_SYMBOLS_SHIFTED:
-                resId = R.string.spoken_description_symbols_shift_shifted;
-                break;
-            default:
-                resId = R.string.spoken_description_shift;
-        }
-        return context.getString(resId);
-    }
-
-    /**
-     * Returns a context-sensitive description of the "Enter" action key.
-     *
-     * @param context  The package's context.
-     * @param keyboard The keyboard on which the key resides.
-     * @param key      The key to describe.
-     * @return Returns a context-sensitive description of the "Enter" action key.
-     */
-    private static String getDescriptionForActionKey(final Context context, final Keyboard keyboard,
-                                                     final Key key) {
-        final KeyboardId keyboardId = keyboard.mId;
-        final int actionId = keyboardId.imeAction();
-
-        // Always use the label, if available.
-        if (!TextUtils.isEmpty(key.getLabel())) {
-            return key.getLabel().trim();
-        }
-
-        // Otherwise, use the action ID.
-        final int resId;
-        switch (actionId) {
-            case EditorInfo.IME_ACTION_SEARCH:
-                resId = R.string.spoken_description_search;
-                break;
-            case EditorInfo.IME_ACTION_GO:
-                resId = R.string.label_go_key;
-                break;
-            case EditorInfo.IME_ACTION_SEND:
-                resId = R.string.label_send_key;
-                break;
-            case EditorInfo.IME_ACTION_NEXT:
-                resId = R.string.label_next_key;
-                break;
-            case EditorInfo.IME_ACTION_DONE:
-                resId = R.string.label_done_key;
-                break;
-            case EditorInfo.IME_ACTION_PREVIOUS:
-                resId = R.string.label_previous_key;
-                break;
-            default:
-                resId = R.string.spoken_description_return;
-        }
-        return context.getString(resId);
-    }
-
-    // TODO: Remove this method once TTS supports emoticon verbalization.
-    private static String getSpokenEmoticonDescription(final Context context,
-                                                       final String outputText) {
-        final StringBuilder sb = new StringBuilder(SPOKEN_EMOTICON_RESOURCE_NAME_PREFIX);
-        final int textLength = outputText.length();
-        for (int index = 0; index < textLength; index = outputText.offsetByCodePoints(index, 1)) {
-            final int codePoint = outputText.codePointAt(index);
-            sb.append(String.format(Locale.ROOT, SPOKEN_EMOTICON_CODE_POINT_FORMAT, codePoint));
-        }
-        final String resourceName = sb.toString();
-        final Resources resources = context.getResources();
-        // Note that the resource package name may differ from the context package name.
-        final String resourcePackageName = resources.getResourcePackageName(
-                R.string.spoken_description_unknown);
-        final int resId = resources.getIdentifier(resourceName, "string", resourcePackageName);
-        return (resId == 0) ? null : resources.getString(resId);
-    }
-
     /**
      * Returns the localized description of the action performed by a specified
      * key based on the current keyboard state.
      *
-     * @param context       The package's context.
-     * @param keyboard      The keyboard on which the key resides.
-     * @param key           The key from which to obtain a description.
+     * @param context The package's context.
+     * @param keyboard The keyboard on which the key resides.
+     * @param key The key from which to obtain a description.
      * @param shouldObscure {@true} if text (e.g. non-control) characters should be obscured.
      * @return a character sequence describing the action performed by pressing the key
      */
     public String getDescriptionForKey(final Context context, final Keyboard keyboard,
-                                       final Key key, final boolean shouldObscure) {
+            final Key key, final boolean shouldObscure) {
         final int code = key.getCode();
 
         if (code == Constants.CODE_SWITCH_ALPHA_SYMBOL) {
@@ -274,10 +138,129 @@ final class KeyCodeDescriptionMapper {
     }
 
     /**
+     * Returns a context-specific description for the CODE_SWITCH_ALPHA_SYMBOL
+     * key or {@code null} if there is not a description provided for the
+     * current keyboard context.
+     *
+     * @param context The package's context.
+     * @param keyboard The keyboard on which the key resides.
+     * @return a character sequence describing the action performed by pressing the key
+     */
+    private static String getDescriptionForSwitchAlphaSymbol(final Context context,
+            final Keyboard keyboard) {
+        final KeyboardId keyboardId = keyboard.mId;
+        final int elementId = keyboardId.mElementId;
+        final int resId;
+
+        switch (elementId) {
+        case KeyboardId.ELEMENT_ALPHABET:
+        case KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED:
+        case KeyboardId.ELEMENT_ALPHABET_MANUAL_SHIFTED:
+        case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED:
+        case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED:
+            resId = R.string.spoken_description_to_symbol;
+            break;
+        case KeyboardId.ELEMENT_SYMBOLS:
+        case KeyboardId.ELEMENT_SYMBOLS_SHIFTED:
+            resId = R.string.spoken_description_to_alpha;
+            break;
+        case KeyboardId.ELEMENT_PHONE:
+            resId = R.string.spoken_description_to_symbol;
+            break;
+        case KeyboardId.ELEMENT_PHONE_SYMBOLS:
+            resId = R.string.spoken_description_to_numeric;
+            break;
+        default:
+            Log.e(TAG, "Missing description for keyboard element ID:" + elementId);
+            return null;
+        }
+        return context.getString(resId);
+    }
+
+    /**
+     * Returns a context-sensitive description of the "Shift" key.
+     *
+     * @param context The package's context.
+     * @param keyboard The keyboard on which the key resides.
+     * @return A context-sensitive description of the "Shift" key.
+     */
+    private static String getDescriptionForShiftKey(final Context context,
+            final Keyboard keyboard) {
+        final KeyboardId keyboardId = keyboard.mId;
+        final int elementId = keyboardId.mElementId;
+        final int resId;
+
+        switch (elementId) {
+        case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED:
+        case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED:
+            resId = R.string.spoken_description_caps_lock;
+            break;
+        case KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED:
+        case KeyboardId.ELEMENT_ALPHABET_MANUAL_SHIFTED:
+            resId = R.string.spoken_description_shift_shifted;
+            break;
+        case KeyboardId.ELEMENT_SYMBOLS:
+            resId = R.string.spoken_description_symbols_shift;
+            break;
+        case KeyboardId.ELEMENT_SYMBOLS_SHIFTED:
+            resId = R.string.spoken_description_symbols_shift_shifted;
+            break;
+        default:
+            resId = R.string.spoken_description_shift;
+        }
+        return context.getString(resId);
+    }
+
+    /**
+     * Returns a context-sensitive description of the "Enter" action key.
+     *
+     * @param context The package's context.
+     * @param keyboard The keyboard on which the key resides.
+     * @param key The key to describe.
+     * @return Returns a context-sensitive description of the "Enter" action key.
+     */
+    private static String getDescriptionForActionKey(final Context context, final Keyboard keyboard,
+            final Key key) {
+        final KeyboardId keyboardId = keyboard.mId;
+        final int actionId = keyboardId.imeAction();
+
+        // Always use the label, if available.
+        if (!TextUtils.isEmpty(key.getLabel())) {
+            return key.getLabel().trim();
+        }
+
+        // Otherwise, use the action ID.
+        final int resId;
+        switch (actionId) {
+        case EditorInfo.IME_ACTION_SEARCH:
+            resId = R.string.spoken_description_search;
+            break;
+        case EditorInfo.IME_ACTION_GO:
+            resId = R.string.label_go_key;
+            break;
+        case EditorInfo.IME_ACTION_SEND:
+            resId = R.string.label_send_key;
+            break;
+        case EditorInfo.IME_ACTION_NEXT:
+            resId = R.string.label_next_key;
+            break;
+        case EditorInfo.IME_ACTION_DONE:
+            resId = R.string.label_done_key;
+            break;
+        case EditorInfo.IME_ACTION_PREVIOUS:
+            resId = R.string.label_previous_key;
+            break;
+        default:
+            resId = R.string.spoken_description_return;
+        }
+        return context.getString(resId);
+    }
+
+    /**
      * Returns a localized character sequence describing what will happen when
      * the specified key is pressed based on its key code point.
      *
-     * @param context   The package's context.
+     * @param context The package's context.
      * @param codePoint The code point from which to obtain a description.
      * @return a character sequence describing the code point.
      */
@@ -350,7 +333,7 @@ final class KeyCodeDescriptionMapper {
     }
 
     private int getSpokenDescriptionId(final Context context, final int code,
-                                       final String resourceNameFormat) {
+            final String resourceNameFormat) {
         final String resourceName = String.format(Locale.ROOT, resourceNameFormat, code);
         final Resources resources = context.getResources();
         // Note that the resource package name may differ from the context package name.
@@ -361,5 +344,23 @@ final class KeyCodeDescriptionMapper {
             mKeyCodeMap.append(code, resId);
         }
         return resId;
+    }
+
+    // TODO: Remove this method once TTS supports emoticon verbalization.
+    private static String getSpokenEmoticonDescription(final Context context,
+            final String outputText) {
+        final StringBuilder sb = new StringBuilder(SPOKEN_EMOTICON_RESOURCE_NAME_PREFIX);
+        final int textLength = outputText.length();
+        for (int index = 0; index < textLength; index = outputText.offsetByCodePoints(index, 1)) {
+            final int codePoint = outputText.codePointAt(index);
+            sb.append(String.format(Locale.ROOT, SPOKEN_EMOTICON_CODE_POINT_FORMAT, codePoint));
+        }
+        final String resourceName = sb.toString();
+        final Resources resources = context.getResources();
+        // Note that the resource package name may differ from the context package name.
+        final String resourcePackageName = resources.getResourcePackageName(
+                R.string.spoken_description_unknown);
+        final int resId = resources.getIdentifier(resourceName, "string", resourcePackageName);
+        return (resId == 0) ? null : resources.getString(resId);
     }
 }

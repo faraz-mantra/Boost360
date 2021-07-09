@@ -16,20 +16,54 @@ public class TaskQueue extends BaseTaskQueue {
     private static final String DEFAULT_QUEUE = "__DEFAULT";
     private static final String NETWORK_QUEUE = "__NETWORK";
     private static Map<String, TaskQueue> queueMap;
+    private final boolean fifo;
+
+    private class ExeTask implements Runnable {
+        private Task task;
+
+        private ExeTask(Task task) {
+            this.task = task;
+        }
+
+        public void run() {
+            UiThreadContext.assertBackgroundThread();
+            try {
+                this.task.run(TaskQueue.this.application);
+                TaskQueue.this.handler.sendMessage(TaskQueue.this.handler.obtainMessage(2));
+            } catch (Throwable th) {
+                TaskQueue.this.handler.sendMessage(TaskQueue.this.handler.obtainMessage(2));
+            }
+        }
+    }
+
+    static class LinkedListQueue<Task> implements QueueWrapper<Task> {
+        private final boolean fifo;
+        private final LinkedList<Task> linkedList;
+
+        public LinkedListQueue(boolean fifo) {
+            this.linkedList = new LinkedList();
+            this.fifo = fifo;
+        }
+
+        public Task poll() {
+            return this.fifo ? this.linkedList.poll() : this.linkedList.pollLast();
+        }
+
+        public void offer(Task task) {
+            this.linkedList.offer(task);
+        }
+
+        public Collection<Task> all() {
+            return this.linkedList;
+        }
+
+        public void remove(Task task) {
+            this.linkedList.remove(task);
+        }
+    }
 
     static {
         queueMap = new HashMap();
-    }
-
-    private final boolean fifo;
-
-    public TaskQueue(Application application) {
-        this(application, true);
-    }
-
-    public TaskQueue(Application application, boolean fifo) {
-        super(application, new LinkedListQueue(fifo));
-        this.fifo = fifo;
     }
 
     public static synchronized TaskQueue loadQueue(Context context, String name) {
@@ -62,6 +96,15 @@ public class TaskQueue extends BaseTaskQueue {
         return loadQueue(context, NETWORK_QUEUE);
     }
 
+    public TaskQueue(Application application) {
+        this(application, true);
+    }
+
+    public TaskQueue(Application application, boolean fifo) {
+        super(application, new LinkedListQueue(fifo));
+        this.fifo = fifo;
+    }
+
     protected void runTask(Task task) {
         this.executeHandler.post(new ExeTask(task));
     }
@@ -84,49 +127,5 @@ public class TaskQueue extends BaseTaskQueue {
             return;
         }
         this.handler.sendMessage(this.handler.obtainMessage(0, task));
-    }
-
-    static class LinkedListQueue<Task> implements QueueWrapper<Task> {
-        private final boolean fifo;
-        private final LinkedList<Task> linkedList;
-
-        public LinkedListQueue(boolean fifo) {
-            this.linkedList = new LinkedList();
-            this.fifo = fifo;
-        }
-
-        public Task poll() {
-            return this.fifo ? this.linkedList.poll() : this.linkedList.pollLast();
-        }
-
-        public void offer(Task task) {
-            this.linkedList.offer(task);
-        }
-
-        public Collection<Task> all() {
-            return this.linkedList;
-        }
-
-        public void remove(Task task) {
-            this.linkedList.remove(task);
-        }
-    }
-
-    private class ExeTask implements Runnable {
-        private Task task;
-
-        private ExeTask(Task task) {
-            this.task = task;
-        }
-
-        public void run() {
-            UiThreadContext.assertBackgroundThread();
-            try {
-                this.task.run(TaskQueue.this.application);
-                TaskQueue.this.handler.sendMessage(TaskQueue.this.handler.obtainMessage(2));
-            } catch (Throwable th) {
-                TaskQueue.this.handler.sendMessage(TaskQueue.this.handler.obtainMessage(2));
-            }
-        }
     }
 }

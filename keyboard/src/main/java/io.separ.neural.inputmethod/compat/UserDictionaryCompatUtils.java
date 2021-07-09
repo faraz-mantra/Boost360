@@ -30,7 +30,7 @@ public final class UserDictionaryCompatUtils {
 
     @SuppressWarnings("deprecation")
     public static void addWord(final Context context, final String word,
-                               final int freq, final String shortcut, final Locale locale) {
+            final int freq, final String shortcut, final Locale locale) {
         if (hasNewerAddWord()) {
             CompatUtils.invoke(Words.class, null, METHOD_addWord, context, word, freq, shortcut,
                     locale);

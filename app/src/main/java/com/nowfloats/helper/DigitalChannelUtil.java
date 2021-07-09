@@ -37,14 +37,12 @@ public class DigitalChannelUtil {
             String city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY);
             String country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY);
             String location = "";
-            if (!TextUtils.isEmpty(city) && !TextUtils.isEmpty(country))
-                location = city + ", " + country;
+            if (!TextUtils.isEmpty(city) && !TextUtils.isEmpty(country)) location = city + ", " + country;
             else location = city + country;
             bundle.putString(Key_Preferences.LOCATION, location);
 
             String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + activity.getString(R.string.tag_for_partners);
-            if (!TextUtils.isEmpty(rootAlisasURI))
-                bundle.putString(Key_Preferences.WEBSITE_URL, rootAlisasURI);
+            if (!TextUtils.isEmpty(rootAlisasURI)) bundle.putString(Key_Preferences.WEBSITE_URL, rootAlisasURI);
             else bundle.putString(Key_Preferences.WEBSITE_URL, normalURI);
             bundle.putString(Key_Preferences.PRIMARY_NUMBER, session.getUserPrimaryMobile());
             bundle.putString(Key_Preferences.PRIMARY_EMAIL, session.getFPEmail());

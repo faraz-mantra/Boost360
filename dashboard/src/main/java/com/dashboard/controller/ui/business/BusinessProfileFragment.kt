@@ -54,8 +54,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.*
 
-class BusinessProfileFragment :
-  AppBaseFragment<FragmentBusinessProfileBinding, BusinessProfileViewModel>() {
+class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, BusinessProfileViewModel>() {
 
   private var businessImage: File? = null
   private var businessProfileModel = BusinessProfileModel()
@@ -84,18 +83,9 @@ class BusinessProfileFragment :
     session = UserSessionManager(requireContext())
     WebEngageController.trackEvent(BUSINESS_PROFILE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(
-      binding?.ctvWhatsThis,
-      binding?.ctvBusinessName,
-      binding?.businessImage,
-      binding?.ctvBusinessCategory,
-      binding?.clBusinessDesc,
-      binding?.imageAddBtn,
-      binding?.btnChangeImage,
-      binding?.btnSavePublish,
-      binding?.openBusinessAddress,
-      binding?.openBusinessChannels,
-      binding?.openBusinessContact,
-      binding?.openBusinessWebsite,
+      binding?.ctvWhatsThis, binding?.ctvBusinessName, binding?.businessImage, binding?.ctvBusinessCategory, binding?.clBusinessDesc,
+      binding?.imageAddBtn, binding?.btnChangeImage, binding?.btnSavePublish, binding?.openBusinessAddress,
+      binding?.openBusinessChannels, binding?.openBusinessContact, binding?.openBusinessWebsite,
     )
   }
 
@@ -109,15 +99,11 @@ class BusinessProfileFragment :
     binding?.btnSavePublish?.isEnabled = false
     binding?.ctvBusinessName?.text = session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
     binding?.ctvBusinessCategory?.text = session?.getFPDetails(GET_FP_DETAILS_CATEGORY)
-    onBusinessNameAddedOrUpdated(
-      session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty().not()
-    )
+    onBusinessNameAddedOrUpdated(session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty().not())
     binding?.ctvBusinessNameCount?.text = "${session?.fPName?.length}/40"
     binding?.ctvWebsite?.text = "${session?.getDomainName()}"
     binding?.ctvBusinessDesc?.text = session?.getFPDetails(GET_FP_DETAILS_DESCRIPTION)
-    onBusinessDescAddedOrUpdated(
-      session?.getFPDetails(GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty().not()
-    )
+    onBusinessDescAddedOrUpdated(session?.getFPDetails(GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty().not())
     binding?.ctvBusinessAddress?.text = session?.getFPDetails(GET_FP_DETAILS_ADDRESS)
     if (session?.getFPDetails(GET_FP_DETAILS_ADDRESS).isNullOrEmpty()) {
       binding?.containerBusinessAddress?.gone()
@@ -125,9 +111,7 @@ class BusinessProfileFragment :
       binding?.containerBusinessAddress?.visible()
     }
     var str = ""
-    if (session?.fPPrimaryContactNumber.isNullOrEmpty()
-        .not()
-    ) str += "• +91 ${session?.fPPrimaryContactNumber} (VMN)"
+    if (session?.fPPrimaryContactNumber.isNullOrEmpty().not()) str += "• +91 ${session?.fPPrimaryContactNumber} (VMN)"
     if (session?.fPPrimaryContactNumber.isNullOrEmpty()) {
       if (session?.getStoreWidgets()?.contains("CALLTRACKER") == true) {
         binding?.ctvActive?.text = getString(R.string.active)
@@ -140,12 +124,8 @@ class BusinessProfileFragment :
     } else {
       binding?.ctvActive?.visible()
     }
-    if (session?.userPrimaryMobile.isNullOrEmpty()
-        .not()
-    ) str += "\n• +91 ${session?.userPrimaryMobile}"
-    if ((session?.userProfileEmail ?: session?.fPEmail).isNullOrEmpty()
-        .not()
-    ) str += "\n• ${session?.userProfileEmail ?: session?.fPEmail}"
+    if (session?.userPrimaryMobile.isNullOrEmpty().not()) str += "\n• +91 ${session?.userPrimaryMobile}"
+    if ((session?.userProfileEmail ?: session?.fPEmail).isNullOrEmpty().not()) str += "\n• ${session?.userProfileEmail ?: session?.fPEmail}"
     str += "\n• ${session?.getDomainName() ?: ""}"
     binding?.ctvBusinessContacts?.text = str.trimMargin()
 
@@ -160,19 +140,11 @@ class BusinessProfileFragment :
     var s_uuid = UUID.randomUUID().toString()
     s_uuid = s_uuid.replace("-", "")
     viewModel?.putUploadBusinessLogo(
-      clientId2,
-      fpId = FirestoreManager.fpId,
-      reqType = "sequential",
-      reqId = s_uuid,
-      totalChunks = "1",
-      currentChunkNumber = "1",
-      file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
+      clientId2, fpId = FirestoreManager.fpId, reqType = "sequential", reqId = s_uuid,
+      totalChunks = "1", currentChunkNumber = "1", file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
     )?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        session?.storeFPDetails(
-          GET_FP_DETAILS_LogoUrl,
-          it.parseStringResponse()?.replace("\\", "")?.replace("\"", "")
-        )
+        session?.storeFPDetails(GET_FP_DETAILS_LogoUrl, it.parseStringResponse()?.replace("\\", "")?.replace("\"", ""))
         showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
       } else showSnackBarNegative(requireActivity(), it.message)
       hideProgress()
@@ -181,11 +153,7 @@ class BusinessProfileFragment :
 
   private fun loadImage(imageUri: String) {
     if (imageUri.isEmpty().not()) {
-      baseActivity.glideLoad(
-        mImageView = binding?.businessImage!!,
-        url = imageUri,
-        placeholder = R.drawable.placeholder_image_n
-      )
+      baseActivity.glideLoad(mImageView = binding?.businessImage!!, url = imageUri, placeholder = R.drawable.placeholder_image_n)
       binding?.imageAddBtn?.gone()
       binding?.btnChangeImage?.visible()
       binding?.divider3?.visible()
@@ -319,57 +287,35 @@ class BusinessProfileFragment :
       updateItemList.add(UpdatesItem(key = "NAME", value = businessProfileModel.businessName))
     }
     if (session?.getFPDetails(GET_FP_DETAILS_DESCRIPTION) != binding?.ctvBusinessDesc?.text.toString()) {
-      updateItemList.add(
-        UpdatesItem(
-          key = "DESCRIPTION",
-          value = businessProfileModel.businessDesc
-        )
-      )
+      updateItemList.add(UpdatesItem(key = "DESCRIPTION", value = businessProfileModel.businessDesc))
     }
-    businessProfileUpdateRequest =
-      BusinessProfileUpdateRequest(session?.fpTag, clientId2, updateItemList)
-    viewModel?.updateBusinessProfile(businessProfileUpdateRequest!!)
-      ?.observeOnce(viewLifecycleOwner, {
-        if (it.isSuccess()) {
-          binding?.btnSavePublish?.isEnabled = false
-          val response = it?.parseStringResponse()
-          if (response?.contains("NAME") == true) {
-            onBusinessNameAddedOrUpdated(true)
-            showSnackBarPositive(
-              requireActivity(),
-              getString(R.string.business_name_published_successfully)
-            )
-          }
-          if (response?.contains("DESCRIPTION") == true) {
-            onBusinessDescAddedOrUpdated(true)
-            showSnackBarPositive(
-              requireActivity(),
-              getString(R.string.business_description_published_successfully)
-            )
-          }
-          session?.storeFPDetails(
-            GET_FP_DETAILS_DESCRIPTION,
-            binding?.ctvBusinessDesc?.text.toString()
-          )
-          session?.storeFPDetails(
-            GET_FP_DETAILS_BUSINESS_NAME,
-            binding?.ctvBusinessName?.text.toString()
-          )
-        } else {
-          showShortToast(baseActivity.getString(R.string.error_updating_business))
+    businessProfileUpdateRequest = BusinessProfileUpdateRequest(session?.fpTag, clientId2, updateItemList)
+    viewModel?.updateBusinessProfile(businessProfileUpdateRequest!!)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        binding?.btnSavePublish?.isEnabled = false
+        val response = it?.parseStringResponse()
+        if (response?.contains("NAME") == true) {
+          onBusinessNameAddedOrUpdated(true)
+          showSnackBarPositive(requireActivity(), getString(R.string.business_name_published_successfully))
         }
-        hideProgress()
-      })
+        if (response?.contains("DESCRIPTION") == true) {
+          onBusinessDescAddedOrUpdated(true)
+          showSnackBarPositive(requireActivity(), getString(R.string.business_description_published_successfully))
+        }
+        session?.storeFPDetails(GET_FP_DETAILS_DESCRIPTION, binding?.ctvBusinessDesc?.text.toString())
+        session?.storeFPDetails(GET_FP_DETAILS_BUSINESS_NAME, binding?.ctvBusinessName?.text.toString())
+      } else {
+        showShortToast(baseActivity.getString(R.string.error_updating_business))
+      }
+      hideProgress()
+    })
   }
 
   private fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
     filterSheet.isHidePdf(true)
     filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(
-      this@BusinessProfileFragment.parentFragmentManager,
-      ImagePickerBottomSheet::class.java.name
-    )
+    filterSheet.show(this@BusinessProfileFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   private fun openImagePicker(it: ClickType) {
@@ -396,10 +342,7 @@ class BusinessProfileFragment :
 
   private fun openBusinessCategoryBottomSheet() {
     val businessCategoryBottomSheet = BusinessCategoryBottomSheet()
-    businessCategoryBottomSheet.show(
-      parentFragmentManager,
-      BusinessCategoryBottomSheet::javaClass.name
-    )
+    businessCategoryBottomSheet.show(parentFragmentManager, BusinessCategoryBottomSheet::javaClass.name)
   }
 
   private fun openBusinessNameDialog() {
@@ -418,10 +361,7 @@ class BusinessProfileFragment :
 
   private fun openDialogForInformation() {
     val businessFeaturedBottomSheet = BusinessFeaturedBottomSheet()
-    businessFeaturedBottomSheet.show(
-      parentFragmentManager,
-      BusinessFeaturedBottomSheet::javaClass.name
-    )
+    businessFeaturedBottomSheet.show(parentFragmentManager, BusinessFeaturedBottomSheet::javaClass.name)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -464,10 +404,7 @@ class BusinessProfileFragment :
 
   private fun setTextViewDrawableColor(textView: TextView, color: Int) {
     for (drawable in textView.compoundDrawables) {
-      if (drawable != null) drawable.colorFilter = PorterDuffColorFilter(
-        ContextCompat.getColor(textView.context, color),
-        PorterDuff.Mode.SRC_IN
-      )
+      if (drawable != null) drawable.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(textView.context, color), PorterDuff.Mode.SRC_IN)
     }
   }
 }

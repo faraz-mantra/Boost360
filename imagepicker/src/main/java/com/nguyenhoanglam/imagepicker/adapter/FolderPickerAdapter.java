@@ -1,9 +1,7 @@
 package com.nguyenhoanglam.imagepicker.adapter;
 
 import android.content.Context;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;

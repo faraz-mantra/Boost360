@@ -19,10 +19,11 @@ import br.com.instachat.emojilibrary.util.TimestampUtil;
 public class FragmentEmoji extends Fragment implements AdapterView.OnItemClickListener {
 
     public static final String TAG = "FragmentEmoji";
-    protected static RecentEmojisManager mRecentEmojisManager;
+
     private RecentListener mRecentListener;
     private OnEmojiClickListener mOnEmojiconClickedListener;
     private View mRootView;
+    protected static RecentEmojisManager mRecentEmojisManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class FragmentEmoji extends Fragment implements AdapterView.OnItemClickLi
             clickedEmoji.setTimestamp(TimestampUtil.getCurrentTimestamp());
 
             mRecentEmojisManager.addRecentEmoji(clickedEmoji);
-            if (mRecentListener != null) {
+            if(mRecentListener != null){
                 mRecentListener.notifyEmojiAdded();
             }
         }

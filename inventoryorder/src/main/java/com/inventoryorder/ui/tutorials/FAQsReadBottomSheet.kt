@@ -8,8 +8,7 @@ import com.inventoryorder.databinding.BottomSheetFaqAppointmentBinding
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.ui.tutorials.viewmodel.TutorialViewModel
 
-class FAQsReadBottomSheet :
-  BaseBottomSheetDialog<BottomSheetFaqAppointmentBinding, TutorialViewModel>() {
+class FAQsReadBottomSheet : BaseBottomSheetDialog<BottomSheetFaqAppointmentBinding, TutorialViewModel>() {
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_faq_appointment
@@ -35,10 +34,7 @@ class FAQsReadBottomSheet :
       binding?.civBack -> {
         dismiss()
         val learnAboutAppointmentMgmtBottomSheet = LearnHowItWorkBottomSheet()
-        learnAboutAppointmentMgmtBottomSheet.show(
-          parentFragmentManager,
-          LearnHowItWorkBottomSheet::class.java.name
-        )
+        learnAboutAppointmentMgmtBottomSheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
       }
     }
   }

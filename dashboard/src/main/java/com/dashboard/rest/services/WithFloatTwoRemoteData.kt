@@ -14,21 +14,22 @@ import retrofit2.http.Query
 import java.io.File
 
 interface WithFloatTwoRemoteData {
-  @PUT(EndPoints.CREATE_BUSINESS_LOGO)
-  fun uploadBusinessImage(
-    @Query("clientId") clientId: String?,
-    @Query("fpId") fpId: String?,
-    @Query("reqType") reqType: String?,
-    @Query("reqtId") reqtId: String?,
-    @Query("totalChunks") totalChunks: String?,
-    @Query("currentChunkNumber") currentChunkNumber: String?,
-    @Body file: RequestBody?
-  ): Observable<Response<ResponseBody>>
+    @PUT(EndPoints.CREATE_BUSINESS_LOGO)
+    fun uploadBusinessImage(
+        @Query("clientId") clientId: String?,
+        @Query("fpId") fpId: String?,
+        @Query("reqType") reqType: String?,
+        @Query("reqtId") reqtId: String?,
+        @Query("totalChunks") totalChunks: String?,
+        @Query("currentChunkNumber") currentChunkNumber: String?,
+        @Body file: RequestBody?
+    ): Observable<Response<ResponseBody>>
 
 
-  @POST(EndPoints.FLOATING_POINT_UPDATE)
-  fun updateBusinessProfile(
+
+    @POST(EndPoints.FLOATING_POINT_UPDATE)
+    fun updateBusinessProfile(
     @Body profileUpdateRequest: BusinessProfileUpdateRequest
-  ): Observable<Response<ResponseBody>>
+    ): Observable<Response<ResponseBody>>
 
 }

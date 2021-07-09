@@ -12,13 +12,11 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
-
 import androidx.annotation.ColorRes;
 import androidx.annotation.DimenRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,10 +36,15 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
  * @author Oleksandr Melnykov
  */
 public class FloatingActionButton extends ImageButton {
+    private static final int TRANSLATE_DURATION_MILLIS = 200;
+
+    @IntDef({TYPE_NORMAL, TYPE_MINI})
+    public @interface TYPE {
+    }
+
     public static final int TYPE_NORMAL = 0;
     public static final int TYPE_MINI = 1;
-    private static final int TRANSLATE_DURATION_MILLIS = 200;
-    private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
+
     private boolean mVisible;
 
     private int mColorNormal;
@@ -55,6 +58,8 @@ public class FloatingActionButton extends ImageButton {
     private int mScrollThreshold;
 
     private boolean mMarginsSet;
+
+    private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
 
     public FloatingActionButton(Context context) {
         this(context, null);
@@ -74,7 +79,7 @@ public class FloatingActionButton extends ImageButton {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int size = getDimension(
-                mType == TYPE_NORMAL ? R.dimen.fab_size_normal : R.dimen.fab_size_mini);
+            mType == TYPE_NORMAL ? R.dimen.fab_size_normal : R.dimen.fab_size_mini);
         if (mShadow && !hasLollipopApi()) {
             size += mShadowSize * 2;
             setMarginsWithoutShadow();
@@ -102,11 +107,11 @@ public class FloatingActionButton extends ImageButton {
         if (attr != null) {
             try {
                 mColorNormal = attr.getColor(R.styleable.FloatingActionButton_fab_colorNormal,
-                        getColor(R.color.material_blue_500));
+                    getColor(R.color.material_blue_500));
                 mColorPressed = attr.getColor(R.styleable.FloatingActionButton_fab_colorPressed,
-                        getColor(R.color.material_blue_600));
+                    getColor(R.color.material_blue_600));
                 mColorRipple = attr.getColor(R.styleable.FloatingActionButton_fab_colorRipple,
-                        getColor(android.R.color.white));
+                    getColor(android.R.color.white));
                 mShadow = attr.getBoolean(R.styleable.FloatingActionButton_fab_shadow, true);
                 mType = attr.getInt(R.styleable.FloatingActionButton_fab_type, TYPE_NORMAL);
             } finally {
@@ -129,7 +134,7 @@ public class FloatingActionButton extends ImageButton {
 
         if (mShadow && !hasLollipopApi()) {
             Drawable shadowDrawable = getResources().getDrawable(mType == TYPE_NORMAL ? R.drawable.shadow
-                    : R.drawable.shadow_mini);
+                : R.drawable.shadow_mini);
             LayerDrawable layerDrawable = new LayerDrawable(new Drawable[]{shadowDrawable, shapeDrawable});
             layerDrawable.setLayerInset(1, mShadowSize, mShadowSize, mShadowSize, mShadowSize);
             return layerDrawable;
@@ -173,13 +178,13 @@ public class FloatingActionButton extends ImageButton {
             float elevation;
             if (mShadow) {
                 elevation = getElevation() > 0.0f ? getElevation()
-                        : getDimension(R.dimen.fab_elevation_lollipop);
+                    : getDimension(R.dimen.fab_elevation_lollipop);
             } else {
                 elevation = 0.0f;
             }
             setElevation(elevation);
             RippleDrawable rippleDrawable = new RippleDrawable(new ColorStateList(new int[][]{{}},
-                    new int[]{mColorRipple}), drawable, null);
+                new int[]{mColorRipple}), drawable, null);
             setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
@@ -205,6 +210,13 @@ public class FloatingActionButton extends ImageButton {
         return marginBottom;
     }
 
+    public void setColorNormal(int color) {
+        if (color != mColorNormal) {
+            mColorNormal = color;
+            updateBackground();
+        }
+    }
+
     public void setColorNormalResId(@ColorRes int colorResId) {
         setColorNormal(getColor(colorResId));
     }
@@ -213,9 +225,9 @@ public class FloatingActionButton extends ImageButton {
         return mColorNormal;
     }
 
-    public void setColorNormal(int color) {
-        if (color != mColorNormal) {
-            mColorNormal = color;
+    public void setColorPressed(int color) {
+        if (color != mColorPressed) {
+            mColorPressed = color;
             updateBackground();
         }
     }
@@ -228,9 +240,9 @@ public class FloatingActionButton extends ImageButton {
         return mColorPressed;
     }
 
-    public void setColorPressed(int color) {
-        if (color != mColorPressed) {
-            mColorPressed = color;
+    public void setColorRipple(int color) {
+        if (color != mColorRipple) {
+            mColorRipple = color;
             updateBackground();
         }
     }
@@ -241,13 +253,6 @@ public class FloatingActionButton extends ImageButton {
 
     public int getColorRipple() {
         return mColorRipple;
-    }
-
-    public void setColorRipple(int color) {
-        if (color != mColorRipple) {
-            mColorRipple = color;
-            updateBackground();
-        }
     }
 
     public void setShadow(boolean shadow) {
@@ -261,16 +266,16 @@ public class FloatingActionButton extends ImageButton {
         return mShadow;
     }
 
-    @TYPE
-    public int getType() {
-        return mType;
-    }
-
     public void setType(@TYPE int type) {
         if (type != mType) {
             mType = type;
             updateBackground();
         }
+    }
+
+    @TYPE
+    public int getType() {
+        return mType;
     }
 
     public boolean isVisible() {
@@ -317,8 +322,8 @@ public class FloatingActionButton extends ImageButton {
             int translationY = visible ? 0 : height + getMarginBottom();
             if (animate) {
                 ViewPropertyAnimator.animate(this).setInterpolator(mInterpolator)
-                        .setDuration(TRANSLATE_DURATION_MILLIS)
-                        .translationY(translationY);
+                    .setDuration(TRANSLATE_DURATION_MILLIS)
+                    .translationY(translationY);
             } else {
                 ViewHelper.setTranslationY(this, translationY);
             }
@@ -374,10 +379,6 @@ public class FloatingActionButton extends ImageButton {
 
     private boolean hasHoneycombApi() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
-    }
-
-    @IntDef({TYPE_NORMAL, TYPE_MINI})
-    public @interface TYPE {
     }
 
     private class AbsListViewScrollDetectorImpl extends AbsListViewScrollDetector {

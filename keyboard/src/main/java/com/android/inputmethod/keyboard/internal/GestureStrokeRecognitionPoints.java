@@ -28,13 +28,14 @@ import io.separ.neural.inputmethod.indic.InputPointers;
  * TODO: Should be package private class.
  */
 public final class GestureStrokeRecognitionPoints {
-    // The height of extra area above the keyboard to draw gesture trails.
-    // Proportional to the keyboard height.
-    public static final float EXTRA_GESTURE_TRAIL_AREA_ABOVE_KEYBOARD_RATIO = 0.25f;
     private static final String TAG = GestureStrokeRecognitionPoints.class.getSimpleName();
     private static final boolean DEBUG = false;
     private static final boolean DEBUG_SPEED = false;
-    private static final int MSEC_PER_SEC = 1000;
+
+    // The height of extra area above the keyboard to draw gesture trails.
+    // Proportional to the keyboard height.
+    public static final float EXTRA_GESTURE_TRAIL_AREA_ABOVE_KEYBOARD_RATIO = 0.25f;
+
     private final int mPointerId;
     private final ResizableIntArray mEventTimes = new ResizableIntArray(
             Constants.DEFAULT_GESTURE_POINTS_CAPACITY);
@@ -42,7 +43,9 @@ public final class GestureStrokeRecognitionPoints {
             Constants.DEFAULT_GESTURE_POINTS_CAPACITY);
     private final ResizableIntArray mYCoordinates = new ResizableIntArray(
             Constants.DEFAULT_GESTURE_POINTS_CAPACITY);
+
     private final GestureStrokeRecognitionParams mRecognitionParams;
+
     private int mMinYCoordinate; // pixel
     private int mMaxYCoordinate; // pixel
     // Static threshold for starting gesture detection
@@ -64,32 +67,30 @@ public final class GestureStrokeRecognitionPoints {
     private int mIncrementalRecognitionSize;
     private int mLastIncrementalBatchSize;
 
+    private static final int MSEC_PER_SEC = 1000;
+
     // TODO: Make this package private
     public GestureStrokeRecognitionPoints(final int pointerId,
-                                          final GestureStrokeRecognitionParams recognitionParams) {
+            final GestureStrokeRecognitionParams recognitionParams) {
         mPointerId = pointerId;
         mRecognitionParams = recognitionParams;
-    }
-
-    private static int getDistance(final int x1, final int y1, final int x2, final int y2) {
-        return (int) Math.hypot(x1 - x2, y1 - y2);
     }
 
     // TODO: Make this package private
     public void setKeyboardGeometry(final int keyWidth, final int keyboardHeight) {
         int mKeyWidth = keyWidth;
-        mMinYCoordinate = -(int) (keyboardHeight * EXTRA_GESTURE_TRAIL_AREA_ABOVE_KEYBOARD_RATIO);
+        mMinYCoordinate = -(int)(keyboardHeight * EXTRA_GESTURE_TRAIL_AREA_ABOVE_KEYBOARD_RATIO);
         mMaxYCoordinate = keyboardHeight;
         // TODO: Find an appropriate base metric for these length. Maybe diagonal length of the key?
-        mDetectFastMoveSpeedThreshold = (int) (
+        mDetectFastMoveSpeedThreshold = (int)(
                 keyWidth * mRecognitionParams.mDetectFastMoveSpeedThreshold);
-        mGestureDynamicDistanceThresholdFrom = (int) (
+        mGestureDynamicDistanceThresholdFrom = (int)(
                 keyWidth * mRecognitionParams.mDynamicDistanceThresholdFrom);
-        mGestureDynamicDistanceThresholdTo = (int) (
+        mGestureDynamicDistanceThresholdTo = (int)(
                 keyWidth * mRecognitionParams.mDynamicDistanceThresholdTo);
-        mGestureSamplingMinimumDistance = (int) (
+        mGestureSamplingMinimumDistance = (int)(
                 keyWidth * mRecognitionParams.mSamplingMinimumDistance);
-        mGestureRecognitionSpeedThreshold = (int) (
+        mGestureRecognitionSpeedThreshold = (int)(
                 keyWidth * mRecognitionParams.mRecognitionSpeedThreshold);
         if (DEBUG) {
             Log.d(TAG, String.format(
@@ -109,7 +110,7 @@ public final class GestureStrokeRecognitionPoints {
 
     // TODO: Make this package private
     public void addDownEventPoint(final int x, final int y, final int elapsedTimeSinceFirstDown,
-                                  final int elapsedTimeSinceLastTyping) {
+            final int elapsedTimeSinceLastTyping) {
         reset();
         if (elapsedTimeSinceLastTyping < mRecognitionParams.mStaticTimeThresholdAfterFastTyping) {
             mAfterFastTyping = true;
@@ -129,7 +130,7 @@ public final class GestureStrokeRecognitionPoints {
         }
         final int decayedThreshold =
                 (mGestureDynamicDistanceThresholdFrom - mGestureDynamicDistanceThresholdTo)
-                        * deltaTime / mRecognitionParams.mDynamicThresholdDecayDuration;
+                * deltaTime / mRecognitionParams.mDynamicThresholdDecayDuration;
         return mGestureDynamicDistanceThresholdFrom - decayedThreshold;
     }
 
@@ -140,7 +141,7 @@ public final class GestureStrokeRecognitionPoints {
         final int decayedThreshold =
                 (mRecognitionParams.mDynamicTimeThresholdFrom
                         - mRecognitionParams.mDynamicTimeThresholdTo)
-                        * deltaTime / mRecognitionParams.mDynamicThresholdDecayDuration;
+                * deltaTime / mRecognitionParams.mDynamicThresholdDecayDuration;
         return mRecognitionParams.mDynamicTimeThresholdFrom - decayedThreshold;
     }
 
@@ -240,13 +241,13 @@ public final class GestureStrokeRecognitionPoints {
             final int pixelsPerSec = pixels * MSEC_PER_SEC;
             int mKeyWidth;
             if (DEBUG_SPEED) {
-                final float speed = (float) pixelsPerSec / msecs / mKeyWidth;
+                final float speed = (float)pixelsPerSec / msecs / mKeyWidth;
                 Log.d(TAG, String.format("[%d] detectFastMove: speed=%5.2f", mPointerId, speed));
             }
             // Equivalent to (pixels / msecs < mStartSpeedThreshold / MSEC_PER_SEC)
             if (!hasDetectedFastMove() && pixelsPerSec > mDetectFastMoveSpeedThreshold * msecs) {
                 if (DEBUG) {
-                    final float speed = (float) pixelsPerSec / msecs / mKeyWidth;
+                    final float speed = (float)pixelsPerSec / msecs / mKeyWidth;
                     Log.d(TAG, String.format(
                             "[%d] detectFastMove: speed=%5.2f T=%3d points=%3d fastMove",
                             mPointerId, speed, time, size));
@@ -262,16 +263,15 @@ public final class GestureStrokeRecognitionPoints {
     /**
      * Add an event point to this gesture stroke recognition points. Returns true if the event
      * point is on the valid gesture area.
-     *
-     * @param x            the x-coordinate of the event point
-     * @param y            the y-coordinate of the event point
-     * @param time         the elapsed time in millisecond from the first gesture down
+     * @param x the x-coordinate of the event point
+     * @param y the y-coordinate of the event point
+     * @param time the elapsed time in millisecond from the first gesture down
      * @param isMajorEvent false if this is a historical move event
      * @return true if the event point is on the valid gesture area
      */
     // TODO: Make this package private
     public boolean addEventPoint(final int x, final int y, final int time,
-                                 final boolean isMajorEvent) {
+            final boolean isMajorEvent) {
         final int size = getLength();
         if (size <= 0) {
             // The first event of this stroke (a.k.a. down event).
@@ -291,7 +291,7 @@ public final class GestureStrokeRecognitionPoints {
     }
 
     private void updateIncrementalRecognitionSize(final int x, final int y, final int time) {
-        final int msecs = (int) (time - mLastMajorEventTime);
+        final int msecs = (int)(time - mLastMajorEventTime);
         if (msecs <= 0) {
             return;
         }
@@ -327,5 +327,9 @@ public final class GestureStrokeRecognitionPoints {
         out.append(mPointerId, mEventTimes, mXCoordinates, mYCoordinates,
                 mLastIncrementalBatchSize, length);
         mLastIncrementalBatchSize = size;
+    }
+
+    private static int getDistance(final int x1, final int y1, final int x2, final int y2) {
+        return (int)Math.hypot(x1 - x2, y1 - y2);
     }
 }

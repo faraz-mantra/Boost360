@@ -1,6 +1,7 @@
 package com.nowfloats.CustomPage.Model;
 
-public enum FloatingPointSupportRequestQueueType {
+public enum FloatingPointSupportRequestQueueType
+{
     INVOICE_EMAIL,
     DISPLAY_PICTURE,
     CHEQUE_IMAGE,

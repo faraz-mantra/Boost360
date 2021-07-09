@@ -1,11 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  tools:context="test.com.nowfloats.Image_Gallery.Image_Gallery_MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="test.com.nowfloats.Image_Gallery.Image_Gallery_MainActivity">
 
 
-  <!-- <item android:id="@+id/addNewImage"
-       android:title="@string/next"
-       android:icon="@drawable/ic_action_new"
-       app:showAsAction="always"/>-->
+
+   <!-- <item android:id="@+id/addNewImage"
+        android:title="@string/next"
+        android:icon="@drawable/ic_action_new"
+        app:showAsAction="always"/>-->
 </menu>

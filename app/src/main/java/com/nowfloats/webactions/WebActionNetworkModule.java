@@ -19,6 +19,14 @@ public class WebActionNetworkModule {
 
     private IWebActionNetworkInterface mWebActionNetworkInterface;
 
+    public static WebActionNetworkModule init(String apiBaseUrl) {
+        if(sWebActionNetworkModule == null) {
+            sWebActionNetworkModule = new WebActionNetworkModule(apiBaseUrl);
+        }
+
+        return sWebActionNetworkModule;
+    }
+
     private WebActionNetworkModule(String apiBaseUrl) {
         mWebActionNetworkInterface = new RestAdapter.Builder()
                 .setEndpoint(apiBaseUrl)
@@ -28,14 +36,6 @@ public class WebActionNetworkModule {
                 .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
                 .build()
                 .create(IWebActionNetworkInterface.class);
-    }
-
-    public static WebActionNetworkModule init(String apiBaseUrl) {
-        if (sWebActionNetworkModule == null) {
-            sWebActionNetworkModule = new WebActionNetworkModule(apiBaseUrl);
-        }
-
-        return sWebActionNetworkModule;
     }
 
     public IWebActionNetworkInterface getWebActionService() {

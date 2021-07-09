@@ -4,13 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,33 +48,34 @@ import retrofit.client.Response;
 
 public class SocialAnalytics extends AppCompatActivity implements FacebookLoginFragment.OpenNextScreen, View.OnClickListener {
 
-    public static final String FACEBOOK = "facebook", QUIKR = "quikr";
-    private final static int FETCH_DATA = 20, POST_UPDATE = 10, LOGIN_FACEBOOK = 30;
+    private int facebookStatus = 0;
+    private final static int FETCH_DATA = 20,POST_UPDATE = 10,LOGIN_FACEBOOK = 30;
     WebView web;
     ProgressDialog progress;
     LinearLayout layout;
     Toolbar toolbar;
+    public static final String FACEBOOK="facebook", QUIKR = "quikr";
+
     String[] socialArray;
-    int[] images = new int[]{R.drawable.facebook_round, R.drawable.quikr};
+    int[] images = new int[]{R.drawable.facebook_round,R.drawable.quikr};
     UserSessionManager session;
     ImageView spinner;
     ImageView toolbarImage;
     TextView title;
     PopupWindow popup = null;
-    private int facebookStatus = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_social_analytics);
         session = new UserSessionManager(getApplicationContext(), this);
-        socialArray = getResources().getStringArray(R.array.social_array);
+        socialArray=getResources().getStringArray(R.array.social_array);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         title = (TextView) findViewById(R.id.title);
 
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
+        if(getSupportActionBar()!=null) {
             title.setText("Social Analytics");
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -86,7 +85,7 @@ public class SocialAnalytics extends AppCompatActivity implements FacebookLoginF
         web = (WebView) findViewById(R.id.webview);
         layout = (LinearLayout) findViewById(R.id.linearlayout);
         spinner = (ImageView) findViewById(R.id.toolbar_spinner);
-        // spinner.setOnItemSelectedListener(this);
+       // spinner.setOnItemSelectedListener(this);
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,socialArray);
         //SpinnerAdapter adapter = new SpinnerAdapter(this,images);
         //spinner.setAdapter(adapter);
@@ -94,16 +93,16 @@ public class SocialAnalytics extends AppCompatActivity implements FacebookLoginF
         //TODO: Canbrand: Update these lines to check if any social media channel is connected
         //                 For the time being only FB-flag is being checked, it needs to be changed
         Intent intent = getIntent();
-        facebookStatus = intent.getIntExtra("GetStatus", 0);
+        facebookStatus = intent.getIntExtra("GetStatus",0);
 
-        progress = new ProgressDialog(this);
+        progress=new ProgressDialog(this);
         progress.setMessage(getResources().getString(R.string.please_wait));
         progress.setCanceledOnTouchOutside(false);
 
-        if (facebookStatus == 1) {
+        if(facebookStatus == 1 ){
             checkForMessage(FACEBOOK);
-        } else {
-            addFragment(LOGIN_FACEBOOK, FACEBOOK);
+        }else{
+            addFragment(LOGIN_FACEBOOK,FACEBOOK);
         }
         spinner.setVisibility(View.GONE);
 //        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
@@ -128,7 +127,6 @@ public class SocialAnalytics extends AppCompatActivity implements FacebookLoginF
 //        }
 
     }
-
     private void initiatePopupWindow(View image) {
 
         try {
@@ -140,7 +138,7 @@ public class SocialAnalytics extends AppCompatActivity implements FacebookLoginF
             popup.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
             popup.setOutsideTouchable(true);
             popup.setFocusable(true);
-            popup.showAsDropDown(image, -10, 0);
+            popup.showAsDropDown(image,-10,0);
             layout.findViewById(R.id.facebook).setOnClickListener(this);
             layout.findViewById(R.id.quikr).setOnClickListener(this);
 
@@ -149,18 +147,16 @@ public class SocialAnalytics extends AppCompatActivity implements FacebookLoginF
         }
 
     }
-
-    private void showDialog() {
-        if (!isFinishing())
+    private void showDialog(){
+        if(!isFinishing())
             progress.show();
     }
-
-    private void hideDialog() {
-        if (progress.isShowing())
+    private void hideDialog(){
+        if(progress.isShowing())
             progress.hide();
     }
 
-    private void checkForMessage(final String mType) {
+    private void checkForMessage(final String mType){
         //Log.v("ggg","checkformessage");
         try {
             showDialog();
@@ -168,7 +164,7 @@ public class SocialAnalytics extends AppCompatActivity implements FacebookLoginF
             facebookApis.nfxFetchFacebookData(session.getFPID(), mType, new Callback<GetFacebookAnalyticsData>() {
                 @Override
                 public void success(GetFacebookAnalyticsData facebookAnalyticsData, Response response) {
-                    if (isFinishing()) {
+                    if (isFinishing()){
                         return;
                     }
                     hideDialog();
@@ -187,7 +183,7 @@ public class SocialAnalytics extends AppCompatActivity implements FacebookLoginF
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if (isFinishing()) {
+                    if (isFinishing()){
                         return;
                     }
                     hideDialog();
@@ -195,14 +191,14 @@ public class SocialAnalytics extends AppCompatActivity implements FacebookLoginF
                     //Log.v("ggg", error + "");
                 }
             });
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
 
     private void setImpressionValue(List<GetFacebookAnalyticsData.Datum> list) {
-        for (GetFacebookAnalyticsData.Datum data : list) {
-            if ("facebook".equalsIgnoreCase(data.getIdentifier())) {
+        for (GetFacebookAnalyticsData.Datum data :list) {
+            if("facebook".equalsIgnoreCase(data.getIdentifier())){
                 session.storeFacebookImpressions(String.valueOf(data.getValues().getPostImpressions()));
                 break;
             }
@@ -217,10 +213,10 @@ public class SocialAnalytics extends AppCompatActivity implements FacebookLoginF
         showDialog();
         web.setWebChromeClient(new SocialAnalytics.MyWebViewClient());
         web.getSettings().setJavaScriptEnabled(true);
-        Map<String, String> mp = new HashMap<>();
-        mp.put("key", "78234i249123102398");
-        mp.put("pwd", "JYUYTJH*(*&BKJ787686876bbbhl)");
-        web.loadUrl(makeUrl(mType, session.getFPID()), mp);
+        Map<String,String> mp=new HashMap<>();
+        mp.put("key","78234i249123102398");
+        mp.put("pwd","JYUYTJH*(*&BKJ787686876bbbhl)");
+        web.loadUrl(makeUrl(mType,session.getFPID()),mp);
     }
 
 
@@ -232,21 +228,21 @@ public class SocialAnalytics extends AppCompatActivity implements FacebookLoginF
     @Override
     public void onClick(View v) {
         int pos = 0;
-        if (popup != null) {
+        if(popup !=null){
             popup.dismiss();
         }
-        switch (v.getId()) {
+        switch(v.getId()) {
             case R.id.facebook:
                 pos = 0;
                 if (facebookStatus == 1) {
                     checkForMessage(FACEBOOK);
-                } else {
+                }else {
                     addFragment(LOGIN_FACEBOOK, FACEBOOK);
                 }
                 break;
             case R.id.quikr:
                 pos = 1;
-                MixPanelController.track(Key_Preferences.SHOW_QUIKR_ANALYTICS, null);
+                MixPanelController.track(Key_Preferences.SHOW_QUIKR_ANALYTICS,null);
                 checkForMessage(QUIKR);
                 break;
             default:
@@ -255,65 +251,65 @@ public class SocialAnalytics extends AppCompatActivity implements FacebookLoginF
         toolbarImage.setImageResource(images[pos]);
     }
 
-    private void addFragment(int i, String mType) {
+    private class MyWebViewClient extends WebChromeClient {
+
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            if(newProgress==100){
+                hideDialog();
+            }
+            super.onProgressChanged(view, newProgress);
+        }
+    }
+    private void addFragment(int i,String mType){
         Bundle b = new Bundle();
-        b.putString("mType", mType);
-        if (layout.getVisibility() != View.VISIBLE) {
+        b.putString("mType",mType);
+        if(layout.getVisibility() != View.VISIBLE) {
             layout.setVisibility(View.VISIBLE);
             web.setVisibility(View.GONE);
         }
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        Fragment frag = null;
-        switch (i) {
+        Fragment frag=null;
+        switch(i){
             case FETCH_DATA:
 
                 frag = ProcessFacebookDataFragment.getInstance(b);
-                transaction.replace(R.id.linearlayout, frag, "FetchFacebookData").commit();
+                transaction.replace(R.id.linearlayout,frag,"FetchFacebookData").commit();
                 break;
             case POST_UPDATE:
 
                 frag = PostFacebookUpdateFragment.getInstance(b);
-                transaction.replace(R.id.linearlayout, frag, "PostFacebookUpdate").commit();
+                transaction.replace(R.id.linearlayout,frag,"PostFacebookUpdate").commit();
                 break;
             case LOGIN_FACEBOOK:
                 frag = manager.findFragmentByTag("SocialMediaConnectPromptFragment");
-                if (frag == null)
+                if(frag == null)
                     frag = SocialMediaConnectPromptFragment.getInstance();
 
-                transaction.replace(R.id.linearlayout, frag, "SocialMediaConnectPromptFragment").commit();
+                transaction.replace(R.id.linearlayout,frag,"SocialMediaConnectPromptFragment").commit();
                 break;
         }
     }
 
-    private String makeUrl(String mType, String fpId) {
-        return Constants.NFX_WITH_NOWFLOATS + "/dataexchange/v1/fetch/analytics?" +
-                "identifier=" + mType + "&nowfloats_id=" + fpId;
-    }
 
+
+    private String makeUrl(String mType, String fpId){
+        return Constants.NFX_WITH_NOWFLOATS+"/dataexchange/v1/fetch/analytics?" +
+                "identifier="+mType+"&nowfloats_id="+fpId;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
 
-        if (id == android.R.id.home) {
+        if(id==android.R.id.home ){
             BoostLog.d("Back", "Back Pressed");
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private class MyWebViewClient extends WebChromeClient {
-
-        @Override
-        public void onProgressChanged(WebView view, int newProgress) {
-            if (newProgress == 100) {
-                hideDialog();
-            }
-            super.onProgressChanged(view, newProgress);
-        }
     }
 
 }

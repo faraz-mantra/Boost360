@@ -5,13 +5,7 @@ package com.thinksity;
  */
 public class Specific {
 
-    public static final String FACEBOOK_API_KEY = "613958438805430";  // Boost
-    public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile", "user_friends", "read_insights", "business_management"};
-    public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = {"publish_actions", "publish_pages", "manage_pages"};
-    public static final String TWITTER_URL = "https://twitter.com/getkitsune";
-    public static final String TWITTER_ID_URL = "twitter://user?screen_name=getkitsune";
-    public static final String TWILIO_AUTHY_API_KEY = "";
-    public static String clientId2 = "4C627432590419E9CF79252291B6A3AE25D7E2FF13347C6ACD1587CC93FC322";
+    public static String clientId2 	= "4C627432590419E9CF79252291B6A3AE25D7E2FF13347C6ACD1587CC93FC322";
     public static String client_ID_1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
     public static String client_ID_2_webcreatorservice = "DA92AD580F614449B2B7B8B62DFC7AE72D201733A6D74E73B8050C541579A26C";
     public static String client_ID_3_imagechunkprocessor = "BFFEB94156C24961BBF4D4B4CC3663BB883E2EFA875148CE9C08BAB702663FAE";
@@ -22,19 +16,29 @@ public class Specific {
     public static String client_ID_8_fpweb = "AC16E0892F2F45388F439BDE9F6F3FB5C31F0FAA628D40CD9814A79D8841397E";
     public static String client_ID_9 = "5DD5965115884A2291B6A06C37B47F6AF0FAA628D40CD9814A794137F6A";
     public static String client_ID_10 = "F66DDF89DB644AB3A6452C23EC8DDEA69D63C6851BB04DD1BF861DC8CB4C861A";
-
-//    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
-//    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
     public static String client_ID_11_webit = "726F12B41F6242CC9A2B23BF101199B54449370AD7F44B069C9B5E7CC4A7A20D";
     public static String client_ID_12_fppaymentupdatationtool = "1357FB1800C84D5C9ED7F30CAB526288974F74B799DD425082CB3A47D2558EEF";
     public static String client_ID_13_enterprizeonboardingservice = "BFB1A9D329204D25AF5423A58E21EB8349FAFE9752DD49F780F7680521DC33E1";
     public static String client_ID_14 = "A91B82DE3E93446A8141A52F288F69EFA1B09B1D13BB4E55BE743AB547B3489E";
+
     public static String access_level = "20";
-    public static String TWITTER_TOK = "GGkgBfPCRL9LPN9uVBM21OZoA";
-    public static String TWITTER_SEC = "5hSo9EpkWlFH8WMmgRYoF6v9T2QyRPiSC4yY379qrpHTOK1HTD";
+    public static final String FACEBOOK_API_KEY 	= "613958438805430";  // Boost
+
+//    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
+//    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
+
+    public static String TWITTER_TOK 				= "GGkgBfPCRL9LPN9uVBM21OZoA";
+    public static String TWITTER_SEC 				= "5hSo9EpkWlFH8WMmgRYoF6v9T2QyRPiSC4yY379qrpHTOK1HTD";
+
     public static String PACKAGE_NAME = "com.kitsune.biz";
     public static String FACEBOOK_URL = "https://www.facebook.com/getkitsune";
     public static String FACEBOOK_PAGE_ID = "fb://page/713199095512917";
     public static String CONTACT_EMAIL_ID = "assist@getkitsune.com";
+    public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile", "user_friends", "read_insights", "business_management"};
+    public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = {"publish_actions", "publish_pages", "manage_pages"};
+    public static final String TWITTER_URL = "https://twitter.com/getkitsune";
+    public static final String TWITTER_ID_URL = "twitter://user?screen_name=getkitsune";
+
+    public static final String TWILIO_AUTHY_API_KEY = "";
 
 }

@@ -23,7 +23,7 @@ import io.separ.neural.inputmethod.indic.Constants;
 
 /**
  * A hardware event decoder for a hardware qwerty-ish keyboard.
- * <p>
+ *
  * The events are always hardware keypresses, but they can be key down or key up events, they
  * can be dead keys, they can be meta keys like shift or ctrl... This does not deal with
  * 10-key like keyboards; a different decoder is used for this.

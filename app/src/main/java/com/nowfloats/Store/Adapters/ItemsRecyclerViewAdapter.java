@@ -1,11 +1,10 @@
 package com.nowfloats.Store.Adapters;
 
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowfloats.Store.Model.PurchaseDetail;
 import com.thinksity.R;
@@ -24,7 +23,7 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
     private String mCurrency;
     private boolean mShowDiscount;
 
-    public ItemsRecyclerViewAdapter(List<PurchaseDetail> purchaseItems, String mCurrency, boolean showDiscount) {
+    public ItemsRecyclerViewAdapter(List<PurchaseDetail> purchaseItems, String mCurrency, boolean showDiscount){
         this.mPurchaseItems = purchaseItems;
         this.mCurrency = mCurrency;
         this.mShowDiscount = showDiscount;
@@ -43,21 +42,21 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
         holder.tvQuantity.setText(1 + "");
         holder.tvUnitPrice.setText(mCurrency + " " + NumberFormat.getNumberInstance(Locale.US).format(data.getBasePrice()) + " /-");
         String discountedPrice;
-        if (data.getDiscount() == null) {
+        if(data.getDiscount()==null) {
             holder.tvDiscount.setText("N/A");
             discountedPrice = NumberFormat.getNumberInstance(Locale.US).format(data.getBasePrice());
-        } else {
+        }else {
             holder.tvDiscount.setText(data.getDiscount().value + " %");
-            discountedPrice = String.valueOf(NumberFormat.getNumberInstance(Locale.US).format(Math.round((data.getBasePrice() - (data.getDiscount().value * data.getBasePrice()) / 100.0) * 100) / 100));
+            discountedPrice = String.valueOf(NumberFormat.getNumberInstance(Locale.US).format(Math.round((data.getBasePrice()-(data.getDiscount().value*data.getBasePrice())/100.0) * 100) /100));
         }
 
         holder.tvDiscountedPrice.setText(mCurrency + " " + discountedPrice + " /-");
-        if (mShowDiscount) {
+        if(mShowDiscount){
             holder.tvDiscount.setVisibility(View.VISIBLE);
             holder.tvDiscountedPrice.setVisibility(View.VISIBLE);
             holder.tvTextDiscountedPrice.setVisibility(View.VISIBLE);
             holder.tvTextDiscount.setVisibility(View.VISIBLE);
-        } else {
+        }else {
             holder.tvDiscount.setVisibility(View.GONE);
             holder.tvDiscountedPrice.setVisibility(View.GONE);
             holder.tvTextDiscountedPrice.setVisibility(View.GONE);
@@ -71,7 +70,7 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
         return mPurchaseItems.size();
     }
 
-    public class MyItemsViewHolder extends RecyclerView.ViewHolder {
+    public class MyItemsViewHolder extends RecyclerView.ViewHolder{
         TextView tvPlan, tvQuantity, tvUnitPrice, tvDiscount, tvDiscountedPrice, tvTextDiscountedPrice, tvTextDiscount;
 
         public MyItemsViewHolder(View itemView) {

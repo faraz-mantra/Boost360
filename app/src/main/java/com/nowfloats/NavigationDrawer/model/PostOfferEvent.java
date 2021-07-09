@@ -8,8 +8,7 @@ public class PostOfferEvent {
 
     public boolean success;
     public String result;
-
-    public PostOfferEvent(boolean success, String result) {
+    public PostOfferEvent(boolean success, String result){
         this.success = success;
         this.result = result;
     }

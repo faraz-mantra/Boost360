@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-  <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/app_bar"
-    style="@style/AppBarLayoutStyle">
+    <com.google.android.material.appbar.AppBarLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/app_bar"
+        style="@style/AppBarLayoutStyle" >
 
-    <androidx.appcompat.widget.Toolbar
-      android:id="@+id/toolbar"
-      android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize"
-      app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
-      <!--
-      android:background="?attr/colorPrimary"
-      -->
+            <!--
+            android:background="?attr/colorPrimary"
+            -->
 
-      <TextView
-        android:id="@+id/toolbar_title"
-        style="@style/ToolbarTitleLayoutStyle" />
+            <TextView
+                android:id="@+id/toolbar_title"
+                style="@style/ToolbarTitleLayoutStyle" />
 
-    </androidx.appcompat.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
-    <!--
-    <include layout="@layout/progress_horizontal" />
-    -->
+        <!--
+        <include layout="@layout/progress_horizontal" />
+        -->
 
-  </com.google.android.material.appbar.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
 </layout>

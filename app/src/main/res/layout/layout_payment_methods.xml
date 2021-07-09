@@ -1,113 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_payment_method"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      android:orientation="horizontal">
-
-      <TextView
-        style="@style/ProductLabelTextStyle"
-        android:text="@string/accept_payment_via" />
-
-      <ImageButton
-        android:id="@+id/ib_info_payment_configuration"
-        style="@style/ProductHelpButtonStyle" />
-
-    </LinearLayout>
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="5dp"
-      android:background="@drawable/white_rectangle_background"
-      android:orientation="vertical">
-
-      <TextView
-        android:id="@+id/tv_payment_configuration"
-        style="@style/ProductEditTextStyle"
-        android:layout_width="match_parent"
-        android:background="@drawable/grey_rounded_background"
-        android:clickable="true"
-        android:drawableRight="@drawable/ic_pencil"
-        android:onClick="onPaymentConfigurationClick"
-        android:padding="8dp"
-        android:text="@string/assured_purchase" />
-
-      <TextView
-        android:id="@+id/tv_payment_configuration_message"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_payment_method"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_info_red"
-        android:drawablePadding="5dp"
-        android:padding="16dp"
-        android:text="@string/incomplete_payment_info"
-        android:textColor="@color/secondaryTextColor"
-        android:textSize="13sp"
-        android:visibility="visible" />
-
-      <LinearLayout
-        android:id="@+id/layout_payment_external_purchase_url"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_20"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1"
-          android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
 
-          <TextView
-            style="@style/ProductLabelTextStyle"
-            android:text="@string/external_info_purchase_url" />
+            <TextView
+                style="@style/ProductLabelTextStyle"
+                android:text="@string/accept_payment_via"/>
 
-          <ImageButton style="@style/ProductHelpButtonStyle" />
+            <ImageButton
+                android:id="@+id/ib_info_payment_configuration"
+                style="@style/ProductHelpButtonStyle"/>
 
         </LinearLayout>
 
         <LinearLayout
-          android:id="@+id/layout_unique_payment_input"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/margin_5"
-          android:background="@drawable/white_rectangle_background"
-          android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/white_rectangle_background">
 
-          <EditText
-            android:id="@+id/edit_website"
-            style="@style/ProductEditTextStyle"
-            android:layout_width="120dp"
-            android:background="@null"
-            android:hint="@string/website_name_" />
+                <TextView
+                    android:id="@+id/tv_payment_configuration"
+                    style="@style/ProductEditTextStyle"
+                    android:drawableRight="@drawable/ic_pencil"
+                    android:layout_width="match_parent"
+                    android:padding="8dp"
+                    android:onClick="onPaymentConfigurationClick"
+                    android:clickable="true"
+                    android:background="@drawable/grey_rounded_background"
+                    android:text="@string/assured_purchase" />
 
-          <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/secondaryLightTextColor" />
+                <TextView
+                    android:id="@+id/tv_payment_configuration_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/incomplete_payment_info"
+                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/ic_info_red"
+                    android:textSize="13sp"
+                    android:padding="16dp"
+                    android:visibility="visible"
+                    android:textColor="@color/secondaryTextColor" />
 
-          <EditText
-            android:id="@+id/edit_purchase_url_link"
-            style="@style/ProductEditTextStyle"
-            android:background="@null"
-            android:hint="@string/paste_your_url_here"
-            android:inputType="textUri" />
+                <LinearLayout
+                    android:id="@+id/layout_payment_external_purchase_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_20"
+                    android:visibility="gone"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="@string/external_info_purchase_url"/>
+
+                        <ImageButton
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_unique_payment_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:background="@drawable/white_rectangle_background"
+                        android:orientation="horizontal" >
+
+                        <EditText
+                            android:id="@+id/edit_website"
+                            style="@style/ProductEditTextStyle"
+                            android:hint="@string/website_name_"
+                            android:background="@null"
+                            android:layout_width="120dp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/secondaryLightTextColor"/>
+
+                        <EditText
+                            android:id="@+id/edit_purchase_url_link"
+                            style="@style/ProductEditTextStyle"
+                            android:inputType="textUri"
+                            android:background="@null"
+                            android:hint="@string/paste_your_url_here"  />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
         </LinearLayout>
 
-      </LinearLayout>
-
     </LinearLayout>
-
-  </LinearLayout>
 
 </layout>

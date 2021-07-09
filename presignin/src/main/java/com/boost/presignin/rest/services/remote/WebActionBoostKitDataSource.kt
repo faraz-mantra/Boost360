@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 interface WebActionBoostKitDataSource {
 
-  @Headers("Authorization: 597ee93f5d64370820a6127c", "Accept: application/json")
-  @GET(value = EndPoints.GET_DATA)
-  fun getSelfBrandedKyc(@Query("query") query: String?): Observable<Response<PaymentKycDataResponse>>
+    @Headers("Authorization: 597ee93f5d64370820a6127c", "Accept: application/json")
+    @GET(value = EndPoints.GET_DATA)
+    fun getSelfBrandedKyc(@Query("query") query: String?): Observable<Response<PaymentKycDataResponse>>
 }

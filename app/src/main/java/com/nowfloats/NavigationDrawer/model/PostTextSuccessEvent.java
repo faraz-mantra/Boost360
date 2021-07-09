@@ -5,8 +5,7 @@ package com.nowfloats.NavigationDrawer.model;
  */
 public class PostTextSuccessEvent {
     public boolean status;
-
-    public PostTextSuccessEvent(boolean status) {
+    public PostTextSuccessEvent(boolean status){
         this.status = status;
     }
 }

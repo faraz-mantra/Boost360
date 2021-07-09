@@ -1,50 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:id="@+id/cl_keyboard_theme"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:layout_gravity="center">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:id="@+id/cl_keyboard_theme"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <ImageView
-    android:id="@+id/iv_keyboard_theme"
-    android:layout_width="128dp"
-    android:layout_height="128dp"
-    android:src="@drawable/ic_keyboard_theme_one"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:srcCompat="@drawable/ic_keyboard_theme_one" />
+    <ImageView
+        android:id="@+id/iv_keyboard_theme"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:src="@drawable/ic_keyboard_theme_one"
+        app:srcCompat="@drawable/ic_keyboard_theme_one"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-  <View
-    android:id="@+id/overlay"
-    android:layout_width="128dp"
-    android:layout_height="96dp"
-    android:background="#80000000"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="128dp"
+        android:layout_height="96dp"
+        android:background="#80000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-  <View
-    android:id="@+id/check_mark_background"
-    android:layout_width="24dp"
-    android:layout_height="24dp"
-    android:background="@drawable/round_check_mark_background_primary_color"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:id="@+id/check_mark_background"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/round_check_mark_background_primary_color"/>
 
-  <ImageView
-    android:id="@+id/iv_check_mark"
-    android:layout_width="24dp"
-    android:layout_height="24dp"
-    android:src="@drawable/checkmark_icon"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/iv_check_mark"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/checkmark_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

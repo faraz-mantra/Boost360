@@ -1,7 +1,6 @@
 package com.nowfloats.Analytics_Screen;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -68,16 +67,18 @@ public class SearchRankingActivity extends AppCompatActivity {
     private Sort sortType = Sort.ASCENDING;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_ranking);
 
-        MixPanelController.track(MixPanelController.SEARCH_RANKING_MAIN, null);
+        MixPanelController.track(MixPanelController.SEARCH_RANKING_MAIN,null);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (getSupportActionBar() != null) {
+        if(getSupportActionBar() != null)
+        {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setTitle(getString(R.string.search_ranking));
@@ -105,7 +106,8 @@ public class SearchRankingActivity extends AppCompatActivity {
     }
 
 
-    private void addListener() {
+    private void addListener()
+    {
         ivSort.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -119,27 +121,35 @@ public class SearchRankingActivity extends AppCompatActivity {
     }
 
 
-    private void changeSortIcon() {
+    private void changeSortIcon()
+    {
         ivSort.setImageResource(R.drawable.ic_arrow_drop_up_black_24dp);
 
-        if (sortType.equals(Sort.ASCENDING)) {
+        if(sortType.equals(Sort.ASCENDING))
+        {
             ivSort.setRotation(0);
         }
-        if (sortType.equals(Sort.DESCENDING)) {
+        if(sortType.equals(Sort.DESCENDING))
+        {
             ivSort.setRotation(180);
         }
     }
 
-    private void changeSortOption() {
-        if (sortType.equals(Sort.ASCENDING)) {
+    private void changeSortOption()
+    {
+        if(sortType.equals(Sort.ASCENDING))
+        {
             sortType = Sort.DESCENDING;
-        } else {
+        }
+        else
+        {
             sortType = Sort.ASCENDING;
         }
     }
 
 
-    private void initRecyclerAdapter() {
+    private void initRecyclerAdapter()
+    {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvSearchQuery.setLayoutManager(layoutManager);
         rvSearchQuery.setItemAnimator(new DefaultItemAnimator());
@@ -155,31 +165,37 @@ public class SearchRankingActivity extends AppCompatActivity {
                 int totalItemCount = layoutManager.getItemCount();
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
 
-                if (lastVisibleItem >= totalItemCount - 1 && !stop && !isLoading) {
+                if(lastVisibleItem>=totalItemCount-1 && !stop && !isLoading)
+                {
                     getSearchRanking();
                 }
             }
         });
     }
 
-    private Map<String, Object> getJsonBody(int offset) {
+    private Map<String, Object> getJsonBody(int offset)
+    {
         List<String> list = new ArrayList<>();
         list.add(mSession.getFPID());
 
         Map<String, Object> map = new HashMap<>();
 
-        try {
+        try
+        {
             map.put("WebsiteIds", list);
             map.put("Limit", 50);
             map.put("Offset", offset);
-        } catch (Exception e) {
+        }
+
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
 
         return map;
     }
 
-    private void getSearchRanking() {
+    private void getSearchRanking(){
 
         isLoading = true;
 
@@ -200,13 +216,15 @@ public class SearchRankingActivity extends AppCompatActivity {
 
                 progressBar.setVisibility(View.GONE);
 
-                if (response.getStatus() == 204 && mSearchRankList.isEmpty()) {
+                if(response.getStatus() == 204 && mSearchRankList.isEmpty())
+                {
                     showEmptyMessage();
                     stop = true;
                     return;
                 }
 
-                if (response.getStatus() == 200 && searchQueryModels != null) {
+                if(response.getStatus() == 200 && searchQueryModels != null)
+                {
                     llRankContainer.setVisibility(View.VISIBLE);
 
                     mSearchRankList.addAll(searchQueryModels);
@@ -224,11 +242,12 @@ public class SearchRankingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void failure(RetrofitError error)
+            {
                 isLoading = false;
 
                 progressBar.setVisibility(View.GONE);
-                Methods.showSnackBarNegative(SearchRankingActivity.this, getString(R.string.something_went_wrong_try_again));
+                Methods.showSnackBarNegative(SearchRankingActivity.this,getString(R.string.something_went_wrong_try_again));
             }
         });
     }
@@ -366,19 +385,22 @@ public class SearchRankingActivity extends AppCompatActivity {
     }*/
 
 
-    private void showEmptyMessage() {
+    private void showEmptyMessage()
+    {
         llRankContainer.setVisibility(View.INVISIBLE);
         llEmptyLayout.setVisibility(View.VISIBLE);
     }
 
 
-    private int getPage(int rank) {
-        return ((rank - 1) / 10) + 1;
+    private int getPage(int rank){
+        return ((rank-1)/10)+1;
     }
 
 
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.search_ranking_spinner_menu, menu);
 
         /*MenuItem item = menu.findItem(R.id.spinner);
@@ -408,8 +430,10 @@ public class SearchRankingActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void filter(int position) {
-        if (mSearchRankList.size() == 0) {
+    private void filter(int position)
+    {
+        if(mSearchRankList.size() == 0)
+        {
             Toast.makeText(getApplicationContext(), "No Records Found", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -425,8 +449,10 @@ public class SearchRankingActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case R.id.menu_avg_position:
 
                 filterType = Filter.AVERAGE_POSITION;
@@ -465,40 +491,61 @@ public class SearchRankingActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         super.onBackPressed();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
-    private void applySort() {
-        Collections.sort(mSearchRankList, new Comparator<SearchAnalytics>() {
 
-            public int compare(SearchAnalytics obj1, SearchAnalytics obj2) {
-                if (filterType.equals(Filter.IMPRESSIONS)) {
-                    if (sortType == Sort.ASCENDING) {
+    enum Filter
+    {
+        AVERAGE_POSITION, IMPRESSIONS, CLICKS, CTR
+    }
+
+    enum Sort
+    {
+        ASCENDING, DESCENDING
+    }
+
+    private void applySort()
+    {
+        Collections.sort(mSearchRankList, new Comparator<SearchAnalytics>(){
+
+            public int compare(SearchAnalytics obj1, SearchAnalytics obj2)
+            {
+                if(filterType.equals(Filter.IMPRESSIONS))
+                {
+                    if(sortType == Sort.ASCENDING)
+                    {
                         return Integer.valueOf(obj1.getImpressions()).compareTo(obj2.getImpressions());
                     }
 
                     return Integer.valueOf(obj2.getImpressions()).compareTo(obj1.getImpressions());
                 }
 
-                if (filterType.equals(Filter.CLICKS)) {
-                    if (sortType == Sort.DESCENDING) {
+                if(filterType.equals(Filter.CLICKS))
+                {
+                    if(sortType == Sort.DESCENDING)
+                    {
                         return Integer.valueOf(obj2.getClicks()).compareTo(obj1.getClicks());
                     }
 
                     return Integer.valueOf(obj1.getClicks()).compareTo(obj2.getClicks());
                 }
 
-                if (filterType.equals(Filter.CTR)) {
-                    if (sortType == Sort.DESCENDING) {
+                if(filterType.equals(Filter.CTR))
+                {
+                    if(sortType == Sort.DESCENDING)
+                    {
                         return Double.valueOf(obj2.getCtr()).compareTo(obj1.getCtr());
                     }
 
                     return Double.valueOf(obj1.getCtr()).compareTo(obj2.getCtr());
                 }
 
-                if (sortType == Sort.ASCENDING) {
+                if(sortType == Sort.ASCENDING)
+                {
                     return Integer.valueOf(obj1.getAveragePosition()).compareTo(obj2.getAveragePosition());
                 }
 
@@ -507,13 +554,5 @@ public class SearchRankingActivity extends AppCompatActivity {
         });
 
         mRvAdapter.setData(mSearchRankList);
-    }
-
-    enum Filter {
-        AVERAGE_POSITION, IMPRESSIONS, CLICKS, CTR
-    }
-
-    enum Sort {
-        ASCENDING, DESCENDING
     }
 }

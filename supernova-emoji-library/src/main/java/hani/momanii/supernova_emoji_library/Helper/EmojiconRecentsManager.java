@@ -15,10 +15,8 @@
  */
 
 package hani.momanii.supernova_emoji_library.Helper;
-
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -101,7 +99,8 @@ public class EmojiconRecentsManager extends ArrayList<Emojicon> {
         while (tokenizer.hasMoreTokens()) {
             try {
                 add(new Emojicon(tokenizer.nextToken()));
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 // ignored
             }
         }

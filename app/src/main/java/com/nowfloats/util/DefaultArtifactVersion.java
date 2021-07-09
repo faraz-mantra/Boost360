@@ -1,6 +1,26 @@
 package com.nowfloats.util;
 
 import java.util.NoSuchElementException;
+
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
@@ -24,18 +44,6 @@ public class DefaultArtifactVersion implements ArtifactVersion {
 
     public DefaultArtifactVersion(String version) {
         parseVersion(version);
-    }
-
-    private static Integer getNextIntegerToken(StringTokenizer tok) {
-        try {
-            String s = tok.nextToken();
-            if ((s.length() > 1) && s.startsWith("0")) {
-                throw new NumberFormatException("Number part has a leading 0: '" + s + "'");
-            }
-            return Integer.valueOf(s);
-        } catch (NoSuchElementException e) {
-            throw new NumberFormatException("Number is invalid");
-        }
     }
 
     @Override
@@ -152,6 +160,18 @@ public class DefaultArtifactVersion implements ArtifactVersion {
                 incrementalVersion = null;
                 buildNumber = null;
             }
+        }
+    }
+
+    private static Integer getNextIntegerToken(StringTokenizer tok) {
+        try {
+            String s = tok.nextToken();
+            if ((s.length() > 1) && s.startsWith("0")) {
+                throw new NumberFormatException("Number part has a leading 0: '" + s + "'");
+            }
+            return Integer.valueOf(s);
+        } catch (NoSuchElementException e) {
+            throw new NumberFormatException("Number is invalid");
         }
     }
 

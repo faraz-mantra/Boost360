@@ -21,7 +21,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-
 import androidx.annotation.NonNull;
 
 import com.android.inputmethod.keyboard.PointerTracker;
@@ -39,12 +38,14 @@ import io.separ.neural.inputmethod.indic.R;
  */
 public final class SlidingKeyInputDrawingPreview extends AbstractDrawingPreview {
     private final float mPreviewBodyRadius;
+
+    private boolean mShowsSlidingKeyInputPreview;
     private final int[] mPreviewFrom = CoordinateUtils.newInstance();
     private final int[] mPreviewTo = CoordinateUtils.newInstance();
+
     // TODO: Finalize the rubber band preview implementation.
     private final RoundedLine mRoundedLine = new RoundedLine();
     private final Paint mPaint = new Paint();
-    private boolean mShowsSlidingKeyInputPreview;
 
     public SlidingKeyInputDrawingPreview(final TypedArray mainKeyboardViewAttr) {
         final int previewColor = mainKeyboardViewAttr.getColor(
@@ -52,14 +53,14 @@ public final class SlidingKeyInputDrawingPreview extends AbstractDrawingPreview 
         final float previewRadius = mainKeyboardViewAttr.getDimension(
                 R.styleable.MainKeyboardView_slidingKeyInputPreviewWidth, 0) / 2.0f;
         final int PERCENTAGE_INT = 100;
-        final float previewBodyRatio = (float) mainKeyboardViewAttr.getInt(
+        final float previewBodyRatio = (float)mainKeyboardViewAttr.getInt(
                 R.styleable.MainKeyboardView_slidingKeyInputPreviewBodyRatio, PERCENTAGE_INT)
-                / (float) PERCENTAGE_INT;
+                / (float)PERCENTAGE_INT;
         mPreviewBodyRadius = previewRadius * previewBodyRatio;
         final int previewShadowRatioInt = mainKeyboardViewAttr.getInt(
                 R.styleable.MainKeyboardView_slidingKeyInputPreviewShadowRatio, 0);
         if (previewShadowRatioInt > 0) {
-            final float previewShadowRatio = (float) previewShadowRatioInt / (float) PERCENTAGE_INT;
+            final float previewShadowRatio = (float)previewShadowRatioInt / (float)PERCENTAGE_INT;
             final float shadowRadius = previewRadius * previewShadowRatio;
             mPaint.setShadowLayer(shadowRadius, 0.0f, 0.0f, previewColor);
         }
@@ -78,9 +79,8 @@ public final class SlidingKeyInputDrawingPreview extends AbstractDrawingPreview 
 
     /**
      * Draws the preview
-     *
      * @param context
-     * @param canvas  The canvas where the preview is drawn.
+     * @param canvas The canvas where the preview is drawn.
      */
     @Override
     public void drawPreview(Context context, @NonNull final Canvas canvas) {
@@ -97,7 +97,6 @@ public final class SlidingKeyInputDrawingPreview extends AbstractDrawingPreview 
 
     /**
      * Set the position of the preview.
-     *
      * @param tracker The new location of the preview is based on the points in PointerTracker.
      */
     @Override

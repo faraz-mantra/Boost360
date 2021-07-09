@@ -4,11 +4,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,11 +63,6 @@ import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYP
  */
 
 public class UniqueVisitorsFragment extends Fragment implements View.OnClickListener {
-    public static String pattern = "yyyy/MM/dd";
-    public BatchType batchType;
-    public SiteViewsAnalytics.VisitsType mVisitType;
-    int totalVisits = -1;
-    int year;
     private Context mContext;
     private String dataType;
     private BarChart graph;
@@ -78,55 +71,14 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
     private ProgressBar progressBar;
     private TextView visitsTitle, visitsCount;
     private ArrayList<String> labels = new ArrayList<>(12);
+    public static String pattern = "yyyy/MM/dd";
     private VisitsModel currVisitsModel;
+    int totalVisits = -1;
+    int year;
+    public BatchType batchType;
+    public SiteViewsAnalytics.VisitsType mVisitType;
     private MaterialDialog.Builder materialDialog;
-    private Callback<VisitsModel> visitsModelCallback = new Callback<VisitsModel>() {
-        @Override
-        public void success(VisitsModel visitsModel, Response response) {
 
-            int totalCount = 0;
-            if (visitsModel != null) {
-                for (VisitsModel.UniqueVisitsList data : visitsModel.getUniqueVisitsList()) {
-                    totalCount += data.getDataCount();
-                }
-            }
-            visitsCount.setText(String.valueOf(totalCount));
-            Log.v("visitsModelCallback", "Success: " + totalCount);
-            updateData(visitsModel);
-        }
-
-        @Override
-        public void failure(RetrofitError error) {
-            updateData(null);
-
-            Log.v("visitsModelCallback", "Failure 0");
-        }
-    };
-    private Callback<VisitsModel> totalVisitsCallback = new Callback<VisitsModel>() {
-        @Override
-        public void success(VisitsModel visitsModel, Response response) {
-            /*int totalCount = 0;
-            if (visitsModel != null) {
-                for (VisitsModel.UniqueVisitsList data : visitsModel.getUniqueVisitsList()) {
-                    totalCount += data.getDataCount();
-                }
-            }
-            visitsCount.setText(String.valueOf(totalCount));*/
-        }
-
-        @Override
-        public void failure(RetrofitError error) {
-            visitsCount.setText("0");
-
-            Log.v("visitsModelCallback", "Failure 1");
-        }
-    };
-
-    public static Fragment getInstance(Bundle bundle) {
-        Fragment frag = new UniqueVisitorsFragment();
-        frag.setArguments(bundle);
-        return frag;
-    }
 
     @Override
     public void onClick(View view) {
@@ -153,9 +105,13 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
                 break;
         }
 
-        if (tabType.equals(getString(R.string.Year).toLowerCase())) {
+        if(tabType.equals(getString(R.string.Year).toLowerCase()))
+        {
             title = String.format("%s in %s %s", visitsName, tabType.toLowerCase(), year);
-        } else {
+        }
+
+        else
+        {
             title = String.format("%s in a %s", visitsName, tabType.toLowerCase());
         }
 
@@ -173,6 +129,26 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         materialDialog.title(title);
         materialDialog.content(content);
         materialDialog.show();
+    }
+
+    public enum BatchType {
+        dy(0),
+        ww(1),
+        mm(2),
+        yy(3);
+
+        public int val;
+
+        BatchType(int v) {
+            val = v;
+        }
+
+    }
+
+    public static Fragment getInstance(Bundle bundle) {
+        Fragment frag = new UniqueVisitorsFragment();
+        frag.setArguments(bundle);
+        return frag;
     }
 
     @Override
@@ -235,9 +211,13 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
                 break;
         }
 
-        if (tabType.equals(getString(R.string.Year).toLowerCase())) {
+        if(tabType.equals(getString(R.string.Year).toLowerCase()))
+        {
             visitsTitle.setText(String.format("%s in %s %s", visitsName, tabType.toLowerCase(), year));
-        } else {
+        }
+
+        else
+        {
             visitsTitle.setText(String.format("%s in a %s", visitsName, tabType.toLowerCase()));
         }
 
@@ -382,6 +362,19 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         graph.invalidate();
     }
 
+    public class MyYAxisValueFormatter implements IValueFormatter {
+        private DecimalFormat mFormat;
+
+        public MyYAxisValueFormatter() {
+            mFormat = new DecimalFormat("#########");
+        }
+
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            return mFormat.format(value);
+        }
+    }
+
     public void updateData(VisitsModel visitsModel) {
         if (!isAdded() || isDetached())
             return;
@@ -461,10 +454,61 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         }
     }
 
+    private Callback<VisitsModel> visitsModelCallback = new Callback<VisitsModel>() {
+        @Override
+        public void success(VisitsModel visitsModel, Response response) {
+
+            int totalCount = 0;
+            if (visitsModel != null) {
+                for (VisitsModel.UniqueVisitsList data : visitsModel.getUniqueVisitsList()) {
+                    totalCount += data.getDataCount();
+                }
+            }
+            visitsCount.setText(String.valueOf(totalCount));
+            Log.v("visitsModelCallback", "Success: " + totalCount);
+            updateData(visitsModel);
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            updateData(null);
+
+            Log.v("visitsModelCallback", "Failure 0");
+        }
+    };
+
+    private Callback<VisitsModel> totalVisitsCallback = new Callback<VisitsModel>() {
+        @Override
+        public void success(VisitsModel visitsModel, Response response) {
+            /*int totalCount = 0;
+            if (visitsModel != null) {
+                for (VisitsModel.UniqueVisitsList data : visitsModel.getUniqueVisitsList()) {
+                    totalCount += data.getDataCount();
+                }
+            }
+            visitsCount.setText(String.valueOf(totalCount));*/
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            visitsCount.setText("0");
+
+            Log.v("visitsModelCallback", "Failure 1");
+        }
+    };
+
+    public interface ViewCallback {
+        void onChartBarClicked(HashMap<String, String> map, int val);
+    }
+
+
+
+
     /**
      * CHIRANJIT
      */
-    private void getVisitsData() {
+    private void getVisitsData()
+    {
 
         /*switch (batchType)
         {
@@ -524,9 +568,9 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         /**
          * Create HashMap for query string parameter
          */
-        HashMap<String, String> map = new HashMap<>();
+        HashMap<String,String> map = new HashMap<>();
 
-        map.put("clientId", Constants.clientId);
+        map.put("clientId",Constants.clientId);
         map.put("startDate", startDate /*"2018-12-05"*/);
         map.put("endDate", endDate /*"2019-02-05"*/);
         map.put("batchType", "DAILY");
@@ -543,7 +587,8 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         visitors_interface.getVisitors(array, map, new Callback<List<VisitAnalytics>>() {
 
             @Override
-            public void success(List<VisitAnalytics> visitAnalyticsList, retrofit.client.Response response) {
+            public void success(List<VisitAnalytics> visitAnalyticsList, retrofit.client.Response response)
+            {
                 /**
                  * Store visit count on session
                  */
@@ -559,7 +604,8 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
             }
 
             @Override
-            public void failure(RetrofitError error) {
+            public void failure(RetrofitError error)
+            {
                 Log.d("VisitorsApiInterface", getString(R.string.fail_) + error.getMessage());
             }
         });
@@ -581,18 +627,20 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
         }*/
     }
 
+
     /**
      * Convert local date to UTC date
-     *
      * @param date local date object
      * @return UTC date
      */
-    private Date localToGMT(Date date) {
+    private Date localToGMT(Date date)
+    {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         return new Date(sdf.format(date));
     }
+
 
     public void updateData1(List<VisitAnalytics> visitAnalyticsList) {
         if (!isAdded() || isDetached())
@@ -648,38 +696,5 @@ public class UniqueVisitorsFragment extends Fragment implements View.OnClickList
 //        dataSets = new ArrayList<>();
 //        dataSets.add(barDataSet1);
         return barDataSet1;
-    }
-
-
-    public enum BatchType {
-        dy(0),
-        ww(1),
-        mm(2),
-        yy(3);
-
-        public int val;
-
-        BatchType(int v) {
-            val = v;
-        }
-
-    }
-
-
-    public interface ViewCallback {
-        void onChartBarClicked(HashMap<String, String> map, int val);
-    }
-
-    public class MyYAxisValueFormatter implements IValueFormatter {
-        private DecimalFormat mFormat;
-
-        public MyYAxisValueFormatter() {
-            mFormat = new DecimalFormat("#########");
-        }
-
-        @Override
-        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-            return mFormat.format(value);
-        }
     }
 }

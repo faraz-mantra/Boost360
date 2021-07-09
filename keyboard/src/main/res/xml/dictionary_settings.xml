@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
 **
 ** Copyright 2011, The Android Open Source Project
@@ -17,8 +18,9 @@
 */
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-  android:summary="@string/dictionary_settings_summary"
-  android:title="@string/dictionary_settings_title">
+<PreferenceScreen
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   android:title="@string/dictionary_settings_title"
+   android:summary="@string/dictionary_settings_summary">
 
 </PreferenceScreen>

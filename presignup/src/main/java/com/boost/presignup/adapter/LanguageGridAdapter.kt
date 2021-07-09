@@ -8,35 +8,31 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import com.boost.presignup.R
 
-class LanguageGridAdapter internal constructor(
-  context: Context,
-  private val resource: Int,
-  private val itemList: Array<String>?
-) : ArrayAdapter<LanguageGridAdapter.ItemHolder>(context, resource) {
+class LanguageGridAdapter internal constructor(context: Context, private val resource: Int, private val itemList: Array<String>?) : ArrayAdapter<LanguageGridAdapter.ItemHolder>(context, resource) {
 
-  override fun getCount(): Int {
-    return if (this.itemList != null) this.itemList.size else 0
-  }
-
-  override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-    var convertView = convertView
-
-    val holder: ItemHolder
-    if (convertView == null) {
-      convertView = LayoutInflater.from(context).inflate(resource, null)
-      holder = ItemHolder()
-      holder.button = convertView.findViewById(R.id.lang_select_button)
-      convertView.tag = holder
-    } else {
-      holder = convertView.tag as ItemHolder
+    override fun getCount(): Int {
+        return if (this.itemList != null) this.itemList.size else 0
     }
 
-    holder.button!!.text = this.itemList!![position]
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        var convertView = convertView
 
-    return convertView!!
-  }
+        val holder: ItemHolder
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(resource, null)
+            holder = ItemHolder()
+            holder.button = convertView.findViewById(R.id.lang_select_button)
+            convertView.tag = holder
+        } else {
+            holder = convertView.tag as ItemHolder
+        }
 
-  class ItemHolder {
-    var button: Button? = null
-  }
+        holder.button!!.text = this.itemList!![position]
+
+        return convertView!!
+    }
+
+    class ItemHolder {
+        var button: Button? = null
+    }
 }

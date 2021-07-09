@@ -8,12 +8,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,20 +51,20 @@ import java.util.HashMap;
  */
 
 public class Business_Profile_Fragment_V3 extends Fragment implements View.OnClickListener {
-    private final static int LIGHT_HOUSE_EXPIRED = -1, DEMO = 0, DEMO_EXPIRED = -2;
     @Nullable
     Context mContext;
     UserSessionManager session;
-    boolean isAlreadyCalled;
     private DomainApiService domainApiService;
+    boolean isAlreadyCalled;
     private SharedPreferences pref = null;
+    private final static int LIGHT_HOUSE_EXPIRED =-1,DEMO =0,DEMO_EXPIRED=-2;
     private Bus mBus;
     private ProgressDialog progressDialog;
     private SharedPreferences.Editor prefsEditor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_business_profile_v2, container, false);
+        return inflater.inflate(R.layout.fragment_business_profile_v2,container,false);
     }
 
     @Override
@@ -83,10 +81,10 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (!isAdded()) {
+        if(!isAdded()){
             return;
         }
-        session = new UserSessionManager(mContext, getActivity());
+        session = new UserSessionManager(mContext,getActivity());
         ImageView profileImage = (ImageView) view.findViewById(R.id.img_profile);
         ImageView editImage = (ImageView) view.findViewById(R.id.img_edit);
         TextView description = (TextView) view.findViewById(R.id.tv_business_description);
@@ -104,9 +102,9 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
 
             Picasso.get()
                     .load(Constants.BASE_IMAGE_URL + "" + iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(profileImage);
-        } else if (iconUrl.length() > 0) {
-            Picasso.get()
-                    .load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(profileImage);
+        } else if ( iconUrl.length() > 0) {
+                Picasso.get()
+                        .load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(profileImage);
         }
 
         if (session.getIsSignUpFromFacebook().contains("true") && !Util.isNullOrEmpty(session.getFacebookPageURL())) {
@@ -128,32 +126,32 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
     @Override
     public void onClick(View v) {
         Intent intent = null;
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.cv_business_details:
-                intent = new Intent(mContext, BusinessDetailsActivity.class);
+                intent = new Intent(mContext,BusinessDetailsActivity.class);
                 break;
             case R.id.cv_business_images:
                 break;
             case R.id.cv_site_appearance:
-                intent = new Intent(mContext, SiteAppearanceActivity.class);
+                intent = new Intent(mContext,SiteAppearanceActivity.class);
                 break;
             case R.id.cv_custom_pages:
-                intent = new Intent(mContext, CustomPageActivity.class);
+                intent = new Intent(mContext,CustomPageActivity.class);
                 break;
             case R.id.cv_domain_details:
                 callDomainDetails();
                 break;
             case R.id.cv_pricing_plans:
-                intent = new Intent(mContext, NewPricingPlansActivity.class);
+                intent = new Intent(mContext,NewPricingPlansActivity.class);
                 startActivity(intent);
                 break;
             case R.id.img_edit:
-                intent = new Intent(mContext, Edit_Profile_Activity.class);
+                intent = new Intent(mContext,Edit_Profile_Activity.class);
                 break;
         }
-        if (intent != null) {
+        if(intent != null){
             startActivity(intent);
-            if (mContext instanceof Activity) {
+            if(mContext instanceof Activity) {
                 ((Activity) mContext).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         }
@@ -178,19 +176,18 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
             if (!getActivity().isFinishing()) {
                 builder.show();
             }
-        } else if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("0")) {
+        } else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("0")){
             showExpiryDialog(DEMO);
-        } else if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")) {
+        }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")){
             showExpiryDialog(DEMO_EXPIRED);
         } else if (Utils.isNetworkConnected(getActivity())) {
             showLoader(getString(R.string.please_wait));
-            domainApiService.getDomainDetails(getActivity(), session.getFpTag(), getDomainDetailsParam());
+            domainApiService.getDomainDetails(getActivity(),session.getFpTag(), getDomainDetailsParam());
         } else {
             Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
         }
     }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -212,7 +209,6 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
         offersParam.put("clientId", Constants.clientId);
         return offersParam;
     }
-
     private void showLoader(final String message) {
 
         if (!isAdded()) return;
@@ -241,7 +237,6 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
             }
         });
     }
-
     private void showCustomDialog(String title, String message, String postiveBtn, String negativeBtn,
                                   final DialogFrom dialogFrom) {
 
@@ -301,26 +296,33 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
         TextView tvMessage = (TextView) maView.findViewById(R.id.toast_message_to_contact);
         tvMessage.setText(message);
     }
+    private enum DialogFrom {
+        DOMAIN_AVAILABLE,
+        CONTACTS_AND_EMAIL_REQUIRED,
+        CATEGORY_REQUIRED,
+        ADDRESS_REQUIRED,
+        DEFAULT
+    }
 
     @Subscribe
     public void getDomainDetails(DomainDetails domainDetails) {
 //        domainDetails = null;
         hideLoader();
 
-        if (!isAlreadyCalled) {
-            if (domainDetails == null) {
-                Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
-            } else if (domainDetails.isFailed()) {
+        if(!isAlreadyCalled) {
+            if (domainDetails == null){
+                Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong));
+            } else if(domainDetails.isFailed()){
                 showCustomDialog(getString(R.string.domain_booking_failed),
-                        Methods.fromHtml(TextUtils.isEmpty(domainDetails.getErrorMessage()) ?
-                                getString(R.string.drop_us_contact) : domainDetails.getErrorMessage()).toString(),
+                        Methods.fromHtml(TextUtils.isEmpty(domainDetails.getErrorMessage())?
+                                getString(R.string.drop_us_contact):domainDetails.getErrorMessage()).toString(),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            } else if (domainDetails.isPending()) {
+            }else if(domainDetails.isPending()){
 
                 showCustomDialog(getString(R.string.domain_booking_process),
                         getString(R.string.domain_booking_process_message),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            } else {
+            }else{
                 showDomainDetails();
             }
         }
@@ -381,7 +383,7 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(mContext, NewPricingPlansActivity.class);
+                        Intent intent = new Intent(mContext,NewPricingPlansActivity.class);
                         startActivity(intent);
                         dialog.dismiss();
                     }
@@ -399,13 +401,5 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
 
         roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
         message.setText(Methods.fromHtml(dialogMessage));
-    }
-
-    private enum DialogFrom {
-        DOMAIN_AVAILABLE,
-        CONTACTS_AND_EMAIL_REQUIRED,
-        CATEGORY_REQUIRED,
-        ADDRESS_REQUIRED,
-        DEFAULT
     }
 }

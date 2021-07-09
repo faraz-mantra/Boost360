@@ -39,10 +39,7 @@ class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, 
     super.onActivityResult(requestCode, resultCode, data)
     if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 202) {
       val output = Intent()
-      output.putExtra(
-        IntentConstant.USER_BANK_DETAIL.name,
-        data?.getSerializableExtra(IntentConstant.USER_BANK_DETAIL.name)
-      )
+      output.putExtra(IntentConstant.USER_BANK_DETAIL.name, data?.getSerializableExtra(IntentConstant.USER_BANK_DETAIL.name))
       baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
       baseActivity.finish()
     }
@@ -52,14 +49,7 @@ class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, 
     super.onClick(v)
     when (v) {
       binding?.closeBtn -> baseActivity.onNavPressed()
-      binding?.startBtn -> arguments?.let {
-        startFragmentAccountActivity(
-          FragmentType.BANK_ACCOUNT_DETAILS,
-          it,
-          isResult = true,
-          requestCode = 202
-        )
-      }
+      binding?.startBtn -> arguments?.let { startFragmentAccountActivity(FragmentType.BANK_ACCOUNT_DETAILS, it, isResult = true, requestCode = 202) }
     }
   }
 }

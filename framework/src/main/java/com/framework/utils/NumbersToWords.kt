@@ -5,22 +5,13 @@ object NumbersToWords {
   private const val ZERO = "zero"
 
   private val oneToNine = arrayOf(
-    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
+      "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
   )
   private val tenToNinteen = arrayOf(
-    "ten",
-    "eleven",
-    "twelve",
-    "thirteen",
-    "fourteen",
-    "fifteen",
-    "sixteen",
-    "seventeen",
-    "eighteen",
-    "nineteen"
+      "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"
   )
   private val dozens = arrayOf(
-    "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
+      "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
   )
 
   fun solution(number: Int): String {

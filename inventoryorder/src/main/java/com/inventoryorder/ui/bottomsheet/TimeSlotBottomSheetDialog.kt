@@ -13,8 +13,7 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 
-class TimeSlotBottomSheetDialog :
-  BaseBottomSheetDialog<BottomSheetTimeSlotBinding, BaseViewModel>(), RecyclerItemClickListener {
+class TimeSlotBottomSheetDialog : BaseBottomSheetDialog<BottomSheetTimeSlotBinding, BaseViewModel>(), RecyclerItemClickListener {
 
   private var list = ArrayList<TimeSlotData>()
   private var adapter: AppBaseRecyclerViewAdapter<TimeSlotData>? = null

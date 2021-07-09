@@ -10,26 +10,36 @@ import java.io.File;
 
 public class ImageLoader {
 
-    public static void load(Context context, String url, ImageView imageView) {
-        try {
+    public static void load(Context context, String url, ImageView imageView)
+    {
+        try
+        {
             Glide.with(context)
                     .load(url)
                     .apply(new RequestOptions()
                             .centerCrop())
                     .into(imageView);
-        } catch (Exception e) {
+        }
+
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
 
-    public static void load(Context context, File path, ImageView imageView) {
-        try {
+    public static void load(Context context, File path, ImageView imageView)
+    {
+        try
+        {
             Glide.with(context)
                     .load(path)
                     .apply(new RequestOptions()
                             .centerCrop())
                     .into(imageView);
-        } catch (Exception e) {
+        }
+
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }

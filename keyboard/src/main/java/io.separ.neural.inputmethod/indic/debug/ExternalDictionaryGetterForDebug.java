@@ -98,7 +98,7 @@ public class ExternalDictionaryGetterForDebug {
      * Shows a dialog which offers the user to install the external dictionary.
      */
     public static void askInstallFile(final Context context, final String dirPath,
-                                      final String fileName, final Runnable completeRunnable) {
+            final String fileName, final Runnable completeRunnable) {
         final File file = new File(dirPath, fileName);
         final DictionaryHeader header = DictionaryInfoUtils.getDictionaryFileHeaderOrNull(file);
         final StringBuilder message = new StringBuilder();
@@ -124,27 +124,27 @@ public class ExternalDictionaryGetterForDebug {
                         }
                     }
                 }).setPositiveButton(android.R.string.ok, new OnClickListener() {
-            @Override
-            public void onClick(final DialogInterface dialog, final int which) {
-                installFile(context, file, header);
-                dialog.dismiss();
-                if (completeRunnable != null) {
-                    completeRunnable.run();
-                }
-            }
-        }).setOnCancelListener(new OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                // Canceled by the user by hitting the back key
-                if (completeRunnable != null) {
-                    completeRunnable.run();
-                }
-            }
-        }).create().show();
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        installFile(context, file, header);
+                        dialog.dismiss();
+                        if (completeRunnable != null) {
+                            completeRunnable.run();
+                        }
+                    }
+                }).setOnCancelListener(new OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        // Canceled by the user by hitting the back key
+                        if (completeRunnable != null) {
+                            completeRunnable.run();
+                        }
+                    }
+                }).create().show();
     }
 
     private static void installFile(final Context context, final File file,
-                                    final DictionaryHeader header) {
+            final DictionaryHeader header) {
         BufferedOutputStream outputStream = null;
         File tempFile = null;
         try {

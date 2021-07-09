@@ -1,9 +1,12 @@
 package com.nowfloats.Login;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -19,6 +22,10 @@ public class MobileOtpFragment extends Fragment {
     private OnMobileProvidedListener onMobileProvidedListener;
     private CardView cvNextButton;
     private View mobileOtpBottomView;
+
+    public interface OnMobileProvidedListener {
+        void onMobileProvided(String mobileNumber);
+    }
 
     private MobileOtpFragment() {
     }
@@ -66,9 +73,5 @@ public class MobileOtpFragment extends Fragment {
         etPhoneNumber.requestFocus();
 
         return v;
-    }
-
-    public interface OnMobileProvidedListener {
-        void onMobileProvided(String mobileNumber);
     }
 }

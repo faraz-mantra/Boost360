@@ -1,13 +1,11 @@
 package com.nowfloats.manageinventory;
 
 import android.os.Bundle;
-
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +38,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView tvPositive, tvNegative;
     private Bus mBusEvent;
-    private ShipOrderFragment shipOrderFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +74,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -102,6 +100,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
             }
         }
     }
+
 
     private void confirmOrder() {
         tvPositive.setVisibility(View.VISIBLE);
@@ -155,6 +154,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+    private ShipOrderFragment shipOrderFragment;
 
     private void shipOrder() {
         tvPositive.setVisibility(View.VISIBLE);

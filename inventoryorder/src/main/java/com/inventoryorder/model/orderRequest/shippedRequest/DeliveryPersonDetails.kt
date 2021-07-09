@@ -13,4 +13,4 @@ data class DeliveryPersonDetails(
   var primaryContactNumber: String = "",
   @SerializedName("SecondaryContactNumber")
   var secondaryContactNumber: String = ""
-) : Serializable
+): Serializable

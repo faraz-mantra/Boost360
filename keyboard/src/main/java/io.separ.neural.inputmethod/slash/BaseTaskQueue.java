@@ -17,12 +17,117 @@ import java.util.PriorityQueue;
 
 public abstract class BaseTaskQueue {
     protected final Application application;
+    private Task currentTask;
     protected final Handler executeHandler;
     protected final Handler handler;
-    protected final QueueWrapper<Task> tasks;
-    private Task currentTask;
     private List<QueueListener> listeners;
     private boolean startedCalled;
+    protected final QueueWrapper<Task> tasks;
+
+    protected class QueueHandler extends Handler {
+        static final int INSERT_TASK = 0;
+        static final int POLL_TASK = 1;
+        public static final int POST_EXE = 2;
+        static final int THROW = 3;
+
+        private QueueHandler(Looper looper) {
+            super(looper);
+        }
+
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case INSERT_TASK /*0*/:
+                    BaseTaskQueue.this.insertTask((Task) msg.obj);
+                    break;
+                case POLL_TASK /*1*/:
+                    if (BaseTaskQueue.this.currentTask == null) {
+                        Task task = (Task) BaseTaskQueue.this.tasks.poll();
+                        if (task != null) {
+                            BaseTaskQueue.this.currentTask = task;
+                            if (!BaseTaskQueue.this.startedCalled) {
+                                BaseTaskQueue.this.startedCalled = true;
+                                for (QueueListener listener : BaseTaskQueue.this.listeners) {
+                                    listener.queueStarted(BaseTaskQueue.this);
+                                }
+                            }
+                            for (QueueListener listener2 : BaseTaskQueue.this.listeners) {
+                                listener2.taskStarted(BaseTaskQueue.this, task);
+                            }
+                            BaseTaskQueue.this.runTask(task);
+                            return;
+                        }
+                        BaseTaskQueue.this.callQueueFinished();
+                    }
+                    break;
+                case POST_EXE /*2*/:
+                    Task tempTask = BaseTaskQueue.this.currentTask;
+                    BaseTaskQueue.this.currentTask = null;
+                    BaseTaskQueue.this.finishTask(msg, tempTask);
+                    for (QueueListener listener22 : BaseTaskQueue.this.listeners) {
+                        listener22.taskFinished(BaseTaskQueue.this, tempTask);
+                    }
+                    break;
+                case THROW /*3*/:
+                    Throwable cause = (Throwable) msg.obj;
+                    if (cause instanceof RuntimeException) {
+                        throw ((RuntimeException) cause);
+                    } else if (cause instanceof Error) {
+                        throw ((Error) cause);
+                    } else {
+                        cause.printStackTrace();
+                        throw new RuntimeException(cause);
+                    }
+                default:
+                    BaseTaskQueue.this.otherOperations(msg);
+            }
+        }
+    }
+
+    public interface QueueListener {
+        void queueFinished(BaseTaskQueue baseTaskQueue);
+
+        void queueStarted(BaseTaskQueue baseTaskQueue);
+
+        void taskFinished(BaseTaskQueue baseTaskQueue, Task task);
+
+        void taskStarted(BaseTaskQueue baseTaskQueue, Task task);
+    }
+
+    public interface QueueQuery {
+        void query(BaseTaskQueue baseTaskQueue, Task task);
+    }
+
+    protected interface QueueWrapper<T> {
+        Collection<T> all();
+
+        void offer(T t);
+
+        T poll();
+
+        void remove(T t);
+    }
+
+    public static class TaskQueueState {
+        Task currentTask;
+        List<Task> queued;
+
+        public TaskQueueState(List<Task> queued, Task currentTask) {
+            this.queued = queued;
+            this.currentTask = currentTask;
+        }
+
+        public List<Task> getQueued() {
+            return this.queued;
+        }
+
+        public Task getCurrentTask() {
+            return this.currentTask;
+        }
+    }
+
+    protected abstract void finishTask(Message message, Task task);
+
+    protected abstract void runTask(Task task);
 
     public BaseTaskQueue(Application application, QueueWrapper<Task> queueWrapper) {
         this.listeners = new ArrayList();
@@ -34,10 +139,6 @@ public abstract class BaseTaskQueue {
         ht.start();
         this.executeHandler = new Handler(ht.getLooper());
     }
-
-    protected abstract void finishTask(Message message, Task task);
-
-    protected abstract void runTask(Task task);
 
     public int countTasks() {
         return (this.currentTask == null ? 0 : 1) + this.tasks.all().size();
@@ -93,107 +194,6 @@ public abstract class BaseTaskQueue {
         }
         if (this.currentTask != null) {
             queueQuery.query(this, this.currentTask);
-        }
-    }
-
-    public interface QueueListener {
-        void queueFinished(BaseTaskQueue baseTaskQueue);
-
-        void queueStarted(BaseTaskQueue baseTaskQueue);
-
-        void taskFinished(BaseTaskQueue baseTaskQueue, Task task);
-
-        void taskStarted(BaseTaskQueue baseTaskQueue, Task task);
-    }
-
-    public interface QueueQuery {
-        void query(BaseTaskQueue baseTaskQueue, Task task);
-    }
-
-    protected interface QueueWrapper<T> {
-        Collection<T> all();
-
-        void offer(T t);
-
-        T poll();
-
-        void remove(T t);
-    }
-
-    public static class TaskQueueState {
-        Task currentTask;
-        List<Task> queued;
-
-        public TaskQueueState(List<Task> queued, Task currentTask) {
-            this.queued = queued;
-            this.currentTask = currentTask;
-        }
-
-        public List<Task> getQueued() {
-            return this.queued;
-        }
-
-        public Task getCurrentTask() {
-            return this.currentTask;
-        }
-    }
-
-    protected class QueueHandler extends Handler {
-        public static final int POST_EXE = 2;
-        static final int INSERT_TASK = 0;
-        static final int POLL_TASK = 1;
-        static final int THROW = 3;
-
-        private QueueHandler(Looper looper) {
-            super(looper);
-        }
-
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case INSERT_TASK /*0*/:
-                    BaseTaskQueue.this.insertTask((Task) msg.obj);
-                    break;
-                case POLL_TASK /*1*/:
-                    if (BaseTaskQueue.this.currentTask == null) {
-                        Task task = (Task) BaseTaskQueue.this.tasks.poll();
-                        if (task != null) {
-                            BaseTaskQueue.this.currentTask = task;
-                            if (!BaseTaskQueue.this.startedCalled) {
-                                BaseTaskQueue.this.startedCalled = true;
-                                for (QueueListener listener : BaseTaskQueue.this.listeners) {
-                                    listener.queueStarted(BaseTaskQueue.this);
-                                }
-                            }
-                            for (QueueListener listener2 : BaseTaskQueue.this.listeners) {
-                                listener2.taskStarted(BaseTaskQueue.this, task);
-                            }
-                            BaseTaskQueue.this.runTask(task);
-                            return;
-                        }
-                        BaseTaskQueue.this.callQueueFinished();
-                    }
-                    break;
-                case POST_EXE /*2*/:
-                    Task tempTask = BaseTaskQueue.this.currentTask;
-                    BaseTaskQueue.this.currentTask = null;
-                    BaseTaskQueue.this.finishTask(msg, tempTask);
-                    for (QueueListener listener22 : BaseTaskQueue.this.listeners) {
-                        listener22.taskFinished(BaseTaskQueue.this, tempTask);
-                    }
-                    break;
-                case THROW /*3*/:
-                    Throwable cause = (Throwable) msg.obj;
-                    if (cause instanceof RuntimeException) {
-                        throw ((RuntimeException) cause);
-                    } else if (cause instanceof Error) {
-                        throw ((Error) cause);
-                    } else {
-                        cause.printStackTrace();
-                        throw new RuntimeException(cause);
-                    }
-                default:
-                    BaseTaskQueue.this.otherOperations(msg);
-            }
         }
     }
 }

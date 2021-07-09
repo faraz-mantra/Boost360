@@ -6,6 +6,5 @@ package nfkeyboard.network;
 
 public interface CallBack<T> {
     public void onSuccess(T data);
-
     public void onError(Throwable t);
 }

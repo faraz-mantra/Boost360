@@ -13,7 +13,6 @@ public class roboto_lt_50_505050 extends TextView {
         super(context);
         init(context);
     }
-
     public roboto_lt_50_505050(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -23,9 +22,9 @@ public class roboto_lt_50_505050 extends TextView {
         super(context, attrs, defStyle);
         init(context);
     }
-
-    public void init(Context context) {
-        setCustomFont(context, "Roboto-Medium.ttf");
+    public void init(Context context)
+    {
+        setCustomFont(context,"Roboto-Medium.ttf");
         setTextColor(Color.parseColor("#808080"));
         setTextSize(16);
     }

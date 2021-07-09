@@ -10,7 +10,7 @@ public class BzQueryEvent {
     public ArrayList<Entity_model> StorebizEnterpriseQueries = new ArrayList<Entity_model>();
 
     public BzQueryEvent(ArrayList<Business_Enquiry_Model> StorebizQueries,
-                        ArrayList<Entity_model> StorebizEnterpriseQueries) {
+                        ArrayList<Entity_model> StorebizEnterpriseQueries){
         this.StorebizQueries = StorebizQueries;
         this.StorebizEnterpriseQueries = StorebizEnterpriseQueries;
     }

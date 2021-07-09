@@ -22,7 +22,7 @@ import io.separ.neural.inputmethod.annotations.UsedForTesting;
 
 /**
  * A string with a probability.
- * <p>
+ *
  * This represents an "attribute", that is either a bigram or a shortcut.
  */
 public final class WeightedString {
@@ -49,14 +49,14 @@ public final class WeightedString {
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(new Object[]{mWord, mProbabilityInfo});
+        return Arrays.hashCode(new Object[] { mWord, mProbabilityInfo});
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == this) return true;
         if (!(o instanceof WeightedString)) return false;
-        final WeightedString w = (WeightedString) o;
+        final WeightedString w = (WeightedString)o;
         return mWord.equals(w.mWord) && mProbabilityInfo.equals(w.mProbabilityInfo);
     }
 }

@@ -2,9 +2,7 @@ package com.nowfloats.CustomWidget;
 
 
 import android.os.Bundle;
-
 import androidx.fragment.app.DialogFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +21,13 @@ import com.thinksity.R;
  */
 public class DateRangePickerFragment extends DialogFragment implements View.OnClickListener {
 
-    boolean is24HourMode;
     private OnDateRangeSelectedListener onDateRangeSelectedListener;
+
     private TabHost tabHost;
     private DatePicker startDatePicker;
     private DatePicker endDatePicker;
     private Button butSetDateRange;
+    boolean is24HourMode;
 
     public DateRangePickerFragment() {
         // Required empty public constructor

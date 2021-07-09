@@ -8,8 +8,7 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class ServiceDeliveryBottomSheet :
-  BaseBottomSheetDialog<BottomSheetServiceDeliveryBinding, BaseViewModel>() {
+class ServiceDeliveryBottomSheet : BaseBottomSheetDialog<BottomSheetServiceDeliveryBinding, BaseViewModel>() {
 
   private var pickUpDataAddress: ArrayList<PickUpData>? = null
   private var pickUpData: PickUpData? = null
@@ -22,8 +21,7 @@ class ServiceDeliveryBottomSheet :
 
   fun setList(pickUpDataAddress: ArrayList<PickUpData>?, addressId: String?) {
     this.pickUpDataAddress = pickUpDataAddress
-    if (addressId.isNullOrEmpty().not()) pickUpData =
-      this.pickUpDataAddress?.firstOrNull { addressId == it.id }
+    if (addressId.isNullOrEmpty().not()) pickUpData = this.pickUpDataAddress?.firstOrNull { addressId == it.id }
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
@@ -62,16 +60,13 @@ class ServiceDeliveryBottomSheet :
   private fun openDialogPicker() {
     if (this.pickUpDataAddress.isNullOrEmpty().not()) {
       val singleItems = this.pickUpDataAddress?.map { it.streetAddress }?.toTypedArray()
-      MaterialAlertDialogBuilder(baseActivity).setTitle("Select one")
-        .setPositiveButton("Ok") { d, _ ->
-          if (selectPosition == -1) return@setPositiveButton
-          pickUpData = this.pickUpDataAddress?.firstOrNull {
-            it.streetAddress == singleItems?.get(selectPosition)
-          }
-          binding?.txtAddress?.text = pickUpData?.streetAddress ?: ""
-          binding?.rbMyBusinessLocation?.isChecked = true
-          d.dismiss()
-        }.setNeutralButton("Cancel") { d, _ ->
+      MaterialAlertDialogBuilder(baseActivity).setTitle("Select one").setPositiveButton("Ok") { d, _ ->
+        if (selectPosition == -1) return@setPositiveButton
+        pickUpData = this.pickUpDataAddress?.firstOrNull { it.streetAddress == singleItems?.get(selectPosition) }
+        binding?.txtAddress?.text = pickUpData?.streetAddress ?: ""
+        binding?.rbMyBusinessLocation?.isChecked = true
+        d.dismiss()
+      }.setNeutralButton("Cancel") { d, _ ->
         d.dismiss()
       }.setSingleChoiceItems(singleItems, selectPosition) { _, pos ->
         selectPosition = pos

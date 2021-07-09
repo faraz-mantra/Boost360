@@ -19,174 +19,172 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public final class PostFbInBackgroundAsyncTask extends AsyncTask<Void, String, String> {
+public final class PostFbInBackgroundAsyncTask extends AsyncTask<Void,String, String> {
 
+	
+	private Activity appContext 	= null;
+	ProgressDialog pd 				= null;
+	String Username 				= null, Password = null;
+	private SharedPreferences pref 	= null;
+	String responseMessage			= "";
+	Boolean success 				= false;
+	String clientIdConcatedWithQoutes = "\"" + Constants.clientId +"\"";
+	int size = 0;
+	SharedPreferences.Editor prefsEditor;
+	String mesgUrl = null;
+	
+	String shareText = "";
+	public PostFbInBackgroundAsyncTask(Activity context ,String shareText,String url ) {									
+		this.appContext = context;
+		this.shareText  = shareText;
+		this.mesgUrl = url;
+	}
+	public PostFbInBackgroundAsyncTask(Activity context ) {									
+		this.appContext = context;
+	}
+	@Override
+	protected void onPreExecute() {
+		
+	}
+	
+	@Override
+	protected void onPostExecute(String result) {
+		
+			
+	}
 
-    ProgressDialog pd = null;
-    String Username = null, Password = null;
-    String responseMessage = "";
-    Boolean success = false;
-    String clientIdConcatedWithQoutes = "\"" + Constants.clientId + "\"";
-    int size = 0;
-    SharedPreferences.Editor prefsEditor;
-    String mesgUrl = null;
-    String shareText = "";
-    private Activity appContext = null;
-    private SharedPreferences pref = null;
+	@Override
+	protected String doInBackground(Void... params) {
+		String response = "";
+		 String data = "";
+		 mesgUrl = Util.shortUrl(mesgUrl);
+		 shareText = shareText+System.getProperty("line.separator")+mesgUrl;
+		 if(Constants.fbShareEnabled){
+			 try {
+				 data = "access_token=" + URLEncoder.encode(Constants.FACEBOOK_USER_ACCESS_ID, "UTF-8") +	"&message=" + URLEncoder.encode(shareText, "UTF-8");
+			 } catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			 }
+			 response = getDataFromServer(data, Constants.HTTP_POST, "https://graph.facebook.com/"+ Constants.FACEBOOK_USER_ID+"/feed", "application/x-www-form-urlencoded");
+		 }
+		if (Constants.fbPageShareEnabled) {
+			int size = 0;
+			if (Constants.FbPageList != null)
+				size = Constants.FbPageList.length();
+			if (size > 0) {
+				for (int i = 0; i < size ; i++) {
+					String key = "", id = "";
+					try {
+						
+						try {
+							key = (String) ((JSONObject) Constants.FbPageList
+									.get(i)).get("access_token");
+							id = (String) ((JSONObject) Constants.FbPageList
+									.get(i)).get("id");
+						} catch (JSONException e) {
 
-    public PostFbInBackgroundAsyncTask(Activity context, String shareText, String url) {
-        this.appContext = context;
-        this.shareText = shareText;
-        this.mesgUrl = url;
-    }
+						}
+						data = "access_token="
+								+ URLEncoder.encode(key, "UTF-8") + "&message="
+								+ URLEncoder.encode(shareText, "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+					if (!Util.isNullOrEmpty(key) && !Util.isNullOrEmpty(id)) {
+						response = getDataFromServer(data, Constants.HTTP_POST,
+								"https://graph.facebook.com/" + id + "/feed",
+								"application/x-www-form-urlencoded");
+					}
+				}
+			}
+	}
+	return response ;
+	}
+	
+	public static String getDataFromServer(String content,
+			String requestMethod, String serverUrl, String contentType) {
+		String response = "", responseMessage = "";
+		Boolean success = false;
+		DataOutputStream outputStream = null;
+		try {
 
-    public PostFbInBackgroundAsyncTask(Activity context) {
-        this.appContext = context;
-    }
+			URL new_url = new URL(serverUrl);
+			HttpURLConnection connection = (HttpURLConnection) new_url
+					.openConnection();
 
-    public static String getDataFromServer(String content,
-                                           String requestMethod, String serverUrl, String contentType) {
-        String response = "", responseMessage = "";
-        Boolean success = false;
-        DataOutputStream outputStream = null;
-        try {
+			// Allow Inputs & Outputs
+			connection.setDoInput(true);
+			connection.setDoOutput(true);
+			connection.setUseCaches(true);
+			// Enable PUT method
+			connection.setRequestMethod(requestMethod);
+			connection.setRequestProperty("Connection", "Keep-Alive");
 
-            URL new_url = new URL(serverUrl);
-            HttpURLConnection connection = (HttpURLConnection) new_url
-                    .openConnection();
+			connection.setRequestProperty("Content-Type", contentType);
+			 connection.setRequestProperty("Content-Length", "" + Integer.toString(content.getBytes().length));
+		      connection.setRequestProperty("Content-Language", "en-US");  
+			outputStream = new DataOutputStream(connection.getOutputStream());
 
-            // Allow Inputs & Outputs
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.setUseCaches(true);
-            // Enable PUT method
-            connection.setRequestMethod(requestMethod);
-            connection.setRequestProperty("Connection", "Keep-Alive");
+			byte[] BytesToBeSent = content.getBytes();
+			if (BytesToBeSent != null) {
+				outputStream.write(BytesToBeSent, 0, BytesToBeSent.length);
+			}
+			int responseCode = connection.getResponseCode();
 
-            connection.setRequestProperty("Content-Type", contentType);
-            connection.setRequestProperty("Content-Length", "" + Integer.toString(content.getBytes().length));
-            connection.setRequestProperty("Content-Language", "en-US");
-            outputStream = new DataOutputStream(connection.getOutputStream());
+			responseMessage = connection.getResponseMessage();
 
-            byte[] BytesToBeSent = content.getBytes();
-            if (BytesToBeSent != null) {
-                outputStream.write(BytesToBeSent, 0, BytesToBeSent.length);
-            }
-            int responseCode = connection.getResponseCode();
+			if (responseCode == 200 || responseCode == 202) {
+				success = true;
 
-            responseMessage = connection.getResponseMessage();
+			}
 
-            if (responseCode == 200 || responseCode == 202) {
-                success = true;
+			InputStreamReader inputStreamReader = null;
+			BufferedReader bufferedReader = null;
+			try {
+				inputStreamReader = new InputStreamReader(
+						connection.getInputStream());
+				bufferedReader = new BufferedReader(inputStreamReader);
 
-            }
+				StringBuilder responseContent = new StringBuilder();
 
-            InputStreamReader inputStreamReader = null;
-            BufferedReader bufferedReader = null;
-            try {
-                inputStreamReader = new InputStreamReader(
-                        connection.getInputStream());
-                bufferedReader = new BufferedReader(inputStreamReader);
+				String temp = null;
 
-                StringBuilder responseContent = new StringBuilder();
+				boolean isFirst = true;
 
-                String temp = null;
+				while ((temp = bufferedReader.readLine()) != null) {
+					if (!isFirst)
+						responseContent.append(Constants.NEW_LINE);
+					responseContent.append(temp);
+					isFirst = false;
+				}
 
-                boolean isFirst = true;
+				response = responseContent.toString();
 
-                while ((temp = bufferedReader.readLine()) != null) {
-                    if (!isFirst)
-                        responseContent.append(Constants.NEW_LINE);
-                    responseContent.append(temp);
-                    isFirst = false;
-                }
+			} catch (Exception e) {
+			} finally {
+				try {
+					inputStreamReader.close();
+				} catch (Exception e) {
+				}
+				try {
+					bufferedReader.close();
+				} catch (Exception e) {
+				}
 
-                response = responseContent.toString();
+			}
 
-            } catch (Exception e) {
-            } finally {
-                try {
-                    inputStreamReader.close();
-                } catch (Exception e) {
-                }
-                try {
-                    bufferedReader.close();
-                } catch (Exception e) {
-                }
+		} catch (Exception ex) {
+			success = false;
+		} finally {
+			try {
+				outputStream.flush();
+				outputStream.close();
+			} catch (Exception e) {
+			}
+		}
 
-            }
-
-        } catch (Exception ex) {
-            success = false;
-        } finally {
-            try {
-                outputStream.flush();
-                outputStream.close();
-            } catch (Exception e) {
-            }
-        }
-
-        return response;
-    }
-
-    @Override
-    protected void onPreExecute() {
-
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-
-
-    }
-
-    @Override
-    protected String doInBackground(Void... params) {
-        String response = "";
-        String data = "";
-        mesgUrl = Util.shortUrl(mesgUrl);
-        shareText = shareText + System.getProperty("line.separator") + mesgUrl;
-        if (Constants.fbShareEnabled) {
-            try {
-                data = "access_token=" + URLEncoder.encode(Constants.FACEBOOK_USER_ACCESS_ID, "UTF-8") + "&message=" + URLEncoder.encode(shareText, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            response = getDataFromServer(data, Constants.HTTP_POST, "https://graph.facebook.com/" + Constants.FACEBOOK_USER_ID + "/feed", "application/x-www-form-urlencoded");
-        }
-        if (Constants.fbPageShareEnabled) {
-            int size = 0;
-            if (Constants.FbPageList != null)
-                size = Constants.FbPageList.length();
-            if (size > 0) {
-                for (int i = 0; i < size; i++) {
-                    String key = "", id = "";
-                    try {
-
-                        try {
-                            key = (String) ((JSONObject) Constants.FbPageList
-                                    .get(i)).get("access_token");
-                            id = (String) ((JSONObject) Constants.FbPageList
-                                    .get(i)).get("id");
-                        } catch (JSONException e) {
-
-                        }
-                        data = "access_token="
-                                + URLEncoder.encode(key, "UTF-8") + "&message="
-                                + URLEncoder.encode(shareText, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                    if (!Util.isNullOrEmpty(key) && !Util.isNullOrEmpty(id)) {
-                        response = getDataFromServer(data, Constants.HTTP_POST,
-                                "https://graph.facebook.com/" + id + "/feed",
-                                "application/x-www-form-urlencoded");
-                    }
-                }
-            }
-        }
-        return response;
-    }
-
-
+		return response;
+	}
+	
+	
 }

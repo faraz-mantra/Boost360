@@ -7,12 +7,10 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
-
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -34,21 +32,29 @@ import com.thinksity.R;
 
 public class ExpandableCardView extends LinearLayout {
 
-    public static final int DEFAULT_ANIM_DURATION = 350;
-    private final static int COLLAPSING = 0;
-    private final static int EXPANDING = 1;
     private String title, message;
+
     private View innerView;
     private ViewGroup containerView;
+
     private ImageButton arrowBtn;
     private ImageView headerIcon;
     private TextView textViewTitle, tvMsg;
+
     private TypedArray typedArray;
     private int innerViewRes, textColor, backgroundColor;
     private Drawable iconDrawable;
+
     private CardView card;
+
     private Space space;
+
+    public static final int DEFAULT_ANIM_DURATION = 350;
     private long animDuration = DEFAULT_ANIM_DURATION;
+
+    private final static int COLLAPSING = 0;
+    private final static int EXPANDING = 1;
+
     private boolean isExpanded = false;
     private boolean isExpanding = false;
     private boolean isCollapsing = false;
@@ -68,12 +74,10 @@ public class ExpandableCardView extends LinearLayout {
             else expand();
         }
     };
-    private boolean isInitCollapse = false;
 
     public ExpandableCardView(Context context) {
         super(context);
     }
-
 
     public ExpandableCardView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -82,22 +86,12 @@ public class ExpandableCardView extends LinearLayout {
         initView(context);
     }
 
+
     public ExpandableCardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         initAttributes(context, attrs);
         initView(context);
-    }
-
-    public static float convertPixelsToDp(float px, Context context) {
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        float dp = px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-        return dp;
-    }
-
-    public static float convertDpToPixels(Context context, float dp) {
-        return dp * context.getResources().getDisplayMetrics().density;
     }
 
     private void initView(Context context) {
@@ -123,6 +117,8 @@ public class ExpandableCardView extends LinearLayout {
         });
 
     }
+
+    private boolean isInitCollapse = false;
 
     public void setInitCollapse(boolean isInitCollapse) {
         this.isInitCollapse = isInitCollapse;
@@ -343,6 +339,7 @@ public class ExpandableCardView extends LinearLayout {
         innerView = stub.inflate();
     }
 
+
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
         if (arrowBtn != null) arrowBtn.setOnClickListener(l);
@@ -356,6 +353,17 @@ public class ExpandableCardView extends LinearLayout {
 
     public void setAnimDuration(long animDuration) {
         this.animDuration = animDuration;
+    }
+
+    public static float convertPixelsToDp(float px, Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp;
+    }
+
+    public static float convertDpToPixels(Context context, float dp) {
+        return dp * context.getResources().getDisplayMetrics().density;
     }
 
     public void setMaxHeight(int maxHeight) {

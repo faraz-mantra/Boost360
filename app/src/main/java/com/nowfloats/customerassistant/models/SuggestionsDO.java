@@ -7,7 +7,7 @@ import java.util.List;
  * Created by NowFloats on 4/28/2017.
  */
 
-public class SuggestionsDO implements Serializable, Cloneable {
+public class SuggestionsDO implements Serializable,Cloneable{
 
     public String Action;
     public long date;
@@ -25,10 +25,6 @@ public class SuggestionsDO implements Serializable, Cloneable {
     public long expiryDate;
     public int status = -1;
     public boolean isEmptyLayout;
-    public boolean isShareEnabled = false;
-    public boolean isExpandGroup = false;
-    public List<SugProducts> products = null;
-    public List<SugUpdates> updates = null;
 
     public String getLogoUrl() {
         return logoUrl;
@@ -69,6 +65,11 @@ public class SuggestionsDO implements Serializable, Cloneable {
     public void setExpiryTimeOfMessage(String expiryTimeOfMessage) {
         this.expiryTimeOfMessage = expiryTimeOfMessage;
     }
+
+    public boolean isShareEnabled = false;
+    public boolean isExpandGroup = false;
+    public List<SugProducts> products = null;
+    public List<SugUpdates> updates = null;
 
     public long getExpiryDate() {
         return expiryDate;

@@ -16,11 +16,11 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 data class ChannelModel(
-  var moreDesc: String? = null,
-  var priority: String? = null,
-  var type: String? = null,
-  var isSelected: Boolean? = false,
-  var status: String? = ProcessApiSyncModel.SyncStatus.PROCESSING.name,
+    var moreDesc: String? = null,
+    var priority: String? = null,
+    var type: String? = null,
+    var isSelected: Boolean? = false,
+    var status: String? = ProcessApiSyncModel.SyncStatus.PROCESSING.name,
 ) : AppBaseRecyclerViewItem, Parcelable {
 
   var websiteUrl: String? = ""
@@ -32,12 +32,11 @@ data class ChannelModel(
   var recyclerViewType = RecyclerViewItemType.CHANNEL_ITEM.getLayout()
 
   constructor(parcel: Parcel) : this(
-    parcel.readString(),
-    parcel.readString(),
-    parcel.readString(),
-    parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-    parcel.readString()
-  ) {
+      parcel.readString(),
+      parcel.readString(),
+      parcel.readString(),
+      parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+      parcel.readString()) {
     recyclerViewType = parcel.readInt()
   }
 
@@ -160,41 +159,13 @@ fun ChannelModel.getAccessTokenType(): String {
 fun ChannelModel.getDrawable(context: Context?): Drawable? {
   if (context == null) return null
   return when (getType()) {
-    ChannelType.G_SEARCH -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_website,
-      context.theme
-    )
-    ChannelType.FB_PAGE -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_facebook_page_n,
-      context.theme
-    )
-    ChannelType.G_MAPS -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_google_maps_n,
-      context.theme
-    )
-    ChannelType.FB_SHOP -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_facebook_shop_n,
-      context.theme
-    )
-    ChannelType.WAB -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_whatsapp_business_n,
-      context.theme
-    )
-    ChannelType.T_FEED -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_twitter_n,
-      context.theme
-    )
-    ChannelType.G_BUSINESS -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_google_maps_n,
-      context.theme
-    )
+    ChannelType.G_SEARCH -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_website, context.theme)
+    ChannelType.FB_PAGE -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_facebook_page_n, context.theme)
+    ChannelType.G_MAPS -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_google_maps_n, context.theme)
+    ChannelType.FB_SHOP -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_facebook_shop_n, context.theme)
+    ChannelType.WAB -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_whatsapp_business_n, context.theme)
+    ChannelType.T_FEED -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_twitter_n, context.theme)
+    ChannelType.G_BUSINESS -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_google_maps_n, context.theme)
     else -> null
   }
 }
@@ -202,41 +173,13 @@ fun ChannelModel.getDrawable(context: Context?): Drawable? {
 fun ChannelModel.getDrawableActiveNew(context: Context?): Drawable? {
   if (context == null) return null
   return when (getType()) {
-    ChannelType.G_SEARCH -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_website_active,
-      context.theme
-    )
-    ChannelType.FB_PAGE -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_facebook_page_active,
-      context.theme
-    )
-    ChannelType.G_MAPS -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_google_maps_active,
-      context.theme
-    )
-    ChannelType.FB_SHOP -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_facebook_shop_active,
-      context.theme
-    )
-    ChannelType.WAB -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_whatsapp_business_active,
-      context.theme
-    )
-    ChannelType.T_FEED -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_twitter_active,
-      context.theme
-    )
-    ChannelType.G_BUSINESS -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_google_maps_active,
-      context.theme
-    )
+    ChannelType.G_SEARCH -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_website_active, context.theme)
+    ChannelType.FB_PAGE -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_facebook_page_active, context.theme)
+    ChannelType.G_MAPS -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_google_maps_active, context.theme)
+    ChannelType.FB_SHOP -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_facebook_shop_active, context.theme)
+    ChannelType.WAB -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_whatsapp_business_active, context.theme)
+    ChannelType.T_FEED -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_twitter_active, context.theme)
+    ChannelType.G_BUSINESS -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_google_maps_active, context.theme)
     else -> null
   }
 }
@@ -244,41 +187,13 @@ fun ChannelModel.getDrawableActiveNew(context: Context?): Drawable? {
 fun ChannelModel.getDrawableInActiveNew(context: Context?): Drawable? {
   if (context == null) return null
   return when (getType()) {
-    ChannelType.G_SEARCH -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_website_inactive,
-      context.theme
-    )
-    ChannelType.FB_PAGE -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_facebook_page_inactive,
-      context.theme
-    )
-    ChannelType.G_MAPS -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_google_maps_inactive,
-      context.theme
-    )
-    ChannelType.FB_SHOP -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_facebook_shop_inactive,
-      context.theme
-    )
-    ChannelType.WAB -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_whatsapp_business_inactive,
-      context.theme
-    )
-    ChannelType.T_FEED -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_twitter_inactive,
-      context.theme
-    )
-    ChannelType.G_BUSINESS -> ResourcesCompat.getDrawable(
-      context.resources,
-      R.drawable.ic_google_maps_inactive,
-      context.theme
-    )
+    ChannelType.G_SEARCH -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_website_inactive, context.theme)
+    ChannelType.FB_PAGE -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_facebook_page_inactive, context.theme)
+    ChannelType.G_MAPS -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_google_maps_inactive, context.theme)
+    ChannelType.FB_SHOP -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_facebook_shop_inactive, context.theme)
+    ChannelType.WAB -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_whatsapp_business_inactive, context.theme)
+    ChannelType.T_FEED -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_twitter_inactive, context.theme)
+    ChannelType.G_BUSINESS -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_google_maps_inactive, context.theme)
     else -> null
   }
 }

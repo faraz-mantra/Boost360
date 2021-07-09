@@ -23,67 +23,66 @@ import io.reactivex.disposables.CompositeDisposable
 
 class BatchesViewModel(private val service: IEducationService) : BaseViewModel() {
 
-  private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-  val upcomingBatchResponse: LiveData<UpcomingBatchesResponse>
-    get() = _upcomingBatchResponse
-  private var _upcomingBatchResponse = MutableLiveData<UpcomingBatchesResponse>()
+    val upcomingBatchResponse: LiveData<UpcomingBatchesResponse>
+        get() = _upcomingBatchResponse
+    private var _upcomingBatchResponse = MutableLiveData<UpcomingBatchesResponse>()
 
-  val errorResponse: LiveData<String>
-    get() = _errorResponse
+    val errorResponse: LiveData<String>
+        get() = _errorResponse
 
-  private var _errorResponse = MutableLiveData<String>()
+    private var _errorResponse = MutableLiveData<String>()
 
-  val deleteBatchResponse: LiveData<String>
-    get() = _deleteBatchResponse
+    val deleteBatchResponse: LiveData<String>
+        get() = _deleteBatchResponse
 
-  private var _deleteBatchResponse = MutableLiveData<String>()
+    private var _deleteBatchResponse = MutableLiveData<String>()
 
-  fun getUpcomingBatches() {
-    val value = "{WebsiteId:'" + WEBSITE_ID_EDUCATION + "'}";
-    compositeDisposable.add(service.getUpcomingBatches(AUTH_CODE, value, LIMIT, SKIP)
-      .processRequest(
-        {
-          _upcomingBatchResponse.value = it
-        },
-        { error ->
-          error.let { _errorResponse.value = it }
-        }
-      ))
-  }
+    fun getUpcomingBatches() {
+        val value = "{WebsiteId:'"+WEBSITE_ID_EDUCATION+"'}";
+        compositeDisposable.add(service.getUpcomingBatches(AUTH_CODE, value, LIMIT, SKIP)
+                .processRequest(
+                        {
+                            _upcomingBatchResponse.value = it
+                        },
+                        { error ->
+                            error.let { _errorResponse.value = it }
+                        }
+                ))
+    }
 
-  fun deleteUpcomingBatch(batchesData: Data) {
-    /*val customQuery = "{" + '"' + "_id" + '"' + ":" + '"' + batchesData._id + '"' + "}"
-    val customSet = "{" + '"' + "$" + "set" + '"' + " : {\"IsArchived\":\"true\"}}"*/
+    fun deleteUpcomingBatch(batchesData: Data) {
+        /*val customQuery = "{" + '"' + "_id" + '"' + ":" + '"' + batchesData._id + '"' + "}"
+        val customSet = "{" + '"' + "$" + "set" + '"' + " : {\"IsArchived\":\"true\"}}"*/
 
-    val query = Query(_id = batchesData._id)
-    val queryString = JsonHelper.KtToJson(query)
+        val query = Query(_id = batchesData._id)
+        val queryString = JsonHelper.KtToJson(query)
 
-    val set = Set(true)
-    val updatedValue = UpdatedValue(`$set` = set)
-    val updateValueString = JsonHelper.KtToJson(updatedValue)
+        val set = Set(true)
+        val updatedValue = UpdatedValue(`$set` = set)
+        val updateValueString = JsonHelper.KtToJson(updatedValue)
 
-    val deleteBatchModel =
-      DeleteModel(Multi = true, Query = queryString, UpdateValue = updateValueString)
+        val deleteBatchModel = DeleteModel(Multi = true, Query = queryString, UpdateValue = updateValueString)
 
-    compositeDisposable.add(service.deleteUpcomingBatch(AUTH_CODE, deleteBatchModel)
-      .processRequest(
-        {
-          _deleteBatchResponse.value = SUCCESS
-        },
-        { error ->
-          error?.let {
-            if (it == JSON_DOCUMENT_WAS_NOT_FULLY_CONSUMED) {
-              _deleteBatchResponse.value = SUCCESS
-            } else {
-              _errorResponse.value = it
-            }
-          }
-        }
-      ))
-  }
+        compositeDisposable.add(service.deleteUpcomingBatch(AUTH_CODE, deleteBatchModel)
+                .processRequest(
+                        {
+                            _deleteBatchResponse.value = SUCCESS
+                        },
+                        { error ->
+                            error?.let {
+                                if (it == JSON_DOCUMENT_WAS_NOT_FULLY_CONSUMED) {
+                                    _deleteBatchResponse.value = SUCCESS
+                                } else {
+                                    _errorResponse.value = it
+                                }
+                            }
+                        }
+                ))
+    }
 
-  fun setDeleteBatchesLiveDataValue(s: String) {
-    _deleteBatchResponse.value = s
-  }
+    fun setDeleteBatchesLiveDataValue(s: String) {
+        _deleteBatchResponse.value = s
+    }
 }

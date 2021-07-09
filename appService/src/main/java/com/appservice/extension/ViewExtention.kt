@@ -30,8 +30,7 @@ fun CustomTextField.afterTextChanged(afterTextChanged: (String) -> Unit) {
   })
 }
 
-fun String.capitalizeWords(): String =
-  split(" ").joinToString(" ") { it.toLowerCase().capitalize() }
+fun String.capitalizeWords(): String = split(" ").joinToString(" ") { it.toLowerCase().capitalize() }
 
 fun getScreenWidth(): Int {
   return Resources.getSystem().displayMetrics.widthPixels

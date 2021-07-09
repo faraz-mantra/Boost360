@@ -1,71 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="#E6E7E9"
-  android:orientation="vertical"
-  tools:context="com.nowfloats.manageinventory.OrderDetailsActivity">
-
-  <androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="@color/primary"
-    app:theme="@style/CustomToolbarTheme">
-
-  </androidx.appcompat.widget.Toolbar>
-
-
-  <FrameLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="1">
+    android:background="#E6E7E9"
+    android:orientation="vertical"
+    tools:context="com.nowfloats.manageinventory.OrderDetailsActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/rv_order_details"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        app:theme="@style/CustomToolbarTheme">
 
-    </androidx.recyclerview.widget.RecyclerView>
+    </androidx.appcompat.widget.Toolbar>
 
-    <ProgressBar
-      android:id="@+id/pb_order_details"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center" />
-  </FrameLayout>
 
-  <TextView
-    android:id="@+id/tvPositive"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_10"
-    android:background="#4BB543"
-    android:gravity="center"
-    android:padding="@dimen/margin_8"
-    android:textAllCaps="true"
-    android:textColor="@color/white"
-    android:textSize="15sp"
-    android:textStyle="bold"
-    android:visibility="gone" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-  <TextView
-    android:id="@+id/tvNegative"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/margin_10"
-    android:layout_marginTop="@dimen/margin_8"
-    android:layout_marginEnd="@dimen/margin_10"
-    android:layout_marginBottom="@dimen/margin_10"
-    android:background="@drawable/order_cancel_btn_bg"
-    android:gravity="center"
-    android:padding="@dimen/margin_8"
-    android:textAllCaps="true"
-    android:textColor="@color/white"
-    android:textSize="15sp"
-    android:textStyle="bold"
-    android:visibility="gone" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_order_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <ProgressBar
+            android:id="@+id/pb_order_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvPositive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_10"
+        android:background="#4BB543"
+        android:gravity="center"
+        android:padding="@dimen/margin_8"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvNegative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_8"
+        android:background="@drawable/order_cancel_btn_bg"
+        android:gravity="center"
+        android:padding="@dimen/margin_8"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
 </LinearLayout>

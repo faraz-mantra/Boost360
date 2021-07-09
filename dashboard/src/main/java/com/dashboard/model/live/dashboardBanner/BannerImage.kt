@@ -23,4 +23,4 @@ data class BannerImage(
   var url: String? = null,
 //  @SerializedName("websiteid")
 //  var websiteid: String? = null
-) : Serializable
+):Serializable

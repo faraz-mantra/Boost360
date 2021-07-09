@@ -26,24 +26,26 @@ import io.separ.neural.inputmethod.indic.settings.SettingsValues;
 
 /**
  * This class gathers audio feedback and haptic feedback functions.
- * <p>
+ *
  * It offers a consistent and simple interface that allows LatinIME to forget about the
  * complexity of settings and the like.
  */
 public final class AudioAndHapticFeedbackManager {
-    private static final AudioAndHapticFeedbackManager sInstance =
-            new AudioAndHapticFeedbackManager();
     private AudioManager mAudioManager;
     private Vibrator mVibrator;
+
     private SettingsValues mSettingsValues;
     private boolean mSoundOn;
 
-    private AudioAndHapticFeedbackManager() {
-        // Intentional empty constructor for singleton.
-    }
+    private static final AudioAndHapticFeedbackManager sInstance =
+            new AudioAndHapticFeedbackManager();
 
     public static AudioAndHapticFeedbackManager getInstance() {
         return sInstance;
+    }
+
+    private AudioAndHapticFeedbackManager() {
+        // Intentional empty constructor for singleton.
     }
 
     public static void init(final Context context) {
@@ -56,7 +58,7 @@ public final class AudioAndHapticFeedbackManager {
     }
 
     public void performHapticAndAudioFeedback(final int code,
-                                              final View viewToPerformHapticFeedbackOn) {
+            final View viewToPerformHapticFeedbackOn) {
         performHapticFeedback(viewToPerformHapticFeedbackOn);
         performAudioFeedback(code);
     }
@@ -86,18 +88,18 @@ public final class AudioAndHapticFeedbackManager {
         }
         final int sound;
         switch (code) {
-            case Constants.CODE_DELETE:
-                sound = AudioManager.FX_KEYPRESS_DELETE;
-                break;
-            case Constants.CODE_ENTER:
-                sound = AudioManager.FX_KEYPRESS_RETURN;
-                break;
-            case Constants.CODE_SPACE:
-                sound = AudioManager.FX_KEYPRESS_SPACEBAR;
-                break;
-            default:
-                sound = AudioManager.FX_KEYPRESS_STANDARD;
-                break;
+        case Constants.CODE_DELETE:
+            sound = AudioManager.FX_KEYPRESS_DELETE;
+            break;
+        case Constants.CODE_ENTER:
+            sound = AudioManager.FX_KEYPRESS_RETURN;
+            break;
+        case Constants.CODE_SPACE:
+            sound = AudioManager.FX_KEYPRESS_SPACEBAR;
+            break;
+        default:
+            sound = AudioManager.FX_KEYPRESS_STANDARD;
+            break;
         }
         mAudioManager.playSoundEffect(sound, mSettingsValues.mKeypressSoundVolume);
     }

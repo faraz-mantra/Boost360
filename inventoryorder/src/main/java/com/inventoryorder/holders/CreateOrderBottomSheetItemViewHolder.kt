@@ -16,24 +16,19 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.squareup.picasso.Picasso
 
-class CreateOrderBottomSheetItemViewHolder(binding: BottomSheetOrderOptionBinding) :
-  AppBaseRecyclerViewHolder<BottomSheetOrderOptionBinding>(binding) {
+class CreateOrderBottomSheetItemViewHolder(binding: BottomSheetOrderOptionBinding) : AppBaseRecyclerViewHolder<BottomSheetOrderOptionBinding>(binding) {
 
-  override fun bind(position: Int, item: BaseRecyclerViewItem) {
-    super.bind(position, item)
-    val data = (item as? BottomSheetOptionsItem) ?: return
+    override fun bind(position: Int, item: BaseRecyclerViewItem) {
+        super.bind(position, item)
+        val data = (item as? BottomSheetOptionsItem) ?: return
 
-    binding?.optionTitle?.text = data?.title
-    binding?.optionDesc?.text = data?.description
-    binding?.radioBtn?.isChecked = data?.isChecked
-    binding?.linearLayout?.setOnClickListener {
-      listener?.onItemClick(
-        adapterPosition,
-        data,
-        RecyclerViewActionType.ORDER_OPTION_SELECTED.ordinal
-      )
+        binding?.optionTitle?.text = data?.title
+        binding?.optionDesc?.text = data?.description
+        binding?.radioBtn?.isChecked = data?.isChecked
+        binding?.linearLayout?.setOnClickListener {
+            listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.ORDER_OPTION_SELECTED.ordinal)
+        }
+        /*binding?.radioBtn?.setOnCheckedChangeListener { p0, p1 ->
+        }*/
     }
-    /*binding?.radioBtn?.setOnCheckedChangeListener { p0, p1 ->
-    }*/
-  }
 }

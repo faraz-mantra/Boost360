@@ -10,11 +10,6 @@ import nfkeyboard.adapter.BaseAdapterManager;
  */
 
 public class AllSuggestionModel {
-    public String price;
-    public String description;
-    public String discount;
-    public String brandName;
-    public String category;
     private String text;
     private String imageUrl;
     private String id;
@@ -22,42 +17,6 @@ public class AllSuggestionModel {
     private String name;
     private String businessName;
     private String phoneNumber;
-    private String secondaryPhoneNumber;
-    private String city, region, country, zipcode;
-    private String website;
-    private String email;
-    private String address;
-    private String location;
-    private int availableUnits;
-    private String currencyCode;
-    private String fpTag;
-    private String linkExpiryDateTime;
-    private int maxUsage;
-    private String p_id;
-    private float amount;
-    private int quantity;
-    private String clientId;
-    private String imageUri;
-    private boolean selected;
-    private BaseAdapterManager.SectionTypeEnum typeEnum = BaseAdapterManager.SectionTypeEnum.Text;
-    public AllSuggestionModel(String text, String imageUrl) {
-        this.text = text;
-        this.imageUrl = imageUrl;
-        if (!TextUtils.isEmpty(imageUrl)) {
-            typeEnum = BaseAdapterManager.SectionTypeEnum.ImageAndText;
-        }
-    }
-    public AllSuggestionModel(String imageUri) {
-        this.imageUri = imageUri;
-        typeEnum = BaseAdapterManager.SectionTypeEnum.ImageShare;
-
-    }
-    public AllSuggestionModel(String name, String businessName, String website) {
-        this.name = name;
-        this.businessName = businessName;
-        this.website = website;
-        typeEnum = BaseAdapterManager.SectionTypeEnum.DetailsShare;
-    }
 
     public String getSecondaryPhoneNumber() {
         return secondaryPhoneNumber;
@@ -98,6 +57,24 @@ public class AllSuggestionModel {
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
+
+    private String secondaryPhoneNumber;
+    private String city, region, country, zipcode;
+    private String website;
+    private String email;
+    private String address;
+    private String location;
+    private int availableUnits;
+    private String currencyCode;
+    private String fpTag;
+    private String linkExpiryDateTime;
+    private int maxUsage;
+    private String p_id;
+    private float amount;
+    private int quantity;
+    private String clientId;
+    private String imageUri;
+    private boolean selected;
 
     public String getName() {
         return name;
@@ -176,6 +153,30 @@ public class AllSuggestionModel {
         this.imageUri = imageUri;
     }
 
+    private BaseAdapterManager.SectionTypeEnum typeEnum = BaseAdapterManager.SectionTypeEnum.Text;
+
+
+    public AllSuggestionModel(String text, String imageUrl) {
+        this.text = text;
+        this.imageUrl = imageUrl;
+        if (!TextUtils.isEmpty(imageUrl)) {
+            typeEnum = BaseAdapterManager.SectionTypeEnum.ImageAndText;
+        }
+    }
+
+    public AllSuggestionModel(String imageUri) {
+        this.imageUri = imageUri;
+        typeEnum = BaseAdapterManager.SectionTypeEnum.ImageShare;
+
+    }
+
+    public AllSuggestionModel(String name, String businessName, String website) {
+        this.name = name;
+        this.businessName = businessName;
+        this.website = website;
+        typeEnum = BaseAdapterManager.SectionTypeEnum.DetailsShare;
+    }
+
     public String getClientId() {
         return clientId;
     }
@@ -248,12 +249,29 @@ public class AllSuggestionModel {
         this.id = id;
     }
 
+    public void setTypeEnum(BaseAdapterManager.SectionTypeEnum type) {
+        typeEnum = type;
+    }
+
     public String getText() {
         return text;
     }
 
+    public String price;
+    public String description;
+    public String discount;
+    public String brandName;
+    public String category;
+
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        if (!TextUtils.isEmpty(imageUrl)) {
+            typeEnum = BaseAdapterManager.SectionTypeEnum.ImageAndText;
+        }
+        this.imageUrl = imageUrl;
     }
 
     public String getPrice() {
@@ -284,27 +302,16 @@ public class AllSuggestionModel {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        if (!TextUtils.isEmpty(imageUrl)) {
-            typeEnum = BaseAdapterManager.SectionTypeEnum.ImageAndText;
-        }
-        this.imageUrl = imageUrl;
+    public void setAvailableUnits(int availableUnits) {
+        this.availableUnits = availableUnits;
     }
 
     public int getAvailableUnits() {
         return availableUnits;
     }
 
-    public void setAvailableUnits(int availableUnits) {
-        this.availableUnits = availableUnits;
-    }
-
     public BaseAdapterManager.SectionTypeEnum getTypeEnum() {
         return typeEnum;
-    }
-
-    public void setTypeEnum(BaseAdapterManager.SectionTypeEnum type) {
-        typeEnum = type;
     }
 
     public String getCurrencyCode() {

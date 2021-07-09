@@ -29,16 +29,16 @@ import java.util.List;
  * Helper class to easy up manipulation of dictionary pack metadata.
  */
 public class MetadataHandler {
+    @SuppressWarnings("unused")
+    private static final String TAG = "DictionaryProvider:" + MetadataHandler.class.getSimpleName();
+
     // The canonical file name for metadata. This is not the name of a real file on the
     // device, but a symbolic name used in the database and in metadata handling. It is never
     // tested against, only used for human-readability as the file name for the metadata.
     public final static String METADATA_FILENAME = "metadata.json";
-    @SuppressWarnings("unused")
-    private static final String TAG = "DictionaryProvider:" + MetadataHandler.class.getSimpleName();
 
     /**
      * Reads the data from the cursor and store it in metadata objects.
-     *
      * @param results the cursor to read data from.
      * @return the constructed list of wordlist metadata.
      */
@@ -82,13 +82,12 @@ public class MetadataHandler {
 
     /**
      * Gets the whole metadata, for installed and not installed dictionaries.
-     *
-     * @param context  The context to open files over.
+     * @param context The context to open files over.
      * @param clientId the client id for retrieving the database. null for default (deprecated)
      * @return The current metadata.
      */
     public static List<WordListMetadata> getCurrentMetadata(final Context context,
-                                                            final String clientId) {
+            final String clientId) {
         // If clientId is null, we get a cursor on the default database (see
         // MetadataDbHelper#getInstance() for more on this)
         final Cursor results = MetadataDbHelper.queryCurrentMetadata(context, clientId);
@@ -104,10 +103,9 @@ public class MetadataHandler {
 
     /**
      * Read metadata from a stream.
-     *
      * @param input The stream to read from.
      * @return The read metadata.
-     * @throws IOException        if the input stream cannot be read
+     * @throws IOException if the input stream cannot be read
      * @throws BadFormatException if the stream is not in a known format
      */
     public static List<WordListMetadata> readMetadata(final InputStreamReader input)
@@ -117,7 +115,7 @@ public class MetadataHandler {
 
     /**
      * Finds a single WordListMetadata inside a whole metadata chunk.
-     * <p>
+     *
      * Searches through the whole passed metadata for the first WordListMetadata associated
      * with the passed ID. If several metadata chunks with the same id are found, it will
      * always return the one with the bigger FormatVersion that is less or equal than the
@@ -126,11 +124,11 @@ public class MetadataHandler {
      * even if it is the only word list with this ID.
      *
      * @param metadata the metadata to search into.
-     * @param id       the word list ID of the metadata to find.
+     * @param id the word list ID of the metadata to find.
      * @return the associated metadata, or null if not found.
      */
     public static WordListMetadata findWordListById(final List<WordListMetadata> metadata,
-                                                    final String id) {
+            final String id) {
         WordListMetadata bestWordList = null;
         int bestFormatVersion = Integer.MIN_VALUE; // To be sure we can't be inadvertently smaller
         for (WordListMetadata wordList : metadata) {

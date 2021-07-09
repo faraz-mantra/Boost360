@@ -3,12 +3,10 @@ package com.android.inputmethod.keyboard.top.services;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.AttributeSet;
 import android.util.TypedValue;
 
@@ -32,6 +30,16 @@ public class ResultsRecyclerView extends RecyclerView {
     private String mPreviousAuthorizedStatus;
     private String mPreviousSlash;
     private ArrayList<RSearchItem> mSearchResults;
+
+    class C04573 implements Runnable {
+        C04573() {
+        }
+
+        public void run() {
+            ResultsRecyclerView.this.mAdapter.setPageLoadingListener(null);
+            //TaskQueue.loadQueueDefault(NeuralApplication.getInstance()).execute(new PhotosSearchItemsTask(ResultsRecyclerView.this.mCurrentSlash, "", ResultsRecyclerView.this.mAdapter.getItemCount()));
+        }
+    }
 
     public ResultsRecyclerView(Context context) {
         super(context);
@@ -62,12 +70,6 @@ public class ResultsRecyclerView extends RecyclerView {
         init();
     }
 
-    public static void openPreview(Context context, String url) {
-        Intent intent = new Intent("android.intent.action.VIEW").setData(Uri.parse(url));
-        intent.addFlags(268435456);
-        context.startActivity(intent);
-    }
-
     private void init() {
         this.mAdapter = new SearchItemArrayAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), 0, false);
@@ -77,20 +79,20 @@ public class ResultsRecyclerView extends RecyclerView {
         setAdapter(this.mAdapter);
     }
 
-    public String getCurrentSlash() {
-        return this.mCurrentSlash;
-    }
-
     public void setCurrentSlash(String mCurrentSlash) {
         this.mCurrentSlash = mCurrentSlash;
     }
 
-    public String getPreviousSlash() {
-        return this.mPreviousSlash;
-    }
-
     public void setPreviousSlash(String mPreviousSlash) {
         this.mPreviousSlash = mPreviousSlash;
+    }
+
+    public String getCurrentSlash() {
+        return this.mCurrentSlash;
+    }
+
+    public String getPreviousSlash() {
+        return this.mPreviousSlash;
     }
 
     public boolean serviceChanged() {
@@ -235,6 +237,12 @@ public class ResultsRecyclerView extends RecyclerView {
         return (SearchItemArrayAdapter) super.getAdapter();
     }
 
+    public static void openPreview(Context context, String url) {
+        Intent intent = new Intent("android.intent.action.VIEW").setData(Uri.parse(url));
+        intent.addFlags(268435456);
+        context.startActivity(intent);
+    }
+
     public void setAuthorizedStatusListener(Runnable listener) {
         //this.mAuthorizedListener = listener;
     }
@@ -244,15 +252,5 @@ public class ResultsRecyclerView extends RecyclerView {
             this.mPreviousAuthorizedStatus = this.mCurrentService.getAuthorizedStatus();
             this.mCurrentService.addChangeListener(this.mServiceListener);
         }*/
-    }
-
-    class C04573 implements Runnable {
-        C04573() {
-        }
-
-        public void run() {
-            ResultsRecyclerView.this.mAdapter.setPageLoadingListener(null);
-            //TaskQueue.loadQueueDefault(NeuralApplication.getInstance()).execute(new PhotosSearchItemsTask(ResultsRecyclerView.this.mCurrentSlash, "", ResultsRecyclerView.this.mAdapter.getItemCount()));
-        }
     }
 }

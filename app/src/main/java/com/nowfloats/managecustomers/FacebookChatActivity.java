@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -55,7 +53,7 @@ import retrofit.client.Response;
 
 public class FacebookChatActivity extends AppCompatActivity implements View.OnClickListener, FacebookLoginFragment.OpenNextScreen {
 
-    private static final int NO_MESSAGES = 0, CONNECT_TO_PAGE = 1;
+    private static final int NO_MESSAGES = 0,CONNECT_TO_PAGE = 1;
     private RecyclerView chatUserRecyclerView;
     private List<FacebookChatUsersModel.Datum> chatModelList = new ArrayList<>();
     private FacebookChatAdapter adapter;
@@ -74,10 +72,9 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_facebook_chat);
         init();
     }
-
-    private void init() {
+    private void init(){
         bus = BusProvider.getInstance().getBus();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.facebook_toolbar);
+        Toolbar toolbar  = (Toolbar) findViewById(R.id.facebook_toolbar);
         findViewById(R.id.img_chat_user).setVisibility(View.GONE);
         findViewById(R.id.img_back).setOnClickListener(this);
         listSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.sfl_list);
@@ -88,15 +85,15 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
                 getChatData();
             }
         });
-        sessionManager = new UserSessionManager(this, this);
-        frameLayout = (FrameLayout) findViewById(R.id.fragment_layout);
+        sessionManager = new UserSessionManager(this,this);
+        frameLayout  = (FrameLayout) findViewById(R.id.fragment_layout);
         chatLayout = (LinearLayout) findViewById(R.id.chat_user_layout);
         title = (TextView) findViewById(R.id.tv_chat_user);
-        Typeface robotoMedium = Typeface.createFromAsset(getAssets(), "Roboto-Medium.ttf");
+        Typeface robotoMedium= Typeface.createFromAsset(getAssets(), "Roboto-Medium.ttf");
         title.setTypeface(robotoMedium);
         findViewById(R.id.facebook_icon).setVisibility(View.VISIBLE);
         description = (TextView) findViewById(R.id.tv_chat_user_description);
-        Typeface face = Typeface.createFromAsset(getAssets(), "Roboto-LightItalic.ttf");
+        Typeface face= Typeface.createFromAsset(getAssets(), "Roboto-LightItalic.ttf");
         description.setTypeface(face);
         setSupportActionBar(toolbar);
 
@@ -108,8 +105,8 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         chatUserRecyclerView = (RecyclerView) findViewById(R.id.rv_facebook_chat);
         chatUserRecyclerView.setHasFixedSize(true);
         chatUserRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new FacebookChatAdapter(this, chatModelList);
-        chatUserRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        adapter = new FacebookChatAdapter(this,chatModelList);
+        chatUserRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         chatUserRecyclerView.setAdapter(adapter);
         checkNfxConnection();
     }
@@ -118,19 +115,17 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         showProgress();
         Get_FP_Details_Service.newNfxTokenDetails(this, sessionManager.getFPID(), bus);
     }
-
     @Subscribe
-    public void nfxCallback(NfxGetTokensResponse response) {
+    public void nfxCallback(NfxGetTokensResponse response){
         SharedPreferences pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
 
-        if (pref.getInt("facebookChatStatus", 0) == 1) {
+        if(pref.getInt("facebookChatStatus",0) == 1) {
             getChatData();
-        } else {
+        }else{
             showEmptyMessages(CONNECT_TO_PAGE);
             hideProgress();
         }
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -143,9 +138,9 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         bus.unregister(this);
     }
 
-    private void showEmptyMessages(int i) {
+    private void showEmptyMessages(int i){
         title.setText("My Facebook Chats");
-        switch (i) {
+        switch(i){
             case NO_MESSAGES:
                 chatLayout.setVisibility(View.VISIBLE);
                 FacebookChatUsersModel.Datum data = new FacebookChatUsersModel.Datum();
@@ -159,27 +154,26 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
                 chatLayout.setVisibility(View.GONE);
                 FragmentManager manager = getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                Fragment frag = null;
+                Fragment frag=null;
                 frag = manager.findFragmentByTag("FacebookLoginFragment");
-                if (frag == null)
+                if(frag == null)
                     frag = FacebookLoginFragment.getInstance(0);
 
-                transaction.replace(R.id.fragment_layout, frag, "FacebookLoginFragment").commit();
+                transaction.replace(R.id.fragment_layout,frag,"FacebookLoginFragment").commit();
                 break;
         }
     }
-
-    private void getChatData() {
-        if (TextUtils.isEmpty(sessionManager.getFacebookPage())) {
+    private void getChatData(){
+        if(TextUtils.isEmpty(sessionManager.getFacebookPage())){
             showEmptyMessages(CONNECT_TO_PAGE);
             hideProgress();
             return;
-        } else {
+        }else{
             description.setVisibility(View.VISIBLE);
-            description.setText(Methods.fromHtml("On page: <b>" + sessionManager.getFacebookPage() + "</b>"));
+            description.setText(Methods.fromHtml("On page: <b>"+sessionManager.getFacebookPage()+"</b>"));
         }
 
-        if (chatModelList.size() > 0) {
+        if(chatModelList.size()>0) {
             chatModelList.clear();
             adapter.notifyDataSetChanged();
         }
@@ -192,14 +186,15 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
                 frameLayout.setVisibility(View.GONE);
                 chatLayout.setVisibility(View.VISIBLE);
 
-                if (listSwipeLayout.isRefreshing()) {
+                if(listSwipeLayout.isRefreshing()) {
                     listSwipeLayout.setRefreshing(false);
                 }
-                if (facebookChatUsersModel == null || (response.getStatus() < 200 && response.getStatus() >= 300)) {
-                    Methods.showSnackBarNegative(FacebookChatActivity.this, getString(R.string.something_went_wrong_try_again));
+                if(facebookChatUsersModel == null || (response.getStatus() < 200 && response.getStatus()>=300)){
+                    Methods.showSnackBarNegative(FacebookChatActivity.this,getString(R.string.something_went_wrong_try_again));
                     showEmptyMessages(NO_MESSAGES);
                     return;
-                } else {
+                }else
+                {
 
                     List<FacebookChatUsersModel.Datum> data = facebookChatUsersModel.getData();
                     if (data != null) {
@@ -215,7 +210,7 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
                                     return object2.getTimestamp().compareTo(object1.getTimestamp());
                                 }
                             });
-                            title.setText("Facebook Chats (" + chatModelList.size() + ")");
+                            title.setText("Facebook Chats ("+chatModelList.size()+")");
                             adapter.notifyDataSetChanged();
                         } else {
                             showEmptyMessages(NO_MESSAGES);
@@ -230,10 +225,10 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void failure(RetrofitError error) {
                 hideProgress();
-                if (listSwipeLayout.isRefreshing()) {
+                if(listSwipeLayout.isRefreshing()) {
                     listSwipeLayout.setRefreshing(false);
                 }
-                Methods.showSnackBarNegative(FacebookChatActivity.this, getString(R.string.something_went_wrong_try_again));
+                Methods.showSnackBarNegative(FacebookChatActivity.this,getString(R.string.something_went_wrong_try_again));
                 showEmptyMessages(NO_MESSAGES);
             }
         });
@@ -241,7 +236,7 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
+        switch (requestCode){
             case 221:
                 getChatData();
                 break;
@@ -252,13 +247,12 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-    private void showProgress() {
-        if (!isFinishing() && !progressDialog.isShowing() && !listSwipeLayout.isRefreshing())
+    private void showProgress(){
+        if(!isFinishing() && !progressDialog.isShowing() && !listSwipeLayout.isRefreshing())
             progressDialog.show();
     }
-
-    private void hideProgress() {
-        if (!isFinishing() && progressDialog.isShowing() && !listSwipeLayout.isRefreshing()) {
+    private void hideProgress(){
+        if(!isFinishing() && progressDialog.isShowing() && !listSwipeLayout.isRefreshing()){
             progressDialog.dismiss();
         }
     }
@@ -271,7 +265,7 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.img_back:
                 onBackPressed();
                 break;

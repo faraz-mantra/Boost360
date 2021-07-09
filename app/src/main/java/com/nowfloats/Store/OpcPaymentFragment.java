@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -67,20 +66,21 @@ import static com.framework.webengageconstant.EventValueKt.CLICKED;
 
 public class OpcPaymentFragment extends Fragment implements View.OnClickListener {
 
+    private Context mContext;
+    private EditText opcEditText;
+//    private OrderDataModel mOrderData;
+    private UserSessionManager mSessionManager;
+    ArrayList<ReceiveDraftInvoiceModel.KeyValuePair> mOpcDetails;
     private final int DIRECT_REQUEST_CODE = 2013;
     private final int OPC_REQUEST_CODE = 2;
     private final int PADDLE_REQUEST_CODE = 3;
-    ArrayList<ReceiveDraftInvoiceModel.KeyValuePair> mOpcDetails;
+    private String mInvoiceId;
+    private List<PackageDetails> mPurchasePlans;
     TextView tvNetTotal, tvTaxes,
             tvAmountToBePaid, tvTdsAmount, btnPayNow, btnOpcApply;
     RecyclerView rvItems;
+
     TableRow trTanNo, trTdsAmount;
-    private Context mContext;
-    private EditText opcEditText;
-    //    private OrderDataModel mOrderData;
-    private UserSessionManager mSessionManager;
-    private String mInvoiceId;
-    private List<PackageDetails> mPurchasePlans;
 
     public static Fragment getInstance(Bundle b) {
         Fragment frag = new OpcPaymentFragment();
@@ -312,13 +312,13 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
         if (keyVal.getValue() != null) {
             new AlertDialog.Builder(mContext)
                     .setMessage(getString(R.string.please_note_that_your_package_will_be_activated_on) + keyVal.getValue() + getString(R.string.are_you_sure_want_to_proceed))
-                    .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getString( R.string.yes), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             initiatePaymentProcess(i, mInvoiceId);
                         }
                     })
-                    .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getString( R.string.no), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();

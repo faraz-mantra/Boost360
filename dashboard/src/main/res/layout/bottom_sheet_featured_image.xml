@@ -11,10 +11,10 @@
       android:layout_width="@dimen/size_40"
       android:layout_height="@dimen/size_40"
       android:layout_gravity="center_horizontal"
-      android:src="@drawable/ic_cross_grey_circle"
       app:layout_constraintBottom_toTopOf="@+id/linearLayoutCompat3"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
+      app:layout_constraintStart_toStartOf="parent"
+      android:src="@drawable/ic_cross_grey_circle" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/linearLayoutCompat3"

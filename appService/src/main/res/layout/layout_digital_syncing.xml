@@ -1,186 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  tools:showIn="@layout/fragment_product_information">
+<merge xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:showIn="@layout/fragment_product_information">
 
-
-  <com.framework.views.customViews.CustomTextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/size_36"
-    android:drawablePadding="@dimen/size_4"
-    android:drawableTint="@color/orange"
-    android:includeFontPadding="false"
-    android:text="Digital channels syncing"
-    android:textColor="@color/black_4a4a4a"
-    app:drawableEndCompat="@drawable/ic_question_circular_blue"
-    app:fontFamily="@font/semi_bold"
-    app:textType="BODY_3" />
-
-  <com.framework.views.customViews.CustomTextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:includeFontPadding="false"
-    android:text="Select the channels where you want to sync this product"
-    android:textColor="@color/warm_grey"
-    android:textSize="12sp"
-    android:visibility="gone"
-    app:fontFamily="@font/regular" />
-
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/size_10"
-    android:background="@drawable/shape_grey_stroke_rect_bkg"
-    android:paddingStart="@dimen/size_10"
-    android:paddingTop="@dimen/size_8"
-    android:paddingRight="@dimen/size_10"
-    android:paddingBottom="@dimen/size_8"
-    android:visibility="gone">
 
     <com.framework.views.customViews.CustomTextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:drawablePadding="@dimen/size_10"
-      android:includeFontPadding="false"
-      android:text="JioLocal"
-      android:textColor="@color/warm_grey"
-      android:textSize="14sp"
-      app:drawableLeftCompat="@drawable/ic_jio"
-      app:fontFamily="@font/regular"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
-
-    <com.framework.views.customViews.CustomCheckBox
-      android:id="@+id/cbJioLocal"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:theme="@style/ActiveTheme"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
-  </androidx.constraintlayout.widget.ConstraintLayout>
-
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/size_10"
-    android:background="@drawable/shape_grey_stroke_rect_bkg"
-    android:paddingStart="@dimen/size_10"
-    android:paddingTop="@dimen/size_8"
-    android:paddingRight="@dimen/size_10"
-    android:paddingBottom="@dimen/size_8">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_36"
+        android:drawablePadding="@dimen/size_4"
+        android:drawableTint="@color/orange"
+        android:includeFontPadding="false"
+        android:text="Digital channels syncing"
+        android:textColor="@color/black_4a4a4a"
+        app:drawableEndCompat="@drawable/ic_question_circular_blue"
+        app:fontFamily="@font/semi_bold"
+        app:textType="BODY_3" />
 
     <com.framework.views.customViews.CustomTextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:drawablePadding="@dimen/size_10"
-      android:includeFontPadding="false"
-      android:text="Facebook Page Shop"
-      android:textColor="@color/warm_grey"
-      android:textSize="14sp"
-      app:drawableLeftCompat="@drawable/ic_facebook_flag"
-      app:fontFamily="@font/regular"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
-
-    <com.framework.views.customViews.CustomCheckBox
-      android:id="@+id/cbFacebookPage"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:theme="@style/ActiveTheme"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
-  </androidx.constraintlayout.widget.ConstraintLayout>
-
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/size_10"
-    android:background="@drawable/shape_grey_stroke_rect_bkg"
-    android:paddingStart="@dimen/size_4"
-    android:paddingTop="@dimen/size_8"
-    android:paddingRight="@dimen/size_10"
-    android:paddingBottom="@dimen/size_8">
-
-    <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:gravity="center_vertical"
-      android:orientation="horizontal"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
-
-      <com.framework.views.customViews.CustomImageView
-        android:layout_width="@dimen/size_30"
-        android:layout_height="@dimen/size_32"
-        app:srcCompat="@drawable/ic_google_business_n" />
-
-      <com.framework.views.customViews.CustomTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_3"
         android:includeFontPadding="false"
-        android:text="Google Merchant Center"
+        android:text="Select the channels where you want to sync this product"
         android:textColor="@color/warm_grey"
-        android:textSize="14sp"
+        android:textSize="12sp"
+        android:visibility="gone"
         app:fontFamily="@font/regular" />
-    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/size_10"
+        android:background="@drawable/shape_grey_stroke_rect_bkg"
+        android:paddingStart="@dimen/size_10"
+        android:paddingTop="@dimen/size_8"
+        android:paddingRight="@dimen/size_10"
+        android:paddingBottom="@dimen/size_8">
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/size_10"
+            android:includeFontPadding="false"
+            android:text="JioLocal"
+            android:textColor="@color/warm_grey"
+            android:textSize="14sp"
+            app:drawableLeftCompat="@drawable/ic_jio"
+            app:fontFamily="@font/regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.framework.views.customViews.CustomCheckBox
-      android:id="@+id/cbGoogleMerchantCenter"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:theme="@style/ActiveTheme"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+        <com.framework.views.customViews.CustomCheckBox
+            android:id="@+id/cbJioLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/ActiveTheme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/size_10"
-    android:background="@drawable/shape_grey_stroke_rect_bkg"
-    android:paddingStart="@dimen/size_10"
-    android:paddingTop="@dimen/size_8"
-    android:paddingRight="@dimen/size_10"
-    android:paddingBottom="@dimen/size_8">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10"
+        android:background="@drawable/shape_grey_stroke_rect_bkg"
+        android:paddingStart="@dimen/size_10"
+        android:paddingTop="@dimen/size_8"
+        android:paddingRight="@dimen/size_10"
+        android:paddingBottom="@dimen/size_8">
 
-    <com.framework.views.customViews.CustomTextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:drawablePadding="@dimen/size_10"
-      android:includeFontPadding="false"
-      android:text="@string/twitter_page"
-      android:textColor="@color/warm_grey"
-      android:textSize="14sp"
-      app:drawableLeftCompat="@drawable/ic_twiter_page"
-      app:fontFamily="@font/regular"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+        <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/size_10"
+            android:includeFontPadding="false"
+            android:text="Facebook Page Shop"
+            android:textColor="@color/warm_grey"
+            android:textSize="14sp"
+            app:drawableLeftCompat="@drawable/ic_facebook_flag"
+            app:fontFamily="@font/regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.framework.views.customViews.CustomCheckBox
-      android:id="@+id/cbTwitterPage"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:theme="@style/ActiveTheme"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+        <com.framework.views.customViews.CustomCheckBox
+            android:id="@+id/cbFacebookPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/ActiveTheme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10"
+        android:background="@drawable/shape_grey_stroke_rect_bkg"
+        android:paddingStart="@dimen/size_4"
+        android:paddingTop="@dimen/size_8"
+        android:paddingRight="@dimen/size_10"
+        android:paddingBottom="@dimen/size_8">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="@dimen/size_30"
+                android:layout_height="@dimen/size_32"
+                app:srcCompat="@drawable/ic_google_business_n" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_3"
+                android:includeFontPadding="false"
+                android:text="Google Merchant Center"
+                android:textColor="@color/warm_grey"
+                android:textSize="14sp"
+                app:fontFamily="@font/regular" />
+        </LinearLayout>
+
+
+        <com.framework.views.customViews.CustomCheckBox
+            android:id="@+id/cbGoogleMerchantCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/ActiveTheme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10"
+        android:background="@drawable/shape_grey_stroke_rect_bkg"
+        android:paddingStart="@dimen/size_10"
+        android:paddingTop="@dimen/size_8"
+        android:paddingRight="@dimen/size_10"
+        android:paddingBottom="@dimen/size_8">
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/size_10"
+            android:includeFontPadding="false"
+            android:text="@string/twitter_page"
+            android:textColor="@color/warm_grey"
+            android:textSize="14sp"
+            app:drawableLeftCompat="@drawable/ic_twiter_page"
+            app:fontFamily="@font/regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.framework.views.customViews.CustomCheckBox
+            android:id="@+id/cbTwitterPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/ActiveTheme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>

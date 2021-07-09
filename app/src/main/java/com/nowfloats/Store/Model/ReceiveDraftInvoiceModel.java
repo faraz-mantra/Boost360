@@ -1,10 +1,9 @@
 package com.nowfloats.Store.Model;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class ReceiveDraftInvoiceModel {
 
@@ -57,129 +56,187 @@ public class ReceiveDraftInvoiceModel {
     }
 
     /**
-     * @return The clientId
+     *
+     * @return
+     * The clientId
      */
     public String getClientId() {
         return clientId;
     }
 
     /**
-     * @param clientId The ClientId
+     *
+     * @param clientId
+     * The ClientId
      */
     public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 
     /**
-     * @return The createdOn
+     *
+     * @return
+     * The createdOn
      */
     public String getCreatedOn() {
         return createdOn;
     }
 
     /**
-     * @param createdOn The CreatedOn
+     *
+     * @param createdOn
+     * The CreatedOn
      */
     public void setCreatedOn(String createdOn) {
         this.createdOn = createdOn;
     }
 
     /**
-     * @return The fPUserProfileId
+     *
+     * @return
+     * The fPUserProfileId
      */
     public String getFPUserProfileId() {
         return fPUserProfileId;
     }
 
     /**
-     * @param fPUserProfileId The FPUserProfileId
+     *
+     * @param fPUserProfileId
+     * The FPUserProfileId
      */
     public void setFPUserProfileId(String fPUserProfileId) {
         this.fPUserProfileId = fPUserProfileId;
     }
 
     /**
-     * @return The invoiceId
+     *
+     * @return
+     * The invoiceId
      */
     public String getInvoiceId() {
         return invoiceId;
     }
 
     /**
-     * @param invoiceId The InvoiceId
+     *
+     * @param invoiceId
+     * The InvoiceId
      */
     public void setInvoiceId(String invoiceId) {
         this.invoiceId = invoiceId;
     }
 
     /**
-     * @return The paymentRequestId
+     *
+     * @return
+     * The paymentRequestId
      */
     public String getPaymentRequestId() {
         return paymentRequestId;
     }
 
     /**
-     * @param paymentRequestId The PaymentRequestId
+     *
+     * @param paymentRequestId
+     * The PaymentRequestId
      */
     public void setPaymentRequestId(String paymentRequestId) {
         this.paymentRequestId = paymentRequestId;
     }
 
     /**
-     * @return The purchaseDetails
+     *
+     * @return
+     * The purchaseDetails
      */
     public List<PurchaseDetail> getPurchaseDetails() {
         return purchaseDetails;
     }
 
     /**
-     * @param purchaseDetails The PurchaseDetails
+     *
+     * @param purchaseDetails
+     * The PurchaseDetails
      */
     public void setPurchaseDetails(List<PurchaseDetail> purchaseDetails) {
         this.purchaseDetails = purchaseDetails;
     }
 
     /**
-     * @return The status
+     *
+     * @return
+     * The status
      */
     public Integer getStatus() {
         return status;
     }
 
     /**
-     * @param status The Status
+     *
+     * @param status
+     * The Status
      */
     public void setStatus(Integer status) {
         this.status = status;
     }
 
     /**
-     * @return The tPCUri
+     *
+     * @return
+     * The tPCUri
      */
     public String getTPCUri() {
         return tPCUri;
     }
 
     /**
-     * @param tPCUri The TPCUri
+     *
+     * @param tPCUri
+     * The TPCUri
      */
     public void setTPCUri(String tPCUri) {
         this.tPCUri = tPCUri;
     }
 
     /**
-     * @return The id
+     *
+     * @return
+     * The id
      */
     public String getId() {
         return id;
     }
 
     /**
-     * @param id The _id
+     *
+     * @param id
+     * The _id
      */
     public void setId(String id) {
         this.id = id;
+    }
+
+
+    public class KeyValuePair{
+        String Key;
+        String Value;
+
+        public String getKey() {
+            return Key;
+        }
+
+        public void setKey(String key) {
+            Key = key;
+        }
+
+        public String getValue() {
+            return Value;
+        }
+
+        public void setValue(String value) {
+            Value = value;
+        }
     }
 
     public String getTanNumber() {
@@ -204,26 +261,5 @@ public class ReceiveDraftInvoiceModel {
 
     public void setTotalPayableAmount(String totalPayableAmount) {
         this.totalPayableAmount = totalPayableAmount;
-    }
-
-    public class KeyValuePair {
-        String Key;
-        String Value;
-
-        public String getKey() {
-            return Key;
-        }
-
-        public void setKey(String key) {
-            Key = key;
-        }
-
-        public String getValue() {
-            return Value;
-        }
-
-        public void setValue(String value) {
-            Value = value;
-        }
     }
 }

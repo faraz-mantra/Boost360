@@ -13,7 +13,6 @@ import static io.separ.neural.inputmethod.slash.RSearchItem.MEDIA_TYPE;
  * Created by sepehr on 3/4/17.
  */
 public class TenorResult {
-    public String url;
     private TenorComposite composite;
     private double created;
     @SerializedName("hasaudio")
@@ -22,6 +21,7 @@ public class TenorResult {
     private ArrayList<TenorMediaCollection> media;
     private ArrayList<String> tags;
     private String title;
+    public String url;
 
     public RSearchItem toSearchItem() {
         RSearchItem retVal = new RSearchItem();

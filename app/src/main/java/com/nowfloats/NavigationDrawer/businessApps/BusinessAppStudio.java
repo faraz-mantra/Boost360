@@ -3,12 +3,10 @@ package com.nowfloats.NavigationDrawer.businessApps;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,50 +41,49 @@ import retrofit.client.Response;
  */
 public class BusinessAppStudio extends Fragment implements View.OnClickListener {
 
-    UserSessionManager session;
-    SharedPreferences pref;
     private String type;
     private Context context;
-
-    public static Fragment getInstance(String type) {
-        Fragment frag = new BusinessAppStudio();
-        Bundle b = new Bundle();
-        b.putString("type", type);
+    UserSessionManager session;
+    SharedPreferences pref;
+    public static Fragment getInstance(String type){
+        Fragment frag=new BusinessAppStudio();
+        Bundle b=new Bundle();
+        b.putString("type",type);
         frag.setArguments(b);
-        return frag;
+        return  frag;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            type = getArguments().getString("type", "android");
-            if (type.equals("android")) {
+        if(getArguments()!=null){
+            type=getArguments().getString("type","android");
+            if(type.equals("android")){
                 setHasOptionsMenu(true);
             }
         }
-        MixPanelController.track(MixPanelController.BUSINESS_APP_REQUEST, null);
+        MixPanelController.track(MixPanelController.BUSINESS_APP_REQUEST,null);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.context = context;
+        this.context=context;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_business_app_madman_studio, container, false);
+        return inflater.inflate(R.layout.fragment_business_app_madman_studio,container,false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        if (!isAdded()) {
+        if(!isAdded()){
             return;
         }
         pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        session = new UserSessionManager(context, requireActivity());
+        session=new UserSessionManager(context,requireActivity());
 
         Button previewButton = (Button) view.findViewById(R.id.preview_button);
         Button getAppButton = (Button) view.findViewById(R.id.get_app_button);
@@ -98,44 +95,45 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
 
         previewButton.setOnClickListener(this);
         getAppButton.setOnClickListener(this);
-        String name = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME);
+        String name=session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME);
         nameTextView.setText(name);
 
-        if (type.equals("android")) {
+        if(type.equals("android")){
             //getAppButton.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.android_icon_white), null, null, null );
-            if (!pref.getBoolean(Key_Preferences.BUSINESS_APP_REQUESTED, false)) {
+            if(!pref.getBoolean(Key_Preferences.BUSINESS_APP_REQUESTED,false)){
                 getAppButton.setText(getString(R.string.interest));
                 getAppButton.setBackgroundResource(R.drawable.black_round_corner);
-            } else {
+            }else{
                 getAppButton.setText("Already\nRequested");
                 getAppButton.setBackgroundResource(R.drawable.gray_round_corner);
             }
-            getAppButton.setPadding(Methods.dpToPx(15, context), 0, 0, 0);
+            getAppButton.setPadding(Methods.dpToPx(15,context),0,0,0);
             previewButton.setText(getResources().getString(R.string.android_app_preview));
-            iconImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.android_green_padding));
-        } else {
+            iconImage.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.android_green_padding));
+        }
+        else {
             buttonLayout.setVisibility(View.GONE);
             comming_soon.setVisibility(View.VISIBLE);
-            getAppButton.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ios_icon_white), null, null, null);
+            getAppButton.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.ios_icon_white), null, null, null );
             getAppButton.setText(getResources().getString(R.string.get_ios_app));
             previewButton.setText(getResources().getString(R.string.ios_app_preview));
-            iconImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ios_icon_black));
+            iconImage.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ios_icon_black));
         }
     }
 
     @Override
     public void onClick(final View view) {
-        final BusinessAppPreview frag = (BusinessAppPreview) getParentFragment();
-        switch (view.getId()) {
+        final BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
+        switch (view.getId()){
             case R.id.preview_button:
 
-                if (frag != null) {
+                if(frag!=null ) {
                     frag.showScreenShots();
                 }
                 break;
             case R.id.get_app_button:
 
-                if (isAdded()) {
+                if(isAdded()) {
                     if (type.equals("android")) {
 
                         if (!pref.getBoolean(Key_Preferences.BUSINESS_APP_REQUESTED, false)) {
@@ -150,12 +148,12 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                                 @Override
                                 public void success(String s, Response response) {
                                     MaterialProgressBar.dismissProgressBar();
-                                    if (response.getStatus() != 200) {
-                                        Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
+                                    if(response.getStatus() != 200){
+                                        Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong_try_again));
                                         return;
                                     }
-                                    pref.edit().putBoolean(Key_Preferences.BUSINESS_APP_REQUESTED, true).apply();
-                                    MixPanelController.track(MixPanelController.BUSINESS_APP_INTRESTED, null);
+                                    pref.edit().putBoolean(Key_Preferences.BUSINESS_APP_REQUESTED,true).apply();
+                                    MixPanelController.track(MixPanelController.BUSINESS_APP_INTRESTED,null);
                                     ((Button) view).setText("Already\nRequested");
                                     (view).setBackgroundResource(R.color.business_button_gray);
                                     new MaterialDialog.Builder(context)
@@ -174,7 +172,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                                 @Override
                                 public void failure(RetrofitError error) {
                                     MaterialProgressBar.dismissProgressBar();
-                                    Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
+                                    Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong_try_again));
                                 }
                             });
                        /* BusinessAppApis.AppApis apis=BusinessAppApis.getRestAdapter();
@@ -201,7 +199,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                                 showMessage("There was an error processing your request. Please try again in few minutes");
                             }
                         });*/
-                        } else {
+                        }else{
                             new MaterialDialog.Builder(context)
                                     .title(getString(R.string.thank_you_for_your_interest))
                                     .content(getString(R.string.business_app_requested_success))
@@ -221,23 +219,22 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                 break;
         }
     }
-
-    private void showMessage(String message) {
-        if (!isAdded()) return;
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_link_layout, null);
+    private void showMessage(String message){
+        if(!isAdded()) return;
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_link_layout,null);
         TextView text = (TextView) view.findViewById(R.id.toast_message_to_contact);
         text.setText(message);
         new MaterialDialog.Builder(context)
-                .customView(view, false)
+                .customView(view,false)
                 .build().show();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (!isAdded()) return false;
-        switch (item.getItemId()) {
+        if(!isAdded()) return false;
+        switch(item.getItemId()){
             case R.id.action_notif:
-                Methods.materialDialog(getActivity(), "Send Push Notification", "Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
+                Methods.materialDialog(getActivity(),"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
                 return true;
             default:
                 break;
@@ -247,7 +244,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.business_app, menu);
+        inflater.inflate(R.menu.business_app,menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 }

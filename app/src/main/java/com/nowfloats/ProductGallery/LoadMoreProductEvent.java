@@ -9,8 +9,7 @@ import java.util.ArrayList;
  */
 public class LoadMoreProductEvent {
     ArrayList<ProductListModel> data;
-
-    public LoadMoreProductEvent(ArrayList<ProductListModel> data) {
+    public LoadMoreProductEvent(ArrayList<ProductListModel> data){
         this.data = data;
     }
 }

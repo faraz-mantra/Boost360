@@ -8,10 +8,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "Coupons")
 data class CouponsModel(
 
-  @PrimaryKey
-  @ColumnInfo(name = "coupon_key")
-  var coupon_key: String,
+        @PrimaryKey
+        @ColumnInfo(name = "coupon_key")
+        var coupon_key: String,
 
-  @ColumnInfo(name = "discount_percent")
-  var discount_percent: Int = 0
+        @ColumnInfo(name = "discount_percent")
+        var discount_percent: Int = 0
 )

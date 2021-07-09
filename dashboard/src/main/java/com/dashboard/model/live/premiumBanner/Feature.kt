@@ -59,4 +59,4 @@ data class Feature(
   var usecaseImportance: String? = null,
   @SerializedName("websiteid")
   var websiteid: String? = null
-) : Serializable
+): Serializable

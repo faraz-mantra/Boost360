@@ -23,6 +23,14 @@ import java.util.ArrayList;
 public final class PointerTrackerQueue {
     private static final String TAG = PointerTrackerQueue.class.getSimpleName();
     private static final boolean DEBUG = false;
+
+    public interface Element {
+        boolean isModifier();
+        boolean isInDraggingFinger();
+        void onPhantomUpEvent(long eventTime);
+        void cancelTrackingForAction();
+    }
+
     private static final int INITIAL_CAPACITY = 10;
     // Note: {@link #mExpandableArrayOfActivePointers} and {@link #mArraySize} are synchronized by
     // {@link #mExpandableArrayOfActivePointers}
@@ -225,15 +233,5 @@ public final class PointerTrackerQueue {
             }
             return '[' + sb.toString() + ']';
         }
-    }
-
-    public interface Element {
-        boolean isModifier();
-
-        boolean isInDraggingFinger();
-
-        void onPhantomUpEvent(long eventTime);
-
-        void cancelTrackingForAction();
     }
 }

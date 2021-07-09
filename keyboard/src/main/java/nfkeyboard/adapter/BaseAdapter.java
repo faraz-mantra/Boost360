@@ -2,9 +2,7 @@ package nfkeyboard.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -22,9 +20,9 @@ public abstract class BaseAdapter<T extends AllSuggestionModel> {
     final int leftSpace, topSpace, padding, paddingTop;
     final Context mContext;
     final DisplayMetrics metrics;
+    private ItemClickListener mItemClickListener;
     LinearLayout.LayoutParams linLayoutParams;
     SharedPreferences preferences;
-    private ItemClickListener mItemClickListener;
 
     BaseAdapter(Context context) {
         mContext = context;
@@ -62,7 +60,7 @@ public abstract class BaseAdapter<T extends AllSuggestionModel> {
         mItemClickListener.onItemClick(model);
     }
 
-    void unRegisterEventBus() {
+    void unRegisterEventBus(){
 
     }
 }

@@ -126,8 +126,68 @@ public final class KeyboardId {
         });
     }
 
+    private boolean equals(final KeyboardId other) {
+        return other == this || other.mElementId == mElementId && other.mMode == mMode && other.mWidth == mWidth && other.mHeight == mHeight && other.passwordInput() == passwordInput() && other.mClobberSettingsKey == mClobberSettingsKey && other.mHasShortcutKey == mHasShortcutKey && other.mLanguageSwitchKeyEnabled == mLanguageSwitchKeyEnabled && other.isMultiLine() == isMultiLine() && other.imeAction() == imeAction() && TextUtils.equals(other.mCustomActionLabel, mCustomActionLabel) && other.navigateNext() == navigateNext() && other.navigatePrevious() == navigatePrevious() && other.mSubtype.equals(mSubtype);
+    }
+
     private static boolean isAlphabetKeyboard(final int elementId) {
         return elementId < ELEMENT_SYMBOLS;
+    }
+
+    public boolean isAlphabetKeyboard() {
+        return isAlphabetKeyboard(mElementId);
+    }
+
+    public boolean navigateNext() {
+        return (mEditorInfo.imeOptions & EditorInfo.IME_FLAG_NAVIGATE_NEXT) != 0
+                || imeAction() == EditorInfo.IME_ACTION_NEXT;
+    }
+
+    public boolean navigatePrevious() {
+        return (mEditorInfo.imeOptions & EditorInfo.IME_FLAG_NAVIGATE_PREVIOUS) != 0
+                || imeAction() == EditorInfo.IME_ACTION_PREVIOUS;
+    }
+
+    public boolean passwordInput() {
+        final int inputType = mEditorInfo.inputType;
+        return InputTypeUtils.isPasswordInputType(inputType)
+                || InputTypeUtils.isVisiblePasswordInputType(inputType);
+    }
+
+    public boolean isMultiLine() {
+        return (mEditorInfo.inputType & InputType.TYPE_TEXT_FLAG_MULTI_LINE) != 0;
+    }
+
+    public int imeAction() {
+        return InputTypeUtils.getImeOptionsActionIdFromEditorInfo(mEditorInfo);
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return other instanceof KeyboardId && equals((KeyboardId) other);
+    }
+
+    @Override
+    public int hashCode() {
+        return mHashCode;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(Locale.ROOT, "[%s %s:%s %dx%d %s %s%s%s%s%s%s%s%s]",
+                elementIdToName(mElementId),
+                mLocale, mSubtype.getExtraValueOf(KEYBOARD_LAYOUT_SET),
+                mWidth, mHeight,
+                modeName(mMode),
+                actionName(imeAction()),
+                (navigateNext() ? " navigateNext" : ""),
+                (navigatePrevious() ? " navigatePrevious" : ""),
+                (mClobberSettingsKey ? " clobberSettingsKey" : ""),
+                (passwordInput() ? " passwordInput" : ""),
+                (mHasShortcutKey ? " hasShortcutKey" : ""),
+                (mLanguageSwitchKeyEnabled ? " languageSwitchKeyEnabled" : ""),
+                (isMultiLine() ? " isMultiLine" : "")
+        );
     }
 
     public static boolean equivalentEditorInfoForKeyboard(final EditorInfo a, final EditorInfo b) {
@@ -229,65 +289,5 @@ public final class KeyboardId {
     public static String actionName(final int actionId) {
         return (actionId == InputTypeUtils.IME_ACTION_CUSTOM_LABEL) ? "actionCustomLabel"
                 : EditorInfoCompatUtils.imeActionName(actionId);
-    }
-
-    private boolean equals(final KeyboardId other) {
-        return other == this || other.mElementId == mElementId && other.mMode == mMode && other.mWidth == mWidth && other.mHeight == mHeight && other.passwordInput() == passwordInput() && other.mClobberSettingsKey == mClobberSettingsKey && other.mHasShortcutKey == mHasShortcutKey && other.mLanguageSwitchKeyEnabled == mLanguageSwitchKeyEnabled && other.isMultiLine() == isMultiLine() && other.imeAction() == imeAction() && TextUtils.equals(other.mCustomActionLabel, mCustomActionLabel) && other.navigateNext() == navigateNext() && other.navigatePrevious() == navigatePrevious() && other.mSubtype.equals(mSubtype);
-    }
-
-    public boolean isAlphabetKeyboard() {
-        return isAlphabetKeyboard(mElementId);
-    }
-
-    public boolean navigateNext() {
-        return (mEditorInfo.imeOptions & EditorInfo.IME_FLAG_NAVIGATE_NEXT) != 0
-                || imeAction() == EditorInfo.IME_ACTION_NEXT;
-    }
-
-    public boolean navigatePrevious() {
-        return (mEditorInfo.imeOptions & EditorInfo.IME_FLAG_NAVIGATE_PREVIOUS) != 0
-                || imeAction() == EditorInfo.IME_ACTION_PREVIOUS;
-    }
-
-    public boolean passwordInput() {
-        final int inputType = mEditorInfo.inputType;
-        return InputTypeUtils.isPasswordInputType(inputType)
-                || InputTypeUtils.isVisiblePasswordInputType(inputType);
-    }
-
-    public boolean isMultiLine() {
-        return (mEditorInfo.inputType & InputType.TYPE_TEXT_FLAG_MULTI_LINE) != 0;
-    }
-
-    public int imeAction() {
-        return InputTypeUtils.getImeOptionsActionIdFromEditorInfo(mEditorInfo);
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        return other instanceof KeyboardId && equals((KeyboardId) other);
-    }
-
-    @Override
-    public int hashCode() {
-        return mHashCode;
-    }
-
-    @Override
-    public String toString() {
-        return String.format(Locale.ROOT, "[%s %s:%s %dx%d %s %s%s%s%s%s%s%s%s]",
-                elementIdToName(mElementId),
-                mLocale, mSubtype.getExtraValueOf(KEYBOARD_LAYOUT_SET),
-                mWidth, mHeight,
-                modeName(mMode),
-                actionName(imeAction()),
-                (navigateNext() ? " navigateNext" : ""),
-                (navigatePrevious() ? " navigatePrevious" : ""),
-                (mClobberSettingsKey ? " clobberSettingsKey" : ""),
-                (passwordInput() ? " passwordInput" : ""),
-                (mHasShortcutKey ? " hasShortcutKey" : ""),
-                (mLanguageSwitchKeyEnabled ? " languageSwitchKeyEnabled" : ""),
-                (isMultiLine() ? " isMultiLine" : "")
-        );
     }
 }

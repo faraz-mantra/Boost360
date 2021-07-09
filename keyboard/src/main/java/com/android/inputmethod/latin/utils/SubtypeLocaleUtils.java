@@ -33,15 +33,21 @@ import static io.separ.neural.inputmethod.indic.Constants.Subtype.ExtraValue.KEY
 import static io.separ.neural.inputmethod.indic.Constants.Subtype.ExtraValue.UNTRANSLATABLE_STRING_IN_SUBTYPE_NAME;
 
 public final class SubtypeLocaleUtils {
+    private static final String TAG = SubtypeLocaleUtils.class.getSimpleName();
+
+    // This reference class {@link Constants} must be located in the same package as LatinIME.java.
+    private static final String RESOURCE_PACKAGE_NAME = Constants.class.getPackage().getName();
+
     // Special language code to represent "no language".
     public static final String NO_LANGUAGE = "en_US";
     public static final String QWERTY = "qwerty";
     public static final String EMOJI = "emoji";
     public static final int UNKNOWN_KEYBOARD_LAYOUT = R.string.subtype_generic;
-    private static final String TAG = SubtypeLocaleUtils.class.getSimpleName();
-    // This reference class {@link Constants} must be located in the same package as LatinIME.java.
-    private static final String RESOURCE_PACKAGE_NAME = Constants.class.getPackage().getName();
+
+    private static volatile boolean sInitialized = false;
     private static final Object sInitializeLock = new Object();
+    private static Resources sResources;
+    private static String[] sPredefinedKeyboardLayoutSet;
     // Keyboard layout to its display name map.
     private static final HashMap<String, String> sKeyboardLayoutToDisplayNameMap = new HashMap<>();
     // Keyboard layout to subtype name resource id map.
@@ -63,20 +69,6 @@ public final class SubtypeLocaleUtils {
     // This is for compatibility to keep the same subtype ids as pre-JellyBean.
     private static final HashMap<String, String> sLocaleAndExtraValueToKeyboardLayoutSetMap =
             new HashMap<>();
-    // TODO: Get this information from the framework instead of maintaining here by ourselves.
-    // Sorted list of known Right-To-Left language codes.
-    private static final String[] SORTED_RTL_LANGUAGES = {
-            "ar", // Arabic
-            "fa", // Persian
-            "iw", // Hebrew
-    };
-    private static volatile boolean sInitialized = false;
-    private static Resources sResources;
-    private static String[] sPredefinedKeyboardLayoutSet;
-
-    static {
-        Arrays.sort(SORTED_RTL_LANGUAGES);
-    }
 
     private SubtypeLocaleUtils() {
         // Intentional empty constructor for utility class.
@@ -177,24 +169,6 @@ public final class SubtypeLocaleUtils {
         return getSubtypeLocaleDisplayNameInternal(localeString, displayLocale);
     }
 
-    // InputMethodSubtype's display name in its locale.
-    //        isAdditionalSubtype (T=true, F=false)
-    // locale layout  |  display name
-    // ------ ------- - ----------------------
-    //  en_US qwerty  F  English (US)            exception
-    //  en_GB qwerty  F  English (UK)            exception
-    //  es_US spanish F  Español (EE.UU.)        exception
-    //  fr    azerty  F  Français
-    //  fr_CA qwerty  F  Français (Canada)
-    //  fr_CH swiss   F  Français (Suisse)
-    //  de    qwertz  F  Deutsch
-    //  de_CH swiss   T  Deutsch (Schweiz)
-    //  zz    qwerty  F  Alphabet (QWERTY)       in system locale
-    //  fr    qwertz  T  Français (QWERTZ)
-    //  de    qwerty  T  Deutsch (QWERTY)
-    //  en_US azerty  T  English (US) (AZERTY)   exception
-    //  zz    azerty  T  Alphabet (AZERTY)       in system locale
-
     public static String getSubtypeLanguageDisplayName(final String localeString) {
         final Locale locale = LocaleUtils.constructLocaleFromString(localeString);
         final Locale displayLocale = getDisplayLocaleOfSubtypeLocale(localeString);
@@ -223,6 +197,24 @@ public final class SubtypeLocaleUtils {
         }
         return StringUtils.capitalizeFirstCodePoint(displayName, displayLocale);
     }
+
+    // InputMethodSubtype's display name in its locale.
+    //        isAdditionalSubtype (T=true, F=false)
+    // locale layout  |  display name
+    // ------ ------- - ----------------------
+    //  en_US qwerty  F  English (US)            exception
+    //  en_GB qwerty  F  English (UK)            exception
+    //  es_US spanish F  Español (EE.UU.)        exception
+    //  fr    azerty  F  Français
+    //  fr_CA qwerty  F  Français (Canada)
+    //  fr_CH swiss   F  Français (Suisse)
+    //  de    qwertz  F  Deutsch
+    //  de_CH swiss   T  Deutsch (Schweiz)
+    //  zz    qwerty  F  Alphabet (QWERTY)       in system locale
+    //  fr    qwertz  T  Français (QWERTZ)
+    //  de    qwerty  T  Deutsch (QWERTY)
+    //  en_US azerty  T  English (US) (AZERTY)   exception
+    //  zz    azerty  T  Alphabet (AZERTY)       in system locale
 
     private static String getReplacementString(final InputMethodSubtype subtype,
                                                final Locale displayLocale) {
@@ -309,6 +301,18 @@ public final class SubtypeLocaleUtils {
             return QWERTY;
         }
         return keyboardLayoutSet;
+    }
+
+    // TODO: Get this information from the framework instead of maintaining here by ourselves.
+    // Sorted list of known Right-To-Left language codes.
+    private static final String[] SORTED_RTL_LANGUAGES = {
+            "ar", // Arabic
+            "fa", // Persian
+            "iw", // Hebrew
+    };
+
+    static {
+        Arrays.sort(SORTED_RTL_LANGUAGES);
     }
 
     public static boolean isRtlLanguage(final Locale locale) {

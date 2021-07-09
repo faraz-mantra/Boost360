@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
 **
 ** Copyright 2014, The Android Open Source Project
@@ -18,35 +19,34 @@
 -->
 
 <resources>
-
-  <style name="KeyboardIcons.LXX_Dark">
-    <!-- Keyboard icons -->
-    <!--<item name="iconShiftKey">@drawable/sym_keyboard_shift_lxx_light</item>-->
-    <item name="iconShiftKey">@drawable/ic_shift_key_white</item>
-    <!--<item name="iconDeleteKey">@drawable/sym_keyboard_delete_lxx_light</item>-->
-    <item name="iconDeleteKey">@drawable/ic_backspace_white_24dp</item>
-    <item name="iconSettingsKey">@drawable/ic_settings_white_24dp</item>
-    <item name="iconSpaceKey">@null</item>
-    <item name="iconEnterKey">@drawable/sym_keyboard_return_lxx_light</item>
-    <item name="iconGoKey">@drawable/sym_keyboard_go_lxx_light</item>
-    <item name="iconSearchKey">@drawable/sym_keyboard_search_lxx_light</item>
-    <item name="iconSendKey">@drawable/sym_keyboard_send_lxx_light</item>
-    <item name="iconNextKey">@drawable/sym_keyboard_next_lxx_light</item>
-    <item name="iconDoneKey">@drawable/sym_keyboard_done_lxx_light</item>
-    <item name="iconPreviousKey">@drawable/sym_keyboard_previous_lxx_light</item>
-    <item name="iconTabKey">@drawable/sym_keyboard_tab_lxx_light</item>
-    <item name="iconShortcutKey">@drawable/sym_keyboard_voice_lxx_light</item>
-    <item name="iconSpaceKeyForNumberLayout">@drawable/sym_keyboard_space_lxx_light</item>
-    <item name="iconShiftKeyShifted">@drawable/ic_shift_key_white</item>
-    <item name="iconShortcutKeyDisabled">@drawable/sym_keyboard_voice_off_lxx_light</item>
-    <!--<item name="iconLanguageSwitchKey">@drawable/sym_keyboard_language_switch_lxx_light</item>-->
-    <item name="iconLanguageSwitchKey">@drawable/ic_language_white_24dp</item>
-    <item name="iconZwnjKey">@drawable/sym_keyboard_zwnj_lxx_light</item>
-    <item name="iconZwjKey">@drawable/sym_keyboard_zwj_lxx_light</item>
-    <!-- Use white emoji icon (for lxx_dark) because an action key has green/dark color background. -->
-    <item name="iconEmojiActionKey">@drawable/emoji_happiness</item>
-    <!-- Use dark green emoji icon (for lxx_light) because a normal key has white color background. -->
-    <item name="iconEmojiNormalKey">@drawable/sym_keyboard_smiley_lxx_light</item>
-    <item name="iconEmojiCommaKey">@drawable/ic_comma_emoji_24dp_white</item>
-  </style>
+    <style name="KeyboardIcons.LXX_Dark">
+        <!-- Keyboard icons -->
+        <!--<item name="iconShiftKey">@drawable/sym_keyboard_shift_lxx_light</item>-->
+        <item name="iconShiftKey">@drawable/ic_shift_key_white</item>
+        <!--<item name="iconDeleteKey">@drawable/sym_keyboard_delete_lxx_light</item>-->
+        <item name="iconDeleteKey">@drawable/ic_backspace_white_24dp</item>
+        <item name="iconSettingsKey">@drawable/ic_settings_white_24dp</item>
+        <item name="iconSpaceKey">@null</item>
+        <item name="iconEnterKey">@drawable/sym_keyboard_return_lxx_light</item>
+        <item name="iconGoKey">@drawable/sym_keyboard_go_lxx_light</item>
+        <item name="iconSearchKey">@drawable/sym_keyboard_search_lxx_light</item>
+        <item name="iconSendKey">@drawable/sym_keyboard_send_lxx_light</item>
+        <item name="iconNextKey">@drawable/sym_keyboard_next_lxx_light</item>
+        <item name="iconDoneKey">@drawable/sym_keyboard_done_lxx_light</item>
+        <item name="iconPreviousKey">@drawable/sym_keyboard_previous_lxx_light</item>
+        <item name="iconTabKey">@drawable/sym_keyboard_tab_lxx_light</item>
+        <item name="iconShortcutKey">@drawable/sym_keyboard_voice_lxx_light</item>
+        <item name="iconSpaceKeyForNumberLayout">@drawable/sym_keyboard_space_lxx_light</item>
+        <item name="iconShiftKeyShifted">@drawable/ic_shift_key_white</item>
+        <item name="iconShortcutKeyDisabled">@drawable/sym_keyboard_voice_off_lxx_light</item>
+        <!--<item name="iconLanguageSwitchKey">@drawable/sym_keyboard_language_switch_lxx_light</item>-->
+        <item name="iconLanguageSwitchKey">@drawable/ic_language_white_24dp</item>
+        <item name="iconZwnjKey">@drawable/sym_keyboard_zwnj_lxx_light</item>
+        <item name="iconZwjKey">@drawable/sym_keyboard_zwj_lxx_light</item>
+        <!-- Use white emoji icon (for lxx_dark) because an action key has green/dark color background. -->
+        <item name="iconEmojiActionKey">@drawable/emoji_happiness</item>
+        <!-- Use dark green emoji icon (for lxx_light) because a normal key has white color background. -->
+        <item name="iconEmojiNormalKey">@drawable/sym_keyboard_smiley_lxx_light</item>
+        <item name="iconEmojiCommaKey">@drawable/ic_comma_emoji_24dp_white</item>
+    </style>
 </resources>

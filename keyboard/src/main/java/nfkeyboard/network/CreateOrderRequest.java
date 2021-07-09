@@ -8,25 +8,6 @@ import com.google.gson.annotations.SerializedName;
  */
 
 class CreateOrderRequest {
-    @SerializedName("ProductId")
-    @Expose
-    String ProductId;
-    @SerializedName("ExpiresOn")
-    @Expose
-    String ExpiresOn;
-    @SerializedName("Quantity")
-    @Expose
-    int Quantity;
-    @SerializedName("SalePrice")
-    @Expose
-    double SalePrice;
-    @SerializedName("MaxQuantityPerOrder")
-    @Expose
-    int MaxQuantityPerOrder;
-    @SerializedName("Seller")
-    @Expose
-    Seller Seller;
-
     public String getProductId() {
         return ProductId;
     }
@@ -59,6 +40,30 @@ class CreateOrderRequest {
         this.Seller = Seller;
     }
 
+    @SerializedName("ProductId")
+    @Expose
+    String ProductId;
+
+    @SerializedName("ExpiresOn")
+    @Expose
+    String ExpiresOn;
+
+    @SerializedName("Quantity")
+    @Expose
+    int Quantity;
+
+    @SerializedName("SalePrice")
+    @Expose
+    double SalePrice;
+
+    @SerializedName("MaxQuantityPerOrder")
+    @Expose
+    int MaxQuantityPerOrder;
+
+    @SerializedName("Seller")
+    @Expose
+    Seller Seller;
+
     public String getExpiresOn() {
         return ExpiresOn;
     }
@@ -76,16 +81,6 @@ class CreateOrderRequest {
     }
 
     public static class Seller {
-        @SerializedName("Identifier")
-        @Expose
-        String Identifier;
-        @SerializedName("ContactDetails")
-        @Expose
-        ContactDetails ContactDetail;
-        @SerializedName("Address")
-        @Expose
-        Address Address;
-
         public String getIdentifier() {
             return Identifier;
         }
@@ -110,26 +105,19 @@ class CreateOrderRequest {
             this.Address = addresses;
         }
 
-        public static class Address {
-            @SerializedName("AddressLine1")
-            @Expose
-            String AddressLine1;
-            @SerializedName("AddressLine2")
-            @Expose
-            String AddressLine2;
-            @SerializedName("City")
-            @Expose
-            String City;
-            @SerializedName("Region")
-            @Expose
-            String Region;
-            @SerializedName("Country")
-            @Expose
-            String Country;
-            @SerializedName("Zipcode")
-            @Expose
-            String Zipcode;
+        @SerializedName("Identifier")
+        @Expose
+        String Identifier;
 
+        @SerializedName("ContactDetails")
+        @Expose
+        ContactDetails ContactDetail;
+
+        @SerializedName("Address")
+        @Expose
+        Address Address;
+
+        public static class Address {
             public String getAddressLine1() {
                 return AddressLine1;
             }
@@ -177,22 +165,33 @@ class CreateOrderRequest {
             public void setZipcode(String zipcode) {
                 this.Zipcode = zipcode;
             }
+
+            @SerializedName("AddressLine1")
+            @Expose
+            String AddressLine1;
+
+            @SerializedName("AddressLine2")
+            @Expose
+            String AddressLine2;
+
+            @SerializedName("City")
+            @Expose
+            String City;
+
+            @SerializedName("Region")
+            @Expose
+            String Region;
+
+            @SerializedName("Country")
+            @Expose
+            String Country;
+
+            @SerializedName("Zipcode")
+            @Expose
+            String Zipcode;
         }
 
-        public static class ContactDetails {
-            @SerializedName("FullName")
-            @Expose
-            String FullName;
-            @SerializedName("PrimaryContactNumber")
-            @Expose
-            String PrimaryContactNumber;
-            @SerializedName("SecondaryContactNumber")
-            @Expose
-            String SecondaryContactNumber;
-            @SerializedName("EmailId")
-            @Expose
-            String EmailId;
-
+        public  static class ContactDetails {
             public String getFullName() {
                 return FullName;
             }
@@ -224,6 +223,22 @@ class CreateOrderRequest {
             public void setEmailId(String emailId) {
                 this.EmailId = emailId;
             }
+
+            @SerializedName("FullName")
+            @Expose
+            String FullName;
+
+            @SerializedName("PrimaryContactNumber")
+            @Expose
+            String PrimaryContactNumber;
+
+            @SerializedName("SecondaryContactNumber")
+            @Expose
+            String SecondaryContactNumber;
+
+            @SerializedName("EmailId")
+            @Expose
+            String EmailId;
         }
     }
 }

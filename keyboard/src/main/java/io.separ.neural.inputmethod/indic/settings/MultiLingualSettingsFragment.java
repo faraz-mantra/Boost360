@@ -22,7 +22,7 @@ import io.separ.neural.inputmethod.indic.R;
 
 /**
  * "Multilingual options" settings sub screen.
- * <p>
+ *
  * This settings sub screen handles the following input preferences.
  * - Language switch key
  * - Switch to other input methods

@@ -9,4 +9,4 @@ data class ServiceTime(
   var from: String? = "",
   @SerializedName("To")
   var to: String? = ""
-) : Serializable
+): Serializable

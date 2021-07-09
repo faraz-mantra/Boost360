@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:orientation="vertical"
-  android:padding="@dimen/margin_20">
-
-  <TextView
-    android:id="@+id/tvTitle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:paddingStart="24dp"
-    android:paddingRight="24dp"
-    android:text="Enter your WhatsApp Number" />
+    android:padding="@dimen/margin_20"
+    android:orientation="vertical">
 
-  <EditText
-    android:id="@+id/editText"
-    style="@style/ProductEditTextStyle"
-    android:layout_marginTop="20dp"
-    android:digits="0123456789"
-    android:gravity="center"
-    android:hint="Enter Number"
-    android:inputType="phone"
-    android:maxLength="12"
-    android:paddingStart="24dp"
-    android:paddingRight="24dp" />
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="24dp"
+        android:paddingRight="24dp"
+        android:gravity="center"
+        android:text="Enter your WhatsApp Number" />
+
+    <EditText
+        android:id="@+id/editText"
+        style="@style/ProductEditTextStyle"
+        android:layout_marginTop="20dp"
+        android:hint="Enter Number"
+        android:gravity="center"
+        android:inputType="phone"
+        android:digits="0123456789"
+        android:maxLength="12"
+        android:paddingStart="24dp"
+        android:paddingRight="24dp" />
 
 </LinearLayout>

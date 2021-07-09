@@ -7,8 +7,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import java.util.*
 
-class GetAddressFromLatLng(private var contextRef: Context?, val listener: Listener) :
-  AsyncTask<Double, Void, Bundle>() {
+class GetAddressFromLatLng(private var contextRef: Context?, val listener: Listener) : AsyncTask<Double, Void, Bundle>() {
 
   override fun onPreExecute() {
     super.onPreExecute()

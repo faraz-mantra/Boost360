@@ -18,8 +18,7 @@ import com.onboarding.nowfloats.model.channel.request.ChannelActionData
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
-class RegistrationBusinessWhatsAppFragment :
-  BaseRegistrationFragment<FragmentRegistrationBusinessWhatsappBinding>() {
+class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWhatsappBinding>() {
 
   private var whatsAppData: ChannelActionData = ChannelActionData()
   private var whatsAppAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
@@ -42,16 +41,13 @@ class RegistrationBusinessWhatsAppFragment :
     }
     binding?.whatsappChannels?.post {
       (binding?.whatsappChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn())
-        ?.doOnComplete { setSetSelectedWhatsAppChannel(channels) })
-        ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
-        ?.andThen(binding?.edtView?.fadeIn(100))
-        ?.andThen(
-          binding?.whatsappEntransactional?.fadeIn(100)
-            ?.mergeWith(binding?.confirmBtn?.fadeIn(400L, confirmButtonAlpha))
-        )
-        ?.andThen(binding?.skip?.fadeIn(50L))?.doOnComplete {
-          baseActivity.showKeyBoard(binding?.number)
-        }?.subscribe()
+          ?.doOnComplete { setSetSelectedWhatsAppChannel(channels) })
+          ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
+          ?.andThen(binding?.edtView?.fadeIn(100))
+          ?.andThen(binding?.whatsappEntransactional?.fadeIn(100)?.mergeWith(binding?.confirmBtn?.fadeIn(400L, confirmButtonAlpha)))
+          ?.andThen(binding?.skip?.fadeIn(50L))?.doOnComplete {
+            baseActivity.showKeyBoard(binding?.number)
+          }?.subscribe()
     }
     setOnClickListener(binding?.confirmBtn, binding?.skip)
 
@@ -64,10 +60,7 @@ class RegistrationBusinessWhatsAppFragment :
     this.whatsAppData = whatsAppData
     binding?.number?.setText(whatsAppData.active_whatsapp_number)
     binding?.confirmBtn?.post {
-      onNumberValid(
-        ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString() ?: ""),
-        0F
-      )
+      onNumberValid(ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString() ?: ""), 0F)
     }
   }
 
@@ -96,9 +89,9 @@ class RegistrationBusinessWhatsAppFragment :
     })
 
     whatsAppAdapter = binding?.whatsappChannels?.setGridRecyclerViewAdapter(
-      baseActivity,
-      selectedItems.size,
-      selectedItems
+        baseActivity,
+        selectedItems.size,
+        selectedItems
     )
     whatsAppAdapter?.notifyDataSetChanged()
   }

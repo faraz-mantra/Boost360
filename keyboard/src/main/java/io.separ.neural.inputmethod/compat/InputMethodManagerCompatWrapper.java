@@ -37,16 +37,16 @@ public final class InputMethodManagerCompatWrapper {
     public final InputMethodManager mImm;
 
     public InputMethodManagerCompatWrapper(final Context context) {
-        mImm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        mImm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     public boolean switchToNextInputMethod(final IBinder token, final boolean onlyCurrentIme) {
-        return (Boolean) CompatUtils.invoke(mImm, false /* defaultValue */,
+        return (Boolean)CompatUtils.invoke(mImm, false /* defaultValue */,
                 METHOD_switchToNextInputMethod, token, onlyCurrentIme);
     }
 
     public boolean shouldOfferSwitchingToNextInputMethod(final IBinder token) {
-        return (Boolean) CompatUtils.invoke(mImm, false /* defaultValue */,
+        return (Boolean)CompatUtils.invoke(mImm, false /* defaultValue */,
                 METHOD_shouldOfferSwitchingToNextInputMethod, token);
     }
 }

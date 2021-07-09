@@ -11,11 +11,11 @@ import java.io.Serializable
 const val LAST_SEEN_DATA = "LAST_SEEN_DATA"
 
 class ManageBusinessData(
-  var title: String? = null,
-  var businessType: String? = null,
-  var premiumCode: String? = null,
-  var isLock: Boolean = false,
-  var isHide: Boolean = false,
+    var title: String? = null,
+    var businessType: String? = null,
+    var premiumCode: String? = null,
+    var isLock: Boolean = false,
+    var isHide: Boolean = false,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
 
   override fun getViewType(): Int {
@@ -36,15 +36,9 @@ class ManageBusinessData(
     ic_custom_page_add("ic_custom_page_add", R.drawable.ic_custom_page_add),
     ic_customer_testimonial_d("ic_customer_testimonial_d", R.drawable.ic_customer_testimonial_d),
     unlimited_content_updates("unlimited_content_updates", R.drawable.unlimited_content_updates),
-    website_social_share_plugin(
-      "website_social_share_plugin",
-      R.drawable.website_social_share_plugin
-    ),
+    website_social_share_plugin("website_social_share_plugin", R.drawable.website_social_share_plugin),
     autamated_seo_d("autamated_seo_d", R.drawable.autamated_seo_d),
-    unlimited_website_bandwidth(
-      "unlimited_website_bandwidth",
-      R.drawable.unlimited_website_bandwidth
-    ),
+    unlimited_website_bandwidth("unlimited_website_bandwidth", R.drawable.unlimited_website_bandwidth),
     clinic_basic_info("clinic_basic_info", R.drawable.ic_business_info_n),
     clinic_logo("clinic_logo", R.drawable.clinic_logo),
     featured_image_video("featured_image_video", R.drawable.picture_gallery),
@@ -58,10 +52,7 @@ class ManageBusinessData(
     my_bank_account("my_bank_account", R.drawable.my_bank_account),
     custom_payment_gateway("custom_payment_gateway", R.drawable.custom_payment_gateway),
     e_commerce_website("e_commerce_website", R.drawable.e_commerce_website),
-    content_sync_acros_channels(
-      "content_sync_acros_channels",
-      R.drawable.content_sync_acros_channels
-    ),
+    content_sync_acros_channels("content_sync_acros_channels", R.drawable.content_sync_acros_channels),
     facebook_likebox_plugin("facebook_likebox_plugin", R.drawable.facebook_likebox_plugin),
     ic_customer_call_tracker_d("ic_customer_call_tracker_d", R.drawable.ic_customer_call_d),
     ic_ivr_faculty("ic_ivr_faculty", R.drawable.ic_tracker_ivr_d),
@@ -100,7 +91,7 @@ class ManageBusinessData(
     table_reservations_d("table_reservations_d", R.drawable.table_reservations_d),
     ic_staff_profile_d("ic_staff_profile_d", R.drawable.ic_staff_profile_d);
 
-    //R.drawable.ic_project_terms_d
+   //R.drawable.ic_project_terms_d
 
     companion object {
       fun fromName(name: String?): BusinessType? = values().firstOrNull { it.name == name }
@@ -108,11 +99,7 @@ class ManageBusinessData(
   }
 
   fun getLastSeenData(): ArrayList<ManageBusinessData> {
-    return ArrayList(
-      convertStringToList(
-        PreferencesUtils.instance.getData(LAST_SEEN_DATA, "") ?: ""
-      ) ?: ArrayList()
-    )
+    return ArrayList(convertStringToList(PreferencesUtils.instance.getData(LAST_SEEN_DATA,"") ?: "") ?: ArrayList())
   }
 
   fun saveLastSeenData(data: ManageBusinessData) {
@@ -127,12 +114,12 @@ class ManageBusinessData(
 }
 
 data class ManageBusinessDataResponse(
-  var data: ArrayList<ManageActionData>? = null,
+    var data: ArrayList<ManageActionData>? = null,
 ) : BaseResponse(), Serializable
 
 data class ManageActionData(
-  @SerializedName("action_item")
-  var actionItem: ArrayList<ManageBusinessData>? = null,
-  @SerializedName("type")
-  var type: String? = null,
+    @SerializedName("action_item")
+    var actionItem: ArrayList<ManageBusinessData>? = null,
+    @SerializedName("type")
+    var type: String? = null,
 ) : Serializable

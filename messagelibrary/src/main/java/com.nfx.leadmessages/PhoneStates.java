@@ -81,25 +81,6 @@ public class PhoneStates extends BroadcastReceiver {
         telephony.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
     }
 
-    private void onCallEnd(final Context context) {
-
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setApiKey("AIzaSyBowYAh4TLbruwJoqL3QnQaKhBmB83EgEs")
-                .setApplicationId("1:506969475000:android:afe3b748e8b5c95f")
-                .setDatabaseUrl("https://nfxteam-153211.firebaseio.com")
-                .build();
-        FirebaseApp secondApp = null;
-        try {
-            secondApp = FirebaseApp.getInstance("second app");
-        } catch (Exception e) {
-            secondApp = FirebaseApp.initializeApp(context, options, "second app");
-        }
-        FirebaseDatabase secondDatabase = FirebaseDatabase.getInstance(secondApp);
-        final DatabaseReference mDatabase = secondDatabase.getReference();
-
-        //readCallLog(mDatabase);
-    }
-
     //Deals with actual events
     public class PhonecallStartEndDetector extends PhoneStateListener {
         private final Context context;
@@ -179,6 +160,25 @@ public class PhoneStates extends BroadcastReceiver {
             lastState = state;
         }
 
+    }
+
+    private void onCallEnd(final Context context) {
+
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setApiKey("AIzaSyBowYAh4TLbruwJoqL3QnQaKhBmB83EgEs")
+                .setApplicationId("1:506969475000:android:afe3b748e8b5c95f")
+                .setDatabaseUrl("https://nfxteam-153211.firebaseio.com")
+                .build();
+        FirebaseApp secondApp = null;
+        try {
+            secondApp = FirebaseApp.getInstance("second app");
+        } catch (Exception e) {
+            secondApp = FirebaseApp.initializeApp(context, options, "second app");
+        }
+        FirebaseDatabase secondDatabase = FirebaseDatabase.getInstance(secondApp);
+        final DatabaseReference mDatabase = secondDatabase.getReference();
+
+        //readCallLog(mDatabase);
     }
 
     /*private void readCallLog(DatabaseReference mDatabase) {

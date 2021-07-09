@@ -8,7 +8,7 @@ import android.inputmethodservice.Keyboard;
  * Created by Admin on 21-02-2018.
  */
 
-public class KeyboardBaseImpl extends Keyboard {
+public class KeyboardBaseImpl extends Keyboard  {
     public KeyboardBaseImpl(Context context, int xmlLayoutResId) {
         super(context, xmlLayoutResId);
     }

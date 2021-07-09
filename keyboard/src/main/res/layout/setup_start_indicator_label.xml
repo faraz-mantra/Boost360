@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
 **
 ** Copyright 2013, The Android Open Source Project
@@ -18,18 +19,14 @@
 -->
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
-
-  <view
-    android:id="@+id/setup_start_label"
-    style="@style/setupStepActionLabelStyleCommon"
-    class="io.separ.neural.inputmethod.indic.setup.SetupStartIndicatorView$LabelView"
-    android:layout_width="0dp"
-    android:layout_weight="1.0"
-    android:gravity="end|center_vertical"
-    android:text="@string/setup_start_action" />
-
-  <view
-    android:id="@+id/setup_start_indicator"
-    style="@style/setupStepStartIndicatorStyle"
-    class="io.separ.neural.inputmethod.indic.setup.SetupStartIndicatorView$IndicatorView" />
+    <view class="io.separ.neural.inputmethod.indic.setup.SetupStartIndicatorView$LabelView"
+        android:id="@+id/setup_start_label"
+        android:text="@string/setup_start_action"
+        android:gravity="end|center_vertical"
+        android:layout_width="0dp"
+        android:layout_weight="1.0"
+        style="@style/setupStepActionLabelStyleCommon" />
+    <view class="io.separ.neural.inputmethod.indic.setup.SetupStartIndicatorView$IndicatorView"
+        android:id="@+id/setup_start_indicator"
+        style="@style/setupStepStartIndicatorStyle" />
 </merge>

@@ -42,8 +42,10 @@ import io.separ.neural.inputmethod.indic.R;
 import io.separ.neural.inputmethod.indic.settings.Settings;
 
 final class EmojiCategory {
-    public static final int ID_RECENTS = 0;
+    private final String TAG = EmojiCategory.class.getSimpleName();
+
     private static final int ID_UNSPECIFIED = -1;
+    public static final int ID_RECENTS = 0;
     private static final int ID_PEOPLE = 1;
     private static final int ID_OBJECTS = 2;
     private static final int ID_NATURE = 3;
@@ -60,6 +62,17 @@ final class EmojiCategory {
     private static final int ID_EIGHT_SYMBOLS = 14;
     private static final int ID_EIGHT_FLAGS = 15;
     private static final int ID_EIGHT_SMILEY_PEOPLE_BORING = 16;
+
+    public static final class CategoryProperties {
+        public final int mCategoryId;
+        public final int mPageCount;
+
+        public CategoryProperties(final int categoryId, final int pageCount) {
+            mCategoryId = categoryId;
+            mPageCount = pageCount;
+        }
+    }
+
     private static final String[] sCategoryName = {
             "recents",
             "people",
@@ -78,6 +91,7 @@ final class EmojiCategory {
             "symbols2",
             "flags2",
             "smiley & people2"};
+
     private static final int[] sCategoryTabIconAttr = {
             R.styleable.EmojiPalettesView_iconEmojiRecentsTab,
             R.styleable.EmojiPalettesView_iconEmojiCategory1Tab,
@@ -96,6 +110,7 @@ final class EmojiCategory {
             R.styleable.EmojiPalettesView_iconEmojiCategory14Tab,
             R.styleable.EmojiPalettesView_iconEmojiCategory15Tab,
             R.styleable.EmojiPalettesView_iconEmojiCategory16Tab};
+
     private static final int[] sAccessibilityDescriptionResourceIdsForCategories = {
             R.string.spoken_descrption_emoji_category_recents,
             R.string.spoken_descrption_emoji_category_people,
@@ -114,6 +129,7 @@ final class EmojiCategory {
             R.string.spoken_descrption_emoji_category_symbols,
             R.string.spoken_descrption_emoji_category_flags,
             R.string.spoken_descrption_emoji_category_eight_smiley_people};
+
     private static final int[] sCategoryElementId = {
             KeyboardId.ELEMENT_EMOJI_RECENTS,
             KeyboardId.ELEMENT_EMOJI_CATEGORY1,
@@ -132,25 +148,7 @@ final class EmojiCategory {
             KeyboardId.ELEMENT_EMOJI_CATEGORY14,
             KeyboardId.ELEMENT_EMOJI_CATEGORY15,
             KeyboardId.ELEMENT_EMOJI_CATEGORY16};
-    private static final Comparator<Key> EMOJI_KEY_COMPARATOR = new Comparator<Key>() {
-        @Override
-        public int compare(final Key lhs, final Key rhs) {
-            final Rect lHitBox = lhs.getHitBox();
-            final Rect rHitBox = rhs.getHitBox();
-            if (lHitBox.top < rHitBox.top)
-                return -1;
-            if (lHitBox.top > rHitBox.top)
-                return 1;
-            if (lHitBox.left < rHitBox.left)
-                return -1;
-            if (lHitBox.left > rHitBox.left)
-                return 1;
-            if (lhs.getCode() == rhs.getCode())
-                return 0;
-            return lhs.getCode() < rhs.getCode() ? -1 : 1;
-        }
-    };
-    private final String TAG = EmojiCategory.class.getSimpleName();
+
     private final SharedPreferences mPrefs;
     private final Resources mRes;
     private final int mMaxPageKeyCount;
@@ -202,25 +200,6 @@ final class EmojiCategory {
         }
     }
 
-    public static String getCategoryName(final int categoryId, final int categoryPageId) {
-        return sCategoryName[categoryId] + '-' + categoryPageId;
-    }
-
-    private static Long getCategoryKeyboardMapKey(final int categoryId, final int id) {
-        return (((long) categoryId) << Constants.MAX_INT_BIT_COUNT) | id;
-    }
-
-    private static Key[][] sortKeysIntoPages(final List<Key> inKeys, final int maxPageCount) {
-        final ArrayList<Key> keys = new ArrayList<>(inKeys);
-        Collections.sort(keys, EMOJI_KEY_COMPARATOR);
-        final int pageCount = (keys.size() - 1) / maxPageCount + 1;
-        final Key[][] retval = new Key[pageCount][maxPageCount];
-        for (int i = 0; i < keys.size(); ++i) {
-            retval[i / maxPageCount][i % maxPageCount] = keys.get(i);
-        }
-        return retval;
-    }
-
     private void addShownCategoryId(final int categoryId) {
         // Load a keyboard of categoryId
         getKeyboard(categoryId, 0 /* categoryPageId */);
@@ -236,6 +215,10 @@ final class EmojiCategory {
             }
         }
         return false;
+    }
+
+    public static String getCategoryName(final int categoryId, final int categoryPageId) {
+        return sCategoryName[categoryId] + '-' + categoryPageId;
     }
 
     public int getCategoryId(final String name) {
@@ -295,6 +278,10 @@ final class EmojiCategory {
         return null;
     }
 
+    private static Long getCategoryKeyboardMapKey(final int categoryId, final int id) {
+        return (((long) categoryId) << Constants.MAX_INT_BIT_COUNT) | id;
+    }
+
     public DynamicGridKeyboard getKeyboard(final int categoryId, final int id) {
         synchronized (mCategoryKeyboardMap) {
             final Long categoryKeyboardMapKey = getCategoryKeyboardMapKey(categoryId, id);
@@ -330,13 +317,33 @@ final class EmojiCategory {
         }
     }
 
-    public static final class CategoryProperties {
-        public final int mCategoryId;
-        public final int mPageCount;
-
-        public CategoryProperties(final int categoryId, final int pageCount) {
-            mCategoryId = categoryId;
-            mPageCount = pageCount;
+    private static final Comparator<Key> EMOJI_KEY_COMPARATOR = new Comparator<Key>() {
+        @Override
+        public int compare(final Key lhs, final Key rhs) {
+            final Rect lHitBox = lhs.getHitBox();
+            final Rect rHitBox = rhs.getHitBox();
+            if (lHitBox.top < rHitBox.top)
+                return -1;
+            if (lHitBox.top > rHitBox.top)
+                return 1;
+            if (lHitBox.left < rHitBox.left)
+                return -1;
+            if (lHitBox.left > rHitBox.left)
+                return 1;
+            if (lhs.getCode() == rhs.getCode())
+                return 0;
+            return lhs.getCode() < rhs.getCode() ? -1 : 1;
         }
+    };
+
+    private static Key[][] sortKeysIntoPages(final List<Key> inKeys, final int maxPageCount) {
+        final ArrayList<Key> keys = new ArrayList<>(inKeys);
+        Collections.sort(keys, EMOJI_KEY_COMPARATOR);
+        final int pageCount = (keys.size() - 1) / maxPageCount + 1;
+        final Key[][] retval = new Key[pageCount][maxPageCount];
+        for (int i = 0; i < keys.size(); ++i) {
+            retval[i / maxPageCount][i % maxPageCount] = keys.get(i);
+        }
+        return retval;
     }
 }

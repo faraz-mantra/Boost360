@@ -2,11 +2,9 @@ package com.nowfloats.ProductGallery.Adapter;
 
 import android.content.Context;
 import android.net.Uri;
-
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

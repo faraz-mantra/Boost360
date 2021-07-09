@@ -13,24 +13,24 @@ const val SELLER_BUSINESS_REPORT = "SELLER_BUSINESS_REPORT"
 const val TOTAL_SELLER_ENQUIRIES = "TOTAL_SELLER_ENQUIRIES"
 
 class OrderSummaryModel(
-  val CurrencyCode: String? = null,
-  val SellerId: String? = null,
-  val TotalCompletedOrders: Int? = null,
-  val TotalGrossAmount: Double? = null,
-  val TotalNetAmount: Double? = null,
-  val TotalOrders: Int? = null,
-  val TotalOrdersAbandoned: Int? = null,
-  val TotalOrdersCancelled: Int? = null,
-  val TotalOrdersCompleted: Int? = null,
-  val TotalOrdersEscalated: Int? = null,
-  val TotalOrdersInProgress: Int? = null,
-  val TotalRevenue: Double? = null,
-  val FeedbackSummary: FeedbackSummary? = null,
+    val CurrencyCode: String? = null,
+    val SellerId: String? = null,
+    val TotalCompletedOrders: Int? = null,
+    val TotalGrossAmount: Double? = null,
+    val TotalNetAmount: Double? = null,
+    val TotalOrders: Int? = null,
+    val TotalOrdersAbandoned: Int? = null,
+    val TotalOrdersCancelled: Int? = null,
+    val TotalOrdersCompleted: Int? = null,
+    val TotalOrdersEscalated: Int? = null,
+    val TotalOrdersInProgress: Int? = null,
+    val TotalRevenue: Double? = null,
+    val FeedbackSummary: FeedbackSummary? = null,
 
-  val type: String? = null,
-  val count: Int? = null,
-  @ColorRes val color: Int? = null,
-  var isSelected: Boolean = false,
+    val type: String? = null,
+    val count: Int? = null,
+    @ColorRes val color: Int? = null,
+    var isSelected: Boolean = false,
 ) : BaseResponse(), Serializable, AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
@@ -47,49 +47,12 @@ class OrderSummaryModel(
 
   fun getOrderType(): ArrayList<OrderSummaryModel> {
     val list = ArrayList<OrderSummaryModel>()
-    list.add(
-      OrderSummaryModel(
-        type = OrderSummaryType.TOTAL.type,
-        count = TotalOrders,
-        isSelected = true,
-        color = R.color.orange
-      )
-    )
-    list.add(
-      OrderSummaryModel(
-        type = OrderSummaryType.RECEIVED.type,
-        count = TotalOrdersInProgress,
-        color = R.color.watermelon_light
-      )
-    )
-    list.add(
-      OrderSummaryModel(
-        type = OrderSummaryType.SUCCESSFUL.type,
-        count = TotalOrdersCompleted,
-        color = R.color.green_27AE60
-      )
-    )
-    list.add(
-      OrderSummaryModel(
-        type = OrderSummaryType.CANCELLED.type,
-        count = TotalOrdersCancelled,
-        color = R.color.pinkish_grey
-      )
-    )
-    list.add(
-      OrderSummaryModel(
-        type = OrderSummaryType.ABANDONED.type,
-        count = TotalOrdersAbandoned,
-        color = R.color.red_F40000
-      )
-    )
-    list.add(
-      OrderSummaryModel(
-        type = OrderSummaryType.ESCALATED.type,
-        count = TotalOrdersEscalated,
-        color = R.color.red_F40000
-      )
-    )
+    list.add(OrderSummaryModel(type = OrderSummaryType.TOTAL.type, count = TotalOrders, isSelected = true, color = R.color.orange))
+    list.add(OrderSummaryModel(type = OrderSummaryType.RECEIVED.type, count = TotalOrdersInProgress, color = R.color.watermelon_light))
+    list.add(OrderSummaryModel(type = OrderSummaryType.SUCCESSFUL.type, count = TotalOrdersCompleted, color = R.color.green_27AE60))
+    list.add(OrderSummaryModel(type = OrderSummaryType.CANCELLED.type, count = TotalOrdersCancelled, color = R.color.pinkish_grey))
+    list.add(OrderSummaryModel(type = OrderSummaryType.ABANDONED.type, count = TotalOrdersAbandoned, color = R.color.red_F40000))
+    list.add(OrderSummaryModel(type = OrderSummaryType.ESCALATED.type, count = TotalOrdersEscalated, color = R.color.red_F40000))
     return list
   }
 
@@ -118,11 +81,8 @@ class OrderSummaryModel(
 
 
     companion object {
-      fun fromType(type: String): OrderSummaryType? =
-        values().firstOrNull { it.type.equals(type, ignoreCase = true) }
-
-      fun fromValue(value: String): OrderSummaryType? =
-        values().firstOrNull { it.value.equals(value, ignoreCase = true) }
+      fun fromType(type: String): OrderSummaryType? = values().firstOrNull { it.type.equals(type, ignoreCase = true) }
+      fun fromValue(value: String): OrderSummaryType? = values().firstOrNull { it.value.equals(value, ignoreCase = true) }
     }
   }
 
@@ -131,8 +91,7 @@ class OrderSummaryModel(
     FEEDBACK_PENDING, FEEDBACK_RECEIVED, DELIVERY_DELAYED, DELIVERY_FAILED, ORDER_COMPLETED, ORDER_CANCELLED, ESCALATED;
 
     companion object {
-      fun from(value: String?): OrderStatus? =
-        values().firstOrNull { it.name.equals(value, ignoreCase = true) }
+      fun from(value: String?): OrderStatus? = values().firstOrNull { it.name.equals(value, ignoreCase = true) }
     }
   }
 
@@ -140,26 +99,26 @@ class OrderSummaryModel(
     ORDER, APPOINTMENT, VIDEO_CONSULTATION;
   }
 
-  fun getSellerSummary(key: String): OrderSummaryModel? {
+  fun getSellerSummary(key:String): OrderSummaryModel? {
     val resp = PreferencesUtils.instance.getData(key, "") ?: ""
     return convertStringToObj(resp)
   }
 
-  fun saveData(key: String) {
+  fun saveData(key:String) {
     PreferencesUtils.instance.saveData(key, convertObjToString(this) ?: "")
   }
 
-  fun getTotalOrder(key: String): String? {
+  fun getTotalOrder(key:String): String? {
     return PreferencesUtils.instance.getData(key, "")
   }
 
-  fun saveTotalOrder(key: String) {
+  fun saveTotalOrder(key:String) {
     PreferencesUtils.instance.saveData(key, getTotalOrders())
   }
 }
 
 class FeedbackSummary(
-  val AverageFeedback: Double? = null,
-  val TotalFeedbacksReceived: Int? = null,
+    val AverageFeedback: Double? = null,
+    val TotalFeedbacksReceived: Int? = null,
 )
 

@@ -18,8 +18,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class CartRenewalAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentListener) :
-  RecyclerView.Adapter<CartRenewalAdaptor.renewalViewHolder>() {
+class CartRenewalAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentListener) : RecyclerView.Adapter<CartRenewalAdaptor.renewalViewHolder>() {
 
   private var list = ArrayList<CartModel>()
   private lateinit var context: Context
@@ -29,8 +28,7 @@ class CartRenewalAdaptor(cardItems: List<CartModel>?, val listener: CartFragment
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): renewalViewHolder {
-    val itemView =
-      LayoutInflater.from(parent.context).inflate(R.layout.cart_single_addons, parent, false)
+    val itemView = LayoutInflater.from(parent.context).inflate(R.layout.cart_single_addons, parent, false)
     context = itemView.context
     return renewalViewHolder(itemView)
   }
@@ -41,16 +39,12 @@ class CartRenewalAdaptor(cardItems: List<CartModel>?, val listener: CartFragment
 
   override fun onBindViewHolder(holder: renewalViewHolder, position: Int) {
     val data = list[position]
-    Glide.with(context).load(data.link ?: "").placeholder(R.drawable.boost_360_insignia)
-      .into(holder.image)
+    Glide.with(context).load(data.link ?: "").placeholder(R.drawable.boost_360_insignia).into(holder.image)
     holder.title.text = data.item_name
     if (data.min_purchase_months > 1) {
-      holder.price.text = "₹${
-        NumberFormat.getNumberInstance(Locale.ENGLISH).format(data.price)
-      }/${data.min_purchase_months}month"
+      holder.price.text = "₹${NumberFormat.getNumberInstance(Locale.ENGLISH).format(data.price)}/${data.min_purchase_months}month"
     } else {
-      holder.price.text =
-        "₹${NumberFormat.getNumberInstance(Locale.ENGLISH).format(data.price)}/month"
+      holder.price.text = "₹${NumberFormat.getNumberInstance(Locale.ENGLISH).format(data.price)}/month"
     }
     holder.MRPPrice.visibility = View.VISIBLE
     if (data.discount > 0) {
@@ -85,10 +79,7 @@ class CartRenewalAdaptor(cardItems: List<CartModel>?, val listener: CartFragment
 
   fun spannableString(holder: renewalViewHolder, value: Double, minMonth: Int) {
     val origCost: SpannableString = if (minMonth > 1) {
-      SpannableString(
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-          .format(value) + "/" + minMonth + "months"
-      )
+      SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "months")
     } else {
       SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
     }

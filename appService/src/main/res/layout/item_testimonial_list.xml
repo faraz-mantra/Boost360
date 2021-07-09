@@ -10,10 +10,10 @@
   <com.framework.views.customViews.CustomCardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/size_10"
-    android:layout_marginTop="@dimen/size_10"
-    android:layout_marginEnd="@dimen/size_10"
     app:cardElevation="@dimen/size_12"
+    android:layout_marginStart="@dimen/size_10"
+    android:layout_marginEnd="@dimen/size_10"
+    android:layout_marginTop="@dimen/size_10"
     app:cardUseCompatPadding="true">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -66,9 +66,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/size_10"
+        tools:text="Very happy with the treatment of Dr Lohia. Getting treatment under him from last one month there is tremendous relief .. Thank you doctor and thanks hospital for the good services"
         android:textColor="@color/black_4a4a4a"
-        app:textType="BODY_2"
-        tools:text="Very happy with the treatment of Dr Lohia. Getting treatment under him from last one month there is tremendous relief .. Thank you doctor and thanks hospital for the good services" />
+        app:textType="BODY_2" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </com.framework.views.customViews.CustomCardView>
 </layout>

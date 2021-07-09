@@ -56,7 +56,6 @@ import retrofit.converter.GsonConverter;
 
 public class DigitalBrochuresDetailsActivity extends AppCompatActivity implements DigitalBrochuresDetailsListener {
 
-    private final int gallery_req_id = 0;
     String ScreenType = "", itemId = "";
     EditText nameText, descriptionText, attachedURLText;
     TextView saveButton;
@@ -65,9 +64,10 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
     UserSessionManager session;
     Data existingItemData;
     int SELECT_PDF = 123;
+    private final int gallery_req_id = 0;
+    private ProgressDialog progressDialog;
     View dummyView1;
     String path = null;
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

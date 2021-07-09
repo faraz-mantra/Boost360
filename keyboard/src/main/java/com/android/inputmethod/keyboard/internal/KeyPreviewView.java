@@ -43,25 +43,9 @@ public class KeyPreviewView extends TextView {
     public static final int POSITION_MIDDLE = 0;
     public static final int POSITION_LEFT = 1;
     public static final int POSITION_RIGHT = 2;
-    private static final HashSet<String> sNoScaleXTextSet = new HashSet<>();
-    // Background state set
-    private static final int[][][] KEY_PREVIEW_BACKGROUND_STATE_TABLE = {
-            { // POSITION_MIDDLE
-                    {},
-                    {R.attr.state_has_morekeys}
-            },
-            { // POSITION_LEFT
-                    {R.attr.state_left_edge},
-                    {R.attr.state_left_edge, R.attr.state_has_morekeys}
-            },
-            { // POSITION_RIGHT
-                    {R.attr.state_right_edge},
-                    {R.attr.state_right_edge, R.attr.state_has_morekeys}
-            }
-    };
-    private static final int STATE_NORMAL = 0;
-    private static final int STATE_HAS_MOREKEYS = 1;
+
     private final Rect mBackgroundPadding = new Rect();
+    private static final HashSet<String> sNoScaleXTextSet = new HashSet<>();
 
     public KeyPreviewView(final Context context, final AttributeSet attrs) {
         this(context, attrs, 0);
@@ -70,24 +54,6 @@ public class KeyPreviewView extends TextView {
     public KeyPreviewView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setGravity(Gravity.CENTER);
-    }
-
-    public static void clearTextCache() {
-        sNoScaleXTextSet.clear();
-    }
-
-    private static float getTextWidth(final String text, final TextPaint paint) {
-        if (TextUtils.isEmpty(text)) {
-            return 0.0f;
-        }
-        final int len = text.length();
-        final float[] widths = new float[len];
-        final int count = paint.getTextWidths(text, 0, len, widths);
-        float width = 0;
-        for (int i = 0; i < count; i++) {
-            width += widths[i];
-        }
-        return width;
     }
 
     public void setPreviewVisual(final Key key, final KeyboardIconsSet iconsSet,
@@ -132,6 +98,42 @@ public class KeyPreviewView extends TextView {
         }
         setTextScaleX(maxWidth / width);
     }
+
+    public static void clearTextCache() {
+        sNoScaleXTextSet.clear();
+    }
+
+    private static float getTextWidth(final String text, final TextPaint paint) {
+        if (TextUtils.isEmpty(text)) {
+            return 0.0f;
+        }
+        final int len = text.length();
+        final float[] widths = new float[len];
+        final int count = paint.getTextWidths(text, 0, len, widths);
+        float width = 0;
+        for (int i = 0; i < count; i++) {
+            width += widths[i];
+        }
+        return width;
+    }
+
+    // Background state set
+    private static final int[][][] KEY_PREVIEW_BACKGROUND_STATE_TABLE = {
+            { // POSITION_MIDDLE
+                    {},
+                    {R.attr.state_has_morekeys}
+            },
+            { // POSITION_LEFT
+                    {R.attr.state_left_edge},
+                    {R.attr.state_left_edge, R.attr.state_has_morekeys}
+            },
+            { // POSITION_RIGHT
+                    {R.attr.state_right_edge},
+                    {R.attr.state_right_edge, R.attr.state_has_morekeys}
+            }
+    };
+    private static final int STATE_NORMAL = 0;
+    private static final int STATE_HAS_MOREKEYS = 1;
 
     public void setPreviewBackground(final boolean hasMoreKeys, final int position) {
         final Drawable background = getBackground();

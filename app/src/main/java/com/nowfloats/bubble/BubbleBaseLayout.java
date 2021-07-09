@@ -30,10 +30,36 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 class BubbleBaseLayout extends FrameLayout {
-    public boolean isAnimRequired = true;
     private WindowManager windowManager;
     private WindowManager.LayoutParams params;
     private BubblesLayoutCoordinator layoutCoordinator;
+    public boolean isAnimRequired = true;
+    void setLayoutCoordinator(BubblesLayoutCoordinator layoutCoordinator) {
+        this.layoutCoordinator = layoutCoordinator;
+    }
+    void setAnimationListener(boolean isAnimRequired) {
+        this.isAnimRequired = isAnimRequired;
+    }
+
+    BubblesLayoutCoordinator getLayoutCoordinator() {
+        return layoutCoordinator;
+    }
+
+    void setWindowManager(WindowManager windowManager) {
+        this.windowManager = windowManager;
+    }
+
+    WindowManager getWindowManager() {
+        return this.windowManager;
+    }
+
+    void setViewParams(WindowManager.LayoutParams params) {
+        this.params = params;
+    }
+
+    WindowManager.LayoutParams getViewParams() {
+        return this.params;
+    }
 
     public BubbleBaseLayout(Context context) {
         super(context);
@@ -45,33 +71,5 @@ class BubbleBaseLayout extends FrameLayout {
 
     public BubbleBaseLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    void setAnimationListener(boolean isAnimRequired) {
-        this.isAnimRequired = isAnimRequired;
-    }
-
-    BubblesLayoutCoordinator getLayoutCoordinator() {
-        return layoutCoordinator;
-    }
-
-    void setLayoutCoordinator(BubblesLayoutCoordinator layoutCoordinator) {
-        this.layoutCoordinator = layoutCoordinator;
-    }
-
-    WindowManager getWindowManager() {
-        return this.windowManager;
-    }
-
-    void setWindowManager(WindowManager windowManager) {
-        this.windowManager = windowManager;
-    }
-
-    WindowManager.LayoutParams getViewParams() {
-        return this.params;
-    }
-
-    void setViewParams(WindowManager.LayoutParams params) {
-        this.params = params;
     }
 }

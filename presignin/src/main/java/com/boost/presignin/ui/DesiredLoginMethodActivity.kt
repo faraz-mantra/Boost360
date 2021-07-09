@@ -13,8 +13,7 @@ import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 import com.framework.webengageconstant.*
 
-class DesiredLoginMethodActivity :
-  BaseActivity<ActivityDesiredLoginMethodBinding, BaseViewModel>() {
+class DesiredLoginMethodActivity : BaseActivity<ActivityDesiredLoginMethodBinding, BaseViewModel>() {
 
 
   override fun getLayout(): Int {
@@ -29,11 +28,7 @@ class DesiredLoginMethodActivity :
     WebEngageController.trackEvent(PS_DESIRED_LOGIN_SCREEN_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
 
     binding?.usernameOrEmailBt?.setOnClickListener {
-      WebEngageController.trackEvent(
-        PS_DESIRED_LOGIN_USERNAME_CLICK,
-        CLICK_LOGIN_USERNAME,
-        NO_EVENT_VALUE
-      )
+      WebEngageController.trackEvent(PS_DESIRED_LOGIN_USERNAME_CLICK, CLICK_LOGIN_USERNAME, NO_EVENT_VALUE)
       startActivity(Intent(this@DesiredLoginMethodActivity, LoginActivity::class.java))
     }
     backPressed()
@@ -45,11 +40,7 @@ class DesiredLoginMethodActivity :
     }
 
     binding?.anotherMethodBt?.setOnClickListener {
-      WebEngageController.trackEvent(
-        PS_DESIRED_LOGIN_NUMBER_CLICK,
-        CLICK_DIFFERENT_NUMBER,
-        NO_EVENT_VALUE
-      )
+      WebEngageController.trackEvent(PS_DESIRED_LOGIN_NUMBER_CLICK, CLICK_DIFFERENT_NUMBER, NO_EVENT_VALUE)
       navigator?.startActivity(MobileVerificationActivity::class.java)
     }
 

@@ -29,14 +29,15 @@ import io.separ.neural.inputmethod.indic.R;
  * @attr ref R.styleable#MainKeyboardView_gestureTrailMaxInterpolationSegments
  */
 public final class GestureStrokeDrawingParams {
-    private static final float DEFAULT_MIN_SAMPLING_DISTANCE = 0.0f; // dp
-    private static final int DEFAULT_MAX_INTERPOLATION_ANGULAR_THRESHOLD = 15; // in degree
-    private static final float DEFAULT_MAX_INTERPOLATION_DISTANCE_THRESHOLD = 0.0f; // dp
-    private static final int DEFAULT_MAX_INTERPOLATION_SEGMENTS = 4;
     public final double mMinSamplingDistance; // in pixel
     public final double mMaxInterpolationAngularThreshold; // in radian
     public final double mMaxInterpolationDistanceThreshold; // in pixel
     public final int mMaxInterpolationSegments;
+
+    private static final float DEFAULT_MIN_SAMPLING_DISTANCE = 0.0f; // dp
+    private static final int DEFAULT_MAX_INTERPOLATION_ANGULAR_THRESHOLD = 15; // in degree
+    private static final float DEFAULT_MAX_INTERPOLATION_DISTANCE_THRESHOLD = 0.0f; // dp
+    private static final int DEFAULT_MAX_INTERPOLATION_SEGMENTS = 4;
 
     public GestureStrokeDrawingParams(final TypedArray mainKeyboardViewAttr) {
         mMinSamplingDistance = mainKeyboardViewAttr.getDimension(
@@ -46,7 +47,7 @@ public final class GestureStrokeDrawingParams {
                 .MainKeyboardView_gestureTrailMaxInterpolationAngularThreshold, 0);
         mMaxInterpolationAngularThreshold = Math.toRadians(interpolationAngularDegree <= 0 ? DEFAULT_MAX_INTERPOLATION_ANGULAR_THRESHOLD : interpolationAngularDegree);
         mMaxInterpolationDistanceThreshold = mainKeyboardViewAttr.getDimension(R.styleable
-                        .MainKeyboardView_gestureTrailMaxInterpolationDistanceThreshold,
+                .MainKeyboardView_gestureTrailMaxInterpolationDistanceThreshold,
                 DEFAULT_MAX_INTERPOLATION_DISTANCE_THRESHOLD);
         mMaxInterpolationSegments = mainKeyboardViewAttr.getInteger(
                 R.styleable.MainKeyboardView_gestureTrailMaxInterpolationSegments,

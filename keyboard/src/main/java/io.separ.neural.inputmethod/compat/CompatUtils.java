@@ -40,7 +40,7 @@ public final class CompatUtils {
     }
 
     public static Method getMethod(final Class<?> targetClass, final String name,
-                                   final Class<?>... parameterTypes) {
+            final Class<?>... parameterTypes) {
         if (targetClass == null || TextUtils.isEmpty(name)) {
             return null;
         }
@@ -65,7 +65,7 @@ public final class CompatUtils {
     }
 
     public static Constructor<?> getConstructor(final Class<?> targetClass,
-                                                final Class<?>... types) {
+            final Class<?> ... types) {
         if (targetClass == null || types == null) {
             return null;
         }
@@ -77,7 +77,7 @@ public final class CompatUtils {
         return null;
     }
 
-    public static Object newInstance(final Constructor<?> constructor, final Object... args) {
+    public static Object newInstance(final Constructor<?> constructor, final Object ... args) {
         if (constructor == null) {
             return null;
         }
@@ -91,7 +91,7 @@ public final class CompatUtils {
     }
 
     public static Object invoke(final Object receiver, final Object defaultValue,
-                                final Method method, final Object... args) {
+            final Method method, final Object... args) {
         if (method == null) {
             return defaultValue;
         }
@@ -105,7 +105,7 @@ public final class CompatUtils {
     }
 
     public static Object getFieldValue(final Object receiver, final Object defaultValue,
-                                       final Field field) {
+            final Field field) {
         if (field == null) {
             return defaultValue;
         }
@@ -134,7 +134,6 @@ public final class CompatUtils {
 
     public static final class ClassWrapper {
         private final Class<?> mClass;
-
         public ClassWrapper(final Class<?> targetClass) {
             mClass = targetClass;
         }
@@ -144,25 +143,25 @@ public final class CompatUtils {
         }
 
         public <T> ToObjectMethodWrapper<T> getMethod(final String name,
-                                                      final T defaultValue, final Class<?>... parameterTypes) {
+                final T defaultValue, final Class<?>... parameterTypes) {
             return new ToObjectMethodWrapper<>(CompatUtils.getMethod(mClass, name, parameterTypes),
                     defaultValue);
         }
 
         public ToIntMethodWrapper getPrimitiveMethod(final String name, final int defaultValue,
-                                                     final Class<?>... parameterTypes) {
+                final Class<?>... parameterTypes) {
             return new ToIntMethodWrapper(CompatUtils.getMethod(mClass, name, parameterTypes),
                     defaultValue);
         }
 
         public ToFloatMethodWrapper getPrimitiveMethod(final String name, final float defaultValue,
-                                                       final Class<?>... parameterTypes) {
+                final Class<?>... parameterTypes) {
             return new ToFloatMethodWrapper(CompatUtils.getMethod(mClass, name, parameterTypes),
                     defaultValue);
         }
 
         public ToBooleanMethodWrapper getPrimitiveMethod(final String name,
-                                                         final boolean defaultValue, final Class<?>... parameterTypes) {
+                final boolean defaultValue, final Class<?>... parameterTypes) {
             return new ToBooleanMethodWrapper(CompatUtils.getMethod(mClass, name, parameterTypes),
                     defaultValue);
         }
@@ -171,12 +170,10 @@ public final class CompatUtils {
     public static final class ToObjectMethodWrapper<T> {
         private final Method mMethod;
         private final T mDefaultValue;
-
         public ToObjectMethodWrapper(final Method method, final T defaultValue) {
             mMethod = method;
             mDefaultValue = defaultValue;
         }
-
         @SuppressWarnings("unchecked")
         public T invoke(final Object receiver, final Object... args) {
             return (T) CompatUtils.invoke(receiver, mDefaultValue, mMethod, args);
@@ -186,12 +183,10 @@ public final class CompatUtils {
     public static final class ToIntMethodWrapper {
         private final Method mMethod;
         private final int mDefaultValue;
-
         public ToIntMethodWrapper(final Method method, final int defaultValue) {
             mMethod = method;
             mDefaultValue = defaultValue;
         }
-
         public int invoke(final Object receiver, final Object... args) {
             return (int) CompatUtils.invoke(receiver, mDefaultValue, mMethod, args);
         }
@@ -200,12 +195,10 @@ public final class CompatUtils {
     public static final class ToFloatMethodWrapper {
         private final Method mMethod;
         private final float mDefaultValue;
-
         public ToFloatMethodWrapper(final Method method, final float defaultValue) {
             mMethod = method;
             mDefaultValue = defaultValue;
         }
-
         public float invoke(final Object receiver, final Object... args) {
             return (float) CompatUtils.invoke(receiver, mDefaultValue, mMethod, args);
         }
@@ -214,12 +207,10 @@ public final class CompatUtils {
     public static final class ToBooleanMethodWrapper {
         private final Method mMethod;
         private final boolean mDefaultValue;
-
         public ToBooleanMethodWrapper(final Method method, final boolean defaultValue) {
             mMethod = method;
             mDefaultValue = defaultValue;
         }
-
         public boolean invoke(final Object receiver, final Object... args) {
             return (boolean) CompatUtils.invoke(receiver, mDefaultValue, mMethod, args);
         }

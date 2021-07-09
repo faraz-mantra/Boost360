@@ -20,33 +20,24 @@ package com.android.inputmethod.keyboard.internal;
  * Interpolates XY-coordinates using Cubic Hermite Curve.
  */
 public final class HermiteInterpolator {
-    /**
-     * The coordinates of the start point of the interval.
-     */
-    public int mP1X, mP1Y;
-    /**
-     * The coordinates of the end point of the interval.
-     */
-    public int mP2X, mP2Y;
-    /**
-     * The slope of the tangent at the start point.
-     */
-    public float mSlope1X, mSlope1Y;
-    /**
-     * The slope of the tangent at the end point.
-     */
-    public float mSlope2X, mSlope2Y;
-
-    // Working variable to calculate interpolated value.
-    /**
-     * The interpolated coordinates.
-     * The return variables of {@link #interpolate(float)} to avoid instantiations.
-     */
-    public float mInterpolatedX, mInterpolatedY;
     private int[] mXCoords;
     private int[] mYCoords;
     private int mMinPos;
     private int mMaxPos;
+
+    // Working variable to calculate interpolated value.
+    /** The coordinates of the start point of the interval. */
+    public int mP1X, mP1Y;
+    /** The coordinates of the end point of the interval. */
+    public int mP2X, mP2Y;
+    /** The slope of the tangent at the start point. */
+    public float mSlope1X, mSlope1Y;
+    /** The slope of the tangent at the end point. */
+    public float mSlope2X, mSlope2Y;
+    /** The interpolated coordinates.
+     * The return variables of {@link #interpolate(float)} to avoid instantiations.
+     */
+    public float mInterpolatedX, mInterpolatedY;
 
     public HermiteInterpolator() {
         // Nothing to do with here.
@@ -54,16 +45,15 @@ public final class HermiteInterpolator {
 
     /**
      * Reset this interpolator to point XY-coordinates data.
-     *
      * @param xCoords the array of x-coordinates. Valid data are in left-open interval
      *                <code>[minPos, maxPos)</code>.
      * @param yCoords the array of y-coordinates. Valid data are in left-open interval
      *                <code>[minPos, maxPos)</code>.
-     * @param minPos  the minimum index of left-open interval of valid data.
-     * @param maxPos  the maximum index of left-open interval of valid data.
+     * @param minPos the minimum index of left-open interval of valid data.
+     * @param maxPos the maximum index of left-open interval of valid data.
      */
     public void reset(final int[] xCoords, final int[] yCoords, final int minPos,
-                      final int maxPos) {
+            final int maxPos) {
         mXCoords = xCoords;
         mYCoords = yCoords;
         mMinPos = minPos;
@@ -79,12 +69,12 @@ public final class HermiteInterpolator {
      *
      * @param p0 the index just before interpolation interval. If <code>p1</code> points the start
      *           of valid points, <code>p0</code> must be less than <code>minPos</code> of
-     *           {@link #reset(int[], int[], int, int)}.
+     *           {@link #reset(int[],int[],int,int)}.
      * @param p1 the start index of interpolation interval.
      * @param p2 the end index of interpolation interval.
      * @param p3 the index just after interpolation interval. If <code>p2</code> points the end of
      *           valid points, <code>p3</code> must be equal or greater than <code>maxPos</code> of
-     *           {@link #reset(int[], int[], int, int)}.
+     *           {@link #reset(int[],int[],int,int)}.
      */
     public void setInterval(final int p0, final int p1, final int p2, final int p3) {
         mP1X = mXCoords[p1];
@@ -150,7 +140,7 @@ public final class HermiteInterpolator {
      * On the unit interval [0,1], given a starting point p1 at t=0 and an ending point p2 at t=1
      * with the slope of the tangent m1 at p1 and m2 at p2, the polynomial of cubic Hermite curve
      * can be defined by
-     * p(t) = (1+2t)(1-t)(1-t)*p1 + t(1-t)(1-t)*m1 + (3-2t)t^2*p2 + (t-1)t^2*m2
+     *   p(t) = (1+2t)(1-t)(1-t)*p1 + t(1-t)(1-t)*m1 + (3-2t)t^2*p2 + (t-1)t^2*m2
      * where t is an element of [0,1].
      * <p>
      * The interpolated XY-coordinates will be set in {@link #mInterpolatedX} and

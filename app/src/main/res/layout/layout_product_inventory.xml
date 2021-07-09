@@ -1,205 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_inventory_root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
-      <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_inventory_root"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <TextView
-          style="@style/ProductLabelTextStyle"
-          android:text="@string/inventory_availability" />
-
-        <ImageButton style="@style/ProductHelpButtonStyle" />
-
-      </LinearLayout>
-
-      <TextView
-        style="@style/ProductLabelTextStyle"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:text="@string/available_qty" />
-
-    </LinearLayout>
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="5dp"
-      android:background="@drawable/white_rectangle_background"
-      android:orientation="vertical">
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/input_background"
-        android:orientation="horizontal"
-        android:padding="1dp">
-
-        <Spinner
-          android:id="@+id/spinner_stock_availability"
-          style="@style/ProductSpinnerStyle"
-          android:layout_weight="1"
-          android:background="@drawable/spinner_background_instock"
-          android:entries="@array/stock_availability" />
-
-        <View
-          android:layout_width="1dp"
-          android:layout_height="match_parent"
-          android:background="@color/secondaryLightTextColor" />
-
-        <EditText
-          android:id="@+id/edit_available_qty"
-          style="@style/ProductEditTextStyle"
-          android:layout_weight="1"
-          android:background="#FFF"
-          android:digits="0123456789."
-          android:gravity="center"
-          android:hint="@string/xxxx"
-          android:inputType="numberDecimal" />
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:id="@+id/layout_child"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_10"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-
-          <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/ProductLabelTextStyle"
+                    android:text="@string/inventory_availability" />
+
+                <ImageButton
+                    style="@style/ProductHelpButtonStyle" />
+
+            </LinearLayout>
 
             <TextView
-              style="@style/ProductLabelTextStyle"
-              android:text="@string/allow_cod_orders" />
-
-            <ImageButton style="@style/ProductHelpButtonStyle" />
-
-          </LinearLayout>
-
-          <TextView
-            style="@style/ProductLabelTextStyle"
-            android:layout_width="match_parent"
-            android:layout_weight="1.4"
-            android:text="@string/max_qty" />
+                style="@style/ProductLabelTextStyle"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="@string/available_qty" />
 
         </LinearLayout>
 
         <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="5dp"
-          android:layout_marginBottom="10dp"
-          android:background="@drawable/input_background"
-          android:orientation="horizontal"
-          android:padding="1dp">
-
-          <Spinner
-            android:id="@+id/spinner_cod_availability"
-            style="@style/ProductSpinnerStyle"
-            android:layout_weight="1"
-            android:background="@drawable/spinner_background_instock"
-            android:entries="@array/stock_options" />
-
-          <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/secondaryLightTextColor" />
-
-          <EditText
-            android:id="@+id/edit_cod_max__qty"
-            style="@style/ProductEditTextStyle"
-            android:layout_weight="1.4"
-            android:background="#FFF"
-            android:digits="0123456789."
-            android:gravity="center"
-            android:hint="@string/xxxx"
-            android:inputType="numberDecimal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-
-          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_marginTop="5dp"
+            android:background="@drawable/white_rectangle_background"
+            android:orientation="vertical">
 
-            <TextView
-              style="@style/ProductLabelTextStyle"
-              android:text="@string/allow_prepaid_online_orders" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_background"
+                android:orientation="horizontal"
+                android:padding="1dp">
 
-            <ImageButton style="@style/ProductHelpButtonStyle" />
+                <Spinner
+                    android:id="@+id/spinner_stock_availability"
+                    style="@style/ProductSpinnerStyle"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_background_instock"
+                    android:entries="@array/stock_availability" />
 
-          </LinearLayout>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/secondaryLightTextColor" />
 
-          <TextView
-            style="@style/ProductLabelTextStyle"
-            android:layout_width="match_parent"
-            android:layout_weight="1.4"
-            android:text="@string/max_qty" />
+                <EditText
+                    android:id="@+id/edit_available_qty"
+                    style="@style/ProductEditTextStyle"
+                    android:layout_weight="1"
+                    android:background="#FFF"
+                    android:digits="0123456789."
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/xxxx" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_child"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="@string/allow_cod_orders" />
+
+                        <ImageButton
+                            style="@style/ProductHelpButtonStyle" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/ProductLabelTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1.4"
+                        android:text="@string/max_qty" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/input_background"
+                    android:orientation="horizontal"
+                    android:padding="1dp">
+
+                    <Spinner
+                        android:id="@+id/spinner_cod_availability"
+                        style="@style/ProductSpinnerStyle"
+                        android:layout_weight="1"
+                        android:background="@drawable/spinner_background_instock"
+                        android:entries="@array/stock_options" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/secondaryLightTextColor" />
+
+                    <EditText
+                        android:id="@+id/edit_cod_max__qty"
+                        style="@style/ProductEditTextStyle"
+                        android:layout_weight="1.4"
+                        android:background="#FFF"
+                        android:digits="0123456789."
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:hint="@string/xxxx" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="@string/allow_prepaid_online_orders" />
+
+                        <ImageButton
+                            style="@style/ProductHelpButtonStyle" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/ProductLabelTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1.4"
+                        android:text="@string/max_qty" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/input_background"
+                    android:orientation="horizontal"
+                    android:padding="1dp">
+
+
+                    <Spinner
+                        android:id="@+id/spinner_prepaid_online_availability"
+                        style="@style/ProductSpinnerStyle"
+                        android:layout_weight="1"
+                        android:background="@drawable/spinner_background_instock"
+                        android:entries="@array/stock_options" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/secondaryLightTextColor" />
+
+                    <EditText
+                        android:id="@+id/edit_prepaid_online_max_qty"
+                        style="@style/ProductEditTextStyle"
+                        android:layout_weight="1.4"
+                        android:background="#FFF"
+                        android:digits="0123456789."
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:hint="@string/xxxx" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="5dp"
-          android:background="@drawable/input_background"
-          android:orientation="horizontal"
-          android:padding="1dp">
-
-
-          <Spinner
-            android:id="@+id/spinner_prepaid_online_availability"
-            style="@style/ProductSpinnerStyle"
-            android:layout_weight="1"
-            android:background="@drawable/spinner_background_instock"
-            android:entries="@array/stock_options" />
-
-          <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/secondaryLightTextColor" />
-
-          <EditText
-            android:id="@+id/edit_prepaid_online_max_qty"
-            style="@style/ProductEditTextStyle"
-            android:layout_weight="1.4"
-            android:background="#FFF"
-            android:digits="0123456789."
-            android:gravity="center"
-            android:hint="@string/xxxx"
-            android:inputType="numberDecimal" />
-
-        </LinearLayout>
-
-      </LinearLayout>
 
     </LinearLayout>
-
-  </LinearLayout>
 
 </layout>

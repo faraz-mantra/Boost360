@@ -20,7 +20,7 @@ import android.content.ContentValues;
 
 /**
  * The metadata for a single word list.
- * <p>
+ *
  * Instances of this class are always immutable.
  */
 public class WordListMetadata {
@@ -50,10 +50,10 @@ public class WordListMetadata {
     public final int mFormatVersion;
 
     public WordListMetadata(final String id, final int type,
-                            final String description, final long lastUpdate, final long fileSize,
-                            final String rawChecksum, final String checksum, final String localFilename,
-                            final String remoteFilename, final int version, final int formatVersion,
-                            final int flags, final String locale) {
+            final String description, final long lastUpdate, final long fileSize,
+            final String rawChecksum, final String checksum, final String localFilename,
+            final String remoteFilename, final int version, final int formatVersion,
+            final int flags, final String locale) {
         mId = id;
         mType = type;
         mDescription = description;
@@ -71,7 +71,7 @@ public class WordListMetadata {
 
     /**
      * Create a WordListMetadata from the contents of a ContentValues.
-     * <p>
+     *
      * If this lacks any required field, IllegalArgumentException is thrown.
      */
     public static WordListMetadata createFromContentValues(final ContentValues values) {

@@ -45,9 +45,7 @@ public final class LastComposedWord {
     public static final int COMMIT_TYPE_CANCEL_AUTO_CORRECT = 3;
 
     public static final String NOT_A_SEPARATOR = "";
-    public static final LastComposedWord NOT_A_COMPOSED_WORD =
-            new LastComposedWord(new ArrayList<Event>(), null, "", "",
-                    NOT_A_SEPARATOR, null, WordComposer.CAPS_MODE_OFF);
+
     public final ArrayList<Event> mEvents;
     public final String mTypedWord;
     public final CharSequence mCommittedWord;
@@ -56,14 +54,19 @@ public final class LastComposedWord {
     public final int mCapitalizedMode;
     public final InputPointers mInputPointers =
             new InputPointers(Constants.DICTIONARY_MAX_WORD_LENGTH);
+
     private boolean mActive;
+
+    public static final LastComposedWord NOT_A_COMPOSED_WORD =
+            new LastComposedWord(new ArrayList<Event>(), null, "", "",
+            NOT_A_SEPARATOR, null, WordComposer.CAPS_MODE_OFF);
 
     // Warning: this is using the passed objects as is and fully expects them to be
     // immutable. Do not fiddle with their contents after you passed them to this constructor.
     public LastComposedWord(final ArrayList<Event> events,
-                            final InputPointers inputPointers, final String typedWord,
-                            final CharSequence committedWord, final String separatorString,
-                            final PrevWordsInfo prevWordsInfo, final int capitalizedMode) {
+            final InputPointers inputPointers, final String typedWord,
+            final CharSequence committedWord, final String separatorString,
+            final PrevWordsInfo prevWordsInfo, final int capitalizedMode) {
         if (inputPointers != null) {
             mInputPointers.copy(inputPointers);
         }

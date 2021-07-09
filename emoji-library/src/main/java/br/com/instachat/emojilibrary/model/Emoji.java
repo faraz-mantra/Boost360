@@ -14,17 +14,7 @@ import java.sql.Timestamp;
 public class Emoji implements Parcelable {
 
     public static final String TAG = "Emoji";
-    public static final Creator<Emoji> CREATOR = new Creator<Emoji>() {
-        @Override
-        public Emoji createFromParcel(Parcel in) {
-            return new Emoji(in);
-        }
 
-        @Override
-        public Emoji[] newArray(int size) {
-            return new Emoji[size];
-        }
-    };
     private int icon;
     private char value;
     private String emoji;
@@ -40,12 +30,12 @@ public class Emoji implements Parcelable {
         this.emoji = emoji;
     }
 
-
     public Emoji(Parcel in) {
         this.icon = in.readInt();
         this.value = (char) in.readInt();
         this.emoji = in.readString();
     }
+
 
     public Emoji(String emoji) {
         this.emoji = emoji;
@@ -106,6 +96,18 @@ public class Emoji implements Parcelable {
     public int hashCode() {
         return emoji.hashCode();
     }
+
+    public static final Creator<Emoji> CREATOR = new Creator<Emoji>() {
+        @Override
+        public Emoji createFromParcel(Parcel in) {
+            return new Emoji(in);
+        }
+
+        @Override
+        public Emoji[] newArray(int size) {
+            return new Emoji[size];
+        }
+    };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

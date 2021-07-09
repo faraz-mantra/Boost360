@@ -13,11 +13,7 @@ fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observ
   })
 }
 
-fun <T> LiveData<T>.observeChange(
-  lifecycleOwner: LifecycleOwner,
-  observer: Observer<T>,
-  changes: Int
-) {
+fun <T> LiveData<T>.observeChange(lifecycleOwner: LifecycleOwner, observer: Observer<T>, changes: Int) {
   var count = 0
   observe(lifecycleOwner, object : Observer<T> {
     override fun onChanged(t: T?) {

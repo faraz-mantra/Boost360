@@ -6,10 +6,10 @@ import com.dashboard.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
 
 class RiaAcademyData(
-  var title: String? = null,
-  var dayTitle: String? = null,
-  var amount: String? = null,
-  var icon1: Int? = null
+    var title: String? = null,
+    var dayTitle: String? = null,
+    var amount: String? = null,
+    var icon1: Int? = null
 ) : BaseResponse(), AppBaseRecyclerViewItem {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.RIA_ACADEMY_ITEM_VIEW.getLayout()

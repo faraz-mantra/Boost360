@@ -42,17 +42,10 @@ class FileUtils(var context: Activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
           var cursor: Cursor? = null
           try {
-            cursor = context.contentResolver.query(
-              uri,
-              arrayOf(MediaStore.MediaColumns.DISPLAY_NAME),
-              null,
-              null,
-              null
-            )
+            cursor = context.contentResolver.query(uri, arrayOf(MediaStore.MediaColumns.DISPLAY_NAME), null, null, null)
             if (!(cursor == null || !cursor.moveToFirst())) {
               val fileName: String = cursor.getString(0)
-              val path: String = Environment.getExternalStorageDirectory().toString()
-                .toString() + "/Download/" + fileName
+              val path: String = Environment.getExternalStorageDirectory().toString().toString() + "/Download/" + fileName
               if (!TextUtils.isEmpty(path)) {
                 return path
               }
@@ -65,14 +58,10 @@ class FileUtils(var context: Activity) {
             if (id.startsWith("raw:")) {
               return id.replaceFirst("raw:".toRegex(), "")
             }
-            val contentUriPrefixesToTry =
-              arrayOf("content://downloads/public_downloads", "content://downloads/my_downloads")
+            val contentUriPrefixesToTry = arrayOf("content://downloads/public_downloads", "content://downloads/my_downloads")
             for (contentUriPrefix in contentUriPrefixesToTry) {
               return try {
-                val contentUri: Uri = ContentUris.withAppendedId(
-                  Uri.parse(contentUriPrefix),
-                  java.lang.Long.valueOf(id)
-                )
+                val contentUri: Uri = ContentUris.withAppendedId(Uri.parse(contentUriPrefix), java.lang.Long.valueOf(id))
                 getDataColumn(context, contentUri, null, null)
               } catch (e: NumberFormatException) {
                 //In Android 8 and Android P the id is not a number
@@ -87,8 +76,7 @@ class FileUtils(var context: Activity) {
           }
           try {
             contentUri = ContentUris.withAppendedId(
-              Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id)
-            )
+                Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id))
           } catch (e: NumberFormatException) {
             e.printStackTrace()
           }
@@ -110,10 +98,8 @@ class FileUtils(var context: Activity) {
         }
         selection = "_id=?"
         selectionArgs = arrayOf(split[1])
-        return getDataColumn(
-          context, contentUri, selection,
-          selectionArgs
-        )
+        return getDataColumn(context, contentUri, selection,
+            selectionArgs)
       }
       if (isGoogleDriveUri(uri)) {
         return getDriveFilePath(uri)
@@ -128,10 +114,7 @@ class FileUtils(var context: Activity) {
         if (isGoogleDriveUri(uri)) {
           return getDriveFilePath(uri)
         }
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) copyFileToInternalStorage(
-          uri,
-          "userfiles"
-        )
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) copyFileToInternalStorage(uri, "userfiles")
         else getDataColumn(context, uri, null, null)
 
       }
@@ -140,7 +123,7 @@ class FileUtils(var context: Activity) {
       if (isWhatsAppFile(uri)) return getFilePathForWhatsApp(uri)
       if ("content".equals(uri.scheme, ignoreCase = true)) {
         val projection = arrayOf(
-          MediaStore.Images.Media.DATA
+            MediaStore.Images.Media.DATA
         )
         var cursor: Cursor? = null
         try {
@@ -227,7 +210,7 @@ class FileUtils(var context: Activity) {
       Log.e("File Path", "Path " + file.path)
       Log.e("File Size", "Size " + file.length())
     } catch (e: Exception) {
-      Log.e("Exception", e.message ?: "")
+      Log.e("Exception", e.message?:"")
     }
     return file.path
   }
@@ -240,13 +223,7 @@ class FileUtils(var context: Activity) {
    */
   private fun copyFileToInternalStorage(uri: Uri, newDirName: String): String {
     val returnUri: Uri = uri
-    val returnCursor: Cursor? = context.contentResolver.query(
-      returnUri,
-      arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE),
-      null,
-      null,
-      null
-    )
+    val returnCursor: Cursor? = context.contentResolver.query(returnUri, arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE), null, null, null)
 
     /*
          * Get the column indexes of the data in the Cursor,
@@ -280,7 +257,7 @@ class FileUtils(var context: Activity) {
       inputStream?.close()
       outputStream.close()
     } catch (e: Exception) {
-      Log.e("Exception", e.message ?: "")
+      Log.e("Exception", e.message?:"")
     }
     return output.path
   }
@@ -289,20 +266,13 @@ class FileUtils(var context: Activity) {
     return copyFileToInternalStorage(uri, "whatsapp")
   }
 
-  private fun getDataColumn(
-    context: Activity,
-    uri: Uri?,
-    selection: String?,
-    selectionArgs: Array<String>?
-  ): String? {
+  private fun getDataColumn(context: Activity, uri: Uri?, selection: String?, selectionArgs: Array<String>?): String? {
     var cursor: Cursor? = null
     val column = "_data"
     val projection = arrayOf(column)
     try {
-      cursor = context.contentResolver.query(
-        uri!!, projection,
-        selection, selectionArgs, null
-      )
+      cursor = context.contentResolver.query(uri!!, projection,
+          selection, selectionArgs, null)
       if (cursor != null && cursor.moveToFirst()) {
         val index: Int = cursor.getColumnIndexOrThrow(column)
         return cursor.getString(index)

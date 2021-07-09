@@ -17,8 +17,7 @@ import com.framework.extensions.observeOnce
 import kotlinx.android.synthetic.main.fragment_kyc_details.*
 import java.util.*
 
-class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, StaffViewModel>(),
-  RecyclerItemClickListener {
+class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, StaffViewModel>(), RecyclerItemClickListener {
   private var isEdit: Boolean? = null
   lateinit var data: List<DataItemService?>
   var adapter: AppBaseRecyclerViewAdapter<DataItemService>? = null
@@ -54,17 +53,12 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
 
   private fun fetchServices() {
     showProgress("Loading...")
-    val request =
-      ServiceListRequest(FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpTag)
+    val request = ServiceListRequest(FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpTag)
     viewModel?.getServiceListing(request)?.observeOnce(viewLifecycleOwner, {
       hideProgress()
       data = (it as? ServiceListResponse)?.result?.data ?: return@observeOnce
       setServiceCount()
-      this.adapter = AppBaseRecyclerViewAdapter(
-        activity = baseActivity,
-        list = data as ArrayList<DataItemService>,
-        itemClickListener = this@StaffServicesFragment
-      )
+      this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data as ArrayList<DataItemService>, itemClickListener = this@StaffServicesFragment)
       binding?.rvServiceProvided?.adapter = adapter
       when (isEdit) {
         true -> {

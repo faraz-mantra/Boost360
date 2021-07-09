@@ -2,9 +2,7 @@ package com.nowfloats.signup.UI.UI;
 
 import android.app.Activity;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,8 +45,6 @@ public class SignUpWithRiaFragmentCopy extends Fragment implements AnimationTool
     private AnimationTool animationTool;
 
     private String navigateTo = "";
-    private int stepCount = 0;
-    private boolean isCalled = false;
 
     public SignUpWithRiaFragmentCopy() {
     }
@@ -104,7 +100,7 @@ public class SignUpWithRiaFragmentCopy extends Fragment implements AnimationTool
          *    Listener--> After applying animation if you want callback set listener
          *    VisbilityStatus--> This hides or visible view after/before applying animation
          *
-         */
+        */
         createAnimation();
     }
 
@@ -113,22 +109,6 @@ public class SignUpWithRiaFragmentCopy extends Fragment implements AnimationTool
         animationTool.setVisbilityStatus(isBackPress);
         animationTool.setListener(this);
     }
-
-    /*
-     * ***************** Set positions ********************
-     *
-     * To support for multiple devices we need to set height,width dynamically
-     *
-     * 1.Ria Image:
-     *
-     *     % in terms of device width,height
-     *     width,height : 40%
-     *     left-margin  : 5%
-     *     top-margin   : 10%
-     *
-     *     RiaImageCircles adjusted left,top,right margins with same width mentioned above for RiaImage.
-     *
-     */
 
     private void bindListeners() {
 
@@ -151,11 +131,6 @@ public class SignUpWithRiaFragmentCopy extends Fragment implements AnimationTool
         });
     }
 
-    /*
-     * used this only for Ria Specific case as we need to apply same animation for multiple-views
-     * used this variable in callback
-     */
-
     private void reverseAnimation() {
 
         isBackPress = true;
@@ -167,6 +142,22 @@ public class SignUpWithRiaFragmentCopy extends Fragment implements AnimationTool
                 .interpolate(new AccelerateInterpolator())
                 .playOn(ivStart);
     }
+
+    /*
+     * ***************** Set positions ********************
+     *
+     * To support for multiple devices we need to set height,width dynamically
+     *
+     * 1.Ria Image:
+     *
+     *     % in terms of device width,height
+     *     width,height : 40%
+     *     left-margin  : 5%
+     *     top-margin   : 10%
+     *
+     *     RiaImageCircles adjusted left,top,right margins with same width mentioned above for RiaImage.
+     *
+     */
 
     private void setPositions() {
 
@@ -251,6 +242,14 @@ public class SignUpWithRiaFragmentCopy extends Fragment implements AnimationTool
                 .interpolate(new AccelerateInterpolator())
                 .playOn(llStart);
     }
+
+    /*
+    * used this only for Ria Specific case as we need to apply same animation for multiple-views
+    * used this variable in callback
+    */
+
+    private int stepCount = 0;
+    private boolean isCalled = false;
 
     @Override
     public void onAnimationStart(AnimationType animationType) {

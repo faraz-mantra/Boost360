@@ -22,7 +22,7 @@ public class SettingsValuesForSuggestion {
     public final int[] mAdditionalFeaturesSettingValues;
 
     public SettingsValuesForSuggestion(final boolean blockPotentiallyOffensive,
-                                       final boolean spaceAwareGestureEnabled, final int[] additionalFeaturesSettingValues) {
+            final boolean spaceAwareGestureEnabled, final int[] additionalFeaturesSettingValues) {
         mBlockPotentiallyOffensive = blockPotentiallyOffensive;
         mSpaceAwareGestureEnabled = spaceAwareGestureEnabled;
         mAdditionalFeaturesSettingValues = additionalFeaturesSettingValues;

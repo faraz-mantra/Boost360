@@ -85,12 +85,12 @@ public interface WebActionCallInterface {
     @GET("/OrderStatusSummary")
     void getOrderStatusSummary(@Query("sellerId") String sellerId, @Query("startDate") String startDate,
                                @Query("endDate") String endDate,
-                               Callback<OrderStatusSummary> callback);
+                               Callback<OrderStatusSummary>callback);
 
     @GET("/DailySellerRevenue")
     void dailySellerRevenue(@Query("sellerId") String sellerId, @Query("deliveredStartDate") String deliveredStartDate,
-                            @Query("deliveredEndDate") String deliveredEndDate,
-                            Callback<RevenueSummary> callback);
+                               @Query("deliveredEndDate") String deliveredEndDate,
+                               Callback<RevenueSummary>callback);
 
     @GET("/whatsapp_number/get-data")
     @Headers({"Authorization: " + Constants.WA_KEY})

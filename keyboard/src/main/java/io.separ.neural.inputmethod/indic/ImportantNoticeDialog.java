@@ -28,8 +28,14 @@ import com.android.inputmethod.latin.utils.ImportantNoticeUtils;
  * The dialog box that shows the important notice contents.
  */
 public final class ImportantNoticeDialog extends AlertDialog implements OnClickListener {
+    public interface ImportantNoticeDialogListener {
+        void onUserAcknowledgmentOfImportantNoticeDialog(final int nextVersion);
+        void onClickSettingsOfImportantNoticeDialog(final int nextVersion);
+    }
+
     private final ImportantNoticeDialogListener mListener;
     private final int mNextImportantNoticeVersion;
+
     public ImportantNoticeDialog(
             final Context context, final ImportantNoticeDialogListener listener) {
         super(DialogUtils.getPlatformDialogThemeContext(context));
@@ -68,11 +74,5 @@ public final class ImportantNoticeDialog extends AlertDialog implements OnClickL
     public void onBackPressed() {
         super.onBackPressed();
         userAcknowledged();
-    }
-
-    public interface ImportantNoticeDialogListener {
-        void onUserAcknowledgmentOfImportantNoticeDialog(final int nextVersion);
-
-        void onClickSettingsOfImportantNoticeDialog(final int nextVersion);
     }
 }

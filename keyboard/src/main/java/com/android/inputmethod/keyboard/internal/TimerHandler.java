@@ -30,16 +30,24 @@ import io.separ.neural.inputmethod.indic.Constants;
 
 // TODO: Separate this class into KeyTimerHandler and BatchInputTimerHandler or so.
 public final class TimerHandler extends LeakGuardHandlerWrapper<Callbacks> implements TimerProxy {
+    public interface Callbacks {
+        void startWhileTypingFadeinAnimation();
+        void startWhileTypingFadeoutAnimation();
+        void onLongPress(PointerTracker tracker);
+    }
+
     private static final int MSG_TYPING_STATE_EXPIRED = 0;
     private static final int MSG_REPEAT_KEY = 1;
     private static final int MSG_LONGPRESS_KEY = 2;
     private static final int MSG_LONGPRESS_SHIFT_KEY = 3;
     private static final int MSG_DOUBLE_TAP_SHIFT_KEY = 4;
     private static final int MSG_UPDATE_BATCH_INPUT = 5;
+
     private final int mIgnoreAltCodeKeyTimeout;
     private final int mGestureRecognitionUpdateTime;
+
     public TimerHandler(final Callbacks ownerInstance, final int ignoreAltCodeKeyTimeout,
-                        final int gestureRecognitionUpdateTime) {
+            final int gestureRecognitionUpdateTime) {
         super(ownerInstance);
         mIgnoreAltCodeKeyTimeout = ignoreAltCodeKeyTimeout;
         mGestureRecognitionUpdateTime = gestureRecognitionUpdateTime;
@@ -53,28 +61,28 @@ public final class TimerHandler extends LeakGuardHandlerWrapper<Callbacks> imple
         }
         final PointerTracker tracker = (PointerTracker) msg.obj;
         switch (msg.what) {
-            case MSG_TYPING_STATE_EXPIRED:
-                callbacks.startWhileTypingFadeinAnimation();
-                break;
-            case MSG_REPEAT_KEY:
-                tracker.onKeyRepeat(msg.arg1 /* code */, msg.arg2 /* repeatCount */);
-                break;
-            case MSG_LONGPRESS_KEY:
-            case MSG_LONGPRESS_SHIFT_KEY:
-                cancelLongPressTimers();
-                if (!tracker.longClickOnMaybeLangChange())
-                    callbacks.onLongPress(tracker);
-                break;
-            case MSG_UPDATE_BATCH_INPUT:
-                tracker.updateBatchInputByTimer(SystemClock.uptimeMillis());
-                startUpdateBatchInputTimer(tracker);
-                break;
+        case MSG_TYPING_STATE_EXPIRED:
+            callbacks.startWhileTypingFadeinAnimation();
+            break;
+        case MSG_REPEAT_KEY:
+            tracker.onKeyRepeat(msg.arg1 /* code */, msg.arg2 /* repeatCount */);
+            break;
+        case MSG_LONGPRESS_KEY:
+        case MSG_LONGPRESS_SHIFT_KEY:
+            cancelLongPressTimers();
+            if(!tracker.longClickOnMaybeLangChange())
+                callbacks.onLongPress(tracker);
+            break;
+        case MSG_UPDATE_BATCH_INPUT:
+            tracker.updateBatchInputByTimer(SystemClock.uptimeMillis());
+            startUpdateBatchInputTimer(tracker);
+            break;
         }
     }
 
     @Override
     public void startKeyRepeatTimerOf(final PointerTracker tracker, final int repeatCount,
-                                      final int delay) {
+            final int delay) {
         final Key key = tracker.getKey();
         if (key == null || delay == 0) {
             return;
@@ -210,13 +218,5 @@ public final class TimerHandler extends LeakGuardHandlerWrapper<Callbacks> imple
     public void cancelAllMessages() {
         cancelAllKeyTimers();
         cancelAllUpdateBatchInputTimers();
-    }
-
-    public interface Callbacks {
-        void startWhileTypingFadeinAnimation();
-
-        void startWhileTypingFadeoutAnimation();
-
-        void onLongPress(PointerTracker tracker);
     }
 }

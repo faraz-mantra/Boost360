@@ -8,5 +8,5 @@ import java.util.List;
  */
 public class EnablePackageError {
     public String ErrorCode;
-    public List<HashMap<String, String>> ErrorList;
+    public List<HashMap<String,String>> ErrorList;
 }

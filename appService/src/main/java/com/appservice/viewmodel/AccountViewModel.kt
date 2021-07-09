@@ -19,11 +19,7 @@ class AccountViewModel : BaseViewModel() {
     return WithFloatRepository.createAccount(request).toLiveData()
   }
 
-  fun updateAccount(
-    fpId: String?,
-    clientId: String?,
-    request: BankAccountDetailsN?
-  ): LiveData<BaseResponse> {
+  fun updateAccount(fpId: String?, clientId: String?, request: BankAccountDetailsN?): LiveData<BaseResponse> {
     return WithFloatRepository.updateAccount(fpId, clientId, request).toLiveData()
   }
 

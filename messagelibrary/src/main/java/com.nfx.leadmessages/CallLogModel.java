@@ -9,23 +9,10 @@ import android.os.Parcelable;
 
 public class CallLogModel implements Parcelable {
 
-    public static final Creator<CallLogModel> CREATOR = new Creator<CallLogModel>() {
-        @Override
-        public CallLogModel createFromParcel(Parcel in) {
-            return new CallLogModel(in);
-        }
-
-        @Override
-        public CallLogModel[] newArray(int size) {
-            return new CallLogModel[size];
-        }
-    };
-    private String name, number, callType, date, duration_seconds;
-
-    public CallLogModel() {
+    private String name,number,callType,date,duration_seconds;
+    public CallLogModel(){
 
     }
-
     protected CallLogModel(Parcel in) {
         name = in.readString();
         number = in.readString();
@@ -72,6 +59,18 @@ public class CallLogModel implements Parcelable {
         this.duration_seconds = duration_seconds;
     }
 
+    public static final Creator<CallLogModel> CREATOR = new Creator<CallLogModel>() {
+        @Override
+        public CallLogModel createFromParcel(Parcel in) {
+            return new CallLogModel(in);
+        }
+
+        @Override
+        public CallLogModel[] newArray(int size) {
+            return new CallLogModel[size];
+        }
+    };
+
     @Override
     public int describeContents() {
         return 0;
@@ -88,6 +87,6 @@ public class CallLogModel implements Parcelable {
 
     @Override
     public String toString() {
-        return name + " " + number + " " + callType + " " + duration_seconds + " " + date;
+        return name+" "+number+" "+callType+" "+duration_seconds+" "+date;
     }
 }

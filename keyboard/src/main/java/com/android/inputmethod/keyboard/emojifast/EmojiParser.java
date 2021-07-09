@@ -62,8 +62,8 @@ public class EmojiParser {
 
     public static class Candidate {
 
-        private final int startIndex;
-        private final int endIndex;
+        private final int           startIndex;
+        private final int           endIndex;
         private final EmojiDrawInfo drawInfo;
 
         Candidate(int startIndex, int endIndex, EmojiDrawInfo drawInfo) {

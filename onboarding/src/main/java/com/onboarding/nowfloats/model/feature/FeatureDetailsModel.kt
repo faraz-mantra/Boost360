@@ -5,11 +5,11 @@ import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewItem
 
 @Deprecated("old")
 class FeatureDetailsModel(
-  val description: String? = null,
-  val title: String? = null
+        val description: String? = null,
+        val title: String? = null
 ) : AppBaseRecyclerViewItem {
 
-  override fun getViewType(): Int {
-    return RecyclerViewItemType.FEATURE_DETAILS_BOTTOM_SHEET_ITEM.getLayout()
-  }
+    override fun getViewType(): Int {
+        return RecyclerViewItemType.FEATURE_DETAILS_BOTTOM_SHEET_ITEM.getLayout()
+    }
 }

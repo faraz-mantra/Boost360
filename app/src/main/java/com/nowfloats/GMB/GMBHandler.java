@@ -2,6 +2,7 @@ package com.nowfloats.GMB;
 
 import android.content.Context;
 import android.os.Handler;
+
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -18,6 +19,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,12 +31,18 @@ import java.util.Map;
 public class GMBHandler {
 
 
-    public static int REQUEST_CODE = 332;
-    private final String content_type = "application/json";
-    private final String Pwd = "78234i249123102398";
-    private final String Key = "JYUYTJH*(*&BKJ787686876bbbhl";
     private Context context;
+
+    public static int REQUEST_CODE = 332;
+
+    private final String content_type = "application/json";
+
+    private final String Pwd = "78234i249123102398";
+
     private String TAG = "android23235616";
+
+    private final String Key = "JYUYTJH*(*&BKJ787686876bbbhl";
+
     private int pollingCount = 0;
 
     private int showLocations = 2323, showAccounts = 345345;
@@ -93,7 +101,7 @@ public class GMBHandler {
         parent.put("social_data", social_data);
 
 
-        BoostLog.i(Constants.LogTag, parent.toString());
+        BoostLog.i(Constants.LogTag,parent.toString());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.NFXProcessUrl, parent,
                 new Response.Listener<JSONObject>() {
@@ -300,7 +308,7 @@ public class GMBHandler {
                     socialSharingFragment.hideLoader();
 
                 } catch (JSONException e) {
-                    Toast.makeText(context, context.getString(R.string.gmb_error_message), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,context.getString(R.string.gmb_error_message),Toast.LENGTH_LONG).show();
                     socialSharingFragment.closeDialog();
                     e.printStackTrace();
                     socialSharingFragment.hideLoader();
@@ -473,7 +481,7 @@ public class GMBHandler {
     public void continueProcess(final String authCode, final SocialSharingFragment socialSharingFragment) {
 
 
-        BoostLog.i(Constants.LogTag, sessionManager.getFPID());
+        BoostLog.i(Constants.LogTag,sessionManager.getFPID());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET
                 , Constants.NFXgetAcessToken + "?nowfloats_id=" + sessionManager.getFPID(), new Response.Listener<String>() {
@@ -496,14 +504,14 @@ public class GMBHandler {
                     JSONObject childObject = new JSONObject();
 
 
-                    for (int i = 0; i < arr.length(); i++) {
+                    for(int i=0; i<arr.length(); i++){
                         childObject = arr.getJSONObject(i);
-                        if (childObject.getString("Type").equals("googlemybusiness")) {
+                        if(childObject.getString("Type").equals("googlemybusiness")){
 
                             break;
-                        } else {
-                            if (pollingCount > 15) {
-                                Toast.makeText(context, context.getString(R.string.gmb_error_message), Toast.LENGTH_LONG).show();
+                        }else{
+                            if(pollingCount>15){
+                                Toast.makeText(context,context.getString(R.string.gmb_error_message),Toast.LENGTH_LONG).show();
                                 socialSharingFragment.hideLoader();
                             }
                         }

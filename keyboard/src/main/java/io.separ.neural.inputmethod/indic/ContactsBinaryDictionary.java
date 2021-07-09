@@ -58,28 +58,26 @@ public class ContactsBinaryDictionary extends ExpandableBinaryDictionary {
     private static final int FREQUENCY_FOR_CONTACTS = 40;
     private static final int FREQUENCY_FOR_CONTACTS_BIGRAM = 90;
 
-    /**
-     * The maximum number of contacts that this dictionary supports.
-     */
+    /** The maximum number of contacts that this dictionary supports. */
     private static final int MAX_CONTACT_COUNT = 10000;
 
     private static final int INDEX_NAME = 1;
+
+    /** The number of contacts in the most recent dictionary rebuild. */
+    private int mContactCountAtLastRebuild = 0;
+
+    /** The hash code of ArrayList of contacts names in the most recent dictionary rebuild. */
+    private int mHashCodeAtLastRebuild = 0;
+
+    private ContentObserver mObserver;
+
     /**
      * Whether to use "firstname lastname" in bigram predictions.
      */
     private final boolean mUseFirstLastBigrams;
-    /**
-     * The number of contacts in the most recent dictionary rebuild.
-     */
-    private int mContactCountAtLastRebuild = 0;
-    /**
-     * The hash code of ArrayList of contacts names in the most recent dictionary rebuild.
-     */
-    private int mHashCodeAtLastRebuild = 0;
-    private ContentObserver mObserver;
 
     protected ContactsBinaryDictionary(final Context context, final Locale locale,
-                                       final File dictFile, final String name) {
+            final File dictFile, final String name) {
         super(context, getDictName(name, locale, dictFile), locale, Dictionary.TYPE_CONTACTS,
                 dictFile);
         mUseFirstLastBigrams = useFirstLastBigramsForLocale(locale);
@@ -89,34 +87,8 @@ public class ContactsBinaryDictionary extends ExpandableBinaryDictionary {
 
     @UsedForTesting
     public static ContactsBinaryDictionary getDictionary(final Context context, final Locale locale,
-                                                         final File dictFile, final String dictNamePrefix) {
+            final File dictFile, final String dictNamePrefix) {
         return new ContactsBinaryDictionary(context, locale, dictFile, dictNamePrefix + NAME);
-    }
-
-    private static boolean useFirstLastBigramsForLocale(final Locale locale) {
-        // TODO: Add firstname/lastname bigram rules for other languages.
-        return locale != null && locale.getLanguage().equals(Locale.ENGLISH.getLanguage());
-    }
-
-    /**
-     * Returns the index of the last letter in the word, starting from position startIndex.
-     */
-    private static int getWordEndPosition(final String string, final int len,
-                                          final int startIndex) {
-        int end;
-        int cp = 0;
-        for (end = startIndex + 1; end < len; end += Character.charCount(cp)) {
-            cp = string.codePointAt(end);
-            if (!(cp == Constants.CODE_DASH || cp == Constants.CODE_SINGLE_QUOTE
-                    || Character.isLetter(cp))) {
-                break;
-            }
-        }
-        return end;
-    }
-
-    private static boolean isValidName(final String name) {
-        return name != null && -1 == name.indexOf(Constants.CODE_COMMERCIAL_AT);
     }
 
     private synchronized void registerObserver(final Context context) {
@@ -189,11 +161,16 @@ public class ContactsBinaryDictionary extends ExpandableBinaryDictionary {
             Log.e(TAG, "Contacts DB is having problems", e);
         } catch (SecurityException e) {
             Log.e(TAG, "Permission not available", e);
-        } finally {
+        }finally {
             if (null != cursor) {
                 cursor.close();
             }
         }
+    }
+
+    private static boolean useFirstLastBigramsForLocale(final Locale locale) {
+        // TODO: Add firstname/lastname bigram rules for other languages.
+        return locale != null && locale.getLanguage().equals(Locale.ENGLISH.getLanguage());
     }
 
     private void addWordsLocked(final Cursor cursor) {
@@ -257,7 +234,7 @@ public class ContactsBinaryDictionary extends ExpandableBinaryDictionary {
                 final int wordLen = StringUtils.codePointCount(word);
                 if (wordLen <= MAX_WORD_LENGTH && wordLen > 1) {
                     if (DEBUG) {
-                        Log.d(TAG, "addName " + name + ", " + word + ", " + prevWordsInfo);
+                        Log.d(TAG, "addName " + name + ", " + word + ", "  + prevWordsInfo);
                     }
                     runGCIfRequiredLocked(true /* mindsBlockByGC */);
                     addUnigramLocked(word, FREQUENCY_FOR_CONTACTS,
@@ -273,6 +250,23 @@ public class ContactsBinaryDictionary extends ExpandableBinaryDictionary {
                 }
             }
         }
+    }
+
+    /**
+     * Returns the index of the last letter in the word, starting from position startIndex.
+     */
+    private static int getWordEndPosition(final String string, final int len,
+            final int startIndex) {
+        int end;
+        int cp = 0;
+        for (end = startIndex + 1; end < len; end += Character.charCount(cp)) {
+            cp = string.codePointAt(end);
+            if (!(cp == Constants.CODE_DASH || cp == Constants.CODE_SINGLE_QUOTE
+                    || Character.isLetter(cp))) {
+                break;
+            }
+        }
+        return end;
     }
 
     private boolean haveContentsChanged() {
@@ -321,5 +315,9 @@ public class ContactsBinaryDictionary extends ExpandableBinaryDictionary {
                     + " ms)");
         }
         return false;
+    }
+
+    private static boolean isValidName(final String name) {
+        return name != null && -1 == name.indexOf(Constants.CODE_COMMERCIAL_AT);
     }
 }

@@ -5,9 +5,10 @@ package com.nowfloats.signup.UI.Model;
  */
 public class Verifty_Unique_Tag_Event {
 
-    public String uniqueFpTag;
+    public String uniqueFpTag ;
 
-    public Verifty_Unique_Tag_Event(String response) {
-        uniqueFpTag = response;
+    public Verifty_Unique_Tag_Event(String response)
+    {
+        uniqueFpTag = response ;
     }
 }

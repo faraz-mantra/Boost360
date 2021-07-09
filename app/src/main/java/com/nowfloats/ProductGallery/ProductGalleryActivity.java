@@ -2,10 +2,8 @@ package com.nowfloats.ProductGallery;
 
 
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,13 +20,18 @@ import com.thinksity.R;
  */
 public class ProductGalleryActivity extends AppCompatActivity {
 
-    public static final String TAG_PRODUCT = "TAG_PRODUCT";
-    UserSessionManager session;
     private Toolbar toolbar;
+
     private TextView headerText;
+
     private Product_Gallery_Fragment product_gallery_fragment;
+
     private ImageView ivDelete;
+
+    public static final String TAG_PRODUCT = "TAG_PRODUCT";
+
     private int count = 0;
+    UserSessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +77,7 @@ public class ProductGalleryActivity extends AppCompatActivity {
                             }
                         });
 
-                builder.show();
+               builder.show();
             }
         });
 
@@ -120,8 +123,8 @@ public class ProductGalleryActivity extends AppCompatActivity {
 //        headerText.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY))?
 //                getString(R.string.product_gallery):session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)+" Gallery");
 
-        headerText.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)) ?
-                getString(R.string.product_gallery) : session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
+        headerText.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY))?
+                getString(R.string.product_gallery):session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY));
 
         ivDelete.setVisibility(View.GONE);
     }

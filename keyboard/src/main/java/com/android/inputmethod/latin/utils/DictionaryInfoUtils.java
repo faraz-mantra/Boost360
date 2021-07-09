@@ -44,11 +44,49 @@ import io.separ.neural.inputmethod.indic.settings.SpacingAndPunctuations;
  */
 public class DictionaryInfoUtils {
     private static final String TAG = DictionaryInfoUtils.class.getSimpleName();
+    private static String RESOURCE_PACKAGE_NAME = R.class.getPackage().getName();
     private static final String DEFAULT_MAIN_DICT = "main";
     private static final String MAIN_DICT_PREFIX = "main_";
     // 6 digits - unicode is limited to 21 bits
     private static final int MAX_HEX_DIGITS_FOR_CODEPOINT = 6;
-    private static String RESOURCE_PACKAGE_NAME = R.class.getPackage().getName();
+
+    public static class DictionaryInfo {
+        private static final String LOCALE_COLUMN = "locale";
+        private static final String WORDLISTID_COLUMN = "id";
+        private static final String LOCAL_FILENAME_COLUMN = "filename";
+        private static final String DESCRIPTION_COLUMN = "description";
+        private static final String DATE_COLUMN = "date";
+        private static final String FILESIZE_COLUMN = "filesize";
+        private static final String VERSION_COLUMN = "version";
+        public final String mId;
+        public final Locale mLocale;
+        public final String mDescription;
+        public final AssetFileAddress mFileAddress;
+        public final int mVersion;
+
+        public DictionaryInfo(Context context, final String id, final Locale locale, final String description,
+                              final AssetFileAddress fileAddress, final int version) {
+            mId = id;
+            mLocale = locale;
+            mDescription = description;
+            mFileAddress = fileAddress;
+            mVersion = version;
+            RESOURCE_PACKAGE_NAME = context.getPackageName();
+        }
+
+        public ContentValues toContentValues() {
+            final ContentValues values = new ContentValues();
+            values.put(WORDLISTID_COLUMN, mId);
+            values.put(LOCALE_COLUMN, mLocale.toString());
+            values.put(DESCRIPTION_COLUMN, mDescription);
+            values.put(LOCAL_FILENAME_COLUMN, mFileAddress.mFilename);
+            values.put(DATE_COLUMN, TimeUnit.MILLISECONDS.toSeconds(
+                    new File(mFileAddress.mFilename).lastModified()));
+            values.put(FILESIZE_COLUMN, mFileAddress.mLength);
+            values.put(VERSION_COLUMN, mVersion);
+            return values;
+        }
+    }
 
     private DictionaryInfoUtils() {
         // Private constructor to forbid instantation of this helper class.
@@ -379,43 +417,5 @@ public class DictionaryInfoUtils {
         // when writing one's address where the street number is usually quite discriminative,
         // as well as the postal code.
         return digitCount < length;
-    }
-
-    public static class DictionaryInfo {
-        private static final String LOCALE_COLUMN = "locale";
-        private static final String WORDLISTID_COLUMN = "id";
-        private static final String LOCAL_FILENAME_COLUMN = "filename";
-        private static final String DESCRIPTION_COLUMN = "description";
-        private static final String DATE_COLUMN = "date";
-        private static final String FILESIZE_COLUMN = "filesize";
-        private static final String VERSION_COLUMN = "version";
-        public final String mId;
-        public final Locale mLocale;
-        public final String mDescription;
-        public final AssetFileAddress mFileAddress;
-        public final int mVersion;
-
-        public DictionaryInfo(Context context, final String id, final Locale locale, final String description,
-                              final AssetFileAddress fileAddress, final int version) {
-            mId = id;
-            mLocale = locale;
-            mDescription = description;
-            mFileAddress = fileAddress;
-            mVersion = version;
-            RESOURCE_PACKAGE_NAME = context.getPackageName();
-        }
-
-        public ContentValues toContentValues() {
-            final ContentValues values = new ContentValues();
-            values.put(WORDLISTID_COLUMN, mId);
-            values.put(LOCALE_COLUMN, mLocale.toString());
-            values.put(DESCRIPTION_COLUMN, mDescription);
-            values.put(LOCAL_FILENAME_COLUMN, mFileAddress.mFilename);
-            values.put(DATE_COLUMN, TimeUnit.MILLISECONDS.toSeconds(
-                    new File(mFileAddress.mFilename).lastModified()));
-            values.put(FILESIZE_COLUMN, mFileAddress.mLength);
-            values.put(VERSION_COLUMN, mVersion);
-            return values;
-        }
     }
 }

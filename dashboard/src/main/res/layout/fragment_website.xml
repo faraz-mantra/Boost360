@@ -327,14 +327,12 @@
               app:textType="CAPTION"
               tools:targetApi="p" />
 
-            <com.airbnb.lottie.LottieAnimationView
+            <com.framework.views.customViews.CustomImageView
               android:id="@+id/ellipse_open_close"
-              android:layout_width="@dimen/size_20"
-              android:layout_height="@dimen/size_20"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
               android:layout_marginEnd="@dimen/size_14"
-              app:lottie_autoPlay="true"
-              app:lottie_loop="true"
-              app:lottie_rawRes="@raw/green_dot_json" />
+              app:srcCompat="@drawable/ic_ellipse_website_d" />
 
             <com.framework.views.customViews.CustomImageView
               android:layout_width="wrap_content"
@@ -366,19 +364,24 @@
               android:textFontWeight="500"
               tools:targetApi="p" />
 
-            <com.airbnb.lottie.LottieAnimationView
+            <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_new"
-              android:layout_width="@dimen/size_90"
-              android:layout_height="@dimen/size_45"
-              android:layout_marginEnd="-30dp"
-              app:lottie_autoPlay="true"
-              app:lottie_loop="true"
-              app:lottie_rawRes="@raw/new_badge" />
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="@dimen/size_10"
+              android:background="@drawable/bg_rounded_accent_6"
+              android:gravity="center"
+              android:paddingHorizontal="@dimen/size_8"
+              android:paddingVertical="@dimen/size_2"
+              android:text="@string/new_"
+              android:textColor="@color/white"
+              android:textSize="10sp"
+              app:textAllCaps="true" />
+
 
             <com.framework.views.customViews.CustomImageView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_margin="@dimen/size_12"
               app:srcCompat="@drawable/ic_arrow_trans_website_d" />
           </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>

@@ -10,18 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by NowFloats on 28-08-2017.
  */
 
-public class OrderModel implements Parcelable {
-    public static final Creator<OrderModel> CREATOR = new Creator<OrderModel>() {
-        @Override
-        public OrderModel createFromParcel(Parcel in) {
-            return new OrderModel(in);
-        }
-
-        @Override
-        public OrderModel[] newArray(int size) {
-            return new OrderModel[size];
-        }
-    };
+public class OrderModel implements Parcelable{
     @SerializedName("_id")
     @Expose
     private String id;
@@ -161,8 +150,7 @@ public class OrderModel implements Parcelable {
         actualShippingCharge = in.readDouble();
         shippingChargeNf = in.readDouble();
         shippingChargeCustomer = in.readDouble();
-        shippingChargeMerchant = in.readDouble();
-        ;
+        shippingChargeMerchant = in.readDouble();;
         cancelledBy = in.readString();
         payMerchantStatus = in.readInt();
         userId = in.readString();
@@ -173,10 +161,6 @@ public class OrderModel implements Parcelable {
         isArchived = in.readByte() != 0;
         expectedDeliveryDate = in.readString();
         actualDeliveryDate = in.readString();
-    }
-
-    public OrderModel() {
-
     }
 
     @Override
@@ -215,10 +199,26 @@ public class OrderModel implements Parcelable {
         dest.writeString(websiteId);
         dest.writeString(createdOn);
         dest.writeString(updatedOn);
-        dest.writeByte((byte) (isArchived ? 1 : 0));
+        dest.writeByte((byte) (isArchived?1:0));
         dest.writeString(expectedDeliveryDate);
         dest.writeString(actualDeliveryDate);
     }
+
+    public OrderModel(){
+
+    }
+
+    public static final Creator<OrderModel> CREATOR = new Creator<OrderModel>() {
+        @Override
+        public OrderModel createFromParcel(Parcel in) {
+            return new OrderModel(in);
+        }
+
+        @Override
+        public OrderModel[] newArray(int size) {
+            return new OrderModel[size];
+        }
+    };
 
     public String getActualDeliveryDate() {
         return actualDeliveryDate;

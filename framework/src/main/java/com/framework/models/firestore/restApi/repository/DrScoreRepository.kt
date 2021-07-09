@@ -13,18 +13,12 @@ import retrofit2.Retrofit
 
 object DrScoreRepository : BaseRepository<DrScoreRemoteData, BaseLocalService>() {
 
-  fun createDrScoreData(request: CreateDrRequest?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.createDrScoreData(request),
-      TaskCode.CREATE_DR_SCORE.ordinal
-    )
+  fun  createDrScoreData(request: CreateDrRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.createDrScoreData(request), TaskCode.CREATE_DR_SCORE.ordinal)
   }
 
-  fun updateDrScoreData(request: UpdateDrRequest?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.updateDrScoreData(request),
-      TaskCode.UPDATE_DR_SCORE.ordinal
-    )
+  fun  updateDrScoreData(request: UpdateDrRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.updateDrScoreData(request), TaskCode.UPDATE_DR_SCORE.ordinal)
   }
 
   override fun getRemoteDataSourceClass(): Class<DrScoreRemoteData> {

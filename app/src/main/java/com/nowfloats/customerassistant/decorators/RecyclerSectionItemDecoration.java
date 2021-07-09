@@ -2,10 +2,8 @@ package com.nowfloats.customerassistant.decorators;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

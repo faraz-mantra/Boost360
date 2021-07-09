@@ -23,7 +23,6 @@ public class roboto_lt extends TextView {
         super(context);
         init(context);
     }
-
     public roboto_lt(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -33,9 +32,9 @@ public class roboto_lt extends TextView {
         super(context, attrs, defStyle);
         init(context);
     }
-
-    public void init(Context context) {
-        setCustomFont(context, "Roboto-Light.ttf");
+    public void init(Context context)
+    {
+        setCustomFont(context,"Roboto-Light.ttf");
         //setTextColor(getResources().getColor(R.color.search_date_color));
         //setTextSize(10);
     }

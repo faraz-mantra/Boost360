@@ -15,6 +15,9 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
  */
 public abstract class MenuAnimationHandler {
 
+    // There are only two distinct animations at the moment.
+    protected enum ActionType {OPENING, CLOSING}
+
     protected FloatingActionMenu menu;
 
     public MenuAnimationHandler() {
@@ -27,11 +30,10 @@ public abstract class MenuAnimationHandler {
     /**
      * Starts the opening animation
      * Should be overriden by children
-     *
      * @param center
      */
     public void animateMenuOpening(Point center) {
-        if (menu == null) {
+        if(menu == null) {
             throw new NullPointerException("MenuAnimationHandler cannot animate without a valid FloatingActionMenu.");
         }
 
@@ -40,11 +42,10 @@ public abstract class MenuAnimationHandler {
     /**
      * Ends the opening animation
      * Should be overriden by children
-     *
      * @param center
      */
     public void animateMenuClosing(Point center) {
-        if (menu == null) {
+        if(menu == null) {
             throw new NullPointerException("MenuAnimationHandler cannot animate without a valid FloatingActionMenu.");
         }
     }
@@ -52,7 +53,6 @@ public abstract class MenuAnimationHandler {
     /**
      * Restores the specified sub action view to its final state, accoding to the current actionType
      * Should be called after an animation finishes.
-     *
      * @param subActionItem
      * @param actionType
      */
@@ -64,23 +64,17 @@ public abstract class MenuAnimationHandler {
         subActionItem.view.setScaleX(1);
         subActionItem.view.setScaleY(1);
         subActionItem.view.setAlpha(1);
-        if (actionType == ActionType.OPENING) {
+        if(actionType == ActionType.OPENING) {
             params.setMargins(subActionItem.x, subActionItem.y, 0, 0);
             subActionItem.view.setLayoutParams(params);
-        } else if (actionType == ActionType.CLOSING) {
+        }
+        else if(actionType == ActionType.CLOSING) {
             Point center = menu.getActionViewCenter();
             params.setMargins(center.x - subActionItem.width / 2, center.y - subActionItem.height / 2, 0, 0);
             subActionItem.view.setLayoutParams(params);
             ((ViewGroup) menu.getActivityContentView()).removeView(subActionItem.view);
         }
     }
-
-    public abstract boolean isAnimating();
-
-    protected abstract void setAnimating(boolean animating);
-
-    // There are only two distinct animations at the moment.
-    protected enum ActionType {OPENING, CLOSING}
 
     /**
      * A special animation listener that is intended to listen the last of the sequential animations.
@@ -108,4 +102,7 @@ public abstract class MenuAnimationHandler {
             setAnimating(true);
         }
     }
+
+    public abstract boolean isAnimating();
+    protected abstract void setAnimating(boolean animating);
 }

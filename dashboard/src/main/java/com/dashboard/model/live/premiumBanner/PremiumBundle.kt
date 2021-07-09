@@ -39,4 +39,4 @@ data class PremiumBundle(
 //  var updatedon: String? = null,
 //  @SerializedName("websiteid")
 //  var websiteid: String? = null
-) : Serializable
+):Serializable

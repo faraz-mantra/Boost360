@@ -14,44 +14,44 @@ import com.onboarding.nowfloats.model.channel.getName
 
 class ChannelWhyDialog : BaseDialogFragment<DialogChannelWhyConfirmBinding, BaseViewModel>() {
 
-  private var channelModel: ChannelModel? = null
+    private var channelModel: ChannelModel? = null
 
-  override fun getLayout(): Int {
-    return R.layout.dialog_channel_why_confirm
-  }
+    override fun getLayout(): Int {
+        return R.layout.dialog_channel_why_confirm
+    }
 
   override fun onCreateView() {
-    binding?.container?.post {
-      (binding?.container?.fadeIn(300L)?.mergeWith(binding?.imageCard?.fadeIn(300L)))
-        ?.andThen(binding?.title?.fadeIn(100L)?.mergeWith(binding?.desc?.fadeIn(100L)))
-        ?.andThen(binding?.confirm?.fadeIn(50L))?.subscribe()
-      binding?.title?.text = channelModel?.getName()
-      binding?.desc?.text = channelModel?.moreDesc
-      binding?.image?.setImageDrawable(channelModel?.getDrawable(activity))
+        binding?.container?.post {
+            (binding?.container?.fadeIn(300L)?.mergeWith(binding?.imageCard?.fadeIn(300L)))
+                    ?.andThen(binding?.title?.fadeIn(100L)?.mergeWith(binding?.desc?.fadeIn(100L)))
+                    ?.andThen(binding?.confirm?.fadeIn(50L))?.subscribe()
+            binding?.title?.text = channelModel?.getName()
+            binding?.desc?.text = channelModel?.moreDesc
+            binding?.image?.setImageDrawable(channelModel?.getDrawable(activity))
+        }
+        setOnClickListener(binding?.confirm)
     }
-    setOnClickListener(binding?.confirm)
-  }
 
-  fun setChannels(channelModel: ChannelModel?) {
-    this.channelModel = channelModel
-  }
-
-  override fun onClick(v: View?) {
-    super.onClick(v)
-    when (v) {
-      binding?.confirm -> this.dismiss()
+    fun setChannels(channelModel: ChannelModel?) {
+        this.channelModel = channelModel
     }
-  }
 
-  override fun getTheme(): Int {
-    return R.style.MaterialDialogTheme
-  }
+    override fun onClick(v: View?) {
+        super.onClick(v)
+        when (v) {
+            binding?.confirm -> this.dismiss()
+        }
+    }
 
-  override fun getWidth(): Int? {
-    return ScreenUtils.instance.getWidth(activity) - ConversionUtils.dp2px(32f)
-  }
+    override fun getTheme(): Int {
+        return R.style.MaterialDialogTheme
+    }
 
-  override fun getViewModelClass(): Class<BaseViewModel> {
-    return BaseViewModel::class.java
-  }
+    override fun getWidth(): Int? {
+        return ScreenUtils.instance.getWidth(activity) - ConversionUtils.dp2px(32f)
+    }
+
+    override fun getViewModelClass(): Class<BaseViewModel> {
+        return BaseViewModel::class.java
+    }
 }

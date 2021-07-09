@@ -1,9 +1,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
   <item>
     <shape
-      android:innerRadiusRatio="2.2"
       android:shape="ring"
       android:thickness="@dimen/size_1"
+      android:innerRadiusRatio="2.2"
       android:useLevel="false">
       <solid android:color="@color/white" />
     </shape>

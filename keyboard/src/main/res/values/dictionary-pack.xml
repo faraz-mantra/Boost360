@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
 **
 ** Copyright 2013, The Android Open Source Project
@@ -17,10 +18,10 @@
 */
 -->
 <resources>
-  <string name="dictionary_pack_client_id" translatable="false">io.separ.neural.inputmethod.indic</string>
-  <string name="dictionary_pack_metadata_uri" translatable="false" />
-  <string name="dictionary_pack_settings_activity" translatable="false">io.separ.neural.inputmethod.dictionarypack.DictionarySettingsActivity</string>
-  <string name="authority" translatable="false">io.separ.neural.inputmethod.dictionarypack.aosp</string>
-  <string name="default_metadata_uri" translatable="false" />
-  <string name="local_metadata_filename" translatable="false">metadata.json</string>
+    <string name="dictionary_pack_client_id" translatable="false">io.separ.neural.inputmethod.indic</string>
+    <string name="dictionary_pack_metadata_uri" translatable="false" />
+    <string name="dictionary_pack_settings_activity" translatable="false">io.separ.neural.inputmethod.dictionarypack.DictionarySettingsActivity</string>
+    <string name="authority" translatable="false">io.separ.neural.inputmethod.dictionarypack.aosp</string>
+    <string name="default_metadata_uri" translatable="false" />
+    <string name="local_metadata_filename" translatable="false">metadata.json</string>
 </resources>

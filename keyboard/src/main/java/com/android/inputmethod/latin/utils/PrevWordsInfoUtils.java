@@ -25,12 +25,11 @@ import io.separ.neural.inputmethod.indic.Constants;
 import io.separ.neural.inputmethod.indic.settings.SpacingAndPunctuations;
 
 public final class PrevWordsInfoUtils {
-    private static final Pattern SPACE_REGEX = Pattern.compile("\\s+");
-
     private PrevWordsInfoUtils() {
         // Intentional empty constructor for utility class.
     }
 
+    private static final Pattern SPACE_REGEX = Pattern.compile("\\s+");
     // Get context information from nth word before the cursor. n = 1 retrieves the words
     // immediately before the cursor, n = 2 retrieves the words before that, and so on. This splits
     // on whitespace only.
@@ -54,7 +53,7 @@ public final class PrevWordsInfoUtils {
     // (n = 2) "abc |" -> beginning-of-sentence
     // (n = 2) "abc. def|" -> beginning-of-sentence
     public static PrevWordsInfo getPrevWordsInfoFromNthPreviousWord(final CharSequence prev,
-                                                                    final SpacingAndPunctuations spacingAndPunctuations, final int n) {
+            final SpacingAndPunctuations spacingAndPunctuations, final int n) {
         if (prev == null) return PrevWordsInfo.EMPTY_PREV_WORDS_INFO;
         final String[] w = SPACE_REGEX.split(prev);
         final WordInfo[] prevWordsInfo = new WordInfo[Constants.MAX_PREV_WORD_COUNT_FOR_N_GRAM];

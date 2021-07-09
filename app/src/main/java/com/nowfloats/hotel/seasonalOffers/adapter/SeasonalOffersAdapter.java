@@ -50,7 +50,7 @@ public class SeasonalOffersAdapter extends RecyclerView.Adapter<SeasonalOffersAd
         menuStatus = status;
     }
 
-    public void updateList(List<Data> list) {
+    public void updateList(List<Data> list){
         itemList = list;
         notifyDataSetChanged();
     }
@@ -100,19 +100,19 @@ public class SeasonalOffersAdapter extends RecyclerView.Adapter<SeasonalOffersAd
         });
 
         holder.offerTitle.setText(itemList.get(position).getOfferTitle());
-        if (itemList.get(position).getDiscountedPrice() != itemList.get(position).getOrignalPrice()) {
-            SpannableString content = new SpannableString("Rs." + itemList.get(position).getOrignalPrice());
-            content.setSpan(new StrikethroughSpan(), 0, itemList.get(position).getOrignalPrice().toString().length() + 3, 0);
+        if(itemList.get(position).getDiscountedPrice() != itemList.get(position).getOrignalPrice()){
+            SpannableString content = new SpannableString("Rs."+ itemList.get(position).getOrignalPrice());
+            content.setSpan(new StrikethroughSpan(), 0, itemList.get(position).getOrignalPrice().toString().length()+3, 0);
             holder.mrpPrice.setText(content);
             holder.mrpPrice.setVisibility(View.VISIBLE);
-        } else {
+        }else{
             holder.mrpPrice.setVisibility(View.GONE);
         }
-        holder.offerPrice.setText("Rs." + itemList.get(position).getDiscountedPrice());
+        holder.offerPrice.setText( "Rs."+ itemList.get(position).getDiscountedPrice());
         holder.offerDescription.setText(itemList.get(position).getOfferImage().getDescription());
-        double discount = (itemList.get(position).getOrignalPrice() - itemList.get(position).getDiscountedPrice()) / (double) (itemList.get(position).getOrignalPrice());
+        double discount = (itemList.get(position).getOrignalPrice() - itemList.get(position).getDiscountedPrice()) / (double)(itemList.get(position).getOrignalPrice());
         discount *= 100.0;
-        holder.offerDiscount.setText(new DecimalFormat("##.##").format(discount) + "% Flat Discount");
+        holder.offerDiscount.setText(new DecimalFormat("##.##").format(discount)+ "% Flat Discount");
 
         Glide.with(context)
                 .load(itemList.get(position).getOfferImage().getUrl())

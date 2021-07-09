@@ -1,160 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/activity_search_ranking"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical"
-  tools:context="com.nowfloats.Analytics_Screen.SearchRankingActivity">
-
-  <androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbar"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_search_ranking"
     android:layout_width="match_parent"
-    android:layout_height="?android:actionBarSize"
-    android:background="?attr/colorPrimary"
-    app:popupTheme="@style/PopupMenuStyle"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-  <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-      android:id="@+id/ll_rank_container"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      android:visibility="invisible">
-
-      <LinearLayout
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.nowfloats.Analytics_Screen.SearchRankingActivity">
+    
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#A1A1A1"
-        android:padding="10dp">
+        android:layout_height="?android:actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/PopupMenuStyle"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-        <TextView
-          android:id="@+id/tv_search_query_title"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_vertical"
-          android:layout_weight="1"
-          android:gravity="start"
-          android:paddingStart="6dp"
-          android:text="@string/search_queries"
-          android:textColor="@color/white"
-          android:textSize="16sp"
-          android:textStyle="bold" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
-        <TextView
-          android:id="@+id/tv_search_type"
-          android:layout_width="100dp"
-          android:layout_height="wrap_content"
-          android:gravity="end"
-          android:text="@string/avg_position"
-          android:textColor="@color/white"
-          android:textStyle="bold" />
-
-        <ImageView
-          android:id="@+id/iv_sort"
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:layout_gravity="center_vertical"
-          android:clickable="true"
-          android:rotation="0"
-          android:tint="@color/green"
-          android:visibility="visible"
-          app:srcCompat="@drawable/ic_arrow_drop_up_black_24dp" />
-
-        <!--
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            android:id="@+id/ll_rank_container"
             android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:background="#A1A1A1"
+                android:layout_height="40dp" >
+
+                <TextView
+                    android:id="@+id/tv_search_query_title"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/search_queries"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:gravity="start"
+                    android:paddingStart="6dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_search_type"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:gravity="end"
+                    android:textStyle="bold"
+                    android:text="@string/avg_position"/>
+
+                <ImageView
+                    android:id="@+id/iv_sort"
+                    android:visibility="visible"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="true"
+                    android:rotation="0"
+                    android:tint="@color/green"
+                    app:srcCompat="@drawable/ic_arrow_drop_up_black_24dp"/>
+
+                <!--
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="Positioning (Page no.)"/>
+
+                    <LinearLayout
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:gravity="center"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"
+                            android:layout_height="wrap_content"
+                            android:text="old"/>
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:gravity="center"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"
+                            android:layout_height="wrap_content"
+                            android:text="new"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                -->
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_search_query"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ll_empty_msg"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="invisible">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:tint="@color/zeroth_grey_icon"
+                android:src="@drawable/ic_search_rankings"/>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/zeroth_grey_title"
+                android:text="@string/keep_moving" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="Positioning (Page no.)"/>
-
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="70dp"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:layout_height="wrap_content"
-                    android:text="old"/>
-
-                <TextView
-                    android:layout_width="70dp"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:layout_height="wrap_content"
-                    android:text="new"/>
-
-            </LinearLayout>
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:textColor="@color/zeroth_grey_title"
+                android:text="@string/update_fresh_and_industry_relevant_content" />
 
         </LinearLayout>
-        -->
 
-      </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
 
-      <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_search_query"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    </LinearLayout>
-
-    <LinearLayout
-      android:id="@+id/ll_empty_msg"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:gravity="center"
-      android:orientation="vertical"
-      android:visibility="invisible">
-
-      <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/ic_search_rankings"
-        android:tint="@color/zeroth_grey_icon" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/keep_moving"
-        android:textColor="@color/zeroth_grey_title"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:text="@string/update_fresh_and_industry_relevant_content"
-        android:textColor="@color/zeroth_grey_title"
-        android:textSize="14sp" />
-
-    </LinearLayout>
-
-    <ProgressBar
-      android:id="@+id/progress_bar"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      android:visibility="gone" />
-
-  </RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>

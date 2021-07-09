@@ -82,13 +82,9 @@ fun Context.copyClipBoard(selectedText: String): Boolean {
 
 fun String.capitalizeUtil(): String {
   val capBuffer = StringBuffer()
-  val capMatcher: Matcher =
-    Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(this)
+  val capMatcher: Matcher = Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(this)
   while (capMatcher.find()) {
-    capMatcher.appendReplacement(capBuffer,
-      capMatcher.group(1).toUpperCase(Locale.getDefault()) + capMatcher.group(2)
-        .toLowerCase(Locale.getDefault())
-    )
+    capMatcher.appendReplacement(capBuffer, capMatcher.group(1).toUpperCase(Locale.getDefault()) + capMatcher.group(2).toLowerCase(Locale.getDefault()))
   }
   return capMatcher.appendTail(capBuffer).toString()
 }
@@ -114,8 +110,7 @@ fun getFormattedDate(date: String?): String? {
     }
   }
   val date = Date(epochTime!!)
-  val format: DateFormat =
-    SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH) //dd/MM/yyyy HH:mm:ss
+  val format: DateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH) //dd/MM/yyyy HH:mm:ss
   format.timeZone = TimeZone.getDefault()
   dateTime = format.format(date)
   if (dateTime.isNullOrEmpty().not()) {
@@ -192,8 +187,7 @@ fun AddSuffixForDay(originalDay: String): String {
 
 
 fun String.getWebViewUrl(): String {
-  return (takeIf { checkIsFile().not() }?.let { this }
-    ?: "https://docs.google.com/viewer?url=$this").checkHttp()
+  return (takeIf { checkIsFile().not() }?.let { this } ?: "https://docs.google.com/viewer?url=$this").checkHttp()
 }
 
 fun String.checkHttp(): String {

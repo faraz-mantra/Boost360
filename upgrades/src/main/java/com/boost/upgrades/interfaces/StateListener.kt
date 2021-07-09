@@ -4,5 +4,5 @@ import com.boost.upgrades.data.api_model.customerId.StateModel
 
 interface StateListener {
 
-  fun stateSelected(data: StateModel)
+    fun stateSelected(data: StateModel)
 }

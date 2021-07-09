@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-
 import androidx.fragment.app.Fragment;
-
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +44,6 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
     private AnimationTool animationTool;
 
     private String navigateTo = "";
-    private AnimationSet animationSet = null;
 
     public SignUpWithRiaFragment() {
     }
@@ -102,7 +99,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
          *    Listener--> After applying animation if you want callback set listener
          *    VisbilityStatus--> This hides or visible view after/before applying animation
          *
-         */
+        */
         createAnimation();
     }
 
@@ -133,22 +130,6 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
         });
     }
 
-    /*
-     * ***************** Set positions ********************
-     *
-     * To support for multiple devices we need to set height,width dynamically
-     *
-     * 1.Ria Image:
-     *
-     *     % in terms of device width,height
-     *     width,height : 40%
-     *     left-margin  : 5%
-     *     top-margin   : 10%
-     *
-     *     RiaImageCircles adjusted left,top,right margins with same width mentioned above for RiaImage.
-     *
-     */
-
     private void reverseAnimation() {
 
         isBackPress = true;
@@ -167,8 +148,19 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
     }
 
     /*
-     * used this only for Ria Specific case as we need to apply same animation for multiple-views
-     * used this variable in callback
+     * ***************** Set positions ********************
+     *
+     * To support for multiple devices we need to set height,width dynamically
+     *
+     * 1.Ria Image:
+     *
+     *     % in terms of device width,height
+     *     width,height : 40%
+     *     left-margin  : 5%
+     *     top-margin   : 10%
+     *
+     *     RiaImageCircles adjusted left,top,right margins with same width mentioned above for RiaImage.
+     *
      */
 
     private void setPositions() {
@@ -258,6 +250,13 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
                 .playOn(llRia);
     }
 
+    /*
+    * used this only for Ria Specific case as we need to apply same animation for multiple-views
+    * used this variable in callback
+    */
+
+    private AnimationSet animationSet = null;
+
     @Override
     public void onAnimationStart(AnimationType animationType) {
         switch (animationType) {
@@ -307,7 +306,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
                     new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.fadein);
+                            Animation animation = AnimationUtils.loadAnimation(getActivity(),R.anim.fadein);
                             animation.setDuration(200);
                             ivStart.startAnimation(animation);
 

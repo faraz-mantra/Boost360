@@ -21,13 +21,11 @@ public class TextExpandableAdapter extends BaseExpandableListAdapter {
     private ArrayList<ArrayList<String>> doubleList;
     private ArrayList<String> titleList;
     private Context mContext;
-
-    public TextExpandableAdapter(Context context, ArrayList<ArrayList<String>> doubleList, ArrayList<String> titleList) {
+    public TextExpandableAdapter(Context context, ArrayList<ArrayList<String>> doubleList, ArrayList<String> titleList){
         mContext = context;
         this.doubleList = doubleList;
         this.titleList = titleList;
     }
-
     @Override
     public int getGroupCount() {
         return titleList.size();
@@ -66,19 +64,19 @@ public class TextExpandableAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
         TextExpandableAdapter.MyHolder holder = null;
-        if (view == null) {
-            view = LayoutInflater.from(mContext).inflate(R.layout.adapter_expandable_parent_item, viewGroup, false);
+        if (view == null){
+            view = LayoutInflater.from(mContext).inflate(R.layout.adapter_expandable_parent_item,viewGroup,false);
             holder = new TextExpandableAdapter.MyHolder();
             holder.text = view.findViewById(R.id.text1);
             holder.image = view.findViewById(R.id.image1);
             view.setTag(holder);
-            int padding1 = Methods.dpToPx(10, mContext);
-            view.setPadding(padding1, padding1 / 2, padding1, padding1 / 2);
+            int padding1 = Methods.dpToPx(10,mContext);
+            view.setPadding(padding1,padding1/2,padding1,padding1/2);
         }
 
         holder = (TextExpandableAdapter.MyHolder) view.getTag();
         holder.text.setText(titleList.get(i));
-        holder.image.setImageResource(b ? R.drawable.up_arrow : R.drawable.down_arrow);
+        holder.image.setImageResource(b?R.drawable.up_arrow:R.drawable.down_arrow);
 
         return view;
     }
@@ -86,14 +84,14 @@ public class TextExpandableAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
         TextExpandableAdapter.MyHolder holder = null;
-        if (view == null) {
-            view = LayoutInflater.from(mContext).inflate(R.layout.adapter_text_item, viewGroup, false);
+        if (view == null){
+            view = LayoutInflater.from(mContext).inflate(R.layout.adapter_text_item,viewGroup,false);
             holder = new TextExpandableAdapter.MyHolder();
             holder.text = view.findViewById(R.id.text1);
             view.setTag(holder);
             view.setBackgroundResource(R.color.white);
-            int padding1 = Methods.dpToPx(5, mContext);
-            view.setPadding(2 * padding1, 0, 2 * padding1, 0);
+            int padding1 = Methods.dpToPx(5,mContext);
+            view.setPadding(2*padding1,0,2*padding1,0);
         }
 
         holder = (TextExpandableAdapter.MyHolder) view.getTag();
@@ -108,7 +106,7 @@ public class TextExpandableAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
-    class MyHolder {
+    class MyHolder{
         public TextView text;
         public ImageView image;
     }

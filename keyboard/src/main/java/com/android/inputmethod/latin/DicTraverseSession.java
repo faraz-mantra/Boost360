@@ -24,13 +24,11 @@ import io.separ.neural.inputmethod.indic.Constants;
 import io.separ.neural.inputmethod.indic.settings.NativeSuggestOptions;
 
 public final class DicTraverseSession {
-    // Must be equal to MAX_RESULTS in native/jni/src/defines.h
-    private static final int MAX_RESULTS = 18;
-
     static {
         JniUtils.loadNativeLibrary();
     }
-
+    // Must be equal to MAX_RESULTS in native/jni/src/defines.h
+    private static final int MAX_RESULTS = 18;
     public final int[] mInputCodePoints = new int[Constants.DICTIONARY_MAX_WORD_LENGTH];
     public final int[][] mPrevWordCodePointArrays =
             new int[Constants.MAX_PREV_WORD_COUNT_FOR_N_GRAM][];
@@ -47,23 +45,18 @@ public final class DicTraverseSession {
     public final float[] mInputOutputLanguageWeight = new float[1];
 
     public final NativeSuggestOptions mNativeSuggestOptions = new NativeSuggestOptions();
+
+    private static native long setDicTraverseSessionNative(String locale, long dictSize);
+    private static native void initDicTraverseSessionNative(long nativeDicTraverseSession,
+            long dictionary, int[] previousWord, int previousWordLength);
+    private static native void releaseDicTraverseSessionNative(long nativeDicTraverseSession);
+
     private long mNativeDicTraverseSession;
 
     public DicTraverseSession(Locale locale, long dictionary, long dictSize) {
         mNativeDicTraverseSession = createNativeDicTraverseSession(
                 locale != null ? locale.toString() : "", dictSize);
         initSession(dictionary);
-    }
-
-    private static native long setDicTraverseSessionNative(String locale, long dictSize);
-
-    private static native void initDicTraverseSessionNative(long nativeDicTraverseSession,
-                                                            long dictionary, int[] previousWord, int previousWordLength);
-
-    private static native void releaseDicTraverseSessionNative(long nativeDicTraverseSession);
-
-    private static long createNativeDicTraverseSession(String locale, long dictSize) {
-        return setDicTraverseSessionNative(locale, dictSize);
     }
 
     public long getSession() {
@@ -77,6 +70,10 @@ public final class DicTraverseSession {
     public void initSession(long dictionary, int[] previousWord, int previousWordLength) {
         initDicTraverseSessionNative(
                 mNativeDicTraverseSession, dictionary, previousWord, previousWordLength);
+    }
+
+    private static long createNativeDicTraverseSession(String locale, long dictSize) {
+        return setDicTraverseSessionNative(locale, dictSize);
     }
 
     private void closeInternal() {

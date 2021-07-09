@@ -44,21 +44,21 @@ final class GestureTrailDrawingPoints {
     public static final int POINT_TYPE_INTERPOLATED = 2;
 
     private static final int DEFAULT_CAPACITY = GestureStrokeDrawingPoints.PREVIEW_CAPACITY;
-    // Use this value as imaginary zero because x-coordinates may be zero.
-    private static final int DOWN_EVENT_MARKER = -128;
+
     // These three {@link ResizableIntArray}s should be synchronized by {@link #mEventTimes}.
     private final ResizableIntArray mXCoordinates = new ResizableIntArray(DEFAULT_CAPACITY);
     private final ResizableIntArray mYCoordinates = new ResizableIntArray(DEFAULT_CAPACITY);
     private final ResizableIntArray mEventTimes = new ResizableIntArray(DEFAULT_CAPACITY);
     private final ResizableIntArray mPointTypes = new ResizableIntArray(
             DEBUG_SHOW_POINTS ? DEFAULT_CAPACITY : 0);
-    private final RoundedLine mRoundedLine = new RoundedLine();
-    private final Rect mRoundedLineBounds = new Rect();
     private int mCurrentStrokeId = -1;
     // The wall time of the zero value in {@link #mEventTimes}
     private long mCurrentTimeBase;
     private int mTrailStartIndex;
     private int mLastInterpolatedDrawIndex;
+
+    // Use this value as imaginary zero because x-coordinates may be zero.
+    private static final int DOWN_EVENT_MARKER = -128;
 
     private static int markAsDownEvent(final int xCoord) {
         return DOWN_EVENT_MARKER - xCoord;
@@ -71,40 +71,6 @@ final class GestureTrailDrawingPoints {
     private static int getXCoordValue(final int xCoordOrMark) {
         return isDownEventXCoord(xCoordOrMark)
                 ? DOWN_EVENT_MARKER - xCoordOrMark : xCoordOrMark;
-    }
-
-    /**
-     * Calculate the alpha of a gesture trail.
-     * A gesture trail starts from fully opaque. After mFadeStartDelay has been passed, the alpha
-     * of a trail reduces in proportion to the elapsed time. Then after mFadeDuration has been
-     * passed, a trail becomes fully transparent.
-     *
-     * @param elapsedTime the elapsed time since a trail has been made.
-     * @param params      gesture trail display parameters
-     * @return the width of a gesture trail
-     */
-    private static int getAlpha(final int elapsedTime, final GestureTrailDrawingParams params) {
-        if (elapsedTime < params.mFadeoutStartDelay) {
-            return Constants.Color.ALPHA_OPAQUE;
-        }
-        final int decreasingAlpha = Constants.Color.ALPHA_OPAQUE
-                * (elapsedTime - params.mFadeoutStartDelay)
-                / params.mFadeoutDuration;
-        return Constants.Color.ALPHA_OPAQUE - decreasingAlpha;
-    }
-
-    /**
-     * Calculate the width of a gesture trail.
-     * A gesture trail starts from the width of mTrailStartWidth and reduces its width in proportion
-     * to the elapsed time. After mTrailEndWidth has been passed, the width becomes mTraiLEndWidth.
-     *
-     * @param elapsedTime the elapsed time since a trail has been made.
-     * @param params      gesture trail display parameters
-     * @return the width of a gesture trail
-     */
-    private static float getWidth(final int elapsedTime, final GestureTrailDrawingParams params) {
-        final float deltaWidth = params.mTrailStartWidth - params.mTrailEndWidth;
-        return params.mTrailStartWidth - (deltaWidth * elapsedTime) / params.mTrailLingerDuration;
     }
 
     public void addStroke(final GestureStrokeDrawingPoints stroke, final long downTime) {
@@ -145,6 +111,43 @@ final class GestureTrailDrawingPoints {
             mCurrentStrokeId = strokeId;
         }
     }
+
+    /**
+     * Calculate the alpha of a gesture trail.
+     * A gesture trail starts from fully opaque. After mFadeStartDelay has been passed, the alpha
+     * of a trail reduces in proportion to the elapsed time. Then after mFadeDuration has been
+     * passed, a trail becomes fully transparent.
+     *
+     * @param elapsedTime the elapsed time since a trail has been made.
+     * @param params      gesture trail display parameters
+     * @return the width of a gesture trail
+     */
+    private static int getAlpha(final int elapsedTime, final GestureTrailDrawingParams params) {
+        if (elapsedTime < params.mFadeoutStartDelay) {
+            return Constants.Color.ALPHA_OPAQUE;
+        }
+        final int decreasingAlpha = Constants.Color.ALPHA_OPAQUE
+                * (elapsedTime - params.mFadeoutStartDelay)
+                / params.mFadeoutDuration;
+        return Constants.Color.ALPHA_OPAQUE - decreasingAlpha;
+    }
+
+    /**
+     * Calculate the width of a gesture trail.
+     * A gesture trail starts from the width of mTrailStartWidth and reduces its width in proportion
+     * to the elapsed time. After mTrailEndWidth has been passed, the width becomes mTraiLEndWidth.
+     *
+     * @param elapsedTime the elapsed time since a trail has been made.
+     * @param params      gesture trail display parameters
+     * @return the width of a gesture trail
+     */
+    private static float getWidth(final int elapsedTime, final GestureTrailDrawingParams params) {
+        final float deltaWidth = params.mTrailStartWidth - params.mTrailEndWidth;
+        return params.mTrailStartWidth - (deltaWidth * elapsedTime) / params.mTrailLingerDuration;
+    }
+
+    private final RoundedLine mRoundedLine = new RoundedLine();
+    private final Rect mRoundedLineBounds = new Rect();
 
     /**
      * Draw gesture trail

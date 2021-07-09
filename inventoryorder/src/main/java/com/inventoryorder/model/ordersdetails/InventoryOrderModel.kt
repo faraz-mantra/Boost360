@@ -4,13 +4,13 @@ import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 
 class InventoryOrderModel(
-  val delivery: String? = null,
-  val orderType: String? = null,
-  val Items: ArrayList<OrderItem>? = null,
-  val Count: Int? = null,
-  val Limit: Int? = null,
-  val Skip: Int? = null,
-  val Total: Int? = null
+    val delivery: String? = null,
+    val orderType: String? = null,
+    val Items: ArrayList<OrderItem>? = null,
+    val Count: Int? = null,
+    val Limit: Int? = null,
+    val Skip: Int? = null,
+    val Total: Int? = null
 ) : AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {

@@ -8,10 +8,8 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
-
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.Window;
@@ -47,15 +45,15 @@ public class PreSignUpActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
 
-        if (Constants.PACKAGE_NAME.equalsIgnoreCase("com.biz2.nowfloats")
-                || Constants.PACKAGE_NAME.equals("com.redtim")) {
+        if(Constants.PACKAGE_NAME.equalsIgnoreCase("com.biz2.nowfloats")
+                || Constants.PACKAGE_NAME.equals("com.redtim")){
             setContentView(R.layout.activity_pre_sign_up__main_v3);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 window.setStatusBarColor(Color.WHITE);
             }
-        } else {
+        }else{
             setContentView(R.layout.activity_pre_sign_up_white_labels);
         }
 
@@ -81,16 +79,16 @@ public class PreSignUpActivity extends FragmentActivity {
 
                 MixPanelController.track(EventKeysWL.CREATE_WEBSITE_BUTTON, null);
                 Intent signUpIntent = null;
-                if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+                if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                     signUpIntent = new Intent(PreSignUpActivity.this, RiaChatInitActivity.class);
                     signUpIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(signUpIntent);
                     finish();
-                } else {
-                    signUpIntent = new Intent(PreSignUpActivity.this, PreSignUpActivityRia.class);
+                }else{
+                    signUpIntent = new Intent(PreSignUpActivity.this,PreSignUpActivityRia.class);
                     signUpIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     Bundle bundle = new Bundle();
-                    bundle.putBundle("mBundle", new Bundle());
+                    bundle.putBundle("mBundle",new Bundle());
                     signUpIntent.putExtras(bundle);
                     startActivity(signUpIntent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

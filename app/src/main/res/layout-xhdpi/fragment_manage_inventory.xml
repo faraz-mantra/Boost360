@@ -1,80 +1,80 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:card_view="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="fill_parent"
-  android:background="@color/white"
-  android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
   <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
 
     <LinearLayout
-      android:id="@+id/business_profile_layout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="2dp"
-      android:orientation="vertical">
-
-      <androidx.cardview.widget.CardView
+        android:id="@+id/business_profile_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/white"
-        android:visibility="gone"
-        app:cardElevation="3dp"
-        card_view:cardCornerRadius="3dp">
+        android:layout_marginStart="2dp"
+        android:orientation="vertical">
 
-        <LinearLayout
+      <androidx.cardview.widget.CardView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginStart="24dp"
-          android:layout_marginTop="24dp"
-          android:layout_marginBottom="24dp"
-          android:orientation="horizontal">
+          android:layout_gravity="center_horizontal"
+          android:background="@color/white"
+          android:visibility="gone"
+          app:cardElevation="3dp"
+          card_view:cardCornerRadius="3dp">
 
-          <com.makeramen.RoundedImageView
-            android:id="@+id/businessProfileIcon_ProfileV2"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_gravity="left"
-            android:scaleType="fitXY"
-            android:src="@drawable/manage_inventory"
-            android:tint="@color/primary"
-            app:riv_border_color="#333333"
-            app:riv_border_width="0dip"
-            app:riv_corner_radius="30dip"
-            app:riv_mutate_background="true"
-            app:riv_oval="true" />
-
-          <LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/margin_10"
-            android:orientation="vertical">
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal">
 
-            <TextView
-              android:id="@+id/websiteTitleTextView_ProfileV2"
+          <com.makeramen.RoundedImageView
+              android:id="@+id/businessProfileIcon_ProfileV2"
+              android:layout_width="65dp"
+              android:layout_height="65dp"
+              android:layout_gravity="left"
+              android:scaleType="fitXY"
+              android:src="@drawable/manage_inventory"
+              android:tint="@color/primary"
+              app:riv_border_color="#333333"
+              app:riv_border_width="0dip"
+              app:riv_corner_radius="30dip"
+              app:riv_mutate_background="true"
+              app:riv_oval="true" />
+
+          <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_gravity="center_horizontal"
-              android:ellipsize="end"
-              android:maxLines="2"
-              android:text="@string/manage_your_order_fulfillment_process"
-              android:textColor="@color/primaryColor"
-              android:textSize="19sp" />
+              android:layout_marginStart="10dp"
+              android:layout_marginTop="@dimen/margin_10"
+              android:orientation="vertical">
 
             <TextView
-              android:id="@+id/categoryTextView_ProfileV2"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginStart="10dp"
-              android:ellipsize="end"
-              android:singleLine="true"
-              android:textColor="#949494"
-              android:textSize="12sp" />
+                android:id="@+id/websiteTitleTextView_ProfileV2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@string/manage_your_order_fulfillment_process"
+                android:textColor="@color/primaryColor"
+                android:textSize="19sp" />
+
+            <TextView
+                android:id="@+id/categoryTextView_ProfileV2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="#949494"
+                android:textSize="12sp" />
 
           </LinearLayout>
 
@@ -83,20 +83,20 @@
       </androidx.cardview.widget.CardView>
 
       <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="true">
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:fillViewport="true">
 
         <androidx.cardview.widget.CardView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/white">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
 
           <include
-            android:id="@+id/businessProfile_List_ProfileV2"
-            layout="@layout/manage_inventory_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+              android:id="@+id/businessProfile_List_ProfileV2"
+              layout="@layout/manage_inventory_list"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" />
 
         </androidx.cardview.widget.CardView>
 
@@ -107,17 +107,17 @@
   </ScrollView>
 
   <LinearLayout
-    android:id="@+id/progress_layout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:visibility="gone">
+      android:id="@+id/progress_layout"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:visibility="gone">
 
     <ProgressBar
-      android:id="@+id/visits_progressBar"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
+        android:id="@+id/visits_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
   </LinearLayout>
 

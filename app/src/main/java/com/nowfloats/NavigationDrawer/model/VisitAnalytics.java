@@ -2,7 +2,8 @@ package com.nowfloats.NavigationDrawer.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class VisitAnalytics {
+public class VisitAnalytics
+{
     @SerializedName("Visits")
     private int visits;
     @SerializedName("Visitors")

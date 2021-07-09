@@ -9,8 +9,7 @@ import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-object AssuredWithFloatRepository :
-  AppBaseRepository<AssuredWithFloatRemoteData, AppBaseLocalService>() {
+object AssuredWithFloatRepository : AppBaseRepository<AssuredWithFloatRemoteData, AppBaseLocalService>() {
 
   fun getPickUpAddress(fpId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getPickUpAddress(fpId), TaskCode.PIC_UP_ADDRESS)

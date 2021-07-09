@@ -57,8 +57,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
-class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBinding>(),
-  RecyclerItemClickListener {
+class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBinding>(), RecyclerItemClickListener {
 
   private lateinit var requestFilter: OrderFilterRequest
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
@@ -141,12 +140,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     })
   }
 
-  private fun getSellerOrdersFilterApi(
-    request: OrderFilterRequest,
-    isFirst: Boolean = false,
-    isRefresh: Boolean = false,
-    isSearch: Boolean = false
-  ) {
+  private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
     if (isFirst || isSearch) showProgressLoad()
     viewModel?.getSellerOrdersFilter(request)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgressLoad()
@@ -159,10 +153,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
           if (isDataNotEmpty) {
             orderList.clear()
             removeLoader()
-            val list = response!!.Items?.map { item ->
-              item.recyclerViewType =
-                RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout();item
-            } as ArrayList<OrderItem>
+            val list = response!!.Items?.map { item -> item.recyclerViewType = RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout();item } as ArrayList<OrderItem>
             TOTAL_ELEMENTS = response.total()
             orderListFinalList.addAll(list)
             orderList.addAll(orderListFinalList)
@@ -172,10 +163,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
           } else emptyView()
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
-            val list = response.Items?.map { item ->
-              item.recyclerViewType =
-                RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout();item
-            } as ArrayList<OrderItem>
+            val list = response.Items?.map { item -> item.recyclerViewType = RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout();item } as ArrayList<OrderItem>
             orderList.clear()
             orderList.addAll(list)
             setAdapterNotify(orderList)
@@ -215,7 +203,6 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
     binding?.bookingRecycler?.visible()
     binding?.errorView?.gone()
-    binding?.btnAdd?.visible()
     if (orderAdapter != null) {
       orderAdapter?.notify(getDateWiseFilter(items))
     } else setAdapterAppointmentList(getDateWiseFilter(items))
@@ -224,7 +211,6 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   private fun emptyView() {
     binding?.bookingRecycler?.gone()
     binding?.errorView?.visible()
-    binding?.btnAdd?.gone()
   }
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {
@@ -281,18 +267,15 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.CONFIRM -> {
-        requestFilter =
-          getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name))
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name))
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.DELIVERED -> {
-        requestFilter =
-          getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.CANCELLED -> {
-        requestFilter =
-          getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name))
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name))
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       else -> {
@@ -325,13 +308,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   private fun startFilter(query: String) {
     if (query.isNotEmpty() && query.length > 2) {
       isSearchItem = true
-      getSellerOrdersFilterApi(
-        getRequestFilterData(
-          arrayListOf(),
-          searchTxt = query,
-          type = QueryObject.QueryKey.ReferenceNumber.name
-        ), isSearch = true
-      )
+      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query, type = QueryObject.QueryKey.ReferenceNumber.name), isSearch = true)
     } else {
       isSearchItem = false
       orderList.clear()
@@ -347,17 +324,12 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
         val bundle = Bundle()
         bundle.putString(IntentConstant.ORDER_ID.name, orderItem?._id)
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
-        startFragmentOrderActivity(
-          FragmentType.APPOINTMENT_SPA_DETAIL_VIEW,
-          bundle,
-          isResult = true
-        )
+        startFragmentOrderActivity(FragmentType.APPOINTMENT_SPA_DETAIL_VIEW, bundle, isResult = true)
       }
       RecyclerViewActionType.ORDER_BUTTON_CLICKED.ordinal -> {
         this.position = position
         this.orderItem = (item as? OrderItem)
-        this.orderItem?.appointmentSpaButtonStatus()?.firstOrNull()
-          ?.let { clickActionAptButton(it, this.orderItem!!) }
+        this.orderItem?.appointmentSpaButtonStatus()?.firstOrNull()?.let { clickActionAptButton(it, this.orderItem!!) }
       }
       RecyclerViewActionType.ORDER_DROPDOWN_CLICKED.ordinal -> {
         if (::mPopupWindow.isInitialized && mPopupWindow.isShowing) mPopupWindow.dismiss()
@@ -367,18 +339,9 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     }
   }
 
-  override fun onItemClickView(
-    position: Int,
-    view: View,
-    item: BaseRecyclerViewItem?,
-    actionType: Int
-  ) {
+  override fun onItemClickView(position: Int, view: View, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
-      RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal -> popUpMenuButton(
-        position,
-        view,
-        (item as? OrderItem)
-      )
+      RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal -> popUpMenuButton(position, view, (item as? OrderItem))
     }
   }
 
@@ -388,30 +351,16 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     this.position = position
     val list = OrderMenuModel().getAppointmentMenu(orderItem)
     if (list.isNotEmpty()) list.removeAt(0)
-    val orderMenuView: View =
-      LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
+    val orderMenuView: View = LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
     val rvOrderMenu: RecyclerView? = orderMenuView.findViewById(R.id.rv_menu_order)
     rvOrderMenu?.apply {
       val adapterMenu = AppBaseRecyclerViewAdapter(baseActivity, list, this@AppointmentSpaFragment)
       adapter = adapterMenu
     }
-    mPopupWindow = PopupWindow(
-      orderMenuView,
-      WindowManager.LayoutParams.MATCH_PARENT,
-      WindowManager.LayoutParams.WRAP_CONTENT,
-      true
-    )
+    mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
     if (orderAdapter != null && orderList.size > 2 && orderAdapter!!.list().size - 1 == position) {
-      orderMenuView.measure(
-        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-      )
-      mPopupWindow.showAsDropDown(
-        view,
-        view.x.roundToInt(),
-        view.y.roundToInt() - orderMenuView.measuredHeight,
-        Gravity.NO_GRAVITY
-      )
+      orderMenuView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+      mPopupWindow.showAsDropDown(view, view.x.roundToInt(), view.y.roundToInt() - orderMenuView.measuredHeight, Gravity.NO_GRAVITY)
     } else mPopupWindow.showAsDropDown(view, 0, 0)
   }
 
@@ -430,10 +379,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
           showProgress()
           sendPaymentLinkApt(getString(R.string.payment_request_send))
         }
-        sheetRequestPayment.show(
-          this.parentFragmentManager,
-          RequestPaymentAptSheetDialog::class.java.name
-        )
+        sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentAptSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT -> {
         this.orderItem = orderItem
@@ -446,10 +392,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
         val markPaymentDoneSheet = MarkPaymentDoneAptSheetDialog()
         markPaymentDoneSheet.setData(orderItem)
         markPaymentDoneSheet.onClicked = { markReceivedPaymentRequest(it) }
-        markPaymentDoneSheet.show(
-          this.parentFragmentManager,
-          MarkPaymentDoneAptSheetDialog::class.java.name
-        )
+        markPaymentDoneSheet.show(this.parentFragmentManager, MarkPaymentDoneAptSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.MARK_AS_SERVED -> {
         val sheetServed = ServedAptSheetDialog()
@@ -467,19 +410,13 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
         val sheetFeedbackApt = SendFeedbackAptSheetDialog()
         sheetFeedbackApt.setData(orderItem)
         sheetFeedbackApt.onClicked = { sendFeedbackRequestApt(it) }
-        sheetFeedbackApt.show(
-          this.parentFragmentManager,
-          SendFeedbackAptSheetDialog::class.java.name
-        )
+        sheetFeedbackApt.show(this.parentFragmentManager, SendFeedbackAptSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.SEND_RE_BOOKING -> {
         val sheetReBookingApt = SendReBookingAptSheetDialog()
         sheetReBookingApt.setData(orderItem)
         sheetReBookingApt.onClicked = { sendReBookingRequestApt() }
-        sheetReBookingApt.show(
-          this.parentFragmentManager,
-          SendReBookingAptSheetDialog::class.java.name
-        )
+        sheetReBookingApt.show(this.parentFragmentManager, SendReBookingAptSheetDialog::class.java.name)
       }
       else -> {
       }
@@ -501,16 +438,15 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
 
   private fun sendReBookingRequestApt() {
     showProgress()
-    viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)
-      ?.observeOnce(viewLifecycleOwner, {
-        if (it.isSuccess()) {
-          apiGetAptDetails()
-          showLongToast(resources.getString(R.string.re_booking_reminder))
-        } else {
-          showLongToast(it.message())
-          hideProgress()
-        }
-      })
+    viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        apiGetAptDetails()
+        showLongToast(resources.getString(R.string.re_booking_reminder))
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
   }
 
   private fun sendFeedbackRequestApt(request: FeedbackRequest) {
@@ -531,11 +467,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         if (message.isNotEmpty()) {
-          updateReason(
-            resources.getString(R.string.appointment_serve),
-            UpdateExtraPropertyRequest.PropertyType.DELIVERY.name,
-            ExtraPropertiesOrder(deliveryRemark = message)
-          )
+          updateReason(resources.getString(R.string.appointment_serve), UpdateExtraPropertyRequest.PropertyType.DELIVERY.name, ExtraPropertiesOrder(deliveryRemark = message))
         } else {
           apiGetAptDetails()
           showLongToast(resources.getString(R.string.appointment_serve))
@@ -549,43 +481,29 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
 
   private fun apiCancelApt(cancellingEntity: String, reasonText: String) {
     showProgress()
-    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)
-      ?.observeOnce(viewLifecycleOwner, {
-        if (it.isSuccess()) {
-          val data = it as? OrderConfirmStatus
-          if (reasonText.isNotEmpty()) {
-            updateReason(
-              resources.getString(R.string.appointment_cancel),
-              UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name,
-              ExtraPropertiesOrder(cancellationRemark = reasonText)
-            )
-          } else {
-            apiGetAptDetails()
-            showLongToast(resources.getString(R.string.appointment_cancel))
-          }
+    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        val data = it as? OrderConfirmStatus
+        if (reasonText.isNotEmpty()) {
+          updateReason(resources.getString(R.string.appointment_cancel), UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name, ExtraPropertiesOrder(cancellationRemark = reasonText))
         } else {
-          showLongToast(it.message())
-          hideProgress()
+          apiGetAptDetails()
+          showLongToast(resources.getString(R.string.appointment_cancel))
         }
-      })
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
   }
 
-  private fun updateReason(
-    message: String,
-    type: String,
-    extraPropertiesOrder: ExtraPropertiesOrder
-  ) {
-    val propertyRequest = UpdateOrderNPropertyRequest(
-      updateExtraPropertyType = type,
-      existingKeyName = "",
-      orderId = this.orderItem?._id,
-      extraPropertiesOrder = extraPropertiesOrder
-    )
-    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)
-      ?.observeOnce(viewLifecycleOwner, {
-        if (it.isSuccess()) showLongToast(message)
-        apiGetAptDetails()
-      })
+  private fun updateReason(message: String, type: String, extraPropertiesOrder: ExtraPropertiesOrder) {
+    val propertyRequest = UpdateOrderNPropertyRequest(updateExtraPropertyType = type,
+        existingKeyName = "", orderId = this.orderItem?._id, extraPropertiesOrder = extraPropertiesOrder)
+    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) showLongToast(message)
+      apiGetAptDetails()
+    })
   }
 
   private fun apiConfirmApt(isSendPaymentLink: Boolean) {
@@ -605,11 +523,10 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   }
 
   private fun sendPaymentLinkApt(message: String) {
-    viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)
-      ?.observeOnce(viewLifecycleOwner, { it1 ->
-        if (it1.isSuccess()) showLongToast(message)
-        apiGetAptDetails()
-      })
+    viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, { it1 ->
+      if (it1.isSuccess()) showLongToast(message)
+      apiGetAptDetails()
+    })
   }
 
   private fun markReceivedPaymentRequest(request: PaymentReceivedRequest) {
@@ -631,8 +548,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
       val response = (it as? OrderDetailResponse)?.Data
       if (it.isSuccess() && response != null) {
         if (position != null && orderAdapter != null && orderAdapter!!.list().size > position!!) {
-          orderListFinalList =
-            orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
+          orderListFinalList = orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
           response.recyclerViewType = RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout()
           orderAdapter?.setRefreshItem(position!!, response)
         } else loadNewData()
@@ -651,71 +567,28 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   }
 
 
-  private fun getRequestFilterData(
-    statusList: ArrayList<String>,
-    searchTxt: String = "",
-    type: String = QueryObject.QueryKey.ReferenceNumber.name
-  ): OrderFilterRequest {
+  private fun getRequestFilterData(statusList: ArrayList<String>, searchTxt: String = "", type: String = QueryObject.QueryKey.ReferenceNumber.name): OrderFilterRequest {
     val requestFil: OrderFilterRequest?
     if (searchTxt.isEmpty()) {
       currentPage = PAGE_START
       requestFil = OrderFilterRequest(clientId = clientId, skip = currentPage, limit = PAGE_SIZE)
     } else requestFil = OrderFilterRequest(clientId = clientId)
-    requestFil.filterBy.add(
-      OrderFilterRequestItem(
-        QueryConditionType = OrderFilterRequestItem.Condition.AND.name,
-        QueryObject = getQueryList()
-      )
-    )
+    requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.AND.name, QueryObject = getQueryList()))
     if (statusList.isNullOrEmpty().not()) {
-      requestFil.filterBy.add(
-        OrderFilterRequestItem(
-          QueryConditionType = OrderFilterRequestItem.Condition.OR.name,
-          QueryObject = getQueryStatusList(statusList)
-        )
-      )
+      requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryStatusList(statusList)))
     }
     if (searchTxt.isNotEmpty()) {
-      requestFil.filterBy.add(
-        OrderFilterRequestItem(
-          QueryConditionType = OrderFilterRequestItem.Condition.OR.name,
-          QueryObject = getQueryFilter(type, searchTxt)
-        )
-      )
+      requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryFilter(type, searchTxt)))
     }
     return requestFil
   }
 
   private fun getQueryList(): ArrayList<QueryObject> {
     val queryList = ArrayList<QueryObject>()
-    queryList.add(
-      QueryObject(
-        QueryObject.QueryKey.Identifier.value,
-        fpTag,
-        QueryObject.Operator.EQ.name
-      )
-    )
-    queryList.add(
-      QueryObject(
-        QueryObject.QueryKey.Mode.value,
-        OrderSummaryRequest.OrderMode.APPOINTMENT.name,
-        QueryObject.Operator.EQ.name
-      )
-    )
-    queryList.add(
-      QueryObject(
-        QueryObject.QueryKey.DeliveryMode.value,
-        OrderSummaryRequest.DeliveryMode.ONLINE.name,
-        QueryObject.Operator.NE.name
-      )
-    )
-    queryList.add(
-      QueryObject(
-        QueryObject.QueryKey.DeliveryProvider.value,
-        QueryObject.QueryValue.NF_VIDEO_CONSULATION.name,
-        QueryObject.Operator.NE.name
-      )
-    )
+    queryList.add(QueryObject(QueryObject.QueryKey.Identifier.value, fpTag, QueryObject.Operator.EQ.name))
+    queryList.add(QueryObject(QueryObject.QueryKey.Mode.value, OrderSummaryRequest.OrderMode.APPOINTMENT.name, QueryObject.Operator.EQ.name))
+    queryList.add(QueryObject(QueryObject.QueryKey.DeliveryMode.value, OrderSummaryRequest.DeliveryMode.ONLINE.name, QueryObject.Operator.NE.name))
+    queryList.add(QueryObject(QueryObject.QueryKey.DeliveryProvider.value, QueryObject.QueryValue.NF_VIDEO_CONSULATION.name, QueryObject.Operator.NE.name))
     return queryList
   }
 
@@ -732,15 +605,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
 
   private fun getQueryStatusList(statusList: ArrayList<String>): ArrayList<QueryObject> {
     val queryList = ArrayList<QueryObject>()
-    statusList.forEach {
-      queryList.add(
-        QueryObject(
-          QueryObject.QueryKey.Status.value,
-          it,
-          QueryObject.Operator.EQ.name
-        )
-      )
-    }
+    statusList.forEach { queryList.add(QueryObject(QueryObject.QueryKey.Status.value, it, QueryObject.Operator.EQ.name)) }
     return queryList
   }
 

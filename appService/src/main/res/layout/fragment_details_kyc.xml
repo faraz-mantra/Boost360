@@ -209,9 +209,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Latest deposit"
+            tools:text="Latest deposit on 23rd July 2020, 3:45PM"
             android:textColor="@color/greyish_brown"
-            app:textType="BODY_1"
-            tools:text="Latest deposit on 23rd July 2020, 3:45PM" />
+            app:textType="BODY_1" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
       </com.framework.views.customViews.CustomCardView>

@@ -53,7 +53,7 @@
         style="@style/BusinessProfileTextField"
         android:drawableEnd="@null"
         android:gravity="top|left"
-        android:inputType="textMultiLine|textCapWords"
+        android:inputType="textMultiLine"
         android:lines="3"
         android:maxLength="40"
         android:minLines="1"

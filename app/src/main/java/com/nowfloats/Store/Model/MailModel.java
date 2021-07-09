@@ -11,7 +11,7 @@ public class MailModel {
     public String Subject;
     public ArrayList<String> EmailIds;
 
-    public MailModel(String id, String msg, String subj, ArrayList<String> EmailIds) {
+    public MailModel(String id,String msg,String subj,ArrayList<String> EmailIds){
         this.ClientId = id;
         this.Message = msg;
         this.Subject = subj;

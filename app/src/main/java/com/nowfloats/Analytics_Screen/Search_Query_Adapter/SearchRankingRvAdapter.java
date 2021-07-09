@@ -1,9 +1,7 @@
 package com.nowfloats.Analytics_Screen.Search_Query_Adapter;
 
 import android.content.Context;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +31,7 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
         mContext = context;
     }*/
 
-    public SearchRankingRvAdapter(Context context) {
+    public SearchRankingRvAdapter(Context context){
         this.mContext = context;
     }
 
@@ -45,7 +43,7 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
 
     @Override
     public int getItemViewType(int position) {
-        if ((position % 2) == 0) {
+        if((position % 2)==0){
             return 0;
         }
         return 1;
@@ -58,7 +56,8 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
 
         holder.tvSearchQuery.setText(analytics.getKeyword());
 
-        switch (filterType) {
+        switch (filterType)
+        {
             case 0:
 
                 holder.tvValue.setText(String.valueOf(analytics.getAveragePosition()));
@@ -76,7 +75,7 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
 
             case 3:
 
-                int ctr = (int) (analytics.getCtr() * 100);
+                int ctr = (int)(analytics.getCtr() * 100);
                 holder.tvValue.setText(String.valueOf(ctr));
                 break;
         }
@@ -117,9 +116,9 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
         }*/
     }
 
-    private String getPage(int rank) {
-        rank = ((rank - 1) / 10) + 1;
-        switch (rank) {
+    private String getPage(int rank){
+        rank = ((rank-1)/10)+1;
+        switch (rank){
             case 1:
                 return "1st";
             case 2:
@@ -127,7 +126,7 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
             case 3:
                 return "3rd";
             default:
-                return String.valueOf(rank) + "th";
+                return String.valueOf(rank)+"th";
         }
     }
 
@@ -136,18 +135,7 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
         return mSearchRankList.size();
     }
 
-    public void setData(List<SearchAnalytics> mSearchRankList) {
-        this.mSearchRankList.clear();
-        this.mSearchRankList.addAll(mSearchRankList);
-        notifyDataSetChanged();
-    }
-
-    public void filter(List<SearchAnalytics> mSearchRankList, int value) {
-        this.filterType = value;
-        this.setData(mSearchRankList);
-    }
-
-    class SearchRankingViewHolder extends RecyclerView.ViewHolder {
+    class SearchRankingViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvValue;
         TextView tvSearchQuery;
@@ -155,7 +143,8 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
         //TextView tvOldPage, tvNewPage;
         //ImageView ivArrow;
 
-        public SearchRankingViewHolder(View itemView) {
+        public SearchRankingViewHolder(View itemView)
+        {
             super(itemView);
 
             tvSearchQuery = itemView.findViewById(R.id.tv_search_query);
@@ -166,5 +155,19 @@ public class SearchRankingRvAdapter extends RecyclerView.Adapter<SearchRankingRv
 
             tvValue = itemView.findViewById(R.id.tv_value);
         }
+    }
+
+
+    public void setData(List<SearchAnalytics> mSearchRankList)
+    {
+        this.mSearchRankList.clear();
+        this.mSearchRankList.addAll(mSearchRankList);
+        notifyDataSetChanged();
+    }
+
+    public void filter(List<SearchAnalytics> mSearchRankList, int value)
+    {
+        this.filterType = value;
+        this.setData(mSearchRankList);
     }
 }

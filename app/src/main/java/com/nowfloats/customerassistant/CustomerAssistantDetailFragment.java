@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -17,7 +16,6 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -60,20 +58,30 @@ import static com.nowfloats.customerassistant.CustomerAssistantActivity.KEY_DATA
 public class CustomerAssistantDetailFragment extends android.app.Fragment implements SuggestionSelectionListner {
 
 
-    private final String ACTION_TYPE_NUMBER = "contactNumber";
-    private final String ACTION_TYPE_EMAIL = "email";
     private ViewPager vwSAM;
+
     private TextView tvDate, tvSource, tvMessage, tvViewMore, tvExpiryDate, tvTitle;
+
     private Button btnCall, btnShare;
+
     private SlidingTabLayout tabs;
+
     private SuggestionsDO mSuggestionsDO;
+
     private boolean isViewMore = true;
+
     private LinearLayout llMessage, llRelevant;
+
     private int selectedCount = 0;
+
     private int noOfTimesResponded = 0;
+
+    private final String ACTION_TYPE_NUMBER = "contactNumber";
+
+    private final String ACTION_TYPE_EMAIL = "email";
+
     private String appVersion = "";
-    private Intent shareIntent = null;
-    private String selectedProducts = "";
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -140,7 +148,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
         tabs.setSelectedIndicatorColors(getResources().getColor(R.color.lt_black));
 
         vwSAM.setAdapter(new SAMPagerAdapter(getActivity()));
-        tabs.setViewPager(vwSAM, ContextCompat.getColorStateList(getActivity(), R.color.lt_black));
+        tabs.setViewPager(vwSAM,ContextCompat.getColorStateList(getActivity(),R.color.lt_black));
         btnShare.setText(getString(R.string.share));
     }
 
@@ -209,6 +217,9 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
             }
         });
     }
+
+    private Intent shareIntent = null;
+    private String selectedProducts = "";
 
     private void prepareMessageForShare(SHARE_VIA share_via) {
 
@@ -290,7 +301,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
                                     }
 
                                     @Override
-                                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                                    public void onBitmapFailed(Exception e,Drawable errorDrawable) {
                                         Toast.makeText(getActivity(), getString(R.string.failed_to_download_image), Toast.LENGTH_SHORT).show();
                                     }
 
@@ -317,6 +328,12 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
             }
         }
 
+    }
+
+
+    enum SHARE_VIA {
+        GMAIL,
+        SMS
     }
 
     private void applyAnimation() {
@@ -361,21 +378,6 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
         }
     }
 
-    public void setOverlay(View v, int opac, int width, int height) {
-        int opacity = opac; // from 0 to 255
-        v.setBackgroundColor(opacity * 0x1000000); // black with a variable alpha
-        FrameLayout.LayoutParams params =
-                new FrameLayout.LayoutParams(width, height);
-        params.gravity = Gravity.NO_GRAVITY;
-        v.setLayoutParams(params);
-        v.invalidate();
-    }
-
-
-    enum SHARE_VIA {
-        GMAIL,
-        SMS
-    }
 
     private class SAMPagerAdapter extends PagerAdapter {
 
@@ -531,5 +533,15 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
         public CharSequence getPageTitle(int position) {
             return arrPageTitle.get(position);
         }
+    }
+
+    public void setOverlay(View v, int opac, int width, int height) {
+        int opacity = opac; // from 0 to 255
+        v.setBackgroundColor(opacity * 0x1000000); // black with a variable alpha
+        FrameLayout.LayoutParams params =
+                new FrameLayout.LayoutParams(width, height);
+        params.gravity = Gravity.NO_GRAVITY;
+        v.setLayoutParams(params);
+        v.invalidate();
     }
 }

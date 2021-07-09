@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public class StoreAndGoModel {
-    List<PublishStatusModel> publishStatusModelList;
+    List<PublishStatusModel>  publishStatusModelList;
 
     public List<PublishStatusModel> getPublishStatusModelList() {
         return publishStatusModelList;
@@ -20,7 +20,7 @@ public class StoreAndGoModel {
         this.publishStatusModelList = publishStatusModelList;
     }
 
-    public static class PublishStatusModel {
+    public static class PublishStatusModel{
         @SerializedName("Key")
         @Expose
         private String key;
@@ -45,7 +45,7 @@ public class StoreAndGoModel {
         }
     }
 
-    public static class ScreenShotsModel {
+    public static class ScreenShotsModel{
         @SerializedName("Key")
         @Expose
         private String key;

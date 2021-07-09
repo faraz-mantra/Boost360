@@ -1,49 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-
-  <RelativeLayout
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_width="match_parent">
+<RelativeLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_marginStart="3dp"
     android:layout_marginEnd="3dp"
     android:background="@drawable/curved_grey_background"
-    android:orientation="vertical">
-
+    android:layout_height="match_parent">
     <TextView
-      android:id="@+id/tv_visit_count"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerHorizontal="true"
-      android:layout_gravity="center_horizontal"
-      android:layout_marginTop="30dp"
-      android:text="" />
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:id="@+id/tv_visit_count"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:text=""/>
     <TextView
-      android:id="@+id/tv_dash_line"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/tv_visit_count"
-      android:layout_centerHorizontal="true"
-      android:text="................................" />
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_dash_line"
+        android:layout_below="@+id/tv_visit_count"
+        android:layout_centerHorizontal="true"
+        android:text="................................"/>
     <TextView
-      android:id="@+id/tv_visits_title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/tv_dash_line"
-      android:layout_centerHorizontal="true"
-      android:text="@string/visits_this_week" />
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_visits_title"
+        android:layout_below="@+id/tv_dash_line"
+        android:layout_centerHorizontal="true"
+        android:text="@string/visits_this_week"/>
     <com.github.mikephil.charting.charts.BarChart
-      android:id="@+id/graph"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/tv_visits_title"
-      android:layout_alignParentBottom="true"
-      android:layout_centerHorizontal="true"
-      android:layout_marginTop="50dp"
-      android:layout_marginBottom="@dimen/activity_vertical_margin" />
-  </RelativeLayout>
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/tv_visits_title"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/graph" />
+</RelativeLayout>
 </LinearLayout>

@@ -1,142 +1,143 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
-
-
-  <LinearLayout
-    android:id="@+id/llRia"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignParentLeft="true"
-    android:background="@color/primary"
-    android:orientation="vertical"
-    android:padding="@dimen/margin_10"
-    android:visibility="gone">
+    android:orientation="vertical">
 
-    <ImageView
-      android:id="@+id/ivBack"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/margin_10"
-      android:src="@drawable/ic_action_back"
-      android:visibility="visible" />
-
-    <RelativeLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content">
-
-      <LinearLayout
-        android:id="@+id/ivRia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/circle_ria_stroke">
-
-        <ImageView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:adjustViewBounds="false"
-          android:scaleType="fitEnd"
-          android:src="@drawable/ria_bg" />
-      </LinearLayout>
-
-      <LinearLayout
-        android:id="@+id/ivRiaZoomLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:alpha="0.5"
-        android:background="@drawable/circle_ria_zoom"
-        android:orientation="horizontal"
-        android:visibility="invisible">
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:id="@+id/ivRiaZoomRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:alpha="0.5"
-        android:background="@drawable/circle_ria_zoom"
-        android:orientation="horizontal"
-        android:visibility="invisible">
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:id="@+id/ivRiaZoomTop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:alpha="0.5"
-        android:background="@drawable/circle_ria_zoom"
-        android:orientation="horizontal"
-        android:visibility="invisible">
-
-      </LinearLayout>
-    </RelativeLayout>
 
     <LinearLayout
-      android:id="@+id/llContent"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:visibility="visible">
+        android:id="@+id/llRia"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:background="@color/primary"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_10"
+        android:visibility="gone">
 
-      <TextView
-        android:id="@+id/tvRia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-thin"
-        android:text="@string/ria_chat_header"
-        android:textColor="@color/white"
-        android:textSize="@dimen/xxxxxlarge_text_size"
-        android:visibility="visible" />
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:src="@drawable/ic_action_back"
+            android:visibility="visible" />
 
-      <TextView
-        android:id="@+id/tvRiaMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5"
-        android:fontFamily="sans-serif-light"
-        android:text="@string/ria_chat_message"
-        android:textColor="@color/white"
-        android:textSize="@dimen/xxlarge_text_size"
-        android:textStyle="normal"
-        android:visibility="visible" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ivRia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle_ria_stroke">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="false"
+                    android:scaleType="fitEnd"
+                    android:src="@drawable/ria_bg" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ivRiaZoomLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:background="@drawable/circle_ria_zoom"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ivRiaZoomRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:background="@drawable/circle_ria_zoom"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ivRiaZoomTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:background="@drawable/circle_ria_zoom"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/llContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tvRia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-thin"
+                android:text="@string/ria_chat_header"
+                android:textColor="@color/white"
+                android:textSize="@dimen/xxxxxlarge_text_size"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvRiaMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_5"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/ria_chat_message"
+                android:textColor="@color/white"
+                android:textSize="@dimen/xxlarge_text_size"
+                android:textStyle="normal"
+                android:visibility="visible" />
+        </LinearLayout>
     </LinearLayout>
-  </LinearLayout>
 
-  <LinearLayout
-    android:id="@+id/llStart"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentEnd="true"
-    android:layout_alignParentBottom="true"
-    android:layout_marginStart="@dimen/margin_20"
-    android:background="@drawable/traingle_bg"
-    android:gravity="right|center"
-    android:orientation="horizontal"
-    android:visibility="invisible">
-
-
-  </LinearLayout>
+    <LinearLayout
+        android:id="@+id/llStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/margin_20"
+        android:background="@drawable/traingle_bg"
+        android:gravity="right|center"
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
 
-  <LinearLayout
-    android:id="@+id/ivStart"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:alpha="0.7"
-    android:background="@drawable/grey_ria_btn_bg"
-    android:textColor="@color/gray"
-    android:visibility="gone">
+    </LinearLayout>
 
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:paddingTop="@dimen/margin_10"
-      android:paddingBottom="@dimen/margin_10"
-      android:text="@string/get_started" />
-  </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ivStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.7"
+        android:background="@drawable/grey_ria_btn_bg"
+        android:textColor="@color/gray"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/margin_10"
+            android:paddingTop="@dimen/margin_10"
+            android:text="@string/get_started" />
+    </LinearLayout>
 </RelativeLayout>
 

@@ -34,7 +34,7 @@
       android:id="@+id/package_blossom_pack_layout"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:visibility="gone">
+        android:visibility="gone">
 
       <ImageView
         android:layout_width="@dimen/_55sdp"

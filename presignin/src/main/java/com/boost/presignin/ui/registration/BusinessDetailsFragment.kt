@@ -22,8 +22,7 @@ import okio.Buffer
 import okio.BufferedSource
 import java.nio.charset.Charset
 
-class BusinessDetailsFragment :
-  AppBaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
+class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
 
   private var floatsRequest: CategoryFloatsRequest? = null
 
@@ -55,13 +54,11 @@ class BusinessDetailsFragment :
     binding?.phoneEt?.setText(floatsRequest?.userBusinessMobile)
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener { goBack() }
-    activity?.onBackPressedDispatcher?.addCallback(
-      viewLifecycleOwner,
-      object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-          parentFragmentManager.popBackStack()
-        }
-      })
+    activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+      override fun handleOnBackPressed() {
+        parentFragmentManager.popBackStack()
+      }
+    })
     binding?.phoneEt?.setOnFocusChangeListener { v, hasFocus ->
       when (hasFocus) {
         true -> binding?.civPhone?.setTintColor(getColor(R.color.orange))
@@ -90,16 +87,15 @@ class BusinessDetailsFragment :
       floatsRequest?.requestProfile?.ProfileProperties?.userName = name
       floatsRequest?.userBusinessMobile = phone
       if (email.isNullOrEmpty().not()) {
-        if (email.isEmailValid()) {
-          floatsRequest?.requestProfile?.ProfileProperties?.userEmail = email
-          floatsRequest?.userBusinessEmail = email
-        } else {
+        if (email.isEmailValid()){
+        floatsRequest?.requestProfile?.ProfileProperties?.userEmail = email
+        floatsRequest?.userBusinessEmail = email}
+        else{
           showLongToast(getString(R.string.email_invalid))
           return@setOnClickListener
         }
       } else {
-        floatsRequest?.requestProfile?.ProfileProperties?.userEmail =
-          "noemail-${floatsRequest?.requestProfile?.ProfileProperties?.userMobile}@noemail.com"
+        floatsRequest?.requestProfile?.ProfileProperties?.userEmail = "noemail-${floatsRequest?.requestProfile?.ProfileProperties?.userMobile}@noemail.com"
         floatsRequest?.userBusinessEmail = null
       }
       floatsRequest?.businessName = businessName
@@ -120,13 +116,7 @@ class BusinessDetailsFragment :
       hideProgress()
       validateEmail()
     } else {
-      viewModel?.validateUsersPhone(
-        RequestValidatePhone(
-          clientId2,
-          "+91",
-          binding?.phoneEt?.text.toString()
-        )
-      )?.observeOnce(viewLifecycleOwner, {
+      viewModel?.validateUsersPhone(RequestValidatePhone(clientId2, "+91", binding?.phoneEt?.text.toString()))?.observeOnce(viewLifecycleOwner, {
         hideProgress()
         if (it.isSuccess()) {
           if (parseResponse(it)) {
@@ -143,35 +133,21 @@ class BusinessDetailsFragment :
     showProgress()
     if (binding?.emailEt?.text.isNullOrEmpty()) {
       hideProgress()
-      addFragmentReplace(
-        com.framework.R.id.container,
-        BusinessWebsiteFragment.newInstance(floatsRequest!!),
-        true
-      )
+      addFragmentReplace(com.framework.R.id.container, BusinessWebsiteFragment.newInstance(floatsRequest!!), true)
     } else {
-      viewModel?.validateUsersEmail(
-        RequestValidateEmail(
-          clientId2,
-          floatsRequest?.userBusinessEmail
-        )
-      )?.observeOnce(viewLifecycleOwner, {
+      viewModel?.validateUsersEmail(RequestValidateEmail(clientId2, floatsRequest?.userBusinessEmail))?.observeOnce(viewLifecycleOwner, {
         hideProgress()
         if (it.isSuccess()) {
           if (parseResponse(it)) {
             showShortToast(getString(R.string.this_email_is_already_in_use))
           } else {
-            addFragmentReplace(
-              com.framework.R.id.container,
-              BusinessWebsiteFragment.newInstance(floatsRequest!!),
-              true
-            )
+            addFragmentReplace(com.framework.R.id.container, BusinessWebsiteFragment.newInstance(floatsRequest!!), true)
           }
         }
       })
 
     }
   }
-
   private fun parseResponse(it: BaseResponse): Boolean {
     return try {
       val source: BufferedSource? = it.responseBody?.source()

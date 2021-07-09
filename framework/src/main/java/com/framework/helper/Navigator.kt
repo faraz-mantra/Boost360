@@ -44,11 +44,7 @@ class Navigator(private val activity: BaseActivity<*, *>) {
     return if (intent.hasExtra(EXTRA_ARGS)) intent.getBundleExtra(EXTRA_ARGS) else Bundle()
   }
 
-  fun startActivityForResult(
-    activityClass: Class<out Activity?>,
-    requestCode: Int,
-    flags: Int? = null
-  ) {
+  fun startActivityForResult(activityClass: Class<out Activity?>, requestCode: Int, flags: Int? = null) {
     val intent = Intent(activity, activityClass)
     flags?.let { intent.flags = it }
     activity.startActivityForResult(intent, requestCode)
@@ -56,8 +52,7 @@ class Navigator(private val activity: BaseActivity<*, *>) {
 
   fun replaceFragment(@IdRes containerId: Int, fragment: Fragment, args: Bundle?) {
     if (args != null) fragment.arguments = args
-    val ft = fragment.requireActivity().supportFragmentManager.beginTransaction()
-      .replace(containerId, fragment, null)
+    val ft = fragment.requireActivity().supportFragmentManager.beginTransaction().replace(containerId, fragment, null)
     ft.commit()
     fragment.requireFragmentManager().executePendingTransactions()
   }
@@ -80,10 +75,7 @@ class Navigator(private val activity: BaseActivity<*, *>) {
   }
 
   @JvmOverloads
-  fun clearBackStackAndStartNextActivity(
-    activityClass: Class<out Activity?>,
-    args: Bundle? = null
-  ) {
+  fun clearBackStackAndStartNextActivity(activityClass: Class<out Activity?>, args: Bundle? = null) {
     val intent = Intent(activity, activityClass)
     if (args != null) intent.putExtras(args)
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

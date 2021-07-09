@@ -36,18 +36,16 @@ public interface TextDecoratorUiOperator {
 
     /**
      * Called to set the new click handler.
-     *
      * @param onClickListener the callback object whose {@link Runnable#run()} should be called when
-     *                        the indicator is clicked.
+     * the indicator is clicked.
      */
     void setOnClickListener(final Runnable onClickListener);
 
     /**
      * Called when the layout should be updated.
-     *
-     * @param matrix              The matrix that transforms the local coordinates into the screen coordinates.
+     * @param matrix The matrix that transforms the local coordinates into the screen coordinates.
      * @param composingTextBounds The bounding box of the composing text, in local coordinates.
-     * @param useRtlLayout        {@code true} if the indicator should be optimized for RTL layout.
+     * @param useRtlLayout {@code true} if the indicator should be optimized for RTL layout.
      */
     void layoutUi(final Matrix matrix, final RectF composingTextBounds, final boolean useRtlLayout);
 }

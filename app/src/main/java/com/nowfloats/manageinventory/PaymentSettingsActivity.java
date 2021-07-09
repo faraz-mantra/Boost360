@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -17,7 +16,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -127,9 +125,9 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
         findViewById(R.id.iv_edit_payment_details).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mProfile != null) {
+                if(mProfile!=null){
                     DialogFragment paymentEntryFragment = new PaymentInfoEntryFragment();
-                    Bundle bundle = new Bundle();
+                    Bundle bundle  = new Bundle();
                     bundle.putParcelable("profile", mProfile);
                     paymentEntryFragment.setArguments(bundle);
                     paymentEntryFragment.show(getFragmentManager(), "PaymentInfoEntryFragment");
@@ -138,19 +136,19 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
         });
     }
 
-    private void checkAssuredPurchase() {
+    private void checkAssuredPurchase(){
         DialogFragment fragment = new APEligibilityCheckerFragment();
         fragment.show(getFragmentManager(), "CheckEligibility");
 
     }
 
 
-    private void getPaymentSettings() {
+    private void getPaymentSettings(){
         progressDialog.setMessage(getString(R.string.please_wait_));
         progressDialog.show();
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(String.format(Constants.WA_BASE_URL + "merchant_profile3/get-data?query={merchant_id:'%s'}&limit=1", mSession.getFPID()))
+                .url(String.format(Constants.WA_BASE_URL+"merchant_profile3/get-data?query={merchant_id:'%s'}&limit=1", mSession.getFPID()))
                 .header("Authorization", Constants.WA_KEY)
                 .build();
         final Gson gson = new Gson();
@@ -182,14 +180,15 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
                                     new TypeToken<WebActionModel<MerchantProfileModel>>() {
                                     }.getType());
 
-                            if (profile != null && profile.getData().size() > 0) {
+                            if (profile != null && profile.getData().size()>0) {
                                 mProfile = profile.getData().get(0);
                                 processProfileData(mProfile);
-                                mApplicableTxnCharge = mProfile.getApplicableTxnCharge() + "%";
-                            } else {
+                                mApplicableTxnCharge = mProfile.getApplicableTxnCharge()+"%";
+                            }else {
                                 throw new NullPointerException(getString(R.string.order_count_is_null));
                             }
-                        } catch (Exception e) {
+                        }catch (Exception e)
+                        {
                             e.printStackTrace();
                         }
                     }
@@ -198,15 +197,15 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
         });
     }
 
-    public void showLearnMoreDialog(final View v, final boolean showAssureDialog) {
+    public void showLearnMoreDialog(final View v, final boolean showAssureDialog){
 
         int arrayId;
-        String title, content = null;
-        switch (v.getId()) {
+        String title,content = null;
+        switch (v.getId()){
 
             case R.id.tv_ap_learn_more:
                 arrayId = R.array.assured_purchase_points;
-                title = getString(R.string.assured_purchase);
+                title =getString(R.string.assured_purchase);
                 content = getString(R.string.assured_purchase_is_service_guarantee_by_nowfloats);
                 break;
             case R.id.tv_deliv_learn_more:
@@ -221,18 +220,18 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
         MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
                 .canceledOnTouchOutside(false)
                 .itemsGravity(GravityEnum.CENTER)
-                .adapter(new MyArrayAdapter(PaymentSettingsActivity.this, arrayId, mApplicableTxnCharge),
-                        new LinearLayoutManager(PaymentSettingsActivity.this, LinearLayoutManager.VERTICAL, false))
+                .adapter(new MyArrayAdapter(PaymentSettingsActivity.this,arrayId,mApplicableTxnCharge),
+                        new LinearLayoutManager(PaymentSettingsActivity.this,LinearLayoutManager.VERTICAL,false))
                 .dividerColorRes(R.color.gray);
 
-        if (!TextUtils.isEmpty(content)) {
+        if(!TextUtils.isEmpty(content)){
             builder.content(content);
         }
-        if (!TextUtils.isEmpty(title)) {
+        if(!TextUtils.isEmpty(title)){
             builder.title(title);
         }
 
-        if (showAssureDialog) {
+        if(showAssureDialog){
 
             builder.negativeText(getString(R.string.cancel));
             builder.positiveText(R.string.i_agree);
@@ -241,25 +240,25 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                     rgPaymentMethod.setOnCheckedChangeListener(null);
                     View view = rgPaymentMethod.getChildAt(1);
-                    if (view instanceof RadioButton) {
+                    if(view instanceof RadioButton){
                         ((RadioButton) view).setChecked(true);
                     }
                     rgPaymentMethod.setOnCheckedChangeListener(PaymentSettingsActivity.this);
                     dialog.dismiss();
                 }
             })
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            switch (v.getId()) {
-                                case R.id.tv_ap_learn_more:
-                                    checkAssuredPurchase();
-                                    break;
-                            }
-                            dialog.dismiss();
-                        }
-                    });
-        } else {
+            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    switch (v.getId()) {
+                        case R.id.tv_ap_learn_more:
+                            checkAssuredPurchase();
+                            break;
+                    }
+                    dialog.dismiss();
+                }
+            });
+        }else {
             builder.positiveText("Ok");
             builder.onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override
@@ -272,28 +271,64 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
         builder.show();
     }
 
-    private void processProfileData(MerchantProfileModel profile) {
+    public class MyArrayAdapter extends RecyclerView.Adapter<MyArrayAdapter.MyHolder>{
+        String[] bulletPoints = null;
+        Context mContext;
+        String textCharge;
+        public MyArrayAdapter(Context context,int id,String textCharge){
+            mContext = context;
+            this.textCharge = textCharge;
+            bulletPoints = getResources().getStringArray(id);
+        }
+        @Override
+        public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_bullet_point_item, parent, false);
+            return new MyHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(MyHolder holder, int position) {
+            if(holder != null){
+                holder.text.setText(String.format(bulletPoints[position],textCharge));
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return bulletPoints.length;
+        }
+
+        class MyHolder extends RecyclerView.ViewHolder{
+
+            public TextView text;
+            MyHolder(View itemView) {
+                super(itemView);
+                text = (TextView) itemView.findViewById(R.id.text1);
+            }
+        }
+    }
+    private void processProfileData(MerchantProfileModel profile){
         rgPaymentMethod.setOnCheckedChangeListener(null);
-        if (profile.getPaymentType() == 0) {
+        if(profile.getPaymentType() == 0){
             View v = rgPaymentMethod.getChildAt(0);
-            if (v != null && v instanceof RadioButton) {
+            if(v!=null && v instanceof RadioButton){
                 ((RadioButton) v).setChecked(true);
             }
-        } else {
+        }else {
             View v = rgPaymentMethod.getChildAt(1);
-            if (v != null && v instanceof RadioButton) {
+            if(v!=null && v instanceof RadioButton){
                 ((RadioButton) v).setChecked(true);
             }
         }
 
-        if (profile.getDeliveryType() == 0) {
+        if(profile.getDeliveryType() == 0){
             View v = rgDeliveryType.getChildAt(0);
-            if (v != null && v instanceof RadioButton) {
+            if(v!=null && v instanceof RadioButton){
                 ((RadioButton) v).setChecked(true);
             }
-        } else {
+        }else {
             View v = rgDeliveryType.getChildAt(1);
-            if (v != null && v instanceof RadioButton) {
+            if(v!=null && v instanceof RadioButton){
                 ((RadioButton) v).setChecked(true);
             }
         }
@@ -311,9 +346,9 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
 
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-        switch (rgPaymentMethod.getCheckedRadioButtonId()) {
+        switch (rgPaymentMethod.getCheckedRadioButtonId()){
             case R.id.rb_assured_purchase:
-                showLearnMoreDialog(tvAssuredPurchase, true);
+                showLearnMoreDialog(tvAssuredPurchase,true);
                 break;
             case R.id.rb_use_payment_link:
                 showDialog();
@@ -321,7 +356,8 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
         }
     }
 
-    private void showDialog() {
+
+    private void showDialog(){
         new AlertDialog.Builder(this)
                 .setMessage(R.string.by_enabling_your_own_payment_link)
                 .setCancelable(false)
@@ -337,7 +373,7 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
                     public void onClick(DialogInterface dialog, int which) {
                         rgPaymentMethod.setOnCheckedChangeListener(null);
                         View v = rgPaymentMethod.getChildAt(0);
-                        if (v != null && v instanceof RadioButton) {
+                        if(v!=null && v instanceof RadioButton){
                             ((RadioButton) v).setChecked(true);
                         }
                         rgPaymentMethod.setOnCheckedChangeListener(PaymentSettingsActivity.this);
@@ -349,7 +385,7 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        if(item.getItemId() == android.R.id.home){
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
@@ -358,26 +394,26 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
     @Override
     public void onEligibiltyChecked(boolean isEligible) {
         rgPaymentMethod.setOnCheckedChangeListener(null);
-        if (isEligible) {
+        if(isEligible){
 
             View v = rgPaymentMethod.getChildAt(0);
-            if (v != null && v instanceof RadioButton) {
+            if(v!=null && v instanceof RadioButton){
                 ((RadioButton) v).setChecked(true);
             }
 
             v = rgDeliveryType.getChildAt(0);
-            if (v != null && v instanceof RadioButton) {
+            if(v!=null && v instanceof RadioButton){
                 ((RadioButton) v).setChecked(true);
             }
             updateAssuredPurchase(true, true);
-        } else {
+        }else {
             View v = rgPaymentMethod.getChildAt(1);
-            if (v != null && v instanceof RadioButton) {
+            if(v!=null && v instanceof RadioButton){
                 ((RadioButton) v).setChecked(true);
             }
 
             v = rgDeliveryType.getChildAt(1);
-            if (v != null && v instanceof RadioButton) {
+            if(v!=null && v instanceof RadioButton){
                 ((RadioButton) v).setChecked(true);
             }
         }
@@ -385,15 +421,15 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
         rgPaymentMethod.setOnCheckedChangeListener(this);
     }
 
-    private void updateAssuredPurchase(final boolean isNfPayment, boolean isNfDeliv) {
+    private void updateAssuredPurchase(final boolean isNfPayment, boolean isNfDeliv){
         progressDialog.setMessage(getString(R.string.please_wait_));
         progressDialog.show();
         int paymentType = 1, delivType = 1;
-        if (isNfPayment) {
+        if(isNfPayment){
             paymentType = 0;
         }
 
-        if (isNfDeliv) {
+        if(isNfDeliv){
             delivType = 0;
         }
 
@@ -406,10 +442,10 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
         OkHttpClient client = new OkHttpClient();
         RequestBody body = RequestBody.create(JSON, new Gson().toJson(update));
         Request request = new Request.Builder()
-                .url(Constants.WA_BASE_URL + "merchant_profile3/update-data")
-                .header("Authorization", Constants.WA_KEY)
-                .post(body)
-                .build();
+                                .url(Constants.WA_BASE_URL + "merchant_profile3/update-data")
+                                .header("Authorization", Constants.WA_KEY)
+                                .post(body)
+                                .build();
         client.newCall(request).enqueue(new Callback() {
 
             Handler handler = new Handler(Looper.getMainLooper());
@@ -433,12 +469,12 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
                     @Override
                     public void run() {
                         progressDialog.dismiss();
-                        if (res.contains("1")) {
-                            if (isNfPayment) {
+                        if(res.contains("1")){
+                            if(isNfPayment) {
                                 Methods.showSnackBarPositive(PaymentSettingsActivity.this, getString(R.string.congrats_assured_purchase_enabled));
-                            } else {
+                            }else {
                                 Methods.showSnackBarPositive(PaymentSettingsActivity.this, getString(R.string.own_payment_link_enabled));
-                                ((RadioButton) rgDeliveryType.getChildAt(1)).setChecked(true);
+                                ((RadioButton)rgDeliveryType.getChildAt(1)).setChecked(true);
                             }
                         }
                     }
@@ -469,8 +505,8 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if ((v.getId() == R.id.rb_seld_deliv || v.getId() == R.id.rb_nowfloats_deliv) && event.getAction() == MotionEvent.ACTION_DOWN) {
-            Toast.makeText(this, getString(R.string.you_cant_change_delivery_while_assured), Toast.LENGTH_SHORT).show();
+        if((v.getId() == R.id.rb_seld_deliv || v.getId() == R.id.rb_nowfloats_deliv) && event.getAction() == MotionEvent.ACTION_DOWN){
+            Toast.makeText(this,getString( R.string.you_cant_change_delivery_while_assured), Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
@@ -478,54 +514,14 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch (v.getId()){
 
             case R.id.tv_ap_learn_more:
-                showLearnMoreDialog(v, false);
+                showLearnMoreDialog(v,false);
                 break;
             case R.id.tv_deliv_learn_more:
-                showLearnMoreDialog(v, false);
+                showLearnMoreDialog(v,false);
                 break;
-        }
-    }
-
-    public class MyArrayAdapter extends RecyclerView.Adapter<MyArrayAdapter.MyHolder> {
-        String[] bulletPoints = null;
-        Context mContext;
-        String textCharge;
-
-        public MyArrayAdapter(Context context, int id, String textCharge) {
-            mContext = context;
-            this.textCharge = textCharge;
-            bulletPoints = getResources().getStringArray(id);
-        }
-
-        @Override
-        public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_bullet_point_item, parent, false);
-            return new MyHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(MyHolder holder, int position) {
-            if (holder != null) {
-                holder.text.setText(String.format(bulletPoints[position], textCharge));
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            return bulletPoints.length;
-        }
-
-        class MyHolder extends RecyclerView.ViewHolder {
-
-            public TextView text;
-
-            MyHolder(View itemView) {
-                super(itemView);
-                text = (TextView) itemView.findViewById(R.id.text1);
-            }
         }
     }
 }

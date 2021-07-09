@@ -7,4 +7,4 @@ import java.io.Serializable
 data class WebsiteDataResponse(
   @SerializedName("data")
   var `data`: ArrayList<WebsiteData>? = null
-) : BaseResponse(), Serializable
+):BaseResponse(),Serializable

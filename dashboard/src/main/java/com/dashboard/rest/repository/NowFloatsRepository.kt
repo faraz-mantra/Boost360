@@ -15,17 +15,10 @@ import retrofit2.Retrofit
 object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocalService>() {
 
   fun getWebsiteCustomTheme(floatingPointId: String): Observable<BaseResponse> {
-    return NowFloatsRepository.makeRemoteRequest(
-      remoteDataSource.getWebsiteTheme(floatingPointId),
-      TaskCode.GET_WEBSITE_CUSTOM_THEME
-    )
+    return NowFloatsRepository.makeRemoteRequest(remoteDataSource.getWebsiteTheme(floatingPointId), TaskCode.GET_WEBSITE_CUSTOM_THEME)
   }
-
   fun updateWebsiteTheme(request: WebsiteThemeUpdateRequest): Observable<BaseResponse> {
-    return NowFloatsRepository.makeRemoteRequest(
-      remoteDataSource.updateWebsiteTheme(request),
-      TaskCode.POST_UPDATE_WEBSITE_THEME
-    )
+    return NowFloatsRepository.makeRemoteRequest(remoteDataSource.updateWebsiteTheme(request), TaskCode.POST_UPDATE_WEBSITE_THEME)
   }
 
   override fun getRemoteDataSourceClass(): Class<NowFloatsRemoteData> {

@@ -18,8 +18,7 @@ import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.parseDate
 import java.util.*
 
-class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, StaffViewModel>(),
-  RecyclerItemClickListener {
+class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, StaffViewModel>(), RecyclerItemClickListener {
   private var isEdit: Boolean = false
   private var serviceTimingList: ArrayList<ServiceTiming>? = null
   private var adapterTiming: AppBaseRecyclerViewAdapter<ServiceTiming>? = null
@@ -44,26 +43,18 @@ class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, Staf
   }
 
   private fun getBundleData() {
-    this.serviceTimingList =
-      arguments?.getSerializable(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
+    this.serviceTimingList = arguments?.getSerializable(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
     this.isEdit = arguments?.getBoolean(IntentConstant.IS_EDIT.name) ?: false
     if (this.isEdit.not()) updateTimingMapWithBusinessHour()
   }
 
   private fun updateTimingMapWithBusinessHour() {
-    this.serviceTimingList?.map {
-      if (it.isOpenDay()) it.time =
-        ServiceTime(it.businessTiming?.startTime, it.businessTiming?.endTime)
-    }
+    this.serviceTimingList?.map { if (it.isOpenDay()) it.time = ServiceTime(it.businessTiming?.startTime, it.businessTiming?.endTime) }
   }
 
   private fun setServiceTimingAdapter(serviceTimingList: ArrayList<ServiceTiming>) {
     binding?.rvStaffTiming?.apply {
-      adapterTiming = AppBaseRecyclerViewAdapter(
-        activity = baseActivity,
-        serviceTimingList,
-        this@ServiceTimingFragment
-      )
+      adapterTiming = AppBaseRecyclerViewAdapter(activity = baseActivity, serviceTimingList, this@ServiceTimingFragment)
       adapter = adapterTiming
     }
   }
@@ -77,10 +68,7 @@ class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, Staf
           adapterTiming?.notifyItemChanged(position)
         } else applyOnAllDays(position, (item as? ServiceTiming))
       }
-      RecyclerViewActionType.CHECK_BOX_APPLY_ALL.ordinal -> applyOnAllDays(
-        position,
-        (item as? ServiceTiming)
-      )
+      RecyclerViewActionType.CHECK_BOX_APPLY_ALL.ordinal -> applyOnAllDays(position, (item as? ServiceTiming))
     }
   }
 
@@ -93,20 +81,13 @@ class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, Staf
         it.isToggle = false
       } else {
         var startDate = it.businessTiming?.startTime?.parseDate(DateUtils.FORMAT_HH_MMA)
-        if (startDate == null) startDate =
-          it.businessTiming?.startTime?.parseDate(DateUtils.FORMAT_HH_MM_A)
+        if (startDate == null) startDate = it.businessTiming?.startTime?.parseDate(DateUtils.FORMAT_HH_MM_A)
         var endDate = it.businessTiming?.endTime?.parseDate(DateUtils.FORMAT_HH_MMA)
-        if (endDate == null) endDate =
-          it.businessTiming?.endTime?.parseDate(DateUtils.FORMAT_HH_MM_A)
+        if (endDate == null) endDate = it.businessTiming?.endTime?.parseDate(DateUtils.FORMAT_HH_MM_A)
         val startDateNew = serviceTiming?.time?.from?.parseDate(DateUtils.FORMAT_HH_MM_A)
         val endDateNew = serviceTiming?.time?.to?.parseDate(DateUtils.FORMAT_HH_MM_A)
-        if (startDate != null && endDate != null && startDateNew != null && endDateNew != null && DateUtils.isBetweenValidTime(
-            startDate,
-            endDate,
-            startDateNew
-          )
-          && DateUtils.isBetweenValidTime(startDate, endDate, endDateNew)
-        ) {
+        if (startDate != null && endDate != null && startDateNew != null && endDateNew != null && DateUtils.isBetweenValidTime(startDate, endDate, startDateNew)
+            && DateUtils.isBetweenValidTime(startDate, endDate, endDateNew)) {
           it.time = serviceTiming.time
           it.isToggle = true
           it.appliedOnPosition = position

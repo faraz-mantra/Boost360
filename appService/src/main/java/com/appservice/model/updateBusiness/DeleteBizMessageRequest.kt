@@ -12,4 +12,4 @@ data class DeleteBizMessageRequest(
   var dealId: String? = null,
   @SerializedName("identifierType")
   var identifierType: String? = null
-) : BaseRequest(), Serializable
+):BaseRequest(),Serializable

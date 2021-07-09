@@ -32,38 +32,13 @@ import io.separ.neural.inputmethod.indic.Constants;
 public final class KeyboardTextsSet {
     public static final String PREFIX_TEXT = "!text/";
     public static final String SWITCH_TO_ALPHA_KEY_LABEL = "keylabel_to_alpha";
-    // These texts' name should be aligned with the @string/<name> in
-    // values*/strings-action-keys.xml.
-    static final String[] RESOURCE_NAMES = {
-            // Labels for action.
-            "label_go_key",
-            "label_send_key",
-            "label_next_key",
-            "label_done_key",
-            "label_search_key",
-            "label_previous_key",
-            // Other labels.
-            "label_pause_key",
-            "label_wait_key",
-    };
+
     private static final char BACKSLASH = Constants.CODE_BACKSLASH;
     private static final int MAX_STRING_REFERENCE_INDIRECTION = 10;
+
+    private String[] mTextsTable;
     // Resource name to text map.
     private final HashMap<String, String> mResourceNameToTextsMap = new HashMap<>();
-    private String[] mTextsTable;
-
-    private static int searchTextNameEnd(final String text, final int start) {
-        final int size = text.length();
-        for (int pos = start; pos < size; pos++) {
-            final char c = text.charAt(pos);
-            // Label name should be consisted of [a-zA-Z_0-9].
-            if ((c >= 'a' && c <= 'z') || c == '_' || (c >= '0' && c <= '9')) {
-                continue;
-            }
-            return pos;
-        }
-        return size;
-    }
 
     public void setLocale(final Locale locale, final Context context) {
         mTextsTable = KeyboardTextsTable.getTextsTable(locale);
@@ -84,7 +59,7 @@ public final class KeyboardTextsSet {
 
     @UsedForTesting
     void loadStringResourcesInternal(final Resources res, final String[] resourceNames,
-                                     final String resourcePackageName) {
+            final String resourcePackageName) {
         for (final String resName : resourceNames) {
             final int resId = res.getIdentifier(resName, "string", resourcePackageName);
             mResourceNameToTextsMap.put(resName, res.getString(resId));
@@ -94,6 +69,19 @@ public final class KeyboardTextsSet {
     public String getText(final String name) {
         final String text = mResourceNameToTextsMap.get(name);
         return (text != null) ? text : KeyboardTextsTable.getText(name, mTextsTable);
+    }
+
+    private static int searchTextNameEnd(final String text, final int start) {
+        final int size = text.length();
+        for (int pos = start; pos < size; pos++) {
+            final char c = text.charAt(pos);
+            // Label name should be consisted of [a-zA-Z_0-9].
+            if ((c >= 'a' && c <= 'z') || c == '_' || (c >= '0' && c <= '9')) {
+                continue;
+            }
+            return pos;
+        }
+        return size;
     }
 
     // TODO: Resolve text reference when creating {@link KeyboardTextsTable} class.
@@ -144,4 +132,19 @@ public final class KeyboardTextsSet {
         } while (sb != null);
         return TextUtils.isEmpty(text) ? null : text;
     }
+
+    // These texts' name should be aligned with the @string/<name> in
+    // values*/strings-action-keys.xml.
+    static final String[] RESOURCE_NAMES = {
+        // Labels for action.
+        "label_go_key",
+        "label_send_key",
+        "label_next_key",
+        "label_done_key",
+        "label_search_key",
+        "label_previous_key",
+        // Other labels.
+        "label_pause_key",
+        "label_wait_key",
+    };
 }

@@ -46,8 +46,8 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
     String subscribers = "false";
     PostTaskModel obj;
     UserSessionManager session;
-    String textId;
     private Activity appContext = null;
+    String textId;
 
     public UploadMessageTask(Activity context, String path, PostTaskModel offerObj, UserSessionManager session) {
         this.appContext = context;
@@ -106,8 +106,7 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                             try {
                                 Thread.sleep(1000);
                                 Log.i("Text---wait", " for 2 SEconDS");
-                                if (Home_Main_Fragment.bus != null)
-                                    Home_Main_Fragment.bus.post(new PostTextSuccessEvent(true));
+                                if (Home_Main_Fragment.bus != null) Home_Main_Fragment.bus.post(new PostTextSuccessEvent(true));
                                 if (listenNew != null) listenNew.postUpdate(true, "Post Updated.");
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -235,10 +234,8 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                                 try {
                                     Thread.sleep(8000);
                                     //Log.i("IMAGE---wait"," for 8 SEconDS");
-                                    if (Home_Main_Fragment.bus != null)
-                                        Home_Main_Fragment.bus.post(new PostImageSuccessEvent(txtId));
-                                    if (listenNew != null)
-                                        listenNew.postUpdate(true, "Post Updated.");
+                                    if (Home_Main_Fragment.bus != null) Home_Main_Fragment.bus.post(new PostImageSuccessEvent(txtId));
+                                    if (listenNew != null) listenNew.postUpdate(true, "Post Updated.");
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -263,8 +260,7 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                if (listenNew != null)
-                    listenNew.postUpdate(false, appContext.getString(R.string.post_image_uploading_error));
+                if (listenNew != null) listenNew.postUpdate(false, appContext.getString(R.string.post_image_uploading_error));
             } finally {
                 try {
                     inputStreamReader.close();
@@ -278,8 +274,7 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
             }
         } catch (Exception ex) {
             success = false;
-            if (listenNew != null)
-                listenNew.postUpdate(false, appContext.getString(R.string.post_image_uploading_error));
+            if (listenNew != null) listenNew.postUpdate(false, appContext.getString(R.string.post_image_uploading_error));
         } finally {
             try {
                 outputStream.flush();
@@ -325,8 +320,7 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                                 try {
                                     Thread.sleep(8000);
                                     Log.i("IMAGE---wait", " for 8 SEconDS");
-                                    if (Home_Main_Fragment.bus != null)
-                                        Home_Main_Fragment.bus.post(new PostImageSuccessEvent(txtId));
+                                    if (Home_Main_Fragment.bus != null) Home_Main_Fragment.bus.post(new PostImageSuccessEvent(txtId));
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

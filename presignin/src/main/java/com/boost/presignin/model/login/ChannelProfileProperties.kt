@@ -5,12 +5,12 @@ import java.io.Serializable
 
 
 class ChannelProfileProperties(
-  @SerializedName("userEmail")
-  val userEmail: String,
-  @SerializedName("userMobile")
-  val userMobile: String,
-  @SerializedName("userName")
-  val userName: String,
-  @SerializedName("userPassword")
-  val userPassword: String
-) : Serializable
+    @SerializedName("userEmail")
+    val userEmail: String,
+    @SerializedName("userMobile")
+    val userMobile: String,
+    @SerializedName("userName")
+    val userName: String,
+    @SerializedName("userPassword")
+    val userPassword: String
+):Serializable

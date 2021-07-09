@@ -4,7 +4,7 @@ package com.nowfloats.sync.model;
  * Created by RAJA on 20-06-2016.
  */
 public class PhotoGallery {
-    private int id;
+    private int id ;
     private String serverId;
     private String imageTag = null;
     private String imageName = null;
@@ -31,6 +31,11 @@ public class PhotoGallery {
         return this;
     }
 
+    public PhotoGallery setId(int id) {
+        this.id = id;
+        return this;
+    }
+
     public String getServerId() {
         return serverId;
     }
@@ -51,11 +56,6 @@ public class PhotoGallery {
 
     public int getId() {
         return id;
-    }
-
-    public PhotoGallery setId(int id) {
-        this.id = id;
-        return this;
     }
 
     public String getLocalImageUrl() {

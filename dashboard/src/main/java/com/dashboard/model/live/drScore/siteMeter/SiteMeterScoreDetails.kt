@@ -3,10 +3,10 @@ package com.dashboard.model.live.drScore.siteMeter
 import java.io.Serializable
 
 data class SiteMeterScoreDetails(
-  var businessProfile: ArrayList<SiteMeterModel> = ArrayList(),
-  var contentManagement: ArrayList<SiteMeterModel> = ArrayList(),
-  var channelSync: ArrayList<SiteMeterModel> = ArrayList(),
-  var siteMeterTotalWeight: Int = 0,
+    var businessProfile: ArrayList<SiteMeterModel> = ArrayList(),
+    var contentManagement: ArrayList<SiteMeterModel> = ArrayList(),
+    var channelSync: ArrayList<SiteMeterModel> = ArrayList(),
+    var siteMeterTotalWeight: Int = 0,
 ) : Serializable
 
 fun ArrayList<SiteMeterModel>.getCompletePercentage(): Int {

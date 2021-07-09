@@ -7,13 +7,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,45 +41,22 @@ public class PricingDetailsFragment extends Fragment {
 
     ImageView ivPackageLogo;
     RecyclerView rvAllPlanDetails;
-    List<List<Pair<String, List<WidgetPacks>>>> packages = new ArrayList<>();
     private PackageDetails mBasePackage;
     private List<PackageDetails> mTopUps;
     private AllPlansRvAdapter mRvAdapter;
     private Context mContext;
     private PopupWindow popup;
     private TextView tvDesc;
-    public OnPlanDescriptionClickListener planDescriptionClickListener = new OnPlanDescriptionClickListener() {
-        @Override
-        public void onPlanClick(ImageView view, String desc) {
-            initiatePopupWindow(view, desc);
-        }
-    };
 
     public PricingDetailsFragment() {
     }
+
 
     public static PricingDetailsFragment newInstance(PackageDetails basePackage, List<PackageDetails> topUps) {
         PricingDetailsFragment fragment = new PricingDetailsFragment();
         fragment.mBasePackage = basePackage;
         fragment.mTopUps = topUps;
         return fragment;
-    }
-
-    public static Rect locateView(View v) {
-        int[] loc_int = new int[2];
-        if (v == null) return null;
-        try {
-            v.getLocationOnScreen(loc_int);
-        } catch (NullPointerException npe) {
-            //Happens when the view doesn't exist on screen anymore.
-            return null;
-        }
-        Rect location = new Rect();
-        location.left = loc_int[0];
-        location.top = loc_int[1];
-        location.right = location.left + v.getWidth();
-        location.bottom = location.top + v.getHeight();
-        return location;
     }
 
     @Override
@@ -131,6 +106,8 @@ public class PricingDetailsFragment extends Fragment {
         rvAllPlanDetails.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         return pricingView;
     }
+
+    List<List<Pair<String, List<WidgetPacks>>>> packages = new ArrayList<>();
 
     private void prepareBasePackageDetails() {
         new Thread(new Runnable() {
@@ -235,6 +212,30 @@ public class PricingDetailsFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+    public static Rect locateView(View v) {
+        int[] loc_int = new int[2];
+        if (v == null) return null;
+        try {
+            v.getLocationOnScreen(loc_int);
+        } catch (NullPointerException npe) {
+            //Happens when the view doesn't exist on screen anymore.
+            return null;
+        }
+        Rect location = new Rect();
+        location.left = loc_int[0];
+        location.top = loc_int[1];
+        location.right = location.left + v.getWidth();
+        location.bottom = location.top + v.getHeight();
+        return location;
+    }
+
+    public OnPlanDescriptionClickListener planDescriptionClickListener = new OnPlanDescriptionClickListener() {
+        @Override
+        public void onPlanClick(ImageView view, String desc) {
+            initiatePopupWindow(view, desc);
+        }
+    };
 
     public interface OnPlanDescriptionClickListener {
         void onPlanClick(ImageView view, String desc);

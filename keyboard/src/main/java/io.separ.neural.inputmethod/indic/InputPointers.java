@@ -93,16 +93,15 @@ public final class InputPointers {
     /**
      * Append the times, x-coordinates and y-coordinates in the specified {@link ResizableIntArray}
      * to the end of this.
-     *
-     * @param pointerId    the pointer id of the source.
-     * @param times        the source {@link ResizableIntArray} to read the event times from.
+     * @param pointerId the pointer id of the source.
+     * @param times the source {@link ResizableIntArray} to read the event times from.
      * @param xCoordinates the source {@link ResizableIntArray} to read the x-coordinates from.
      * @param yCoordinates the source {@link ResizableIntArray} to read the y-coordinates from.
-     * @param startPos     the starting index of the data in {@code times} and etc.
-     * @param length       the number of data to be appended.
+     * @param startPos the starting index of the data in {@code times} and etc.
+     * @param length the number of data to be appended.
      */
     public void append(int pointerId, ResizableIntArray times, ResizableIntArray xCoordinates,
-                       ResizableIntArray yCoordinates, int startPos, int length) {
+            ResizableIntArray yCoordinates, int startPos, int length) {
         if (length == 0) {
             return;
         }
@@ -114,7 +113,6 @@ public final class InputPointers {
 
     /**
      * Shift to the left by elementCount, discarding elementCount pointers at the start.
-     *
      * @param elementCount how many elements to shift.
      */
     public void shift(final int elementCount) {

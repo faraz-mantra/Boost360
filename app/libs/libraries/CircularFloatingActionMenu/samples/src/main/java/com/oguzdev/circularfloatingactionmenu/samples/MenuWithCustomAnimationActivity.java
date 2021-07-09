@@ -57,20 +57,20 @@ public class MenuWithCustomAnimationActivity extends Activity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+                Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_menu_with_custom_animation, container, false);
 
             ImageView fabContent = new ImageView(getActivity());
             fabContent.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_settings));
 
             FloatingActionButton darkButton = new FloatingActionButton.Builder(getActivity())
-                    .setTheme(FloatingActionButton.THEME_DARK)
-                    .setContentView(fabContent)
-                    .setPosition(FloatingActionButton.POSITION_BOTTOM_CENTER)
-                    .build();
+                                                  .setTheme(FloatingActionButton.THEME_DARK)
+                                                  .setContentView(fabContent)
+                                                  .setPosition(FloatingActionButton.POSITION_BOTTOM_CENTER)
+                                                  .build();
 
             SubActionButton.Builder rLSubBuilder = new SubActionButton.Builder(getActivity())
-                    .setTheme(SubActionButton.THEME_DARK);
+                                                   .setTheme(SubActionButton.THEME_DARK);
             ImageView rlIcon1 = new ImageView(getActivity());
             ImageView rlIcon2 = new ImageView(getActivity());
             ImageView rlIcon3 = new ImageView(getActivity());

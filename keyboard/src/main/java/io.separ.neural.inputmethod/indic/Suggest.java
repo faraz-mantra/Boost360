@@ -57,6 +57,33 @@ public final class Suggest {
         mDictionaryFacilitator = dictionaryFacilitator;
     }
 
+    public Locale getLocale() {
+        return mDictionaryFacilitator.getLocale();
+    }
+
+    public void setAutoCorrectionThreshold(final float threshold) {
+        mAutoCorrectionThreshold = threshold;
+    }
+
+    public interface OnGetSuggestedWordsCallback {
+        void onGetSuggestedWords(final SuggestedWords suggestedWords);
+    }
+
+    public void getSuggestedWords(final WordComposer wordComposer,
+            final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
+            final SettingsValuesForSuggestion settingsValuesForSuggestion,
+            final boolean isCorrectionEnabled, final int inputStyle, final int sequenceNumber,
+            final OnGetSuggestedWordsCallback callback) {
+        if (wordComposer.isBatchMode()) {
+            getSuggestedWordsForBatchInput(wordComposer, prevWordsInfo, proximityInfo,
+                    settingsValuesForSuggestion, inputStyle, sequenceNumber, callback);
+        } else {
+            getSuggestedWordsForNonBatchInput(wordComposer, prevWordsInfo, proximityInfo,
+                    settingsValuesForSuggestion, inputStyle, isCorrectionEnabled,
+                    sequenceNumber, callback);
+        }
+    }
+
     private static ArrayList<SuggestedWordInfo> getTransformedSuggestedWordInfoList(
             final WordComposer wordComposer, final SuggestionResults results,
             final int trailingSingleQuotesCount) {
@@ -91,88 +118,13 @@ public final class Suggest {
         return firstSuggestedWordInfo.mWord;
     }
 
-    private static ArrayList<SuggestedWordInfo> getSuggestionsInfoListWithDebugInfo(
-            final String typedWord, final ArrayList<SuggestedWordInfo> suggestions) {
-        final SuggestedWordInfo typedWordInfo = suggestions.get(0);
-        typedWordInfo.setDebugString("+");
-        final int suggestionsSize = suggestions.size();
-        final ArrayList<SuggestedWordInfo> suggestionsList = new ArrayList<>(suggestionsSize);
-        suggestionsList.add(typedWordInfo);
-        // Note: i here is the index in mScores[], but the index in mSuggestions is one more
-        // than i because we added the typed word to mSuggestions without touching mScores.
-        for (int i = 0; i < suggestionsSize - 1; ++i) {
-            final SuggestedWordInfo cur = suggestions.get(i + 1);
-            final float normalizedScore = BinaryDictionaryUtils.calcNormalizedScore(
-                    typedWord, cur.toString(), cur.mScore);
-            final String scoreInfoString;
-            if (normalizedScore > 0) {
-                scoreInfoString = String.format(
-                        Locale.ROOT, "%d (%4.2f), %s", cur.mScore, normalizedScore,
-                        cur.mSourceDict.mDictType);
-            } else {
-                scoreInfoString = Integer.toString(cur.mScore);
-            }
-            cur.setDebugString(scoreInfoString);
-            suggestionsList.add(cur);
-        }
-        return suggestionsList;
-    }
-
-    /* package for test */
-    static SuggestedWordInfo getTransformedSuggestedWordInfo(
-            final SuggestedWordInfo wordInfo, final Locale locale, final boolean isAllUpperCase,
-            final boolean isOnlyFirstCharCapitalized, final int trailingSingleQuotesCount) {
-        final StringBuilder sb = new StringBuilder(wordInfo.mWord.length());
-        if (isAllUpperCase) {
-            sb.append(wordInfo.mWord.toUpperCase(locale));
-        } else if (isOnlyFirstCharCapitalized) {
-            sb.append(StringUtils.capitalizeFirstCodePoint(wordInfo.mWord, locale));
-        } else {
-            sb.append(wordInfo.mWord);
-        }
-        // Appending quotes is here to help people quote words. However, it's not helpful
-        // when they type words with quotes toward the end like "it's" or "didn't", where
-        // it's more likely the user missed the last character (or didn't type it yet).
-        final int quotesToAppend = trailingSingleQuotesCount
-                - (-1 == wordInfo.mWord.indexOf(Constants.CODE_SINGLE_QUOTE) ? 0 : 1);
-        for (int i = quotesToAppend - 1; i >= 0; --i) {
-            sb.appendCodePoint(Constants.CODE_SINGLE_QUOTE);
-        }
-        return new SuggestedWordInfo(sb.toString(), wordInfo.mScore, wordInfo.mKindAndFlags,
-                wordInfo.mSourceDict, wordInfo.mIndexOfTouchPointOfSecondWord,
-                wordInfo.mAutoCommitFirstWordConfidence);
-    }
-
-    public Locale getLocale() {
-        return mDictionaryFacilitator.getLocale();
-    }
-
-    public void setAutoCorrectionThreshold(final float threshold) {
-        mAutoCorrectionThreshold = threshold;
-    }
-
-    public void getSuggestedWords(final WordComposer wordComposer,
-                                  final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
-                                  final SettingsValuesForSuggestion settingsValuesForSuggestion,
-                                  final boolean isCorrectionEnabled, final int inputStyle, final int sequenceNumber,
-                                  final OnGetSuggestedWordsCallback callback) {
-        if (wordComposer.isBatchMode()) {
-            getSuggestedWordsForBatchInput(wordComposer, prevWordsInfo, proximityInfo,
-                    settingsValuesForSuggestion, inputStyle, sequenceNumber, callback);
-        } else {
-            getSuggestedWordsForNonBatchInput(wordComposer, prevWordsInfo, proximityInfo,
-                    settingsValuesForSuggestion, inputStyle, isCorrectionEnabled,
-                    sequenceNumber, callback);
-        }
-    }
-
     // Retrieves suggestions for non-batch input (typing, recorrection, predictions...)
     // and calls the callback function with the suggestions.
     private void getSuggestedWordsForNonBatchInput(final WordComposer wordComposer,
-                                                   final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
-                                                   final SettingsValuesForSuggestion settingsValuesForSuggestion,
-                                                   final int inputStyleIfNotPrediction, final boolean isCorrectionEnabled,
-                                                   final int sequenceNumber, final OnGetSuggestedWordsCallback callback) {
+            final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
+            final SettingsValuesForSuggestion settingsValuesForSuggestion,
+            final int inputStyleIfNotPrediction, final boolean isCorrectionEnabled,
+            final int sequenceNumber, final OnGetSuggestedWordsCallback callback) {
         final String typedWord = wordComposer.getTypedWord();
         final int trailingSingleQuotesCount = StringUtils.getTrailingSingleQuotesCount(typedWord);
         final String consideredWord = trailingSingleQuotesCount > 0
@@ -251,10 +203,10 @@ public final class Suggest {
     // Retrieves suggestions for the batch input
     // and calls the callback function with the suggestions.
     private void getSuggestedWordsForBatchInput(final WordComposer wordComposer,
-                                                final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
-                                                final SettingsValuesForSuggestion settingsValuesForSuggestion,
-                                                final int inputStyle, final int sequenceNumber,
-                                                final OnGetSuggestedWordsCallback callback) {
+            final PrevWordsInfo prevWordsInfo, final ProximityInfo proximityInfo,
+            final SettingsValuesForSuggestion settingsValuesForSuggestion,
+            final int inputStyle, final int sequenceNumber,
+            final OnGetSuggestedWordsCallback callback) {
         final SuggestionResults suggestionResults = mDictionaryFacilitator.getSuggestionResults(
                 wordComposer, prevWordsInfo, proximityInfo, settingsValuesForSuggestion,
                 SESSION_ID_GESTURE);
@@ -300,7 +252,54 @@ public final class Suggest {
                 inputStyle, sequenceNumber));
     }
 
-    public interface OnGetSuggestedWordsCallback {
-        void onGetSuggestedWords(final SuggestedWords suggestedWords);
+    private static ArrayList<SuggestedWordInfo> getSuggestionsInfoListWithDebugInfo(
+            final String typedWord, final ArrayList<SuggestedWordInfo> suggestions) {
+        final SuggestedWordInfo typedWordInfo = suggestions.get(0);
+        typedWordInfo.setDebugString("+");
+        final int suggestionsSize = suggestions.size();
+        final ArrayList<SuggestedWordInfo> suggestionsList = new ArrayList<>(suggestionsSize);
+        suggestionsList.add(typedWordInfo);
+        // Note: i here is the index in mScores[], but the index in mSuggestions is one more
+        // than i because we added the typed word to mSuggestions without touching mScores.
+        for (int i = 0; i < suggestionsSize - 1; ++i) {
+            final SuggestedWordInfo cur = suggestions.get(i + 1);
+            final float normalizedScore = BinaryDictionaryUtils.calcNormalizedScore(
+                    typedWord, cur.toString(), cur.mScore);
+            final String scoreInfoString;
+            if (normalizedScore > 0) {
+                scoreInfoString = String.format(
+                        Locale.ROOT, "%d (%4.2f), %s", cur.mScore, normalizedScore,
+                        cur.mSourceDict.mDictType);
+            } else {
+                scoreInfoString = Integer.toString(cur.mScore);
+            }
+            cur.setDebugString(scoreInfoString);
+            suggestionsList.add(cur);
+        }
+        return suggestionsList;
+    }
+
+    /* package for test */ static SuggestedWordInfo getTransformedSuggestedWordInfo(
+            final SuggestedWordInfo wordInfo, final Locale locale, final boolean isAllUpperCase,
+            final boolean isOnlyFirstCharCapitalized, final int trailingSingleQuotesCount) {
+        final StringBuilder sb = new StringBuilder(wordInfo.mWord.length());
+        if (isAllUpperCase) {
+            sb.append(wordInfo.mWord.toUpperCase(locale));
+        } else if (isOnlyFirstCharCapitalized) {
+            sb.append(StringUtils.capitalizeFirstCodePoint(wordInfo.mWord, locale));
+        } else {
+            sb.append(wordInfo.mWord);
+        }
+        // Appending quotes is here to help people quote words. However, it's not helpful
+        // when they type words with quotes toward the end like "it's" or "didn't", where
+        // it's more likely the user missed the last character (or didn't type it yet).
+        final int quotesToAppend = trailingSingleQuotesCount
+                - (-1 == wordInfo.mWord.indexOf(Constants.CODE_SINGLE_QUOTE) ? 0 : 1);
+        for (int i = quotesToAppend - 1; i >= 0; --i) {
+            sb.appendCodePoint(Constants.CODE_SINGLE_QUOTE);
+        }
+        return new SuggestedWordInfo(sb.toString(), wordInfo.mScore, wordInfo.mKindAndFlags,
+                wordInfo.mSourceDict, wordInfo.mIndexOfTouchPointOfSecondWord,
+                wordInfo.mAutoCommitFirstWordConfidence);
     }
 }

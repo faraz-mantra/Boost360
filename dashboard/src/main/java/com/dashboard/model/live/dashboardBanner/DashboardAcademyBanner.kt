@@ -6,16 +6,16 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class DashboardAcademyBanner(
-  @SerializedName("banner_image")
-  var bannerImage: BannerImage? = null,
+    @SerializedName("banner_image")
+    var bannerImage: BannerImage? = null,
 //    @SerializedName("createdon")
 //    var createdon: String? = null,
-  @SerializedName("cta_file_link")
-  var ctaFileLink: String? = null,
-  @SerializedName("cta_web_link")
-  var ctaWebLink: String? = null,
-  @SerializedName("cta_youtube_link")
-  var ctaYoutubeLink: String? = null,
+    @SerializedName("cta_file_link")
+    var ctaFileLink: String? = null,
+    @SerializedName("cta_web_link")
+    var ctaWebLink: String? = null,
+    @SerializedName("cta_youtube_link")
+    var ctaYoutubeLink: String? = null,
 //    @SerializedName("importance")
 //    var importance: Double? = null,
 //    @SerializedName("isarchived")

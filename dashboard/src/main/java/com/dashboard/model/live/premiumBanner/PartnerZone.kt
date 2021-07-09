@@ -7,10 +7,10 @@ import java.io.Serializable
 data class PartnerZone(
 //    @SerializedName("createdon")
 //    var createdon: String? = null,
-  @SerializedName("cta_web_link")
-  var ctaWebLink: String? = null,
-  @SerializedName("image")
-  var image: PremiumImage? = null,
+    @SerializedName("cta_web_link")
+    var ctaWebLink: String? = null,
+    @SerializedName("image")
+    var image: PremiumImage? = null,
 //    @SerializedName("isarchived")
 //    var isarchived: Boolean? = null,
 //    @SerializedName("_kid")
@@ -21,8 +21,8 @@ data class PartnerZone(
 //    var parentClassName: String? = null,
 //    @SerializedName("_propertyName")
 //    var propertyName: String? = null,
-  @SerializedName("title")
-  var title: String? = null,
+    @SerializedName("title")
+    var title: String? = null,
 //    @SerializedName("updatedon")
 //    var updatedon: String? = null,
 //    @SerializedName("websiteid")

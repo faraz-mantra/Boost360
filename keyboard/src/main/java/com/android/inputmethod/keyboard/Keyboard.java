@@ -52,57 +52,39 @@ public class Keyboard {
     public final KeyboardId mId;
     public final int mThemeId;
 
-    /**
-     * Total height of the keyboard, including the padding and keys
-     */
+    /** Total height of the keyboard, including the padding and keys */
     public final int mOccupiedHeight;
-    /**
-     * Total width of the keyboard, including the padding and keys
-     */
+    /** Total width of the keyboard, including the padding and keys */
     public final int mOccupiedWidth;
 
-    /**
-     * Base height of the keyboard, used to calculate rows' height
-     */
+    /** Base height of the keyboard, used to calculate rows' height */
     public final int mBaseHeight;
-    /**
-     * Base width of the keyboard, used to calculate keys' width
-     */
+    /** Base width of the keyboard, used to calculate keys' width */
     public final int mBaseWidth;
 
-    /**
-     * The padding above the keyboard
-     */
+    /** The padding above the keyboard */
     public final int mTopPadding;
-    /**
-     * Default gap between rows
-     */
+    /** Default gap between rows */
     public final int mVerticalGap;
 
-    /**
-     * Per keyboard key visual parameters
-     */
+    /** Per keyboard key visual parameters */
     public final KeyVisualAttributes mKeyVisualAttributes;
 
     public final int mMostCommonKeyHeight;
     public final int mMostCommonKeyWidth;
 
-    /**
-     * More keys keyboard template
-     */
+    /** More keys keyboard template */
     public final int mMoreKeysTemplate;
 
-    /**
-     * Maximum column for more keys keyboard
-     */
+    /** Maximum column for more keys keyboard */
     public final int mMaxMoreKeysKeyboardColumn;
+
+    /** List of keys in this keyboard */
+    private final List<Key> mSortedKeys;
     public final List<Key> mShiftKeys;
     public final List<Key> mAltCodeKeysWhileTyping;
     public final KeyboardIconsSet mIconsSet;
-    /**
-     * List of keys in this keyboard
-     */
-    private final List<Key> mSortedKeys;
+
     private final SparseArray<Key> mKeyCache = new SparseArray<>();
 
     private final ProximityInfo mProximityInfo;
@@ -169,7 +151,7 @@ public class Keyboard {
         // TODO: Figure out how to handle proximity characters information of all layouts.
         final boolean canAssumeNativeHasProximityCharsInfoOfAllKeys = (
                 mId.mElementId == KeyboardId.ELEMENT_ALPHABET
-                        || mId.mElementId == KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED);
+                || mId.mElementId == KeyboardId.ELEMENT_ALPHABET_AUTOMATIC_SHIFTED);
         return canAssumeNativeHasProximityCharsInfoOfAllKeys || Character.isLetter(code);
     }
 
@@ -181,7 +163,6 @@ public class Keyboard {
      * Return the sorted list of keys of this keyboard.
      * The keys are sorted from top-left to bottom-right order.
      * The list may contain {@link Key.Spacer} object as well.
-     *
      * @return the sorted unmodifiable list of {@link Key}s of this keyboard.
      */
     public List<Key> getSortedKeys() {
@@ -230,7 +211,6 @@ public class Keyboard {
 
     /**
      * Returns the array of the keys that are closest to the given point.
-     *
      * @param x the x-coordinate of the point
      * @param y the y-coordinate of the point
      * @return the list of the nearest keys to the given point. If the given

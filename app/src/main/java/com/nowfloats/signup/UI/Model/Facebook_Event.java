@@ -7,7 +7,8 @@ public class Facebook_Event {
 
     public Facebook_Data_Model model;
 
-    public Facebook_Event(Facebook_Data_Model response) {
+    public Facebook_Event(Facebook_Data_Model response)
+    {
         model = response;
     }
 }

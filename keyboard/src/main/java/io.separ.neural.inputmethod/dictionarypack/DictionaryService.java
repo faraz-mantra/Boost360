@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2011 The Android Open Source Project
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * <p>
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -51,23 +51,27 @@ import io.separ.neural.inputmethod.indic.R;
  */
 public final class DictionaryService extends Service {
     /**
-     * A locale argument, as a String.
-     */
-    /* package */ static final String LOCALE_INTENT_ARGUMENT = "locale";
-    /**
      * The package name, to use in the intent actions.
      */
     private static final String PACKAGE_NAME = "io.separ.neural.inputmethod.indic";
-    /**
-     * The action of displaying a toast to warn the user an automatic download is starting.
-     */
-    /* package */ static final String SHOW_DOWNLOAD_TOAST_INTENT_ACTION =
-            PACKAGE_NAME + ".SHOW_DOWNLOAD_TOAST_INTENT_ACTION";
+
     /**
      * The action of the date changing, used to schedule a periodic freshness check
      */
     private static final String DATE_CHANGED_INTENT_ACTION =
             Intent.ACTION_DATE_CHANGED;
+
+    /**
+     * The action of displaying a toast to warn the user an automatic download is starting.
+     */
+    /* package */ static final String SHOW_DOWNLOAD_TOAST_INTENT_ACTION =
+            PACKAGE_NAME + ".SHOW_DOWNLOAD_TOAST_INTENT_ACTION";
+
+    /**
+     * A locale argument, as a String.
+     */
+    /* package */ static final String LOCALE_INTENT_ARGUMENT = "locale";
+
     /**
      * How often, in milliseconds, we want to update the metadata. This is a
      * floor value; actually, it may happen several hours later, or even more.
@@ -78,90 +82,19 @@ public final class DictionaryService extends Service {
      * We are waked around midnight, local time. We want to wake between midnight and 6 am,
      * roughly. So use a random time between 0 and this delay.
      */
-    private static final int MAX_ALARM_DELAY = (int) TimeUnit.HOURS.toMillis(6);
+    private static final int MAX_ALARM_DELAY = (int)TimeUnit.HOURS.toMillis(6);
 
     /**
      * How long we consider a "very long time". If no update took place in this time,
      * the content provider will trigger an update in the background.
      */
     private static final long VERY_LONG_TIME = TimeUnit.DAYS.toMillis(14);
-    private static final int WORKER_THREAD_TIMEOUT_SECONDS = 15;
+
     /**
      * An executor that serializes tasks given to it.
      */
     private ThreadPoolExecutor mExecutor;
-
-    private static void dispatchBroadcast(final Context context, final Intent intent) {
-        if (DATE_CHANGED_INTENT_ACTION.equals(intent.getAction())) {
-            // This happens when the date of the device changes. This normally happens
-            // at midnight local time, but it may happen if the user changes the date
-            // by hand or something similar happens.
-            checkTimeAndMaybeSetupUpdateAlarm(context);
-        } else if (DictionaryPackConstants.UPDATE_NOW_INTENT_ACTION.equals(intent.getAction())) {
-            // Intent to trigger an update now.
-            UpdateHandler.tryUpdate(context, false);
-        } else {
-            UpdateHandler.downloadFinished(context, intent);
-        }
-    }
-
-    /**
-     * Setups an alarm to check for updates if an update is due.
-     */
-    private static void checkTimeAndMaybeSetupUpdateAlarm(final Context context) {
-        // Of all clients, if the one that hasn't been updated for the longest
-        // is still more recent than UPDATE_FREQUENCY, do nothing.
-        if (!isLastUpdateAtLeastThisOld(context, UPDATE_FREQUENCY)) return;
-
-        PrivateLog.log("Date changed - registering alarm");
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        // Best effort to wake between midnight and MAX_ALARM_DELAY in the morning.
-        // It doesn't matter too much if this is very inexact.
-        final long now = System.currentTimeMillis();
-        final long alarmTime = now + new Random().nextInt(MAX_ALARM_DELAY);
-        final Intent updateIntent = new Intent(DictionaryPackConstants.UPDATE_NOW_INTENT_ACTION);
-        final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
-                updateIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        // We set the alarm in the type that doesn't forcefully wake the device
-        // from sleep, but fires the next time the device actually wakes for any
-        // other reason.
-        if (null != alarmManager) alarmManager.set(AlarmManager.RTC, alarmTime, pendingIntent);
-    }
-
-    /**
-     * Utility method to decide whether the last update is older than a certain time.
-     *
-     * @return true if at least `time' milliseconds have elapsed since last update, false otherwise.
-     */
-    private static boolean isLastUpdateAtLeastThisOld(final Context context, final long time) {
-        final long now = System.currentTimeMillis();
-        final long lastUpdate = MetadataDbHelper.getOldestUpdateTime(context);
-        PrivateLog.log("Last update was " + lastUpdate);
-        return lastUpdate + time < now;
-    }
-
-    /**
-     * Refreshes data if it hasn't been refreshed in a very long time.
-     *
-     * This will check the last update time, and if it's been more than VERY_LONG_TIME,
-     * update metadata now - and possibly take subsequent update actions.
-     */
-    public static void updateNowIfNotUpdatedInAVeryLongTime(final Context context) {
-        if (!isLastUpdateAtLeastThisOld(context, VERY_LONG_TIME)) return;
-        UpdateHandler.tryUpdate(context, false);
-    }
-
-    /**
-     * Shows a toast informing the user that an automatic dictionary download is starting.
-     */
-    private static void showStartDownloadingToast(final Context context, final Locale locale) {
-        final String toastText = String.format(
-                context.getString(R.string.toast_downloading_suggestions),
-                locale.getDisplayName());
-        Toast.makeText(context, toastText, Toast.LENGTH_LONG).show();
-    }
+    private static final int WORKER_THREAD_TIMEOUT_SECONDS = 15;
 
     @Override
     public void onCreate() {
@@ -209,7 +142,7 @@ public final class DictionaryService extends Service {
      */
     @Override
     public synchronized int onStartCommand(final Intent intent, final int flags,
-                                           final int startId) {
+            final int startId) {
         final DictionaryService self = this;
         if (SHOW_DOWNLOAD_TOAST_INTENT_ACTION.equals(intent.getAction())) {
             // This is a UI action, it can't be run in another thread
@@ -234,5 +167,77 @@ public final class DictionaryService extends Service {
             });
         }
         return Service.START_REDELIVER_INTENT;
+    }
+
+    private static void dispatchBroadcast(final Context context, final Intent intent) {
+        if (DATE_CHANGED_INTENT_ACTION.equals(intent.getAction())) {
+            // This happens when the date of the device changes. This normally happens
+            // at midnight local time, but it may happen if the user changes the date
+            // by hand or something similar happens.
+            checkTimeAndMaybeSetupUpdateAlarm(context);
+        } else if (DictionaryPackConstants.UPDATE_NOW_INTENT_ACTION.equals(intent.getAction())) {
+            // Intent to trigger an update now.
+            UpdateHandler.tryUpdate(context, false);
+        } else {
+            UpdateHandler.downloadFinished(context, intent);
+        }
+    }
+
+    /**
+     * Setups an alarm to check for updates if an update is due.
+     */
+    private static void checkTimeAndMaybeSetupUpdateAlarm(final Context context) {
+        // Of all clients, if the one that hasn't been updated for the longest
+        // is still more recent than UPDATE_FREQUENCY, do nothing.
+        if (!isLastUpdateAtLeastThisOld(context, UPDATE_FREQUENCY)) return;
+
+        PrivateLog.log("Date changed - registering alarm");
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+
+        // Best effort to wake between midnight and MAX_ALARM_DELAY in the morning.
+        // It doesn't matter too much if this is very inexact.
+        final long now = System.currentTimeMillis();
+        final long alarmTime = now + new Random().nextInt(MAX_ALARM_DELAY);
+        final Intent updateIntent = new Intent(DictionaryPackConstants.UPDATE_NOW_INTENT_ACTION);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
+                updateIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        // We set the alarm in the type that doesn't forcefully wake the device
+        // from sleep, but fires the next time the device actually wakes for any
+        // other reason.
+        if (null != alarmManager) alarmManager.set(AlarmManager.RTC, alarmTime, pendingIntent);
+    }
+
+    /**
+     * Utility method to decide whether the last update is older than a certain time.
+     *
+     * @return true if at least `time' milliseconds have elapsed since last update, false otherwise.
+     */
+    private static boolean isLastUpdateAtLeastThisOld(final Context context, final long time) {
+        final long now = System.currentTimeMillis();
+        final long lastUpdate = MetadataDbHelper.getOldestUpdateTime(context);
+        PrivateLog.log("Last update was " + lastUpdate);
+        return lastUpdate + time < now;
+    }
+
+    /**
+     * Refreshes data if it hasn't been refreshed in a very long time.
+     *
+     * This will check the last update time, and if it's been more than VERY_LONG_TIME,
+     * update metadata now - and possibly take subsequent update actions.
+     */
+    public static void updateNowIfNotUpdatedInAVeryLongTime(final Context context) {
+        if (!isLastUpdateAtLeastThisOld(context, VERY_LONG_TIME)) return;
+        UpdateHandler.tryUpdate(context, false);
+    }
+
+    /**
+     * Shows a toast informing the user that an automatic dictionary download is starting.
+     */
+    private static void showStartDownloadingToast(final Context context, final Locale locale) {
+        final String toastText = String.format(
+                context.getString(R.string.toast_downloading_suggestions),
+                locale.getDisplayName());
+        Toast.makeText(context, toastText, Toast.LENGTH_LONG).show();
     }
 }

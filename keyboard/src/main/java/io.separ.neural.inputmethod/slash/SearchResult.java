@@ -8,18 +8,13 @@ import java.util.ArrayList;
  * Created by sepehr on 3/2/17.
  */
 public class SearchResult {
-    @SerializedName("results")
-    public ArrayList<RSearchItem> results;
     @SerializedName("meta")
     private Meta meta;
+    @SerializedName("results")
+    public ArrayList<RSearchItem> results;
 
-    public SearchResult() {
-    }
-
-    public SearchResult(boolean x) {
-        meta = new Meta();
-        meta.status = null;
-        this.results = new ArrayList<>();
+    public static class Meta {
+        public String status;
     }
 
     public ArrayList<RSearchItem> getItems() {
@@ -32,8 +27,10 @@ public class SearchResult {
         }
         return null;
     }
-
-    public static class Meta {
-        public String status;
+    public SearchResult(){}
+    public SearchResult(boolean x){
+        meta = new Meta();
+        meta.status = null;
+        this.results = new ArrayList<>();
     }
 }

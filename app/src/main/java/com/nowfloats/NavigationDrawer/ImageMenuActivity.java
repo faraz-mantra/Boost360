@@ -23,17 +23,20 @@ import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityImageMenuBinding;
 
-public class ImageMenuActivity extends AppCompatActivity {
+public class ImageMenuActivity extends AppCompatActivity
+{
     private ActivityImageMenuBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_image_menu);
 
         setSupportActionBar(binding.layoutToolbar.toolbar);
 
-        if (getSupportActionBar() != null) {
+        if (getSupportActionBar() != null)
+        {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -46,10 +49,10 @@ public class ImageMenuActivity extends AppCompatActivity {
 
     /**
      * Initialize pickup address list adapter
-     *
      * @param mRecyclerView
      */
-    private void initMenuRecyclerView(RecyclerView mRecyclerView) {
+    private void initMenuRecyclerView(RecyclerView mRecyclerView)
+    {
         final String[] adapterTexts = getResources().getStringArray(R.array.images_content_list_items);
         final TypedArray imagesArray = getResources().obtainTypedArray(R.array.image_list_icons);
         int[] adapterImages = new int[adapterTexts.length];
@@ -65,10 +68,12 @@ public class ImageMenuActivity extends AppCompatActivity {
         SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(this, new OnItemClickCallback() {
 
             @Override
-            public void onItemClick(int pos) {
+            public void onItemClick(int pos)
+            {
                 Intent intent = null;
 
-                switch (adapterTexts[pos]) {
+                switch(adapterTexts[pos])
+                {
                     case "Business Logo":
 
                         MixPanelController.track(EventKeysWL.LOGO, null);
@@ -101,15 +106,17 @@ public class ImageMenuActivity extends AppCompatActivity {
             }
         });
 
-        adapter.setItems(adapterImages, adapterTexts);
+        adapter.setItems(adapterImages,adapterTexts);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(adapter);
     }
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
 
                 finish();

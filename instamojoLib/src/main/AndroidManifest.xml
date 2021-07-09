@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  package="com.romeo.mylibrary">
+    package="com.romeo.mylibrary"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
-  <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-  //required for Juspay to read the OTP from the SMS sent to the device
-  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    //required for Juspay to read the OTP from the SMS sent to the device
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
 
-  <application
-    android:allowBackup="true"
-    android:label="@string/app_name"
-    android:supportsRtl="true">
-    <activity android:name=".ui.InstaMojoMainActivity" />
-  </application>
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true">
+        <activity
+            android:name=".ui.InstaMojoMainActivity" />
+    </application>
 
 </manifest>

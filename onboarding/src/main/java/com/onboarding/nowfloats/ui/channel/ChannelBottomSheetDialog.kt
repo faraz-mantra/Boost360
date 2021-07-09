@@ -8,8 +8,7 @@ import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.DialogChannelBottomSheetBinding
 
 @Deprecated("not in use")
-class ChannelBottomSheetDialog :
-  BaseBottomSheetDialog<DialogChannelBottomSheetBinding, BaseViewModel>() {
+class ChannelBottomSheetDialog : BaseBottomSheetDialog<DialogChannelBottomSheetBinding, BaseViewModel>() {
 
   private var list = ArrayList<ChannelModel>()
   var onDoneClicked: () -> Unit = { }

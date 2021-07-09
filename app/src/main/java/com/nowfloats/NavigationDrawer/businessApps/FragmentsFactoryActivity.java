@@ -1,11 +1,9 @@
 package com.nowfloats.NavigationDrawer.businessApps;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -41,10 +39,10 @@ public class FragmentsFactoryActivity extends AppCompatActivity {
         findViewById(R.id.fm_site_appearance).setVisibility(View.VISIBLE);
         Bundle intent = getIntent().getExtras();
 
-        if (intent != null && intent.containsKey("fragmentName")) {
+        if (intent != null && intent.containsKey("fragmentName")){
             String fragmentName = intent.getString("fragmentName");
             Fragment attachedFragment;
-            switch (fragmentName) {
+            switch (fragmentName){
                 case "DictateFragment":
                     headerText.setText("Dictate");
                     attachedFragment = new DictateFragment();

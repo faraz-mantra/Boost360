@@ -64,104 +64,6 @@ class ComparableVersion implements Comparable<ComparableVersion> {
 
     private ListItem items;
 
-    public ComparableVersion(String version) {
-        parseVersion(version);
-    }
-
-    private static Item parseItem(boolean isDigit, String buf) {
-        return isDigit ? new IntegerItem(buf) : new StringItem(buf, false);
-    }
-
-    public final void parseVersion(String version) {
-        this.value = version;
-
-        items = new ListItem();
-
-        version = version.toLowerCase(Locale.ENGLISH);
-
-        ListItem list = items;
-
-        Stack<Item> stack = new Stack<Item>();
-        stack.push(list);
-
-        boolean isDigit = false;
-
-        int startIndex = 0;
-
-        for (int i = 0; i < version.length(); i++) {
-            char c = version.charAt(i);
-
-            if (c == '.') {
-                if (i == startIndex) {
-                    list.add(IntegerItem.ZERO);
-                } else {
-                    list.add(parseItem(isDigit, version.substring(startIndex, i)));
-                }
-                startIndex = i + 1;
-            } else if (c == '-') {
-                if (i == startIndex) {
-                    list.add(IntegerItem.ZERO);
-                } else {
-                    list.add(parseItem(isDigit, version.substring(startIndex, i)));
-                }
-                startIndex = i + 1;
-
-                if (isDigit) {
-                    list.normalize(); // 1.0-* = 1-*
-
-                    if ((i + 1 < version.length()) && Character.isDigit(version.charAt(i + 1))) {
-                        // new ListItem only if previous were digits and new char is a digit,
-                        // ie need to differentiate only 1.1 from 1-1
-                        list.add(list = new ListItem());
-
-                        stack.push(list);
-                    }
-                }
-            } else if (Character.isDigit(c)) {
-                if (!isDigit && i > startIndex) {
-                    list.add(new StringItem(version.substring(startIndex, i), true));
-                    startIndex = i;
-                }
-
-                isDigit = true;
-            } else {
-                if (isDigit && i > startIndex) {
-                    list.add(parseItem(true, version.substring(startIndex, i)));
-                    startIndex = i;
-                }
-
-                isDigit = false;
-            }
-        }
-
-        if (version.length() > startIndex) {
-            list.add(parseItem(isDigit, version.substring(startIndex)));
-        }
-
-        while (!stack.isEmpty()) {
-            list = (ListItem) stack.pop();
-            list.normalize();
-        }
-
-        canonical = items.toString();
-    }
-
-    public int compareTo(ComparableVersion o) {
-        return items.compareTo(o.items);
-    }
-
-    public String toString() {
-        return value;
-    }
-
-    public boolean equals(Object o) {
-        return (o instanceof ComparableVersion) && canonical.equals(((ComparableVersion) o).canonical);
-    }
-
-    public int hashCode() {
-        return canonical.hashCode();
-    }
-
     private interface Item {
         int INTEGER_ITEM = 0;
         int STRING_ITEM = 1;
@@ -178,9 +80,11 @@ class ComparableVersion implements Comparable<ComparableVersion> {
      * Represents a numeric item in the version item list.
      */
     private static class IntegerItem implements Item {
-        public static final IntegerItem ZERO = new IntegerItem();
         private static final BigInteger BIG_INTEGER_ZERO = new BigInteger("0");
+
         private final BigInteger value;
+
+        public static final IntegerItem ZERO = new IntegerItem();
 
         private IntegerItem() {
             this.value = BIG_INTEGER_ZERO;
@@ -233,17 +137,18 @@ class ComparableVersion implements Comparable<ComparableVersion> {
         private static final List<String> _QUALIFIERS = Arrays.asList(QUALIFIERS);
 
         private static final Properties ALIASES = new Properties();
-        /**
-         * A comparable value for the empty-string qualifier. This one is used to determine if a given qualifier makes
-         * the version older than one without a qualifier, or more recent.
-         */
-        private static final String RELEASE_VERSION_INDEX = String.valueOf(_QUALIFIERS.indexOf(""));
 
         static {
             ALIASES.put("ga", "");
             ALIASES.put("final", "");
             ALIASES.put("cr", "rc");
         }
+
+        /**
+         * A comparable value for the empty-string qualifier. This one is used to determine if a given qualifier makes
+         * the version older than one without a qualifier, or more recent.
+         */
+        private static final String RELEASE_VERSION_INDEX = String.valueOf(_QUALIFIERS.indexOf(""));
 
         private String value;
 
@@ -266,6 +171,14 @@ class ComparableVersion implements Comparable<ComparableVersion> {
             this.value = ALIASES.getProperty(value, value);
         }
 
+        public int getType() {
+            return STRING_ITEM;
+        }
+
+        public boolean isNull() {
+            return (comparableQualifier(value).compareTo(RELEASE_VERSION_INDEX) == 0);
+        }
+
         /**
          * Returns a comparable value for a qualifier.
          * <p/>
@@ -283,14 +196,6 @@ class ComparableVersion implements Comparable<ComparableVersion> {
             int i = _QUALIFIERS.indexOf(qualifier);
 
             return i == -1 ? (_QUALIFIERS.size() + "-" + qualifier) : String.valueOf(i);
-        }
-
-        public int getType() {
-            return STRING_ITEM;
-        }
-
-        public boolean isNull() {
-            return (comparableQualifier(value).compareTo(RELEASE_VERSION_INDEX) == 0);
         }
 
         public int compareTo(Item item) {
@@ -391,5 +296,103 @@ class ComparableVersion implements Comparable<ComparableVersion> {
             buffer.append(')');
             return buffer.toString();
         }
+    }
+
+    public ComparableVersion(String version) {
+        parseVersion(version);
+    }
+
+    public final void parseVersion(String version) {
+        this.value = version;
+
+        items = new ListItem();
+
+        version = version.toLowerCase(Locale.ENGLISH);
+
+        ListItem list = items;
+
+        Stack<Item> stack = new Stack<Item>();
+        stack.push(list);
+
+        boolean isDigit = false;
+
+        int startIndex = 0;
+
+        for (int i = 0; i < version.length(); i++) {
+            char c = version.charAt(i);
+
+            if (c == '.') {
+                if (i == startIndex) {
+                    list.add(IntegerItem.ZERO);
+                } else {
+                    list.add(parseItem(isDigit, version.substring(startIndex, i)));
+                }
+                startIndex = i + 1;
+            } else if (c == '-') {
+                if (i == startIndex) {
+                    list.add(IntegerItem.ZERO);
+                } else {
+                    list.add(parseItem(isDigit, version.substring(startIndex, i)));
+                }
+                startIndex = i + 1;
+
+                if (isDigit) {
+                    list.normalize(); // 1.0-* = 1-*
+
+                    if ((i + 1 < version.length()) && Character.isDigit(version.charAt(i + 1))) {
+                        // new ListItem only if previous were digits and new char is a digit,
+                        // ie need to differentiate only 1.1 from 1-1
+                        list.add(list = new ListItem());
+
+                        stack.push(list);
+                    }
+                }
+            } else if (Character.isDigit(c)) {
+                if (!isDigit && i > startIndex) {
+                    list.add(new StringItem(version.substring(startIndex, i), true));
+                    startIndex = i;
+                }
+
+                isDigit = true;
+            } else {
+                if (isDigit && i > startIndex) {
+                    list.add(parseItem(true, version.substring(startIndex, i)));
+                    startIndex = i;
+                }
+
+                isDigit = false;
+            }
+        }
+
+        if (version.length() > startIndex) {
+            list.add(parseItem(isDigit, version.substring(startIndex)));
+        }
+
+        while (!stack.isEmpty()) {
+            list = (ListItem) stack.pop();
+            list.normalize();
+        }
+
+        canonical = items.toString();
+    }
+
+    private static Item parseItem(boolean isDigit, String buf) {
+        return isDigit ? new IntegerItem(buf) : new StringItem(buf, false);
+    }
+
+    public int compareTo(ComparableVersion o) {
+        return items.compareTo(o.items);
+    }
+
+    public String toString() {
+        return value;
+    }
+
+    public boolean equals(Object o) {
+        return (o instanceof ComparableVersion) && canonical.equals(((ComparableVersion) o).canonical);
+    }
+
+    public int hashCode() {
+        return canonical.hashCode();
     }
 }

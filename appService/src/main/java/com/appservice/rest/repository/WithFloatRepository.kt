@@ -15,25 +15,15 @@ object WithFloatRepository : AppBaseRepository<WithFloatRemoteData, AppBaseLocal
 
 
   fun userAccountDetail(fpId: String?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.userAccountDetail(fpId, clientId),
-      TaskCode.GET_ACCOUNT_DETAILS
-    )
+    return makeRemoteRequest(remoteDataSource.userAccountDetail(fpId, clientId), TaskCode.GET_ACCOUNT_DETAILS)
   }
 
   fun createAccount(request: AccountCreateRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.createAccount(request), TaskCode.CREATE_ACCOUNT)
   }
 
-  fun updateAccount(
-    fpId: String?,
-    clientId: String?,
-    request: BankAccountDetailsN?
-  ): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.updateAccount(fpId, clientId, request),
-      TaskCode.UPDATE_ACCOUNT
-    )
+  fun updateAccount(fpId: String?, clientId: String?, request: BankAccountDetailsN?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.updateAccount(fpId, clientId, request), TaskCode.UPDATE_ACCOUNT)
   }
 
 

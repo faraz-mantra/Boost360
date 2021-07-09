@@ -1,17 +1,16 @@
 package com.nowfloats.Store.Adapters;
 
 import android.content.Context;
+import androidx.fragment.app.FragmentActivity;
+import androidx.core.util.Pair;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.core.util.Pair;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowfloats.Store.Model.WidgetPacks;
 import com.nowfloats.Store.PricingDetailsFragment;
@@ -133,9 +132,9 @@ public class AllPlansRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     class GreyTextViewHolder extends RecyclerView.ViewHolder {
 
         private final RecyclerView mList;
-        private final ImageView ivQuestion;
         TextView tvContent;
         ImageView ivTick;
+        private final ImageView ivQuestion;
 
         public GreyTextViewHolder(View itemView) {
             super(itemView);

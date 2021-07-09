@@ -21,9 +21,7 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.SystemClock;
 import android.provider.Settings;
-
 import androidx.core.view.accessibility.AccessibilityEventCompat;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -47,27 +45,23 @@ public final class AccessibilityUtils {
             AccessibilityUtils.class.getClass().getPackage().getName();
 
     private static final AccessibilityUtils sInstance = new AccessibilityUtils();
+
+    private Context mContext;
+    private AccessibilityManager mAccessibilityManager;
+    private AudioManager mAudioManager;
+
+    /** The most recent auto-correction. */
+    private String mAutoCorrectionWord;
+
+    /** The most recent typed word for auto-correction. */
+    private String mTypedWord;
+
     /*
      * Setting this constant to {@code false} will disable all keyboard
      * accessibility code, regardless of whether Accessibility is turned on in
      * the system settings. It should ONLY be used in the event of an emergency.
      */
     private static final boolean ENABLE_ACCESSIBILITY = true;
-    private Context mContext;
-    private AccessibilityManager mAccessibilityManager;
-    private AudioManager mAudioManager;
-    /**
-     * The most recent auto-correction.
-     */
-    private String mAutoCorrectionWord;
-    /**
-     * The most recent typed word for auto-correction.
-     */
-    private String mTypedWord;
-
-    private AccessibilityUtils() {
-        // This class is not publicly instantiable.
-    }
 
     public static void init(final Context context) {
         if (!ENABLE_ACCESSIBILITY) return;
@@ -80,19 +74,8 @@ public final class AccessibilityUtils {
         return sInstance;
     }
 
-    /**
-     * Returns {@true} if the provided event is a touch exploration (e.g. hover)
-     * event. This is used to determine whether the event should be processed by
-     * the touch exploration code within the keyboard.
-     *
-     * @param event The event to check.
-     * @return {@true} is the event is a touch exploration event
-     */
-    public static boolean isTouchExplorationEvent(final MotionEvent event) {
-        final int action = event.getAction();
-        return action == MotionEvent.ACTION_HOVER_ENTER
-                || action == MotionEvent.ACTION_HOVER_EXIT
-                || action == MotionEvent.ACTION_HOVER_MOVE;
+    private AccessibilityUtils() {
+        // This class is not publicly instantiable.
     }
 
     private void initInternal(final Context context) {
@@ -121,6 +104,21 @@ public final class AccessibilityUtils {
      */
     public boolean isTouchExplorationEnabled() {
         return isAccessibilityEnabled() && mAccessibilityManager.isTouchExplorationEnabled();
+    }
+
+    /**
+     * Returns {@true} if the provided event is a touch exploration (e.g. hover)
+     * event. This is used to determine whether the event should be processed by
+     * the touch exploration code within the keyboard.
+     *
+     * @param event The event to check.
+     * @return {@true} is the event is a touch exploration event
+     */
+    public static boolean isTouchExplorationEvent(final MotionEvent event) {
+        final int action = event.getAction();
+        return action == MotionEvent.ACTION_HOVER_ENTER
+                || action == MotionEvent.ACTION_HOVER_EXIT
+                || action == MotionEvent.ACTION_HOVER_MOVE;
     }
 
     /**
@@ -155,7 +153,7 @@ public final class AccessibilityUtils {
      * will occur when a key is typed.
      *
      * @param suggestedWords the list of suggested auto-correction words
-     * @param typedWord      the currently typed word
+     * @param typedWord the currently typed word
      */
     public void setAutoCorrection(final SuggestedWords suggestedWords, final String typedWord) {
         if (suggestedWords.mWillAutoCorrect) {
@@ -172,10 +170,10 @@ public final class AccessibilityUtils {
      * currently typed word and auto-correction.
      *
      * @param keyCodeDescription spoken description of the key that will insert
-     *                           an auto-correction
-     * @param shouldObscure      whether the key should be obscured
+     *            an auto-correction
+     * @param shouldObscure whether the key should be obscured
      * @return a description including a description of the auto-correction, if
-     * needed
+     *         needed
      */
     public String getAutoCorrectionDescription(
             final String keyCodeDescription, final boolean shouldObscure) {
@@ -239,12 +237,12 @@ public final class AccessibilityUtils {
      * Handles speaking the "connect a headset to hear passwords" notification
      * when connecting to a password field.
      *
-     * @param view       The source view.
+     * @param view The source view.
      * @param editorInfo The input connection's editor info attribute.
      * @param restarting Whether the connection is being restarted.
      */
     public void onStartInputViewInternal(final View view, final EditorInfo editorInfo,
-                                         final boolean restarting) {
+            final boolean restarting) {
         if (shouldObscureInput(editorInfo)) {
             final CharSequence text = mContext.getText(R.string.spoken_use_headphones);
             announceForAccessibility(view, text);

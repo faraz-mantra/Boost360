@@ -21,8 +21,7 @@ import com.onboarding.nowfloats.databinding.ActivityFragmentContainerUpdateBindi
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyDigitalChannelFragment
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyVisitingCardFragment
 
-open class DigitalChannelActivity :
-  AppBaseActivity<ActivityFragmentContainerUpdateBinding, BaseViewModel>() {
+open class DigitalChannelActivity : AppBaseActivity<ActivityFragmentContainerUpdateBinding, BaseViewModel>() {
 
   private var isStartActivity: Boolean? = null
 
@@ -63,10 +62,7 @@ open class DigitalChannelActivity :
   }
 
   private fun getFragments(bundle: Bundle?): ArrayList<BaseFragment<*, *>> {
-    return arrayListOf(
-      MyDigitalChannelFragment.newInstance(bundle),
-      MyVisitingCardFragment.newInstance(bundle)
-    )
+    return arrayListOf(MyDigitalChannelFragment.newInstance(bundle), MyVisitingCardFragment.newInstance(bundle))
   }
 
   override fun onBackPressed() {
@@ -91,12 +87,7 @@ open class DigitalChannelActivity :
   }
 }
 
-fun Fragment.startFragmentActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false,
-  isResult: Boolean = false
-) {
+fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
   val intent = Intent(activity, DigitalChannelActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -104,12 +95,7 @@ fun Fragment.startFragmentActivity(
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startFragmentActivityNew(
-  activity: Activity,
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean
-) {
+fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
   val intent = Intent(activity, DigitalChannelActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -117,11 +103,7 @@ fun startFragmentActivityNew(
   activity.startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false
-) {
+fun AppCompatActivity.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(this, DigitalChannelActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

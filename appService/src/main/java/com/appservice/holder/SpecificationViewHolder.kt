@@ -8,8 +8,7 @@ import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.onTextChanged
 
-class SpecificationViewHolder(binding: RowLayoutAddedSpecsBinding) :
-  AppBaseRecyclerViewHolder<RowLayoutAddedSpecsBinding>(binding) {
+class SpecificationViewHolder(binding: RowLayoutAddedSpecsBinding) : AppBaseRecyclerViewHolder<RowLayoutAddedSpecsBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -19,27 +18,15 @@ class SpecificationViewHolder(binding: RowLayoutAddedSpecsBinding) :
     binding.value.setText(keySpecification?.value ?: "")
     binding.type.onTextChanged {
       keySpecification?.key = it
-      listener?.onItemClick(
-        position,
-        keySpecification,
-        RecyclerViewActionType.UPDATE_SPECIFICATION_VALUE.ordinal
-      )
+      listener?.onItemClick(position, keySpecification, RecyclerViewActionType.UPDATE_SPECIFICATION_VALUE.ordinal)
     }
     binding.value.onTextChanged {
       keySpecification?.value = it
-      listener?.onItemClick(
-        position,
-        keySpecification,
-        RecyclerViewActionType.UPDATE_SPECIFICATION_VALUE.ordinal
-      )
+      listener?.onItemClick(position, keySpecification, RecyclerViewActionType.UPDATE_SPECIFICATION_VALUE.ordinal)
     }
     binding.btnRemoveView.setOnClickListener {
       activity?.currentFocus?.clearFocus()
-      listener?.onItemClick(
-        position,
-        keySpecification,
-        RecyclerViewActionType.CLEAR_SPECIFICATION_CLICK.ordinal
-      )
+      listener?.onItemClick(position, keySpecification, RecyclerViewActionType.CLEAR_SPECIFICATION_CLICK.ordinal)
     }
   }
 }

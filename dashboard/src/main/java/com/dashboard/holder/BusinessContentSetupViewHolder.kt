@@ -12,8 +12,7 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
-class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) :
-  AppBaseRecyclerViewHolder<ItemBusinessContentSetupBinding>(binding), RecyclerItemClickListener {
+class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) : AppBaseRecyclerViewHolder<ItemBusinessContentSetupBinding>(binding), RecyclerItemClickListener {
 
   private var adapterSiteMeter: AppBaseRecyclerViewAdapter<DrScoreItem>? = null
   var list: ArrayList<DrScoreItem>? = null
@@ -29,7 +28,7 @@ class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) :
       binding.viewImage.gone()
       binding.lottySyncOk.visible()
       startCheckAnimation(true)
-    } else {
+    }else{
 //      MATCH_PARENT.setHeight()
       getColor(R.color.red_light_1)?.let { binding.txtDes.setTextColor(it) }
       binding.viewImage.visible()
@@ -42,13 +41,7 @@ class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) :
 
     if (adapterSiteMeter == null) {
       binding.rvBusinessItemState.apply {
-        adapterSiteMeter = activity?.let {
-          AppBaseRecyclerViewAdapter(
-            it,
-            list!!,
-            this@BusinessContentSetupViewHolder
-          )
-        }
+        adapterSiteMeter = activity?.let { AppBaseRecyclerViewAdapter(it, list!!, this@BusinessContentSetupViewHolder) }
         adapter = adapterSiteMeter
       }
     } else adapterSiteMeter?.notify(list)

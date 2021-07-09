@@ -24,14 +24,6 @@ import java.lang.reflect.Method;
 // Currently {@link #getPaddingEnd(View)} and {@link #setPaddingRelative(View,int,int,int,int)}
 // are missing from android-support-v4 static library in KitKat SDK.
 public final class ViewCompatUtils {
-    // These TEXT_ALIGNMENT_* constants have been introduced in API 17.
-    public static final int TEXT_ALIGNMENT_INHERIT = 0;
-    public static final int TEXT_ALIGNMENT_GRAVITY = 1;
-    public static final int TEXT_ALIGNMENT_TEXT_START = 2;
-    public static final int TEXT_ALIGNMENT_TEXT_END = 3;
-    public static final int TEXT_ALIGNMENT_CENTER = 4;
-    public static final int TEXT_ALIGNMENT_VIEW_START = 5;
-    public static final int TEXT_ALIGNMENT_VIEW_END = 6;
     // Note that View.getPaddingEnd(), View.setPaddingRelative(int,int,int,int) have been
     // introduced in API level 17 (Build.VERSION_CODE.JELLY_BEAN_MR1).
     private static final Method METHOD_getPaddingEnd = CompatUtils.getMethod(
@@ -45,6 +37,7 @@ public final class ViewCompatUtils {
     // Note that View.setTextAlignment(int) has been introduced in API level 17.
     private static final Method METHOD_setTextAlignment = CompatUtils.getMethod(
             View.class, "setTextAlignment", int.class);
+
     private ViewCompatUtils() {
         // This utility class is not publicly instantiable.
     }
@@ -53,11 +46,11 @@ public final class ViewCompatUtils {
         if (METHOD_getPaddingEnd == null) {
             return view.getPaddingRight();
         }
-        return (Integer) CompatUtils.invoke(view, 0, METHOD_getPaddingEnd);
+        return (Integer)CompatUtils.invoke(view, 0, METHOD_getPaddingEnd);
     }
 
     public static void setPaddingRelative(final View view, final int start, final int top,
-                                          final int end, final int bottom) {
+            final int end, final int bottom) {
         if (METHOD_setPaddingRelative == null) {
             view.setPadding(start, top, end, bottom);
             return;
@@ -68,6 +61,15 @@ public final class ViewCompatUtils {
     public static void setElevation(final View view, final float elevation) {
         CompatUtils.invoke(view, null, METHOD_setElevation, elevation);
     }
+
+    // These TEXT_ALIGNMENT_* constants have been introduced in API 17.
+    public static final int TEXT_ALIGNMENT_INHERIT = 0;
+    public static final int TEXT_ALIGNMENT_GRAVITY = 1;
+    public static final int TEXT_ALIGNMENT_TEXT_START = 2;
+    public static final int TEXT_ALIGNMENT_TEXT_END = 3;
+    public static final int TEXT_ALIGNMENT_CENTER = 4;
+    public static final int TEXT_ALIGNMENT_VIEW_START = 5;
+    public static final int TEXT_ALIGNMENT_VIEW_END = 6;
 
     public static void setTextAlignment(final View view, final int textAlignment) {
         CompatUtils.invoke(view, null, METHOD_setTextAlignment, textAlignment);

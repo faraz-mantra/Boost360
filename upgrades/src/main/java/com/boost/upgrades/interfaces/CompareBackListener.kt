@@ -8,5 +8,5 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.YoutubeVideoModel
 
 interface CompareBackListener {
-  fun backComparePress()
+    fun backComparePress()
 }

@@ -1,187 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/ll_reveal_layout"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:background="@color/white"
-  android:orientation="vertical"
-  android:visibility="visible">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:id="@+id/ll_reveal_layout"
+    android:visibility="visible"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/rl_received_orders"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_received_orders"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:text="@string/received_orders"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_successful_orders"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_successful_orders"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/received_successful_orders"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_disputed_orders"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_returned_orders"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/disputed_orders"/>
+        </RelativeLayout>
 
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="110dp"
-    android:orientation="horizontal">
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/rl_cancelled_orders"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_cancelled_orders"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:layout_centerHorizontal="true"
+                android:text="@string/cancelled_orders"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_total_orders"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_total_orders"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/total_orders"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_abandoned_orders"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_abandoned_orders"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/abandoned_orders"/>
+        </RelativeLayout>
 
-    <RelativeLayout
-      android:id="@+id/rl_received_orders"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:background="?android:attr/selectableItemBackground"
-      android:paddingStart="10dp"
-      android:paddingTop="10dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="15dp">
-
-      <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_received_orders" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/received_orders"
-        android:textSize="12sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-      android:id="@+id/rl_successful_orders"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:background="?android:attr/selectableItemBackground"
-      android:paddingStart="10dp"
-      android:paddingTop="10dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="15dp">
-
-      <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_successful_orders" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/received_successful_orders"
-        android:textSize="12sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-      android:id="@+id/rl_disputed_orders"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:background="?android:attr/selectableItemBackground"
-      android:paddingStart="10dp"
-      android:paddingTop="10dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="15dp">
-
-      <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_returned_orders" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/disputed_orders"
-        android:textSize="12sp" />
-    </RelativeLayout>
-
-  </LinearLayout>
-
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="110dp"
-    android:orientation="horizontal">
-
-    <RelativeLayout
-      android:id="@+id/rl_cancelled_orders"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:background="?android:attr/selectableItemBackground"
-      android:paddingStart="10dp"
-      android:paddingTop="10dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="15dp">
-
-      <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_cancelled_orders" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/cancelled_orders"
-        android:textSize="12sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-      android:id="@+id/rl_total_orders"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:background="?android:attr/selectableItemBackground"
-      android:paddingStart="10dp"
-      android:paddingTop="10dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="15dp">
-
-      <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_total_orders" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/total_orders"
-        android:textSize="12sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-      android:id="@+id/rl_abandoned_orders"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:background="?android:attr/selectableItemBackground"
-      android:paddingStart="10dp"
-      android:paddingTop="10dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="15dp">
-
-      <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_abandoned_orders" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp"
-        android:gravity="center"
-        android:text="@string/abandoned_orders"
-        android:textSize="12sp" />
-    </RelativeLayout>
-
-  </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

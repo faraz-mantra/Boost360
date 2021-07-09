@@ -4,5 +4,5 @@ import com.boost.upgrades.data.api_model.customerId.StateModel
 
 interface BusinessDetailListener {
 
-  fun backListener(flag: Boolean)
+    fun backListener(flag: Boolean)
 }

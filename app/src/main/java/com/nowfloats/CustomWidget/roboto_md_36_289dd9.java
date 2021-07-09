@@ -15,7 +15,6 @@ public class roboto_md_36_289dd9 extends TextView {
         super(context);
         init(context);
     }
-
     public roboto_md_36_289dd9(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -25,9 +24,9 @@ public class roboto_md_36_289dd9 extends TextView {
         super(context, attrs, defStyle);
         init(context);
     }
-
-    public void init(Context context) {
-        setCustomFont(context, "Roboto-Medium.ttf");
+    public void init(Context context)
+    {
+        setCustomFont(context,"Roboto-Medium.ttf");
         setTextColor(getResources().getColor(R.color.side_panel_progress_bar_blue));
         setTextSize(12);
     }

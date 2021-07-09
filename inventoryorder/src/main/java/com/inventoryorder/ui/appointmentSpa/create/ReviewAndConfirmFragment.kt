@@ -63,18 +63,11 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   }
 
   override fun onCreateView() {
-    setOnClickListener(
-      binding?.textAdd,
-      binding?.buttonReviewDetails,
-      binding?.tvPaymentStatus,
-      binding?.textEdit
-    )
-    orderInitiateRequest =
-      arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
+    setOnClickListener(binding?.textAdd, binding?.buttonReviewDetails, binding?.tvPaymentStatus, binding?.textEdit)
+    orderInitiateRequest = arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
     totalPrice = arguments?.getDouble(IntentConstant.TOTAL_PRICE.name) ?: 0.0
     discountedPrice = arguments?.getDouble(IntentConstant.DISCOUNTED_PRICE.name) ?: 0.0
-    selectedService =
-      arguments?.getSerializable(IntentConstant.SELECTED_SERVICE.name) as ServiceItem
+    selectedService = arguments?.getSerializable(IntentConstant.SELECTED_SERVICE.name) as ServiceItem
     prefData = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     // orderInitiateRequest?.sellerID = preferenceData?.fpTag.toString()
 
@@ -83,25 +76,16 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   }
 
   private fun setData() {
-    binding?.serviceName?.text =
-      orderInitiateRequest?.items?.get(0)?.productDetails?.name?.capitalizeUtil() ?: ""
-    binding?.textServiceDuration?.text =
-      "${orderInitiateRequest?.items?.get(0)?.productDetails?.extraProperties?.appointment?.get(0)?.duration ?: 0} minutes"
-    binding?.textStaffName?.text =
-      "by ${orderInitiateRequest?.items?.get(0)?.productDetails?.extraProperties?.appointment?.get(0)?.staffName}"
-    binding?.textDateTimeSlot?.text = "${
-      parseDate(
-        orderInitiateRequest?.items?.get(0)?.productDetails?.extraProperties?.appointment?.get(0)?.scheduledDateTime!!
-      )
-    }, ${orderInitiateRequest?.items?.get(0)?.productDetails?.extraProperties?.appointment?.get(0)?.startTime}"
+    binding?.serviceName?.text = orderInitiateRequest?.items?.get(0)?.productDetails?.name?.capitalizeUtil() ?: ""
+    binding?.textServiceDuration?.text = "${orderInitiateRequest?.items?.get(0)?.productDetails?.extraProperties?.appointment?.get(0)?.duration ?: 0} minutes"
+    binding?.textStaffName?.text = "by ${orderInitiateRequest?.items?.get(0)?.productDetails?.extraProperties?.appointment?.get(0)?.staffName}"
+    binding?.textDateTimeSlot?.text = "${parseDate(orderInitiateRequest?.items?.get(0)?.productDetails?.extraProperties?.appointment?.get(0)?.scheduledDateTime!!)}, ${orderInitiateRequest?.items?.get(0)?.productDetails?.extraProperties?.appointment?.get(0)?.startTime}"
 
-    binding?.tvName?.text =
-      orderInitiateRequest?.buyerDetails?.contactDetails?.fullName?.capitalizeUtil()
+    binding?.tvName?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.fullName?.capitalizeUtil()
     binding?.tvEmail?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.emailId
     binding?.textAmount?.text = "${selectedService?.Currency} $totalPrice"
     binding?.textActualAmount?.text = "${selectedService?.Currency} $discountedPrice"
-    binding?.textGstAmount?.text =
-      "${selectedService?.Currency} ${calculateGST(discountedPrice + serviceFee)}"
+    binding?.textGstAmount?.text = "${selectedService?.Currency} ${calculateGST(discountedPrice + serviceFee)}"
     // binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${(discountedPrice + calculateGST(discountedPrice))}"
     binding?.textTotalPayableValue?.text = "${selectedService?.Currency} $discountedPrice"
 
@@ -112,8 +96,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     }
 
     orderInitiateRequest?.gstCharges = calculateGST(discountedPrice)
-    val paymentDetails =
-      PaymentDetails(method = PaymentDetailsN.METHOD.COD.type, status = paymentStatus)
+    val paymentDetails = PaymentDetails(method = PaymentDetailsN.METHOD.COD.type, status = paymentStatus)
     orderInitiateRequest?.paymentDetails = paymentDetails
 
     if (selectedService?.Image != null && selectedService?.Image?.isNotEmpty() == true)
@@ -129,8 +112,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
       binding?.textAmount?.visibility = View.GONE
     }
 
-    binding?.tvPhone?.text =
-      orderInitiateRequest?.buyerDetails?.contactDetails?.primaryContactNumber.toString()
+    binding?.tvPhone?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.primaryContactNumber.toString()
     binding?.tvAddress?.text = setUpAddress()
   }
 
@@ -139,12 +121,9 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     when (v) {
       binding?.textAdd -> showAddServiceFeeDialog()
       binding?.buttonReviewDetails -> {
-        val shippingDetails = ShippingDetails(
-          shippedBy = ShippingDetails.ShippedBy.SELLER.name,
-          deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name, shippingCost = serviceFee,
-          currencyCode = orderInitiateRequest?.items?.get(0)?.productDetails?.getCurrencyCodeValue()
-            ?: "INR"
-        )
+        val shippingDetails = ShippingDetails(shippedBy = ShippingDetails.ShippedBy.SELLER.name,
+            deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name, shippingCost = serviceFee,
+            currencyCode = orderInitiateRequest?.items?.get(0)?.productDetails?.getCurrencyCodeValue() ?: "INR")
         orderInitiateRequest?.shippingDetails = shippingDetails
         createAppointment()
       }
@@ -154,18 +133,12 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
       binding?.tvPaymentStatus -> {
         val createOrderBottomSheetDialog = CreateOrderBottomSheetDialog(orderBottomSheet)
         createOrderBottomSheetDialog.onClicked = this::onPaymentStatusSelected
-        createOrderBottomSheetDialog.show(
-          this.parentFragmentManager,
-          CreateOrderBottomSheetDialog::class.java.name
-        )
+        createOrderBottomSheetDialog.show(this.parentFragmentManager, CreateOrderBottomSheetDialog::class.java.name)
       }
     }
   }
 
-  private fun onPaymentStatusSelected(
-    bottomSheetOptionsItem: BottomSheetOptionsItem,
-    orderBottomSheet: OrderBottomSheet
-  ) {
+  private fun onPaymentStatusSelected(bottomSheetOptionsItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) {
     binding?.tvPaymentStatus?.text = bottomSheetOptionsItem?.displayValue
     orderInitiateRequest?.paymentDetails?.status = bottomSheetOptionsItem?.serverValue
     paymentStatus = bottomSheetOptionsItem?.serverValue!!
@@ -173,19 +146,14 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   }
 
   private fun showAddServiceFeeDialog() {
-    val addDeliveryFeeBottomSheetDialog =
-      AddDeliveryFeeBottomSheetDialog(serviceFee, AppConstant.TYPE_APPOINTMENT)
+    val addDeliveryFeeBottomSheetDialog = AddDeliveryFeeBottomSheetDialog(serviceFee, AppConstant.TYPE_APPOINTMENT)
     addDeliveryFeeBottomSheetDialog.onClicked = { onServiceFeeAdded(it) }
-    addDeliveryFeeBottomSheetDialog.show(
-      this.parentFragmentManager,
-      AddDeliveryFeeBottomSheetDialog::class.java.name
-    )
+    addDeliveryFeeBottomSheetDialog.show(this.parentFragmentManager, AddDeliveryFeeBottomSheetDialog::class.java.name)
   }
 
   private fun onServiceFeeAdded(fee: Double) {
     serviceFee = fee
-    binding?.textGstAmount?.text =
-      "${selectedService?.Currency} ${calculateGST(discountedPrice + serviceFee)}"
+    binding?.textGstAmount?.text = "${selectedService?.Currency} ${calculateGST(discountedPrice + serviceFee)}"
 
     if (fee > 0.0) {
       binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + fee}"
@@ -200,21 +168,16 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
 
   private fun createAppointment() {
     showProgress()
-    viewModel?.postAppointment(AppConstant.CLIENT_ID_2, orderInitiateRequest)
-      ?.observeOnce(viewLifecycleOwner, {
-        if (it.isSuccess()) {
-          hideProgress()
-          val orderInitiateResponse = (it as? OrderInitiateResponse)
-          apiConfirmOrder(orderInitiateResponse?.data)
-        } else {
-          hideProgress()
-          showLongToast(
-            if (it.message()
-                .isNotEmpty()
-            ) it.message() else getString(R.string.unable_to_create_order)
-          )
-        }
-      })
+    viewModel?.postAppointment(AppConstant.CLIENT_ID_2, orderInitiateRequest)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        hideProgress()
+        val orderInitiateResponse = (it as? OrderInitiateResponse)
+        apiConfirmOrder(orderInitiateResponse?.data)
+      } else {
+        hideProgress()
+        showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
+      }
+    })
   }
 
   private fun apiConfirmOrder(order: OrderItem?) {
@@ -228,11 +191,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, prefData)
         startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)
       } else {
-        showLongToast(
-          if (it.message()
-              .isNotEmpty()
-          ) it.message() else getString(R.string.unable_to_create_order)
-        )
+        showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
       }
     })
   }
@@ -240,15 +199,9 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   private fun setUpAddress(): String {
     val addSlr = StringBuilder()
     addSlr.append(orderInitiateRequest?.buyerDetails?.address?.addressLine)
-    if (orderInitiateRequest?.buyerDetails?.address?.city.isNullOrEmpty()
-        .not()
-    ) addSlr.append(", ${orderInitiateRequest?.buyerDetails?.address?.city}")
-    if (orderInitiateRequest?.buyerDetails?.address?.region.isNullOrEmpty()
-        .not()
-    ) addSlr.append(", ${orderInitiateRequest?.buyerDetails?.address?.region}")
-    if (orderInitiateRequest?.buyerDetails?.address?.zipcode.isNullOrEmpty()
-        .not()
-    ) addSlr.append(", ${orderInitiateRequest?.buyerDetails?.address?.zipcode}")
+    if (orderInitiateRequest?.buyerDetails?.address?.city.isNullOrEmpty().not()) addSlr.append(", ${orderInitiateRequest?.buyerDetails?.address?.city}")
+    if (orderInitiateRequest?.buyerDetails?.address?.region.isNullOrEmpty().not()) addSlr.append(", ${orderInitiateRequest?.buyerDetails?.address?.region}")
+    if (orderInitiateRequest?.buyerDetails?.address?.zipcode.isNullOrEmpty().not()) addSlr.append(", ${orderInitiateRequest?.buyerDetails?.address?.zipcode}")
 
     return addSlr.toString()
   }

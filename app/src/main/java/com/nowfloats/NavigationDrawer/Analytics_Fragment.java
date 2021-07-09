@@ -109,44 +109,41 @@ import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYP
  * A simple {@link Fragment} subclass.
  */
 public class Analytics_Fragment extends Fragment {
-    private static final String BUTTON_TYPE_DEEP_LINK = "DeepLink";
-    private static final String BUTTON_TYPE_NEXT_NODE = "NextNode";
-    private static final String BUTTON_TYPE_EXIT = "None";
-    private static final String BUTTON_TYPE_OPEN_URL = "OpenUrl";
-    private static final String BAR = "Bar";
-    private static final String LINE = "Line";
+    View rootView = null;
     public static TextView visitCount, mapVisitsCount, visitorsCount, subscriberCount, vmnTotalCallCount, vmnTotalCustomerCount,
             searchQueriesCount, businessEnqCount, facebokImpressions, tvOrdersCount;
-    public static ProgressBar visits_progressBar, map_progressbar, visitors_progressBar, vmnProgressBar, vmnCustomerProgressBar,
-            subscriber_progress, search_query_progress, businessEnqProgress, pbOrders;
     private static ImageView rupeeSymbol;
     private final int noOfSearchQueries = 0;
-    View rootView = null;
+    public static ProgressBar visits_progressBar, map_progressbar, visitors_progressBar, vmnProgressBar, vmnCustomerProgressBar,
+            subscriber_progress, search_query_progress, businessEnqProgress, pbOrders;
     UserSessionManager session;
+    private Context context;
+    private Bus bus;
     CardView cvRiaCard, vmnCallCard, cvCustomerAppointment;
     Button btnRiaCardLeft, btnRiaCrdRight, btnSingleResponse;
     TextView tvRiaCardHeader;
     //LinearLayout mLockLayout;
     RiaCardDeepLinkListener mRiaCardDeepLinkListener;
+    private static final String BUTTON_TYPE_DEEP_LINK = "DeepLink";
+    private static final String BUTTON_TYPE_NEXT_NODE = "NextNode";
+    private static final String BUTTON_TYPE_EXIT = "None";
+    private static final String BUTTON_TYPE_OPEN_URL = "OpenUrl";
     LinearLayout llRiaCardSections;
     roboto_lt_24_212121 customerAppointmentTitle;
+
+    private enum SectionType {
+        Text, Graph, Image
+    }
+
+    private static final String BAR = "Bar";
+    private static final String LINE = "Line";
     RiaCardResponseListener mListener = null;
-    LinearLayout llTwoButtons, llSingleButtonLayout;
-    SharedPreferences pref;
-    OnBoardingManager onBoardingManager;
-    private Context context;
-    private Bus bus;
     private String mButtonId;
     private String mNextNodeId;
+    LinearLayout llTwoButtons, llSingleButtonLayout;
     private String vmnTotalCalls;
-
-    public static String getNumberFormat(String value) {
-        try {
-            return NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(value));
-        } catch (Exception e) {
-            return value;
-        }
-    }
+    SharedPreferences pref;
+    OnBoardingManager onBoardingManager;
 
     @Override
     public void onResume() {
@@ -1047,6 +1044,22 @@ public class Analytics_Fragment extends Fragment {
         llRiaCardSections.addView(iv);
     }
 
+    public interface RiaCardResponseListener {
+        void onResponse(String buttonId, String NextNodeId);
+    }
+
+    public interface RiaCardDeepLinkListener {
+        void onDeepLink(String deepLinkUrl, boolean isFromRia, RiaNodeDataModel riaNodeData);
+    }
+
+    public class GraphValueFormatter implements IValueFormatter {
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            return Math.round(value) + "";
+        }
+
+    }
+
     private void setVmnTotalCallCount() {
         vmnProgressBar.setVisibility(View.VISIBLE);
         CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
@@ -1109,6 +1122,7 @@ public class Analytics_Fragment extends Fragment {
         });
     }
 
+
     private void openSubscriberActivity() {
         Intent i = new Intent(getActivity(), SubscribersActivity.class);
         startActivity(i);
@@ -1134,24 +1148,11 @@ public class Analytics_Fragment extends Fragment {
         }
     }
 
-    private enum SectionType {
-        Text, Graph, Image
-    }
-
-
-    public interface RiaCardResponseListener {
-        void onResponse(String buttonId, String NextNodeId);
-    }
-
-    public interface RiaCardDeepLinkListener {
-        void onDeepLink(String deepLinkUrl, boolean isFromRia, RiaNodeDataModel riaNodeData);
-    }
-
-    public class GraphValueFormatter implements IValueFormatter {
-        @Override
-        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-            return Math.round(value) + "";
+    public static String getNumberFormat(String value) {
+        try {
+            return NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(value));
+        } catch (Exception e) {
+            return value;
         }
-
     }
 }

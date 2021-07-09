@@ -47,9 +47,15 @@ public class UserDictionaryList extends PreferenceFragment {
     public static final String USER_DICTIONARY_SETTINGS_INTENT_ACTION =
             "android.settings.USER_DICTIONARY_SETTINGS";
 
+    @Override
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        setPreferenceScreen(getPreferenceManager().createPreferenceScreen(getActivity()));
+    }
+
     public static TreeSet<String> getUserDictionaryLocalesSet(Activity activity) {
         final Cursor cursor = activity.getContentResolver().query(UserDictionary.Words.CONTENT_URI,
-                new String[]{UserDictionary.Words.LOCALE},
+                new String[] { UserDictionary.Words.LOCALE },
                 null, null, null);
         final TreeSet<String> localeSet = new TreeSet<>();
         if (null == cursor) {
@@ -74,7 +80,7 @@ public class UserDictionaryList extends PreferenceFragment {
         }
 
         final InputMethodManager imm =
-                (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         final List<InputMethodInfo> imis = imm.getEnabledInputMethodList();
         for (final InputMethodInfo imi : imis) {
             final List<InputMethodSubtype> subtypes =
@@ -99,15 +105,8 @@ public class UserDictionaryList extends PreferenceFragment {
         return localeSet;
     }
 
-    @Override
-    public void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
-        setPreferenceScreen(getPreferenceManager().createPreferenceScreen(getActivity()));
-    }
-
     /**
      * Creates the entries that allow the user to go into the user dictionary for each locale.
-     *
      * @param userDictGroup The group to put the settings in.
      */
     protected void createUserDictSettings(PreferenceGroup userDictGroup) {
@@ -133,7 +132,6 @@ public class UserDictionaryList extends PreferenceFragment {
 
     /**
      * Create a single User Dictionary Preference object, with its parameters set.
-     *
      * @param locale The locale for which this user dictionary is for.
      * @return The corresponding preference.
      */

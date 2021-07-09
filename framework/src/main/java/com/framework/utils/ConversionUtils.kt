@@ -13,8 +13,7 @@ import java.io.*
 
 object ConversionUtils {
 
-  private val hexDigits =
-    charArrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F')
+  private val hexDigits = charArrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F')
 
   /**
    * Chars to bytes.
@@ -54,7 +53,7 @@ object ConversionUtils {
     var i = 0
     while (i < len) {
       ret[i shr 1] = (hex2Int(hexBytes[i]) shl 4 or hex2Int(
-        hexBytes[i + 1]
+              hexBytes[i + 1]
       )).toByte()
       i += 2
     }
@@ -281,9 +280,9 @@ object ConversionUtils {
     if (string == null || isSpace(charsetName)) return null
     try {
       return bytes2OutputStream(
-        string.toByteArray(
-          charset(charsetName)
-        )
+              string.toByteArray(
+                      charset(charsetName)
+              )
       )
     } catch (e: UnsupportedEncodingException) {
       e.printStackTrace()
@@ -334,22 +333,20 @@ object ConversionUtils {
     val bitmap: Bitmap
     if (drawable.intrinsicWidth <= 0 || drawable.intrinsicHeight <= 0) {
       bitmap = Bitmap.createBitmap(
-        1,
-        1,
-        if (drawable.opacity != PixelFormat.OPAQUE)
-          Bitmap.Config.ARGB_8888
-        else
-          Bitmap.Config.RGB_565
-      )
+              1,
+              1,
+              if (drawable.opacity != PixelFormat.OPAQUE)
+                Bitmap.Config.ARGB_8888
+              else
+                Bitmap.Config.RGB_565)
     } else {
       bitmap = Bitmap.createBitmap(
-        drawable.intrinsicWidth,
-        drawable.intrinsicHeight,
-        if (drawable.opacity != PixelFormat.OPAQUE)
-          Bitmap.Config.ARGB_8888
-        else
-          Bitmap.Config.RGB_565
-      )
+              drawable.intrinsicWidth,
+              drawable.intrinsicHeight,
+              if (drawable.opacity != PixelFormat.OPAQUE)
+                Bitmap.Config.ARGB_8888
+              else
+                Bitmap.Config.RGB_565)
     }
     val canvas = Canvas(bitmap)
     drawable.setBounds(0, 0, canvas.width, canvas.height)
@@ -379,8 +376,8 @@ object ConversionUtils {
    */
   fun drawable2Bytes(drawable: Drawable?, format: Bitmap.CompressFormat): ByteArray? {
     return if (drawable == null) null else bitmap2Bytes(
-      drawable2Bitmap(drawable),
-      format
+            drawable2Bitmap(drawable),
+            format
     )
   }
 
@@ -392,7 +389,7 @@ object ConversionUtils {
    */
   fun bytes2Drawable(bytes: ByteArray?): Drawable? {
     return if (bytes == null) null else bitmap2Drawable(
-      bytes2Bitmap(bytes)
+            bytes2Bitmap(bytes)
     )
   }
 

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <item name="auth" type="id" />
-  <item name="enable" type="id" />
-  <item name="select_keyboard" type="id" />
-  <item name="language_button" type="id" />
-  <item name="webber" type="id" />
-  <item name="auth_checkbox" type="id" />
-  <item name="copy" type="id" />
-  <item name="cut" type="id" />
-  <item name="paste" type="id" />
-  <item name="select" type="id" />
-  <item name="keyboard_top_area" type="id" />
-  <item name="suggestion_strip_hacky_container" type="id" />
-  <item name="suggestion_source_results" type="id" />
-  <item name="services_bar" type="id" />
-  <item name="header" type="id" />
-  <item name="hsv_color_picker" type="id" />
-  <item name="connect_button" type="id" />
-  <item name="item_image" type="id" />
+    <item type="id" name="auth" />
+    <item type="id" name="enable" />
+    <item type="id" name="select_keyboard" />
+    <item type="id" name="language_button" />
+    <item type="id" name="webber" />
+    <item type="id" name="auth_checkbox" />
+    <item type="id" name="copy" />
+    <item type="id" name="cut" />
+    <item type="id" name="paste" />
+    <item type="id" name="select" />
+    <item type="id" name="keyboard_top_area" />
+    <item type="id" name="suggestion_strip_hacky_container" />
+    <item type="id" name="suggestion_source_results" />
+    <item type="id" name="services_bar" />
+    <item type="id" name="header" />
+    <item type="id" name="hsv_color_picker" />
+    <item type="id" name="connect_button" />
+    <item type="id" name="item_image" />
 </resources>

@@ -25,13 +25,23 @@ import java.util.List;
 
 public class CAProductsAdapter extends BaseAdapter {
 
-    public String currencyType = "";
+    // View lookup cache
+    public static class ViewHolder {
+        public ImageView ProductImageView;
+        public TextView Product_Name;
+        public TextView Currency_Type;
+        public TextView OriginalPrice;
+        public CheckBox cbUpdate;
+    }
+
     ViewHolder viewHolder;
     Activity activity;
+    public String currencyType = "";
     private Resources mResources;
     private Product_Gallery_Fragment.FROM from;
     private ArrayList<SugProducts> productItemModelList;
     private SuggestionSelectionListner mSuggestionSelectionListner;
+
     public CAProductsAdapter(Activity activity, List<SugProducts> productItemModelList) {
         this.activity = activity;
         this.productItemModelList = (ArrayList<SugProducts>) productItemModelList;
@@ -144,15 +154,6 @@ public class CAProductsAdapter extends BaseAdapter {
 
     public ArrayList<SugProducts> getDetails() {
         return productItemModelList;
-    }
-
-    // View lookup cache
-    public static class ViewHolder {
-        public ImageView ProductImageView;
-        public TextView Product_Name;
-        public TextView Currency_Type;
-        public TextView OriginalPrice;
-        public CheckBox cbUpdate;
     }
 
 

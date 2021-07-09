@@ -10,12 +10,12 @@ import java.io.Serializable
 import java.util.*
 
 data class TimingModel(
-  var dayName: String? = "",
-  var availStartTime: String? = "",
-  var availEndTime: String? = "",
-  var breakStartTime: String? = "",
-  var breakEndTime: String? = "",
-  var isMarkOff: Boolean = false
+    var dayName: String? = "",
+    var availStartTime: String? = "",
+    var availEndTime: String? = "",
+    var breakStartTime: String? = "",
+    var breakEndTime: String? = "",
+    var isMarkOff: Boolean = false
 ) : AppBaseRecyclerViewItem, Serializable {
 
   override fun getViewType(): Int {
@@ -67,8 +67,7 @@ data class TimingModel(
     MONDAY("Monday", "Mon");
 
     companion object {
-      fun from(name: String): WeekDay? =
-        values().firstOrNull { it.name.toLowerCase(Locale.ROOT) == name.toLowerCase(Locale.ROOT) }
+      fun from(name: String): WeekDay? = values().firstOrNull { it.name.toLowerCase(Locale.ROOT) == name.toLowerCase(Locale.ROOT) }
     }
   }
 }

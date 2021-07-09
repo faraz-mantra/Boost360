@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:gravity="center_horizontal"
-  android:padding="10dp">
-
-  <TextView
-    android:id="@+id/list_item_section_text"
-    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/facebook_chat_date_header"
-    android:elevation="1dp"
-    android:gravity="center"
-    android:text="@string/_21_july_2017"
-    android:textColor="#A5A5A5"
-    android:textSize="10sp" />
+    android:layout_width="match_parent"
+    android:gravity="center_horizontal"
+    android:padding="10dp">
+    <TextView
+        android:id="@+id/list_item_section_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@drawable/facebook_chat_date_header"
+        android:text="@string/_21_july_2017"
+        android:elevation="1dp"
+        android:textColor="#A5A5A5"
+        android:textSize="10sp" />
 </LinearLayout>

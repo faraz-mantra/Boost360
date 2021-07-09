@@ -10,8 +10,7 @@ import com.inventoryorder.databinding.BottomSheetMarkPaymentDoneBinding
 import com.inventoryorder.model.orderRequest.paymentRequest.PaymentReceivedRequest
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class MarkPaymentDoneAptSheetDialog :
-  BaseBottomSheetDialog<BottomSheetMarkPaymentDoneBinding, BaseViewModel>() {
+class MarkPaymentDoneAptSheetDialog : BaseBottomSheetDialog<BottomSheetMarkPaymentDoneBinding, BaseViewModel>() {
 
   private var paymentProvider: String? = PaymentReceivedRequest.PaymentProvider.cash.name
   private var orderItem: OrderItem? = null
@@ -49,15 +48,7 @@ class MarkPaymentDoneAptSheetDialog :
     dismiss()
     when (v) {
       binding?.buttonDone -> {
-        onClicked(
-          PaymentReceivedRequest(
-            paymentProvider,
-            "",
-            orderItem?.PaymentDetails?.method(),
-            orderItem?._id,
-            orderItem?.PaymentDetails?.TransactionId ?: ""
-          )
-        )
+        onClicked(PaymentReceivedRequest(paymentProvider, "", orderItem?.PaymentDetails?.method(), orderItem?._id, orderItem?.PaymentDetails?.TransactionId ?: ""))
       }
     }
   }

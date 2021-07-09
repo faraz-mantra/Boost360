@@ -50,13 +50,7 @@ object DateUtils {
     return formatter.format(calendar.time)
   }
 
-  fun parseDate(
-    time: String?,
-    format: String?,
-    required: String?,
-    locale: Locale = Locale.getDefault(),
-    timeZone: TimeZone? = TimeZone.getDefault()
-  ): String? {
+  fun parseDate(time: String?, format: String?, required: String?, locale: Locale = Locale.getDefault(), timeZone: TimeZone? = TimeZone.getDefault()): String? {
     try {
       val timeFormat: DateFormat = SimpleDateFormat(format, locale)
       timeZone?.let { timeFormat.timeZone = it }
@@ -68,21 +62,13 @@ object DateUtils {
     return ""
   }
 
-  fun Date.parseDate(
-    format: String,
-    locale: Locale = Locale.getDefault(),
-    timeZone: TimeZone? = TimeZone.getDefault()
-  ): String? {
+  fun Date.parseDate(format: String, locale: Locale = Locale.getDefault(), timeZone: TimeZone? = TimeZone.getDefault()): String? {
     val timeFormat: DateFormat = SimpleDateFormat(format, locale)
     timeZone?.let { timeFormat.timeZone = it }
     return timeFormat.format(this)
   }
 
-  fun String.parseDate(
-    format: String,
-    locale: Locale = Locale.getDefault(),
-    timeZone: TimeZone? = TimeZone.getDefault()
-  ): Date? {
+  fun String.parseDate(format: String, locale: Locale = Locale.getDefault(), timeZone: TimeZone? = TimeZone.getDefault()): Date? {
     return try {
       val timeFormat: DateFormat = SimpleDateFormat(format, locale)
       timeZone?.let { timeFormat.timeZone = it }

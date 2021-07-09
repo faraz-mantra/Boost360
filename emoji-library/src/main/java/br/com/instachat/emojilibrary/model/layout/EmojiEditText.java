@@ -121,6 +121,12 @@ public class EmojiEditText extends EditText {
         SoftKeyboardUtil.dismissSoftKeyboard(this.mContext, this);
     }
 
+    public interface OnSoftKeyboardListener {
+        public void onSoftKeyboardDisplay();
+
+        public void onSoftKeyboardHidden();
+    }
+
     // GETTERS AND SETTERS
     public Boolean isSoftKeyboardVisible() {
         return isSoftKeyboardVisible;
@@ -137,11 +143,5 @@ public class EmojiEditText extends EditText {
 
     public void setUseSystemDefault(boolean useSystemDefault) {
         this.mUseSystemDefault = useSystemDefault;
-    }
-
-    public interface OnSoftKeyboardListener {
-        public void onSoftKeyboardDisplay();
-
-        public void onSoftKeyboardHidden();
     }
 }

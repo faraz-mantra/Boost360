@@ -1,30 +1,30 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:aapt="http://schemas.android.com/aapt"
-  android:width="24dp"
-  android:height="24dp"
-  android:viewportWidth="50"
-  android:viewportHeight="50">
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="50"
+    android:viewportHeight="50">
   <path
-    android:fillType="evenOdd"
-    android:pathData="M25,0c13.807,0 25,11.193 25,25S38.807,50 25,50 0,38.807 0,25 11.193,0 25,0z">
+      android:fillType="evenOdd"
+      android:pathData="M25,0c13.807,0 25,11.193 25,25S38.807,50 25,50 0,38.807 0,25 11.193,0 25,0z">
     <aapt:attr name="android:fillColor">
       <gradient
-        android:endX="25.379"
-        android:endY="50.125"
-        android:startX="25.379"
-        android:startY="-0.375"
-        android:type="linear">
+          android:endX="25.379"
+          android:endY="50.125"
+          android:startX="25.379"
+          android:startY="-0.375"
+          android:type="linear">
         <item
-          android:color="#FF53A0FD"
-          android:offset="0" />
+            android:color="#FF53A0FD"
+            android:offset="0" />
         <item
-          android:color="#FF4889F8"
-          android:offset="1" />
+            android:color="#FF4889F8"
+            android:offset="1" />
       </gradient>
     </aapt:attr>
   </path>
   <path
-    android:fillColor="#FFF"
-    android:fillType="nonZero"
-    android:pathData="M35.294,18.526c0,0.581 -0.222,1.133 -0.637,1.54L31.739,23l-4.445,-4.454L30.222,15.62c0.821,-0.823 2.25,-0.833 3.072,0l1.363,1.365c0.415,0.407 0.637,0.96 0.637,1.54zM30.812,24.001L20.606,34.698c-0.095,0.1 -0.219,0.169 -0.342,0.199L15.872,35.98c-0.047,0.01 -0.104,0.02 -0.161,0.02 -0.19,0 -0.37,-0.08 -0.503,-0.219 -0.17,-0.179 -0.246,-0.447 -0.19,-0.695l1.034,-4.603c0.029,-0.13 0.095,-0.259 0.19,-0.358L26.45,19.429 30.812,24z" />
+      android:fillColor="#FFF"
+      android:fillType="nonZero"
+      android:pathData="M35.294,18.526c0,0.581 -0.222,1.133 -0.637,1.54L31.739,23l-4.445,-4.454L30.222,15.62c0.821,-0.823 2.25,-0.833 3.072,0l1.363,1.365c0.415,0.407 0.637,0.96 0.637,1.54zM30.812,24.001L20.606,34.698c-0.095,0.1 -0.219,0.169 -0.342,0.199L15.872,35.98c-0.047,0.01 -0.104,0.02 -0.161,0.02 -0.19,0 -0.37,-0.08 -0.503,-0.219 -0.17,-0.179 -0.246,-0.447 -0.19,-0.695l1.034,-4.603c0.029,-0.13 0.095,-0.259 0.19,-0.358L26.45,19.429 30.812,24z" />
 </vector>

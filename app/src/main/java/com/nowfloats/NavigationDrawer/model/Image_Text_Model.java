@@ -5,7 +5,7 @@ package com.nowfloats.NavigationDrawer.model;
  */
 public class Image_Text_Model {
 
-    public String titleText;
-    public String dateText;
-    public String imagePath;
+    public String titleText ;
+    public String dateText ;
+    public String imagePath ;
 }

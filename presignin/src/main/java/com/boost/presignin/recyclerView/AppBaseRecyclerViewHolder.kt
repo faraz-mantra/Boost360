@@ -10,7 +10,7 @@ import androidx.databinding.ViewDataBinding
 import com.boost.presignin.recyclerView.BaseRecyclerViewHolder
 
 abstract class AppBaseRecyclerViewHolder<Binding : ViewDataBinding>(binding: Binding) :
-  BaseRecyclerViewHolder<Binding>(binding), View.OnClickListener {
+    BaseRecyclerViewHolder<Binding>(binding), View.OnClickListener {
 
   protected fun getApplicationContext(): Context? {
     return activity?.applicationContext
@@ -21,13 +21,7 @@ abstract class AppBaseRecyclerViewHolder<Binding : ViewDataBinding>(binding: Bin
   }
 
   protected fun getColor(@ColorRes color: Int): Int? {
-    return getResources()?.let {
-      ResourcesCompat.getColor(
-        it,
-        color,
-        getApplicationContext()?.theme
-      )
-    }
+    return getResources()?.let { ResourcesCompat.getColor(it, color, getApplicationContext()?.theme) }
   }
 
   protected fun setClickListeners(vararg views: View?) {

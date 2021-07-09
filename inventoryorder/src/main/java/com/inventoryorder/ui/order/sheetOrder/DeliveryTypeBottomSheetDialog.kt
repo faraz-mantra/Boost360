@@ -11,8 +11,7 @@ import com.inventoryorder.databinding.BottomSheetCancelOrderBinding
 import com.inventoryorder.databinding.BottomSheetDeliveryTypeBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class DeliveryTypeBottomSheetDialog(val selectedType: String) :
-  BaseBottomSheetDialog<BottomSheetDeliveryTypeBinding, BaseViewModel>() {
+class DeliveryTypeBottomSheetDialog(val selectedType : String) : BaseBottomSheetDialog<BottomSheetDeliveryTypeBinding, BaseViewModel>() {
 
   var selectedDeliveryType = ""
   var onClicked: (selectedDeliveryType: String) -> Unit = { selectedDeliveryType: String -> }

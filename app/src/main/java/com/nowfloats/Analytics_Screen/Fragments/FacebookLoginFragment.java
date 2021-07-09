@@ -10,11 +10,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,33 +57,33 @@ import java.util.List;
  * Created by Abhi on 11/25/2016.
  */
 
-public class FacebookLoginFragment extends Fragment implements NfxRequestClient.NfxCallBackListener, FacebookHandler.FacebookCallbacks {
+public class FacebookLoginFragment extends Fragment implements NfxRequestClient.NfxCallBackListener,FacebookHandler.FacebookCallbacks {
     private static final int PAGE_NO_FOUND = 404;
+    private SharedPreferences pref = null;
+    SharedPreferences.Editor prefsEditor;
+
+    UserSessionManager session;
     private static final int FB_PAGE_CREATION = 101;
-    private final static String FB_PAGE_DEFAULT_LOGO = "https://s3.ap-south-1.amazonaws.com/nfx-content-cdn/logo.png";
-    private final static String FB_PAGE_COVER_PHOTO = "https://cdn.nowfloats.com/fpbkgd-kitsune/abstract/24.jpg";
-    final List<String> readPermissions = Arrays.asList(Constants.FACEBOOK_READ_PERMISSIONS);
-    final List<String> publishPermissions = Arrays.asList(Constants.FACEBOOK_PUBLISH_PERMISSIONS);
     private final int FBTYPE = 0;
     private final int FBPAGETYPE = 1;
     private final int FROM_FB_PAGE = 0;
-    SharedPreferences.Editor prefsEditor;
-    UserSessionManager session;
-    FacebookHandler facebookHandler;
-    private SharedPreferences pref = null;
     private String fpPageName;
+    private final static String FB_PAGE_DEFAULT_LOGO = "https://s3.ap-south-1.amazonaws.com/nfx-content-cdn/logo.png";
+    private final static String FB_PAGE_COVER_PHOTO = "https://cdn.nowfloats.com/fpbkgd-kitsune/abstract/24.jpg";
     private ProgressDialog progressDialog;
-    private int mNewPosition = -1, status;
+    private int mNewPosition = -1,status;
     private Context mContext;
+    FacebookHandler facebookHandler;
+    final List<String> readPermissions = Arrays.asList(Constants.FACEBOOK_READ_PERMISSIONS);
+    final List<String> publishPermissions = Arrays.asList(Constants.FACEBOOK_PUBLISH_PERMISSIONS);
 
-    public static Fragment getInstance(int i) {
-        FacebookLoginFragment frag = new FacebookLoginFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("status", i);
+    public static Fragment getInstance(int i){
+        FacebookLoginFragment frag=new FacebookLoginFragment();
+        Bundle bundle=new Bundle();
+        bundle.putInt("status",i);
         frag.setArguments(bundle);
         return frag;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,7 +93,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if(getArguments()!=null){
             status = getArguments().getInt("status");
         }
     }
@@ -110,11 +108,11 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView message = (TextView) view.findViewById(R.id.facebook_analytics_connect_text1);
-        facebookHandler = new FacebookHandler(this, mContext);
-        if (status == 2)
+        TextView message= (TextView) view.findViewById(R.id.facebook_analytics_connect_text1);
+        facebookHandler = new FacebookHandler(this,mContext);
+        if(status == 2)
             message.setText(R.string.your_facebook_session_has_expired);
-        if (getActivity() instanceof FacebookChatActivity) {
+        if(getActivity() instanceof FacebookChatActivity){
             message.setText(R.string.please_connect_your_facebook_page);
         }
         Methods.isOnline(getActivity());
@@ -126,8 +124,8 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // fbData(FROM_FB_PAGE);
-                facebookHandler.getFacebookPermissions(FacebookLoginFragment.this, readPermissions, publishPermissions);
+               // fbData(FROM_FB_PAGE);
+                facebookHandler.getFacebookPermissions(FacebookLoginFragment.this,readPermissions,publishPermissions);
             }
         });
     }
@@ -148,7 +146,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                 .setmCallType(FBTYPE)
                 .setmName(userName);
         requestClient.connectNfx();
-        if (isAdded()) {
+        if(isAdded()) {
             showLoader(getString(R.string.wait_while_subscribing));
         }
 
@@ -182,11 +180,12 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
 
     }
 
-    private void processGraphResponse(final JSONArray pages, final ArrayList<String> items) {
+    private void processGraphResponse(final JSONArray pages,final ArrayList<String> items) {
         //Log.v("ggg","progressgraph");
 
-        try {
-            if (pages == null || items == null || items.size() == 0) {
+        try
+        {
+            if(pages == null || items == null || items.size() == 0) {
                 // no pages found on something wrong
                 onFBPageError();
                 NfxRequestClient requestClient = new NfxRequestClient(FacebookLoginFragment.this)
@@ -195,9 +194,10 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                         .setmCallType(PAGE_NO_FOUND)
                         .setmName("");
                 requestClient.nfxNoPageFound();
-                showLoader(getString(R.string.please_wait));
-            } else if (items.size() > 0) {
-                //final String[] array = items.toArray(new String[items.size()]);
+               showLoader(getString(R.string.please_wait));
+            }else if (items.size() > 0)
+            {
+                    //final String[] array = items.toArray(new String[items.size()]);
                 new MaterialDialog.Builder(mContext)
                         .title(getString(R.string.select_page))
                         .items(items)
@@ -259,7 +259,6 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
             e1.printStackTrace();
         }
     }
-
     private void showLoader(final String message) {
         if (getActivity() == null) return;
         getActivity().runOnUiThread(new Runnable() {
@@ -286,7 +285,6 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
             }
         });
     }
-
     public void pageSeleted(int id, final String pageName, String pageID, String pageAccessToken) {
         //Log.v("ggg",pageName+"page");
         String s = "";
@@ -305,7 +303,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                 .setmCallType(FBPAGETYPE)
                 .setmName(pageName);
         requestClient.connectNfx();
-        if (isAdded())
+        if(isAdded())
             showLoader(getString(R.string.wait_while_subscribing));
 
         DataBase dataBase = new DataBase(getActivity());
@@ -348,7 +346,6 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
             }
         }
     }
-
     private void showDialog(String headText, String message) {
         AlertDialog dialog = null;
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -381,18 +378,18 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                 Constants.fbShareEnabled = true;
                 prefsEditor = pref.edit();
                 prefsEditor.putBoolean("fbShareEnabled", true);
-                prefsEditor.putInt("fbStatus", 1);
+                prefsEditor.putInt("fbStatus",1);
                 prefsEditor.apply();
-                MixPanelController.track(EventKeysWL.FACEBOOK_ANAYTICS, null);
+                MixPanelController.track(EventKeysWL.FACEBOOK_ANAYTICS,null);
                 break;
             case FBPAGETYPE://not put in pref
                 session.storeFacebookPage(name);
                 Constants.fbPageShareEnabled = true;
-                prefsEditor.putBoolean("fbPageShareEnabled", true);
-                prefsEditor.putInt("fbPageStatus", 1);
+                prefsEditor.putBoolean("fbPageShareEnabled",true);
+                prefsEditor.putInt("fbPageStatus",1);
                 prefsEditor.apply();
-                //call other fragment
-                ((OpenNextScreen) mContext).onNextScreen();
+               //call other fragment
+                ((OpenNextScreen)mContext).onNextScreen();
                 break;
             case PAGE_NO_FOUND:
                 MixPanelController.track(MixPanelController.FACEBOOK_PAGE_NOT_FOUND, null);
@@ -409,8 +406,8 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                                     builder.dismiss();
                                     if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
                                         createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-                                    } else {
-                                        Methods.materialDialog(getActivity(), "Alert", getString(R.string.this_feature_is_available_for_paid_customers));
+                                    }else{
+                                        Methods.materialDialog(getActivity(), "Alert",getString(R.string.this_feature_is_available_for_paid_customers));
                                     }
                                 }
                             });
@@ -450,7 +447,6 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                 break;
         }
     }
-
     private void createFBPage(String fpName) {
         MixPanelController.track(MixPanelController.CREATE_FACEBOOK_PAGE, null);
         fpPageName = fpName;
@@ -557,7 +553,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                facebookHandler.getFacebookPermissions(FacebookLoginFragment.this, readPermissions, publishPermissions);
+              facebookHandler.getFacebookPermissions(FacebookLoginFragment.this,readPermissions,publishPermissions);
             }
         });
 
@@ -578,23 +574,25 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
 
     @Override
     public void onAllPermissionNotGiven(Collection<String> givenPermissions) {
-        if (!isAdded() || getActivity() == null) return;
+        if(!isAdded() || getActivity() == null) return;
         boolean readContain = givenPermissions.containsAll(publishPermissions);
         boolean publishContain = givenPermissions.containsAll(publishPermissions);
-        if (!readContain) {
+        if(!readContain){
 
-            Methods.showSnackBarNegative(getActivity(), getString(R.string.required_permission_is_not_given_please_connect_again));
-        } else if (!publishContain) {
-            Methods.showSnackBarNegative(getActivity(), getString(R.string.required_permission_is_not_given_please_connect_again));
+            Methods.showSnackBarNegative(getActivity(),getString(R.string.required_permission_is_not_given_please_connect_again));
+        }else if(!publishContain){
+            Methods.showSnackBarNegative(getActivity(),getString(R.string.required_permission_is_not_given_please_connect_again));
         }
     }
 
     @Override
     public void onLoginSuccess(LoginResult loginResult) {
 
-        if (Profile.getCurrentProfile() == null) {
+        if(Profile.getCurrentProfile()==null)
+        {
             facebookHandler.getFacebookProfile(loginResult.getAccessToken());
-        } else {
+        }else
+        {
             //Log.v("ggg",Profile.getCurrentProfile().toString());
             saveFbLoginResults(Profile.getCurrentProfile().getName(),
                     loginResult.getAccessToken().getToken(),
@@ -604,17 +602,20 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
     }
 
     @Override
-    public void onProfilePages(JSONArray pages, ArrayList<String> pagesNameList) {
+    public void onProfilePages(JSONArray pages,ArrayList<String> pagesNameList) {
 
-        processGraphResponse(pages, pagesNameList);
+        processGraphResponse(pages,pagesNameList);
     }
 
     @Override
     public void onProfileConnected(JSONObject profile, AccessToken accessToken) {
 
-        try {
+        try
+        {
             saveFbLoginResults(profile.getString("name"), accessToken.getToken(), profile.getString("id"));
-        } catch (JSONException e) {
+        }
+        catch (JSONException e)
+        {
             e.printStackTrace();
         }
     }

@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/item_layout"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:background="@color/white"
-  android:orientation="vertical"
-  android:padding="@dimen/margin_10"
-  tools:ignore="MissingPrefix">
-
-
-  <CheckBox
-    android:id="@+id/cbCOD"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="@string/nf_delivery" />
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_10"
+    tools:ignore="MissingPrefix">
 
-  <CheckBox
-    android:id="@+id/cbOnlinePayment"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margin_5"
-    android:text="@string/self" />
+
+    <CheckBox
+        android:id="@+id/cbCOD"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nf_delivery" />
+
+    <CheckBox
+        android:id="@+id/cbOnlinePayment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5"
+        android:text="@string/self" />
 
 
 </LinearLayout>

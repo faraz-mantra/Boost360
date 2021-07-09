@@ -36,8 +36,7 @@ import com.inventoryorder.ui.order.OrderInvoiceFragment
 import com.inventoryorder.ui.order.OrdersFragment
 import com.inventoryorder.ui.order.createorder.*
 
-open class FragmentContainerOrderActivity :
-  AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
   private var ordersFragment: OrdersFragment? = null
@@ -81,7 +80,7 @@ open class FragmentContainerOrderActivity :
 
   override fun customTheme(): Int? {
     return when (type) {
-      FragmentType.REVIEW_SPA_DETAILS -> R.style.AppThemeReviewAndConfirm
+      FragmentType.REVIEW_SPA_DETAILS-> R.style.AppThemeReviewAndConfirm
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2,
       -> R.style.AppTheme_Order_create
@@ -366,12 +365,9 @@ open class FragmentContainerOrderActivity :
   }
 
   override fun onBackPressed() {
-    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData()
-    ?: videoConsultDetailsFragment?.getBundleData()
-    ?: bookingSuccessfulFragment?.getBundleData() ?: billingDetailFragment?.getBundleData()
-    ?: addCustomerFragment?.getBundleData()
-    ?: orderPlacedFragment?.getBundleData() ?: reviewAndConfirmFragment?.getBundleData()
-    ?: spaAppointmentFragment?.getBundleData()
+    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?: videoConsultDetailsFragment?.getBundleData()
+    ?: bookingSuccessfulFragment?.getBundleData() ?: billingDetailFragment?.getBundleData() ?: addCustomerFragment?.getBundleData()
+    ?: orderPlacedFragment?.getBundleData() ?: reviewAndConfirmFragment?.getBundleData() ?: spaAppointmentFragment?.getBundleData()
     ?: appointmentSpaDetailsFragment?.getBundleData() ?: addProductFragment?.getBundleData()
     bundle?.let {
       val intent = Intent()
@@ -382,12 +378,7 @@ open class FragmentContainerOrderActivity :
   }
 }
 
-fun Fragment.startFragmentOrderActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false,
-  isResult: Boolean = false
-) {
+fun Fragment.startFragmentOrderActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
   val intent = Intent(activity, FragmentContainerOrderActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -395,12 +386,7 @@ fun Fragment.startFragmentOrderActivity(
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startFragmentActivityNew(
-  activity: Activity,
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean
-) {
+fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
   val intent = Intent(activity, FragmentContainerOrderActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -408,12 +394,7 @@ fun startFragmentActivityNew(
   activity.startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentOrderActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false,
-  isResult: Boolean = false
-) {
+fun AppCompatActivity.startFragmentOrderActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
   val intent = Intent(this, FragmentContainerOrderActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

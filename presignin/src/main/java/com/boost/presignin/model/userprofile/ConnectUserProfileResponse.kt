@@ -10,4 +10,4 @@ data class ConnectUserProfileResponse(
   val Result: ConnectUserProfileResult,
   @SerializedName("StatusCode")
   val StatusCode: Int,
-) : Serializable
+):Serializable

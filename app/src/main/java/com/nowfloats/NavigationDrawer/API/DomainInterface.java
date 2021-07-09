@@ -33,18 +33,18 @@ public interface DomainInterface {
 
     @Headers({"Content-Type: application/json"})
     @GET("/DomainService/v1/checkAvailability/{domainName}")
-    public void checkDomainAvailability(@Path("domainName") String domainName, @QueryMap Map<String, String> map, Callback<Boolean> callback);
+    public void checkDomainAvailability(@Path("domainName") String domainName,@QueryMap Map<String, String> map, Callback<Boolean> callback);
 
     @Headers({"Content-Type: application/json"})
     @POST("/api/Service/EmailRIASupportTeamV2")
-    public void linkDomain(@QueryMap Map<String, String> map, @Body Map<String, String> bodyMap, Callback<Boolean> callback);
+    public void linkDomain(@QueryMap Map<String, String> map,@Body Map<String,String> bodyMap, Callback<Boolean> callback);
 
     @Headers({"Content-Type: application/json"})
     @PUT("/DomainService/v2/DomainWithWebsite/create")
-    public void buyDomain(@Body Map<String, String> bodyMap, Callback<String> callback);
+    public void buyDomain(@Body Map<String,String> bodyMap, Callback<String> callback);
 
     @GET("/Discover/v3/floatingPoint/nf-app/{fpid}")
-    public void getFPDetails(@Path("fpid") String fpid, @QueryMap Map<String, String> map, Callback<Get_FP_Details_Model> callback);
+    public void getFPDetails(@Path("fpid") String fpid,@QueryMap Map<String,String> map, Callback<Get_FP_Details_Model> callback);
 
     // Email booking apis
     @Headers({"Content-Type: application/json"})

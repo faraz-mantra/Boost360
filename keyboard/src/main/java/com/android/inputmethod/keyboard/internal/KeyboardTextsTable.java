@@ -48,6 +48,39 @@ public final class KeyboardTextsTable {
     // TODO: Remove this variable after debugging.
     // Texts table to locale maps.
     private static final HashMap<String[], String> sTextsTableToLocaleMap = new HashMap<>();
+
+    public static String getText(final String name, final String[] textsTable) {
+        final Integer indexObj = sNameToIndexesMap.get(name);
+        if (indexObj == null) {
+            throw new RuntimeException("Unknown text name=" + name + " locale="
+                    + sTextsTableToLocaleMap.get(textsTable));
+        }
+        final int index = indexObj;
+        final String text = (index < textsTable.length) ? textsTable[index] : null;
+        if (text != null) {
+            return text;
+        }
+        // Sanity check.
+        if (index >= 0 && index < TEXTS_DEFAULT.length) {
+            return TEXTS_DEFAULT[index];
+        }
+        // Throw exception for debugging purpose.
+        throw new RuntimeException("Illegal index=" + index + " for name=" + name
+                + " locale=" + sTextsTableToLocaleMap.get(textsTable));
+    }
+
+    public static String[] getTextsTable(final Locale locale) {
+        final String localeKey = locale.toString();
+        if (sLocaleToTextsTableMap.containsKey(localeKey)) {
+            return sLocaleToTextsTableMap.get(localeKey);
+        }
+        final String languageKey = locale.getLanguage();
+        if (sLocaleToTextsTableMap.containsKey(languageKey)) {
+            return sLocaleToTextsTableMap.get(languageKey);
+        }
+        return TEXTS_DEFAULT;
+    }
+
     private static final String[] NAMES = {
             //  /* index:histogram */ "name",
             /*   0:12 */ "keylabel_to_alpha",
@@ -223,7 +256,9 @@ public final class KeyboardTextsTable {
             /* 170: 0 */ "keyspec_two_by_four",
             /* 171: 0 */ "keyspec_three_by_four",
     };
+
     private static final String EMPTY = "";
+
     /* Default texts */
     private static final String[] TEXTS_DEFAULT = {
             // Label for "switch to alphabetic" key.
@@ -423,6 +458,7 @@ public final class KeyboardTextsTable {
             /* keyspec_two_by_four */ "2/3",
             /* keyspec_three_by_four */ "3/3",
     };
+
     /* Locale fa: Farsi */
     private static final String[] TEXTS_fa = {
             "ا‌ب‌پ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0,\u066b,\u066c", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹",
@@ -434,6 +470,7 @@ public final class KeyboardTextsTable {
             "،", null, null, null, null, "\u064b", "!fixedColumnOrder!7, \u0655|\u0655, \u0652|\u0652, \u0651|\u0651, \u064c|\u064c, \u064d|\u064d, \u064b|\u064b, \u0654|\u0654, \u0656|\u0656, \u0670|\u0670, \u0653|\u0653, \u064f|\u064f, \u0650|\u0650, \u064e|\u064e,\u0640\u0640\u0640|\u0640", null, null, null,
             "؟", "؛",
     };
+
     /* Locale hi_IN: Hindi (India) */
     private static final String[] TEXTS_hi_IN = {
             // Label for "switch to alphabetic" key.
@@ -580,6 +617,7 @@ public final class KeyboardTextsTable {
             /* keyhintlabel_tablet_period */ EMPTY,
             /* morekeys_tablet_period */ "!text/morekeys_tablet_punctuation",
     };
+
     /* Locale en: English */
     private static final String[] TEXTS_en = {
             /* keylabel_to_alpha ~ */
@@ -629,6 +667,7 @@ public final class KeyboardTextsTable {
             // U+00E7: "ç" LATIN SMALL LETTER C WITH CEDILLA
             /* morekeys_c */ "\u00E7",
     };
+
     private static final Object[] LOCALES_AND_TEXTS = {
             // "locale", TEXT_ARRAY,  /* numberOfNonNullText/lengthOf_TEXT_ARRAY localeName */
             "DEFAULT", TEXTS_DEFAULT, /* 168/168 DEFAULT */
@@ -648,37 +687,5 @@ public final class KeyboardTextsTable {
             sLocaleToTextsTableMap.put(locale, textsTable);
             sTextsTableToLocaleMap.put(textsTable, locale);
         }
-    }
-
-    public static String getText(final String name, final String[] textsTable) {
-        final Integer indexObj = sNameToIndexesMap.get(name);
-        if (indexObj == null) {
-            throw new RuntimeException("Unknown text name=" + name + " locale="
-                    + sTextsTableToLocaleMap.get(textsTable));
-        }
-        final int index = indexObj;
-        final String text = (index < textsTable.length) ? textsTable[index] : null;
-        if (text != null) {
-            return text;
-        }
-        // Sanity check.
-        if (index >= 0 && index < TEXTS_DEFAULT.length) {
-            return TEXTS_DEFAULT[index];
-        }
-        // Throw exception for debugging purpose.
-        throw new RuntimeException("Illegal index=" + index + " for name=" + name
-                + " locale=" + sTextsTableToLocaleMap.get(textsTable));
-    }
-
-    public static String[] getTextsTable(final Locale locale) {
-        final String localeKey = locale.toString();
-        if (sLocaleToTextsTableMap.containsKey(localeKey)) {
-            return sLocaleToTextsTableMap.get(localeKey);
-        }
-        final String languageKey = locale.getLanguage();
-        if (sLocaleToTextsTableMap.containsKey(languageKey)) {
-            return sLocaleToTextsTableMap.get(languageKey);
-        }
-        return TEXTS_DEFAULT;
     }
 }

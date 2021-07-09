@@ -15,29 +15,34 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
-public class FileUpload extends AsyncTask<String, String, String> {
+public class FileUpload extends AsyncTask<String, String, String>
+{
     private String TAG = FileUpload.class.getSimpleName();
 
     private File file;
     private OnFileUpload listener;
-    // private String fileURL;
+   // private String fileURL;
 
-    public FileUpload(File file) {
+    public FileUpload(File file)
+    {
         this.file = file;
     }
 
     @Override
-    protected void onPreExecute() {
+    protected void onPreExecute()
+    {
         super.onPreExecute();
         Log.d(TAG, "onPreExecute");
         listener.onPreUpload();
     }
 
     @Override
-    protected String doInBackground(String... strings) {
+    protected String doInBackground(String... strings)
+    {
         String url = strings[0];
 
-        try {
+        try
+        {
             Log.d(TAG, "URL " + url);
 
             OkHttpClient client = new OkHttpClient();
@@ -58,20 +63,28 @@ public class FileUpload extends AsyncTask<String, String, String> {
                 @Override
                 public void onResponse(Call call, okhttp3.Response response) throws IOException {
 
-                    if (response != null) {
-                        try {
+                    if(response != null)
+                    {
+                        try
+                        {
                             JSONObject json = new JSONObject(response.body().string());
                             //setFileURL(json.getString("Data"));
                             //Log.d(TAG, "" + json.toString());
                             listener.onSuccess(json.getString("Data"));
-                        } catch (JSONException e) {
+                        }
+
+                        catch (JSONException e)
+                        {
                             e.printStackTrace();
                             listener.onFailure();
                         }
                     }
                 }
-            });
-        } catch (Exception e) {
+            } );
+        }
+
+        catch (Exception e)
+        {
             Log.d(TAG, "FILE_UPLOAD: EXCEPTION" + e.getMessage());
             e.printStackTrace();
             listener.onFailure();
@@ -81,20 +94,21 @@ public class FileUpload extends AsyncTask<String, String, String> {
     }
 
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(String result)
+    {
         super.onPostExecute(result);
         Log.d(TAG, "onPostExecute " + result);
     }
 
-    public void setFileUploadListener(OnFileUpload listener) {
+    public void setFileUploadListener(OnFileUpload listener)
+    {
         this.listener = listener;
     }
 
-    public interface OnFileUpload {
+    public interface OnFileUpload
+    {
         void onSuccess(String url);
-
         void onFailure();
-
         void onPreUpload();
     }
 }

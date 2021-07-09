@@ -25,7 +25,9 @@ import java.net.URL;
 
 public class Create_Facebook_AutoPost extends AsyncTask<Void, String, String> {
 
+    private SharedPreferences pref = null;
     SharedPreferences.Editor prefsEditor;
+    private Activity appContext = null;
     ProgressDialog pd = null;
     Boolean success = false;
     String response = null;
@@ -33,8 +35,6 @@ public class Create_Facebook_AutoPost extends AsyncTask<Void, String, String> {
     JSONObject obj;
     TextView fromPage;
     CheckBox checkBox;
-    private SharedPreferences pref = null;
-    private Activity appContext = null;
 
 
     public Create_Facebook_AutoPost(Activity context, JSONObject obj, TextView FromPage, CheckBox Checkbox) {
@@ -50,22 +50,23 @@ public class Create_Facebook_AutoPost extends AsyncTask<Void, String, String> {
         pd = ProgressDialog.show(appContext, null, "Please wait");
         pd.setCancelable(true);
         pd.show();
-        pref = appContext.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
+        pref = appContext.getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
     }
 
     @Override
     protected void onPostExecute(String result) {
 
-        if (pd != null) {
+        if(pd!=null){
             pd.dismiss();
         }
-        if (!Util.isNullOrEmpty(result)) {
+        if(!Util.isNullOrEmpty(result)){
             //Util.toast("success", appContext);
             prefsEditor.putBoolean("FacebookFeedRegd", true);
             prefsEditor.commit();
-            fromPage.setText("From " + Constants.fbFromWhichPage);
-        } else {
+            fromPage.setText("From "+ Constants.fbFromWhichPage);
+        }
+        else{
             Util.toast(appContext.getString(R.string.uh_oh_somthing_went_wrong_please_try_again), appContext);
             checkBox.setChecked(false);
         }
@@ -79,8 +80,9 @@ public class Create_Facebook_AutoPost extends AsyncTask<Void, String, String> {
             String content = obj.toString();
             response = getDataFromServer(content,
                     Constants.HTTP_POST,
-                    Constants.NOW_FLOATS_API_URL + "/Discover/v1/FloatingPoint/AutoPublishMessages");
+                    Constants.NOW_FLOATS_API_URL+"/Discover/v1/FloatingPoint/AutoPublishMessages");
             if (!Util.isNullOrEmpty(response)) {
+
 
 
             }// end of if condition

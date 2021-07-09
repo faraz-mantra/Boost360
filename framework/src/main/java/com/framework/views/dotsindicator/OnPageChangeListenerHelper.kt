@@ -4,7 +4,7 @@ public abstract class OnPageChangeListenerHelper {
   private var lastLeftPosition: Int = -1
   private var lastRightPosition: Int = -1
 
-  abstract val pageCount: Int
+   abstract val pageCount: Int
 
   fun onPageScrolled(position: Int, positionOffset: Float) {
     var offset = (position + positionOffset)
@@ -40,10 +40,8 @@ public abstract class OnPageChangeListenerHelper {
     lastRightPosition = rightPosition
   }
 
-  abstract fun onPageScrolled(
-    selectedPosition: Int, nextPosition: Int,
-    positionOffset: Float
-  )
+   abstract fun onPageScrolled(selectedPosition: Int, nextPosition: Int,
+                                       positionOffset: Float)
 
-  abstract fun resetPosition(position: Int)
+   abstract fun resetPosition(position: Int)
 }

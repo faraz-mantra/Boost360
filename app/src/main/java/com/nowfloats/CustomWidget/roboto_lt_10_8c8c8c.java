@@ -25,7 +25,6 @@ public class roboto_lt_10_8c8c8c extends TextView {
         super(context);
         init(context);
     }
-
     public roboto_lt_10_8c8c8c(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -35,9 +34,9 @@ public class roboto_lt_10_8c8c8c extends TextView {
         super(context, attrs, defStyle);
         init(context);
     }
-
-    public void init(Context context) {
-        setCustomFont(context, "Roboto-Light.ttf");
+    public void init(Context context)
+    {
+        setCustomFont(context,"Roboto-Light.ttf");
         setTextColor(getResources().getColor(R.color.search_date_color));
         setTextSize(10);
     }

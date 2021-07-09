@@ -47,107 +47,106 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class StateListPopFragment : DialogFragment(), StateListener {
+class StateListPopFragment : DialogFragment() ,StateListener{
 
-  var createCustomerInfoRequest: Result? = null
+    var createCustomerInfoRequest: Result? = null
 
-  var customerInfoState = false
+    var customerInfoState = false
 
-  lateinit var stateListAdapter: StateListAdapter
-  private var getState: String? = null
+    lateinit var stateListAdapter: StateListAdapter
+    private var getState: String? = null
 
 
-  companion object {
-    fun newInstance() = StateListPopFragment()
-  }
+    companion object {
+        fun newInstance() = StateListPopFragment()
+    }
 
-  //    private lateinit var viewModel: CheckoutKycViewModel
-  private lateinit var viewModel: PaymentViewModel
+//    private lateinit var viewModel: CheckoutKycViewModel
+    private lateinit var viewModel: PaymentViewModel
 
-  override fun onStart() {
-    super.onStart()
-    val width = ViewGroup.LayoutParams.MATCH_PARENT
-    val height = ViewGroup.LayoutParams.MATCH_PARENT
-    dialog!!.window!!.setLayout(width, height)
-    dialog!!.window!!.setBackgroundDrawableResource(R.color.fullscreen_color)
-  }
+    override fun onStart() {
+        super.onStart()
+        val width = ViewGroup.LayoutParams.MATCH_PARENT
+        val height = ViewGroup.LayoutParams.MATCH_PARENT
+        dialog!!.window!!.setLayout(width, height)
+        dialog!!.window!!.setBackgroundDrawableResource(R.color.fullscreen_color)
+    }
 
-  override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.statelist_fragment, container, false)
-  }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.statelist_fragment, container, false)
+    }
 
-  override fun onActivityCreated(savedInstanceState: Bundle?) {
-    super.onActivityCreated(savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 //        viewModel = ViewModelProviders.of(requireActivity()).get(CheckoutKycViewModel::class.java)
-    viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
-    stateListAdapter = StateListAdapter((activity as UpgradeActivity), ArrayList(), this)
-    getState = requireArguments().getString("state")
-    initializeFreeAddonsRecyclerView()
-    initMvvm()
-    viewModel.getStatesFromAssetJson(requireActivity())
+        viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
+        stateListAdapter = StateListAdapter((activity as UpgradeActivity),ArrayList(),this)
+        getState = requireArguments().getString("state")
+        initializeFreeAddonsRecyclerView()
+        initMvvm()
+        viewModel.getStatesFromAssetJson(requireActivity())
 
 
-    close.setOnClickListener {
+        close.setOnClickListener {
 
-      dismiss()
-    }
-
-    dialog!!.setOnKeyListener { dialog, keyCode, event ->
-      if (keyCode == KeyEvent.KEYCODE_BACK || event.action == KeyEvent.ACTION_UP) {
-//                Toasty.info(requireContext(), "Accept Any One Condition...", Toast.LENGTH_LONG).show()
-        return@setOnKeyListener true
-      }
-      false
-    }
-  }
-
-
-  @SuppressLint("FragmentLiveDataObserve")
-  private fun initMvvm() {
-
-    viewModel.stateResult().observeOnce(this, androidx.lifecycle.Observer {
-      if (it != null) {
-        var data = arrayListOf<StateModel>()
-        it.forEach {
-          if (!data.contains(StateModel(it, "", 0))) {
-            data.add(StateModel(it, "", 0))
-          }
-//                    data.add(StateModel(it,"",0))
+            dismiss()
         }
 
+        dialog!!.setOnKeyListener { dialog, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK || event.action == KeyEvent.ACTION_UP) {
+//                Toasty.info(requireContext(), "Accept Any One Condition...", Toast.LENGTH_LONG).show()
+                return@setOnKeyListener true
+            }
+            false
+        }
+    }
 
-        stateListAdapter.addupdates(data, getState)
-        stateListAdapter.notifyDataSetChanged()
-      }
 
-    })
 
-  }
+    @SuppressLint("FragmentLiveDataObserve")
+    private fun initMvvm() {
 
-  override fun onDestroy() {
-    super.onDestroy()
-//        requireActivity().viewModelStore.clear()
-  }
+        viewModel.stateResult().observeOnce(this, androidx.lifecycle.Observer {
+            if(it != null){
+                var data = arrayListOf<StateModel>()
+                it.forEach {
+                    if(!data.contains(StateModel(it,"",0))){
+                        data.add(StateModel(it,"",0))
+                    }
+//                    data.add(StateModel(it,"",0))
+                }
 
-  fun initializeFreeAddonsRecyclerView() {
-    val gridLayoutManager = GridLayoutManager(requireContext(), 1)
-    gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-    recycler_state.apply {
-      layoutManager = gridLayoutManager
+
+                stateListAdapter.addupdates(data,getState)
+                stateListAdapter.notifyDataSetChanged()
+            }
+
+        })
 
     }
-    recycler_state.adapter = stateListAdapter
-  }
 
-  override fun stateSelected(data: StateModel) {
-    getState = data.state
+    override fun onDestroy() {
+        super.onDestroy()
+//        requireActivity().viewModelStore.clear()
+    }
+
+    fun initializeFreeAddonsRecyclerView() {
+        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        recycler_state.apply {
+            layoutManager = gridLayoutManager
+
+        }
+        recycler_state.adapter = stateListAdapter
+    }
+
+    override fun stateSelected(data: StateModel) {
+        getState = data.state
 //        stateListAdapter.notifyDataSetChanged()
-    viewModel.selectedStateResult(data.state)
-    Handler().postDelayed({
-      dismiss()
-    }, 300)
-  }
+viewModel.selectedStateResult(data.state)
+        Handler().postDelayed({
+            dismiss()
+        }, 300)
+    }
 }

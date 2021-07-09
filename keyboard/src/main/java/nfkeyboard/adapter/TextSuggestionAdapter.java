@@ -2,7 +2,6 @@ package nfkeyboard.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.ViewGroup;
 
 

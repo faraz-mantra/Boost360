@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/constraint"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <com.framework.views.blur.BlurView
-      android:id="@+id/blurView"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      app:blurOverlayColor="@color/white_30"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="parent">
-
-      <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_90"
-        android:layout_gravity="bottom"
-        android:background="@drawable/error_background"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.framework.views.customViews.CustomImageView
-          android:layout_width="@dimen/size_28"
-          android:layout_height="@dimen/size_28"
-          android:layout_marginStart="@dimen/size_20"
-          android:layout_marginEnd="@dimen/size_10"
-          app:srcCompat="@drawable/ic_no_internet_connection" />
+        <com.framework.views.blur.BlurView
+            android:id="@+id/blurView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:blurOverlayColor="@color/white_30"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
 
-        <LinearLayout
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:orientation="vertical">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_90"
+                android:layout_gravity="bottom"
+                android:background="@drawable/error_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/error_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/internet_connection_not_available"
-            android:textColor="@color/white"
-            app:fontFamily="@font/semi_bold"
-            app:textType="SUBHEADING_1" />
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_28"
+                    android:layout_height="@dimen/size_28"
+                    android:layout_marginStart="@dimen/size_20"
+                    android:layout_marginEnd="@dimen/size_10"
+                    app:srcCompat="@drawable/ic_no_internet_connection" />
 
-          <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/please_check_and_retry"
-            android:textColor="@color/white"
-            app:textType="SUBHEADING_2" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-        <com.framework.views.customViews.CustomButton
-          android:id="@+id/retry_btn"
-          android:layout_width="@dimen/size_70"
-          android:layout_height="@dimen/size_30"
-          android:layout_marginStart="@dimen/size_10"
-          android:layout_marginEnd="@dimen/size_20"
-          android:background="@drawable/white_background"
-          android:gravity="center"
-          android:text="@string/retry"
-          android:textAllCaps="false"
-          android:textColor="@color/black"
-          app:textType="SUBTITLE_2" />
-      </androidx.appcompat.widget.LinearLayoutCompat>
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/error_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/internet_connection_not_available"
+                        android:textColor="@color/white"
+                        app:fontFamily="@font/semi_bold"
+                        app:textType="SUBHEADING_1" />
 
-    </com.framework.views.blur.BlurView>
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/please_check_and_retry"
+                        android:textColor="@color/white"
+                        app:textType="SUBHEADING_2" />
+                </LinearLayout>
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/retry_btn"
+                    android:layout_width="@dimen/size_70"
+                    android:layout_height="@dimen/size_30"
+                    android:layout_marginStart="@dimen/size_10"
+                    android:layout_marginEnd="@dimen/size_20"
+                    android:background="@drawable/white_background"
+                    android:text="@string/retry"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    app:textType="SUBTITLE_2" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </com.framework.views.blur.BlurView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

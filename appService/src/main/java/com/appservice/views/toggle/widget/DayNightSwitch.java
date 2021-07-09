@@ -62,9 +62,8 @@ public class DayNightSwitch extends ToggleableView {
 
     /**
      * Simple constructor to use when creating a switch from code.
-     *
      * @param context The Context the switch is running in, through which it can
-     *                access the current theme, resources, etc.
+     *        access the current theme, resources, etc.
      */
     public DayNightSwitch(Context context) {
         super(context);
@@ -75,8 +74,8 @@ public class DayNightSwitch extends ToggleableView {
      * Constructor that is called when inflating a switch from XML.
      *
      * @param context The Context the switch is running in, through which it can
-     *                access the current theme, resources, etc.
-     * @param attrs   The attributes of the XML tag that is inflating the switch.
+     *        access the current theme, resources, etc.
+     * @param attrs The attributes of the XML tag that is inflating the switch.
      */
     public DayNightSwitch(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -88,12 +87,12 @@ public class DayNightSwitch extends ToggleableView {
      * Perform inflation from XML and apply a class-specific base style from a
      * theme attribute.
      *
-     * @param context      The Context the switch is running in, through which it can
-     *                     access the current theme, resources, etc.
-     * @param attrs        The attributes of the XML tag that is inflating the switch.
+     * @param context The Context the switch is running in, through which it can
+     *        access the current theme, resources, etc.
+     * @param attrs The attributes of the XML tag that is inflating the switch.
      * @param defStyleAttr An attribute in the current theme that contains a
-     *                     reference to a style resource that supplies default values for
-     *                     the switch. Can be 0 to not look for defaults.
+     *        reference to a style resource that supplies default values for
+     *        the switch. Can be 0 to not look for defaults.
      */
     public DayNightSwitch(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -121,23 +120,22 @@ public class DayNightSwitch extends ToggleableView {
     }
 
     private void initProperties(AttributeSet attrs) {
-        TypedArray tarr = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.Toggle, 0, 0);
+        TypedArray tarr = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.Toggle,0,0);
         final int N = tarr.getIndexCount();
         for (int i = 0; i < N; ++i) {
             int attr = tarr.getIndex(i);
             if (attr == R.styleable.Toggle_on) {
                 isOn = tarr.getBoolean(R.styleable.Toggle_on, false);
-            } else if (attr == R.styleable.Toggle_android_enabled) {
+            } else if(attr == R.styleable.Toggle_android_enabled) {
                 enabled = tarr.getBoolean(R.styleable.Toggle_android_enabled, false);
             }
         }
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+    @Override protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         {
-            if (isEnabled()) {
+            if(isEnabled()) {
                 int borderColor;
                 int alpha = (int) (((thumbBounds.centerX() - thumbOffCenterX) / (thumbOnCenterX - thumbOffCenterX)) * 255);
                 alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
@@ -175,7 +173,7 @@ public class DayNightSwitch extends ToggleableView {
             int alpha = (int) (((thumbBounds.centerX() - thumbOffCenterX) / (thumbOnCenterX - thumbOffCenterX)) * 255);
             alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
 
-            if (isEnabled()) {
+            if(isEnabled()) {
                 onColor = Color.argb(alpha, Color.red(parentInner), Color.green(parentInner), Color.blue(parentInner));
             } else {
                 onColor = Color.argb(alpha, Color.red(colorDisabled), Color.green(colorDisabled), Color.blue(colorDisabled));
@@ -268,7 +266,7 @@ public class DayNightSwitch extends ToggleableView {
             alpha = (alpha < 0 ? 0 : (alpha > 255 ? 255 : alpha));
 
             int moonOuterColor;
-            if (isEnabled()) {
+            if(isEnabled()) {
                 moonOuterColor = Color.argb(alpha, Color.red(moonOuter), Color.green(moonOuter), Color.blue(moonOuter));
             } else {
                 moonOuterColor = Color.argb(alpha, Color.red(colorDisabled), Color.green(colorDisabled), Color.blue(colorDisabled));
@@ -368,8 +366,7 @@ public class DayNightSwitch extends ToggleableView {
         );
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int desiredWidth = getResources().getDimensionPixelSize(R.dimen.day_night_default_width);
         int desiredHeight = getResources().getDimensionPixelSize(R.dimen.day_night_default_height);
 
@@ -409,17 +406,17 @@ public class DayNightSwitch extends ToggleableView {
         thumbBounds.set(padding, padding, padding + thumbRadii, height - padding);
         thumbOffCenterX = thumbBounds.centerX();
 
-        if (isOn) {
+        if(isOn) {
             thumbBounds.set(width - padding - thumbRadii, padding, width - padding, height - padding);
         } else {
             thumbBounds.set(padding, padding, padding + thumbRadii, height - padding);
         }
 
-        leftBgArc.set(0, 0, outerRadii << 1, height);
-        rightBgArc.set(width - (outerRadii << 1), 0, width, height);
+        leftBgArc.set(0,0, outerRadii << 1, height);
+        rightBgArc.set(width - (outerRadii << 1),0, width, height);
 
-        leftFgArc.set(padding >>> 2, padding >>> 2, (outerRadii << 1) - (padding >>> 2), height - (padding >>> 2));
-        rightFgArc.set(width - (outerRadii << 1) + (padding >>> 2), padding >>> 2, width - (padding >>> 2), height - (padding >>> 2));
+        leftFgArc.set(padding >>> 2,padding >>> 2, (outerRadii << 1) - (padding >>> 2), height - (padding >>> 2));
+        rightFgArc.set(width - (outerRadii << 1) + (padding >>> 2),padding >>> 2, width - (padding >>> 2), height - (padding >>> 2));
 
         cloudCenterX = centerX;
         cloudCenterY = centerY + (centerY >>> 2);
@@ -431,10 +428,9 @@ public class DayNightSwitch extends ToggleableView {
      * a sound, etc.
      *
      * @return True there was an assigned OnClickListener that was called, false
-     * otherwise is returned.
+     *         otherwise is returned.
      */
-    @Override
-    public final boolean performClick() {
+    @Override public final boolean performClick() {
         super.performClick();
         if (isOn) {
             ValueAnimator switchColor = ValueAnimator.ofFloat(width - padding - thumbRadii, padding);
@@ -457,8 +453,8 @@ public class DayNightSwitch extends ToggleableView {
             switchColor.setDuration(150);
             switchColor.start();
         }
-        isOn = !isOn;
-        if (onToggledListener != null) {
+        isOn =! isOn;
+        if(onToggledListener != null) {
             onToggledListener.onSwitched(this, isOn);
         }
         return true;
@@ -470,9 +466,8 @@ public class DayNightSwitch extends ToggleableView {
      * @param event The motion event.
      * @return True if the event was handled, false otherwise.
      */
-    @Override
-    public final boolean onTouchEvent(MotionEvent event) {
-        if (isEnabled()) {
+    @Override public final boolean onTouchEvent(MotionEvent event) {
+        if(isEnabled()) {
             float x = event.getX();
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN: {
@@ -518,7 +513,7 @@ public class DayNightSwitch extends ToggleableView {
                             thumbAnimator.start();
                             isOn = false;
                         }
-                        if (onToggledListener != null) {
+                        if(onToggledListener != null) {
                             onToggledListener.onSwitched(this, isOn);
                         }
                     }
@@ -526,8 +521,7 @@ public class DayNightSwitch extends ToggleableView {
                     return true;
                 }
 
-                default:
-                    return super.onTouchEvent(event);
+                default: return super.onTouchEvent(event);
             }
         } else {
             return false;
@@ -539,10 +533,9 @@ public class DayNightSwitch extends ToggleableView {
      *
      * @param on true to turn switch on, false to turn it off.
      */
-    @Override
-    public void setOn(boolean on) {
+    @Override public void setOn(boolean on) {
         super.setOn(on);
-        if (isOn) {
+        if(isOn) {
             thumbBounds.set(width - padding - thumbRadii, padding, width - padding, height - padding);
         } else {
             thumbBounds.set(padding, padding, padding + thumbRadii, height - padding);

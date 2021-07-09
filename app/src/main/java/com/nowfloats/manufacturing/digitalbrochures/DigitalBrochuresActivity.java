@@ -49,14 +49,14 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 public class DigitalBrochuresActivity extends AppCompatActivity implements DigitalBrochuresListener {
 
-    public static TextView headerText;
+    private ProgressDialog progressDialog;
     public UserSessionManager session;
+    public static TextView headerText;
     RelativeLayout emptyLayout;
     RecyclerView recyclerView;
     List<Data> dataList;
     DigitalBrochuresAdapter adapter;
     TextView buyButton;
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

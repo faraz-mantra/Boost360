@@ -36,8 +36,7 @@ import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
-class UpdatesBusinessFragment :
-  AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
+class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
 
   private val STORAGE_CODE = 120
 
@@ -108,10 +107,7 @@ class UpdatesBusinessFragment :
 
   private fun listUpdateApi(offSet: Int) {
     binding?.emptyView?.gone()
-    hitApi(
-      viewModel?.getMessageUpdates(getRequestUpdate(offSet)),
-      R.string.latest_update_data_not_found
-    )
+    hitApi(viewModel?.getMessageUpdates(getRequestUpdate(offSet)), R.string.latest_update_data_not_found)
   }
 
   override fun onSuccess(it: BaseResponse) {
@@ -123,8 +119,7 @@ class UpdatesBusinessFragment :
       isLastPageD = (listFloat.size == data.totalCount ?: 0)
       if (adapterUpdate == null) {
         binding?.rvUpdates?.apply {
-          adapterUpdate =
-            AppBaseRecyclerViewAdapter(baseActivity, listFloat, this@UpdatesBusinessFragment)
+          adapterUpdate = AppBaseRecyclerViewAdapter(baseActivity, listFloat, this@UpdatesBusinessFragment)
           this.adapter = adapterUpdate
         }
       } else adapterUpdate?.notifyDataSetChanged()
@@ -169,69 +164,29 @@ class UpdatesBusinessFragment :
       RecyclerViewActionType.UPDATE_FP_APP_SHARE.ordinal -> shareUpdate(item, actionType)
       RecyclerViewActionType.UPDATE_BUSINESS_CLICK.ordinal -> {
         val float = item as? UpdateFloat ?: return
-        startUpdateFragmentActivity(
-          FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT,
-          Bundle().apply { putSerializable(IntentConstant.OBJECT_DATA.name, float) },
-          isResult = true
-        )
+        startUpdateFragmentActivity(FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT, Bundle().apply { putSerializable(IntentConstant.OBJECT_DATA.name, float) }, isResult = true)
       }
     }
   }
 
   private fun shareUpdate(item: BaseRecyclerViewItem?, actionType: Int) {
     val float = item as? UpdateFloat ?: return
-    if (ActivityCompat.checkSelfPermission(
-        baseActivity,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-      ) == PackageManager.PERMISSION_DENIED
-    ) {
-      showDialog(
-        baseActivity,
-        "Storage Permission",
-        "To share service image, we need storage permission."
-      ) { _: DialogInterface?, _: Int ->
+    if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+      showDialog(baseActivity, "Storage Permission", "To share service image, we need storage permission.") { _: DialogInterface?, _: Int ->
         requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_CODE)
       }
       return
     }
-    val subDomain =
-      if (isService(sessionLocal.fP_AppExperienceCode)) "all-services" else "all-products"
+    val subDomain = if (isService(sessionLocal.fP_AppExperienceCode)) "all-services" else "all-products"
     when (actionType) {
       RecyclerViewActionType.UPDATE_WHATS_APP_SHARE.ordinal -> {
-        shareUpdates(
-          baseActivity,
-          float.message ?: "",
-          float.url,
-          sessionLocal.getDomainName() + "/" + subDomain,
-          sessionLocal.userPrimaryMobile ?: "",
-          true,
-          false,
-          float.imageUri
-        )
+        shareUpdates(baseActivity, float.message ?: "", float.url, sessionLocal.getDomainName() + "/" + subDomain, sessionLocal.userPrimaryMobile ?: "", true, false, float.imageUri)
       }
       RecyclerViewActionType.UPDATE_OTHER_SHARE.ordinal -> {
-        shareUpdates(
-          baseActivity,
-          float.message ?: "",
-          float.url,
-          sessionLocal.getDomainName() + "/" + subDomain,
-          sessionLocal.userPrimaryMobile ?: "",
-          false,
-          false,
-          float.imageUri
-        )
+        shareUpdates(baseActivity, float.message ?: "", float.url, sessionLocal.getDomainName() + "/" + subDomain, sessionLocal.userPrimaryMobile ?: "", false, false, float.imageUri)
       }
       RecyclerViewActionType.UPDATE_FP_APP_SHARE.ordinal -> {
-        shareUpdates(
-          baseActivity,
-          float.message ?: "",
-          float.url,
-          sessionLocal.getDomainName() + "/" + subDomain,
-          sessionLocal.userPrimaryMobile ?: "",
-          false,
-          true,
-          float.imageUri
-        )
+        shareUpdates(baseActivity, float.message ?: "", float.url, sessionLocal.getDomainName() + "/" + subDomain, sessionLocal.userPrimaryMobile ?: "", false, true, float.imageUri)
       }
     }
   }
@@ -250,12 +205,7 @@ class UpdatesBusinessFragment :
   }
 }
 
-fun showDialog(
-  mContext: Context?,
-  title: String?,
-  msg: String?,
-  listener: DialogInterface.OnClickListener
-) {
+fun showDialog(mContext: Context?, title: String?, msg: String?, listener: DialogInterface.OnClickListener) {
   val builder = AlertDialog.Builder(mContext!!)
   builder.setTitle(title).setMessage(msg).setPositiveButton("Ok") { dialog, which ->
     dialog.dismiss()

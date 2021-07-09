@@ -9,8 +9,7 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
-class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) :
-  AppBaseRecyclerViewHolder<ItemBusinessManagementBinding>(binding) {
+class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) : AppBaseRecyclerViewHolder<ItemBusinessManagementBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -35,20 +34,8 @@ class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) :
       binding.progressBar.setProgressWithAnimation((data.percentage ?: 0).toFloat(), 1000)
       data.type?.icon?.let { binding.imgIcon.setImageResource(it) }
     }
-    binding.mainContent.setOnClickListener {
-      listener?.onItemClick(
-        position,
-        data,
-        RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal
-      )
-    }
-    binding.btnAddItemStart.setOnClickListener {
-      listener?.onItemClick(
-        position,
-        data,
-        RecyclerViewActionType.BUSINESS_SETUP_ADD_ITEM_START.ordinal
-      )
-    }
+    binding.mainContent.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal) }
+    binding.btnAddItemStart.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.BUSINESS_SETUP_ADD_ITEM_START.ordinal) }
   }
 
   private fun startCheckAnimation(isAnimate: Boolean) {

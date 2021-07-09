@@ -1,78 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:card_view="http://schemas.android.com/apk/res-auto"
-  android:id="@+id/card_view"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:layout_marginBottom="2dp"
-  android:background="#FFFFFF"
-  card_view:cardBackgroundColor="#FFFFFF"
-  card_view:cardCornerRadius="3dp"
-  card_view:cardElevation="3dp"
-  card_view:cardUseCompatPadding="true">
-
-  <LinearLayout
+<androidx.cardview.widget.CardView android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_marginBottom="2dp"
+    android:background="#FFFFFF"
+    card_view:cardBackgroundColor="#FFFFFF"
+    card_view:cardCornerRadius="3dp"
+    card_view:cardElevation="3dp"
+    card_view:cardUseCompatPadding="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginTop="7dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo_default_image"
+            android:visibility="gone" />
+
+            <com.nowfloats.CustomWidget.roboto_lt_45_505050
+                android:id="@+id/tv_person_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="4"
+                android:text="@string/large_text"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:paddingRight="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+
+            <com.nowfloats.CustomWidget.roboto_md_36__565656
+                android:id="@+id/textViewEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:visibility="gone"
+                android:text="@string/medium_text"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/ll_selected"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/white"
+        android:alpha=".6">
+
+    </FrameLayout>
     <ImageView
-      android:id="@+id/imageView"
-      android:layout_width="match_parent"
-      android:layout_height="160dp"
-      android:layout_marginStart="7dp"
-      android:layout_marginTop="7dp"
-      android:layout_marginEnd="7dp"
-      android:layout_weight="1"
-      android:scaleType="centerCrop"
-      android:src="@drawable/logo_default_image"
-      android:visibility="gone" />
-
-    <com.nowfloats.CustomWidget.roboto_lt_45_505050
-      android:id="@+id/tv_person_name"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:maxLines="4"
-      android:paddingStart="10dp"
-      android:paddingTop="20dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="20dp"
-      android:text="@string/large_text"
-      android:textColor="@color/black"
-      android:textSize="16sp" />
-
-
-    <com.nowfloats.CustomWidget.roboto_md_36__565656
-      android:id="@+id/textViewEmail"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="17dp"
-      android:text="@string/medium_text"
-      android:textColor="@color/black"
-      android:textSize="16sp"
-      android:visibility="gone" />
-
-  </LinearLayout>
-
-  <FrameLayout
-    android:id="@+id/ll_selected"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:alpha=".6"
-    android:background="@color/white"
-    android:visibility="gone">
-
-  </FrameLayout>
-
-  <ImageView
-    android:id="@+id/img_selected"
-    android:layout_width="30dp"
-    android:layout_height="30dp"
-    android:layout_gravity="end|bottom"
-    android:layout_marginEnd="15dp"
-    android:layout_marginBottom="10dp"
-    android:visibility="gone"
-    app:srcCompat="@drawable/domain_available" />
+        android:id="@+id/img_selected"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:visibility="gone"
+        app:srcCompat="@drawable/domain_available"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="end|bottom"/>
 
 </androidx.cardview.widget.CardView>

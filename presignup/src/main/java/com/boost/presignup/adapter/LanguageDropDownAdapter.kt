@@ -9,12 +9,8 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.presignup.R
 
-class LanguageDropDownAdapter(
-  var context: Context,
-  var list: List<String>,
-  val listener: RecyclerViewClickListener
-) :
-  RecyclerView.Adapter<LanguageDropDownAdapter.ViewHolder>() {
+class LanguageDropDownAdapter(var context: Context,var list: List<String>, val listener: RecyclerViewClickListener) :
+    RecyclerView.Adapter<LanguageDropDownAdapter.ViewHolder>() {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val inflater = (context as Activity).layoutInflater

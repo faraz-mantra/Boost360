@@ -23,39 +23,24 @@ import com.android.inputmethod.latin.utils.ResizableIntArray;
  */
 public final class GestureStrokeDrawingPoints {
     public static final int PREVIEW_CAPACITY = 256;
-    private static final double TWO_PI = Math.PI * 2.0d;
+
     private final ResizableIntArray mPreviewEventTimes = new ResizableIntArray(PREVIEW_CAPACITY);
     private final ResizableIntArray mPreviewXCoordinates = new ResizableIntArray(PREVIEW_CAPACITY);
     private final ResizableIntArray mPreviewYCoordinates = new ResizableIntArray(PREVIEW_CAPACITY);
+
     private final GestureStrokeDrawingParams mDrawingParams;
-    private final HermiteInterpolator mInterpolator = new HermiteInterpolator();
+
     private int mStrokeId;
     private int mLastPreviewSize;
+    private final HermiteInterpolator mInterpolator = new HermiteInterpolator();
     private int mLastInterpolatedPreviewIndex;
+
     private int mLastX;
     private int mLastY;
     private double mDistanceFromLastSample;
 
     public GestureStrokeDrawingPoints(final GestureStrokeDrawingParams drawingParams) {
         mDrawingParams = drawingParams;
-    }
-
-    /**
-     * Calculate the angular of rotation from <code>a0</code> to <code>a1</code>.
-     *
-     * @param a1 the angular to which the rotation ends.
-     * @param a0 the angular from which the rotation starts.
-     * @return the angular rotation value from a0 to a1, normalized to [-PI, +PI].
-     */
-    private static double angularDiff(final double a1, final double a0) {
-        double deltaAngle = a1 - a0;
-        while (deltaAngle > Math.PI) {
-            deltaAngle -= TWO_PI;
-        }
-        while (deltaAngle < -Math.PI) {
-            deltaAngle += TWO_PI;
-        }
-        return deltaAngle;
     }
 
     private void reset() {
@@ -100,14 +85,14 @@ public final class GestureStrokeDrawingPoints {
      * Append sampled preview points.
      *
      * @param eventTimes the event time array of gesture trail to be drawn.
-     * @param xCoords    the x-coordinates array of gesture trail to be drawn.
-     * @param yCoords    the y-coordinates array of gesture trail to be drawn.
-     * @param types      the point types array of gesture trail. This is valid only when
-     *                   {@link GestureTrailDrawingPoints#DEBUG_SHOW_POINTS} is true.
+     * @param xCoords the x-coordinates array of gesture trail to be drawn.
+     * @param yCoords the y-coordinates array of gesture trail to be drawn.
+     * @param types the point types array of gesture trail. This is valid only when
+     * {@link GestureTrailDrawingPoints#DEBUG_SHOW_POINTS} is true.
      */
     public void appendPreviewStroke(final ResizableIntArray eventTimes,
-                                    final ResizableIntArray xCoords, final ResizableIntArray yCoords,
-                                    final ResizableIntArray types) {
+            final ResizableIntArray xCoords, final ResizableIntArray yCoords,
+            final ResizableIntArray types) {
         final int length = mPreviewEventTimes.getLength() - mLastPreviewSize;
         if (length <= 0) {
             return;
@@ -128,17 +113,17 @@ public final class GestureStrokeDrawingPoints {
      * added to this stroke.
      *
      * @param lastInterpolatedIndex the start index of the last interpolated segment of
-     *                              <code>eventTimes</code>, <code>xCoords</code>, and <code>yCoords</code>.
-     * @param eventTimes            the event time array of gesture trail to be drawn.
-     * @param xCoords               the x-coordinates array of gesture trail to be drawn.
-     * @param yCoords               the y-coordinates array of gesture trail to be drawn.
-     * @param types                 the point types array of gesture trail. This is valid only when
-     *                              {@link GestureTrailDrawingPoints#DEBUG_SHOW_POINTS} is true.
+     *        <code>eventTimes</code>, <code>xCoords</code>, and <code>yCoords</code>.
+     * @param eventTimes the event time array of gesture trail to be drawn.
+     * @param xCoords the x-coordinates array of gesture trail to be drawn.
+     * @param yCoords the y-coordinates array of gesture trail to be drawn.
+     * @param types the point types array of gesture trail. This is valid only when
+     * {@link GestureTrailDrawingPoints#DEBUG_SHOW_POINTS} is true.
      * @return the start index of the last interpolated segment of input arrays.
      */
     public int interpolateStrokeAndReturnStartIndexOfLastSegment(final int lastInterpolatedIndex,
-                                                                 final ResizableIntArray eventTimes, final ResizableIntArray xCoords,
-                                                                 final ResizableIntArray yCoords, final ResizableIntArray types) {
+            final ResizableIntArray eventTimes, final ResizableIntArray xCoords,
+            final ResizableIntArray yCoords, final ResizableIntArray types) {
         final int size = mPreviewEventTimes.getLength();
         final int[] pt = mPreviewEventTimes.getPrimitiveArray();
         final int[] px = mPreviewXCoordinates.getPrimitiveArray();
@@ -158,11 +143,11 @@ public final class GestureStrokeDrawingPoints {
             final double m1 = Math.atan2(mInterpolator.mSlope1Y, mInterpolator.mSlope1X);
             final double m2 = Math.atan2(mInterpolator.mSlope2Y, mInterpolator.mSlope2X);
             final double deltaAngle = Math.abs(angularDiff(m2, m1));
-            final int segmentsByAngle = (int) Math.ceil(
+            final int segmentsByAngle = (int)Math.ceil(
                     deltaAngle / mDrawingParams.mMaxInterpolationAngularThreshold);
             final double deltaDistance = Math.hypot(mInterpolator.mP1X - mInterpolator.mP2X,
                     mInterpolator.mP1Y - mInterpolator.mP2Y);
-            final int segmentsByDistance = (int) Math.ceil(deltaDistance
+            final int segmentsByDistance = (int)Math.ceil(deltaDistance
                     / mDrawingParams.mMaxInterpolationDistanceThreshold);
             final int segments = Math.min(mDrawingParams.mMaxInterpolationSegments,
                     Math.max(segmentsByAngle, segmentsByDistance));
@@ -170,11 +155,11 @@ public final class GestureStrokeDrawingPoints {
             final int dt = pt[p2] - pt[p1];
             d1++;
             for (int i = 1; i < segments; i++) {
-                final float t = i / (float) segments;
+                final float t = i / (float)segments;
                 mInterpolator.interpolate(t);
-                eventTimes.addAt(d1, (int) (dt * t) + t1);
-                xCoords.addAt(d1, (int) mInterpolator.mInterpolatedX);
-                yCoords.addAt(d1, (int) mInterpolator.mInterpolatedY);
+                eventTimes.addAt(d1, (int)(dt * t) + t1);
+                xCoords.addAt(d1, (int)mInterpolator.mInterpolatedX);
+                yCoords.addAt(d1, (int)mInterpolator.mInterpolatedY);
                 if (GestureTrailDrawingPoints.DEBUG_SHOW_POINTS) {
                     types.addAt(d1, GestureTrailDrawingPoints.POINT_TYPE_INTERPOLATED);
                 }
@@ -188,5 +173,25 @@ public final class GestureStrokeDrawingPoints {
             }
         }
         return lastInterpolatedDrawIndex;
+    }
+
+    private static final double TWO_PI = Math.PI * 2.0d;
+
+    /**
+     * Calculate the angular of rotation from <code>a0</code> to <code>a1</code>.
+     *
+     * @param a1 the angular to which the rotation ends.
+     * @param a0 the angular from which the rotation starts.
+     * @return the angular rotation value from a0 to a1, normalized to [-PI, +PI].
+     */
+    private static double angularDiff(final double a1, final double a0) {
+        double deltaAngle = a1 - a0;
+        while (deltaAngle > Math.PI) {
+            deltaAngle -= TWO_PI;
+        }
+        while (deltaAngle < -Math.PI) {
+            deltaAngle += TWO_PI;
+        }
+        return deltaAngle;
     }
 }

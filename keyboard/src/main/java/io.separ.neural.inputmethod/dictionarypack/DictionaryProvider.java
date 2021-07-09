@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2011 The Android Open Source Project
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * <p>
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -27,9 +27,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
-
 import androidx.annotation.NonNull;
-
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -50,21 +48,16 @@ import io.separ.neural.inputmethod.indic.R;
  * the dictionary pack.
  */
 public final class DictionaryProvider extends ContentProvider {
+    private static final String TAG = DictionaryProvider.class.getSimpleName();
     public static final boolean DEBUG = false;
+
     public static final Uri CONTENT_URI =
             Uri.parse(ContentResolver.SCHEME_CONTENT + "://" + DictionaryPackConstants.AUTHORITY);
-    public static final String QUERY_PARAMETER_PROTOCOL_VERSION = "protocol";
-    // MIME types for dictionary and dictionary list, as required by ContentProvider contract.
-    public static final String DICT_LIST_MIME_TYPE =
-            "vnd.android.cursor.item/vnd.google.dictionarylist";
-    public static final String DICT_DATAFILE_MIME_TYPE =
-            "vnd.android.cursor.item/vnd.google.dictionary";
-    public static final String ID_CATEGORY_SEPARATOR = ":";
-    private static final String TAG = DictionaryProvider.class.getSimpleName();
     private static final String QUERY_PARAMETER_MAY_PROMPT_USER = "mayPrompt";
     private static final String QUERY_PARAMETER_TRUE = "true";
     private static final String QUERY_PARAMETER_DELETE_RESULT = "result";
     private static final String QUERY_PARAMETER_FAILURE = "failure";
+    public static final String QUERY_PARAMETER_PROTOCOL_VERSION = "protocol";
     private static final int NO_MATCH = 0;
     private static final int DICTIONARY_V1_WHOLE_LIST = 1;
     private static final int DICTIONARY_V1_DICT_INFO = 2;
@@ -74,8 +67,8 @@ public final class DictionaryProvider extends ContentProvider {
     private static final int DICTIONARY_V2_DATAFILE = 6;
     private static final UriMatcher sUriMatcherV1 = new UriMatcher(NO_MATCH);
     private static final UriMatcher sUriMatcherV2 = new UriMatcher(NO_MATCH);
-
-    static {
+    static
+    {
         sUriMatcherV1.addURI(DictionaryPackConstants.AUTHORITY, "list", DICTIONARY_V1_WHOLE_LIST);
         sUriMatcherV1.addURI(DictionaryPackConstants.AUTHORITY, "*", DICTIONARY_V1_DICT_INFO);
         sUriMatcherV2.addURI(DictionaryPackConstants.AUTHORITY, "*/metadata",
@@ -87,17 +80,97 @@ public final class DictionaryProvider extends ContentProvider {
                 DICTIONARY_V2_DATAFILE);
     }
 
+    // MIME types for dictionary and dictionary list, as required by ContentProvider contract.
+    public static final String DICT_LIST_MIME_TYPE =
+            "vnd.android.cursor.item/vnd.google.dictionarylist";
+    public static final String DICT_DATAFILE_MIME_TYPE =
+            "vnd.android.cursor.item/vnd.google.dictionary";
+
+    public static final String ID_CATEGORY_SEPARATOR = ":";
+
+    private static final class WordListInfo {
+        public final String mId;
+        public final String mLocale;
+        public final String mRawChecksum;
+        public final int mMatchLevel;
+        public WordListInfo(final String id, final String locale, final String rawChecksum,
+                final int matchLevel) {
+            mId = id;
+            mLocale = locale;
+            mRawChecksum = rawChecksum;
+            mMatchLevel = matchLevel;
+        }
+    }
+
+    /**
+     * A cursor for returning a list of file ids from a List of strings.
+     *
+     * This simulates only the necessary methods. It has no error handling to speak of,
+     * and does not support everything a database does, only a few select necessary methods.
+     */
+    private static final class ResourcePathCursor extends AbstractCursor {
+
+        // Column names for the cursor returned by this content provider.
+        static private final String[] columnNames = { MetadataDbHelper.WORDLISTID_COLUMN,
+                MetadataDbHelper.LOCALE_COLUMN, MetadataDbHelper.RAW_CHECKSUM_COLUMN };
+
+        // The list of word lists served by this provider that match the client request.
+        final WordListInfo[] mWordLists;
+        // Note : the cursor also uses mPos, which is defined in AbstractCursor.
+
+        public ResourcePathCursor(final Collection<WordListInfo> wordLists) {
+            // Allocating a 0-size WordListInfo here allows the toArray() method
+            // to ensure we have a strongly-typed array. It's thrown out. That's
+            // what the documentation of #toArray says to do in order to get a
+            // new strongly typed array of the correct size.
+            mWordLists = wordLists.toArray(new WordListInfo[0]);
+            mPos = 0;
+        }
+
+        @Override
+        public String[] getColumnNames() {
+            return columnNames;
+        }
+
+        @Override
+        public int getCount() {
+            return mWordLists.length;
+        }
+
+        @Override public double getDouble(int column) { return 0; }
+        @Override public float getFloat(int column) { return 0; }
+        @Override public int getInt(int column) { return 0; }
+        @Override public short getShort(int column) { return 0; }
+        @Override public long getLong(int column) { return 0; }
+
+        @Override public String getString(final int column) {
+            switch (column) {
+                case 0: return mWordLists[mPos].mId;
+                case 1: return mWordLists[mPos].mLocale;
+                case 2: return mWordLists[mPos].mRawChecksum;
+                default : return null;
+            }
+        }
+
+        @Override
+        public boolean isNull(final int column) {
+            return mPos >= mWordLists.length || column != 0;
+        }
+    }
+
+    @Override
+    public boolean onCreate() {
+        return true;
+    }
+
     private static int matchUri(final Uri uri) {
         int protocolVersion = 1;
         final String protocolVersionArg = uri.getQueryParameter(QUERY_PARAMETER_PROTOCOL_VERSION);
         if ("2".equals(protocolVersionArg)) protocolVersion = 2;
         switch (protocolVersion) {
-            case 1:
-                return sUriMatcherV1.match(uri);
-            case 2:
-                return sUriMatcherV2.match(uri);
-            default:
-                return NO_MATCH;
+            case 1: return sUriMatcherV1.match(uri);
+            case 2: return sUriMatcherV2.match(uri);
+            default: return NO_MATCH;
         }
     }
 
@@ -106,18 +179,10 @@ public final class DictionaryProvider extends ContentProvider {
         final String protocolVersionArg = uri.getQueryParameter(QUERY_PARAMETER_PROTOCOL_VERSION);
         if ("2".equals(protocolVersionArg)) protocolVersion = 2;
         switch (protocolVersion) {
-            case 1:
-                return null; // In protocol 1, the client ID is always null.
-            case 2:
-                return uri.getPathSegments().get(0);
-            default:
-                return null;
+            case 1: return null; // In protocol 1, the client ID is always null.
+            case 2: return uri.getPathSegments().get(0);
+            default: return null;
         }
-    }
-
-    @Override
-    public boolean onCreate() {
-        return true;
     }
 
     /**
@@ -133,17 +198,13 @@ public final class DictionaryProvider extends ContentProvider {
         PrivateLog.log("Asked for type of : " + uri);
         final int match = matchUri(uri);
         switch (match) {
-            case NO_MATCH:
-                return null;
+            case NO_MATCH: return null;
             case DICTIONARY_V1_WHOLE_LIST:
             case DICTIONARY_V1_DICT_INFO:
             case DICTIONARY_V2_WHOLE_LIST:
-            case DICTIONARY_V2_DICT_INFO:
-                return DICT_LIST_MIME_TYPE;
-            case DICTIONARY_V2_DATAFILE:
-                return DICT_DATAFILE_MIME_TYPE;
-            default:
-                return null;
+            case DICTIONARY_V2_DICT_INFO: return DICT_LIST_MIME_TYPE;
+            case DICTIONARY_V2_DATAFILE: return DICT_DATAFILE_MIME_TYPE;
+            default: return null;
         }
     }
 
@@ -199,7 +260,7 @@ public final class DictionaryProvider extends ContentProvider {
                     PrivateLog.log("No dictionary files for this URL");
                     return new ResourcePathCursor(Collections.<WordListInfo>emptyList());
                 }
-                // V2_METADATA and V2_DATAFILE are not supported for query()
+            // V2_METADATA and V2_DATAFILE are not supported for query()
             default:
                 return null;
         }
@@ -213,7 +274,7 @@ public final class DictionaryProvider extends ContentProvider {
      * @return the metadata for this wordlist ID, or null if none could be found.
      */
     private ContentValues getWordlistMetadataForWordlistId(final String clientId,
-                                                           final String wordlistId) {
+            final String wordlistId) {
         final Context context = getContext();
         if (TextUtils.isEmpty(wordlistId)) return null;
         final SQLiteDatabase db = MetadataDbHelper.getDb(context, clientId);
@@ -287,7 +348,7 @@ public final class DictionaryProvider extends ContentProvider {
      * @return a collection of ids. It is guaranteed to be non-null, but may be empty.
      */
     private Collection<WordListInfo> getDictionaryWordListsForLocale(final String clientId,
-                                                                     final String locale, final boolean mayPrompt) {
+            final String locale, final boolean mayPrompt) {
         final Context context = getContext();
         final Cursor results =
                 MetadataDbHelper.queryInstalledOrDeletingOrAvailableDictionaryMetadata(context,
@@ -483,100 +544,5 @@ public final class DictionaryProvider extends ContentProvider {
                       final String[] selectionArgs) throws UnsupportedOperationException {
         PrivateLog.log("Attempt to update : " + uri);
         throw new UnsupportedOperationException("Updating dictionary words is not supported");
-    }
-
-    private static final class WordListInfo {
-        public final String mId;
-        public final String mLocale;
-        public final String mRawChecksum;
-        public final int mMatchLevel;
-
-        public WordListInfo(final String id, final String locale, final String rawChecksum,
-                            final int matchLevel) {
-            mId = id;
-            mLocale = locale;
-            mRawChecksum = rawChecksum;
-            mMatchLevel = matchLevel;
-        }
-    }
-
-    /**
-     * A cursor for returning a list of file ids from a List of strings.
-     *
-     * This simulates only the necessary methods. It has no error handling to speak of,
-     * and does not support everything a database does, only a few select necessary methods.
-     */
-    private static final class ResourcePathCursor extends AbstractCursor {
-
-        // Column names for the cursor returned by this content provider.
-        static private final String[] columnNames = {MetadataDbHelper.WORDLISTID_COLUMN,
-                MetadataDbHelper.LOCALE_COLUMN, MetadataDbHelper.RAW_CHECKSUM_COLUMN};
-
-        // The list of word lists served by this provider that match the client request.
-        final WordListInfo[] mWordLists;
-        // Note : the cursor also uses mPos, which is defined in AbstractCursor.
-
-        public ResourcePathCursor(final Collection<WordListInfo> wordLists) {
-            // Allocating a 0-size WordListInfo here allows the toArray() method
-            // to ensure we have a strongly-typed array. It's thrown out. That's
-            // what the documentation of #toArray says to do in order to get a
-            // new strongly typed array of the correct size.
-            mWordLists = wordLists.toArray(new WordListInfo[0]);
-            mPos = 0;
-        }
-
-        @Override
-        public String[] getColumnNames() {
-            return columnNames;
-        }
-
-        @Override
-        public int getCount() {
-            return mWordLists.length;
-        }
-
-        @Override
-        public double getDouble(int column) {
-            return 0;
-        }
-
-        @Override
-        public float getFloat(int column) {
-            return 0;
-        }
-
-        @Override
-        public int getInt(int column) {
-            return 0;
-        }
-
-        @Override
-        public short getShort(int column) {
-            return 0;
-        }
-
-        @Override
-        public long getLong(int column) {
-            return 0;
-        }
-
-        @Override
-        public String getString(final int column) {
-            switch (column) {
-                case 0:
-                    return mWordLists[mPos].mId;
-                case 1:
-                    return mWordLists[mPos].mLocale;
-                case 2:
-                    return mWordLists[mPos].mRawChecksum;
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public boolean isNull(final int column) {
-            return mPos >= mWordLists.length || column != 0;
-        }
     }
 }

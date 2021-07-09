@@ -9,31 +9,14 @@ import android.os.Parcelable;
 
 public class RiaNodeDataModel implements Parcelable {
 
-    public static final Creator<RiaNodeDataModel> CREATOR = new Creator<RiaNodeDataModel>() {
-        @Override
-        public RiaNodeDataModel createFromParcel(Parcel in) {
-            return new RiaNodeDataModel(in);
-        }
-
-        @Override
-        public RiaNodeDataModel[] newArray(int size) {
-            return new RiaNodeDataModel[size];
-        }
-    };
     private String nodeId;
     private String buttonId;
     private String buttonLabel;
 
-    public RiaNodeDataModel(String nodeId, String buttonId, String buttonLabel) {
+    public RiaNodeDataModel(String nodeId, String buttonId, String buttonLabel){
         this.nodeId = nodeId;
         this.buttonId = buttonId;
         this.buttonLabel = buttonLabel;
-    }
-
-    private RiaNodeDataModel(Parcel in) {
-        nodeId = in.readString();
-        buttonId = in.readString();
-        buttonLabel = in.readString();
     }
 
     public String getNodeId() {
@@ -62,6 +45,24 @@ public class RiaNodeDataModel implements Parcelable {
         this.buttonLabel = buttonLabel;
         return this;
     }
+
+    private RiaNodeDataModel(Parcel in) {
+        nodeId = in.readString();
+        buttonId = in.readString();
+        buttonLabel = in.readString();
+    }
+
+    public static final Creator<RiaNodeDataModel> CREATOR = new Creator<RiaNodeDataModel>() {
+        @Override
+        public RiaNodeDataModel createFromParcel(Parcel in) {
+            return new RiaNodeDataModel(in);
+        }
+
+        @Override
+        public RiaNodeDataModel[] newArray(int size) {
+            return new RiaNodeDataModel[size];
+        }
+    };
 
     @Override
     public int describeContents() {

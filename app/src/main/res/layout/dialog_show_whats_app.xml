@@ -1,37 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="@color/white"
-  android:gravity="center"
-  android:orientation="vertical">
-
-  <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="24dp"
-    android:layout_marginTop="24dp"
-    android:layout_marginEnd="24dp"
-    android:text="@string/boost_bubble"
-    android:textSize="18sp"
-    android:textStyle="bold" />
-
-  <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="24dp"
-    android:text="@string/accessibility_message"
-    android:textSize="15sp" />
-
-  <TextView
-    android:id="@+id/whatsapp_button"
-    android:layout_width="wrap_content"
-    android:layout_height="36dp"
-    android:layout_gravity="end"
-    android:layout_marginEnd="24dp"
-    android:layout_marginBottom="8dp"
-    android:background="@color/white"
+    android:orientation="vertical"
     android:gravity="center"
-    android:text="@string/open_whatsapp"
-    android:textColor="@color/primaryColor" />
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="@string/boost_bubble"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_margin="24dp"
+        android:text="@string/accessibility_message"/>
+    <TextView
+        android:id="@+id/whatsapp_button"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:background="@color/white"
+        android:textColor="@color/primaryColor"
+        android:text="@string/open_whatsapp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="24dp" />
 </LinearLayout>

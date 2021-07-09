@@ -17,29 +17,29 @@
 -->
 
 <input-method xmlns:android="http://schemas.android.com/apk/res/android"
-  android:isDefault="@bool/im_is_default"
-  android:settingsActivity="io.separ.neural.inputmethod.indic.settings.SettingsActivity">
+    android:isDefault="@bool/im_is_default"
+    android:settingsActivity="io.separ.neural.inputmethod.indic.settings.SettingsActivity">
 
-  <!-- English -->
-  <subtype
-    android:icon="@drawable/ic_ime_switcher_dark"
-    android:imeSubtypeExtraValue="TrySuppressingImeSwitcher,AsciiCapable,SupportTouchPositionCorrection,EmojiCapable"
-    android:imeSubtypeLocale="en_US"
-    android:imeSubtypeMode="keyboard"
-    android:label="@string/keyboard_name_en" />
+    <!-- English -->
+    <subtype
+        android:icon="@drawable/ic_ime_switcher_dark"
+        android:imeSubtypeExtraValue="TrySuppressingImeSwitcher,AsciiCapable,SupportTouchPositionCorrection,EmojiCapable"
+        android:imeSubtypeLocale="en_US"
+        android:imeSubtypeMode="keyboard"
+        android:label="@string/keyboard_name_en" />
 
-  <!-- Farsi -->
-  <subtype
-    android:icon="@drawable/ic_ime_switcher_dark"
-    android:imeSubtypeExtraValue="TrySuppressingImeSwitcher,SupportTouchPositionCorrection,EmojiCapable"
-    android:imeSubtypeLocale="fa"
-    android:imeSubtypeMode="keyboard"
-    android:isAsciiCapable="false"
-    android:label="@string/keyboard_name_fa" />
-  <subtype
-    android:icon="@drawable/ic_ime_switcher_dark"
-    android:imeSubtypeExtraValue="KeyboardLayoutSet=hindi,EmojiCapable"
-    android:imeSubtypeLocale="hi_IN"
-    android:imeSubtypeMode="keyboard"
-    android:label="@string/keyboard_name_hi_compact" />
+    <!-- Farsi -->
+    <subtype
+        android:icon="@drawable/ic_ime_switcher_dark"
+        android:imeSubtypeExtraValue="TrySuppressingImeSwitcher,SupportTouchPositionCorrection,EmojiCapable"
+        android:imeSubtypeLocale="fa"
+        android:imeSubtypeMode="keyboard"
+        android:isAsciiCapable="false"
+        android:label="@string/keyboard_name_fa" />
+    <subtype
+        android:icon="@drawable/ic_ime_switcher_dark"
+        android:imeSubtypeExtraValue="KeyboardLayoutSet=hindi,EmojiCapable"
+        android:imeSubtypeLocale="hi_IN"
+        android:imeSubtypeMode="keyboard"
+        android:label="@string/keyboard_name_hi_compact" />
 </input-method>

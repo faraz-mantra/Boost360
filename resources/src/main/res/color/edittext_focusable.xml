@@ -1,5 +1,5 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:color="#f89f18" android:state_focused="true" />
-  <item android:color="#f89f18" android:state_activated="true" />
-  <item android:color="@color/primary_text" android:state_focused="false" />
+  <item android:color="#f89f18" android:state_focused="true"/>
+  <item android:color="#f89f18" android:state_activated="true"/>
+  <item android:color="@color/primary_text" android:state_focused="false"/>
 </selector>

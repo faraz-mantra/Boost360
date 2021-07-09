@@ -14,11 +14,14 @@ public class Signup_Validation {
         return m.matches();
     }
 
-    public static boolean isValidPhoneNumber(String phoneNumber) {
-        if (phoneNumber.length() > 6 && phoneNumber.length() <= 12) {
-            return true;
-        } else
-            return false;
+    public static boolean isValidPhoneNumber(String phoneNumber)
+    {
+        if(phoneNumber.length() > 6 && phoneNumber.length() <= 12)
+        {
+            return true ;
+        }
+        else
+            return false ;
     }
 
 
