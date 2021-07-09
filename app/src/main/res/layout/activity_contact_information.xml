@@ -35,7 +35,7 @@
 
             <TextView
               style="@style/ProductLabelTextStyle"
-              android:text="Registered Contact Number" />
+              android:text="Registered contact number" />
 
             <ImageButton
               android:id="@+id/ib_info_primary"
