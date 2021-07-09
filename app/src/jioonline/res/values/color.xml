@@ -37,6 +37,6 @@
     <color name="text_dark">@color/colorPrimaryDarkBlue</color>
     <color name="bg_dark_grey">@color/colorPrimary</color>
     <color name="error_red">@color/ButtoncolorAccent</color>
-
+    <color name="black_light_progress">#e371b7</color>
 
 </resources>
