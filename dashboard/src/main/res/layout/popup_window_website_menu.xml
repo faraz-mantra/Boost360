@@ -53,7 +53,7 @@
         android:padding="@dimen/size_16"
         android:text="@string/reset_to_default"
         android:textAllCaps="true"
-        android:textColor="@color/red_F40000"
+        android:textColor="@color/black_4a4a4a"
         android:textSize="12sp" />
 
     </LinearLayout>

@@ -163,7 +163,7 @@
             android:id="@+id/reviewTitleLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/review_title"
+            android:text="@string/review_title_testimonial"
             android:textSize="@dimen/_11sdp" />
 
           <TextView
@@ -207,7 +207,7 @@
             android:id="@+id/reviewDescriptionLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/review_description"
+            android:text="@string/review_description_testimonial"
             android:textSize="@dimen/_11sdp" />
 
           <TextView
