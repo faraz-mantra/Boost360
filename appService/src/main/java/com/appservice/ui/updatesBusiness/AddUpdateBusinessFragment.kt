@@ -110,7 +110,7 @@ class AddUpdateBusinessFragment :
       object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
           if (isUpdate.not() && binding?.edtDesc?.text.isNullOrEmpty()
-              .not() && postImage != null
+              .not() || postImage != null
           ) onBackPress() else baseActivity.finish()
         }
       })
