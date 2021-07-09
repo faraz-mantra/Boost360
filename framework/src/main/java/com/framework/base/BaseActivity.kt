@@ -15,6 +15,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.framework.CustomTypefaceSpan
 import com.framework.R
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
@@ -78,6 +79,8 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   open fun getToolbarTitleTypeface(): Typeface? {
+    if (this.packageName.equals("com.jio.online", ignoreCase = true))
+      return Typeface.create("sans_regular",Typeface.NORMAL)
     return null
   }
 
