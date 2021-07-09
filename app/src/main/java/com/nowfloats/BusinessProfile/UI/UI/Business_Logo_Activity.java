@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -221,7 +222,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
         final CharSequence[] items = {"Take Photo", "Choose from Library",
                 "Cancel"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Business_Logo_Activity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper(this,R.style.AlertDialogCustom));
         builder.setTitle("Add Photo!");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override

@@ -36,6 +36,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -852,11 +853,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     }
 
     public void appUpdateAlertDialog(final Activity mContext) {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext)
+        MaterialDialog.Builder builder = new MaterialDialog.Builder( new ContextThemeWrapper(mContext,R.style.MaterialAlertDialogTheme))
                 .title(getString(R.string.app_update_available))
                 .content(getString(R.string.update_nowfloats_app))
                 .positiveText(getString(R.string.update))
-                .positiveColorRes(R.color.primaryColor)
                 .cancelable(false)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override

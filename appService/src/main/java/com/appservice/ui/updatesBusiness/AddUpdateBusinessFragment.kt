@@ -10,6 +10,7 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -191,7 +192,7 @@ class AddUpdateBusinessFragment :
       }
       binding?.btnSubscription -> {
         if (!sessionLocal.getBooleanDetails(isFirstTimeSendToSubscriber)) {
-          AlertDialog.Builder(baseActivity)
+          AlertDialog.Builder(ContextThemeWrapper(baseActivity,R.style.CustomAlertDialogTheme))
             .setTitle(R.string.send_to_subscribers)
             .setMessage(R.string.unable_to_send_website_updates_to_subscribers)
             .setPositiveButton(R.string.enable) { _: DialogInterface, _: Int ->
@@ -417,7 +418,7 @@ class AddUpdateBusinessFragment :
   }
 
   fun onBackPress() {
-    AlertDialog.Builder(baseActivity)
+    AlertDialog.Builder(ContextThemeWrapper(baseActivity,R.style.CustomAlertDialogTheme))
       .setCancelable(false)
       .setMessage(R.string.do_you_want_to_save_this_update_as_draft)
       .setPositiveButton(R.string.save) { dialog: DialogInterface, _: Int ->
