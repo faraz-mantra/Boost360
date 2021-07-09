@@ -130,10 +130,10 @@
   <string name="get_started">Get Started</string>
   <string name="add_a_customer_or_select_from_your_contact_book">Add a customer or select from your contact book.</string>
   <string name="customer_name">Customer name*</string>
-  <string name="customer_phone_number">Customer Phone number*</string>
+  <string name="customer_phone_number">Customer phone number*</string>
   <string name="add_a_customer">Add a Customer</string>
-  <string name="customer_email_id_optional">Customer Email ID (optional)</string>
-  <string name="enter_customer_s_email_id">Enter customer’s Email ID</string>
+  <string name="customer_email_id_optional">Customer email ID (optional)</string>
+  <string name="enter_customer_s_email_id">Enter customer’s email ID</string>
   <string name="address">Address*</string>
   <string name="customer_gstin_optional">Customer GSTIN (optional)</string>
   <string name="enter_customer_s_gstin">Enter customer’s GSTIN</string>
