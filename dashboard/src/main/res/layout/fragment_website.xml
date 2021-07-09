@@ -325,7 +325,7 @@
               android:id="@+id/txt_open_close"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginEnd="@dimen/size_10"
+              android:layout_marginEnd="@dimen/size_2"
               android:maxLines="2"
               android:text="@string/open_now"
               android:textColor="@color/white_green_light"
@@ -338,7 +338,7 @@
               android:id="@+id/ellipse_open_close"
               android:layout_width="@dimen/size_25"
               android:layout_height="@dimen/size_25"
-              android:layout_marginEnd="@dimen/size_14"
+              android:layout_marginEnd="@dimen/size_2"
               app:lottie_autoPlay="true"
               app:lottie_loop="true"
               app:lottie_rawRes="@raw/green_dot_json" />
