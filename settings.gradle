@@ -4,4 +4,5 @@ include ':app', ':imagepicker', ':keyboard', ':presignup', ':framework', ':faceb
 include ':messagelibrary'
 include ':app:libs:libraries:volley'
 include ':library'
+include ':florisboard'
 include ':flowtextview'
