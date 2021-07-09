@@ -207,7 +207,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         rightButton = findViewById(R.id.right_icon_layout);
         rightIcon = findViewById(R.id.right_icon);
         if (ScreenType.equals("edit")) {
-            title.setText("Edit testimonial");
+            title.setText("Edit Testimonial");
             rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
             rightButton.setOnClickListener(v -> {
                 if (ScreenType != null && ScreenType.equals("edit")) {
@@ -218,7 +218,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                 onBackPressed();
             });
         } else {
-            title.setText("Add a testimonial");
+            title.setText("Add a Testimonial");
         }
 
         backButton.setOnClickListener(v -> onBackPressed());

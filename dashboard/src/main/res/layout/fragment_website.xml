@@ -51,7 +51,7 @@
           android:layout_width="@dimen/size_36"
           android:layout_height="@dimen/size_36"
           android:layout_gravity="center"
-          android:padding="@dimen/size_1"
+          android:padding="@dimen/size_4"
           android:src="@drawable/ic_whatsapp_for_business_active" />
 
         <com.framework.views.customViews.CustomTextView

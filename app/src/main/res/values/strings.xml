@@ -2109,8 +2109,8 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="with_the_feature_you_can_showcase_your_customer_reviews_and_highlight_their_experience_on_the_homepage_of_your_website">With the feature, you can showcase your customer reviews and highlight their experience on the homepage of your website.</string>
   <string name="astreak">*</string>
   <string name="enter_company_title" translatable="false">Enter Company Title</string>
-  <string name="review_title">Review Title</string>
-  <string name="review_description">Review Description</string>
+  <string name="review_title">Review title</string>
+  <string name="review_description">Review description</string>
   <string name="_200_characters" translatable="false">(200 Characters)</string>
   <string name="save" translatable="false">Save</string>
   <string name="showcase_tripadvisor_ratings_on_your_boost_business_website">Showcase Tripadvisor Ratings on your Boost business website.</string>
@@ -2393,7 +2393,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="potential_customers">Potential Customers</string>
   <string name="_91_84932987498" translatable="false">+91 84932987498</string>
   <string name="relevant_update_and_product_suggestions">Relevant update and product suggestions:</string>
-  <string name="other_information">Other Information</string>
+  <string name="other_information">Other information</string>
   <string name="if_you_wish_to_change_email_address_please_contact_ria_nowfloats_com">If you wish to change email address, please contact ria@nowfloats.com</string>
   <string name="domain_is_a_great_first_step_towards_building_your_brand_on_web">Domain is a great first step towards building your brand on web.</string>
   <string name="website_domain_not_enabled">Website Domain not enabled</string>
