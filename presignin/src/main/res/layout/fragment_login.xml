@@ -46,7 +46,7 @@
       style="@style/psn_login_edittext_style"
       android:layout_marginTop="@dimen/_16sdp"
       android:drawableStart="@drawable/ic_pass_et_drawable"
-      android:hint="@string/password"
+      android:hint="@string/password_n"
       android:inputType="textPassword"
       app:layout_constraintEnd_toEndOf="@id/endGuide"
       app:layout_constraintTop_toBottomOf="@id/username_et"

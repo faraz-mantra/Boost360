@@ -265,17 +265,11 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       if (isEditable) resources.getString(R.string.write_account_alias) else ""
     binding?.edtIfsc?.hint = if (isEditable) resources.getString(R.string.type_ifsc_code) else ""
     if (isEditable) {
-      (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(
-        resources.getString(R.string.adding_bank_account),
-        resources.getDimensionPixelSize(R.dimen.size_36)
-      )
+      (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.adding_bank_account), resources.getDimensionPixelSize(R.dimen.size_36))
       binding?.submitBtn?.apply {
-        background = ContextCompat.getDrawable(baseActivity, R.drawable.bg_button_rounded_orange)
+        backgroundTintList = ContextCompat.getColorStateList(baseActivity, R.color.colorAccentLight)
       }
-      (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(
-        R.color.color_primary,
-        R.color.color_primary_dark
-      )
+      (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.color_primary, R.color.color_primary_dark)
     }
   }
 

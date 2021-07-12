@@ -367,7 +367,7 @@
             android:src="@drawable/ic_email"
             app:layout_constraintStart_toStartOf="@id/ctv_gstin"
             app:layout_constraintTop_toBottomOf="@id/ctv_gstin"
-            app:tint="@color/colorAccent_jio" />
+            app:tint="@color/colorAccentLight" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_email"
@@ -376,7 +376,7 @@
             android:layout_marginEnd="@dimen/size_2"
             android:text="@string/appointment_send_email"
             android:textAllCaps="true"
-            app:tint="@color/colorAccent_jio"
+            android:textColor="@color/colorAccentLight"
             app:layout_constraintBottom_toBottomOf="@id/image_email"
             app:layout_constraintStart_toEndOf="@id/image_email"
             app:layout_constraintTop_toTopOf="@id/image_email" />
@@ -390,7 +390,7 @@
             app:layout_constraintBottom_toBottomOf="@id/text_email"
             app:layout_constraintStart_toEndOf="@id/text_email"
             app:layout_constraintTop_toTopOf="@id/text_email"
-            app:tint="@color/colorAccent_jio" />
+            app:tint="@color/colorAccentLight" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_phone"
@@ -399,7 +399,7 @@
             android:paddingStart="@dimen/size_8"
             android:text="@string/call"
             android:textAllCaps="true"
-            app:tint="@color/colorAccent_jio"
+            android:textColor="@color/colorAccentLight"
             app:layout_constraintBottom_toBottomOf="@id/image_phone"
             app:layout_constraintStart_toEndOf="@id/image_phone"
             app:layout_constraintTop_toTopOf="@id/image_phone" />

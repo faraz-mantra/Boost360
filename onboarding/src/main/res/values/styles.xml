@@ -254,7 +254,6 @@
   </style>
 
   <style name="AlertDialogCustom" parent="CustomAlertDialogTheme">
-    <item name="colorAccent">@color/colorAccent</item>
     <item name="android:textColorPrimary">@color/black_4a4a4a</item>
     <item name="android:background">@color/white</item>
   </style>

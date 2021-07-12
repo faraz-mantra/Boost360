@@ -240,9 +240,9 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2
             new MaterialDialog.Builder(this)
                     .title("Recording Download")
                     .content(R.string.we_need_external_storage_permission_to_download_this_file)
-                    .negativeColorRes(R.color.gray_transparent)
                     .negativeText(getString(R.string.cancel))
-                    .positiveColorRes(R.color.primary_color)
+                    .negativeColorRes(R.color.black_4a4a4a)
+                    .positiveColorRes(R.color.primaryColor)
                     .positiveText(getString(R.string.open_setting))
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override

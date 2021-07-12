@@ -334,8 +334,8 @@ public class CustomPageFragment extends Fragment {
                             .content(getString(R.string.page_will_deleted))
                             .positiveText(getString(R.string.deleted_in_capital))
                             .negativeText(getString(R.string.cancel_in_capital))
-                            .positiveColorRes(R.color.primaryColor)
-                            .negativeColorRes(R.color.grey)
+                            .positiveColorRes(R.color.colorAccentLight)
+                            .negativeColorRes(R.color.black_4a4a4a)
                             .callback(new MaterialDialog.ButtonCallback() {
                                 @Override
                                 public void onPositive(MaterialDialog dialog) {
