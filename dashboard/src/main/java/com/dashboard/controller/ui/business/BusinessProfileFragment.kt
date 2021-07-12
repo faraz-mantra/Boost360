@@ -54,8 +54,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.*
 
-class BusinessProfileFragment :
-  AppBaseFragment<FragmentBusinessProfileBinding, BusinessProfileViewModel>() {
+class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, BusinessProfileViewModel>() {
 
   private var businessImage: File? = null
   private var businessProfileModel = BusinessProfileModel()
