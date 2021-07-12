@@ -91,7 +91,7 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_20"
               android:text="@string/add_service_image"
-              android:textColor="@color/yellow_ffb900"
+              android:textColor="@color/colorAccent_jio"
               app:fontFamily="@font/semi_bold"
               app:textAllCaps="true"
               app:textType="BODY_1" />

@@ -35,9 +35,8 @@
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="20dp"
-      android:orientation="horizontal"
-      android:padding="15dp">
+      android:layout_marginTop="@dimen/_14sdp"
+      android:orientation="horizontal">
 
       <Button
         android:id="@+id/Button_crop"
@@ -45,12 +44,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:background="#ffb900"
+        android:background="@drawable/rounded_button_enabled"
         android:drawableTop="@drawable/crop_icon"
+        android:drawableTint="@color/white"
         android:padding="5dp"
         android:text="@string/crop"
-        android:textColor="@color/black"
-        android:textSize="8sp" />
+        android:textColor="@color/white"
+        android:textSize="12sp" />
 
       <Button
         android:id="@+id/Button_rotate"
@@ -60,12 +60,13 @@
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         android:layout_weight="1"
-        android:background="@color/primaryColor"
+        android:background="@drawable/rounded_button_enabled"
         android:drawableTop="@drawable/rotate_icon"
+        android:drawableTint="@color/white"
         android:padding="5dp"
         android:text="@string/rotate"
-        android:textColor="@color/black"
-        android:textSize="8sp" />
+        android:textColor="@color/white"
+        android:textSize="12sp" />
 
       <Button
         android:id="@+id/button_recapture"
@@ -73,22 +74,24 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:background="@color/colorAccent"
+        android:background="@drawable/rounded_button_enabled"
+        android:drawableTint="@color/white"
         android:padding="5dp"
         android:text="@string/choose_image"
         android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
     </LinearLayout>
 
     <Button
       android:id="@+id/Button_save"
       android:layout_width="match_parent"
-      android:layout_height="36dp"
+      android:layout_height="@dimen/_38sdp"
       android:layout_gravity="center"
-      android:background="@color/colorAccent"
+      android:layout_marginTop="@dimen/_10sdp"
+      android:background="@drawable/rounded_button_enabled"
       android:text="@string/save"
       android:textColor="@color/white"
-      android:textSize="15sp" />
+      android:textSize="14sp" />
   </LinearLayout>
 </LinearLayout>

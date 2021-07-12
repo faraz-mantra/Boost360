@@ -44,8 +44,7 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 import com.squareup.picasso.Picasso
 import java.util.*
 
-class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentSpaDetailsBinding>(),
-  RecyclerItemClickListener {
+class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentSpaDetailsBinding>(), RecyclerItemClickListener {
 
   private var orderItem: OrderItem? = null
   private var isRefresh: Boolean = false
