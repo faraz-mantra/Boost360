@@ -71,99 +71,99 @@ class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Chann
     val fpTag = arguments?.getString(PreferenceConstant.GET_FP_DETAILS_TAG)
     showProgress()
     viewModel?.getMerchantProfile(floatingPoint)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        val response = it as? MerchantProfileResponse
-        val userDetail = response?.result?.getUserDetail()
-        contactName = when {
-          contactName.isNullOrEmpty().not() -> contactName
-          userDetail?.userName.isNullOrEmpty().not() -> userDetail?.userName
-          else -> fpTag
-        }
-        primaryNumber = if (primaryNumber.isNullOrEmpty()
-            .not()
-        ) primaryNumber else if (userDetail?.userMobile.isNullOrEmpty()
-            .not()
-        ) userDetail?.userMobile else ""
-        primaryEmail = if (primaryEmail.isNullOrEmpty()
-            .not()
-        ) primaryEmail else if (userDetail?.userEmail.isNullOrEmpty()
-            .not()
-        ) userDetail?.userEmail else ""
+//      if (it.isSuccess()) {
+      val response = it as? MerchantProfileResponse
+      val userDetail = response?.result?.getUserDetail()
+      contactName = when {
+        contactName.isNullOrEmpty().not() -> contactName
+        userDetail?.userName.isNullOrEmpty().not() -> userDetail?.userName
+        else -> fpTag
+      }
+      primaryNumber = when {
+        primaryNumber.isNullOrEmpty().not() -> primaryNumber
+        userDetail?.userMobile.isNullOrEmpty().not() -> userDetail?.userMobile
+        else -> ""
+      }
+      primaryEmail = when {
+        primaryEmail.isNullOrEmpty().not() -> primaryEmail
+        userDetail?.userEmail.isNullOrEmpty().not() -> userDetail?.userEmail
+        else -> ""
+      }
 
-        val userProfile = ProfileProperties(
-          userName = contactName,
-          userMobile = primaryNumber,
-          userEmail = primaryEmail
-        )
-        val cardList = ArrayList<DigitalCardData>()
-        val cardData = CardData(
-          businessName, businessImage, location, userProfile.userName?.capitalizeWords(),
-          addPlus91(userProfile.userMobile), userProfile.userEmail, businessType, websiteUrl
-        )
+      val userProfile = ProfileProperties(
+        userName = contactName,
+        userMobile = primaryNumber,
+        userEmail = primaryEmail
+      )
+      val cardList = ArrayList<DigitalCardData>()
+      val cardData = CardData(
+        businessName, businessImage, location, userProfile.userName?.capitalizeWords(),
+        addPlus91(userProfile.userMobile), userProfile.userEmail, businessType, websiteUrl
+      )
 
-        cardList.add(
-          DigitalCardData(
-            cardData = cardData,
-            recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()
-          )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()
         )
-        cardList.add(
-          DigitalCardData(
-            cardData = cardData,
-            recyclerViewType = RecyclerViewItemType.VISITING_CARD_TWO_ITEM.getLayout()
-          )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_TWO_ITEM.getLayout()
         )
-        cardList.add(
-          DigitalCardData(
-            cardData = cardData,
-            recyclerViewType = RecyclerViewItemType.VISITING_CARD_THREE_ITEM.getLayout()
-          )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_THREE_ITEM.getLayout()
         )
-        cardList.add(
-          DigitalCardData(
-            cardData = cardData,
-            recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()
-          )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()
         )
-        cardList.add(
-          DigitalCardData(
-            cardData = cardData,
-            recyclerViewType = RecyclerViewItemType.VISITING_CARD_FIVE_ITEM.getLayout()
-          )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_FIVE_ITEM.getLayout()
         )
-        cardList.add(
-          DigitalCardData(
-            cardData = cardData,
-            recyclerViewType = RecyclerViewItemType.VISITING_CARD_SIX_ITEM.getLayout()
-          )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_SIX_ITEM.getLayout()
         )
-        cardList.add(
-          DigitalCardData(
-            cardData = cardData,
-            recyclerViewType = RecyclerViewItemType.VISITING_CARD_SEVEN_ITEM.getLayout()
-          )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_SEVEN_ITEM.getLayout()
         )
-        cardList.add(
-          DigitalCardData(
-            cardData = cardData,
-            recyclerViewType = RecyclerViewItemType.VISITING_CARD_EIGHT_ITEM.getLayout()
-          )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_EIGHT_ITEM.getLayout()
         )
-        cardList.add(
-          DigitalCardData(
-            cardData = cardData,
-            recyclerViewType = RecyclerViewItemType.VISITING_CARD_NINE_ITEM.getLayout()
-          )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_NINE_ITEM.getLayout()
         )
-        cardList.add(
-          DigitalCardData(
-            cardData = cardData,
-            recyclerViewType = RecyclerViewItemType.VISITING_CARD_TEN_ITEM.getLayout()
-          )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_TEN_ITEM.getLayout()
         )
+      )
 
-        setAdapterCard(cardList)
-      } else showShortToast(it.message())
+      setAdapterCard(cardList)
+//      } else showShortToast(it.message())
       hideProgress()
     })
     binding?.shareWhatsapp?.setOnClickListener {

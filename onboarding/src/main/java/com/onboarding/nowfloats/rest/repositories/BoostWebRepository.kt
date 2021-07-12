@@ -12,10 +12,7 @@ import retrofit2.Retrofit
 object BoostWebRepository : AppBaseRepository<BoostWebDataSource, AppBaseLocalService>() {
 
   fun getMerchantProfile(floatingpointId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.getMerchantProfile(floatingpointId),
-      Taskcode.GET_MERCHANT_PROFILE
-    )
+    return makeRemoteRequest(remoteDataSource.getMerchantProfile(floatingpointId), Taskcode.GET_MERCHANT_PROFILE)
   }
 
   override fun getRemoteDataSourceClass(): Class<BoostWebDataSource> {
