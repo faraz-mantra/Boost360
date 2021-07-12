@@ -156,8 +156,8 @@
     <item name="colorSurface">@color/white</item>
     <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertTitleTextStyle</item>
     <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertBodyTextStyle</item>
-    <item name="buttonBarPositiveButtonStyle">@style/MaterialAlertPositiveButtonStyle</item>
-    <item name="buttonBarNegativeButtonStyle">@style/MaterialAlertNegativeButtonStyle</item>
+<!--    <item name="buttonBarPositiveButtonStyle">@style/MaterialAlertPositiveButtonStyle</item>-->
+<!--    <item name="buttonBarNegativeButtonStyle">@style/MaterialAlertNegativeButtonStyle</item>-->
   </style>
 
   <style name="MaterialAlertTitleTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
