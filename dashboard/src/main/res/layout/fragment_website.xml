@@ -202,6 +202,7 @@
                 android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:maxLines="2"
+                android:fontFamily="@font/open_sans"
                 android:textColor="@color/pinkish_grey"
                 app:textType="CAPTION"
                 tools:text="Dr. Shravans clinic is located in Jubilee Hills, Hyderabad. The clinic was establised in 2006 and is one of the most..." />
