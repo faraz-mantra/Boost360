@@ -297,8 +297,8 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 .customView(view, false)
                 .positiveText("Add")
                 .negativeText("Cancel")
-                .negativeColorRes(R.color.gray_transparent)
-                .positiveColorRes(R.color.primary_color)
+                .negativeColorRes(R.color.black_4a4a4a)
+                .positiveColorRes(R.color.colorAccentLight)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
