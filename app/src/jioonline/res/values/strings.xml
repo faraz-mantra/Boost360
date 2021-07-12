@@ -588,5 +588,6 @@
   <string name="get_boost_360_tnc">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
   <string name="need_help_desc">Please feel free to <a href="mailto: businesscare@jio.com">send an email at businesscare@jio.com</a>. Alternatively you can <a href="tel:18008899444">call us at 1800 889 9444</a>.</string>
   <string name="business_category_is_to_be_selected_only_once_while_setting_up_your_business_account_on_boost_360_to_know_more_contact_support">Business category is to be selected only once while setting up your business account on JioOnline. To know more contact support.</string>
+  <string name="fp_shop_awaited_desc">Unfortunately, This functionality is not available on the Android app yet. To activate this channel, please log in to boost the web portal <a href="https://jioonline.nowfloatsdev.com/">(jioonline.nowfloatsdev.com)</a> from the nearest desktop and go to <b>Content > Content Sharing Settings</b>. There you\'ll be able to activate this.</string>
 
 </resources>

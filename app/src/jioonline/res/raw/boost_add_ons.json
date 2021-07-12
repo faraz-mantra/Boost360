@@ -59,7 +59,7 @@
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"
@@ -222,8 +222,8 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
-              "isHide": true,
+              "isLock": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
             }
@@ -322,7 +322,7 @@
             },
             {
               "businessType": "social_sharing_analytics",
-              "isLock": false,
+              "isLock": true,
               "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
@@ -435,7 +435,7 @@
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"
@@ -598,8 +598,8 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
-              "isHide": true,
+              "isLock": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
             }
@@ -698,7 +698,7 @@
             },
             {
               "businessType": "social_sharing_analytics",
-              "isLock": false,
+              "isLock": true,
               "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
@@ -953,7 +953,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -1053,7 +1053,7 @@
             },
             {
               "businessType": "social_sharing_analytics",
-              "isLock": false,
+              "isLock": true,
               "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
@@ -1329,8 +1329,8 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
-              "isHide": true,
+              "isLock": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
             }
@@ -1429,7 +1429,7 @@
             },
             {
               "businessType": "social_sharing_analytics",
-              "isLock": false,
+              "isLock": true,
               "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
@@ -1712,7 +1712,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -1812,7 +1812,7 @@
             },
             {
               "businessType": "social_sharing_analytics",
-              "isLock": false,
+              "isLock": true,
               "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
@@ -2102,8 +2102,8 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
-              "isHide": true,
+              "isLock": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
             }
@@ -2202,7 +2202,7 @@
             },
             {
               "businessType": "social_sharing_analytics",
-              "isLock": false,
+              "isLock": true,
               "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
@@ -2308,7 +2308,7 @@
             },
             {
               "businessType": "restaurant_story_d",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Restaurant\nStory"
@@ -2471,7 +2471,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -2571,7 +2571,7 @@
             },
             {
               "businessType": "social_sharing_analytics",
-              "isLock": false,
+              "isLock": true,
               "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
@@ -2670,7 +2670,7 @@
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"
@@ -2833,7 +2833,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -2933,7 +2933,7 @@
             },
             {
               "businessType": "social_sharing_analytics",
-              "isLock": false,
+              "isLock": true,
               "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
@@ -3032,7 +3032,7 @@
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"
@@ -3195,7 +3195,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -3295,7 +3295,7 @@
             },
             {
               "businessType": "social_sharing_analytics",
-              "isLock": false,
+              "isLock": true,
               "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
@@ -3394,7 +3394,7 @@
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"
@@ -3408,7 +3408,7 @@
 //            },
             {
               "businessType": "membership_plans",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Membership\nPlans"
@@ -3571,7 +3571,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -3671,7 +3671,7 @@
             },
             {
               "businessType": "social_sharing_analytics",
-              "isLock": false,
+              "isLock": true,
               "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
