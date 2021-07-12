@@ -248,7 +248,7 @@ public class ContactInformationActivity extends BaseActivity {
                 .title("Call Tracker is enabled")
                 .customView(dialogView, false)
                 .positiveText(getString(R.string.ok))
-                .positiveColorRes(R.color.primaryColor)
+                .positiveColorRes(R.color.primary_color)
                 .callback(new MaterialDialog.ButtonCallback() {
 
                     @Override
