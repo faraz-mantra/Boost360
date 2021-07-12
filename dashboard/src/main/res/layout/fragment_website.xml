@@ -204,6 +204,7 @@
                 android:layout_marginHorizontal="@dimen/_14dp"
                 android:includeFontPadding="false"
                 android:maxLines="2"
+                android:fontFamily="@font/open_sans"
                 android:textColor="@color/website_desc"
                 android:visibility="visible"
                 app:textType="CAPTION"
