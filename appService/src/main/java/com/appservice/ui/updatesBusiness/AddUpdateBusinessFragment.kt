@@ -86,7 +86,6 @@ class AddUpdateBusinessFragment :
 
   override fun onCreateView() {
     super.onCreateView()
-    baseActivity.showKeyBoard(binding?.edtDesc)
     updateFloat = arguments?.getSerializable(IntentConstant.OBJECT_DATA.name) as? UpdateFloat
     isUpdate = updateFloat != null && updateFloat!!.id.isNullOrEmpty().not()
     WebEngageController.trackEvent(EVENT_NAME_UPDATE_CREATE, PAGE_VIEW, sessionLocal.fpTag)
@@ -117,6 +116,7 @@ class AddUpdateBusinessFragment :
         }
       })
     initializeSocial()
+    binding?.edtDesc?.post { baseActivity.showKeyBoard(binding?.edtDesc) }
   }
 
   private fun localDataView() {
@@ -192,7 +192,7 @@ class AddUpdateBusinessFragment :
       }
       binding?.btnSubscription -> {
         if (!sessionLocal.getBooleanDetails(isFirstTimeSendToSubscriber)) {
-          AlertDialog.Builder(ContextThemeWrapper(baseActivity,R.style.CustomAlertDialogTheme))
+          AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
             .setTitle(R.string.send_to_subscribers)
             .setMessage(R.string.unable_to_send_website_updates_to_subscribers)
             .setPositiveButton(R.string.enable) { _: DialogInterface, _: Int ->
@@ -418,7 +418,7 @@ class AddUpdateBusinessFragment :
   }
 
   fun onBackPress() {
-    AlertDialog.Builder(ContextThemeWrapper(baseActivity,R.style.CustomAlertDialogTheme))
+    AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
       .setCancelable(false)
       .setMessage(R.string.do_you_want_to_save_this_update_as_draft)
       .setPositiveButton(R.string.save) { dialog: DialogInterface, _: Int ->
