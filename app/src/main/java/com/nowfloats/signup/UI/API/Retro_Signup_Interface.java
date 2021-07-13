@@ -4,6 +4,7 @@ package com.nowfloats.signup.UI.API;
 import com.nowfloats.Store.Model.PricingPlansModel;
 import com.nowfloats.signup.UI.Model.Email_Validation_Model;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
+import com.nowfloats.signup.UI.Model.Get_Feature_Details;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +61,9 @@ public interface Retro_Signup_Interface {
     //    @Headers({"Content-Type: application/json","Accept: application/json"})
     @GET("/Discover/v3/floatingPoint/nf-app/{fpid}")
     void post_getFPDetails(@Path("fpid") String fpid,@QueryMap Map<String,String> map, Callback<Get_FP_Details_Model> callback);
+
+    @GET("/Features/v1/GetFeatureDetils")
+    void post_getFeatureDetails(@Query("fpId") String fdId,@Query("clientId") String clientId, Callback<Get_Feature_Details> callback);
 
     @GET("/Support/v5/floatingpoint/getpackages")
     void post_getFPPackageDetails(@QueryMap Map<String,String> map, Callback<PricingPlansModel> callback);

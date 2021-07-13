@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.framework.models.firestore.FirestoreManager;
+import com.google.gson.Gson;
 import com.nowfloats.Analytics_Screen.API.NfxFacebbokAnalytics;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.API.Facebook_Auto_Publish_API;
@@ -21,6 +22,7 @@ import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.signup.UI.API.Retro_Signup_Interface;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
+import com.nowfloats.signup.UI.Model.Get_Feature_Details;
 import com.nowfloats.signup.UI.Model.ProcessFPDetails;
 import com.nowfloats.signup.UI.UI.WebSiteAddressActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -65,6 +67,7 @@ public class Get_FP_Details_Service {
     HashMap<String, String> map = new HashMap<>();
     map.put("clientId", clientID);
     Retro_Signup_Interface getFPDetails = Constants.restAdapter.create(Retro_Signup_Interface.class);
+    Retro_Signup_Interface getFeatureDetails = Constants.restAdapterforCapLimit.create(Retro_Signup_Interface.class);
     getFPDetails.post_getFPDetails(fpID, map, new Callback<Get_FP_Details_Model>() {
       @Override
       public void success(Get_FP_Details_Model get_fp_details_model, final Response response) {
@@ -154,6 +157,25 @@ public class Get_FP_Details_Service {
         } catch (Exception e) {
           bus.post(e.getLocalizedMessage());
         }
+      }
+    });
+
+    getFeatureDetails.post_getFeatureDetails(fpID, clientID, new Callback<Get_Feature_Details>() {
+      @Override
+      public void success(Get_Feature_Details get_feature_detailsItems, Response response) {
+        if (get_feature_detailsItems != null) {
+          com.framework.pref.UserSessionManager mSessionManager = new com.framework.pref.UserSessionManager(activity.getApplicationContext());
+          String jsonString = new Gson().toJson(get_feature_detailsItems);
+          mSessionManager.storeFeatureDetails(com.framework.pref.Key_Preferences.FEATURE_DETAILS,jsonString);
+          Log.d("jsonString", " "+ jsonString);
+//          mSessionManager.storeFeatureDetails();
+        }
+
+      }
+
+      @Override
+      public void failure(RetrofitError error) {
+
       }
     });
   }

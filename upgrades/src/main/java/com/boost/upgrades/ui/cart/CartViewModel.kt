@@ -213,8 +213,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     fun InitiatePurchaseOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
         Log.d("InitiatePurchaseOld", " " + createPurchaseOrderV2)
         if (Utils.isConnectedToInternet(getApplication())) {
-            var sample = Gson().toJson(createPurchaseOrderV2)
-            writeStringAsFile(sample, "initiatePurchase.txt")
+//            var sample = Gson().toJson(createPurchaseOrderV2)
+//            writeStringAsFile(sample, "initiatePurchase.txt")
             updatesLoader.postValue(true)
             APIRequestStatus = "Order registration in progress..."
             compositeDisposable.add(
