@@ -22,5 +22,9 @@
     android:name="com.dashboard.controller.ui.enquiries.EnquiriesFragment"
     android:label="@string/my_enquiry"
     tools:layout="@layout/fragment_patients_customer" />
-
+  <fragment
+    android:id="@+id/more_settings"
+    android:name="com.dashboard.controller.ui.more.MoreFragment"
+    android:label="@string/menu"
+    tools:layout="@layout/fragment_more" />
 </navigation>
