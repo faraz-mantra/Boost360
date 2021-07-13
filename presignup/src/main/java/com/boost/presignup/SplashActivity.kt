@@ -29,14 +29,19 @@ class SplashActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_splash)
-
+    val pref: SharedPreferences = this.getSharedPreferences("nowfloatsPrefs", MODE_PRIVATE)
+    isUserLoggedIn = pref.getBoolean("IsUserLoggedIn", false)
+    isSignUpComplete = pref.getBoolean("IsSignUpComplete", false)
+    if (isUserLoggedIn && isSignUpComplete.not()) {
+      val profileId = pref.getString("user_profile_id", null)
+      isUserLoggedIn = profileId != null && profileId.trim().isNotEmpty()
+    }
     if (intent != null) {
       val uri = intent.data ?: null
       if (uri == null) {
         if (uri.toString().contains("onelink", true)) {
           if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
-            deepLinkViewType =
-              AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
+            deepLinkViewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
             deepLinkFpId = AppsFlyerUtils.sAttributionData[DynamicLinkParams.fpId.name] ?: ""
             deepLinkFpTag = AppsFlyerUtils.sAttributionData[DynamicLinkParams.fpTag.name] ?: ""
             deepLinkDay = AppsFlyerUtils.sAttributionData[DynamicLinkParams.day.name] ?: ""
@@ -51,29 +56,37 @@ class SplashActivity : AppCompatActivity() {
           }
         }
       }
-    }
-    val pref: SharedPreferences = this.getSharedPreferences("nowfloatsPrefs", MODE_PRIVATE)
-    isUserLoggedIn = pref.getBoolean("IsUserLoggedIn", false)
-    isSignUpComplete = pref.getBoolean("IsSignUpComplete", false)
-
-    if (isUserLoggedIn && isSignUpComplete.not()) {
-      val profileId = pref.getString("user_profile_id", null)
-      isUserLoggedIn = profileId != null && profileId.trim().isNotEmpty()
+    } else if (intent.extras?.containsKey("url") == true) {
+      val url = intent.extras?.getString("url")
+      if (url.isNullOrEmpty().not() && isUserLoggedIn) {
+        try {
+          val intent = Intent(applicationContext, Class.forName("com.dashboard.controller.DashboardActivity"))
+          intent.putExtra("url", url)
+          startActivity(intent)
+          overridePendingTransition(0, 0)
+          this.finish()
+        } catch (e: Exception) {
+          e.printStackTrace()
+        }
+      }
     }
     onCreateView()
   }
 
   private fun onCreateView() {
     if (isUserLoggedIn && deepLinkViewType.isNotEmpty()) {
-      val intent =
-        Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
-      intent.putExtra("deepLinkViewType", deepLinkViewType)
-      intent.putExtra("deepLinkFpId", deepLinkFpId)
-      intent.putExtra("deepLinkFpTag", deepLinkFpTag)
-      intent.putExtra("deepLinkDay", deepLinkDay)
-      startActivity(intent)
-      overridePendingTransition(0, 0)
-      finish()
+      try {
+        val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkFpId", deepLinkFpId)
+        intent.putExtra("deepLinkFpTag", deepLinkFpTag)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        startActivity(intent)
+        overridePendingTransition(0, 0)
+        finish()
+      } catch (e: Exception) {
+        e.printStackTrace()
+      }
     } else
       initLottieAnimation()
   }
@@ -88,10 +101,7 @@ class SplashActivity : AppCompatActivity() {
         animation_view?.cancelAnimation()
         when {
           isUserLoggedIn -> {
-            val intent = Intent(
-              applicationContext,
-              Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity")
-            )
+            val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
             startActivity(intent)
             finish()
           }
@@ -100,12 +110,7 @@ class SplashActivity : AppCompatActivity() {
 //            NavigatorManager.startActivities(this@SplashActivity)
 //            finish()
           }
-          else -> {
-            startNewSignIn()
-//            val mainIntent = Intent(applicationContext, PreSignUpActivity::class.java)
-//            startActivity(mainIntent)
-//            finish()
-          }
+          else -> startNewSignIn()
         }
       }
 
@@ -121,10 +126,7 @@ class SplashActivity : AppCompatActivity() {
 
   private fun startNewSignUpSuccess() {
     try {
-      val intent = Intent(
-        applicationContext,
-        Class.forName("com.boost.presignin.ui.registration.RegistrationActivity")
-      )
+      val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.registration.RegistrationActivity"))
       intent.putExtra("FRAGMENT_TYPE", 101)
       startActivity(intent)
       finish()
@@ -136,29 +138,12 @@ class SplashActivity : AppCompatActivity() {
 
   private fun startNewSignIn() {
     try {
-      val intent =
-        Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
+      val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
       startActivity(intent)
       finish()
     } catch (e: Exception) {
       e.printStackTrace()
       finish()
-    }
-  }
-
-  private fun hashGeneration() { // Add code to print out the key hash
-    try {
-      val info: PackageInfo = packageManager.getPackageInfo(
-        packageName,
-        PackageManager.GET_SIGNATURES
-      )
-      for (signature in info.signatures) {
-        val md: MessageDigest = MessageDigest.getInstance("SHA")
-        md.update(signature.toByteArray())
-        Log.e("BST_KeyHash:", ">>>>" + Base64.encodeToString(md.digest(), Base64.DEFAULT))
-      }
-    } catch (e: PackageManager.NameNotFoundException) {
-    } catch (e: NoSuchAlgorithmException) {
     }
   }
 
