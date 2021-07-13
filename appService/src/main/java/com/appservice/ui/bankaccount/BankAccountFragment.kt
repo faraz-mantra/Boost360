@@ -270,7 +270,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         resources.getDimensionPixelSize(R.dimen.size_36)
       )
       binding?.submitBtn?.apply {
-        background = ContextCompat.getDrawable(baseActivity, R.drawable.bg_button_rounded_orange)
+       backgroundTintList = ContextCompat.getColorStateList(baseActivity, R.color.colorAccent_jio)
       }
       (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(
         R.color.color_primary,
