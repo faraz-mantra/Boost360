@@ -218,6 +218,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .customView(R.layout.exit_dialog, true)
                 .positiveText(getString(R.string.setting_logout))
                 .negativeText(getString(R.string.cancel))
+                .negativeColorRes(R.color.black_4a4a4a)
+                .positiveColorRes(R.color.colorAccent_jio)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -241,7 +243,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .customView(R.layout.change_password, true)
                 .positiveText(getString(R.string.ok))
                 .negativeText(getString(R.string.cancel))
-                .positiveColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.black_4a4a4a)
+                .positiveColorRes(R.color.colorAccent_jio)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onNegative(MaterialDialog dialog) {
@@ -381,8 +384,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .customView(R.layout.dialog_link_layout, false)
                 .positiveText(postiveBtn)
                 .negativeText(negativeBtn)
-                .positiveColorRes(R.color.primaryColor)
-                .negativeColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.black_4a4a4a)
+                .positiveColorRes(R.color.colorAccent_jio)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
