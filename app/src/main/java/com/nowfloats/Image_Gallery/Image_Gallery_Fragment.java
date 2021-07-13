@@ -95,6 +95,15 @@ public class Image_Gallery_Fragment extends Fragment implements
     ArrayList<String> purchasedWidgetList = new ArrayList<String>();
     String featureList = null;
     String limitValue = null;
+    int imageCount = 0;
+    ImageGalleryListener imageGalleryListener = null;
+    public Image_Gallery_Fragment getInstance(ImageGalleryListener mListener)
+    {
+        Log.d("imageGalleryListener", " "+ mListener);
+        imageGalleryListener = mListener;
+        return new Image_Gallery_Fragment();
+    }
+
 
     @Override
     public void onResume() {
@@ -176,6 +185,10 @@ public class Image_Gallery_Fragment extends Fragment implements
             if (otherImagesAdapter != null) otherImagesAdapter.notifyDataSetChanged();
             if (emptyGalleryLayout != null && otherImagesAdapter.getCount() != 0) {
                 emptyGalleryLayout.setVisibility(View.GONE);
+                imageCount = otherImagesAdapter.getCount();
+                Log.d("imageGalleryListener", " 3 :  "+ imageGalleryListener);
+                imageGalleryListener.imageCount(imageCount);
+                Log.d("imagesReceived", " 3 :  "+ imageCount);
             }
         }
         ArrayList<String> serverImage = Constants.storeSecondaryImages;
@@ -629,5 +642,9 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     public void addImage() {
         selectImage();
+    }
+    public int getImageCount(){
+        Log.d("imagesReceived", " 4 : "+ imageCount);
+        return imageCount;
     }
 }

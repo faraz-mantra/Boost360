@@ -26,7 +26,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 @SuppressLint("ValidFragment")
-public class ImageGalleryActivity extends AppCompatActivity {
+public class ImageGalleryActivity extends AppCompatActivity implements ImageGalleryListener {
 
     private Image_Gallery_Fragment image_gallery_fragment;
 
@@ -56,7 +56,8 @@ public class ImageGalleryActivity extends AppCompatActivity {
 
         binding.appBar.toolbarTitle.setText(getResources().getString(R.string.image_gallery));
 
-        image_gallery_fragment = new Image_Gallery_Fragment();
+//        image_gallery_fragment = new Image_Gallery_Fragment();
+        image_gallery_fragment = new Image_Gallery_Fragment().getInstance(this);
         findViewById(R.id.fm_site_appearance).setVisibility(View.VISIBLE);
         getSupportFragmentManager().beginTransaction().replace(R.id.fm_site_appearance, image_gallery_fragment, TAG_IMAGE).
                 commit();
@@ -67,6 +68,12 @@ public class ImageGalleryActivity extends AppCompatActivity {
                 image_gallery_fragment.addImage();
             }
         }
+//        noOfImages =  image_gallery_fragment.getImageCount();
+    }
+
+    public void onResume(){
+        super.onResume();
+//        noOfImages =  image_gallery_fragment.getImageCount();
     }
 
     @Override
@@ -87,10 +94,22 @@ public class ImageGalleryActivity extends AppCompatActivity {
                 break;
 
             case R.id.menu_add:
-                image_gallery_fragment.addImage();
+                if(noOfImages < 3){
+                    Log.d("imagesReceived", " 1 : "+ noOfImages);
+                    image_gallery_fragment.addImage();
+                }else{
+                    Log.d("imagesReceived", " 2 : "+ noOfImages);
+                }
+//                image_gallery_fragment.addImage();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void imageCount(int count) {
+        noOfImages =  count;
+        Log.d("imagesReceived", " 5 : "+ count);
     }
 }
