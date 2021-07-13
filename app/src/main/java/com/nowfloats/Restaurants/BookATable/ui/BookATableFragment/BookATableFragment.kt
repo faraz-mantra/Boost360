@@ -70,7 +70,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
         setHeader()
         initializeRecycler()
 
-        if (Constants.StoreWidgets.contains("BOOKTABLE")) {
+        if (session?.storeWidgets?.contains("BOOKTABLE")==true) {
             book_table_recycler.visibility = View.VISIBLE
             empty_layout.setVisibility(View.GONE)
             loadData()
@@ -93,7 +93,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
         back_button.setOnClickListener {
             (activity as BookATableActivity).onBackPressed()
         }
-        if (Constants.StoreWidgets.contains("BOOKTABLE")) {
+        if (session?.storeWidgets?.contains("BOOKTABLE")==true) {
             right_icon.setImageResource(R.drawable.ic_add_white)
             right_icon_layout.setOnClickListener {
                 val bookATableDetailsFragment = BookATableDetailsFragment.newInstance()

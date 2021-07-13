@@ -66,9 +66,9 @@ class ToppersFragment : BaseFragment(), ItemClickEventListener {
         viewModel.apply {
             ourTopperResponse.observe(viewLifecycleOwner, Observer {
                 if (!it.Data.isNullOrEmpty()) {
-                    hideLoader()
                     setRecyclerviewAdapter(it.Data)
-                }
+                }else showToast(getString(R.string.our_topper_data_empty))
+                hideLoader()
             })
 
             errorMessage.observe(viewLifecycleOwner, Observer {
@@ -79,13 +79,13 @@ class ToppersFragment : BaseFragment(), ItemClickEventListener {
             deleteTopperResponse.observe(viewLifecycleOwner, Observer {
                 if (!it.isNullOrBlank()) {
                     if (it == SUCCESS) {
-                        hideLoader()
                         Toast.makeText(requireContext(), getString(R.string.topper_deleted_successfully), Toast.LENGTH_SHORT).show()
                         showLoader(getString(R.string.loading_topper))
                         setDeleteTopperLiveDataValue("")
                         viewModel.getOurToppers()
                     }
                 }
+                hideLoader()
             })
         }
     }

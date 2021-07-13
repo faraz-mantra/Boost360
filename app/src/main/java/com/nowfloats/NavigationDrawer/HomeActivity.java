@@ -983,7 +983,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
       keys2.addAll(keys);
       Toast.makeText(HomeActivity.this, getString(R.string.refreshing_your_business_dashboard), Toast.LENGTH_LONG).show();
       for (int i = 0; i < keys2.size(); i++) {
-        if (!Constants.StoreWidgets.contains(keys2.get(i))) {
+        if (!session.getStoreWidgets().contains(keys2.get(i))) {
           Constants.StoreWidgets.add(keys2.get(i));
         }
       }
@@ -1715,23 +1715,23 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     new Get_FP_Details_Service(activity, fpId, clientId, bus);
   }
 
-  @Subscribe
-  public void post_getFPDetails(Get_FP_Details_Event response) {
-    Bundle bundle = getIntent().getExtras();
-
-    if (bundle != null && bundle.containsKey("Username")) {
-      GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(HomeActivity.this, session);
-      visit_subcribersCountAsyncTask.execute();
-    }
-
-    if (progressDialog != null) {
-      progressDialog.dismiss();
-      progressDialog = null;
-    }
-
-    createView();
-
-  }
+//  @Subscribe
+//  public void post_getFPDetails(Get_FP_Details_Event response) {
+//    Bundle bundle = getIntent().getExtras();
+//
+//    if (bundle != null && bundle.containsKey("Username")) {
+//      GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(HomeActivity.this, session);
+//      visit_subcribersCountAsyncTask.execute();
+//    }
+//
+//    if (progressDialog != null) {
+//      progressDialog.dismiss();
+//      progressDialog = null;
+//    }
+//
+//    createView();
+//
+//  }
 
   @Subscribe
   public void getResponse(Response response) {

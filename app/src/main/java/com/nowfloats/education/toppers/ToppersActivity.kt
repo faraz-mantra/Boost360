@@ -50,7 +50,7 @@ class ToppersActivity : AppCompatActivity() {
     private fun initializeView() {
         session = UserSessionManager(this, this)
 
-        if (com.nowfloats.util.Constants.StoreWidgets.contains(Constants.TOPPER_FEATURE)) {
+        if (session?.storeWidgets?.contains(Constants.TOPPER_FEATURE)==true) {
             addFragment(ToppersFragment.newInstance(), TOPPERS_FRAGMENT)
         } else {
             val unlockFeatureModel = UnlockFeatureModel(
