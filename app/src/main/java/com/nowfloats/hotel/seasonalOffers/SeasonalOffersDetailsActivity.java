@@ -36,6 +36,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.hotel.API.HotelAPIInterfaces;
 import com.nowfloats.hotel.API.UploadOfferImage;
 import com.nowfloats.hotel.API.model.AddOffer.ActionData;
@@ -47,7 +48,10 @@ import com.nowfloats.hotel.API.model.UpdateOffer.UpdateOfferRequest;
 import com.nowfloats.hotel.Interfaces.SeasonalOffersDetailsListener;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.io.File;
@@ -62,6 +66,9 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
+
+import static com.framework.webengageconstant.EventLabelKt.UPDATED_BUINSESS_LOGO;
+import static com.framework.webengageconstant.EventNameKt.UPLOAD_LOGO;
 
 public class SeasonalOffersDetailsActivity extends AppCompatActivity implements SeasonalOffersDetailsListener {
 
@@ -187,37 +194,46 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
     }
 
     public void showDialogToGetImage() {
-        final MaterialDialog dialog = new MaterialDialog.Builder(SeasonalOffersDetailsActivity.this)
-                .customView(R.layout.featuredimage_popup, true)
-                .show();
-
-        PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
-        View view = dialog.getCustomView();
-        TextView title = (TextView) view.findViewById(R.id.textview_heading);
-        title.setText("Upload Image");
-        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-        cameraImg.setColorFilter(whiteLabelFilter);
-        galleryImg.setColorFilter(whiteLabelFilter);
-
-        takeCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cameraIntent();
-                dialog.dismiss();
-            }
-        });
-
-        takeGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                galleryIntent();
-                dialog.dismiss();
-
-            }
-        });
+        final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+        imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
+//        final MaterialDialog dialog = new MaterialDialog.Builder(SeasonalOffersDetailsActivity.this)
+//                .customView(R.layout.featuredimage_popup, true)
+//                .show();
+//
+//        PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
+//        View view = dialog.getCustomView();
+//        TextView title = (TextView) view.findViewById(R.id.textview_heading);
+//        title.setText("Upload Image");
+//        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+//        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+//        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+//        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+//        cameraImg.setColorFilter(whiteLabelFilter);
+//        galleryImg.setColorFilter(whiteLabelFilter);
+//
+//        takeCamera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                cameraIntent();
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        takeGallery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                galleryIntent();
+//                dialog.dismiss();
+//
+//            }
+//        });
+    }
+    private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
+        if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
+            cameraIntent();
+        } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
+            galleryIntent();
+        }
     }
 
     public void displayData() {
