@@ -79,7 +79,7 @@ public class AboutFragment extends Fragment {
                 switch (pos) {
                     case 0:
                         WebEngageController.trackEvent(ABOUT_BOOST_TRAINING, EVENT_LABEL_NULL, NULL);
-                        if (Constants.StoreWidgets.contains("MERCHANT_TRAINING")) {
+                        if(session.getStoreWidgets().contains("MERCHANT_TRAINING")) {
                             intent = new Intent(mContext, Mobile_Site_Activity.class);
                             intent.putExtra("WEBSITE_NAME", getString(R.string.product_training_link));
                         } else {
