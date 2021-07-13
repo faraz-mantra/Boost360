@@ -206,7 +206,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         session.setFpEmail(sessionManager.getFPEmail());
         session.setFpNumber(sessionManager.getFPPrimaryContactNumber());
         session.setSelfBrandedAdd(sessionManager.isSelfBrandedKycAdd());
-        session.setPaymentGateway(Constants.StoreWidgets.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name()));
+        session.setPaymentGateway(sessionManager.getStoreWidgets().contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name()));
         Bundle bundle = new Bundle();
         bundle.putSerializable(com.appservice.constant.IntentConstant.SESSION_DATA.name(), session);
         return bundle;
