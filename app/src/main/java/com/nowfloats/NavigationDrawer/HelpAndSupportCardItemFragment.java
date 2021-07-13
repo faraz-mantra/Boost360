@@ -99,7 +99,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded()) return;
 
-        if (Constants.StoreWidgets.contains("CUSTOMERSUPPORT")){
+        if (sessionManager.getStoreWidgets().contains("CUSTOMERSUPPORT")){
             is_premium_support = true;
         }
 

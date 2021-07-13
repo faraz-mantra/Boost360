@@ -188,7 +188,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         newDomainProceed.setOnClickListener(this);
 
 
-        if(Constants.StoreWidgets.contains("DOMAINPURCHASE")) {
+        if(session.getStoreWidgets().contains("DOMAINPURCHASE")) {
             secondaryLayout.setVisibility(View.GONE);
             loadData();
         }else{

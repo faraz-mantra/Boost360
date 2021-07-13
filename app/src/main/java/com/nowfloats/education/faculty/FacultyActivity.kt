@@ -50,7 +50,7 @@ class FacultyActivity : AppCompatActivity() {
     private fun initializeView() {
         session = UserSessionManager(this, this)
 
-        if (com.nowfloats.util.Constants.StoreWidgets.contains(Constants.FACULTY_MANAGEMENT_FEATURE)) {
+        if (session?.storeWidgets?.contains(Constants.FACULTY_MANAGEMENT_FEATURE)==true) {
             addFragment(FacultyManagementFragment.newInstance(), FACULTY_MANAGEMENT_FRAGMENT)
         } else {
             val unlockFeatureModel = UnlockFeatureModel(

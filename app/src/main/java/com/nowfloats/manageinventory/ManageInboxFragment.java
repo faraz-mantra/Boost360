@@ -176,7 +176,7 @@ public class ManageInboxFragment extends Fragment {
             });
 
             tvBusinessCalls.setOnClickListener(v -> {
-                if(Constants.StoreWidgets.contains("CALLTRACKER")) {
+                if(session.getStoreWidgets().contains("CALLTRACKER")) {
                     Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

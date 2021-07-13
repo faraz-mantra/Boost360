@@ -3050,6 +3050,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="logo_updated_successfully">Logo uploaded successfully.</string>
     <string name="add_logo">Add Logo</string>
   <string name="business_timings">Business Timings</string>
+  <string name="our_topper_data_empty">Our toppers data empty!</string>
 
   <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
 <!--    <string name="ir_statusBarColor">#ffb900</string>-->
