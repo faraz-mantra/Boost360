@@ -1,0 +1,1318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/constraintLayout4"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/black_4a4a4a"
+      android:orientation="vertical"
+      android:padding="@dimen/size_16"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/customTextView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
+        android:text="@string/menu"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/customImageView7"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_help_white"
+        app:layout_constraintBottom_toBottomOf="@+id/customTextView8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <com.framework.views.roundedimageview.RoundedImageView
+        android:id="@+id/riv_users_image"
+        android:layout_width="80dp"
+        android:layout_height="@dimen/size_80"
+        android:layout_marginTop="@dimen/size_16"
+        android:src="@drawable/dummy_staff_img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView8"
+        app:riv_border_color="@color/white"
+        app:riv_border_width="1dp"
+        app:riv_corner_radius="@dimen/size_40"
+        app:riv_mutate_background="true" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_2"
+        android:background="@drawable/rounded_stroke_grey"
+        android:backgroundTint="@color/dark_gray"
+        android:fontFamily="@font/barlow_semi_bold"
+        android:gravity="center"
+        android:includeFontPadding="true"
+        android:paddingHorizontal="@dimen/size_8"
+        android:paddingVertical="2dp"
+        android:text="SUPER ADMIN"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/riv_users_image"
+        app:layout_constraintTop_toTopOf="@+id/riv_users_image" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_16"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:includeFontPadding="true"
+        android:paddingVertical="2dp"
+        android:text="Santosh Kamat"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/riv_users_image"
+        app:layout_constraintTop_toBottomOf="@+id/ctv_type"
+        app:layout_goneMarginStart="-10dp" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:fontFamily="@font/open_sans"
+        android:gravity="start"
+
+        android:includeFontPadding="true"
+        android:text="@string/your_email_mobile_no_username_password_payment_info_etc"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/customImageView4"
+        app:layout_constraintStart_toEndOf="@+id/riv_users_image"
+        app:layout_constraintTop_toBottomOf="@+id/ctv_name" />
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/customImageView4"
+        android:layout_width="@dimen/size_16"
+        android:layout_height="16dp"
+        android:src="@drawable/ic_arrow_right_7_white_d"
+        app:layout_constraintBottom_toBottomOf="@+id/ctv_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView8" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+      android:id="@+id/view3"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/gray_light_4"
+      app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+      app:layout_constraintVertical_bias="0" />
+
+    <androidx.core.widget.NestedScrollView
+      android:id="@+id/nestedScrollView"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:fillViewport="true"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/view3">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/linearLayoutCompat5"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/ic_bg_rounded_dark_grey_bottom"
+          android:orientation="vertical"
+          android:padding="16dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_manage_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/currently_managing"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10"
+            android:background="@drawable/rounded_stroke_grey"
+            android:backgroundTint="@color/gray_828282"
+            android:padding="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/arrow_bottom"
+              android:layout_width="@dimen/size_16"
+              android:layout_height="@dimen/size_16"
+              android:src="@drawable/ic_arrow_down_grey_staff"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintVertical_bias="0" />
+
+            <com.framework.views.roundedimageview.RoundedImageView
+              android:id="@+id/roundedImageView3"
+              android:layout_width="@dimen/size_50"
+              android:layout_height="@dimen/size_50"
+              android:src="@drawable/dummy_staff_img"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              app:riv_corner_radius="@dimen/size_8"
+              app:riv_mutate_background="true"
+              app:riv_oval="false" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_business_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:fontFamily="@font/semi_bold"
+              android:gravity="center"
+              android:includeFontPadding="true"
+              android:text="@string/business_name"
+              android:textColor="@color/white"
+              android:textSize="16sp"
+              app:layout_constraintStart_toEndOf="@+id/roundedImageView3"
+              app:layout_constraintTop_toTopOf="@+id/roundedImageView3"
+              app:layout_constraintVertical_bias="0" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_business_address"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:fontFamily="@font/open_sans"
+              android:gravity="center"
+              android:includeFontPadding="true"
+              android:text="@string/address"
+              android:textColor="@color/white"
+              android:textSize="16sp"
+              app:layout_constraintBottom_toBottomOf="@+id/roundedImageView3"
+              app:layout_constraintStart_toEndOf="@+id/roundedImageView3"
+              app:layout_constraintTop_toBottomOf="@+id/ctv_business_name"
+              app:layout_constraintVertical_bias="1" />
+
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:background="@drawable/rounded_stroke_grey"
+            android:backgroundTint="@color/white"
+            android:padding="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/customImageView5"
+              android:layout_width="@dimen/size_30"
+              android:layout_height="@dimen/size_30"
+              android:src="@drawable/ic_subscription_boost"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintVertical_bias="0" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_offer"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/rounded_stroke_grey"
+              android:backgroundTint="@color/light_green_2"
+              android:fontFamily="@font/barlow_semi_bold"
+              android:gravity="center"
+              android:includeFontPadding="true"
+              android:paddingHorizontal="@dimen/size_8"
+              android:paddingVertical="2dp"
+              android:text="@string/new_offers"
+              android:textAllCaps="true"
+              android:textColor="@color/white"
+              android:textSize="12sp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_subscription_heading"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_4"
+              android:fontFamily="@font/open_sans_semibold"
+              android:gravity="start"
+              android:includeFontPadding="true"
+              android:text="@string/my_boost_360_subscription"
+              android:textAllCaps="false"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="16sp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/customImageView5" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_subscription_content"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_4"
+              android:fontFamily="@font/open_sans"
+              android:gravity="start"
+              android:includeFontPadding="true"
+              android:text="@string/upgrade_website_with_great_features_offers_for_you_current_plan_purchase_history_invoice_and_more"
+              android:textAllCaps="false"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="11sp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/ctv_subscription_heading" />
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/constraintLayout5"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:padding="@dimen/size_16"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat5"
+          app:layout_constraintVertical_bias="0">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_useful_links_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:gravity="start"
+            android:includeFontPadding="true"
+            android:text="@string/useful_links"
+            android:textAllCaps="false"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearLayoutCompat6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_useful_links_heading">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+              <com.framework.views.customViews.CustomCardView
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_120"
+                android:layout_weight="1"
+                android:elevation="@dimen/size_2"
+                app:cardCornerRadius="@dimen/size_8"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:padding="@dimen/size_8">
+
+                  <com.framework.views.roundedimageview.RoundedImageView
+                    android:id="@+id/roundedImageView4"
+                    android:layout_width="@dimen/size_30"
+                    android:layout_height="@dimen/size_30"
+                    android:src="@drawable/ria_digital_assistant"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/help_and_support"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/help_and_support"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/roundedImageView4"
+                    app:layout_constraintVertical_bias="0" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/help_and_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/faqs_help_support_notifications_etc"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/help_and_support"
+                    app:layout_constraintVertical_bias="0" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+              </com.framework.views.customViews.CustomCardView>
+
+              <com.framework.views.customViews.CustomCardView
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_120"
+                android:layout_weight="1"
+                android:elevation="@dimen/size_2"
+                app:cardCornerRadius="@dimen/size_8"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:padding="@dimen/size_8">
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_needs_action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_20"
+                    android:layout_marginTop="@dimen/size_2"
+                    android:background="@drawable/rounded_stroke_grey"
+                    android:backgroundTint="#EB5757"
+                    android:fontFamily="@font/barlow_semi_bold"
+                    android:gravity="center"
+                    android:includeFontPadding="true"
+                    android:paddingHorizontal="@dimen/size_8"
+                    android:paddingVertical="2dp"
+                    android:text="@string/need_action"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintStart_toEndOf="@+id/riv_business"
+                    app:layout_constraintTop_toTopOf="@+id/riv_business" />
+
+                  <com.framework.views.roundedimageview.RoundedImageView
+                    android:id="@+id/riv_business"
+                    android:layout_width="@dimen/size_30"
+                    android:layout_height="@dimen/size_30"
+                    android:src="@drawable/ic_buildings"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/my_business_kyc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/my_business_kyc"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/riv_business"
+                    app:layout_constraintVertical_bias="0" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/my_business_kyc_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/govt_mandated_process_to_help_you_etc"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/my_business_kyc"
+                    app:layout_constraintVertical_bias="0" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+              </com.framework.views.customViews.CustomCardView>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+              <com.framework.views.customViews.CustomCardView
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_120"
+                android:layout_weight="1"
+                android:elevation="@dimen/size_2"
+                app:cardCornerRadius="@dimen/size_8"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:padding="@dimen/size_8">
+
+                  <com.framework.views.roundedimageview.RoundedImageView
+                    android:id="@+id/riv_keyboard"
+                    android:layout_width="@dimen/size_30"
+                    android:layout_height="@dimen/size_30"
+                    android:src="@drawable/ic_keyboard_more"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/keyboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/_360_keyboard"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/riv_keyboard"
+                    app:layout_constraintVertical_bias="0" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/keyboard_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/start_business_chat_on_any_instant_messaging_app"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/keyboard"
+                    app:layout_constraintVertical_bias="0" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+              </com.framework.views.customViews.CustomCardView>
+
+              <com.framework.views.customViews.CustomCardView
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_120"
+                android:layout_weight="1"
+                android:elevation="@dimen/size_2"
+                app:cardCornerRadius="@dimen/size_8"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:padding="@dimen/size_8">
+
+                  <com.framework.views.roundedimageview.RoundedImageView
+                    android:id="@+id/riv_users"
+                    android:layout_width="@dimen/size_30"
+                    android:layout_height="@dimen/size_30"
+                    android:src="@drawable/ic_users"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_20"
+                    android:layout_marginTop="@dimen/size_2"
+                    android:background="@drawable/rounded_stroke_grey"
+                    android:backgroundTint="@color/green_light_2"
+                    android:fontFamily="@font/barlow_semi_bold"
+                    android:gravity="center"
+                    android:includeFontPadding="true"
+                    android:paddingHorizontal="@dimen/size_8"
+                    android:paddingVertical="2dp"
+                    android:text="@string/new_"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintStart_toEndOf="@+id/riv_users"
+                    app:layout_constraintTop_toTopOf="@+id/riv_users" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/refer_and_earn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/my_business_kyc"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/riv_users"
+                    app:layout_constraintVertical_bias="0" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/refer_and_earn_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/govt_mandated_process_to_help_you_etc"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/refer_and_earn"
+                    app:layout_constraintVertical_bias="0" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+              </com.framework.views.customViews.CustomCardView>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+              <com.framework.views.customViews.CustomCardView
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_120"
+                android:layout_weight="1"
+                android:elevation="@dimen/size_2"
+                app:cardCornerRadius="@dimen/size_8"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:padding="@dimen/size_8">
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_verified"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_20"
+                    android:layout_marginTop="@dimen/size_2"
+                    android:background="@drawable/rounded_stroke_grey"
+                    android:backgroundTint="#467ED321"
+                    android:fontFamily="@font/barlow_semi_bold"
+                    android:gravity="center"
+                    android:includeFontPadding="true"
+                    android:paddingHorizontal="@dimen/size_8"
+                    android:paddingVertical="2dp"
+                    android:text="@string/verified"
+                    android:textAllCaps="true"
+                    android:textColor="@color/green_light"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintStart_toEndOf="@+id/riv_bank_accounts"
+                    app:layout_constraintTop_toTopOf="@+id/riv_bank_accounts" />
+
+                  <com.framework.views.roundedimageview.RoundedImageView
+                    android:id="@+id/riv_bank_accounts"
+                    android:layout_width="@dimen/size_30"
+                    android:layout_height="@dimen/size_30"
+                    android:src="@drawable/ic_bank"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/my_bank_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/my_bank_account"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/riv_bank_accounts"
+                    app:layout_constraintVertical_bias="0" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/my_bank_account_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/add_and_manage_your_bank_account"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/my_bank_account"
+                    app:layout_constraintVertical_bias="0" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+              </com.framework.views.customViews.CustomCardView>
+
+              <com.framework.views.customViews.CustomCardView
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_120"
+                android:layout_weight="1"
+                android:elevation="@dimen/size_2"
+                app:cardCornerRadius="@dimen/size_8"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:padding="@dimen/size_8">
+
+                  <com.framework.views.roundedimageview.RoundedImageView
+                    android:id="@+id/riv_academy"
+                    android:layout_width="@dimen/size_30"
+                    android:layout_height="@dimen/size_30"
+                    android:src="@drawable/ic_bookbookmark"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_academy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/boost_360_academy"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/riv_academy"
+                    app:layout_constraintVertical_bias="0" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_academy_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/great_courses_to_help_you_learn_and_grow_more"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ctv_academy"
+                    app:layout_constraintVertical_bias="0" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+              </com.framework.views.customViews.CustomCardView>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+              <com.framework.views.customViews.CustomCardView
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_120"
+                android:layout_weight="1"
+                android:elevation="@dimen/size_2"
+                app:cardCornerRadius="@dimen/size_8"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:padding="@dimen/size_8">
+
+                  <com.framework.views.roundedimageview.RoundedImageView
+                    android:id="@+id/riv_certification"
+                    android:layout_width="@dimen/size_30"
+                    android:layout_height="@dimen/size_30"
+                    android:src="@drawable/ic_training_certification"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/certification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/boost_360_training_certification"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/riv_certification"
+                    app:layout_constraintVertical_bias="0" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/certification_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/add_and_manage_your_bank_account"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/certification"
+                    app:layout_constraintVertical_bias="0" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+              </com.framework.views.customViews.CustomCardView>
+
+              <com.framework.views.customViews.CustomCardView
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_120"
+                android:layout_weight="1"
+                android:elevation="@dimen/size_2"
+                app:cardCornerRadius="@dimen/size_8"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:padding="@dimen/size_8">
+
+                  <com.framework.views.roundedimageview.RoundedImageView
+                    android:id="@+id/riv_extension"
+                    android:layout_width="@dimen/size_30"
+                    android:layout_height="@dimen/size_30"
+                    android:src="@drawable/ic_extension"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/boost_extension"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/boost_360_extensions"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/riv_extension"
+                    app:layout_constraintVertical_bias="0" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/boost_extension_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/integrate_this_website_to_your_wordpress_website"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/boost_extension"
+                    app:layout_constraintVertical_bias="0" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+              </com.framework.views.customViews.CustomCardView>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_about_boost"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/size_16"
+          android:fontFamily="@font/bold"
+          android:gravity="start"
+          android:includeFontPadding="true"
+          android:text="@string/about_boost_360"
+          android:textAllCaps="false"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="16sp"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/ctv_about_boost"
+          app:layout_constraintVertical_bias="0.01">
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/customImageView6"
+              android:layout_width="30dp"
+              android:layout_height="@dimen/size_30"
+              android:src="@drawable/ic_lightbulbfilament"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_whats_new"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:fontFamily="@font/open_sans_semibold"
+              android:text="@string/what_s_new_in_latest_version"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="@+id/customImageView6"
+              app:layout_constraintStart_toEndOf="@+id/customImageView6"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintVertical_bias="0" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_whats_new_subtitle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:fontFamily="@font/open_sans"
+              android:text="@string/run_boost_360_account_on_your_wordpress_website"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toEndOf="@+id/customImageView6"
+              app:layout_constraintTop_toBottomOf="@+id/ctv_whats_new"
+              app:layout_constraintVertical_bias="0" />
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_light_4"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:layout_constraintVertical_bias="0" />
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/civ_frequently_asked"
+              android:layout_width="30dp"
+              android:layout_height="@dimen/size_30"
+              android:src="@drawable/ic_circlewavyquestion"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_frequently_asked"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:fontFamily="@font/open_sans_semibold"
+              android:text="@string/frequently_asked_questions"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="@+id/civ_frequently_asked"
+              app:layout_constraintStart_toEndOf="@+id/civ_frequently_asked"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintVertical_bias="0" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_frequently_asked_subtitle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:fontFamily="@font/open_sans"
+              android:text="@string/run_boost_360_account_on_your_wordpress_website"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toEndOf="@+id/civ_frequently_asked"
+              app:layout_constraintTop_toBottomOf="@+id/ctv_frequently_asked"
+              app:layout_constraintVertical_bias="0" />
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_light_4"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:layout_constraintVertical_bias="0" />
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/civ_facebook"
+              android:layout_width="30dp"
+              android:layout_height="@dimen/size_30"
+              android:src="@drawable/ic_facebooklogo"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_facebook_logo"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:fontFamily="@font/open_sans_semibold"
+              android:text="@string/like_us_on_facebook"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="@+id/civ_facebook"
+              app:layout_constraintStart_toEndOf="@+id/civ_facebook"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintVertical_bias="0" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_facebook_subtitle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:fontFamily="@font/open_sans"
+              android:text="@string/run_boost_360_account_on_your_wordpress_website"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toEndOf="@+id/civ_facebook"
+              app:layout_constraintTop_toBottomOf="@+id/ctv_facebook_logo"
+              app:layout_constraintVertical_bias="0" />
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_light_4"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:layout_constraintVertical_bias="0" />
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/civ_twitter"
+              android:layout_width="30dp"
+              android:layout_height="@dimen/size_30"
+              android:src="@drawable/ic_twitter"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_twitter"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:fontFamily="@font/open_sans_semibold"
+              android:text="@string/follow_us_on_twitter"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="@+id/civ_twitter"
+              app:layout_constraintStart_toEndOf="@+id/civ_twitter"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintVertical_bias="0" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_twitter_subtitle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:fontFamily="@font/open_sans"
+              android:text="@string/run_boost_360_account_on_your_wordpress_website"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toEndOf="@+id/civ_twitter"
+              app:layout_constraintTop_toBottomOf="@+id/ctv_twitter"
+              app:layout_constraintVertical_bias="0" />
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_light_4"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:layout_constraintVertical_bias="0" />
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/civ_playstore"
+              android:layout_width="30dp"
+              android:layout_height="@dimen/size_30"
+              android:src="@drawable/ic_googleplaylogo"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_playstore"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:fontFamily="@font/open_sans_semibold"
+              android:text="@string/rate_us_on_playstore"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="@+id/civ_playstore"
+              app:layout_constraintStart_toEndOf="@+id/civ_playstore"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintVertical_bias="0" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_playstore_subtitle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:fontFamily="@font/open_sans"
+              android:text="@string/run_boost_360_account_on_your_wordpress_website"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toEndOf="@+id/civ_playstore"
+              app:layout_constraintTop_toBottomOf="@+id/ctv_playstore"
+              app:layout_constraintVertical_bias="0" />
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_light_4"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:layout_constraintVertical_bias="0" />
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/civ_apple"
+              android:layout_width="30dp"
+              android:layout_height="@dimen/size_30"
+              android:src="@drawable/ic_applelogo"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_apple"
+              android:layout_width="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/open_sans_semibold"
+              android:text="@string/rate_us_on_appstore"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="@+id/civ_apple"
+              app:layout_constraintStart_toEndOf="@+id/civ_apple"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintVertical_bias="0" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_apple_subtitle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/open_sans"
+              android:text="@string/run_boost_360_account_on_your_wordpress_website"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              android:layout_marginStart="@dimen/size_16"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toEndOf="@+id/civ_apple"
+              app:layout_constraintTop_toBottomOf="@+id/ctv_apple"
+              app:layout_constraintVertical_bias="0" />
+          </androidx.constraintlayout.widget.ConstraintLayout>
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_light_4"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:layout_constraintVertical_bias="0" />
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/civ_terms"
+              android:layout_width="30dp"
+              android:layout_height="@dimen/size_30"
+              android:src="@drawable/ic_terms"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_terms"
+              android:layout_width="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/open_sans_semibold"
+              android:text="@string/terms_of_use"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="@+id/civ_terms"
+              app:layout_constraintStart_toEndOf="@+id/civ_terms"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintVertical_bias="0" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_terms_subtitle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/open_sans"
+              android:text="@string/last_updated_on"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              android:layout_marginStart="@dimen/size_16"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toEndOf="@+id/civ_terms"
+              app:layout_constraintTop_toBottomOf="@+id/ctv_terms"
+              app:layout_constraintVertical_bias="0" />
+          </androidx.constraintlayout.widget.ConstraintLayout>
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_light_4"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:layout_constraintVertical_bias="0" />
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/civ_shield"
+              android:layout_width="30dp"
+              android:layout_height="@dimen/size_30"
+              android:src="@drawable/ic_shieldchevron"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_shield"
+              android:layout_width="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/open_sans_semibold"
+              android:text="@string/privacy_policy"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="@+id/civ_shield"
+              app:layout_constraintStart_toEndOf="@+id/civ_shield"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintVertical_bias="0" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_shield_subtitle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/open_sans"
+              android:text="@string/run_boost_360_account_on_your_wordpress_website"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              android:layout_marginStart="@dimen/size_16"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toEndOf="@+id/civ_shield"
+              app:layout_constraintTop_toBottomOf="@+id/ctv_shield"
+              app:layout_constraintVertical_bias="0" />
+          </androidx.constraintlayout.widget.ConstraintLayout>
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_light_4"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+            app:layout_constraintVertical_bias="0" />
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_we_are_listening"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/size_16"
+            android:fontFamily="@font/bold"
+            android:gravity="start"
+            android:includeFontPadding="true"
+            android:text="@string/we_re_listening"
+            android:textAllCaps="false"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/civ_heart"
+              android:layout_width="30dp"
+              android:layout_height="@dimen/size_30"
+              android:src="@drawable/ic_heartbeat"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_make_boost_better"
+              android:layout_width="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/open_sans_semibold"
+              android:text="@string/help_us_make_boost_360_better"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="@+id/civ_heart"
+              app:layout_constraintStart_toEndOf="@+id/civ_heart"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintVertical_bias="0" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_make_boost_better_subtitle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/open_sans"
+              android:text="@string/suggest_a_feature_or_share_a_your_feedback"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="14sp"
+              android:layout_marginStart="@dimen/size_16"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toEndOf="@+id/civ_heart"
+              app:layout_constraintTop_toBottomOf="@+id/ctv_make_boost_better"
+              app:layout_constraintVertical_bias="0" />
+          </androidx.constraintlayout.widget.ConstraintLayout>
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="wrap_content"
+            android:layout_marginVertical="@dimen/size_30"
+            android:src="@drawable/ic_boost_360_slogan"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

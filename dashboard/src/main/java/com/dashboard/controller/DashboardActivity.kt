@@ -275,6 +275,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
 
       }
+      4->{
+        mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
+        toolbarPropertySet(pos)
+
+      }
     }
   }
 
@@ -303,6 +308,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when (pos) {
       1 -> showToolbar(getString(R.string.my_website))
       2 -> showToolbar(getString(R.string.my_enquiry))
+      4-> {
+        changeTheme(R.color.black_4a4a4a, R.color.black_4a4a4a)
+        getToolbar()?.apply { visibility = View.GONE }}
       else -> {
         changeTheme(R.color.colorPrimary, R.color.colorPrimary)
         getToolbar()?.apply { visibility = View.GONE }
@@ -328,8 +336,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when (pos) {
       3 -> checkWelcomeShowScreen(pos)
       4 -> {
-        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
-        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
+//        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
+//        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
+        mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
+        toolbarPropertySet(pos)
+
       }
     }
   }
