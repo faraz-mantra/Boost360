@@ -1,5 +1,7 @@
 package com.boost.presignin.holders
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.boost.presignin.R
@@ -41,17 +43,15 @@ class CategoryRecyclerViewHolder constructor(binding: ItemCategoryLayoutBinding)
 
   private fun setCardSelection(isSelected: Boolean) {
     if (isSelected) {
-      getColor(R.color.colorAccent)?.let { binding.cardBg.setBackgroundColor(it) }
-      getColor(R.color.white)?.let { binding.name.setTextColorCompat(it) }
-      getColor(R.color.white)?.let { binding.image.setTintColor(it) }
-      binding.check.visible()
+      getColor(R.color.view_background_1)?.let { binding.cardBg.setBackgroundColor(it) }
+      binding.check.buttonTintList = ColorStateList.valueOf(Color.parseColor("#4a4a4a"))
     } else {
       binding.cardBg.background = null
       getColor(R.color.white)?.let { binding.cardBg.setBackgroundColor(it) }
-      getColor(R.color.black_4a4a4a)?.let { binding.name.setTextColorCompat(it) }
-      getColor(R.color.black_4a4a4a)?.let { binding.image.setTintColor(it) }
-      binding.check.invisible()
+      binding.check.buttonTintList = ColorStateList.valueOf(Color.parseColor("#bbbbbb"))
     }
+    binding.check.isChecked =isSelected
+
   }
 
 
@@ -61,6 +61,8 @@ class CategoryRecyclerViewHolder constructor(binding: ItemCategoryLayoutBinding)
     binding.name.text = model?.category_Name
     val drawable = model?.getImage(activity) ?: return
     binding.image.setImageDrawable(drawable)
+    binding.image.setTintColor(getColor(R.color.black_4a4a4a)!!)
+    binding.categoryImage.setImageDrawable(model.getCategoryImage(activity))
     setClickListeners(binding.card)
     setCardSelection(model.isSelected)
   }
