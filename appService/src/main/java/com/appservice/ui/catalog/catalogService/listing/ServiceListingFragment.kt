@@ -261,19 +261,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
       else -> setEmptyView(View.VISIBLE)
     }
   }
-    private fun startFilter(query: String?) {
-        when {
-            query.isNullOrEmpty().not() && query!!.length > 2 -> getListServiceFilterApi(
-                searchString = query
-            )
-            finalList.isNullOrEmpty().not() -> {
-                list.clear()
-                list.addAll(finalList)
-                setAdapterNotify()
-            }
-            else -> setEmptyView(View.VISIBLE)
-        }
-    }
+
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.action_service_configuration -> {

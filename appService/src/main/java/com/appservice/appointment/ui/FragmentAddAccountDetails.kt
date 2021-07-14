@@ -14,7 +14,7 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentAddBankDetailsBinding
 import com.appservice.rest.TaskCode
-import com.appservice.staffs.ui.UserSession
+import com.appservice.ui.staffs.UserSession
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
@@ -107,7 +107,7 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
 
     private fun addBankAccount() {
         showProgress()
-        hitApi(viewModel?.addBankAccount(UserSession.fpId,UserSession.clientId,addBankAccountRequest!!), R.string.error_adding_bank_account)
+        hitApi(viewModel?.addBankAccount(UserSession.fpId, UserSession.clientId,addBankAccountRequest!!), R.string.error_adding_bank_account)
     }
 
     override fun onSuccess(it: BaseResponse) {

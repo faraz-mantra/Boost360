@@ -10,7 +10,7 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentPaymentCollectionSetupBinding
 import com.appservice.rest.TaskCode
-import com.appservice.staffs.ui.UserSession
+import com.appservice.ui.staffs.UserSession
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
