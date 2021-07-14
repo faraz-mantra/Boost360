@@ -2,10 +2,11 @@ package com.dashboard.controller
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.StrictMode
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -59,10 +60,10 @@ import zendesk.support.Support
 import java.io.File
 import java.util.*
 
-class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(),
-  OnItemSelectedListener, RecyclerItemClickListener {
 
-  private var exitToast: Toast? = null
+class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
+
+  private var doubleBackToExitPressedOnce = false
   private var mDeepLinkUrl: String? = null;
   private var mPayload: String? = null
   private var deepLinkUtil: DeepLinkUtil? = null
@@ -112,7 +113,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   private fun UserSessionManager.initializeWebEngageLogin() {
     WebEngageController.setUserContactInfoProperties(this)
+    WebEngageController.setUserContactInfoProperties(this)
     WebEngageController.setFPTag(this.fpTag)
+    WebEngageController.trackAttribute(this)
   }
 
   private fun initialize() {
@@ -144,21 +147,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           isAppFlyerLink()
         } else {
           //Default Deep Link..
-          val deepHashMap: HashMap<DynamicLinkParams, String> =
-            DynamicLinksManager().getURILinkParams(uri)
+          val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(uri)
           if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
             val viewType = deepHashMap[DynamicLinkParams.viewType]
             val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
-            if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(
-              viewType ?: "",
-              buyItemKey ?: "",
-              false
-            )
-          } else deepLinkUtil?.deepLinkPage(
-            data?.substring(data.lastIndexOf("/") + 1) ?: "",
-            "",
-            false
-          )
+            if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
+          } else deepLinkUtil?.deepLinkPage(data?.substring(data.lastIndexOf("/") + 1) ?: "", "", false)
         }
       } else {
         this.startPreSignUp(session, true)
@@ -413,14 +407,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when {
       (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) -> binding?.drawerLayout?.closeDrawers()
       (mNavController.currentDestination?.id == R.id.navigation_dashboard) -> {
-        if (exitToast == null || exitToast?.view == null || exitToast?.view?.windowToken == null) {
-          exitToast =
-            Toast.makeText(this, resources.getString(R.string.press_again_exit), Toast.LENGTH_SHORT)
-          exitToast?.show()
-        } else {
-          exitToast?.cancel()
-          this.finish()
-        }
+        if (!doubleBackToExitPressedOnce) {
+          this.doubleBackToExitPressedOnce = true
+          showShortToast(resources.getString(R.string.press_again_exit))
+          Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+        } else this.finish()
       }
       else -> openDashboard()
     }
@@ -520,17 +511,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
-    val responseBody =
-      RequestBody.create("image/png".toMediaTypeOrNull(), businessImage.readBytes())
-    val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
-      ?: "bg_${UUID.randomUUID()}.png"
-    return UploadFileBusinessRequest(
-      clientId,
-      session?.fPID,
-      UploadFileBusinessRequest.Type.SINGLE.name,
-      fileName,
-      responseBody
-    )
+    val responseBody = RequestBody.create("image/png".toMediaTypeOrNull(), businessImage.readBytes())
+    val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name } ?: "bg_${UUID.randomUUID()}.png"
+    return UploadFileBusinessRequest(clientId, session?.fPID, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
   }
 
   private fun initialiseZendeskSupportSdk() {
@@ -566,12 +549,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 }
 
+
 fun UserSessionManager.getDomainName(isRemoveHttp: Boolean = false): String? {
-  var rootAliasUri = getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
-  if(rootAliasUri.isNullOrEmpty().not()){
-    rootAliasUri = rootAliasUri?.replace("http://", "https://")
-  }
-  val normalUri = "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.${AppDashboardApplication.instance.resources.getString(R.string.boost_360_tag_domain)}"
+  val rootAliasUri = getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
+  val normalUri = "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
   return if (rootAliasUri.isNullOrEmpty().not() && rootAliasUri != "null") {
     return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace("http://", "")
     else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace("https://", "") else rootAliasUri

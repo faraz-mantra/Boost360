@@ -46,7 +46,7 @@ public class Constants {
             " buttonTextColor=\"#790000\">" +
             " </script> ";
 
-    public static final boolean APK_MODE_RELEASE = true;
+    public static final boolean APK_MODE_RELEASE = false;
     public static final String APP_TAG = "Boost App";
     public static final String RIA_NODE_DATA = "riaNodeDatas";
     public static final int VISITS_TABLE = 0;

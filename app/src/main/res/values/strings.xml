@@ -3060,6 +3060,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="ria_customer_number">9160004303</string>
   <string name="review_title_testimonial">Review title</string>
   <string name="review_description_testimonial">Review description</string>
+  <string name="our_topper_data_empty">Our toppers data empty!</string>
 
   <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
   <!--    <string name="ir_statusBarColor">#ffb900</string>-->

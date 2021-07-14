@@ -77,7 +77,7 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
         //setheader
         setHeader();
 
-        if (Constants.StoreWidgets.contains("PLACES-TO-LOOK-AROUND")) {
+        if (session.getStoreWidgets().contains("PLACES-TO-LOOK-AROUND")){
             recyclerView.setVisibility(View.VISIBLE);
             secondaryLayout.setVisibility(View.GONE);
             initialiseRecycler();
@@ -100,7 +100,7 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
     @Override
     protected void onResume() {
         super.onResume();
-        if (Constants.StoreWidgets.contains("PLACES-TO-LOOK-AROUND")) {
+        if (session.getStoreWidgets().contains("PLACES-TO-LOOK-AROUND")) {
             loadData();
         }
     }
@@ -122,7 +122,7 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
         rightButton = findViewById(R.id.right_icon_layout);
         rightIcon = findViewById(R.id.right_icon);
         title.setText("Places to Look Around");
-        if (Constants.StoreWidgets.contains("PLACES-TO-LOOK-AROUND")) {
+        if (session.getStoreWidgets().contains("PLACES-TO-LOOK-AROUND")) {
             rightIcon.setImageResource(R.drawable.ic_add_white);
             rightButton.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -50,20 +50,17 @@ class ToppersActivity : AppCompatActivity() {
   private fun initializeView() {
     session = UserSessionManager(this, this)
 
-    if (com.nowfloats.util.Constants.StoreWidgets.contains(Constants.TOPPER_FEATURE)) {
-      addFragment(ToppersFragment.newInstance(), TOPPERS_FRAGMENT)
-    } else {
-      val unlockFeatureModel = UnlockFeatureModel(
-        buyItemKey = Constants.TOPPER_FEATURE,
-        titleFeatureName = getString(R.string.our_toppers),
-        featureDescription = getString(R.string.our_toppers_feature_description)
-      )
-      addFragment(
-        UnlockFeatureFragment.newInstance(session, unlockFeatureModel),
-        Constants.UNLOCK_FEATURE_FRAGMENT
-      )
+        if (session?.storeWidgets?.contains(Constants.TOPPER_FEATURE)==true) {
+            addFragment(ToppersFragment.newInstance(), TOPPERS_FRAGMENT)
+        } else {
+            val unlockFeatureModel = UnlockFeatureModel(
+                    buyItemKey = Constants.TOPPER_FEATURE,
+                    titleFeatureName = getString(R.string.our_toppers),
+                    featureDescription = getString(R.string.our_toppers_feature_description)
+            )
+            addFragment(UnlockFeatureFragment.newInstance(session, unlockFeatureModel), Constants.UNLOCK_FEATURE_FRAGMENT)
+        }
     }
-  }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     if (item.itemId == android.R.id.home) {
