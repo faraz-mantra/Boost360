@@ -125,21 +125,21 @@ class PackageFragment : BaseFragment() {
 
                     makeFlyAnimation(package_profile_image_copy)
 
-//                    viewModel.addItemToCart(CartModel(
-//                            bundleData!!._kid,
-//                            null,
-//                            null,
-//                            bundleData!!.name,
-//                            "",
-//                            bundleData!!.primary_image!!.url,
-//                            offeredBundlePrice.toDouble(),
-//                            originalBundlePrice.toDouble(),
-//                            bundleData!!.overall_discount_percent,
-//                            1,
-//                            if (bundleData!!.min_purchase_months != null) bundleData!!.min_purchase_months!! else 1,
-//                            "bundles",
-//                            null
-//                    ))
+                    viewModel.addItemToCart(CartModel(
+                            bundleData!!._kid,
+                            null,
+                            null,
+                            bundleData!!.name,
+                            "",
+                            bundleData!!.primary_image!!.url,
+                            offeredBundlePrice.toDouble(),
+                            originalBundlePrice.toDouble(),
+                            bundleData!!.overall_discount_percent,
+                            1,
+                            if (bundleData!!.min_purchase_months != null) bundleData!!.min_purchase_months!! else 1,
+                            "bundles",
+                            null
+                    ))
                     val event_attributes: HashMap<String, Any> = HashMap()
                     bundleData!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
                     bundleData!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
@@ -156,8 +156,8 @@ class PackageFragment : BaseFragment() {
                     package_submit.setTextColor(Color.parseColor("#bbbbbb"))
                     package_submit.setText(getString(R.string.added_to_cart))
                     badgeNumber = badgeNumber + 1
-                    badge121.setText(badgeNumber.toString())
-                    badge121.visibility = View.VISIBLE
+//                    badge121.setText(badgeNumber.toString())
+//                    badge121.visibility = View.VISIBLE
                     Constants.CART_VALUE = badgeNumber
                 }
             }
@@ -336,21 +336,7 @@ class PackageFragment : BaseFragment() {
                 override fun onAnimationStart(animation: Animator) {}
                 override fun onAnimationEnd(animation: Animator) {
 
-                    viewModel.addItemToCart(CartModel(
-                        bundleData!!._kid,
-                        null,
-                        null,
-                        bundleData!!.name,
-                        "",
-                        bundleData!!.primary_image!!.url,
-                        offeredBundlePrice.toDouble(),
-                        originalBundlePrice.toDouble(),
-                        bundleData!!.overall_discount_percent,
-                        1,
-                        if (bundleData!!.min_purchase_months != null) bundleData!!.min_purchase_months!! else 1,
-                        "bundles",
-                        null
-                    ))
+                  viewModel.getCartItems()
                 }
 
 

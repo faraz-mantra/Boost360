@@ -386,6 +386,28 @@ public class Methods {
                 }).show();
     }
 
+    public static void showCapLimitDialog(final Context context) {
+        new MaterialDialog.Builder(context)
+                .title(context.getString(R.string.features_not_available))
+                .content(context.getString(R.string.buy_light_house_plan))
+                .positiveText(context.getString(R.string.buy))
+                .positiveColorRes(R.color.primaryColor)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        super.onPositive(dialog);
+                        context.startActivity(new Intent(context, NewPricingPlansActivity.class));
+                    }
+                }).show();
+    }
+
+
     public static void showSnackBarNegative(View mView, String msg) {
         Snackbar snackBar = Snackbar.make(mView, msg, Snackbar.LENGTH_INDEFINITE);
         snackBar.getView().setBackgroundColor(ContextCompat.getColor(mView.getContext(), R.color.snackbar_negative_color));

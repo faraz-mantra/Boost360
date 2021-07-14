@@ -98,6 +98,7 @@ public class ImageGalleryActivity extends AppCompatActivity implements ImageGall
                     Log.d("imagesReceived", " 1 : "+ noOfImages);
                     image_gallery_fragment.addImage();
                 }else{
+//                    Methods.showCapLimitDialog(getApplicationContext());
                     Log.d("imagesReceived", " 2 : "+ noOfImages);
                 }
 //                image_gallery_fragment.addImage();
