@@ -97,9 +97,9 @@ public class Image_Gallery_Fragment extends Fragment implements
     String limitValue = null;
     int imageCount = 0;
     ImageGalleryListener imageGalleryListener = null;
-    public Image_Gallery_Fragment getInstance(ImageGalleryListener mListener)
-    {
-        Log.d("imageGalleryListener", " "+ mListener);
+
+    public Image_Gallery_Fragment getInstance(ImageGalleryListener mListener) {
+        Log.d("imageGalleryListener", " " + mListener);
         imageGalleryListener = mListener;
         return new Image_Gallery_Fragment();
     }
@@ -154,14 +154,14 @@ public class Image_Gallery_Fragment extends Fragment implements
         Get_Feature_Details valueFeature = new Gson().fromJson(featureList, Get_Feature_Details.class);
         for (Get_Feature_DetailsItem aList : valueFeature) {
             if (aList.equals("IMAGEGALLERY")) {
-                for (Get_Properties_Details pList:aList.getProperties()) {
-                    if(pList.getKey().equals("LIMIT")){
+                for (Get_Properties_Details pList : aList.getProperties()) {
+                    if (pList.getKey().equals("LIMIT")) {
                         limitValue = pList.getValue();
                     }
                 }
             } else if (aList.equals("UNLIMITED_CONTENT")) {
-                for (Get_Properties_Details pList:aList.getProperties()) {
-                    if(pList.getKey().equals("IMAGE")){
+                for (Get_Properties_Details pList : aList.getProperties()) {
+                    if (pList.getKey().equals("IMAGE")) {
                         limitValue = pList.getValue();
                     }
                 }
@@ -186,9 +186,9 @@ public class Image_Gallery_Fragment extends Fragment implements
             if (emptyGalleryLayout != null && otherImagesAdapter.getCount() != 0) {
                 emptyGalleryLayout.setVisibility(View.GONE);
                 imageCount = otherImagesAdapter.getCount();
-                Log.d("imageGalleryListener", " 3 :  "+ imageGalleryListener);
+                Log.d("imageGalleryListener", " 3 :  " + imageGalleryListener);
                 imageGalleryListener.imageCount(imageCount);
-                Log.d("imagesReceived", " 3 :  "+ imageCount);
+                Log.d("imagesReceived", " 3 :  " + imageCount);
             }
         }
         ArrayList<String> serverImage = Constants.storeSecondaryImages;
@@ -331,6 +331,54 @@ public class Image_Gallery_Fragment extends Fragment implements
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        try {
+            imageGalleryListener = (ImageGalleryListener) activity;
+        } catch (Exception e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implemenet ImageGalleryListener");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
@@ -643,8 +691,9 @@ public class Image_Gallery_Fragment extends Fragment implements
     public void addImage() {
         selectImage();
     }
-    public int getImageCount(){
-        Log.d("imagesReceived", " 4 : "+ imageCount);
+
+    public int getImageCount() {
+        Log.d("imagesReceived", " 4 : " + imageCount);
         return imageCount;
     }
 }
