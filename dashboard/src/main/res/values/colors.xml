@@ -11,5 +11,6 @@
   <color name="accent_30">#4DFFB900</color>
   <color name="green_lite">#7ED321</color>
   <color name="green_more_settings">#01D34F</color>
+  <color name="red_more_settings">#EB5757</color>
 
 </resources>

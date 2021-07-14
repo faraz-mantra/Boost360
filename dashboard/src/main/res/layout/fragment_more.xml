@@ -411,7 +411,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_20"
                     android:background="@drawable/rounded_stroke_3"
-                    android:backgroundTint="#EB5757"
+                    android:backgroundTint="@color/red_more_settings"
                     android:fontFamily="@font/barlow_semi_bold"
                     android:gravity="center"
                     android:includeFontPadding="true"
