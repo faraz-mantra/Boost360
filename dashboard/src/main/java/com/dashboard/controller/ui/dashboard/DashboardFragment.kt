@@ -1343,9 +1343,7 @@ fun getLocalSession(session: UserSessionManager): LocalSessionModel {
     BASE_IMAGE_URL + imageUri
   val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
   val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
-  val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty()
-      .not()
-  ) "$city, $country" else "$city$country"
+  val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
   return LocalSessionModel(
     floatingPoint = session.fPID,
     contactName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME),
