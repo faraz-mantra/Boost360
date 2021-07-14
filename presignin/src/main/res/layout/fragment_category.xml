@@ -31,9 +31,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/size_16"
+        android:includeFontPadding="true"
         android:fontFamily="@font/semi_bold"
         android:text="@string/select_your_business_type"
-        android:textColor="@color/black_4a4a4a"
+        android:textColor="@color/black_3C3C3C"
         android:textSize="16sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -43,10 +44,12 @@
       android:id="@+id/view"
       android:background="@color/view_background_1"
       app:layout_constraintBottom_toBottomOf="@+id/linearLayoutCompat" />
+
     <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="0dp"
       android:fillViewport="true"
+      app:layout_constraintBottom_toTopOf="@+id/confirm_button"
       app:layout_constraintTop_toBottomOf="@+id/view">
 
       <androidx.constraintlayout.widget.ConstraintLayout
@@ -78,31 +81,37 @@
         <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/recyclerView"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="0dp"
           android:clipToPadding="false"
           android:orientation="vertical"
           android:overScrollMode="never"
-          android:paddingBottom="@dimen/_120sdp"
+          android:paddingBottom="@dimen/_80sdp"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintTop_toBottomOf="@id/sub_heading_tv"
-          tools:itemCount="15"
+          tools:itemCount="2"
           tools:listitem="@layout/item_category_layout" />
 
+
       </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.core.widget.NestedScrollView>
-
-
     <com.framework.views.customViews.CustomButton
       android:id="@+id/confirm_button"
       style="@style/psn_button_style"
       android:layout_width="match_parent"
-      android:layout_marginHorizontal="@dimen/_20sdp"
-      android:layout_marginBottom="@dimen/_14sdp"
+      android:height="70dp"
+      android:background="@color/colorAccent"
+      android:drawableEnd="@null"
       android:enabled="true"
-      android:text="@string/confirm_business_category"
+      android:gravity="center"
+      android:text="@string/confirm_proceed"
       android:visibility="invisible"
       app:layout_constraintBottom_toBottomOf="parent"
       tools:ignore="MissingConstraints,UnknownId" />
+
+
+
   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

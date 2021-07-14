@@ -32,7 +32,8 @@ class CategoryDataModel(
   }
 
   override fun getViewType(): Int {
-    return if (sectionType) RecyclerViewItemType.SECTION_HEADER_ITEM.getLayout() else RecyclerViewItemType.CATEGORY_ITEM.getLayout()
+//    return if (sectionType) RecyclerViewItemType.SECTION_HEADER_ITEM.getLayout() else
+    return  RecyclerViewItemType.CATEGORY_ITEM.getLayout()
   }
 
 

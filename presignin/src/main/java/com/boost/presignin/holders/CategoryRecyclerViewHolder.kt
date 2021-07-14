@@ -3,6 +3,7 @@ package com.boost.presignin.holders
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.View
+import android.widget.CompoundButton
 import androidx.core.content.ContextCompat
 import com.boost.presignin.R
 import com.boost.presignin.constant.RecyclerViewActionType
@@ -15,7 +16,7 @@ import com.framework.extensions.setTextColorCompat
 import com.framework.extensions.visible
 
 class CategoryRecyclerViewHolder constructor(binding: ItemCategoryLayoutBinding) :
-  AppBaseRecyclerViewHolder<ItemCategoryLayoutBinding>(binding) {
+  AppBaseRecyclerViewHolder<ItemCategoryLayoutBinding>(binding){
 
   private var model: CategoryDataModel? = null
 
@@ -28,7 +29,7 @@ class CategoryRecyclerViewHolder constructor(binding: ItemCategoryLayoutBinding)
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-      binding.card -> onCardClicked()
+      binding.card,binding.check -> onCardClicked()
     }
   }
 
@@ -65,6 +66,9 @@ class CategoryRecyclerViewHolder constructor(binding: ItemCategoryLayoutBinding)
     binding.categoryImage.setImageDrawable(model.getCategoryImage(activity))
     setClickListeners(binding.card)
     setCardSelection(model.isSelected)
+
   }
+
+
 
 }
