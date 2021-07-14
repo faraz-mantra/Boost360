@@ -9,8 +9,7 @@ import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
-class ChannelsConnectViewHolder constructor(binding: ItemChannelsConnectedBinding) :
-  AppBaseRecyclerViewHolder<ItemChannelsConnectedBinding>(binding) {
+class ChannelsConnectViewHolder constructor(binding: ItemChannelsConnectedBinding) : AppBaseRecyclerViewHolder<ItemChannelsConnectedBinding>(binding) {
 
   private var model: ChannelModel? = null
 

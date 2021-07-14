@@ -87,7 +87,7 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
         //setheader
         setHeader();
 
-        if (Constants.StoreWidgets.contains("BROCHURE")) {
+        if (session.getStoreWidgets().contains("BROCHURE")) {
             recyclerView.setVisibility(View.VISIBLE);
             emptyLayout.setVisibility(View.GONE);
         } else {
@@ -99,7 +99,7 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
     @Override
     protected void onResume() {
         super.onResume();
-        if (Constants.StoreWidgets.contains("BROCHURE")) {
+        if (session.getStoreWidgets().contains("BROCHURE")) {
             if (Utils.isNetworkConnected(DigitalBrochuresActivity.this)) {
                 loadData();
             } else {

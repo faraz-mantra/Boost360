@@ -72,7 +72,7 @@ public class DomainEmailActivity extends AppCompatActivity {
     }
 
     private void createView() {
-        if (Constants.StoreWidgets.contains("DOMAINPURCHASE")) {
+        if (session.getStoreWidgets().contains("DOMAINPURCHASE")) {
             loadData();
         } else {
             addFragment(new DomainNotPurchaseFragment(), "DOMAIN_NOT_PURCHASE_FRAGMENT");

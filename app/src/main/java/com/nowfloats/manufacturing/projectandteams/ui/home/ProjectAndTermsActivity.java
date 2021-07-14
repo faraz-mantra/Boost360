@@ -96,7 +96,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
             }
         });
 
-        if (Constants.StoreWidgets.contains("PROJECTTEAM")) {
+        if (session.getStoreWidgets().contains("PROJECTTEAM")) {
             primaryLayout.setVisibility(View.VISIBLE);
             secoundaryLayout.setVisibility(View.GONE);
         } else {
@@ -109,7 +109,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (Constants.StoreWidgets.contains("PROJECTTEAM")) {
+        if (session.getStoreWidgets().contains("PROJECTTEAM")) {
             if (Utils.isNetworkConnected(ProjectAndTermsActivity.this)) {
                 loadProjectsData();
                 loadTeamData();

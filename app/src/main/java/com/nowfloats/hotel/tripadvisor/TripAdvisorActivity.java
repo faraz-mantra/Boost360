@@ -146,7 +146,7 @@ public class TripAdvisorActivity extends AppCompatActivity {
         //setHeader
         setHeader();
 
-        if (Constants.StoreWidgets.contains("TRIPADVISOR-REVIEWS")) {
+        if (session.getStoreWidgets().contains("TRIPADVISOR-REVIEWS")){
             emptyLayout.setVisibility(View.GONE);
             primaryLayout.setVisibility(View.VISIBLE);
             loadData();
