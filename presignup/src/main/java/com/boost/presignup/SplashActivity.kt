@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignup.utils.DynamicLinkParams
 import com.boost.presignup.utils.FirebaseDynamicLinksManager
+import com.framework.pref.UserSessionManager
 import com.framework.utils.AppsFlyerUtils
 import com.onboarding.nowfloats.managers.NavigatorManager
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -19,8 +20,7 @@ import java.security.NoSuchAlgorithmException
 
 class SplashActivity : AppCompatActivity() {
 
-  var isUserLoggedIn = false
-  var isSignUpComplete = false
+  var session: UserSessionManager? = null
   private var deepLinkViewType = ""
   private var deepLinkFpId = ""
   private var deepLinkFpTag = ""
@@ -29,36 +29,28 @@ class SplashActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_splash)
-    val pref: SharedPreferences = this.getSharedPreferences("nowfloatsPrefs", MODE_PRIVATE)
-    isUserLoggedIn = pref.getBoolean("IsUserLoggedIn", false)
-    isSignUpComplete = pref.getBoolean("IsSignUpComplete", false)
-    if (isUserLoggedIn && isSignUpComplete.not()) {
-      val profileId = pref.getString("user_profile_id", null)
-      isUserLoggedIn = profileId != null && profileId.trim().isNotEmpty()
-    }
-    if (intent != null) {
-      val uri = intent.data ?: null
-      if (uri == null) {
-        if (uri.toString().contains("onelink", true)) {
-          if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
-            deepLinkViewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
-            deepLinkFpId = AppsFlyerUtils.sAttributionData[DynamicLinkParams.fpId.name] ?: ""
-            deepLinkFpTag = AppsFlyerUtils.sAttributionData[DynamicLinkParams.fpTag.name] ?: ""
-            deepLinkDay = AppsFlyerUtils.sAttributionData[DynamicLinkParams.day.name] ?: ""
-          }
-        } else {
-          val deepHashMap = FirebaseDynamicLinksManager().getURILinkParams(uri)
-          if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
-            deepLinkViewType = deepHashMap[DynamicLinkParams.viewType] ?: ""
-            deepLinkFpId = deepHashMap[DynamicLinkParams.fpId] ?: ""
-            deepLinkFpTag = deepHashMap[DynamicLinkParams.fpTag] ?: ""
-            deepLinkDay = deepHashMap[DynamicLinkParams.day] ?: ""
-          }
+    session = UserSessionManager(this)
+    val uri = intent.data
+    if (uri != null) {
+      if (uri.toString().contains("onelink", true)) {
+        if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
+          deepLinkViewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
+          deepLinkFpId = AppsFlyerUtils.sAttributionData[DynamicLinkParams.fpId.name] ?: ""
+          deepLinkFpTag = AppsFlyerUtils.sAttributionData[DynamicLinkParams.fpTag.name] ?: ""
+          deepLinkDay = AppsFlyerUtils.sAttributionData[DynamicLinkParams.day.name] ?: ""
+        }
+      } else {
+        val deepHashMap = FirebaseDynamicLinksManager().getURILinkParams(uri)
+        if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
+          deepLinkViewType = deepHashMap[DynamicLinkParams.viewType] ?: ""
+          deepLinkFpId = deepHashMap[DynamicLinkParams.fpId] ?: ""
+          deepLinkFpTag = deepHashMap[DynamicLinkParams.fpTag] ?: ""
+          deepLinkDay = deepHashMap[DynamicLinkParams.day] ?: ""
         }
       }
     } else if (intent.extras?.containsKey("url") == true) {
       val url = intent.extras?.getString("url")
-      if (url.isNullOrEmpty().not() && isUserLoggedIn) {
+      if (url.isNullOrEmpty().not() && session?.isUserLoggedIn == true) {
         try {
           val intent = Intent(applicationContext, Class.forName("com.dashboard.controller.DashboardActivity"))
           intent.putExtra("url", url)
@@ -74,7 +66,7 @@ class SplashActivity : AppCompatActivity() {
   }
 
   private fun onCreateView() {
-    if (isUserLoggedIn && deepLinkViewType.isNotEmpty()) {
+    if (session?.isUserLoggedIn == true && deepLinkViewType.isNotEmpty()) {
       try {
         val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
         intent.putExtra("deepLinkViewType", deepLinkViewType)
@@ -100,16 +92,8 @@ class SplashActivity : AppCompatActivity() {
       override fun onAnimationEnd(animation: Animator?) {
         animation_view?.cancelAnimation()
         when {
-          isUserLoggedIn -> {
-            val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
-            startActivity(intent)
-            finish()
-          }
-          isSignUpComplete -> {
-            startNewSignUpSuccess()
-//            NavigatorManager.startActivities(this@SplashActivity)
-//            finish()
-          }
+          (session?.isUserLoggedIn == true) -> splashLoader()
+          (session?.isUserSignUpComplete == true) -> startNewSignUpSuccess()
           else -> startNewSignIn()
         }
       }
@@ -122,6 +106,17 @@ class SplashActivity : AppCompatActivity() {
 
     })
     animation_view.playAnimation()
+  }
+
+  private fun splashLoader() {
+    try {
+      val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
+      startActivity(intent)
+      finish()
+    } catch (e: Exception) {
+      e.printStackTrace()
+      finish()
+    }
   }
 
   private fun startNewSignUpSuccess() {
