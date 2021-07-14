@@ -50,7 +50,7 @@
         android:layout_below="@id/ctv_about_heading"
         android:layout_marginHorizontal="@dimen/size_20"
         android:layout_marginTop="@dimen/size_20"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/removing_the_staff_will_remove"
         android:textColor="@color/black_4a4a4a"
         android:textSize="12sp" />

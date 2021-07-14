@@ -32,7 +32,7 @@
       android:text="@string/warehouse"
       android:textColor="@color/primaryColor"
       android:textSize="14sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
       android:id="@+id/label_address"

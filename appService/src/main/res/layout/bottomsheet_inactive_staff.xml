@@ -24,7 +24,7 @@
         style="@style/StaffProfileTextContent"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/size_8"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:text="@string/this_staff_is_marked_inactive"
         android:textColor="@color/white" />
 

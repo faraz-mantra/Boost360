@@ -13,7 +13,7 @@
     android:gravity="center"
     android:hapticFeedbackEnabled="false"
     android:soundEffectsEnabled="false"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 
   <ImageButton
     android:id="@+id/switch_to_emoji"

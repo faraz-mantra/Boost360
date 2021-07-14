@@ -53,7 +53,7 @@
           android:id="@+id/offer_title"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:text="@string/qutub_minar"
           android:textColor="#4A4A4A"
           android:textSize="@dimen/_15sdp" />
@@ -66,18 +66,17 @@
             android:id="@+id/offer_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/semi_bold"
             android:text="@string/rs_1199"
             android:textColor="#747474"
-            android:textSize="@dimen/_12sdp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/_12sdp" />
 
           <TextView
             android:id="@+id/mrp_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:text="@string/rs_1199"
             android:textColor="#747474"
             android:textSize="@dimen/_10sdp" />
@@ -120,7 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/at_a_height_of_234_feet_this_minaret_is_the_tallest_individual_tower_in_the_world_and_is_a_perfect_display_of_mughal_architectural_brilliance"
         android:textColor="#747474"
         android:textSize="@dimen/_9sdp" />
@@ -156,7 +155,7 @@
         android:id="@+id/discount_percentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:padding="@dimen/_10sdp"
         android:text="@string/_25_flat_discount"
         android:textSize="@dimen/_12sdp" />

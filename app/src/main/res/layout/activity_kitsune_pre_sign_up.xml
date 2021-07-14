@@ -56,7 +56,7 @@
       android:textAllCaps="true"
       android:textColor="@color/primaryColor"
       android:textSize="25sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
   </LinearLayout>
 

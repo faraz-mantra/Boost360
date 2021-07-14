@@ -30,8 +30,7 @@ import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.util.*
 
-class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) :
-  AppBaseRecyclerViewHolder<ItemAppointmentsOrderBinding>(binding) {
+class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRecyclerViewHolder<ItemAppointmentsOrderBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -177,12 +176,12 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) :
           )
         }
         OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
-          colorCode = "#52AAC6"
+          colorCode = "#4A4A4A"
           changeButtonStatus(
             btnOrderMenu.title,
             R.drawable.ic_in_transit_order_btn_bkg,
-            R.color.blue_52AAC6,
-            R.drawable.ic_arrow_down_blue
+            R.color.black_4a4a4a,
+            R.drawable.ic_arrow_down_4a4a4a
           )
         }
         else -> binding.lytStatusBtn.gone()

@@ -557,7 +557,7 @@
         android:paddingVertical="@dimen/size_14"
         android:text="@string/submit_verification"
         android:textAllCaps="true"
-        android:textStyle="bold"
+         android:fontFamily="@font/semi_bold"
         app:layout_constraintBottom_toBottomOf="parent" />
     </FrameLayout>
 

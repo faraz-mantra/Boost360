@@ -19,8 +19,7 @@ import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
-open class PaymentGatewayContainerActivity :
-  AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
 
@@ -50,13 +49,6 @@ open class PaymentGatewayContainerActivity :
   override fun onCreateView() {
     super.onCreateView()
     setFragment()
-  }
-
-  override fun getNavIconScale(): Float {
-    return when (type) {
-      FragmentType.SCAN_PAN_CARD, FragmentType.KYC_DETAIL_NEW -> 1f
-      else -> super.getNavIconScale()
-    }
   }
 
   override fun customTheme(): Int? {

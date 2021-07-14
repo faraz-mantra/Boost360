@@ -61,7 +61,7 @@
           android:text="@string/physical_product"
           android:textColor="@color/primaryTextColor"
           android:textSize="16sp"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
         <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/arrow_btn"
@@ -109,7 +109,7 @@
           android:text="@string/service_offering"
           android:textColor="@color/primaryTextColor"
           android:textSize="16sp"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
         <TextView
           android:id="@+id/label_item_service_description"

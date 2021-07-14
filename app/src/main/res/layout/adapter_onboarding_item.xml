@@ -31,7 +31,7 @@
       android:gravity="center"
       android:text="@string/awesome_nyou_are_using_nowfloats_boost"
       android:textSize="16sp"
-      android:textStyle="bold"
+       android:fontFamily="@font/semi_bold"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/tv_card_number" />
@@ -67,7 +67,7 @@
       android:textAllCaps="true"
       android:textColor="@drawable/yellow_btn_hover_text_color"
       android:textSize="15sp"
-      android:textStyle="bold"
+       android:fontFamily="@font/semi_bold"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
@@ -82,7 +82,7 @@
       android:text="@string/_1"
       android:textColor="@color/primary_color"
       android:textSize="40sp"
-      android:textStyle="bold"
+       android:fontFamily="@font/semi_bold"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />

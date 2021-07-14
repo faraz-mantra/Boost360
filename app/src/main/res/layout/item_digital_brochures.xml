@@ -42,7 +42,7 @@
           android:id="@+id/title"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:text="@string/updates_"
           android:textColor="#4A4A4A"
           android:textSize="@dimen/_15sdp" />
@@ -91,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/https_web_s_cdn_boostkit_dev_webaction_files_597c6bbfee786c8284e8d3bb_uploadpdf_13_ideas_to_update_better_content_5e2ac29940a98f00013766c1_pdf"
         android:textColor="#4A90E2"
         android:textSize="@dimen/_9sdp" />

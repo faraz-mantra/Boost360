@@ -29,7 +29,7 @@
       android:text="@string/email"
       android:textColor="@color/white"
       android:textSize="22sp"
-      android:textStyle="bold"
+       android:fontFamily="@font/semi_bold"
       app:textAllCaps="false" />
 
     <androidx.appcompat.widget.AppCompatTextView

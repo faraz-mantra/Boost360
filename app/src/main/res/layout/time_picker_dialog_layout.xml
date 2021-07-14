@@ -16,7 +16,7 @@
     android:textAllCaps="true"
     android:textColor="@color/white"
     android:textSize="@dimen/txt_16sp"
-    android:textStyle="bold"
+     android:fontFamily="@font/semi_bold"
     tools:text="Select Opening time" />
 
 

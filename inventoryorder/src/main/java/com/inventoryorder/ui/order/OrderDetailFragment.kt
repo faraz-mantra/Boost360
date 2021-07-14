@@ -239,15 +239,11 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 //        binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
 //        binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
 
-    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
-        ?.let { !checkValidMobile(it) } == true
-    )
+    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) } == true)
       binding?.tvCustomerContactNumber?.setTextColor(getColor(R.color.watermelon_light_10))
     if (order.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty().not()) {
       //binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
-      if (!checkValidEmail(order.BuyerDetails?.ContactDetails?.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(
-        getColor(R.color.watermelon_light_10)
-      )
+      if (!checkValidEmail(order.BuyerDetails?.ContactDetails?.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
     } else binding?.tvCustomerEmail?.isGone = true
 
 
@@ -327,10 +323,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
           showProgress()
           sendPaymentLinkOrder(getString(R.string.payment_request_send))
         }
-        sheetRequestPayment.show(
-          this.parentFragmentManager,
-          RequestPaymentBottomSheetDialog::class.java.name
-        )
+        sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentBottomSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.CANCEL_ORDER -> {
         val sheetCancel = CancelBottomSheetDialog()
@@ -355,20 +348,13 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
         val sheetReBookingApt = SendReBookingOrderSheetDialog()
         sheetReBookingApt.setData(orderItem)
         sheetReBookingApt.onClicked = { sendReBookingRequestOrder() }
-        sheetReBookingApt.show(
-          this.parentFragmentManager,
-          SendReBookingAptSheetDialog::class.java.name
-        )
+        sheetReBookingApt.show(this.parentFragmentManager, SendReBookingAptSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
         val sheetFeedbackApt = SendFeedbackOrderSheetDialog()
         sheetFeedbackApt.setData(orderItem)
-        sheetFeedbackApt.onClicked =
-          { sendFeedbackRequestOrder(it, getString(R.string.order_feedback_requested)) }
-        sheetFeedbackApt.show(
-          this.parentFragmentManager,
-          SendFeedbackAptSheetDialog::class.java.name
-        )
+        sheetFeedbackApt.onClicked = { sendFeedbackRequestOrder(it, getString(R.string.order_feedback_requested)) }
+        sheetFeedbackApt.show(this.parentFragmentManager, SendFeedbackAptSheetDialog::class.java.name)
       }
       else -> {
       }

@@ -18,7 +18,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/inr_5_000"
-    android:textStyle="bold"
+     android:fontFamily="@font/semi_bold"
     app:layout_constraintBottom_toBottomOf="@+id/rb_plan"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toTopOf="@+id/rb_plan" />

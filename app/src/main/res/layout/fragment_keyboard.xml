@@ -441,7 +441,7 @@
           android:id="@+id/feature_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:text="Boost Keyboard"
           android:textColor="@color/common_text_color"
           android:textSize="@dimen/_16sdp" />
@@ -450,7 +450,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_20sdp"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:text="Looks like this add-on is not added to your current plan. Add it now to start using it."
           android:textSize="@dimen/_11sdp" />
@@ -463,7 +463,7 @@
           android:layout_marginTop="@dimen/_20sdp"
           android:layout_marginEnd="@dimen/_10sdp"
           android:background="@drawable/orange_button_click_effect"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:paddingTop="@dimen/_10sdp"
           android:paddingBottom="@dimen/_10sdp"

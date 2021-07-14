@@ -28,6 +28,7 @@
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/sub_heading_tv"
       style="@style/psn_subheading_style"
+      android:layout_marginTop="@dimen/size_4"
       android:text="@string/psn_username_or_email"
       app:layout_constraintTop_toBottomOf="@id/heading_tv"
       tools:ignore="MissingConstraints" />

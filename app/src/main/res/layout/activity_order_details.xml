@@ -48,7 +48,7 @@
     android:textAllCaps="true"
     android:textColor="@color/white"
     android:textSize="15sp"
-    android:textStyle="bold"
+     android:fontFamily="@font/semi_bold"
     android:visibility="gone" />
 
   <TextView
@@ -65,7 +65,7 @@
     android:textAllCaps="true"
     android:textColor="@color/white"
     android:textSize="15sp"
-    android:textStyle="bold"
+     android:fontFamily="@font/semi_bold"
     android:visibility="gone" />
 
 </LinearLayout>

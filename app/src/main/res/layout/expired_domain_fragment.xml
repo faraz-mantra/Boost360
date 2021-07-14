@@ -43,7 +43,7 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:gravity="center"
             android:text="thinkwalls.net"
             android:textColor="@color/common_text_color"
@@ -143,7 +143,7 @@
       android:layout_marginEnd="@dimen/_10sdp"
       android:layout_marginBottom="@dimen/_15sdp"
       android:background="@drawable/feature_deals_click_effect"
-      android:fontFamily="@font/open_sans_semibold"
+      android:fontFamily="@font/semi_bold"
       android:gravity="center"
       android:paddingTop="@dimen/_10sdp"
       android:paddingBottom="@dimen/_10sdp"
@@ -177,7 +177,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/_10sdp"
-      android:fontFamily="@font/open_sans_semibold"
+      android:fontFamily="@font/semi_bold"
       android:text="Your Business Emails"
       android:textColor="@color/common_text_color"
       android:textSize="@dimen/_16sdp" />

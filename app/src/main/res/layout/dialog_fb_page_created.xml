@@ -83,7 +83,7 @@
       android:text="@string/facebook_page"
       android:textColor="@color/com_facebook_blue"
       android:textSize="18sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
       android:layout_width="wrap_content"

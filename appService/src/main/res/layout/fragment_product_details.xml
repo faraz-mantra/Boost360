@@ -290,7 +290,7 @@
                   android:id="@+id/cb_price_include"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:fontFamily="@font/open_sans"
+                  android:fontFamily="@font/regular"
                   android:text="@string/price_includes_taxes"
                   android:textColor="@color/primary_text"
                   android:textFontWeight="400"

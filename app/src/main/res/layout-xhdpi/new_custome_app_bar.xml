@@ -29,7 +29,7 @@
     android:id="@+id/title"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:fontFamily="@font/open_sans_bold"
+    android:fontFamily="@font/bold"
     android:gravity="center"
     android:textColor="@color/white"
     android:textSize="@dimen/_12sdp"
