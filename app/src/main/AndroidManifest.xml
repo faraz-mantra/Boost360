@@ -781,7 +781,7 @@
         android:value="com.nowfloats.PreSignUp.SplashScreen_Activity" />
     </activity> <!-- PreSignUp module -->
     <activity
-      android:name="com.boost.presignin.ui.registration.RegistrationActivity"
+      android:name="com.boost.presignup.SplashActivity"
       android:label="@string/title_activity_splash_screen_"
       android:launchMode="singleTask"
       android:screenOrientation="portrait"

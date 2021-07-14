@@ -88,7 +88,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
             it.isSelected = (it.category_key == (item as? CategoryDataModel)?.category_key)
           }
         }
-        baseAdapter.notifyDataSetChanged()
+        binding?.recyclerView?.post { baseAdapter.notifyDataSetChanged() }
         binding?.confirmButton?.visible()
       }
     }

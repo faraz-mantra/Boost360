@@ -20,7 +20,6 @@
       android:focusable="true"
       android:orientation="vertical"
       app:cardElevation="@dimen/size_4"
-      app:contentPaddingBottom="4dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintDimensionRatio="w,1:2"
       app:layout_constraintEnd_toEndOf="parent"
@@ -41,12 +40,12 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_centerHorizontal="true"
+          android:layout_marginTop="4dp"
+          android:layout_marginEnd="4dp"
           android:ellipsize="end"
           android:gravity="start"
-          android:textColor="@color/black_4a4a4a"
           android:maxLines="2"
-          android:layout_marginEnd="4dp"
-          android:layout_marginTop="4dp"
+          android:textColor="@color/black_4a4a4a"
           app:layout_constraintEnd_toStartOf="@+id/category_image"
           app:layout_constraintStart_toStartOf="@+id/image"
           app:layout_constraintTop_toBottomOf="@+id/image"
@@ -64,10 +63,11 @@
           tools:srcCompat="@drawable/ic_category_doctor" />
 
         <com.framework.views.customViews.CustomImageView
+          android:id="@id/category_image"
           android:layout_width="@dimen/_165sdp"
           android:layout_height="@dimen/_90sdp"
-          android:id="@id/category_image"
-          android:layout_marginTop="18dp"
+          android:layout_marginTop="10dp"
+          android:layout_marginEnd="20dp"
           android:scaleType="centerCrop"
           android:src="@drawable/business_registed_icon"
           app:layout_constraintBottom_toBottomOf="parent"
@@ -80,17 +80,24 @@
         android:id="@+id/check"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:layout_gravity="top|end"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:gravity="center"
-        android:layout_gravity="top|end"
-        android:clickable="true"
         android:buttonTint="#bbbbbb"
+        android:clickable="false"
         android:focusable="true"
-        android:visibility="visible"
-         />
+        android:gravity="center"
+        android:visibility="visible" />
 
     </com.framework.views.customViews.CustomCardView>
+
+    <View
+      android:id="@+id/view"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/view_background_1"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/card" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
