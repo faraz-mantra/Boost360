@@ -7,10 +7,9 @@ import java.util.ArrayList;
  */
 public class Business_Update_Event {
 
-    public ArrayList<String> updateList ;
+    public ArrayList<String> updateList;
 
-    public Business_Update_Event(ArrayList<String> response)
-    {
-        updateList = response ;
+    public Business_Update_Event(ArrayList<String> response) {
+        updateList = response;
     }
 }

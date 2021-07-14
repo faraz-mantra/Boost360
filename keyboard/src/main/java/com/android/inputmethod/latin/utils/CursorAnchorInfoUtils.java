@@ -42,8 +42,8 @@ public final class CursorAnchorInfoUtils {
     }
 
     private static boolean isPositionVisible(final View view, final float positionX,
-            final float positionY) {
-        final float[] position = new float[] { positionX, positionY };
+                                             final float positionY) {
+        final float[] position = new float[]{positionX, positionY};
         View currentView = view;
 
         while (currentView != null) {
@@ -80,6 +80,7 @@ public final class CursorAnchorInfoUtils {
 
     /**
      * Returns {@link CursorAnchorInfo} from the given {@link TextView}.
+     *
      * @param textView the target text view from which {@link CursorAnchorInfo} is to be extracted.
      * @return the {@link CursorAnchorInfo} object based on the current layout. {@code null} if it
      * is not feasible.

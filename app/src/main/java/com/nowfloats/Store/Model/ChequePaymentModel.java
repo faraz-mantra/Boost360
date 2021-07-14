@@ -112,16 +112,16 @@ public class ChequePaymentModel {
         return bankName;
     }
 
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
     public String getActivationDate() {
         return activationDate;
     }
 
     public void setActivationDate(String activationDate) {
         this.activationDate = activationDate;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
     }
 
     public String getChequeNumber() {

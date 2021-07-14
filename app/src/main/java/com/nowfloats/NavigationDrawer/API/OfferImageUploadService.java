@@ -16,10 +16,9 @@ import java.net.URL;
 public class OfferImageUploadService extends AsyncTask<String, Void, String> {
 
 
-
     private OfferImageUploadComplete offerImageUploadComplete;
 
-    public OfferImageUploadService(OfferImageUploadComplete offerImageUploadComplete){
+    public OfferImageUploadService(OfferImageUploadComplete offerImageUploadComplete) {
         this.offerImageUploadComplete = offerImageUploadComplete;
     }
 
@@ -34,7 +33,7 @@ public class OfferImageUploadService extends AsyncTask<String, Void, String> {
         offerImageUploadComplete.onUploadCompletion(s);
     }
 
-    private String startUpload(String filename, String targetUrl){
+    private String startUpload(String filename, String targetUrl) {
         String response = "error";
 
         HttpURLConnection connection = null;
@@ -110,7 +109,7 @@ public class OfferImageUploadService extends AsyncTask<String, Void, String> {
 
     }
 
-    public interface OfferImageUploadComplete{
+    public interface OfferImageUploadComplete {
         void onUploadCompletion(String response);
     }
 

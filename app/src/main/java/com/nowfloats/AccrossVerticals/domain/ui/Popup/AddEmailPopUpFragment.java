@@ -49,14 +49,14 @@ public class AddEmailPopUpFragment extends DialogFragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),getString( R.string.save_button_clicked),Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getString(R.string.save_button_clicked), Toast.LENGTH_LONG).show();
             }
         });
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), getString(R.string.cancel_button_is_clicked),Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getString(R.string.cancel_button_is_clicked), Toast.LENGTH_LONG).show();
                 dismiss();
             }
         });

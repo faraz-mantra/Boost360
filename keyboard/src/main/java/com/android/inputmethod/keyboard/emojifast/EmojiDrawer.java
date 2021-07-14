@@ -21,7 +21,7 @@ public class EmojiDrawer extends LinearLayout {
     private List<EmojiPageModel> models;
     private PagerSlidingTabStrip strip;
     private RecentEmojiPageModel recentModel;
-    private EmojiDrawerListener  drawerListener;
+    private EmojiDrawerListener drawerListener;
 
     public EmojiDrawer(Context context) {
         this(context, null);
@@ -40,8 +40,8 @@ public class EmojiDrawer extends LinearLayout {
     }
 
     private void initializeResources(View v) {
-        this.pager     = (ViewPager)            v.findViewById(R.id.emoji_pager);
-        this.strip     = (PagerSlidingTabStrip) v.findViewById(R.id.tabs);
+        this.pager = (ViewPager) v.findViewById(R.id.emoji_pager);
+        this.strip = (PagerSlidingTabStrip) v.findViewById(R.id.tabs);
     }
 
     public boolean isShowing() {
@@ -78,6 +78,7 @@ public class EmojiDrawer extends LinearLayout {
 
     public interface EmojiDrawerListener {
         void onShown();
+
         void onHidden();
     }
 }

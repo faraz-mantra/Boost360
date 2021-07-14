@@ -1,73 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/tools"
-    android:orientation="vertical"
+  xmlns:card_view="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@color/screen_bg"
+  android:orientation="vertical">
+
+  <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/screen_bg">
+    android:layout_gravity="center_horizontal"
+    android:layout_marginBottom=".5dp"
+    card_view:cardBackgroundColor="#FFFFFF"
+    card_view:cardCornerRadius="0dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="15dp"
+      android:orientation="horizontal">
+
+      <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <ImageView
+          android:id="@+id/search_query_image"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:src="@drawable/circle_bakground" />
+
+        <ImageView
+          android:layout_width="15dp"
+          android:layout_height="15dp"
+          android:layout_gravity="center"
+          android:src="@drawable/analytics_search" />
+
+      </FrameLayout>
+
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardBackgroundColor="#FFFFFF"
-        card_view:cardCornerRadius="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom=".5dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="15dp">
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" >
-
-                <ImageView
-                    android:id="@+id/search_query_image"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/circle_bakground" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/analytics_search" />
-
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="20dp" >
+        android:layout_marginStart="20dp"
+        android:orientation="vertical">
 
 
-                <com.nowfloats.CustomWidget.roboto_md_italic_16_primary_color
-                    android:id="@+id/search_query_header_text_1"
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold|italic"
-                    android:text="@string/search_queries" />
+        <com.nowfloats.CustomWidget.roboto_md_italic_16_primary_color
+          android:id="@+id/search_query_header_text_1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:text="@string/search_queries"
+          android:textStyle="bold|italic" />
 
-                <com.nowfloats.CustomWidget.roboto_lt_10_8c8c8c
-                    android:id="@+id/search_query_header_text_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_gravity="left"
-                    android:text="@string/search_datetime" />
+        <com.nowfloats.CustomWidget.roboto_lt_10_8c8c8c
+          android:id="@+id/search_query_header_text_2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="left"
+          android:layout_marginTop="8dp"
+          android:text="@string/search_datetime" />
 
-            </LinearLayout>
+      </LinearLayout>
 
-        </LinearLayout>
+    </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+  </androidx.cardview.widget.CardView>
 
 </LinearLayout>

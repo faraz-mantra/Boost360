@@ -77,11 +77,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_4"
             android:buttonTint="@color/colorAccent"
-            android:textColor="@color/black_4a4a4a"
-            app:textType="HEADING_6"
             android:checked="true"
             android:clickable="false"
             android:focusable="false"
+            android:textColor="@color/black_4a4a4a"
+            app:textType="HEADING_6"
             tools:text="via Email (brajmadhav@gmail.com)" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -120,18 +120,18 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent">
 
-      <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tvCancel"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:layout_marginEnd="@dimen/size_10"
-          android:background="@color/white"
-          android:text="@string/cancel" />
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/tvCancel"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_marginEnd="@dimen/size_10"
+        android:text="@string/cancel"
+        android:textColor="@color/white" />
 
       <com.framework.views.customViews.CustomButton
-          android:id="@+id/buttonDone"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:text="@string/send_reminder"
-          android:textColor="@color/white" />
+        android:id="@+id/buttonDone"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:text="@string/send_reminder"
+        android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

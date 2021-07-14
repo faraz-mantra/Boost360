@@ -16,7 +16,7 @@ fun String?.isBusinessNameValid(): Boolean {
 }
 
 fun String?.validateLetters(): Boolean {
-  if (this.toString().isEmpty()||this.toString().isBlank()){
+  if (this.toString().isEmpty() || this.toString().isBlank()) {
     return false
   }
   val regx = "^[a-zA-Z0-9 ]*\$"

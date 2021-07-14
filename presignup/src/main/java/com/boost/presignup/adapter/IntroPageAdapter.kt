@@ -23,18 +23,18 @@ class IntroPageAdapter(val list: ArrayList<SingleScreenModel>) : RecyclerView.Ad
 //        R.drawable.eighthscreen
 //    )
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerVH =
-        PagerVH(LayoutInflater.from(parent.context).inflate(R.layout.item_page, parent, false))
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerVH =
+    PagerVH(LayoutInflater.from(parent.context).inflate(R.layout.item_page, parent, false))
 
-    //get the size of color array
-    override fun getItemCount(): Int = list.size
+  //get the size of color array
+  override fun getItemCount(): Int = list.size
 
-    //binding the screen with view
-    override fun onBindViewHolder(holder: PagerVH, position: Int) = holder.itemView.run {
-        image_title.setText(list.get(position).title)
-        image_description.setText(list.get(position).description)
-        page_images.setImageResource(list.get(position).image!!)
-    }
+  //binding the screen with view
+  override fun onBindViewHolder(holder: PagerVH, position: Int) = holder.itemView.run {
+    image_title.setText(list.get(position).title)
+    image_description.setText(list.get(position).description)
+    page_images.setImageResource(list.get(position).image!!)
+  }
 }
 
 class PagerVH(itemView: View) : RecyclerView.ViewHolder(itemView)

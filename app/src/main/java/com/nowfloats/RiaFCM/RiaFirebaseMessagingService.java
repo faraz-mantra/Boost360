@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -16,11 +17,14 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.anachat.chatsdk.AnaCore;
 import com.crashlytics.android.Crashlytics;
+import com.dashboard.controller.DashboardActivity;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -66,22 +70,19 @@ import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
 
 public class RiaFirebaseMessagingService extends FirebaseMessagingService {
   private static final String TAG = RiaFirebaseMessagingService.class.getSimpleName();
+  private static final String SAM_BUBBLE_MSG = "I have Got some data";
+  private static final String SAM_BUBBLE_MSG_KEY = "100";
   public static String deepLinkUrl;
   private SharedPreferences pref;
 
   @Override
   public void onNewToken(String token) {
     super.onNewToken(token);
-
     Log.d(TAG, "Token: " + token);
-
     try {
       saveTokenToPreferenceAndUpload(token);
       WebEngage.get().setRegistrationID(token);
-//                try {
-//                    ZopimChat.setPushToken(token);
-//                } catch (Exception e) {
-//                }
+      //try {ZopimChat.setPushToken(token);} catch (Exception e) {}
       AnaCore.saveFcmToken(this, token);
     } catch (Exception e) {
       Crashlytics.log("Failed to process FCM Token by RiaFirebaseMessagingService" + e.getMessage());
@@ -92,9 +93,8 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
   public void onMessageReceived(RemoteMessage remoteMessage) {
     try {
       pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-
       Map<String, String> mapResult = remoteMessage.getData();
-      BoostLog.d(TAG, "onMessageReceived");
+      BoostLog.d("onMessageReceived: ", "onMessageReceived");
       if (mapResult != null) {
         if (mapResult.containsKey("source") && "webengage".equals(mapResult.get("source"))) {
           WebEngage.get().receive(mapResult);
@@ -102,7 +102,10 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         if (mapResult.containsKey("payload")) {
           AnaCore.handlePush(this, mapResult.get("payload"));
         } else {
-          sendNotification(mapResult);
+          String deepLinkUrl = mapResult.get("url");
+          String title = mapResult.get("title");
+          String message = mapResult.get("mp_message");
+          sendNotification(this.getBaseContext(), title, message, deepLinkUrl);
           Constants.GCM_Msg = true;
         }
       }
@@ -111,8 +114,51 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
     }
   }
 
-  private static final String SAM_BUBBLE_MSG = "I have Got some data";
-  private static final String SAM_BUBBLE_MSG_KEY = "100";
+
+  private void sendNotification(Context c, String messageTitle, String messageBody, String deepLinkUrl) {
+    Intent intent = new Intent("com.dashboard.controller.DashboardActivity");
+    TaskStackBuilder stackBuilder = TaskStackBuilder.create(c);
+    intent.putExtra("from", "notification");
+    intent.putExtra("url", deepLinkUrl);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    stackBuilder.addNextIntentWithParentStack(intent);
+
+    PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+    NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(c, "111")
+        .setSmallIcon(R.drawable.app_launcher2)
+        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_launcher))
+        .setContentText(messageBody)
+        .setAutoCancel(true)
+        .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
+        .setColor(ContextCompat.getColor(c, R.color.primaryColor))
+        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+        .setContentIntent(pendingIntent)
+        .setStyle(new NotificationCompat.BigTextStyle().bigText(messageBody))
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
+        .setLights(Color.GREEN, 3000, 3000);
+
+    if (messageTitle != null && messageTitle.isEmpty()) notificationBuilder.setContentTitle(messageTitle);
+    else notificationBuilder.setContentTitle(getResources().getString(R.string.app_name));
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+      NotificationManager notificationManager =
+          (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+      int importance = NotificationManager.IMPORTANCE_HIGH;
+      NotificationChannel notificationChannel = new NotificationChannel("111", "NOTIFICATION_CHANNEL_NAME", importance);
+      notificationChannel.enableLights(true);
+      notificationChannel.setLightColor(Color.YELLOW);
+      notificationChannel.enableVibration(true);
+      notificationChannel.setShowBadge(false);
+      notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+      assert notificationManager != null;
+      notificationBuilder.setChannelId("111");
+      notificationManager.createNotificationChannel(notificationChannel);
+      notificationManager.notify(0, notificationBuilder.build());
+    } else {
+      NotificationManagerCompat notificationManager = NotificationManagerCompat.from(c);
+      notificationManager.notify(0, notificationBuilder.build());
+    }
+  }
 
   private void sendNotification(Map<String, String> message) {
 
@@ -218,12 +264,14 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
             ArrayList<VmnCallModel> vmnList = new ArrayList<>();
 
-            VmnCallModel vmnCallModel = gson.fromJson(jsonData, new TypeToken<VmnCallModel>() {}.getType());
+            VmnCallModel vmnCallModel = gson.fromJson(jsonData, new TypeToken<VmnCallModel>() {
+            }.getType());
 
             String oldData = pref.getString(PREF_NOTI_CALL_LOGS, "");
 
             if (!TextUtils.isEmpty(oldData)) {
-              Type type = new TypeToken<List<VmnCallModel>>() {}.getType();
+              Type type = new TypeToken<List<VmnCallModel>>() {
+              }.getType();
               vmnList = gson.fromJson(oldData, type);
             }
 
@@ -248,12 +296,14 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
             ArrayList<Business_Enquiry_Model> eqList = new ArrayList<>();
 
-            Business_Enquiry_Model entity_model = gson.fromJson(jsonData, new TypeToken<Business_Enquiry_Model>() {}.getType());
+            Business_Enquiry_Model entity_model = gson.fromJson(jsonData, new TypeToken<Business_Enquiry_Model>() {
+            }.getType());
 
             String oldData = pref.getString(PREF_NOTI_ENQUIRIES, "");
 
             if (!TextUtils.isEmpty(oldData)) {
-              Type type = new TypeToken<List<Business_Enquiry_Model>>() {}.getType();
+              Type type = new TypeToken<List<Business_Enquiry_Model>>() {
+              }.getType();
               eqList = gson.fromJson(oldData, type);
             }
 
@@ -271,12 +321,14 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
             ArrayList<OrderModel> orderList = new ArrayList<>();
 
-            OrderModel entity_model = gson.fromJson(jsonData, new TypeToken<OrderModel>() {}.getType());
+            OrderModel entity_model = gson.fromJson(jsonData, new TypeToken<OrderModel>() {
+            }.getType());
 
             String oldData = pref.getString(PREF_NOTI_ORDERS, "");
 
             if (!TextUtils.isEmpty(oldData)) {
-              Type type = new TypeToken<List<OrderModel>>() {}.getType();
+              Type type = new TypeToken<List<OrderModel>>() {
+              }.getType();
               orderList = gson.fromJson(oldData, type);
             }
 
@@ -320,10 +372,12 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         if (!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
           FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
           if (data.getId() != null) {
-            if (isNotificationShow) notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
+            if (isNotificationShow)
+              notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
           }
         } else {
-          if (isNotificationShow) notificationManager.notify(createID(), notificationBuilder.build());
+          if (isNotificationShow)
+            notificationManager.notify(createID(), notificationBuilder.build());
           BoostLog.d("Message-", "fsdf");
 
         }

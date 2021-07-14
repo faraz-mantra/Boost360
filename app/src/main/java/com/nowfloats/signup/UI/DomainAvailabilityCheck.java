@@ -25,6 +25,7 @@ import java.util.Set;
 
 public class DomainAvailabilityCheck {
 
+    int regex;
     private Context mContext;
     private boolean domainCheck, firstCheck = true;
     private CustomRunnable r;
@@ -90,8 +91,6 @@ public class DomainAvailabilityCheck {
         }
 
     }
-
-    int regex;
 
     public boolean validate(String text) {
         regex = R.string.signup_subd;

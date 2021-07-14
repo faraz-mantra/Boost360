@@ -19,9 +19,9 @@ import static io.separ.neural.inputmethod.Utils.SizeUtils.pxFromDp;
 
 public class EnableButtonLayout extends LinearLayout {
     private final String buttonText;
+    private final int number;
     private ImageView imageView;
     private IntroButton introButton;
-    private final int number;
     private TextView numberView;
 
     public EnableButtonLayout(Context context, AttributeSet attrs) {

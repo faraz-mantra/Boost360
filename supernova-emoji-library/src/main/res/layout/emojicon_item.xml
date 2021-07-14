@@ -15,18 +15,18 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+  xmlns:emojicon="http://schemas.android.com/apk/res-auto"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content">
 
-    <hani.momanii.supernova_emoji_library.Helper.EmojiconTextView
-        android:layout_gravity="center"
-        android:id="@+id/emojicon_icon"
-        android:layout_width="36dip"
-        android:layout_height="36dip"
-        android:textSize="20dip"
+  <hani.momanii.supernova_emoji_library.Helper.EmojiconTextView
+    android:id="@+id/emojicon_icon"
+    android:layout_width="36dip"
+    android:layout_height="36dip"
+    android:layout_gravity="center"
+    android:gravity="center"
 
-        android:textColor="#000000"
-        emojicon:emojiconSize="30dip"
-        android:gravity="center" />
+    android:textColor="#000000"
+    android:textSize="20dip"
+    emojicon:emojiconSize="30dip" />
 </FrameLayout>

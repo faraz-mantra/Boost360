@@ -104,11 +104,11 @@ public class ManageContentFragment extends Fragment {
             Intent intent = null;
             switch (pos) {
                 case 0:
-                    WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE , MANAGE_CONTENT, session.getFpTag());
+                    WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE, MANAGE_CONTENT, session.getFpTag());
                     intent = new Intent(mContext, ProductCatalogActivity.class);
                     break;
                 case 1:
-                    AppFragmentContainerActivity.startFragmentAppActivity(getActivity(), UPDATE_LATEST_STORY_VIEW, new Bundle(), false);
+//                    AppFragmentContainerActivity.startFragmentAppActivity(getActivity(), UPDATE_LATEST_STORY_VIEW, new Bundle(), false);
 //                        ((SidePanelFragment.OnItemClickListener) mContext).onClick(getString(R.string.update));
                     return;
                 case 2:

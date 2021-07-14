@@ -1,9 +1,9 @@
 package com.inventoryorder.model.orderfilter
 
 data class QueryObject(
-    var Key: String? = null,
-    var Value: String? = null,
-    var QueryOperator: String? = null
+  var Key: String? = null,
+  var Value: String? = null,
+  var QueryOperator: String? = null
 
 ) {
   enum class Operator {

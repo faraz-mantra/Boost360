@@ -69,14 +69,14 @@
           tools:visibility="visible">
 
           <com.framework.views.customViews.CustomCheckBox
-              android:id="@+id/checkbox_sms"
-              style="@style/CheckBoxStyle"
-              tools:text="via SMS (+91-9876543243)" />
+            android:id="@+id/checkbox_sms"
+            style="@style/CheckBoxStyle"
+            tools:text="via SMS (+91-9876543243)" />
 
           <com.framework.views.customViews.CustomCheckBox
-              android:id="@+id/checkbox_email"
-              style="@style/CheckBoxStyle"
-              tools:text="via Email (brajmadhav@gmail.com)" />
+            android:id="@+id/checkbox_email"
+            style="@style/CheckBoxStyle"
+            tools:text="via Email (brajmadhav@gmail.com)" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomTextView
@@ -114,18 +114,18 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent">
 
-      <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tvCancel"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:layout_marginEnd="@dimen/size_10"
-          android:background="@color/white"
-          android:text="@string/cancel" />
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/tvCancel"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_marginEnd="@dimen/size_10"
+        android:text="@string/cancel"
+        android:textColor="@color/white" />
 
       <com.framework.views.customViews.CustomButton
-          android:id="@+id/buttonDone"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:text="@string/send_payment_link"
-          android:textColor="@color/white" />
+        android:id="@+id/buttonDone"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:text="@string/send_payment_link"
+        android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

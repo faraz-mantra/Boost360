@@ -39,30 +39,27 @@ import java.util.Locale;
  */
 final public class BinaryDictionaryGetter {
 
+    // Name of the category for the main dictionary
+    public static final String MAIN_DICTIONARY_CATEGORY = "main";
+    public static final String ID_CATEGORY_SEPARATOR = ":";
     /**
      * Used for Log actions from this class
      */
     private static final String TAG = BinaryDictionaryGetter.class.getSimpleName();
-
     /**
      * Used to return empty lists
      */
     private static final File[] EMPTY_FILE_ARRAY = new File[0];
-
     /**
      * Name of the common preferences name to know which word list are on and which are off.
      */
     private static final String COMMON_PREFERENCES_NAME = "LatinImeDictPrefs";
-
-    // Name of the category for the main dictionary
-    public static final String MAIN_DICTIONARY_CATEGORY = "main";
-    public static final String ID_CATEGORY_SEPARATOR = ":";
-
     // The key considered to read the version attribute in a dictionary file.
     private static final String VERSION_KEY = "version";
 
     // Prevents this from being instantiated
-    private BinaryDictionaryGetter() {}
+    private BinaryDictionaryGetter() {
+    }
 
     /**
      * Generates a unique temporary file name in the app cache directory.
@@ -86,7 +83,7 @@ final public class BinaryDictionaryGetter {
      * Returns a file address from a resource, or null if it cannot be opened.
      */
     public static AssetFileAddress loadFallbackResource(final Context context,
-            final int fallbackResId) {
+                                                        final int fallbackResId) {
         final AssetFileDescriptor afd = context.getResources().openRawResourceFd(fallbackResId);
         if (afd == null) {
             Log.e(TAG, "Found the resource but cannot read it. Is it compressed? resId="
@@ -105,42 +102,9 @@ final public class BinaryDictionaryGetter {
         }
     }
 
-    private static final class DictPackSettings {
-        final SharedPreferences mDictPreferences;
-        public DictPackSettings(final Context context) {
-            mDictPreferences = null == context ? null
-                    : context.getSharedPreferences(COMMON_PREFERENCES_NAME,
-                            Context.MODE_MULTI_PROCESS);
-        }
-        public boolean isWordListActive(final String dictId) {
-            // If we don't have preferences it basically means we can't find the dictionary
-// pack - either it's not installed, or it's disabled, or there is some strange
-// bug. Either way, a word list with no settings should be on by default: default
-// dictionaries in LatinIME are on if there is no settings at all, and if for some
-// reason some dictionaries have been installed BUT the dictionary pack can't be
-// found anymore it's safer to actually supply installed dictionaries.
-            return null == mDictPreferences || mDictPreferences.getBoolean(dictId, true);
-// The default is true here for the same reasons as above. We got the dictionary
-// pack but if we don't have any settings for it it means the user has never been
-// to the settings yet. So by default, the main dictionaries should be on.
-        }
-    }
-
-    /**
-     * Utility class for the {@link #getCachedWordLists} method
-     */
-    private static final class FileAndMatchLevel {
-        final File mFile;
-        final int mMatchLevel;
-        public FileAndMatchLevel(final File file, final int matchLevel) {
-            mFile = file;
-            mMatchLevel = matchLevel;
-        }
-    }
-
     /**
      * Returns the list of cached files for a specific locale, one for each category.
-     *
+     * <p>
      * This will return exactly one file for each word list category that matches
      * the passed locale. If several files match the locale for any given category,
      * this returns the file with the closest match to the locale. For example, if
@@ -148,7 +112,7 @@ final public class BinaryDictionaryGetter {
      * word list available, we'll return only the en_US one.
      * Thus, the list will contain as many files as there are categories.
      *
-     * @param locale the locale to find the dictionary files for, as a string.
+     * @param locale  the locale to find the dictionary files for, as a string.
      * @param context the context on which to open the files upon.
      * @return an array of binary dictionary files, which may be empty but may not be null.
      */
@@ -186,13 +150,13 @@ final public class BinaryDictionaryGetter {
 
     /**
      * Remove all files with the passed id, except the passed file.
-     *
+     * <p>
      * If a dictionary with a given ID has a metadata change that causes it to change
      * path, we need to remove the old version. The only way to do this is to check all
      * installed files for a matching ID in a different directory.
      */
     public static void removeFilesWithIdExcept(final Context context, final String id,
-            final File fileToKeep) {
+                                               final File fileToKeep) {
         try {
             final File canonicalFileToKeep = fileToKeep.getCanonicalFile();
             final File[] directoryList = DictionaryInfoUtils.getCachedDirectoryList(context);
@@ -247,18 +211,19 @@ final public class BinaryDictionaryGetter {
 
     /**
      * Returns a list of file addresses for a given locale, trying relevant methods in order.
-     *
+     * <p>
      * Tries to get binary dictionaries from various sources, in order:
      * - Uses a content provider to get a public dictionary set, as per the protocol described
-     *   in BinaryDictionaryFileDumper.
+     * in BinaryDictionaryFileDumper.
      * If that fails:
      * - Gets a file name from the built-in dictionary for this locale, if any.
      * If that fails:
      * - Returns null.
+     *
      * @return The list of addresses of valid dictionary files, or null.
      */
     public static ArrayList<AssetFileAddress> getDictionaryFiles(final Locale locale,
-            final Context context) {
+                                                                 final Context context) {
 
         final boolean hasDefaultWordList = DictionaryFactory.isDictionaryAvailable(context, locale);
         BinaryDictionaryFileDumper.cacheWordListsFromContentProvider(locale, context,
@@ -287,7 +252,7 @@ final public class BinaryDictionaryGetter {
 
         if (!foundMainDict && dictPackSettings.isWordListActive(mainDictId)) {
             final int fallbackResId =
-                    DictionaryInfoUtils.getMainDictionaryResourceId(context,context.getResources(), locale);
+                    DictionaryInfoUtils.getMainDictionaryResourceId(context, context.getResources(), locale);
             final AssetFileAddress fallbackAsset = loadFallbackResource(context, fallbackResId);
             if (null != fallbackAsset) {
                 fileList.add(fallbackAsset);
@@ -295,5 +260,41 @@ final public class BinaryDictionaryGetter {
         }
 
         return fileList;
+    }
+
+    private static final class DictPackSettings {
+        final SharedPreferences mDictPreferences;
+
+        public DictPackSettings(final Context context) {
+            mDictPreferences = null == context ? null
+                    : context.getSharedPreferences(COMMON_PREFERENCES_NAME,
+                    Context.MODE_MULTI_PROCESS);
+        }
+
+        public boolean isWordListActive(final String dictId) {
+            // If we don't have preferences it basically means we can't find the dictionary
+// pack - either it's not installed, or it's disabled, or there is some strange
+// bug. Either way, a word list with no settings should be on by default: default
+// dictionaries in LatinIME are on if there is no settings at all, and if for some
+// reason some dictionaries have been installed BUT the dictionary pack can't be
+// found anymore it's safer to actually supply installed dictionaries.
+            return null == mDictPreferences || mDictPreferences.getBoolean(dictId, true);
+// The default is true here for the same reasons as above. We got the dictionary
+// pack but if we don't have any settings for it it means the user has never been
+// to the settings yet. So by default, the main dictionaries should be on.
+        }
+    }
+
+    /**
+     * Utility class for the {@link #getCachedWordLists} method
+     */
+    private static final class FileAndMatchLevel {
+        final File mFile;
+        final int mMatchLevel;
+
+        public FileAndMatchLevel(final File file, final int matchLevel) {
+            mFile = file;
+            mMatchLevel = matchLevel;
+        }
     }
 }

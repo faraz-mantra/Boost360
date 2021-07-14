@@ -7,7 +7,8 @@ import com.appservice.constant.PreferenceConstant
 import com.appservice.viewmodel.TestimonialViewModel
 import com.framework.exceptions.IllegalFragmentTypeException
 
-open class BaseTestimonialFragment<binding : ViewDataBinding> : AppBaseFragment<binding, TestimonialViewModel>() {
+open class BaseTestimonialFragment<binding : ViewDataBinding> :
+  AppBaseFragment<binding, TestimonialViewModel>() {
 
 
   val fpId: String?

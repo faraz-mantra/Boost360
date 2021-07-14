@@ -1,47 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <nowfloats.nfkeyboard.keyboards.ManageKeyboardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_gravity="center"
+  android:background="@color/color_212121">
+
+  <nowfloats.nfkeyboard.keyboards.KeyboardViewBaseImpl xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/keyboard_view"
     android:layout_width="match_parent"
-    android:background="@color/color_212121"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="6dp"
+    android:background="@drawable/kbd_background"
+    android:keyBackground="@drawable/kbd_key_bg"
+    android:keyPreviewHeight="85dp"
+    android:keyPreviewLayout="@layout/kbd_preview_text"
+    android:keyPreviewOffset="40dp"
+    android:keyTextSize="22sp"
+    android:shadowColor="@android:color/transparent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
+
+  </nowfloats.nfkeyboard.keyboards.KeyboardViewBaseImpl>
+
+  <include
+    android:id="@+id/sharelayout"
+    layout="@layout/layout_boost_share_keyboard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:layout_height="wrap_content">
-    <nowfloats.nfkeyboard.keyboards.KeyboardViewBaseImpl xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/keyboard_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:shadowColor="@android:color/transparent"
-        android:background="@drawable/kbd_background"
-        android:keyBackground="@drawable/kbd_key_bg"
-        android:keyPreviewLayout="@layout/kbd_preview_text"
-        android:keyTextSize="22sp"
-        android:keyPreviewOffset="40dp"
-        android:keyPreviewHeight="85dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+    android:visibility="gone" />
 
-    </nowfloats.nfkeyboard.keyboards.KeyboardViewBaseImpl>
-
-    <include
-        android:id="@+id/sharelayout"
-        android:visibility="gone"
-        android:layout_gravity="center"
-        layout="@layout/layout_boost_share_keyboard"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <include android:id="@+id/speech_layout"
-        android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_gravity="center"
-        layout="@layout/layout_speech_layout"
-        android:layout_height="wrap_content"/>
-    <!--<include android:id="@+id/emoji_layout"
-        android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_gravity="center"
-        layout="@layout/emojicons"
-        android:layout_height="wrap_content" />-->
+  <include
+    android:id="@+id/speech_layout"
+    layout="@layout/layout_speech_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:visibility="gone" />
+  <!--<include android:id="@+id/emoji_layout"
+      android:layout_width="match_parent"
+      android:visibility="gone"
+      android:layout_gravity="center"
+      layout="@layout/emojicons"
+      android:layout_height="wrap_content" />-->
 
 </nowfloats.nfkeyboard.keyboards.ManageKeyboardView>

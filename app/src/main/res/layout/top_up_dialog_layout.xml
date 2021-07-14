@@ -1,52 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:padding="10dp"
-    android:layout_height="match_parent">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:padding="10dp">
+
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/to_proceed_select_the_plans_that_suits_your_requirement" />
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rv_top_plans"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_marginTop="10dp"
+    android:layout_weight="1">
+
+  </androidx.recyclerview.widget.RecyclerView>
+
+  <LinearLayout
+    android:id="@+id/ll_purchase_plan"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_alignParentBottom="true"
+    android:layout_gravity="bottom|center"
+    android:layout_marginStart="30dp"
+    android:layout_marginTop="11dp"
+    android:layout_marginEnd="30dp"
+    android:background="@drawable/btn_bg"
+    android:gravity="center">
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/to_proceed_select_the_plans_that_suits_your_requirement"/>
+      android:id="@+id/tv_currency"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/inr" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_top_plans"
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+    <TextView
+      android:id="@+id/tv_price"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="5dp"
+      android:text="@string/zero"
+      android:textColor="@color/white"
+      android:textSize="22sp" />
 
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <LinearLayout
-        android:id="@+id/ll_purchase_plan"
-        android:background="@drawable/btn_bg"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:gravity="center"
-        android:layout_gravity="bottom|center"
-        android:layout_alignParentBottom="true">
-        <TextView
-            android:id="@+id/tv_currency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/inr"/>
-        <TextView
-            android:id="@+id/tv_price"
-            android:layout_marginStart="5dp"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/zero"/>
-        <TextView
-            android:id="@+id/tv_taxes"
-            android:layout_marginStart="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/taxes_plus"/>
-    </LinearLayout>
+    <TextView
+      android:id="@+id/tv_taxes"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="5dp"
+      android:text="@string/taxes_plus" />
+  </LinearLayout>
 
 </LinearLayout>

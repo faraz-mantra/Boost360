@@ -23,7 +23,8 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.webengageconstant.*
 
-class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoModel>(), RecyclerItemClickListener {
+class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoModel>(),
+  RecyclerItemClickListener {
 
   private val TAG = "CategoryFragment"
   private lateinit var baseAdapter: AppBaseRecyclerViewAdapter<CategoryDataModel>
@@ -76,11 +77,15 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
 
     binding?.confirmButton?.setOnClickListener {
       WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_CLICK, CATEGORY, NO_EVENT_VALUE)
-      addFragmentReplace(com.framework.R.id.container,
-          BusinessDetailsFragment.newInstance(
-              CategoryFloatsRequest(categoryDataModel = category, userBusinessMobile = phoneNumber,
-                  requestProfile = CreateProfileRequest(ProfileProperties = BusinessInfoModel(userMobile = phoneNumber)))
-          ), true)
+      addFragmentReplace(
+        com.framework.R.id.container,
+        BusinessDetailsFragment.newInstance(
+          CategoryFloatsRequest(
+            categoryDataModel = category, userBusinessMobile = phoneNumber,
+            requestProfile = CreateProfileRequest(ProfileProperties = BusinessInfoModel(userMobile = phoneNumber))
+          )
+        ), true
+      )
     }
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener { baseActivity.onNavPressed() }

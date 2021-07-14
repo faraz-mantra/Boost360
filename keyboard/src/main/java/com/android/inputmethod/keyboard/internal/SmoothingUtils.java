@@ -43,7 +43,7 @@ public class SmoothingUtils {
      */
     @UsedForTesting
     public static void get3DParameters(final float[] xs, final float[] ys,
-            final float[][] retval) throws MatrixOperationFailedException {
+                                       final float[][] retval) throws MatrixOperationFailedException {
         final int COEFF_COUNT = 4; // Coefficient count for 3d smoothing
         if (retval.length != COEFF_COUNT || retval[0].length != 1) {
             Log.d(TAG, "--- invalid length of 3d retval " + retval.length + ", "

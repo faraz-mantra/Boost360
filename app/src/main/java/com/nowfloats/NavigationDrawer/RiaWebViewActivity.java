@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,17 +31,14 @@ public class RiaWebViewActivity extends AppCompatActivity {
     Toolbar tbWebView;
     WebView wbRiaContent;
     ProgressBar progressBar;
-
+    Handler mHandler = new Handler();
     private RiaNodeDataModel mNodeDataModel;
     private UserSessionManager mSession;
     private boolean mRiaTimeOut = false;
-    private boolean mIsCalled = false;
-
-    Handler mHandler = new Handler();
     Runnable mRiaPostRunnable = new Runnable() {
         @Override
         public void run() {
-            if(!mRiaTimeOut) {
+            if (!mRiaTimeOut) {
                 RiaEventLogger.getInstance().logPostEvent(mSession.getFpTag(), mNodeDataModel.getNodeId(),
                         mNodeDataModel.getButtonId(), mNodeDataModel.getButtonLabel(),
                         RiaEventLogger.EventStatus.COMPLETED.getValue());
@@ -49,7 +48,7 @@ public class RiaWebViewActivity extends AppCompatActivity {
 
         }
     };
-
+    private boolean mIsCalled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +76,7 @@ public class RiaWebViewActivity extends AppCompatActivity {
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
-                if(!mRiaTimeOut) {
+                if (!mRiaTimeOut) {
                     RiaEventLogger.getInstance().logPostEvent(mSession.getFpTag(), mNodeDataModel.getNodeId(),
                             mNodeDataModel.getButtonId(), mNodeDataModel.getButtonLabel(),
                             RiaEventLogger.EventStatus.COMPLETED.getValue());
@@ -92,12 +91,11 @@ public class RiaWebViewActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         wbRiaContent.setWebChromeClient(new MyWebChromeClient());
         wbRiaContent.setWebViewClient(new MyWebViewClient());
-        if (TextUtils.isEmpty(url)){
+        if (TextUtils.isEmpty(url)) {
             finish();
-        }
-        else if(url.endsWith(".pdf")){
-            wbRiaContent.loadUrl(Constants.PDF_LOADER_URL+url);
-        }else {
+        } else if (url.endsWith(".pdf")) {
+            wbRiaContent.loadUrl(Constants.PDF_LOADER_URL + url);
+        } else {
             wbRiaContent.loadUrl(url);
         }
 
@@ -106,7 +104,7 @@ public class RiaWebViewActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(item.getItemId()==android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
@@ -118,7 +116,7 @@ public class RiaWebViewActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if(!mRiaTimeOut){
+        if (!mRiaTimeOut) {
             RiaEventLogger.getInstance().logPostEvent(mSession.getFpTag(), mNodeDataModel.getNodeId(),
                     mNodeDataModel.getButtonId(), mNodeDataModel.getButtonLabel(),
                     RiaEventLogger.EventStatus.DROPPED.getValue());
@@ -126,6 +124,13 @@ public class RiaWebViewActivity extends AppCompatActivity {
         //Set WebViewClient null to not to cache the view and not to trigger completed event
         wbRiaContent.setWebViewClient(null);
         mHandler.removeCallbacksAndMessages(null);
+    }
+
+    private void setValue(int progress) {
+        progressBar.setProgress(progress);
+        if (progress == 100) {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     private class MyWebChromeClient extends WebChromeClient {
@@ -136,17 +141,10 @@ public class RiaWebViewActivity extends AppCompatActivity {
         }
     }
 
-    private void setValue(int progress){
-        progressBar.setProgress(progress);
-        if(progress==100){
-            progressBar.setVisibility(View.GONE);
-        }
-    }
-
-    private class MyWebViewClient extends WebViewClient{
+    private class MyWebViewClient extends WebViewClient {
         @Override
         public void onPageFinished(WebView view, String url) {
-            if(!mIsCalled) {
+            if (!mIsCalled) {
                 mHandler.postDelayed(mRiaPostRunnable, 10000);
                 mIsCalled = true;
             }

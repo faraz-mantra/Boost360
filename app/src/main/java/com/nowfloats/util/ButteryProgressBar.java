@@ -31,19 +31,6 @@ import com.thinksity.R;
  */
 public class ButteryProgressBar extends View {
 
-    private final GradientDrawable mShadow;
-    private final ValueAnimator mAnimator;
-
-    private final Paint mPaint = new Paint();
-
-    private final int mBarColor;
-    private final int mSolidBarHeight;
-    private final int mSolidBarDetentWidth;
-
-    private final float mDensity;
-
-    private int mSegmentCount;
-
     /**
      * The baseline width that the other constants below are optimized for.
      */
@@ -59,9 +46,16 @@ public class ButteryProgressBar extends View {
      * weakly scaled up and down for wider and narrower widths, respectively.
      */
     private static final int BASE_SEGMENT_COUNT = 5;
-
     private static final int DEFAULT_BAR_HEIGHT_DP = 4;
     private static final int DEFAULT_DETENT_WIDTH_DP = 4;
+    private final GradientDrawable mShadow;
+    private final ValueAnimator mAnimator;
+    private final Paint mPaint = new Paint();
+    private final int mBarColor;
+    private final int mSolidBarHeight;
+    private final int mSolidBarDetentWidth;
+    private final float mDensity;
+    private int mSegmentCount;
 
     public ButteryProgressBar(Context c) {
         this(c, null);
@@ -92,7 +86,7 @@ public class ButteryProgressBar extends View {
         mPaint.setColor(mBarColor);
 
         mShadow = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[] { (mBarColor & 0x00ffffff) | 0x22000000, 0 });
+                new int[]{(mBarColor & 0x00ffffff) | 0x22000000, 0});
     }
 
     @Override

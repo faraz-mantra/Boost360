@@ -41,9 +41,38 @@ import java.util.List;
     private InputMethodInfo mImi;
     private Context mContext;
 
+    private static InputMethodInfo getMyImi(Context context, InputMethodManager imm) {
+        final List<InputMethodInfo> imis = imm.getInputMethodList();
+        for (int i = 0; i < imis.size(); ++i) {
+            final InputMethodInfo imi = imis.get(i);
+            if (imis.get(i).getPackageName().equals(context.getPackageName())) {
+                return imi;
+            }
+        }
+        return null;
+    }
+
+    private static String getEnabledSubtypesLabel(
+            Context context, InputMethodManager imm, InputMethodInfo imi) {
+        if (context == null || imm == null || imi == null) return null;
+        final List<InputMethodSubtype> subtypes = imm.getEnabledInputMethodSubtypeList(imi, true);
+        final StringBuilder sb = new StringBuilder();
+        final int N = subtypes.size();
+        for (int i = 0; i < N; ++i) {
+            final InputMethodSubtype subtype = subtypes.get(i);
+            if (sb.length() > 0) {
+                sb.append(", ");
+            }
+            sb.append(subtype.getDisplayName(context, imi.getPackageName(),
+                    imi.getServiceInfo().applicationInfo));
+        }
+        return sb.toString();
+    }
+
     /**
      * Initialize internal states of this object.
-     * @param context the context for this application.
+     *
+     * @param context    the context for this application.
      * @param prefScreen a PreferenceScreen of PreferenceActivity or PreferenceFragment.
      * @return true if this application is an IME and has two or more subtypes, false otherwise.
      */
@@ -78,33 +107,6 @@ import java.util.List;
         return true;
     }
 
-    private static InputMethodInfo getMyImi(Context context, InputMethodManager imm) {
-        final List<InputMethodInfo> imis = imm.getInputMethodList();
-        for (int i = 0; i < imis.size(); ++i) {
-            final InputMethodInfo imi = imis.get(i);
-            if (imis.get(i).getPackageName().equals(context.getPackageName())) {
-                return imi;
-            }
-        }
-        return null;
-    }
-
-    private static String getEnabledSubtypesLabel(
-            Context context, InputMethodManager imm, InputMethodInfo imi) {
-        if (context == null || imm == null || imi == null) return null;
-        final List<InputMethodSubtype> subtypes = imm.getEnabledInputMethodSubtypeList(imi, true);
-        final StringBuilder sb = new StringBuilder();
-        final int N = subtypes.size();
-        for (int i = 0; i < N; ++i) {
-            final InputMethodSubtype subtype = subtypes.get(i);
-            if (sb.length() > 0) {
-                sb.append(", ");
-            }
-            sb.append(subtype.getDisplayName(context, imi.getPackageName(),
-                    imi.getServiceInfo().applicationInfo));
-        }
-        return sb.toString();
-    }
     /**
      * {@inheritDoc}
      */

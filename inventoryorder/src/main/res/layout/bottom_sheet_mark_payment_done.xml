@@ -52,38 +52,38 @@
         android:layout_marginStart="@dimen/size_20"
         android:layout_marginTop="@dimen/size_20"
         android:text="@string/how_did_customer_pay_you"
-        app:fontFamily="@font/regular"
         android:textColor="@color/black_4a4a4a"
+        app:fontFamily="@font/regular"
         app:textType="HEADING_6" />
 
       <RadioGroup
-          android:id="@+id/radioGroup"
-          style="@style/match_wrap"
-          android:layout_marginTop="@dimen/size_10"
-          android:orientation="horizontal">
+        android:id="@+id/radioGroup"
+        style="@style/match_wrap"
+        android:layout_marginTop="@dimen/size_10"
+        android:orientation="horizontal">
 
         <com.framework.views.customViews.CustomRadioButton
-            android:id="@+id/radio_cash"
-            style="@style/RadioButtonMarkPaymentDoneStyle"
-            android:layout_marginStart="@dimen/size_16"
-            android:checked="true"
-            android:text="@string/cash_payment" />
+          android:id="@+id/radio_cash"
+          style="@style/RadioButtonMarkPaymentDoneStyle"
+          android:layout_marginStart="@dimen/size_16"
+          android:checked="true"
+          android:text="@string/cash_payment" />
 
         <com.framework.views.customViews.CustomRadioButton
-            android:id="@+id/radio_card"
-            style="@style/RadioButtonMarkPaymentDoneStyle"
-            android:text="@string/card_payment" />
+          android:id="@+id/radio_card"
+          style="@style/RadioButtonMarkPaymentDoneStyle"
+          android:text="@string/card_payment" />
 
         <com.framework.views.customViews.CustomRadioButton
-            android:id="@+id/radio_upi"
-            style="@style/RadioButtonMarkPaymentDoneStyle"
-            android:layout_marginStart="@dimen/size_16"
-            android:text="@string/upi_payment" />
+          android:id="@+id/radio_upi"
+          style="@style/RadioButtonMarkPaymentDoneStyle"
+          android:layout_marginStart="@dimen/size_16"
+          android:text="@string/upi_payment" />
 
         <com.framework.views.customViews.CustomRadioButton
-            android:id="@+id/radio_others"
-            style="@style/RadioButtonMarkPaymentDoneStyle"
-            android:text="@string/others_payment" />
+          android:id="@+id/radio_others"
+          style="@style/RadioButtonMarkPaymentDoneStyle"
+          android:text="@string/others_payment" />
 
       </RadioGroup>
 
@@ -107,28 +107,27 @@
         app:textType="CAPTION" />
 
 
-
       <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/btn_bottom"
         style="@style/match_wrap"
+        android:layout_marginTop="@dimen/size_10"
         android:background="@color/white"
         android:gravity="end"
-        android:layout_marginTop="@dimen/size_10"
         android:orientation="horizontal"
         android:padding="@dimen/size_14">
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tvCancel"
-            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-            android:layout_marginEnd="@dimen/size_10"
-            android:background="@color/white"
-            android:text="@string/cancel" />
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/tvCancel"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:layout_marginEnd="@dimen/size_10"
+          android:text="@string/cancel"
+          android:textColor="@color/white" />
 
         <com.framework.views.customViews.CustomButton
-            android:id="@+id/buttonDone"
-            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-            android:text="@string/confirm_payment"
-            android:textColor="@color/white" />
+          android:id="@+id/buttonDone"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:text="@string/confirm_payment"
+          android:textColor="@color/white" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
 

@@ -1,94 +1,94 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
+  <data>
 
-    </data>
+  </data>
 
-    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/size_30"
-        android:layout_marginTop="@dimen/size_8">
+  <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/size_8"
+    android:paddingHorizontal="@dimen/size_30">
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/ctv_selection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/size_5"
-            android:text="@string/current_selection" />
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/ctv_selection"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/size_5"
+      android:text="@string/current_selection" />
 
-        <LinearLayout
-            android:id="@+id/bottom_view"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_30"
-            android:layout_below="@id/top_view"
-            android:layout_marginTop="-3dp"
-            android:background="@drawable/rounded_stroke_grey_4"
-            android:backgroundTint="#F2F2F2"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/size_3">
+    <LinearLayout
+      android:id="@+id/bottom_view"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_30"
+      android:layout_below="@id/top_view"
+      android:layout_marginTop="-3dp"
+      android:background="@drawable/rounded_stroke_grey_4"
+      android:backgroundTint="#F2F2F2"
+      android:orientation="horizontal"
+      android:paddingTop="@dimen/size_3">
 
-            <com.framework.views.customViews.CustomImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:drawableTint="@color/gray_d1d1d1"
-                android:paddingHorizontal="@dimen/size_8"
-                android:src="@drawable/ic_stack" />
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:drawableTint="@color/gray_d1d1d1"
+        android:paddingHorizontal="@dimen/size_8"
+        android:src="@drawable/ic_stack" />
 
-            <com.framework.views.customViews.CustomTextView
-                android:layout_width="@dimen/size_0"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/ctv_product_count"
-                android:gravity="center_vertical"
-                android:paddingStart="@dimen/size_8"
-                android:text="4 products under this category" />
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_product_count"
+        android:layout_width="@dimen/size_0"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/size_8"
+        android:text="@string/_4_products_under_this_category" />
 
-            <com.framework.views.customViews.CustomImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/size_16"
-                android:foreground="?selectableItemBackground"
-                android:src="@drawable/ic_arrow_down_blue"
-                android:tint="@color/color_primary_dark" />
-        </LinearLayout>
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:foreground="?selectableItemBackground"
+        android:src="@drawable/ic_arrow_down_blue"
+        android:tint="@color/color_primary_dark" />
+    </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/top_view"
-            android:layout_width="match_parent"
-            android:paddingHorizontal="@dimen/size_4"
-            android:paddingVertical="@dimen/size_8"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ctv_selection"
-            android:background="@drawable/rounded_stroke_grey_4"
-            android:orientation="horizontal">
+    <LinearLayout
+      android:id="@+id/top_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/ctv_selection"
+      android:background="@drawable/rounded_stroke_grey_4"
+      android:orientation="horizontal"
+      android:paddingHorizontal="@dimen/size_4"
+      android:paddingVertical="@dimen/size_8">
 
-            <com.framework.views.customViews.CustomRadioButton
-                android:id="@+id/crb_category"
-                android:layout_width="0dp"
+      <com.framework.views.customViews.CustomRadioButton
+        android:id="@+id/crb_category"
+        android:layout_width="0dp"
 
-                android:layout_height="@dimen/size_30"
-                android:layout_weight="1"
-                android:drawableTint="@color/gray_d1d1d1"
-                tools:text="Brand" />
+        android:layout_height="@dimen/size_30"
+        android:layout_weight="1"
+        android:drawableTint="@color/gray_d1d1d1"
+        tools:text="Brand" />
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="1dp"
-                android:layout_height="@dimen/size_30"
-                android:layout_gravity="center_vertical"
-                android:background="?android:attr/listDivider" />
+      <View
+        android:id="@+id/divider"
+        android:layout_width="1dp"
+        android:layout_height="@dimen/size_30"
+        android:layout_gravity="center_vertical"
+        android:background="?android:attr/listDivider" />
 
-            <com.framework.views.customViews.CustomImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/civ_category_menu"
-                android:layout_marginHorizontal="@dimen/size_8"
-                android:background="?selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_more_vert"
-                android:tint="@color/gray_light_1" />
-        </LinearLayout>
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/civ_category_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/size_8"
+        android:foreground="?selectableItemBackground"
+        android:src="@drawable/ic_more_vert"
+        android:tint="@color/gray_light_1" />
+    </LinearLayout>
 
 
-    </RelativeLayout>
+  </RelativeLayout>
 </layout>

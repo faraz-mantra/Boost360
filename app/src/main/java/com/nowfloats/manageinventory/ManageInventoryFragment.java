@@ -53,15 +53,30 @@ public class ManageInventoryFragment extends Fragment {
     ImageView ivLockWidget, ivPaymentIcon, lockIcon, bookTableIcon;
 
     LinearLayout bookTable;
-    //Typeface robotoLight;
-    private SharedPreferences pref = null;
     UserSessionManager session;
     SharedPreferences.Editor prefsEditor;
+    //Typeface robotoLight;
+    private SharedPreferences pref = null;
     private Activity activity;
     private boolean mIsAPEnabled = false;
     private String mTransactionCharge = "9%";
     private String category_code = "";
 
+    public static int getExperienceType(String fp_appExperienceCode) {
+        switch (fp_appExperienceCode) {
+            case "SVC": /* TODO for Appointment (delivery mode offline)*/
+            case "SPA":
+            case "SAL":
+            case "DOC": /* TODO for Appointment (delivery mode offline) && consultation (delivery mode online)*/
+            case "HOS":
+                return 1;
+            case "HOT": /* TODO for booking */
+                return 2;
+            // coming order case "EDU":
+            default: /* TODO for order */
+                return 3;
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,23 +154,6 @@ public class ManageInventoryFragment extends Fragment {
         });
     }
 
-    public static int getExperienceType(String fp_appExperienceCode) {
-        switch (fp_appExperienceCode) {
-            case "SVC": /* TODO for Appointment (delivery mode offline)*/
-            case "SPA":
-            case "SAL":
-            case "DOC": /* TODO for Appointment (delivery mode offline) && consultation (delivery mode online)*/
-            case "HOS":
-                return 1;
-            case "HOT": /* TODO for booking */
-                return 2;
-            // coming order case "EDU":
-            default: /* TODO for order */
-                return 3;
-        }
-    }
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -165,8 +163,10 @@ public class ManageInventoryFragment extends Fragment {
 
     private void openPrimaryTransactionTypeOrdes() {
         int experienceType = getExperienceType(session.getFP_AppExperienceCode());
-        if (experienceType == 1) startFragmentActivityNew(activity, FragmentType.ALL_APPOINTMENT_VIEW, getBundleData(), false);
-        else if (experienceType == 3) startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, getBundleData(), false);
+        if (experienceType == 1)
+            startFragmentActivityNew(activity, FragmentType.ALL_APPOINTMENT_VIEW, getBundleData(), false);
+        else if (experienceType == 3)
+            startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, getBundleData(), false);
         else Toast.makeText(activity, "Coming soon..", Toast.LENGTH_SHORT).show();
 //        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
 //        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
@@ -267,7 +267,7 @@ public class ManageInventoryFragment extends Fragment {
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
                 });
-                if (Constants.StoreWidgets.contains("BOOKTABLE")) {
+                if (session.getStoreWidgets().contains("BOOKTABLE")) {
                     lockIcon.setVisibility(View.GONE);
                 } else {
                     lockIcon.setVisibility(View.VISIBLE);

@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class ProductImageResponse(
-    @SerializedName("Data")
-    var `data`: ArrayList<DataImage>? = null,
-    @SerializedName("Extra")
-    var extra: ExtraI? = null
+  @SerializedName("Data")
+  var `data`: ArrayList<DataImage>? = null,
+  @SerializedName("Extra")
+  var extra: ExtraI? = null
 ) : BaseResponse(), Serializable

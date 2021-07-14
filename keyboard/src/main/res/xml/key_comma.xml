@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2012, The Android Open Source Project
@@ -18,34 +17,27 @@
 */
 -->
 
-<merge
-    xmlns:latin="http://schemas.android.com/apk/res-auto"
->
-    <switch>
-        <case
-            latin:mode="url"
-        >
-            <Key
-                latin:keySpec="/"
-                latin:keyStyle="commaKeyStyle" />
-        </case>
-        <case
-            latin:mode="email"
-        >
-            <Key
-                latin:keySpec="\@"
-                latin:keyStyle="commaKeyStyle" />
-        </case>
-        <case
-            latin:languageCode="fa">
-            <Key
-                latin:keySpec="،"
-                latin:keyStyle="commaKeyStyle" />
-        </case>
-        <default>
-            <Key
-                latin:keyLabelFlags="hasPopupHint"
-                latin:keyStyle="commaKeyStyle"/>
-        </default>
-    </switch>
+<merge xmlns:latin="http://schemas.android.com/apk/res-auto">
+  <switch>
+    <case latin:mode="url">
+      <Key
+        latin:keySpec="/"
+        latin:keyStyle="commaKeyStyle" />
+    </case>
+    <case latin:mode="email">
+      <Key
+        latin:keySpec="\@"
+        latin:keyStyle="commaKeyStyle" />
+    </case>
+    <case latin:languageCode="fa">
+      <Key
+        latin:keySpec="،"
+        latin:keyStyle="commaKeyStyle" />
+    </case>
+    <default>
+      <Key
+        latin:keyLabelFlags="hasPopupHint"
+        latin:keyStyle="commaKeyStyle" />
+    </default>
+  </switch>
 </merge>

@@ -13,7 +13,7 @@ object EndPoints {
   const val CREATE_STAFF_PROFILE = "Staff/v1/Create"
   const val FETCH_STAFF_SERVICES = "product/v13/GetServiceListings"
   const val GET_STAFF_LISTING = "staff/v1/GetStaffListing"
-  const val STAFF_PROFILE_UPDATE ="staff/v1/Update"
+  const val STAFF_PROFILE_UPDATE = "staff/v1/Update"
   const val STAFF_PROFILE_DELETE = "staff/v1/Delete"
   const val STAFF_ADD_TIMING = "staff/v1/AddStaffTiming"
   const val STAFF_UPDATE_TIMING = "staff/v1/UpdateStaffTiming"
@@ -56,6 +56,11 @@ object EndPoints {
   const val ADD_IMAGE = "Product/v1/AddImage"
   const val GET_TAGS = "Product/v1/tags"
   const val GET_NOTIFICATION = "Discover/v1/floatingpoint/notificationscount"
+  const val GET_LATEST_UPDATES = "Discover/v1/floatingPoint/bizFloats"
+  const val PUT_BIZ_MESSAGE = "discover/v1/FloatingPoint/createBizMessage"
+  const val PUT_BIZ_IMAGE = "discover/v1/FloatingPoint/createBizImage"
+  const val GET_BIZ_WEB_UPDATE_BY_ID = "discover/v1/bizFloatForWeb/{id}"
+  const val DELETE_BIZ_MESSAGE_UPDATE = "discover/v1/floatingpoint/archiveMessage"
 
   //TODO PRODUCT API 2 WITH FLOAT
   const val CREATE_PRODUCT = "Product/v1/Create"

@@ -25,13 +25,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="1.5"
         android:background="@android:color/transparent"
-        android:hint="e.g. Served by"
+        android:hint="@string/e_g_served_by"
         android:maxLines="1"
         android:paddingStart="@dimen/size_8"
         android:singleLine="true"
-        android:textSize="14sp"
         android:textColor="@color/greyish_brown"
-        android:textColorHint="@color/primary_grey" />
+        android:textColorHint="@color/primary_grey"
+        android:textSize="14sp" />
 
       <View
         android:layout_width="1dp"
@@ -44,13 +44,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@android:color/transparent"
-        android:hint="Ms. Shruti"
-        android:textSize="14sp"
+        android:hint="@string/ms_shruti"
         android:maxLines="1"
         android:paddingStart="@dimen/size_8"
         android:singleLine="true"
         android:textColor="@color/greyish_brown"
-        android:textColorHint="@color/primary_grey" />
+        android:textColorHint="@color/primary_grey"
+        android:textSize="14sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

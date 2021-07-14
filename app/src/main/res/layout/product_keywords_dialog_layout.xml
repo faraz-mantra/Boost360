@@ -1,96 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:padding="10dp">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/svKeywords"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_height="250dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/svKeywords"
+
+    <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fillViewport="true">
+
+      <com.nowfloats.ProductGallery.widgets.TagView
+        android:id="@+id/tv_product_keyword"
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="250dp" />
 
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
-
-            <com.nowfloats.ProductGallery.widgets.TagView
-                android:id="@+id/tv_product_keyword"
-                android:layout_width="match_parent"
-                android:layout_height="250dp" />
-
-
-        </ScrollView>
-
-        <ProgressBar
-            android:id="@+id/pb_keyword_loader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/tv_add_product_keywords"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/add_keywords_nto_your_product"
-        android:textSize="20sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/svKeywords"
-        app:layout_constraintEnd_toEndOf="@id/svKeywords"
-        app:layout_constraintStart_toStartOf="@id/svKeywords"
-        app:layout_constraintTop_toTopOf="@id/svKeywords" />
-
-    <EditText
-        android:id="@+id/et_keyword_input"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/et_bg"
-        android:hint="@string/enter_product_keyword"
-        android:inputType="text"
-        android:paddingStart="5dp"
-        app:layout_constraintEnd_toStartOf="@+id/btn_add_keyword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/svKeywords" />
+    </ScrollView>
 
     <ProgressBar
-        android:id="@+id/pb_adding_keyword"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:progressTint="@color/white"
-        android:translationZ="3dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/btn_add_keyword"
-        app:layout_constraintLeft_toLeftOf="@id/btn_add_keyword"
-        app:layout_constraintRight_toRightOf="@id/btn_add_keyword"
-        app:layout_constraintTop_toTopOf="@id/btn_add_keyword" />
+      android:id="@+id/pb_keyword_loader"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:visibility="invisible"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_add_keyword"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/btn_bg"
-        android:text="@string/add"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/svKeywords" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <TextView
+    android:id="@+id/tv_add_product_keywords"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="@string/add_keywords_nto_your_product"
+    android:textSize="20sp"
+    android:visibility="invisible"
+    app:layout_constraintBottom_toBottomOf="@id/svKeywords"
+    app:layout_constraintEnd_toEndOf="@id/svKeywords"
+    app:layout_constraintStart_toStartOf="@id/svKeywords"
+    app:layout_constraintTop_toTopOf="@id/svKeywords" />
+
+  <EditText
+    android:id="@+id/et_keyword_input"
+    android:layout_width="0dp"
+    android:layout_height="40dp"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="5dp"
+    android:background="@drawable/et_bg"
+    android:hint="@string/enter_product_keyword"
+    android:inputType="text"
+    android:paddingStart="5dp"
+    app:layout_constraintEnd_toStartOf="@+id/btn_add_keyword"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/svKeywords" />
+
+  <ProgressBar
+    android:id="@+id/pb_adding_keyword"
+    android:layout_width="25dp"
+    android:layout_height="25dp"
+    android:progressTint="@color/white"
+    android:translationZ="3dp"
+    android:visibility="invisible"
+    app:layout_constraintBottom_toBottomOf="@id/btn_add_keyword"
+    app:layout_constraintLeft_toLeftOf="@id/btn_add_keyword"
+    app:layout_constraintRight_toRightOf="@id/btn_add_keyword"
+    app:layout_constraintTop_toTopOf="@id/btn_add_keyword" />
+
+  <Button
+    android:id="@+id/btn_add_keyword"
+    android:layout_width="wrap_content"
+    android:layout_height="40dp"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentEnd="true"
+    android:layout_marginStart="5dp"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/btn_bg"
+    android:text="@string/add"
+    android:textColor="@color/white"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/svKeywords" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

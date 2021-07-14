@@ -1,85 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <androidx.constraintlayout.widget.ConstraintLayout
-      android:id="@+id/constraint"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical">
+    android:id="@+id/constraint"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.framework.views.blur.BlurView
-        android:id="@+id/blurView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:blurOverlayColor="@color/black_20"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent">
+      android:id="@+id/blurView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:blurOverlayColor="@color/black_20"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="parent">
 
       <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_vertical"
-          android:layout_margin="@dimen/size_20"
-          android:background="@drawable/bg_rounded_36"
-          android:gravity="center_vertical"
-          android:orientation="vertical"
-          android:padding="@dimen/size_30">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/size_20"
+        android:background="@drawable/bg_rounded_36"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="@dimen/size_30">
 
 
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bg_light_blue_circle">
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:background="@drawable/bg_light_blue_circle">
 
           <com.framework.views.CircularProgressBar
-              android:id="@+id/progressBar"
-              android:layout_width="@dimen/size_74"
-              android:layout_height="@dimen/size_74"
-              android:layout_gravity="center"
-              android:layout_margin="@dimen/size_14"
-              app:cpb_background_progressbar_color="@android:color/transparent"
-              app:cpb_background_progressbar_width="@dimen/size_4"
-              app:cpb_progress_direction="to_right"
-              app:cpb_progressbar_color="@color/dodger_blue_light"
-              app:cpb_progressbar_width="@dimen/size_4"
-              app:cpb_round_border="true" />
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/size_74"
+            android:layout_height="@dimen/size_74"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/size_14"
+            app:cpb_background_progressbar_color="@android:color/transparent"
+            app:cpb_background_progressbar_width="@dimen/size_4"
+            app:cpb_progress_direction="to_right"
+            app:cpb_progressbar_color="@color/dodger_blue_light"
+            app:cpb_progressbar_width="@dimen/size_4"
+            app:cpb_round_border="true" />
 
           <com.framework.views.shadowview.ShadowLayout
-              android:id="@+id/image_riya"
-              android:layout_width="@dimen/size_68"
-              android:layout_height="@dimen/size_68"
-              android:layout_gravity="center"
-              app:shadowColor="@color/shadow"
-              app:shadowDx=".5dp"
-              app:shadowDy=".5dp"
-              app:shadowRadius="2dp"
-              app:shadowShape="oval"
-              app:shadowSide="all"
-              app:srcCompat="@drawable/ic_ria_circle">
+            android:id="@+id/image_riya"
+            android:layout_width="@dimen/size_68"
+            android:layout_height="@dimen/size_68"
+            android:layout_gravity="center"
+            app:shadowColor="@color/shadow"
+            app:shadowDx=".5dp"
+            app:shadowDy=".5dp"
+            app:shadowRadius="2dp"
+            app:shadowShape="oval"
+            app:shadowSide="all"
+            app:srcCompat="@drawable/ic_ria_circle">
 
             <com.framework.views.customViews.CustomImageView
-                android:id="@+id/riya_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/size_1"
-                app:srcCompat="@drawable/ic_ria_circle" />
+              android:id="@+id/riya_image"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="@dimen/size_1"
+              app:srcCompat="@drawable/ic_ria_circle" />
           </com.framework.views.shadowview.ShadowLayout>
         </FrameLayout>
 
         <com.framework.views.customViews.CustomTextView
-            android:id="@+id/error_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/size_16"
-            android:gravity="center"
-            android:text="@string/building_plan_for_your_business"
-            android:textColor="@color/greyish_brown"
-            app:fontFamily="@font/regular"
-            app:textType="HEADING_7" />
+          android:id="@+id/error_text"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginTop="@dimen/size_16"
+          android:gravity="center"
+          android:text="@string/building_plan_for_your_business"
+          android:textColor="@color/greyish_brown"
+          app:fontFamily="@font/regular"
+          app:textType="HEADING_7" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
     </com.framework.views.blur.BlurView>

@@ -42,7 +42,9 @@ class SuccessLoginNumberFragment : AuthBaseFragment<FragmentSuccessLoginBinding>
   }
 
   override fun authTokenData(): AuthTokenDataItem? {
-    return if (resultLogin()?.authTokens.isNullOrEmpty().not()) resultLogin()?.authTokens!![0] else null
+    return if (resultLogin()?.authTokens.isNullOrEmpty()
+        .not()
+    ) resultLogin()?.authTokens!![0] else null
   }
 
   override fun onCreateView() {
@@ -68,12 +70,19 @@ class SuccessLoginNumberFragment : AuthBaseFragment<FragmentSuccessLoginBinding>
           authTokenData()?.createAccessTokenAuth()
         } else {
           navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
-            putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, resultLogin)
+            putInt(
+              FRAGMENT_TYPE,
+              FP_LIST_FRAGMENT
+            );putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, resultLogin)
           })
         }
       }
       binding?.changeNumberBtn -> {
-        WebEngageController.trackEvent(PS_USER_LOGIN_SUCCESS_CHANGE_NUMBER_CLICK, CLICK, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(
+          PS_USER_LOGIN_SUCCESS_CHANGE_NUMBER_CLICK,
+          CLICK,
+          NO_EVENT_VALUE
+        )
         navigator?.startActivity(MobileVerificationActivity::class.java)
       }
     }

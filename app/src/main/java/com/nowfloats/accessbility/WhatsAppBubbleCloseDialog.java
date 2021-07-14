@@ -2,8 +2,10 @@ package com.nowfloats.accessbility;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,6 +28,7 @@ public class WhatsAppBubbleCloseDialog extends AppCompatActivity {
         setContentView(R.layout.dialog_whatsapp_bubble_close);
         initialize();
     }
+
     private void initialize() {
         getWindow().setGravity(Gravity.CENTER_VERTICAL);
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -35,13 +38,13 @@ public class WhatsAppBubbleCloseDialog extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 stopService(new Intent(WhatsAppBubbleCloseDialog.this, BubblesService.class));
-                MixPanelController.track(MixPanelController.WHATSAPP_TO_BOOST,null);
+                MixPanelController.track(MixPanelController.WHATSAPP_TO_BOOST, null);
                 try {
                     //Intent launchIntent = getPackageManager().getLaunchIntentForPackage(DataAccessibilityServiceV8.PK_NAME_NOWFLOATS);
                     Intent launchIntent = new Intent(WhatsAppBubbleCloseDialog.this, SplashScreen_Activity.class);
-                    launchIntent.putExtra("url","com.biz2.nowfloats://"+getString(R.string.deeplink_manage_customer));
+                    launchIntent.putExtra("url", "com.biz2.nowfloats://" + getString(R.string.deeplink_manage_customer));
                     startActivity(launchIntent);
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(WhatsAppBubbleCloseDialog.this, getResources().getString(R.string.problem_to_open_boost), Toast.LENGTH_SHORT).show();
                 }

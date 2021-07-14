@@ -27,21 +27,14 @@ import java.util.List;
 public class LoadCountryData extends AsyncTask<Void, Integer, Void> {
     static List<String> countries;
     private final Activity activity;
+    LoadCountryData_Interface loadCountryData_interface;
 
-    public interface LoadCountryData_Interface {
-        public void LoadCountry_onPostExecute_Completed(String result);
+    public LoadCountryData(Activity activity) {
+        this.activity = activity;
     }
 
-    LoadCountryData_Interface loadCountryData_interface ;
-
-    public LoadCountryData(Activity activity)
-    {
-        this.activity = activity ;
-    }
-
-    public void LoadCountryData_Listener(LoadCountryData_Interface loadCountryData_interface)
-    {
-        this.loadCountryData_interface = loadCountryData_interface ;
+    public void LoadCountryData_Listener(LoadCountryData_Interface loadCountryData_interface) {
+        this.loadCountryData_interface = loadCountryData_interface;
     }
 
     @Override
@@ -69,8 +62,7 @@ public class LoadCountryData extends AsyncTask<Void, Integer, Void> {
         }
 
 
-
-    };
+    }
 
     @Override
     protected Void doInBackground(Void... arg0) {
@@ -104,6 +96,12 @@ public class LoadCountryData extends AsyncTask<Void, Integer, Void> {
         }
 
         return null;
+    }
+
+    ;
+
+    public interface LoadCountryData_Interface {
+        public void LoadCountry_onPostExecute_Completed(String result);
     }
 
 }

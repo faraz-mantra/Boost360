@@ -21,7 +21,15 @@ object GoogleAuthRepository : AppBaseRepository<GoogleAuthRemoteDataSource, AppB
   }
 
   fun getGoogleAuthToken(req: GoogleAuthTokenRequest?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getGoogleAuthToken(req?.client_id, req?.client_secret, req?.auth_code, req?.grant_type, req?.redirect_uri), Taskcode.POST_GOOGLE_AUTH_TOKEN)
+    return makeRemoteRequest(
+      remoteDataSource.getGoogleAuthToken(
+        req?.client_id,
+        req?.client_secret,
+        req?.auth_code,
+        req?.grant_type,
+        req?.redirect_uri
+      ), Taskcode.POST_GOOGLE_AUTH_TOKEN
+    )
   }
 
   override fun getApiClient(): Retrofit {

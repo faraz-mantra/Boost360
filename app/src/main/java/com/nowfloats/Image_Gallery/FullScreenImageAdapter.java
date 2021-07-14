@@ -2,8 +2,10 @@ package com.nowfloats.Image_Gallery;
 
 import android.app.Activity;
 import android.content.Context;
+
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +29,6 @@ public class FullScreenImageAdapter extends PagerAdapter {
     ArrayList<String> imagesList = null;
     int size = 0;
 
-    public interface ImageAdapter_interface {
-        public void ImageDeleted();
-    }
-
-    //  ImageAdapter_interface imageInterface ;
-
     public FullScreenImageAdapter(Activity context) {
 
         imagesList = new ArrayList<>();
@@ -43,6 +39,8 @@ public class FullScreenImageAdapter extends PagerAdapter {
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
+    //  ImageAdapter_interface imageInterface ;
 
     @Override
     public int getCount() {
@@ -85,6 +83,10 @@ public class FullScreenImageAdapter extends PagerAdapter {
         //DeleteGalleryImages task = new DeleteGalleryImages((android.app.Activity) context,this,deletePosition);
         //task.execute();
 
+    }
+
+    public interface ImageAdapter_interface {
+        public void ImageDeleted();
     }
 
 

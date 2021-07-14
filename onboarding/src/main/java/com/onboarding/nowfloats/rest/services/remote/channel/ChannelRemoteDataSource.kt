@@ -27,7 +27,10 @@ interface ChannelRemoteDataSource {
   fun getChannelsStatus(@Query("nowfloats_id") nowfloatsId: String?): Observable<Response<ChannelAccessStatusResponse>>
 
   @GET(EndPoints.NFX_CHANNELS_INSIGHTS)
-  fun getChannelsInsights(@Query("nowfloats_id") nowfloatsId: String?, @Query("identifier") identifier: String?): Observable<Response<ChannelInsightsResponse>>
+  fun getChannelsInsights(
+    @Query("nowfloats_id") nowfloatsId: String?,
+    @Query("identifier") identifier: String?
+  ): Observable<Response<ChannelInsightsResponse>>
 
   @POST(EndPoints.NFX_PROCESS_URL)
   fun nfxProcess(@Body request: NFXProcessRequest?): Observable<Response<Any>>

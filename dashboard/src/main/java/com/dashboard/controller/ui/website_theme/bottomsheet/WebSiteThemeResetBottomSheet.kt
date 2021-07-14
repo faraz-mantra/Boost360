@@ -11,7 +11,8 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
 
-class WebSiteThemeResetBottomSheet : BaseBottomSheetDialog<BottomSheetResetWebsiteBinding, BaseViewModel>() {
+class WebSiteThemeResetBottomSheet :
+  BaseBottomSheetDialog<BottomSheetResetWebsiteBinding, BaseViewModel>() {
 
   var onClicked: (value: String) -> Unit = { }
   override fun getLayout(): Int {
@@ -23,18 +24,20 @@ class WebSiteThemeResetBottomSheet : BaseBottomSheetDialog<BottomSheetResetWebsi
   }
 
   override fun onCreateView() {
-    setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnBack,binding?.btnRest)
+    setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnBack, binding?.btnRest)
     val fontsList =
       arguments?.getSerializable(IntentConstant.FONT_LIST.name) as? FontsList
     val colorsItem = arguments?.getSerializable(IntentConstant.COLOR_LIST.name) as? List<ColorsItem>
-    setData(fontsList,colorsItem)
+    setData(fontsList, colorsItem)
 
     isCancelable = false
   }
 
   private fun setData(fontsList: FontsList?, colorsItem: List<ColorsItem>?) {
-    val defaultColor = colorsItem?.first { it.defaultColor == true } ?:colorsItem?.first { it.isSelected == true }
-    val defaultFont = fontsList?.primary?.first { it?.defaultFont == true }?:fontsList?.primary?.first { it?.isSelected == true }
+    val defaultColor =
+      colorsItem?.first { it.defaultColor == true } ?: colorsItem?.first { it.isSelected == true }
+    val defaultFont = fontsList?.primary?.first { it?.defaultFont == true }
+      ?: fontsList?.primary?.first { it?.isSelected == true }
     binding?.ccvColor?.setCardBackgroundColor(Color.parseColor(defaultColor?.primary?.ifBlank { defaultColor.secondary }))
     binding?.ctfFontName?.text = defaultFont?.description
   }
