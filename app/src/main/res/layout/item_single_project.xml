@@ -43,7 +43,7 @@
           android:id="@+id/client_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:text="@string/robert"
           android:textColor="#747474"
           android:textSize="@dimen/_15sdp" />
@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/commercial_kitchen_equipment"
         android:textColor="#4A4A4A"
         android:textSize="@dimen/_15sdp" />
@@ -134,11 +134,10 @@
               android:id="@+id/project_result"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:fontFamily="@font/open_sans"
+              android:fontFamily="@font/semi_bold"
               android:text="@string/in_progress"
               android:textAllCaps="true"
-              android:textColor="@color/white"
-              android:textStyle="bold" />
+              android:textColor="@color/white" />
           </LinearLayout>
 
           <ImageView
@@ -176,7 +175,7 @@
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:text="@string/budget"
             android:textAllCaps="true"
             android:textColor="#C4C4C4" />
@@ -195,7 +194,7 @@
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:text="@string/completion_date"
             android:textAllCaps="true"
             android:textColor="#C4C4C4" />
@@ -214,7 +213,7 @@
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:text="@string/client_requirement"
             android:textAllCaps="true"
             android:textColor="#C4C4C4" />
@@ -233,7 +232,7 @@
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:text="@string/our_approach"
             android:textAllCaps="true"
             android:textColor="#C4C4C4" />

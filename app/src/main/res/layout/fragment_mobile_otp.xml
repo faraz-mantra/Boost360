@@ -30,7 +30,7 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="14dp"
       android:layout_marginTop="20dp"
-      android:fontFamily="@font/open_sans_bold"
+      android:fontFamily="@font/bold"
       android:text="Log in using mobile number"
       android:textColor="@color/yellow"
       android:textSize="30sp" />
@@ -61,7 +61,7 @@
         android:background="@android:color/transparent"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:gravity="bottom"
         android:hint="@string/_10_digit_mobile_number"
         android:importantForAutofill="no"
@@ -108,7 +108,7 @@
       <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_bold"
+        android:fontFamily="@font/bold"
         android:gravity="center"
         android:text="@string/next"
         android:textAllCaps="true"

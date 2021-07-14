@@ -27,7 +27,7 @@
       android:id="@+id/customTextView"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:fontFamily="@font/open_sans"
+      android:fontFamily="@font/regular"
       android:text="@string/add_services_to_your_catalog"
       android:textColor="@color/black_4a4a4a"
       app:fontFamily="@font/regular"

@@ -172,7 +172,7 @@
                 android:textAlignment="gravity"
                 android:textColor="@color/watermelon_light"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                 android:fontFamily="@font/semi_bold" />
             </LinearLayout>
 
 
@@ -212,13 +212,15 @@
               android:id="@+id/service_location"
               style="@style/wrap_wrap"
               layout="@layout/icon_text_item"
-              android:layout_marginTop="@dimen/size_2" />
+              android:layout_marginTop="@dimen/size_2"
+              tools:ignore="IncludeLayoutParam" />
 
             <include
               android:id="@+id/customer"
               style="@style/wrap_wrap"
               layout="@layout/icon_text_item"
-              android:layout_marginTop="@dimen/size_2" />
+              android:layout_marginTop="@dimen/size_2"
+              tools:ignore="IncludeLayoutParam" />
 
             <RelativeLayout
               style="@style/match_wrap"

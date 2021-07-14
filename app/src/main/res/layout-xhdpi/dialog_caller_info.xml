@@ -37,7 +37,7 @@
       android:text="@string/dismiss"
       android:textColor="@color/primaryColor"
       android:textSize="@dimen/medium_text_size"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
       android:id="@+id/tvViewOrders"
@@ -50,7 +50,7 @@
       android:textAllCaps="true"
       android:textColor="@color/primaryColor"
       android:textSize="@dimen/medium_text_size"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
   </LinearLayout>
 
@@ -80,7 +80,7 @@
     android:text="@string/dismiss"
     android:textColor="@color/primaryColor"
     android:textSize="@dimen/medium_text_size"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 
   <com.nowfloats.managenotification.ExpandableCardView
     android:id="@+id/ecvEnquiries"
@@ -108,6 +108,6 @@
     android:text="@string/dismiss"
     android:textColor="@color/primaryColor"
     android:textSize="@dimen/medium_text_size"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 
 </LinearLayout>

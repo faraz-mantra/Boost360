@@ -40,7 +40,7 @@
         android:text="@string/keep_move"
         android:textColor="@color/zeroth_grey_title"
         android:textSize="18sp"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
 
       <TextView
         android:layout_width="wrap_content"

@@ -169,12 +169,12 @@ class OrdersViewHolder(binding: ItemOrderBinding) :
           )
         }
         OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
-          colorCode = "#52AAC6"
+          colorCode = "#4A4A4A"
           changeButtonStatus(
             btnOrderMenu.title,
             R.drawable.ic_in_transit_order_btn_bkg,
-            R.color.blue_52AAC6,
-            R.drawable.ic_arrow_down_blue
+            R.color.black_4a4a4a,
+            R.drawable.ic_arrow_down_4a4a4a
           )
         }
         else -> binding.lytStatusBtn.gone()

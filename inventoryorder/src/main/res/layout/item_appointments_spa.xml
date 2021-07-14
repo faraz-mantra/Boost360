@@ -172,7 +172,7 @@
                 android:textAlignment="gravity"
                 android:textColor="@color/watermelon_light"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                 android:fontFamily="@font/semi_bold" />
             </LinearLayout>
 
 

@@ -52,13 +52,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/semi_bold"
             android:maxLines="1"
             android:singleLine="true"
             android:text="@{batchesResponseData.coursecategorytag}"
             android:textColor="#4A4A4A"
             android:textSize="@dimen/txt_16sp"
-            android:textStyle="bold"
             tools:text="Clerks" />
 
           <LinearLayout
@@ -134,7 +133,7 @@
           android:id="@+id/date_value"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:text="@{batchesResponseData.commencementdate}"
           android:textColor="#747474"
           android:textSize="@dimen/_12sdp"

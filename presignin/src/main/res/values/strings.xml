@@ -49,10 +49,10 @@
   <string name="psn_login_using_username_or_email_id">Login using username or email id</string>
   <string name="psn_try_a_different_mobile_number">Try a different mobile number</string>
   <string name="psn_login_to_boost_360">Login to Boost 360</string>
-  <string name="psn_username_or_email">Enter your registered username/email ID and password</string>
+  <string name="psn_username_or_email">Enter your registered username/ email ID and password</string>
   <string name="wrong_otp_tv">Please enter correct OTP</string>
-  <string name="login_et_hint">Username or Email ID</string>
-  <string name="password">password</string>
+  <string name="login_et_hint">Username/Email ID</string>
+  <string name="password">Password</string>
   <string name="forgot">FORGOT?</string>
   <string name="psn_need_help_in_login"><u>Need help in Login?</u></string>
   <string name="psn_forgot_password">Forgot Password?</string>

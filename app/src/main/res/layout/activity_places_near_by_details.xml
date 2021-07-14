@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/add_image"
         android:textColor="#747474" />
 
@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/place_name"
         android:textColor="#747474" />
 
@@ -92,7 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/alt_tag"
         android:textColor="#747474" />
 
@@ -117,7 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/address"
         android:textColor="#747474" />
 
@@ -142,7 +142,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/distance_from_hotel"
         android:textColor="#747474" />
 
@@ -168,7 +168,7 @@
         android:layout_marginBottom="@dimen/_15sdp"
         android:background="@drawable/orange_button_click_effect"
         android:elevation="@dimen/_2sdp"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"

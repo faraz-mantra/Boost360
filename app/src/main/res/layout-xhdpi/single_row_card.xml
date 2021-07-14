@@ -220,7 +220,7 @@
           android:layout_height="wrap_content"
           android:layout_centerVertical="true"
           android:layout_marginStart="6dp"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:text="PREMIUM"
           android:textColor="@color/white"
           android:textSize="@dimen/_8ssp" />
@@ -634,7 +634,7 @@
           android:text="@string/i"
           android:textColor="#ffffff"
           android:textSize="16sp"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
       </RelativeLayout>
 

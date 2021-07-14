@@ -237,7 +237,7 @@
             android:text="@string/having_variants_of_this_product"
             android:textColor="@color/primaryTextColor"
             android:textSize="14sp"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <com.github.angads25.toggle.widget.LabeledSwitch
             android:id="@+id/switch_variants"

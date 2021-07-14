@@ -33,7 +33,7 @@
         android:layout_gravity="start"
         android:layout_marginHorizontal="@dimen/size_20"
         android:layout_marginTop="@dimen/size_4"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/reset_website_style"
         android:textAllCaps="false"
         android:textColor="@color/black_4a4a4a"
@@ -47,7 +47,7 @@
         android:layout_marginHorizontal="@dimen/size_20"
         android:layout_marginTop="@dimen/size_8"
         android:layout_marginBottom="@dimen/size_16"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:gravity="start"
         android:includeFontPadding="false"
         android:text="@string/this_will_change_the_fonts_and_color_of_your_website_to_default_ones_shown_below"
@@ -90,7 +90,7 @@
             android:layout_marginTop="@dimen/size_4"
             android:textColor="@color/black_4a4a4a"
             android:textSize="20sp"
-            android:textStyle="bold"
+             android:fontFamily="@font/semi_bold"
             tools:text="fasjnasjdknaskdj" />
         </LinearLayout>
 

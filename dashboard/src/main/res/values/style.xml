@@ -15,6 +15,7 @@
     <item name="searchViewStyle">@style/ThemeOverlay.SearchView</item>
     <item name="colorSurface">@color/white</item>
     <item name="colorControlActivated">@color/white</item>
+    <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
 
   <style name="DashboardThemeNew" parent="DashboardTheme">
@@ -76,5 +77,4 @@
     <item name="android:progressDrawable">@drawable/ic_progress_bar_horizontal_high</item>
     <!--    <item name="android:progressDrawable">@drawable/progress_bar_horizontal</item>-->
   </style>
-
 </resources>

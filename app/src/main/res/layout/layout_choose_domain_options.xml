@@ -182,7 +182,7 @@
       android:layout_marginEnd="@dimen/_30sdp"
       android:layout_marginBottom="@dimen/_15sdp"
       android:background="@drawable/feature_deals_click_effect"
-      android:fontFamily="@font/open_sans_semibold"
+      android:fontFamily="@font/semi_bold"
       android:gravity="center"
       android:paddingTop="@dimen/_10sdp"
       android:paddingBottom="@dimen/_10sdp"

@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/size_4"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/successfully_saved"
         android:textAllCaps="true"
         android:textColor="@color/yellow_ffb900"
@@ -62,7 +62,7 @@
         android:layout_marginHorizontal="@dimen/size_20"
         android:layout_marginTop="@dimen/size_8"
         android:layout_marginBottom="@dimen/size_26"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:gravity="center"
         android:includeFontPadding="false"
         android:text="@string/product_saved_and_published_live_on_your_website_or_share"
@@ -79,7 +79,7 @@
         android:background="@drawable/bg_button_proceed_4"
         android:drawableEnd="@drawable/ic_arrow_top_right"
         android:drawablePadding="@dimen/size_8"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingHorizontal="@dimen/size_20"
         android:stateListAnimator="@null"
@@ -87,7 +87,6 @@
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="14sp"
-        android:textStyle="bold"
         android:visibility="gone" />
 
       <androidx.appcompat.widget.LinearLayoutCompat

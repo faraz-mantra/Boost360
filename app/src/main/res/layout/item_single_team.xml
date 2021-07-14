@@ -52,7 +52,7 @@
           android:id="@+id/name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:text="@string/robert"
           android:textColor="#4A4A4A"
           android:textSize="@dimen/_15sdp" />

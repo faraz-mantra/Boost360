@@ -62,13 +62,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/semi_bold"
             android:maxLines="1"
             android:singleLine="true"
             android:text="@{facultyManagementData.name}"
             android:textColor="#4A4A4A"
             android:textSize="@dimen/txt_16sp"
-            android:textStyle="bold"
             tools:text="Suchi" />
 
           <TextView

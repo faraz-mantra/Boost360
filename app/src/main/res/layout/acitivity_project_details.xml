@@ -232,7 +232,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_centerVertical="true"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:gravity="center"
           android:text="Add Images"
           android:textAllCaps="true"
@@ -250,7 +250,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_5sdp"
           android:layout_weight="1"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:text="@string/maximum_3"
           android:textColor="@color/grey_400" />
 
@@ -259,7 +259,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_5sdp"
           android:layout_weight="1"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:gravity="end"
           android:text="@string/jpg_png_800x800px"
           android:textColor="@color/grey_400" />
@@ -279,7 +279,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/status"
         android:textAllCaps="true"
         android:textColor="@color/common_text_color" />
@@ -310,7 +310,7 @@
             android:textAllCaps="true"
             android:textColor="#9ABFFF"
             android:textSize="@dimen/_8sdp"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -335,7 +335,7 @@
             android:textAllCaps="true"
             android:textColor="#9ABFFF"
             android:textSize="@dimen/_8sdp"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -360,7 +360,7 @@
             android:textAllCaps="true"
             android:textColor="#9ABFFF"
             android:textSize="@dimen/_8sdp"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
         </LinearLayout>
       </LinearLayout>
 
@@ -374,7 +374,7 @@
         android:layout_marginBottom="@dimen/_20sdp"
         android:background="@drawable/orange_button_click_effect"
         android:elevation="@dimen/_2sdp"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
