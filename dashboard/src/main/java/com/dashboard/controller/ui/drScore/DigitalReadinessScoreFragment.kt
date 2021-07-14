@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -276,7 +277,8 @@ fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?, baseActivity: App
 }
 
 fun alertDialogBusinessHours(baseActivity: AppCompatActivity, session: UserSessionManager?) {
-  AlertDialog.Builder(baseActivity)
+  AlertDialog.Builder(
+    ContextThemeWrapper(baseActivity,R.style.AlertDialogCustom))
     .setTitle(baseActivity.getString(R.string.features_not_available))
     .setMessage(baseActivity.getString(R.string.check_store_for_upgrade_info))
     .setPositiveButton(baseActivity.getString(R.string.goto_store)) { dialogInterface, i ->

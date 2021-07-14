@@ -9,10 +9,23 @@ import com.inventoryorder.rest.services.WithFloatTwoDataSource
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-object ApiTwoWithFloatRepository : AppBaseRepository<WithFloatTwoDataSource, AppBaseLocalService>() {
+object ApiTwoWithFloatRepository :
+  AppBaseRepository<WithFloatTwoDataSource, AppBaseLocalService>() {
 
-  fun getAllServiceList(clientId: String?, skipBy: Int?, fpTag: String?, identifierType: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getAllServiceList(clientId, skipBy, fpTag, identifierType), TaskCode.GET_ALL_SERVICES)
+  fun getAllServiceList(
+    clientId: String?,
+    skipBy: Int?,
+    fpTag: String?,
+    identifierType: String?
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getAllServiceList(
+        clientId,
+        skipBy,
+        fpTag,
+        identifierType
+      ), TaskCode.GET_ALL_SERVICES
+    )
   }
 
   fun sendSMS(mobile: String?, message: String?, clientId: String?): Observable<BaseResponse> {
@@ -24,11 +37,17 @@ object ApiTwoWithFloatRepository : AppBaseRepository<WithFloatTwoDataSource, App
   }
 
   fun getBizFloatMessage(map: Map<String, String>): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getBizFloatMessage(map), TaskCode.GET_BIZ_FLOAT_MESSAGE)
+    return makeRemoteRequest(
+      remoteDataSource.getBizFloatMessage(map),
+      TaskCode.GET_BIZ_FLOAT_MESSAGE
+    )
   }
 
-  fun getProductList(fpTag : String?, clientId : String?, skipBy: Int?) : Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getAllProductList(fpTag, clientId, skipBy), TaskCode.GET_ALL_PRODUCT_LIST)
+  fun getProductList(fpTag: String?, clientId: String?, skipBy: Int?): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getAllProductList(fpTag, clientId, skipBy),
+      TaskCode.GET_ALL_PRODUCT_LIST
+    )
   }
 
   override fun getLocalDataSourceInstance(): AppBaseLocalService {

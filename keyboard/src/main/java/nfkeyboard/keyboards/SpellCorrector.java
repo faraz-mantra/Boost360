@@ -19,23 +19,19 @@ import nfkeyboard.models.KeywordModel;
 public class SpellCorrector {
 
     private static Context mContext;
-
+    private static Logger log = Logger.getLogger(SpellCorrector.class.getName());
+    private static TST tst = new TST();
+    private int EDIT_LIMIT = 3;
+    private int SUGGESTED_WORD_LIST_LIMIT = 3;
+    private int PRIORITY_QUEUE_SIZE_LIMIT = 3;
+    private String inputString = "";
+    private PriorityQueue<PQElement> suggestedWordsStack = new PriorityQueue<>(PRIORITY_QUEUE_SIZE_LIMIT);
     public SpellCorrector(Context context) {
         this.mContext = context;
         if (tst.getRoot() == null && mContext != null) {
             WordTree.createTree(mContext, tst);
         }
     }
-
-
-    private static Logger log = Logger.getLogger(SpellCorrector.class.getName());
-    private static TST tst = new TST();
-
-    private int EDIT_LIMIT = 3;
-    private int SUGGESTED_WORD_LIST_LIMIT = 3;
-    private int PRIORITY_QUEUE_SIZE_LIMIT = 3;
-    private String inputString = "";
-    private PriorityQueue<PQElement> suggestedWordsStack = new PriorityQueue<>(PRIORITY_QUEUE_SIZE_LIMIT);
 
     // create the ternary search tree and populate with words.
 

@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -64,15 +65,15 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
             ifscCodeEt, paymentDateEt, gstNumberEt;
     public RadioGroup gstRadioGroup;
     public TextView addAltTv, addMainTv;
-    CardView altImageCv, mainImageCv;
-    private UserSessionManager manager;
     public ImageView altChequeImgView, mainChequeImgView;
     public String mainImage, altImage;
+    public int paymentMode = 0;
+    CardView altImageCv, mainImageCv;
+    private UserSessionManager manager;
     private double totalPrice, taxAmount, discountPercentage, tdsPercentage, tdsAmount, finalAmount, discountAmount = 0;
     private String currencyCode;
     private List<ProductPaymentModel> mProductPaymentModel;
     private DiscountCoupon discountCoupon;
-    public int paymentMode = 0;
     private SalesmanModel salesmanModel;
 
     @Override

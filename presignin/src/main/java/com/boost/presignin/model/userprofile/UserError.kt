@@ -8,9 +8,9 @@ data class UserError(
   val ErrorCode: Any? = null,
   @SerializedName("ErrorList")
   val ErrorList: ErrorList? = null
-):Serializable
+) : Serializable
 
 data class ErrorList(
   @SerializedName("EXCEPTION")
   var eXCEPTION: String? = null
-):Serializable
+) : Serializable

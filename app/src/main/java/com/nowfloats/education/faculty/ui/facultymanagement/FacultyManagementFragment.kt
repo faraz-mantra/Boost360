@@ -26,106 +26,122 @@ import org.koin.android.ext.android.inject
 
 class FacultyManagementFragment : BaseFragment(), ItemClickEventListener {
 
-    private val viewModel by inject<FacultyManagementViewModel>()
-    private val facultyManagementAdapter: FacultyManagementAdapter by lazy { FacultyManagementAdapter(this) }
+  private val viewModel by inject<FacultyManagementViewModel>()
+  private val facultyManagementAdapter: FacultyManagementAdapter by lazy {
+    FacultyManagementAdapter(
+      this
+    )
+  }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.faculty_management_fragment, container, false)
+  override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    return inflater.inflate(R.layout.faculty_management_fragment, container, false)
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+
+    setHeader(view)
+    initLiveDataObservers()
+    initBatchesRecyclerview(view)
+  }
+
+  private fun initBatchesRecyclerview(view: View) {
+    val recyclerview = view.findViewById<RecyclerView>(R.id.faculty_recycler)
+    val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+    gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+    recyclerview.apply {
+      layoutManager = gridLayoutManager
+      adapter = facultyManagementAdapter
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setHeader(view)
-        initLiveDataObservers()
-        initBatchesRecyclerview(view)
+    if (Utils.isNetworkConnected(requireContext())) {
+      showLoader("Loading Faculty Management")
+      viewModel.getOurFaculty()
+    } else {
+      showToast("No Internet!")
     }
+  }
 
-    private fun initBatchesRecyclerview(view: View) {
-        val recyclerview = view.findViewById<RecyclerView>(R.id.faculty_recycler)
-        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
-        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        recyclerview.apply {
-            layoutManager = gridLayoutManager
-            adapter = facultyManagementAdapter
+  private fun initLiveDataObservers() {
+    viewModel.apply {
+      ourFacultyResponse.observe(viewLifecycleOwner, Observer {
+        if (!it.Data.isNullOrEmpty()) {
+          hideLoader()
+          setRecyclerviewAdapter(it.Data)
         }
+      })
 
-        if (Utils.isNetworkConnected(requireContext())) {
-            showLoader("Loading Faculty Management")
+      errorMessage.observe(viewLifecycleOwner, Observer {
+        hideLoader()
+        Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+      })
+
+      deleteFacultyResponse.observe(viewLifecycleOwner, Observer {
+        if (!it.isNullOrBlank()) {
+          if (it == SUCCESS) {
+            hideLoader()
+            Toast.makeText(
+              requireContext(),
+              getString(R.string.faculty_deleted_successfully),
+              Toast.LENGTH_SHORT
+            ).show()
+            showLoader("Loading Faculty")
+            setDeleteFacultyLiveDataValue("")
             viewModel.getOurFaculty()
-        } else {
-            showToast("No Internet!")
+          }
         }
+      })
     }
+  }
 
-    private fun initLiveDataObservers() {
-        viewModel.apply {
-            ourFacultyResponse.observe(viewLifecycleOwner, Observer {
-                if (!it.Data.isNullOrEmpty()) {
-                    hideLoader()
-                    setRecyclerviewAdapter(it.Data)
-                }
-            })
+  private fun setRecyclerviewAdapter(batchesResponseData: List<Data>) {
+    facultyManagementAdapter.items = batchesResponseData
+    facultyManagementAdapter.notifyDataSetChanged()
+  }
 
-            errorMessage.observe(viewLifecycleOwner, Observer {
-                hideLoader()
-                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
-            })
-
-            deleteFacultyResponse.observe(viewLifecycleOwner, Observer {
-                if (!it.isNullOrBlank()) {
-                    if (it == SUCCESS) {
-                        hideLoader()
-                        Toast.makeText(requireContext(), getString(R.string.faculty_deleted_successfully), Toast.LENGTH_SHORT).show()
-                        showLoader("Loading Faculty")
-                        setDeleteFacultyLiveDataValue("")
-                        viewModel.getOurFaculty()
-                    }
-                }
-            })
-        }
+  private fun setHeader(view: View) {
+    val rightButton: LinearLayout = view.findViewById(R.id.right_icon_layout)
+    val backButton: LinearLayout = view.findViewById(R.id.back_button)
+    val rightIcon: ImageView = view.findViewById(R.id.right_icon)
+    val title: TextView = view.findViewById(R.id.title)
+    title.text = getString(R.string.faculty_management)
+    rightIcon.setImageResource(R.drawable.ic_add_white)
+    rightButton.setOnClickListener {
+      (activity as FacultyActivity).addFragment(
+        FacultyDetailsFragment.newInstance(),
+        FACULTY_DETAILS_FRAGMENT
+      )
     }
+    backButton.setOnClickListener { requireActivity().onBackPressed() }
+  }
 
-    private fun setRecyclerviewAdapter(batchesResponseData: List<Data>) {
-        facultyManagementAdapter.items = batchesResponseData
-        facultyManagementAdapter.notifyDataSetChanged()
-    }
+  override fun itemMenuOptionStatus(pos: Int, status: Boolean) {
+    updateItemMenuOptionStatus(pos, status)
+  }
 
-    private fun setHeader(view: View) {
-        val rightButton: LinearLayout = view.findViewById(R.id.right_icon_layout)
-        val backButton: LinearLayout = view.findViewById(R.id.back_button)
-        val rightIcon: ImageView = view.findViewById(R.id.right_icon)
-        val title: TextView = view.findViewById(R.id.title)
-        title.text = getString(R.string.faculty_management)
-        rightIcon.setImageResource(R.drawable.ic_add_white)
-        rightButton.setOnClickListener {
-            (activity as FacultyActivity).addFragment(FacultyDetailsFragment.newInstance(), FACULTY_DETAILS_FRAGMENT)
-        }
-        backButton.setOnClickListener { requireActivity().onBackPressed() }
-    }
+  override fun onEditClick(data: Any, position: Int) {
+    facultyManagementAdapter.menuOption(position, false)
+    (activity as FacultyActivity).addFragment(
+      FacultyDetailsFragment.newInstance(data as Data),
+      FACULTY_DETAILS_FRAGMENT
+    )
+  }
 
-    override fun itemMenuOptionStatus(pos: Int, status: Boolean) {
-        updateItemMenuOptionStatus(pos, status)
-    }
+  override fun onDeleteClick(data: Any, position: Int) {
+    facultyManagementAdapter.menuOption(position, false)
+    showLoader(getString(R.string.deleting_faculty))
+    viewModel.deleteOurFaculty(data as Data)
+  }
 
-    override fun onEditClick(data: Any, position: Int) {
-        facultyManagementAdapter.menuOption(position, false)
-        (activity as FacultyActivity).addFragment(FacultyDetailsFragment.newInstance(data as Data), FACULTY_DETAILS_FRAGMENT)
-    }
+  private fun updateItemMenuOptionStatus(position: Int, status: Boolean) {
+    facultyManagementAdapter.menuOption(position, status)
+    facultyManagementAdapter.notifyDataSetChanged()
+  }
 
-    override fun onDeleteClick(data: Any, position: Int) {
-        facultyManagementAdapter.menuOption(position, false)
-        showLoader(getString(R.string.deleting_faculty))
-        viewModel.deleteOurFaculty(data as Data)
-    }
-
-    private fun updateItemMenuOptionStatus(position: Int, status: Boolean) {
-        facultyManagementAdapter.menuOption(position, status)
-        facultyManagementAdapter.notifyDataSetChanged()
-    }
-
-    companion object {
-        fun newInstance(): FacultyManagementFragment = FacultyManagementFragment()
-    }
+  companion object {
+    fun newInstance(): FacultyManagementFragment = FacultyManagementFragment()
+  }
 }

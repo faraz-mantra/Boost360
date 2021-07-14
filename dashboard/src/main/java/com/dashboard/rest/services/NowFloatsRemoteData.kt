@@ -14,11 +14,11 @@ import retrofit2.http.Query
 interface NowFloatsRemoteData {
   @GET(EndPoints.WEBSITE_THEME_GET)
   fun getWebsiteTheme(
-      @Query("floatingPointId") floatingPointId: String,
+    @Query("floatingPointId") floatingPointId: String,
   ): Observable<Response<WebsiteThemeResponse>>
 
   @POST(EndPoints.WEBSITE_THEME_UPDATE)
   fun updateWebsiteTheme(
-      @Body request: WebsiteThemeUpdateRequest,
+    @Body request: WebsiteThemeUpdateRequest,
   ): Observable<Response<ResponseBody>>
 }

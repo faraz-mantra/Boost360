@@ -22,7 +22,9 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+
 import androidx.annotation.NonNull;
+
 import android.text.TextUtils;
 
 import com.android.inputmethod.keyboard.internal.KeyDrawParams;
@@ -55,25 +57,17 @@ import static io.separ.neural.inputmethod.indic.Constants.CODE_UNSPECIFIED;
  * Class for describing the position and characteristics of a single key in the keyboard.
  */
 public class Key implements Comparable<Key> {
-    private String mKeySpec;
-    /**
-     * The key code (unicode or custom code) that this key generates.
-     */
-    public int mCode;
-
-    /**
-     * Label to display
-     */
-    private String mLabel;
-    private String mHeaderKeySpec;
-    /**
-     * Hint label to display on the key in conjunction with the label
-     */
-    private final String mHintLabel;
-    /**
-     * Flags of the label
-     */
-    private final int mLabelFlags;
+    public static final int BACKGROUND_TYPE_EMPTY = 0;
+    public static final int BACKGROUND_TYPE_NORMAL = 1;
+    public static final int BACKGROUND_TYPE_FUNCTIONAL = 2;
+    public static final int BACKGROUND_TYPE_STICKY_OFF = 3;
+    public static final int BACKGROUND_TYPE_STICKY_ON = 4;
+    public static final int BACKGROUND_TYPE_ACTION = 5;
+    public static final int BACKGROUND_TYPE_SPACEBAR = 6;
+    public static final int BACKGROUND_TYPE_ENTERKEY = 7;
+    public static final int BACKGROUND_TYPE_HEADERKEY = 8;
+    public static final int BACKGROUND_TYPE_FONTRESIZEKEY = 9;
+    public static final int BACKGROUND_TYPE_NUMKEY = 10;
     private static final int LABEL_FLAGS_ALIGN_HINT_LABEL_TO_BOTTOM = 0x02;
     private static final int LABEL_FLAGS_ALIGN_ICON_TO_BOTTOM = 0x04;
     private static final int LABEL_FLAGS_ALIGN_LABEL_OFF_CENTER = 0x08;
@@ -106,42 +100,6 @@ public class Key implements Comparable<Key> {
     private static final int LABEL_FLAGS_KEEP_BACKGROUND_ASPECT_RATIO = 0x100000;
     private static final int LABEL_FLAGS_DISABLE_HINT_LABEL = 0x40000000;
     private static final int LABEL_FLAGS_DISABLE_ADDITIONAL_MORE_KEYS = 0x80000000;
-
-    /**
-     * Icon to display instead of a label. Icon takes precedence over a label
-     */
-    private final int mIconId;
-
-    /**
-     * Width of the key, excluding the gap
-     */
-    private final int mWidth;
-    /**
-     * Height of the key, excluding the gap
-     */
-    private final int mHeight;
-    /**
-     * X coordinate of the key in the keyboard layout
-     */
-    private final int mX;
-    /**
-     * Y coordinate of the key in the keyboard layout
-     */
-    private final int mY;
-    /**
-     * Hit bounding box of the key
-     */
-    private final Rect mHitBox = new Rect();
-
-    /**
-     * More keys. It is guaranteed that this is null or an array of one or more elements
-     */
-    public MoreKeySpec[] mMoreKeys;
-    public MoreKeySpec[] mHeaderMoreKeys;
-    /**
-     * More keys column number and flags
-     */
-    private final int mMoreKeysColumnAndFlags;
     private static final int MORE_KEYS_COLUMN_NUMBER_MASK = 0x000000ff;
     // If this flag is specified, more keys keyboard should have the specified number of columns.
     // Otherwise more keys keyboard should have less than or equal to the specified maximum number
@@ -164,86 +122,71 @@ public class Key implements Comparable<Key> {
     private static final String MORE_KEYS_HAS_LABELS = "!hasLabels!";
     private static final String MORE_KEYS_NEEDS_DIVIDERS = "!needsDividers!";
     private static final String MORE_KEYS_NO_PANEL_AUTO_MORE_KEY = "!noPanelAutoMoreKey!";
-
-    /**
-     * Background type that represents different key background visual than normal one.
-     */
-    private final int mBackgroundType;
-    public static final int BACKGROUND_TYPE_EMPTY = 0;
-    public static final int BACKGROUND_TYPE_NORMAL = 1;
-    public static final int BACKGROUND_TYPE_FUNCTIONAL = 2;
-    public static final int BACKGROUND_TYPE_STICKY_OFF = 3;
-    public static final int BACKGROUND_TYPE_STICKY_ON = 4;
-    public static final int BACKGROUND_TYPE_ACTION = 5;
-    public static final int BACKGROUND_TYPE_SPACEBAR = 6;
-    public static final int BACKGROUND_TYPE_ENTERKEY = 7;
-    public static final int BACKGROUND_TYPE_HEADERKEY = 8;
-    public static final int BACKGROUND_TYPE_FONTRESIZEKEY = 9;
-    public static final int BACKGROUND_TYPE_NUMKEY = 10;
-
-    private final int mActionFlags;
     private static final int ACTION_FLAGS_IS_REPEATABLE = 0x01;
     private static final int ACTION_FLAGS_NO_KEY_PREVIEW = 0x02;
     private static final int ACTION_FLAGS_ALT_CODE_WHILE_TYPING = 0x04;
     private static final int ACTION_FLAGS_ENABLE_LONG_PRESS = 0x08;
-
+    /**
+     * Hint label to display on the key in conjunction with the label
+     */
+    private final String mHintLabel;
+    /**
+     * Flags of the label
+     */
+    private final int mLabelFlags;
+    /**
+     * Icon to display instead of a label. Icon takes precedence over a label
+     */
+    private final int mIconId;
+    /**
+     * Width of the key, excluding the gap
+     */
+    private final int mWidth;
+    /**
+     * Height of the key, excluding the gap
+     */
+    private final int mHeight;
+    /**
+     * X coordinate of the key in the keyboard layout
+     */
+    private final int mX;
+    /**
+     * Y coordinate of the key in the keyboard layout
+     */
+    private final int mY;
+    /**
+     * Hit bounding box of the key
+     */
+    private final Rect mHitBox = new Rect();
+    /**
+     * More keys column number and flags
+     */
+    private final int mMoreKeysColumnAndFlags;
+    /**
+     * Background type that represents different key background visual than normal one.
+     */
+    private final int mBackgroundType;
+    private final int mActionFlags;
     private final KeyVisualAttributes mKeyVisualAttributes;
-
+    private final int mHashCode;
+    /**
+     * The key code (unicode or custom code) that this key generates.
+     */
+    public int mCode;
+    /**
+     * More keys. It is guaranteed that this is null or an array of one or more elements
+     */
+    public MoreKeySpec[] mMoreKeys;
+    public MoreKeySpec[] mHeaderMoreKeys;
     public OptionalAttributes mOptionalAttributes;
+    private String mKeySpec;
+    /**
+     * Label to display
+     */
+    private String mLabel;
+    private String mHeaderKeySpec;
     private boolean moreKey = false;
     private boolean isLabelModified;
-
-    public boolean isMoreKey() {
-        return moreKey;
-    }
-
-    public void setLabelModified(boolean isLabelModified) {
-        this.isLabelModified = isLabelModified;
-    }
-
-    public boolean isLabelModified() {
-        return isLabelModified;
-    }
-
-    public static final class OptionalAttributes {
-        /**
-         * Text to output when pressed. This can be multiple characters, like ".com"
-         */
-        public final String mOutputText;
-        public final int mAltCode;
-        /**
-         * Icon for disabled state
-         */
-        public final int mDisabledIconId;
-        /**
-         * The visual insets
-         */
-        public final int mVisualInsetsLeft;
-        public final int mVisualInsetsRight;
-
-        private OptionalAttributes(final String outputText, final int altCode,
-                                   final int disabledIconId, final int visualInsetsLeft, final int visualInsetsRight) {
-            mOutputText = outputText;
-            mAltCode = altCode;
-            mDisabledIconId = disabledIconId;
-            mVisualInsetsLeft = visualInsetsLeft;
-            mVisualInsetsRight = visualInsetsRight;
-        }
-
-        public static OptionalAttributes newInstance(final String outputText, final int altCode,
-                                                     final int disabledIconId, final int visualInsetsLeft, final int visualInsetsRight) {
-            if (outputText == null && altCode == CODE_UNSPECIFIED
-                    && disabledIconId == ICON_UNDEFINED && visualInsetsLeft == 0
-                    && visualInsetsRight == 0) {
-                return null;
-            }
-            return new OptionalAttributes(outputText, altCode, disabledIconId, visualInsetsLeft,
-                    visualInsetsRight);
-        }
-    }
-
-    private final int mHashCode;
-
     /**
      * The current pressed state of this key
      */
@@ -252,7 +195,6 @@ public class Key implements Comparable<Key> {
      * Key is enabled and responds on press
      */
     private boolean mEnabled = true;
-
     private boolean mShowColorFilter = false;
 
     public Key(final String label, final int iconId, final int code, final String outputText,
@@ -297,7 +239,6 @@ public class Key implements Comparable<Key> {
                 y, width, height, horizontalGap,
                 verticalGap, false);
     }
-
     /**
      * Create a key with the given top-left coordinate and extract its attributes from a key
      * specification string, Key attribute array, key style, and etc.
@@ -530,6 +471,56 @@ public class Key implements Comparable<Key> {
         });
     }
 
+    private static String backgroundName(final int backgroundType) {
+        switch (backgroundType) {
+            case BACKGROUND_TYPE_EMPTY:
+                return "empty";
+            case BACKGROUND_TYPE_NORMAL:
+                return "normal";
+            case BACKGROUND_TYPE_FUNCTIONAL:
+                return "functional";
+            case BACKGROUND_TYPE_STICKY_OFF:
+                return "stickyOff";
+            case BACKGROUND_TYPE_STICKY_ON:
+                return "stickyOn";
+            case BACKGROUND_TYPE_ACTION:
+                return "action";
+            case BACKGROUND_TYPE_SPACEBAR:
+                return "spacebar";
+            case BACKGROUND_TYPE_ENTERKEY:
+                return "enter";
+            default:
+                return null;
+        }
+    }
+
+    public static Typeface selectTypeface(final KeyDrawParams params) {
+        /*SEPAR*/
+        return FontUtils.getTypeface();
+        /*switch (mLabelFlags & LABEL_FLAGS_FONT_MASK) {
+        case LABEL_FLAGS_FONT_NORMAL:
+            return Typeface.DEFAULT;
+        case LABEL_FLAGS_FONT_MONO_SPACE:
+            return Typeface.MONOSPACE;
+        case LABEL_FLAGS_FONT_DEFAULT:
+        default:
+            // The type-face is specified by keyTypeface attribute.
+            return params.mTypeface;
+        }*/
+    }
+
+    public boolean isMoreKey() {
+        return moreKey;
+    }
+
+    public boolean isLabelModified() {
+        return isLabelModified;
+    }
+
+    public void setLabelModified(boolean isLabelModified) {
+        this.isLabelModified = isLabelModified;
+    }
+
     private boolean equalsInternal(final Key o) {
         return this == o || o.mX == mX && o.mY == mY && o.mWidth == mWidth && o.mHeight == mHeight && o.mCode == mCode && TextUtils.equals(o.mLabel, mLabel) && TextUtils.equals(o.mHintLabel, mHintLabel) && o.mIconId == mIconId && o.mBackgroundType == mBackgroundType && Arrays.equals(o.mMoreKeys, mMoreKeys) && TextUtils.equals(o.getOutputText(), getOutputText()) && o.mActionFlags == mActionFlags && o.mLabelFlags == mLabelFlags;
     }
@@ -575,29 +566,6 @@ public class Key implements Comparable<Key> {
         final String hintLabel = mHintLabel;
         final String visual = (hintLabel == null) ? topVisual : topVisual + '^' + hintLabel;
         return toString() + ' ' + visual + '/' + backgroundName(mBackgroundType);
-    }
-
-    private static String backgroundName(final int backgroundType) {
-        switch (backgroundType) {
-            case BACKGROUND_TYPE_EMPTY:
-                return "empty";
-            case BACKGROUND_TYPE_NORMAL:
-                return "normal";
-            case BACKGROUND_TYPE_FUNCTIONAL:
-                return "functional";
-            case BACKGROUND_TYPE_STICKY_OFF:
-                return "stickyOff";
-            case BACKGROUND_TYPE_STICKY_ON:
-                return "stickyOn";
-            case BACKGROUND_TYPE_ACTION:
-                return "action";
-            case BACKGROUND_TYPE_SPACEBAR:
-                return "spacebar";
-            case BACKGROUND_TYPE_ENTERKEY:
-                return "enter";
-            default:
-                return null;
-        }
     }
 
     public int getCode() {
@@ -708,21 +676,6 @@ public class Key implements Comparable<Key> {
 
     public KeyVisualAttributes getVisualAttributes() {
         return mKeyVisualAttributes;
-    }
-
-    public static Typeface selectTypeface(final KeyDrawParams params) {
-        /*SEPAR*/
-        return FontUtils.getTypeface();
-        /*switch (mLabelFlags & LABEL_FLAGS_FONT_MASK) {
-        case LABEL_FLAGS_FONT_NORMAL:
-            return Typeface.DEFAULT;
-        case LABEL_FLAGS_FONT_MONO_SPACE:
-            return Typeface.MONOSPACE;
-        case LABEL_FLAGS_FONT_DEFAULT:
-        default:
-            // The type-face is specified by keyTypeface attribute.
-            return params.mTypeface;
-        }*/
     }
 
     public final int selectTextSize(final KeyDrawParams params) {
@@ -996,50 +949,6 @@ public class Key implements Comparable<Key> {
         return dx * dx + dy * dy;
     }
 
-    static class KeyBackgroundState {
-        private final int[] mReleasedState;
-        private final int[] mPressedState;
-
-        private KeyBackgroundState(final int... attrs) {
-            mReleasedState = attrs;
-            mPressedState = Arrays.copyOf(attrs, attrs.length + 1);
-            mPressedState[attrs.length] = android.R.attr.state_pressed;
-        }
-
-        public int[] getState(final boolean pressed) {
-            return pressed ? mPressedState : mReleasedState;
-        }
-
-        public int[] getState(boolean pressed, ColorUtils.ButtonType buttonType) {
-            return pressed ? this.mPressedState : this.mReleasedState;
-        }
-
-        public static final KeyBackgroundState[] STATES = {
-                // 0: BACKGROUND_TYPE_EMPTY
-                new KeyBackgroundState(android.R.attr.state_empty),
-                // 1: BACKGROUND_TYPE_NORMAL
-                new KeyBackgroundState(),
-                // 2: BACKGROUND_TYPE_FUNCTIONAL
-                new KeyBackgroundState(),
-                // 3: BACKGROUND_TYPE_STICKY_OFF
-                new KeyBackgroundState(android.R.attr.state_checkable),
-                // 4: BACKGROUND_TYPE_STICKY_ON
-                new KeyBackgroundState(android.R.attr.state_checkable, android.R.attr.state_checked),
-                // 5: BACKGROUND_TYPE_ACTION
-                new KeyBackgroundState(android.R.attr.state_active),
-                // 6: BACKGROUND_TYPE_SPACEBAR
-                new KeyBackgroundState(),
-                // 7: BACKGROUND_TYPE_ENTER
-                new KeyBackgroundState(android.R.attr.state_active),
-                // 7: BACKGROUND_TYPE_ENTER
-                new KeyBackgroundState(),
-                // 7: BACKGROUND_TYPE_ENTER
-                new KeyBackgroundState(),
-                // 7: BACKGROUND_TYPE_ENTER
-                new KeyBackgroundState(),
-        };
-    }
-
     /**
      * Returns the background drawable for the key, based on the current state and type of the key.
      *
@@ -1072,23 +981,6 @@ public class Key implements Comparable<Key> {
     public final void setBackgroundState(final Drawable background) {
         final int[] state = KeyBackgroundState.STATES[mBackgroundType].getState(mPressed);
         background.setState(state);
-    }
-
-    public static class Spacer extends Key {
-        public Spacer(final TypedArray keyAttr, final KeyStyle keyStyle,
-                      final KeyboardParams params, final KeyboardRow row) {
-            super(null /* keySpec */, null, null, keyAttr, keyStyle, params, row);
-        }
-
-        /**
-         * This constructor is being used only for divider in more keys keyboard.
-         */
-        protected Spacer(final KeyboardParams params, final int x, final int y, final int width,
-                         final int height) {
-            super(null /* label */, ICON_UNDEFINED, CODE_UNSPECIFIED, null /* outputText */,
-                    null /* hintLabel */, 0 /* labelFlags */, BACKGROUND_TYPE_EMPTY, x, y, width,
-                    height, params.mHorizontalGap, params.mVerticalGap);
-        }
     }
 
     public Drawable getSpaceBarBackground(Drawable mSpacebarBackground) {
@@ -1128,5 +1020,102 @@ public class Key implements Comparable<Key> {
         int[] state = keyBackgroundState.getState(z, ColorUtils.ButtonType.NONE);
         normalDrawable.setState(state);
         return normalDrawable;
+    }
+
+    public static final class OptionalAttributes {
+        /**
+         * Text to output when pressed. This can be multiple characters, like ".com"
+         */
+        public final String mOutputText;
+        public final int mAltCode;
+        /**
+         * Icon for disabled state
+         */
+        public final int mDisabledIconId;
+        /**
+         * The visual insets
+         */
+        public final int mVisualInsetsLeft;
+        public final int mVisualInsetsRight;
+
+        private OptionalAttributes(final String outputText, final int altCode,
+                                   final int disabledIconId, final int visualInsetsLeft, final int visualInsetsRight) {
+            mOutputText = outputText;
+            mAltCode = altCode;
+            mDisabledIconId = disabledIconId;
+            mVisualInsetsLeft = visualInsetsLeft;
+            mVisualInsetsRight = visualInsetsRight;
+        }
+
+        public static OptionalAttributes newInstance(final String outputText, final int altCode,
+                                                     final int disabledIconId, final int visualInsetsLeft, final int visualInsetsRight) {
+            if (outputText == null && altCode == CODE_UNSPECIFIED
+                    && disabledIconId == ICON_UNDEFINED && visualInsetsLeft == 0
+                    && visualInsetsRight == 0) {
+                return null;
+            }
+            return new OptionalAttributes(outputText, altCode, disabledIconId, visualInsetsLeft,
+                    visualInsetsRight);
+        }
+    }
+
+    static class KeyBackgroundState {
+        public static final KeyBackgroundState[] STATES = {
+                // 0: BACKGROUND_TYPE_EMPTY
+                new KeyBackgroundState(android.R.attr.state_empty),
+                // 1: BACKGROUND_TYPE_NORMAL
+                new KeyBackgroundState(),
+                // 2: BACKGROUND_TYPE_FUNCTIONAL
+                new KeyBackgroundState(),
+                // 3: BACKGROUND_TYPE_STICKY_OFF
+                new KeyBackgroundState(android.R.attr.state_checkable),
+                // 4: BACKGROUND_TYPE_STICKY_ON
+                new KeyBackgroundState(android.R.attr.state_checkable, android.R.attr.state_checked),
+                // 5: BACKGROUND_TYPE_ACTION
+                new KeyBackgroundState(android.R.attr.state_active),
+                // 6: BACKGROUND_TYPE_SPACEBAR
+                new KeyBackgroundState(),
+                // 7: BACKGROUND_TYPE_ENTER
+                new KeyBackgroundState(android.R.attr.state_active),
+                // 7: BACKGROUND_TYPE_ENTER
+                new KeyBackgroundState(),
+                // 7: BACKGROUND_TYPE_ENTER
+                new KeyBackgroundState(),
+                // 7: BACKGROUND_TYPE_ENTER
+                new KeyBackgroundState(),
+        };
+        private final int[] mReleasedState;
+        private final int[] mPressedState;
+
+        private KeyBackgroundState(final int... attrs) {
+            mReleasedState = attrs;
+            mPressedState = Arrays.copyOf(attrs, attrs.length + 1);
+            mPressedState[attrs.length] = android.R.attr.state_pressed;
+        }
+
+        public int[] getState(final boolean pressed) {
+            return pressed ? mPressedState : mReleasedState;
+        }
+
+        public int[] getState(boolean pressed, ColorUtils.ButtonType buttonType) {
+            return pressed ? this.mPressedState : this.mReleasedState;
+        }
+    }
+
+    public static class Spacer extends Key {
+        public Spacer(final TypedArray keyAttr, final KeyStyle keyStyle,
+                      final KeyboardParams params, final KeyboardRow row) {
+            super(null /* keySpec */, null, null, keyAttr, keyStyle, params, row);
+        }
+
+        /**
+         * This constructor is being used only for divider in more keys keyboard.
+         */
+        protected Spacer(final KeyboardParams params, final int x, final int y, final int width,
+                         final int height) {
+            super(null /* label */, ICON_UNDEFINED, CODE_UNSPECIFIED, null /* outputText */,
+                    null /* hintLabel */, 0 /* labelFlags */, BACKGROUND_TYPE_EMPTY, x, y, width,
+                    height, params.mHorizontalGap, params.mVerticalGap);
+        }
     }
 }

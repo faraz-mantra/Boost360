@@ -8,7 +8,8 @@ import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
 
-class ChannelSelectedRecyclerViewHolder(binding: ItemSelectedChannelBinding) : AppBaseRecyclerViewHolder<ItemSelectedChannelBinding>(binding) {
+class ChannelSelectedRecyclerViewHolder(binding: ItemSelectedChannelBinding) :
+  AppBaseRecyclerViewHolder<ItemSelectedChannelBinding>(binding) {
 
   var model: ChannelModel? = null
 

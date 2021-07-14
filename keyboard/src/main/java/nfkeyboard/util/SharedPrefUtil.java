@@ -9,8 +9,8 @@ import android.content.SharedPreferences;
 
 public class SharedPrefUtil {
 
-    private SharedPreferences sBoostPref;
     private static SharedPrefUtil sPrefUtil;
+    private SharedPreferences sBoostPref;
 
     private SharedPrefUtil() {
 

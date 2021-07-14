@@ -26,6 +26,6 @@ public interface INowFloatsApi {
     Observable<CreatedOffer> createProductOffers(@Body CreateOrderRequest request);
 
     @GET("/discover/v2/floatingPoint/nf-web/{fpTag}")
-    Observable<CustomerDetails> getAllDetails(@Path("fpTag") String fpTag , @QueryMap Map<String,String> queries);
+    Observable<CustomerDetails> getAllDetails(@Path("fpTag") String fpTag, @QueryMap Map<String, String> queries);
 
 }

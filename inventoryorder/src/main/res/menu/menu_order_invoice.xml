@@ -8,9 +8,9 @@
     android:title="Download"
     app:showAsAction="always" />
 
-<!--  <item-->
-<!--    android:id="@+id/menu_item_alert"-->
-<!--    android:icon="@drawable/ic_alert_inventory"-->
-<!--    android:title="Alert"-->
-<!--    app:showAsAction="always" />-->
+  <!--  <item-->
+  <!--    android:id="@+id/menu_item_alert"-->
+  <!--    android:icon="@drawable/ic_alert_inventory"-->
+  <!--    android:title="Alert"-->
+  <!--    app:showAsAction="always" />-->
 </menu>

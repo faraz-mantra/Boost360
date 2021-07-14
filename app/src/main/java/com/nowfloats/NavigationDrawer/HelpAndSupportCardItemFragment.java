@@ -61,13 +61,13 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 public class HelpAndSupportCardItemFragment extends Fragment implements View.OnClickListener {
 
+    public static String RIA_MODEL_DATA = "ria_model_data";
     private Context mContext;
     private RiaSupportModel riaSupportModel;
     private UserSessionManager sessionManager;
-    public static String RIA_MODEL_DATA = "ria_model_data";
     private boolean is_premium_support = false;
 
-    public static Fragment getInstance(Bundle b){
+    public static Fragment getInstance(Bundle b) {
         HelpAndSupportCardItemFragment frag = new HelpAndSupportCardItemFragment();
         frag.setArguments(b);
         return frag;
@@ -76,7 +76,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null){
+        if (getArguments() != null) {
             riaSupportModel = new Gson().fromJson(getArguments().getString(RIA_MODEL_DATA), RiaSupportModel.class);
         }
         sessionManager = new UserSessionManager(mContext, getActivity());
@@ -91,7 +91,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_card_help_and_support,container,false);
+        return inflater.inflate(R.layout.fragment_card_help_and_support, container, false);
     }
 
     @Override
@@ -99,11 +99,11 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded()) return;
 
-        if (Constants.StoreWidgets.contains("CUSTOMERSUPPORT")){
+        if (sessionManager.getStoreWidgets().contains("CUSTOMERSUPPORT")){
             is_premium_support = true;
         }
 
-        ImageView personImage =  view.findViewById(R.id.img_person);
+        ImageView personImage = view.findViewById(R.id.img_person);
         EditText emailTv = view.findViewById(R.id.tv_person_email);
         EditText numberTv = view.findViewById(R.id.tv_person_number);
         EditText nameTv = view.findViewById(R.id.tv_person_name);
@@ -120,12 +120,12 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
         WebEngageController.trackEvent(is_premium_support ? SUPPORT_VIEWED_PREMIUM : SUPPORT_VIEWED, SUPPORT_SCREEN_LOADED, NULL);
 
         nameTv.setText(riaSupportModel.getName());
-        if(is_premium_support)
+        if (is_premium_support)
             numberTv.setText("1860-123-1233");
         else
             numberTv.setText("xxx-xxx-xxxx");
 
-        if(is_premium_support)
+        if (is_premium_support)
             emailTv.setText("ria@boost360.app");
         else
             emailTv.setText(riaSupportModel.getEmail());
@@ -133,7 +133,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
         chatActionBtn.setOnClickListener(this);
         callActionBtn.setOnClickListener(this);
 
-        if(is_premium_support){
+        if (is_premium_support) {
             (view.findViewById(R.id.chat_option_lock)).setVisibility(View.GONE);
             (view.findViewById(R.id.call_option_lock)).setVisibility(View.GONE);
             slaTv.setText("* Response time SLA - 1 hour *");
@@ -147,8 +147,8 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                 .content(R.string.you_are_currently_on_the_default_support_plan)
                 .positiveText(getString(R.string.save_data))
                 .negativeText(R.string.later)
-                .positiveColorRes(R.color.primaryColor)
-                .negativeColorRes(R.color.gray_40)
+                .negativeColorRes(R.color.black_4a4a4a)
+                .positiveColorRes(R.color.colorAccent_jio)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onNegative(MaterialDialog dialog) {
@@ -186,7 +186,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                         startActivity(intent);
                         new Handler().postDelayed(() -> {
                             progressDialog.dismiss();
-                        },1000);
+                        }, 1000);
                     }
                 }).build();
         dialog.show();
@@ -194,10 +194,10 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_chat_action:
                 WebEngageController.trackEvent(SUPPORT_CHAT, CHAT_OPTION_IN_ACCOUNT, NULL);
-                if(is_premium_support) {
+                if (is_premium_support) {
                     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                     Date dateobj = new Date();
 
@@ -220,7 +220,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                 Methods.sendEmail(mContext, new String[]{riaSupportModel.getEmail()}, getString(R.string.need_help_with_boost) + sessionManager.getFpTag() + " , " + sessionManager.getFP_AppExperienceCode() + "]");
                 break;
             case R.id.tv_person_number:
-                if(is_premium_support) {
+                if (is_premium_support) {
                     WebEngageController.trackEvent(SUPPORT_DIRECT_AGENT_CALL, DIRECT_AGENT_CALL_OPTION_IN_ACCOUNT, NULL);
                     Methods.makeCall(mContext, riaSupportModel.getPhoneNumber());
                 } else {
@@ -228,7 +228,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                 }
                 break;
             case R.id.btn_call_option:
-                if(is_premium_support) {
+                if (is_premium_support) {
                     WebEngageController.trackEvent(SUPPORT_CALL, CALL_SUPPORT_OPTION_IN_ACCOUNT, NULL);
                     Methods.makeCall(mContext, riaSupportModel.getPhoneNumber());
                 } else {

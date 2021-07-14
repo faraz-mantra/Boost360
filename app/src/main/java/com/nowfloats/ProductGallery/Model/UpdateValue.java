@@ -6,7 +6,8 @@ package com.nowfloats.ProductGallery.Model;
 public class UpdateValue {
     public String key;
     public String value;
-    public UpdateValue(String key ,String value){
+
+    public UpdateValue(String key, String value) {
         this.key = key;
         this.value = value;
     }

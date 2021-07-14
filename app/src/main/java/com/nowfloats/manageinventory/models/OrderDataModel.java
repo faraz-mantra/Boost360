@@ -16,6 +16,14 @@ public class OrderDataModel {
     @Expose
     private Data data;
 
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
     public class Data {
         @SerializedName("Items")
         @Expose
@@ -304,7 +312,6 @@ public class OrderDataModel {
             this.tileImageUri = tileImageUri;
         }
     }
-
 
     public class BillingDetails implements Serializable {
         @SerializedName("CurrencyCode")
@@ -640,13 +647,5 @@ public class OrderDataModel {
         public void setZipcode(String zipcode) {
             this.zipcode = zipcode;
         }
-    }
-
-    public Data getData() {
-        return data;
-    }
-
-    public void setData(Data data) {
-        this.data = data;
     }
 }

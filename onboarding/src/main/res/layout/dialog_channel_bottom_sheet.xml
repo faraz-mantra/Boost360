@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.onboarding.nowfloats.compoundViews.ChannelBottomSheetView
-        android:id="@+id/channelBottomSheet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:behavior_hideable="false"
-        app:behavior_peekHeight="0dp"
-        android:layout_marginTop="@dimen/footer_button_height"
-        app:layout_behavior="com.framework.LockableBottomSheetBehavior"/>
+  <com.onboarding.nowfloats.compoundViews.ChannelBottomSheetView
+    android:id="@+id/channelBottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/footer_button_height"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.framework.LockableBottomSheetBehavior" />
 </layout>
 
-    <!--not in use-->
+  <!--not in use-->

@@ -45,20 +45,19 @@ public class ForgotPassword extends Activity {
 
         setContentView(R.layout.forgot_password_screen);
         Methods.isOnline(ForgotPassword.this);
-        userName = (EditText)findViewById(R.id.forgot_password_text_box);
-        send    =  (Button)findViewById(R.id.forget_password_send_button);
-        back    =  (Button)findViewById(R.id.forgot_password_top_bar_store_back_button);
-        backLi  =  (View)findViewById(R.id.forgot_password_div_back_click);
+        userName = (EditText) findViewById(R.id.forgot_password_text_box);
+        send = (Button) findViewById(R.id.forget_password_send_button);
+        back = (Button) findViewById(R.id.forgot_password_top_bar_store_back_button);
+        backLi = (View) findViewById(R.id.forgot_password_div_back_click);
 
         send.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
 
                 String enteredText = userName.getText().toString().trim();
-                if(enteredText.length()>1){
+                if (enteredText.length() > 1) {
                     sendPasswordToEmail(enteredText);
-                }
-                else{
+                } else {
                     //Util.toast("Please enter the username", getApplicationContext());
                 }
             }
@@ -76,7 +75,7 @@ public class ForgotPassword extends Activity {
         backLi.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-               // MixPanelController.track(EventKeys.forgot_password_back, null);
+                // MixPanelController.track(EventKeys.forgot_password_back, null);
                 finish();
             }
         });
@@ -94,7 +93,7 @@ public class ForgotPassword extends Activity {
             e.printStackTrace();
         }
 
-        String url = Constants.NOW_FLOATS_API_URL+"/Discover/v1/floatingpoint/forgotPassword";
+        String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/forgotPassword";
 
         com.android.volley.Response.Listener<String> listener = new com.android.volley.Response.Listener<String>() {
 
@@ -110,10 +109,10 @@ public class ForgotPassword extends Activity {
 
                 if (isUpdatedOnServer) {
                     SuccessDialog();
-                    WebEngageController.trackEvent(PS_FORGOT_PASSWORD_PAGE_LOAD,EVENT_LABEL_NULL,NULL);
+                    WebEngageController.trackEvent(PS_FORGOT_PASSWORD_PAGE_LOAD, EVENT_LABEL_NULL, NULL);
                 } else {
-                   Toast.makeText(ForgotPassword.this,getString(R.string.enter_correct_user_name),Toast.LENGTH_SHORT);
-                    WebEngageController.trackEvent(PS_FORGOT_PASSWORD_PAGE_LOAD,EVENT_LABEL_NULL,FORGOT_PASSWORD_FAILED);
+                    Toast.makeText(ForgotPassword.this, getString(R.string.enter_correct_user_name), Toast.LENGTH_SHORT);
+                    WebEngageController.trackEvent(PS_FORGOT_PASSWORD_PAGE_LOAD, EVENT_LABEL_NULL, FORGOT_PASSWORD_FAILED);
 
                 }
             }
@@ -128,8 +127,7 @@ public class ForgotPassword extends Activity {
                 if (response.statusCode == 200) {
                     isUpdatedOnServer = true;
 
-                }
-                else {
+                } else {
                     isUpdatedOnServer = false;
                 }
                 return null;
@@ -137,7 +135,6 @@ public class ForgotPassword extends Activity {
         };
         queue.add(req);
     }
-
 
 
     protected void SuccessDialog() {
@@ -203,10 +200,8 @@ public class ForgotPassword extends Activity {
     }
 
 
-
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
     }
 }

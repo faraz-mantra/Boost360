@@ -81,8 +81,7 @@
           app:cardElevation="@dimen/size_4"
           app:layout_constraintTop_toBottomOf="@id/card_date_range_selector">
 
-          <LinearLayout
-            style="@style/match_wrap">
+          <LinearLayout style="@style/match_wrap">
 
             <com.michalsvec.singlerowcalendar.calendar.SingleRowCalendar
               android:id="@+id/main_single_row_calendar"
@@ -159,8 +158,8 @@
             android:textColor="@drawable/radio_selected"
             android:textSize="16sp"
             android:visibility="gone"
-            tools:visibility="visible"
-            app:buttonTint="@drawable/radio_selected" />
+            app:buttonTint="@drawable/radio_selected"
+            tools:visibility="visible" />
         </RadioGroup>
 
         <com.framework.views.customViews.CustomTextView

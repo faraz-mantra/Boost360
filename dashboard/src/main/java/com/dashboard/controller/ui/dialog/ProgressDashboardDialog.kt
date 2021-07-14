@@ -9,7 +9,8 @@ import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
 
-class ProgressDashboardDialog : BaseDialogFragment<DialogDashboardProgressBinding, BaseViewModel>() {
+class ProgressDashboardDialog :
+  BaseDialogFragment<DialogDashboardProgressBinding, BaseViewModel>() {
 
   private var title: String? = null
   private var lottyFile: Int? = null

@@ -18,101 +18,101 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class MarketPlaceOfferViewModel(application: Application) : BaseViewModel(application) {
-    var updatesResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
-    var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
-    var marketOffersCouponResult: MutableLiveData<MarketOfferModel> = MutableLiveData()
+  var updatesResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+  var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
+  var marketOffersCouponResult: MutableLiveData<MarketOfferModel> = MutableLiveData()
 
-    var updatesError: MutableLiveData<String> = MutableLiveData()
-    var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
+  var updatesError: MutableLiveData<String> = MutableLiveData()
+  var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun getUpgradeResult(): LiveData<List<FeaturesModel>> {
-        return updatesResult
-    }
+  fun getUpgradeResult(): LiveData<List<FeaturesModel>> {
+    return updatesResult
+  }
 
-    fun cartResult(): LiveData<List<CartModel>>{
-        return cartResult
-    }
+  fun cartResult(): LiveData<List<CartModel>> {
+    return cartResult
+  }
 
-    fun marketOffersCouponResult(): LiveData<MarketOfferModel> {
-        return marketOffersCouponResult
-    }
+  fun marketOffersCouponResult(): LiveData<MarketOfferModel> {
+    return marketOffersCouponResult
+  }
 
-    fun loadUpdates(list: List<String>){
-        Log.v("loadUpdates", " "+ list);
-        CompositeDisposable().add(
-                AppDatabase.getInstance(getApplication())!!
-                        .featuresDao()
-                        .getallFeaturesInList(list)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                {
-                                    updatesResult.postValue(it)
-                                    updatesLoader.postValue(false)
-                                },
-                                {
-                                    it.printStackTrace()
-                                    updatesError.postValue(it.message)
-                                    updatesLoader.postValue(false)
-                                }
-                        )
+  fun loadUpdates(list: List<String>) {
+    Log.v("loadUpdates", " " + list);
+    CompositeDisposable().add(
+      AppDatabase.getInstance(getApplication())!!
+        .featuresDao()
+        .getallFeaturesInList(list)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+          {
+            updatesResult.postValue(it)
+            updatesLoader.postValue(false)
+          },
+          {
+            it.printStackTrace()
+            updatesError.postValue(it.message)
+            updatesLoader.postValue(false)
+          }
         )
-    }
+    )
+  }
 
-    fun addItemToCart(cartItem: CartModel) {
-        updatesLoader.postValue(true)
-        Completable.fromAction {
-            AppDatabase.getInstance(getApplication())!!.cartDao()
-                    .insertToCart(cartItem)
+  fun addItemToCart(cartItem: CartModel) {
+    updatesLoader.postValue(true)
+    Completable.fromAction {
+      AppDatabase.getInstance(getApplication())!!.cartDao()
+        .insertToCart(cartItem)
+    }
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .doOnComplete {
+        updatesLoader.postValue(false)
+      }
+      .doOnError {
+        updatesError.postValue(it.message)
+        updatesLoader.postValue(false)
+      }
+      .subscribe()
+  }
+
+  fun getCartItems() {
+    updatesLoader.postValue(true)
+    CompositeDisposable().add(
+      AppDatabase.getInstance(getApplication())!!
+        .cartDao()
+        .getCartItems()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .doOnSuccess {
+          cartResult.postValue(it)
+          updatesLoader.postValue(false)
         }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete {
-                    updatesLoader.postValue(false)
-                }
-                .doOnError {
-                    updatesError.postValue(it.message)
-                    updatesLoader.postValue(false)
-                }
-                .subscribe()
-    }
+        .doOnError {
+          updatesError.postValue(it.message)
+          updatesLoader.postValue(false)
+        }
+        .subscribe()
+    )
+  }
 
-    fun getCartItems() {
-        updatesLoader.postValue(true)
-        CompositeDisposable().add(
-                AppDatabase.getInstance(getApplication())!!
-                        .cartDao()
-                        .getCartItems()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSuccess {
-                            cartResult.postValue(it)
-                            updatesLoader.postValue(false)
-                        }
-                        .doOnError {
-                            updatesError.postValue(it.message)
-                            updatesLoader.postValue(false)
-                        }
-                        .subscribe()
-        )
-    }
-
-    fun getOffersByCouponId(couponId: String) {
-        updatesLoader.postValue(true)
-        CompositeDisposable().add(
-                AppDatabase.getInstance(getApplication())!!
-                        .marketOffersDao()
-                        .getMarketOffersByCouponCode(couponId)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSuccess {
-                            marketOffersCouponResult.postValue(it)
-                        }
-                        .doOnError {
-                            updatesError.postValue(it.message)
-                            updatesLoader.postValue(false)
-                        }
-                        .subscribe()
-        )
-    }
+  fun getOffersByCouponId(couponId: String) {
+    updatesLoader.postValue(true)
+    CompositeDisposable().add(
+      AppDatabase.getInstance(getApplication())!!
+        .marketOffersDao()
+        .getMarketOffersByCouponCode(couponId)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .doOnSuccess {
+          marketOffersCouponResult.postValue(it)
+        }
+        .doOnError {
+          updatesError.postValue(it.message)
+          updatesLoader.postValue(false)
+        }
+        .subscribe()
+    )
+  }
 }

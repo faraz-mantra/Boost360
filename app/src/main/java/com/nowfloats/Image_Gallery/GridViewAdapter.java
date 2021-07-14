@@ -3,7 +3,9 @@ package com.nowfloats.Image_Gallery;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+
 import androidx.collection.LruCache;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,26 +22,24 @@ import com.thinksity.R;
  */
 public class GridViewAdapter extends BaseAdapter {
 
-//    private final ImageLoader imgLoader;
-    private Context mContext ;
-    private LruCache<Integer, NetworkImageView> imageCache;
-    private String imageURI ;
-    Bitmap imageUploaded ;
-
-    private RequestQueue queue ;
+    Bitmap imageUploaded;
     ImageView imageView;
+    //    private final ImageLoader imgLoader;
+    private Context mContext;
+    private LruCache<Integer, NetworkImageView> imageCache;
+    private String imageURI;
+    private RequestQueue queue;
 
-    public GridViewAdapter(Context c, String imageURI)
-    {
-        mContext = c ;
+    public GridViewAdapter(Context c, String imageURI) {
+        mContext = c;
 
-        final int maxMemory = (int)(Runtime.getRuntime().maxMemory() /1024);
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         final int cacheSize = maxMemory / 8;
         imageCache = new LruCache<>(cacheSize);
 
 //        imgLoader= AppController.getInstance().getImageLoader();
         queue = Volley.newRequestQueue(c);
-        this.imageURI = imageURI ;
+        this.imageURI = imageURI;
     }
 
 
@@ -67,7 +67,7 @@ public class GridViewAdapter extends BaseAdapter {
 
         if (convertView == null) {
 
-            imageView = (ImageView)grid.findViewById(R.id.grid_Image);
+            imageView = (ImageView) grid.findViewById(R.id.grid_Image);
             imageView.setImageBitmap(imageUploaded);
 
             //imageCache.put(1,imageView);

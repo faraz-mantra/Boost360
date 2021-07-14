@@ -128,7 +128,7 @@ public class DbConstants {
 
         String CREATE_SEARCH_QUERIES_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + SearchQueries +
                 " TEXT, " + date + " TEXT)";
-        String DROP_SEARCH_QUERIES_TABLE  = "DROP TABLE IF EXISTS " + tableName;
+        String DROP_SEARCH_QUERIES_TABLE = "DROP TABLE IF EXISTS " + tableName;
 
     }
 
@@ -141,7 +141,7 @@ public class DbConstants {
 
         String CREATE_ACTIVE_PLANS_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + planName +
                 " TEXT, " + planDescr + " TEXT, " + price + " REAL)";
-        String DROP_ACTIVE_PLANS_TABLE  = "DROP TABLE IF EXISTS " + tableName;
+        String DROP_ACTIVE_PLANS_TABLE = "DROP TABLE IF EXISTS " + tableName;
 
     }
 
@@ -152,7 +152,7 @@ public class DbConstants {
         String imageUrl = "image_url";
         String CREATE_STORE_IMAGES_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + foreignIdPlanName +
                 " TEXT, " + imageUrl + " TEXT)";
-        String DROP_STORE_IMAGES_TABLE  = "DROP TABLE IF EXISTS " + tableName;
+        String DROP_STORE_IMAGES_TABLE = "DROP TABLE IF EXISTS " + tableName;
 
     }
 
@@ -162,7 +162,7 @@ public class DbConstants {
         String SUGGESTIONS = "suggestions";
         String CREATE_SAM_BUBBLE_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + SUGGESTIONS + " TEXT)";
-        String DROP_SAM_BUBBLE_TABLE  = "DROP TABLE IF EXISTS " + tableName;
+        String DROP_SAM_BUBBLE_TABLE = "DROP TABLE IF EXISTS " + tableName;
 
     }
 

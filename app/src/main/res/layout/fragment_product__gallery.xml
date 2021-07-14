@@ -1,71 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/screen_bg">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <GridView
-            android:id="@+id/product_gridview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numColumns="2"
-            android:stretchMode="columnWidth">
-        </GridView>
-        <LinearLayout
-            android:id="@+id/emptyproductlayout"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:visibility="gone"
-            android:gravity="center">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@color/screen_bg"
+  android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/catalog_zeroth_icon" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/dgts__title_text_size"
-                android:textStyle="bold"
-                android:layout_marginTop="@dimen/dgts__padding_title"
-                android:layout_marginBottom="@dimen/dgts__padding_title"
-                android:textColor="@color/zeroth_grey_title"
-                android:text="@string/tell_world"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/zeroth_grey"
-                android:gravity="center"
-                android:padding="4dp"
-                android:text="@string/empty_product_gallery"/>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/progress_productlayout"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:visibility="gone"
-            android:gravity="center">
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/visits_progressBar" />
-        </LinearLayout>
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_product"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="16dp"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_add_white_24dp"
-            app:backgroundTint="@color/primaryColorDark"/>
-    </FrameLayout>
+    <GridView
+      android:id="@+id/product_gridview"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:numColumns="2"
+      android:stretchMode="columnWidth"></GridView>
+
+    <LinearLayout
+      android:id="@+id/emptyproductlayout"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:visibility="gone">
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/catalog_zeroth_icon" />
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dgts__padding_title"
+        android:layout_marginBottom="@dimen/dgts__padding_title"
+        android:text="@string/tell_world"
+        android:textColor="@color/zeroth_grey_title"
+        android:textSize="@dimen/dgts__title_text_size"
+        android:textStyle="bold" />
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="@string/empty_product_gallery"
+        android:textColor="@color/zeroth_grey"
+        android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/progress_productlayout"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:visibility="gone">
+
+      <ProgressBar
+        android:id="@+id/visits_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/fab_product"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|right"
+      android:layout_margin="16dp"
+      android:scaleType="fitCenter"
+      app:backgroundTint="@color/primaryColorDark"
+      app:srcCompat="@drawable/ic_add_white_24dp" />
+  </FrameLayout>
 </LinearLayout>

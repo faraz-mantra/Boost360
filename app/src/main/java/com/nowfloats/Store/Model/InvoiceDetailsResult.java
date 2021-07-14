@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class InvoiceDetailsResult {
+    @SerializedName("packageDetails")
+    @Expose
+    public List<PackageDetails> packageDetails;
     @SerializedName("_id")
     @Expose
     private String orderConfirmationId;
@@ -24,10 +27,6 @@ public class InvoiceDetailsResult {
     @SerializedName("currencyCode")
     @Expose
     private String currencyCode;
-
-    @SerializedName("packageDetails")
-    @Expose
-    public List<PackageDetails> packageDetails;
 
     public String getCurrencyCode() {
         return currencyCode;

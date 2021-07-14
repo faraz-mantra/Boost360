@@ -16,13 +16,13 @@ import java.io.Serializable
 const val CATEGORY_DASHBOARD_DATA = "CATEGORY_DASHBOARD_DATA"
 
 class CategoryDataModel(
-    val experience_code: String? = null,
-    val webTemplateId: String? = null,
-    val category_key: String? = null,
-    val category_Name: String? = null,
-    val category_descriptor: String? = null,
-    val icon: String? = null,
-    val sections: ArrayList<SectionsFeature>? = null,
+  val experience_code: String? = null,
+  val webTemplateId: String? = null,
+  val category_key: String? = null,
+  val category_Name: String? = null,
+  val category_descriptor: String? = null,
+  val icon: String? = null,
+  val sections: ArrayList<SectionsFeature>? = null,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
   var sectionType: Boolean = false
   var isSelected = false
@@ -37,10 +37,10 @@ class CategoryDataModel(
 
 
   fun getImage(context: Context?): Drawable? {
-  
+
     if (context == null) return null
 
-    val resId =  when (icon?.let { CategoryType.from(it) }) {
+    val resId = when (icon?.let { CategoryType.from(it) }) {
       CategoryType.DOCTORS -> R.drawable.ic_category_doctor
       CategoryType.CLINICS_HOSPITALS -> R.drawable.ic_categoty_hospital_architectonic
       CategoryType.EDUCATION_COACHING -> R.drawable.ic_category_education
@@ -52,11 +52,11 @@ class CategoryDataModel(
       CategoryType.RETAIL_BUSINESS -> R.drawable.ic_other_retails
       CategoryType.SERVICES_BUSINESS -> R.drawable.ic_business_services_pro
       else -> null
-    }?:return null
+    } ?: return null
 
     return ContextCompat.getDrawable(context, resId)
   }
 
-  }
+}
 
 

@@ -9,6 +9,6 @@ public class Facebook_Data_Model {
     public Facebook_Picture_Model picture;
     public String name;
     public Facebook_Location_Model location;
-    public String description ;
+    public String description;
 
 }

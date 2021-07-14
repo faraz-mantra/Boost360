@@ -1,5 +1,5 @@
 <resources>
 
-<dimen name="sidepanel_cell_width">310dp</dimen>
+  <dimen name="sidepanel_cell_width">310dp</dimen>
 
 </resources>

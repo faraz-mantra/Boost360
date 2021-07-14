@@ -19,41 +19,37 @@ import br.com.instachat.emojilibrary.model.Emoji;
  */
 public class RecentEmojisManager {
 
-    private static RecentEmojisManager ourInstance;
-
     private static final String PREFERENCES_FILE = "EmojiProperties";
     private static final String RECENT_EMOJIS = "RECENTS";
     private static final String DELIMETER = "213488984564321";
-
+    private static RecentEmojisManager ourInstance;
     static private SharedPreferences.Editor mWriter;
     static private SharedPreferences mReader;
-
-    private volatile ArrayList<Emoji> recentEmojis;
-
     private static Context context;
-
-    public static void initContext(Context pContext){
-        if(context==null)
-            context = pContext;
-    }
+    private volatile ArrayList<Emoji> recentEmojis;
 
     private RecentEmojisManager(Context context) {
         mWriter = context.getSharedPreferences(PREFERENCES_FILE, context.MODE_PRIVATE).edit();
         mReader = context.getSharedPreferences(PREFERENCES_FILE, context.MODE_PRIVATE);
         recentEmojis = getSavedRecentEmojis();
-        if (recentEmojis == null){
+        if (recentEmojis == null) {
             recentEmojis = new ArrayList<>();
         }
     }
 
-    public static RecentEmojisManager getInstance(){
-        if(ourInstance==null){
+    public static void initContext(Context pContext) {
+        if (context == null)
+            context = pContext;
+    }
+
+    public static RecentEmojisManager getInstance() {
+        if (ourInstance == null) {
             ourInstance = new RecentEmojisManager(context);
         }
         return ourInstance;
     }
 
-    public void saveRecentEmojis(List<Emoji> emojiStack){
+    public void saveRecentEmojis(List<Emoji> emojiStack) {
         Gson gson = new Gson();
         mWriter.putString(RECENT_EMOJIS, gson.toJson(emojiStack));
         mWriter.commit();
@@ -70,12 +66,12 @@ public class RecentEmojisManager {
         return recentEmojis;
     }
 
-    public void addRecentEmoji(Emoji emoji){
+    public void addRecentEmoji(Emoji emoji) {
         int emojiPosition = recentEmojis.indexOf(emoji);
-        if(emojiPosition != -1){
+        if (emojiPosition != -1) {
             recentEmojis.remove(emojiPosition);
         }
-        recentEmojis.add(0,emoji);
+        recentEmojis.add(0, emoji);
 
         //save new recent stack async
         new AsyncTask<Void, Void, Boolean>() {

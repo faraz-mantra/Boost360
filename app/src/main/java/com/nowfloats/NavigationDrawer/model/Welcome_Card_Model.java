@@ -5,5 +5,5 @@ package com.nowfloats.NavigationDrawer.model;
  */
 public class Welcome_Card_Model {
 
-    public String webSiteName = null ;
+    public String webSiteName = null;
 }

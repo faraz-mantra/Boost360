@@ -11,7 +11,9 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 
-class PickInventoryNatureBottomSheetDialog : BaseBottomSheetDialog<BottomSheetPickInventoryNatureBinding, BaseViewModel>(), RecyclerItemClickListener {
+class PickInventoryNatureBottomSheetDialog :
+  BaseBottomSheetDialog<BottomSheetPickInventoryNatureBinding, BaseViewModel>(),
+  RecyclerItemClickListener {
 
   private var list = ArrayList<PickInventoryNatureModel>()
   var adapter: AppBaseRecyclerViewAdapter<PickInventoryNatureModel>? = null
@@ -46,7 +48,8 @@ class PickInventoryNatureBottomSheetDialog : BaseBottomSheetDialog<BottomSheetPi
   private fun setRecyclerViewPickInventoryNature() {
     binding?.recyclerViewPickInventoryNature?.post {
       adapter = AppBaseRecyclerViewAdapter(baseActivity, list, this)
-      val linearLayoutManager = LinearLayoutManager(baseActivity, LinearLayoutManager.VERTICAL, false)
+      val linearLayoutManager =
+        LinearLayoutManager(baseActivity, LinearLayoutManager.VERTICAL, false)
       binding?.recyclerViewPickInventoryNature?.layoutManager = linearLayoutManager
       binding?.recyclerViewPickInventoryNature?.adapter = adapter
       binding?.recyclerViewPickInventoryNature?.let { adapter?.runLayoutAnimation(it) }

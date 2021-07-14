@@ -1,4 +1,5 @@
 package com.framework.models.firestore;
+
 import com.google.gson.annotations.SerializedName
 
 /*
@@ -13,7 +14,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
 
-data class Boolean_add_business_description (
+data class Boolean_add_business_description(
 
-	@SerializedName("state") val state : Int
+  @SerializedName("state") val state: Int
 )

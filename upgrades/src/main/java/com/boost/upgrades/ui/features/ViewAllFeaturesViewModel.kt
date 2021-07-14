@@ -12,65 +12,65 @@ import io.reactivex.schedulers.Schedulers
 
 class ViewAllFeaturesViewModel(application: Application) : BaseViewModel(application) {
 
-    var updatesResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
-    var updatesError: MutableLiveData<String> = MutableLiveData()
-    var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
+  var updatesResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+  var updatesError: MutableLiveData<String> = MutableLiveData()
+  var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
 
-    val compositeDisposable = CompositeDisposable()
+  val compositeDisposable = CompositeDisposable()
 
-    fun addonsResult(): LiveData<List<FeaturesModel>> {
-        return updatesResult
-    }
+  fun addonsResult(): LiveData<List<FeaturesModel>> {
+    return updatesResult
+  }
 
-    fun addonsError(): LiveData<String> {
-        return updatesError
-    }
+  fun addonsError(): LiveData<String> {
+    return updatesError
+  }
 
-    fun addonsLoader(): LiveData<Boolean> {
-        return updatesLoader
-    }
+  fun addonsLoader(): LiveData<Boolean> {
+    return updatesLoader
+  }
 
-    fun loadAddonsByTypeFromDB(categoryType: String){
-        updatesLoader.postValue(true)
-        compositeDisposable.add(
-                AppDatabase.getInstance(getApplication())!!
-                        .featuresDao()
-                        .getFeaturesItemsByType(categoryType,"MERCHANT_TRAINING")
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSuccess {
-                            updatesResult.postValue(it)
-                            updatesLoader.postValue(false)
-                        }
-                        .doOnError {
-                            updatesError.postValue(it.message)
-                            updatesLoader.postValue(false)
-                        }
-                        .subscribe()
-        )
-    }
+  fun loadAddonsByTypeFromDB(categoryType: String) {
+    updatesLoader.postValue(true)
+    compositeDisposable.add(
+      AppDatabase.getInstance(getApplication())!!
+        .featuresDao()
+        .getFeaturesItemsByType(categoryType, "MERCHANT_TRAINING")
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .doOnSuccess {
+          updatesResult.postValue(it)
+          updatesLoader.postValue(false)
+        }
+        .doOnError {
+          updatesError.postValue(it.message)
+          updatesLoader.postValue(false)
+        }
+        .subscribe()
+    )
+  }
 
-    fun loadAddonsFromDB() {
-        updatesLoader.postValue(true)
-        compositeDisposable.add(
-                AppDatabase.getInstance(getApplication())!!
-                        .featuresDao()
-                        .getFeaturesItems(true)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSuccess {
-                            updatesResult.postValue(it)
-                            updatesLoader.postValue(false)
-                        }
-                        .doOnError {
-                            updatesError.postValue(it.message)
-                            updatesLoader.postValue(false)
-                        }
-                        .subscribe()
-        )
-    }
+  fun loadAddonsFromDB() {
+    updatesLoader.postValue(true)
+    compositeDisposable.add(
+      AppDatabase.getInstance(getApplication())!!
+        .featuresDao()
+        .getFeaturesItems(true)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .doOnSuccess {
+          updatesResult.postValue(it)
+          updatesLoader.postValue(false)
+        }
+        .doOnError {
+          updatesError.postValue(it.message)
+          updatesLoader.postValue(false)
+        }
+        .subscribe()
+    )
+  }
 
-    fun disposeElements() {
-        if (!compositeDisposable.isDisposed) compositeDisposable.dispose()
-    }
+  fun disposeElements() {
+    if (!compositeDisposable.isDisposed) compositeDisposable.dispose()
+  }
 }

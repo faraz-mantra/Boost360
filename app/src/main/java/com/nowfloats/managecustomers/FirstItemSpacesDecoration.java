@@ -1,7 +1,9 @@
 package com.nowfloats.riachatsdk.CustomWidget;
 
 import android.graphics.Rect;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 
 /**
@@ -14,7 +16,7 @@ public class FirstItemSpacesDecoration extends RecyclerView.ItemDecoration {
     private final int reverseSpace;
     private final int rightSpace;
 
-    public FirstItemSpacesDecoration(int leftSpace,int rightSpace, boolean layoutReversed) {
+    public FirstItemSpacesDecoration(int leftSpace, int rightSpace, boolean layoutReversed) {
         if (layoutReversed) {
             directSpace = 0;
             reverseSpace = leftSpace;

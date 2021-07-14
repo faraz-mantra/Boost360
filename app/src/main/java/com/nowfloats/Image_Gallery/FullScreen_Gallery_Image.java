@@ -3,8 +3,10 @@ package com.nowfloats.Image_Gallery;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,8 +20,8 @@ import com.thinksity.R;
 
 public class FullScreen_Gallery_Image extends AppCompatActivity {
 
-    private ImageAdapter adapter;
     ViewPager viewPager;
+    private ImageAdapter adapter;
     private int currentPos;
     //Activity context;
 
@@ -59,16 +61,16 @@ public class FullScreen_Gallery_Image extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
 
-
         int selectedPOS = extras.getInt("currentPositon");
-        currentPos = extras.getInt("currentPositon"); ;
+        currentPos = extras.getInt("currentPositon");
+        ;
 
         viewPager = (ViewPager) findViewById(R.id.galleryImageViewpager);
         adapter = new ImageAdapter(this);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(selectedPOS);
         final int maxNumberofImages = adapter.getCount();
-        currentTextView.setText(String.valueOf(selectedPOS+1));
+        currentTextView.setText(String.valueOf(selectedPOS + 1));
         maxCountTextView.setText(String.valueOf(maxNumberofImages));
         //currentTextView.setId(R.id.custom_view_pager);
         // viewPager.setId(R.id.custom_view_pager);
@@ -80,7 +82,7 @@ public class FullScreen_Gallery_Image extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                currentTextView.setText(String.valueOf(position+1));
+                currentTextView.setText(String.valueOf(position + 1));
                 currentPos = position;
             }
 
@@ -93,13 +95,13 @@ public class FullScreen_Gallery_Image extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Log.d("Image_Gallery_Fragment","Current POS : "+selectedPOS);
-                currentPos -=1;
+                currentPos -= 1;
                 int selectedPosition = getItem(-1);
                 viewPager.setCurrentItem(selectedPosition, true);
-                if (viewPager.getCurrentItem()==0){
+                if (viewPager.getCurrentItem() == 0) {
                     currentTextView.setText("1");
-                }else{
-                    currentTextView.setText(String.valueOf(Integer.parseInt(currentTextView.getText().toString())-1));
+                } else {
+                    currentTextView.setText(String.valueOf(Integer.parseInt(currentTextView.getText().toString()) - 1));
                 }
             }
         });
@@ -107,20 +109,20 @@ public class FullScreen_Gallery_Image extends AppCompatActivity {
         nextImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentPos+=1;
+                currentPos += 1;
                 Log.d("Image_Gallery_Fragment", "Current POS : " + currentPos);
                 int selectedPosition = getItem(+1);
                 viewPager.setCurrentItem(selectedPosition, true);
-                if(viewPager.getAdapter().getCount()-1== viewPager.getCurrentItem()){
+                if (viewPager.getAdapter().getCount() - 1 == viewPager.getCurrentItem()) {
                     currentTextView.setText(String.valueOf(viewPager.getAdapter().getCount()));
-                }else{
-                    currentTextView.setText(String.valueOf(Integer.parseInt(currentTextView.getText().toString())+1));
+                } else {
+                    currentTextView.setText(String.valueOf(Integer.parseInt(currentTextView.getText().toString()) + 1));
                 }
             }
         });
 
 
-        ImageView cancelDialogImageView = (ImageView)findViewById(R.id.galleryCancel);
+        ImageView cancelDialogImageView = (ImageView) findViewById(R.id.galleryCancel);
         cancelDialogImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,7 +156,7 @@ public class FullScreen_Gallery_Image extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-       // MixPanelController.track(EventKeysWL.FULL_SCREEN_IMAGE,null);
+        // MixPanelController.track(EventKeysWL.FULL_SCREEN_IMAGE,null);
         super.onResume();
         Methods.isOnline(FullScreen_Gallery_Image.this);
     }
@@ -186,17 +188,16 @@ public class FullScreen_Gallery_Image extends AppCompatActivity {
         return position;
     }
 
-    public void deleteImage(int deletePosition){
-        DeleteGalleryImages task = new DeleteGalleryImages(this,adapter,deletePosition);
-       // task.setOnDeleteListener(this);
+    public void deleteImage(int deletePosition) {
+        DeleteGalleryImages task = new DeleteGalleryImages(this, adapter, deletePosition);
+        // task.setOnDeleteListener(this);
         task.execute();
 
 //        UploadPictureAsyncTask upload = new UploadPictureAsyncTask(getActivity(),imageUrl);
 //        upload.execute();
     }
 
-    private void makeActivityAppearOnLockScreen()
-    {
+    private void makeActivityAppearOnLockScreen() {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
                         | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
                         | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON,

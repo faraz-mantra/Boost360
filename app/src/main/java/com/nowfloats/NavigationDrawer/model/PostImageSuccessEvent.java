@@ -5,7 +5,8 @@ package com.nowfloats.NavigationDrawer.model;
  */
 public class PostImageSuccessEvent {
     public String imageResponseId;
-    public PostImageSuccessEvent(String imageResponseId){
+
+    public PostImageSuccessEvent(String imageResponseId) {
         this.imageResponseId = imageResponseId;
     }
 }

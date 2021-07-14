@@ -1,77 +1,77 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="facebook_app_id" translatable="false">539836972828386</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb539836972828386</string>
-    <string name="server_client_id" translatable="false">87687526880-c469m17sot79ece3vv902osuplr9rgn3.apps.googleusercontent.com</string>
+  <string name="facebook_app_id" translatable="false">539836972828386</string>
+  <string name="fb_login_protocol_scheme" translatable="false">fb539836972828386</string>
+  <string name="server_client_id" translatable="false">87687526880-c469m17sot79ece3vv902osuplr9rgn3.apps.googleusercontent.com</string>
 
-    <string name="app_name">My Library</string>
-    <string name="replay_intro">Replay Intro</string>
-    <string name="create_account">create account</string>
-    <string name="create_account_new">Create a new account </string>
-    <string name="login">Login</string>
-    <string name="login_existing_account">Login to existing account</string>
-    <string name="proceed" translatable="false">Proceed</string>
-    <string name="skip">Skip</string>
-    <string name="mute">Mute</string>
-    <string name="english">English</string>
-    <string name="hindi">हिन्दी</string>
-    <string name="kannada">ಕನ್ನಡ</string>
-    <string name="telugu">తెలుగు</string>
-    <string name="punjabi">ਪੰਜਾਬੀ</string>
-    <string name="malayalam">മലയാളം</string>
-    <string name="tamil">தமிழ்</string>
-    <string name="marathi">मराठी</string>
-    <string name="Get_multichannel_presence">Get multichannel presence</string>
-    <string name="for_your_offline_business_effortlessly">for your offline business effortleslly</string>
-    <string name="Post_offers_and_updates"><![CDATA[Post offers & updates]]></string>
-    <string name="targeting_your_potential_customers">targeting your potential customers</string>
-    <string name="Engage_and_interact">Engage and interact</string>
-    <string name="with_your_multichannel_visitors_and_customers"><![CDATA[with your multichannel visitors & customers]]></string>
-    <string name="AI_assistant_Ria">AI assistant Ria</string>
-    <string name="to_help_you_go_towards_digital_success">to help you go towards digital success</string>
-    <string name="Join_35k_plus_biz_owners">Join 35k+ biz owners</string>
-    <string name="in_growing_their_business_digitally_everyday">in growing their business digitally, everyday</string>
-    <string name="terms_of_use_and_privacy_policy">By creating Boost account, you agree to our Terms of use and Privacy Policy</string>
-    <string name="boost360_terms_conditions" translatable="false"><![CDATA[Boost360 - Terms & Conditions]]></string>
-    <string name="boost360_privacy_policy" translatable="false">Boost360 - Privacy Policy</string>
-    <string name="signup_using_email">Signup using Email</string>
-    <string name="signup_using_google">Signup using Google</string>
-    <string name="signup_using_facebook">Signup using Facebook</string>
-    <string name="signup_using_jio_id" translatable="false">Signup using Jio SecureID</string>
-    <string name="_00Seconds">00 Seconds</string>
-    <string name="seconds">Seconds</string>
-    <string name="loading">Loading…</string>
-    <string name="i_will_help_you_setup_and_manage_your_digital_business_on_boost_let_s_get_start_by_selecting_the_category_of_your_business">She will help you setup a digital-growth plan for your business, in less than 9 minutes.</string>
-    <string name="hello_presignup">Hello.</string>
-    <string name="let_s_create_your_boost_account">Let’s create your Boost account.</string>
-    <string name="email">Email</string>
-    <string name="_10_digit_mobile_number">10 digit mobile number</string>
-    <string name="create_a_password">Create a password</string>
-    <string name="you_email_com">you@email.com</string>
-    <string name="your_name">Your name</string>
-    <string name="your_jio_id_mobile" translatable="false">Enter Jio SecureID Mobile Number</string>
-    <string name="we_ll_never_share_your_number_with_any_third_party">We will never share your contact details with any third party.</string>
-    <string name="welcome">Hi,</string>
-    <string name="your_boost_profile_is_successfully_created">Your personal profile is successfully created.</string>
-    <string name="hi_i_am_ria">Meet Ria.</string>
-    <string name="setup_business_profile">Let’s start</string>
-    <string name="forgot"><u>Forgot?</u></string>
-    <string name="dont_have_jio_id" translatable="false">Don’t have Jio SecureID?</string>
-    <string name="no_jio_id_description" translatable="false">Jio SecureID is the most convenient and secure way to log into any app or portal and sign documents digitally. Jio SecureID is using Aadhaar eSign for digital signatures.\n\nCreate Jio SecureID here</string>
-    <string name="failed_create_user" translatable="false">Failed to create user, Please try again.</string>
-    <string name="you_email_com_optional" translatable="false">you@email.com (optional)</string>
-    <string name="browser">Browser</string>
-    <string name="login_cancel">Login cancel.</string>
-    <string name="signup_using_mobile">Signup using Mobile</string>
-    <string name="please_enter_all_values" translatable="false">Please enter all values.</string>
-    <string name="enter_valid_email_id" translatable="false">Enter Valid EmailId.</string>
-    <string name="enter_valid_mobile_no" translatable="false">Enter Valid Mobile No.</string>
-    <string name="link_is_empty" translatable="false">Link is Empty!!</string>
-    <string name="ready_to_log_in" translatable="false">Ready to Log in?</string>
-    <string name="login_faster_via_below_options" translatable="false">Login faster via below options</string>
-    <string name="via_facebook" translatable="false">Via Facebook</string>
-    <string name="via_google" translatable="false">Via Google</string>
-    <string name="via_mobile_otp" translatable="false">Via Mobile OTP</string>
-    <string name="scan_qr_code" translatable="false">Scan QR code</string>
+  <string name="app_name">My Library</string>
+  <string name="replay_intro">Replay Intro</string>
+  <string name="create_account">create account</string>
+  <string name="create_account_new">Create a new account </string>
+  <string name="login">Login</string>
+  <string name="login_existing_account">Login to existing account</string>
+  <string name="proceed" translatable="false">Proceed</string>
+  <string name="skip">Skip</string>
+  <string name="mute">Mute</string>
+  <string name="english">English</string>
+  <string name="hindi">हिन्दी</string>
+  <string name="kannada">ಕನ್ನಡ</string>
+  <string name="telugu">తెలుగు</string>
+  <string name="punjabi">ਪੰਜਾਬੀ</string>
+  <string name="malayalam">മലയാളം</string>
+  <string name="tamil">தமிழ்</string>
+  <string name="marathi">मराठी</string>
+  <string name="Get_multichannel_presence">Get multichannel presence</string>
+  <string name="for_your_offline_business_effortlessly">for your offline business effortleslly</string>
+  <string name="Post_offers_and_updates"><![CDATA[Post offers & updates]]></string>
+  <string name="targeting_your_potential_customers">targeting your potential customers</string>
+  <string name="Engage_and_interact">Engage and interact</string>
+  <string name="with_your_multichannel_visitors_and_customers"><![CDATA[with your multichannel visitors & customers]]></string>
+  <string name="AI_assistant_Ria">AI assistant Ria</string>
+  <string name="to_help_you_go_towards_digital_success">to help you go towards digital success</string>
+  <string name="Join_35k_plus_biz_owners">Join 35k+ biz owners</string>
+  <string name="in_growing_their_business_digitally_everyday">in growing their business digitally, everyday</string>
+  <string name="terms_of_use_and_privacy_policy">By creating Boost account, you agree to our Terms of use and Privacy Policy</string>
+  <string name="boost360_terms_conditions" translatable="false"><![CDATA[Boost360 - Terms & Conditions]]></string>
+  <string name="boost360_privacy_policy" translatable="false">Boost360 - Privacy Policy</string>
+  <string name="signup_using_email">Signup using Email</string>
+  <string name="signup_using_google">Signup using Google</string>
+  <string name="signup_using_facebook">Signup using Facebook</string>
+  <string name="signup_using_jio_id" translatable="false">Signup using Jio SecureID</string>
+  <string name="_00Seconds">00 Seconds</string>
+  <string name="seconds">Seconds</string>
+  <string name="loading">Loading…</string>
+  <string name="i_will_help_you_setup_and_manage_your_digital_business_on_boost_let_s_get_start_by_selecting_the_category_of_your_business">She will help you setup a digital-growth plan for your business, in less than 9 minutes.</string>
+  <string name="hello_presignup">Hello.</string>
+  <string name="let_s_create_your_boost_account">Let’s create your Boost account.</string>
+  <string name="email">Email</string>
+  <string name="_10_digit_mobile_number">10 digit mobile number</string>
+  <string name="create_a_password">Create a password</string>
+  <string name="you_email_com">you@email.com</string>
+  <string name="your_name">Your name</string>
+  <string name="your_jio_id_mobile" translatable="false">Enter Jio SecureID Mobile Number</string>
+  <string name="we_ll_never_share_your_number_with_any_third_party">We will never share your contact details with any third party.</string>
+  <string name="welcome">Hi,</string>
+  <string name="your_boost_profile_is_successfully_created">Your personal profile is successfully created.</string>
+  <string name="hi_i_am_ria">Meet Ria.</string>
+  <string name="setup_business_profile">Let’s start</string>
+  <string name="forgot"><u>Forgot?</u></string>
+  <string name="dont_have_jio_id" translatable="false">Don’t have Jio SecureID?</string>
+  <string name="no_jio_id_description" translatable="false">Jio SecureID is the most convenient and secure way to log into any app or portal and sign documents digitally. Jio SecureID is using Aadhaar eSign for digital signatures.\n\nCreate Jio SecureID here</string>
+  <string name="failed_create_user" translatable="false">Failed to create user, Please try again.</string>
+  <string name="you_email_com_optional" translatable="false">you@email.com (optional)</string>
+  <string name="browser">Browser</string>
+  <string name="login_cancel">Login cancel.</string>
+  <string name="signup_using_mobile">Signup using Mobile</string>
+  <string name="please_enter_all_values" translatable="false">Please enter all values.</string>
+  <string name="enter_valid_email_id" translatable="false">Enter Valid EmailId.</string>
+  <string name="enter_valid_mobile_no" translatable="false">Enter Valid Mobile No.</string>
+  <string name="link_is_empty" translatable="false">Link is Empty!!</string>
+  <string name="ready_to_log_in" translatable="false">Ready to Log in?</string>
+  <string name="login_faster_via_below_options" translatable="false">Login faster via below options</string>
+  <string name="via_facebook" translatable="false">Via Facebook</string>
+  <string name="via_google" translatable="false">Via Google</string>
+  <string name="via_mobile_otp" translatable="false">Via Mobile OTP</string>
+  <string name="scan_qr_code" translatable="false">Scan QR code</string>
 
 </resources>

@@ -5,5 +5,5 @@ import org.json.JSONObject
 
 interface EmailPopupListener {
 
-    fun emailSelected(data: JSONObject)
+  fun emailSelected(data: JSONObject)
 }

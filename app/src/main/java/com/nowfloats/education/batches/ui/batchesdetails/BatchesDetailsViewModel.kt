@@ -22,140 +22,143 @@ import java.util.*
 
 class BatchesDetailsViewModel(private val service: IEducationService) : ViewModel() {
 
-    val calendar: Calendar = Calendar.getInstance()
+  val calendar: Calendar = Calendar.getInstance()
 
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+  private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    private var _onDateSelected = MutableLiveData<String>()
-    val onDateSelected: LiveData<String>
-        get() = _onDateSelected
+  private var _onDateSelected = MutableLiveData<String>()
+  val onDateSelected: LiveData<String>
+    get() = _onDateSelected
 
-    val addBatchResponse: LiveData<String>
-        get() = _addBatchResponse
-    private var _addBatchResponse = MutableLiveData<String>()
+  val addBatchResponse: LiveData<String>
+    get() = _addBatchResponse
+  private var _addBatchResponse = MutableLiveData<String>()
 
-    val updateBatchResponse: LiveData<String>
-        get() = _updateBatchResponse
-    private var _updateBatchResponse = MutableLiveData<String>()
+  val updateBatchResponse: LiveData<String>
+    get() = _updateBatchResponse
+  private var _updateBatchResponse = MutableLiveData<String>()
 
-    val errorResponse: LiveData<String>
-        get() = _errorResponse
+  val errorResponse: LiveData<String>
+    get() = _errorResponse
 
-    private var _errorResponse = MutableLiveData<String>()
+  private var _errorResponse = MutableLiveData<String>()
 
-    val deleteBatchResponse: LiveData<String>
-        get() = _deleteBatchResponse
+  val deleteBatchResponse: LiveData<String>
+    get() = _deleteBatchResponse
 
-    private var _deleteBatchResponse = MutableLiveData<String>()
+  private var _deleteBatchResponse = MutableLiveData<String>()
 
-    fun addUpcomingBatch(batchesData: Data) {
-        val actionData = ActionData(
-                Coursecategorytag = batchesData.Coursecategorytag,
-                batchtiming = batchesData.batchtiming,
-                commencementdate = batchesData.commencementdate,
-                duration = batchesData.duration
-        )
+  fun addUpcomingBatch(batchesData: Data) {
+    val actionData = ActionData(
+      Coursecategorytag = batchesData.Coursecategorytag,
+      batchtiming = batchesData.batchtiming,
+      commencementdate = batchesData.commencementdate,
+      duration = batchesData.duration
+    )
 
-        val addUpcomingBatchModel = AddUpcomingBatchModel(actionData, WEBSITE_ID_EDUCATION)
+    val addUpcomingBatchModel = AddUpcomingBatchModel(actionData, WEBSITE_ID_EDUCATION)
 
-        compositeDisposable.add(service.addUpcomingBatches(AUTH_CODE, addUpcomingBatchModel)
-                .processRequest(
-                        {
-                            _addBatchResponse.value = it
-                        },
-                        { error ->
-                            error?.let { _errorResponse.value = it }
-                        }
-                ))
-    }
+    compositeDisposable.add(service.addUpcomingBatches(AUTH_CODE, addUpcomingBatchModel)
+      .processRequest(
+        {
+          _addBatchResponse.value = it
+        },
+        { error ->
+          error?.let { _errorResponse.value = it }
+        }
+      ))
+  }
 
-    fun deleteUpcomingBatch(batchesData: Data) {
-        /*val customQuery = "{" + '"' + "_id" + '"' + ":" + '"' + batchesData._id + '"' + "}"
-        val customSet = "{" + '"' + "$" + "set" + '"' + " : {\"IsArchived\":\"true\"}}"*/
+  fun deleteUpcomingBatch(batchesData: Data) {
+    /*val customQuery = "{" + '"' + "_id" + '"' + ":" + '"' + batchesData._id + '"' + "}"
+    val customSet = "{" + '"' + "$" + "set" + '"' + " : {\"IsArchived\":\"true\"}}"*/
 
-        val query = Query(_id = batchesData._id)
-        val queryString = JsonHelper.KtToJson(query)
+    val query = Query(_id = batchesData._id)
+    val queryString = JsonHelper.KtToJson(query)
 
-        val set = com.nowfloats.education.model.Set(
-                IsArchived = true
-        )
+    val set = com.nowfloats.education.model.Set(
+      IsArchived = true
+    )
 
-        val updatedValue = UpdatedValue(
-                `$set` = set
-        )
-        val updateValueString = JsonHelper.KtToJson(updatedValue)
+    val updatedValue = UpdatedValue(
+      `$set` = set
+    )
+    val updateValueString = JsonHelper.KtToJson(updatedValue)
 
-        val deleteBatchModel = DeleteModel(
-                Multi = true,
-                Query = queryString,
-                UpdateValue = updateValueString
-        )
+    val deleteBatchModel = DeleteModel(
+      Multi = true,
+      Query = queryString,
+      UpdateValue = updateValueString
+    )
 
-        compositeDisposable.add(service.deleteUpcomingBatch(AUTH_CODE, deleteBatchModel)
-                .processRequest(
-                        {
-                            _deleteBatchResponse.value = SUCCESS
-                        },
-                        { error ->
-                            error?.let {
-                                if (it == JSON_DOCUMENT_WAS_NOT_FULLY_CONSUMED) {
-                                    _deleteBatchResponse.value = SUCCESS
-                                } else {
-                                    _errorResponse.value = it
-                                }
-                            }
-                        }
-                ))
-    }
+    compositeDisposable.add(service.deleteUpcomingBatch(AUTH_CODE, deleteBatchModel)
+      .processRequest(
+        {
+          _deleteBatchResponse.value = SUCCESS
+        },
+        { error ->
+          error?.let {
+            if (it == JSON_DOCUMENT_WAS_NOT_FULLY_CONSUMED) {
+              _deleteBatchResponse.value = SUCCESS
+            } else {
+              _errorResponse.value = it
+            }
+          }
+        }
+      ))
+  }
 
-    fun getDate() {
-        _onDateSelected.value = SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(calendar.time)
-    }
+  fun getDate() {
+    _onDateSelected.value = SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(calendar.time)
+  }
 
-    fun updateUpcomingBatch(batchData: Data) {
+  fun updateUpcomingBatch(batchData: Data) {
 //        val queryString = "{_id:'5f1e96872c54b70001caf8a5'}"
 //        val updateValueString = "{" + "$" + "set : {\"batchtiming\":\"10Am to 12Pm\",\"Coursecategorytag\":\"Bank PO\",\"duration\":\"10 months\",\"commencementdate\":\"2020-07-30T00:00:00Z\",\"CreatedOn\":\"2020-07-20T09:30:14.949Z\"}}"
 
-        val query = Query(_id = batchData._id)
-        val queryString = JsonHelper.KtToJson(query)
+    val query = Query(_id = batchData._id)
+    val queryString = JsonHelper.KtToJson(query)
 
-        val set = Set(
-                Coursecategorytag = batchData.Coursecategorytag,
-                batchtiming = batchData.batchtiming,
-                commencementdate = batchData.commencementdate,
-                duration = batchData.duration
-        )
+    val set = Set(
+      Coursecategorytag = batchData.Coursecategorytag,
+      batchtiming = batchData.batchtiming,
+      commencementdate = batchData.commencementdate,
+      duration = batchData.duration
+    )
 
-        val updateValue = UpdateValue(
-                `$set` = set
-        )
-        val updateValueString = JsonHelper.KtToJson(updateValue)
+    val updateValue = UpdateValue(
+      `$set` = set
+    )
+    val updateValueString = JsonHelper.KtToJson(updateValue)
 
-        val updateBatchModel = UpdateUpcomingBatchModel(
-                Multi = true,
-                Query = queryString,
-                UpdateValue = updateValueString
-        )
+    val updateBatchModel = UpdateUpcomingBatchModel(
+      Multi = true,
+      Query = queryString,
+      UpdateValue = updateValueString
+    )
 
-        compositeDisposable.add(service.updateUpcomingBatch(AUTH_CODE, updateUpcomingBatchModel = updateBatchModel).processRequest(
-                {
-                    _updateBatchResponse.value = SUCCESS
-                },
-                { error ->
-                    error?.let {
-                        if (it == JSON_DOCUMENT_WAS_NOT_FULLY_CONSUMED) {
-                            _updateBatchResponse.value = SUCCESS
-                        } else {
-                            _errorResponse.value = it
-                        }
-                    }
-                }
-        ))
-    }
+    compositeDisposable.add(service.updateUpcomingBatch(
+      AUTH_CODE,
+      updateUpcomingBatchModel = updateBatchModel
+    ).processRequest(
+      {
+        _updateBatchResponse.value = SUCCESS
+      },
+      { error ->
+        error?.let {
+          if (it == JSON_DOCUMENT_WAS_NOT_FULLY_CONSUMED) {
+            _updateBatchResponse.value = SUCCESS
+          } else {
+            _errorResponse.value = it
+          }
+        }
+      }
+    ))
+  }
 
-    fun isTimeAfter(startTime: String, endTime: String): Boolean {
-        val start = SimpleDateFormat(TIME_FORMAT).parse(startTime)
-        val end = SimpleDateFormat(TIME_FORMAT).parse(endTime)
-        return !end.before(start)
-    }
+  fun isTimeAfter(startTime: String, endTime: String): Boolean {
+    val start = SimpleDateFormat(TIME_FORMAT).parse(startTime)
+    val end = SimpleDateFormat(TIME_FORMAT).parse(endTime)
+    return !end.before(start)
+  }
 }

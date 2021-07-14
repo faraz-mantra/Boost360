@@ -1,53 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="100dp">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="100dp">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
 
-        <ImageView
-            android:id="@+id/share_facebook"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/share_icon_normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/share_general"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+      android:id="@+id/share_facebook"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:src="@drawable/share_icon_normal"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/share_general"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/share_general"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/facebook_icon_share"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/share_whatsapp"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/share_facebook"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+      android:id="@+id/share_general"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:src="@drawable/facebook_icon_share"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/share_whatsapp"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toEndOf="@+id/share_facebook"
+      app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/share_whatsapp"
-            android:layout_width="100dp"
-            android:layout_height="60dp"
-            android:src="@drawable/share_whatsapp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/share_general"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+      android:id="@+id/share_whatsapp"
+      android:layout_width="100dp"
+      android:layout_height="60dp"
+      android:src="@drawable/share_whatsapp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toEndOf="@+id/share_general"
+      app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

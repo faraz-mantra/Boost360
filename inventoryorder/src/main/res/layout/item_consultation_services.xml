@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        style="@style/match_wrap"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:id="@+id/main_content"
-        android:orientation="vertical">
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/main_content"
+    style="@style/match_wrap"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
 
-        <LinearLayout
-            style="@style/match_wrap"
-            android:gravity="center_vertical"
-            android:paddingTop="@dimen/size_12"
-            android:paddingBottom="@dimen/size_12"
-            android:orientation="horizontal">
+    <LinearLayout
+      style="@style/match_wrap"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingTop="@dimen/size_12"
+      android:paddingBottom="@dimen/size_12">
 
-            <com.framework.views.customViews.CustomImageView
-                android:id="@+id/serviceIcon"
-                android:layout_width="@dimen/size_16"
-                android:layout_height="@dimen/size_16"
-                app:srcCompat="@drawable/ic_selected_icon" />
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/serviceIcon"
+        android:layout_width="@dimen/size_16"
+        android:layout_height="@dimen/size_16"
+        app:srcCompat="@drawable/ic_selected_icon" />
 
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/serviceName"
-                style="@style/wrap_wrap"
-                android:layout_marginStart="@dimen/size_8"
-                android:text="@string/dentist"
-                android:textColor="@color/warm_light"
-                android:textSize="16sp" />
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/serviceName"
+        style="@style/wrap_wrap"
+        android:layout_marginStart="@dimen/size_8"
+        android:text="@string/dentist"
+        android:textColor="@color/warm_light"
+        android:textSize="16sp" />
 
-        </LinearLayout>
+    </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_1"
-            android:background="@color/colorLightGrey" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_1"
+      android:background="@color/colorLightGrey" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>

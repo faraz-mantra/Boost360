@@ -12,8 +12,8 @@ import retrofit.http.Path;
  * Created by NowFloatsDev on 16/04/2015.
  */
 
- public class Facebook_Auto_Publish_API {
-    public static autoPullApi getAdapter(){
+public class Facebook_Auto_Publish_API {
+    public static autoPullApi getAdapter() {
         RestAdapter adapter = new RestAdapter.Builder()
                 /*.setLog(new AndroidLog("ggg"))
                 .setLogLevel(RestAdapter.LogLevel.FULL)*/

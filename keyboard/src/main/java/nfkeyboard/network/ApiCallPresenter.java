@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import io.separ.neural.inputmethod.indic.R;
 import nfkeyboard.interface_contracts.ApiCallToKeyboardViewInterface;
 import nfkeyboard.interface_contracts.CandidateToPresenterInterface;
@@ -24,40 +25,15 @@ public class ApiCallPresenter {
     private Context mContext;
     private ApiCallToKeyboardViewInterface apiCallListener;
     private CandidateToPresenterInterface presenterListener;
-
-    public ApiCallPresenter(Context context, ApiCallToKeyboardViewInterface apiCallListener) {
-        mContext = context;
-        this.apiCallListener = apiCallListener;
-    }
-
-    public void loadMore(int skipBy, ImePresenterImpl.TabType tabType, GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface getGalleryImagesInterface) {
-        switch (tabType) {
-            case PRODUCTS:
-                adapter.getAllProducts(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag(), mContext.getString(R.string.client_id), skipBy, "SINGLE", productCallback);
-                break;
-            case UPDATES:
-                adapter.getAllUpdates(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpId(), mContext.getString(R.string.client_id), skipBy, 10, updateCallback);
-                break;
-            case PHOTOS:
-                adapter.getAllImageList(getGalleryImagesInterface, SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpId());
-            default:
-                break;
-        }
-    }
-
     private CallBack<CustomerDetails> customerDetailsCallBack = new CallBack<CustomerDetails>() {
         @Override
         public void onSuccess(CustomerDetails data) {
             Details details = new Details();
             details.setAddress(data.getAddress());
 
-            if(SharedPrefUtil.fromBoostPref().getFpTag().equals(data.getTag()))
-            {
+            if (SharedPrefUtil.fromBoostPref().getFpTag().equals(data.getTag())) {
                 details.setName(SharedPrefUtil.fromBoostPref().getName() == null ? "" : (SharedPrefUtil.fromBoostPref().getName().equals("null") ? "" : SharedPrefUtil.fromBoostPref().getName()));
-            }
-
-            else
-            {
+            } else {
                 details.setName(data.getContactName() == null ? "" : (data.getContactName().toLowerCase().equals("null") ? "" : data.getContactName()));
             }
 
@@ -65,7 +41,7 @@ public class ApiCallPresenter {
             details.setPhoneNumber(data.getPrimaryNumber());
             details.setWebsite(SharedPrefUtil.fromBoostPref().getWebsite());
             details.setBusinessName(data.getName());
-            String location = "http://maps.google.com/maps?q=loc:" + data.lat+ "," + data.lng;
+            String location = "http://maps.google.com/maps?q=loc:" + data.lat + "," + data.lng;
             details.setLocation(location);
             ArrayList<AllSuggestionModel> modelList = new ArrayList<>();
             modelList.add(details.toAllSuggestion());
@@ -77,7 +53,6 @@ public class ApiCallPresenter {
             apiCallListener.onError(ImePresenterImpl.TabType.DETAILS);
         }
     };
-
     private CallBack<List<Product>> productCallback = new CallBack<List<Product>>() {
         ArrayList<AllSuggestionModel> modelList = new ArrayList<>();
 
@@ -124,7 +99,6 @@ public class ApiCallPresenter {
             apiCallListener.onError(ImePresenterImpl.TabType.UPDATES);
         }
     };
-
     private CallBack<CreatedOffer> createOfferCallback = new CallBack<CreatedOffer>() {
         @Override
         public void onSuccess(CreatedOffer data) {
@@ -145,6 +119,25 @@ public class ApiCallPresenter {
             presenterListener.onError();
         }
     };
+    public ApiCallPresenter(Context context, ApiCallToKeyboardViewInterface apiCallListener) {
+        mContext = context;
+        this.apiCallListener = apiCallListener;
+    }
+
+    public void loadMore(int skipBy, ImePresenterImpl.TabType tabType, GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface getGalleryImagesInterface) {
+        switch (tabType) {
+            case PRODUCTS:
+                adapter.getAllProducts(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag(), mContext.getString(R.string.client_id), skipBy, "SINGLE", productCallback);
+                break;
+            case UPDATES:
+                adapter.getAllUpdates(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpId(), mContext.getString(R.string.client_id), skipBy, 10, updateCallback);
+                break;
+            case PHOTOS:
+                adapter.getAllImageList(getGalleryImagesInterface, SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpId());
+            default:
+                break;
+        }
+    }
 
     private String getName(String product) {
         int start = product.indexOf(" Name=");
@@ -180,6 +173,6 @@ public class ApiCallPresenter {
     }
 
     public void getAllDetailsFromApi() {
-        adapter.getAllDetails(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag(), mContext.getString(R.string.client_id) , customerDetailsCallBack);
+        adapter.getAllDetails(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag(), mContext.getString(R.string.client_id), customerDetailsCallBack);
     }
 }

@@ -18,6 +18,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.pref.UserSessionManager
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.*
 import com.onboarding.nowfloats.R
@@ -50,10 +51,14 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
   private var isWhatsApp: Boolean? = null
   private var cardPosition = 0
   private var localSessionModel: LocalSessionModel? = null
+  private var session: UserSessionManager? = null
 
   private val pref: SharedPreferences?
     get() {
-      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
+      return baseActivity.getSharedPreferences(
+        PreferenceConstant.NOW_FLOATS_PREFS,
+        Context.MODE_PRIVATE
+      )
     }
 
   fun setData(localSessionModel: LocalSessionModel, shareChannelText: String) {
@@ -71,46 +76,109 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
 
   override fun onCreateView() {
     showSimmer(true)
-    viewModel?.getMerchantProfile(localSessionModel?.floatingPoint)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        val response = it as? MerchantProfileResponse
-        val userDetail = response?.result?.getUserDetail()
-        localSessionModel?.contactName = when {
-          localSessionModel?.contactName.isNullOrEmpty().not() -> localSessionModel?.contactName
-          userDetail?.userName.isNullOrEmpty().not() -> userDetail?.userName
-          else -> localSessionModel?.fpTag
-        }
-        localSessionModel?.primaryNumber = when {
-          localSessionModel?.primaryNumber.isNullOrEmpty().not() -> localSessionModel?.primaryNumber
-          userDetail?.userMobile.isNullOrEmpty().not() -> userDetail?.userMobile
-          else -> ""
-        }
-        localSessionModel?.primaryEmail = when {
-          localSessionModel?.primaryEmail.isNullOrEmpty().not() -> localSessionModel?.primaryEmail
-          userDetail?.userEmail.isNullOrEmpty().not() -> userDetail?.userEmail
-          else -> ""
-        }
-
-        val userProfile = ProfileProperties(userName = localSessionModel?.contactName, userMobile = localSessionModel?.primaryNumber, userEmail = localSessionModel?.primaryEmail)
-        val cardList = ArrayList<DigitalCardData>()
-        val cardData = CardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location,
-            userProfile.userName?.capitalizeWords(), addPlus91(userProfile.userMobile), userProfile.userEmail,
-            localSessionModel?.businessType, localSessionModel?.websiteUrl, getIconCard())
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_SIX_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_EIGHT_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_TWO_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_THREE_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FIVE_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_SEVEN_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_NINE_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_TEN_ITEM.getLayout()))
-        setAdapterCard(cardList)
-      } else {
-        showShortToast(it.message())
-        dismiss()
+    session = UserSessionManager(baseActivity)
+    viewModel?.getMerchantProfile(session?.fPID)?.observeOnce(viewLifecycleOwner, {
+//        if (it.isSuccess()) {
+      val response = it as? MerchantProfileResponse
+      val userDetail = response?.result?.getUserDetail()
+      localSessionModel?.contactName = when {
+        localSessionModel?.contactName.isNullOrEmpty().not() -> localSessionModel?.contactName
+        userDetail?.userName.isNullOrEmpty().not() -> userDetail?.userName
+        else -> localSessionModel?.fpTag
       }
+      localSessionModel?.primaryNumber = when {
+        localSessionModel?.primaryNumber.isNullOrEmpty()
+          .not() -> localSessionModel?.primaryNumber
+        userDetail?.userMobile.isNullOrEmpty().not() -> userDetail?.userMobile
+        else -> ""
+      }
+      localSessionModel?.primaryEmail = when {
+        localSessionModel?.primaryEmail.isNullOrEmpty().not() -> localSessionModel?.primaryEmail
+        userDetail?.userEmail.isNullOrEmpty().not() -> userDetail?.userEmail
+        else -> ""
+      }
+
+      val userProfile = ProfileProperties(
+        userName = localSessionModel?.contactName, userMobile = localSessionModel?.primaryNumber,
+        userEmail = localSessionModel?.primaryEmail
+      )
+      val cardList = ArrayList<DigitalCardData>()
+      val cardData = CardData(
+        localSessionModel?.businessName,
+        localSessionModel?.businessImage,
+        localSessionModel?.location,
+        userProfile.userName?.capitalizeWords(),
+        addPlus91(userProfile.userMobile),
+        userProfile.userEmail,
+        localSessionModel?.businessType,
+        localSessionModel?.websiteUrl,
+        getIconCard()
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_SIX_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_EIGHT_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_TWO_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_THREE_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_FIVE_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_SEVEN_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_NINE_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_TEN_ITEM.getLayout()
+        )
+      )
+      setAdapterCard(cardList)
+//        } else {
+//          showShortToast(it.message())
+//          dismiss()
+//        }
       showSimmer(false)
       binding?.btnMainView?.visible()
       binding?.borderView?.visible()
@@ -122,7 +190,10 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
         if (menu.itemId == R.id.menu_edit_contact) {
           try {
             WebEngageController.trackEvent(MY_BUSINESS_CARD_MENU_CONTACT, CLICK, TO_BE_ADDED)
-            val contactInfo = Intent(baseActivity, Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"))
+            val contactInfo = Intent(
+              baseActivity,
+              Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity")
+            )
             startActivity(contactInfo)
             baseActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
           } catch (e: Exception) {
@@ -160,7 +231,8 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       isUserInputEnabled = true
       adapter = adapterPager3
       binding?.dotIndicatorCard?.setViewPager2(this)
-      setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position)
+      setPageTransformer { page, position ->
+        OffsetPageTransformer().transformPage(page, position)
       }
       registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
@@ -189,7 +261,11 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
 
   private fun shareCardWhatsApp(messageCard: String?, isWhatsApp: Boolean) {
     this.isWhatsApp = isWhatsApp
-    if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+    if (ActivityCompat.checkSelfPermission(
+        baseActivity,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+      ) == PackageManager.PERMISSION_DENIED
+    ) {
       requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
       return
     }
@@ -203,11 +279,16 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       if (isWhatsApp) waIntent.setPackage(getString(R.string.whatsapp_package))
       waIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
       waIntent.putExtra(Intent.EXTRA_TEXT, messageCard ?: "")
-      baseActivity.startActivity(Intent.createChooser(waIntent, resources.getString(R.string.share_your_business_card))
+      baseActivity.startActivity(
+        Intent.createChooser(waIntent, resources.getString(R.string.share_your_business_card))
       )
       dismiss()
       savePositionCard(cardPosition)
-      WebEngageController.trackEvent(VISITING_CARD_SHARE, VISITING_CARD, localSessionModel?.fpTag ?: "")
+      WebEngageController.trackEvent(
+        VISITING_CARD_SHARE,
+        VISITING_CARD,
+        localSessionModel?.fpTag ?: ""
+      )
       onBusinessCardAddedOrUpdated(true)
     } catch (e: Exception) {
       showLongToast(getString(R.string.error_sharing_visiting_card_please_try_again))
@@ -244,7 +325,11 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
     return bundle
   }
 
-  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray, ) {
+  override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<out String>,
+    grantResults: IntArray,
+  ) {
     when (requestCode) {
       100 -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -274,16 +359,16 @@ fun addPlus91(userMobile: String?): String? {
 }
 
 data class LocalSessionModel(
-    var floatingPoint: String? = null,
-    var contactName: String? = null,
-    var businessName: String? = null,
-    var businessImage: String? = null,
-    var location: String? = null,
-    var websiteUrl: String? = null,
-    var businessType: String? = null,
-    var primaryNumber: String? = null,
-    var primaryEmail: String? = null,
-    var fpTag: String? = null,
-    var experienceCode: String? = null,
+  var floatingPoint: String? = null,
+  var contactName: String? = null,
+  var businessName: String? = null,
+  var businessImage: String? = null,
+  var location: String? = null,
+  var websiteUrl: String? = null,
+  var businessType: String? = null,
+  var primaryNumber: String? = null,
+  var primaryEmail: String? = null,
+  var fpTag: String? = null,
+  var experienceCode: String? = null,
 )
 

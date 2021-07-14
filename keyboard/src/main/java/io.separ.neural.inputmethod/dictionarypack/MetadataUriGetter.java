@@ -27,7 +27,7 @@ public class MetadataUriGetter {
     }
 
     public static String getUri(final Context context, final String baseUri,
-            final String additionalId) {
+                                final String additionalId) {
         return baseUri;
     }
 }

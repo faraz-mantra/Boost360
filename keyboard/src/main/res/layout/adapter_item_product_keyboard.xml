@@ -1,237 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cl_products_keyboard"
-    android:padding="0dp"
-    android:background="@color/white"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/cl_products_keyboard"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/white"
+  android:padding="0dp">
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="12sp"
+    android:layout_marginEnd="12dp"
+    android:background="@drawable/round_corner_grey_background"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toTopOf="@+id/btn_one">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginTop="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_one"
-        android:background="@drawable/round_corner_grey_background">
+    <TextView
+      android:id="@+id/tv_keyboard_currency"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginStart="8dp"
+      android:text="@string/currency"
+      android:textSize="@dimen/adapter_item_product_keyboard_text_size" />
 
-        <TextView
-            android:id="@+id/tv_keyboard_currency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/adapter_item_product_keyboard_text_size"
-            android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:text="@string/currency" />
+    <EditText
+      android:id="@+id/editText"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_weight="2"
+      android:background="@android:color/transparent"
+      android:cursorVisible="true"
+      android:focusable="false"
+      android:gravity="center"
+      android:hint="@string/enter_offer_price"
+      android:longClickable="false"
+      android:maxLines="1"
+      android:paddingStart="5dp"
+      android:paddingRight="5dp"
+      android:textSize="@dimen/adapter_item_product_keyboard_text_size" />
 
-        <EditText
-            android:id="@+id/editText"
-            android:hint="@string/enter_offer_price"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:longClickable="false"
-            android:cursorVisible="true"
-            android:textSize="@dimen/adapter_item_product_keyboard_text_size"
-            android:maxLines="1"
-            android:focusable="false"
-            android:background="@android:color/transparent"
-            android:layout_height="wrap_content"
-            android:paddingStart="5dp"
-            android:paddingRight="5dp" />
+    <androidx.appcompat.widget.AppCompatImageButton
+      android:id="@+id/ib_del"
+      style="@style/Base.Widget.AppCompat.Button.Borderless"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_gravity="center_vertical"
+      app:srcCompat="@drawable/ic_backspace_arrow_light_gray" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/ib_del"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_backspace_arrow_light_gray"
-            style="@style/Base.Widget.AppCompat.Button.Borderless" />
+  </LinearLayout>
 
-    </LinearLayout>
+  <Button
+    android:id="@+id/btn_one"
+    style="@style/Base.Widget.AppCompat.Button.Borderless"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:text="@string/_1"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
+    app:layout_constraintEnd_toStartOf="@+id/btn_two" />
+
+  <Button
+    android:id="@+id/btn_two"
+    style="@style/Base.Widget.AppCompat.Button.Borderless"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:text="@string/_2"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
+    app:layout_constraintEnd_toStartOf="@+id/btn_three"
+    app:layout_constraintVertical_bias="0.5" />
+
+  <Button
+    android:id="@+id/btn_three"
+    style="@style/Base.Widget.AppCompat.Button.Borderless"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:text="@string/_3"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
+    app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_offer"
+    app:layout_constraintVertical_bias="0.5" />
+
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline_vertical_offer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.5" />
+
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline_horizontal_offer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.5" />
+
+  <Button
+    android:id="@+id/btn_four"
+    style="@style/Base.Widget.AppCompat.Button.Borderless"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:text="@string/_4"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
+    app:layout_constraintStart_toEndOf="@+id/guideline_vertical_offer"
+    app:layout_constraintVertical_bias="0.5" />
+
+  <Button
+    android:id="@+id/btn_five"
+    style="@style/Base.Widget.AppCompat.Button.Borderless"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:text="@string/_5"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
+    app:layout_constraintStart_toEndOf="@+id/btn_four"
+    app:layout_constraintVertical_bias="0.5" />
+
+  <Button
+    android:id="@+id/btn_six"
+    style="@style/Base.Widget.AppCompat.Button.Borderless"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:text="@string/_6"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
+    app:layout_constraintStart_toEndOf="@+id/btn_five"
+    app:layout_constraintVertical_bias="0.5" />
+
+  <Button
+    android:id="@+id/btn_seven"
+    style="@style/Base.Widget.AppCompat.Button.Borderless"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:text="@string/_7"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toStartOf="@+id/btn_eight"
+    app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer" />
+
+  <Button
+    android:id="@+id/btn_eight"
+    style="@style/Base.Widget.AppCompat.Button.Borderless"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:text="@string/_8"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toStartOf="@+id/btn_nine"
+    app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer" />
+
+  <Button
+    android:id="@+id/btn_nine"
+    style="@style/Base.Widget.AppCompat.Button.Borderless"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:text="@string/_9"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toStartOf="parent"
+    app:layout_constraintStart_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer" />
+
+  <Button
+    android:id="@+id/btn_zero"
+    style="@style/Base.Widget.AppCompat.Button.Borderless"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:text="@string/_0"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:layout_constraintStart_toEndOf="@+id/btn_nine"
+    app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer" />
+
+  <Button
+    android:id="@+id/btn_decimal"
+    style="@style/Base.Widget.AppCompat.Button.Borderless"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:text="@string/decimal"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:layout_constraintStart_toEndOf="@+id/btn_zero"
+    app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer" />
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="32dp"
+    android:background="@android:color/darker_gray"
+    app:layout_constraintLeft_toLeftOf="@+id/guideline_vertical_offer"
+    app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_offer"
+    app:layout_constraintTop_toBottomOf="@+id/btn_nine" />
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="parent">
 
     <Button
-        android:id="@+id/btn_one"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:text="@string/_1"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
-        app:layout_constraintEnd_toStartOf="@+id/btn_two" />
+      android:id="@+id/btn_cancel"
+      android:layout_width="match_parent"
+      android:layout_height="35dp"
+      android:layout_weight="1"
+      android:background="#dddddd"
+      android:text="@string/cancel"
+      android:textColor="@android:color/tab_indicator_text"
+      android:textSize="@dimen/adapter_item_product_flipped_text_size" />
 
     <Button
-        android:id="@+id/btn_two"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:text="@string/_2"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintEnd_toStartOf="@+id/btn_three" />
+      android:id="@+id/button_done"
+      android:layout_width="match_parent"
+      android:layout_height="35dp"
+      android:layout_weight="1"
+      android:background="@color/primaryColor"
+      android:text="@string/tv_done"
+      android:textColor="@color/white"
+      android:textSize="@dimen/adapter_item_product_flipped_text_size" />
 
-    <Button
-        android:id="@+id/btn_three"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:text="@string/_3"
-        android:textColor="@android:color/black"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_offer" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vertical_offer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_horizontal_offer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5"/>
-
-    <Button
-        android:id="@+id/btn_four"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:text="@string/_4"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/guideline_vertical_offer" />
-
-    <Button
-        android:id="@+id/btn_five"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:text="@string/_5"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_four" />
-
-    <Button
-        android:id="@+id/btn_six"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:textSize="14sp"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:text="@string/_6"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_offer"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_five" />
-
-    <Button
-        android:id="@+id/btn_seven"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:textSize="14sp"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:text="@string/_7"
-        android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer"
-        app:layout_constraintEnd_toStartOf="@+id/btn_eight" />
-
-    <Button
-        android:id="@+id/btn_eight"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:textSize="14sp"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:text="@string/_8"
-        android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer"
-        app:layout_constraintEnd_toStartOf="@+id/btn_nine" />
-
-    <Button
-        android:id="@+id/btn_nine"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:textSize="14sp"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:text="@string/_9"
-        android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toEndOf="parent"/>
-
-    <Button
-        android:id="@+id/btn_zero"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:textSize="14sp"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:text="@string/_0"
-        android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer"
-        app:layout_constraintStart_toEndOf="@+id/btn_nine" />
-
-    <Button
-        android:id="@+id/btn_decimal"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:textSize="14sp"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:text="@string/decimal"
-        android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal_offer"
-        app:layout_constraintStart_toEndOf="@+id/btn_zero" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="4dp"
-        android:background="@android:color/darker_gray"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline_vertical_offer"
-        app:layout_constraintLeft_toRightOf="@+id/guideline_vertical_offer"
-        app:layout_constraintTop_toBottomOf="@+id/btn_nine"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:textSize="@dimen/adapter_item_product_flipped_text_size"
-            android:layout_weight="1"
-            android:background="#dddddd"
-            android:textColor="@android:color/tab_indicator_text"
-            android:text="@string/cancel"/>
-
-        <Button
-            android:id="@+id/button_done"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:textSize="@dimen/adapter_item_product_flipped_text_size"
-            android:layout_weight="1"
-            android:background="@color/primaryColor"
-            android:textColor="@color/white"
-            android:text="@string/tv_done"/>
-
-    </LinearLayout>
+  </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

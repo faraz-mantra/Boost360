@@ -4,104 +4,104 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class WebActionsItem{
+public class WebActionsItem {
 
-	@SerializedName("WebsiteId")
-	private String websiteId;
+    @SerializedName("WebsiteId")
+    private String websiteId;
 
-	@SerializedName("ActionId")
-	private String actionId;
+    @SerializedName("ActionId")
+    private String actionId;
 
-	@SerializedName("UserName")
-	private String userName;
+    @SerializedName("UserName")
+    private String userName;
 
-	@SerializedName("Description")
-	private String description;
+    @SerializedName("Description")
+    private String description;
 
-	@SerializedName("UserId")
-	private String userId;
+    @SerializedName("UserId")
+    private String userId;
 
-	@SerializedName("DisplayName")
-	private String displayName;
+    @SerializedName("DisplayName")
+    private String displayName;
 
-	@SerializedName("UpdatedOn")
-	private String updatedOn;
+    @SerializedName("UpdatedOn")
+    private String updatedOn;
 
-	@SerializedName("Properties")
-	private List<PropertiesItem> properties;
+    @SerializedName("Properties")
+    private List<PropertiesItem> properties;
 
-	@SerializedName("Name")
-	private String name;
+    @SerializedName("Name")
+    private String name;
 
-	public String getWebsiteId(){
-		return websiteId;
-	}
+    public String getWebsiteId() {
+        return websiteId;
+    }
 
-	public void setWebsiteId(String websiteId){
-		this.websiteId = websiteId;
-	}
+    public void setWebsiteId(String websiteId) {
+        this.websiteId = websiteId;
+    }
 
-	public String getActionId(){
-		return actionId;
-	}
+    public String getActionId() {
+        return actionId;
+    }
 
-	public void setActionId(String actionId){
-		this.actionId = actionId;
-	}
+    public void setActionId(String actionId) {
+        this.actionId = actionId;
+    }
 
-	public String getUserName(){
-		return userName;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public void setUserName(String userName){
-		this.userName = userName;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public String getDescription(){
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description){
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getUserId(){
-		return userId;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public void setUserId(String userId){
-		this.userId = userId;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public String getDisplayName(){
-		return displayName;
-	}
+    public String getDisplayName() {
+        return displayName;
+    }
 
-	public void setDisplayName(String displayName){
-		this.displayName = displayName;
-	}
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
-	public String getUpdatedOn(){
-		return updatedOn;
-	}
+    public String getUpdatedOn() {
+        return updatedOn;
+    }
 
-	public void setUpdatedOn(String updatedOn){
-		this.updatedOn = updatedOn;
-	}
+    public void setUpdatedOn(String updatedOn) {
+        this.updatedOn = updatedOn;
+    }
 
-	public List<PropertiesItem> getProperties(){
-		return properties;
-	}
+    public List<PropertiesItem> getProperties() {
+        return properties;
+    }
 
-	public void setProperties(List<PropertiesItem> properties){
-		this.properties = properties;
-	}
+    public void setProperties(List<PropertiesItem> properties) {
+        this.properties = properties;
+    }
 
-	public String getName(){
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name){
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 }

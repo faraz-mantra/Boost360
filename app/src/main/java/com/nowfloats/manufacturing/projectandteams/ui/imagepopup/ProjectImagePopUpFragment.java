@@ -22,11 +22,11 @@ import java.util.ArrayList;
 public class ProjectImagePopUpFragment extends DialogFragment {
 
     ImageView closeButton, backButton, nextButton;
-    private ArrayList<String> imageList;
     int currentPos = 0;
     ViewPager2 viewPager;
     boolean initialLoad = true;
     ProjectImagePreviewAdapter adapter;
+    private ArrayList<String> imageList;
 
     public static ProjectImagePopUpFragment newInstance() {
         return new ProjectImagePopUpFragment();
@@ -37,7 +37,7 @@ public class ProjectImagePopUpFragment extends DialogFragment {
         super.onStart();
         int width = ViewGroup.LayoutParams.MATCH_PARENT;
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
-        getDialog().getWindow().setLayout(width,height);
+        getDialog().getWindow().setLayout(width, height);
         getDialog().getWindow().setBackgroundDrawableResource(R.color.fullscreen_color);
 
     }
@@ -68,8 +68,8 @@ public class ProjectImagePopUpFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (currentPos >= 1) {
-                viewPager.setCurrentItem(currentPos - 1);
-            }
+                    viewPager.setCurrentItem(currentPos - 1);
+                }
             }
         });
 
@@ -77,8 +77,8 @@ public class ProjectImagePopUpFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (currentPos < imageList.size()) {
-                viewPager.setCurrentItem(currentPos + 1);
-            }
+                    viewPager.setCurrentItem(currentPos + 1);
+                }
             }
         });
 
@@ -93,14 +93,14 @@ public class ProjectImagePopUpFragment extends DialogFragment {
 
     }
 
-    private void initializeViewPager(){
+    private void initializeViewPager() {
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(imageList.size());
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                if(!initialLoad) {
+                if (!initialLoad) {
                     currentPosition(position);
                 }
             }
@@ -119,7 +119,7 @@ public class ProjectImagePopUpFragment extends DialogFragment {
         }, 100);
     }
 
-    private void currentPosition(int pos){
+    private void currentPosition(int pos) {
         currentPos = pos;
     }
 

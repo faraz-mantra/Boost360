@@ -18,6 +18,7 @@ package hani.momanii.supernova_emoji_library.Helper;
 
 import android.content.Context;
 import android.widget.GridView;
+
 import hani.momanii.supernova_emoji_library.R;
 import hani.momanii.supernova_emoji_library.emoji.Emojicon;
 
@@ -26,19 +27,18 @@ import hani.momanii.supernova_emoji_library.emoji.Emojicon;
  * @author Daniele Ricci
  * @author Hani Al Momani (hani.momanii@gmail.com)
  */
-public class EmojiconRecentsGridView  extends EmojiconGridView implements EmojiconRecents {
+public class EmojiconRecentsGridView extends EmojiconGridView implements EmojiconRecents {
     EmojiAdapter mAdapter;
     private boolean mUseSystemDefault = false;
 
 
-
     public EmojiconRecentsGridView(Context context, Emojicon[] emojicons,
-                                   EmojiconRecents recents,OnEmojiconClickedListener emojiconsPopup,boolean useSystemDefault) {
-        super(context, emojicons, recents, emojiconsPopup,useSystemDefault);
-        this.mUseSystemDefault=useSystemDefault;
+                                   EmojiconRecents recents, OnEmojiconClickedListener emojiconsPopup, boolean useSystemDefault) {
+        super(context, emojicons, recents, emojiconsPopup, useSystemDefault);
+        this.mUseSystemDefault = useSystemDefault;
         EmojiconRecentsManager recents1 = EmojiconRecentsManager
                 .getInstance(rootView.getContext());
-        mAdapter = new EmojiAdapter(rootView.getContext(),  recents1,mUseSystemDefault);
+        mAdapter = new EmojiAdapter(rootView.getContext(), recents1, mUseSystemDefault);
         mAdapter.setEmojiClickListener(new OnEmojiconClickedListener() {
 
             @Override
@@ -53,7 +53,6 @@ public class EmojiconRecentsGridView  extends EmojiconGridView implements Emojic
         if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
     }
-
 
 
     @Override

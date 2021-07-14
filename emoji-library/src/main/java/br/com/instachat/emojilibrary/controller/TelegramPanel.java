@@ -4,7 +4,9 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
+
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;

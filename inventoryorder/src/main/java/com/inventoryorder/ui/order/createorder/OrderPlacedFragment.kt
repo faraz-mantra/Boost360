@@ -38,7 +38,11 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
     type = arguments?.getString(IntentConstant.TYPE_APPOINTMENT.name)
     orderId = arguments?.getString(IntentConstant.ORDER_ID.name)
     getOrderDetails()
-    setOnClickListener(binding?.buttonInitiateNewOrder, binding?.textInvoice, binding?.buttonConfirmOrder)
+    setOnClickListener(
+      binding?.buttonInitiateNewOrder,
+      binding?.textInvoice,
+      binding?.buttonConfirmOrder
+    )
   }
 
   private fun setData(orderItem: OrderItem) {
@@ -49,7 +53,8 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
       binding?.textPaymentStatus?.text = orderItem.PaymentDetails?.statusValue() ?: ""
       binding?.textOrderIdValue?.text = "#${orderItem.ReferenceNumber}"
       binding?.textName?.text = orderItem.BuyerDetails?.ContactDetails?.FullName ?: ""
-      binding?.textTotalAmount?.text = "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem.BillingDetails?.GrossAmount ?: 0.0}"
+      binding?.textTotalAmount?.text =
+        "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem.BillingDetails?.GrossAmount ?: 0.0}"
 
       binding?.linearItemQty?.visibility = View.GONE
       binding?.linearPaymentMode?.visibility = View.GONE
@@ -61,18 +66,24 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
     } else {
       binding?.textOrderIdValue?.text = "#${orderItem.ReferenceNumber}"
       binding?.textName?.text = orderItem.BuyerDetails?.ContactDetails?.FullName ?: ""
-      binding?.textCount?.text = "${NumbersToWords.solution(orderItem.Items?.size ?: 0)} (${orderItem.Items?.size})"
+      binding?.textCount?.text =
+        "${NumbersToWords.solution(orderItem.Items?.size ?: 0)} (${orderItem.Items?.size})"
       binding?.textPaymentLink?.text = orderItem.PaymentDetails?.methodValue() ?: ""
       binding?.textPaymentStatus?.text = orderItem.PaymentDetails?.statusValue() ?: ""
       binding?.textDeliveryType?.text = orderItem.LogisticsDetails?.DeliveryMode ?: ""
-      binding?.textTotalAmount?.text = "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem?.BillingDetails?.GrossAmount ?: 0.0}"
+      binding?.textTotalAmount?.text =
+        "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem?.BillingDetails?.GrossAmount ?: 0.0}"
     }
 
   }
 
   fun getBundleData(): Bundle {
     val bundle = Bundle()
-    if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) bundle.putBoolean(IntentConstant.IS_REFRESH.name, true)
+    if (type.equals(
+        AppConstant.TYPE_APPOINTMENT,
+        true
+      )
+    ) bundle.putBoolean(IntentConstant.IS_REFRESH.name, true)
     bundle.putBoolean(IntentConstant.SHOULD_RE_INITIATE.name, shouldReInitiate)
     if (!shouldReInitiate) bundle.putBoolean(IntentConstant.SHOULD_FINISH.name, true)
     return bundle
@@ -80,13 +91,18 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
 
   private fun getOrderDetails() {
     showProgress()
-    viewModel?.assuredPurchaseGetOrderDetails(preferenceData?.clientId, orderId)?.observeOnce(viewLifecycleOwner, {
-      hideProgress()
-      if (it.isSuccess()) {
-        orderResponse = (it as? OrderDetailResponse)?.Data
-        orderResponse?.let { it1 -> setData(it1) }
-      } else showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
-    })
+    viewModel?.assuredPurchaseGetOrderDetails(preferenceData?.clientId, orderId)
+      ?.observeOnce(viewLifecycleOwner, {
+        hideProgress()
+        if (it.isSuccess()) {
+          orderResponse = (it as? OrderDetailResponse)?.Data
+          orderResponse?.let { it1 -> setData(it1) }
+        } else showLongToast(
+          if (it.message()
+              .isNotEmpty()
+          ) it.message() else getString(R.string.unable_to_create_order)
+        )
+      })
   }
 
   override fun onClick(v: View) {
@@ -106,7 +122,11 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
         bundle.putString(IntentConstant.ORDER_ID.name, orderResponse?._id)
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) {
-          startFragmentOrderActivity(FragmentType.APPOINTMENT_SPA_DETAIL_VIEW, bundle, isResult = true)
+          startFragmentOrderActivity(
+            FragmentType.APPOINTMENT_SPA_DETAIL_VIEW,
+            bundle,
+            isResult = true
+          )
         } else {
           startFragmentOrderActivity(FragmentType.ORDER_DETAIL_VIEW, bundle, isResult = true)
         }

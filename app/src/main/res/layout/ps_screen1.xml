@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLayout_Screen1"
-    style="@style/white_label_style"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/mainLayout_Screen1"
+  style="@style/white_label_style"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+  <com.nowfloats.CustomWidget.ResizableImageView
+    android:id="@+id/awesome_img"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:src="@drawable/welcome_top" />
 
-    <com.nowfloats.CustomWidget.ResizableImageView
-        android:id="@+id/awesome_img"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/welcome_top" />
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/welcome_bottom"
+    android:gravity="center">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/welcome_bottom"
-        android:gravity="center">
+    <TextView
+      android:id="@+id/screen_1_descTextView"
+      fontPath="GOTHAM_Bold.TTF"
+      android:layout_width="230dp"
+      android:layout_height="wrap_content"
+      android:text="@string/pre_signup_screen_one_text"
+      android:textAllCaps="true"
+      android:textColor="@color/white"
+      android:textSize="11sp"
+      android:textStyle="bold"
+      tools:ignore="MissingPrefix">
 
-        <TextView
-            android:id="@+id/screen_1_descTextView"
-            fontPath="GOTHAM_Bold.TTF"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:text="@string/pre_signup_screen_one_text"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="11sp"
-            android:textStyle="bold"
-            tools:ignore="MissingPrefix">
-
-        </TextView>
-    </LinearLayout>
+    </TextView>
+  </LinearLayout>
 
 </LinearLayout>

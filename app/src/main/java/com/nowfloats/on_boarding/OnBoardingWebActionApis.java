@@ -22,7 +22,7 @@ public interface OnBoardingWebActionApis {
 
     @GET("/fp_onboarding/get-data")
     @Headers({"Authorization: " + ON_BOARDING_KEY})
-    void getData(@Query("query") String query,Callback<WebActionModel<OnBoardingDataModel>> callback);
+    void getData(@Query("query") String query, Callback<WebActionModel<OnBoardingDataModel>> callback);
 
     @POST("/fp_onboarding/add-data")
     @Headers({"Authorization: " + ON_BOARDING_KEY})

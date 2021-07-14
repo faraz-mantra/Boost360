@@ -16,8 +16,8 @@ import com.framework.R
 import com.framework.views.dotsindicator.BaseDotsIndicator.Type.SPRING
 
 class SpringDotsIndicator @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+  context: Context, attrs: AttributeSet? = null,
+  defStyleAttr: Int = 0
 ) : BaseDotsIndicator(context, attrs, defStyleAttr) {
 
   companion object {
@@ -45,8 +45,8 @@ class SpringDotsIndicator @JvmOverloads constructor(
     setPadding(horizontalPadding.toInt(), 0, horizontalPadding.toInt(), 0)
     strokeDotsLinearLayout.orientation = HORIZONTAL
     addView(
-        strokeDotsLinearLayout, ViewGroup.LayoutParams.WRAP_CONTENT,
-        ViewGroup.LayoutParams.WRAP_CONTENT
+      strokeDotsLinearLayout, ViewGroup.LayoutParams.WRAP_CONTENT,
+      ViewGroup.LayoutParams.WRAP_CONTENT
     )
 
     dotsStrokeWidth = dpToPxF(2f) // 2dp
@@ -62,16 +62,16 @@ class SpringDotsIndicator @JvmOverloads constructor(
       // Dots attributes
       dotIndicatorColor = a.getColor(R.styleable.SpringDotsIndicator_dotsColor, dotIndicatorColor)
       dotsStrokeColor = a.getColor(
-          R.styleable.SpringDotsIndicator_dotsStrokeColor,
-          dotIndicatorColor
+        R.styleable.SpringDotsIndicator_dotsStrokeColor,
+        dotIndicatorColor
       )
       stiffness = a.getFloat(R.styleable.SpringDotsIndicator_stiffness, stiffness)
       dampingRatio = a.getFloat(R.styleable.SpringDotsIndicator_dampingRatio, dampingRatio)
 
       // Spring dots attributes
       dotsStrokeWidth = a.getDimension(
-          R.styleable.SpringDotsIndicator_dotsStrokeWidth,
-          dotsStrokeWidth
+        R.styleable.SpringDotsIndicator_dotsStrokeWidth,
+        dotsStrokeWidth
       )
 
       a.recycle()
@@ -119,8 +119,8 @@ class SpringDotsIndicator @JvmOverloads constructor(
 
   private fun buildDot(stroke: Boolean): ViewGroup {
     val dot = LayoutInflater.from(context).inflate(
-        R.layout.dot_layout, this,
-        false
+      R.layout.dot_layout, this,
+      false
     ) as ViewGroup
 
     dot.layoutDirection = View.LAYOUT_DIRECTION_LTR

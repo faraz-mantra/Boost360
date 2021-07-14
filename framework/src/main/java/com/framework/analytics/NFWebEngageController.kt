@@ -30,7 +30,8 @@ object NFWebEngageController {
 
     //AppsFlyerEvent...
     try {
-      AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
+      AppsFlyerLib.getInstance()
+        .logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
     } catch (e: Exception) {
       e.printStackTrace()
     }
@@ -59,7 +60,12 @@ object NFWebEngageController {
     }
   }
 
-  fun trackEventLoad(event_name: String, event_label: String, event_value: HashMap<String, Any>, value: String) {
+  fun trackEventLoad(
+    event_name: String,
+    event_label: String,
+    event_value: HashMap<String, Any>,
+    value: String
+  ) {
     if (event_value.size > 0) {
       event_value["event_name"] = event_name
       event_value["event_label"] = event_label
@@ -84,7 +90,12 @@ object NFWebEngageController {
     }
   }
 
-  fun setUserContactAttributes(email: String?, mobile: String?, name: String?, clientId: String? = "") {
+  fun setUserContactAttributes(
+    email: String?,
+    mobile: String?,
+    name: String?,
+    clientId: String? = ""
+  ) {
     if (isUserLoggedIn) {
       if (!email.isNullOrEmpty()) {
         weUser.setEmail(email)

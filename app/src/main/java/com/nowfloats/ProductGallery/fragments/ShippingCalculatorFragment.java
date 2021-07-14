@@ -1,8 +1,10 @@
 package com.nowfloats.ProductGallery.fragments;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Editable;
@@ -31,7 +33,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class ShippingCalculatorFragment extends DialogFragment implements TextWatcher{
+public class ShippingCalculatorFragment extends DialogFragment implements TextWatcher {
 
     EditText etLength, etWidth, etHeight, etWeight, etShippingCharges;
 
@@ -48,22 +50,13 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
     private ShippingMetricsModel mShippingMetric;
     private ProductMetricCallBack mProductMetricCallBack;
 
-    public enum ShippingAddOrUpdate
-    {
-        ADD,
-        UPDATE
-    }
-
-
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setStyle(STYLE_NO_TITLE, 0);
 
-        if(getArguments()!=null && getArguments().containsKey("shippingMetric"))
-        {
+        if (getArguments() != null && getArguments().containsKey("shippingMetric")) {
             mShippingMetric = getArguments().getParcelable("shippingMetric");
         }
 
@@ -74,32 +67,25 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
     }
 
     @Override
-    public void onAttach(Context context)
-    {
+    public void onAttach(Context context) {
         super.onAttach(context);
 
-        if(context instanceof ProductMetricCallBack)
-        {
+        if (context instanceof ProductMetricCallBack) {
             mProductMetricCallBack = (ProductMetricCallBack) context;
-        }
-
-        else
-        {
+        } else {
             throw new RuntimeException("Implement ProductMetricCallBack");
         }
     }
 
     @Override
-    public void onStart()
-    {
+    public void onStart() {
         super.onStart();
 
         getDialog().getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shipping_calculator_v1, container, false);
 
         etLength = view.findViewById(R.id.et_length);
@@ -157,18 +143,13 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         btnSaveMetrics.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v)
-            {
-                if(mShippingMetric == null || mShippingMetric.getProductId() == null || mShippingMetric.getProductId().isEmpty())
-                {
+            public void onClick(View v) {
+                if (mShippingMetric == null || mShippingMetric.getProductId() == null || mShippingMetric.getProductId().isEmpty()) {
                     /**
                      * if it is a new product entry
                      */
                     addMetric();
-                }
-
-                else
-                {
+                } else {
                     /**
                      * if it is product update
                      */
@@ -180,8 +161,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         view.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 dismiss();
             }
         });
@@ -190,7 +170,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         /**
          * if update product request set shipping matrix value in fields
          */
-        if(mShippingMetric != null){
+        if (mShippingMetric != null) {
 
             etLength.setText(getValue(mShippingMetric.getLength()));
             etHeight.setText(getValue(mShippingMetric.getHeight()));
@@ -199,8 +179,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
 
             String shippingCharge = getValue(String.valueOf(mShippingMetric.getShippingCharge()));
 
-            if(!shippingCharge.isEmpty() && !shippingCharge.equals("0") && !shippingCharge.equals("0.0"))
-            {
+            if (!shippingCharge.isEmpty() && !shippingCharge.equals("0") && !shippingCharge.equals("0.0")) {
                 etShippingCharges.setText(shippingCharge);
             }
 
@@ -223,18 +202,15 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         return view;
     }
 
-    private void updateMetric()
-    {
-        if(!isValidForm())
-        {
+    private void updateMetric() {
+        if (!isValidForm()) {
             return;
         }
 
         WaUpdateDataModel update = new WaUpdateDataModel();
         final ShippingMetricsModel shippingMetric = initShippingMatrix();
 
-        if(shippingMetric == null)
-        {
+        if (shippingMetric == null) {
             return;
         }
 
@@ -302,8 +278,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
                     @Override
                     public void failure(RetrofitError error) {
 
-                        if(error.getResponse().getStatus() == 200)
-                        {
+                        if (error.getResponse().getStatus() == 200) {
                             ShippingCalculatorFragment.this.dismiss();
                             mProductMetricCallBack.onProductMetricCalculated(shippingMetric, ShippingAddOrUpdate.UPDATE);
                         }
@@ -316,15 +291,13 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
 
     private void addMetric() {
 
-        if(!isValidForm())
-        {
+        if (!isValidForm()) {
             return;
         }
 
         final ShippingMetricsModel shippingMetric = initShippingMatrix();
 
-        if(shippingMetric == null)
-        {
+        if (shippingMetric == null) {
             return;
         }
 
@@ -332,34 +305,28 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         ShippingCalculatorFragment.this.dismiss();
     }
 
-
-    private void calculateShippingCharge()
-    {
+    private void calculateShippingCharge() {
         String length = etLength.getText().toString().trim();
         String width = etWidth.getText().toString().trim();
         String height = etHeight.getText().toString().trim();
         String weight = etWeight.getText().toString().trim();
 
-        if(TextUtils.isEmpty(length))
-        {
+        if (TextUtils.isEmpty(length)) {
             etLength.setError("Length is required");
             return;
         }
 
-        if(TextUtils.isEmpty(width))
-        {
+        if (TextUtils.isEmpty(width)) {
             etWidth.setError("Width is required");
             return;
         }
 
-        if(TextUtils.isEmpty(height))
-        {
+        if (TextUtils.isEmpty(height)) {
             etHeight.setError("Height is required");
             return;
         }
 
-        if(TextUtils.isEmpty(weight))
-        {
+        if (TextUtils.isEmpty(weight)) {
             etWeight.setError("Weight is required");
             return;
         }
@@ -377,8 +344,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
                 .getShippingCharge(query, new Callback<APIResponseModel<Integer>>() {
 
                     @Override
-                    public void success(APIResponseModel<Integer> shippingCharge, Response response)
-                    {
+                    public void success(APIResponseModel<Integer> shippingCharge, Response response) {
                         //progressDialog.dismiss();
                         //tvShippingCharge.setText("INR " + shippingCharge.Result);
                         //mShippingCharge = shippingCharge.Result;
@@ -387,14 +353,12 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
                     }
 
                     @Override
-                    public void failure(RetrofitError error)
-                    {
+                    public void failure(RetrofitError error) {
                         //progressDialog.dismiss();
                         //Toast.makeText(getActivity(), "Something went wrong! Please try again", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -407,22 +371,18 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
     }
 
     @Override
-    public void afterTextChanged(Editable s)
-    {
+    public void afterTextChanged(Editable s) {
         //btnSaveMetrics.setVisibility(View.GONE);
         //btnCalculateShippingCharge.setVisibility(View.VISIBLE);
     }
 
-
     /**
      * Initialize ShippingMatixModel
      */
-    private ShippingMetricsModel initShippingMatrix()
-    {
+    private ShippingMetricsModel initShippingMatrix() {
         ShippingMetricsModel shippingMetric = new ShippingMetricsModel();
 
-        try
-        {
+        try {
             /*if(deliveryMethod.equalsIgnoreCase(Constants.DeliveryMethod.ASSURED_PURCHASE.getValue()))
             {
                 shippingMetric.setHeight(etHeight.getText().toString().trim());
@@ -443,13 +403,9 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
             double length = Double.valueOf(etLength.getText().toString().trim());
             shippingMetric.setLength(String.valueOf(length));
 
-            if(!etShippingCharges.getText().toString().trim().isEmpty())
-            {
+            if (!etShippingCharges.getText().toString().trim().isEmpty()) {
                 shippingMetric.setShippingCharge(Double.valueOf(etShippingCharges.getText().toString().trim()));
-            }
-
-            else
-            {
+            } else {
                 shippingMetric.setShippingCharge(0.0);
             }
 
@@ -459,10 +415,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
             }*/
 
             //shippingMetric.setHidePrice(switchHidePrice.isChecked());
-        }
-
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Toast.makeText(getActivity(), "Please enter valid input", Toast.LENGTH_LONG).show();
             return null;
         }
@@ -472,36 +425,36 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
 
     /**
      * if value is null
+     *
      * @param value
      * @return empty string
      */
-    private String getValue(String value)
-    {
+    private String getValue(String value) {
         return value == null ? "" : (value.equalsIgnoreCase("null") ? "" : value);
     }
 
     /**
      * Check weather all input fields are valid
+     *
      * @return true
      */
-    private boolean isValidForm()
-    {
-        if(TextUtils.isEmpty(etLength.getText().toString().trim())){
+    private boolean isValidForm() {
+        if (TextUtils.isEmpty(etLength.getText().toString().trim())) {
             etLength.setError("Length is required");
             return false;
         }
 
-        if(TextUtils.isEmpty(etWidth.getText().toString().trim())){
+        if (TextUtils.isEmpty(etWidth.getText().toString().trim())) {
             etWidth.setError("Width is required");
             return false;
         }
 
-        if(TextUtils.isEmpty(etHeight.getText().toString().trim())){
+        if (TextUtils.isEmpty(etHeight.getText().toString().trim())) {
             etHeight.setError("Height is required");
             return false;
         }
 
-        if(TextUtils.isEmpty(etWeight.getText().toString().trim())){
+        if (TextUtils.isEmpty(etWeight.getText().toString().trim())) {
             etWeight.setError("Weight is required");
             return false;
         }
@@ -552,8 +505,12 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         return true;
     }
 
-    public interface ProductMetricCallBack
-    {
+    public enum ShippingAddOrUpdate {
+        ADD,
+        UPDATE
+    }
+
+    public interface ProductMetricCallBack {
         void onProductMetricCalculated(ShippingMetricsModel shippingMetricsModel, ShippingAddOrUpdate val);
     }
 }

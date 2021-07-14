@@ -22,46 +22,39 @@ import java.util.Map;
  */
 public class Number_of_Visits {
 
-    Activity activity ;
+    Activity activity;
 
-    private RequestQueue queue ;
+    private RequestQueue queue;
 
-    public Number_of_Visits(Activity activity)
-    {
-        this.activity = activity ;
+    public Number_of_Visits(Activity activity) {
+        this.activity = activity;
         queue = AppController.getInstance().getRequestQueue();
     }
 
-    public void getNumberOfVisits(String websiteName)
-    {
-        String visitorsUri = Constants.LoadStoreURI+websiteName+"/visitorCount?clientId="+Constants.clientId;
+    public void getNumberOfVisits(String websiteName) {
+        String visitorsUri = Constants.LoadStoreURI + websiteName + "/visitorCount?clientId=" + Constants.clientId;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (
                         Request.Method.GET,
-                visitorsUri,null,
-                new Response.Listener<JSONObject>() {
+                        visitorsUri, null,
+                        new Response.Listener<JSONObject>() {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                         Log.d("Response", "Response : " + response);
-                        Log.d("Response", "Response : " + response);
-                    }
-                },
-                        new Response.ErrorListener()
-                        {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.d("Response", "Response : " + response);
+                                Log.d("Response", "Response : " + response);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("Error", "error : " + error);
+                            }
+                        }
+                ) {
             @Override
-            public void onErrorResponse(VolleyError error)
-            {
-               Log.d("Error","error : "+error);
-            }
-         }
-         )
-
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError
-            {
+            public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-type", "application/json");
 

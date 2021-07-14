@@ -7,7 +7,7 @@ import retrofit2.http.GET
 
 interface CategoryRemoteDataSource {
 
-    @GET("")
-    fun getCategories(): Observable<Response<CategoryListResponse>>
+  @GET("")
+  fun getCategories(): Observable<Response<CategoryListResponse>>
 
 }

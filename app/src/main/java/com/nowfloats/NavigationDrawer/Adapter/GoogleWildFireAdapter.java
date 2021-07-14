@@ -2,8 +2,10 @@ package com.nowfloats.NavigationDrawer.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,13 +36,11 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
     private ArrayList<WildFireKeyStatsModel> modelList, originalList;
     private ArrayList<FacebookWildFireDataModel> facebookModelList, facebookOriginalList;
     private ChannelType dataChannelType;
-    public enum ChannelType {
-        GOOGLE,FACEBOOK;
-    }
 
-    public GoogleWildFireAdapter(Context context){
+    public GoogleWildFireAdapter(Context context) {
         mContext = context;
     }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -49,39 +49,41 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
 
     }
 
-    public void setGoogleModelList(ArrayList<WildFireKeyStatsModel> modelList){
+    public void setGoogleModelList(ArrayList<WildFireKeyStatsModel> modelList) {
         this.modelList = modelList;
         originalList = modelList;
         dataChannelType = ChannelType.GOOGLE;
     }
-    public void setFacebookModelList(ArrayList<FacebookWildFireDataModel> modelList){
+
+    public void setFacebookModelList(ArrayList<FacebookWildFireDataModel> modelList) {
         facebookModelList = modelList;
         facebookOriginalList = modelList;
         dataChannelType = ChannelType.FACEBOOK;
     }
+
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        switch (dataChannelType){
+        switch (dataChannelType) {
             case GOOGLE:
-                int padding1 = Methods.dpToPx(10,mContext);
-                holder.parentView.setPadding(padding1,padding1,padding1,padding1);
-                holder.keywordTv.setText(modelList.get(position).getKeyword().replace("+",""));
+                int padding1 = Methods.dpToPx(10, mContext);
+                holder.parentView.setPadding(padding1, padding1, padding1, padding1);
+                holder.keywordTv.setText(modelList.get(position).getKeyword().replace("+", ""));
                 if (TextUtils.isDigitsOnly(modelList.get(position).getClicks())) {
                     holder.clickTv.setText(NumberFormat.getIntegerInstance(Locale.US).format(Long.valueOf(modelList.get(position).getClicks())));
-                }else{
+                } else {
                     holder.clickTv.setText(modelList.get(position).getClicks());
                 }
                 holder.statusTv.setText(modelList.get(position).getKeywordState());
-                if (modelList.get(position).getKeywordState().equalsIgnoreCase("enabled")){
-                    holder.statusTv.setTextColor(ContextCompat.getColor(mContext,R.color.green));
-                }else{
-                    holder.statusTv.setTextColor(ContextCompat.getColor(mContext,R.color.red));
+                if (modelList.get(position).getKeywordState().equalsIgnoreCase("enabled")) {
+                    holder.statusTv.setTextColor(ContextCompat.getColor(mContext, R.color.green));
+                } else {
+                    holder.statusTv.setTextColor(ContextCompat.getColor(mContext, R.color.red));
                 }
                 break;
 
             case FACEBOOK:
-                int padding2 = Methods.dpToPx(15,mContext);
-                holder.parentView.setPadding(padding2,padding2,padding2,padding2);
+                int padding2 = Methods.dpToPx(15, mContext);
+                holder.parentView.setPadding(padding2, padding2, padding2, padding2);
                 holder.keywordTv.setText(facebookModelList.get(position).getAdName());
                 holder.clickTv.setText(NumberFormat.getIntegerInstance(Locale.US).format(Long.valueOf(facebookModelList.get(position).getClicks())));
                 holder.statusTv.setVisibility(View.GONE);
@@ -92,7 +94,7 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
 
     @Override
     public int getItemCount() {
-        switch (dataChannelType){
+        switch (dataChannelType) {
             case GOOGLE:
                 return modelList.size();
             case FACEBOOK:
@@ -108,7 +110,7 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
 
     @Override
     public Filter getFilter() {
-        switch (dataChannelType){
+        switch (dataChannelType) {
             case GOOGLE:
                 return getGoogleListFilter();
             case FACEBOOK:
@@ -116,8 +118,9 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
         }
         return null;
     }
-    private Filter getFacebookListFilter(){
-        return new Filter(){
+
+    private Filter getFacebookListFilter() {
+        return new Filter() {
 
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
@@ -127,7 +130,7 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
 
                     filteredList = facebookOriginalList;
                 } else {
-                    filteredList =new ArrayList<>();
+                    filteredList = new ArrayList<>();
                     for (FacebookWildFireDataModel model : facebookOriginalList) {
 
                         if (model.getAdName().toLowerCase().contains(charString)) {
@@ -149,8 +152,9 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
             }
         };
     }
-    private Filter getGoogleListFilter(){
-        return new Filter(){
+
+    private Filter getGoogleListFilter() {
+        return new Filter() {
 
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
@@ -160,7 +164,7 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
 
                     filteredList = originalList;
                 } else {
-                    filteredList =new ArrayList<>();
+                    filteredList = new ArrayList<>();
                     for (WildFireKeyStatsModel model : originalList) {
 
                         if (model.getKeyword().toLowerCase().contains(charString)) {
@@ -182,11 +186,17 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
             }
         };
     }
-    class MyViewHolder extends RecyclerView.ViewHolder{
+
+    public enum ChannelType {
+        GOOGLE, FACEBOOK;
+    }
+
+    class MyViewHolder extends RecyclerView.ViewHolder {
         final static int layout_id = R.layout.adapter_wildfire_item;
         ImageView arrowImage;
-        TextView keywordTv,clickTv,statusTv;
+        TextView keywordTv, clickTv, statusTv;
         View parentView;
+
         MyViewHolder(View itemView) {
             super(itemView);
 
@@ -199,10 +209,10 @@ public class GoogleWildFireAdapter extends RecyclerView.Adapter<GoogleWildFireAd
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, WildFireAdAnalyticsActivity.class);
-                    intent.putExtra(WildFireAdAnalyticsActivity.TYPE,dataChannelType.name());
+                    intent.putExtra(WildFireAdAnalyticsActivity.TYPE, dataChannelType.name());
                     intent.putExtra(WildFireAdAnalyticsActivity.VALUE,
-                            new Gson().toJson(dataChannelType == ChannelType.GOOGLE?modelList.get(getAdapterPosition())
-                                    :facebookModelList.get(getAdapterPosition())));
+                            new Gson().toJson(dataChannelType == ChannelType.GOOGLE ? modelList.get(getAdapterPosition())
+                                    : facebookModelList.get(getAdapterPosition())));
                     mContext.startActivity(intent);
                 }
             });
