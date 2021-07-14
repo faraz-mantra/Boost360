@@ -122,8 +122,8 @@
 
         <com.framework.views.customViews.CustomCardView
           android:id="@+id/btn_copy_message"
-          android:layout_width="@dimen/size_30"
-          android:layout_height="@dimen/size_30"
+          android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
           android:layout_marginStart="@dimen/size_20"
           app:cardBackgroundColor="@color/white_one"
           app:cardCornerRadius="@dimen/size_15"
