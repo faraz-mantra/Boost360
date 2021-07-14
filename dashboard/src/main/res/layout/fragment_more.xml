@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <data>
 
@@ -9,6 +8,7 @@
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
+android:background="#f0f0f0"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,9 +37,9 @@
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/customImageView7"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_help_white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/customTextView8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,17 +54,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/customTextView8"
         app:riv_border_color="@color/white"
-        app:riv_border_width="1dp"
-        app:riv_corner_radius="@dimen/size_40"
-        app:riv_mutate_background="true" />
+        app:riv_border_width="2dp"
+        app:riv_corner_radius="@dimen/size_10"
+        app:riv_mutate_background="true"
+        app:riv_oval="false" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_20"
+        android:layout_marginStart="@dimen/size_16"
         android:layout_marginTop="@dimen/size_2"
-        android:background="@drawable/rounded_stroke_grey"
+        android:background="@drawable/rounded_stroke_3"
         android:backgroundTint="@color/dark_gray"
         android:fontFamily="@font/barlow_semi_bold"
         android:gravity="center"
@@ -91,7 +92,7 @@
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/riv_users_image"
         app:layout_constraintTop_toBottomOf="@+id/ctv_type"
-        app:layout_goneMarginStart="-10dp" />
+       />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_content"
@@ -100,10 +101,9 @@
         android:layout_marginHorizontal="@dimen/size_16"
         android:fontFamily="@font/open_sans"
         android:gravity="start"
-
         android:includeFontPadding="true"
         android:text="@string/your_email_mobile_no_username_password_payment_info_etc"
-        android:textColor="@color/white"
+        android:textColor="@color/gray_text_hint"
         android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/customImageView4"
         app:layout_constraintStart_toEndOf="@+id/riv_users_image"
@@ -123,8 +123,8 @@
     <View
       android:id="@+id/view3"
       android:layout_width="match_parent"
-      android:layout_height="1dp"
-      android:background="@color/gray_light_4"
+      android:layout_height="0.5dp"
+      android:background="@color/view_background_1"
       app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
       app:layout_constraintVertical_bias="0" />
 
@@ -141,6 +141,7 @@
       <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/linearLayoutCompat5"
           android:layout_width="match_parent"
@@ -235,9 +236,9 @@
 
             <com.framework.views.customViews.CustomImageView
               android:id="@+id/customImageView5"
-              android:layout_width="@dimen/size_30"
-              android:layout_height="@dimen/size_30"
-              android:src="@drawable/ic_subscription_boost"
+              android:layout_width="@dimen/size_40"
+              android:layout_height="@dimen/size_40"
+              android:src="@drawable/ic_crown"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent"
@@ -247,8 +248,8 @@
               android:id="@+id/ctv_offer"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:background="@drawable/rounded_stroke_grey"
-              android:backgroundTint="@color/light_green_2"
+              android:background="@drawable/rounded_stroke_3"
+              android:backgroundTint="@color/green_more_settings"
               android:fontFamily="@font/barlow_semi_bold"
               android:gravity="center"
               android:includeFontPadding="true"
@@ -281,13 +282,13 @@
               android:id="@+id/ctv_subscription_content"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/size_4"
+              android:layout_marginTop="@dimen/_6dp"
               android:fontFamily="@font/open_sans"
               android:gravity="start"
               android:includeFontPadding="true"
               android:text="@string/upgrade_website_with_great_features_offers_for_you_current_plan_purchase_history_invoice_and_more"
               android:textAllCaps="false"
-              android:textColor="@color/black_4a4a4a"
+              android:textColor="@color/gray_828282"
               android:textSize="11sp"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
@@ -340,7 +341,7 @@
 
               <com.framework.views.customViews.CustomCardView
                 android:layout_width="@dimen/size_0"
-                android:layout_height="@dimen/size_120"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:elevation="@dimen/size_2"
                 app:cardCornerRadius="@dimen/size_8"
@@ -353,21 +354,23 @@
 
                   <com.framework.views.roundedimageview.RoundedImageView
                     android:id="@+id/roundedImageView4"
-                    android:layout_width="@dimen/size_30"
-                    android:layout_height="@dimen/size_30"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:src="@drawable/ria_digital_assistant"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/help_and_support"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_12"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="@string/help_and_support"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/roundedImageView4"
                     app:layout_constraintVertical_bias="0" />
@@ -376,11 +379,13 @@
                     android:id="@+id/help_and_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_8"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/faqs_help_support_notifications_etc"
-                    android:textColor="@color/black_4a4a4a"
+                    android:textColor="@color/warm_grey"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/help_and_support"
                     app:layout_constraintVertical_bias="0" />
@@ -390,8 +395,8 @@
 
               <com.framework.views.customViews.CustomCardView
                 android:layout_width="@dimen/size_0"
-                android:layout_height="@dimen/size_120"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+android:layout_weight="1"
                 android:elevation="@dimen/size_2"
                 app:cardCornerRadius="@dimen/size_8"
                 app:cardUseCompatPadding="true">
@@ -406,8 +411,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_20"
-                    android:layout_marginTop="@dimen/size_2"
-                    android:background="@drawable/rounded_stroke_grey"
+                    android:background="@drawable/rounded_stroke_3"
                     android:backgroundTint="#EB5757"
                     android:fontFamily="@font/barlow_semi_bold"
                     android:gravity="center"
@@ -421,25 +425,27 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1"
                     app:layout_constraintStart_toEndOf="@+id/riv_business"
-                    app:layout_constraintTop_toTopOf="@+id/riv_business" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                   <com.framework.views.roundedimageview.RoundedImageView
                     android:id="@+id/riv_business"
-                    android:layout_width="@dimen/size_30"
-                    android:layout_height="@dimen/size_30"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:src="@drawable/ic_buildings"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/my_business_kyc"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_12"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="@string/my_business_kyc"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/riv_business"
                     app:layout_constraintVertical_bias="0" />
@@ -448,11 +454,13 @@
                     android:id="@+id/my_business_kyc_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_8"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/govt_mandated_process_to_help_you_etc"
-                    android:textColor="@color/black_4a4a4a"
+                    android:textColor="@color/warm_grey"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/my_business_kyc"
                     app:layout_constraintVertical_bias="0" />
@@ -469,8 +477,8 @@
 
               <com.framework.views.customViews.CustomCardView
                 android:layout_width="@dimen/size_0"
-                android:layout_height="@dimen/size_120"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+android:layout_weight="1"
                 android:elevation="@dimen/size_2"
                 app:cardCornerRadius="@dimen/size_8"
                 app:cardUseCompatPadding="true">
@@ -482,8 +490,8 @@
 
                   <com.framework.views.roundedimageview.RoundedImageView
                     android:id="@+id/riv_keyboard"
-                    android:layout_width="@dimen/size_30"
-                    android:layout_height="@dimen/size_30"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:src="@drawable/ic_keyboard_more"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -496,6 +504,7 @@
                     android:text="@string/_360_keyboard"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="14sp"
+                    android:layout_marginTop="@dimen/size_12"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/riv_keyboard"
@@ -506,8 +515,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
+                    android:maxLines="2"
+                    android:layout_marginTop="@dimen/size_8"
                     android:text="@string/start_business_chat_on_any_instant_messaging_app"
-                    android:textColor="@color/black_4a4a4a"
+                    android:textColor="@color/warm_grey"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -519,8 +530,8 @@
 
               <com.framework.views.customViews.CustomCardView
                 android:layout_width="@dimen/size_0"
-                android:layout_height="@dimen/size_120"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+android:layout_weight="1"
                 android:elevation="@dimen/size_2"
                 app:cardCornerRadius="@dimen/size_8"
                 app:cardUseCompatPadding="true">
@@ -532,8 +543,8 @@
 
                   <com.framework.views.roundedimageview.RoundedImageView
                     android:id="@+id/riv_users"
-                    android:layout_width="@dimen/size_30"
-                    android:layout_height="@dimen/size_30"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:src="@drawable/ic_users"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -543,9 +554,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_20"
-                    android:layout_marginTop="@dimen/size_2"
-                    android:background="@drawable/rounded_stroke_grey"
-                    android:backgroundTint="@color/green_light_2"
+                    android:background="@drawable/rounded_stroke_3"
+                    android:backgroundTint="@color/green_more_settings"
                     android:fontFamily="@font/barlow_semi_bold"
                     android:gravity="center"
                     android:includeFontPadding="true"
@@ -558,7 +568,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1"
                     app:layout_constraintStart_toEndOf="@+id/riv_users"
-                    app:layout_constraintTop_toTopOf="@+id/riv_users" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/refer_and_earn"
@@ -568,6 +578,7 @@
                     android:text="@string/my_business_kyc"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="14sp"
+                    android:layout_marginTop="@dimen/size_12"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/riv_users"
@@ -579,8 +590,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/govt_mandated_process_to_help_you_etc"
-                    android:textColor="@color/black_4a4a4a"
+                    android:textColor="@color/warm_grey"
                     android:textSize="14sp"
+                    android:layout_marginTop="@dimen/size_8"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/refer_and_earn"
@@ -598,8 +610,8 @@
 
               <com.framework.views.customViews.CustomCardView
                 android:layout_width="@dimen/size_0"
-                android:layout_height="@dimen/size_120"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+android:layout_weight="1"
                 android:elevation="@dimen/size_2"
                 app:cardCornerRadius="@dimen/size_8"
                 app:cardUseCompatPadding="true">
@@ -614,9 +626,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_20"
-                    android:layout_marginTop="@dimen/size_2"
-                    android:background="@drawable/rounded_stroke_grey"
-                    android:backgroundTint="#467ED321"
+                    android:background="@drawable/rounded_stroke_3"
+                    android:backgroundTint="#F2FBE9"
                     android:fontFamily="@font/barlow_semi_bold"
                     android:gravity="center"
                     android:includeFontPadding="true"
@@ -624,17 +635,17 @@
                     android:paddingVertical="2dp"
                     android:text="@string/verified"
                     android:textAllCaps="true"
-                    android:textColor="@color/green_light"
+                    android:textColor="#7fd321"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1"
                     app:layout_constraintStart_toEndOf="@+id/riv_bank_accounts"
-                    app:layout_constraintTop_toTopOf="@+id/riv_bank_accounts" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                   <com.framework.views.roundedimageview.RoundedImageView
                     android:id="@+id/riv_bank_accounts"
-                    android:layout_width="@dimen/size_30"
-                    android:layout_height="@dimen/size_30"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:src="@drawable/ic_bank"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -647,6 +658,7 @@
                     android:text="@string/my_bank_account"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="14sp"
+                    android:layout_marginTop="@dimen/size_12"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/riv_bank_accounts"
@@ -658,8 +670,10 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/add_and_manage_your_bank_account"
-                    android:textColor="@color/black_4a4a4a"
+                    android:textColor="@color/warm_grey"
                     android:textSize="14sp"
+                    android:layout_marginTop="@dimen/size_8"
+
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/my_bank_account"
@@ -670,8 +684,8 @@
 
               <com.framework.views.customViews.CustomCardView
                 android:layout_width="@dimen/size_0"
-                android:layout_height="@dimen/size_120"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+android:layout_weight="1"
                 android:elevation="@dimen/size_2"
                 app:cardCornerRadius="@dimen/size_8"
                 app:cardUseCompatPadding="true">
@@ -683,8 +697,8 @@
 
                   <com.framework.views.roundedimageview.RoundedImageView
                     android:id="@+id/riv_academy"
-                    android:layout_width="@dimen/size_30"
-                    android:layout_height="@dimen/size_30"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:src="@drawable/ic_bookbookmark"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -697,6 +711,7 @@
                     android:text="@string/boost_360_academy"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="14sp"
+                    android:layout_marginTop="@dimen/size_12"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/riv_academy"
@@ -708,8 +723,10 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/great_courses_to_help_you_learn_and_grow_more"
-                    android:textColor="@color/black_4a4a4a"
+                    android:textColor="@color/warm_grey"
                     android:textSize="14sp"
+                    android:maxLines="2"
+                    android:layout_marginTop="@dimen/size_8"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ctv_academy"
@@ -727,8 +744,8 @@
 
               <com.framework.views.customViews.CustomCardView
                 android:layout_width="@dimen/size_0"
-                android:layout_height="@dimen/size_120"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+android:layout_weight="1"
                 android:elevation="@dimen/size_2"
                 app:cardCornerRadius="@dimen/size_8"
                 app:cardUseCompatPadding="true">
@@ -740,21 +757,25 @@
 
                   <com.framework.views.roundedimageview.RoundedImageView
                     android:id="@+id/riv_certification"
-                    android:layout_width="@dimen/size_30"
-                    android:layout_height="@dimen/size_30"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:src="@drawable/ic_training_certification"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/certification"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_12"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="@string/boost_360_training_certification"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="14sp"
+                    android:lines="2"
+                    android:ellipsize="end"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/riv_certification"
                     app:layout_constraintVertical_bias="0" />
@@ -765,8 +786,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/add_and_manage_your_bank_account"
-                    android:textColor="@color/black_4a4a4a"
+                    android:textColor="@color/warm_grey"
                     android:textSize="14sp"
+                    android:layout_marginTop="@dimen/size_8"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/certification"
@@ -777,8 +799,8 @@
 
               <com.framework.views.customViews.CustomCardView
                 android:layout_width="@dimen/size_0"
-                android:layout_height="@dimen/size_120"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+android:layout_weight="1"
                 android:elevation="@dimen/size_2"
                 app:cardCornerRadius="@dimen/size_8"
                 app:cardUseCompatPadding="true">
@@ -790,8 +812,8 @@
 
                   <com.framework.views.roundedimageview.RoundedImageView
                     android:id="@+id/riv_extension"
-                    android:layout_width="@dimen/size_30"
-                    android:layout_height="@dimen/size_30"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
                     android:src="@drawable/ic_extension"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -800,10 +822,12 @@
                     android:id="@+id/boost_extension"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_12"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="@string/boost_360_extensions"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="14sp"
+                    android:maxEms="4"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/riv_extension"
@@ -815,8 +839,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/integrate_this_website_to_your_wordpress_website"
-                    android:textColor="@color/black_4a4a4a"
+                    android:textColor="@color/warm_grey"
                     android:textSize="14sp"
+                    android:layout_marginTop="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/boost_extension"
@@ -851,6 +876,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="vertical"
+          android:layout_marginTop="@dimen/size_10"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/ctv_about_boost"
@@ -859,6 +885,7 @@
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:padding="@dimen/size_16">
 
             <com.framework.views.customViews.CustomImageView
@@ -886,14 +913,15 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_whats_new_subtitle"
-              android:layout_width="wrap_content"
+              android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_16"
               android:fontFamily="@font/open_sans"
               android:text="@string/run_boost_360_account_on_your_wordpress_website"
-              android:textColor="@color/black_4a4a4a"
+              android:textColor="@color/gray_828282"
               android:textSize="14sp"
               app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toEndOf="@+id/customImageView6"
               app:layout_constraintTop_toBottomOf="@+id/ctv_whats_new"
               app:layout_constraintVertical_bias="0" />
@@ -902,13 +930,14 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_light_4"
+            android:background="@color/view_background_1"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
             app:layout_constraintVertical_bias="0" />
 
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:padding="@dimen/size_16">
 
             <com.framework.views.customViews.CustomImageView
@@ -936,14 +965,15 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_frequently_asked_subtitle"
-              android:layout_width="wrap_content"
+              android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_16"
               android:fontFamily="@font/open_sans"
               android:text="@string/run_boost_360_account_on_your_wordpress_website"
-              android:textColor="@color/black_4a4a4a"
+              android:textColor="@color/gray_828282"
               android:textSize="14sp"
               app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toEndOf="@+id/civ_frequently_asked"
               app:layout_constraintTop_toBottomOf="@+id/ctv_frequently_asked"
               app:layout_constraintVertical_bias="0" />
@@ -952,13 +982,14 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_light_4"
+            android:background="@color/view_background_1"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
-            app:layout_constraintVertical_bias="0" />
+             />
 
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:padding="@dimen/size_16">
 
             <com.framework.views.customViews.CustomImageView
@@ -986,14 +1017,15 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_facebook_subtitle"
-              android:layout_width="wrap_content"
+              android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_16"
               android:fontFamily="@font/open_sans"
               android:text="@string/run_boost_360_account_on_your_wordpress_website"
-              android:textColor="@color/black_4a4a4a"
+              android:textColor="@color/gray_828282"
               android:textSize="14sp"
               app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toEndOf="@+id/civ_facebook"
               app:layout_constraintTop_toBottomOf="@+id/ctv_facebook_logo"
               app:layout_constraintVertical_bias="0" />
@@ -1002,13 +1034,14 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_light_4"
+            android:background="@color/view_background_1"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
             app:layout_constraintVertical_bias="0" />
 
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:padding="@dimen/size_16">
 
             <com.framework.views.customViews.CustomImageView
@@ -1036,14 +1069,15 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_twitter_subtitle"
-              android:layout_width="wrap_content"
+              android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_16"
               android:fontFamily="@font/open_sans"
               android:text="@string/run_boost_360_account_on_your_wordpress_website"
-              android:textColor="@color/black_4a4a4a"
+              android:textColor="@color/gray_828282"
               android:textSize="14sp"
               app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toEndOf="@+id/civ_twitter"
               app:layout_constraintTop_toBottomOf="@+id/ctv_twitter"
               app:layout_constraintVertical_bias="0" />
@@ -1052,13 +1086,14 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_light_4"
+            android:background="@color/view_background_1"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
             app:layout_constraintVertical_bias="0" />
 
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:padding="@dimen/size_16">
 
             <com.framework.views.customViews.CustomImageView
@@ -1086,14 +1121,15 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_playstore_subtitle"
-              android:layout_width="wrap_content"
+              android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_16"
               android:fontFamily="@font/open_sans"
               android:text="@string/run_boost_360_account_on_your_wordpress_website"
-              android:textColor="@color/black_4a4a4a"
+              android:textColor="@color/gray_828282"
               android:textSize="14sp"
               app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toEndOf="@+id/civ_playstore"
               app:layout_constraintTop_toBottomOf="@+id/ctv_playstore"
               app:layout_constraintVertical_bias="0" />
@@ -1102,12 +1138,14 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_light_4"
+            android:background="@color/view_background_1"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
             app:layout_constraintVertical_bias="0" />
+
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:padding="@dimen/size_16">
 
             <com.framework.views.customViews.CustomImageView
@@ -1122,8 +1160,8 @@
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_apple"
               android:layout_width="wrap_content"
-              android:layout_marginStart="@dimen/size_16"
               android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
               android:fontFamily="@font/open_sans_semibold"
               android:text="@string/rate_us_on_appstore"
               android:textColor="@color/black_4a4a4a"
@@ -1135,27 +1173,31 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_apple_subtitle"
-              android:layout_width="wrap_content"
+              android:layout_width="0dp"
               android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
               android:fontFamily="@font/open_sans"
               android:text="@string/run_boost_360_account_on_your_wordpress_website"
-              android:textColor="@color/black_4a4a4a"
+              android:textColor="@color/gray_828282"
               android:textSize="14sp"
-              android:layout_marginStart="@dimen/size_16"
               app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toEndOf="@+id/civ_apple"
               app:layout_constraintTop_toBottomOf="@+id/ctv_apple"
               app:layout_constraintVertical_bias="0" />
           </androidx.constraintlayout.widget.ConstraintLayout>
+
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_light_4"
+            android:background="@color/view_background_1"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
             app:layout_constraintVertical_bias="0" />
+
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:padding="@dimen/size_16">
 
             <com.framework.views.customViews.CustomImageView
@@ -1170,8 +1212,8 @@
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_terms"
               android:layout_width="wrap_content"
-              android:layout_marginStart="@dimen/size_16"
               android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
               android:fontFamily="@font/open_sans_semibold"
               android:text="@string/terms_of_use"
               android:textColor="@color/black_4a4a4a"
@@ -1183,27 +1225,31 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_terms_subtitle"
-              android:layout_width="wrap_content"
+              android:layout_width="0dp"
               android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
               android:fontFamily="@font/open_sans"
               android:text="@string/last_updated_on"
-              android:textColor="@color/black_4a4a4a"
+              android:textColor="@color/gray_828282"
               android:textSize="14sp"
-              android:layout_marginStart="@dimen/size_16"
               app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toEndOf="@+id/civ_terms"
               app:layout_constraintTop_toBottomOf="@+id/ctv_terms"
               app:layout_constraintVertical_bias="0" />
           </androidx.constraintlayout.widget.ConstraintLayout>
+
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_light_4"
+            android:background="@color/view_background_1"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
             app:layout_constraintVertical_bias="0" />
+
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:padding="@dimen/size_16">
 
             <com.framework.views.customViews.CustomImageView
@@ -1218,8 +1264,8 @@
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_shield"
               android:layout_width="wrap_content"
-              android:layout_marginStart="@dimen/size_16"
               android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
               android:fontFamily="@font/open_sans_semibold"
               android:text="@string/privacy_policy"
               android:textColor="@color/black_4a4a4a"
@@ -1231,24 +1277,27 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_shield_subtitle"
-              android:layout_width="wrap_content"
+              android:layout_width="0dp"
               android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
               android:fontFamily="@font/open_sans"
               android:text="@string/run_boost_360_account_on_your_wordpress_website"
-              android:textColor="@color/black_4a4a4a"
+              android:textColor="@color/gray_828282"
               android:textSize="14sp"
-              android:layout_marginStart="@dimen/size_16"
               app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toEndOf="@+id/civ_shield"
               app:layout_constraintTop_toBottomOf="@+id/ctv_shield"
               app:layout_constraintVertical_bias="0" />
           </androidx.constraintlayout.widget.ConstraintLayout>
+
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_light_4"
+            android:background="@color/view_background_1"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
             app:layout_constraintVertical_bias="0" />
+
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/ctv_we_are_listening"
             android:layout_width="wrap_content"
@@ -1263,9 +1312,11 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:padding="@dimen/size_16">
 
             <com.framework.views.customViews.CustomImageView
@@ -1280,8 +1331,8 @@
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_make_boost_better"
               android:layout_width="wrap_content"
-              android:layout_marginStart="@dimen/size_16"
               android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
               android:fontFamily="@font/open_sans_semibold"
               android:text="@string/help_us_make_boost_360_better"
               android:textColor="@color/black_4a4a4a"
@@ -1293,24 +1344,26 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_make_boost_better_subtitle"
-              android:layout_width="wrap_content"
+              android:layout_width="0dp"
               android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
               android:fontFamily="@font/open_sans"
               android:text="@string/suggest_a_feature_or_share_a_your_feedback"
-              android:textColor="@color/black_4a4a4a"
+              android:textColor="@color/gray_828282"
               android:textSize="14sp"
-              android:layout_marginStart="@dimen/size_16"
               app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toEndOf="@+id/civ_heart"
               app:layout_constraintTop_toBottomOf="@+id/ctv_make_boost_better"
               app:layout_constraintVertical_bias="0" />
           </androidx.constraintlayout.widget.ConstraintLayout>
+
           <com.framework.views.customViews.CustomImageView
             android:layout_width="wrap_content"
-            android:layout_marginVertical="@dimen/size_30"
-            android:src="@drawable/ic_boost_360_slogan"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_height="wrap_content"/>
+            android:layout_marginVertical="@dimen/size_30"
+            android:src="@drawable/ic_boost_360_slogan" />
         </androidx.appcompat.widget.LinearLayoutCompat>
       </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

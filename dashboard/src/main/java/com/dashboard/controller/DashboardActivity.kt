@@ -243,6 +243,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       0 -> openDashboard(false)
       1 -> checkWelcomeShowScreen(pos)
       2 -> checkWelcomeShowScreen(pos)
+      4 -> checkWelcomeShowScreen(pos)
       else -> {
         mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
         toolbarPropertySet(0)
@@ -335,13 +336,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onItemClick(pos)
     when (pos) {
       3 -> checkWelcomeShowScreen(pos)
-      4 -> {
-//        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
-//        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
-        mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
-        toolbarPropertySet(pos)
-
-      }
+//      4 -> {
+////        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
+////        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
+//
+//
+//      }TO_BE_ADDED
     }
   }
 
