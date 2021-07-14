@@ -436,7 +436,76 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                         }
                                                         .subscribe()
                                                 }
-                                                Completable.fromAction {
+
+                                                /*start check*/
+                                                marketOfferData.forEach {
+                                                    val itemFeature = it
+                                                    val marketModel = MarketOfferModel(
+                                                        it.coupon_code,
+                                                        it.extra_information,
+                                                        it.createdon,
+                                                        it.updatedon,
+                                                        it._kid,
+                                                        it.websiteid,
+                                                        it.isarchived,
+                                                        it.expiry_date,
+                                                        it.title,
+                                                        if (it.exclusive_to_categories != null ) Gson().toJson(it.exclusive_to_categories) else null,
+                                                        if (it.image != null) it.image else null,
+                                                        if (it.cta_offer_identifier != null) it.cta_offer_identifier else null,
+                                                    )
+                                                    Log.d("itemFeature"," "+ itemFeature + " "+itemFeature.coupon_code)
+                                                    CompositeDisposable().add(
+                                                        AppDatabase.getInstance(getApplication())!!
+                                                            .marketOffersDao()
+                                                            .checkOffersIDExist(it._kid!!)
+                                                            .subscribeOn(Schedulers.io())
+                                                            .observeOn(AndroidSchedulers.mainThread())
+                                                            .subscribe({
+                                                                if (it == 0) {
+                                                                    Completable.fromAction {
+                                                                        AppDatabase.getInstance(getApplication())!!
+                                                                            .marketOffersDao()
+                                                                            .insertToMarketOffers(itemFeature)
+                                                                    }
+                                                                        .subscribeOn(Schedulers.io())
+                                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                                        .doOnComplete {
+                                                                            Log.d("insertMarketOffers", "Successfully")
+
+                                                                        }
+                                                                        .doOnError {
+                                                                            updatesError.postValue(it.message)
+                                                                            updatesLoader.postValue(false)
+                                                                        }
+                                                                        .subscribe()
+                                                                }else{
+                                                                    Completable.fromAction {
+                                                                        AppDatabase.getInstance(getApplication())!!
+                                                                            .marketOffersDao()
+                                                                            .updateAllMarketOffers(marketModel)
+                                                                    }
+                                                                        .subscribeOn(Schedulers.io())
+                                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                                        .doOnComplete {
+                                                                            Log.d("updateMarketOffers", "Successfully")
+
+                                                                        }
+                                                                        .doOnError {
+                                                                            updatesError.postValue(it.message)
+                                                                            updatesLoader.postValue(false)
+                                                                        }
+                                                                        .subscribe()
+                                                                }
+                                                            }, {
+                                                                it.printStackTrace()
+                                                            })
+                                                    )
+                                                }
+
+                                                /*end check*/
+
+                                                /*Completable.fromAction {
                                                     AppDatabase.getInstance(getApplication())!!
                                                             .marketOffersDao()
                                                             .insertAllMarketOffers(marketOfferData)
@@ -451,7 +520,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                             updatesError.postValue(it.message)
                                                             updatesLoader.postValue(false)
                                                         }
-                                                        .subscribe()
+                                                        .subscribe()*/
 
                                             } else {
                                                 promoBannersList.postValue(promoList)
