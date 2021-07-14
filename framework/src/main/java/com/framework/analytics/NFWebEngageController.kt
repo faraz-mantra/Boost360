@@ -41,7 +41,6 @@ object NFWebEngageController {
       weAnalytics.screenNavigated(event_name)
       //Firebase Analytics Event...
       FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value)
-
       //AppsFlyerEvent...
       try {
         AppsFlyerLib.getInstance()
@@ -57,10 +56,8 @@ object NFWebEngageController {
       if (event_value.size > 0) {
         weAnalytics.track(event_name, event_value)
         weAnalytics.screenNavigated(event_name)
-
         //Firebase Analytics Event...
         FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, "")
-
         //AppsFlyerEvent...
         try {
           AppsFlyerLib.getInstance().logEvent(
@@ -77,148 +74,136 @@ object NFWebEngageController {
     }
   }
 
-  fun trackEventLoad(
-    event_name: String,
-    event_label: String,
-    event_value: HashMap<String, Any>,
-    value: String
-  ) {
-    if (event_value.size > 0) {
-      event_value["event_name"] = event_name
-      event_value["event_label"] = event_label
-      weAnalytics.track(event_name, event_value)
-      weAnalytics.screenNavigated(event_name)
-
-      //Firebase Analytics Event...
-      FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, "")
-
-      //AppsFlyerEvent...
-      try {
-        AppsFlyerLib.getInstance().logEvent(
-          weAnalytics.activity.get()?.applicationContext,
-          event_name, event_value.toMap()
-        )
-      } catch (e: Exception) {
-        e.printStackTrace()
+  fun trackEventLoad(event_name: String, event_label: String, event_value: HashMap<String, Any>, value: String) {
+    if (BaseApplication.instance.packageName != "com.jio.online") {
+      if (event_value.size > 0) {
+        event_value["event_name"] = event_name
+        event_value["event_label"] = event_label
+        weAnalytics.track(event_name, event_value)
+        weAnalytics.screenNavigated(event_name)
+        //Firebase Analytics Event...
+        FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, "")
+        //AppsFlyerEvent...
+        try {
+          AppsFlyerLib.getInstance().logEvent(
+            weAnalytics.activity.get()?.applicationContext,
+            event_name, event_value.toMap()
+          )
+        } catch (e: Exception) {
+          e.printStackTrace()
+        }
+      } else {
+        weAnalytics.track(event_name)
+        weAnalytics.screenNavigated(event_name)
       }
-    } else {
-      weAnalytics.track(event_name)
-      weAnalytics.screenNavigated(event_name)
     }
   }
 
   fun setUserContactAttributes(email: String?, mobile: String?, name: String?, clientId: String? = "") {
-    if (isUserLoggedIn) {
-      if (!email.isNullOrEmpty()) {
-        weUser.setEmail(email)
-
-        //Firebase Analytics User Property.
-        FirebaseAnalyticsUtilsHelper.setUserProperty("emailId", email)
-
+    if (BaseApplication.instance.packageName != "com.jio.online") {
+      if (isUserLoggedIn) {
+        if (!email.isNullOrEmpty()) {
+          weUser.setEmail(email)
+          //Firebase Analytics User Property.
+          FirebaseAnalyticsUtilsHelper.setUserProperty("emailId", email)
+          //AppsFlyer Analytics User Property.
+          AppsFlyerLib.getInstance().setUserEmails(email)
+        }
         //AppsFlyer Analytics User Property.
-        AppsFlyerLib.getInstance().setUserEmails(email)
+        val params = HashMap<String, Any>()
+        if (!mobile.isNullOrEmpty()) {
+          weUser.setPhoneNumber(mobile)
+          //Firebase Analytics User Property.
+          FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", mobile)
+          params["mobile"] = mobile
+        }
+        if (!name.isNullOrEmpty()) {
+          weUser.setFirstName(name)
+          //Firebase Analytics User Property.
+          FirebaseAnalyticsUtilsHelper.setUserProperty("name", name)
+          params["name"] = name
+        }
+        if (!clientId.isNullOrEmpty()) {
+          weUser.setAttribute("clientId", clientId)
+          //Firebase Analytics User Property.
+          FirebaseAnalyticsUtilsHelper.setUserProperty("clientId", clientId)
+          params["clientId"] = clientId
+        }
+        if (params.isNotEmpty())
+          AppsFlyerLib.getInstance().setAdditionalData(params)
       }
-
-      //AppsFlyer Analytics User Property.
-      val params = HashMap<String, Any>()
-
-      if (!mobile.isNullOrEmpty()) {
-        weUser.setPhoneNumber(mobile)
-
-        //Firebase Analytics User Property.
-        FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", mobile)
-        params["mobile"] = mobile
-      }
-      if (!name.isNullOrEmpty()) {
-        weUser.setFirstName(name)
-
-        //Firebase Analytics User Property.
-        FirebaseAnalyticsUtilsHelper.setUserProperty("name", name)
-        params["name"] = name
-      }
-      if (!clientId.isNullOrEmpty()) {
-        weUser.setAttribute("clientId", clientId)
-
-        //Firebase Analytics User Property.
-        FirebaseAnalyticsUtilsHelper.setUserProperty("clientId", clientId)
-        params["clientId"] = clientId
-      }
-      if (params.isNotEmpty())
-        AppsFlyerLib.getInstance().setAdditionalData(params)
     }
   }
 
 
   fun initiateUserLogin(userId: String?) {
-    if (userId != null && !userId.isNullOrEmpty()) {
-      Log.d(TAG, "Initiating User login" + userId)
-      weUser.login(userId)
-
-      //Firebase Analytics User Session Event.
-      FirebaseAnalyticsUtilsHelper.identifyUser(userId)
-
-      //AppsFlyer Analytics User Session Event
-      if (weAnalytics.activity != null) {
-        AppsFlyerLib.getInstance().logSession(weAnalytics.activity.get()?.applicationContext)
+    if (BaseApplication.instance.packageName != "com.jio.online") {
+      if (userId != null && !userId.isNullOrEmpty()) {
+        Log.d(TAG, "Initiating User login" + userId)
+        weUser.login(userId)
+        //Firebase Analytics User Session Event.
+        FirebaseAnalyticsUtilsHelper.identifyUser(userId)
+        //AppsFlyer Analytics User Session Event
+        if (weAnalytics.activity != null) {
+          AppsFlyerLib.getInstance().logSession(weAnalytics.activity.get()?.applicationContext)
+        }
+        AppsFlyerLib.getInstance().setCustomerUserId(userId)
+        isUserLoggedIn = true
       }
-      AppsFlyerLib.getInstance().setCustomerUserId(userId)
-      isUserLoggedIn = true
     }
   }
 
   fun setCategory(userCategory: String?) {
-    try {
-      if (!userCategory.isNullOrEmpty()) {
-        val activity = weAnalytics.activity.get()
-        val version = activity?.packageManager?.getPackageInfo(activity.packageName, 0)?.versionName
-        weUser.setAttribute("Category", userCategory)
-        weUser.setAttribute("Version", version ?: "")
-
-        //Firebase Analytics User Property.
-        FirebaseAnalyticsUtilsHelper.apply {
-          setUserProperty("Category", userCategory)
-          setUserProperty("Version", version ?: "")
+    if (BaseApplication.instance.packageName != "com.jio.online") {
+      try {
+        if (!userCategory.isNullOrEmpty()) {
+          val activity = weAnalytics.activity.get()
+          val version = activity?.packageManager?.getPackageInfo(activity.packageName, 0)?.versionName
+          weUser.setAttribute("Category", userCategory)
+          weUser.setAttribute("Version", version ?: "")
+          //Firebase Analytics User Property.
+          FirebaseAnalyticsUtilsHelper.apply {
+            setUserProperty("Category", userCategory)
+            setUserProperty("Version", version ?: "")
+          }
+          //AppsFlyer User Property
+          val params = HashMap<String, Any>()
+          params["Category"] = userCategory
+          params["Version"] = version ?: ""
+          AppsFlyerLib.getInstance().setAdditionalData(params)
         }
-
-        //AppsFlyer User Property
-        val params = HashMap<String, Any>()
-        params["Category"] = userCategory
-        params["Version"] = version ?: ""
-        AppsFlyerLib.getInstance().setAdditionalData(params)
+      } catch (e: Exception) {
+        e.printStackTrace()
       }
-    } catch (e: Exception) {
-      e.printStackTrace()
     }
   }
 
   fun setFPTag(fpTag: String) {
-    try {
-      if (fpTag == null) {
-        return;
+    if (BaseApplication.instance.packageName != "com.jio.online") {
+      try {
+        if (fpTag == null) return
+        Log.d(TAG, "Setting FP Tag" + fpTag)
+        weUser.setAttribute("fpTag", fpTag)
+        //Firebase Analytics User Property.
+        FirebaseAnalyticsUtilsHelper.setUserProperty("fpTag", fpTag)
+        //AppsFlyer User Property
+        val params = java.util.HashMap<String, Any>()
+        params["fpTag"] = fpTag
+        AppsFlyerLib.getInstance().setAdditionalData(params)
+      } catch (e: java.lang.Exception) {
+        e.printStackTrace()
       }
-      Log.d(TAG, "Setting FP Tag" + fpTag)
-      weUser.setAttribute("fpTag", fpTag)
-
-      //Firebase Analytics User Property.
-      FirebaseAnalyticsUtilsHelper.setUserProperty("fpTag", fpTag)
-
-      //AppsFlyer User Property
-      val params = java.util.HashMap<String, Any>()
-      params["fpTag"] = fpTag
-      AppsFlyerLib.getInstance().setAdditionalData(params)
-    } catch (e: java.lang.Exception) {
-      e.printStackTrace()
     }
   }
 
   fun logout() {
-    Log.d(TAG, "Loggind user out from analytics")
-    weUser.logout()
-
-    //Reset Firebase Analytics User Session Event.
-    FirebaseAnalyticsUtilsHelper.resetIdentifyUser()
-
-    //End AppsFlyer Analytics User Session Event.
-    AppsFlyerLib.getInstance().setCustomerUserId(null)
+    if (BaseApplication.instance.packageName != "com.jio.online") {
+      Log.d(TAG, "Loggind user out from analytics")
+      weUser.logout()
+      //Reset Firebase Analytics User Session Event.
+      FirebaseAnalyticsUtilsHelper.resetIdentifyUser()
+      //End AppsFlyer Analytics User Session Event.
+      AppsFlyerLib.getInstance().setCustomerUserId(null)
+    }
   }
 }
