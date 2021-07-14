@@ -196,8 +196,7 @@
         android:paddingEnd="@dimen/size_10"
         android:paddingBottom="@dimen/size_18">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-          style="@style/match_match">
+        <androidx.appcompat.widget.LinearLayoutCompat style="@style/match_match">
 
           <androidx.appcompat.widget.LinearLayoutCompat
             style="@style/match_wrap"
@@ -211,14 +210,14 @@
 
             <include
               android:id="@+id/service_location"
-              layout="@layout/icon_text_item"
               style="@style/wrap_wrap"
+              layout="@layout/icon_text_item"
               android:layout_marginTop="@dimen/size_2" />
 
             <include
               android:id="@+id/customer"
-              layout="@layout/icon_text_item"
               style="@style/wrap_wrap"
+              layout="@layout/icon_text_item"
               android:layout_marginTop="@dimen/size_2" />
 
             <RelativeLayout

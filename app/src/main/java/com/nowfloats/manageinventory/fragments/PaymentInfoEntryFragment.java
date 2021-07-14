@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.annotation.Nullable;
 
 import android.text.TextUtils;
@@ -58,7 +59,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
 
         setStyle(STYLE_NO_TITLE, 0);
 
-        if(getArguments()!=null) {
+        if (getArguments() != null) {
             mProfile = getArguments().getParcelable("profile");
         }
         mSession = new UserSessionManager(getActivity(), getActivity());
@@ -67,9 +68,9 @@ public class PaymentInfoEntryFragment extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if(activity instanceof  ProfileUpdateCallBack){
+        if (activity instanceof ProfileUpdateCallBack) {
             mProfileCallBack = (ProfileUpdateCallBack) activity;
-        }else {
+        } else {
             throw new RuntimeException(getString(R.string.must_implement_profile_update_callback));
         }
     }
@@ -80,7 +81,6 @@ public class PaymentInfoEntryFragment extends DialogFragment {
         getDialog().getWindow()
                 .setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
     }
-
 
 
     @Override
@@ -100,7 +100,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
 
         rgAccType = (RadioGroup) view.findViewById(R.id.rg_account_type);
 
-        if(mProfile!=null){
+        if (mProfile != null) {
             etName.setText(mProfile.getMerchantName());
             etAccNum.setText(mProfile.getBankAccNum());
             etBankName.setText(mProfile.getBankName());
@@ -108,10 +108,10 @@ public class PaymentInfoEntryFragment extends DialogFragment {
             etPanCard.setText(mProfile.getPanCard());
             etGstn.setText(mProfile.getGstn());
 
-            if(mProfile.getBankAccountType().equalsIgnoreCase("Savings")){
-                ((RadioButton)rgAccType.getChildAt(0)).setChecked(true);
-            }else {
-                ((RadioButton)rgAccType.getChildAt(1)).setChecked(true);
+            if (mProfile.getBankAccountType().equalsIgnoreCase("Savings")) {
+                ((RadioButton) rgAccType.getChildAt(0)).setChecked(true);
+            } else {
+                ((RadioButton) rgAccType.getChildAt(1)).setChecked(true);
             }
         }
 
@@ -133,29 +133,29 @@ public class PaymentInfoEntryFragment extends DialogFragment {
     }
 
     private void saveOrUpdateProfileData() {
-        if(TextUtils.isEmpty(etName.getText().toString().trim())){
+        if (TextUtils.isEmpty(etName.getText().toString().trim())) {
             etName.setError(getString(R.string.name_is_mandatory));
             return;
         }
-        if(TextUtils.isEmpty(etAccNum.getText().toString().trim())){
+        if (TextUtils.isEmpty(etAccNum.getText().toString().trim())) {
             etName.setError(getString(R.string.account_number_is_mandatory));
             return;
         }
-        if(TextUtils.isEmpty(etBankName.getText().toString().trim())){
+        if (TextUtils.isEmpty(etBankName.getText().toString().trim())) {
             etName.setError(getString(R.string.bank_name_is_mandatory));
             return;
         }
-        if(TextUtils.isEmpty(etIfsc.getText().toString().trim())){
+        if (TextUtils.isEmpty(etIfsc.getText().toString().trim())) {
             etName.setError(getString(R.string.ifcs_code_is_mandatory));
             return;
         }
-        if(TextUtils.isEmpty(etPanCard.getText().toString().trim())){
+        if (TextUtils.isEmpty(etPanCard.getText().toString().trim())) {
             etName.setError(getString(R.string.pan_card_is_mandatory));
             return;
         }
-        if(mProfile == null){
+        if (mProfile == null) {
             saveMerchantProfile();
-        }else {
+        } else {
             updateAssuredPurchase();
         }
     }
@@ -175,9 +175,9 @@ public class PaymentInfoEntryFragment extends DialogFragment {
         profile.setPanCard(etPanCard.getText().toString().trim());
         profile.setIfscCode(etIfsc.getText().toString().trim());
 
-        if(rgAccType.getCheckedRadioButtonId() == R.id.rb_savings){
+        if (rgAccType.getCheckedRadioButtonId() == R.id.rb_savings) {
             profile.setBankAccountType(getString(R.string.savings));
-        }else {
+        } else {
             profile.setBankAccountType(getString(R.string.current));
         }
 
@@ -229,12 +229,12 @@ public class PaymentInfoEntryFragment extends DialogFragment {
 
     }
 
-    private void updateAssuredPurchase(){
+    private void updateAssuredPurchase() {
         progressDialog.setMessage(getString(R.string.please_wait_));
         progressDialog.show();
 
         String accType = "Savings";
-        if(rgAccType.getCheckedRadioButtonId() != R.id.rb_savings){
+        if (rgAccType.getCheckedRadioButtonId() != R.id.rb_savings) {
             accType = "Current";
         }
 
@@ -258,7 +258,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
                 merchantProfile.getBankAccountType(),
                 merchantProfile.getPanCard(),
                 merchantProfile.getGstn()
-                ));
+        ));
 
         final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
@@ -302,7 +302,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
 
     }
 
-    public interface ProfileUpdateCallBack{
+    public interface ProfileUpdateCallBack {
         void onProfileUpdated(MerchantProfileModel profile);
     }
 

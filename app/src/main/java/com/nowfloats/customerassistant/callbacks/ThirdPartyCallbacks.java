@@ -8,5 +8,5 @@ import java.util.ArrayList;
 
 public interface ThirdPartyCallbacks {
 
-    void addSuggestions(int type,ArrayList<Integer> positions);
+    void addSuggestions(int type, ArrayList<Integer> positions);
 }

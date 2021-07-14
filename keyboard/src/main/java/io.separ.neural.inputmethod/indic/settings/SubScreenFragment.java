@@ -36,7 +36,7 @@ abstract class SubScreenFragment extends PreferenceFragment
     private OnSharedPreferenceChangeListener mSharedPreferenceChangeListener;
 
     static void setPreferenceEnabled(final String prefKey, final boolean enabled,
-            final PreferenceScreen screen) {
+                                     final PreferenceScreen screen) {
         final Preference preference = screen.findPreference(prefKey);
         if (preference != null) {
             preference.setEnabled(enabled);
@@ -51,10 +51,10 @@ abstract class SubScreenFragment extends PreferenceFragment
     }
 
     static void updateListPreferenceSummaryToCurrentValue(final String prefKey,
-            final PreferenceScreen screen) {
+                                                          final PreferenceScreen screen) {
         // Because the "%s" summary trick of {@link ListPreference} doesn't work properly before
         // KitKat, we need to update the summary programmatically.
-        final ListPreference listPreference = (ListPreference)screen.findPreference(prefKey);
+        final ListPreference listPreference = (ListPreference) screen.findPreference(prefKey);
         if (listPreference == null) {
             return;
         }

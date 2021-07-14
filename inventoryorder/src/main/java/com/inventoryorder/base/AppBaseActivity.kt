@@ -11,7 +11,8 @@ import com.framework.models.BaseViewModel
 import com.inventoryorder.R
 
 
-abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseActivity<Binding, ViewModel>() {
+abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> :
+  BaseActivity<Binding, ViewModel>() {
 
 
   override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,96 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:attrs="http://schemas.android.com/tools"
-    android:id="@+id/cv_confirmation"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:attrs="http://schemas.android.com/tools"
+  android:id="@+id/cv_confirmation"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_marginStart="@dimen/margin_20"
+  android:layout_marginTop="8dp"
+  android:layout_marginEnd="@dimen/margin_20"
+  android:layout_marginBottom="8dp"
+  android:visibility="visible"
+  app:cardBackgroundColor="@color/white"
+  app:cardCornerRadius="7dp">
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginStart="@dimen/margin_20"
-    android:layout_marginEnd="@dimen/margin_20"
-    android:layout_marginTop="8dp"
-    android:visibility="visible"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="7dp">
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rv_carousel"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/margin_30"
+      android:gravity="center" />
+
+    <com.rd.PageIndicatorView
+      android:id="@+id/ps_indicator"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:padding="7dp"
+      app:piv_radius="4dp"
+      app:piv_selectedColor="#80616161"
+      app:piv_unselectedColor="#40616161"
+      attrs:piv_animationType="slide" />
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_marginTop="@dimen/margin_10"
+      android:background="#e3e3e3" />
+
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+      android:id="@+id/llConfirm"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:splitMotionEvents="false"
+      android:visibility="visible">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_carousel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_30"
-            android:gravity="center" />
-
-        <com.rd.PageIndicatorView
-            android:id="@+id/ps_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="7dp"
-            app:piv_radius="4dp"
-            app:piv_selectedColor="#80616161"
-            app:piv_unselectedColor="#40616161"
-            attrs:piv_animationType="slide" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/margin_10"
-            android:background="#e3e3e3" />
+      <TextView
+        android:id="@+id/tv_edit"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="Edit"
+        android:textColor="#80000000" />
 
 
-        <LinearLayout
-            android:id="@+id/llConfirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:splitMotionEvents="false"
-            android:visibility="visible">
+      <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="#e3e3e3" />
 
-            <TextView
-                android:id="@+id/tv_edit"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="Edit"
-                android:textColor="#80000000" />
-
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="#e3e3e3" />
-
-            <TextView
-                android:id="@+id/tv_confirm"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/confirm_"
-                android:textColor="@android:color/black" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvSubmit"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_centerInParent="true"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="@string/confirming"
-            android:textColor="#60000000"
-            android:visibility="gone" />
+      <TextView
+        android:id="@+id/tv_confirm"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/confirm_"
+        android:textColor="@android:color/black" />
     </LinearLayout>
+
+    <TextView
+      android:id="@+id/tvSubmit"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:layout_centerInParent="true"
+      android:background="?attr/selectableItemBackground"
+      android:clickable="true"
+      android:gravity="center"
+      android:text="@string/confirming"
+      android:textColor="#60000000"
+      android:visibility="gone" />
+  </LinearLayout>
 
 
 </androidx.cardview.widget.CardView>

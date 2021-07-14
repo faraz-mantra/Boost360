@@ -26,9 +26,11 @@ class GmbLocationAddDialog : BaseDialogFragment<DialogGmbLocationAddBinding, Bas
     isCancelable = false
     binding?.container?.post {
       (binding?.container?.fadeIn(200L)?.mergeWith(binding?.imageCard?.fadeIn(200L)))
-          ?.andThen(binding?.title?.fadeIn(50L)?.mergeWith(binding?.subTitle?.fadeIn(80L))
-              ?.mergeWith(binding?.desc?.fadeIn(100L)))?.andThen(binding?.confirm?.fadeIn(50L))
-          ?.andThen(binding?.laterBtn?.fadeIn(50L))?.subscribe()
+        ?.andThen(
+          binding?.title?.fadeIn(50L)?.mergeWith(binding?.subTitle?.fadeIn(80L))
+            ?.mergeWith(binding?.desc?.fadeIn(100L))
+        )?.andThen(binding?.confirm?.fadeIn(50L))
+        ?.andThen(binding?.laterBtn?.fadeIn(50L))?.subscribe()
     }
     setOnClickListener(binding?.confirm, binding?.laterBtn)
   }

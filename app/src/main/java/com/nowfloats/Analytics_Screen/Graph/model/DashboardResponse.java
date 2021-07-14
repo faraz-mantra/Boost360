@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Created by Abhi on 11/8/2016.
  */
@@ -25,72 +26,56 @@ public class DashboardResponse {
     private Object referenceId;
 
     /**
-     *
-     * @return
-     * The errorList
+     * @return The errorList
      */
     public List<Object> getErrorList() {
         return errorList;
     }
 
     /**
-     *
-     * @param errorList
-     * The ErrorList
+     * @param errorList The ErrorList
      */
     public void setErrorList(List<Object> errorList) {
         this.errorList = errorList;
     }
 
     /**
-     *
-     * @return
-     * The operationStatus
+     * @return The operationStatus
      */
     public Boolean getOperationStatus() {
         return operationStatus;
     }
 
     /**
-     *
-     * @param operationStatus
-     * The OperationStatus
+     * @param operationStatus The OperationStatus
      */
     public void setOperationStatus(Boolean operationStatus) {
         this.operationStatus = operationStatus;
     }
 
     /**
-     *
-     * @return
-     * The entity
+     * @return The entity
      */
     public List<Entity> getEntity() {
         return entity;
     }
 
     /**
-     *
-     * @param entity
-     * The Entity
+     * @param entity The Entity
      */
     public void setEntity(List<Entity> entity) {
         this.entity = entity;
     }
 
     /**
-     *
-     * @return
-     * The referenceId
+     * @return The referenceId
      */
     public Object getReferenceId() {
         return referenceId;
     }
 
     /**
-     *
-     * @param referenceId
-     * The ReferenceId
+     * @param referenceId The ReferenceId
      */
     public void setReferenceId(Object referenceId) {
         this.referenceId = referenceId;
@@ -106,36 +91,28 @@ public class DashboardResponse {
         private Integer dataCount;
 
         /**
-         *
-         * @return
-         * The createdDate
+         * @return The createdDate
          */
         public String getCreatedDate() {
             return createdDate;
         }
 
         /**
-         *
-         * @param createdDate
-         * The CreatedDate
+         * @param createdDate The CreatedDate
          */
         public void setCreatedDate(String createdDate) {
             this.createdDate = createdDate;
         }
 
         /**
-         *
-         * @return
-         * The dataCount
+         * @return The dataCount
          */
         public Integer getDataCount() {
             return dataCount;
         }
 
         /**
-         *
-         * @param dataCount
-         * The DataCount
+         * @param dataCount The DataCount
          */
         public void setDataCount(Integer dataCount) {
             this.dataCount = dataCount;

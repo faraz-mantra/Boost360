@@ -17,21 +17,21 @@
 */
 -->
 <resources>
-    <!-- Title for Latin keyboard input options dialog [CHAR LIMIT=25] -->
-    <string name="tv_updates">Updates</string>
-    <string name="tv_products">Products</string>
-    <string name="tv_photos">Photos</string>
-    <string name="tv_details">Details</string>
-    <string name="tv_share_link">Share Link</string>
-    <!--
-    <string name="tv_create_offer">Create Offer</string>
-    -->
-    <string name="tv_share">Share</string>
-    <string name="tv_name">Name:</string>
-    <string name="tv_price">Price:</string>
-    <string name="tv_discount">Discount:</string>
-    <string name="tv_description">Description:</string>
-    <string name="deselect_all">Deselect all</string>
-    <string name="tv_done">Done</string>
+  <!-- Title for Latin keyboard input options dialog [CHAR LIMIT=25] -->
+  <string name="tv_updates">Updates</string>
+  <string name="tv_products">Products</string>
+  <string name="tv_photos">Photos</string>
+  <string name="tv_details">Details</string>
+  <string name="tv_share_link">Share Link</string>
+  <!--
+  <string name="tv_create_offer">Create Offer</string>
+  -->
+  <string name="tv_share">Share</string>
+  <string name="tv_name">Name:</string>
+  <string name="tv_price">Price:</string>
+  <string name="tv_discount">Discount:</string>
+  <string name="tv_description">Description:</string>
+  <string name="deselect_all">Deselect all</string>
+  <string name="tv_done">Done</string>
 
 </resources>

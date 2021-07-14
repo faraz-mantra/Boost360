@@ -12,13 +12,13 @@ public class TestimonialData {
     @Expose
     private String title;
 
-    @SerializedName(value = "description",alternate = {"testimonial","ourStory","text"})
+    @SerializedName(value = "description", alternate = {"testimonial", "ourStory", "text"})
     @Expose
     private String description;
-    @SerializedName(value = "username",alternate = {"customerName","name"})
+    @SerializedName(value = "username", alternate = {"customerName", "name"})
     @Expose
     private String username;
-    @SerializedName(value = "profileimage",alternate = {"profileImage","img"})
+    @SerializedName(value = "profileimage", alternate = {"profileImage", "img"})
     @Expose
     private Profileimage profileimage;
 

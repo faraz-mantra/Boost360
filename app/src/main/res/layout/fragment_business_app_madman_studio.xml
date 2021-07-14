@@ -1,126 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
 
-    <!--<TextView
-    android:id="@+id/tv_free"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:text="FREE"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
-    android:paddingEnd="5dp"
-    android:gravity="center_horizontal"
-    android:textColor="@color/white"
-    android:background="@drawable/ribbon_green"
-    android:paddingRight="5dp" />-->
+  <!--<TextView
+  android:id="@+id/tv_free"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_marginTop="10dp"
+  android:text="FREE"
+  android:paddingTop="5dp"
+  android:paddingBottom="5dp"
+  android:paddingEnd="5dp"
+  android:gravity="center_horizontal"
+  android:textColor="@color/white"
+  android:background="@drawable/ribbon_green"
+  android:paddingRight="5dp" />-->
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_height="0dp">
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/studio_architecture"
-                    android:id="@+id/business_app_preview_android_image"
-                    android:layout_gravity="center"
-                    android:layout_height="120dp" />
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:gravity="center"
+      android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="bottom|end"
-                    android:id="@+id/imgview_icon_type"
-                    android:src="@drawable/android_green_padding" />
-            </FrameLayout>
-            <TextView
-                android:id="@+id/app_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="marquee"
-                android:maxLines="1"
-                android:layout_marginEnd="10dp"
-                android:scrollHorizontally="true"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:text="@string/Madman_design_studio"
-                android:layout_marginStart="10dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:background="#F5F5F5"
-            android:id="@+id/comming_soon"
-            android:visibility="gone"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="15sp"
-                android:padding="15dp"
-                android:layout_margin="10dp"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:background="@drawable/gray_round_corner"
-                android:text="@string/coming_soon"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:background="#F5F5F5"
-            android:id="@+id/button_layout"
-            android:layout_height="wrap_content">
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:drawableStart="@drawable/business_white_eye"
-                android:background="@drawable/black_round_corner"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:visibility="visible"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="2.5dp"
-                android:id="@+id/preview_button"
-                android:layout_height="match_parent"
-                android:text="@string/android_app_preview"
-                android:paddingStart="15dp"
-                android:layout_marginStart="10dp" />
+      <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:textSize="12sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp"
-                android:id="@+id/get_app_button"
-                android:drawableStart="@drawable/android_icon_white"
-                android:background="@drawable/black_round_corner"
-                android:textColor="@color/white"
-                android:layout_height="match_parent"
-                android:text="@string/interest"
-                android:textAllCaps="true"
-                android:paddingStart="15dp"
-                android:layout_marginStart="2.5dp"/>
-        </LinearLayout>
+        <ImageView
+          android:id="@+id/business_app_preview_android_image"
+          android:layout_width="120dp"
+          android:layout_height="120dp"
+          android:layout_gravity="center"
+          android:layout_margin="5dp"
+          android:src="@drawable/studio_architecture" />
 
+        <ImageView
+          android:id="@+id/imgview_icon_type"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_gravity="bottom|end"
+          android:src="@drawable/android_green_padding" />
+      </FrameLayout>
+
+      <TextView
+        android:id="@+id/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:text="@string/Madman_design_studio" />
     </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/comming_soon"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="#F5F5F5"
+      android:visibility="gone">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/gray_round_corner"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="@string/coming_soon"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/button_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="#F5F5F5">
+
+      <Button
+        android:id="@+id/preview_button"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="2.5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/black_round_corner"
+        android:drawableStart="@drawable/business_white_eye"
+        android:paddingStart="15dp"
+        android:text="@string/android_app_preview"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="visible" />
+
+      <Button
+        android:id="@+id/get_app_button"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="2.5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/black_round_corner"
+        android:drawableStart="@drawable/android_icon_white"
+        android:paddingStart="15dp"
+        android:text="@string/interest"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+    </LinearLayout>
+
+  </LinearLayout>
 </RelativeLayout>

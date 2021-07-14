@@ -18,16 +18,24 @@ object FacebookGraphManager {
   }
 
   interface GraphRequestUserAccountCallback {
-    fun onCompleted(type: FacebookGraphRequestType, facebookGraphResponse: BaseFacebookGraphResponse?)
+    fun onCompleted(
+      type: FacebookGraphRequestType,
+      facebookGraphResponse: BaseFacebookGraphResponse?
+    )
   }
 
-  fun getProfilePictureUrl(id: String, type: ProfilePictureType = ProfilePictureType.Square): String {
+  fun getProfilePictureUrl(
+    id: String,
+    type: ProfilePictureType = ProfilePictureType.Square
+  ): String {
     return "https://graph.facebook.com/v6.0/$id/picture?type=${type.name.toLowerCase()}"
   }
 
   fun requestUserPages(accessToken: AccessToken?, callback: GraphRequestUserAccountCallback) {
-    val request = GraphRequest.newGraphPathRequest(accessToken,
-            FacebookGraphPath.USER_PAGES) { graphResponse ->
+    val request = GraphRequest.newGraphPathRequest(
+      accessToken,
+      FacebookGraphPath.USER_PAGES
+    ) { graphResponse ->
 
       val response = try {
         Gson().fromJson(graphResponse.rawResponse, FacebookGraphUserPagesResponse::class.java)
@@ -40,7 +48,11 @@ object FacebookGraphManager {
     request.executeAsync()
   }
 
-  fun requestUserPublicDetails(accessToken: AccessToken?, userId: String, callback: GraphRequestUserAccountCallback) {
+  fun requestUserPublicDetails(
+    accessToken: AccessToken?,
+    userId: String,
+    callback: GraphRequestUserAccountCallback
+  ) {
     val request = GraphRequest.newGraphPathRequest(accessToken, userId) { graphResponse ->
       val response = try {
         Gson().fromJson(graphResponse.rawResponse, FacebookGraphUserDetailsResponse::class.java)

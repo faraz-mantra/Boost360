@@ -30,7 +30,7 @@ public class ServiceQuerySearchTask extends BaseQuerySearchTask {
                 location = SmartLocation.with(context).location().getLastLocation();
                 if (LatLngUtils.isEmpty(location))
                     SmartLocation.with(context).location().oneFix().start(null);
-            }catch (Exception ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }

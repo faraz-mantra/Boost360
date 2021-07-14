@@ -5,7 +5,7 @@ package com.nowfloats.webactions.models;
  */
 
 public class WebActionUpdateValue<T> {
-    private  T value;
+    private T value;
 
     public WebActionUpdateValue(T value) {
         this.value = value;

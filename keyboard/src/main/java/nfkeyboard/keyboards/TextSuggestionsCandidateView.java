@@ -2,7 +2,9 @@ package nfkeyboard.keyboards;
 
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;

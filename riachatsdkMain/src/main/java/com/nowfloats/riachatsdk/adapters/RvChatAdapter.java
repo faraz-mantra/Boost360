@@ -11,10 +11,12 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
+
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -73,30 +75,12 @@ import java.util.regex.Pattern;
 
 public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public enum SectionTypeEnum {
-
-        Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7),
-        Carousel(8), Typing(9), Card(10), AddressCard(11), UnConfirmedCard(12), UnConfirmedAddressCard(13), PrintOTP(14), SubmitForm(15);
-
-        private final int val;
-
-        private SectionTypeEnum(int val) {
-            this.val = val;
-        }
-
-        public int getValue() {
-            return val;
-        }
-    }
-
     private int MAX_CARD_COUNT = 6;
-
     private List<Section> mChatSections;
     private Map<String, String> mDataMap;
     private Context mContext;
     private IConfirmationCallback mConfirmationCallback;
     private float MAX_WIDTH, TARGET_WIDTH, TARGET_HEIGHT;
-
     public RvChatAdapter(List<Section> mChatSections, Map<String, String> dataMap, Context context) {
         this.mChatSections = mChatSections;
         this.mDataMap = dataMap;
@@ -317,15 +301,11 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         cardViewHolder.llConfirm.setVisibility(View.GONE);
                         cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
 
-                        if (fpTagChecker)
-                        {
+                        if (fpTagChecker) {
                             mConfirmationCallback.onCardResponse(Constants.ConfirmationType.FP_TAG_CONFIRM, mChatSections.get(position).getCardModel().getButtons().get(0),
                                     cardViewHolder.tvConfirmationText.getText().toString(),
                                     mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
-                        }
-
-                        else
-                        {
+                        } else {
                             mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME, mChatSections.get(position).getCardModel().getButtons().get(0),
                                     cardViewHolder.tvConfirmationText.getText().toString(),
                                     mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
@@ -343,15 +323,11 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         cardViewHolder.llConfirm.setVisibility(View.GONE);
                         cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
 
-                        if(fpTagChecker)
-                        {
+                        if (fpTagChecker) {
                             mConfirmationCallback.onCardResponse(Constants.ConfirmationType.FP_TAG_EDIT, mChatSections.get(position).getCardModel().getButtons().get(1),
                                     cardViewHolder.tvConfirmationText.getText().toString(),
                                     mChatSections.get(position).getCardModel().getButtons().get(1).getNextNodeId());
-                        }
-
-                        else
-                        {
+                        } else {
                             mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME, mChatSections.get(position).getCardModel().getButtons().get(1),
                                     cardViewHolder.tvConfirmationText.getText().toString(),
                                     mChatSections.get(position).getCardModel().getButtons().get(1).getNextNodeId());
@@ -726,7 +702,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     }
 
 
-
                     @Override
                     public void onBitmapFailed(Exception e, Drawable errorDrawable) {
                         imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
@@ -1017,38 +992,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return mChatSections.size();
     }
 
-    private class HeaderViewHolder extends RecyclerView.ViewHolder {
-
-        TextView tvDateTime;
-
-
-        public HeaderViewHolder(View itemView) {
-            super(itemView);
-            tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
-        }
-    }
-
-
-    private class ImageViewHolder extends RecyclerView.ViewHolder {
-
-        TextView tvImageTitle, tvDateTime;
-        ImageView ivMainImage;
-        TextView tvImageCaption;
-        ProgressBar pbLoading;
-
-
-        public ImageViewHolder(View itemView) {
-            super(itemView);
-
-            tvImageTitle = (TextView) itemView.findViewById(R.id.tv_title);
-            ivMainImage = (ImageView) itemView.findViewById(R.id.iv_main_row_image);
-            tvImageCaption = (TextView) itemView.findViewById(R.id.tv_caption);
-            pbLoading = (ProgressBar) itemView.findViewById(R.id.pb_loading);
-            tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
-
-        }
-    }
-
     protected void makeLinkClickable(SpannableStringBuilder sp, CharSequence charSequence) {
 
         URLSpan[] spans = sp.getSpans(0, charSequence.length(), URLSpan.class);
@@ -1073,11 +1016,71 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     }
 
+    private String getParsedPrefixPostfixText(String text) {
+        if (text == null)
+            return null;
+        Matcher m = Pattern.compile("\\[~(.*?)\\]").matcher(text);
+        while (m.find()) {
+            if (mDataMap.get(m.group()) != null) {
+                text = text.replace(m.group(), mDataMap.get(m.group()));
+            }
+        }
+        return text;
+    }
+
+
+    public enum SectionTypeEnum {
+
+        Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7),
+        Carousel(8), Typing(9), Card(10), AddressCard(11), UnConfirmedCard(12), UnConfirmedAddressCard(13), PrintOTP(14), SubmitForm(15);
+
+        private final int val;
+
+        private SectionTypeEnum(int val) {
+            this.val = val;
+        }
+
+        public int getValue() {
+            return val;
+        }
+    }
+
+    private class HeaderViewHolder extends RecyclerView.ViewHolder {
+
+        TextView tvDateTime;
+
+
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
+            tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
+        }
+    }
+
+    private class ImageViewHolder extends RecyclerView.ViewHolder {
+
+        TextView tvImageTitle, tvDateTime;
+        ImageView ivMainImage;
+        TextView tvImageCaption;
+        ProgressBar pbLoading;
+
+
+        public ImageViewHolder(View itemView) {
+            super(itemView);
+
+            tvImageTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            ivMainImage = (ImageView) itemView.findViewById(R.id.iv_main_row_image);
+            tvImageCaption = (TextView) itemView.findViewById(R.id.tv_caption);
+            pbLoading = (ProgressBar) itemView.findViewById(R.id.pb_loading);
+            tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
+
+        }
+    }
+
     public class TextViewHolder extends RecyclerView.ViewHolder {
 
+        public LinearLayout llBubbleContainer;
         TextView tvMessageText, tvDateTime;
         View itemView;
-        public LinearLayout llBubbleContainer;
 
         public TextViewHolder(View itemView) {
             super(itemView);
@@ -1310,8 +1313,8 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public class TypingViewHolder extends RecyclerView.ViewHolder {
-        AVLoadingIndicatorView ldiDots;
         public RelativeLayout rlLoadingDots;
+        AVLoadingIndicatorView ldiDots;
 
         public TypingViewHolder(View itemView) {
             super(itemView);
@@ -1326,19 +1329,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
             }
         }
-    }
-
-
-    private String getParsedPrefixPostfixText(String text) {
-        if (text == null)
-            return null;
-        Matcher m = Pattern.compile("\\[~(.*?)\\]").matcher(text);
-        while (m.find()) {
-            if (mDataMap.get(m.group()) != null) {
-                text = text.replace(m.group(), mDataMap.get(m.group()));
-            }
-        }
-        return text;
     }
 
     private class CarouselViewHolder extends RecyclerView.ViewHolder {

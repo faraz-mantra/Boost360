@@ -9,15 +9,26 @@ import java.util.ArrayList;
  * Created by Admin on 21-03-2018.
  */
 
-public class OnBoardingModel implements Parcelable{
+public class OnBoardingModel implements Parcelable {
 
+    public static final Creator<OnBoardingModel> CREATOR = new Creator<OnBoardingModel>() {
+        @Override
+        public OnBoardingModel createFromParcel(Parcel in) {
+            return new OnBoardingModel(in);
+        }
+
+        @Override
+        public OnBoardingModel[] newArray(int size) {
+            return new OnBoardingModel[size];
+        }
+    };
     private ArrayList<ScreenData> screenDataArrayList;
-
     private int toBeCompletePos = -1;
 
-    public OnBoardingModel(){
+    public OnBoardingModel() {
 
     }
+
     protected OnBoardingModel(Parcel in) {
         screenDataArrayList = in.createTypedArrayList(ScreenData.CREATOR);
         toBeCompletePos = in.readInt();
@@ -34,20 +45,12 @@ public class OnBoardingModel implements Parcelable{
         return 0;
     }
 
-    public static final Creator<OnBoardingModel> CREATOR = new Creator<OnBoardingModel>() {
-        @Override
-        public OnBoardingModel createFromParcel(Parcel in) {
-            return new OnBoardingModel(in);
-        }
-
-        @Override
-        public OnBoardingModel[] newArray(int size) {
-            return new OnBoardingModel[size];
-        }
-    };
-
     public ArrayList<ScreenData> getScreenDataArrayList() {
         return screenDataArrayList;
+    }
+
+    public void setScreenDataArrayList(ArrayList<ScreenData> screenDataArrayList) {
+        this.screenDataArrayList = screenDataArrayList;
     }
 
     public int getToBeCompletePos() {
@@ -58,20 +61,24 @@ public class OnBoardingModel implements Parcelable{
         this.toBeCompletePos = toBeCompletePos;
     }
 
-    public void setScreenDataArrayList(ArrayList<ScreenData> screenDataArrayList) {
-        this.screenDataArrayList = screenDataArrayList;
-    }
+    public static class ScreenData implements Parcelable {
 
+        public static final Creator<ScreenData> CREATOR = new Creator<ScreenData>() {
+            @Override
+            public ScreenData createFromParcel(Parcel in) {
+                return new ScreenData(in);
+            }
 
-    public static class ScreenData implements Parcelable{
-
+            @Override
+            public ScreenData[] newArray(int size) {
+                return new ScreenData[size];
+            }
+        };
         public String key;
-
         public boolean isComplete;
+        public String value = "";
 
-        public String value="";
-
-        public ScreenData(){
+        public ScreenData() {
 
         }
 
@@ -92,18 +99,6 @@ public class OnBoardingModel implements Parcelable{
         public int describeContents() {
             return 0;
         }
-
-        public static final Creator<ScreenData> CREATOR = new Creator<ScreenData>() {
-            @Override
-            public ScreenData createFromParcel(Parcel in) {
-                return new ScreenData(in);
-            }
-
-            @Override
-            public ScreenData[] newArray(int size) {
-                return new ScreenData[size];
-            }
-        };
 
         public String getKey() {
             return key;

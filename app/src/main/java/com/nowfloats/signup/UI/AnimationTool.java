@@ -21,11 +21,6 @@ public class AnimationTool {
     private Activity mContext;
     private boolean isVisible;
 
-    public interface AnimationListener {
-        void onAnimationEnd(AnimationType animationType);
-        void onAnimationStart(AnimationType animationType);
-    }
-
     public AnimationTool(Activity mContext) {
         this.mContext = mContext;
     }
@@ -44,6 +39,12 @@ public class AnimationTool {
 
     public void setListener(AnimationListener animationListener) {
         this.animationListener = animationListener;
+    }
+
+    public interface AnimationListener {
+        void onAnimationEnd(AnimationType animationType);
+
+        void onAnimationStart(AnimationType animationType);
     }
 
     public class AnimationComposer implements Animation.AnimationListener {

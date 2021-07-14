@@ -4,87 +4,87 @@ package com.onboarding.nowfloats.bottomsheet.util
 class ObservableList<T> : ArrayList<T> {
 
 
-    companion object {
-        inline fun <reified T> build(builderAction: ObservableList<T> .() -> Unit)
-                : ObservableList<T> =
-                ObservableList<T>().apply(builderAction)
+  companion object {
+    inline fun <reified T> build(builderAction: ObservableList<T> .() -> Unit)
+        : ObservableList<T> =
+      ObservableList<T>().apply(builderAction)
 
-    }
+  }
 
-    constructor(listener: DataCahngedListener<T>? = null) : super() {
-        this.listener = listener
-    }
+  constructor(listener: DataCahngedListener<T>? = null) : super() {
+    this.listener = listener
+  }
 
-    constructor(c: MutableCollection<out T>) : super(c)
+  constructor(c: MutableCollection<out T>) : super(c)
 
-    var listener: DataCahngedListener<T>? = null
+  var listener: DataCahngedListener<T>? = null
 
-    override fun clear() {
-        super.clear()
-        listener?.onClear()
-    }
+  override fun clear() {
+    super.clear()
+    listener?.onClear()
+  }
 
-    override fun addAll(elements: Collection<T>): Boolean {
-        val r = super.addAll(elements)
-        if (r) listener?.onAddAll(elements)
-        return r
-    }
+  override fun addAll(elements: Collection<T>): Boolean {
+    val r = super.addAll(elements)
+    if (r) listener?.onAddAll(elements)
+    return r
+  }
 
-    override fun removeAll(elements: Collection<T>): Boolean {
-        val r = super.removeAll(elements)
-        if (r) listener?.onRemove(elements)
-        return r
-    }
+  override fun removeAll(elements: Collection<T>): Boolean {
+    val r = super.removeAll(elements)
+    if (r) listener?.onRemove(elements)
+    return r
+  }
 
-    override fun add(element: T): Boolean {
-        val r = super.add(element)
-        if (r) listener?.onAdd(element)
-        return r
-    }
+  override fun add(element: T): Boolean {
+    val r = super.add(element)
+    if (r) listener?.onAdd(element)
+    return r
+  }
 
-    override fun removeRange(fromIndex: Int, toIndex: Int) {
-        super.removeRange(fromIndex, toIndex)
-        listener?.onRemoveRange(fromIndex, toIndex)
-    }
+  override fun removeRange(fromIndex: Int, toIndex: Int) {
+    super.removeRange(fromIndex, toIndex)
+    listener?.onRemoveRange(fromIndex, toIndex)
+  }
 
-    override fun add(index: Int, element: T) {
-        super.add(index, element)
-        listener?.onAdd(index, element)
-    }
+  override fun add(index: Int, element: T) {
+    super.add(index, element)
+    listener?.onAdd(index, element)
+  }
 
-    override fun remove(element: T): Boolean {
-        val r = super.remove(element)
-        listener?.onRemove(element)
-        return r
-    }
+  override fun remove(element: T): Boolean {
+    val r = super.remove(element)
+    listener?.onRemove(element)
+    return r
+  }
 
-    override fun set(index: Int, element: T): T {
-        val r = super.set(index, element)
-        listener?.onSet(index, element)
-        return r
-    }
+  override fun set(index: Int, element: T): T {
+    val r = super.set(index, element)
+    listener?.onSet(index, element)
+    return r
+  }
 
-    override fun removeAt(index: Int): T {
-        val r = super.removeAt(index)
-        listener?.onRemoveAt(index)
-        return r
-    }
+  override fun removeAt(index: Int): T {
+    val r = super.removeAt(index)
+    listener?.onRemoveAt(index)
+    return r
+  }
 
 }
 
 interface DataCahngedListener<T> {
-    fun onClear() {}
+  fun onClear() {}
 
-    fun onAddAll(elements: Collection<T>)
+  fun onAddAll(elements: Collection<T>)
 
-    fun onRemove(elements: Collection<T>)
-    fun onRemove(elements: T)
+  fun onRemove(elements: Collection<T>)
+  fun onRemove(elements: T)
 
-    fun onAdd(element: T)
-    fun onAdd(index: Int, element: T)
+  fun onAdd(element: T)
+  fun onAdd(index: Int, element: T)
 
-    fun onRemoveRange(fromIndex: Int, toIndex: Int)
+  fun onRemoveRange(fromIndex: Int, toIndex: Int)
 
-    fun onSet(index: Int, element: T)
-    fun onRemoveAt(index: Int)
+  fun onSet(index: Int, element: T)
+  fun onRemoveAt(index: Int)
 }

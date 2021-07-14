@@ -28,7 +28,7 @@ public final class DownloadManagerCompatUtils {
 
     public static DownloadManager.Request setAllowedOverMetered(
             final DownloadManager.Request request, final boolean allowOverMetered) {
-        return (DownloadManager.Request)CompatUtils.invoke(request,
+        return (DownloadManager.Request) CompatUtils.invoke(request,
                 request /* default return value */, METHOD_setAllowedOverMetered, allowOverMetered);
     }
 

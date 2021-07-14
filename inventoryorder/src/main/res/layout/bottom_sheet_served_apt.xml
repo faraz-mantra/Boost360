@@ -94,7 +94,7 @@
         android:textAllCaps="true"
         android:textColor="@color/pinkish_grey"
         app:fontFamily="@font/semi_bold"
-        app:textType="BODY_1"/>
+        app:textType="BODY_1" />
 
       <com.framework.views.customViews.CustomButton
         android:id="@+id/buttonDone"

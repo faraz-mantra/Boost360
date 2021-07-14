@@ -2,10 +2,12 @@ package com.nowfloats.Analytics_Screen;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -59,19 +61,18 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
 
 
     private static final int SUBSCRIBER_REQUEST_CODE = 221;
+    ArrayList<SubscriberModel> mSubscriberList = new ArrayList<>();
+    SubscribersAdapter mSubscriberAdapter;
+    TextView titleTextView;
+    AutoCompleteTextView searchEditText;
+    ImageView deleteImage, searchImage;
+    LinearLayout emptyLayout;
     private UserSessionManager mSessionManager;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private Toolbar toolbar;
-    ArrayList<SubscriberModel> mSubscriberList = new ArrayList<>();
-    SubscribersAdapter mSubscriberAdapter;
     private LinearLayoutManager mLayoutManager;
     private boolean stop;
-    TextView titleTextView;
-    AutoCompleteTextView searchEditText;
-    ImageView deleteImage, searchImage;
-
-    LinearLayout emptyLayout;
     private int itemClicked = -1;
 
     @Override
@@ -237,7 +238,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
             public void success(String s, Response response) {
                 mProgressBar.setVisibility(View.GONE);
                 if (response.getStatus() == 200 || response.getStatus() == 201 || response.getStatus() == 202) {
-                    WebEngageController.trackEvent(ADD_SUBSCRIBER,ADDED,TO_BE_ADDED);
+                    WebEngageController.trackEvent(ADD_SUBSCRIBER, ADDED, TO_BE_ADDED);
                     mSubscriberList.clear();
                     mSubscriberAdapter.notifyDataSetChanged();
                     getSubscribersList();
@@ -255,7 +256,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 Log.v("ggg", error.getMessage());
                 mProgressBar.setVisibility(View.GONE);
                 Methods.showSnackBarNegative(SubscribersActivity.this, getString(R.string.something_went_wrong_try_again));
-                WebEngageController.trackEvent(ADD_SUBSCRIBER_FAILED,ERROR_SUBSCRIBER,mSessionManager.getFpTag());
+                WebEngageController.trackEvent(ADD_SUBSCRIBER_FAILED, ERROR_SUBSCRIBER, mSessionManager.getFpTag());
             }
         });
     }

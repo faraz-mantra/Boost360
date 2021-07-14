@@ -30,6 +30,15 @@ import io.separ.neural.inputmethod.annotations.UsedForTesting;
 @UsedForTesting
 public final class LocaleSpanCompatUtils {
     private static final String TAG = LocaleSpanCompatUtils.class.getSimpleName();
+    private static final Class<?> LOCALE_SPAN_TYPE;
+    private static final Constructor<?> LOCALE_SPAN_CONSTRUCTOR;
+    private static final Method LOCALE_SPAN_GET_LOCALE;
+
+    static {
+        LOCALE_SPAN_TYPE = getLocaleSpanClass();
+        LOCALE_SPAN_CONSTRUCTOR = CompatUtils.getConstructor(LOCALE_SPAN_TYPE, Locale.class);
+        LOCALE_SPAN_GET_LOCALE = CompatUtils.getMethod(LOCALE_SPAN_TYPE, "getLocale");
+    }
 
     // Note that LocaleSpan(Locale locale) has been introduced in API level 17
     // (Build.VERSION_CODE.JELLY_BEAN_MR1).
@@ -39,14 +48,6 @@ public final class LocaleSpanCompatUtils {
         } catch (ClassNotFoundException e) {
             return null;
         }
-    }
-    private static final Class<?> LOCALE_SPAN_TYPE;
-    private static final Constructor<?> LOCALE_SPAN_CONSTRUCTOR;
-    private static final Method LOCALE_SPAN_GET_LOCALE;
-    static {
-        LOCALE_SPAN_TYPE = getLocaleSpanClass();
-        LOCALE_SPAN_CONSTRUCTOR = CompatUtils.getConstructor(LOCALE_SPAN_TYPE, Locale.class);
-        LOCALE_SPAN_GET_LOCALE = CompatUtils.getMethod(LOCALE_SPAN_TYPE, "getLocale");
     }
 
     @UsedForTesting
@@ -68,14 +69,15 @@ public final class LocaleSpanCompatUtils {
      * Ensures that the specified range is covered with only one {@link LocaleSpan} with the given
      * locale. If the region is already covered by one or more {@link LocaleSpan}, their ranges are
      * updated so that each character has only one locale.
+     *
      * @param spannable the spannable object to be updated.
-     * @param start the start index from which {@link LocaleSpan} is attached (inclusive).
-     * @param end the end index to which {@link LocaleSpan} is attached (exclusive).
-     * @param locale the locale to be attached to the specified range.
+     * @param start     the start index from which {@link LocaleSpan} is attached (inclusive).
+     * @param end       the end index to which {@link LocaleSpan} is attached (exclusive).
+     * @param locale    the locale to be attached to the specified range.
      */
     @UsedForTesting
     public static void updateLocaleSpan(final Spannable spannable, final int start,
-            final int end, final Locale locale) {
+                                        final int end, final Locale locale) {
         if (end < start) {
             Log.e(TAG, "Invalid range: start=" + start + " end=" + end);
             return;
@@ -158,7 +160,7 @@ public final class LocaleSpanCompatUtils {
     }
 
     private static void removeLocaleSpanFromRange(final Object localeSpan,
-            final Spannable spannable, final int removeStart, final int removeEnd) {
+                                                  final Spannable spannable, final int removeStart, final int removeEnd) {
         if (!isLocaleSpanAvailable()) {
             return;
         }
@@ -200,13 +202,13 @@ public final class LocaleSpanCompatUtils {
     }
 
     private static int getSpanFlag(final int originalFlag,
-            final boolean isStartExclusive, final boolean isEndExclusive) {
+                                   final boolean isStartExclusive, final boolean isEndExclusive) {
         return (originalFlag & ~Spannable.SPAN_POINT_MARK_MASK) |
                 getSpanPointMarkFlag(isStartExclusive, isEndExclusive);
     }
 
     private static int getSpanPointMarkFlag(final boolean isStartExclusive,
-            final boolean isEndExclusive) {
+                                            final boolean isEndExclusive) {
         if (isStartExclusive) {
             if (isEndExclusive) {
                 return Spannable.SPAN_EXCLUSIVE_EXCLUSIVE;

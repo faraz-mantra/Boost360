@@ -10,26 +10,6 @@ import android.os.Parcelable;
 
 public class ChatConfig implements Parcelable {
 
-    public Bitmap botImage;
-    public String botName = "Ria";
-    public String chatBgColor = "#ffffff";
-    public String botBubbleColor = "#ffb900";
-    public String userBubbleColor = "#FAFAFA";
-    public String chatTextColor = "#808080";
-
-    public ChatConfig(){
-
-    }
-
-    protected ChatConfig(Parcel in) {
-        botImage = in.readParcelable(getClass().getClassLoader());
-        botName = in.readString();
-        chatBgColor = in.readString();
-        botBubbleColor = in.readString();
-        userBubbleColor = in.readString();
-        chatTextColor = in.readString();
-    }
-
     public static final Creator<ChatConfig> CREATOR = new Creator<ChatConfig>() {
         @Override
         public ChatConfig createFromParcel(Parcel in) {
@@ -41,6 +21,25 @@ public class ChatConfig implements Parcelable {
             return new ChatConfig[size];
         }
     };
+    public Bitmap botImage;
+    public String botName = "Ria";
+    public String chatBgColor = "#ffffff";
+    public String botBubbleColor = "#ffb900";
+    public String userBubbleColor = "#FAFAFA";
+    public String chatTextColor = "#808080";
+
+    public ChatConfig() {
+
+    }
+
+    protected ChatConfig(Parcel in) {
+        botImage = in.readParcelable(getClass().getClassLoader());
+        botName = in.readString();
+        chatBgColor = in.readString();
+        botBubbleColor = in.readString();
+        userBubbleColor = in.readString();
+        chatTextColor = in.readString();
+    }
 
     @Override
     public int describeContents() {

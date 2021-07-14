@@ -20,44 +20,78 @@ import java.util.HashMap
 object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBaseLocalService>() {
 
   fun isMobileIsRegistered(number: Long?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.checkIfMobileNumberIsRegistered(number, clientId = clientId), TaskCode.CHECK_MOBILE_IS_REGISTERED)
+    return makeRemoteRequest(
+      remoteDataSource.checkIfMobileNumberIsRegistered(
+        number,
+        clientId = clientId
+      ), TaskCode.CHECK_MOBILE_IS_REGISTERED
+    )
   }
 
   fun connectUserProfile(userProfileRequest: CreateProfileRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.connectUserProfile(userProfileRequest), TaskCode.CONNECT_USER_PROFILE)
+    return makeRemoteRequest(
+      remoteDataSource.connectUserProfile(userProfileRequest),
+      TaskCode.CONNECT_USER_PROFILE
+    )
   }
 
   fun createUserProfile(userProfileRequest: CreateProfileRequest?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.createUserProfile(userProfileRequest), TaskCode.CREATE_USER_PROFILE)
+    return makeRemoteRequest(
+      remoteDataSource.createUserProfile(userProfileRequest),
+      TaskCode.CREATE_USER_PROFILE
+    )
   }
 
   fun getFpDetailsByPhone(number: Long?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getFpDetailsByPhone(number, clientId = clientId), TaskCode.GET_FP_DETAILS_BY_PHONE)
+    return makeRemoteRequest(
+      remoteDataSource.getFpDetailsByPhone(number, clientId = clientId),
+      TaskCode.GET_FP_DETAILS_BY_PHONE
+    )
   }
 
   fun sendOtpIndia(number: Long?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.sendOtpIndia(number, clientId = clientId), TaskCode.SEND_OTP_INDIA)
+    return makeRemoteRequest(
+      remoteDataSource.sendOtpIndia(number, clientId = clientId),
+      TaskCode.SEND_OTP_INDIA
+    )
   }
 
   fun verifyOtp(number: String?, otp: String?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.verifyOtp(number, otp, clientId = clientId), TaskCode.VERIFY_OTP)
+    return makeRemoteRequest(
+      remoteDataSource.verifyOtp(number, otp, clientId = clientId),
+      TaskCode.VERIFY_OTP
+    )
   }
 
   fun verifyLoginOtp(number: String?, otp: String?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.verifyLoginOtp(number, otp, clientId = clientId), TaskCode.VERIFY_LOGIN_OTP)
+    return makeRemoteRequest(
+      remoteDataSource.verifyLoginOtp(number, otp, clientId = clientId),
+      TaskCode.VERIFY_LOGIN_OTP
+    )
   }
 
   fun createAccessToken(request: AccessTokenRequest?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.createAccessToken(request), TaskCode.ACCESS_TOKEN_CREATE)
+    return makeRemoteRequest(
+      remoteDataSource.createAccessToken(request),
+      TaskCode.ACCESS_TOKEN_CREATE
+    )
   }
 
 
   fun getFpListForRegisteredNumber(number: String?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getFpListForRegisteredMobile(number, clientId = clientId), TaskCode.GET_FP_LIST_FOR_REGISTERED_NUMBER)
+    return makeRemoteRequest(
+      remoteDataSource.getFpListForRegisteredMobile(
+        number,
+        clientId = clientId
+      ), TaskCode.GET_FP_LIST_FOR_REGISTERED_NUMBER
+    )
   }
 
   fun verifyUserProfile(request: UserProfileVerificationRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.verifyUserProfile(request), TaskCode.VERIFY_USER_PROFILE)
+    return makeRemoteRequest(
+      remoteDataSource.verifyUserProfile(request),
+      TaskCode.VERIFY_USER_PROFILE
+    )
   }
 
   fun forgotPassword(request: ForgotPassRequest): Observable<BaseResponse> {
@@ -67,8 +101,9 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   fun getFpDetails(fpId: String, map: Map<String, String>): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getFpDetails(fpId, map), TaskCode.GET_FP_USER_DETAILS)
   }
-  fun post_RegisterRia(@Body map: HashMap<String?, String?>?): Observable<BaseResponse>{
-    return makeRemoteRequest(remoteDataSource.post_RegisterRia(map),TaskCode.REGISTER_RIA);
+
+  fun post_RegisterRia(@Body map: HashMap<String?, String?>?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.post_RegisterRia(map), TaskCode.REGISTER_RIA);
   }
 
   override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {

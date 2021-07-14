@@ -4,56 +4,58 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <data />
-<FrameLayout
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    android:id="@+id/staff_list_swipe_refresh"
+
+  <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+      android:id="@+id/staff_list_swipe_refresh"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical">
+      android:layout_height="match_parent">
 
-      <com.framework.views.viewgroups.BaseRecyclerView
-        android:id="@+id/rv_staff_list"
+      <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/size_30"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:itemCount="6"
-        tools:listitem="@layout/recycler_item_staff_listing" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-      <include
-        android:id="@+id/service_empty"
-        layout="@layout/fragment_service_listing_empty"
-        android:visibility="gone" />
-      <include
-        android:id="@+id/staff_empty"
-        layout="@layout/fragment_staff_listing_empty"
-        android:visibility="gone" />
+        <com.framework.views.viewgroups.BaseRecyclerView
+          android:id="@+id/rv_staff_list"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:clipToPadding="false"
+          android:orientation="vertical"
+          android:paddingBottom="@dimen/size_30"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior"
+          tools:itemCount="6"
+          tools:listitem="@layout/recycler_item_staff_listing" />
+
+        <include
+          android:id="@+id/service_empty"
+          layout="@layout/fragment_service_listing_empty"
+          android:visibility="gone" />
+
+        <include
+          android:id="@+id/staff_empty"
+          layout="@layout/fragment_staff_listing_empty"
+          android:visibility="gone" />
 
 
+        <ProgressBar
+          android:id="@+id/progress"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:indeterminate="true"
+          android:theme="@style/progressBar" />
+      </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-      <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:theme="@style/progressBar" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-  <include
-    android:id="@+id/staff_lock"
-    layout="@layout/staff_lock_view"
-    android:visibility="gone" />
-</FrameLayout>
+    <include
+      android:id="@+id/staff_lock"
+      layout="@layout/staff_lock_view"
+      android:visibility="gone" />
+  </FrameLayout>
 
 </layout>

@@ -16,17 +16,17 @@ import java.io.InputStreamReader;
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
     public static final String COL_WORD = "word";
     public static final String COL_COUNT = "count";
+    public static final String FTS_VIRTUAL_TABLE = "FTS";
     private static final String TAG = "DictionaryDatabase";
     private static final String DATABASE_NAME = "DICTIONARY";
-    public static final String FTS_VIRTUAL_TABLE = "FTS";
     private static final int DATABASE_VERSION = 1;
-    private final Context mHelperContext;
-    private static String WORD = "word=";
     private static final String FTS_TABLE_CREATE =
             "CREATE VIRTUAL TABLE " + FTS_VIRTUAL_TABLE +
                     " USING fts3 (" +
                     COL_WORD + ", " +
                     COL_COUNT + ")";
+    private static String WORD = "word=";
+    private final Context mHelperContext;
     private SQLiteDatabase mDatabase;
 
     DatabaseOpenHelper(Context context) {

@@ -12,8 +12,10 @@ import android.widget.RelativeLayout
 import com.framework.R
 import com.framework.views.dotsindicator.BaseDotsIndicator.Type.DEFAULT
 
-open class DotsIndicator @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
-                                              defStyleAttr: Int = 0) : BaseDotsIndicator(context, attrs, defStyleAttr) {
+open class DotsIndicator @JvmOverloads constructor(
+  context: Context, attrs: AttributeSet? = null,
+  defStyleAttr: Int = 0
+) : BaseDotsIndicator(context, attrs, defStyleAttr) {
 
   companion object {
     const val DEFAULT_WIDTH_FACTOR = 2.5f
@@ -103,7 +105,8 @@ open class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attr
       override fun onPageScrolled(selectedPosition: Int, nextPosition: Int, positionOffset: Float) {
         val selectedDot = dots[selectedPosition]
         // Selected dot
-        val selectedDotWidth = (dotsSize + dotsSize * (dotsWidthFactor - 1) * (1 - positionOffset)).toInt()
+        val selectedDotWidth =
+          (dotsSize + dotsSize * (dotsWidthFactor - 1) * (1 - positionOffset)).toInt()
         selectedDot.setWidth(selectedDotWidth)
 
         if (dots.isInBounds(nextPosition)) {
@@ -116,10 +119,14 @@ open class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attr
           val nextDotBackground = nextDot.background as DotsGradientDrawable
 
           if (selectedDotColor != dotsColor) {
-            val selectedColor = argbEvaluator.evaluate(positionOffset, selectedDotColor,
-                dotsColor) as Int
-            val nextColor = argbEvaluator.evaluate(positionOffset, dotsColor,
-                selectedDotColor) as Int
+            val selectedColor = argbEvaluator.evaluate(
+              positionOffset, selectedDotColor,
+              dotsColor
+            ) as Int
+            val nextColor = argbEvaluator.evaluate(
+              positionOffset, dotsColor,
+              selectedDotColor
+            ) as Int
 
             nextDotBackground.setColor(nextColor)
 

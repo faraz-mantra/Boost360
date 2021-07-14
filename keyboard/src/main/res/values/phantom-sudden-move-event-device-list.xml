@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2012, The Android Open Source Project
@@ -18,10 +17,10 @@
 */
 -->
 <resources>
-    <string-array name="phantom_sudden_move_event_device_list" translatable="false">
-        <!-- "Build condition,true" that needs "phantom sudden move event" hack.
-             See {@link com.android.inputmethod.keyboard.PointerTracker}. -->
-        <!-- Xoom -->
-        <item>HARDWARE=stingray,true</item>
-    </string-array>
+  <string-array name="phantom_sudden_move_event_device_list" translatable="false">
+    <!-- "Build condition,true" that needs "phantom sudden move event" hack.
+         See {@link com.android.inputmethod.keyboard.PointerTracker}. -->
+    <!-- Xoom -->
+    <item>HARDWARE=stingray,true</item>
+  </string-array>
 </resources>

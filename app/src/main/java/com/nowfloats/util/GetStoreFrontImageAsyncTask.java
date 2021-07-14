@@ -24,151 +24,31 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 public final class GetStoreFrontImageAsyncTask extends AsyncTask<Void, String, String> {
-	public String url;
-	private Activity appContext 		= null;
-	private String response 			= "";
-	private String imageUrl			= "";
-	private String callInitiatedFrom	= "";
-	ImageView iv ;
-	ProgressDialog pd;
-	LinearLayout websiteScreen,detailsScreen;
-	
-	public GetStoreFrontImageAsyncTask(Activity context , String imageUrl,String callInitiatedFrom) {
-		this.appContext 		= context;
-		this.imageUrl 			= imageUrl;
-		this.callInitiatedFrom 	= callInitiatedFrom;
-		}
-	
-	public GetStoreFrontImageAsyncTask(Activity context , String imageUrl) {
-		this.appContext 		= context;
-		this.imageUrl 			= imageUrl;
-		}
-	
-	public GetStoreFrontImageAsyncTask(Activity context , String imageUrl,ImageView iv) {
-		this.appContext 		= context;
-		this.imageUrl 			= imageUrl;
-		this.iv 				= iv;
-		}
-	@Override
-	protected void onPreExecute() {
-		pd= ProgressDialog.show(appContext, null, "getting your store image...");
-		pd.setCancelable(true);
-	}
+    public String url;
+    ImageView iv;
+    ProgressDialog pd;
+    LinearLayout websiteScreen, detailsScreen;
+    private Activity appContext = null;
+    private String response = "";
+    private String imageUrl = "";
+    private String callInitiatedFrom = "";
 
-	@Override
-	protected void onPostExecute(String abc) {
-      if(pd!=null){
-		pd.dismiss();
-      }
-		if (!Util.isNullOrEmpty(abc)) {
-			if (iv != null) {
-				Bitmap bmp = BitmapFactory.decodeFile(abc);
-				iv.setImageBitmap(bmp);
-				iv.invalidate();
-			}
-		} else {
-			
-		}
+    public GetStoreFrontImageAsyncTask(Activity context, String imageUrl, String callInitiatedFrom) {
+        this.appContext = context;
+        this.imageUrl = imageUrl;
+        this.callInitiatedFrom = callInitiatedFrom;
+    }
 
-	}
+    public GetStoreFrontImageAsyncTask(Activity context, String imageUrl) {
+        this.appContext = context;
+        this.imageUrl = imageUrl;
+    }
 
-	@Override
-	protected String doInBackground(Void... params) {
-		String img_path = "";
-		try {
-			String serverUri = Constants.NOW_FLOATS_API_URL+"/"+imageUrl;
-			Bitmap response = null;
-			DefaultHttpClient client = new DefaultHttpClient();		
-				HttpGet httpGet = new HttpGet(serverUri);
-				HttpResponse execute = client.execute(httpGet);
-				InputStream content = execute.getEntity().getContent();
-				response = BitmapFactory.decodeStream(content);
-                Log.d("Downloaded Image"," Image Saved : "+response);
-			if (response != null) {
-				 img_path = saveBitmap(response);
-
-                
-			}			
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return img_path;
-	}
-	public JSONArray getJsonArray(JSONObject store,String key)
-	{
-		JSONArray val = new JSONArray();
-		if(checkForNull(store,key))
-		{
-			try {
-				val = store.getJSONArray(key);
-				if(val.length()!=0)
-				{
-					
-				}
-			} catch (JSONException e) {
-				
-				e.printStackTrace();
-			}
-		}
-		
-		return val;
-		
-	}
-	public boolean checkForNull(JSONObject store,String key)
-	{
-		boolean flag = true;
-		
-		try {
-			String str = store.getString(key);
-			if(str.equals("null")||str.equals("NULL")||str.length() == 0)
-			{
-				flag = false;
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-			flag = false;
-		}
-		
-		return flag;
-	}
-	public String saveBitmap(Bitmap bitmap) 
-	{
-		String imgpath = "";
-		try 
-		{
-			String baseName = imageUrl;
-			if(baseName.contains("FP/Logos/Actual/"))
-			{
-				baseName = baseName.replace("FP/Logos/Actual/", "");
-			}
-			else
-			{
-				baseName = baseName.replace("FP/Tile/", "");
-			}
-			
-			File pictureDir = new File(Util.getAppPicDir());
-			pictureDir.mkdirs();
-            Log.d("Dir Picture ","pictureDir : "+pictureDir);
-			File f = new File(pictureDir, baseName);
-            Log.d("Dir Picture ","pictureDir : "+f.getPath()+" , "+f);
-			if (!f.exists()) 
-			{
-				FileOutputStream fos = new FileOutputStream(f);
-				bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fos);
-				fos.flush();
-				fos.close();
-				imgpath = f.getAbsolutePath();
-			}
-
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-        Log.d("Download Image","downloaded Image path : "+imgpath);
-		return imgpath;
-	}
+    public GetStoreFrontImageAsyncTask(Activity context, String imageUrl, ImageView iv) {
+        this.appContext = context;
+        this.imageUrl = imageUrl;
+        this.iv = iv;
+    }
 
     public static String getAppPicDir() {
         String tempDir = null;
@@ -178,5 +58,115 @@ public final class GetStoreFrontImageAsyncTask extends AsyncTask<Void, String, S
         tempDir = pictureDir.getAbsolutePath();
         return tempDir;
     }
-	
+
+    @Override
+    protected void onPreExecute() {
+        pd = ProgressDialog.show(appContext, null, "getting your store image...");
+        pd.setCancelable(true);
+    }
+
+    @Override
+    protected void onPostExecute(String abc) {
+        if (pd != null) {
+            pd.dismiss();
+        }
+        if (!Util.isNullOrEmpty(abc)) {
+            if (iv != null) {
+                Bitmap bmp = BitmapFactory.decodeFile(abc);
+                iv.setImageBitmap(bmp);
+                iv.invalidate();
+            }
+        } else {
+
+        }
+
+    }
+
+    @Override
+    protected String doInBackground(Void... params) {
+        String img_path = "";
+        try {
+            String serverUri = Constants.NOW_FLOATS_API_URL + "/" + imageUrl;
+            Bitmap response = null;
+            DefaultHttpClient client = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(serverUri);
+            HttpResponse execute = client.execute(httpGet);
+            InputStream content = execute.getEntity().getContent();
+            response = BitmapFactory.decodeStream(content);
+            Log.d("Downloaded Image", " Image Saved : " + response);
+            if (response != null) {
+                img_path = saveBitmap(response);
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return img_path;
+    }
+
+    public JSONArray getJsonArray(JSONObject store, String key) {
+        JSONArray val = new JSONArray();
+        if (checkForNull(store, key)) {
+            try {
+                val = store.getJSONArray(key);
+                if (val.length() != 0) {
+
+                }
+            } catch (JSONException e) {
+
+                e.printStackTrace();
+            }
+        }
+
+        return val;
+
+    }
+
+    public boolean checkForNull(JSONObject store, String key) {
+        boolean flag = true;
+
+        try {
+            String str = store.getString(key);
+            if (str.equals("null") || str.equals("NULL") || str.length() == 0) {
+                flag = false;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            flag = false;
+        }
+
+        return flag;
+    }
+
+    public String saveBitmap(Bitmap bitmap) {
+        String imgpath = "";
+        try {
+            String baseName = imageUrl;
+            if (baseName.contains("FP/Logos/Actual/")) {
+                baseName = baseName.replace("FP/Logos/Actual/", "");
+            } else {
+                baseName = baseName.replace("FP/Tile/", "");
+            }
+
+            File pictureDir = new File(Util.getAppPicDir());
+            pictureDir.mkdirs();
+            Log.d("Dir Picture ", "pictureDir : " + pictureDir);
+            File f = new File(pictureDir, baseName);
+            Log.d("Dir Picture ", "pictureDir : " + f.getPath() + " , " + f);
+            if (!f.exists()) {
+                FileOutputStream fos = new FileOutputStream(f);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+                fos.flush();
+                fos.close();
+                imgpath = f.getAbsolutePath();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.d("Download Image", "downloaded Image path : " + imgpath);
+        return imgpath;
+    }
+
 }

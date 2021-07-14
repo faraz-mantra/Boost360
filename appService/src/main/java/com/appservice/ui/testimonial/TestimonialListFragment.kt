@@ -55,15 +55,18 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
         data?.token?.let { headerToken = it }
         val query = JSONObject()
         query.put("WebsiteId", fpTag)
-        hitApi(viewModel?.getTestimonialsList(headerToken, testimonialType, query, 0, 10000), R.string.error_getting_web_action)
+        hitApi(
+          viewModel?.getTestimonialsList(headerToken, testimonialType, query, 0, 10000),
+          R.string.error_getting_web_action
+        )
       }
       TaskCode.GET_TESTIMONIAL.ordinal -> {
         val response = (it as? TestimonialDataResponse)
-        if (response?.data.isNullOrEmpty().not()){
+        if (response?.data.isNullOrEmpty().not()) {
           binding?.emptyLayout?.gone()
           binding?.rvTestimonial?.visible()
           setTestimonialAdapter(response?.data!!)
-        }else{
+        } else {
           binding?.rvTestimonial?.gone()
           binding?.emptyLayout?.visible()
         }
@@ -88,7 +91,12 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
     return when (item.itemId) {
       R.id.menu_add -> {
         val bundle: Bundle = Bundle.EMPTY
-        startTestimonialFragmentActivity(FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT, bundle, clearTop = false, isResult = true)
+        startTestimonialFragmentActivity(
+          FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT,
+          bundle,
+          clearTop = false,
+          isResult = true
+        )
         true
       }
       else -> super.onOptionsItemSelected(item)

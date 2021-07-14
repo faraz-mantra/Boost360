@@ -8,31 +8,31 @@
     android:background="@android:color/transparent">
 
     <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tvTitle"
-        style="@style/match_wrap"
-        android:layout_marginStart="@dimen/size_20"
-        android:layout_marginBottom="@dimen/size_8"
-        android:text="@string/send_feedback_form"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:textType="HEADING_4"
-        tools:ignore="RtlSymmetry"
-        tools:textColor="@color/dimgray" />
+      android:id="@+id/tvTitle"
+      style="@style/match_wrap"
+      android:layout_marginStart="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_8"
+      android:text="@string/send_feedback_form"
+      android:textColor="@color/white"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:textType="HEADING_4"
+      tools:ignore="RtlSymmetry"
+      tools:textColor="@color/dimgray" />
 
     <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tvSubTitle"
-        style="@style/BottomSheetSubTitleTextStyle"
-        android:layout_marginStart="@dimen/size_20"
-        android:layout_marginBottom="@dimen/size_8"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        tools:text="@string/tools_text_appointment_id"
-        tools:textColor="@color/dimgray" />
+      android:id="@+id/tvSubTitle"
+      style="@style/BottomSheetSubTitleTextStyle"
+      android:layout_marginStart="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_8"
+      android:textColor="@color/white"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+      tools:text="@string/tools_text_appointment_id"
+      tools:textColor="@color/dimgray" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/coordinatorLayoutBottomSheet"
@@ -65,16 +65,16 @@
           android:layout_marginTop="@dimen/size_10"
           android:layout_marginEnd="@dimen/size_20"
           android:background="@drawable/bg_rect_edit_txt"
+          android:gravity="top|left"
           android:hint="@string/type_if_there_are_any_feedback"
-          android:padding="@dimen/size_12"
           android:lines="6"
-          android:minLines="4"
           android:maxLines="10"
-            android:gravity="top|left"
-            android:textCursorDrawable="@drawable/color_cursor"
+          android:minLines="4"
+          android:padding="@dimen/size_12"
           android:scrollbars="vertical"
           android:textColor="@color/warm_grey_10"
           android:textColorHint="@color/primary_grey"
+          android:textCursorDrawable="@drawable/color_cursor"
           tools:ignore="UnusedAttribute" />
 
         <com.framework.views.customViews.CustomTextView
@@ -119,10 +119,10 @@
         android:textColor="@color/white" />
 
       <com.framework.views.customViews.CustomButton
-          android:id="@+id/buttonDone"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:text="@string/request_feedback"
-          android:textColor="@color/white" />
+        android:id="@+id/buttonDone"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:text="@string/request_feedback"
+        android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

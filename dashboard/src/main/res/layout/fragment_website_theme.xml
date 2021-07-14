@@ -317,7 +317,7 @@
 
         </com.framework.views.customViews.CustomCardView>
 
-        <com.framework.views.customViews.CustomCardView
+        <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/customCardView7"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -349,7 +349,7 @@
               />
 
           </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.framework.views.customViews.CustomCardView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
 
       </androidx.constraintlayout.widget.ConstraintLayout>

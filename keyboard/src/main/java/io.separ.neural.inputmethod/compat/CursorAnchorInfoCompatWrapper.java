@@ -55,6 +55,7 @@ public final class CursorAnchorInfoCompatWrapper {
     private static final CompatUtils.ToIntMethodWrapper sGetInsertionMarkerFlagsMethod;
 
     private static final int INVALID_TEXT_INDEX = -1;
+
     static {
         sCursorAnchorInfoClass = CompatUtils.getClassWrapper(
                 "android.view.inputmethod.CursorAnchorInfo");
@@ -83,11 +84,6 @@ public final class CursorAnchorInfoCompatWrapper {
                 "getInsertionMarkerFlags", 0);
     }
 
-    @UsedForTesting
-    public boolean isAvailable() {
-        return sCursorAnchorInfoClass.exists() && mInstance != null;
-    }
-
     private final Object mInstance;
 
     private CursorAnchorInfoCompatWrapper(final Object instance) {
@@ -102,13 +98,14 @@ public final class CursorAnchorInfoCompatWrapper {
         return new CursorAnchorInfoCompatWrapper(instance);
     }
 
-    private static final class FakeHolder {
-        static final CursorAnchorInfoCompatWrapper sInstance = new CursorAnchorInfoCompatWrapper(null);
-    }
-
     @UsedForTesting
     public static CursorAnchorInfoCompatWrapper getFake() {
         return FakeHolder.sInstance;
+    }
+
+    @UsedForTesting
+    public boolean isAvailable() {
+        return sCursorAnchorInfoClass.exists() && mInstance != null;
     }
 
     public int getSelectionStart() {
@@ -157,5 +154,9 @@ public final class CursorAnchorInfoCompatWrapper {
 
     public int getInsertionMarkerFlags() {
         return sGetInsertionMarkerFlagsMethod.invoke(mInstance);
+    }
+
+    private static final class FakeHolder {
+        static final CursorAnchorInfoCompatWrapper sInstance = new CursorAnchorInfoCompatWrapper(null);
     }
 }

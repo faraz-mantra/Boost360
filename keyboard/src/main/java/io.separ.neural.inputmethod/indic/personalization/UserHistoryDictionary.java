@@ -45,7 +45,7 @@ public class UserHistoryDictionary extends DecayingExpandableBinaryDictionaryBas
 
     @UsedForTesting
     public static UserHistoryDictionary getDictionary(final Context context, final Locale locale,
-            final File dictFile, final String dictNamePrefix) {
+                                                      final File dictFile, final String dictNamePrefix) {
         return PersonalizationHelper.getUserHistoryDictionary(context, locale);
     }
 
@@ -53,15 +53,15 @@ public class UserHistoryDictionary extends DecayingExpandableBinaryDictionaryBas
      * Add a word to the user history dictionary.
      *
      * @param userHistoryDictionary the user history dictionary
-     * @param prevWordsInfo the information of previous words
-     * @param word the word the user inputted
-     * @param isValid whether the word is valid or not
-     * @param timestamp the timestamp when the word has been inputted
-     * @param distracterFilter the filter to check whether the word is a distracter
+     * @param prevWordsInfo         the information of previous words
+     * @param word                  the word the user inputted
+     * @param isValid               whether the word is valid or not
+     * @param timestamp             the timestamp when the word has been inputted
+     * @param distracterFilter      the filter to check whether the word is a distracter
      */
     public static void addToDictionary(final ExpandableBinaryDictionary userHistoryDictionary,
-            final PrevWordsInfo prevWordsInfo, final String word, final boolean isValid,
-            final int timestamp, final DistracterFilter distracterFilter) {
+                                       final PrevWordsInfo prevWordsInfo, final String word, final boolean isValid,
+                                       final int timestamp, final DistracterFilter distracterFilter) {
         final CharSequence prevWord = prevWordsInfo.mPrevWordsInfo[0].mWord;
         if (word.length() > Constants.DICTIONARY_MAX_WORD_LENGTH ||
                 (prevWord != null && prevWord.length() > Constants.DICTIONARY_MAX_WORD_LENGTH)) {

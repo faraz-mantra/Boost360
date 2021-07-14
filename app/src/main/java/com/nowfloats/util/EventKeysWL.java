@@ -1,23 +1,22 @@
 package com.nowfloats.util;
 
-public interface EventKeysWL
-{
-    String PRE_SIGNUP_SCREEN_ONE			=	"PRESIGNUPSCREENONE";
+public interface EventKeysWL {
+    String PRE_SIGNUP_SCREEN_ONE = "PRESIGNUPSCREENONE";
 
-    String PRE_SIGNUP_SCREEN_TWO			=	"PRESIGNUPSCREENTWO";
+    String PRE_SIGNUP_SCREEN_TWO = "PRESIGNUPSCREENTWO";
 
-    String PRE_SIGNUP_SCREEN_THREE			=	"PRESIGNUPSCREENTHREE";
+    String PRE_SIGNUP_SCREEN_THREE = "PRESIGNUPSCREENTHREE";
 
-    String PRE_SIGNUP_SCREEN_FOUR			=	"PRESIGNUPSCREENFOUR";
+    String PRE_SIGNUP_SCREEN_FOUR = "PRESIGNUPSCREENFOUR";
 
-    String PRE_SIGNUP_SCREEN_FIVE			=	"PRESIGNUPSCREENFIVE";
+    String PRE_SIGNUP_SCREEN_FIVE = "PRESIGNUPSCREENFIVE";
 
-    String PRE_SIGNUP_SCREEN_SIX			=	"PRESIGNUPSCREENSIX";
+    String PRE_SIGNUP_SCREEN_SIX = "PRESIGNUPSCREENSIX";
 
-    String PRE_SIGNUP_SCREEN_SEVEN			=	"PRESIGNUPSCREENSEVEN";
+    String PRE_SIGNUP_SCREEN_SEVEN = "PRESIGNUPSCREENSEVEN";
 
     String CREATE_WEBSITE_BUTTON = "SignUpWithEmail";
-    String FACEBOOK_ANAYTICS="FacebookAnalytics";
+    String FACEBOOK_ANAYTICS = "FacebookAnalytics";
     String LOGIN_BUTTON = "Login";
     String LOGIN_SCREEN_FORGOT_PWD = "ForgotPassword";
     String SIGNUP_NEXT = "SignupNextButton";
@@ -94,9 +93,9 @@ public interface EventKeysWL
     String SITE_SCORE_SHARE = "SiteScoreShare";
     String SELF_NAME = "Name";
 
-    String WELCOME_SCREEN_1 =  "WelcomeScreenOne";
-    String WELCOME_SCREEN_2 =  "WelcomeScreenTwo";
-    String WELCOME_SCREEN_3 =  "WelcomeScreenThree";
+    String WELCOME_SCREEN_1 = "WelcomeScreenOne";
+    String WELCOME_SCREEN_2 = "WelcomeScreenTwo";
+    String WELCOME_SCREEN_3 = "WelcomeScreenThree";
 
 
     String STORE_USER_INDIA = "StoreUserIndia";
@@ -111,13 +110,13 @@ public interface EventKeysWL
     String GET_FP_FAILURE_EVENT = "GetFPFail";
     String STORE_IN_APP_PURCHASE_PACKAGE_ACTIVATION = "InAppPurchasePackageActivation";
 
-    String PRODUCT_GALLERY_ADD ="AddProduct";
+    String PRODUCT_GALLERY_ADD = "AddProduct";
     String PRODUCT_GALLERY_DELETE = "DeleteProduct";
     String PRODUCT_GALLERY_UPDATEIMAGE = "UpdateProductImage";
-    String PRODUCT_GALLERY_UPDATE= "UpdateProduct";
+    String PRODUCT_GALLERY_UPDATE = "UpdateProduct";
 
     String BUY_NOW_STORE_CLICKED = "InitiatePayment";
-    String PAYMENT_SUCCESSFULL  = "PaymentSuccess";
+    String PAYMENT_SUCCESSFULL = "PaymentSuccess";
     String NOTIFICATION_CLICKED = "NotificationClicked";
     String SIDE_PANEL_ABOUT = "SidePanelAbout";
     String SIDE_PANEL_MANAGE_CONTENT = "SidePanelManageContent";
@@ -140,7 +139,7 @@ public interface EventKeysWL
     // PRODUCT_GALLERY_
 
     ////// Product Gallery
-   // String
+    // String
 
 
     // String SELECT_FACEBOOK_

@@ -19,7 +19,7 @@ import java.net.URLEncoder;
 public class PlacesTask extends AsyncTask<String, Void, String> {
     Activity activity;
 
-    public PlacesTask(Activity act){
+    public PlacesTask(Activity act) {
         activity = act;
     }
 
@@ -33,7 +33,7 @@ public class PlacesTask extends AsyncTask<String, Void, String> {
 //        String key = "key=AIzaSyAOs1F-vvt8y8OI_owV-14d2U6C2zFTdcI";
         /*Live key*/
         String key = "key=AIzaSyDEYXNicTu6UPd0-68OdMDGZZtUi3FWNlM";
-        String input="";
+        String input = "";
 
         try {
             input = "input=" + URLEncoder.encode(place[0], "utf-8");
@@ -49,28 +49,30 @@ public class PlacesTask extends AsyncTask<String, Void, String> {
         String sensor = "sensor=false";
 
         // Building the parameters to the web service
-        String parameters = input+"&"+types+"&"+sensor+"&"+key;
+        String parameters = input + "&" + types + "&" + sensor + "&" + key;
 
         // Output format
         String output = "json";
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/place/autocomplete/"+output+"?"+parameters;
+        String url = "https://maps.googleapis.com/maps/api/place/autocomplete/" + output + "?" + parameters;
 
-        try{
+        try {
             // Fetching the data from web service in background
             data = downloadUrl(url);
-        }catch(Exception e){
+        } catch (Exception e) {
             Log.d("Background Task", e.toString());
         }
         return data;
     }
 
-    /** A method to download json data from url */
+    /**
+     * A method to download json data from url
+     */
     private String downloadUrl(String strUrl) throws IOException {
         String data = "";
         InputStream iStream = null;
         HttpURLConnection urlConnection = null;
-        try{
+        try {
             URL url = new URL(strUrl);
 
             // Creating an http connection to communicate with url
@@ -83,20 +85,20 @@ public class PlacesTask extends AsyncTask<String, Void, String> {
             iStream = urlConnection.getInputStream();
 
             BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-            StringBuffer sb  = new StringBuffer();
+            StringBuffer sb = new StringBuffer();
 
             String line = "";
-            while( ( line = br.readLine())  != null){
+            while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
 
             data = sb.toString();
-            Log.d("VAL--",""+data);
+            Log.d("VAL--", "" + data);
             br.close();
 
-        }catch(Exception e){
+        } catch (Exception e) {
             Log.d("Exception downloading", e.toString());
-        }finally{
+        } finally {
             iStream.close();
             urlConnection.disconnect();
         }

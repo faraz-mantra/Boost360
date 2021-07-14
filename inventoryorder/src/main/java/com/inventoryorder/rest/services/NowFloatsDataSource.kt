@@ -13,15 +13,15 @@ import retrofit2.http.Query
 
 interface NowFloatsDataSource {
 
-    @GET(EndPoints.GET_SEARCH_LISTING)
-    fun getSearchListing(
-            @Query("fpTag") fpTag: String?,
-            @Query("fpId") fpId: String?,
-            @Query("searchString") searchString: String?,
-            @Query("offset") offset: Int?,
-            @Query("limit") limit: Int?,
-    ): Observable<Response<GetServiceListingResponse>>
+  @GET(EndPoints.GET_SEARCH_LISTING)
+  fun getSearchListing(
+    @Query("fpTag") fpTag: String?,
+    @Query("fpId") fpId: String?,
+    @Query("searchString") searchString: String?,
+    @Query("offset") offset: Int?,
+    @Query("limit") limit: Int?,
+  ): Observable<Response<GetServiceListingResponse>>
 
-    @POST(EndPoints.GET_BOOKING_SLOTS)
-    fun getBookingSlots(@Body request: BookingSlotsRequest?): Observable<Response<BookingSlotResponse>>
+  @POST(EndPoints.GET_BOOKING_SLOTS)
+  fun getBookingSlots(@Body request: BookingSlotsRequest?): Observable<Response<BookingSlotResponse>>
 }

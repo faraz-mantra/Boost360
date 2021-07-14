@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="account_settings">
-        <item>@drawable/ic_your_plan</item>
-        <item>@drawable/icon_change_password</item>
-        <item>@drawable/icon_logout</item>
-    </array>
-    <array name="about_sidepanel">
-        <item>@drawable/ic_nowfloats_gray</item>
-        <item>@drawable/ic_faq</item>
-        <item>@drawable/ic_facebook_circle</item>
-        <item>@drawable/ic_twitter_circle</item>
-        <item>@drawable/ic_rate_us</item>
-        <item>@drawable/ic_term_cond</item>
-        <item>@drawable/ic_privacy</item>
-    </array>
+  <array name="account_settings">
+    <item>@drawable/ic_your_plan</item>
+    <item>@drawable/icon_change_password</item>
+    <item>@drawable/icon_logout</item>
+  </array>
+  <array name="about_sidepanel">
+    <item>@drawable/ic_nowfloats_gray</item>
+    <item>@drawable/ic_faq</item>
+    <item>@drawable/ic_facebook_circle</item>
+    <item>@drawable/ic_twitter_circle</item>
+    <item>@drawable/ic_rate_us</item>
+    <item>@drawable/ic_term_cond</item>
+    <item>@drawable/ic_privacy</item>
+  </array>
 
-    <array name="manage_content_sidepanel">
-        <item>@drawable/ic_manage_business</item>
-        <item>@drawable/ic_about</item>
-        <item>@drawable/ic_image_gallery</item>
-        <item>@drawable/ic_custom_pages</item>
-    </array>
+  <array name="manage_content_sidepanel">
+    <item>@drawable/ic_manage_business</item>
+    <item>@drawable/ic_about</item>
+    <item>@drawable/ic_image_gallery</item>
+    <item>@drawable/ic_custom_pages</item>
+  </array>
 </resources>

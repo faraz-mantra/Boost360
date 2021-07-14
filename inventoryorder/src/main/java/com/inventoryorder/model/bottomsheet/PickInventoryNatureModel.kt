@@ -6,10 +6,11 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PickInventoryNatureModel(var inventoryName: String? = null,
-                               var inventoryDescription: String? = null,
-                               var type: String? = null,
-                               var isSelected: Boolean = false
+class PickInventoryNatureModel(
+  var inventoryName: String? = null,
+  var inventoryDescription: String? = null,
+  var type: String? = null,
+  var isSelected: Boolean = false
 ) : AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
@@ -30,17 +31,36 @@ class PickInventoryNatureModel(var inventoryName: String? = null,
 
   fun getData(): ArrayList<PickInventoryNatureModel> {
     val list = ArrayList<PickInventoryNatureModel>()
-    list.add(PickInventoryNatureModel("Physical product", "Can be packaged and shipped to buyer. E.g. book, watch, toy, garment.",
-        InventoryType.PRODUCTS.name, true))
+    list.add(
+      PickInventoryNatureModel(
+        "Physical product", "Can be packaged and shipped to buyer. E.g. book, watch, toy, garment.",
+        InventoryType.PRODUCTS.name, true
+      )
+    )
 
-    list.add(PickInventoryNatureModel("Service offering", "Tasks that are performed by individuals for the benefit of others. E.g. therapy, training, financial consultation.",
-        InventoryType.SERVICES.name))
+    list.add(
+      PickInventoryNatureModel(
+        "Service offering",
+        "Tasks that are performed by individuals for the benefit of others. E.g. therapy, training, financial consultation.",
+        InventoryType.SERVICES.name
+      )
+    )
 
-    list.add(PickInventoryNatureModel("Booking based inventory", "Cases where payment is made against time. e.g.: hotel room, studio on rent, doctor consultation.",
-        InventoryType.BOOKINGS.name))
+    list.add(
+      PickInventoryNatureModel(
+        "Booking based inventory",
+        "Cases where payment is made against time. e.g.: hotel room, studio on rent, doctor consultation.",
+        InventoryType.BOOKINGS.name
+      )
+    )
 
-    list.add(PickInventoryNatureModel("Digital asset", "Can be downloaded as a digital file. e.g.: PDF, e-book, digital course, documents, design files.",
-        InventoryType.DIGITAL.name))
+    list.add(
+      PickInventoryNatureModel(
+        "Digital asset",
+        "Can be downloaded as a digital file. e.g.: PDF, e-book, digital course, documents, design files.",
+        InventoryType.DIGITAL.name
+      )
+    )
     return list
   }
 
@@ -58,7 +78,8 @@ class PickInventoryNatureModel(var inventoryName: String? = null,
     PRODUCTS("products"), SERVICES("services"), BOOKINGS("bookings"), DIGITAL("digital");
 
     companion object {
-      fun fromName(name: String): InventoryType? = values().firstOrNull { it.name.toLowerCase(Locale.ROOT) == name.toLowerCase(Locale.ROOT) }
+      fun fromName(name: String): InventoryType? =
+        values().firstOrNull { it.name.toLowerCase(Locale.ROOT) == name.toLowerCase(Locale.ROOT) }
     }
   }
 

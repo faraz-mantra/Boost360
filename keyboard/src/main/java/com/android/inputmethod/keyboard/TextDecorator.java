@@ -46,32 +46,48 @@ public class TextDecorator {
     private static final int MODE_MONITOR = 0;
     private static final int MODE_WAITING_CURSOR_INDEX = 1;
     private static final int MODE_SHOWING_INDICATOR = 2;
+    private final static Listener EMPTY_LISTENER = new Listener() {
+        @Override
+        public void onClickComposingTextToAddToDictionary(final String word) {
+        }
+    };
+    private final static TextDecoratorUiOperator EMPTY_UI_OPERATOR = new TextDecoratorUiOperator() {
+        @Override
+        public void disposeUi() {
+        }
 
+        @Override
+        public void hideUi() {
+        }
+
+        @Override
+        public void setOnClickListener(Runnable listener) {
+        }
+
+        @Override
+        public void layoutUi(Matrix matrix, RectF composingTextBounds, boolean useRtlLayout) {
+        }
+    };
+    private final RectF mComposingTextBoundsForLastComposingText = new RectF();
+    @Nonnull
+    private final Listener mListener;
+    private final LayoutInvalidator mLayoutInvalidator = new LayoutInvalidator(this);
     private int mMode = MODE_MONITOR;
-
     private String mLastComposingText = null;
     private boolean mHasRtlCharsInLastComposingText = false;
-    private final RectF mComposingTextBoundsForLastComposingText = new RectF();
-
     private boolean mIsFullScreenMode = false;
     private String mWaitingWord = null;
+    private final Runnable mDefaultOnClickHandler = new Runnable() {
+        @Override
+        public void run() {
+            onClickIndicator();
+        }
+    };
     private int mWaitingCursorStart = INVALID_CURSOR_INDEX;
     private int mWaitingCursorEnd = INVALID_CURSOR_INDEX;
     private CursorAnchorInfoCompatWrapper mCursorAnchorInfoWrapper = null;
-
-    @Nonnull
-    private final Listener mListener;
-
     @Nonnull
     private TextDecoratorUiOperator mUiOperator = EMPTY_UI_OPERATOR;
-
-    public interface Listener {
-        /**
-         * Called when the user clicks the indicator to add the word into the dictionary.
-         * @param word the word which the user clicked on.
-         */
-        void onClickComposingTextToAddToDictionary(final String word);
-    }
 
     public TextDecorator(final Listener listener) {
         mListener = (listener != null) ? listener : EMPTY_LISTENER;
@@ -80,6 +96,7 @@ public class TextDecorator {
     /**
      * Sets the UI operator for {@link TextDecorator}. Any user visible operations will be
      * delegated to the associated UI operator.
+     *
      * @param uiOperator the UI operator to be associated.
      */
     public void setUiOperator(final TextDecoratorUiOperator uiOperator) {
@@ -87,13 +104,6 @@ public class TextDecorator {
         mUiOperator = uiOperator;
         mUiOperator.setOnClickListener(mDefaultOnClickHandler);
     }
-
-    private final Runnable mDefaultOnClickHandler = new Runnable() {
-        @Override
-        public void run() {
-            onClickIndicator();
-        }
-    };
 
     @UsedForTesting
     final Runnable getOnClickHandler() {
@@ -103,13 +113,13 @@ public class TextDecorator {
     /**
      * Shows the "Add to dictionary" indicator and associates it with associating the given word.
      *
-     * @param word the word which should be associated with the indicator. This object will be
-     * passed back in {@link Listener#onClickComposingTextToAddToDictionary(String)}.
+     * @param word           the word which should be associated with the indicator. This object will be
+     *                       passed back in {@link Listener#onClickComposingTextToAddToDictionary(String)}.
      * @param selectionStart the cursor index (inclusive) when the indicator should be displayed.
-     * @param selectionEnd the cursor index (exclusive) when the indicator should be displayed.
+     * @param selectionEnd   the cursor index (exclusive) when the indicator should be displayed.
      */
     public void showAddToDictionaryIndicator(final String word, final int selectionStart,
-            final int selectionEnd) {
+                                             final int selectionEnd) {
         mWaitingWord = word;
         mWaitingCursorStart = selectionStart;
         mWaitingCursorEnd = selectionEnd;
@@ -119,8 +129,9 @@ public class TextDecorator {
 
     /**
      * Must be called when the input method is about changing to for from the full screen mode.
+     *
      * @param fullScreenMode {@code true} if the input method is entering the full screen mode.
-     * {@code false} is the input method is finishing the full screen mode.
+     *                       {@code false} is the input method is finishing the full screen mode.
      */
     public void notifyFullScreenMode(final boolean fullScreenMode) {
         final boolean fullScreenModeChanged = (mIsFullScreenMode != fullScreenMode);
@@ -148,6 +159,7 @@ public class TextDecorator {
      * <p>CAVEAT: Currently the input method author is responsible for ignoring
      * {@link InputMethodService#onUpdateCursorAnchorInfo(CursorAnchorInfo)} called in full screen
      * mode.</p>
+     *
      * @param info the compatibility wrapper object for the received {@link CursorAnchorInfo}.
      */
     public void onUpdateCursorAnchorInfo(final CursorAnchorInfoCompatWrapper info) {
@@ -171,7 +183,6 @@ public class TextDecorator {
     private void layoutLater() {
         mLayoutInvalidator.invalidateLayout();
     }
-
 
     private void layoutImmediately() {
         // Clear pending layout requests.
@@ -294,18 +305,42 @@ public class TextDecorator {
         mListener.onClickComposingTextToAddToDictionary(mWaitingWord);
     }
 
-    private final LayoutInvalidator mLayoutInvalidator = new LayoutInvalidator(this);
+    public interface Listener {
+        /**
+         * Called when the user clicks the indicator to add the word into the dictionary.
+         *
+         * @param word the word which the user clicked on.
+         */
+        void onClickComposingTextToAddToDictionary(final String word);
+    }
 
     /**
      * Used for managing pending layout tasks for {@link TextDecorator#layoutLater()}.
      */
     private static final class LayoutInvalidator {
+        private static final int MSG_LAYOUT = 0;
         private final HandlerImpl mHandler;
+
         public LayoutInvalidator(final TextDecorator ownerInstance) {
             mHandler = new HandlerImpl(ownerInstance);
         }
 
-        private static final int MSG_LAYOUT = 0;
+        /**
+         * Puts a layout task into the scheduler. Does nothing if one or more layout tasks are
+         * already scheduled.
+         */
+        public void invalidateLayout() {
+            if (!mHandler.hasMessages(MSG_LAYOUT)) {
+                mHandler.obtainMessage(MSG_LAYOUT).sendToTarget();
+            }
+        }
+
+        /**
+         * Clears the pending layout tasks.
+         */
+        public void cancelInvalidateLayout() {
+            mHandler.removeMessages(MSG_LAYOUT);
+        }
 
         private static final class HandlerImpl
                 extends LeakGuardHandlerWrapper<TextDecorator> {
@@ -326,43 +361,5 @@ public class TextDecorator {
                 }
             }
         }
-
-        /**
-         * Puts a layout task into the scheduler. Does nothing if one or more layout tasks are
-         * already scheduled.
-         */
-        public void invalidateLayout() {
-            if (!mHandler.hasMessages(MSG_LAYOUT)) {
-                mHandler.obtainMessage(MSG_LAYOUT).sendToTarget();
-            }
-        }
-
-        /**
-         * Clears the pending layout tasks.
-         */
-        public void cancelInvalidateLayout() {
-            mHandler.removeMessages(MSG_LAYOUT);
-        }
     }
-
-    private final static Listener EMPTY_LISTENER = new Listener() {
-        @Override
-        public void onClickComposingTextToAddToDictionary(final String word) {
-        }
-    };
-
-    private final static TextDecoratorUiOperator EMPTY_UI_OPERATOR = new TextDecoratorUiOperator() {
-        @Override
-        public void disposeUi() {
-        }
-        @Override
-        public void hideUi() {
-        }
-        @Override
-        public void setOnClickListener(Runnable listener) {
-        }
-        @Override
-        public void layoutUi(Matrix matrix, RectF composingTextBounds, boolean useRtlLayout) {
-        }
-    };
 }

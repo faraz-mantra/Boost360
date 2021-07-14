@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,15 +53,14 @@ import retrofit.client.Response;
 
 public class NewPricingPlansActivity extends AppCompatActivity {
 
+    public static final int DIRECT_REQUEST_CODE = 2013;
+    private static final int NUM_OF_FEATURES = 5;
     TextView tvCategory, tvToolBarTitle;
     UserSessionManager mSession;
     Toolbar toolbar;
     ImageView ivHistory;
     List<PackageDetails> mBasePackages;
     List<PackageDetails> mTopUps;
-    private static final int NUM_OF_FEATURES = 5;
-    public static final int DIRECT_REQUEST_CODE = 2013;
-
     MaterialDialog materialProgress;
 
 
@@ -300,7 +301,7 @@ public class NewPricingPlansActivity extends AppCompatActivity {
                             List<String> featuresList = new ArrayList<>();
                             int count = 0;
                             if (topUp.getWidgetPacks() != null
-                                    && topUp.getWidgetPacks().size()>0) {
+                                    && topUp.getWidgetPacks().size() > 0) {
                                 for (WidgetPacks widget : topUp.getWidgetPacks()) {
                                     if (widget.Name != null) {
                                         featuresList.add(widget.Name);

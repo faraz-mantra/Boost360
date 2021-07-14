@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+
 import androidx.annotation.Nullable;
 
 import com.nowfloats.NotificationCenter.Model.Notification_data;
@@ -22,8 +23,8 @@ import java.util.List;
  */
 public class DbController implements IdbController {
 
-    private Context mContext;
     private static DbController sDbController = null;
+    private Context mContext;
 
     private DbController(Context context) {
         this.mContext = context;
@@ -126,9 +127,9 @@ public class DbController implements IdbController {
     }
 
     /*
-    * Returns Uri of inserted Element
-    * @postUpdate return @uri_Last_Item
-    */
+     * Returns Uri of inserted Element
+     * @postUpdate return @uri_Last_Item
+     */
     @Nullable
     @Override
     public Uri postUpdate(Updates update) {

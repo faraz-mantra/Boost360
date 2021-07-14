@@ -6,15 +6,14 @@ package com.nowfloats.sync.model;
 public class Updates {
     private int id;
     private String serverId = null;
-    private String imageUrl= null;
-    private String tileImageUrl= null;
-    private String updateText= null;
-    private String date= null;
-    private String type= null;
-    private String url= null;
+    private String imageUrl = null;
+    private String tileImageUrl = null;
+    private String updateText = null;
+    private String date = null;
+    private String type = null;
+    private String url = null;
     private int synced = -1;                                                                      //indeterminate state
-    private String localImagePath= null;
-
+    private String localImagePath = null;
 
 
     public Updates() {
@@ -102,6 +101,7 @@ public class Updates {
         this.url = url;
         return this;
     }
+
     public String getLocalImagePath() {
         return localImagePath;
     }

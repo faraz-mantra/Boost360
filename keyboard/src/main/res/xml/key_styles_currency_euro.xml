@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2011, The Android Open Source Project
@@ -19,26 +18,26 @@
 -->
 
 <merge xmlns:latin="http://schemas.android.com/apk/res-auto">
-    <!-- U+20AC: "€" EURO SIGN
-         U+00A2: "¢" CENT SIGN
-         U+00A3: "£" POUND SIGN
-         U+00A5: "¥" YEN SIGN
-         U+20B1: "₱" PESO SIGN -->
-    <key-style
-        latin:styleName="currencyKeyStyle"
-        latin:keySpec="&#x20AC;"
-        latin:moreKeys="&#x00A2;,&#x00A3;,$,&#x00A5;,&#x20B1;" />
-    <key-style
-        latin:styleName="moreCurrency1KeyStyle"
-        latin:keySpec="&#x00A3;" />
-    <key-style
-        latin:styleName="moreCurrency2KeyStyle"
-        latin:keySpec="&#x00A5;" />
-    <key-style
-        latin:styleName="moreCurrency3KeyStyle"
-        latin:keySpec="$"
-        latin:moreKeys="&#x00A2;" />
-    <key-style
-        latin:styleName="moreCurrency4KeyStyle"
-        latin:keySpec="&#x00A2;" />
+  <!-- U+20AC: "€" EURO SIGN
+       U+00A2: "¢" CENT SIGN
+       U+00A3: "£" POUND SIGN
+       U+00A5: "¥" YEN SIGN
+       U+20B1: "₱" PESO SIGN -->
+  <key-style
+    latin:keySpec="&#x20AC;"
+    latin:moreKeys="&#x00A2;,&#x00A3;,$,&#x00A5;,&#x20B1;"
+    latin:styleName="currencyKeyStyle" />
+  <key-style
+    latin:keySpec="&#x00A3;"
+    latin:styleName="moreCurrency1KeyStyle" />
+  <key-style
+    latin:keySpec="&#x00A5;"
+    latin:styleName="moreCurrency2KeyStyle" />
+  <key-style
+    latin:keySpec="$"
+    latin:moreKeys="&#x00A2;"
+    latin:styleName="moreCurrency3KeyStyle" />
+  <key-style
+    latin:keySpec="&#x00A2;"
+    latin:styleName="moreCurrency4KeyStyle" />
 </merge>

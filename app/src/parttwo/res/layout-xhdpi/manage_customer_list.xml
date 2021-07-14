@@ -1,155 +1,155 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/screen_bg">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@color/screen_bg">
+
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/screen_bg"
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+      android:layout_width="85dp"
+      android:layout_height="wrap_content"
+      android:background="@color/screen_bg"
+      android:orientation="vertical"
+      android:paddingTop="3dp"
+
+
+      >
+
+      <ImageView
+        android:id="@+id/firstrow_ImageView_ProfileV2"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/textview_height_business_profile"
+        android:layout_marginStart="@dimen/icon_left_margin"
+        android:layout_marginEnd="@dimen/icon_right_margin"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/sidepanel_enquiry" />
+
+
+      <ImageView
+        android:id="@+id/secondrow_ImageView_ProfileV2"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/textview_height_business_profile"
+        android:layout_marginStart="@dimen/icon_left_margin"
+        android:layout_marginEnd="@dimen/icon_right_margin"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_star_gray_24dp" />
+
+      <ImageView
+        android:id="@+id/thirdrow_ImageView_ProfileV2"
+        android:layout_width="38dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="@dimen/icon_left_margin"
+        android:layout_marginEnd="@dimen/icon_right_margin"
+        android:padding="9dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/facebook"
+        android:visibility="gone" />
+
+      <ImageView
+        android:id="@+id/fourth_ImageView_ProfileV2"
+        android:layout_width="38dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="@dimen/icon_left_margin"
+        android:layout_marginEnd="@dimen/icon_right_margin"
+        android:padding="9dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_boost_bubble"
+        android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+
+      android:layout_width="288dp"
+      android:layout_height="wrap_content"
+      android:background="@color/screen_bg"
+      android:orientation="vertical"
+
+      >
+
+      <TextView
+        android:id="@+id/tvBusinessEnquires"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/textview_height_business_profile"
+        android:background="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:text="@string/business_enquiries_title"
+        android:textColor="@color/cell_text_color"
+        android:textSize="@dimen/cell_text_size" />
+
+      <View
+        android:layout_width="288dp"
+        android:layout_height="1dp"
+        android:background="#d3d3d3" />
+
+      <TextView
+        android:id="@+id/tvSubscribers"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/textview_height_business_profile"
+        android:layout_marginTop="1dp"
+        android:background="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:text="@string/subscribers"
+        android:textColor="@color/cell_text_color"
+        android:textSize="14sp" />
+
+      <View
+        android:layout_width="288dp"
+        android:layout_height="1dp"
+        android:background="#d3d3d3"
+        android:visibility="gone" />
+
+      <TextView
+        android:id="@+id/tvFacebookChat"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/textview_height_business_profile"
+        android:layout_marginTop="1dp"
+        android:background="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:text="My Facebook Page Chats"
+        android:textColor="@color/cell_text_color"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+      <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/screen_bg"
-        android:orientation="horizontal">
+        android:layout_marginEnd="@dimen/margin_30"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
-        <LinearLayout
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:background="@color/screen_bg"
-            android:orientation="vertical"
-            android:paddingTop="3dp"
+        <TextView
+          android:id="@+id/tvBubbleInfo"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/textview_height_business_profile"
+          android:layout_marginTop="1dp"
+          android:layout_weight="1"
+          android:background="?android:selectableItemBackground"
+          android:drawableRight="@drawable/info"
+          android:gravity="center_vertical"
+          android:paddingRight="@dimen/margin_30"
+          android:text="Bubble For WhatsApp"
+          android:textColor="@color/cell_text_color"
+          android:textSize="14sp" />
 
+        <Switch
+          android:id="@+id/ninethRow_Switch"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/textview_height_business_profile"
+          android:layout_gravity="right|center"
+          android:layout_marginTop="1dp"
+          android:checked="false" />
 
-            >
-
-            <ImageView
-                android:id="@+id/firstrow_ImageView_ProfileV2"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/textview_height_business_profile"
-                android:layout_marginStart="@dimen/icon_left_margin"
-                android:layout_marginEnd="@dimen/icon_right_margin"
-                android:padding="5dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/sidepanel_enquiry" />
-
-
-            <ImageView
-                android:id="@+id/secondrow_ImageView_ProfileV2"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/textview_height_business_profile"
-                android:layout_marginStart="@dimen/icon_left_margin"
-                android:layout_marginEnd="@dimen/icon_right_margin"
-                android:padding="5dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_star_gray_24dp" />
-
-            <ImageView
-                android:id="@+id/thirdrow_ImageView_ProfileV2"
-                android:layout_width="38dp"
-                android:layout_height="47dp"
-                android:layout_marginStart="@dimen/icon_left_margin"
-                android:layout_marginEnd="@dimen/icon_right_margin"
-                android:padding="9dp"
-                android:visibility="gone"
-                android:scaleType="fitCenter"
-                android:src="@drawable/facebook" />
-
-            <ImageView
-                android:id="@+id/fourth_ImageView_ProfileV2"
-                android:layout_width="38dp"
-                android:layout_height="47dp"
-                android:layout_marginStart="@dimen/icon_left_margin"
-                android:layout_marginEnd="@dimen/icon_right_margin"
-                android:padding="9dp"
-                android:visibility="gone"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_boost_bubble" />
-        </LinearLayout>
-
-        <LinearLayout
-
-            android:layout_width="288dp"
-            android:layout_height="wrap_content"
-            android:background="@color/screen_bg"
-            android:orientation="vertical"
-
-            >
-
-            <TextView
-                android:id="@+id/tvBusinessEnquires"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/textview_height_business_profile"
-                android:background="?android:selectableItemBackground"
-                android:gravity="center_vertical"
-                android:text="@string/business_enquiries_title"
-                android:textColor="@color/cell_text_color"
-                android:textSize="@dimen/cell_text_size" />
-
-            <View
-                android:layout_width="288dp"
-                android:layout_height="1dp"
-                android:background="#d3d3d3" />
-
-            <TextView
-                android:id="@+id/tvSubscribers"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/textview_height_business_profile"
-                android:layout_marginTop="1dp"
-                android:background="?android:selectableItemBackground"
-                android:gravity="center_vertical"
-                android:text="@string/subscribers"
-                android:textColor="@color/cell_text_color"
-                android:textSize="14sp" />
-
-            <View
-                android:layout_width="288dp"
-                android:layout_height="1dp"
-                android:visibility="gone"
-                android:background="#d3d3d3" />
-
-            <TextView
-                android:id="@+id/tvFacebookChat"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/textview_height_business_profile"
-                android:layout_marginTop="1dp"
-                android:background="?android:selectableItemBackground"
-                android:gravity="center_vertical"
-                android:visibility="gone"
-                android:text="My Facebook Page Chats"
-                android:textColor="@color/cell_text_color"
-                android:textSize="14sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginEnd="@dimen/margin_30"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvBubbleInfo"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/textview_height_business_profile"
-                    android:layout_marginTop="1dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:drawableRight="@drawable/info"
-                    android:gravity="center_vertical"
-                    android:paddingRight="@dimen/margin_30"
-                    android:text="Bubble For WhatsApp"
-                    android:textColor="@color/cell_text_color"
-                    android:textSize="14sp" />
-
-                <Switch
-                    android:id="@+id/ninethRow_Switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/textview_height_business_profile"
-                    android:layout_gravity="right|center"
-                    android:layout_marginTop="1dp"
-                    android:checked="false" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
+      </LinearLayout>
 
     </LinearLayout>
+
+
+  </LinearLayout>
 </LinearLayout>

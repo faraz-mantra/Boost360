@@ -44,7 +44,7 @@ public final class AndroidSpellCheckerSession extends AndroidWordLevelSpellCheck
     }
 
     private SentenceSuggestionsInfo fixWronglyInvalidatedWordWithSingleQuote(TextInfo ti,
-            SentenceSuggestionsInfo ssi) {
+                                                                             SentenceSuggestionsInfo ssi) {
         final CharSequence typedText = TextInfoCompatUtils.getCharSequenceOrString(ti);
         if (!typedText.toString().contains(AndroidSpellCheckerService.SINGLE_QUOTE)) {
             return null;
@@ -71,7 +71,7 @@ public final class AndroidSpellCheckerSession extends AndroidWordLevelSpellCheck
             }
             final CharSequence[] splitTexts = StringUtils.split(subText,
                     AndroidSpellCheckerService.SINGLE_QUOTE,
-                    true /* preserveTrailingEmptySegments */ );
+                    true /* preserveTrailingEmptySegments */);
             if (splitTexts == null || splitTexts.length <= 1) {
                 continue;
             }
@@ -122,7 +122,7 @@ public final class AndroidSpellCheckerSession extends AndroidWordLevelSpellCheck
 
     @Override
     public SentenceSuggestionsInfo[] onGetSentenceSuggestionsMultiple(TextInfo[] textInfos,
-            int suggestionsLimit) {
+                                                                      int suggestionsLimit) {
         final SentenceSuggestionsInfo[] retval = splitAndSuggest(textInfos, suggestionsLimit);
         if (retval == null || retval.length != textInfos.length) {
             return retval;
@@ -146,7 +146,8 @@ public final class AndroidSpellCheckerSession extends AndroidWordLevelSpellCheck
      * This function will run on the incoming IPC thread.
      * So, this is not called on the main thread,
      * but will be called in series on another thread.
-     * @param textInfos an array of the text metadata
+     *
+     * @param textInfos        an array of the text metadata
      * @param suggestionsLimit the maximum number of suggestions to be returned
      * @return an array of {@link SentenceSuggestionsInfo} returned by
      * {@link SpellCheckerService.Session#onGetSuggestions(TextInfo, int)}
@@ -156,7 +157,7 @@ public final class AndroidSpellCheckerSession extends AndroidWordLevelSpellCheck
             return SentenceLevelAdapter.getEmptySentenceSuggestionsInfo();
         }
         SentenceLevelAdapter sentenceLevelAdapter;
-        synchronized(this) {
+        synchronized (this) {
             sentenceLevelAdapter = mSentenceLevelAdapter;
             if (sentenceLevelAdapter == null) {
                 final String localeStr = getLocale();
@@ -191,7 +192,7 @@ public final class AndroidSpellCheckerSession extends AndroidWordLevelSpellCheck
 
     @Override
     public SuggestionsInfo[] onGetSuggestionsMultiple(TextInfo[] textInfos,
-            int suggestionsLimit, boolean sequentialWords) {
+                                                      int suggestionsLimit, boolean sequentialWords) {
         long ident = Binder.clearCallingIdentity();
         try {
             final int length = textInfos.length;

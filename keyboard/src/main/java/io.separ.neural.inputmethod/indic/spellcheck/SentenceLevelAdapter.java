@@ -36,130 +36,15 @@ import io.separ.neural.inputmethod.indic.settings.SpacingAndPunctuations;
  * rewrite everything for any small change.
  */
 public class SentenceLevelAdapter {
-    private static class EmptySentenceSuggestionsInfosInitializationHolder {
-        public static final SentenceSuggestionsInfo[] EMPTY_SENTENCE_SUGGESTIONS_INFOS =
-                new SentenceSuggestionsInfo[]{};
-    }
     private static final SuggestionsInfo EMPTY_SUGGESTIONS_INFO = new SuggestionsInfo(0, null);
-
-    public static SentenceSuggestionsInfo[] getEmptySentenceSuggestionsInfo() {
-        return EmptySentenceSuggestionsInfosInitializationHolder.EMPTY_SENTENCE_SUGGESTIONS_INFOS;
-    }
-
-    /**
-     * Container for split TextInfo parameters
-     */
-    public static class SentenceWordItem {
-        public final TextInfo mTextInfo;
-        public final int mStart;
-        public final int mLength;
-        public SentenceWordItem(TextInfo ti, int start, int end) {
-            mTextInfo = ti;
-            mStart = start;
-            mLength = end - start;
-        }
-    }
-
-    /**
-     * Container for originally queried TextInfo and parameters
-     */
-    public static class SentenceTextInfoParams {
-        final TextInfo mOriginalTextInfo;
-        final ArrayList<SentenceWordItem> mItems;
-        final int mSize;
-        public SentenceTextInfoParams(TextInfo ti, ArrayList<SentenceWordItem> items) {
-            mOriginalTextInfo = ti;
-            mItems = items;
-            mSize = items.size();
-        }
-    }
-
-    private static class WordIterator {
-        private final SpacingAndPunctuations mSpacingAndPunctuations;
-        public WordIterator(final Resources res, final Locale locale) {
-            final RunInLocale<SpacingAndPunctuations> job
-                    = new SpacingAndPunctuationsRunInLocale();
-            mSpacingAndPunctuations = job.runInLocale(res, locale);
-        }
-
-        public int getEndOfWord(final CharSequence sequence, int index) {
-            final int length = sequence.length();
-            index = index < 0 ? 0 : Character.offsetByCodePoints(sequence, index, 1);
-            while (index < length) {
-                final int codePoint = Character.codePointAt(sequence, index);
-                if (mSpacingAndPunctuations.isWordSeparator(codePoint)) {
-                    // If it's a period, we want to stop here only if it's followed by another
-                    // word separator. In all other cases we stop here.
-                    if (Constants.CODE_PERIOD == codePoint) {
-                        final int indexOfNextCodePoint =
-                                index + Character.charCount(Constants.CODE_PERIOD);
-                        if (indexOfNextCodePoint < length
-                                && mSpacingAndPunctuations.isWordSeparator(
-                                        Character.codePointAt(sequence, indexOfNextCodePoint))) {
-                            return index;
-                        }
-                    } else {
-                        return index;
-                    }
-                }
-                index += Character.charCount(codePoint);
-            }
-            return index;
-        }
-
-        public int getBeginningOfNextWord(final CharSequence sequence, int index) {
-            final int length = sequence.length();
-            if (index >= length) {
-                return -1;
-            }
-            index = index < 0 ? 0 : Character.offsetByCodePoints(sequence, index, 1);
-            while (index < length) {
-                final int codePoint = Character.codePointAt(sequence, index);
-                if (!mSpacingAndPunctuations.isWordSeparator(codePoint)) {
-                    return index;
-                }
-                index += Character.charCount(codePoint);
-            }
-            return -1;
-        }
-
-        private static class SpacingAndPunctuationsRunInLocale extends RunInLocale<SpacingAndPunctuations> {
-            @Override
-            protected SpacingAndPunctuations job(final Resources res) {
-                return new SpacingAndPunctuations(res);
-            }
-        }
-    }
-
     private final WordIterator mWordIterator;
+
     public SentenceLevelAdapter(final Resources res, final Locale locale) {
         mWordIterator = new WordIterator(res, locale);
     }
 
-    public SentenceTextInfoParams getSplitWords(TextInfo originalTextInfo) {
-        final WordIterator wordIterator = mWordIterator;
-        final CharSequence originalText =
-                TextInfoCompatUtils.getCharSequenceOrString(originalTextInfo);
-        final int cookie = originalTextInfo.getCookie();
-        final int start = -1;
-        final int end = originalText.length();
-        final ArrayList<SentenceWordItem> wordItems = new ArrayList<>();
-        int wordStart = wordIterator.getBeginningOfNextWord(originalText, start);
-        int wordEnd = wordIterator.getEndOfWord(originalText, wordStart);
-        while (wordStart <= end && wordEnd != -1 && wordStart != -1) {
-            if (wordEnd >= start && wordEnd > wordStart) {
-                CharSequence subSequence = originalText.subSequence(wordStart, wordEnd).toString();
-                final TextInfo ti = TextInfoCompatUtils.newInstance(subSequence, 0,
-                        subSequence.length(), cookie, subSequence.hashCode());
-                wordItems.add(new SentenceWordItem(ti, wordStart, wordEnd));
-            }
-            wordStart = wordIterator.getBeginningOfNextWord(originalText, wordEnd);
-            if (wordStart == -1) {
-                break;
-            }
-            wordEnd = wordIterator.getEndOfWord(originalText, wordStart);
-        }
-        return new SentenceTextInfoParams(originalTextInfo, wordItems);
+    public static SentenceSuggestionsInfo[] getEmptySentenceSuggestionsInfo() {
+        return EmptySentenceSuggestionsInfosInitializationHolder.EMPTY_SENTENCE_SUGGESTIONS_INFOS;
     }
 
     public static SentenceSuggestionsInfo reconstructSuggestions(
@@ -193,5 +78,124 @@ public class SentenceLevelAdapter {
             reconstructedSuggestions[i] = result != null ? result : EMPTY_SUGGESTIONS_INFO;
         }
         return new SentenceSuggestionsInfo(reconstructedSuggestions, offsets, lengths);
+    }
+
+    public SentenceTextInfoParams getSplitWords(TextInfo originalTextInfo) {
+        final WordIterator wordIterator = mWordIterator;
+        final CharSequence originalText =
+                TextInfoCompatUtils.getCharSequenceOrString(originalTextInfo);
+        final int cookie = originalTextInfo.getCookie();
+        final int start = -1;
+        final int end = originalText.length();
+        final ArrayList<SentenceWordItem> wordItems = new ArrayList<>();
+        int wordStart = wordIterator.getBeginningOfNextWord(originalText, start);
+        int wordEnd = wordIterator.getEndOfWord(originalText, wordStart);
+        while (wordStart <= end && wordEnd != -1 && wordStart != -1) {
+            if (wordEnd >= start && wordEnd > wordStart) {
+                CharSequence subSequence = originalText.subSequence(wordStart, wordEnd).toString();
+                final TextInfo ti = TextInfoCompatUtils.newInstance(subSequence, 0,
+                        subSequence.length(), cookie, subSequence.hashCode());
+                wordItems.add(new SentenceWordItem(ti, wordStart, wordEnd));
+            }
+            wordStart = wordIterator.getBeginningOfNextWord(originalText, wordEnd);
+            if (wordStart == -1) {
+                break;
+            }
+            wordEnd = wordIterator.getEndOfWord(originalText, wordStart);
+        }
+        return new SentenceTextInfoParams(originalTextInfo, wordItems);
+    }
+
+    private static class EmptySentenceSuggestionsInfosInitializationHolder {
+        public static final SentenceSuggestionsInfo[] EMPTY_SENTENCE_SUGGESTIONS_INFOS =
+                new SentenceSuggestionsInfo[]{};
+    }
+
+    /**
+     * Container for split TextInfo parameters
+     */
+    public static class SentenceWordItem {
+        public final TextInfo mTextInfo;
+        public final int mStart;
+        public final int mLength;
+
+        public SentenceWordItem(TextInfo ti, int start, int end) {
+            mTextInfo = ti;
+            mStart = start;
+            mLength = end - start;
+        }
+    }
+
+    /**
+     * Container for originally queried TextInfo and parameters
+     */
+    public static class SentenceTextInfoParams {
+        final TextInfo mOriginalTextInfo;
+        final ArrayList<SentenceWordItem> mItems;
+        final int mSize;
+
+        public SentenceTextInfoParams(TextInfo ti, ArrayList<SentenceWordItem> items) {
+            mOriginalTextInfo = ti;
+            mItems = items;
+            mSize = items.size();
+        }
+    }
+
+    private static class WordIterator {
+        private final SpacingAndPunctuations mSpacingAndPunctuations;
+
+        public WordIterator(final Resources res, final Locale locale) {
+            final RunInLocale<SpacingAndPunctuations> job
+                    = new SpacingAndPunctuationsRunInLocale();
+            mSpacingAndPunctuations = job.runInLocale(res, locale);
+        }
+
+        public int getEndOfWord(final CharSequence sequence, int index) {
+            final int length = sequence.length();
+            index = index < 0 ? 0 : Character.offsetByCodePoints(sequence, index, 1);
+            while (index < length) {
+                final int codePoint = Character.codePointAt(sequence, index);
+                if (mSpacingAndPunctuations.isWordSeparator(codePoint)) {
+                    // If it's a period, we want to stop here only if it's followed by another
+                    // word separator. In all other cases we stop here.
+                    if (Constants.CODE_PERIOD == codePoint) {
+                        final int indexOfNextCodePoint =
+                                index + Character.charCount(Constants.CODE_PERIOD);
+                        if (indexOfNextCodePoint < length
+                                && mSpacingAndPunctuations.isWordSeparator(
+                                Character.codePointAt(sequence, indexOfNextCodePoint))) {
+                            return index;
+                        }
+                    } else {
+                        return index;
+                    }
+                }
+                index += Character.charCount(codePoint);
+            }
+            return index;
+        }
+
+        public int getBeginningOfNextWord(final CharSequence sequence, int index) {
+            final int length = sequence.length();
+            if (index >= length) {
+                return -1;
+            }
+            index = index < 0 ? 0 : Character.offsetByCodePoints(sequence, index, 1);
+            while (index < length) {
+                final int codePoint = Character.codePointAt(sequence, index);
+                if (!mSpacingAndPunctuations.isWordSeparator(codePoint)) {
+                    return index;
+                }
+                index += Character.charCount(codePoint);
+            }
+            return -1;
+        }
+
+        private static class SpacingAndPunctuationsRunInLocale extends RunInLocale<SpacingAndPunctuations> {
+            @Override
+            protected SpacingAndPunctuations job(final Resources res) {
+                return new SpacingAndPunctuations(res);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.melnykov.fab;
 
 import androidx.annotation.NonNull;
+
 import android.view.View;
 import android.widget.AbsListView;
 
@@ -20,7 +21,7 @@ abstract class AbsListViewScrollDetector implements AbsListView.OnScrollListener
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        if(totalItemCount == 0) return;
+        if (totalItemCount == 0) return;
         if (isSameRow(firstVisibleItem)) {
             int newScrollY = getTopItemScrollY();
             boolean isSignificantDelta = Math.abs(mLastScrollY - newScrollY) > mScrollThreshold;

@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +49,7 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
 
     private static final int DIRECT_REQUEST_CODE = 2013, RESULT_OK = -1;
     private List<PackageDetails> mTopUps;
-    private  List<PackageDetails> visiblePackages;
+    private List<PackageDetails> visiblePackages;
     private MaterialDialog topUpDialog;
     private Context mContext;
     private Activity activity;
@@ -55,14 +57,12 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
     private String selectedPackage;
     private ProgressDialog progressDialog;
 
-    public enum TopUpType{
-        WildFire,Dictate,App;
-    }
-    public TopUpDialog(Activity activity){
+    public TopUpDialog(Activity activity) {
         this.activity = activity;
         mContext = activity;
     }
-    public void getTopUpPricing(String planType){
+
+    public void getTopUpPricing(String planType) {
         this.planType = planType;
         if (mTopUps == null) {
             UserSessionManager mSession = new UserSessionManager(mContext, activity);
@@ -81,7 +81,7 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
             params.put("fpCategory", mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toUpperCase());
             TopUpPlansService services = TopUpPlansService.getTopUpService(this);
             services.getTopUpPackages(params);
-        }else{
+        } else {
             showTopUpDialog();
         }
     }
@@ -89,17 +89,17 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
     private void showTopUpDialog() {
         if (visiblePackages == null)
             visiblePackages = new ArrayList<>();
-        else{
+        else {
             visiblePackages.clear();
         }
 
-        for (PackageDetails details:mTopUps){
-            if(details.getName() != null && details.getName().toLowerCase().contains(planType.toLowerCase())){
+        for (PackageDetails details : mTopUps) {
+            if (details.getName() != null && details.getName().toLowerCase().contains(planType.toLowerCase())) {
                 visiblePackages.add(details);
             }
         }
-        if (visiblePackages.size() == 0){
-            Toast.makeText(mContext,mContext.getString( R.string.your_account_can_t_activate_this_top_up_packages), Toast.LENGTH_SHORT).show();
+        if (visiblePackages.size() == 0) {
+            Toast.makeText(mContext, mContext.getString(R.string.your_account_can_t_activate_this_top_up_packages), Toast.LENGTH_SHORT).show();
             return;
         }
         if (topUpDialog == null) {
@@ -122,8 +122,8 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
         view.findViewById(R.id.img_cancel).setOnClickListener(this);
         TextView title = view.findViewById(R.id.tv_title);
         TextView description = view.findViewById(R.id.tv_description);
-        title.setText(String.format("%s Pricing",planType));
-        description.setText(String.format(mContext.getString(R.string.select_the_duration_s_package_),planType));
+        title.setText(String.format("%s Pricing", planType));
+        description.setText(String.format(mContext.getString(R.string.select_the_duration_s_package_), planType));
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_plans);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -134,22 +134,24 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
         topUpDialog.show();
     }
 
-    private void startBuy(String id){
-        Intent i = new Intent(mContext, BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")?ProductCheckout_v2Activity.class:ProductCheckoutActivity.class);
+    private void startBuy(String id) {
+        Intent i = new Intent(mContext, BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") ? ProductCheckout_v2Activity.class : ProductCheckoutActivity.class);
         i.putExtra("package_ids", new String[]{id});
         activity.startActivityForResult(i, DIRECT_REQUEST_CODE);
     }
+
     @Override
     public void onDataReceived(List<PackageDetails> packages) {
-        if (packages == null || packages.size() == 0){
+        if (packages == null || packages.size() == 0) {
             Toast.makeText(mContext, mContext.getString(R.string.your_account_cant_activate_any_topup_package), Toast.LENGTH_SHORT).show();
             return;
         }
         mTopUps = packages;
         showTopUpDialog();
     }
+
     @Override
-    public void startApiCall(){
+    public void startApiCall() {
         showProgressDialog("Loading...");
     }
 
@@ -157,12 +159,14 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
     public void endApiCall() {
         hideProgressDialog();
     }
-    private void hideProgressDialog(){
+
+    private void hideProgressDialog() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
     }
-    private void showProgressDialog(String msg){
+
+    private void showProgressDialog(String msg) {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(mContext);
             progressDialog.setCanceledOnTouchOutside(false);
@@ -171,18 +175,19 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
         if (!progressDialog.isShowing())
             progressDialog.show();
     }
+
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.img_cancel:
                 topUpDialog.dismiss();
                 break;
         }
     }
 
-    public void onPaymentResultReceived(int requestCode, int resultCode, Intent data){
-        if(requestCode==DIRECT_REQUEST_CODE && resultCode==RESULT_OK){
-            if(data==null){
+    public void onPaymentResultReceived(int requestCode, int resultCode, Intent data) {
+        if (requestCode == DIRECT_REQUEST_CODE && resultCode == RESULT_OK) {
+            if (data == null) {
                 return;
             }
 //            final boolean success = data.getBooleanExtra(com.romeo.mylibrary.Constants.RESULT_SUCCESS_KEY, false);
@@ -221,26 +226,27 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
 //            }
         }
     }
+
     private void pollServerForStatus(final String transactionId, final String paymentid, final String status, final boolean showTobeActivatedOn, final String tobeActivatedOn) {
         showProgressDialog(mContext.getString(R.string.please_wait));
-        String url = Constants.NOW_FLOATS_API_URL + "/payment/v1/floatingpoint/getPaymentStatus?clientId=" + Constants.clientId +"&paymentRequestId=" + transactionId;
-        JsonObjectRequest request  =new JsonObjectRequest(Request.Method.POST, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+        String url = Constants.NOW_FLOATS_API_URL + "/payment/v1/floatingpoint/getPaymentStatus?clientId=" + Constants.clientId + "&paymentRequestId=" + transactionId;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     if (response.getString("Result").equals("SUCCESS")) {
                         hideProgressDialog();
-                        if(!showTobeActivatedOn) {
+                        if (!showTobeActivatedOn) {
                             String msg = "Thank you! \n" +
                                     mContext.getString(R.string.the_payment_id_for_your_transaction_is) + paymentid + mContext.getString(R.string.your_package_will_be_activated_within_24_hours) +
                                     mContext.getString(R.string.you_can_reach_customer_support_at_ria_nowfloats_com_or_1860_123_1233_for_any_queries);
-                            Methods.showDialog(mContext,status, msg);
+                            Methods.showDialog(mContext, status, msg);
                         }
 
-                    }else {
+                    } else {
                         pollServerForStatus(transactionId, paymentid, status, showTobeActivatedOn, tobeActivatedOn);
                     }
-                }catch (JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                     hideProgressDialog();
                 }
@@ -252,13 +258,18 @@ public class TopUpDialog implements TopUpPlansService.ServiceCallbackListener, V
             public void onErrorResponse(VolleyError error) {
                 String msg = mContext.getString(R.string.your_payment_id_is_) + paymentid + mContext.getString(R.string.please_contact_customer_support);
                 hideProgressDialog();
-                Methods.showDialog(mContext,status, msg);
+                Methods.showDialog(mContext, status, msg);
             }
         });
         AppController.getInstance().addToRequstQueue(request);
     }
+
     @Override
     public void onItemClick(String id) {
         selectedPackage = id;
+    }
+
+    public enum TopUpType {
+        WildFire, Dictate, App;
     }
 }
