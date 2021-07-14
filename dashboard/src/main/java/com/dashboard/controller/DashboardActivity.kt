@@ -112,7 +112,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   private fun UserSessionManager.initializeWebEngageLogin() {
     WebEngageController.setUserContactInfoProperties(this)
+    WebEngageController.setUserContactInfoProperties(this)
     WebEngageController.setFPTag(this.fpTag)
+    WebEngageController.trackAttribute(this)
   }
 
   private fun initialize() {

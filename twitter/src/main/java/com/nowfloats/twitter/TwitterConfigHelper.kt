@@ -17,8 +17,8 @@ object TwitterConfigHelper {
       .logger(DefaultLogger(Log.DEBUG))
       .twitterAuthConfig(
         TwitterAuthConfig(
-          "4CiUg5gcIbvYre8XjGd8GsElV",
-          "4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9"
+          context.getString(R.string.twitter_consumer_key),
+          context.getString(R.string.twitter_consumer_secret)
         )
       )
       .debug(debug)
