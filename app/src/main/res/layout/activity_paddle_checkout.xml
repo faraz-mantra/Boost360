@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.nowfloats.Store.PaddleCheckoutActivity">
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/test_payment"
-        android:visibility="gone"
-        android:id="@+id/btn_test_payment"/>
-    <WebView
-        android:id="@+id/wv_paddle_pg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context="com.nowfloats.Store.PaddleCheckoutActivity">
 
-    </WebView>
+  <Button
+    android:id="@+id/btn_test_payment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/test_payment"
+    android:visibility="gone" />
+
+  <WebView
+    android:id="@+id/wv_paddle_pg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  </WebView>
 
 </LinearLayout>

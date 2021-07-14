@@ -33,17 +33,17 @@ import static com.framework.webengageconstant.EventNameKt.DELETE_CUSTOMPAGE;
  * Created by guru on 26-08-2015.
  */
 
-public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
-    String url="",tag = "";
+public class SinglePageDeleteAsyncTask extends AsyncTask<String, String, String> {
+    String url = "", tag = "";
     Activity activity;
     private boolean flag = false;
     private MaterialDialog materialProgress;
     private String pageId;
     private int position;
 
-    public SinglePageDeleteAsyncTask(String url, Activity activity, String tag,String pageId,
-                                     int position){
-        this.url=url;
+    public SinglePageDeleteAsyncTask(String url, Activity activity, String tag, String pageId,
+                                     int position) {
+        this.url = url;
         this.activity = activity;
         this.tag = tag;
         this.pageId = pageId;
@@ -62,7 +62,8 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
     }
 
     @Override
-    protected void onPostExecute(final String result){}
+    protected void onPostExecute(final String result) {
+    }
 
     @Override
     protected String doInBackground(String... params) {
@@ -74,8 +75,10 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
             deleteMethod(map.toString());
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (Exception e) {e.printStackTrace();}
-        return  null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void deleteMethod(String values) {
@@ -93,36 +96,36 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
             Log.i("Delete Page---", "status----" + status);
             if (status.getStatusCode() == 200) {
                 MixPanelController.track("DeleteCustomPage", null);
-                Log.i("Delete page...","Success");
-                WebEngageController.trackEvent(DELETE_CUSTOMPAGE,EVENT_LABEL_DELETE_CUSTOMPAGE,pageId);
+                Log.i("Delete page...", "Success");
+                WebEngageController.trackEvent(DELETE_CUSTOMPAGE, EVENT_LABEL_DELETE_CUSTOMPAGE, pageId);
                 flag = true;
-            }else{
+            } else {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
-                        WebEngageController.trackEvent(DELETE_CUSTOMPAGE,FAILED_TO_DELETE_CUSTOMPAGE,pageId);
+                        Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
+                        WebEngageController.trackEvent(DELETE_CUSTOMPAGE, FAILED_TO_DELETE_CUSTOMPAGE, pageId);
                     }
                 });
             }
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (materialProgress!=null)
+                    if (materialProgress != null)
                         materialProgress.dismiss();
-                    if (flag){
+                    if (flag) {
                         activity.finish();
                         CustomPageFragment.dataModel.remove(position);
                         Methods.showSnackBarPositive(activity, activity.getString(R.string.page_removed));
-                        if (CustomPageFragment.custompageAdapter!=null)
+                        if (CustomPageFragment.custompageAdapter != null)
                             CustomPageFragment.custompageAdapter.notifyDataSetChanged();
-                        if (CustomPageFragment.recyclerView!=null)
+                        if (CustomPageFragment.recyclerView != null)
                             CustomPageFragment.recyclerView.invalidate();
-                    }else{
-                        Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
-                        if (CustomPageFragment.custompageAdapter!=null)
+                    } else {
+                        Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
+                        if (CustomPageFragment.custompageAdapter != null)
                             CustomPageFragment.custompageAdapter.notifyDataSetChanged();
-                        if (CustomPageFragment.recyclerView!=null)
+                        if (CustomPageFragment.recyclerView != null)
                             CustomPageFragment.recyclerView.invalidate();
                     }
                 }

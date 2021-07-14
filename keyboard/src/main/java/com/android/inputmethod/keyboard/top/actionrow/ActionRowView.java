@@ -54,150 +54,7 @@ import static nfkeyboard.keyboards.ImePresenterImpl.TabType.UPDATES;
 public class ActionRowView extends ViewPager implements ColorManager.OnColorChange, View.OnTouchListener {
     public static final String[] DEFAULT_SUGGESTED_EMOJI;
     private static final int[] SERVICE_IMAGE_IDS;
-    private EventBusHandler mEventHandler;
-    private ActionRowAdapter adapter;
-    private String[] layoutToShow;
-    private Listener mListener;
-    private HashMap<String, LinearLayout> layouts;
     private static final String[] DEFAULT_SERVICES;
-    private KeyboardActionListener keyboardActionListener;
-    private TextView tvUpdates;
-    private TextView tvProducts;
-    private TextView tvPhotos;
-    private TextView tvDetails;
-
-    public boolean onTouch(View v, MotionEvent event) {
-        if (event.getActionMasked() != MotionEvent.ACTION_DOWN) {
-            return false;
-        }
-        final Object tag = v.getTag();
-        if (!(tag instanceof Integer)) {
-            return false;
-        }
-        final int code = (Integer) tag;
-        keyboardActionListener.onPressKey(
-                code, 0 /* repeatCount */, true /* isSinglePointer */);
-        // It's important to return false here. Otherwise, {@link #onClick} and touch-down visual
-        // feedback stop working.
-        return false;
-    }
-
-    public void setKeyboardActionListener(KeyboardActionListener keyboardActionListener) {
-        this.keyboardActionListener = keyboardActionListener;
-    }
-
-    /*service click handler*/
-    class serviceClickListener implements OnClickListener {
-        final int serviceId;
-
-        serviceClickListener(int serviceId) {
-            this.serviceId = serviceId;
-        }
-
-        public void onClick(View v) {
-            AudioAndHapticFeedbackManager.getInstance().performHapticAndAudioFeedback(-15, ActionRowView.this);
-
-            findViewById(R.id.tv_updates).setBackgroundResource(v.getId()
-                    == R.id.tv_updates ? R.drawable.round_414141 : android.R.color.transparent);
-            findViewById(R.id.tv_products).setBackgroundResource(v.getId()
-                    == R.id.tv_products ? R.drawable.round_414141 : android.R.color.transparent);
-            findViewById(R.id.tv_photos).setBackgroundResource(v.getId()
-                    == R.id.tv_photos ? R.drawable.round_414141 : android.R.color.transparent);
-            findViewById(R.id.tv_details).setBackgroundResource(v.getId()
-                    == R.id.tv_details ? R.drawable.round_414141 : android.R.color.transparent);
-            mListener.onServiceClicked(DEFAULT_SERVICES[serviceId]);
-        }
-    }
-
-    /* onSelectAll */
-    class C02297 implements OnClickListener {
-        C02297() {
-        }
-
-        public void onClick(View v) {
-            mListener.onSelectAll();
-            AudioAndHapticFeedbackManager.getInstance().performHapticAndAudioFeedback(-15, ActionRowView.this);
-        }
-    }
-
-    /* onCut */
-    class C02308 implements OnClickListener {
-        C02308() {
-        }
-
-        public void onClick(View v) {
-            mListener.onCut();
-            AudioAndHapticFeedbackManager.getInstance().performHapticAndAudioFeedback(-15, ActionRowView.this);
-        }
-    }
-
-    /* onCopy */
-    class C02319 implements OnClickListener {
-        C02319() {
-        }
-
-        public void onClick(View v) {
-            mListener.onCopy();
-            AudioAndHapticFeedbackManager.getInstance().performHapticAndAudioFeedback(-15, ActionRowView.this);
-        }
-    }
-
-    public interface Listener {
-        void onCopy();
-
-        void onCut();
-
-        void onEmojiClicked(String str, boolean z);
-
-        void onNumberClicked(String str);
-
-        void onPaste();
-
-        void onSelectAll();
-
-        void onServiceClicked(String id);
-    }
-
-    private class ActionRowAdapter extends PagerAdapter {
-        private ArrayList<View> views;
-
-        private ActionRowAdapter() {
-            this.views = new ArrayList();
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            int index = this.views.indexOf(object);
-            if (index == -1) {
-                return -2;
-            }
-            return index;
-        }
-
-        public Object instantiateItem(ViewGroup container, int position) {
-            //View v = ActionRowView.this.createViewFromID(ActionRowView.this.layoutToShow[position % ActionRowView.this.layoutToShow.length]);
-            View v = layouts.get(ActionRowView.this.layoutToShow[position % ActionRowView.this.layoutToShow.length]);
-            this.views.add(v);
-            container.addView(v);
-            return v;
-        }
-
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-
-        public int getCount() {
-            return ActionRowView.this.layoutToShow.length;
-        }
-
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        public View getView(int position) {
-            return (View) this.views.get(position);
-        }
-    }
 
     static {
         DEFAULT_SUGGESTED_EMOJI = "\u2764,\ud83d\ude15,\ud83d\ude18,\ud83d\ude22,\ud83d\ude3b,\ud83d\ude0a,\ud83d\ude09,\ud83d\ude0d".split("\\s*,\\s*");
@@ -208,6 +65,17 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
         // DEFAULT_SERVICES = new String[]{"maps", "google", "contacts", "foursquare", "customization", "emoji"};
         DEFAULT_SERVICES = new String[]{UPDATES.name(), PRODUCTS.name(), PHOTOS.name(), DETAILS.name()};
     }
+
+    private EventBusHandler mEventHandler;
+    private ActionRowAdapter adapter;
+    private String[] layoutToShow;
+    private Listener mListener;
+    private HashMap<String, LinearLayout> layouts;
+    private KeyboardActionListener keyboardActionListener;
+    private TextView tvUpdates;
+    private TextView tvProducts;
+    private TextView tvPhotos;
+    private TextView tvDetails;
 
     public ActionRowView(Context context) {
         super(context);
@@ -227,41 +95,6 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
         init();
         this.mEventHandler = new EventBusHandler();
         this.mEventHandler.register();
-    }
-
-    public class EventBusHandler {
-        public void register() {
-            if (!EventBusExt.getDefault().isRegistered(this)) {
-                EventBusExt.getDefault().register(this);
-            }
-        }
-
-        public void unregister() {
-            if (EventBusExt.getDefault().isRegistered(this)) {
-                EventBusExt.getDefault().unregister(this);
-            }
-        }
-
-        @Subscribe(threadMode = ThreadMode.MAIN)
-        public void onEventMainThread(UpdateActionBarEvent event) {
-            if (tvUpdates != null) {
-                tvUpdates.setText(R.string.tv_updates);
-                tvProducts.setText(R.string.tv_products);
-                tvPhotos.setText(R.string.tv_photos);
-                tvDetails.setText(R.string.tv_details);
-
-                tvUpdates.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                tvProducts.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                tvPhotos.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                tvDetails.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-            }
-        }
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        this.mEventHandler.unregister();
     }
 
     public static Context setLocale(Context context, String language) {
@@ -297,6 +130,32 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
 
         return context;
+    }
+
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getActionMasked() != MotionEvent.ACTION_DOWN) {
+            return false;
+        }
+        final Object tag = v.getTag();
+        if (!(tag instanceof Integer)) {
+            return false;
+        }
+        final int code = (Integer) tag;
+        keyboardActionListener.onPressKey(
+                code, 0 /* repeatCount */, true /* isSinglePointer */);
+        // It's important to return false here. Otherwise, {@link #onClick} and touch-down visual
+        // feedback stop working.
+        return false;
+    }
+
+    public void setKeyboardActionListener(KeyboardActionListener keyboardActionListener) {
+        this.keyboardActionListener = keyboardActionListener;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        this.mEventHandler.unregister();
     }
 
     public void setAdapter(ActionRowAdapter adapter) {
@@ -456,6 +315,159 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
             emojiLayout.addView(addSingleEmoji(DEFAULT_SUGGESTED_EMOJI[j]));
     }
 
+    private View addSingleEmoji(String emoji) {
+        EmojiView view = new EmojiView(getContext(), true);
+        view.setEmoji(emoji);
+        view.setSoundEffectsEnabled(false);
+        view.setAlpha(1.f);
+        view.setOnClickListener(new AnonymousClass11(view));
+        view.setLayoutParams(new LinearLayout.LayoutParams(-1, -1, 1.f / ((float) DEFAULT_SUGGESTED_EMOJI.length)));
+        view.setBackgroundResource(R.drawable.action_row_bg);
+        return view;
+    }
+
+    public interface Listener {
+        void onCopy();
+
+        void onCut();
+
+        void onEmojiClicked(String str, boolean z);
+
+        void onNumberClicked(String str);
+
+        void onPaste();
+
+        void onSelectAll();
+
+        void onServiceClicked(String id);
+    }
+
+    /*service click handler*/
+    class serviceClickListener implements OnClickListener {
+        final int serviceId;
+
+        serviceClickListener(int serviceId) {
+            this.serviceId = serviceId;
+        }
+
+        public void onClick(View v) {
+            AudioAndHapticFeedbackManager.getInstance().performHapticAndAudioFeedback(-15, ActionRowView.this);
+
+            findViewById(R.id.tv_updates).setBackgroundResource(v.getId()
+                    == R.id.tv_updates ? R.drawable.round_414141 : android.R.color.transparent);
+            findViewById(R.id.tv_products).setBackgroundResource(v.getId()
+                    == R.id.tv_products ? R.drawable.round_414141 : android.R.color.transparent);
+            findViewById(R.id.tv_photos).setBackgroundResource(v.getId()
+                    == R.id.tv_photos ? R.drawable.round_414141 : android.R.color.transparent);
+            findViewById(R.id.tv_details).setBackgroundResource(v.getId()
+                    == R.id.tv_details ? R.drawable.round_414141 : android.R.color.transparent);
+            mListener.onServiceClicked(DEFAULT_SERVICES[serviceId]);
+        }
+    }
+
+    /* onSelectAll */
+    class C02297 implements OnClickListener {
+        C02297() {
+        }
+
+        public void onClick(View v) {
+            mListener.onSelectAll();
+            AudioAndHapticFeedbackManager.getInstance().performHapticAndAudioFeedback(-15, ActionRowView.this);
+        }
+    }
+
+    /* onCut */
+    class C02308 implements OnClickListener {
+        C02308() {
+        }
+
+        public void onClick(View v) {
+            mListener.onCut();
+            AudioAndHapticFeedbackManager.getInstance().performHapticAndAudioFeedback(-15, ActionRowView.this);
+        }
+    }
+
+    /* onCopy */
+    class C02319 implements OnClickListener {
+        C02319() {
+        }
+
+        public void onClick(View v) {
+            mListener.onCopy();
+            AudioAndHapticFeedbackManager.getInstance().performHapticAndAudioFeedback(-15, ActionRowView.this);
+        }
+    }
+
+    private class ActionRowAdapter extends PagerAdapter {
+        private ArrayList<View> views;
+
+        private ActionRowAdapter() {
+            this.views = new ArrayList();
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            int index = this.views.indexOf(object);
+            if (index == -1) {
+                return -2;
+            }
+            return index;
+        }
+
+        public Object instantiateItem(ViewGroup container, int position) {
+            //View v = ActionRowView.this.createViewFromID(ActionRowView.this.layoutToShow[position % ActionRowView.this.layoutToShow.length]);
+            View v = layouts.get(ActionRowView.this.layoutToShow[position % ActionRowView.this.layoutToShow.length]);
+            this.views.add(v);
+            container.addView(v);
+            return v;
+        }
+
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        public int getCount() {
+            return ActionRowView.this.layoutToShow.length;
+        }
+
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        public View getView(int position) {
+            return (View) this.views.get(position);
+        }
+    }
+
+    public class EventBusHandler {
+        public void register() {
+            if (!EventBusExt.getDefault().isRegistered(this)) {
+                EventBusExt.getDefault().register(this);
+            }
+        }
+
+        public void unregister() {
+            if (EventBusExt.getDefault().isRegistered(this)) {
+                EventBusExt.getDefault().unregister(this);
+            }
+        }
+
+        @Subscribe(threadMode = ThreadMode.MAIN)
+        public void onEventMainThread(UpdateActionBarEvent event) {
+            if (tvUpdates != null) {
+                tvUpdates.setText(R.string.tv_updates);
+                tvProducts.setText(R.string.tv_products);
+                tvPhotos.setText(R.string.tv_photos);
+                tvDetails.setText(R.string.tv_details);
+
+                tvUpdates.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                tvProducts.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                tvPhotos.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                tvDetails.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            }
+        }
+    }
+
     class AnonymousClass11 implements OnClickListener {
         final EmojiView val$view;
 
@@ -467,16 +479,5 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
             AudioAndHapticFeedbackManager.getInstance().performHapticAndAudioFeedback(-15, ActionRowView.this);
             mListener.onEmojiClicked(this.val$view.getEmoji(), false);
         }
-    }
-
-    private View addSingleEmoji(String emoji) {
-        EmojiView view = new EmojiView(getContext(), true);
-        view.setEmoji(emoji);
-        view.setSoundEffectsEnabled(false);
-        view.setAlpha(1.f);
-        view.setOnClickListener(new AnonymousClass11(view));
-        view.setLayoutParams(new LinearLayout.LayoutParams(-1, -1, 1.f / ((float) DEFAULT_SUGGESTED_EMOJI.length)));
-        view.setBackgroundResource(R.drawable.action_row_bg);
-        return view;
     }
 }

@@ -84,22 +84,19 @@ import static io.separ.neural.inputmethod.indic.LastComposedWord.COMMIT_TYPE_MAN
  */
 public final class InputLogic {
     private static final String TAG = InputLogic.class.getSimpleName();
-
+    public final Suggest mSuggest;
+    public final RichInputConnection mConnection;
+    public final TreeSet<Long> mCurrentlyPressedHardwareKeys = new TreeSet<>();
+    // This has package visibility so it can be accessed from InputLogicHandler.
+    /* package */ final WordComposer mWordComposer;
     // TODO : Remove this member when we can.
     private final LatinIME mLatinIME;
     private final SuggestionStripViewAccessor mSuggestionStripViewAccessor;
-
-    // Never null.
-    private InputLogicHandler mInputLogicHandler = InputLogicHandler.NULL_HANDLER;
-
-    // TODO : make all these fields private as soon as possible.
-    // Current space state of the input method. This can be any of the above constants.
-    private int mSpaceState;
+    private final DictionaryFacilitator mDictionaryFacilitator;
+    private final RecapitalizeStatus mRecapitalizeStatus = new RecapitalizeStatus();
     // Never null
     public SuggestedWords mSuggestedWords = SuggestedWords.EMPTY;
-    public final Suggest mSuggest;
-    private final DictionaryFacilitator mDictionaryFacilitator;
-
+    public LastComposedWord mLastComposedWord = LastComposedWord.NOT_A_COMPOSED_WORD;
     private final TextDecorator mTextDecorator = new TextDecorator(new TextDecorator.Listener() {
         @Override
         public void onClickComposingTextToAddToDictionary(final String word) {
@@ -107,17 +104,13 @@ public final class InputLogic {
             mLatinIME.dismissAddToDictionaryHint();
         }
     });
-
-    public LastComposedWord mLastComposedWord = LastComposedWord.NOT_A_COMPOSED_WORD;
-    // This has package visibility so it can be accessed from InputLogicHandler.
-    /* package */ final WordComposer mWordComposer;
-    public final RichInputConnection mConnection;
-    private final RecapitalizeStatus mRecapitalizeStatus = new RecapitalizeStatus();
-
+    // Never null.
+    private InputLogicHandler mInputLogicHandler = InputLogicHandler.NULL_HANDLER;
+    // TODO : make all these fields private as soon as possible.
+    // Current space state of the input method. This can be any of the above constants.
+    private int mSpaceState;
     private int mDeleteCount;
     private long mLastKeyTime;
-    public final TreeSet<Long> mCurrentlyPressedHardwareKeys = new TreeSet<>();
-
     // Keeps track of most recently inserted text (multi-character key) for reverting
     private String mEnteredText;
 
@@ -131,6 +124,21 @@ public final class InputLogic {
     private boolean mIsSearchingResults;
     private StringBuilder mSearchText;
     private boolean shouldReSearch;
+    /* The sequence number member is only used in onUpdateBatchInput. It is increased each time
+     * auto-commit happens. The reason we need this is, when auto-commit happens we trim the
+     * input pointers that are held in a singleton, and to know how much to trim we rely on the
+     * results of the suggestion process that is held in mSuggestedWords.
+     * However, the suggestion process is asynchronous, and sometimes we may enter the
+     * onUpdateBatchInput method twice without having recomputed suggestions yet, or having
+     * received new suggestions generated from not-yet-trimmed input pointers. In this case, the
+     * mIndexOfTouchPointOfSecondWords member will be out of date, and we must not use it lest we
+     * remove an unrelated number of pointers (possibly even more than are left in the input
+     * pointers, leading to a crash).
+     * To avoid that, we increase the sequence number each time we auto-commit and trim the
+     * input pointers, and we do not use any suggested words that have been generated with an
+     * earlier sequence number.
+     */
+    private int mAutoCommitSequenceNumber = 1;
 
     /**
      * Create a new instance of the input logic.
@@ -152,6 +160,71 @@ public final class InputLogic {
         mDictionaryFacilitator = dictionaryFacilitator;
         mIsSearchingResults = false;
         mSearchText = new StringBuilder();
+    }
+
+    /**
+     * Returns whether this code point can be followed by the double-space-to-period transformation.
+     * <p>
+     * See #maybeDoubleSpaceToPeriod for details.
+     * Generally, most word characters can be followed by the double-space-to-period transformation,
+     * while most punctuation can't. Some punctuation however does allow for this to take place
+     * after them, like the closing parenthesis for example.
+     *
+     * @param codePoint the code point after which we may want to apply the transformation
+     * @return whether it's fine to apply the transformation after this code point.
+     */
+    private static boolean canBeFollowedByDoubleSpacePeriod(final int codePoint) {
+        // TODO: This should probably be a blacklist rather than a whitelist.
+        // TODO: This should probably be language-dependant...
+        return Character.isLetterOrDigit(codePoint)
+                || codePoint == Constants.CODE_SINGLE_QUOTE
+                || codePoint == Constants.CODE_DOUBLE_QUOTE
+                || codePoint == Constants.CODE_CLOSING_PARENTHESIS
+                || codePoint == Constants.CODE_CLOSING_SQUARE_BRACKET
+                || codePoint == Constants.CODE_CLOSING_CURLY_BRACKET
+                || codePoint == Constants.CODE_CLOSING_ANGLE_BRACKET
+                || codePoint == Constants.CODE_PLUS
+                || codePoint == Constants.CODE_PERCENT
+                || Character.getType(codePoint) == Character.OTHER_SYMBOL;
+    }
+
+    /**
+     * Tests the passed word for resumability.
+     * <p>
+     * We can resume suggestions on words whose first code point is a word code point (with some
+     * nuances: check the code for details).
+     *
+     * @param settings the current values of the settings.
+     * @param word     the word to evaluate.
+     * @return whether it's fine to resume suggestions on this word.
+     */
+    private static boolean isResumableWord(final SettingsValues settings, final String word) {
+        final int firstCodePoint = word.codePointAt(0);
+        return settings.isWordCodePoint(firstCodePoint)
+                && Constants.CODE_SINGLE_QUOTE != firstCodePoint
+                && Constants.CODE_DASH != firstCodePoint;
+    }
+
+    /**
+     * Make a {@link io.separ.neural.inputmethod.indic.SuggestedWords} object containing a typed word
+     * and obsolete suggestions.
+     * See {@link io.separ.neural.inputmethod.indic.SuggestedWords#getTypedWordAndPreviousSuggestions(
+     *String, io.separ.neural.inputmethod.indic.SuggestedWords)}.
+     *
+     * @param typedWord              The typed word as a string.
+     * @param previousSuggestedWords The previously suggested words.
+     * @return Obsolete suggestions with the newly typed word.
+     */
+    private static SuggestedWords retrieveOlderSuggestions(final String typedWord,
+                                                           final SuggestedWords previousSuggestedWords) {
+        final SuggestedWords oldSuggestedWords =
+                previousSuggestedWords.isPunctuationSuggestions() ? SuggestedWords.EMPTY
+                        : previousSuggestedWords;
+        final ArrayList<SuggestedWords.SuggestedWordInfo> typedWordAndPreviousSuggestions =
+                SuggestedWords.getTypedWordAndPreviousSuggestions(typedWord, oldSuggestedWords);
+        return new SuggestedWords(typedWordAndPreviousSuggestions, null /* rawSuggestions */,
+                false /* typedWordValid */, false /* hasAutoCorrectionCandidate */,
+                true /* isObsoleteSuggestions */, oldSuggestedWords.mInputStyle);
     }
 
     /**
@@ -610,22 +683,6 @@ public final class InputLogic {
         mWordComposer.setCapitalizedModeAtStartComposingTime(
                 getActualCapsMode(settingsValues, keyboardSwitcher.getKeyboardShiftMode()));
     }
-
-    /* The sequence number member is only used in onUpdateBatchInput. It is increased each time
-     * auto-commit happens. The reason we need this is, when auto-commit happens we trim the
-     * input pointers that are held in a singleton, and to know how much to trim we rely on the
-     * results of the suggestion process that is held in mSuggestedWords.
-     * However, the suggestion process is asynchronous, and sometimes we may enter the
-     * onUpdateBatchInput method twice without having recomputed suggestions yet, or having
-     * received new suggestions generated from not-yet-trimmed input pointers. In this case, the
-     * mIndexOfTouchPointOfSecondWords member will be out of date, and we must not use it lest we
-     * remove an unrelated number of pointers (possibly even more than are left in the input
-     * pointers, leading to a crash).
-     * To avoid that, we increase the sequence number each time we auto-commit and trim the
-     * input pointers, and we do not use any suggested words that have been generated with an
-     * earlier sequence number.
-     */
-    private int mAutoCommitSequenceNumber = 1;
 
     public void onUpdateBatchInput(final SettingsValues settingsValues,
                                    final InputPointers batchPointers,
@@ -1611,32 +1668,6 @@ public final class InputLogic {
     }
 
     /**
-     * Returns whether this code point can be followed by the double-space-to-period transformation.
-     * <p>
-     * See #maybeDoubleSpaceToPeriod for details.
-     * Generally, most word characters can be followed by the double-space-to-period transformation,
-     * while most punctuation can't. Some punctuation however does allow for this to take place
-     * after them, like the closing parenthesis for example.
-     *
-     * @param codePoint the code point after which we may want to apply the transformation
-     * @return whether it's fine to apply the transformation after this code point.
-     */
-    private static boolean canBeFollowedByDoubleSpacePeriod(final int codePoint) {
-        // TODO: This should probably be a blacklist rather than a whitelist.
-        // TODO: This should probably be language-dependant...
-        return Character.isLetterOrDigit(codePoint)
-                || codePoint == Constants.CODE_SINGLE_QUOTE
-                || codePoint == Constants.CODE_DOUBLE_QUOTE
-                || codePoint == Constants.CODE_CLOSING_PARENTHESIS
-                || codePoint == Constants.CODE_CLOSING_SQUARE_BRACKET
-                || codePoint == Constants.CODE_CLOSING_CURLY_BRACKET
-                || codePoint == Constants.CODE_CLOSING_ANGLE_BRACKET
-                || codePoint == Constants.CODE_PLUS
-                || codePoint == Constants.CODE_PERCENT
-                || Character.getType(codePoint) == Character.OTHER_SYMBOL;
-    }
-
-    /**
      * Performs a recapitalization event.
      *
      * @param settingsValues The current settings values.
@@ -2087,23 +2118,6 @@ public final class InputLogic {
     }
 
     /**
-     * Tests the passed word for resumability.
-     * <p>
-     * We can resume suggestions on words whose first code point is a word code point (with some
-     * nuances: check the code for details).
-     *
-     * @param settings the current values of the settings.
-     * @param word     the word to evaluate.
-     * @return whether it's fine to resume suggestions on this word.
-     */
-    private static boolean isResumableWord(final SettingsValues settings, final String word) {
-        final int firstCodePoint = word.codePointAt(0);
-        return settings.isWordCodePoint(firstCodePoint)
-                && Constants.CODE_SINGLE_QUOTE != firstCodePoint
-                && Constants.CODE_DASH != firstCodePoint;
-    }
-
-    /**
      * @param actionId the action to perform
      */
     private void performEditorAction(final int actionId) {
@@ -2183,28 +2197,6 @@ public final class InputLogic {
         if (alsoResetLastComposedWord) {
             mLastComposedWord = LastComposedWord.NOT_A_COMPOSED_WORD;
         }
-    }
-
-    /**
-     * Make a {@link io.separ.neural.inputmethod.indic.SuggestedWords} object containing a typed word
-     * and obsolete suggestions.
-     * See {@link io.separ.neural.inputmethod.indic.SuggestedWords#getTypedWordAndPreviousSuggestions(
-     *String, io.separ.neural.inputmethod.indic.SuggestedWords)}.
-     *
-     * @param typedWord              The typed word as a string.
-     * @param previousSuggestedWords The previously suggested words.
-     * @return Obsolete suggestions with the newly typed word.
-     */
-    private static SuggestedWords retrieveOlderSuggestions(final String typedWord,
-                                                           final SuggestedWords previousSuggestedWords) {
-        final SuggestedWords oldSuggestedWords =
-                previousSuggestedWords.isPunctuationSuggestions() ? SuggestedWords.EMPTY
-                        : previousSuggestedWords;
-        final ArrayList<SuggestedWords.SuggestedWordInfo> typedWordAndPreviousSuggestions =
-                SuggestedWords.getTypedWordAndPreviousSuggestions(typedWord, oldSuggestedWords);
-        return new SuggestedWords(typedWordAndPreviousSuggestions, null /* rawSuggestions */,
-                false /* typedWordValid */, false /* hasAutoCorrectionCandidate */,
-                true /* isObsoleteSuggestions */, oldSuggestedWords.mInputStyle);
     }
 
     /**

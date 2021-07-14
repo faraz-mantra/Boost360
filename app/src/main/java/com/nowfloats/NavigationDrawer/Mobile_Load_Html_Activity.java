@@ -3,8 +3,10 @@ package com.nowfloats.NavigationDrawer;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -17,7 +19,7 @@ import com.thinksity.R;
  * Created by Admin on 26-12-2017.
  */
 
-public class Mobile_Load_Html_Activity extends AppCompatActivity{
+public class Mobile_Load_Html_Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,13 +31,13 @@ public class Mobile_Load_Html_Activity extends AppCompatActivity{
 
         if (getIntent().hasExtra("WEBSITE_DATA")) {
             data = getIntent().getStringExtra("WEBSITE_DATA");
-        }else{
+        } else {
             Toast.makeText(this, "Something is wrong with data", Toast.LENGTH_SHORT).show();
             return;
         }
 
         findViewById(R.id.close_web).setVisibility(View.GONE);
-        ImageView back = (ImageView)findViewById(R.id.back_web);
+        ImageView back = (ImageView) findViewById(R.id.back_web);
         back.setColorFilter(whiteLabelFilter);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +45,7 @@ public class Mobile_Load_Html_Activity extends AppCompatActivity{
                 finish();
             }
         });
-        WebView webView = (WebView)findViewById(R.id.webView1);
+        WebView webView = (WebView) findViewById(R.id.webView1);
         //        startWebView(url);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadData(data, "text/html", null);

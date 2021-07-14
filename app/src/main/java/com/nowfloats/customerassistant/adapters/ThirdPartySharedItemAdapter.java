@@ -1,8 +1,10 @@
 package com.nowfloats.customerassistant.adapters;
 
 import android.content.Context;
+
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +24,15 @@ public class ThirdPartySharedItemAdapter extends RecyclerView.Adapter<ThirdParty
 
     private Context mContext;
     private List<SharedSuggestionsDO> mSuggestionsDO;
-    public ThirdPartySharedItemAdapter(Context context, List<SharedSuggestionsDO> suggestionsDO){
+
+    public ThirdPartySharedItemAdapter(Context context, List<SharedSuggestionsDO> suggestionsDO) {
         mContext = context;
         mSuggestionsDO = suggestionsDO;
     }
+
     @Override
     public MySharedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_third_party_shared_item,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_third_party_shared_item, parent, false);
         return new MySharedViewHolder(view);
     }
 
@@ -42,48 +46,56 @@ public class ThirdPartySharedItemAdapter extends RecyclerView.Adapter<ThirdParty
         return mSuggestionsDO.size();
     }
 
-    public void refreshListData(List<SharedSuggestionsDO> newList){
-        if(newList == null){
+    public void refreshListData(List<SharedSuggestionsDO> newList) {
+        if (newList == null) {
             return;
         }
-        if(mSuggestionsDO.size()>0) {
+        if (mSuggestionsDO.size() > 0) {
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(new SuggestionsCallback(newList));
             result.dispatchUpdatesTo(this);
             mSuggestionsDO.addAll(newList);
-        }else{
+        } else {
             mSuggestionsDO.addAll(newList);
             notifyDataSetChanged();
         }
 
     }
 
+    private void removeItem(int position) {
+        mSuggestionsDO.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mSuggestionsDO.size());
+    }
 
-    class SuggestionsCallback extends DiffUtil.Callback{
+    class SuggestionsCallback extends DiffUtil.Callback {
 
-           List<SharedSuggestionsDO> newList;
-           SuggestionsCallback(List<SharedSuggestionsDO> newList){
-               this.newList = newList;
-           }
-           @Override
-           public int getOldListSize() {
-               return mSuggestionsDO.size();
-           }
+        List<SharedSuggestionsDO> newList;
 
-           @Override
-           public int getNewListSize() {
-               return newList.size();
-           }
+        SuggestionsCallback(List<SharedSuggestionsDO> newList) {
+            this.newList = newList;
+        }
 
-           @Override
-           public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-               return mSuggestionsDO.get(oldItemPosition).equals(newList.get(newItemPosition));
-           }
+        @Override
+        public int getOldListSize() {
+            return mSuggestionsDO.size();
+        }
 
-           @Override
-           public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-               return true;
-           }
-       }
+        @Override
+        public int getNewListSize() {
+            return newList.size();
+        }
+
+        @Override
+        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+            return mSuggestionsDO.get(oldItemPosition).equals(newList.get(newItemPosition));
+        }
+
+        @Override
+        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+            return true;
+        }
+    }
+
     class MySharedViewHolder extends RecyclerView.ViewHolder {
 
         int viewType;
@@ -102,11 +114,5 @@ public class ThirdPartySharedItemAdapter extends RecyclerView.Adapter<ThirdParty
                 }
             });
         }
-    }
-
-    private void removeItem(int position){
-        mSuggestionsDO.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position,mSuggestionsDO.size());
     }
 }

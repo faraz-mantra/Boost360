@@ -9,7 +9,9 @@ public class CustomRunnable implements Runnable {
 
     public CustomRunnable(String s) {
         this.data = s;
-    };
+    }
+
+    ;
 
     @Override
     public void run() {

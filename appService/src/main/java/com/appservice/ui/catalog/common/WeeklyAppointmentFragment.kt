@@ -11,13 +11,14 @@ import com.appservice.databinding.FragmentStaffTimingBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.staffs.model.StaffDetailsResult
-import com.appservice.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.model.staffModel.StaffDetailsResult
+import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, StaffViewModel>(), RecyclerItemClickListener {
+class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, StaffViewModel>(),
+  RecyclerItemClickListener {
 
   private var isEdit: Boolean? = null
   private var staffData: StaffDetailsResult? = null
@@ -43,26 +44,30 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     setTimings()
   }
 
-  private fun initDefaultTiming(){
-    if(staffData?.timings.isNullOrEmpty().not()){
+  private fun initDefaultTiming() {
+    if (staffData?.timings.isNullOrEmpty().not()) {
       this.defaultTimings = ArrayList();
-      for(item in this.staffData?.timings!!){
-        if(item?.timeSlots.isNullOrEmpty().not()){
+      for (item in this.staffData?.timings!!) {
+        if (item?.timeSlots.isNullOrEmpty().not()) {
           item?.isTurnedOn = true
         }
-        if(item?.day?.toLowerCase().equals("monday")){
+        if (item?.day?.toLowerCase().equals("monday")) {
           item?.isAppliedOnAllDaysViewVisible = true;
         }
         this.defaultTimings?.add(item);
       }
-    }else{
+    } else {
       this.defaultTimings = AppointmentModel.getDefaultTimings()
     }
   }
 
   private fun setTimings() {
     if (defaultTimings.isNullOrEmpty().not()) {
-      this.adapter = AppBaseRecyclerViewAdapter(baseActivity, this.defaultTimings, this@WeeklyAppointmentFragment)
+      this.adapter = AppBaseRecyclerViewAdapter(
+        baseActivity,
+        this.defaultTimings,
+        this@WeeklyAppointmentFragment
+      )
       binding?.rvStaffTiming?.adapter = adapter
     }
   }
@@ -71,7 +76,8 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     super.onCreateView()
     getBundleData()
     setOnClickListener(binding?.btnSave)
-    this.adapter = AppBaseRecyclerViewAdapter(baseActivity, this.defaultTimings, this@WeeklyAppointmentFragment)
+    this.adapter =
+      AppBaseRecyclerViewAdapter(baseActivity, this.defaultTimings, this@WeeklyAppointmentFragment)
     binding!!.rvStaffTiming.adapter = adapter
 
   }
@@ -154,7 +160,11 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
         }
 
         if ((pos + 1) < defaultTimings[index].timeSlots.size && defaultTimings[index].timeSlots[pos + 1].from != null) {
-          if (convertAndCompareTime(defaultTimings[index].timeSlots[pos].to ?: "", defaultTimings[index].timeSlots[pos + 1].from ?: "")) {
+          if (convertAndCompareTime(
+              defaultTimings[index].timeSlots[pos].to ?: "",
+              defaultTimings[index].timeSlots[pos + 1].from ?: ""
+            )
+          ) {
             showLongToast(getString(R.string.starttime_on_one_slot_cannot_be_before_endtime_of_other_slot))
             return false
           }

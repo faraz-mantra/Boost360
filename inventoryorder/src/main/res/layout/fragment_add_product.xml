@@ -20,17 +20,16 @@
       app:layout_constraintTop_toTopOf="parent">
 
       <com.framework.views.customViews.CustomEditText
+        android:id="@+id/edt_search"
         style="@style/match_wrap"
         android:background="@drawable/ic_rectangle_light_black_outline"
         android:drawableStart="@drawable/ic_search_grey"
         android:drawablePadding="@dimen/size_10"
         android:gravity="center_vertical"
         android:hint="@string/type_the_product_name"
-        android:paddingStart="@dimen/size_12"
-        android:paddingEnd="@dimen/size_12"
+        android:padding="@dimen/size_12"
         android:textColorHint="@color/black_202A2A2A"
         android:textSize="14sp"
-        android:id="@+id/edt_search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

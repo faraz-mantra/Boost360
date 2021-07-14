@@ -1,70 +1,70 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/white">
+
+  <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="match_parent">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <GridView
+      android:id="@+id/grid"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:nestedScrollingEnabled="true"
+      android:numColumns="4"
+      android:padding="24dp"
+      android:stretchMode="columnWidth" />
 
-        <GridView
-            android:id="@+id/grid"
-            android:padding="24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numColumns="4"
-            android:nestedScrollingEnabled="true"
-            android:stretchMode="columnWidth" />
+    <LinearLayout
+      android:id="@+id/layout_empty"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:visibility="gone">
 
-        <LinearLayout
-            android:id="@+id/layout_empty"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:visibility="gone"
-            android:gravity="center">
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/imagegallery_icon" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/imagegallery_icon" />
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dgts__padding_title"
+        android:layout_marginBottom="@dimen/dgts__padding_title"
+        android:text="@string/dont_shy"
+        android:textColor="@color/zeroth_grey_title"
+        android:textSize="@dimen/dgts__title_text_size"
+        android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/dgts__title_text_size"
-                android:textStyle="bold"
-                android:layout_marginTop="@dimen/dgts__padding_title"
-                android:layout_marginBottom="@dimen/dgts__padding_title"
-                android:textColor="@color/zeroth_grey_title"
-                android:text="@string/dont_shy"/>
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="@string/empty_image_gallery"
+        android:textColor="@color/zeroth_grey"
+        android:textSize="15sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/zeroth_grey"
-                android:gravity="center"
-                android:padding="4dp"
-                android:text="@string/empty_image_gallery"/>
+    </LinearLayout>
 
-        </LinearLayout>
+    <LinearLayout
+      android:id="@+id/layout_progress"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:visibility="gone">
 
-        <LinearLayout
-            android:id="@+id/layout_progress"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:visibility="gone"
-            android:gravity="center">
+      <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/progress" />
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </FrameLayout>
+  </FrameLayout>
 
 </FrameLayout>

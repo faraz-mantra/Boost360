@@ -25,5 +25,5 @@ public interface RiaNetworkInterface {
     void getAllMemberForFp(@QueryMap Map<String, String> map, Callback<List<RiaSupportModel>> callback);
 
     @GET("/riacards/api/RiaCard/GetRiaCards")
-    public void getRiaCards(@QueryMap Map<String, String> map,  Callback<ArrayList<RiaCardModel>> callback);
+    public void getRiaCards(@QueryMap Map<String, String> map, Callback<ArrayList<RiaCardModel>> callback);
 }

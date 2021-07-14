@@ -76,6 +76,7 @@
         android:inputType="phone"
         android:letterSpacing="0.05"
         android:maxLength="10"
+        android:textCursorDrawable="@color/pinkish_grey"
         android:textSize="@dimen/heading_4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +91,7 @@
       android:layout_marginTop="@dimen/_6sdp"
       android:layout_marginEnd="@dimen/_16sdp"
       android:layout_marginBottom="@dimen/_4sdp"
-      android:background="#cacaca"
+      android:background="@color/graycacaca"
       app:layout_constraintTop_toBottomOf="@id/phone_et_container" />
 
     <!--        <com.framework.views.customViews.CustomTextView-->
@@ -106,9 +107,10 @@
       android:layout_marginStart="@dimen/_16sdp"
       android:layout_marginTop="@dimen/_24sdp"
       android:layout_marginEnd="@dimen/_16sdp"
-      android:enabled="false"
       android:drawableEnd="@null"
+      android:enabled="false"
       android:text="@string/request_otp"
+      android:textAllCaps="false"
       app:layout_constraintTop_toBottomOf="@id/divider"
       tools:ignore="MissingConstraints" />
 
@@ -116,10 +118,10 @@
       android:id="@+id/login_username"
       style="@style/psn_subheading_style"
       android:layout_marginTop="@dimen/_16sdp"
+      android:fontFamily="@font/semi_bold"
       android:gravity="center"
       android:text="@string/login_with_username_or_email"
       android:textAllCaps="true"
-      android:fontFamily="@font/semi_bold"
       android:textColor="@color/colorPrimary"
       app:layout_constraintTop_toBottomOf="@id/next_button"
       app:textType="BODY_1"
@@ -130,10 +132,11 @@
       android:id="@+id/help_tv"
       style="@style/psn_subheading_style"
       android:layout_width="wrap_content"
-      android:layout_marginTop="@dimen/_20sdp"
       android:fontFamily="@font/semi_bold"
       android:text="@string/need_help"
       app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
+      app:layout_constraintTop_toBottomOf="@+id/login_username"
+      app:layout_constraintVertical_bias="1"
       tools:ignore="MissingConstraints,UnknownId" />
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

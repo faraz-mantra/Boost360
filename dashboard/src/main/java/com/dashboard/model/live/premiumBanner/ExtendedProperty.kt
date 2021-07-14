@@ -25,4 +25,4 @@ data class ExtendedProperty(
   var value: String? = null,
   @SerializedName("websiteid")
   var websiteid: String? = null
-): Serializable
+) : Serializable

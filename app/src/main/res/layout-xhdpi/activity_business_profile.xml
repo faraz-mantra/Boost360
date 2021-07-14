@@ -1,184 +1,178 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools"
-    android:orientation="vertical"
+  xmlns:card_view="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="fill_parent"
+  android:background="#E0E0E0"
+  android:orientation="vertical">
+
+  <include
+    android:id="@+id/app_bar"
+    layout="@layout/app_bar_home" />
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:background="#E0E0E0">
+    android:layout_height="match_parent"
+    android:layout_marginStart="2dp"
+    android:layout_marginTop="5dp"
+    android:orientation="vertical">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/app_bar_home" />
+    <androidx.cardview.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="200dp"
+      android:layout_gravity="center_horizontal"
+      card_view:cardCornerRadius="1dp">
 
-    <LinearLayout
+      <TextView
+        android:id="@+id/websiteTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="41dp"
+        android:text="@string/website_name"
+        android:textColor="#FFB900"
+        android:textSize="22sp" />
+
+
+      <TextView
+        android:id="@+id/domainNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="18dp"
+        android:text="@string/nowfloats.com"
+        android:textColor="#858585"
+        android:textSize="13sp" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="10dp"
+      card_view:cardCornerRadius="1dp">
+
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_marginStart="21dp"
         android:layout_marginTop="5dp"
-        android:layout_marginStart="2dp">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_gravity="center_horizontal"
-            card_view:cardCornerRadius="1dp"
-            >
-
-            <TextView
-                android:id="@+id/websiteTitleTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:layout_marginTop="41dp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="#FFB900"
-                android:text="@string/website_name"/>
-
-
-            <TextView
-                android:id="@+id/domainNameTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nowfloats.com"
-                android:layout_marginBottom="18dp"
-                android:layout_gravity="center|bottom"
-                android:textSize="13sp"
-                android:textColor="#858585"/>
-
-        </androidx.cardview.widget.CardView>
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            card_view:cardCornerRadius="1dp"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="21dp">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/businessNameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="47dp"
-            android:orientation="horizontal">
+          android:id="@+id/businessNameLayout"
+          android:layout_width="match_parent"
+          android:layout_height="47dp"
+          android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/address_grey"
-                android:layout_gravity="bottom"
-                android:scaleType="fitXY"
-                />
+          <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:scaleType="fitXY"
+            android:src="@drawable/address_grey" />
 
-            <EditText
-                android:id="@+id/editText_businessName"
-                style="@style/SignUp_EditText_Style"
-                android:layout_marginStart="33dp"
-                android:inputType="textCapWords"
-                android:textColorHint="#4D4D4D"
-                android:hint="@string/business__address"/>
+          <EditText
+            android:id="@+id/editText_businessName"
+            style="@style/SignUp_EditText_Style"
+            android:layout_marginStart="33dp"
+            android:hint="@string/business__address"
+            android:inputType="textCapWords"
+            android:textColorHint="#4D4D4D" />
         </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/contactInformationLayout"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:orientation="horizontal"
+        <LinearLayout
+          android:id="@+id/contactInformationLayout"
+          android:layout_width="match_parent"
+          android:layout_height="47dp"
+          android:orientation="horizontal"
 
-                >
+          >
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:src="@drawable/contact_grey"
-                    android:scaleType="fitXY"
-                    />
+          <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:scaleType="fitXY"
+            android:src="@drawable/contact_grey" />
 
-                <EditText
-                    android:id="@+id/editText_contactInformation"
-                    style="@style/SignUp_EditText_Style"
-                    android:layout_marginStart="33dp"
-                    android:textColorHint="#4D4D4D"
-                    android:inputType="textCapWords"
-                    android:hint="@string/contact__info"/>
-            </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/businessHoursLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:orientation="horizontal">
+          <EditText
+            android:id="@+id/editText_contactInformation"
+            style="@style/SignUp_EditText_Style"
+            android:layout_marginStart="33dp"
+            android:hint="@string/contact__info"
+            android:inputType="textCapWords"
+            android:textColorHint="#4D4D4D" />
+        </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:src="@drawable/time_grey"
-                        android:scaleType="fitXY"
-                        />
+        <LinearLayout
+          android:id="@+id/businessHoursLayout"
+          android:layout_width="match_parent"
+          android:layout_height="47dp"
+          android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/editText_businessHours"
-                        style="@style/SignUp_EditText_Style"
-                        android:layout_marginStart="33dp"
-                        android:textColorHint="#4D4D4D"
-                        android:inputType="textCapWords"
-                        android:hint="@string/title_activity_business__hours_"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/businessLogoLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:orientation="horizontal">
+          <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:scaleType="fitXY"
+            android:src="@drawable/time_grey" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:src="@drawable/logo_grey"
-                        android:scaleType="fitXY"
-                        />
+          <EditText
+            android:id="@+id/editText_businessHours"
+            style="@style/SignUp_EditText_Style"
+            android:layout_marginStart="33dp"
+            android:hint="@string/title_activity_business__hours_"
+            android:inputType="textCapWords"
+            android:textColorHint="#4D4D4D" />
+        </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/editText_businessLogo"
-                        style="@style/SignUp_EditText_Style"
-                        android:textColorHint="#4D4D4D"
-                        android:layout_marginStart="33dp"
-                        android:inputType="textCapWords"
-                        android:hint="@string/title_activity_business__logo_"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/socialSharingLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:orientation="horizontal">
+        <LinearLayout
+          android:id="@+id/businessLogoLayout"
+          android:layout_width="match_parent"
+          android:layout_height="47dp"
+          android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:src="@drawable/share_grey"
-                        android:scaleType="fitXY"
-                        />
+          <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:scaleType="fitXY"
+            android:src="@drawable/logo_grey" />
 
-                    <EditText
-                        android:id="@+id/editText_socialSharing"
-                        style="@style/SignUp_EditText_Style"
-                        android:textColorHint="#4D4D4D"
-                        android:layout_marginStart="33dp"
-                        android:inputType="textCapWords"
-                        android:hint="@string/title_activity_social__sharing_"/>
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+          <EditText
+            android:id="@+id/editText_businessLogo"
+            style="@style/SignUp_EditText_Style"
+            android:layout_marginStart="33dp"
+            android:hint="@string/title_activity_business__logo_"
+            android:inputType="textCapWords"
+            android:textColorHint="#4D4D4D" />
+        </LinearLayout>
 
+        <LinearLayout
+          android:id="@+id/socialSharingLayout"
+          android:layout_width="match_parent"
+          android:layout_height="47dp"
+          android:orientation="horizontal">
+
+          <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:scaleType="fitXY"
+            android:src="@drawable/share_grey" />
+
+          <EditText
+            android:id="@+id/editText_socialSharing"
+            style="@style/SignUp_EditText_Style"
+            android:layout_marginStart="33dp"
+            android:hint="@string/title_activity_social__sharing_"
+            android:inputType="textCapWords"
+            android:textColorHint="#4D4D4D" />
+        </LinearLayout>
+      </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
-    </LinearLayout>
+  </LinearLayout>
 </LinearLayout>

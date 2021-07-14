@@ -29,7 +29,10 @@ class WebPreviewActivity : AppBaseActivity<ActivityWebPreviewBinding, BaseViewMo
     binding?.ctvUrl?.text = floatsRequest?.webSiteUrl
     binding?.closeIcon?.setOnClickListener { finish() }
     binding?.shareIcon?.setOnClickListener {
-      shareViaAnyApp(null, "${floatsRequest?.businessName} ${floatsRequest?.categoryDataModel?.category_descriptor} ${floatsRequest?.webSiteUrl}")
+      shareViaAnyApp(
+        null,
+        "${floatsRequest?.businessName} ${floatsRequest?.categoryDataModel?.category_descriptor} ${floatsRequest?.webSiteUrl}"
+      )
     }
     loadData(floatsRequest?.webSiteUrl!!)
   }
@@ -60,7 +63,11 @@ class WebPreviewActivity : AppBaseActivity<ActivityWebPreviewBinding, BaseViewMo
         binding?.progressBar?.gone()
       }
 
-      override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+      override fun onReceivedError(
+        view: WebView?,
+        request: WebResourceRequest?,
+        error: WebResourceError?
+      ) {
         super.onReceivedError(view, request, error)
         binding?.progressBar?.gone()
       }

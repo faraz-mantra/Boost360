@@ -4,12 +4,15 @@ import androidx.lifecycle.LiveData
 import com.appservice.model.account.AccountCreateRequest
 import com.appservice.model.account.BankAccountDetailsN
 import com.appservice.model.account.testimonial.addEdit.DeleteTestimonialRequest
+import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.repository.BoostKitDevRepository
 import com.appservice.rest.repository.RazorRepository
 import com.appservice.rest.repository.WithFloatRepository
+import com.appservice.rest.repository.WithFloatTwoRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import okhttp3.RequestBody
 import org.json.JSONObject
 
 class TestimonialViewModel : BaseViewModel() {
@@ -18,8 +21,15 @@ class TestimonialViewModel : BaseViewModel() {
     return BoostKitDevRepository.getWebActionList(themeID, websiteId).toLiveData()
   }
 
-  fun getTestimonialsList(token: String?,testimonialType: String?, query: JSONObject?, skip: Int, limit: Int): LiveData<BaseResponse> {
-    return BoostKitDevRepository.getTestimonialsList(token,testimonialType, query, skip, limit).toLiveData()
+  fun getTestimonialsList(
+    token: String?,
+    testimonialType: String?,
+    query: JSONObject?,
+    skip: Int,
+    limit: Int
+  ): LiveData<BaseResponse> {
+    return BoostKitDevRepository.getTestimonialsList(token, testimonialType, query, skip, limit)
+      .toLiveData()
   }
 
 //  fun addTestimonials(token: String?, testimonialType: String?, body: AddTestimonialsData?): LiveData<BaseResponse> {
@@ -30,7 +40,11 @@ class TestimonialViewModel : BaseViewModel() {
 //    return BoostKitDevRepository.updateTestimonials(token, testimonialType, body).toLiveData()
 //  }
 
-  fun deleteTestimonials(token: String?,testimonialType: String?, body: DeleteTestimonialRequest?): LiveData<BaseResponse> {
-    return BoostKitDevRepository.deleteTestimonials(token,testimonialType, body).toLiveData()
+  fun deleteTestimonials(
+    token: String?,
+    testimonialType: String?,
+    body: DeleteTestimonialRequest?
+  ): LiveData<BaseResponse> {
+    return BoostKitDevRepository.deleteTestimonials(token, testimonialType, body).toLiveData()
   }
 }

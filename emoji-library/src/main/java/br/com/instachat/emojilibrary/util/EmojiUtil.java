@@ -24,11 +24,6 @@ public final class EmojiUtil {
     private static final SparseIntArray mSoftbanksMap = new SparseIntArray(471);
     private static Map<String, Integer> sEmojisModifiedMap = new HashMap<>();
 
-
-    // CONSTRUCTOR
-    private EmojiUtil() {
-    }
-
     static {
         People.bindEmojis(EmojiUtil.mEmojisMap);
         Nature.bindEmojis(EmojiUtil.mEmojisMap);
@@ -41,6 +36,10 @@ public final class EmojiUtil {
         Objects.bindSoftBankEmojis(EmojiUtil.mSoftbanksMap);
         Places.bindSoftBankEmojis(EmojiUtil.mSoftbanksMap);
         Symbols.bindSoftBankEmojis(EmojiUtil.mSoftbanksMap);
+    }
+
+    // CONSTRUCTOR
+    private EmojiUtil() {
     }
 
     private static boolean isSoftBankEmoji(char c) {

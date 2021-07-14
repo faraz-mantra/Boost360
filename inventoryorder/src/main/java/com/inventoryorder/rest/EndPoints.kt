@@ -43,16 +43,18 @@ object EndPoints {
   const val GET_ORDER_DETAIL = "api/assuredPurchase/v2/GetOrderDetails"
   const val GET_LIST_IN_COMPLETE_ORDER = "api/assuredPurchase/v2/ListIncompleteOrders"
 
-  const val POST_UPDATE_EXTRA_FIELD_ORDER = "api/assuredPurchase/v2/UpdateExtraPropertiesInformation"
+  const val POST_UPDATE_EXTRA_FIELD_ORDER =
+    "api/assuredPurchase/v2/UpdateExtraPropertiesInformation"
   const val GET_CONFIRM_ORDER = "api/assuredPurchase/v2/ConfirmOrder"
   const val GET_CANCEL_ORDER = "api/assuredPurchase/v2/CancelOrder"
   const val MARK_AS_DELIVERED = "api/assuredPurchase/v2/MarkOrderAsDelivered"
   const val MARK_AS_SHIPPED = "api/assuredPurchase/v2/MarkOrderAsShipped"
   const val SEND_PAYMENT_REMINDER = "api/assuredPurchase/v2/SendPaymentReminder"
   const val MARK_COD_PAYMENT_DONE = "api/assuredPurchase/v2/MarkPaymentReceivedForCODOrder"
-  const val MARK_PAYMENT_RECEIVED_MERCHANT = "api/assuredPurchase/v2/MarkPaymentReceivedForPlacedOrderByMerchant"
-  const val ORDER_FEEDBACK_REQUEST= "api/assuredPurchase/v2/RequestOrderFeedback"
-  const val ORDER_RE_BOOKING_REQUEST= "api/assuredPurchase/v2/SendRebookingReminder"
+  const val MARK_PAYMENT_RECEIVED_MERCHANT =
+    "api/assuredPurchase/v2/MarkPaymentReceivedForPlacedOrderByMerchant"
+  const val ORDER_FEEDBACK_REQUEST = "api/assuredPurchase/v2/RequestOrderFeedback"
+  const val ORDER_RE_BOOKING_REQUEST = "api/assuredPurchase/v2/SendRebookingReminder"
   //new API order
 
 

@@ -18,6 +18,7 @@ import com.boost.presignin.ui.AccountNotFoundActivity
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
+import com.framework.smsVerification.AppSignatureHashHelper
 import com.framework.utils.makeLinks
 import com.framework.webengageconstant.*
 
@@ -41,7 +42,10 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         val lastPosition: Int? = binding?.introViewpager?.adapter?.itemCount?.minus(1)
         val mCurrentPosition = binding?.introViewpager?.currentItem ?: 0
         val isLast = (mCurrentPosition == lastPosition)
-        binding?.introViewpager?.setCurrentItem(if (isLast) 0 else mCurrentPosition + 1, isLast.not())
+        binding?.introViewpager?.setCurrentItem(
+          if (isLast) 0 else mCurrentPosition + 1,
+          isLast.not()
+        )
         nextPageTimer()
       }
     }
@@ -51,11 +55,17 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     binding?.acceptTnc?.makeLinks(
       Pair("terms", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
+        openTNCDialog(
+          "https://www.getboost360.com/tnc?src=android&stage=presignup",
+          resources.getString(R.string.boost360_terms_conditions)
+        )
       }),
       Pair("conditions", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.boost360_terms_conditions))
+        openTNCDialog(
+          "https://www.getboost360.com/tnc?src=android&stage=presignup",
+          resources.getString(R.string.boost360_terms_conditions)
+        )
       })
     )
   }
@@ -73,7 +83,12 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     initTncString()
     nextPageTimer()
     binding?.introViewpager?.apply {
-      adapter = IntroAdapter(supportFragmentManager, lifecycle, items, { setNextPage() }, { isVideoPlaying = it; })
+      adapter = IntroAdapter(
+        supportFragmentManager,
+        lifecycle,
+        items,
+        { setNextPage() },
+        { isVideoPlaying = it; })
       orientation = ViewPager2.ORIENTATION_HORIZONTAL
       binding?.introIndicator?.setViewPager2(binding!!.introViewpager)
       binding?.introViewpager?.registerOnPageChangeCallback(CircularViewPagerHandler(this))
@@ -84,6 +99,9 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
       WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
       startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
     }
+
+    val hashes = AppSignatureHashHelper(this).appSignatures
+
   }
 
   private fun setNextPage() {

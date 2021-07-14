@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/flTopView"
+  android:id="@+id/flTopView"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:alpha="0.96"
+  android:background="#fff"
+  android:orientation="vertical">
+
+
+  <ProgressBar
+    android:id="@+id/pbView"
+    style="@style/Widget.AppCompat.ProgressBar"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:theme="@style/CircularProgress"
+    android:visibility="gone" />
+
+  <FrameLayout
+    android:id="@+id/fmCustomerAssistant"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="0.96"
-    android:background="#fff"
-    android:orientation="vertical">
-
-
-    <ProgressBar
-        android:id="@+id/pbView"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:theme="@style/CircularProgress"
-        android:visibility="gone" />
-
-    <FrameLayout
-        android:id="@+id/fmCustomerAssistant"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible" />
+    android:visibility="visible" />
 
 </LinearLayout>
 

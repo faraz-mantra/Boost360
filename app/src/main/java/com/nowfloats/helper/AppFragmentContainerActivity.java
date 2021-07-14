@@ -32,7 +32,6 @@ import com.nowfloats.util.Utils;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityFragmentContainerAppBinding;
 
-
 public class AppFragmentContainerActivity extends AppCompatActivity {
 
     public static String FRAGMENT_TYPE = "FRAGMENT_TYPE";
@@ -40,16 +39,21 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
     private UserSessionManager session;
 
     private ActivityFragmentContainerAppBinding binding;
-    private AccountSettingsFragment accountSettingsFragment = null;
-    private KeyboardFragment keyboardFragment = null;
-    private ManageContentFragment manageContentFragment = null;
-    private ManageInventoryFragment manageInventoryFragment = null;
-    private HelpAndSupportFragment helpAndSupportFragment = null;
-    private AboutFragment aboutFragment = null;
-    private NotificationFragment notificationFragment = null;
-    private Home_Main_Fragment homeMainFragment = null;
-    private ManageCustomerFragment manageCustomerFragment = null;
-    private Site_Meter_Fragment site_Meter_Fragment = null;
+
+    public static void startFragmentAppActivity(Activity activity, FragmentType type, Bundle bundle, Boolean clearTop) {
+        Intent intent = new Intent(activity, AppFragmentContainerActivity.class);
+        intent.putExtras(bundle);
+        setFragmentType(intent, type);
+        if (clearTop) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        }
+        activity.startActivity(intent);
+    }
+
+    private static void setFragmentType(Intent intent, FragmentType type) {
+        intent.putExtra(FRAGMENT_TYPE, type.name());
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,21 +79,6 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
 
     private boolean isVisibleBackButton() {
         return true;
-    }
-
-    public static void startFragmentAppActivity(Activity activity, FragmentType type, Bundle bundle, Boolean clearTop) {
-        Intent intent = new Intent(activity, AppFragmentContainerActivity.class);
-        intent.putExtras(bundle);
-        setFragmentType(intent, type);
-        if (clearTop) {
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        }
-        activity.startActivity(intent);
-    }
-
-    private static void setFragmentType(Intent intent, FragmentType type) {
-        intent.putExtra(FRAGMENT_TYPE, type.name());
     }
 
     private Boolean isHideToolbar() {
@@ -218,7 +207,8 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             getToolbar().setNavigationIcon(getNavigationIcon());
             getToolbar().setBackgroundColor(getToolbarBackgroundColor());
             setSupportActionBar(getToolbar());
-            if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(isVisibleBackButton());
+            if (getSupportActionBar() != null)
+                getSupportActionBar().setDisplayHomeAsUpEnabled(isVisibleBackButton());
         } else getToolbar().setVisibility(View.GONE);
     }
 
@@ -235,35 +225,25 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
     private Fragment getFragmentInstance(FragmentType type) {
         switch (type) {
             case ACCOUNT_SETTING:
-                accountSettingsFragment = new AccountSettingsFragment();
-                return accountSettingsFragment;
+                return new AccountSettingsFragment();
             case ACCOUNT_KEYBOARD:
-                keyboardFragment = new KeyboardFragment();
-                return keyboardFragment;
+                return new KeyboardFragment();
             case MANAGE_CONTENT:
-                manageContentFragment = new ManageContentFragment();
-                return manageContentFragment;
+                return new ManageContentFragment();
             case MANAGE_INVENTORY:
-                manageInventoryFragment = new ManageInventoryFragment();
-                return manageInventoryFragment;
+                return new ManageInventoryFragment();
             case HELP_AND_SUPPORT:
-                helpAndSupportFragment = new HelpAndSupportFragment();
-                return helpAndSupportFragment;
+                return new HelpAndSupportFragment();
             case ABOUT_BOOST:
-                aboutFragment = new AboutFragment();
-                return aboutFragment;
+                return new AboutFragment();
             case NOTIFICATION_VIEW:
-                notificationFragment = new NotificationFragment();
-                return notificationFragment;
+                return new NotificationFragment();
             case UPDATE_LATEST_STORY_VIEW:
-                homeMainFragment = new Home_Main_Fragment();
-                return homeMainFragment;
+                return new Home_Main_Fragment();
             case MANAGE_CUSTOMER_VIEW:
-                manageCustomerFragment =  new ManageCustomerFragment();
-                return manageCustomerFragment;
+                return new ManageCustomerFragment();
             case SITE_METER_OLD_VIEW:
-                site_Meter_Fragment =  new Site_Meter_Fragment();
-                return site_Meter_Fragment;
+                return new Site_Meter_Fragment();
             default:
                 return null;
         }
@@ -272,14 +252,8 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (accountSettingsFragment != null) accountSettingsFragment.onActivityResult(requestCode, resultCode, data);
-        if (keyboardFragment != null) keyboardFragment.onActivityResult(requestCode, resultCode, data);
-        if (manageContentFragment != null) manageContentFragment.onActivityResult(requestCode, resultCode, data);
-        if (manageInventoryFragment != null) manageInventoryFragment.onActivityResult(requestCode, resultCode, data);
-        if (helpAndSupportFragment != null) helpAndSupportFragment.onActivityResult(requestCode, resultCode, data);
-        if (aboutFragment != null) aboutFragment.onActivityResult(requestCode, resultCode, data);
-        if (notificationFragment != null) notificationFragment.onActivityResult(requestCode, resultCode, data);
-        if (homeMainFragment != null) homeMainFragment.onActivityResult(requestCode, resultCode, data);
-        if (manageCustomerFragment!= null) manageCustomerFragment.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

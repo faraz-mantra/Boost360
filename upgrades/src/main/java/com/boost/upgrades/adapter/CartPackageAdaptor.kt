@@ -22,104 +22,118 @@ import kotlin.collections.ArrayList
 
 
 class CartPackageAdaptor(
-        list: List<CartModel>?,
-        val listener: CartFragmentListener) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
+  list: List<CartModel>?,
+  val listener: CartFragmentListener
+) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
 
-    private var bundlesList = ArrayList<CartModel>()
-    private lateinit var context: Context
+  private var bundlesList = ArrayList<CartModel>()
+  private lateinit var context: Context
 
-    init {
-        this.bundlesList = list as ArrayList<CartModel>
+  init {
+    this.bundlesList = list as ArrayList<CartModel>
+  }
+
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
+    val itemView = LayoutInflater.from(parent.context).inflate(
+      R.layout.cart_single_package, parent, false
+    )
+    context = itemView.context
+
+    return upgradeViewHolder(itemView)
+  }
+
+  override fun getItemCount(): Int {
+    return bundlesList.size
+  }
+
+  override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
+    val selectedBundle = bundlesList.get(position)
+
+    holder.name.text = selectedBundle.item_name
+    val price = selectedBundle.price
+    val MRPPrice = selectedBundle.MRPPrice
+    if (selectedBundle.min_purchase_months > 1) {
+      holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+        .format(price) + "/" + selectedBundle.min_purchase_months + "mths"
+    } else {
+      holder.price.text =
+        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/mth"
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.cart_single_package, parent, false)
-        context = itemView.context
-
-        return upgradeViewHolder(itemView)
+    if (selectedBundle.link != null) {
+      Glide.with(context).load(selectedBundle.link!!).placeholder(R.drawable.boost_360_insignia)
+        .into(holder.image)
+    } else {
+      holder.image.setImageResource(R.drawable.rectangle_copy_18)
     }
 
-    override fun getItemCount(): Int {
-        return bundlesList.size
+    if (price != MRPPrice) {
+      spannableString(holder, MRPPrice, selectedBundle.min_purchase_months)
+      holder.orig_cost.visibility = View.VISIBLE
+    } else {
+      holder.orig_cost.visibility = View.GONE
     }
-
-    override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-        val selectedBundle = bundlesList.get(position)
-
-      holder.name.text = selectedBundle.item_name
-        val price = selectedBundle.price
-        val MRPPrice = selectedBundle.MRPPrice
-        if (selectedBundle.min_purchase_months > 1) {
-          holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/" + selectedBundle.min_purchase_months + "mths"
-        } else {
-          holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/mth"
-        }
-
-        if(selectedBundle.link != null){
-          Glide.with(context).load(selectedBundle.link!!).placeholder(R.drawable.boost_360_insignia).into(holder.image)
-        } else {
-            holder.image.setImageResource(R.drawable.rectangle_copy_18)
-        }
-        
-        if(price != MRPPrice) {
-            spannableString(holder, MRPPrice, selectedBundle.min_purchase_months)
-            holder.orig_cost.visibility = View.VISIBLE
-        }else{
-            holder.orig_cost.visibility = View.GONE
-        }
-        if (selectedBundle.discount > 0) {
-          holder.discount.text = selectedBundle.discount.toString() + "%"
-          holder.discount.visibility = View.VISIBLE
-        } else {
-            holder.discount.visibility = View.GONE
-        }
-        holder.removePackage.setOnClickListener {
-            selectedBundle.item_name?.let { it1 -> WebEngageController.trackEvent(ADDONS_MARKETPLACE_PACKAGE_CROSSED_DELETED_FROM_CART, ADDONS_MARKETPLACE, it1) }
-            listener.deleteCartAddonsItem(bundlesList.get(position).item_id)
-        }
-        holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-        if(bundlesList.size - 1 == position) {
-            holder.view.visibility = View.GONE
-        }
-
-        //showing package details
-        holder.itemView.setOnClickListener {
-            listener.showBundleDetails(bundlesList.get(position).item_id)
-        }
+    if (selectedBundle.discount > 0) {
+      holder.discount.text = selectedBundle.discount.toString() + "%"
+      holder.discount.visibility = View.VISIBLE
+    } else {
+      holder.discount.visibility = View.GONE
     }
-
-    fun addupdates(upgradeModel: List<CartModel>) {
-        val initPosition = bundlesList.size
-        bundlesList.clear()
-        bundlesList.addAll(upgradeModel)
-        notifyItemRangeInserted(initPosition, bundlesList.size)
-    }
-
-    class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name = itemView.findViewById<TextView>(R.id.package_title)
-        val price = itemView.findViewById<TextView>(R.id.package_price)
-        val orig_cost = itemView.findViewById<TextView>(R.id.package_orig_cost)
-        val discount = itemView.findViewById<TextView>(R.id.package_discount)
-        val image = itemView.findViewById<ImageView>(R.id.package_profile_image)
-        val removePackage = itemView.findViewById<ImageView>(R.id.package_close)
-        var view = itemView.findViewById<View>(R.id.cart_single_package_bottom_view)!!
-    }
-
-    fun spannableString(holder: upgradeViewHolder, value: Double, minMonth: Int) {
-        val origCost: SpannableString
-        if (minMonth > 1) {
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
-        } else {
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
-        }
-
-        origCost.setSpan(
-                StrikethroughSpan(),
-                0,
-                origCost.length,
-                0
+    holder.removePackage.setOnClickListener {
+      selectedBundle.item_name?.let { it1 ->
+        WebEngageController.trackEvent(
+          ADDONS_MARKETPLACE_PACKAGE_CROSSED_DELETED_FROM_CART,
+          ADDONS_MARKETPLACE,
+          it1
         )
-      holder.orig_cost.text = origCost
+      }
+      listener.deleteCartAddonsItem(bundlesList.get(position).item_id)
     }
+    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+    if (bundlesList.size - 1 == position) {
+      holder.view.visibility = View.GONE
+    }
+
+    //showing package details
+    holder.itemView.setOnClickListener {
+      listener.showBundleDetails(bundlesList.get(position).item_id)
+    }
+  }
+
+  fun addupdates(upgradeModel: List<CartModel>) {
+    val initPosition = bundlesList.size
+    bundlesList.clear()
+    bundlesList.addAll(upgradeModel)
+    notifyItemRangeInserted(initPosition, bundlesList.size)
+  }
+
+  class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val name = itemView.findViewById<TextView>(R.id.package_title)
+    val price = itemView.findViewById<TextView>(R.id.package_price)
+    val orig_cost = itemView.findViewById<TextView>(R.id.package_orig_cost)
+    val discount = itemView.findViewById<TextView>(R.id.package_discount)
+    val image = itemView.findViewById<ImageView>(R.id.package_profile_image)
+    val removePackage = itemView.findViewById<ImageView>(R.id.package_close)
+    var view = itemView.findViewById<View>(R.id.cart_single_package_bottom_view)!!
+  }
+
+  fun spannableString(holder: upgradeViewHolder, value: Double, minMonth: Int) {
+    val origCost: SpannableString
+    if (minMonth > 1) {
+      origCost = SpannableString(
+        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths"
+      )
+    } else {
+      origCost =
+        SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
+    }
+
+    origCost.setSpan(
+      StrikethroughSpan(),
+      0,
+      origCost.length,
+      0
+    )
+    holder.orig_cost.text = origCost
+  }
 }

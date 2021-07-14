@@ -11,9 +11,9 @@ data class DrScoreUiData(
   var id: String = "",
   @SerializedName("title")
   var title: String = ""
-):BaseResponse(),Serializable{
+) : BaseResponse(), Serializable {
 
-  fun getDescValue():String{
+  fun getDescValue(): String {
     return if (desc.isNotEmpty()) desc else title
   }
 }

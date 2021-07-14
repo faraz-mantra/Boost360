@@ -16,11 +16,14 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -52,12 +55,11 @@ import static android.view.Window.FEATURE_NO_TITLE;
 
 public class MultipleProductImageActivity extends AppCompatActivity {
 
-    FloatingActionButton fabDeleteImage, fabAddImage;
-    ViewPager vpMultipleImages;
-
     private final int galleryReqId = 6;
     private final int mediaReqId = 5;
-
+    FloatingActionButton fabDeleteImage, fabAddImage;
+    ViewPager vpMultipleImages;
+    List<ProductImageResponseModel> lsProductImages;
     private String mProductId;
     private WebAction mWebAction;
     private ProductImageListAdapter mAdapter;
@@ -290,7 +292,6 @@ public class MultipleProductImageActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -409,8 +410,6 @@ public class MultipleProductImageActivity extends AppCompatActivity {
         }
         return val;
     }
-
-    List<ProductImageResponseModel> lsProductImages;
 
     private void displayImagesForProduct() {
         progressDialog = ProgressDialog.show(this, "", getString(R.string.please_wait_));

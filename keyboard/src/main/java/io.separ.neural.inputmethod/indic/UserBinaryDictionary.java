@@ -56,24 +56,23 @@ public class UserBinaryDictionary extends ExpandableBinaryDictionary {
     // to auto-correct, so we set this to the highest frequency that won't, i.e. 14.
     private static final int USER_DICT_SHORTCUT_FREQUENCY = 14;
 
-    private static final String[] PROJECTION_QUERY_WITH_SHORTCUT = new String[] {
-        Words.WORD,
-        Words.SHORTCUT,
-        Words.FREQUENCY,
+    private static final String[] PROJECTION_QUERY_WITH_SHORTCUT = new String[]{
+            Words.WORD,
+            Words.SHORTCUT,
+            Words.FREQUENCY,
     };
-    private static final String[] PROJECTION_QUERY_WITHOUT_SHORTCUT = new String[] {
-        Words.WORD,
-        Words.FREQUENCY,
+    private static final String[] PROJECTION_QUERY_WITHOUT_SHORTCUT = new String[]{
+            Words.WORD,
+            Words.FREQUENCY,
     };
 
     private static final String NAME = "userunigram";
-
-    private ContentObserver mObserver;
     final private String mLocale;
     final private boolean mAlsoUseMoreRestrictiveLocales;
+    private ContentObserver mObserver;
 
     protected UserBinaryDictionary(final Context context, final Locale locale,
-            final boolean alsoUseMoreRestrictiveLocales, final File dictFile, final String name) {
+                                   final boolean alsoUseMoreRestrictiveLocales, final File dictFile, final String name) {
         super(context, getDictName(name, locale, dictFile), locale, Dictionary.TYPE_USER, dictFile);
         if (null == locale) throw new NullPointerException(); // Catch the error earlier
         final String localeStr = locale.toString();
@@ -94,6 +93,7 @@ public class UserBinaryDictionary extends ExpandableBinaryDictionary {
                 // version of the platform.
                 onChange(self, null);
             }
+
             // The following hook is only available as of API level 16
             // (Build.VERSION_CODES.JELLY_BEAN), and as such it will only work on JellyBean+
             // devices. On older versions of the platform, the hook above will be called instead.
@@ -108,9 +108,48 @@ public class UserBinaryDictionary extends ExpandableBinaryDictionary {
 
     @UsedForTesting
     public static UserBinaryDictionary getDictionary(final Context context, final Locale locale,
-            final File dictFile, final String dictNamePrefix) {
+                                                     final File dictFile, final String dictNamePrefix) {
         return new UserBinaryDictionary(context, locale, false /* alsoUseMoreRestrictiveLocales */,
                 dictFile, dictNamePrefix + NAME);
+    }
+
+    public static boolean isEnabled(final Context context) {
+        final ContentResolver cr = context.getContentResolver();
+        final ContentProviderClient client = cr.acquireContentProviderClient(Words.CONTENT_URI);
+        if (client != null) {
+            client.release();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Adds a word to the user dictionary and makes it persistent.
+     *
+     * @param context the context
+     * @param locale  the locale
+     * @param word    the word to add. If the word is capitalized, then the dictionary will
+     *                recognize it as a capitalized word when searched.
+     */
+    public static void addWordToUserDictionary(final Context context, final Locale locale,
+                                               final String word) {
+        // Update the user dictionary provider
+        UserDictionaryCompatUtils.addWord(context, word,
+                HISTORICAL_DEFAULT_USER_DICTIONARY_FREQUENCY, null, locale);
+    }
+
+    private static int scaleFrequencyFromDefaultToLatinIme(final int defaultFrequency) {
+        // The default frequency for the user dictionary is 250 for historical reasons.
+        // Latin IME considers a good value for the default user dictionary frequency
+        // is about 160 considering the scale we use. So we are scaling down the values.
+        if (defaultFrequency > Integer.MAX_VALUE / LATINIME_DEFAULT_USER_DICTIONARY_FREQUENCY) {
+            return (defaultFrequency / HISTORICAL_DEFAULT_USER_DICTIONARY_FREQUENCY)
+                    * LATINIME_DEFAULT_USER_DICTIONARY_FREQUENCY;
+        } else {
+            return (defaultFrequency * LATINIME_DEFAULT_USER_DICTIONARY_FREQUENCY)
+                    / HISTORICAL_DEFAULT_USER_DICTIONARY_FREQUENCY;
+        }
     }
 
     @Override
@@ -129,7 +168,7 @@ public class UserBinaryDictionary extends ExpandableBinaryDictionary {
         // This is correct for locale processing.
         // For this example, we'll look at the "en_US_POSIX" case.
         final String[] localeElements =
-                TextUtils.isEmpty(mLocale) ? new String[] {} : mLocale.split("_", 3);
+                TextUtils.isEmpty(mLocale) ? new String[]{} : mLocale.split("_", 3);
         final int length = localeElements.length;
 
         final StringBuilder request = new StringBuilder("(locale is NULL)");
@@ -189,7 +228,7 @@ public class UserBinaryDictionary extends ExpandableBinaryDictionary {
     }
 
     private void addWordsFromProjectionLocked(final String[] query, String request,
-            final String[] requestArguments) throws IllegalArgumentException {
+                                              final String[] requestArguments) throws IllegalArgumentException {
         Cursor cursor = null;
         try {
             cursor = mContext.getContentResolver().query(
@@ -203,45 +242,6 @@ public class UserBinaryDictionary extends ExpandableBinaryDictionary {
             } catch (final SQLiteException e) {
                 Log.e(TAG, "SQLiteException in the remote User dictionary process.", e);
             }
-        }
-    }
-
-    public static boolean isEnabled(final Context context) {
-        final ContentResolver cr = context.getContentResolver();
-        final ContentProviderClient client = cr.acquireContentProviderClient(Words.CONTENT_URI);
-        if (client != null) {
-            client.release();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Adds a word to the user dictionary and makes it persistent.
-     *
-     * @param context the context
-     * @param locale the locale
-     * @param word the word to add. If the word is capitalized, then the dictionary will
-     * recognize it as a capitalized word when searched.
-     */
-    public static void addWordToUserDictionary(final Context context, final Locale locale,
-            final String word) {
-        // Update the user dictionary provider
-        UserDictionaryCompatUtils.addWord(context, word,
-                HISTORICAL_DEFAULT_USER_DICTIONARY_FREQUENCY, null, locale);
-    }
-
-    private static int scaleFrequencyFromDefaultToLatinIme(final int defaultFrequency) {
-        // The default frequency for the user dictionary is 250 for historical reasons.
-        // Latin IME considers a good value for the default user dictionary frequency
-        // is about 160 considering the scale we use. So we are scaling down the values.
-        if (defaultFrequency > Integer.MAX_VALUE / LATINIME_DEFAULT_USER_DICTIONARY_FREQUENCY) {
-            return (defaultFrequency / HISTORICAL_DEFAULT_USER_DICTIONARY_FREQUENCY)
-                    * LATINIME_DEFAULT_USER_DICTIONARY_FREQUENCY;
-        } else {
-            return (defaultFrequency * LATINIME_DEFAULT_USER_DICTIONARY_FREQUENCY)
-                    / HISTORICAL_DEFAULT_USER_DICTIONARY_FREQUENCY;
         }
     }
 

@@ -52,9 +52,9 @@ public class UserDictionarySettings extends ListFragment {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
 
     private static final String[] QUERY_PROJECTION_SHORTCUT_UNSUPPORTED =
-            { UserDictionary.Words._ID, UserDictionary.Words.WORD};
+            {UserDictionary.Words._ID, UserDictionary.Words.WORD};
     private static final String[] QUERY_PROJECTION_SHORTCUT_SUPPORTED =
-            { UserDictionary.Words._ID, UserDictionary.Words.WORD, UserDictionary.Words.SHORTCUT};
+            {UserDictionary.Words._ID, UserDictionary.Words.WORD, UserDictionary.Words.SHORTCUT};
     private static final String[] QUERY_PROJECTION =
             IS_SHORTCUT_API_SUPPORTED ?
                     QUERY_PROJECTION_SHORTCUT_SUPPORTED : QUERY_PROJECTION_SHORTCUT_UNSUPPORTED;
@@ -63,22 +63,22 @@ public class UserDictionarySettings extends ListFragment {
     private static final int INDEX_SHORTCUT = 2;
 
     private static final String[] ADAPTER_FROM_SHORTCUT_UNSUPPORTED = {
-        UserDictionary.Words.WORD,
+            UserDictionary.Words.WORD,
     };
 
     private static final String[] ADAPTER_FROM_SHORTCUT_SUPPORTED = {
-        UserDictionary.Words.WORD, UserDictionary.Words.SHORTCUT
+            UserDictionary.Words.WORD, UserDictionary.Words.SHORTCUT
     };
 
     private static final String[] ADAPTER_FROM = IS_SHORTCUT_API_SUPPORTED ?
             ADAPTER_FROM_SHORTCUT_SUPPORTED : ADAPTER_FROM_SHORTCUT_UNSUPPORTED;
 
     private static final int[] ADAPTER_TO_SHORTCUT_UNSUPPORTED = {
-        android.R.id.text1,
+            android.R.id.text1,
     };
 
     private static final int[] ADAPTER_TO_SHORTCUT_SUPPORTED = {
-        android.R.id.text1, android.R.id.text2
+            android.R.id.text1, android.R.id.text2
     };
 
     private static final int[] ADAPTER_TO = IS_SHORTCUT_API_SUPPORTED ?
@@ -100,10 +100,24 @@ public class UserDictionarySettings extends ListFragment {
             UserDictionary.Words.WORD + "=?";
 
     private static final int OPTIONS_MENU_ADD = Menu.FIRST;
-
+    protected String mLocale;
     private Cursor mCursor;
 
-    protected String mLocale;
+    public static void deleteWord(final String word, final String shortcut,
+                                  final ContentResolver resolver) {
+        if (!IS_SHORTCUT_API_SUPPORTED) {
+            resolver.delete(UserDictionary.Words.CONTENT_URI, DELETE_SELECTION_SHORTCUT_UNSUPPORTED,
+                    new String[]{word});
+        } else if (TextUtils.isEmpty(shortcut)) {
+            resolver.delete(
+                    UserDictionary.Words.CONTENT_URI, DELETE_SELECTION_WITHOUT_SHORTCUT,
+                    new String[]{word});
+        } else {
+            resolver.delete(
+                    UserDictionary.Words.CONTENT_URI, DELETE_SELECTION_WITH_SHORTCUT,
+                    new String[]{word, shortcut});
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -180,7 +194,7 @@ public class UserDictionarySettings extends ListFragment {
         } else {
             final String queryLocale = null != locale ? locale : Locale.getDefault().toString();
             return getActivity().managedQuery(UserDictionary.Words.CONTENT_URI, QUERY_PROJECTION,
-                    QUERY_SELECTION, new String[] { queryLocale },
+                    QUERY_SELECTION, new String[]{queryLocale},
                     "UPPER(" + UserDictionary.Words.WORD + ')');
         }
     }
@@ -212,7 +226,7 @@ public class UserDictionarySettings extends ListFragment {
         }
         MenuItem actionItem =
                 menu.add(0, OPTIONS_MENU_ADD, 0, R.string.user_dict_settings_add_menu_title)
-                .setIcon(R.drawable.ic_menu_add);
+                        .setIcon(R.drawable.ic_menu_add);
         actionItem.setShowAsAction(
                 MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
     }
@@ -228,7 +242,8 @@ public class UserDictionarySettings extends ListFragment {
 
     /**
      * Add or edit a word. If editingWord is null, it's an add; otherwise, it's an edit.
-     * @param editingWord the word to edit, or null if it's an add.
+     *
+     * @param editingWord     the word to edit, or null if it's an add.
      * @param editingShortcut the shortcut for this entry, or null if none.
      */
     private void showAddOrEditDialog(final String editingWord, final String editingShortcut) {
@@ -240,7 +255,7 @@ public class UserDictionarySettings extends ListFragment {
         args.putString(UserDictionaryAddWordContents.EXTRA_SHORTCUT, editingShortcut);
         args.putString(UserDictionaryAddWordContents.EXTRA_LOCALE, mLocale);
         android.preference.PreferenceActivity pa =
-                (android.preference.PreferenceActivity)getActivity();
+                (android.preference.PreferenceActivity) getActivity();
         pa.startPreferencePanel(UserDictionaryAddWordFragment.class.getName(),
                 args, R.string.user_dict_settings_add_dialog_title, null, null, 0);
     }
@@ -266,31 +281,14 @@ public class UserDictionarySettings extends ListFragment {
                 mCursor.getColumnIndexOrThrow(UserDictionary.Words.SHORTCUT));
     }
 
-    public static void deleteWord(final String word, final String shortcut,
-            final ContentResolver resolver) {
-        if (!IS_SHORTCUT_API_SUPPORTED) {
-            resolver.delete(UserDictionary.Words.CONTENT_URI, DELETE_SELECTION_SHORTCUT_UNSUPPORTED,
-                    new String[] { word });
-        } else if (TextUtils.isEmpty(shortcut)) {
-            resolver.delete(
-                    UserDictionary.Words.CONTENT_URI, DELETE_SELECTION_WITHOUT_SHORTCUT,
-                    new String[] { word });
-        } else {
-            resolver.delete(
-                    UserDictionary.Words.CONTENT_URI, DELETE_SELECTION_WITH_SHORTCUT,
-                    new String[] { word, shortcut });
-        }
-    }
-
     private static class MyAdapter extends SimpleCursorAdapter implements SectionIndexer {
 
-        private AlphabetIndexer mIndexer;
-
         private final ViewBinder mViewBinder = new MyViewBinder();
+        private AlphabetIndexer mIndexer;
 
         @SuppressWarnings("deprecation")
         public MyAdapter(Context context, int layout, Cursor c, String[] from, int[] to,
-                UserDictionarySettings settings) {
+                         UserDictionarySettings settings) {
             super(context, layout, c, from, to);
 
             if (null != c) {
@@ -329,7 +327,7 @@ public class UserDictionarySettings extends ListFragment {
                     if (TextUtils.isEmpty(shortcut)) {
                         v.setVisibility(View.GONE);
                     } else {
-                        ((TextView)v).setText(shortcut);
+                        ((TextView) v).setText(shortcut);
                         v.setVisibility(View.VISIBLE);
                     }
                     v.invalidate();

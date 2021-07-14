@@ -24,7 +24,7 @@
       android:textColor="@color/black_4a4a4a"
       app:textAllCaps="true"
       app:textType="HEADING_6"
-      tools:text="REQUEST PAYMENT"/>
+      tools:text="REQUEST PAYMENT" />
 
     <View
       android:id="@+id/line1"
@@ -32,7 +32,7 @@
       android:layout_height="@dimen/size_1"
       android:layout_marginStart="@dimen/size_20"
       android:layout_marginEnd="@dimen/size_20"
-      android:background="@color/light_grey_2"/>
+      android:background="@color/light_grey_2" />
 
   </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

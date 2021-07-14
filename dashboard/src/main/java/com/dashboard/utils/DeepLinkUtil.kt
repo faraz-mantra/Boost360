@@ -94,6 +94,7 @@ const val deeplink_REFER_EARN = "refer_and_earn"
 const val deeplink_compare_package = "compare_package_selection"
 const val deeplink_package_bundle = "package_bundle"
 const val deeplink_promo_banner = "promo_banner"
+const val deeplink_expert_contact = "expert_connect"
 const val deeplink_create_order = "create_order"
 const val deeplink_create_appointment = "create_appointment"
 const val deeplink_create_consultation = "create_consultation"
@@ -141,22 +142,26 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startOrderAptConsultList(session, isOrder = true)
         } else if (url.contains(myorderdetail)) {
           if (session.fP_AppExperienceCode.equals("SVC") || session.fP_AppExperienceCode.equals("SPA") ||
-              session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")) {
+            session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")
+          ) {
             baseActivity.startOrderAptConsultList(session)
           } else baseActivity.startOrderAptConsultList(session, isOrder = true)
         } else if (url.contains(appointment_fragment)) {
           if (session.fP_AppExperienceCode.equals("SVC") || session.fP_AppExperienceCode.equals("SPA") ||
-              session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")) {
+            session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")
+          ) {
             baseActivity.startOrderAptConsultList(session)
           }
         } else if (url.contains(order_fragment)) {
           if ((session.fP_AppExperienceCode.equals("SVC") || session.fP_AppExperienceCode.equals("SPA") ||
-                  session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")).not()) {
+                session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")).not()
+          ) {
             baseActivity.startOrderAptConsultList(session, isOrder = true)
           }
         } else if (url.contains(consultation_fragment)) {
           if (session.fP_AppExperienceCode.equals("SVC") || session.fP_AppExperienceCode.equals("SPA") ||
-              session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")) {
+            session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")
+          ) {
             baseActivity.startOrderAptConsultList(session, isConsult = true)
           }
         } else if (url.contains(deeplink_upgrade)) {
@@ -168,9 +173,10 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deep_link_call_tracker)) {
           baseActivity.startVmnCallCard(session)
         } else if (url.contains(store_url) || url.contains(deeplink_store) ||
-            url.contains(deeplink_propack) || url.contains(deeplink_nfstoreseo) ||
-            url.contains(deeplink_nfstorettb) || url.contains(deeplink_nfstorebiztiming) ||
-            url.contains(deeplink_nfstoreimage) || url.contains(deeplink_nfstoreimage)) {
+          url.contains(deeplink_propack) || url.contains(deeplink_nfstoreseo) ||
+          url.contains(deeplink_nfstorettb) || url.contains(deeplink_nfstorebiztiming) ||
+          url.contains(deeplink_nfstoreimage) || url.contains(deeplink_nfstoreimage)
+        ) {
           baseActivity.startPricingPlan(session)
         } else if (url.contains(deeplink_searchqueries)) {
 //          baseActivity.startSearchQuery(session)
@@ -200,7 +206,10 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startBusinessLogo(session)
         } else if (url.contains(deeplink_nfstoreDomainTTBCombo)) {
           baseActivity.startBusinessProfileDetailEdit(session)
-        } else if (url.contains(deeplink_sitemeter) || url.contains(deeplink_site_health) || url.contains(deeplink_DR_SCORE)) {
+        } else if (url.contains(deeplink_sitemeter) || url.contains(deeplink_site_health) || url.contains(
+            deeplink_DR_SCORE
+          )
+        ) {
           baseActivity.startReadinessScoreView(session, 0)
         } else if (url.contains(deeplink_imageGallery)) {
           baseActivity.startAddImageGallery(session, isCreate = false)
@@ -261,16 +270,19 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.initiateAddonMarketplace(session, false, "comparePackageSelection", "")
         } else if (url.contains(deeplink_package_bundle)) {
 //          println("deeplink_package_bundle ${url}  ${buyItemKey}")
-          Log.v("deeplink_package_bundle", " "+ url + " "+ buyItemKey)
+          Log.v("deeplink_package_bundle", " " + url + " " + buyItemKey)
 //          baseActivity.initiateAddonMarketplace(session, false, "packageBundle", "")
           baseActivity.initiateAddonMarketplace(session, false, "packageBundle", buyItemKey)
 
-        }else if (url.contains(deeplink_promo_banner)) {
+        } else if (url.contains(deeplink_promo_banner)) {
           baseActivity.initiateAddonMarketplace(session, false, "promoBanner", buyItemKey)
-        }else if (url.contains(deeplink_REFER_EARN)) {
+        } else if (url.contains(deeplink_REFER_EARN)) {
           baseActivity.startReferralView(session)
-        }else if (url.contains(deeplink_website_theme)) {
+        } else if (url.contains(deeplink_website_theme)) {
           baseActivity.startWebsiteTheme(session)
+        } else if (url.contains(deeplink_expert_contact)) {
+          Log.v("deeplink_expert_contact", " " + url + " " + buyItemKey)
+          baseActivity.initiateAddonMarketplace(session, false, "expertContact", "")
         }
       }
     } catch (e: Exception) {
@@ -299,9 +311,19 @@ fun AppCompatActivity.upgradeApp() {
   try {
     val appPackageName: String = this.packageName
     try {
-      this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+      this.startActivity(
+        Intent(
+          Intent.ACTION_VIEW,
+          Uri.parse("market://details?id=$appPackageName")
+        )
+      )
     } catch (anfe: ActivityNotFoundException) {
-      this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+      this.startActivity(
+        Intent(
+          Intent.ACTION_VIEW,
+          Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+        )
+      )
     }
   } catch (e: Exception) {
     e.printStackTrace()
@@ -314,7 +336,8 @@ fun AppCompatActivity.startBlog(urlN: String, session: UserSessionManager) {
     url = if (url.isNotEmpty()) {
       "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)
     } else {
-      ("http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT) + tag_for_partners)
+      ("http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)
+        ?.toLowerCase(Locale.ROOT) + tag_for_partners)
     }
     val uri = Uri.parse(url)
     val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -332,7 +355,8 @@ fun AppCompatActivity.shareWebsite(session: UserSessionManager) {
       visit_to_new_website + eol + url!!.toLowerCase(Locale.ROOT)
     } else {
       val eol = System.getProperty("line.separator")
-      (visit_to_new_website + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT) + tag_for_partners)
+      (visit_to_new_website + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)
+        ?.toLowerCase(Locale.ROOT) + tag_for_partners)
     }
     val intent = Intent(Intent.ACTION_SEND)
     intent.type = "text/plain"

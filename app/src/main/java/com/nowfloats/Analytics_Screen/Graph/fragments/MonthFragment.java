@@ -3,8 +3,10 @@ package com.nowfloats.Analytics_Screen.Graph.fragments;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,14 +42,14 @@ import java.util.List;
  */
 
 public class MonthFragment extends Fragment {
+    public final static String PARAMETER1 = "count", PARAMETER2 = "visit", PARAMETER3 = "frag", PARAMETER4 = "title", MONTH_PARAMETER = "month";
+    public TextView visitsTitle, visitsCount;
+    public int visitValue, frag;
     BarChart graph;
     int[] data;
     String[] days, months, weeks, shortArray;
     Context mContext;
-    public final static String PARAMETER1 = "count", PARAMETER2 = "visit", PARAMETER3 = "frag", PARAMETER4 = "title", MONTH_PARAMETER = "month";
     String visitsThisWhat, title;
-    public TextView visitsTitle, visitsCount;
-    public int visitValue, frag;
     private OnYearDataClickListener onYearDataClickListener;
     private String titleMain;
     private boolean flag;
@@ -199,25 +201,8 @@ public class MonthFragment extends Fragment {
         return dataSets;
     }
 
-    public class MyYAxisValueFormatter implements IValueFormatter {
-        private DecimalFormat mFormat;
-
-        public MyYAxisValueFormatter() {
-            mFormat = new DecimalFormat("#########");
-        }
-
-        @Override
-        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-            return mFormat.format(value);
-        }
-    }
-
     public void setYearDataListener(OnYearDataClickListener listener) {
         this.onYearDataClickListener = listener;
-    }
-
-    public interface OnYearDataClickListener {
-        public void onYearDataClicked(int month);
     }
 
     public void getWeeksAccordingToMonth(int month) {
@@ -261,5 +246,22 @@ public class MonthFragment extends Fragment {
             //Log.v("ggg",start+" end "+end);
         }
 
+    }
+
+    public interface OnYearDataClickListener {
+        public void onYearDataClicked(int month);
+    }
+
+    public class MyYAxisValueFormatter implements IValueFormatter {
+        private DecimalFormat mFormat;
+
+        public MyYAxisValueFormatter() {
+            mFormat = new DecimalFormat("#########");
+        }
+
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            return mFormat.format(value);
+        }
     }
 }

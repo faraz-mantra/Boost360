@@ -3,9 +3,12 @@ package io.separ.neural.inputmethod.indic.setup;
 /**
  * Created by sepehr on 1/27/17.
  */
+
 import android.content.Context;
 import android.graphics.Color;
+
 import androidx.annotation.RequiresApi;
+
 import android.util.AttributeSet;
 import android.widget.Button;
 
@@ -13,11 +16,6 @@ import io.separ.neural.inputmethod.indic.R;
 
 public class IntroButton extends Button {
     private ButtonState state;
-
-    private enum ButtonState {
-        TODO,
-        DONE
-    }
 
     public IntroButton(Context context) {
         super(context);
@@ -57,5 +55,10 @@ public class IntroButton extends Button {
 
     public boolean isCompleted() {
         return this.state == ButtonState.DONE;
+    }
+
+    private enum ButtonState {
+        TODO,
+        DONE
     }
 }

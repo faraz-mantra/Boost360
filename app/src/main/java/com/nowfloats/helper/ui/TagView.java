@@ -436,6 +436,10 @@ public class TagView extends RelativeLayout {
         mDeleteListener = deleteListener;
     }
 
+    public int getTagsCount() {
+        return mTags.size();
+    }
+
     /**
      * Listeners
      */
@@ -447,12 +451,8 @@ public class TagView extends RelativeLayout {
         void onTagClick(Tag tag, int position);
     }
 
+
     public interface OnTagLongClickListener {
         void onTagLongClick(Tag tag, int position);
-    }
-
-
-    public int getTagsCount() {
-        return mTags.size();
     }
 }

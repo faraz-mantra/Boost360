@@ -24,6 +24,7 @@ public final class DeleteGalleryImages extends AsyncTask<Void, String, String> {
 
 
     boolean status = false;
+    DeleteGalleryInterface deleteInterface;
     private Activity ctx = null;
     private OtherImagesAdapter adapter = null;
     private ImageAdapter imageAdapter;
@@ -41,12 +42,6 @@ public final class DeleteGalleryImages extends AsyncTask<Void, String, String> {
         hasToFinish = false;
     }
 
-    public interface DeleteGalleryInterface {
-        public void galleryImageDeleted();
-    }
-
-    DeleteGalleryInterface deleteInterface;
-
     public DeleteGalleryImages(Activity context, ImageAdapter imageAdapter, int SelectedPosition) {
         this.ctx = context;
         hasToFinish = true;
@@ -59,7 +54,6 @@ public final class DeleteGalleryImages extends AsyncTask<Void, String, String> {
     public void setOnDeleteListener(DeleteGalleryInterface deleteInterface) {
         this.deleteInterface = deleteInterface;
     }
-
 
     @Override
     protected void onPreExecute() {
@@ -76,7 +70,7 @@ public final class DeleteGalleryImages extends AsyncTask<Void, String, String> {
         String temp = null;
         if (status) {
             MixPanelController.track("ImageDeleted", null);
-            WebEngageController.trackEvent(DELETE_GALLERY_IMAGE,EVENT_LABEL_DELETE_GALLERY_IMAGE,session.getFpTag());
+            WebEngageController.trackEvent(DELETE_GALLERY_IMAGE, EVENT_LABEL_DELETE_GALLERY_IMAGE, session.getFpTag());
             temp = "Deleted";
         } else {
             temp = "error";
@@ -130,5 +124,9 @@ public final class DeleteGalleryImages extends AsyncTask<Void, String, String> {
         Log.d("DeleteGalleryImages", "Path : " + url + " , " + obj.toString());
         status = Util.deleteWithBody(url, obj.toString());
         Log.d("DeleteGalleryImages", "Status : " + status);
+    }
+
+    public interface DeleteGalleryInterface {
+        public void galleryImageDeleted();
     }
 }

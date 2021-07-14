@@ -19,9 +19,24 @@ public class RServiceItem {
     public static final String PHOTOS = "photos";
     public static final String PIN = "pin";
     public static final String RECENT = "recent";
+    public static final String UNAUTHORIZED = "unauthorized";
     public static String RECENTS = null;
     public static String SEARCH = null;
-    public static final String UNAUTHORIZED = "unauthorized";
+    public static HashMap<String, RServiceItem> serviceItemHashMap = new HashMap<>();
+
+    static {
+        serviceItemHashMap.put("giphy", new RServiceItem(true, "Giphy lets you search and share trending GIFS, reactions, stickers, & more",
+                "Share animated GIFs from Giphy", true, 223, false, false, true, "Search OMG, vintage, and more GIFs...", "giphy"));
+        serviceItemHashMap.put("maps", new RServiceItem(false, "maps lets you share your location or any address on Google Maps",
+                "Search and Share locations on Google Maps", true, 217, false, true, false, "Search for locations and addresses...", "maps"));
+        serviceItemHashMap.put("google", new RServiceItem(false, "Google lets you search the web and share any Google link within your keyboard",
+                "Search the web right from your keyboard", true, 210, false, false, false, "Search the web...", "google"));
+        serviceItemHashMap.put("contacts", new RServiceItem(false, "Contacts lets you easily share your Contact information with friends",
+                "Easily share contact info from your Contacts", true, 233, true, false, false, "Search for your contacts...", "contacts"));
+        serviceItemHashMap.put("foursquare", new RServiceItem(true, "Foursquare lets you search and share venues, restaurants, coffee shops, & more",
+                "Share nearby restaurants and venues on Foursquare", true, 220, false, true, true, "Search nearby places and restaurants...", "foursquare"));
+    }
+
     @SerializedName("auth_post_message")
     private String authPostMessage;
     @SerializedName("auth_pre_message")
@@ -66,12 +81,33 @@ public class RServiceItem {
     private boolean staticService;
     private boolean mySlash;
 
+    public RServiceItem() {
+    }
+
+    public RServiceItem(boolean hasCategory, String desc, String shortDesc, boolean isEnabled, int serviceId,
+                        boolean isLocal, boolean location, boolean prepop, String placeHolder, String slash) {
+        this.categoriesEnabled = hasCategory;
+        this.description = desc;
+        this.descriptionShort = shortDesc;
+        this.enabled = isEnabled;
+        this.id = serviceId;
+        this.local = isLocal;
+        this.location_aware = location;
+        this.prepopulate = prepop;
+        this.searchPlaceholder = placeHolder;
+        this.slash = slash;
+    }
+
     public String getImageLight() {
         return imageLight;
     }
 
     public String getSlash() {
         return slash;
+    }
+
+    public void setSlash(String slash) {
+        this.slash = slash;
     }
 
     public String getImageDark() {
@@ -94,46 +130,11 @@ public class RServiceItem {
         return searchPlaceholder;
     }
 
-    public void setSlash(String slash) {
-        this.slash = slash;
-    }
-
     public void setMySlash(boolean mySlash) {
         this.mySlash = mySlash;
     }
 
     public boolean isLocation_aware() {
         return location_aware;
-    }
-
-    public static HashMap<String, RServiceItem> serviceItemHashMap = new HashMap<>();
-
-    public RServiceItem(){}
-
-    public RServiceItem(boolean hasCategory, String desc, String shortDesc, boolean isEnabled, int serviceId,
-                        boolean isLocal, boolean location, boolean prepop, String placeHolder, String slash){
-        this.categoriesEnabled = hasCategory;
-        this.description = desc;
-        this.descriptionShort = shortDesc;
-        this.enabled = isEnabled;
-        this.id = serviceId;
-        this.local = isLocal;
-        this.location_aware = location;
-        this.prepopulate = prepop;
-        this.searchPlaceholder = placeHolder;
-        this.slash = slash;
-    }
-
-    static {
-        serviceItemHashMap.put("giphy", new RServiceItem(true, "Giphy lets you search and share trending GIFS, reactions, stickers, & more",
-                "Share animated GIFs from Giphy", true, 223, false, false, true, "Search OMG, vintage, and more GIFs...", "giphy"));
-        serviceItemHashMap.put("maps", new RServiceItem(false, "maps lets you share your location or any address on Google Maps",
-                "Search and Share locations on Google Maps", true, 217, false, true, false, "Search for locations and addresses...", "maps"));
-        serviceItemHashMap.put("google", new RServiceItem(false, "Google lets you search the web and share any Google link within your keyboard",
-                "Search the web right from your keyboard", true, 210, false, false, false, "Search the web...", "google"));
-        serviceItemHashMap.put("contacts", new RServiceItem(false, "Contacts lets you easily share your Contact information with friends",
-                "Easily share contact info from your Contacts", true, 233, true, false, false, "Search for your contacts...", "contacts"));
-        serviceItemHashMap.put("foursquare", new RServiceItem(true, "Foursquare lets you search and share venues, restaurants, coffee shops, & more",
-                "Share nearby restaurants and venues on Foursquare", true, 220, false, true, true, "Search nearby places and restaurants...", "foursquare"));
     }
 }

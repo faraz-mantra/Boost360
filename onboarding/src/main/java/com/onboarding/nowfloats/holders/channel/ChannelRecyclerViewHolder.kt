@@ -9,7 +9,8 @@ import com.onboarding.nowfloats.model.channel.request.ChannelActionData
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
-class ChannelRecyclerViewHolder(binding: ItemChannelBinding) : AppBaseRecyclerViewHolder<ItemChannelBinding>(binding) {
+class ChannelRecyclerViewHolder(binding: ItemChannelBinding) :
+  AppBaseRecyclerViewHolder<ItemChannelBinding>(binding) {
 
   var model: ChannelModel? = null
 

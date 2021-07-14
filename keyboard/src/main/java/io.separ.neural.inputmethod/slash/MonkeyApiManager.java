@@ -18,18 +18,6 @@ public class MonkeyApiManager extends BaseApiManager {
     private static MonkeyApi mMonkey;
     private static RestAdapter mRestAdapter;
 
-    /* renamed from: co.touchlab.inputmethod.latin.monkey.network.MonkeyApiManager.2 */
-    static class C04212 implements RequestInterceptor {
-        C04212() {
-        }
-
-        public void intercept(RequestFacade request) {
-            request.addQueryParam("v", "2");
-            request.addQueryParam("trackerId", DeviceUuidFactory.getDeviceUuid().toString());
-            request.addQueryParam("client", "android_10309");
-        }
-    }
-
     static {
         mMonkey = null;
         mRestAdapter = null;
@@ -78,5 +66,17 @@ public class MonkeyApiManager extends BaseApiManager {
 
     private static RestAdapter getRestAdapter(OkClient client) {
         return new RestAdapter.Builder().setEndpoint("https://platform.tapslash.com/api").setErrorHandler(BaseApiManager.getErrorHandler()).setLogLevel(RestAdapter.LogLevel.NONE).setClient(client).setConverter(new GsonConverter(new GsonBuilder().create())).setRequestInterceptor(new C04212()).build();
+    }
+
+    /* renamed from: co.touchlab.inputmethod.latin.monkey.network.MonkeyApiManager.2 */
+    static class C04212 implements RequestInterceptor {
+        C04212() {
+        }
+
+        public void intercept(RequestFacade request) {
+            request.addQueryParam("v", "2");
+            request.addQueryParam("trackerId", DeviceUuidFactory.getDeviceUuid().toString());
+            request.addQueryParam("client", "android_10309");
+        }
     }
 }

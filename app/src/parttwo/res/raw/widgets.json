@@ -1,65 +1,56 @@
 {
-  "Paid_products" : [
-                 {
-                     "name"     :   "Image Gallery",
-                     "desc"     :   "Add pictures of your products/services to your site.",
-                     "price"    :   "Rs. 300.00",
-                     "img"      :   0,
-                     "intro"    :   "Show off your wares or services offered in a neatly arranged picture gallery.",
-                     "how"      :   "Some people are visual. They might not have the patience to read through your website. An image gallery on the site with good pictures of your products and services might just grab their attention. Upload upto 25 pictures.",
-                     "sku"      :   "image_gallery_499",
-                     "widgetId"	:	"IMAGEGALLERY"
-                 },
-                 
-                 {
-                     "name"     :   "Business Enquiries",
-                     "desc"     :   "Let your site visitors become leads.",
-                     "price"    :   "Rs. 600.00",
-                     "img"      :   1,
-                     "intro"    :   "Let your customers contact you directly. Messages sent from the website are delivered to you instantly. Business Enquiries is a lead generating mechanism for your business.",
-                     "how"      :   "Visitors to your site can contact you directly by leaving a message with their phone number or email address. You will get these messages instantly over email and can see them in your NowFloats app at any time. Revert back to these leads quickly and generate business.",
-                     "sku"      :   "business_enquiries_999",
-                     "widgetId"	:	"TOB"
-                 },
-                 
-                 
-                 {
-                     "name"     :   "Business Hours",
-                     "desc"     :   "Tell people when you are open and when you aren't.",
-                     "price"    :   "Rs. 180.00",
-                     "img"      :   2,
-                     "intro"    :   "Visitors to your site would like to drop in at your store. Let them know when you are open and when you aren’t.",
-                     "how"      :   "Once you set timings for your store, a widget shows up on your site telling the visitors when your working hours are. It is optimised for visitors on mobile too. ",
-                     "sku"      :   "business_hours_299",
-                     "widgetId"	:	"TIMINGS"
-                 },
-                 
-                 {
-                     "name"     :   "Ads Free",
-                     "desc"     :   "Remove ads from your NowFloats site by purchasing this widget.",
-                     "price"    :   "Rs. 300.00",
-                     "img"      :   3,
-                     "intro"    :   "Remove ads from your NowFloats site by purchasing this widget.",
-                     "how"      :   "There is a teeny cost for us to provide you with an ad free site. It is still free forever if you don't mind the ads. So go ahead, go ad free. Make your good looking NowFloats site even better.",
-                     "sku"      :   "ad_free_499",
-                     "widgetId"	:	"NOADS"
-                 }
-     ],
-     
-     
-     
-     "Free_products" : [
-                 {
-                     "name"     :   "Auto-SEO",
-                     "desc"     :   "A plug-in to optimize content for SEO automatically.",
-                     "price"    :   "FREE",
-                     "img"      :   4,
-                     "intro"    :   "The Auto-SEO plugin optimises your content for search results and enhances the discovery of your website.",
-                     "how"      :   "When you post an update, it is analysed and keywords are generated. These keywords are tagged to your content so that search engines can get better context about your content. This gives better search results for relevant queries.",
-                     "sku"      :   "autoseo",
-                     "widgetId"	:	"SITESENSE"
-                 }
-                 
-                
-     ]
+  "Paid_products": [
+    {
+      "name": "Image Gallery",
+      "desc": "Add pictures of your products/services to your site.",
+      "price": "Rs. 300.00",
+      "img": 0,
+      "intro": "Show off your wares or services offered in a neatly arranged picture gallery.",
+      "how": "Some people are visual. They might not have the patience to read through your website. An image gallery on the site with good pictures of your products and services might just grab their attention. Upload upto 25 pictures.",
+      "sku": "image_gallery_499",
+      "widgetId": "IMAGEGALLERY"
+    },
+    {
+      "name": "Business Enquiries",
+      "desc": "Let your site visitors become leads.",
+      "price": "Rs. 600.00",
+      "img": 1,
+      "intro": "Let your customers contact you directly. Messages sent from the website are delivered to you instantly. Business Enquiries is a lead generating mechanism for your business.",
+      "how": "Visitors to your site can contact you directly by leaving a message with their phone number or email address. You will get these messages instantly over email and can see them in your NowFloats app at any time. Revert back to these leads quickly and generate business.",
+      "sku": "business_enquiries_999",
+      "widgetId": "TOB"
+    },
+    {
+      "name": "Business Hours",
+      "desc": "Tell people when you are open and when you aren't.",
+      "price": "Rs. 180.00",
+      "img": 2,
+      "intro": "Visitors to your site would like to drop in at your store. Let them know when you are open and when you aren’t.",
+      "how": "Once you set timings for your store, a widget shows up on your site telling the visitors when your working hours are. It is optimised for visitors on mobile too. ",
+      "sku": "business_hours_299",
+      "widgetId": "TIMINGS"
+    },
+    {
+      "name": "Ads Free",
+      "desc": "Remove ads from your NowFloats site by purchasing this widget.",
+      "price": "Rs. 300.00",
+      "img": 3,
+      "intro": "Remove ads from your NowFloats site by purchasing this widget.",
+      "how": "There is a teeny cost for us to provide you with an ad free site. It is still free forever if you don't mind the ads. So go ahead, go ad free. Make your good looking NowFloats site even better.",
+      "sku": "ad_free_499",
+      "widgetId": "NOADS"
+    }
+  ],
+  "Free_products": [
+    {
+      "name": "Auto-SEO",
+      "desc": "A plug-in to optimize content for SEO automatically.",
+      "price": "FREE",
+      "img": 4,
+      "intro": "The Auto-SEO plugin optimises your content for search results and enhances the discovery of your website.",
+      "how": "When you post an update, it is analysed and keywords are generated. These keywords are tagged to your content so that search engines can get better context about your content. This gives better search results for relevant queries.",
+      "sku": "autoseo",
+      "widgetId": "SITESENSE"
+    }
+  ]
 }

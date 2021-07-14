@@ -27,9 +27,8 @@ import java.util.concurrent.TimeUnit;
 public class AsyncResultHolder<E> {
 
     private final Object mLock = new Object();
-
-    private E mResult;
     private final CountDownLatch mLatch;
+    private E mResult;
 
     public AsyncResultHolder() {
         mLatch = new CountDownLatch(1);
@@ -41,7 +40,7 @@ public class AsyncResultHolder<E> {
      * @param result the value to set.
      */
     public void set(final E result) {
-        synchronized(mLock) {
+        synchronized (mLock) {
             if (mLatch.getCount() > 0) {
                 mResult = result;
                 mLatch.countDown();
@@ -54,7 +53,7 @@ public class AsyncResultHolder<E> {
      * Causes the current thread to wait unless the value is set or the specified time is elapsed.
      *
      * @param defaultValue the default value.
-     * @param timeOut the maximum time to wait.
+     * @param timeOut      the maximum time to wait.
      * @return if the result is set before the time limit then the result, otherwise defaultValue.
      */
     public E get(final E defaultValue, final long timeOut) {

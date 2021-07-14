@@ -2,7 +2,6 @@ package com.boost.presignin.ui.mobileVerification
 
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextPaint
@@ -13,27 +12,25 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentManager
 import com.boost.presignin.R
-import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
-import com.boost.presignin.databinding.FragmentFpListBinding
 import com.boost.presignin.databinding.FragmentOtpVerificationBinding
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.authToken.AuthTokenDataItem
 import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.model.login.VerifyOtpResponse
 import com.boost.presignin.ui.AccountNotFoundActivity
-import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.boost.presignin.views.otptextview.OTPListener
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.observeOnce
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
-import com.framework.utils.showKeyBoard
+import com.framework.smsVerification.SMSReceiver
+import com.framework.smsVerification.SmsManager
 import com.framework.webengageconstant.*
 
-class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>() {
+class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>(),
+  SMSReceiver.OTPReceiveListener {
 
   private val TAG = OtpVerificationFragment::class.java.canonicalName;
   private var isCounterRunning = false
@@ -41,6 +38,7 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
   private lateinit var countDown: com.boost.presignin.timer.CountDownTimer
 
   private var resultLogin: VerificationRequestResult? = null
+
 
   companion object {
 
@@ -64,7 +62,9 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
   }
 
   override fun authTokenData(): AuthTokenDataItem? {
-    return if (resultLogin()?.authTokens.isNullOrEmpty().not()) resultLogin()?.authTokens!![0] else null
+    return if (resultLogin()?.authTokens.isNullOrEmpty()
+        .not()
+    ) resultLogin()?.authTokens!![0] else null
   }
 
   override fun onCreateView() {
@@ -87,12 +87,23 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
     }
     binding?.verifyButton?.setOnClickListener { verify() }
     Handler().postDelayed({ onCodeSent() }, 500)
+
+
+    // init SMS Manager
+    SmsManager.initManager(activity?.baseContext!!, this);
   }
 
   override fun onResume() {
     super.onResume()
     if (this::countDown.isInitialized) countDown.resume()
+    SmsManager.register()
   }
+
+  override fun onPause() {
+    super.onPause()
+    SmsManager.unregister()
+  }
+
 
   private fun onCodeSent() {
     countDown = object : com.boost.presignin.timer.CountDownTimer(50 * 1000, 1000) {
@@ -162,25 +173,42 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
     showProgress(getString(R.string.verify_otp))
     WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
     val otp = binding?.pinTv?.otp
-    viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId2)?.observeOnce(viewLifecycleOwner, {
-      hideProgress()
-      if (it.isSuccess()) {
-        val result = it as? VerifyOtpResponse
-        if (result?.Result?.authTokens.isNullOrEmpty().not()) {
-          if (result?.Result?.authTokens!!.size == 1) {
-            this.resultLogin = result.Result
-            authTokenData()?.createAccessTokenAuth()
+    viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId2)
+      ?.observeOnce(viewLifecycleOwner, {
+        hideProgress()
+        if (it.isSuccess()) {
+          val result = it as? VerifyOtpResponse
+          if (result?.Result?.authTokens.isNullOrEmpty().not()) {
+            if (result?.Result?.authTokens!!.size == 1) {
+              this.resultLogin = result.Result
+              authTokenData()?.createAccessTokenAuth()
+            } else {
+              navigator?.startActivityFinish(
+                MobileVerificationActivity::class.java,
+                Bundle().apply {
+                  putInt(
+                    FRAGMENT_TYPE,
+                    FP_LIST_FRAGMENT
+                  );putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, result?.Result)
+                })
+            }
           } else {
-            navigator?.startActivityFinish(MobileVerificationActivity::class.java, Bundle().apply {
-              putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, result?.Result)
-            })
+            navigator?.startActivityFinish(
+              AccountNotFoundActivity::class.java,
+              args = Bundle().apply {
+                putString(
+                  IntentConstant.EXTRA_PHONE_NUMBER.name,
+                  phoneNumber
+                )
+              })
           }
         } else {
-          navigator?.startActivityFinish(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) })
+          binding?.wrongOtpErrorTv?.isVisible = true;
         }
-      } else {
-        binding?.wrongOtpErrorTv?.isVisible = true;
-      }
-    })
+      })
+  }
+
+  override fun onOTPReceived(otp: String?) {
+    binding?.pinTv?.post { binding?.pinTv?.setOTP(otp ?: "") }
   }
 }

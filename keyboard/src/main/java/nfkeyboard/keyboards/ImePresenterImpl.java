@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.inputmethod.EditorInfoCompat;
@@ -23,6 +24,7 @@ import androidx.core.view.inputmethod.InputConnectionCompat;
 import androidx.core.view.inputmethod.InputContentInfoCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.content.res.AppCompatResources;
+
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -83,16 +85,21 @@ public class ImePresenterImpl implements ItemClickListener,
         CandidateViewItemClickListener,
         UrlToBitmapInterface,
         GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface {
+    public final static int KEY_EMOJI = -2005, KEY_IME_OPTION = -2006, KEY_SPACE = -2007, KEY_NUMBER = -2000,
+            KEY_SYM = -2001, KEY_SYM_SHIFT = -2002, KEY_QWRTY = -2003, KEY_LANGUAGE_CHANGE = -2004;
+    private static final String UTM_SOURCE = "utm_source", UTM_MEDIUM = "utm_medium";
+    private static String previousText;
+    private static boolean isSelectedKeyboardItem = false;
+    private static boolean isSelectedKeyboardEdited = false;
+    private static boolean isPreviousWordEdited = false;
     private final KeyboardSwitcher mKeyboardSwitcher;
+    int numberOfSelected = 0;
     private DatabaseTable mDatabaseTable;
     private SpellCorrector corrector;
     private ExecutorService mExecutorService;
     private CandidateViewBaseImpl mCandidateView;
     private KeyboardViewBaseImpl mKeyboardView;
     private ManageKeyboardView manageKeyboardView;
-    private static final String UTM_SOURCE = "utm_source", UTM_MEDIUM = "utm_medium";
-    public final static int KEY_EMOJI = -2005, KEY_IME_OPTION = -2006, KEY_SPACE = -2007, KEY_NUMBER = -2000,
-            KEY_SYM = -2001, KEY_SYM_SHIFT = -2002, KEY_QWRTY = -2003, KEY_LANGUAGE_CHANGE = -2004;
     private Context mContext;
     private String packageName = "";
     private KeyboardUtils.CandidateType currentCandidateType = KeyboardUtils.CandidateType.TEXT_LIST;
@@ -107,27 +114,83 @@ public class ImePresenterImpl implements ItemClickListener,
     private ShiftType mShiftType = ShiftType.CAPITAL;
     private int mPrimaryCode;
     private String text;
-    private static String previousText;
     private ArrayList<KeywordModel> mSuggestions;
-    private static boolean isSelectedKeyboardItem = false;
-    private static boolean isSelectedKeyboardEdited = false;
-    private static boolean isPreviousWordEdited = false;
+    Runnable updateKeyboardRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("data", (Serializable) mSuggestions);
+            mCandidateView.setDataToCandidateType(currentCandidateType, bundle);
+        }
+    };
     private Map<String, String> mSuggestedWordlist;
     private Handler mHandler;
+    Runnable searchKeywordRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mHandler.removeCallbacks(updateKeyboardRunnable);
+            //mSuggestions = new ArrayList<>();
+            mSuggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, text.trim().length() > 0 ? text.trim() : " ");
+            if (mSuggestions != null && mSuggestions.size() < 3) {
+                corrector.setSuggestedWordListLimit(3 - mSuggestions.size());
+                mSuggestions.addAll(corrector.correct(text.trim()));
+            }
+            mSuggestedWordlist = new HashMap<>();
+            List<Map<String, String>> mSuggestedWordmap = new ArrayList<>();
+            boolean isWordPresent = false;
+            if (text.trim().length() > 0) {
+                Map<String, String> map = new HashMap<>();
+                for (KeywordModel model : mSuggestions) {
+                    if (model.getWord().trim().equalsIgnoreCase(text.trim())) {
+                        isWordPresent = true;
+                    }
+                    mSuggestedWordlist.put(model.getWord().trim().toLowerCase(), model.getType());
+                }
+
+                if (!isWordPresent) {
+                    KeywordModel model = new KeywordModel();
+                    model.setWord(text);
+                    model.setType(KeywordModel.NEW_WORD);
+                    mSuggestions.add(0, model);
+                }
+            }
+            mHandler.post(updateKeyboardRunnable);
+            //mHandler.post(updateKeyboardRunnable);
+
+        }
+    };
     private Runnable runnable;
     private Future longRunningTaskFuture;
     private String enteredText;
     private SpellCorrectorAsyncTask spellCorrectorAsyncTask;
     private ArrayList<Uri> uris = new ArrayList<>();
-    int numberOfSelected = 0;
-
     private int flag;
     private InputContentInfoCompat inputContentInfoCompat;
+
+    public ImePresenterImpl(Context context, PresenterToImeInterface mImeListener, KeyboardSwitcher mKeyboardSwitcher) {
+        mContext = context;
+        this.imeListener = mImeListener;
+        this.mKeyboardSwitcher = mKeyboardSwitcher;
+
+
+    }
 
     @Override
     public TabType getTabType() {
         return mTabType;
     }
+
+
+//    @Override
+//    public void onEmojiconClicked(Emojicon emojicon) {
+//        if (imeListener.getImeCurrentInputConnection() != null)
+//            imeListener.getImeCurrentInputConnection().commitText(emojicon.getEmoji(), 1);
+//    }
+//
+//    @Override
+//    public void onEmojiconBackspaceClicked(View v) {
+//        sendKeyEvent(KeyEvent.KEYCODE_DEL);
+//    }
 
     @Override
     public void onSpeechResult(String speech) {
@@ -161,18 +224,6 @@ public class ImePresenterImpl implements ItemClickListener,
         EditorInfo editorInfo = imeListener.getImeCurrentEditorInfo();
         return editorInfo.packageName;
     }
-
-
-//    @Override
-//    public void onEmojiconClicked(Emojicon emojicon) {
-//        if (imeListener.getImeCurrentInputConnection() != null)
-//            imeListener.getImeCurrentInputConnection().commitText(emojicon.getEmoji(), 1);
-//    }
-//
-//    @Override
-//    public void onEmojiconBackspaceClicked(View v) {
-//        sendKeyEvent(KeyEvent.KEYCODE_DEL);
-//    }
 
     @Override
     public Context getContext() {
@@ -279,8 +330,7 @@ public class ImePresenterImpl implements ItemClickListener,
     }
 
     @Override
-    public String onCopyClick(AllSuggestionModel model)
-    {
+    public String onCopyClick(AllSuggestionModel model) {
 
         permissions();
         return onClickRegister(model);
@@ -303,8 +353,7 @@ public class ImePresenterImpl implements ItemClickListener,
             return null;
         }*/
 
-        if (Url == null)
-        {
+        if (Url == null) {
             Toast.makeText(mContext, mContext.getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
             return null;
         }
@@ -312,8 +361,7 @@ public class ImePresenterImpl implements ItemClickListener,
         long diffHours = 24;
         DecimalFormat df = new DecimalFormat("#,##,##,##,##,##,##,###.##");
 
-        try
-        {
+        try {
             createdOn = createdOn.replace("T", " ");
             expiresOn = expiresOn.replace("T", " ");
             Date createdDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(createdOn);
@@ -321,15 +369,9 @@ public class ImePresenterImpl implements ItemClickListener,
 
             long diff = expireDate.getTime() - createdDate.getTime();
             diffHours = (diff / (60 * 60 * 1000));
-        }
-
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-
-        finally
-        {
+        } finally {
             doCommitContent("Offer on: " + name /*+ "\nPrice: " + currency + " " + df.format(oldPrice)*/ + "\n\nOffer Price: "
                     + currency + " " + df.format(newPrice) + "\nExpires in \"" + diffHours + "\" Hours!\n\n" +
                     "Click to Buy: " + appendedUrl(Url), "text/plain", null);
@@ -355,21 +397,6 @@ public class ImePresenterImpl implements ItemClickListener,
         mKeyboardSwitcher.hideProgressbar();
     }
 
-    @Override
-    public void imagesReceived() {
-        Log.d("here", "hello");
-        mKeyboardSwitcher.imagesReceived();
-
-    }
-
-    public enum TabType {
-        PRODUCTS, UPDATES, KEYBOARD, SETTINGS, BACK, NO_TAB, PHOTOS, DETAILS;
-    }
-
-    private enum ShiftType {
-        LOCKED, CAPITAL, NORMAL;
-    }
-
      /* public ImePresenterImpl(Context context, PresenterToImeInterface imeListener) {
         mHandler = new Handler(context.getMainLooper());
         mDatabaseTable = new DatabaseTable(context);
@@ -388,15 +415,12 @@ public class ImePresenterImpl implements ItemClickListener,
         mSuggestions = new ArrayList<>();
     }*/
 
-
-    public ImePresenterImpl(Context context, PresenterToImeInterface mImeListener, KeyboardSwitcher mKeyboardSwitcher) {
-        mContext = context;
-        this.imeListener = mImeListener;
-        this.mKeyboardSwitcher = mKeyboardSwitcher;
-
+    @Override
+    public void imagesReceived() {
+        Log.d("here", "hello");
+        mKeyboardSwitcher.imagesReceived();
 
     }
-
 
     @Override
     public View onCreateInputView() {
@@ -455,6 +479,7 @@ public class ImePresenterImpl implements ItemClickListener,
         imeOptionId = attribute.imeOptions;
         setCurrentKeyboard();
     }
+
     private void initializeValues() {
         mTabType = TabType.NO_TAB;
         manageKeyboardView.clearResources();
@@ -774,49 +799,133 @@ public class ImePresenterImpl implements ItemClickListener,
         }
     }
 
-    Runnable updateKeyboardRunnable = new Runnable() {
-        @Override
-        public void run() {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("data", (Serializable) mSuggestions);
-            mCandidateView.setDataToCandidateType(currentCandidateType, bundle);
-        }
-    };
+    public void permissions() {
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
 
-    Runnable searchKeywordRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mHandler.removeCallbacks(updateKeyboardRunnable);
-            //mSuggestions = new ArrayList<>();
-            mSuggestions = MethodUtils.fetchWordsFromDatabase(mDatabaseTable, text.trim().length() > 0 ? text.trim() : " ");
-            if (mSuggestions != null && mSuggestions.size() < 3) {
-                corrector.setSuggestedWordListLimit(3 - mSuggestions.size());
-                mSuggestions.addAll(corrector.correct(text.trim()));
-            }
-            mSuggestedWordlist = new HashMap<>();
-            List<Map<String, String>> mSuggestedWordmap = new ArrayList<>();
-            boolean isWordPresent = false;
-            if (text.trim().length() > 0) {
-                Map<String, String> map = new HashMap<>();
-                for (KeywordModel model : mSuggestions) {
-                    if (model.getWord().trim().equalsIgnoreCase(text.trim())) {
-                        isWordPresent = true;
+            Toast.makeText(mContext, "Please grant external storage permission", Toast.LENGTH_SHORT).show();
+            //MethodUtils.getPermissions(mContext);
+            return;
+        }
+    }
+
+    private String onClickRegister(AllSuggestionModel model) {
+        if (model == null) {
+            Toast.makeText(mContext, mContext.getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
+            return null;
+        }
+
+        JSONObject object = new JSONObject();
+
+        try {
+            object.put("id", model.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String shareUrl = appendedUrl(model.getUrl());
+
+        switch (model.getTypeEnum()) {
+            case ImageAndText:
+
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE, object);
+                MethodUtils.onGlideBitmapReady(this, model.getText() + "\nUrl: " + shareUrl, model.getImageUrl(), model.getId());
+                break;
+
+            case Product:
+
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_PRODUCT_SHARE, object);
+                StringBuilder builder = new StringBuilder("Product: " + model.getText());
+
+                try {
+                    DecimalFormat df = new DecimalFormat("#,##,##,##,##,##,##,###.##");
+
+                    double price = TextUtils.isEmpty(model.getPrice()) ? 0 : Double.valueOf(model.getPrice());
+                    double discount = TextUtils.isEmpty(model.getDiscount()) ? 0 : Double.valueOf(model.getDiscount());
+
+                    String formatted = df.format(price);
+
+                    if (discount > 0) {
+                        String _mrp = (price == 0) ? "" : "\nMRP: " + (model.getCurrencyCode() + " " + formatted);
+                        builder.append(_mrp);
                     }
-                    mSuggestedWordlist.put(model.getWord().trim().toLowerCase(), model.getType());
+
+                    formatted = df.format(price - discount);
+                    String _price = (price - discount <= 0) ? "" : "\nPrice: " + (model.getCurrencyCode() + " " + formatted);
+                    builder.append(_price);
+
+                    formatted = df.format(discount);
+                    String _discount = (discount == 0) ? "" : "\nYou Save: " + (model.getCurrencyCode() + " " + formatted);
+                    builder.append(_discount);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    builder.append("\n\nClick to Buy: ");
+                    builder.append(shareUrl);
                 }
 
-                if (!isWordPresent) {
-                    KeywordModel model = new KeywordModel();
-                    model.setWord(text);
-                    model.setType(KeywordModel.NEW_WORD);
-                    mSuggestions.add(0, model);
-                }
-            }
-            mHandler.post(updateKeyboardRunnable);
-            //mHandler.post(updateKeyboardRunnable);
+                /*MethodUtils.onGlideBitmapReady(this, "Product: " + model.getText() +
+                        "\nPrice: " + model.getCurrencyCode() + " " + model.getPrice() + "\n\nClick to Buy: " + shareUrl, model.getImageUrl(), model.getId());*/
 
+                MethodUtils.onGlideBitmapReady(this, builder.toString(), model.getImageUrl(), model.getId());
+                break;
+
+            case DetailsShare:
+
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_SHARE, object);
+                String description = model.getName() + "\n" + model.getBusinessName() + "\n"
+                        + model.getPhoneNumber() + "\n\nWebsite: " + model.getWebsite() + "\nEmail: " + model.getEmail() +
+                        "\n\nAddress: " + model.getAddress() + "\nLocation: " + model.getLocation();
+                doCommitContent(description, "text/plain", null);
+                break;
+
+            case Text:
+
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_SHARE, object);
+                doCommitContent(model.getText() + "\nUrl: " + shareUrl, "text/plain", null);
+                break;
+
+            case ImageShare:
+
+                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE, object);
+                MethodUtils.onGlideBitmapReady(this, "", model.getImageUri(), model.getId());
+
+            default:
+
+                break;
         }
-    };
+
+        return shareUrl;
+    }
+
+    String appendedUrl(String url) {
+        Uri uri = null;
+        String shareUrl = null;
+
+        try {
+            if (!TextUtils.isEmpty(url)) {
+                uri = Uri.parse(url).buildUpon().appendQueryParameter(UTM_SOURCE, "bk_android")
+                        .appendQueryParameter(UTM_MEDIUM, TextUtils.isEmpty(packageName) ? "share" : packageName).build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (uri != null) {
+            shareUrl = uri.toString();
+        }
+
+        return shareUrl;
+    }
+
+    public enum TabType {
+        PRODUCTS, UPDATES, KEYBOARD, SETTINGS, BACK, NO_TAB, PHOTOS, DETAILS;
+    }
+
+    private enum ShiftType {
+        LOCKED, CAPITAL, NORMAL;
+    }
 
     class KeyboardListener extends AbstractKeyboardListener {
         @Override
@@ -1053,148 +1162,5 @@ public class ImePresenterImpl implements ItemClickListener,
             bundle.putSerializable("data", (Serializable) mSuggestions);
             mCandidateView.setDataToCandidateType(currentCandidateType, bundle);
         }
-    }
-
-    public void permissions()
-    {
-        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            Toast.makeText(mContext, "Please grant external storage permission", Toast.LENGTH_SHORT).show();
-            //MethodUtils.getPermissions(mContext);
-            return;
-        }
-    }
-
-    private String onClickRegister(AllSuggestionModel model)
-    {
-        if (model == null)
-        {
-            Toast.makeText(mContext, mContext.getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
-            return null;
-        }
-
-        JSONObject object = new JSONObject();
-
-        try
-        {
-            object.put("id", model.getId());
-        }
-
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-
-        String shareUrl = appendedUrl(model.getUrl());
-
-        switch (model.getTypeEnum())
-        {
-            case ImageAndText:
-
-                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE, object);
-                MethodUtils.onGlideBitmapReady(this, model.getText() + "\nUrl: " + shareUrl, model.getImageUrl(), model.getId());
-                break;
-
-            case Product:
-
-                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_PRODUCT_SHARE, object);
-                StringBuilder builder = new StringBuilder("Product: " + model.getText());
-
-                try
-                {
-                    DecimalFormat df = new DecimalFormat("#,##,##,##,##,##,##,###.##");
-
-                    double price = TextUtils.isEmpty(model.getPrice()) ? 0 : Double.valueOf(model.getPrice());
-                    double discount = TextUtils.isEmpty(model.getDiscount()) ? 0 : Double.valueOf(model.getDiscount());
-
-                    String formatted = df.format(price);
-
-                    if(discount > 0)
-                    {
-                        String _mrp = (price == 0) ? "" : "\nMRP: " + (model.getCurrencyCode() + " " + formatted);
-                        builder.append(_mrp);
-                    }
-
-                    formatted = df.format(price - discount);
-                    String _price = (price - discount <= 0) ? "" : "\nPrice: " + (model.getCurrencyCode() + " " + formatted);
-                    builder.append(_price);
-
-                    formatted = df.format(discount);
-                    String _discount = (discount == 0) ? "" : "\nYou Save: " + (model.getCurrencyCode() + " " + formatted);
-                    builder.append(_discount);
-                }
-
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-
-                finally
-                {
-                    builder.append("\n\nClick to Buy: ");
-                    builder.append(shareUrl);
-                }
-
-                /*MethodUtils.onGlideBitmapReady(this, "Product: " + model.getText() +
-                        "\nPrice: " + model.getCurrencyCode() + " " + model.getPrice() + "\n\nClick to Buy: " + shareUrl, model.getImageUrl(), model.getId());*/
-
-                MethodUtils.onGlideBitmapReady(this, builder.toString(), model.getImageUrl(), model.getId());
-                break;
-
-            case DetailsShare:
-
-                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_SHARE, object);
-                String description = model.getName() + "\n" + model.getBusinessName() + "\n"
-                        + model.getPhoneNumber() + "\n\nWebsite: " + model.getWebsite() + "\nEmail: " + model.getEmail() +
-                        "\n\nAddress: " + model.getAddress() + "\nLocation: " + model.getLocation();
-                doCommitContent(description, "text/plain", null);
-                break;
-
-            case Text:
-
-                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_SHARE, object);
-                doCommitContent(model.getText() + "\nUrl: " + shareUrl, "text/plain", null);
-                break;
-
-            case ImageShare:
-
-                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE, object);
-                MethodUtils.onGlideBitmapReady(this, "", model.getImageUri(), model.getId());
-
-            default:
-
-                break;
-        }
-
-        return shareUrl;
-    }
-
-    String appendedUrl(String url)
-    {
-        Uri uri = null;
-        String shareUrl = null;
-
-        try
-        {
-            if (!TextUtils.isEmpty(url))
-            {
-                uri = Uri.parse(url).buildUpon().appendQueryParameter(UTM_SOURCE, "bk_android")
-                        .appendQueryParameter(UTM_MEDIUM, TextUtils.isEmpty(packageName) ? "share" : packageName).build();
-            }
-        }
-
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        if (uri != null)
-        {
-            shareUrl = uri.toString();
-        }
-
-        return shareUrl;
     }
 }

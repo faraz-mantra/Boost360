@@ -17,6 +17,13 @@ public class RevenueSummary implements Serializable {
     @Expose
     private List<RevenueData> revenueData;
 
+    public List<RevenueData> getRevenueData() {
+        return revenueData;
+    }
+
+    public void setRevenueData(List<RevenueData> revenueData) {
+        this.revenueData = revenueData;
+    }
 
     public class RevenueData implements Serializable {
         @SerializedName("DeliveryDate")
@@ -42,13 +49,5 @@ public class RevenueSummary implements Serializable {
         public void setAmount(float amount) {
             this.amount = amount;
         }
-    }
-
-    public List<RevenueData> getRevenueData() {
-        return revenueData;
-    }
-
-    public void setRevenueData(List<RevenueData> revenueData) {
-        this.revenueData = revenueData;
     }
 }

@@ -1,7 +1,9 @@
 package com.nowfloats.CustomWidget;
 
 import android.content.Context;
+
 import androidx.appcompat.widget.AppCompatCheckBox;
+
 import android.util.AttributeSet;
 
 import com.thinksity.R;
@@ -23,9 +25,9 @@ public class CircularCheckBox extends AppCompatCheckBox {
     @Override
     public void setChecked(boolean checked) {
         super.setChecked(checked);
-        if(checked){
+        if (checked) {
             this.setButtonDrawable(R.drawable.domain_available);
-        }else{
+        } else {
             this.setButtonDrawable(R.drawable.circle_stroke);
         }
     }

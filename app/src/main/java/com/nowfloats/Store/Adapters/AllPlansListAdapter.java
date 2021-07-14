@@ -1,14 +1,15 @@
 package com.nowfloats.Store.Adapters;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowfloats.Store.Model.WidgetPacks;
 import com.nowfloats.Store.PricingDetailsFragment;
@@ -17,8 +18,8 @@ import com.thinksity.R;
 import java.util.List;
 
 class AllPlansListAdapter extends RecyclerView.Adapter<AllPlansListAdapter.ViewHolder> {
-    final Context mContext;
     public final PricingDetailsFragment.OnPlanDescriptionClickListener planDescriptionClickListener;
+    final Context mContext;
     private List<WidgetPacks> mDataset;
     private PopupWindow popup;
 

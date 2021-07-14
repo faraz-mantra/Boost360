@@ -17,9 +17,9 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 data class Drs_segment(
 
-    @SerializedName("id") val id: String,
-    @SerializedName("segment_score") val segment_score: Double,
-    @SerializedName("events") val events: Map<String, Events>
+  @SerializedName("id") val id: String,
+  @SerializedName("segment_score") val segment_score: Double,
+  @SerializedName("events") val events: Map<String, Events>
 ) : Serializable {
 
   fun getScore(): Int {

@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context="com.nowfloats.hotel.placesnearby.PlacesNearByActivity">
+
+  <include
+    android:id="@+id/app_bar"
+    layout="@layout/new_custome_app_bar" />
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.nowfloats.hotel.placesnearby.PlacesNearByActivity">
+    android:visibility="gone"
+    tools:listitem="@layout/item_place_nearby" />
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/new_custome_app_bar" />
+  <LinearLayout
+    android:id="@+id/secondary_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:visibility="visible">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        tools:listitem="@layout/item_place_nearby" />
+    <RelativeLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:padding="@dimen/_20sdp">
 
-    <LinearLayout
-        android:id="@+id/secondary_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:visibility="visible">
+      <TextView
+        android:id="@+id/feature_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_semibold"
+        android:text="@string/nothing_to_show"
+        android:textColor="@color/common_text_color"
+        android:textSize="@dimen/_16sdp" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_20sdp">
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/feature_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_semibold"
-                android:text="@string/nothing_to_show"
-                android:textColor="@color/common_text_color"
-                android:textSize="@dimen/_16sdp" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
+  </LinearLayout>
 
 </LinearLayout>

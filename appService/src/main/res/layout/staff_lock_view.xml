@@ -43,8 +43,8 @@
       android:layout_marginHorizontal="@dimen/size_30"
       android:layout_marginTop="@dimen/size_14"
       android:gravity="center"
-      android:textAlignment="center"
-      android:text="@string/add_ons_description_lock" />
+      android:text="@string/add_ons_description_lock"
+      android:textAlignment="center" />
 
     <com.framework.views.customViews.CustomButton
       android:id="@+id/btn_staff_add_ons"

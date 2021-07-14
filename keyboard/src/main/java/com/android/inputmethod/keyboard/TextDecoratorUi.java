@@ -57,7 +57,7 @@ public final class TextDecoratorUi implements TextDecoratorUiOperator {
      * This constructor is designed to be called from {@link InputMethodService#setInputView(View)}.
      * Other usages are not supported.
      *
-     * @param context the context of the input method.
+     * @param context   the context of the input method.
      * @param inputView the view that is passed to {@link InputMethodService#setInputView(View)}.
      */
     public TextDecoratorUi(final Context context, final View inputView) {
@@ -96,6 +96,36 @@ public final class TextDecoratorUi implements TextDecoratorUiOperator {
         mTouchEventWindow.setContentView(mTouchEventWindowClickListenerView);
     }
 
+    private static RectF getIndicatorBoundsInScreenCoordinates(final Matrix matrix,
+                                                               final RectF composingTextBounds, final boolean showAtLeftSide) {
+        final float indicatorSize = composingTextBounds.height();
+        final RectF indicatorBounds;
+        if (showAtLeftSide) {
+            indicatorBounds = new RectF(composingTextBounds.left - indicatorSize,
+                    composingTextBounds.top, composingTextBounds.left,
+                    composingTextBounds.top + indicatorSize);
+        } else {
+            indicatorBounds = new RectF(composingTextBounds.right, composingTextBounds.top,
+                    composingTextBounds.right + indicatorSize,
+                    composingTextBounds.top + indicatorSize);
+        }
+        matrix.mapRect(indicatorBounds);
+        return indicatorBounds;
+    }
+
+    private static ViewGroup getContentView(final View view) {
+        final View rootView = view.getRootView();
+        if (rootView == null) {
+            return null;
+        }
+
+        final ViewGroup windowContentView = (ViewGroup) rootView.findViewById(android.R.id.content);
+        if (windowContentView == null) {
+            return null;
+        }
+        return windowContentView;
+    }
+
     @Override
     public void disposeUi() {
         if (mLocalRootView != null) {
@@ -116,26 +146,9 @@ public final class TextDecoratorUi implements TextDecoratorUiOperator {
         mTouchEventWindow.dismiss();
     }
 
-    private static RectF getIndicatorBoundsInScreenCoordinates(final Matrix matrix,
-                                                               final RectF composingTextBounds, final boolean showAtLeftSide) {
-        final float indicatorSize = composingTextBounds.height();
-        final RectF indicatorBounds;
-        if (showAtLeftSide) {
-            indicatorBounds = new RectF(composingTextBounds.left - indicatorSize,
-                    composingTextBounds.top, composingTextBounds.left,
-                    composingTextBounds.top + indicatorSize);
-        } else {
-            indicatorBounds = new RectF(composingTextBounds.right, composingTextBounds.top,
-                    composingTextBounds.right + indicatorSize,
-                    composingTextBounds.top + indicatorSize);
-        }
-        matrix.mapRect(indicatorBounds);
-        return indicatorBounds;
-    }
-
     @Override
     public void layoutUi(final Matrix matrix, final RectF composingTextBounds,
-            final boolean useRtlLayout) {
+                         final boolean useRtlLayout) {
         RectF indicatorBoundsInScreenCoordinates = getIndicatorBoundsInScreenCoordinates(matrix,
                 composingTextBounds, useRtlLayout /* showAtLeftSide */);
         if (indicatorBoundsInScreenCoordinates.left < mDisplayRect.left ||
@@ -161,16 +174,16 @@ public final class TextDecoratorUi implements TextDecoratorUiOperator {
         mAddToDictionaryIndicatorView.setVisibility(View.VISIBLE);
 
         if (mTouchEventWindow.isShowing()) {
-            mTouchEventWindow.update((int)hitAreaBoundsInScreenCoordinates.left - viewOriginX,
-                    (int)hitAreaBoundsInScreenCoordinates.top - viewOriginY,
-                    (int)hitAreaBoundsInScreenCoordinates.width(),
-                    (int)hitAreaBoundsInScreenCoordinates.height());
+            mTouchEventWindow.update((int) hitAreaBoundsInScreenCoordinates.left - viewOriginX,
+                    (int) hitAreaBoundsInScreenCoordinates.top - viewOriginY,
+                    (int) hitAreaBoundsInScreenCoordinates.width(),
+                    (int) hitAreaBoundsInScreenCoordinates.height());
         } else {
-            mTouchEventWindow.setWidth((int)hitAreaBoundsInScreenCoordinates.width());
-            mTouchEventWindow.setHeight((int)hitAreaBoundsInScreenCoordinates.height());
+            mTouchEventWindow.setWidth((int) hitAreaBoundsInScreenCoordinates.width());
+            mTouchEventWindow.setHeight((int) hitAreaBoundsInScreenCoordinates.height());
             mTouchEventWindow.showAtLocation(mLocalRootView, Gravity.NO_GRAVITY,
-                    (int)hitAreaBoundsInScreenCoordinates.left - viewOriginX,
-                    (int)hitAreaBoundsInScreenCoordinates.top - viewOriginY);
+                    (int) hitAreaBoundsInScreenCoordinates.left - viewOriginX,
+                    (int) hitAreaBoundsInScreenCoordinates.top - viewOriginY);
         }
     }
 
@@ -187,14 +200,33 @@ public final class TextDecoratorUi implements TextDecoratorUiOperator {
         private final int mBackgroundColor;
         private final int mForegroundColor;
         private final RectF mBounds = new RectF();
+
         public IndicatorView(Context context, final int pathResourceId,
-                final int sizeResourceId, final int backgroundColorResourceId,
-                final int foregroundColroResourceId) {
+                             final int sizeResourceId, final int backgroundColorResourceId,
+                             final int foregroundColroResourceId) {
             super(context);
             final Resources resources = context.getResources();
             mPath = createPath(resources, pathResourceId, sizeResourceId);
             mBackgroundColor = resources.getColor(backgroundColorResourceId);
             mForegroundColor = resources.getColor(foregroundColroResourceId);
+        }
+
+        private static Path createPath(final Resources resources, final int pathResourceId,
+                                       final int sizeResourceId) {
+            final int size = resources.getInteger(sizeResourceId);
+            final float normalizationFactor = 1.0f / size;
+            final int[] array = resources.getIntArray(pathResourceId);
+
+            final Path path = new Path();
+            for (int i = 0; i < array.length; i += 2) {
+                if (i == 0) {
+                    path.moveTo(array[i] * normalizationFactor, array[i + 1] * normalizationFactor);
+                } else {
+                    path.lineTo(array[i] * normalizationFactor, array[i + 1] * normalizationFactor);
+                }
+            }
+            path.close();
+            return path;
         }
 
         public void setBounds(final RectF rect) {
@@ -213,37 +245,6 @@ public final class TextDecoratorUi implements TextDecoratorUiOperator {
             mPaint.setColor(mForegroundColor);
             canvas.drawPath(mTmpPath, mPaint);
         }
-
-        private static Path createPath(final Resources resources, final int pathResourceId,
-                final int sizeResourceId) {
-            final int size = resources.getInteger(sizeResourceId);
-            final float normalizationFactor = 1.0f / size;
-            final int[] array = resources.getIntArray(pathResourceId);
-
-            final Path path = new Path();
-            for (int i = 0; i < array.length; i += 2) {
-                if (i == 0) {
-                    path.moveTo(array[i] * normalizationFactor, array[i + 1] * normalizationFactor);
-                } else {
-                    path.lineTo(array[i] * normalizationFactor, array[i + 1] * normalizationFactor);
-                }
-            }
-            path.close();
-            return path;
-        }
-    }
-
-    private static ViewGroup getContentView(final View view) {
-        final View rootView = view.getRootView();
-        if (rootView == null) {
-            return null;
-        }
-
-        final ViewGroup windowContentView = (ViewGroup)rootView.findViewById(android.R.id.content);
-        if (windowContentView == null) {
-            return null;
-        }
-        return windowContentView;
     }
 
     private static final class AddToDictionaryIndicatorView extends TextDecoratorUi.IndicatorView {

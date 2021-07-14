@@ -332,17 +332,17 @@ public class SidePanelFragment extends Fragment {
         callLock = (ImageView) card.findViewById(R.id.call_lock);
         facebookLock = (ImageView) card.findViewById(R.id.facebook_lock);
 //        Log.v("StoreWidgets"," "+ Constants.StoreWidgets);
-        if (Constants.StoreWidgets.contains("BOOSTKEYBOARD"))
+        if (session.getStoreWidgets().contains("BOOSTKEYBOARD"))
             keyboardLock.setVisibility(View.GONE);
         else
             keyboardLock.setVisibility(View.VISIBLE);
         //calltracker
-        if (Constants.StoreWidgets.contains("CALLTRACKER"))
+        if (session.getStoreWidgets().contains("CALLTRACKER"))
             callLock.setVisibility(View.GONE);
         else
             callLock.setVisibility(View.VISIBLE);
         //facebookleads
-        if (Constants.StoreWidgets.contains("WILDFIRE_FB_LEAD_ADS")) {
+        if (session.getStoreWidgets().contains("WILDFIRE_FB_LEAD_ADS")) {
             facebookLayout.setVisibility(View.GONE);
             facebookLock.setVisibility(View.GONE);
         } else {
@@ -631,7 +631,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //About Boost Event Trigger
-                WebEngageController.trackEvent(CLICKED_ON_REFER_A_FRIEND , BUTTON, CLICKED);
+                WebEngageController.trackEvent(CLICKED_ON_REFER_A_FRIEND, BUTTON, CLICKED);
 
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.referrals_button));
 //                String name = session.getUserProfileName();
@@ -905,7 +905,7 @@ public class SidePanelFragment extends Fragment {
         setThumbnail();
         setBackgroundImage();
         Log.v("StoreWidgets", " " + Constants.StoreWidgets);
-        if (Constants.StoreWidgets.contains("BOOSTKEYBOARD"))
+        if (session.getStoreWidgets().contains("BOOSTKEYBOARD"))
             keyboardLock.setVisibility(View.GONE);
         else
             keyboardLock.setVisibility(View.VISIBLE);

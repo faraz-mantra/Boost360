@@ -6,6 +6,16 @@ package io.separ.neural.inputmethod.slash;
 
 public class TaskQueueHelper {
 
+    public static boolean hasTasksOfType(BaseTaskQueue taskQueueActual, Class... classes) {
+        return hasTasksOfType(null, taskQueueActual, classes);
+    }
+
+    public static boolean hasTasksOfType(StickyTaskManager stickyTaskManager, BaseTaskQueue taskQueueActual, Class... classes) {
+        ClassesQuery queueQuery = new ClassesQuery(stickyTaskManager, classes);
+        taskQueueActual.query(queueQuery);
+        return queueQuery.found;
+    }
+
     static class ClassesQuery implements BaseTaskQueue.QueueQuery {
         Class[] classes;
         boolean found;
@@ -31,15 +41,5 @@ public class TaskQueueHelper {
                 }
             }
         }
-    }
-
-    public static boolean hasTasksOfType(BaseTaskQueue taskQueueActual, Class... classes) {
-        return hasTasksOfType(null, taskQueueActual, classes);
-    }
-
-    public static boolean hasTasksOfType(StickyTaskManager stickyTaskManager, BaseTaskQueue taskQueueActual, Class... classes) {
-        ClassesQuery queueQuery = new ClassesQuery(stickyTaskManager, classes);
-        taskQueueActual.query(queueQuery);
-        return queueQuery.found;
     }
 }

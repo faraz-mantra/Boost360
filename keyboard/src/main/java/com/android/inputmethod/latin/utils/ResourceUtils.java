@@ -32,17 +32,10 @@ import io.separ.neural.inputmethod.annotations.UsedForTesting;
 import io.separ.neural.inputmethod.indic.R;
 
 public final class ResourceUtils {
-    private static final String TAG = ResourceUtils.class.getSimpleName();
-
     public static final float UNDEFINED_RATIO = -1.0f;
     public static final int UNDEFINED_DIMENSION = -1;
-
-    private ResourceUtils() {
-        // This utility class is not publicly instantiable.
-    }
-
+    private static final String TAG = ResourceUtils.class.getSimpleName();
     private static final HashMap<String, String> sDeviceOverrideValueMap = new HashMap<>();
-
     private static final String[] BUILD_KEYS_AND_VALUES = {
             "HARDWARE", Build.HARDWARE,
             "MODEL", Build.MODEL,
@@ -64,6 +57,10 @@ public final class ResourceUtils {
             keyValuePairs.add(key + '=' + value);
         }
         sBuildKeyValuesDebugString = '[' + TextUtils.join(" ", keyValuePairs) + ']';
+    }
+
+    private ResourceUtils() {
+        // This utility class is not publicly instantiable.
     }
 
     public static String getDeviceOverrideValue(final Resources res, final int overrideResId,
@@ -88,18 +85,6 @@ public final class ResourceUtils {
 
         sDeviceOverrideValueMap.put(key, defaultValue);
         return defaultValue;
-    }
-
-    @SuppressWarnings("serial")
-    static class DeviceOverridePatternSyntaxError extends Exception {
-        public DeviceOverridePatternSyntaxError(final String message, final String expression) {
-            this(message, expression, null);
-        }
-
-        public DeviceOverridePatternSyntaxError(final String message, final String expression,
-                                                final Throwable throwable) {
-            super(message + ": " + expression, throwable);
-        }
     }
 
     /**
@@ -286,5 +271,17 @@ public final class ResourceUtils {
 
     public static boolean isStringValue(final TypedValue v) {
         return v.type == TypedValue.TYPE_STRING;
+    }
+
+    @SuppressWarnings("serial")
+    static class DeviceOverridePatternSyntaxError extends Exception {
+        public DeviceOverridePatternSyntaxError(final String message, final String expression) {
+            this(message, expression, null);
+        }
+
+        public DeviceOverridePatternSyntaxError(final String message, final String expression,
+                                                final Throwable throwable) {
+            super(message + ": " + expression, throwable);
+        }
     }
 }

@@ -4,30 +4,32 @@ import com.google.gson.annotations.SerializedName
 
 
 class Error {
-    @SerializedName("error")
-    var error: String? = null
-    @SerializedName("error_description")
-    var error_description: String? = null
-    @SerializedName("error_code")
-    var error_code = 0
+  @SerializedName("error")
+  var error: String? = null
 
-    constructor(message: String) {
-        this.error = message
-    }
+  @SerializedName("error_description")
+  var error_description: String? = null
 
-    constructor(errorCode: Int, message: String) {
-        this.error_code = errorCode
-        this.error = message
-    }
+  @SerializedName("error_code")
+  var error_code = 0
 
-    constructor(errorCode: Int, message: String, errorDescription: String) {
-        this.error_code = errorCode
-        this.error = message
-        this.error_description = errorDescription
-    }
+  constructor(message: String) {
+    this.error = message
+  }
 
-    fun getMessageWithCode() = "$error_code - $error"
+  constructor(errorCode: Int, message: String) {
+    this.error_code = errorCode
+    this.error = message
+  }
 
-    fun getMessageWithDesc() = "$error_code - $error\nDescription : $error_description"
+  constructor(errorCode: Int, message: String, errorDescription: String) {
+    this.error_code = errorCode
+    this.error = message
+    this.error_description = errorDescription
+  }
+
+  fun getMessageWithCode() = "$error_code - $error"
+
+  fun getMessageWithDesc() = "$error_code - $error\nDescription : $error_description"
 
 }

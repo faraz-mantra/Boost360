@@ -18,6 +18,8 @@
   <color name="dodger_blue_two_30">#504889f8</color>
   <color name="dodger_blue_light">#2f9cd9</color>
   <color name="white">#FFFFFF</color>
+  <color name="white_grey_progress">#eeeeee</color>
+  <color name="black_light_progress">#5c5c5c</color>
   <color name="white_50">#80FFFFFF</color>
   <color name="white_light">#F3F3F3</color>
   <color name="white_grey">#E5E5E5</color>
@@ -96,6 +98,7 @@
   <color name="lightest_grey">#F6F6F6</color>
   <color name="lightest_grey_10">#E7E7E7</color>
   <color name="primary_grey">#B3B4B4</color>
+  <color name="primary_grey_light">#888888</color>
   <color name="primary_grey_dark">#90918D</color>
   <color name="warm_grey_10">#4D4D4D</color>
   <color name="watermelon_light">#F06428</color>
@@ -110,6 +113,7 @@
   <color name="bg_dark_grey">#4A4A4A</color>
   <color name="light_grey_two">#B7B7B7</color>
   <color name="dodger_blue_ED73FE">#EDF3FE</color>
+  <color name="grey_A1A1A1">#A1A1A1</color>
   <color name="black_2A2A2A">#2A2A2A</color>
   <color name="black_4a4a4a">#4A4A4A</color>
   <color name="black_4a4a4a_50">#804A4A4A</color>
@@ -125,6 +129,7 @@
   <color name="gray_light_3">#e1e1e1</color>
   <color name="gray_light_4">#a7a7a7</color>
   <color name="gray_text_hint">#c4c4c4</color>
+  <color name="gray_text_hint_product">#c4c4c4</color>
   <color name="grey_light_2">#898989</color>
   <color name="grey_light_3">#CECECE</color>
   <color name="white_4">#fbfbfb</color>
@@ -135,6 +140,7 @@
   <color name="green_27AE60">#27AE60</color>
   <color name="green_78AF00">#78AF00</color>
   <color name="green_light">#00C42D</color>
+  <color name="white_green_light">#FFFFFF</color>
   <color name="green_light_1">#6DCA07</color>
   <color name="white_80FFFFFF">#80FFFFFF</color>
   <color name="blue_4A90E2">#4A90E2</color>
@@ -142,4 +148,6 @@
   <color name="red_F40000">#F40000</color>
   <color name="black_202A2A2A">#202A2A2A</color>
   <color name="black_3C3C3C">#3C3C3C</color>
+  <color name="colorAccentPositive">@color/colorAccent</color>
+  <color name="colorAccentNegative">@color/greyish_brown</color>
 </resources>

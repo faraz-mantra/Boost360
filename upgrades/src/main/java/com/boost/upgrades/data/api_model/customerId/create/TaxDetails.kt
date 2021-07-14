@@ -1,8 +1,8 @@
 package com.boost.upgrades.data.api_model.customerId.create
 
 data class TaxDetails(
-        val TanNumber: String?,
-        val Tax: Int,
-        val GSTIN: String?,
-        val TDS: Int
+  val TanNumber: String?,
+  val Tax: Int,
+  val GSTIN: String?,
+  val TDS: Int
 )

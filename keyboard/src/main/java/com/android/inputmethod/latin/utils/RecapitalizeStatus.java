@@ -31,24 +31,12 @@ public class RecapitalizeStatus {
     public static final int CAPS_MODE_LAST = CAPS_MODE_ALL_UPPER;
 
     private static final int[] ROTATION_STYLE = {
-        CAPS_MODE_ORIGINAL_MIXED_CASE,
-        CAPS_MODE_ALL_LOWER,
-        CAPS_MODE_FIRST_WORD_UPPER,
-        CAPS_MODE_ALL_UPPER
+            CAPS_MODE_ORIGINAL_MIXED_CASE,
+            CAPS_MODE_ALL_LOWER,
+            CAPS_MODE_FIRST_WORD_UPPER,
+            CAPS_MODE_ALL_UPPER
     };
-
-    private static int getStringMode(final String string, final int[] sortedSeparators) {
-        if (StringUtils.isIdenticalAfterUpcase(string)) {
-            return CAPS_MODE_ALL_UPPER;
-        } else if (StringUtils.isIdenticalAfterDowncase(string)) {
-            return CAPS_MODE_ALL_LOWER;
-        } else if (StringUtils.isIdenticalAfterCapitalizeEachWord(string, sortedSeparators)) {
-            return CAPS_MODE_FIRST_WORD_UPPER;
-        } else {
-            return CAPS_MODE_ORIGINAL_MIXED_CASE;
-        }
-    }
-
+    private static final int[] EMPTY_STORTED_SEPARATORS = {};
     /**
      * We store the location of the cursor and the string that was there before the recapitalize
      * action was done, and the location of the cursor and the string that was there after.
@@ -65,16 +53,26 @@ public class RecapitalizeStatus {
     private boolean mIsStarted;
     private boolean mIsEnabled = true;
 
-    private static final int[] EMPTY_STORTED_SEPARATORS = {};
-
     public RecapitalizeStatus() {
         // By default, initialize with dummy values that won't match any real recapitalize.
         start(-1, -1, "", Locale.getDefault(), EMPTY_STORTED_SEPARATORS);
         stop();
     }
 
+    private static int getStringMode(final String string, final int[] sortedSeparators) {
+        if (StringUtils.isIdenticalAfterUpcase(string)) {
+            return CAPS_MODE_ALL_UPPER;
+        } else if (StringUtils.isIdenticalAfterDowncase(string)) {
+            return CAPS_MODE_ALL_LOWER;
+        } else if (StringUtils.isIdenticalAfterCapitalizeEachWord(string, sortedSeparators)) {
+            return CAPS_MODE_FIRST_WORD_UPPER;
+        } else {
+            return CAPS_MODE_ORIGINAL_MIXED_CASE;
+        }
+    }
+
     public void start(final int cursorStart, final int cursorEnd, final String string,
-            final Locale locale, final int[] sortedSeparators) {
+                      final Locale locale, final int[] sortedSeparators) {
         if (!mIsEnabled) {
             return;
         }
@@ -142,21 +140,21 @@ public class RecapitalizeStatus {
             }
             ++count;
             switch (ROTATION_STYLE[mRotationStyleCurrentIndex]) {
-            case CAPS_MODE_ORIGINAL_MIXED_CASE:
-                mStringAfter = mStringBefore;
-                break;
-            case CAPS_MODE_ALL_LOWER:
-                mStringAfter = mStringBefore.toLowerCase(mLocale);
-                break;
-            case CAPS_MODE_FIRST_WORD_UPPER:
-                mStringAfter = StringUtils.capitalizeEachWord(mStringBefore, mSortedSeparators,
-                        mLocale);
-                break;
-            case CAPS_MODE_ALL_UPPER:
-                mStringAfter = mStringBefore.toUpperCase(mLocale);
-                break;
-            default:
-                mStringAfter = mStringBefore;
+                case CAPS_MODE_ORIGINAL_MIXED_CASE:
+                    mStringAfter = mStringBefore;
+                    break;
+                case CAPS_MODE_ALL_LOWER:
+                    mStringAfter = mStringBefore.toLowerCase(mLocale);
+                    break;
+                case CAPS_MODE_FIRST_WORD_UPPER:
+                    mStringAfter = StringUtils.capitalizeEachWord(mStringBefore, mSortedSeparators,
+                            mLocale);
+                    break;
+                case CAPS_MODE_ALL_UPPER:
+                    mStringAfter = mStringBefore.toUpperCase(mLocale);
+                    break;
+                default:
+                    mStringAfter = mStringBefore;
             }
         } while (mStringAfter.equals(oldResult) && count < ROTATION_STYLE.length + 1);
         mCursorEndAfter = mCursorStartAfter + mStringAfter.length();
@@ -169,13 +167,13 @@ public class RecapitalizeStatus {
         final int len = mStringBefore.length();
         int nonWhitespaceStart = 0;
         for (; nonWhitespaceStart < len;
-                nonWhitespaceStart = mStringBefore.offsetByCodePoints(nonWhitespaceStart, 1)) {
+             nonWhitespaceStart = mStringBefore.offsetByCodePoints(nonWhitespaceStart, 1)) {
             final int codePoint = mStringBefore.codePointAt(nonWhitespaceStart);
             if (!Character.isWhitespace(codePoint)) break;
         }
         int nonWhitespaceEnd = len;
         for (; nonWhitespaceEnd > 0;
-                nonWhitespaceEnd = mStringBefore.offsetByCodePoints(nonWhitespaceEnd, -1)) {
+             nonWhitespaceEnd = mStringBefore.offsetByCodePoints(nonWhitespaceEnd, -1)) {
             final int codePoint = mStringBefore.codePointBefore(nonWhitespaceEnd);
             if (!Character.isWhitespace(codePoint)) break;
         }

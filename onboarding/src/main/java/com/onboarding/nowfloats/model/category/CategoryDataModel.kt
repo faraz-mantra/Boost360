@@ -18,14 +18,14 @@ import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewItem
 const val CATEGORY_DASHBOARD_DATA = "CATEGORY_DASHBOARD_DATA"
 
 class CategoryDataModel(
-    var experience_code: String? = null,
-    var webTemplateId: String? = null,
-    var category_key: String? = null,
-    var category_Name: String? = null,
-    var category_descriptor: String? = null,
-    var icon: String? = null,
-    var channels: ArrayList<ChannelModel>? = null,
-    var sections: ArrayList<SectionsFeature>? = null,
+  var experience_code: String? = null,
+  var webTemplateId: String? = null,
+  var category_key: String? = null,
+  var category_Name: String? = null,
+  var category_descriptor: String? = null,
+  var icon: String? = null,
+  var channels: ArrayList<ChannelModel>? = null,
+  var sections: ArrayList<SectionsFeature>? = null,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Parcelable {
 
   val sectionType: Boolean = false
@@ -45,14 +45,14 @@ class CategoryDataModel(
   }
 
   constructor(parcel: Parcel) : this(
-      parcel.readString(),
-      parcel.readString(),
-      parcel.readString(),
-      parcel.readString(),
-      parcel.readString(),
-      parcel.readString(),
-      parcel.createTypedArrayList(ChannelModel.CREATOR),
-      parcel.createTypedArrayList(SectionsFeature.CREATOR)
+    parcel.readString(),
+    parcel.readString(),
+    parcel.readString(),
+    parcel.readString(),
+    parcel.readString(),
+    parcel.readString(),
+    parcel.createTypedArrayList(ChannelModel.CREATOR),
+    parcel.createTypedArrayList(SectionsFeature.CREATOR)
   ) {
     isSelected = parcel.readByte() != 0.toByte()
   }
@@ -73,54 +73,54 @@ class CategoryDataModel(
     if (context == null) return null
     return when (icon?.let { CategoryTypeNew.from(it) }) {
       CategoryTypeNew.DOCTORS -> ResourcesCompat.getDrawable(
-          context.resources,
-          R.drawable.ic_doctors_pro,
-          context.theme
+        context.resources,
+        R.drawable.ic_doctors_pro,
+        context.theme
       )
       CategoryTypeNew.CLINICS_HOSPITALS -> ResourcesCompat.getDrawable(
-          context.resources,
-          R.drawable.ic_hospital,
-          context.theme
+        context.resources,
+        R.drawable.ic_hospital,
+        context.theme
       )
       CategoryTypeNew.EDUCATION_COACHING -> ResourcesCompat.getDrawable(
-          context.resources,
-          R.drawable.ic_edu,
-          context.theme
+        context.resources,
+        R.drawable.ic_edu,
+        context.theme
       )
       CategoryTypeNew.HOTELS_MOTELS -> ResourcesCompat.getDrawable(
-          context.resources,
-          R.drawable.ic_hotel,
-          context.theme
+        context.resources,
+        R.drawable.ic_hotel,
+        context.theme
       )
       CategoryTypeNew.MANUFACTURING_EQUIPMENT -> ResourcesCompat.getDrawable(
-          context.resources,
-          R.drawable.ic_mfg,
-          context.theme
+        context.resources,
+        R.drawable.ic_mfg,
+        context.theme
       )
       CategoryTypeNew.SPAS_WELLNESS -> ResourcesCompat.getDrawable(
-          context.resources,
-          R.drawable.ic_spa,
-          context.theme
+        context.resources,
+        R.drawable.ic_spa,
+        context.theme
       )
       CategoryTypeNew.SALON -> ResourcesCompat.getDrawable(
-          context.resources,
-          R.drawable.ic_salon,
-          context.theme
+        context.resources,
+        R.drawable.ic_salon,
+        context.theme
       )
       CategoryTypeNew.RESTAURANT_CAFES -> ResourcesCompat.getDrawable(
-          context.resources,
-          R.drawable.ic_cafe,
-          context.theme
+        context.resources,
+        R.drawable.ic_cafe,
+        context.theme
       )
       CategoryTypeNew.RETAIL_BUSINESS -> ResourcesCompat.getDrawable(
-          context.resources,
-          R.drawable.ic_other_retails,
-          context.theme
+        context.resources,
+        R.drawable.ic_other_retails,
+        context.theme
       )
       CategoryTypeNew.SERVICES_BUSINESS -> ResourcesCompat.getDrawable(
-          context.resources,
-          R.drawable.ic_business_services_pro,
-          context.theme
+        context.resources,
+        R.drawable.ic_business_services_pro,
+        context.theme
       )
       else -> null
     }

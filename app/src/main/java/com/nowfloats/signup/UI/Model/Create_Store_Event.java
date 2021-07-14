@@ -6,10 +6,9 @@ package com.nowfloats.signup.UI.Model;
 public class Create_Store_Event {
 
 
-    public String fpId ;
+    public String fpId;
 
-    public Create_Store_Event(String response)
-    {
-        fpId = response ;
+    public Create_Store_Event(String response) {
+        fpId = response;
     }
 }

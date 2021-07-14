@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
@@ -93,7 +94,8 @@ import kotlin.collections.ArrayList
 const val IS_FIRST_LOAD = "isFirsLoad"
 const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
 
-class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
+class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(),
+  RecyclerItemClickListener {
 
   private var deepLinkUtil: DeepLinkUtil? = null
   private var connectedChannels: ArrayList<String> = arrayListOf()
@@ -131,15 +133,29 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   override fun onCreateView() {
-    if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
+    if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(
+      true
+    )
     session = UserSessionManager(baseActivity)
     session?.let { deepLinkUtil = DeepLinkUtil(baseActivity, it) }
     setOnClickListener(
-      binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport,
-      binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore, binding?.viewEmptyEnquiries?.btnWhatsappEnquiries,
-      binding?.viewEmptyEnquiries?.btnInstagramEnquiries, binding?.viewEmptyEnquiries?.btnTelegramEnquiries, binding?.viewEmptyEnquiries?.btnMessangerEnquiries, binding?.viewEmptyEnquiries?.btnEmailEnquiries, binding?.viewEmptyEnquiries?.btnOtherShareEnquiries
+      binding?.btnBusinessLogo,
+      binding?.btnNotofication,
+      binding?.filterBusinessReport,
+      binding?.filterWebsiteReport,
+      binding?.btnVisitingCard,
+      binding?.txtDomainName,
+      binding?.btnShowDigitalScore,
+      binding?.retryDrScore,
+      binding?.viewEmptyEnquiries?.btnWhatsappEnquiries,
+      binding?.viewEmptyEnquiries?.btnInstagramEnquiries,
+      binding?.viewEmptyEnquiries?.btnTelegramEnquiries,
+      binding?.viewEmptyEnquiries?.btnMessangerEnquiries,
+      binding?.viewEmptyEnquiries?.btnEmailEnquiries,
+      binding?.viewEmptyEnquiries?.btnOtherShareEnquiries
     )
-    val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
+    val versionName: String =
+      baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion1?.text = "Version $versionName"
     binding?.txtVersion2?.text = "Version $versionName"
     getAllDashboardSummary()
@@ -155,14 +171,15 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         val response = it as? ChannelAccessStatusResponse
         val channels = response?.channels.getChannelStatusList()
         channels.forEachIndexed { index, channelStatusData ->
-          viewModel?.getChannelsInsight(session?.fPID, channelStatusData.accountType)?.observeOnce(viewLifecycleOwner, { it2 ->
-            val response2 = it2 as? ChannelInsightsResponse
-            if (response2?.isSuccess() == true) channelStatusData.insightsData = response2.data
-            if (index + 1 == channels.size) {
-              saveDataChannelStatus(channels)
-              updateUiSocialMedia(channels)
-            }
-          })
+          viewModel?.getChannelsInsight(session?.fPID, channelStatusData.accountType)
+            ?.observeOnce(viewLifecycleOwner, { it2 ->
+              val response2 = it2 as? ChannelInsightsResponse
+              if (response2?.isSuccess() == true) channelStatusData.insightsData = response2.data
+              if (index + 1 == channels.size) {
+                saveDataChannelStatus(channels)
+                updateUiSocialMedia(channels)
+              }
+            })
         }
       }
     })
@@ -174,7 +191,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         mainView.visible()
         if (adapterSocialMedia == null) {
           rvMediaChannel.apply {
-            adapterSocialMedia = AppBaseRecyclerViewAdapter(baseActivity, channels, this@DashboardFragment)
+            adapterSocialMedia =
+              AppBaseRecyclerViewAdapter(baseActivity, channels, this@DashboardFragment)
             adapter = adapterSocialMedia
           }
         } else adapterSocialMedia?.notify(channels)
@@ -200,7 +218,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           setDataRiaAcademy(data.academyBanners!!)
         }
         if (data?.marketplaceBanners.isNullOrEmpty().not()) {
-          val marketBannerFilter = (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
+          val marketBannerFilter =
+            (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
           saveDataMarketPlace(marketBannerFilter)
           setDataMarketBanner(marketBannerFilter)
         }
@@ -235,11 +254,17 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           binding?.highReadinessScoreView?.gone()
           binding?.lowReadinessScoreView?.visible()
           binding?.txtReadinessScore?.text = "${drScoreData!!.getDrsTotal()}"
-          binding?.progressScore?.progress = drScoreData.getDrsTotal()
-          drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout() }
+//          binding?.progressScore?.progress = drScoreData.getDrsTotal()
+          val percentage = ((100 - drScoreData.getDrsTotal()).toDouble() / 100).roundToFloat(2)
+          (binding?.progressBar?.layoutParams as? ConstraintLayout.LayoutParams)?.matchConstraintPercentWidth = percentage
+          binding?.progressBar?.requestLayout()
+          drScoreSetupList?.map { it1 ->
+            it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout()
+          }
           binding?.pagerBusinessSetupLow?.apply {
 //            binding?.motionOne?.transitionToStart()
-            adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList!!, this@DashboardFragment)
+            adapterBusinessContent =
+              AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList!!, this@DashboardFragment)
             offscreenPageLimit = 3
             adapter = adapterBusinessContent
             binding?.dotIndicator?.setViewPager2(this)
@@ -269,7 +294,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 //          baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
           visibleViewHighLow(true)
         } else {
-          if (PreferencesUtils.instance.getData(IS_DR_HIGH_DIALOG, false).not()) welcomeDrScoreDialog()
+          if (PreferencesUtils.instance.getData(IS_DR_HIGH_DIALOG, false)
+              .not()
+          ) welcomeDrScoreDialog()
           binding?.highReadinessScoreView?.visible()
           binding?.lowReadinessScoreView?.gone()
           visibleViewHighLow(true)
@@ -342,7 +369,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         if (response?.isSuccess() == true && listAction?.actionItem.isNullOrEmpty().not()) {
           if (adapterQuickAction == null) {
             rvQuickAction.apply {
-              adapterQuickAction = AppBaseRecyclerViewAdapter(baseActivity, listAction?.actionItem!!, this@DashboardFragment)
+              adapterQuickAction = AppBaseRecyclerViewAdapter(
+                baseActivity,
+                listAction?.actionItem!!,
+                this@DashboardFragment
+              )
               adapter = adapterQuickAction
             }
           } else adapterQuickAction?.notify(listAction?.actionItem!!)
@@ -351,9 +382,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
     }
     binding?.manageBusiness?.apply {
-      title.text = if (getRoiSummaryType(session?.fP_AppExperienceCode) == "DOC") baseActivity.getString(
-        R.string.manage_your_clinic
-      ) else baseActivity.getString(R.string.manage_your_business)
+      title.text =
+        if (getRoiSummaryType(session?.fP_AppExperienceCode) == "DOC") baseActivity.getString(
+          R.string.manage_your_clinic
+        ) else baseActivity.getString(R.string.manage_your_business)
 
       viewModel?.getBoostAddOnsTop(baseActivity)?.observeOnce(viewLifecycleOwner, {
         val response = it as? ManageBusinessDataResponse
@@ -368,7 +400,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           }
           if (adapterBusinessData == null) {
             rvManageBusiness.apply {
-              adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction?.actionItem!!, this@DashboardFragment)
+              adapterBusinessData = AppBaseRecyclerViewAdapter(
+                baseActivity,
+                dataAction?.actionItem!!,
+                this@DashboardFragment
+              )
               adapter = adapterBusinessData
             }
           } else adapterBusinessData?.notify(dataAction?.actionItem!!)
@@ -383,9 +419,21 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun refreshAllDashboardSummary() {
-    setBusinessSummary(getDrScoreData()?.getDrsTotal() ?: 0, OrderSummaryModel().getTotalOrder(TOTAL_SELLER_SUMMARY) ?: "0", SummaryEntity().getUserSummary(USER_BUSINESS_SUMMARY))
-    setRoiBusinessReport(OrderSummaryModel().getSellerSummary(SELLER_BUSINESS_REPORT), SummaryEntity().getTotalUserMessage(TOTAL_USER_MESSAGE).toString(), CallSummaryResponse().getCallSummary(CALL_BUSINESS_REPORT) ?: "0")
-    setWebsiteReport(SummaryEntity().getUserSummary(USER_WEBSITE_REPORT), VisitsModelResponse().getTotalOMapVisit(TOTAL_MAP_VISIT) ?: "0", null)
+    setBusinessSummary(
+      getDrScoreData()?.getDrsTotal() ?: 0,
+      OrderSummaryModel().getTotalOrder(TOTAL_SELLER_SUMMARY) ?: "0",
+      SummaryEntity().getUserSummary(USER_BUSINESS_SUMMARY)
+    )
+    setRoiBusinessReport(
+      OrderSummaryModel().getSellerSummary(SELLER_BUSINESS_REPORT),
+      SummaryEntity().getTotalUserMessage(TOTAL_USER_MESSAGE).toString(),
+      CallSummaryResponse().getCallSummary(CALL_BUSINESS_REPORT) ?: "0"
+    )
+    setWebsiteReport(
+      SummaryEntity().getUserSummary(USER_WEBSITE_REPORT),
+      VisitsModelResponse().getTotalOMapVisit(TOTAL_MAP_VISIT) ?: "0",
+      null
+    )
   }
 
   private fun getAllDashboardSummary() {
@@ -407,27 +455,41 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun apiBusinessSummary() {
-    viewModel?.getSellerSummaryV2_5(clientId_ORDER, session?.fpTag, getRequestSellerSummary(null))?.observeOnce(viewLifecycleOwner, {
-      val response1 = it as? OrderSummaryResponse
-      if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveTotalOrder(TOTAL_SELLER_SUMMARY)
-      val scope = if (session?.iSEnterprise == "true") "1" else "0"
-      viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope)?.observeOnce(viewLifecycleOwner, { it1 ->
-        val response2 = it1 as? UserSummaryResponse
-        response2?.getSummary()?.saveData(USER_BUSINESS_SUMMARY)
-        setBusinessSummary(getDrScoreData()?.getDrsTotal() ?: 0, response1?.Data?.getTotalOrders() ?: "0", response2?.getSummary())
+    viewModel?.getSellerSummaryV2_5(clientId_ORDER, session?.fpTag, getRequestSellerSummary(null))
+      ?.observeOnce(viewLifecycleOwner, {
+        val response1 = it as? OrderSummaryResponse
+        if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveTotalOrder(
+          TOTAL_SELLER_SUMMARY
+        )
+        val scope = if (session?.iSEnterprise == "true") "1" else "0"
+        viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope)
+          ?.observeOnce(viewLifecycleOwner, { it1 ->
+            val response2 = it1 as? UserSummaryResponse
+            response2?.getSummary()?.saveData(USER_BUSINESS_SUMMARY)
+            setBusinessSummary(
+              getDrScoreData()?.getDrsTotal() ?: 0,
+              response1?.Data?.getTotalOrders() ?: "0",
+              response2?.getSummary()
+            )
+          })
       })
-    })
   }
 
   private fun setBusinessSummary(drTotal: Int, totalOrder: String, summary: SummaryEntity?) {
     val data = BusinessSetupHighData().getData(
-      drTotal, summary?.getNoOfUniqueViews() ?: "0", totalOrder,
-      getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0"
+      drTotal,
+      summary?.getNoOfUniqueViews() ?: "0",
+      totalOrder,
+      getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode),
+      summary?.getNoOfMessages() ?: "0"
     )
-    data.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_HIGH_ITEM_VIEW.getLayout() }
+    data.map {
+      it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_HIGH_ITEM_VIEW.getLayout()
+    }
     if (adapterPagerBusinessUpdate == null) {
       binding?.pagerBusinessSetupHigh?.apply {
-        adapterPagerBusinessUpdate = AppBaseRecyclerViewAdapter(baseActivity, data, this@DashboardFragment)
+        adapterPagerBusinessUpdate =
+          AppBaseRecyclerViewAdapter(baseActivity, data, this@DashboardFragment)
         offscreenPageLimit = 3
         adapter = adapterPagerBusinessUpdate
         binding?.dotIndicatorBusinessHigh?.setViewPager2(this)
@@ -440,26 +502,58 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun apiRoiBusinessReport(filterDate: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
-    viewModel?.getSellerSummaryV2_5(clientId_ORDER, session?.fpTag, getRequestSellerSummary(filterDate))?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerSummaryV2_5(
+      clientId_ORDER,
+      session?.fpTag,
+      getRequestSellerSummary(filterDate)
+    )?.observeOnce(viewLifecycleOwner, {
       val response1 = it as? OrderSummaryResponse
-      if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveData(SELLER_BUSINESS_REPORT)
+      if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveData(
+        SELLER_BUSINESS_REPORT
+      )
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
-      viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, { it1 ->
+      viewModel?.getUserSummary(
+        session?.fpTag,
+        clientId,
+        session?.fPParentId,
+        scope,
+        filterDate.startDate,
+        filterDate.endDate
+      )?.observeOnce(viewLifecycleOwner, { it1 ->
         val response2 = it1 as? UserSummaryResponse
         response2?.getSummary()?.saveTotalMessage(TOTAL_USER_MESSAGE)
         val identifierType = if (session?.iSEnterprise == "true") "MULTI" else "SINGLE"
-        viewModel?.getUserCallSummary(clientId, session?.fPParentId, identifierType, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, { it2 ->
+        viewModel?.getUserCallSummary(
+          clientId,
+          session?.fPParentId,
+          identifierType,
+          filterDate.startDate,
+          filterDate.endDate
+        )?.observeOnce(viewLifecycleOwner, { it2 ->
           val response3 = it2 as? CallSummaryResponse
           response3?.saveData(CALL_BUSINESS_REPORT)
-          setRoiBusinessReport(response1?.Data, response2?.getSummary()?.getNoOfMessages() ?: "0", response3?.getTotalCalls() ?: "0")
+          setRoiBusinessReport(
+            response1?.Data,
+            response2?.getSummary()?.getNoOfMessages() ?: "0",
+            response3?.getTotalCalls() ?: "0"
+          )
           if (isLoader) hideProgress()
         })
       })
     })
   }
 
-  private fun setRoiBusinessReport(sellerOrder: OrderSummaryModel?, noOfMessage: String, totlaCalls: String) {
-    val roiData = RoiSummaryData().getData(noOfMessage, totlaCalls, sellerOrder, getRoiSummaryType(session?.fP_AppExperienceCode))
+  private fun setRoiBusinessReport(
+    sellerOrder: OrderSummaryModel?,
+    noOfMessage: String,
+    totlaCalls: String
+  ) {
+    val roiData = RoiSummaryData().getData(
+      noOfMessage,
+      totlaCalls,
+      sellerOrder,
+      getRoiSummaryType(session?.fP_AppExperienceCode)
+    )
     roiData.map { it.recyclerViewItemType = RecyclerViewItemType.ROI_SUMMARY_ITEM_VIEW.getLayout() }
     if (roiData.isAllDataZero()) binding?.viewEmptyEnquiries?.root?.visible()
     else binding?.viewEmptyEnquiries?.root?.gone()
@@ -473,38 +567,62 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun apiWebsiteReport(filterDate: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
-    if (isFirstLoad()) Handler().postDelayed({ baseActivity.runOnUiThread { showSimmer(false) } }, 2000)
+    if (isFirstLoad()) Handler().postDelayed(
+      { baseActivity.runOnUiThread { showSimmer(false) } },
+      2000
+    )
     val scope = if (session?.iSEnterprise == "true") "1" else "0"
-    viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, { it1 ->
+    viewModel?.getUserSummary(
+      session?.fpTag,
+      clientId,
+      session?.fPParentId,
+      scope,
+      filterDate.startDate,
+      filterDate.endDate
+    )?.observeOnce(viewLifecycleOwner, { it1 ->
       val response1 = it1 as? UserSummaryResponse
-      viewModel?.getSubscriberCount(session?.fpTag, clientId, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, { it2 ->
+      viewModel?.getSubscriberCount(
+        session?.fpTag,
+        clientId,
+        filterDate.startDate,
+        filterDate.endDate
+      )?.observeOnce(viewLifecycleOwner, { it2 ->
         val subscriberCount = (it2.anyResponse as? Double)?.toInt() ?: 0
         val summary = response1?.getSummary()
         summary?.noOfSubscribers = subscriberCount
         summary?.saveData(USER_WEBSITE_REPORT)
-        viewModel?.getMapVisits(session?.fpTag, session?.getRequestMap(filterDate.startDate ?: "", filterDate.endDate ?: ""))?.observeOnce(viewLifecycleOwner, { it3 ->
+        viewModel?.getMapVisits(
+          session?.fpTag,
+          session?.getRequestMap(filterDate.startDate ?: "", filterDate.endDate ?: "")
+        )?.observeOnce(viewLifecycleOwner, { it3 ->
           val response3 = it3 as? VisitsModelResponse
           response3?.saveMapVisit(TOTAL_MAP_VISIT)
-          viewModel?.getSearchAnalytics(session?.fPID, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, {
-            val countSearch = (it?.anyResponse as? String)?.toIntOrNull()
-            setWebsiteReport(summary, response3?.getTotalCount() ?: "0", countSearch)
-            if (isLoader) hideProgress()
-            (baseActivity as? DashboardActivity)?.isLoadShimmer = false
-            showSimmer(false)
-            saveFirstLoad()
-          })
+          viewModel?.getSearchAnalytics(session?.fPID, filterDate.startDate, filterDate.endDate)
+            ?.observeOnce(viewLifecycleOwner, {
+              val countSearch = (it?.anyResponse as? String)?.toIntOrNull()
+              setWebsiteReport(summary, response3?.getTotalCount() ?: "0", countSearch)
+              if (isLoader) hideProgress()
+              (baseActivity as? DashboardActivity)?.isLoadShimmer = false
+              showSimmer(false)
+              saveFirstLoad()
+            })
         })
       })
     })
   }
 
   private fun setWebsiteReport(summary: SummaryEntity?, mapVisitCount: String, countSearch: Int?) {
-    val countS = countSearch?.toString() ?: getNumberFormat((session?.searchCount?.toIntOrNull() ?: 0).toString())
+    val countS = countSearch?.toString() ?: getNumberFormat(
+      (session?.searchCount?.toIntOrNull() ?: 0).toString()
+    )
     val growthStatsList = GrowthStatsData().getData(summary, mapVisitCount, countS)
-    growthStatsList.map { it.recyclerViewItemType = RecyclerViewItemType.GROWTH_STATE_ITEM_VIEW.getLayout() }
+    growthStatsList.map {
+      it.recyclerViewItemType = RecyclerViewItemType.GROWTH_STATE_ITEM_VIEW.getLayout()
+    }
     if (adapterGrowth == null) {
       binding?.rvGrowthState?.apply {
-        adapterGrowth = AppBaseRecyclerViewAdapter(baseActivity, growthStatsList, this@DashboardFragment)
+        adapterGrowth =
+          AppBaseRecyclerViewAdapter(baseActivity, growthStatsList, this@DashboardFragment)
         adapter = adapterGrowth
       }
     } else adapterGrowth?.notify(growthStatsList)
@@ -520,7 +638,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
     binding?.imgBusinessLogo?.let {
       if (imageLogoUri.isNullOrEmpty().not()) {
-        baseActivity.glideLoad(mImageView = it, url = imageLogoUri!!, placeholder = R.drawable.gradient_white, isLoadBitmap = true)
+        baseActivity.glideLoad(
+          mImageView = it,
+          url = imageLogoUri!!,
+          placeholder = R.drawable.gradient_white,
+          isLoadBitmap = true
+        )
       } else it.setImageResource(R.drawable.ic_add_logo_d)
     }
   }
@@ -528,10 +651,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun setDataRiaAcademy(academyBanner: ArrayList<DashboardAcademyBanner>) {
     binding?.pagerRiaAcademy?.apply {
       if (academyBanner.isNotEmpty()) {
-        academyBanner.map { it.recyclerViewItemType = RecyclerViewItemType.RIA_ACADEMY_ITEM_VIEW.getLayout() }
+        academyBanner.map {
+          it.recyclerViewItemType = RecyclerViewItemType.RIA_ACADEMY_ITEM_VIEW.getLayout()
+        }
         binding?.riaAcademyView?.visible()
         if (adapterAcademy == null) {
-          adapterAcademy = AppBaseRecyclerViewAdapter(baseActivity, academyBanner, this@DashboardFragment)
+          adapterAcademy =
+            AppBaseRecyclerViewAdapter(baseActivity, academyBanner, this@DashboardFragment)
           offscreenPageLimit = 3
           adapter = adapterAcademy
           binding?.dotIndicatorAcademy?.setViewPager2(this)
@@ -556,10 +682,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun setDataMarketBanner(marketBannerFilter: ArrayList<DashboardMarketplaceBanner>) {
     binding?.pagerBoostPremium?.apply {
       if (marketBannerFilter.isNotEmpty()) {
-        marketBannerFilter.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_PREMIUM_ITEM_VIEW.getLayout() }
+        marketBannerFilter.map {
+          it.recyclerViewItemType = RecyclerViewItemType.BOOST_PREMIUM_ITEM_VIEW.getLayout()
+        }
         binding?.boostPremiumView?.visible()
         if (adapterMarketBanner == null) {
-          adapterMarketBanner = AppBaseRecyclerViewAdapter(baseActivity, marketBannerFilter, this@DashboardFragment)
+          adapterMarketBanner =
+            AppBaseRecyclerViewAdapter(baseActivity, marketBannerFilter, this@DashboardFragment)
           offscreenPageLimit = 3
           adapter = adapterMarketBanner
           binding?.dotIndicatorPremium?.setViewPager2(this)
@@ -578,13 +707,19 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 //        session?.let { baseActivity.startOldSiteMeter(it) }
         baseActivity.startReadinessScoreView(session, 0)
       }
-      RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> baseActivity.startReadinessScoreView(session, position)
+      RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> baseActivity.startReadinessScoreView(
+        session,
+        position
+      )
       RecyclerViewActionType.BUSINESS_SETUP_ADD_ITEM_START.ordinal -> {
         val dataDr = (item as? DrScoreSetupData)?.getDrScoreData()
         if (dataDr != null) {
           val type = DrScoreItem.DrScoreItemType.fromName(dataDr.id)
           if (type == DrScoreItem.DrScoreItemType.boolean_share_business_card) {
-            if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, isBusinessCardShare = true)
+            if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(
+              messageBusiness,
+              isBusinessCardShare = true
+            )
             else getChannelAccessToken(true)
           } else clickEventUpdateScoreN(type, baseActivity, session)
         } else baseActivity.startReadinessScoreView(session, position)
@@ -601,7 +736,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
       RecyclerViewActionType.BUSINESS_UPDATE_CLICK.ordinal -> {
         val data = item as? Specification ?: return
-        BusinessSetupHighData.BusinessClickEvent.fromName(data.clickType)?.let { clickBusinessUpdate(it) }
+        BusinessSetupHighData.BusinessClickEvent.fromName(data.clickType)
+          ?.let { clickBusinessUpdate(it) }
       }
       RecyclerViewActionType.ROI_SUMMARY_CLICK.ordinal -> {
         val data = item as? RoiSummaryData ?: return
@@ -634,7 +770,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     if (data.ctaWebLink.isNullOrEmpty().not()) {
       if (data.ctaWebLink!!.contains("com.biz2.nowfloats.keyboard.home")) {
         WebEngageController.trackEvent(BOOST_MARKETPLACE_BANNER_CLICK, DEEP_LINK, NO_EVENT_VALUE)
-        val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(Uri.parse(data.ctaWebLink))
+        val deepHashMap: HashMap<DynamicLinkParams, String> =
+          DynamicLinksManager().getURILinkParams(Uri.parse(data.ctaWebLink))
         if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
           val viewType = deepHashMap[DynamicLinkParams.viewType]
           val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
@@ -645,7 +782,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         baseActivity.startWebViewPageLoad(session, data.ctaWebLink?.trim()!!)
       }
     } else {
-      WebEngageController.trackEvent(BOOST_MARKETPLACE_BANNER_CLICK, FEATURE_ITEM_CLICK, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(
+        BOOST_MARKETPLACE_BANNER_CLICK,
+        FEATURE_ITEM_CLICK,
+        NO_EVENT_VALUE
+      )
       if (data.ctaFeatureKey.isNullOrEmpty().not()) {
         session?.let { baseActivity.initiateAddonMarketplace(it, false, "", data.ctaFeatureKey) }
       }
@@ -656,43 +797,77 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     super.onClick(v)
     // Track the share_business_card_initiated even in Firebase & Webengage
     when (v) {
-      binding?.filterBusinessReport -> bottomSheetFilter(BUSINESS_REPORT, FilterDateModel().getDateFilter(FILTER_BUSINESS_REPORT))
-      binding?.filterWebsiteReport -> bottomSheetFilter(WEBSITE_REPORT, FilterDateModel().getDateFilter(FILTER_WEBSITE_REPORT))
+      binding?.filterBusinessReport -> bottomSheetFilter(
+        BUSINESS_REPORT,
+        FilterDateModel().getDateFilter(FILTER_BUSINESS_REPORT)
+      )
+      binding?.filterWebsiteReport -> bottomSheetFilter(
+        WEBSITE_REPORT,
+        FilterDateModel().getDateFilter(FILTER_WEBSITE_REPORT)
+      )
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
       binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)//openDialogPicker()
       binding?.btnShowDigitalScore -> baseActivity.startReadinessScoreView(session, 0)
       binding?.btnVisitingCard -> {
-        if (messageBusiness.isNotEmpty() || _connectedChannels.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, isBusinessCardShare = true)
+        if (messageBusiness.isNotEmpty() || _connectedChannels.isNotEmpty()) businessWebsiteDetailMessage(
+          messageBusiness,
+          isBusinessCardShare = true
+        )
         else getChannelAccessToken(true)
       }
       binding?.retryDrScore -> setSummaryAndDrScore(true)
-      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
+      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(
+        session,
+        session!!.getDomainName(false)
+      )
       binding?.scrollDownBtn -> {
         binding?.nestedScrollView?.scrollToTopBottom(binding?.arrowBtn!!)
-        WebEngageController.trackEvent(if (binding?.arrowBtn?.rotation?.toInt() != 90) DASHBOARD_DOWN_PAGE else DASHBOARD_UP_PAGE, PAGE_VIEW, session?.fpTag)
+        WebEngageController.trackEvent(
+          if (binding?.arrowBtn?.rotation?.toInt() != 90) DASHBOARD_DOWN_PAGE else DASHBOARD_UP_PAGE,
+          PAGE_VIEW,
+          session?.fpTag
+        )
       }
       binding?.viewEmptyEnquiries?.btnWhatsappEnquiries -> {
-        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.WHATS_APP)
+        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(
+          messageBusiness,
+          shareType = ShareType.WHATS_APP
+        )
         else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.WHATS_APP)
       }
       binding?.viewEmptyEnquiries?.btnInstagramEnquiries -> {
-        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.INSTAGRAM)
+        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(
+          messageBusiness,
+          shareType = ShareType.INSTAGRAM
+        )
         else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.INSTAGRAM)
       }
       binding?.viewEmptyEnquiries?.btnTelegramEnquiries -> {
-        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.TELEGRAM)
+        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(
+          messageBusiness,
+          shareType = ShareType.TELEGRAM
+        )
         else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.TELEGRAM)
       }
       binding?.viewEmptyEnquiries?.btnMessangerEnquiries -> {
-        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.MESSENGER)
+        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(
+          messageBusiness,
+          shareType = ShareType.MESSENGER
+        )
         else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.MESSENGER)
       }
       binding?.viewEmptyEnquiries?.btnEmailEnquiries -> {
-        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.G_MAIL)
+        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(
+          messageBusiness,
+          shareType = ShareType.G_MAIL
+        )
         else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.G_MAIL)
       }
       binding?.viewEmptyEnquiries?.btnOtherShareEnquiries -> {
-        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = null)
+        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(
+          messageBusiness,
+          shareType = null
+        )
         else getChannelAccessToken(isEnquiriesShare = true, shareType = null)
       }
     }
@@ -702,7 +877,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     val filterSheet = ImagePickerBottomSheet()
     filterSheet.isHidePdf(true)
     filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(this@DashboardFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
+    filterSheet.show(
+      this@DashboardFragment.parentFragmentManager,
+      ImagePickerBottomSheet::class.java.name
+    )
   }
 
   private fun openImagePicker(it: ClickType) {
@@ -733,11 +911,19 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     var s_uuid = uuid.toString()
     s_uuid = s_uuid.replace("-", "")
     viewModel?.putUploadBusinessLogo(
-      clientId2, fpId = fpId, reqType = "sequential", reqId = s_uuid, totalChunks = "1",
-      currentChunkNumber = "1", file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
+      clientId2,
+      fpId = fpId,
+      reqType = "sequential",
+      reqId = s_uuid,
+      totalChunks = "1",
+      currentChunkNumber = "1",
+      file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
     )?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        session?.storeFPDetails(GET_FP_DETAILS_LogoUrl, it.parseStringResponse()?.replace("\\", "")?.replace("\"", ""))
+        session?.storeFPDetails(
+          GET_FP_DETAILS_LogoUrl,
+          it.parseStringResponse()?.replace("\\", "")?.replace("\"", "")
+        )
         showSnackBarPositive(requireActivity(), getString(R.string.business_image_uploaded))
       } else showSnackBarNegative(requireActivity(), it.message)
       hideProgress()
@@ -745,21 +931,43 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
 
-  private fun businessWebsiteDetailMessage(shareChannelText: String?, isBusinessCardShare: Boolean = false, shareType: ShareType? = null) {
+  private fun businessWebsiteDetailMessage(
+    shareChannelText: String?,
+    isBusinessCardShare: Boolean = false,
+    shareType: ShareType? = null
+  ) {
     viewModel?.getBoostVisitingMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? ShareUserDetailResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-        val messageDetail = response.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.message
+        val messageDetail = response.data?.firstOrNull { it1 ->
+          it1.type.equals(
+            session?.fP_AppExperienceCode,
+            ignoreCase = true
+          )
+        }?.message
         if (messageDetail.isNullOrEmpty().not()) {
           val lat = session?.getFPDetails(Key_Preferences.LATITUDE)
           val long = session?.getFPDetails(Key_Preferences.LONGITUDE)
           var location = ""
-          if (lat != null && long != null) location = "${if (shareChannelText.isNullOrEmpty().not()) "\n\n" else ""}\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"
-          val txt = String.format(messageDetail!!, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), shareChannelText, location)
-          if (isBusinessCardShare) visitingCard(txt) else baseActivity.shareViaAnyApp(shareType, txt)
+          if (lat != null && long != null) location = "${
+            if (shareChannelText.isNullOrEmpty().not()) "\n\n" else ""
+          }\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"
+          val txt = String.format(
+            messageDetail!!,
+            session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "",
+            session!!.getDomainName(false),
+            shareChannelText,
+            location
+          )
+          if (isBusinessCardShare) visitingCard(txt) else baseActivity.shareViaAnyApp(
+            shareType,
+            txt
+          )
         }
       } else {
-        if (isBusinessCardShare) visitingCard(getString(R.string.my_business_card)) else showShortToast("Business detail getting error!")
+        if (isBusinessCardShare) visitingCard(getString(R.string.my_business_card)) else showShortToast(
+          "Business detail getting error!"
+        )
       }
     })
   }
@@ -768,21 +976,30 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     session?.let {
       val dialogCard = VisitingCardSheet()
       dialogCard.setData(getLocalSession(it), shareChannelText)
-      dialogCard.show(this@DashboardFragment.parentFragmentManager, VisitingCardSheet::class.java.name)
+      dialogCard.show(
+        this@DashboardFragment.parentFragmentManager,
+        VisitingCardSheet::class.java.name
+      )
     }
   }
 
   private fun bottomSheetWebView(title: String, domainUrl: String) {
     val webViewBottomDialog = WebViewBottomDialog()
     webViewBottomDialog.setData(title, domainUrl)
-    webViewBottomDialog.show(this@DashboardFragment.parentFragmentManager, WebViewBottomDialog::class.java.name)
+    webViewBottomDialog.show(
+      this@DashboardFragment.parentFragmentManager,
+      WebViewBottomDialog::class.java.name
+    )
   }
 
   private fun quickActionClick(type: QuickActionItem.QuickActionType) {
     when (type) {
       QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
-      QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
+      QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(
+        session,
+        true
+      )
       QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)
       QuickActionItem.QuickActionType.ADD_STAFF_PROFILE -> baseActivity.startAddStaff(session)
       QuickActionItem.QuickActionType.LIST_SERVICES,
@@ -795,8 +1012,14 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionItem.QuickActionType.ADD_MENU,
       QuickActionItem.QuickActionType.ADD_ROOM_TYPE,
       -> baseActivity.startAddServiceProduct(session)
-      QuickActionItem.QuickActionType.PLACE_APPOINTMENT -> baseActivity.startBookAppointmentConsult(session, false)
-      QuickActionItem.QuickActionType.PLACE_CONSULT -> baseActivity.startBookAppointmentConsult(session, true)
+      QuickActionItem.QuickActionType.PLACE_APPOINTMENT -> baseActivity.startBookAppointmentConsult(
+        session,
+        false
+      )
+      QuickActionItem.QuickActionType.PLACE_CONSULT -> baseActivity.startBookAppointmentConsult(
+        session,
+        true
+      )
       QuickActionItem.QuickActionType.ADD_PROJECT -> {
         if (session?.getStoreWidgets()?.equals(PremiumCode.PROJECTTEAM.value) == true) {
           baseActivity.startListProject(session)
@@ -812,7 +1035,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           baseActivity.startAddDigitalBrochure(session)
         } else baseActivity.startListDigitalBrochure(session)
       }
-      QuickActionItem.QuickActionType.POST_SEASONAL_OFFER -> baseActivity.startAddSeasonalOffer(session)
+      QuickActionItem.QuickActionType.POST_SEASONAL_OFFER -> baseActivity.startAddSeasonalOffer(
+        session
+      )
       QuickActionItem.QuickActionType.LIST_TOPPER -> baseActivity.startListToppers(session)
       QuickActionItem.QuickActionType.ADD_UPCOMING_BATCH -> baseActivity.startListBatches(session)
       QuickActionItem.QuickActionType.ADD_NEARBY_ATTRACTION -> baseActivity.startNearByView(session)
@@ -832,8 +1057,14 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun clickBusinessUpdate(type: BusinessSetupHighData.BusinessClickEvent) {
     when (type) {
-      BusinessSetupHighData.BusinessClickEvent.WEBSITE_VISITOR -> baseActivity.startSiteViewAnalytic(session, "UNIQUE", WEBSITE_REPORT_UNIQUE_VISITS_CLICK)
-      BusinessSetupHighData.BusinessClickEvent.ENQUIRIES -> baseActivity.startBusinessEnquiry(session)
+      BusinessSetupHighData.BusinessClickEvent.WEBSITE_VISITOR -> baseActivity.startSiteViewAnalytic(
+        session,
+        "UNIQUE",
+        WEBSITE_REPORT_UNIQUE_VISITS_CLICK
+      )
+      BusinessSetupHighData.BusinessClickEvent.ENQUIRIES -> baseActivity.startBusinessEnquiry(
+        session
+      )
       BusinessSetupHighData.BusinessClickEvent.ODER_APT -> baseActivity.startAptOrderSummary(session)
     }
   }
@@ -858,9 +1089,21 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun clickGrowthStats(type: GrowthStatsData.GrowthType) {
     when (type) {
-      GrowthStatsData.GrowthType.ALL_VISITS -> baseActivity.startSiteViewAnalytic(session, "TOTAL", WEBSITE_REPORT_ALL_VISITS_CLICK)
-      GrowthStatsData.GrowthType.UNIQUE_VISITS -> baseActivity.startSiteViewAnalytic(session, "UNIQUE", WEBSITE_REPORT_UNIQUE_VISITS_CLICK)
-      GrowthStatsData.GrowthType.ADDRESS_NEWS -> baseActivity.startSiteViewAnalytic(session, "MAP_VISITS", WEBSITE_REPORT_ADDRESS_VISITS_CLICK)
+      GrowthStatsData.GrowthType.ALL_VISITS -> baseActivity.startSiteViewAnalytic(
+        session,
+        "TOTAL",
+        WEBSITE_REPORT_ALL_VISITS_CLICK
+      )
+      GrowthStatsData.GrowthType.UNIQUE_VISITS -> baseActivity.startSiteViewAnalytic(
+        session,
+        "UNIQUE",
+        WEBSITE_REPORT_UNIQUE_VISITS_CLICK
+      )
+      GrowthStatsData.GrowthType.ADDRESS_NEWS -> baseActivity.startSiteViewAnalytic(
+        session,
+        "MAP_VISITS",
+        WEBSITE_REPORT_ADDRESS_VISITS_CLICK
+      )
       GrowthStatsData.GrowthType.NEWSLETTER_SUBSCRIPTION -> baseActivity.startSubscriber(session)
 //      GrowthStatsData.GrowthType.SEARCH_QUERIES -> baseActivity.startSearchQuery(session)
     }
@@ -874,9 +1117,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         title = "Website"
         website = session?.getDomainName(false) ?: ""
       } else {
-        title = data.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() } ?: data.getName()
-        if (data.isTwitterChannel()) website = "https://twitter.com/${data.channelAccessToken?.userAccountName?.trim()}"
-        else if (data.isFacebookPage()) website = "https://www.facebook.com/${data.channelAccessToken?.userAccountId?.trim()}"
+        title =
+          data.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() } ?: data.getName()
+        if (data.isTwitterChannel()) website =
+          "https://twitter.com/${data.channelAccessToken?.userAccountName?.trim()}"
+        else if (data.isFacebookPage()) website =
+          "https://www.facebook.com/${data.channelAccessToken?.userAccountId?.trim()}"
       }
       bottomSheetWebView(title, website)
     }
@@ -888,10 +1134,21 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       data.ctaFileLink.isNullOrEmpty().not() -> {
         WebEngageController.trackEvent(BOOST_ACADEMY_BANNER_CLICK, FILE_LINK, NO_EVENT_VALUE)
         this.ctaFileLink = data.ctaFileLink
-        if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED ||
-          ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+        if (ActivityCompat.checkSelfPermission(
+            baseActivity,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+          ) == PackageManager.PERMISSION_DENIED ||
+          ActivityCompat.checkSelfPermission(
+            baseActivity,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+          ) == PackageManager.PERMISSION_DENIED
         ) {
-          requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
+          requestPermissions(
+            arrayOf(
+              Manifest.permission.READ_EXTERNAL_STORAGE,
+              Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ), 100
+          )
         } else {
           loader.setData(R.raw.download_gif, resources.getString(R.string.download_file_banner))
           loader.showProgress(baseActivity.supportFragmentManager)
@@ -901,7 +1158,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
       data.ctaWebLink.isNullOrEmpty().not() -> {
         WebEngageController.trackEvent(BOOST_ACADEMY_BANNER_CLICK, WEB_LINK, NO_EVENT_VALUE)
-        loader.setData(R.raw.activity_browser_gif, resources.getString(R.string.opening_browser_banner))
+        loader.setData(
+          R.raw.activity_browser_gif,
+          resources.getString(R.string.opening_browser_banner)
+        )
         loader.showProgress(baseActivity.supportFragmentManager)
         Handler().postDelayed({
           baseActivity.startWebViewPageLoad(session, data.ctaWebLink?.trim()!!)
@@ -920,7 +1180,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+  override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<out String>,
+    grantResults: IntArray
+  ) {
     when (requestCode) {
       100 -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -940,7 +1204,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun showSimmerDrScore(isSimmer: Boolean, isRetry: Boolean = false) {
     if (isSimmer && isRetry.not()) handler.postDelayed(runnable, 4000)
     binding?.retryDrScore?.visibility = if (isSimmer.not() && isRetry) View.VISIBLE else View.GONE
-    binding?.shimmerLoadDrScoreCard?.visibility = if (isSimmer || isRetry) View.VISIBLE else View.GONE
+    binding?.shimmerLoadDrScoreCard?.visibility =
+      if (isSimmer || isRetry) View.VISIBLE else View.GONE
     binding?.shimmerLoadDrView?.setBackgroundColor(getColor(if (isSimmer) R.color.placeholder_bg else android.R.color.transparent))
     binding?.shimmerLoadDrView?.apply { if (isSimmer) startShimmer() else stopShimmer() }
     binding?.lowHighViewDrScore?.visibility = if (isSimmer && isRetry) View.GONE else View.VISIBLE
@@ -960,7 +1225,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-  private fun getChannelAccessToken(isBusinessCardShare: Boolean = false, isEnquiriesShare: Boolean = false, shareType: ShareType? = null) {
+  private fun getChannelAccessToken(
+    isBusinessCardShare: Boolean = false,
+    isEnquiriesShare: Boolean = false,
+    shareType: ShareType? = null
+  ) {
     if (isBusinessCardShare || isEnquiriesShare) showProgress()
     viewModel?.getChannelsAccessTokenStatus(session?.fPID)?.observeOnce(this, {
       var urlString = ""
@@ -968,7 +1237,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         val response = it as? ChannelAccessStatusResponse
         connectedChannels.clear()
         if (response?.channels?.facebookpage?.status == CHANNEL_STATUS_SUCCESS) {
-          urlString = "\n⚡ *Facebook: https://www.facebook.com/${response.channels?.facebookpage?.account?.accountId}*"
+          urlString =
+            "\n⚡ *Facebook: https://www.facebook.com/${response.channels?.facebookpage?.account?.accountId}*"
           connectedChannels.add(ChannelsType.AccountType.facebookpage.name)
         }
         if (response?.channels?.twitter?.status == CHANNEL_STATUS_SUCCESS) {
@@ -987,7 +1257,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     })
   }
 
-  private fun getWhatsAppData(urlString: String, isBusinessCardShare: Boolean = false, isEnquiriesShare: Boolean = false, shareType: ShareType? = null) {
+  private fun getWhatsAppData(
+    urlString: String,
+    isBusinessCardShare: Boolean = false,
+    isEnquiriesShare: Boolean = false,
+    shareType: ShareType? = null
+  ) {
     var urlStringN = urlString
     viewModel?.getWhatsappBusiness(request = session?.fpTag, auth = WA_KEY)?.observeOnce(this, {
       if (isBusinessCardShare || isEnquiriesShare) hideProgress()
@@ -1001,7 +1276,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       val otherWebsite = session?.getFPDetails(GET_FP_DETAILS_WEBSITE)
       if (otherWebsite.isNullOrEmpty().not()) urlStringN += "\n⚡ *Other Website: $otherWebsite*"
       saveDataConnectedChannel(connectedChannels)
-      if (session?.userPrimaryMobile.isNullOrEmpty().not()) urlStringN += "\n\uD83D\uDCDE *Call: ${session?.userPrimaryMobile}*"
+      if (session?.userPrimaryMobile.isNullOrEmpty()
+          .not()
+      ) urlStringN += "\n\uD83D\uDCDE *Call: ${session?.userPrimaryMobile}*"
       PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlStringN)
       if (isBusinessCardShare) businessWebsiteDetailMessage(urlStringN, isBusinessCardShare = true)
       else if (isEnquiriesShare) businessWebsiteDetailMessage(urlStringN, shareType = shareType)
@@ -1012,7 +1289,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     val filterBottomSheet = FilterBottomSheet()
     filterBottomSheet.setData(dateFilter)
     filterBottomSheet.onClicked = { apiFilterCall(it, type) }
-    filterBottomSheet.show(this@DashboardFragment.parentFragmentManager, FilterBottomSheet::class.java.name)
+    filterBottomSheet.show(
+      this@DashboardFragment.parentFragmentManager,
+      FilterBottomSheet::class.java.name
+    )
   }
 
   private fun apiFilterCall(filterDate: FilterDateModel, type: String) {
@@ -1059,15 +1339,25 @@ fun UserSessionManager?.checkIsPremiumUnlock(value: String?): Boolean {
 
 fun getLocalSession(session: UserSessionManager): LocalSessionModel {
   var imageUri = session.getFPDetails(GET_FP_DETAILS_LogoUrl)
-  if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) imageUri = BASE_IMAGE_URL + imageUri
+  if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) imageUri =
+    BASE_IMAGE_URL + imageUri
   val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
   val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
-  val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
+  val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty()
+      .not()
+  ) "$city, $country" else "$city$country"
   return LocalSessionModel(
-    floatingPoint = session.fPID, contactName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME),
-    businessName = session.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME), businessImage = imageUri, location = location, websiteUrl = session.getDomainName(false),
-    businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY), primaryNumber = session.userPrimaryMobile,
-    primaryEmail = session.fPEmail, fpTag = session.fpTag, experienceCode = session.fP_AppExperienceCode
+    floatingPoint = session.fPID,
+    contactName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME),
+    businessName = session.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME),
+    businessImage = imageUri,
+    location = location,
+    websiteUrl = session.getDomainName(false),
+    businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY),
+    primaryNumber = session.userPrimaryMobile,
+    primaryEmail = session.fPEmail,
+    fpTag = session.fpTag,
+    experienceCode = session.fP_AppExperienceCode
   )
 }
 
@@ -1083,9 +1373,18 @@ fun getRequestSellerSummary(filterDate: FilterDateModel?): SellerSummaryRequest 
   if (filterDate?.startDate.isNullOrEmpty()) return SellerSummaryRequest(filterBy = ArrayList())
   val request = SellerSummaryRequest()
   val queryObject = arrayListOf(
-    QueryObject(key = QueryObject.keys.CreatedOn.name, value = filterDate?.startDate, queryOperator = QueryObject.Operator.GTE.name),
-    QueryObject(key = QueryObject.keys.CreatedOn.name, value = filterDate?.endDate, queryOperator = QueryObject.Operator.LTE.name)
+    QueryObject(
+      key = QueryObject.keys.CreatedOn.name,
+      value = filterDate?.startDate,
+      queryOperator = QueryObject.Operator.GTE.name
+    ),
+    QueryObject(
+      key = QueryObject.keys.CreatedOn.name,
+      value = filterDate?.endDate,
+      queryOperator = QueryObject.Operator.LTE.name
+    )
   )
-  request.filterBy = arrayListOf(FilterBy(queryConditionType = FilterBy.ConditionType.AND.name, queryObject))
+  request.filterBy =
+    arrayListOf(FilterBy(queryConditionType = FilterBy.ConditionType.AND.name, queryObject))
   return request
 }

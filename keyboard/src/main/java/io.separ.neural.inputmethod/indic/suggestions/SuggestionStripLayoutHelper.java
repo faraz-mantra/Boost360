@@ -21,7 +21,9 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+
 import androidx.core.view.ViewCompat;
+
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -62,40 +64,35 @@ final class SuggestionStripLayoutHelper {
     private static final int DEFAULT_MAX_MORE_SUGGESTIONS_ROW = 2;
     private static final int PUNCTUATIONS_IN_STRIP = 5;
     private static final float MIN_TEXT_XSCALE = 0.70f;
-
+    private static final String MORE_SUGGESTIONS_HINT = "\u2026";
+    private static final String LEFTWARDS_ARROW = "\u2190";
+    private static final String RIGHTWARDS_ARROW = "\u2192";
+    private static final CharacterStyle BOLD_SPAN = new StyleSpan(Typeface.BOLD);
+    private static final CharacterStyle UNDERLINE_SPAN = new UnderlineSpan();
+    // These constants are the flag values of
+    // {@link R.styleable#SuggestionStripView_suggestionStripOptions} attribute.
+    private static final int AUTO_CORRECT_BOLD = 0x01;
+    private static final int AUTO_CORRECT_UNDERLINE = 0x02;
+    private static final int VALID_TYPED_WORD_BOLD = 0x04;
     public final int mPadding;
     public final int mDividerWidth;
     public final int mSuggestionsStripHeight;
     private final int mSuggestionsCountInStrip;
-
     // The index of these {@link ArrayList} is the position in the suggestion strip. The indices
     // increase towards the right for LTR scripts and the left for RTL scripts, starting with 0.
     // The position of the most important suggestion is in {@link #mCenterPositionInStrip}
     private final ArrayList<TextView> mWordViews;
     private final ArrayList<View> mDividerViews;
     private final ArrayList<TextView> mDebugInfoViews;
-
-    private int mColorValidTypedWord;
-    private int mColorTypedWord;
-    private int mColorAutoCorrect;
-    private int mColorSuggested;
     private final float mAlphaObsoleted;
     private final float mCenterSuggestionWeight;
     private final int mCenterPositionInStrip;
     private final int mTypedWordPositionWhenAutocorrect;
-    private static final String MORE_SUGGESTIONS_HINT = "\u2026";
-    private static final String LEFTWARDS_ARROW = "\u2190";
-    private static final String RIGHTWARDS_ARROW = "\u2192";
-
-    private static final CharacterStyle BOLD_SPAN = new StyleSpan(Typeface.BOLD);
-    private static final CharacterStyle UNDERLINE_SPAN = new UnderlineSpan();
-
     private final int mSuggestionStripOptions;
-    // These constants are the flag values of
-    // {@link R.styleable#SuggestionStripView_suggestionStripOptions} attribute.
-    private static final int AUTO_CORRECT_BOLD = 0x01;
-    private static final int AUTO_CORRECT_UNDERLINE = 0x02;
-    private static final int VALID_TYPED_WORD_BOLD = 0x04;
+    private int mColorValidTypedWord;
+    private int mColorTypedWord;
+    private int mColorAutoCorrect;
+    private int mColorSuggested;
 
     public SuggestionStripLayoutHelper(final Context context, final AttributeSet attrs,
                                        final int defStyle, final ArrayList<TextView> wordViews,
@@ -136,54 +133,6 @@ final class SuggestionStripLayoutHelper {
         // laid out according to script direction, so this is left of the center for LTR scripts
         // and right of the center for RTL scripts.
         mTypedWordPositionWhenAutocorrect = mCenterPositionInStrip - 1;
-    }
-
-    private CharSequence getStyledSuggestedWord(final SuggestedWords suggestedWords,
-                                                final int indexInSuggestedWords) {
-        if (indexInSuggestedWords >= suggestedWords.size()) {
-            return null;
-        }
-        final String word = suggestedWords.getLabel(indexInSuggestedWords);
-        // TODO: don't use the index to decide whether this is the auto-correction/typed word, as
-        // this is brittle
-        final boolean isAutoCorrection = suggestedWords.mWillAutoCorrect
-                && indexInSuggestedWords == SuggestedWords.INDEX_OF_AUTO_CORRECTION;
-        final boolean isTypedWordValid = suggestedWords.mTypedWordValid
-                && indexInSuggestedWords == SuggestedWords.INDEX_OF_TYPED_WORD;
-        if (!isAutoCorrection && !isTypedWordValid) {
-            return word;
-        }
-
-        final int len = word.length();
-        final Spannable spannedWord = new SpannableString(word);
-        final int options = mSuggestionStripOptions;
-        if ((isAutoCorrection && (options & AUTO_CORRECT_BOLD) != 0)
-                || (isTypedWordValid && (options & VALID_TYPED_WORD_BOLD) != 0)) {
-            spannedWord.setSpan(BOLD_SPAN, 0, len, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        }
-        if (isAutoCorrection && (options & AUTO_CORRECT_UNDERLINE) != 0) {
-            spannedWord.setSpan(UNDERLINE_SPAN, 0, len, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        }
-        return spannedWord;
-    }
-
-    /**
-     * Convert an index of {@link SuggestedWords} to position in the suggestion strip.
-     *
-     * @param indexInSuggestedWords the index of {@link SuggestedWords}.
-     * @param suggestedWords        the suggested words list
-     * @return Non-negative integer of the position in the suggestion strip.
-     * Negative integer if the word of the index shouldn't be shown on the suggestion strip.
-     */
-    private int getPositionInSuggestionStrip(final int indexInSuggestedWords,
-                                             final SuggestedWords suggestedWords) {
-        final SettingsValues settingsValues = Settings.getInstance().getCurrent();
-        final boolean shouldOmitTypedWord = shouldOmitTypedWord(suggestedWords.mInputStyle,
-                settingsValues.mGestureFloatingPreviewTextEnabled,
-                settingsValues.mShouldShowUiToAcceptTypedWord);
-        return getPositionInSuggestionStrip(indexInSuggestedWords, suggestedWords.mWillAutoCorrect,
-                settingsValues.mShouldShowUiToAcceptTypedWord && shouldOmitTypedWord,
-                mCenterPositionInStrip, mTypedWordPositionWhenAutocorrect);
     }
 
     @UsedForTesting
@@ -241,6 +190,156 @@ final class SuggestionStripLayoutHelper {
         return centerPositionInStrip + offsetFromCenter;
     }
 
+    private static int applyAlpha(final int color, final float alpha) {
+        final int newAlpha = (int) (Color.alpha(color) * alpha);
+        return Color.argb(newAlpha, Color.red(color), Color.green(color), Color.blue(color));
+    }
+
+    private static void addDivider(final ViewGroup stripView, final View dividerView) {
+        stripView.addView(dividerView);
+        final LinearLayout.LayoutParams params =
+                (LinearLayout.LayoutParams) dividerView.getLayoutParams();
+        params.gravity = Gravity.CENTER;
+    }
+
+    static void setLayoutWeight(final View v, final float weight, final int height) {
+        final ViewGroup.LayoutParams lp = v.getLayoutParams();
+        if (lp instanceof LinearLayout.LayoutParams) {
+            final LinearLayout.LayoutParams llp = (LinearLayout.LayoutParams) lp;
+            llp.weight = weight;
+            llp.width = 0;
+            llp.height = height;
+        }
+    }
+
+    private static float getTextScaleX(final CharSequence text, final int maxWidth,
+                                       final TextPaint paint) {
+        paint.setTextScaleX(1.0f);
+        final int width = getTextWidth(text, paint);
+        if (width <= maxWidth || maxWidth <= 0) {
+            return 1.0f;
+        }
+        return maxWidth / (float) width;
+    }
+
+    private static CharSequence getEllipsizedText(final CharSequence text, final int maxWidth,
+                                                  final TextPaint paint) {
+        if (text == null) {
+            return null;
+        }
+        final float scaleX = getTextScaleX(text, maxWidth, paint);
+        if (scaleX >= MIN_TEXT_XSCALE) {
+            paint.setTextScaleX(scaleX);
+            return text;
+        }
+
+        // Note that TextUtils.ellipsize() use text-x-scale as 1.0 if ellipsize is needed. To
+        // get squeezed and ellipsized text, passes enlarged width (maxWidth / MIN_TEXT_XSCALE).
+        final float upscaledWidth = maxWidth / MIN_TEXT_XSCALE;
+        CharSequence ellipsized = TextUtils.ellipsize(
+                text, paint, upscaledWidth, TextUtils.TruncateAt.MIDDLE);
+        // For an unknown reason, ellipsized seems to return a text that does indeed fit inside the
+        // passed width according to paint.measureText, but not according to paint.getTextWidths.
+        // But when rendered, the text seems to actually take up as many pixels as returned by
+        // paint.getTextWidths, hence problem.
+        // To save this case, we compare the measured size of the new text, and if it's too much,
+        // try it again removing the difference. This may still give a text too long by one or
+        // two pixels so we take an additional 2 pixels cushion and call it a day.
+        // TODO: figure out why getTextWidths and measureText don't agree with each other, and
+        // remove the following code.
+        final float ellipsizedTextWidth = getTextWidth(ellipsized, paint);
+        if (upscaledWidth <= ellipsizedTextWidth) {
+            ellipsized = TextUtils.ellipsize(
+                    text, paint, upscaledWidth - (ellipsizedTextWidth - upscaledWidth) - 2,
+                    TextUtils.TruncateAt.MIDDLE);
+        }
+        paint.setTextScaleX(MIN_TEXT_XSCALE);
+        return ellipsized;
+    }
+
+    private static int getTextWidth(final CharSequence text, final TextPaint paint) {
+        if (TextUtils.isEmpty(text)) {
+            return 0;
+        }
+        final Typeface savedTypeface = paint.getTypeface();
+        paint.setTypeface(getTextTypeface(text));
+        final int len = text.length();
+        final float[] widths = new float[len];
+        final int count = paint.getTextWidths(text, 0, len, widths);
+        int width = 0;
+        for (int i = 0; i < count; i++) {
+            width += Math.round(widths[i] + 0.5f);
+        }
+        paint.setTypeface(savedTypeface);
+        return width;
+    }
+
+    private static Typeface getTextTypeface(final CharSequence text) {
+        if (!(text instanceof SpannableString)) {
+            return Typeface.DEFAULT;
+        }
+
+        final SpannableString ss = (SpannableString) text;
+        final StyleSpan[] styles = ss.getSpans(0, text.length(), StyleSpan.class);
+        if (styles.length == 0) {
+            return Typeface.DEFAULT;
+        }
+
+        if (styles[0].getStyle() == Typeface.BOLD) {
+            return Typeface.DEFAULT_BOLD;
+        }
+        // TODO: BOLD_ITALIC, ITALIC case?
+        return Typeface.DEFAULT;
+    }
+
+    private CharSequence getStyledSuggestedWord(final SuggestedWords suggestedWords,
+                                                final int indexInSuggestedWords) {
+        if (indexInSuggestedWords >= suggestedWords.size()) {
+            return null;
+        }
+        final String word = suggestedWords.getLabel(indexInSuggestedWords);
+        // TODO: don't use the index to decide whether this is the auto-correction/typed word, as
+        // this is brittle
+        final boolean isAutoCorrection = suggestedWords.mWillAutoCorrect
+                && indexInSuggestedWords == SuggestedWords.INDEX_OF_AUTO_CORRECTION;
+        final boolean isTypedWordValid = suggestedWords.mTypedWordValid
+                && indexInSuggestedWords == SuggestedWords.INDEX_OF_TYPED_WORD;
+        if (!isAutoCorrection && !isTypedWordValid) {
+            return word;
+        }
+
+        final int len = word.length();
+        final Spannable spannedWord = new SpannableString(word);
+        final int options = mSuggestionStripOptions;
+        if ((isAutoCorrection && (options & AUTO_CORRECT_BOLD) != 0)
+                || (isTypedWordValid && (options & VALID_TYPED_WORD_BOLD) != 0)) {
+            spannedWord.setSpan(BOLD_SPAN, 0, len, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+        if (isAutoCorrection && (options & AUTO_CORRECT_UNDERLINE) != 0) {
+            spannedWord.setSpan(UNDERLINE_SPAN, 0, len, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+        return spannedWord;
+    }
+
+    /**
+     * Convert an index of {@link SuggestedWords} to position in the suggestion strip.
+     *
+     * @param indexInSuggestedWords the index of {@link SuggestedWords}.
+     * @param suggestedWords        the suggested words list
+     * @return Non-negative integer of the position in the suggestion strip.
+     * Negative integer if the word of the index shouldn't be shown on the suggestion strip.
+     */
+    private int getPositionInSuggestionStrip(final int indexInSuggestedWords,
+                                             final SuggestedWords suggestedWords) {
+        final SettingsValues settingsValues = Settings.getInstance().getCurrent();
+        final boolean shouldOmitTypedWord = shouldOmitTypedWord(suggestedWords.mInputStyle,
+                settingsValues.mGestureFloatingPreviewTextEnabled,
+                settingsValues.mShouldShowUiToAcceptTypedWord);
+        return getPositionInSuggestionStrip(indexInSuggestedWords, suggestedWords.mWillAutoCorrect,
+                settingsValues.mShouldShowUiToAcceptTypedWord && shouldOmitTypedWord,
+                mCenterPositionInStrip, mTypedWordPositionWhenAutocorrect);
+    }
+
     private int getSuggestionTextColor(final SuggestedWords suggestedWords,
                                        final int indexInSuggestedWords) {
         // Use identity for strings, not #equals : it's the typed word if it's the same object
@@ -274,18 +373,6 @@ final class SuggestionStripLayoutHelper {
             return applyAlpha(color, mAlphaObsoleted);
         }
         return color;
-    }
-
-    private static int applyAlpha(final int color, final float alpha) {
-        final int newAlpha = (int) (Color.alpha(color) * alpha);
-        return Color.argb(newAlpha, Color.red(color), Color.green(color), Color.blue(color));
-    }
-
-    private static void addDivider(final ViewGroup stripView, final View dividerView) {
-        stripView.addView(dividerView);
-        final LinearLayout.LayoutParams params =
-                (LinearLayout.LayoutParams) dividerView.getLayoutParams();
-        params.gravity = Gravity.CENTER;
     }
 
     /**
@@ -539,96 +626,6 @@ final class SuggestionStripLayoutHelper {
         titleView.setTextScaleX(1.0f); // Reset textScaleX.
         final float titleScaleX = getTextScaleX(importantNoticeTitle, width, titleView.getPaint());
         titleView.setTextScaleX(titleScaleX);*/
-    }
-
-    static void setLayoutWeight(final View v, final float weight, final int height) {
-        final ViewGroup.LayoutParams lp = v.getLayoutParams();
-        if (lp instanceof LinearLayout.LayoutParams) {
-            final LinearLayout.LayoutParams llp = (LinearLayout.LayoutParams) lp;
-            llp.weight = weight;
-            llp.width = 0;
-            llp.height = height;
-        }
-    }
-
-    private static float getTextScaleX(final CharSequence text, final int maxWidth,
-                                       final TextPaint paint) {
-        paint.setTextScaleX(1.0f);
-        final int width = getTextWidth(text, paint);
-        if (width <= maxWidth || maxWidth <= 0) {
-            return 1.0f;
-        }
-        return maxWidth / (float) width;
-    }
-
-    private static CharSequence getEllipsizedText(final CharSequence text, final int maxWidth,
-                                                  final TextPaint paint) {
-        if (text == null) {
-            return null;
-        }
-        final float scaleX = getTextScaleX(text, maxWidth, paint);
-        if (scaleX >= MIN_TEXT_XSCALE) {
-            paint.setTextScaleX(scaleX);
-            return text;
-        }
-
-        // Note that TextUtils.ellipsize() use text-x-scale as 1.0 if ellipsize is needed. To
-        // get squeezed and ellipsized text, passes enlarged width (maxWidth / MIN_TEXT_XSCALE).
-        final float upscaledWidth = maxWidth / MIN_TEXT_XSCALE;
-        CharSequence ellipsized = TextUtils.ellipsize(
-                text, paint, upscaledWidth, TextUtils.TruncateAt.MIDDLE);
-        // For an unknown reason, ellipsized seems to return a text that does indeed fit inside the
-        // passed width according to paint.measureText, but not according to paint.getTextWidths.
-        // But when rendered, the text seems to actually take up as many pixels as returned by
-        // paint.getTextWidths, hence problem.
-        // To save this case, we compare the measured size of the new text, and if it's too much,
-        // try it again removing the difference. This may still give a text too long by one or
-        // two pixels so we take an additional 2 pixels cushion and call it a day.
-        // TODO: figure out why getTextWidths and measureText don't agree with each other, and
-        // remove the following code.
-        final float ellipsizedTextWidth = getTextWidth(ellipsized, paint);
-        if (upscaledWidth <= ellipsizedTextWidth) {
-            ellipsized = TextUtils.ellipsize(
-                    text, paint, upscaledWidth - (ellipsizedTextWidth - upscaledWidth) - 2,
-                    TextUtils.TruncateAt.MIDDLE);
-        }
-        paint.setTextScaleX(MIN_TEXT_XSCALE);
-        return ellipsized;
-    }
-
-    private static int getTextWidth(final CharSequence text, final TextPaint paint) {
-        if (TextUtils.isEmpty(text)) {
-            return 0;
-        }
-        final Typeface savedTypeface = paint.getTypeface();
-        paint.setTypeface(getTextTypeface(text));
-        final int len = text.length();
-        final float[] widths = new float[len];
-        final int count = paint.getTextWidths(text, 0, len, widths);
-        int width = 0;
-        for (int i = 0; i < count; i++) {
-            width += Math.round(widths[i] + 0.5f);
-        }
-        paint.setTypeface(savedTypeface);
-        return width;
-    }
-
-    private static Typeface getTextTypeface(final CharSequence text) {
-        if (!(text instanceof SpannableString)) {
-            return Typeface.DEFAULT;
-        }
-
-        final SpannableString ss = (SpannableString) text;
-        final StyleSpan[] styles = ss.getSpans(0, text.length(), StyleSpan.class);
-        if (styles.length == 0) {
-            return Typeface.DEFAULT;
-        }
-
-        if (styles[0].getStyle() == Typeface.BOLD) {
-            return Typeface.DEFAULT_BOLD;
-        }
-        // TODO: BOLD_ITALIC, ITALIC case?
-        return Typeface.DEFAULT;
     }
 
     public void updateColor(ColorProfile colorProfile) {
