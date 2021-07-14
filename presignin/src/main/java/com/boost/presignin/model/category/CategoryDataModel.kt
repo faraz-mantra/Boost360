@@ -56,7 +56,26 @@ class CategoryDataModel(
 
     return ContextCompat.getDrawable(context, resId)
   }
+  fun getCategoryImage(context: Context?): Drawable? {
 
+    if (context == null) return null
+
+    val resId = when (icon?.let { CategoryType.from(it) }) {
+      CategoryType.DOCTORS -> R.drawable.doctors
+      CategoryType.CLINICS_HOSPITALS -> R.drawable.clinics_hospital
+      CategoryType.EDUCATION_COACHING -> R.drawable.education
+      CategoryType.HOTELS_MOTELS -> R.drawable.category_hotel
+      CategoryType.MANUFACTURING_EQUIPMENT -> R.drawable.manufacturing
+      CategoryType.SPAS_WELLNESS -> R.drawable.spa_bathrobe
+      CategoryType.SALON -> R.drawable.beauty_salons
+      CategoryType.RESTAURANT_CAFES -> R.drawable.resturants_cafe
+      CategoryType.RETAIL_BUSINESS -> R.drawable.retail_business
+      CategoryType.SERVICES_BUSINESS -> R.drawable.service_providers
+      else -> null
+    } ?: return null
+
+    return ContextCompat.getDrawable(context, resId)
+  }
 }
 
 
