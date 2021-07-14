@@ -245,7 +245,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
                     }
                 }
             }*/
-            viewModel.getCartItems()
+//            viewModel.getCartItems()
         })
 
         viewModel.getSpecificFeature().observe(this, Observer {
@@ -512,7 +512,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
 
                                             //clear cartOrderInfo from SharedPref to requestAPI again
                                             prefs.storeCartOrderInfo(null)
-                                            viewModel.addItemToCartPackage(CartModel(
+                                            viewModel.addItemToCartPackage1(CartModel(
                                                     item!!._kid,
                                                     null,
                                                     null,

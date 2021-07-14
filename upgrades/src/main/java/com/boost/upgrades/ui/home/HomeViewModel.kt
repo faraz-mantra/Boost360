@@ -50,6 +50,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var _fpTag: String = "ABC"
 
     var categoryResult: MutableLiveData<String> = MutableLiveData()
+    var bundleExistsBool: MutableLiveData<Boolean> = MutableLiveData()
 
     fun upgradeResult(): LiveData<List<WidgetModel>> {
         return updatesResult
@@ -123,6 +124,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     fun categoryResult(): LiveData<String> {
         return categoryResult
+    }
+
+    fun getBundleExxists(): LiveData<Boolean> {
+        return bundleExistsBool
     }
 
     fun getCategoriesFromAssetJson(context: Context, expCode: String?) {
@@ -863,6 +868,25 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                             .subscribe()
                 }
                 .subscribe()
+    }
+
+    fun checkBundlePackExists(kid: String){
+        CompositeDisposable().add(
+            AppDatabase.getInstance(getApplication())!!
+                .cartDao()
+                .checkCartBundleExist(kid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it == 0) {
+                        bundleExistsBool.postValue(false)
+                    }else{
+                        bundleExistsBool.postValue(true)
+                    }
+                }, {
+//                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                })
+        )
     }
 
 

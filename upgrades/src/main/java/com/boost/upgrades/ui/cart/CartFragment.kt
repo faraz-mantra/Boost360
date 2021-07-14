@@ -1782,6 +1782,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
         args.putString("contact", (activity as UpgradeActivity).mobileNo)
         prefs.storeCardIds(cartItems)
         prefs.storeCouponIds(couponCode)
+        prefs.storeValidityMonths(default_validity_months.toString())
         paymentFragment.arguments = args
         (activity as UpgradeActivity).addFragment(
                 paymentFragment,

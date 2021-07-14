@@ -668,6 +668,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
         viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
             if (it != null && it.size > 0) {
+//                packageInCartStatus = false
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
                 badge.setText(badgeNumber.toString())
@@ -683,6 +684,19 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     updateFeatureDealsViewPager(list, it)
                 }
             }
+
+            /*if (viewModel.allBundleResult.value != null){
+                var list = viewModel.allBundleResult.value!!
+                if (list.size > 0){
+                    for (item in list){
+                        it.forEach {
+                            if(it.item_id.equals(item.bundle_id)){
+                                packageInCartStatus = true
+                            }
+                        }
+                    }
+                }
+            }*/
 
             /*if (viewModel.allBundleResult.value != null) {
 
@@ -715,6 +729,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
         viewModel.cartResultBack().observe(this, androidx.lifecycle.Observer {
             if (it != null && it.size > 0) {
+//                packageInCartStatus = false
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
                 badge.setText(badgeNumber.toString())
@@ -867,6 +882,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         viewModel.getFeedBackLink().observe(this, androidx.lifecycle.Observer {
             Log.e("getFeedBackLink", it.toString())
             feedBackLink = it
+        })
+
+        viewModel.getBundleExxists().observe(this,androidx.lifecycle.Observer{
+            Log.d("getBundleExxists", it.toString())
         })
     }
 
@@ -1561,14 +1580,14 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         if (!packageInCartStatus) {
             if (item != null) {
 
-
+               viewModel.checkBundlePackExists(item._kid)
                 makeFlyAnimation(imageView)
 
                 val itemIds = arrayListOf<String>()
                 for (i in item.included_features) {
                     itemIds.add(i.feature_code)
                 }
-
+                callBundleCart(item)
                 CompositeDisposable().add(
                     AppDatabase.getInstance(requireActivity().application)!!
                         .featuresDao()
@@ -1665,43 +1684,6 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                         )
                 )
 
-
-                /* //clear cartOrderInfo from SharedPref to requestAPI again
-                 prefs.storeCartOrderInfo(null)
-                 viewModel.addItemToCartPackage(CartModel(
-                         item!!._kid,
-                         null,
-                         null,
-                         item!!.name,
-                         "",
-                         item!!.primary_image!!.url,
-                         offeredBundlePrice.toDouble(),
-                         originalBundlePrice.toDouble(),
-                         item!!.overall_discount_percent,
-                         1,
-                         if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
-                         "bundles",
-                         null
-                 ))
-                 val event_attributes: HashMap<String, Any> = HashMap()
-                 item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
-                 item!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
-                 event_attributes.put("Package Price", originalBundlePrice)
-                 event_attributes.put("Discounted Price", offeredBundlePrice)
-                 event_attributes.put("Discount %", item!!.overall_discount_percent)
-                 item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                 WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", ADDONS_MARKETPLACE, event_attributes)
-        //                packageInCartStatus = true
-        //                package_submit.background = ContextCompat.getDrawable(
-        //                        requireContext(),
-        //                        R.drawable.added_to_cart_grey
-        //                )
-        //                package_submit.setTextColor(Color.parseColor("#bbbbbb"))
-        //                package_submit.setText(getString(R.string.added_to_cart))
-                 badgeNumber = badgeNumber + 1
-        //                badge121.setText(badgeNumber.toString())
-        //                badge121.visibility = View.VISIBLE
-                 Constants.CART_VALUE = badgeNumber*/
             }
         }
 
@@ -2361,6 +2343,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 override fun onAnimationStart(animation: Animator) {}
                 override fun onAnimationEnd(animation: Animator) {
                     viewModel.getCartItems()
+
                 }
 
 
@@ -2370,5 +2353,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     }
 
+    fun callBundleCart(bundle: Bundles){
+
+    }
 
 }

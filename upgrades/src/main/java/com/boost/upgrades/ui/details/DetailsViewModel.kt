@@ -141,7 +141,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
                                                     .subscribeOn(Schedulers.io())
                                                     .observeOn(AndroidSchedulers.mainThread())
                                                     .doOnComplete {
-                                                        getCartItems()
+//                                                        getCartItems()
                                                         updatesLoader.postValue(false)
                                                     }
                                                     .doOnError {
@@ -159,7 +159,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .doOnComplete {
-                                            getCartItems()
+//                                            getCartItems()
                                             updatesLoader.postValue(false)
                                         }
                                         .doOnError {

@@ -180,18 +180,23 @@ class PackageViewPagerAdapter(
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             for (singleItem in it) {
-                                Log.v("isItemAddedInCart", " "+ bundles!!._kid + " "+ singleItem.item_id)
+//                                Log.v("isItemAddedInCart", " "+ bundles!!._kid + " "+ singleItem.item_id)
 //                                for (item in bundles.included_features) {
 //                                    Log.v("isItemAddedInCar12", " "+ item.feature_code)
                                     if (singleItem.item_id.equals(bundles!!._kid)) {
+                                        Log.d("isItemAddedInCart1", " "+ holder.getNowButton.isClickable)
                                         holder.getNowButton.background = ContextCompat.getDrawable(
                                                 activity.application,
                                                 R.drawable.added_to_cart_grey
                                         )
                                         holder.getNowButton.setTextColor(Color.parseColor("#bbbbbb"))
                                         holder.getNowButton.setText("Added To Cart")
-                                        holder.getNowButton.setEnabled(false)
+//                                        holder.getNowButton.setEnabled(false)
+                                        holder.getNowButton.isEnabled = false
+                                        holder.getNowButton.isClickable = false
+
                                     }
+
 //                                }
                             }
                         }, {

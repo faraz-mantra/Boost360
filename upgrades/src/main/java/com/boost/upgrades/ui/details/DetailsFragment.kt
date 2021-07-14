@@ -166,7 +166,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
 
                     makeFlyAnimation(image1222Copy)
 
-//                    viewModel.addItemToCart(addonDetails!!)
+                    viewModel.addItemToCart1(addonDetails!!)
                     val event_attributes: HashMap<String, Any> = HashMap()
                     addonDetails!!.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
                     event_attributes.put("Addon Price", addonDetails!!.price)
@@ -179,8 +179,8 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                     if(addonDetails!!.feature_code == "CUSTOM_PAYMENTGATEWAY")
                         WebEngageController.trackEvent(SELF_BRANDED_PAYMENT_GATEWAY_REQUESTED , SELF_BRANDED_PAYMENT_GATEWAY, NO_EVENT_VALUE)
                     badgeNumber = badgeNumber + 1
-                    badge121.setText(badgeNumber.toString())
-                    badge121.visibility = View.VISIBLE
+//                    badge121.setText(badgeNumber.toString())
+//                    badge121.visibility = View.VISIBLE
                     Constants.CART_VALUE = badgeNumber
 
 //                    localStorage.addCartItem(addons_list!!.get(itemId))
@@ -537,7 +537,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
             .setDestView(featureDetailsCartIcon).setAnimationListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator) {}
                 override fun onAnimationEnd(animation: Animator) {
-                    viewModel.addItemToCart(addonDetails!!)
+                    viewModel.getCartItems()
                 }
 
 
