@@ -158,7 +158,6 @@
   <string name="contact_support">Contact Support</string>
   <string name="update_bank_detail">Update Bank Detail</string>
   <string name="add_bank_detail">Add Bank Detail</string>
-  <string name="boost_payment_gateway">Boost payment gateway</string>
   <string name="external_url">External URL</string>
   <string name="the_service_can_be_offered_either_at_the_business_location_or_at_client_s_location">The service can be offered either at the business location or at client’s location.</string>
   <string name="please_add_bank_detail">Please add bank account detail.</string>
@@ -181,7 +180,6 @@
   <string name="testimonial_add">Add Testimonial</string>
   <string name="testimonial_edit">Edit Testimonial</string>
   <string name="error_getting_web_action">Error getting web action list!</string>
-  <string name="add_a_testimonial">ADD A TESTIMONIAL</string>
   <!--staff module strings-->
   <string name="what_services_you_give">What services do you give?</string>
   <string name="you_don_t_h">In order to add staff members, please first add all the services your business offers.</string>
@@ -514,24 +512,14 @@
   <string name="payment_collection_setup">Payment collection setup</string>
   <string name="policies_for_customer">Policies for customers</string>
   <string name="customer_invoice_setup">Customer invoice setup</string>
-  <string name="testimonial_title">Testimonials</string>
-  <string name="testimonial_add">Add Testimonial</string>
-  <string name="testimonial_edit">Edit Testimonial</string>
-  <string name="error_getting_web_action">Error getting web action list!</string>
-  <string name="add_a_testimonial">ADD A TESTIMONIAL</string>
   <string name="preferred_payment_gateway_connected_bank_account">Preferred payment gateway,\nConnected bank account</string>
   <string name="gst_declearation_bank_upi_appointments">GST declaration, Bank UPI for offline appointments,\nSignature</string>
   <string name="refund_cancllation_privacy_policies">Refund, cancellation, privacy policies for your \ncustomers</string>
   <string name="search_settings">search settings</string>
   <string name="current_selection">Current selection</string>
   <string name="rename">RENAME</string>
-  <string name="get_direct_payment_in_your_bank_account_instantly">Get direct payment in your bank account instantly</string>
-  <string name="my_custom_payment_gateway">My custom payment gateway</string>
-  <string name="payment_configuration">Payment Configuration</string>
   <string name="bank_ifsc_code">Bank IFSC Code*</string>
-  <string name="account_alias">Account Alias</string>
   <string name="bank_name">Bank name*</string>
-  <string name="confirm_account_number">Confirm Account Number*</string>
   <string name="account_number_">Account Number*</string>
   <string name="name_of_the_account_holder">Name of the account holder*</string>
   <string name="bank_branch_">Bank Branch*</string>
@@ -564,7 +552,6 @@
   <string name="gstin">GSTIN</string>
   <string name="enter_you_business_gstin">Enter you business GSTIN</string>
   <string name="this_bank_account_will_be_used_for_monentary_transactions_in_case_of_online_payment">Note: This bank account will be used for monetary transactions in case of online payment.</string>
-  <string name="my_bank_account">My Bank Account</string>
   <string name="enter_account_holder_name">enter account holder name</string>
   <string name="enter_account_number">enter account number</string>
   <string name="please_confirm_account_number">please confirm account number</string>
@@ -622,12 +609,10 @@
   <string name="secondary_offer_Image_uploading_error">Secondary Offer image uploading error, please try again.</string>
   <string name="sort">Sort</string>
   <string name="more">More</string>
-  <string name="latest_on_top">Latest on top</string>
   <string name="active_first">Active first</string>
   <string name="deactive_first">Deactive first</string>
   <string name="search_for_services">Search for services</string>
   <string name="sort_offers_by">Sort offers by</string>
-  <string name="change_picture">CHANGE PICTURE</string>
   <string name="is_the_offer_available_to_customers">Is the offer available to customers?</string>
   <string name="please_enter_discount_amount">Please enter discount amount.</string>
   <string name="please_enter_positive_discount_value">Please enter positive discount value</string>
@@ -655,7 +640,6 @@
   <string name="product_saved_successfully">Product saved successfully.</string>
   <string name="you_have_unsaved_information_do_you_still_want_to_close">You have unsaved information. Do you still want to close?</string>
   <string name="service_image_uploading_error">Service image uploading error, please try again.</string>
-  <string name="name_of_the_account_holder">Name of the account holder*</string>
   <string name="account_number_required">Account number*</string>
   <string name="confirm_account_number">Confirm account number*</string>
   <string name="bank_ifsc_code_required">Bank IFSC code*</string>
@@ -664,7 +648,6 @@
   <string name="bank_branch_required">Bank branch*</string>
   <string name="service_duration">Please provide a valid duration of service</string>
   <string name="why_do_we_need_your_bank_account_required">Why do we need your bank account?</string>
-  <string name="storage_permission" translatable="false">Storage Permission</string>
   <string name="please_provide_the_storage_permissions_to_proceed" translatable="false">Please provide the storage permissions to proceed</string>
   <string name="please_provide_the_camera_permission_to_proceed" translatable="false">Please provide the camera permission to proceed</string>
   <string name="no">No</string>
@@ -698,7 +681,6 @@
   <string name="select_how_you_want_to_receive_money_for_your_bookings">Select, how you want to receive money for your bookings.</string>
   <string name="my_custom_payment_gateway">My custom payment gateway</string>
   <string name="get_direct_payment_in_your_bank_account_instantly">Get direct payment in your bank account instantly</string>
-  <string name="done">Done</string>
   <string name="done_caps">DONE</string>
   <string name="create_a_product_category">Create a product category</string>
   <string name="product_description">Product description*</string>
@@ -737,10 +719,8 @@
   <string name="package_thickness">Package thickness</string>
   <string name="inch">INCH</string>
   <string name="_5">5</string>
-  <string name="external_url">External URL</string>
   <string name="paste_your_url_here_product">Paste your URL here…</string>
   <string name="type_a_tag_and_press_add_s_info">Type a tag and press \'ADD\'</string>
-  <string name="current_selection">Current selection</string>
   <string name="_4_products_under_this_category">4 products under this category</string>
   <string name="latest_update_data_not_found">Latest update data not found!</string>
   <string name="update_regularly_keep_customers_informed_brand">Update regularly to keep your customers informed about your brand</string>

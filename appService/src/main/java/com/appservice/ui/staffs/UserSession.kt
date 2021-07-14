@@ -1,4 +1,4 @@
-package com.appservice.staffs.ui
+package com.appservice.ui.staffs
 
 object UserSession {
     var fpTag: String? = null

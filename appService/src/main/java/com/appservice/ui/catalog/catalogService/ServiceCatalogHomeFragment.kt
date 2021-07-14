@@ -1,5 +1,6 @@
 package com.appservice.ui.catalog.catalogService
 
+import android.annotation.SuppressLint
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -8,8 +9,8 @@ import com.appservice.appointment.ui.CreateCategoryFragment
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentServiceHomeContainerBinding
-import com.appservice.staffs.ui.UserSession
 import com.appservice.ui.catalog.catalogService.listing.ServiceListingFragment
+import com.appservice.ui.staffs.UserSession
 import com.framework.models.BaseViewModel
 
 class ServiceCatalogHomeFragment : AppBaseFragment<FragmentServiceHomeContainerBinding, BaseViewModel>() {
@@ -59,12 +60,13 @@ class ServiceCatalogHomeFragment : AppBaseFragment<FragmentServiceHomeContainerB
         UserSession.fpId = fpId
     }
 
+    @SuppressLint("WrongConstant")
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         override fun getCount(): Int = NUM_PAGES
 
         override fun getItem(position: Int): Fragment {
             return when (position) {
-                0 -> ServiceListingFragment.newInstance(isNonPhysicalExperience,currencyType,fpId,fpTag,clientId,externalSourceId,applicationId,userProfileId)
+                0 -> ServiceListingFragment.newInstance()
                 1 -> CreateCategoryFragment.newInstance(fpTag)
                 else -> requireParentFragment()
             }
