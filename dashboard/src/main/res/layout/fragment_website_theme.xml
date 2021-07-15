@@ -68,7 +68,7 @@
           android:id="@+id/customCardView3"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@color/gray_4e4e4e"
+          android:background="@color/black_4a4a4a"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent">

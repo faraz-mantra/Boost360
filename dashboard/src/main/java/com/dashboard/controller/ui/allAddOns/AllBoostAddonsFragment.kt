@@ -34,8 +34,7 @@ import kotlin.collections.ArrayList
 
 const val LAST_SEEN_TEXT = "Last Seen"
 
-class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, AddOnsViewModel>(),
-  RecyclerItemClickListener {
+class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, AddOnsViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
   private var searchView: SearchView? = null
@@ -231,9 +230,6 @@ fun businessAddOnsClick(
     ManageBusinessData.BusinessType.clinic_logo -> baseActivity.startBusinessLogo(session)
     ManageBusinessData.BusinessType.featured_image_video -> baseActivity.startFeatureLogo(session)
     ManageBusinessData.BusinessType.business_hours -> baseActivity.startBusinessHours(session)
-    ManageBusinessData.BusinessType.doctor_profile,
-    ManageBusinessData.BusinessType.faculty_profiles_d,
-    -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
     ManageBusinessData.BusinessType.contact_details -> baseActivity.startBusinessInfoEmail(session)
     ManageBusinessData.BusinessType.content_sync_acros_channels -> session?.let {
       baseActivity.startDigitalChannel(
@@ -326,12 +322,10 @@ fun businessAddOnsClick(
     ManageBusinessData.BusinessType.social_sharing_analytics,
     ManageBusinessData.BusinessType.membership_plans,
     ManageBusinessData.BusinessType.restaurant_story_d,
+    ManageBusinessData.BusinessType.doctor_profile,
+    ManageBusinessData.BusinessType.faculty_profiles_d,
     -> {
-      Toast.makeText(
-        baseActivity,
-        AppDashboardApplication.instance.getString(R.string.coming_soon),
-        Toast.LENGTH_SHORT
-      ).show()
+      Toast.makeText(baseActivity, AppDashboardApplication.instance.getString(R.string.coming_soon), Toast.LENGTH_SHORT).show()
     }
   }
 }

@@ -9,7 +9,7 @@
   <com.framework.views.customViews.CustomCardView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/size_6"
+    app:cardCornerRadius="@dimen/size_10"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -29,7 +29,6 @@
         android:gravity="start"
         android:padding="@dimen/size_16"
         android:text="@string/need_help"
-        android:textAllCaps="true"
         android:textColor="@color/black"
         android:textSize="12sp"
         android:visibility="gone" />
@@ -52,7 +51,6 @@
         android:gravity="center"
         android:padding="@dimen/size_16"
         android:text="@string/reset_to_default"
-        android:textAllCaps="true"
         android:textColor="@color/black_4a4a4a"
         android:textSize="12sp" />
 
