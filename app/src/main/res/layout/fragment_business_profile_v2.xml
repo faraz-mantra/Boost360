@@ -73,7 +73,7 @@
           android:ellipsize="end"
           android:maxLines="1"
           android:text=""
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="#949494"
           android:textSize="12sp" />
 

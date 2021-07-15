@@ -111,7 +111,7 @@
         android:fontFamily="@font/bold"
         android:gravity="center"
         android:text="@string/next"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp" />
 

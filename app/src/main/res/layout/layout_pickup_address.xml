@@ -324,7 +324,7 @@
             android:background="@android:color/transparent"
             android:minWidth="100dp"
             android:text="@string/cancel"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/secondaryTextColor"
             android:textSize="14sp" />
 

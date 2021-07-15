@@ -39,7 +39,7 @@
         android:paddingHorizontal="@dimen/size_18"
         android:stateListAnimator="@null"
         android:text="@string/activate_staff_profile"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/black_4a4a4a"
         android:textSize="12sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>

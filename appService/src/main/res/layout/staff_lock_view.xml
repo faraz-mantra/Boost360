@@ -57,7 +57,7 @@
       android:gravity="center"
       android:stateListAnimator="@null"
       android:text="@string/view_in_add_on_store"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:textSize="14sp" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

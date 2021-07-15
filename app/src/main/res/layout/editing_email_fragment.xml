@@ -178,7 +178,7 @@
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:text="Save"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white" />
 
 
@@ -193,7 +193,7 @@
         android:gravity="center"
         android:padding="@dimen/_10sdp"
         android:text="Remove"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/common_text_color" />
     </LinearLayout>
   </LinearLayout>

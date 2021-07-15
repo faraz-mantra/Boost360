@@ -81,6 +81,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/round_border_button"
             android:text="@string/change"
+            android:textAllCaps="false"
             android:textColor="@color/primaryColor"
             card_view:ignore="MissingPrefix" />
 

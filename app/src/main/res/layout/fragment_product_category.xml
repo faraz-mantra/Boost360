@@ -159,7 +159,7 @@
         android:enabled="true"
         android:minWidth="120dp"
         android:text="@string/continue_"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@android:color/white" />
 
     </LinearLayout>

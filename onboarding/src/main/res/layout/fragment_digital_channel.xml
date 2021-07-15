@@ -237,7 +237,7 @@
       android:layout_gravity="bottom"
       android:drawableEnd="@null"
       android:paddingBottom="@dimen/size_5"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:visibility="gone"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"

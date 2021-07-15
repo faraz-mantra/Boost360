@@ -195,7 +195,7 @@
             android:paddingTop="@dimen/_10sdp"
             android:paddingBottom="@dimen/_10sdp"
             android:text="@string/log_in"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/white" />
         </androidx.cardview.widget.CardView>
 

@@ -164,7 +164,7 @@
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:text="@string/save"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white" />
 
     </LinearLayout>

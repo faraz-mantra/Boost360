@@ -47,7 +47,7 @@
       android:background="#EEEEEE"
       android:padding="@dimen/margin_10"
       android:text="@string/view_orders"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:textColor="@color/primaryColor"
       android:textSize="@dimen/medium_text_size"
        android:fontFamily="@font/semi_bold" />

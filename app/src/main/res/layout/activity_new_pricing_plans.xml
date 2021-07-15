@@ -62,7 +62,7 @@
       android:layout_marginStart="5dp"
       android:gravity="center_horizontal"
       android:text="@string/select_category"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:textColor="#525252"
        android:fontFamily="@font/semi_bold" />
   </LinearLayout>

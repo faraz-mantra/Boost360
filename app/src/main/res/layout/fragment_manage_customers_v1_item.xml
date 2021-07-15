@@ -88,7 +88,7 @@
           android:paddingTop="@dimen/margin_15"
           android:paddingBottom="@dimen/margin_15"
           android:text="Subscribers"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/primary"
           android:textSize="@dimen/small_text_size" />
 
@@ -104,7 +104,7 @@
           android:paddingTop="@dimen/margin_15"
           android:paddingBottom="@dimen/margin_15"
           android:text="Enquiries"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/primary"
           android:textSize="@dimen/small_text_size" />
 
@@ -120,7 +120,7 @@
           android:paddingTop="@dimen/margin_15"
           android:paddingBottom="@dimen/margin_15"
           android:text="CALLS"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/primary"
           android:textSize="@dimen/small_text_size" />
 

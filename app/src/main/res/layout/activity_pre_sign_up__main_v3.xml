@@ -54,7 +54,7 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/create_website"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/primary"
         android:textSize="@dimen/medium_text_size"
         tools:ignore="MissingPrefix" />
@@ -85,7 +85,7 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/login__"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/medium_text_size"
         tools:ignore="MissingPrefix" />

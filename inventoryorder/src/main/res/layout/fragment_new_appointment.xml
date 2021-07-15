@@ -66,7 +66,7 @@
               android:id="@+id/btn_goto_current_week"
               style="@style/wrap_wrap"
               android:text="@string/go_to_current_week"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/orange"
               android:visibility="invisible"
               app:layout_constraintEnd_toEndOf="parent"

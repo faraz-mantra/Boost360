@@ -118,8 +118,8 @@
       android:gravity="center"
       android:paddingTop="@dimen/_10sdp"
       android:paddingBottom="@dimen/_10sdp"
-      android:text="save"
-      android:textAllCaps="true"
+      android:text="Save"
+      android:textAllCaps="false"
       android:textColor="@color/white" />
 
   </LinearLayout>

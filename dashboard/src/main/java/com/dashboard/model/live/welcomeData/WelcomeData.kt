@@ -15,9 +15,7 @@ class WelcomeData(
 
   enum class WelcomeType(var icon: Int) {
 
-    WEBSITE_CONTENT(R.drawable.ic_website_content_d), MANAGE_INTERACTION(R.drawable.ic_customer_interaction), ADD_ON_MARKETPLACE(
-      R.drawable.ic_marketplace_d
-    );
+    WEBSITE_CONTENT(R.drawable.ic_website_content_d), MANAGE_INTERACTION(R.drawable.ic_customer_interaction), ADD_ON_MARKETPLACE(R.drawable.ic_marketplace_d);
 
     companion object {
       fun fromName(name: String?): WelcomeType? =

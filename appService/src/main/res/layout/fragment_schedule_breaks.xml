@@ -68,7 +68,7 @@
         android:fontFamily="@font/regular"
         android:gravity="center"
         android:text="@string/add_a_break"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textFontWeight="600"
         app:textType="BODY_1" />

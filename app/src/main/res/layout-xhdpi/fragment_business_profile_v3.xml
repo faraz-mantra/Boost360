@@ -121,7 +121,7 @@
             android:background="?android:selectableItemBackground"
             android:padding="10dp"
             android:text="Edit basic info"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="#505050"
             android:textSize="13sp" />
 

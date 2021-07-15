@@ -13,11 +13,11 @@
     android:layout_height="wrap_content"
     android:background="@color/primary_color"
     android:padding="@dimen/_10sdp"
-    android:textAllCaps="true"
+    android:textAllCaps="false"
     android:textColor="@color/white"
     android:textSize="@dimen/txt_16sp"
      android:fontFamily="@font/semi_bold"
-    tools:text="Select Opening time" />
+    tools:text="Select opening time" />
 
 
   <TimePicker
