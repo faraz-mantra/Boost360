@@ -1366,7 +1366,8 @@
 
     <activity
       android:name="com.nowfloats.helper.AppFragmentContainerActivity"
-      android:screenOrientation="portrait" />
+      android:screenOrientation="portrait"
+      android:theme="@style/AppThemeContainer"/>
 
     <activity
       android:name="com.nowfloats.helper.ReferralTransActivity"
