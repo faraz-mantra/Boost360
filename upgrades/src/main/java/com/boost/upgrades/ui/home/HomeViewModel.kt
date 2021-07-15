@@ -41,6 +41,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
+    var cartResultInCart: MutableLiveData<List<CartModel>> = MutableLiveData()
     var cartResultBack: MutableLiveData<List<CartModel>> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()

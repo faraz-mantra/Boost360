@@ -45,6 +45,7 @@ class PackageViewPagerAdapter(
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
         holder.getNowButton.setOnClickListener {
+            holder.getNowButton.setFocusable(true)
             holder.getNowButton.background = ContextCompat.getDrawable(
                     activity.application,
                     R.drawable.added_to_cart_grey
@@ -192,8 +193,8 @@ class PackageViewPagerAdapter(
                                         holder.getNowButton.setTextColor(Color.parseColor("#bbbbbb"))
                                         holder.getNowButton.setText("Added To Cart")
 //                                        holder.getNowButton.setEnabled(false)
-                                        holder.getNowButton.isEnabled = false
-                                        holder.getNowButton.isClickable = false
+//                                        holder.getNowButton.isEnabled = false
+//                                        holder.getNowButton.isClickable = false
 
                                     }
 
