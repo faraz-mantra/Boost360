@@ -1574,20 +1574,37 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPackageAddToCart(item: Bundles?,imageView: ImageView) {
-        Log.v("onPackageAddToCart", " " + item.toString())
+        Log.d("onPackageAddToCart", " " + item.toString())
 //        var bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
 //        var bundleData =  Gson().fromJson<PackageBundles>(item.toString(), object : TypeToken<PackageBundles>() {}.type)
+
         if (!packageInCartStatus) {
             if (item != null) {
 
-               viewModel.checkBundlePackExists(item._kid)
-                makeFlyAnimation(imageView)
+                CompositeDisposable().add(
+                    AppDatabase.getInstance(requireActivity().application)!!
+                        .cartDao()
+                        .checkCartBundleExist(item._kid)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            if (it == 0) {
+                                makeFlyAnimation(imageView)
+                                callBundleCart(item,imageView)
+                            }else{
 
-                val itemIds = arrayListOf<String>()
+                            }
+                        }, {
+//                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                        })
+                )
+
+//                makeFlyAnimation(imageView)
+
+                /*val itemIds = arrayListOf<String>()
                 for (i in item.included_features) {
                     itemIds.add(i.feature_code)
                 }
-                callBundleCart(item)
                 CompositeDisposable().add(
                     AppDatabase.getInstance(requireActivity().application)!!
                         .featuresDao()
@@ -1682,11 +1699,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
                             }
                         )
-                )
+                )*/
 
             }
         }
-
     }
 
     /*fun checkBannerDetails(list: ArrayList<PromoBanners>){
@@ -2353,8 +2369,96 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     }
 
-    fun callBundleCart(bundle: Bundles){
+    fun callBundleCart(item: Bundles, imageView: ImageView){
+        val itemIds = arrayListOf<String>()
+        for (i in item.included_features) {
+            itemIds.add(i.feature_code)
+        }
+        CompositeDisposable().add(
+            AppDatabase.getInstance(requireActivity().application)!!
+                .featuresDao()
+                .getallFeaturesInList(itemIds)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        featuresList = it
+                        var bundleMonthlyMRP = 0
+                        val minMonth: Int =
+                            if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
 
+                        for (singleItem in it) {
+                            for (item in item!!.included_features) {
+                                if (singleItem.feature_code == item.feature_code) {
+                                    bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
+                                }
+                            }
+                        }
+
+                        offeredBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
+                        originalBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
+
+                        if (item!!.overall_discount_percent > 0)
+                            offeredBundlePrice =
+                                originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100)
+                        else
+                            offeredBundlePrice = originalBundlePrice
+
+                        //clear cartOrderInfo from SharedPref to requestAPI again
+                        prefs.storeCartOrderInfo(null)
+                        viewModel.addItemToCartPackage1(
+                            CartModel(
+                                item!!._kid,
+                                null,
+                                null,
+                                item!!.name,
+                                "",
+                                item!!.primary_image!!.url,
+                                offeredBundlePrice.toDouble(),
+                                originalBundlePrice.toDouble(),
+                                item!!.overall_discount_percent,
+                                1,
+                                if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
+                                "bundles",
+                                null
+                            )
+                        )
+                        val event_attributes: HashMap<String, Any> = HashMap()
+                        item!!.name?.let { it1 ->
+                            event_attributes.put(
+                                "Package Name",
+                                it1
+                            )
+                        }
+                        item!!.target_business_usecase?.let { it1 ->
+                            event_attributes.put(
+                                "Package Tag",
+                                it1
+                            )
+                        }
+                        event_attributes.put("Package Price", originalBundlePrice)
+                        event_attributes.put("Discounted Price", offeredBundlePrice)
+                        event_attributes.put("Discount %", item!!.overall_discount_percent)
+                        item!!.min_purchase_months?.let { it1 ->
+                            event_attributes.put(
+                                "Validity",
+                                it1
+                            )
+                        }
+                        WebEngageController.trackEvent(
+                            ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART,
+                            ADDED,
+                            event_attributes
+                        )
+                        badgeNumber = badgeNumber + 1
+                        Constants.CART_VALUE = badgeNumber
+                    },
+                    {
+                        it.printStackTrace()
+
+                    }
+                )
+        )
     }
 
 }
