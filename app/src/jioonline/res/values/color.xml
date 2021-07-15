@@ -41,5 +41,5 @@
     <color name="colorAccentPositive">@color/ButtoncolorAccent</color>
     <color name="colorAccentNegative">@color/greyish_brown</color>
     <color name="accent_lemon">#1A03007F</color>
-
+    <color name="light_red">@color/greyish_brown</color>
 </resources>

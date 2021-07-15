@@ -78,7 +78,7 @@
       android:gravity="center"
       android:paddingVertical="@dimen/size_14"
       android:text="@string/start_with_pan_card"
-      android:textColor="@color/colorAccentLight"
+      android:textColor="@color/white"
       app:layout_constraintBottom_toBottomOf="parent" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
