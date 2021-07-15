@@ -918,7 +918,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="send_email">Send email&#8230;</string>
   <string name="faqs">FAQs</string>
   <string name="answer">Answer</string>
-  <string name="ok">ok</string>
+  <string name="ok">Ok</string>
   <string name="logo">Logo</string>
   <string name="business_logo" translatable="false">Business Logo</string>
   <string name="featured_image" translatable="false">Featured Image</string>
