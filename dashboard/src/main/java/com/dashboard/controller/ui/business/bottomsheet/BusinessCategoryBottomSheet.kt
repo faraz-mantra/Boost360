@@ -50,23 +50,12 @@ class BusinessCategoryBottomSheet :
   protected fun needHelp() {
     val s = SpannableString(resources.getString(com.boost.presignin.R.string.need_help_desc))
     Linkify.addLinks(s, Linkify.ALL)
-    val alertDialog = AlertDialog.Builder(
-      ContextThemeWrapper(
-        baseActivity,
-        com.boost.presignin.R.style.AlertDialogCustom
-      )
-    )
-    alertDialog.setTitle(getString(com.boost.presignin.R.string.need_help_title)).setMessage(s)
-      .setPositiveButton(
-        resources.getString(
-          com.boost.presignin.R.string.okay
-        ), null
-      )
+    val alertDialog = AlertDialog.Builder(ContextThemeWrapper(baseActivity,R.style.CustomAlertDialogTheme))
+    alertDialog.setTitle(getString(com.boost.presignin.R.string.need_help_title))
+      .setMessage(s)
+      .setPositiveButton(resources.getString(com.boost.presignin.R.string.okay), null)
     val alert = alertDialog.create()
     alert.show()
-    alert.findViewById<TextView>(android.R.id.message)?.movementMethod =
-      LinkMovementMethod.getInstance()
-    alert.getButton(DialogInterface.BUTTON_POSITIVE)
-      .setTextColor(ContextCompat.getColor(baseActivity, com.boost.presignin.R.color.colorAccent))
+    alert.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
   }
 }

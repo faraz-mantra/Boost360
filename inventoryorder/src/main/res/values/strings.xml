@@ -149,7 +149,8 @@
   <string name="pincode">Pincode*</string>
   <string name="enter_customer_s_pincode">Enter customer’s Pincode</string>
   <string name="shipping_address_is_same_as_billing_address">Shipping Address is same as billing Address</string>
-  <string name="go_back_n">Go back</string>
+  <string name="go_back">Go back</string>
+  <string name="go_back_1">Go back</string>
   <string name="next">Next</string>
   <string name="shipping_address">Shipping address</string>
   <string name="type_the_product_name">Type the product name</string>
