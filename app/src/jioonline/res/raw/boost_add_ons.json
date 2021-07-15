@@ -53,7 +53,7 @@
             {
               "businessType": "doctor_profile",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Doctor\ne-Profile"
             },
@@ -337,7 +337,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -429,7 +429,7 @@
             {
               "businessType": "doctor_profile",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Doctor\ne-Profile"
             },
@@ -713,7 +713,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -1068,7 +1068,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -1167,7 +1167,7 @@
             {
               "businessType": "faculty_profiles_d",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Faculty\nProfiles"
             },
@@ -1444,7 +1444,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -1827,7 +1827,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -2217,7 +2217,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -2586,7 +2586,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -2948,7 +2948,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -3310,7 +3310,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -3399,13 +3399,13 @@
               "premiumCode": "",
               "title": "Appointment\nSettings"
             },
-//            {
-//              "businessType": "doctor_profile",
-//              "isLock": false,
-//              "isHide": false,
-//              "premiumCode": "",
-//              "title": "Staff\ne-Profiles"
-//            },
+            //            {
+            //              "businessType": "doctor_profile",
+            //              "isLock": false,
+            //              "isHide": false,
+            //              "premiumCode": "",
+            //              "title": "Staff\ne-Profiles"
+            //            },
             {
               "businessType": "membership_plans",
               "isLock": true,
@@ -3686,7 +3686,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },

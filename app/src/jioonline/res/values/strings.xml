@@ -12,7 +12,7 @@
   <string name="title_activity_business__logo_">Business Logo</string>
   <string name="title_activity_social__sharing_">Social Sharing</string>
   <string name="title_activity_login__main">Welcome Back</string>
-  <string name="primary_number">Primary Number (To communicate with JioOnline)</string>
+  <string name="primary_number">Primary number (To communicate with JioOnline)</string>
   <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
   <string name="ps_sc2_lbl1">Instant Website</string>
   <string name="ps_sc2_lbl2">Creation</string>
@@ -20,12 +20,12 @@
   <string name="ps_sc3_lbl2">Facebook</string>
   <string name="ps_sc3_lbl3">Sign in with your Facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
   <string name="ps_sc4_lbl1">Discoverable</string>
-  <string name="ps_sc4_lbl2">On Search</string>
+  <string name="ps_sc4_lbl2">On search</string>
   <string name="ps_sc4_lbl3">With Location-Based-SEO<sup><small>TM</small></sup>, get \ndiscovered for relevant keywords and \nimprove your ranking on search engines</string>
   <string name="ps_sc5_lbl1">Get your own</string>
   <string name="ps_sc5_lbl2">Domain</string>
   <string name="ps_sc5_lbl3">Take the next step in growing your business. Give it an identity of its own</string>
-  <string name="ps_sc6_lbl1">Generate Business</string>
+  <string name="ps_sc6_lbl1">Generate business</string>
   <string name="ps_sc6_lbl2">Leads</string>
   <string name="ps_sc8_lbl1">Premium features in</string>
   <string name="ps_sc8_lbl2">JioOnline</string>
@@ -324,11 +324,9 @@
 
   <string name="onboarding_screen_1_title">Congratulations!</string>
   <string name="onboarding_screen_1_desc">We\'re here to help you through the way. Here are two most basic yet important things you should know.</string>
-  <string name="onboarding_screen_3_title">Discovery is Revenue</string>
-  <string name="onboarding_screen_2_title">Content is King</string>
+  <string name="onboarding_screen_3_title">Discovery is revenue</string>
+  <string name="onboarding_screen_2_title">Content is king</string>
   <string name="primary_contact_number_message">Please drop us a line at businesscare@jio.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to change this number.</string>
-
-  <string name="your_site_health">Your Site Health</string>
 
   <!--this part is for FAQ harcoded strings -->
   <string-array name="faqmain">
@@ -344,14 +342,14 @@
     <item>OTHER INFO</item>
   </string-array>
 
-  <string name="buy_in_capital">BUY</string>
-  <string name="later_in_capital">LATER</string>
+  <string name="buy_in_capital">Buy</string>
+  <string name="later_in_capital">Later</string>
   <string name="renew_light_house_plan">Renew JioOnline plan to get all the features</string>
   <string name="light_house_plan_expired_some_features_visible">Your JioOnline plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
-  <string name="renew_wildfire_plan">Renew Wildfire plan</string>
+  <string name="renew_wildfire_plan">Renew wildfire plan</string>
   <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
-  <string name="renew_in_capital">RENEW</string>
-  <string name="ignore_in_capital">IGNORE</string>
+  <string name="renew_in_capital">Renew</string>
+  <string name="ignore_in_capital">Ignore</string>
   <string name="buy_light_house_plan">Buy JioOnline plan to get all the features</string>
   <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
   <string name="buy_light_house">Your current plan is demo which does not have all features, to get all features buy JioOnline plan.</string>
@@ -367,7 +365,7 @@
 
   <string name="payment_config_acceptance_message">I agree that JioOnline will charge %s of the total cart value as convenience fee(as part of your current JioOnline plan)</string>
 
-  <string name="link_marketplace">boost.nowfloats.com/home/marketplace</string>
+  <string name="link_marketplace">jioonline.nowfloatsdev.com/home/marketplace</string>
   <string name="wordpress_plugin_script">wordpress-plugin script</string>
   <string name="shared_user_key">com.jioonline.kb.boostapp.sharedkey</string>
   <string name="ria_academy">JioOnline Academy</string>
@@ -385,8 +383,8 @@
     <item>Change Password</item>
     <item>Log out</item>
   </string-array>
-  <string name="boost_extension">JioOnline Extensions</string>
-  <string name="enable_boost_keyboard">Enable Business Keyboard</string>
+  <string name="boost_extension">JioOnline extensions</string>
+  <string name="enable_boost_keyboard">Enable business keyboard</string>
   <string name="about">About JioOnline</string>
   <string name="boost_payment_gateway">JioOnline payment gateway</string>
   <string name="payment_gateway_not_added_please_add_first">JioOnline Payment gateway not added, please add first.</string>
@@ -395,7 +393,7 @@
   <string name="open_boost">Open JioOnline</string>
   <string name="boost_lite_boost_pro_boost_custom">jioOnline Lite, jioOnline Pro, jioOnline Custom</string>
   <string name="your_nowfloats_website_runs_on_your_base_pack_once_your_base_pack_expires_all_your_features_and_functions_will_be_disabled_and_you_won_t_be_able_to_update_any_content">Your jioOnline website runs on your base pack Once your base pack expires, all your features and functions will be disabled and you won\'t be able to update any content.</string>
-  <string name="boost_plans">jioOnline Plans</string>
+  <string name="boost_plans">jioOnline plans</string>
   <string name="month_boost_demo_package_will_expire_on">\" month JioOnline demo package will expire on \"</string>
   <string name="tags_help_site_visitors_to_find_a_desire_item">Tags help site visitors find a desired item on your JioOnline website. You can add related tags here and reuse them across other related products. Selecting a tag filters all relevant inventory in your product catalog.</string>
   <string name="the_total_number_of_units">The total number of units you are willing to sell through your JioOnline website. Quantity decreases with orders that include this product.</string>
@@ -444,7 +442,7 @@
   <string name="channels_belong_to_respective_owners_boost_360_does_not_own_them"><b>Disclaimer:</b> The Names and Logos of Google Search, Google Maps, Facebook Page, Facebook Shop, WhatsApp Business &amp; Twitter belong to their respective owners. JioOnline does not own them.</string>
   <string name="boost360_terms_conditions"><![CDATA[JioOnline - Terms & Conditions]]></string>
   <string name="entransactional_updates_whatsapp_number">Allow JioOnline to send entransactional updates regarding you orders, invoices along with other promotional messages on this WhatsApp number.</string>
-  <string name="not_opted_for_boost_alerts">Not Opted For JioOnline Alerts</string>
+  <string name="not_opted_for_boost_alerts">Not opted for JioOnline alerts</string>
   <string name="digital_channel_in_boost">Digital channel in JioOnline</string>
   <string name="boost_360">JioOnline</string>
   <string name="terms_of_use_and_privacy_policy">By creating JioOnline account, you agree to our Terms of use and Privacy Policy</string>
@@ -458,6 +456,7 @@
   <string name="marketoffer_howtoOne">Open the JioOnline app/website/mobile-web, search for packs and choose your preferred <b>packs/addon</b>.<br /></string>
   <string name="marketoffer_termTwo">This offer is valid only for your first ever transaction of the month on JioOnline.<br /></string>
   <string name="on_boost360">on JioOnline</string>
+  <string name="disable_boost_notifications">Disable JioOnline notification</string>
   <string-array name="about_tab_items">
     <item>JioOnline Training &amp; Certification Program</item>
     <item>FAQs</item>
@@ -584,10 +583,20 @@
   <string name="pranav_email">businesscare@jio.com</string>
   <string name="wildfire_email">businesscare@jio.com</string>
   <string name="signin_nowfloats_com">.bizdigital.com</string>
+  <string name="nowfloats_dot_com">.bizdigital.com</string>
 
   <string name="get_boost_360_tnc">https://www.jio.com/business/JioOnline-terms-and-conditions</string>
   <string name="need_help_desc">Please feel free to <a href="mailto: businesscare@jio.com">send an email at businesscare@jio.com</a>. Alternatively you can <a href="tel:18008899444">call us at 1800 889 9444</a>.</string>
   <string name="business_category_is_to_be_selected_only_once_while_setting_up_your_business_account_on_boost_360_to_know_more_contact_support">Business category is to be selected only once while setting up your business account on JioOnline. To know more contact support.</string>
   <string name="fp_shop_awaited_desc">Unfortunately, This functionality is not available on the Android app yet. To activate this channel, please log in to boost the web portal <a href="https://jioonline.nowfloatsdev.com/">(jioonline.nowfloatsdev.com)</a> from the nearest desktop and go to <b>Content > Content Sharing Settings</b>. There you\'ll be able to activate this.</string>
+  <string name="nowfloats">JioOnline</string>
+  <string name="powered_by_company"> JioOnline</string>
+  <string name="nowfloats_deliv">JioOnline delivery</string>
+  <string name="renew_nowfloats_plan">Renew JioOnline plan</string>
+  <string name="assured_purchase_is_service_guarantee_by_nowfloats">Assured Purchase is a service guarantee by JioOnline that is the new benchmark for online selling businesses in India. By earning this badge:</string>
 
+  <string name="facebook_url_message" >If your Facebook page URL is facebook.com/jioonline; then your user name is JioOnline</string>
+
+  <string name="twitter_consumer_key">TE20KJRCg35Sg3o8lM7OvTGRM</string>
+  <string name="twitter_consumer_secret">mvHwpYzH4y2nJFdZfIHsyyEBnaZibMmtg3P5VnKKwGgIwFAn0M</string>
 </resources>

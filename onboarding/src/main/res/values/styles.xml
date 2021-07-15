@@ -10,6 +10,7 @@
     <item name="android:windowBackground">@color/white</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="android:windowDisablePreview">true</item>
+    <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
 
 
@@ -254,6 +255,7 @@
   </style>
 
   <style name="AlertDialogCustom" parent="CustomAlertDialogTheme">
+    <item name="colorAccent">@color/colorAccentLight</item>
     <item name="android:textColorPrimary">@color/black_4a4a4a</item>
     <item name="android:background">@color/white</item>
   </style>
