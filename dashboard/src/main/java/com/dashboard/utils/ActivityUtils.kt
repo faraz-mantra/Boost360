@@ -393,6 +393,7 @@ fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boole
     WebEngageController.trackEvent(text, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.nowfloats.CustomPage.CustomPageActivity"))
     webIntent.putExtra("IS_ADD", isAdd)
+    webIntent.putExtra("featureWidgets", session?.getFeatureDetails(Key_Preferences.FEATURE_DETAILS))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
