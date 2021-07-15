@@ -446,7 +446,7 @@
               android:textAllCaps="false"
               android:textColor="@color/white"
               app:textType="HEADING_6"
-              tools:text="CONFIRM APPOINTMENT" />
+              tools:text="Confirm appointment" />
 
             <View
               android:id="@+id/divider"

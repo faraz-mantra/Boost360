@@ -15,6 +15,6 @@
   <color name="gray_828282">#828282</color>
   <color name="green_6bc95c">#6BC95C</color>
   <color name="error_red">#E39595</color>
-    <color name="ButtoncolorAccent">@color/colorAccent</color>
+  <color name="ButtoncolorAccent">@color/colorAccent</color>
 
 </resources>

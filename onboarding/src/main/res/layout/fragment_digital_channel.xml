@@ -105,7 +105,7 @@
               android:layout_marginStart="@dimen/size_10"
               android:textColor="@color/white"
               app:textType="HEADING_6"
-              tools:text="Not Connected (2/6)" />
+              tools:text="Not connected (2/6)" />
           </LinearLayout>
 
           <com.framework.views.viewgroups.BaseRecyclerView

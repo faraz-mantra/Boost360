@@ -35,7 +35,7 @@
       android:layout_marginStart="@dimen/size_10"
       android:layout_marginEnd="@dimen/size_4"
       android:layout_weight="1"
-      android:textColor="@color/light_blue_grey"
+      android:textColor="@color/black_4a4a4a"
       app:textType="BODY_1"
       tools:text="Appointment\nBookings Worth" />
 

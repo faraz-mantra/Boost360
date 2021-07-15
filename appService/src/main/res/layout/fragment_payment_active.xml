@@ -286,7 +286,7 @@
           android:paddingStart="@dimen/size_40"
           android:paddingEnd="@dimen/size_40"
           android:text="@string/view_in_add_on_store"
-          android:textAllCaps="true" />
+          android:textAllCaps="false" />
       </LinearLayout>
 
       <RelativeLayout
