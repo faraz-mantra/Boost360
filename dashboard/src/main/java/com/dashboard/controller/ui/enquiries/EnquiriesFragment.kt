@@ -28,8 +28,7 @@ import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.response.OrderSummaryResponse
 import java.util.*
 
-class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, DashboardViewModel>(),
-  RecyclerItemClickListener {
+class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
   private var adapterACustomer: AppBaseRecyclerViewAdapter<CustomerActionItem>? = null

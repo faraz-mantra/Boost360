@@ -116,7 +116,7 @@
             android:includeFontPadding="false"
             android:paddingStart="@dimen/size_4"
             android:paddingEnd="@dimen/size_4"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:textColor="@color/white_70"
             app:textType="CAPTION"
             tools:text="@string/add_missing_info_better_online_traction" />

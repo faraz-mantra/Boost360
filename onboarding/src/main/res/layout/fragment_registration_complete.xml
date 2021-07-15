@@ -241,7 +241,7 @@
                     android:includeFontPadding="false"
                     android:textAlignment="gravity"
                     android:textColor="@color/black_15"
-                    app:textAllCaps="true"
+                    app:textAllCaps="false"
                     app:textType="HEADING_TEXT_1"
                     tools:text="M" />
                 </FrameLayout>

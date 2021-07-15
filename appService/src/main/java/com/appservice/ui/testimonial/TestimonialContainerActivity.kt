@@ -50,9 +50,6 @@ open class TestimonialContainerActivity :
     return binding?.appBarLayout?.toolbar
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.body_2)
-  }
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {

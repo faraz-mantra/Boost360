@@ -102,10 +102,6 @@ open class FragmentContainerOrderActivity :
     return binding?.appBarLayout?.toolbar
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.body_2)
-  }
-
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.ALL_ORDER_VIEW,

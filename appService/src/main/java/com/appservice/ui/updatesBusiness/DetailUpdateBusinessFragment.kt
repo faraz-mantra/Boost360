@@ -10,6 +10,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.app.ActivityCompat
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -196,7 +197,7 @@ class DetailUpdateBusinessFragment :
 
 
   private fun apiDeleteUpdateBusiness() {
-    AlertDialog.Builder(baseActivity)
+    AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
       .setCancelable(false)
       .setTitle(R.string.are_you_sure_want_to_delete)
       .setPositiveButton(R.string.delete_) { dialog: DialogInterface, _: Int ->

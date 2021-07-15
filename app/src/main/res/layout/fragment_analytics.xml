@@ -51,7 +51,7 @@
               android:layout_marginStart="10dp"
               android:text="Your Customers Love you"
               android:textColor="#808080"
-              android:textStyle="bold" />
+               android:fontFamily="@font/semi_bold" />
           </LinearLayout>
 
           <LinearLayout

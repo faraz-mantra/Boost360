@@ -17,7 +17,7 @@
       android:text="@string/feedback"
       android:textColor="@color/white"
       android:textSize="20sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
   </LinearLayout>
 
   <com.nowfloats.CustomWidget.roboto_lt_24_212121

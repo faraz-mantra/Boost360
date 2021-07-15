@@ -24,7 +24,7 @@
       android:text="@string/order_analytics"
       android:textColor="@color/white"
       android:textSize="20sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <ImageView
       android:id="@+id/social_img"

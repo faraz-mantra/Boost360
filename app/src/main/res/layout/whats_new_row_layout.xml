@@ -24,7 +24,7 @@
       android:singleLine="true"
       android:text="@string/whats_new_default"
       android:textSize="15sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
       android:id="@+id/tv_text_body"

@@ -75,7 +75,7 @@
           android:textColor="@color/warm_grey_two"
           android:visibility="gone"
           app:fontFamily="@font/regular"
-          app:textAllCaps="true"
+          app:textAllCaps="false"
           app:textType="OVERLINE" />
 
       </androidx.appcompat.widget.LinearLayoutCompat>

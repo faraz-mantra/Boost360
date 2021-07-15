@@ -42,7 +42,7 @@
           android:text="Let's get started!"
           android:textColor="@color/white"
           android:textSize="16sp"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
       </LinearLayout>
 
       <!--            <include-->

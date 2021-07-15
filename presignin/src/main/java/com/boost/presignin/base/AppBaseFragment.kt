@@ -22,8 +22,7 @@ import com.framework.models.BaseViewModel
 import com.onboarding.nowfloats.constant.PreferenceConstant
 
 
-abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> :
-  BaseFragment<Binding, ViewModel>() {
+abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseFragment<Binding, ViewModel>() {
 
 
   protected var appBaseActivity: AppBaseActivity<*, *>? = null

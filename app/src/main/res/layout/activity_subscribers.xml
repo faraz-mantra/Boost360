@@ -47,7 +47,7 @@
       android:layout_marginBottom="3dp"
       android:text="@string/uh_oh_you_have_no_subscribers"
       android:textSize="20sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
       android:layout_width="wrap_content"

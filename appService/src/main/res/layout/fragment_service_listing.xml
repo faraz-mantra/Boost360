@@ -55,7 +55,7 @@
       <!--                android:background="@drawable/rounded_stroke_orange_4_transparent"-->
       <!--                android:gravity="center"-->
       <!--                android:text="@string/sort_and_filter"-->
-      <!--                android:textAllCaps="true"-->
+      <!--                android:textAllCaps="false"-->
       <!--                android:textColor="@color/yellow_ffb900" />-->
 
     </LinearLayout>

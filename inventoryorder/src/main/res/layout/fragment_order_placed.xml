@@ -256,7 +256,7 @@
               android:layout_weight="0"
               android:gravity="end"
               android:text="@string/invoice"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/orange"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_1" />
@@ -302,7 +302,7 @@
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/view_order_details"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           app:fontFamily="@font/semi_bold"
           app:textType="BODY_1" />
@@ -317,7 +317,7 @@
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/initiate_new_order"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/colorAccentLight"
           app:fontFamily="@font/semi_bold"
           app:textType="BODY_1" />

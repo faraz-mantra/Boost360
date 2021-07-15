@@ -79,6 +79,7 @@
             android:layout_below="@+id/card_view"
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
+            android:textAllCaps="false"
             android:background="@drawable/round_border_button"
             android:text="@string/change"
             android:textColor="@color/back_button_color"
@@ -109,7 +110,7 @@
           android:layout_marginTop="10dp"
           android:text="@string/featured_image_instructions_2"
           android:textSize="12sp"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
       </LinearLayout>
 

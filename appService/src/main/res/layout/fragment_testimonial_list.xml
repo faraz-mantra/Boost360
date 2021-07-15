@@ -63,7 +63,7 @@
             android:id="@+id/feature_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:text="@string/testimonial_title"
             android:textColor="@color/black_4a4a4a"
             app:textType="HEADING_7" />
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_20"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:gravity="center"
             android:text="With the feature, you can showcase your customer reviews and highlight their experience on the homepage of your website."
             app:textType="BODY_1" />
@@ -85,7 +85,7 @@
             android:layout_marginTop="@dimen/size_20"
             android:layout_marginEnd="@dimen/size_10"
             android:background="@drawable/orange_button_click_effect_n"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:gravity="center"
             android:paddingTop="@dimen/size_10"
             android:paddingBottom="@dimen/size_10"

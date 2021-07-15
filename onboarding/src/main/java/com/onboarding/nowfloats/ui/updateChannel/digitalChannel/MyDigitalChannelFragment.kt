@@ -54,8 +54,7 @@ import io.reactivex.Completable
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MyDigitalChannelFragment :
-  AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
+class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
 
   private var connectedChannels: ArrayList<String> = arrayListOf()
 
@@ -460,12 +459,8 @@ class MyDigitalChannelFragment :
         adapterDisconnect?.notifyItemChanged(position)
         val count = listDisconnect?.filter { it.isSelected == true }?.size ?: 0
         if (count > 0) {
-          if (count == 1)
-            binding?.syncBtn?.text =
-              "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channel)}"
-          else
-            binding?.syncBtn?.text =
-              "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channels)}"
+          if (count == 1) binding?.syncBtn?.text = "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channel)}"
+          else binding?.syncBtn?.text = "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channels)}"
           binding?.syncBtn?.visible()
         } else binding?.syncBtn?.gone()
         if (channelTypeClick.isNotEmpty()) {
