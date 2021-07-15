@@ -72,10 +72,10 @@
         android:layout_marginHorizontal="@dimen/size_16"
         android:layout_marginTop="@dimen/size_12"
         android:layout_marginBottom="@dimen/size_16"
-        android:background="@null"
         android:enabled="true"
         android:gravity="center"
-        android:text="@string/contact_support"
+        android:textAllCaps="false"
+        android:text="@string/contact_support_n"
         android:textColor="@color/ButtoncolorAccent" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
