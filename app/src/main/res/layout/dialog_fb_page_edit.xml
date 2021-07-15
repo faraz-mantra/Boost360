@@ -13,7 +13,7 @@
     android:layout_marginBottom="24dp"
     android:gravity="center"
     android:text="@string/fb_page_unavailable"
-    android:textAllCaps="true"
+    android:textAllCaps="false"
     android:textSize="18sp"
      android:fontFamily="@font/semi_bold" />
 

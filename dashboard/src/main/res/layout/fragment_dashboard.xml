@@ -150,7 +150,7 @@
                     android:includeFontPadding="false"
                     android:paddingEnd="@dimen/size_6"
                     android:text="@string/improve"
-                    android:textAllCaps="true"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
                     app:fontFamily="@font/semi_bold"
                     app:textType="CAPTION"
@@ -441,7 +441,7 @@
                     android:drawablePadding="@dimen/size_4"
                     android:text="@string/retry"
                     android:textColor="@color/colorAccent"
-                    app:textAllCaps="true"
+                    app:textAllCaps="false"
                     app:textType="BODY_1" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
               </FrameLayout>
@@ -601,7 +601,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/share_business_card"
                 android:textColor="@color/white"
-                app:textAllCaps="true"
+                app:textAllCaps="false"
                 app:textType="HEADING_6" />
 
               <com.framework.views.customViews.CustomImageView

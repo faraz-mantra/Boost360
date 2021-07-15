@@ -65,7 +65,7 @@
         android:fontFamily="@font/regular"
         android:gravity="center"
         android:text="@string/take_me_to_service_listing"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textFontWeight="600"
         app:textType="BODY_1" />

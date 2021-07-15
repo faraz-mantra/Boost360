@@ -337,7 +337,7 @@
               android:fontFamily="@font/semi_bold"
               android:gravity="center"
               android:text="@string/publish_changes"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textSize="14sp"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintRight_toRightOf="parent"

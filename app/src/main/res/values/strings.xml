@@ -2180,7 +2180,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="calculate_shipping_charges">Calculate shipping charges</string>
   <string name="save_metrics">Save metrics</string>
   <string name="fpwebsitename_com">fpwebsitename.com</string>
-  <string name="get_started_">Get Started</string>
+  <string name="get_started_">Get started</string>
   <string name="send_message">Send message</string>
   <string name="call_subscriber">Call subscriber</string>
   <string name="unsubscribe">Unsubscribe</string>
@@ -2420,7 +2420,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="use_same_time_for_whole_week">Use same time for whole week</string>
   <string name="expiry_in_3_days">Expiry in 3 days</string>
   <string name="j" translatable="false">J</string>
-  <string name="view_details">View Details</string>
+  <string name="view_details">View details</string>
   <string name="confirming">Confirming...</string>
   <string name="call_">Call</string>
   <string name="manage_your_potential_customers_on_a_tap">Manage your potential customers on a tap</string>
@@ -3049,7 +3049,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="add_featured_image">ADD FEATURED IMAGE</string>
   <string name="logo_updated_successfully">Logo uploaded successfully.</string>
   <string name="add_logo">Add logo</string>
-  <string name="business_timings">Business timings</string>
+  <string name="business_timings">Business Timings</string>
   <string name="review_title_testimonial">Review title</string>
   <string name="review_description_testimonial">Review description</string>
   <string name="our_topper_data_empty">Our toppers data empty!</string>

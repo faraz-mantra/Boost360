@@ -125,7 +125,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@string/commencement_date"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="#C4C4C4"
           android:textSize="@dimen/_8sdp" />
 
@@ -177,7 +177,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:padding="@dimen/_10sdp"
         android:text="@string/delete_"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/red"
         android:textSize="@dimen/_12sdp" />
 

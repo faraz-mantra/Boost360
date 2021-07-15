@@ -337,7 +337,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -713,7 +713,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -1075,7 +1075,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -1458,7 +1458,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -1848,7 +1848,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -2245,7 +2245,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -2621,7 +2621,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -2997,7 +2997,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -3373,7 +3373,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -3763,7 +3763,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },

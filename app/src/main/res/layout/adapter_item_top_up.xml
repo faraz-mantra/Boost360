@@ -33,7 +33,7 @@
       android:layout_marginTop="10dp"
       android:layout_marginEnd="10dp"
       android:text="@string/wildfire"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:textSize="16sp"
        android:fontFamily="@font/semi_bold"
       app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +73,7 @@
         android:gravity="center"
         android:padding="12dp"
         android:text="@string/check_pricing"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/primary_color_dark"
         android:textSize="12sp"
          android:fontFamily="@font/semi_bold" />
@@ -88,7 +88,7 @@
         android:gravity="center"
         android:padding="12dp"
         android:text="@string/view_details"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textSize="12sp"
          android:fontFamily="@font/semi_bold" />
     </LinearLayout>

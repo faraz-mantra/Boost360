@@ -41,7 +41,7 @@
         android:layout_marginTop="@dimen/size_4"
         android:fontFamily="@font/regular"
         android:text="@string/website_updated"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/yellow_ffb900"
         app:fontFamily="@font/semi_bold"
         app:textType="HEADING_5" />
@@ -75,7 +75,7 @@
         android:paddingHorizontal="@dimen/size_30"
         android:stateListAnimator="@null"
         android:text="@string/view_changes_live"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:visibility="visible" />
@@ -94,7 +94,7 @@
         android:paddingHorizontal="@dimen/size_20"
         android:stateListAnimator="@null"
         android:text="@string/share_on_whatsapp"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/green_6bc95c"
         android:textSize="14sp"
         android:visibility="visible" />

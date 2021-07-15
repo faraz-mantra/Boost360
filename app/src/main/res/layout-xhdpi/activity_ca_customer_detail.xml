@@ -132,7 +132,7 @@
         android:fontFamily="@font/semi_bold"
         android:gravity="end"
         android:text="@string/view_less"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/primary"
         android:textSize="13sp" />
 
@@ -194,7 +194,7 @@
           android:background="@color/primaryColor"
           android:fontFamily="sans-serif"
           android:text="@string/share"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@android:color/white"
           android:textSize="15sp"
           tools:ignore="MissingPrefix" />
@@ -207,7 +207,7 @@
           android:background="@drawable/ca_btn_call"
           android:fontFamily="sans-serif"
           android:text="@string/call"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/primary"
           android:textSize="15sp"
           tools:ignore="MissingPrefix" />

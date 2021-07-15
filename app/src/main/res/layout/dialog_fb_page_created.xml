@@ -90,7 +90,7 @@
       android:layout_height="wrap_content"
       android:gravity="center"
       android:text="@string/congratulations"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:textSize="13sp" />
 
     <TextView

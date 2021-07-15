@@ -54,7 +54,7 @@
             android:text="@string/add_staff_image"
             android:textColor="@color/blue_4A90E2"
             android:visibility="gone"
-            app:textAllCaps="true"
+            app:textAllCaps="false"
             app:textType="CAPTION" />
         </FrameLayout>
 
@@ -429,7 +429,7 @@
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/save_amp_publish"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           android:textFontWeight="600" />
       </LinearLayout>

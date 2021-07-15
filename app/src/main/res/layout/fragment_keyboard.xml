@@ -89,7 +89,7 @@
               android:layout_marginStart="32dp"
               android:layout_weight="1"
               android:text="Orders"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/gray"
               android:textSize="13sp" />
 
@@ -130,7 +130,7 @@
               android:layout_marginStart="32dp"
               android:layout_weight="1"
               android:text="Enquiries"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/gray"
               android:textSize="13sp" />
 
@@ -172,7 +172,7 @@
               android:layout_marginStart="32dp"
               android:layout_weight="1"
               android:text="Calls"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/gray"
               android:textSize="13sp" />
 
@@ -214,7 +214,7 @@
               android:layout_marginStart="32dp"
               android:layout_weight="1"
               android:text="Subscribers"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/gray"
               android:textSize="13sp" />
 
@@ -318,7 +318,7 @@
               android:layout_marginStart="32dp"
               android:layout_weight="1"
               android:text="@string/enable_keyboard"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/gray"
               android:textSize="13sp" />
 

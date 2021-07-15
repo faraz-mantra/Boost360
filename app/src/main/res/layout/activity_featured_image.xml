@@ -79,6 +79,7 @@
             android:layout_below="@+id/card_view"
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
+            android:textAllCaps="false"
             android:background="@drawable/round_border_button"
             android:text="@string/change"
             android:textColor="@color/primaryColor"

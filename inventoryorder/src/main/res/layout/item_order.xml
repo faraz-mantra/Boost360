@@ -60,9 +60,9 @@
                 style="@style/wrap_wrap"
                 android:layout_marginStart="@dimen/size_4"
                 android:textAlignment="center"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
-                app:textAllCaps="true"
+                app:textAllCaps="false"
                 app:textType="BODY_1"
                 tools:drawableStart=""
                 tools:text="New Order" />
@@ -218,7 +218,7 @@
           android:layout_gravity="center"
           android:layout_weight="1"
           android:gravity="center"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           app:textType="HEADING_6"
           tools:text="CONFIRM ORDER" />

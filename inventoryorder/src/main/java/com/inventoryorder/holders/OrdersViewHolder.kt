@@ -25,8 +25,7 @@ import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.util.*
 
-class OrdersViewHolder(binding: ItemOrderBinding) :
-  AppBaseRecyclerViewHolder<ItemOrderBinding>(binding) {
+class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<ItemOrderBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)

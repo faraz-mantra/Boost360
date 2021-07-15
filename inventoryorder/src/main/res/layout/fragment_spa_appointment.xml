@@ -239,7 +239,7 @@
           android:shadowRadius="0"
           android:stateListAnimator="@null"
           android:text="@string/review_details"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           app:fontFamily="@font/bold"
           app:textType="CAPTION"

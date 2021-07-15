@@ -102,7 +102,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:textAllCaps="true" />
+            app:textAllCaps="false" />
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/civ_speak_how_it_works"
@@ -142,7 +142,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:textAllCaps="true" />
+            app:textAllCaps="false" />
 
           <com.framework.views.dotsindicator.DotsIndicator
             android:id="@+id/di_pager_indicator"
@@ -179,7 +179,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:textAllCaps="true" />
+            app:textAllCaps="false" />
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/civ_speak_tips"

@@ -72,7 +72,7 @@
   <string name="i_don_t_have_an_instamojo_account">I don\'t have an Instamojo account</string>
   <string name="i_have_an_instamojo_account">I have an Instamojo account</string>
   <string name="start_with_pan_card">Start with PAN card</string>
-  <string name="get_started">get started</string>
+  <string name="get_started">Get started</string>
   <string name="take_photo_of_your_pan_card">Take photo Of your PAN card</string>
   <string name="submit_documents_for_kyc">Submit documents for KYC</string>
   <string name="submit">Submit</string>
@@ -175,7 +175,7 @@
   <string name="proceed">Proceed</string>
   <string name="service_details">Service details</string>
   <string name="other_information">Other information</string>
-  <string name="product_details">Product details</string>
+  <string name="product_details">Product Details</string>
   <string name="additional_information">Additional Info</string>
   <string name="testimonial_title">Testimonials</string>
   <string name="updates_title">Latest Updates</string>
@@ -347,7 +347,7 @@
   <string name="for_invoice">(for invoice)</string>
   <string name="product_tags">Product tags</string>
   <string name="tags_help_site_visitors_filter_products_in_your_catalogue">Tags help site visitors filter products in your catalogue.</string>
-  <string name="type_a_tag_and_press_add">Type a tag and press \'ADD\'</string>
+  <string name="type_a_tag_and_press_add">Type a tag and press \'Add\'</string>
   <string name="add">Add</string>
   <string name="it_appears_at_the_end_of_the_product_name_as_it_s_variant">It appears at the end of the product name as it’s variant</string>
   <string name="e_g_color">e.g. Color</string>
