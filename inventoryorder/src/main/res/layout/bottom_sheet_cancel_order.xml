@@ -152,7 +152,7 @@
         android:id="@+id/tvCancel"
         style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
         android:layout_marginEnd="@dimen/size_20"
-        android:text="@string/go_back"
+        android:text="@string/go_back_n"
         android:textColor="@color/white" />
 
 

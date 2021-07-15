@@ -97,7 +97,7 @@
             android:drawableStart="@drawable/ic_add_gstn_yellow"
             android:drawablePadding="@dimen/size_5"
             android:text="@string/select_appointment_date_and_time"
-            android:textColor="@color/orange"
+            android:textColor="@color/colorAccentLight"
             android:visibility="visible"
             app:fontFamily="@font/bold"
             app:layout_constraintStart_toStartOf="@id/text_appt_date_time"
