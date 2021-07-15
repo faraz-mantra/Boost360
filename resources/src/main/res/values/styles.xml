@@ -3,18 +3,13 @@
 
   <style name="AppBaseTheme" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorAccent</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:windowBackground">@color/white</item>
     <item name="android:screenOrientation">portrait</item>
-    <item name="android:windowDisablePreview">true</item>
-    <item name="actionMenuTextColor">@color/cerulean_blue</item>
-    <item name="android:actionMenuTextColor">@color/cerulean_blue</item>
     <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
-    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
-    <item name="toolbarStyle">@style/ToolbarStyle</item>
-    <item name="android:toolbarStyle" tools:ignore="NewApi">@style/ToolbarStyle</item>
+    <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
 
 
@@ -59,10 +54,6 @@
     <item name="background">@drawable/bg_rounded_white</item>
   </style>
 
-  <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
-    <item name="titleTextAppearance">@style/ToolbarStyle.TextAppearance</item>
-    <item name="android:background">@color/transparent</item>
-  </style>
 
   <style name="ToolbarStyle.TextAppearance" parent="TextAppearance.MaterialComponents.Body1">
     <item name="font">@font/bold</item>
@@ -127,4 +118,5 @@
   <style name="PositiveButtonStyleMaterial" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
     <item name="android:textColor">@color/colorAccentPositive</item>
   </style>
+
 </resources>

@@ -95,8 +95,7 @@ import kotlin.collections.ArrayList
 const val IS_FIRST_LOAD = "isFirsLoad"
 const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
 
-class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(),
-  RecyclerItemClickListener {
+class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var deepLinkUtil: DeepLinkUtil? = null
   private var connectedChannels: ArrayList<String> = arrayListOf()

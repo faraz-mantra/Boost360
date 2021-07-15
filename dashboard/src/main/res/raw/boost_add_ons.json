@@ -52,14 +52,14 @@
             },
             {
               "businessType": "doctor_profile",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Doctor\ne-Profile"
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"
@@ -337,7 +337,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -428,14 +428,14 @@
             },
             {
               "businessType": "doctor_profile",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Doctor\ne-Profile"
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"
@@ -713,7 +713,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -1068,7 +1068,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -1166,7 +1166,7 @@
             },
             {
               "businessType": "faculty_profiles_d",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Faculty\nProfiles"
@@ -1444,7 +1444,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -1827,7 +1827,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -2217,7 +2217,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -2586,7 +2586,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -2670,7 +2670,7 @@
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"
@@ -2955,7 +2955,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -3039,7 +3039,7 @@
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"
@@ -3324,7 +3324,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },
@@ -3408,7 +3408,7 @@
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"
@@ -3707,7 +3707,7 @@
             {
               "businessType": "search_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Search\nAnalytics"
             },

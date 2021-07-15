@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:padding="15sp"
         android:textFontWeight="600"
         android:textStyle="normal"
@@ -82,7 +82,7 @@
         android:gravity="center"
         android:paddingTop="@dimen/size_4"
         android:paddingBottom="@dimen/size_4"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         app:textType="HEADING_6"
         tools:text="Confirm 4 services" />

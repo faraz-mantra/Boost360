@@ -17,7 +17,7 @@
     android:text="Change Primary Number"
     android:textColor="@color/primaryColor"
     android:textSize="15sp"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 
   <TextView
     android:id="@+id/tvContent"

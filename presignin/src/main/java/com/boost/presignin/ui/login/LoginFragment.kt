@@ -47,14 +47,13 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
   }
 
   override fun authTokenData(): AuthTokenDataItem? {
-    return if (resultLogin()?.authTokens.isNullOrEmpty()
-        .not()
+    return if (resultLogin()?.authTokens.isNullOrEmpty().not()
     ) resultLogin()?.authTokens!![0] else null
   }
 
   override fun onResume() {
     super.onResume()
-    Handler().postDelayed({ baseActivity.showKeyBoard(binding?.usernameEt) }, 300)
+    binding?.usernameEt?.post{ baseActivity.showKeyBoard(binding?.usernameEt) }
   }
 
   override fun onCreateView() {

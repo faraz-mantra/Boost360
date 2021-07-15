@@ -48,8 +48,7 @@ public class DomainEmailActivity extends AppCompatActivity {
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
-                Fragment currentFragment =
-                        getSupportFragmentManager().findFragmentById(R.id.mainFrame);
+                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.mainFrame);
                 if (currentFragment != null) {
                     String tag = currentFragment.getTag();
                     Log.e("tag", ">>>$tag");

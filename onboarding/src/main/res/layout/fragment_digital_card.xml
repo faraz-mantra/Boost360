@@ -86,7 +86,7 @@
         android:background="@drawable/bg_button_outlined_grey"
         android:stateListAnimator="@null"
         android:text="@string/share_on_more"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         app:textType="HEADING_6" />
     </LinearLayout>
 

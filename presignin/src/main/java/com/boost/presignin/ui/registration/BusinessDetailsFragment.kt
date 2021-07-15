@@ -22,8 +22,7 @@ import okio.Buffer
 import okio.BufferedSource
 import java.nio.charset.Charset
 
-class BusinessDetailsFragment :
-  AppBaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
+class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
 
   private var floatsRequest: CategoryFloatsRequest? = null
 

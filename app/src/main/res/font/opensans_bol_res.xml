@@ -3,10 +3,10 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <font
-    android:font="@font/opensans_bold"
+    android:font="@font/bold"
     android:fontStyle="normal"
     android:fontWeight="700"
-    app:font="@font/opensans_bold"
+    app:font="@font/bold"
     app:fontStyle="normal"
     app:fontWeight="700" />
 

@@ -23,8 +23,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.webengageconstant.*
 
-class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoModel>(),
-  RecyclerItemClickListener {
+class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoModel>(), RecyclerItemClickListener {
 
   private val TAG = "CategoryFragment"
   private lateinit var baseAdapter: AppBaseRecyclerViewAdapter<CategoryDataModel>

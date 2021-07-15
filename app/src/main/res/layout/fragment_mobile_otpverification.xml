@@ -29,7 +29,7 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="14dp"
       android:layout_marginTop="20dp"
-      android:fontFamily="@font/open_sans_bold"
+      android:fontFamily="@font/bold"
       android:text="Almost there..."
       android:textColor="@color/login_title"
       android:textSize="30sp" />
@@ -93,7 +93,7 @@
         android:id="@+id/resend_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:text="Didn’t get the code? Resend"
         android:textColor="#4a4a4a"
         android:visibility="visible" />
@@ -129,10 +129,10 @@
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_bold"
+          android:fontFamily="@font/bold"
           android:gravity="center"
           android:text="@string/next"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           android:textSize="16sp" />
 

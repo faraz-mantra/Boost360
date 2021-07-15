@@ -96,7 +96,7 @@
           android:paddingStart="@dimen/size_10"
           android:paddingEnd="@dimen/size_10"
           android:text="@string/start_call"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/orange"
           app:textType="HEADING_6" />
 

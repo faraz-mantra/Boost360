@@ -273,7 +273,7 @@
           android:shadowRadius="0"
           android:stateListAnimator="@null"
           android:text="@string/proceed"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           app:fontFamily="@font/bold"
           app:textType="CAPTION"

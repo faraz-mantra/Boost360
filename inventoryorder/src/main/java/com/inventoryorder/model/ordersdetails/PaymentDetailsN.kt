@@ -36,11 +36,8 @@ data class PaymentDetailsN(
   }
 
   enum class METHOD(val value: String, val type: String) {
-    COD("COD", "COD"), ONLINEPAYMENT("ONLINE", "ONLINEPAYMENT"), FREE(
-      "FREE",
-      "FREE"
-    ),
-    ONLINE("ONLINE", "ONLINE");
+    COD("COD", "COD"), ONLINEPAYMENT("ONLINE", "ONLINEPAYMENT"),
+    FREE("FREE", "FREE"), ONLINE("ONLINE", "ONLINE");
 
     companion object {
       fun fromType(type: String?): METHOD? =
@@ -50,10 +47,8 @@ data class PaymentDetailsN(
 
   enum class STATUS(var title: String) {
     PENDING("PENDING"), INITIATED("INITIATED"), SUCCESS("RECEIVED"), INPROCESS("IN-PROCESS"),
-    SUBMITTEDFORREFUND("SUBMITFORREFUND"), REFUNDED("REFUNDED"), REFUNDDENIED("REFUND-DENIED"), FAILED(
-      "FAILED"
-    ),
-    CANCELLED("CANCELLED");
+    SUBMITTEDFORREFUND("SUBMITFORREFUND"), REFUNDED("REFUNDED"), REFUNDDENIED("REFUND-DENIED"),
+    FAILED("FAILED"), CANCELLED("CANCELLED");
 
     companion object {
       fun from(value: String?): STATUS? =

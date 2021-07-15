@@ -98,11 +98,11 @@
             android:text="@string/how_it_works_staff"
             android:textColor="@color/black_4a4a4a"
             android:textSize="16sp"
-            android:textStyle="bold"
+             android:fontFamily="@font/semi_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:textAllCaps="true" />
+            app:textAllCaps="false" />
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/civ_speak_how_it_works"
@@ -138,11 +138,11 @@
             android:text="@string/videos_3"
             android:textColor="@color/black_4a4a4a"
             android:textSize="16sp"
-            android:textStyle="bold"
+             android:fontFamily="@font/semi_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:textAllCaps="true" />
+            app:textAllCaps="false" />
 
           <com.framework.views.dotsindicator.DotsIndicator
             android:id="@+id/di_pager_indicator"
@@ -175,11 +175,11 @@
             android:text="@string/tips"
             android:textColor="@color/black_4a4a4a"
             android:textSize="16sp"
-            android:textStyle="bold"
+             android:fontFamily="@font/semi_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:textAllCaps="true" />
+            app:textAllCaps="false" />
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/civ_speak_tips"

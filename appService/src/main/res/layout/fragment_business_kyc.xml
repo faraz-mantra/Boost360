@@ -75,13 +75,10 @@
       style="@style/ButtonStyle.Rounded"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="@drawable/rounded_refresh_btn"
       android:gravity="center"
       android:paddingVertical="@dimen/size_14"
       android:text="@string/start_with_pan_card"
-      android:textAllCaps="false"
       android:textColor="@color/colorAccentLight"
-      android:textStyle="bold"
       app:layout_constraintBottom_toBottomOf="parent" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>

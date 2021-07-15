@@ -11,6 +11,7 @@
     <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="searchViewStyle">@style/SearchView</item>
+    <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
 
   <style name="CatalogTheme" parent="BaseTheme">
@@ -46,7 +47,7 @@
     <item name="android:textColor">@color/black_4a4a4a</item>
     <item name="android:layout_height">match_parent</item>
     <item name="android:layout_width">match_parent</item>
-    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
     <item name="android:buttonTint">@color/yellow_ffb900</item>
     <item name="android:gravity">center_vertical</item>
@@ -183,11 +184,12 @@
   <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorPrimary</item>
+    <item name="colorAccent">@color/colorAccent</item>
     <item name="colorControlActivated">@color/colorAccent</item>
     <item name="colorControlHighlight">@color/colorAccent</item>
     <item name="colorControlNormal">#eeeeee</item>
     <item name="android:windowDisablePreview">true</item>
+    <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
 
   <style name="FooterButtonStyle">
@@ -294,7 +296,7 @@
     <item name="android:textColor">@color/black_4f4f4f</item>
     <item name="android:textStyle">normal</item>
     <item name="textType">SUBHEADING_1</item>
-    <item name="fontFamily">@font/open_sans</item>
+    <item name="fontFamily">@font/regular</item>
     <item name="android:textSize">@dimen/size_12</item>
     <item name="android:textAlignment">center</item>
     <item name="android:layout_height">wrap_content</item>
@@ -305,7 +307,7 @@
     <item name="android:textFontWeight" tools:ignore="NewApi">600</item>
     <item name="android:textColor">@color/black</item>
     <item name="android:textStyle">bold</item>
-    <item name="fontFamily">@font/open_sans</item>
+    <item name="fontFamily">@font/regular</item>
     <item name="android:textSize">14sp</item>
     <item name="android:textAlignment">center</item>
     <item name="android:layout_height">wrap_content</item>
@@ -322,7 +324,7 @@
     <item name="android:text">@string/edit</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="textAllCaps">true</item>
+    <item name="textAllCaps">false</item>
     <item name="android:layout_alignParentEnd">true</item>
     <item name="android:textColor">@color/blue_4889f8</item>
   </style>
@@ -353,7 +355,7 @@
     <item name="android:drawablePadding">8dp</item>
     <item name="android:layout_marginStart">@dimen/size_16</item>
     <item name="android:layout_marginBottom">@dimen/size_16</item>
-    <item name="android:textAllCaps">true</item>
+    <item name="android:textAllCaps">false</item>
     <item name="android:layout_gravity">center_horizontal</item>
     <item name="android:textColor">@color/green_6bc95c</item>
     <item name="android:background">@drawable/rounded_stroke_grey_4_solid_green</item>
@@ -372,7 +374,7 @@
     <item name="android:stateListAnimator">@null</item>
     <item name="android:gravity">center</item>
     <item name="android:fontFamily">@font/semi_bold</item>
-    <item name="android:textAllCaps">true</item>
+    <item name="android:textAllCaps">false</item>
     <item name="paddingStart">@dimen/size_28</item>
     <item name="paddingEnd">@dimen/size_28</item>
     <item name="android:layout_width">wrap_content</item>

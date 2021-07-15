@@ -16,7 +16,7 @@
 ** limitations under the License.
 */
 -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Title for Latin keyboard input options dialog [CHAR LIMIT=25] -->
   <string name="english_ime_input_options" translatable="false">Input options</string>
 
@@ -654,6 +654,7 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
   <string name="tv_price">Price:</string>
   <string name="tv_discount">Discount:</string>
   <string name="tv_description">Description:</string>
+  <string name="tv_description_n" tools:ignore="ExtraTranslation">Description</string>
   <string name="deselect_all">Deselect all</string>
   <string name="tv_done">Done</string>
   <string name="separator">". "</string>

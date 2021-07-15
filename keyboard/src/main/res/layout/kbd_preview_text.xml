@@ -7,4 +7,4 @@
   android:gravity="center_horizontal"
   android:textColor="@color/kbd_key_color"
   android:textSize="30sp"
-  android:textStyle="bold"></TextView>
+   android:fontFamily="@font/semi_bold"></TextView>

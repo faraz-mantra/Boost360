@@ -19,7 +19,7 @@
     android:layout_marginTop="20dp"
     android:text="@string/gathering_fcebook_analytics"
     android:textSize="20sp"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 
   <TextView
     android:id="@+id/facebook_analytics_connect_text2"

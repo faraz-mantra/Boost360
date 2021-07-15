@@ -70,7 +70,7 @@
         android:layout_marginBottom="@dimen/size_40"
         android:background="@drawable/bg_rounded_10"
         android:gravity="center"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         app:textType="HEADING_6"
         tools:text="@string/get_started" />
     </androidx.appcompat.widget.LinearLayoutCompat>

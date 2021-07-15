@@ -19,6 +19,6 @@
     android:fontFamily="sans-serif"
     android:textColor="@color/gray"
     android:textSize="15sp"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 
 </LinearLayout>

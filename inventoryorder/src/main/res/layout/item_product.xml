@@ -127,12 +127,12 @@
       <com.framework.views.customViews.CustomTextView
         style="@style/wrap_wrap"
         android:layout_gravity="center"
-        android:paddingStart="@dimen/size_26"
-        android:paddingTop="@dimen/size_4"
-        android:paddingEnd="@dimen/size_26"
-        android:paddingBottom="@dimen/size_4"
+        android:paddingStart="@dimen/size_24"
+        android:paddingTop="@dimen/size_6"
+        android:paddingEnd="@dimen/size_24"
+        android:paddingBottom="@dimen/size_6"
         android:text="@string/add"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/colorAccentLight"
         android:textSize="@dimen/size_12"
         app:fontFamily="@font/semi_bold" />

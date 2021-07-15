@@ -1,12 +1,10 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="339dp"
-    android:height="42dp"
-    android:viewportWidth="339"
-    android:viewportHeight="42">
-  <path
-      android:strokeWidth="1"
-      android:pathData="M7,0.908L332,0.908A6,6 0,0 1,338 6.908L338,34.908A6,6 0,0 1,332 40.908L7,40.908A6,6 0,0 1,1 34.908L1,6.908A6,6 0,0 1,7 0.908z"
-      android:fillColor="@color/orange"
-      android:fillAlpha="0.1"
-      android:strokeColor="@color/orange_light"/>
-</vector>
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+  android:shape="rectangle">
+  <stroke
+    android:width="1dp"
+    android:color="@color/orange_light" />
+  <corners android:radius="@dimen/size_10" />
+  <solid android:color="@color/orange" />
+</shape>
+

@@ -10,12 +10,12 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.framework.CustomTypefaceSpan
 import com.framework.R
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
@@ -25,8 +25,7 @@ import com.framework.views.customViews.CustomToolbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> :
-  AppCompatActivity(), View.OnClickListener {
+abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : AppCompatActivity(), View.OnClickListener {
 
   protected var TAG = this.javaClass.simpleName
   protected var navigator: Navigator? = null
@@ -79,13 +78,11 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   open fun getToolbarTitleTypeface(): Typeface? {
-    if (this.packageName.equals("com.jio.online", ignoreCase = true))
-      return Typeface.create("sans_regular",Typeface.NORMAL)
-    return null
+    return ResourcesCompat.getFont(this, R.font.semi_bold)
   }
 
   open fun getToolbarTitleSize(): Float? {
-    return null
+    return ConversionUtils.dp2px(16f).toFloat()
   }
 
   open fun getToolbarSubTitleSize(): Float? {
@@ -93,7 +90,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   open fun getNavIconScale(): Float {
-    return 1f
+    return 1.0f
   }
 
   open fun getToolbarTitleGravity(): Int {

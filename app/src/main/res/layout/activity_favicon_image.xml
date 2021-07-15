@@ -109,7 +109,7 @@
           android:layout_marginTop="10dp"
           android:text="@string/favicon_image_instructions_2"
           android:textSize="12sp"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
       </LinearLayout>
 

@@ -40,7 +40,7 @@
         android:maxLines="1"
         android:text="@string/one_piece_anime_full"
         android:textSize="12sp"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
     </TableRow>
 
     <TableRow
@@ -63,7 +63,7 @@
         android:maxLines="1"
         android:text="@string/_3"
         android:textSize="12sp"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
     </TableRow>
 
     <TableRow
@@ -86,7 +86,7 @@
         android:maxLines="1"
         android:text="@string/inr_200"
         android:textSize="12sp"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
     </TableRow>
 
     <TableRow
@@ -109,7 +109,7 @@
         android:maxLines="1"
         android:text="@string/inr_0"
         android:textSize="12sp"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
     </TableRow>
 
     <TableRow
@@ -132,7 +132,7 @@
         android:maxLines="1"
         android:text="@string/inr_200"
         android:textSize="12sp"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
     </TableRow>
   </TableLayout>
 
