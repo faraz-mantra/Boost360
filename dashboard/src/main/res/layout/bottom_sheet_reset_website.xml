@@ -142,7 +142,7 @@
           android:layout_marginTop="@dimen/size_12"
           android:enabled="true"
           android:gravity="center"
-          android:text="@string/go_back" />
+          android:text="@string/go_back_n" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

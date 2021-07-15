@@ -49,6 +49,7 @@
               android:layout_marginVertical="@dimen/size_2"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent"
+              app:tint="@color/colorAccent"
               app:srcCompat="@drawable/ic_arrow_down_blue" />
 
             <com.framework.views.customViews.CustomTextView
@@ -57,7 +58,7 @@
               android:layout_marginStart="@dimen/size_8"
               android:includeFontPadding="false"
               android:text="@string/aug_sep_2020"
-              android:textColor="@color/light_blue_1"
+              android:textColor="@color/colorAccent"
                android:fontFamily="@font/semi_bold"
               app:layout_constraintStart_toEndOf="@id/btn_month_range"
               app:layout_constraintTop_toTopOf="parent" />
@@ -67,7 +68,7 @@
               style="@style/wrap_wrap"
               android:text="@string/go_to_current_week"
               android:textAllCaps="false"
-              android:textColor="@color/orange"
+              android:textColor="@color/colorAccent"
               android:visibility="invisible"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintTop_toTopOf="parent" />

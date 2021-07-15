@@ -5,10 +5,6 @@
     <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
   </style>
 
-  <style name="AppThemeContainer" parent="AppTheme.Base">
-    <item name="android:textViewStyle">@style/TextViewDefaultFontWithLowerCase</item>
-  </style>
-
   <style name="OtpWidget.OtpView" parent="Widget.AppCompat.EditText">
     <item name="android:background">@null</item>
     <item name="android:minHeight">0dp</item>
@@ -44,6 +40,22 @@
     <item name="android:windowDisablePreview">true</item>
     <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
+    <item name="android:alertDialogTheme">@style/AppAlertDialogN</item>
+  </style>
+
+  <style name="AppAlertDialogN" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+    <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+    <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+  </style>
+
+  <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+    <item name="android:textColor">@color/colorAccentPositive</item>
+    <item name="android:textAllCaps">false</item>
+  </style>
+
+  <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+    <item name="android:textColor">@color/colorAccentNegative</item>
+    <item name="android:textAllCaps">false</item>
   </style>
 
   <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">

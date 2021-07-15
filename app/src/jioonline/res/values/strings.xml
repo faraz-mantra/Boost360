@@ -458,11 +458,11 @@
   <string name="on_boost360">on JioOnline</string>
   <string name="disable_boost_notifications">Disable JioOnline notification</string>
   <string-array name="about_tab_items">
-    <item>JioOnline Training &amp; Certification Program</item>
+    <item>JioOnline training &amp; certification program</item>
     <item>FAQs</item>
-    <item>Like us on Facebook</item>
-    <item>Follow us on Twitter</item>
-    <item>Rate us on Play Store</item>
+    <item>Like us on facebook</item>
+    <item>Follow us on twitter</item>
+    <item>Rate us on play store</item>
     <item>Terms of use</item>
     <item>Data privacy policy</item>
   </string-array>
