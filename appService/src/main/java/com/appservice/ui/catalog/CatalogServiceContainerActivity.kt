@@ -75,10 +75,6 @@ open class CatalogServiceContainerActivity :
     return binding?.appBarLayout?.toolbar
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.heading_7)
-  }
-
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
@@ -107,9 +103,6 @@ open class CatalogServiceContainerActivity :
     }
   }
 
-  override fun getNavIconScale(): Float {
-    return 1.0f
-  }
 
   override fun getToolbarTitle(): String? {
     return when (type) {

@@ -80,7 +80,6 @@
       android:layout_marginTop="@dimen/_20sdp"
       android:fontFamily="@font/semi_bold"
       android:text="@string/login_with_mobile_number"
-      android:textAllCaps="true"
       android:textColor="@color/colorPrimary"
       app:layout_constraintTop_toBottomOf="@id/login_bt"
       app:textType="BODY_1"

@@ -3,6 +3,7 @@
 
   <style name="AppTheme" parent="AppTheme.Base">
     <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
+    <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
 
   <style name="OtpWidget.OtpView" parent="Widget.AppCompat.EditText">

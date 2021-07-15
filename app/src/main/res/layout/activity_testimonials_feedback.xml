@@ -117,7 +117,7 @@
             android:id="@+id/title_img_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tv_description"
+            android:text="@string/tv_description_n"
             android:textSize="@dimen/_11sdp" />
 
           <TextView
@@ -139,7 +139,7 @@
           android:layout_height="wrap_content"
           android:background="@drawable/edittext_bg_elevated"
           android:elevation="@dimen/_2sdp"
-          android:hint="@string/tv_description"
+          android:hint="@string/tv_description_n"
           android:imeOptions="actionNext"
           android:inputType="textCapWords"
           android:maxLines="1" />
@@ -163,7 +163,7 @@
             android:id="@+id/reviewTitleLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/review_title_testimonial"
+            android:text="@string/review_title"
             android:textSize="@dimen/_11sdp" />
 
           <TextView
@@ -260,7 +260,6 @@
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:text="@string/save"
-        android:textAllCaps="true"
         android:textColor="@color/white" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

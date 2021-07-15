@@ -7,52 +7,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/linearLayoutCompat4"
       android:layout_width="match_parent"
       android:layout_height="@dimen/size_56"
-      android:background="@color/gray_4e4e4e"
+      android:background="@color/black_4a4a4a"
+      android:gravity="center_vertical"
+      android:paddingHorizontal="@dimen/size_12"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent">
 
-      <com.framework.views.roundedimageview.RoundedImageView
+      <com.framework.views.customViews.CustomImageView
         android:id="@+id/back"
-        android:layout_width="@dimen/size_36"
-        android:layout_height="@dimen/size_36"
-        android:layout_marginStart="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_12"
-        android:padding="@dimen/_6dp"
-        android:src="@drawable/ic_back_arrow_toolbar_d"
-        app:riv_corner_radius="@dimen/size_18"
-        app:riv_mutate_background="true" />
+        android:layout_width="@dimen/size_32"
+        android:layout_height="@dimen/size_32"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="@dimen/size_6"
+        android:src="@drawable/ic_back_arrow_toolbar_d" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_toolbar_title"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/size_8"
-        android:layout_toStartOf="@+id/more"
-        android:layout_toEndOf="@+id/back"
-        android:fontFamily="@font/bold"
+        android:layout_marginStart="@dimen/size_12"
+        android:layout_marginEnd="@dimen/size_6"
+        android:layout_weight="1"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center_vertical"
-        android:padding="@dimen/_6dp"
+        android:includeFontPadding="false"
         android:text="@string/website_style_customisation"
+        android:textAlignment="gravity"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        app:textType="HEADING_7" />
 
-      <com.framework.views.roundedimageview.RoundedImageView
+      <com.framework.views.customViews.CustomImageView
         android:id="@+id/more"
-        android:layout_width="@dimen/size_36"
-        android:layout_height="@dimen/size_36"
+        android:layout_width="@dimen/size_34"
+        android:layout_height="@dimen/size_34"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/size_12"
-        android:layout_marginEnd="@dimen/size_12"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="@dimen/size_4"
-        android:src="@drawable/ic_baseline_more_vert_24"
-        app:riv_corner_radius="@dimen/size_18"
-        app:riv_mutate_background="true" />
-    </RelativeLayout>
+        android:src="@drawable/ic_baseline_more_vert_24" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <ScrollView
       android:layout_width="match_parent"

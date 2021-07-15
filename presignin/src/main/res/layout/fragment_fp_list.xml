@@ -35,7 +35,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/back_iv"
-      app:textType="HEADING_2" />
+      app:textType="HEADING_4" />
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/customTextView2"
@@ -44,6 +44,7 @@
       android:layout_marginHorizontal="@dimen/_20sdp"
       android:text="@string/you_can_always_switch_between_these_business_accounts_from_the_bottom_side_menu_on_dashboard"
       android:textColor="@color/black_4a4a4a"
+      android:fontFamily="@font/regular_medium"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/ctv_business_name"
@@ -71,7 +72,6 @@
       android:layout_marginBottom="@dimen/_12sdp"
       android:enabled="false"
       android:text="@string/go_to_dashboard"
-      android:textAllCaps="true"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"

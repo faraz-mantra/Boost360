@@ -360,9 +360,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     }
   }
 
-  override fun getNavIconScale(): Float {
-    return 1f
-  }
 
   override fun onItemClick(pos: Int) {
     super.onItemClick(pos)

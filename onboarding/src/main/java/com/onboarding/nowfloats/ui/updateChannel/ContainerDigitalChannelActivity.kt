@@ -22,8 +22,7 @@ import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyDigitalChannelFragment
 
-class ContainerDigitalChannelActivity :
-  AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+class ContainerDigitalChannelActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var isStartActivity: Boolean? = null
 
@@ -62,20 +61,11 @@ class ContainerDigitalChannelActivity :
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.MY_DIGITAL_CHANNEL.name -> ContextCompat.getDrawable(
-        this,
-        R.drawable.ic_round_arrow_white_n
-      )
+      FragmentType.MY_DIGITAL_CHANNEL.name -> ContextCompat.getDrawable(this, R.drawable.ic_round_arrow_white_n)
       else -> super.getNavigationIcon()
     }
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return when (type) {
-      FragmentType.MY_DIGITAL_CHANNEL.name -> ConversionUtils.dp2px(16f).toFloat()
-      else -> return super.getToolbarTitleSize()
-    }
-  }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {

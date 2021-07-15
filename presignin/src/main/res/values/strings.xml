@@ -2,8 +2,6 @@
 <resources>
   <string name="please_wait">Please wait...</string>
   <string name="ps_accept_tnc">By continuing, you agree to Boost 360 <b><u>terms</u></b> and <b><u>conditions</u></b></string>
-  <string name="psn_get_started">GET STARTED</string>
-
 
   <string name="intro_title_0">Be wherever</string>
   <string name="intro_title_1">Create a website</string>
@@ -29,12 +27,12 @@
   <string name="enter_your_number">Enter your number</string>
   <string name="enter_your_number_hint">Please type your mobile number and get started with Boost 360.</string>
   <string name="number_wont_shared"> Your number won’t be shared with anyone.</string>
-  <string name="next">NEXT</string>
+  <string name="next">Next</string>
 
   <string name="almost_there">Almost there...</string>
 
   <string name="code_sent_hint"> Type the 4-digit code you received on your entered mobile number %s.</string>
-  <string name="verify">VERIFY</string>
+  <string name="verify">Verify</string>
   <string name="psn_resend_hint">Didn’t get the code? Resend</string>
   <string name="psn_resend">Resend</string>
   <string name="psn_resend_in">Resend in %d s</string>
@@ -53,10 +51,10 @@
   <string name="wrong_otp_tv">Please enter correct OTP</string>
   <string name="login_et_hint">Username/Email ID</string>
   <string name="password">Password</string>
-  <string name="forgot">FORGOT?</string>
+  <string name="forgot">Forgot?</string>
   <string name="psn_need_help_in_login"><u>Need help in Login?</u></string>
-  <string name="psn_forgot_password">Forgot Password?</string>
-  <string name="psn_forget_pass_hint">Type your Username or registered Email or registered Phone Number. We will mail you the reset link.</string>
+  <string name="psn_forgot_password">Forgot password?</string>
+  <string name="psn_forget_pass_hint">Type your username or registered email or registered Phone Number. We will mail you the reset link.</string>
   <string name="psn_get_password_reset_link">Get password reset link</string>
   <string name="psn_username_email_phone_number">Username/Email/Phone Number</string>
   <string name="psn_retrieve_your_account">Retrieve your account</string>
@@ -134,14 +132,14 @@
   <string name="no_business_account_available_with">No business account available with</string>
   <string name="step_1_2">STEP 1/2</string>
   <string name="user_not_available">username/subdomain not available. Try with something else</string>
-  <string name="go_back">Go Back</string>
+  <string name="go_back">Go back</string>
   <string name="i_agree_n">I agree</string>
   <string name="login_with_mobile_number">Login with Mobile number</string>
   <string name="business_setup_process">Business setup process, please wait...</string>
   <string name="this_is_your_registered_mobile_number">This is your registered mobile number</string>
   <string name="number_to_login_via_otp_change_tap_on_change_number">You can also use above number to login via OTP verification. In case you want to change this number, tap on ‘Change number ’.</string>
   <string name="change_number">Change number</string>
-  <string name="psn_login_now">LOGIN NOW</string>
+  <string name="psn_login_now">Login now</string>
   <string name="request_otp">Request OTP</string>
   <string name="get_boost_360_tnc">https://www.getboost360.com/tnc?v=224</string>
   <string name="need_help_desc">Please feel free to <a href="mailto: ria@nowfloats.com">send an email at ria@nowfloats.com</a>. Alternatively you can <a href="tel:18601231233">call us at 1860 123 1233</a>.</string>
