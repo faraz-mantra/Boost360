@@ -94,7 +94,7 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     ArrayList<String> purchasedWidgetList = new ArrayList<String>();
     String featureList = null;
-    String limitValue = null;
+    int limitValue = 0;
     int imageCount = 0;
     ImageGalleryListener imageGalleryListener = null;
 
@@ -153,18 +153,32 @@ public class Image_Gallery_Fragment extends Fragment implements
         }
         Get_Feature_Details valueFeature = new Gson().fromJson(featureList, Get_Feature_Details.class);
         for (Get_Feature_DetailsItem aList : valueFeature) {
-            if (aList.equals("IMAGEGALLERY")) {
+            Log.v("Get_Feature_DetailsItem", " "+ aList.getFeatureKey());
+            /*if (aList.getFeatureKey().equals("IMAGEGALLERY")) {
                 for (Get_Properties_Details pList : aList.getProperties()) {
                     if (pList.getKey().equals("LIMIT")) {
-                        limitValue = pList.getValue();
+                        limitValue = Integer.parseInt(pList.getValue());
                     }
                 }
-            } else if (aList.equals("UNLIMITED_CONTENT")) {
+            } else*/ if (aList.getFeatureKey().equals("UNLIMITED_CONTENT")) {
+Log.v("valueFeature", " "+ "UNLIMITED_CONTENT");
                 for (Get_Properties_Details pList : aList.getProperties()) {
-                    if (pList.getKey().equals("IMAGE")) {
-                        limitValue = pList.getValue();
+                    /*if (pList.getKey().equals("LATESTUPDATES")) {
+                        limitValue = Integer.parseInt(pList.getValue());
+                    }else if (pList.getKey().equals("PRODUCT_CATALOUGE")){
+                        limitValue = Integer.parseInt(pList.getValue());
                     }
+                    else if (pList.getKey().equals("CUSTOM_PAGE")){
+                        limitValue = Integer.parseInt(pList.getValue());
+                    }
+                    else */if (pList.getKey().equals("IMAGE")){
+                        Log.v("valueFeature", " "+ "IMAGE");
+                        limitValue = Integer.parseInt(pList.getValue());
+                    }
+
+
                 }
+                imageGalleryListener.imageLimit(limitValue);
             }
         }
         gvImages.setAdapter(otherImagesAdapter);
@@ -335,7 +349,7 @@ public class Image_Gallery_Fragment extends Fragment implements
             imageGalleryListener = (ImageGalleryListener) activity;
         } catch (Exception e) {
             throw new ClassCastException(activity.toString()
-                    + " must implemenet ImageGalleryListener");
+                    + " must implement ImageGalleryListener");
         }
 
 
