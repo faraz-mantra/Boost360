@@ -52,14 +52,14 @@
             },
             {
               "businessType": "doctor_profile",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Doctor\ne-Profile"
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"
@@ -428,14 +428,14 @@
             },
             {
               "businessType": "doctor_profile",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Doctor\ne-Profile"
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"
@@ -1173,7 +1173,7 @@
             },
             {
               "businessType": "faculty_profiles_d",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Faculty\nProfiles"
@@ -2705,7 +2705,7 @@
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"
@@ -3081,7 +3081,7 @@
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"
@@ -3457,7 +3457,7 @@
             },
             {
               "businessType": "appointment_settings",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "Appointment\nSettings"

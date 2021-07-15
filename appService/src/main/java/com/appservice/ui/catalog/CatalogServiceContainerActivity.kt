@@ -28,8 +28,7 @@ import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
 
-open class CatalogServiceContainerActivity :
-  AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
   private var fragment: AppBaseFragment<*, *>? = null
@@ -78,8 +77,8 @@ open class CatalogServiceContainerActivity :
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
-      FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY,
-      -> ContextCompat.getColor(this, R.color.orange)
+      FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY, -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> ContextCompat.getColor(this, R.color.color_primary)
       else -> super.getToolbarBackgroundColor()
     }
   }
