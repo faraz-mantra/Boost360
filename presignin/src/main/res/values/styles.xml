@@ -111,7 +111,7 @@
     <item name="android:layout_width">0dp</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="textColor">@color/psn_sub_heading_color</item>
-    <item name="android:fontFamily">@font/regular</item>
+    <item name="android:fontFamily">@font/regular_medium</item>
     <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
     <item name="layout_constraintStart_toStartOf">@id/startGuide</item>
   </style>
@@ -128,7 +128,6 @@
   <style name="psn_signin_bt_style" parent="psn_button_base_style">
     <item name="android:textColor">@color/white</item>
     <item name="android:background">@drawable/signin_button_selector</item>
-    <item name="android:textAllCaps">true</item>
     <item name="android:drawableEnd">@null</item>
     <item name="android:paddingStart">@dimen/_24sdp</item>
     <item name="android:paddingEnd">@dimen/_24sdp</item>
@@ -181,7 +180,7 @@
     <item name="drawableTint">@color/psn_edittext_color</item>
     <item name="backgroundTint">@color/psn_edittext_color</item>
     <item name="android:layout_width">0dp</item>
-    <item name="android:textCursorDrawable">@color/black_4a4a4a</item>
+    <item name="android:textCursorDrawable">@drawable/cursor_drawable</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:drawablePadding">@dimen/_4sdp</item>
     <item name="android:paddingBottom">@dimen/_16sdp</item>
@@ -193,7 +192,6 @@
     <item name="android:textColor">@color/colorAccent</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:textAllCaps">true</item>
     <item name="android:textSize">@dimen/body_3</item>
     <item name="android:fontFamily">@font/regular</item>
     <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>

@@ -65,9 +65,6 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
     }
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.body_2)
-  }
 
   override fun getToolbar(): CustomToolbar? {
     return binding?.appBarLayout?.toolbar

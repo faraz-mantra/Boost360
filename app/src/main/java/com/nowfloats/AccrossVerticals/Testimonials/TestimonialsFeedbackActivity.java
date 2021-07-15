@@ -218,7 +218,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                 onBackPressed();
             });
         } else {
-            title.setText("Add a Testimonial");
+            title.setText("Add Testimonial");
         }
 
         backButton.setOnClickListener(v -> onBackPressed());

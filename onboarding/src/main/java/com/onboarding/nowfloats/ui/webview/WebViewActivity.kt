@@ -77,10 +77,6 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
     binding?.webview?.loadUrl(urlData.getWebViewUrl())
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.heading_7)
-  }
-
   override fun getToolbarSubTitle(): String? {
     return domainUrl.checkHttp()
   }

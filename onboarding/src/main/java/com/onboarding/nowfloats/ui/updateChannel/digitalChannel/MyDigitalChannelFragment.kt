@@ -57,8 +57,7 @@ import io.reactivex.Completable
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MyDigitalChannelFragment :
-  AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
+class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
 
   private var connectedChannels: ArrayList<String> = arrayListOf()
 

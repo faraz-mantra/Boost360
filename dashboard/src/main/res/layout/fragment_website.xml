@@ -28,13 +28,12 @@
         android:layout_marginHorizontal="@dimen/size_8"
         android:layout_marginEnd="72dp"
         android:layout_toStartOf="@+id/share_whatsapp"
-        android:fontFamily="@font/bold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="start|center_vertical"
         android:padding="@dimen/_14dp"
         android:text="@string/my_website"
-
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        app:textType="HEADING_5" />
 
       <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/share_whatsapp"
@@ -61,14 +60,13 @@
           android:layout_marginStart="@dimen/size_4"
           android:fontFamily="@font/semi_bold"
           android:text="@string/share"
-          android:textAllCaps="true"
           android:textColor="@color/white" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
       <com.framework.views.roundedimageview.RoundedImageView
         android:id="@+id/more"
-        android:layout_width="@dimen/size_36"
-        android:layout_height="@dimen/size_36"
+        android:layout_width="@dimen/size_34"
+        android:layout_height="@dimen/size_34"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/size_12"
         android:layout_marginEnd="@dimen/size_12"
@@ -219,9 +217,9 @@
                 android:backgroundTint="@color/gray_66666"
                 android:fontFamily="@font/semi_bold"
                 android:gravity="center_vertical"
+                android:textAllCaps="false"
                 android:paddingStart="@dimen/size_10"
                 android:text="@string/business_profile"
-                android:textAllCaps="true"
                 android:textColor="@color/white"
                 tools:ignore="RtlSymmetry" />
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -314,7 +312,6 @@
               android:fontFamily="@font/semi_bold"
               android:maxLines="2"
               android:text="@string/business_timings"
-              android:textAllCaps="true"
               android:textColor="@color/white"
               tools:targetApi="p" />
 
@@ -327,7 +324,6 @@
               android:layout_marginEnd="@dimen/size_2"
               android:textColor="@color/white_green_light"
               android:textFontWeight="400"
-              app:textAllCaps="true"
               app:textType="CAPTION"
               tools:targetApi="p" />
 
@@ -356,7 +352,8 @@
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:targetApi="m">
 
             <com.framework.views.customViews.CustomTextView
               android:layout_width="0dp"
@@ -366,7 +363,6 @@
               android:maxLines="2"
               android:layout_margin="@dimen/size_12"
               android:text="@string/website_customisation"
-              android:textAllCaps="true"
               android:textColor="@color/white"
               tools:targetApi="p" />
 

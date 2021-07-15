@@ -43,8 +43,7 @@ import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
 
-class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>(),
-  RecyclerItemClickListener {
+class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
   private var adapterWebsite: AppBaseRecyclerViewAdapter<WebsiteActionItem>? = null
@@ -243,8 +242,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
           .toLowerCase(Locale.ROOT).endsWith("pm"))
       }
     }
-    binding?.txtOpenClose?.text =
-      resources.getString(if (isOpen) R.string.open_now else R.string.close_now)
+    binding?.txtOpenClose?.text = resources.getString(if (isOpen) R.string.open_now else R.string.close_now)
     binding?.txtOpenClose?.setTextColor(if (isOpen) getColor(R.color.green_light) else getColor(R.color.red_F40000))
     binding?.ellipseOpenClose?.changeLayersColor(if (isOpen) R.color.green_light else R.color.red_F40000)
 

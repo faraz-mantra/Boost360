@@ -35,17 +35,6 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
   override fun onCreateView() {
   }
 
-  override fun getToolbarTitleTypeface(): Typeface? {
-    return ResourcesCompat.getFont(this, R.font.semi_bold)
-  }
-
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.heading_5)
-  }
-
-  override fun getNavIconScale(): Float {
-    return 0.75f
-  }
 
   override fun getToolbarBackgroundColor(): Int? {
     return Color.parseColor("#747474")

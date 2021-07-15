@@ -97,9 +97,6 @@ class StaffFragmentContainerActivity :
     return binding?.appBarLayout?.toolbar
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.heading_7)
-  }
 
 
   override fun customTheme(): Int? {

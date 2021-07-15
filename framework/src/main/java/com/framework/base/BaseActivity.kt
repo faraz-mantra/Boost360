@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -77,11 +78,11 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   open fun getToolbarTitleTypeface(): Typeface? {
-    return Typeface.createFromAsset(assets, "fonts/semi_bold.ttf")
+    return ResourcesCompat.getFont(this, R.font.semi_bold)
   }
 
   open fun getToolbarTitleSize(): Float? {
-    return null
+    return ConversionUtils.dp2px(16f).toFloat()
   }
 
   open fun getToolbarSubTitleSize(): Float? {
