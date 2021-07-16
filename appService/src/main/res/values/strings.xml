@@ -144,7 +144,7 @@
   <string name="business_kyc_verification_underway">Business KYC\nVerification Underway...</string>
   <string name="business_kyc_verify">Business KYC verify</string>
   <string name="submit_verification">Submit for verification</string>
-  <string name="business_kyc_verification_underway_n">Business KYC Verification Underway</string>
+  <string name="business_kyc_verification_underway_n">Business KYC verification underway</string>
   <string name="bank_account_not_added">Bank account not added</string>
   <string name="bank_account_added">Bank account added</string>
   <string name="are_you_sure">Are you sure?</string>
@@ -389,7 +389,7 @@
   <string name="staff_timings_updated">Staff timings updated</string>
   <string name="staff_timings_unable_to_update">Staff timings unable to update</string>
   <string name="staff_timings_updating">Updating staff timings...</string>
-  <string name="weekly_appointment">Weekly appointment schedule</string>
+  <string name="weekly_appointment">Weekly Appointment Schedule</string>
   <string name="categories">Categories</string>
   <string name="services">Services</string>
   <string name="you_don_t_have_any_service_added_to_your_digital_catalog_as_of_yet_watch_video">You don’t have any service added to your digital catalog as of yet.</string>
@@ -427,7 +427,7 @@
   <string name="can_not_share_image_offline">can not share image offline mode</string>
   <string name="associated_brand_name_if_any">Associated brand name (if any)</string>
   <string name="in_case_this_service_is_associated_with_certified_by_any_brand">In case this service is associated with/certified by any brand.</string>
-  <string name="dry_balanese_massage">Dry Balanese Massage</string>
+  <string name="dry_balanese_massage">Dry balanese massage</string>
   <string name="service_tags">Service tags</string>
   <string name="key_specifications">Key specifications</string>
   <string name="it_appears_at_the_end_of_the_service_name_as_it_s_variant">It appears at the end of the service name as it’s variant</string>
@@ -565,7 +565,7 @@
   <string name="_5">5</string>
   <string name="external_url">External URL</string>
   <string name="paste_your_url_here_product">Paste your URL here…</string>
-  <string name="type_a_tag_and_press_add_s_info">Type a tag and press \'ADD\'</string>
+  <string name="type_a_tag_and_press_add_s_info">Type a tag and press \'Add\'</string>
   <string name="current_selection">Current selection</string>
   <string name="_4_products_under_this_category">4 products under this category</string>
   <string name="latest_update_data_not_found">Latest update data not found!</string>
@@ -590,6 +590,7 @@
   <string name="Message_empty">You can post an offer, news or upload your catalog. \nClick on the + button below to start posting.</string>
   <string name="add_product_image_n">Add product image</string>
   <string name="post_n">Post</string>
+  <string name="refreshing_status">Refreshing status...</string>
 
 
   <array name="stock_availbility">

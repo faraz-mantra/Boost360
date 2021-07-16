@@ -147,12 +147,8 @@
           android:id="@+id/ctv_business_name"
           style="@style/BusinessProfileTextField"
           android:background="@drawable/bg_rect_edit_txt_gray_business"
-          android:includeFontPadding="false"
           android:singleLine="true"
-          android:textColor="@color/black_2A2A2A"
-          android:textFontWeight="500"
-          app:textType="BODY_2"
-          tools:ignore="UnusedAttribute"
+          android:textColor="@color/black_4a4a4a"
           tools:text="@string/services_business" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
