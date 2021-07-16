@@ -147,7 +147,7 @@
   <string name="state">State*</string>
   <string name="select_customer_s_state">Select customer’s state</string>
   <string name="pincode">Pincode*</string>
-  <string name="enter_customer_s_pincode">Enter customer’s Pincode</string>
+  <string name="enter_customer_s_pincode">Enter customer’s pincode</string>
   <string name="shipping_address_is_same_as_billing_address">Shipping Address is same as billing Address</string>
   <string name="go_back">Go back</string>
   <string name="next">Next</string>
@@ -301,7 +301,7 @@
   <string name="service_info">Service info</string>
   <string name="service_name">Service name*</string>
   <string name="select_service">Select service</string>
-  <string name="review_details">Review Details</string>
+  <string name="review_details">Review details</string>
   <string name="appointment_date_and_time">Appointment date and time</string>
   <string name="dummy_date_time">Monday, 7 Jan 2021</string>
   <string name="dummy_time">11:00 AM</string>
@@ -518,4 +518,7 @@
   <string name="to_learn_more_about_how_bookings_work">To learn more about how ‘bookings’ work,</string>
   <string name="click_on_the">click on the ‘</string>
   <string name="icon_on_top_right">’ icon on top right.</string>
+  <string name="payment_type_i">Payment type</string>
+  <string name="payment_status_i">Payment status</string>
+  <string name="service_location_i">Service location</string>
 </resources>

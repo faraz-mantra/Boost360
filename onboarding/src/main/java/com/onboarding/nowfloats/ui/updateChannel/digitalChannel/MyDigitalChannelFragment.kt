@@ -312,7 +312,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     binding?.connectedTxt?.text =
       "Connected (${listConnect?.size}/${requestFloatsModel?.categoryDataModel?.channels?.size})"
     binding?.notConnectedTxt?.text =
-      "Not Connected (${listDisconnect?.size}/${requestFloatsModel?.categoryDataModel?.channels?.size})"
+      "Not connected (${listDisconnect?.size}/${requestFloatsModel?.categoryDataModel?.channels?.size})"
 
     binding?.disconnectedBg?.post {
       var animObserver: Completable? = null

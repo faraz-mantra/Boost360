@@ -621,7 +621,6 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     startActivity(intent);
     new Handler().postDelayed(() -> {
       progressDialog.dismiss();
-      finish();
     }, 1000);
   }
 }

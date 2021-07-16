@@ -74,6 +74,7 @@
         android:layout_marginBottom="@dimen/size_16"
         android:enabled="true"
         android:gravity="center"
+        android:textAllCaps="false"
         android:text="@string/discard_exit" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 

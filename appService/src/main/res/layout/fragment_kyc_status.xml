@@ -215,7 +215,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_6"
         android:layout_marginTop="@dimen/size_20"
-        android:text="Refreshing Status..."
+        android:text="@string/refreshing_status"
         android:textColor="@color/greyish_brown"
         app:fontFamily="@font/regular"
         app:textType="HEADING_7" />
