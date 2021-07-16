@@ -144,7 +144,7 @@
   <string name="business_kyc_verification_underway">Business KYC\nVerification Underway...</string>
   <string name="business_kyc_verify">Business KYC verify</string>
   <string name="submit_verification">Submit for verification</string>
-  <string name="business_kyc_verification_underway_n">Business KYC Verification Underway</string>
+  <string name="business_kyc_verification_underway_n">Business KYC verification underway</string>
   <string name="bank_account_not_added">Bank account not added</string>
   <string name="bank_account_added">Bank account added</string>
   <string name="are_you_sure">Are you sure?</string>
@@ -590,6 +590,7 @@
   <string name="Message_empty">You can post an offer, news or upload your catalog. \nClick on the + button below to start posting.</string>
   <string name="add_product_image_n">Add product image</string>
   <string name="post_n">Post</string>
+  <string name="refreshing_status">Refreshing status...</string>
 
 
   <string name="done_">Done</string>

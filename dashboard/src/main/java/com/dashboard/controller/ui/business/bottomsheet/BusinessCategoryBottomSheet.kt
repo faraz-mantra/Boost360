@@ -1,6 +1,5 @@
 package com.dashboard.controller.ui.business.bottomsheet
 
-import android.content.DialogInterface
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
@@ -8,15 +7,12 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.core.content.ContextCompat
 import com.dashboard.R
 import com.dashboard.databinding.BottomSheetBusinessCategoryBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
-import kotlinx.android.synthetic.main.popup_window_website_menu.*
 
-class BusinessCategoryBottomSheet :
-  BaseBottomSheetDialog<BottomSheetBusinessCategoryBinding, BaseViewModel>() {
+class BusinessCategoryBottomSheet : BaseBottomSheetDialog<BottomSheetBusinessCategoryBinding, BaseViewModel>() {
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_business_category
