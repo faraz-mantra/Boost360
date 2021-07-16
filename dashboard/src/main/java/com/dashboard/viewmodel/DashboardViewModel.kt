@@ -30,6 +30,9 @@ class DashboardViewModel : BaseViewModel() {
   fun getCategories(context: Context): LiveData<BaseResponse> {
     return CategoryRepository.getCategories(context).toLiveData()
   }
+  fun getMoreSettings(context: Context): LiveData<BaseResponse> {
+    return WithFloatRepository.getMoreSettings(context).toLiveData()
+  }
 
   @Deprecated("NFX token API")
   fun getChannelsAccessToken(nowfloatsId: String?): LiveData<BaseResponse> {

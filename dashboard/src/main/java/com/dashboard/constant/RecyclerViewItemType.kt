@@ -23,6 +23,8 @@ enum class RecyclerViewItemType {
   HOME_DRAWER_VIEW,
   WEBSITE_COLOR_VIEW,
   WEBSITE_FONT_VIEW,
+  RECYCLER_USEFUL_LINKS,
+  RECYCLER_ABOUT_APP,
   FILTER_DATE_VIEW;
 
   @LayoutRes
@@ -48,6 +50,8 @@ enum class RecyclerViewItemType {
       FILTER_DATE_VIEW -> R.layout.item_filter_date
       WEBSITE_COLOR_VIEW -> R.layout.recycler_item_colors
       WEBSITE_FONT_VIEW -> R.layout.recycler_item_select_font
+      RECYCLER_USEFUL_LINKS -> R.layout.recycler_item_useful_links
+      RECYCLER_ABOUT_APP -> R.layout.recycler_item_about_app
     }
   }
 }

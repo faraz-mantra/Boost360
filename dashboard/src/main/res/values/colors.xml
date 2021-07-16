@@ -12,5 +12,7 @@
   <color name="green_lite">#7ED321</color>
   <color name="green_more_settings">#01D34F</color>
   <color name="red_more_settings">#EB5757</color>
+  <color name="gray_5c5c5c">#5c5c5c</color>
+  <color name="gray_eeee">#eeeeee</color>
 
 </resources>

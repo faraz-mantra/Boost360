@@ -1,0 +1,59 @@
+<layout>
+<androidx.appcompat.widget.LinearLayoutCompat
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+  <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="@dimen/size_16">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/civ_image"
+      android:layout_width="30dp"
+      android:layout_height="@dimen/size_30"
+      android:src="@drawable/ic_lightbulbfilament"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/ctv_heading"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_16"
+      android:fontFamily="@font/open_sans_semibold"
+      android:text="@string/what_s_new_in_latest_version"
+      android:textColor="@color/black_4a4a4a"
+      android:textSize="14sp"
+      app:layout_constraintBottom_toBottomOf="@+id/civ_image"
+      app:layout_constraintStart_toEndOf="@+id/civ_image"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/ctv_subtitle"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_16"
+      android:fontFamily="@font/open_sans"
+      android:text="@string/run_boost_360_account_on_your_wordpress_website"
+      android:textColor="@color/gray_828282"
+      android:textSize="14sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/civ_image"
+      app:layout_constraintTop_toBottomOf="@+id/ctv_heading"
+      app:layout_constraintVertical_bias="0" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/view_background_1"
+    app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+    app:layout_constraintVertical_bias="0" />
+</androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

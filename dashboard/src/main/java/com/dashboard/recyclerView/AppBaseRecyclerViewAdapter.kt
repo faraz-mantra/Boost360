@@ -6,6 +6,8 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.dashboard.R
 import com.dashboard.constant.RecyclerViewItemType.*
+import com.dashboard.controller.ui.more.holder.AboutViewHolder
+import com.dashboard.controller.ui.more.holder.UsefulLinksHolder
 import com.dashboard.databinding.*
 import com.dashboard.holder.*
 import com.framework.base.BaseActivity
@@ -42,6 +44,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       FILTER_DATE_VIEW -> DateFilterViewHolder(binding as ItemFilterDateBinding)
       WEBSITE_COLOR_VIEW -> WebsiteColorViewHolder(binding as RecyclerItemColorsBinding)
       WEBSITE_FONT_VIEW -> WebSiteFontViewHolder(binding as RecyclerItemSelectFontBinding)
+      RECYCLER_USEFUL_LINKS -> UsefulLinksHolder(binding as RecyclerItemUsefulLinksBinding)
+      RECYCLER_ABOUT_APP -> AboutViewHolder(binding as RecyclerItemAboutAppBinding)
     }
   }
 

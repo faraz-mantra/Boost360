@@ -1,26 +1,25 @@
 package com.dashboard.controller.ui.website
 
-import android.graphics.ColorFilter
+import android.content.Context
 import android.os.Build
+import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
-import androidx.annotation.ColorRes
 import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getColor
-import com.airbnb.lottie.LottieAnimationView
-import com.airbnb.lottie.LottieProperty
-import com.airbnb.lottie.SimpleColorFilter
-import com.airbnb.lottie.model.KeyPath
-import com.airbnb.lottie.value.LottieValueCallback
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
+import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
 import com.dashboard.databinding.FragmentWebsiteBinding
+import com.dashboard.databinding.FragmentWebsitePagerBinding
 import com.dashboard.model.live.websiteItem.WebsiteActionItem
+import com.dashboard.model.live.websiteItem.WebsiteData
 import com.dashboard.model.live.websiteItem.WebsiteDataResponse
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
@@ -28,7 +27,6 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
-import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
@@ -40,14 +38,17 @@ import com.framework.utils.changeLayersColor
 import com.framework.utils.fromHtml
 import com.framework.webengageconstant.DASHBOARD_WEBSITE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
+import com.google.android.material.tabs.TabLayout
 import java.util.*
+import kotlin.collections.ArrayList
 
+private val TAB_TITLES = arrayOf(
+  "Content","Features"
+)
 
-class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>(),
-  RecyclerItemClickListener {
+class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>(){
 
   private var session: UserSessionManager? = null
-  private var adapterWebsite: AppBaseRecyclerViewAdapter<WebsiteActionItem>? = null
   private var websiteLink: String? = null
   private var businessName: String? = null
   private var businessContact: String? = null
@@ -65,7 +66,8 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     hideToolBar()
     super.onCreateView()
     session = UserSessionManager(baseActivity)
-    getWebsiteData()
+//    getWebsiteData()
+    setupViewPager()
     setOnClickListener(
       binding?.txtDomainName,
       binding?.btnProfileLogo,
@@ -80,6 +82,31 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     this.websiteLink = fromHtml("<u>${session?.getDomainName()}</u>").toString()
     businessName = session?.fPName!!
     businessContact = session?.fPPrimaryContactNumber ?: ""
+  }
+
+  private fun setupViewPager() {
+    binding?.pager?.adapter = CategoriesPagerAdapter(baseActivity,childFragmentManager)
+    binding?.tabLayout?.setupWithViewPager(binding?.pager)
+    binding?.tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+      override fun onTabSelected(tab: TabLayout.Tab?) {
+        when (tab?.position) {
+          0 -> {
+
+          }
+          else -> {
+          }
+        }
+      }
+
+      override fun onTabUnselected(tab: TabLayout.Tab?) {
+        TODO("Not yet implemented")
+      }
+
+      override fun onTabReselected(tab: TabLayout.Tab?) {
+        TODO("Not yet implemented")
+      }
+    })
+
   }
 
   override fun onResume() {
@@ -113,87 +140,6 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       } else setImageResource(R.drawable.ic_add_logo_d)
     }
     updateTimings()
-  }
-
-  private fun getWebsiteData() {
-    viewModel?.getBoostWebsiteItem(baseActivity)
-      ?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { it0 ->
-        val response = it0 as? WebsiteDataResponse
-        if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-          val data = response.data?.firstOrNull {
-            it.type.equals(
-              session?.fP_AppExperienceCode,
-              ignoreCase = true
-            )
-          }
-          if (data != null && data.actionItem.isNullOrEmpty().not()) {
-            data.actionItem!!.map { it2 ->
-              if (it2.premiumCode.isNullOrEmpty()
-                  .not() && session.checkIsPremiumUnlock(it2.premiumCode).not()
-              ) it2.isLock = true
-            }
-            binding?.mainContent?.setBackgroundColor(
-              getColor(
-                baseActivity,
-                if (data.actionItem!!.size % 2 != 0) R.color.white_smoke_1 else R.color.white
-              )
-            )
-            setAdapterCustomer(data.actionItem!!)
-          }
-        }
-      })
-  }
-
-  private fun setAdapterCustomer(actionItem: ArrayList<WebsiteActionItem>) {
-    actionItem.map {
-      it.recyclerViewItemType = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout()
-    }
-    if (adapterWebsite == null) {
-      binding?.rvEnquiries?.apply {
-        adapterWebsite = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@WebsiteFragment)
-        adapter = adapterWebsite
-      }
-    } else adapterWebsite?.notify(actionItem)
-  }
-
-  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-    when (actionType) {
-      RecyclerViewActionType.WEBSITE_ITEM_CLICK.ordinal -> {
-        val data = item as? WebsiteActionItem ?: return
-        data.type?.let { WebsiteActionItem.IconType.fromName(it) }?.let { clickActionButton(it) }
-      }
-    }
-  }
-
-  private fun clickActionButton(type: WebsiteActionItem.IconType) {
-    when (type) {
-      WebsiteActionItem.IconType.service_product_catalogue -> baseActivity.startListServiceProduct(
-        session
-      )
-      WebsiteActionItem.IconType.latest_update_tips -> session?.let {
-        baseActivity.startUpdateLatestStory(
-          it
-        )
-      }
-      WebsiteActionItem.IconType.all_images -> baseActivity.startAllImage(session)
-      WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(
-        session,
-        fragmentType = "Business_Profile_Fragment_V2"
-      )
-      WebsiteActionItem.IconType.testimonials -> baseActivity.startTestimonial(session)
-      WebsiteActionItem.IconType.custom_page -> baseActivity.startCustomPage(session)
-      WebsiteActionItem.IconType.project_teams -> baseActivity.startListProjectAndTeams(session)
-      WebsiteActionItem.IconType.unlimited_digital_brochures -> baseActivity.startListDigitalBrochure(
-        session
-      )
-      WebsiteActionItem.IconType.toppers_institute -> baseActivity.startListToppers(session)
-      WebsiteActionItem.IconType.upcoming_batches -> baseActivity.startListBatches(session)
-      WebsiteActionItem.IconType.faculty_management -> baseActivity.startFacultyMember(session)
-      WebsiteActionItem.IconType.places_look_around -> baseActivity.startNearByView(session)
-      WebsiteActionItem.IconType.trip_adviser_ratings -> baseActivity.startListTripAdvisor(session)
-      WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
-      WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteTheme(session)
-    }
   }
 
 
@@ -316,5 +262,134 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       websiteLink!!,
       businessContact!!
     )
+  }
+}
+
+
+class CategoriesPagerAdapter(private var context: Context, fm: FragmentManager)
+  : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+  override fun getItem(position: Int): Fragment {
+    // getItem is called to instantiate the fragment for the given page.
+    // Return a PlaceholderFragment (defined as a static inner class below).
+    return FragmentCategory.newInstance(position)
+
+    }
+
+  override fun getPageTitle(position: Int): CharSequence {
+    return TAB_TITLES[position]
+  }
+
+  override fun getCount(): Int {
+    return 2
+  }
+}
+class FragmentCategory: AppBaseFragment<FragmentWebsitePagerBinding,DashboardViewModel>(), RecyclerItemClickListener {
+  private var session: UserSessionManager? = null
+  private var adapterWebsite: AppBaseRecyclerViewAdapter<WebsiteActionItem>? = null
+  companion object{
+    fun newInstance(position: Int):FragmentCategory {
+      val bundle = Bundle()
+      bundle.putInt(IntentConstant.POSITION.name,position)
+      val fragment = FragmentCategory()
+      fragment.arguments = bundle
+      return fragment
+    }
+  }
+
+  override fun getLayout(): Int {
+    return R.layout.fragment_website_pager
+  }
+  var data:WebsiteData?= null
+  override fun getViewModelClass(): Class<DashboardViewModel> {
+   return DashboardViewModel::class.java
+  }
+
+  override fun onCreateView() {
+    super.onCreateView()
+    session = UserSessionManager(baseActivity)
+    getWebsiteData()
+  }
+  private fun getWebsiteData() {
+    viewModel?.getBoostWebsiteItem(baseActivity)
+      ?.observeOnce(viewLifecycleOwner, { it0 ->
+        val response = it0 as? WebsiteDataResponse
+        if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+          data = response.data?.firstOrNull {
+            it.type.equals(
+              session?.fP_AppExperienceCode,
+              ignoreCase = true
+            )
+          }
+          if (data != null && data?.actionItem.isNullOrEmpty().not()) {
+            data?.actionItem!!.map { it2 ->
+              if (it2.premiumCode.isNullOrEmpty()
+                  .not() && session.checkIsPremiumUnlock(it2.premiumCode).not()
+              ) it2.isLock = true
+            }
+//            binding?.mainContent?.setBackgroundColor(
+//              getColor(
+//                baseActivity,
+//                if (data.actionItem!!.size % 2 != 0) R.color.white_smoke_1 else R.color.white
+//              )
+//            )
+            setAdapterCustomer(if(arguments?.getInt(IntentConstant.POSITION.name)==0) data?.actionItem!!.filter { it. isFeature==false}else data?.actionItem!!.filter { it. isFeature==true})
+          }
+        }
+      })
+  }
+
+
+  private fun setAdapterCustomer(actionItem: List<WebsiteActionItem>) {
+    actionItem as ArrayList<WebsiteActionItem>
+    actionItem.map {
+      it.recyclerViewItemType = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout()
+    }
+//    if (adapterWebsite == null) {
+      binding?.rvWebsite?.apply {
+        adapterWebsite = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@FragmentCategory)
+        adapter = adapterWebsite
+      }
+//    } else adapterWebsite?.notify(actionItem)
+  }
+
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    when (actionType) {
+      RecyclerViewActionType.WEBSITE_ITEM_CLICK.ordinal -> {
+        val data = item as? WebsiteActionItem ?: return
+        data.type?.let { WebsiteActionItem.IconType.fromName(it) }?.let { clickActionButton(it) }
+      }
+    }
+  }
+
+  private fun clickActionButton(type: WebsiteActionItem.IconType) {
+    when (type) {
+      WebsiteActionItem.IconType.service_product_catalogue -> baseActivity.startListServiceProduct(
+        session
+      )
+      WebsiteActionItem.IconType.latest_update_tips -> session?.let {
+        baseActivity.startUpdateLatestStory(
+          it
+        )
+      }
+      WebsiteActionItem.IconType.all_images -> baseActivity.startAllImage(session)
+      WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(
+        session,
+        fragmentType = "Business_Profile_Fragment_V2"
+      )
+      WebsiteActionItem.IconType.testimonials -> baseActivity.startTestimonial(session)
+      WebsiteActionItem.IconType.custom_page -> baseActivity.startCustomPage(session)
+      WebsiteActionItem.IconType.project_teams -> baseActivity.startListProjectAndTeams(session)
+      WebsiteActionItem.IconType.unlimited_digital_brochures -> baseActivity.startListDigitalBrochure(
+        session
+      )
+      WebsiteActionItem.IconType.toppers_institute -> baseActivity.startListToppers(session)
+      WebsiteActionItem.IconType.upcoming_batches -> baseActivity.startListBatches(session)
+      WebsiteActionItem.IconType.faculty_management -> baseActivity.startFacultyMember(session)
+      WebsiteActionItem.IconType.places_look_around -> baseActivity.startNearByView(session)
+      WebsiteActionItem.IconType.trip_adviser_ratings -> baseActivity.startListTripAdvisor(session)
+      WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
+      WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteTheme(session)
+    }
   }
 }
