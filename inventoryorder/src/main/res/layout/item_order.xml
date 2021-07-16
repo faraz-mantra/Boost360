@@ -221,7 +221,7 @@
           android:textAllCaps="false"
           android:textColor="@color/white"
           app:textType="HEADING_6"
-          tools:text="Confirm order" />
+          tools:text="@string/confirm_order" />
 
 
         <View
