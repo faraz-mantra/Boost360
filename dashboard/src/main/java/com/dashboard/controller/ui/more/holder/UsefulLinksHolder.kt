@@ -1,6 +1,7 @@
 package com.dashboard.controller.ui.more.holder
 
 import android.graphics.Color
+import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.more.model.UsefulLinksItem
 import com.dashboard.databinding.RecyclerItemUsefulLinksBinding
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
@@ -25,7 +26,9 @@ class UsefulLinksHolder(binding: RecyclerItemUsefulLinksBinding) : AppBaseRecycl
       binding.ctvNeedsAction.invisible()
     }
     binding.rivIcon.setImageResource(activity?.resources?.getIdentifier(data?.icon, "drawable", activity?.packageName)!!)
+    binding.root.setOnClickListener { listener?.onItemClick(position,item, RecyclerViewActionType.USEFUL_LINKS_CLICK.ordinal) }
 
   }
+
 
 }

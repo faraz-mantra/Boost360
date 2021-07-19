@@ -87,25 +87,6 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   private fun setupViewPager() {
     binding?.pager?.adapter = CategoriesPagerAdapter(baseActivity,childFragmentManager)
     binding?.tabLayout?.setupWithViewPager(binding?.pager)
-    binding?.tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-      override fun onTabSelected(tab: TabLayout.Tab?) {
-        when (tab?.position) {
-          0 -> {
-
-          }
-          else -> {
-          }
-        }
-      }
-
-      override fun onTabUnselected(tab: TabLayout.Tab?) {
-        TODO("Not yet implemented")
-      }
-
-      override fun onTabReselected(tab: TabLayout.Tab?) {
-        TODO("Not yet implemented")
-      }
-    })
 
   }
 
