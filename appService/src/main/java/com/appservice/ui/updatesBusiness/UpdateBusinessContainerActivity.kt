@@ -46,9 +46,6 @@ open class UpdateBusinessContainerActivity :
     setFragment()
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return Gravity.START
-  }
 
   override fun getToolbar(): CustomToolbar? {
     return binding?.appBarLayout?.toolbar

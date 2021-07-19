@@ -83,6 +83,7 @@
             android:background="@drawable/selector"
             android:singleLine="true"
             android:text="@string/search"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="14sp"
             tools:ignore="MissingPrefix" />

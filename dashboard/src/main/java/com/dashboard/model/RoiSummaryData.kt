@@ -31,7 +31,7 @@ class RoiSummaryData(
       "DOC" -> {
         list.add(
           RoiSummaryData(
-            title = "Patient\nEnquiries",
+            title = "Patient\nenquiries",
             value = enquiry,
             icon1 = R.drawable.ic_chat_enquiry_d,
             type = RoiType.ENQUIRY.name
@@ -39,7 +39,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Tracked\nCalls",
+            title = "Tracked\ncalls",
             value = totalCalls,
             icon1 = R.drawable.ic_track_call_d,
             type = RoiType.TRACK_CALL.name
@@ -47,7 +47,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Appointments\nBooked",
+            title = "Appointments\nbooked",
             value = sellerOrder?.getTotalOrders(),
             icon1 = R.drawable.ic_meeting_apt_d,
             type = RoiType.APT_ORDER.name
@@ -56,7 +56,7 @@ class RoiSummaryData(
 //        list.add(RoiSummaryData(title = "Online Video\nConsultations", value = "-", icon1 = R.drawable.ic_meeting_conslt_d, type = RoiType.CONSULTATION.name))
         list.add(
           RoiSummaryData(
-            title = "Appointment\nWorth",
+            title = "Appointment\nworth",
             value = sellerOrder?.getTotalNetAmount(),
             icon1 = R.drawable.ic_meeting_apt_d,
             isRupeeSymbols = true,
@@ -68,7 +68,7 @@ class RoiSummaryData(
       "HOS" -> {
         list.add(
           RoiSummaryData(
-            title = "Patient\nEnquiries",
+            title = "Patient\nenquiries",
             value = enquiry,
             icon1 = R.drawable.ic_chat_enquiry_d,
             type = RoiType.ENQUIRY.name
@@ -76,7 +76,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Tracked\nCalls",
+            title = "Tracked\ncalls",
             value = totalCalls,
             icon1 = R.drawable.ic_track_call_d,
             type = RoiType.TRACK_CALL.name
@@ -84,7 +84,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Appointments\nBooked",
+            title = "Appointments\nbooked",
             value = sellerOrder?.getTotalOrders(),
             icon1 = R.drawable.ic_meeting_apt_d,
             type = RoiType.APT_ORDER.name
@@ -93,7 +93,7 @@ class RoiSummaryData(
 //        list.add(RoiSummaryData(title = "Online Video\nConsultations", value = "-", icon1 = R.drawable.ic_meeting_conslt_d, type = RoiType.CONSULTATION.name))
         list.add(
           RoiSummaryData(
-            title = "Appointment\nWorth",
+            title = "Appointment\nworth",
             value = sellerOrder?.getTotalNetAmount(),
             icon1 = R.drawable.ic_meeting_apt_d,
             isRupeeSymbols = true,
@@ -105,7 +105,7 @@ class RoiSummaryData(
       "SPA", "SAL" -> {
         list.add(
           RoiSummaryData(
-            title = "Customer\nEnquiries",
+            title = "Customer\nenquiries",
             value = enquiry,
             icon1 = R.drawable.ic_chat_enquiry_d,
             type = RoiType.ENQUIRY.name
@@ -113,7 +113,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Tracked\nCalls",
+            title = "Tracked\ncalls",
             value = totalCalls,
             icon1 = R.drawable.ic_track_call_d,
             type = RoiType.TRACK_CALL.name
@@ -121,7 +121,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "In-Store\nAppointments",
+            title = "In-Store\nappointments",
             value = sellerOrder?.getTotalOrders(),
             icon1 = R.drawable.ic_meeting_apt_d,
             type = RoiType.APT_ORDER.name
@@ -129,7 +129,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Appointment\nWorth",
+            title = "Appointment\nworth",
             value = sellerOrder?.getTotalNetAmount(),
             icon1 = R.drawable.ic_meeting_apt_d,
             isRupeeSymbols = true,
@@ -141,7 +141,7 @@ class RoiSummaryData(
       "MFG" -> {
         list.add(
           RoiSummaryData(
-            title = "Customer\nEnquiries",
+            title = "Customer\nenquiries",
             value = enquiry,
             icon1 = R.drawable.ic_chat_enquiry_d,
             type = RoiType.ENQUIRY.name
@@ -149,7 +149,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Tracked\nCalls",
+            title = "Tracked\ncalls",
             value = totalCalls,
             icon1 = R.drawable.ic_track_call_d,
             type = RoiType.TRACK_CALL.name
@@ -157,7 +157,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Customer\nOrders",
+            title = "Customer\norders",
             value = sellerOrder?.getTotalOrders(),
             icon1 = R.drawable.ic_meeting_apt_d,
             type = RoiType.APT_ORDER.name
@@ -165,7 +165,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Order\nWorth",
+            title = "Order\nworth",
             value = sellerOrder?.getTotalNetAmount(),
             icon1 = R.drawable.ic_meeting_apt_d,
             isRupeeSymbols = true,
@@ -177,7 +177,7 @@ class RoiSummaryData(
       "RTL" -> {
         list.add(
           RoiSummaryData(
-            title = "Customer\nEnquiries",
+            title = "Customer\nenquiries",
             value = enquiry,
             icon1 = R.drawable.ic_chat_enquiry_d,
             type = RoiType.ENQUIRY.name
@@ -185,7 +185,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Tracked\nCalls",
+            title = "Tracked\ncalls",
             value = totalCalls,
             icon1 = R.drawable.ic_track_call_d,
             type = RoiType.TRACK_CALL.name
@@ -193,7 +193,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Customer\nOrders",
+            title = "Customer\norders",
             value = sellerOrder?.getTotalOrders(),
             icon1 = R.drawable.ic_meeting_apt_d,
             type = RoiType.APT_ORDER.name
@@ -201,7 +201,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Order\nWorth",
+            title = "Order\nworth",
             value = sellerOrder?.getTotalNetAmount(),
             icon1 = R.drawable.ic_meeting_apt_d,
             isRupeeSymbols = true,
@@ -213,7 +213,7 @@ class RoiSummaryData(
       "SVC" -> {
         list.add(
           RoiSummaryData(
-            title = "Customer\nEnquiries",
+            title = "Customer\nenquiries",
             value = enquiry,
             icon1 = R.drawable.ic_chat_enquiry_d,
             type = RoiType.ENQUIRY.name
@@ -221,7 +221,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Tracked\nCalls",
+            title = "Tracked\ncalls",
             value = totalCalls,
             icon1 = R.drawable.ic_track_call_d,
             type = RoiType.TRACK_CALL.name
@@ -229,7 +229,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Customer\nAppointments",
+            title = "Customer\nappointments",
             value = sellerOrder?.getTotalOrders(),
             icon1 = R.drawable.ic_meeting_apt_d,
             type = RoiType.APT_ORDER.name
@@ -237,7 +237,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Appointment\nWorth",
+            title = "Appointment\nworth",
             value = sellerOrder?.getTotalNetAmount(),
             icon1 = R.drawable.ic_meeting_apt_d,
             isRupeeSymbols = true,
@@ -249,7 +249,7 @@ class RoiSummaryData(
       "EDU" -> {
         list.add(
           RoiSummaryData(
-            title = "Student\nEnquiries",
+            title = "Student\nenquiries",
             value = enquiry,
             icon1 = R.drawable.ic_chat_enquiry_d,
             type = RoiType.ENQUIRY.name
@@ -257,7 +257,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Tracked\nCalls",
+            title = "Tracked\ncalls",
             value = totalCalls,
             icon1 = R.drawable.ic_track_call_d,
             type = RoiType.TRACK_CALL.name
@@ -265,7 +265,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Admission\nRequests",
+            title = "Admission\nrequests",
             value = sellerOrder?.getTotalOrders(),
             icon1 = R.drawable.ic_meeting_apt_d,
             type = RoiType.APT_ORDER.name
@@ -277,7 +277,7 @@ class RoiSummaryData(
       "HOT" -> {
         list.add(
           RoiSummaryData(
-            title = "Customer\nEnquiries",
+            title = "Customer\nenquiries",
             value = enquiry,
             icon1 = R.drawable.ic_chat_enquiry_d,
             type = RoiType.ENQUIRY.name
@@ -285,7 +285,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Tracked\nCalls",
+            title = "Tracked\ncalls",
             value = totalCalls,
             icon1 = R.drawable.ic_track_call_d,
             type = RoiType.TRACK_CALL.name
@@ -293,7 +293,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Room\nBookings",
+            title = "Room\nbookings",
             value = sellerOrder?.getTotalOrders(),
             icon1 = R.drawable.ic_meeting_apt_d,
             type = RoiType.APT_ORDER.name
@@ -301,7 +301,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Booking\nWorth",
+            title = "Booking\nworth",
             value = sellerOrder?.getTotalNetAmount(),
             icon1 = R.drawable.ic_meeting_apt_d,
             isRupeeSymbols = true,
@@ -313,7 +313,7 @@ class RoiSummaryData(
       "CAF" -> {
         list.add(
           RoiSummaryData(
-            title = "Customer\nEnquiries",
+            title = "Customer\nenquiries",
             value = enquiry,
             icon1 = R.drawable.ic_chat_enquiry_d,
             type = RoiType.ENQUIRY.name
@@ -321,7 +321,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Tracked\nCalls",
+            title = "Tracked\ncalls",
             value = totalCalls,
             icon1 = R.drawable.ic_track_call_d,
             type = RoiType.TRACK_CALL.name
@@ -329,7 +329,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Food\nOrders",
+            title = "Food\norders",
             value = sellerOrder?.getTotalOrders(),
             icon1 = R.drawable.ic_meeting_apt_d,
             type = RoiType.APT_ORDER.name
@@ -337,7 +337,7 @@ class RoiSummaryData(
         )
         list.add(
           RoiSummaryData(
-            title = "Order\nWorth",
+            title = "Order\nworth",
             value = sellerOrder?.getTotalNetAmount(),
             icon1 = R.drawable.ic_meeting_apt_d,
             isRupeeSymbols = true,

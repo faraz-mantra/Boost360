@@ -5,6 +5,7 @@ import android.os.Handler;
 
 import androidx.annotation.Nullable;
 
+import com.framework.views.customViews.CustomToolbar;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.fragment.app.Fragment;
@@ -53,7 +54,7 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
 
     private static final int NUM_OF_FEATURES = 5;
     UserSessionManager mSession;
-    Toolbar toolbar;
+    CustomToolbar toolbar;
     List<PackageDetails> mTopUps = Collections.emptyList();
     MaterialDialog materialProgress;
 
@@ -89,7 +90,7 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_purchased_plans);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        CustomToolbar toolbar = (CustomToolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             setTitle("Subscription History");

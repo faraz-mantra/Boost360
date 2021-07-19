@@ -116,12 +116,6 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     }
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return when (type) {
-      FragmentType.SERVICE_TIMING_FRAGMENT, FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> Gravity.CENTER
-      else -> Gravity.START
-    }
-  }
 
 
   private fun shouldAddToBackStack(): Boolean {
