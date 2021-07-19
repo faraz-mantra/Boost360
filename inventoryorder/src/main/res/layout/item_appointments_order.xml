@@ -252,7 +252,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/regular"
                 android:includeFontPadding="false"
-                android:textColor="@color/bg_dark_grey"
+                android:textColor="@color/black_4a4a4a"
                 tools:text="Honey wax and detan service" />
 
               <com.framework.views.customViews.CustomTextView
@@ -265,7 +265,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="Today 2:30-3:20 pm by Dr. XXXX"
-                android:textColor="@color/bg_dark_grey"
+                android:textColor="@color/black_4a4a4a"
                 android:visibility="visible"
                 app:textType="CAPTION"
                 tools:visibility="visible" />

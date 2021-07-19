@@ -308,7 +308,7 @@
               app:autoSizeTextType="uniform"
               app:layout_constraintStart_toEndOf="@id/image_service_provider"
               app:layout_constraintTop_toBottomOf="@id/text_date"
-              tools:text="Business      " />
+              tools:text="Business" />
           </LinearLayout>
 
           <LinearLayout
@@ -362,7 +362,7 @@
               app:autoSizeTextType="uniform"
               app:layout_constraintStart_toEndOf="@id/image_service_provider"
               app:layout_constraintTop_toBottomOf="@id/text_date"
-              tools:text="Cash on delivery      " />
+              tools:text="Cash on delivery" />
           </LinearLayout>
 
           <LinearLayout
@@ -416,7 +416,7 @@
               app:autoSizeTextType="uniform"
               app:layout_constraintStart_toEndOf="@id/image_service_provider"
               app:layout_constraintTop_toBottomOf="@id/text_date"
-              tools:text="Pending      " />
+              tools:text="Pending" />
           </LinearLayout>
 
           <androidx.appcompat.widget.LinearLayoutCompat

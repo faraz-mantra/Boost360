@@ -27,38 +27,21 @@
       layout="@layout/fragment_service_listing_empty"
       android:visibility="gone" />
 
-    <LinearLayout
-      android:id="@+id/ll_action_buttons"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom"
-      android:layout_marginHorizontal="16dp"
-      android:orientation="horizontal"
-      android:paddingBottom="@dimen/size_14"
-      android:visibility="visible">
 
-      <com.framework.views.customViews.CustomButton
-        android:id="@+id/cb_add_service"
-        style="@style/ButtonStyle.Rounded.Solid"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_44"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:stateListAnimator="@null"
-        android:text="@string/add_service" />
-      <!--            <com.framework.views.customViews.CustomButton-->
-      <!--                android:layout_width="0dp"-->
-      <!--                android:layout_height="@dimen/size_40"-->
-      <!--                android:id="@+id/cb_sort_and_filter"-->
-      <!--                android:layout_weight="1"-->
-      <!--                android:background="@drawable/rounded_stroke_orange_4_transparent"-->
-      <!--                android:gravity="center"-->
-      <!--                android:text="@string/sort_and_filter"-->
-      <!--                android:textAllCaps="false"-->
-      <!--                android:textColor="@color/yellow_ffb900" />-->
-
-    </LinearLayout>
+    <com.framework.views.fabButton.FloatingActionButton
+      android:id="@+id/cb_add_service"
+      style="@style/wrap_wrap"
+      android:layout_gravity="bottom|end"
+      android:layout_margin="16dp"
+      android:clickable="true"
+      android:focusable="true"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="center"
+      android:textColor="@color/white"
+      app:fabIcon="@drawable/ic_add_white"
+      app:fabIconPosition="start"
+      app:fabSize="normal"
+      app:fabType="circle" />
 
     <ProgressBar
       android:id="@+id/progress"

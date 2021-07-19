@@ -76,7 +76,7 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
   protected fun needHelp() {
     val s = SpannableString(resources.getString(R.string.need_help_desc))
     Linkify.addLinks(s, Linkify.ALL)
-    val alertDialog = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
+    val alertDialog = AlertDialog.Builder(ContextThemeWrapper(this, R.style.CustomAlertDialogTheme))
     alertDialog.setTitle(getString(R.string.need_help_title)).setMessage(s)
       .setPositiveButton(resources.getString(R.string.okay), null)
     val alert = alertDialog.create()

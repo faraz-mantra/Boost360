@@ -72,6 +72,6 @@
       android:layout_margin="16dp"
       android:scaleType="fitCenter"
       app:backgroundTint="@color/primaryColorDark"
-      app:srcCompat="@drawable/ic_add_white_24dp" />
+      app:srcCompat="@drawable/ic_add_white" />
   </FrameLayout>
 </LinearLayout>

@@ -1910,7 +1910,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="custome_domain_instruction">We strongly recommend that you use an existing domain (if you have one) for your Boost website. Online discovery will be better as search engines already recognize your domain.</string>
   <string-array name="boost_extensions">
     <item>Wordpress</item>
-    <item>Static Website</item>
+    <item>Static website</item>
   </string-array>
   <string name="your_digital_assitant">Your digital assistant</string>
   <string name="error_right_fptag">This link is intended for the business %1$s! and you are not authorized to access this page. Please make sure you are signed in to the right Boost account.</string>
@@ -2753,7 +2753,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="boost_extension">Boost Extensions</string>
   <string name="the_key_has_been_copied_to_clipboard">The key has been copied to clipboard. Also you can share the key with your developer using the most appropriate share option.</string>
   <string name="shared_from_boost">Shared from Boost360</string>
-  <string name="copy_and_share"><![CDATA[COPY & SHARE]]></string>
+  <string name="copy_and_share"><![CDATA[Copy & Share]]></string>
   <string name="the_script_has_been_copied_to_clipboard_also_you_can">The script has been copied to clipboard. Also you can share the script with your developer using the most appropriate option.</string>
   <string name="here_is_the_content_share_body">Here is the share content body</string>
   <string name="to_share_your_image_we_need_storage_permission">To share your image we need storage permission.</string>
@@ -3058,6 +3058,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="book_a_new_domain_n">Book a new domain</string>
   <string name="or_n">--- or ---</string>
   <string name="domain_is_a_great_first_step_towards_building_your_brand_on_web_n">Domain is a great first step towards building your brand on web.</string>
+  <string name="boost_keyboard_themes_n">Boost Keyboard Themes</string>
 
   <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
   <!--    <string name="ir_statusBarColor">#ffb900</string>-->
