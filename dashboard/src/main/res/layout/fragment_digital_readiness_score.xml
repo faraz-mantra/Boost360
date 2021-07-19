@@ -49,16 +49,21 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/size_7"
+            android:layout_marginStart="@dimen/size_4"
             app:srcCompat="@drawable/ic_arrow_left_8_d" />
 
           <com.framework.views.customViews.CustomTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="start"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginStart="@dimen/size_14"
+            android:fontFamily="@font/semi_bold"
             android:text="@string/digital_readiness_score_n"
             android:textColor="@color/white"
-            app:textType="HEADING_7" />
+            app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/btn_alert"
@@ -81,7 +86,7 @@
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_14"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -139,7 +144,7 @@
             android:layout_height="@dimen/size_8"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="@dimen/size_18"
-            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginTop="@dimen/size_14"
             android:layout_marginEnd="@dimen/size_18">
 
             <androidx.cardview.widget.CardView
@@ -188,7 +193,7 @@
             android:id="@+id/pager_business_content_setup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/size_14"
+            android:layout_marginTop="@dimen/size_12"
             android:layout_weight="1"
             android:clipChildren="false"
             android:clipToPadding="false" />

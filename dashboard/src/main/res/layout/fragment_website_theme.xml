@@ -23,7 +23,7 @@
         android:layout_width="@dimen/size_30"
         android:layout_height="@dimen/size_30"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="@dimen/size_6"
+        android:padding="@dimen/size_7"
         android:src="@drawable/ic_back_arrow_toolbar_d" />
 
       <com.framework.views.customViews.CustomTextView
@@ -39,7 +39,7 @@
         android:text="@string/website_style_customisation"
         android:textAlignment="gravity"
         android:textColor="@color/white"
-        app:textType="HEADING_7" />
+        app:textType="HEADING_6" />
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/more"
@@ -47,7 +47,7 @@
         android:layout_height="@dimen/size_34"
         android:layout_alignParentEnd="true"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="@dimen/size_4"
+        android:padding="@dimen/size_5"
         android:src="@drawable/ic_baseline_more_vert_24" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 

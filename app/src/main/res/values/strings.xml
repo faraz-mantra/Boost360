@@ -1417,24 +1417,24 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   </string-array>
 
   <string-array name="appointment_analytics">
-    <item>Successful\nAppointments</item>
-    <item>Received\nAppointments</item>
-    <item>Cancelled\nAppointments</item>
-    <item>Abandoned\nAppointments</item>
+    <item>Successful\nappointments</item>
+    <item>Received\nappointments</item>
+    <item>Cancelled\nappointments</item>
+    <item>Abandoned\nappointments</item>
   </string-array>
 
   <string-array name="booking_analytics">
-    <item>Successful\nBookings</item>
-    <item>Received\nBookings</item>
-    <item>Cancelled\nBookings</item>
-    <item>Abandoned\nBookings</item>
+    <item>Successful\nbookings</item>
+    <item>Received\nbookings</item>
+    <item>Cancelled\nbookings</item>
+    <item>Abandoned\nbookings</item>
   </string-array>
 
   <string-array name="order_analytics">
-    <item>Successful\nOrders</item>
-    <item>Received\nOrders</item>
-    <item>Cancelled\nOrders</item>
-    <item>Abandoned\nOrders</item>
+    <item>Successful\norders</item>
+    <item>Received\norders</item>
+    <item>Cancelled\norders</item>
+    <item>Abandoned\norders</item>
   </string-array>
 
   <string-array name="tabs">
@@ -1819,14 +1819,14 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
   <string-array name="account_setting_tab_items">
     <!--<item>Seller Profile</item>-->
-    <item>My Business Profile</item>
-    <item>My Bank Account</item>
-    <item>My Business KYC</item>
-    <item>Self Branded Payment Gateway</item>
-    <item>Boost Extensions</item>
+    <item>My business profile</item>
+    <item>My bank account</item>
+    <item>My business KYC</item>
+    <item>Self branded payment gateway</item>
+    <item>Boost extensions</item>
     <!--        <item>Subscription History</item>-->
     <item>Domain and Email</item>
-    <item>Change Password</item>
+    <item>Change password</item>
     <item>Log out</item>
   </string-array>
 
@@ -3046,13 +3046,18 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="unable_to_open_facebook">unable to open facebook</string>
   <string name="enter_valid_open_close_timing"><![CDATA[Please enter valid open & close time!]]></string>
   <string name="choose_image">Choose image</string>
-  <string name="add_featured_image">ADD FEATURED IMAGE</string>
+  <string name="add_featured_image">Add Featured Image</string>
   <string name="logo_updated_successfully">Logo uploaded successfully.</string>
   <string name="add_logo">Add logo</string>
-  <string name="business_timings">Business Timings</string>
+  <string name="business_timings">Business timings</string>
+  <string name="business_timings_n">Business Timings</string>
   <string name="review_title_testimonial">Review title</string>
   <string name="review_description_testimonial">Review description</string>
   <string name="our_topper_data_empty">Our toppers data empty!</string>
+  <string name="have_an_existing_domain_n">Have an existing domain</string>
+  <string name="book_a_new_domain_n">Book a new domain</string>
+  <string name="or_n">--- or ---</string>
+  <string name="domain_is_a_great_first_step_towards_building_your_brand_on_web_n">Domain is a great first step towards building your brand on web.</string>
 
   <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
   <!--    <string name="ir_statusBarColor">#ffb900</string>-->

@@ -1,13 +1,10 @@
 package com.appservice.base
 
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
 import android.view.MenuItem
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.ViewDataBinding
 import com.appservice.R
 import com.framework.base.BaseActivity
@@ -33,9 +30,6 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
     return ContextCompat.getColor(this,R.color.white)
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return Gravity.CENTER
-  }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
