@@ -89,9 +89,6 @@ open class TestimonialContainerActivity :
     }
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return Gravity.CENTER
-  }
 
   private fun shouldAddToBackStack(): Boolean {
     return when (type) {

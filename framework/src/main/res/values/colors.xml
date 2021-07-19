@@ -29,6 +29,7 @@
 
   <color name="white">#FFFFFF</color>
   <color name="white_70">#B3FFFFFF</color>
+  <color name="white_50">#80FFFFFF</color>
   <color name="white_snow">#fbfbfb</color>
   <color name="white_0">#00ffffff</color>
   <color name="black">#000000</color>

@@ -25,10 +25,6 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 
 
-  override fun getToolbarTitleGravity(): Int {
-    return Gravity.NO_GRAVITY
-  }
-
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       android.R.id.home -> {

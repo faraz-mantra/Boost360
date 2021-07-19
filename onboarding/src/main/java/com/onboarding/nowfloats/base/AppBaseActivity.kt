@@ -21,9 +21,6 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
     progressView = ProgressDialog.newInstance()
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return Gravity.CENTER_HORIZONTAL
-  }
 
   protected open fun hideProgress() {
     progressView?.hideProgress()

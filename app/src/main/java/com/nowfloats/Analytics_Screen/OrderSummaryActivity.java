@@ -73,13 +73,13 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
     public static final String TODAY = "Today";
     public static final String YESTERDAY = "Yesterday";
-    public static final String LAST_SEVEN_DAYS = "Last 7 Days";
-    public static final String LAST_30_DAYS = "Last 30 Days";
-    public static final String THIS_MONTH = "This Month";
-    public static final String LAST_MONTH = "Last Month";
-    public static final String LAST_SIX_MONTH = "Last 6 Month";
-    public static final String LAST_YEAR = "Last Year";
-    public static final String CUSTOM_RANGE = "Custom Range";
+    public static final String LAST_SEVEN_DAYS = "Last 7 days";
+    public static final String LAST_30_DAYS = "Last 30 days";
+    public static final String THIS_MONTH = "This month";
+    public static final String LAST_MONTH = "Last month";
+    public static final String LAST_SIX_MONTH = "Last 6 month";
+    public static final String LAST_YEAR = "Last year";
+    public static final String CUSTOM_RANGE = "Custom range";
     private ImageView spinner;
     private LinearLayout layout;
     private BarChart mChart;
@@ -139,7 +139,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
             }
         });
 
-        tvYear.setText("Last 30 Days");
+        tvYear.setText("Last 30 days");
 
         ivLeftNav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,13 +205,13 @@ public class OrderSummaryActivity extends AppCompatActivity {
                 final List<String> yearsList = new ArrayList<>();
                 yearsList.add("Today");
                 yearsList.add("Yesterday");
-                yearsList.add("Last 7 Days");
-                yearsList.add("Last 30 Days");
-                yearsList.add("This Month");
-//                yearsList.add("Last Month");
-//                yearsList.add("Last 6 Months");
-//                yearsList.add("Last Year");
-//                yearsList.add("Custom Range");
+                yearsList.add("Last 7 days");
+                yearsList.add("Last 30 days");
+                yearsList.add("This month");
+//                yearsList.add("Last month");
+//                yearsList.add("Last 6 months");
+//                yearsList.add("Last year");
+//                yearsList.add("Custom range");
 
                 popup = new PopupWindow(this);
                 View layout = LayoutInflater.from(this).inflate(R.layout.layout_drop_down_list, null);
@@ -400,7 +400,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
         }
 
         //visitsCount.setText(String.valueOf(totalCount));
-        BarDataSet barDataSet = new BarDataSet(valueEntryList, "Total Count");
+        BarDataSet barDataSet = new BarDataSet(valueEntryList, "Total count");
         barDataSet.setColor(Color.GRAY);
         barDataSet.setValueTextSize(14.0f);
         barDataSet.setValueTextColor(getResources().getColor(R.color.black));

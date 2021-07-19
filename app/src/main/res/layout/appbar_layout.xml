@@ -6,21 +6,24 @@
     android:id="@+id/app_bar"
     style="@style/AppBarLayoutStyle">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.framework.views.customViews.CustomToolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize"
+      app:navigationIcon="@drawable/ic_back_arrow_new"
       app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
       <!--
       android:background="?attr/colorPrimary"
       -->
 
-      <TextView
+      <com.framework.views.customViews.CustomTextView
         android:id="@+id/toolbar_title"
-        style="@style/ToolbarTitleLayoutStyle" />
+        style="@style/ToolbarTitleLayoutStyle"
+        android:paddingEnd="0dp"
+        android:paddingStart="0dp"/>
 
-    </androidx.appcompat.widget.Toolbar>
+    </com.framework.views.customViews.CustomToolbar>
 
     <!--
     <include layout="@layout/progress_horizontal" />

@@ -74,12 +74,6 @@ class ContainerDigitalChannelActivity : AppBaseActivity<ActivityFragmentContaine
     }
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return when (type) {
-      FragmentType.MY_DIGITAL_CHANNEL.name -> Gravity.CENTER
-      else -> super.getToolbarTitleGravity()
-    }
-  }
 
   override fun getToolbarTitle(): String? {
     return when (type) {
