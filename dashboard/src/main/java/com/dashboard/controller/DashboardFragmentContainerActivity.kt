@@ -45,12 +45,6 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     super.onCreate(savedInstanceState)
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return when (type) {
-      FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_BUSINESS_PROFILE -> Gravity.START
-      else -> Gravity.CENTER
-    }
-  }
 
   override fun onCreateView() {
     super.onCreateView()

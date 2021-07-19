@@ -58,12 +58,6 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
     }
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return when (type) {
-      FragmentType.KYC_STATUS, FragmentType.KYC_DETAILS, FragmentType.BUSINESS_KYC_VIEW, FragmentType.KYC_DETAIL_NEW -> Gravity.CENTER
-      else -> Gravity.START
-    }
-  }
 
 
   override fun getToolbar(): CustomToolbar? {

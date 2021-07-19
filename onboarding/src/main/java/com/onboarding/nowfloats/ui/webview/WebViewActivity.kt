@@ -81,9 +81,6 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
     return domainUrl.checkHttp()
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return Gravity.NO_GRAVITY
-  }
 
   override fun getToolbarTitle(): String? {
     return resources.getString(R.string.app_name)

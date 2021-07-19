@@ -33,9 +33,6 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
     return ContextCompat.getColor(this, R.color.white)
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return Gravity.CENTER
-  }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {

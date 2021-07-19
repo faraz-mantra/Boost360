@@ -25,18 +25,18 @@
       android:layout_height="wrap_content" />
   </LinearLayout>
 
-  <TextView
+  <com.framework.views.customViews.CustomTextView
     android:id="@+id/title"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:fontFamily="@font/bold"
-    android:gravity="center"
+    android:fontFamily="@font/semi_bold"
+    android:gravity="start"
     android:textColor="@color/white"
-    android:textSize="@dimen/_12sdp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toStartOf="@+id/right_icon_layout"
     app:layout_constraintStart_toEndOf="@+id/back_button"
     app:layout_constraintTop_toTopOf="parent"
+    app:textType="HEADING_6"
     tools:text="Title" />
 
   <LinearLayout

@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Key_Preferences;
@@ -54,7 +55,7 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analytics);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        CustomToolbar toolbar = (CustomToolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
 

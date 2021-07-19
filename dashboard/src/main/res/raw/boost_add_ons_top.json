@@ -15,21 +15,21 @@
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "In-clinic\nAppointments"
+          "title": "In-clinic\nappointments"
         },
         {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "CALLTRACKER",
-          "title": "Patient\nCalls"
+          "title": "Patient\ncalls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Patient\nEnquiries"
+          "title": "Patient\nenquiries"
         }
       ]
     },
@@ -48,21 +48,21 @@
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "In-clinic\nAppointments"
+          "title": "In-clinic\nappointments"
         },
         {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "CALLTRACKER",
-          "title": "Patient\nCalls"
+          "title": "Patient\ncalls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Patient\nEnquiries"
+          "title": "Patient\nenquiries"
         }
       ]
     },
@@ -74,21 +74,21 @@
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Customer\nOrders"
+          "title": "Customer\norders"
         },
         {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "CALLTRACKER",
-          "title": "Customer\nCalls"
+          "title": "Customer\ncalls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Customer\nEnquiries"
+          "title": "Customer\nenquiries"
         }
       ]
     },
@@ -100,21 +100,21 @@
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Admission\nRequests"
+          "title": "Admission\nrequests"
         },
         {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "CALLTRACKER",
-          "title": "Student\nCalls"
+          "title": "Student\ncalls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Student\nEnquiries"
+          "title": "Student\nenquiries"
         }
       ]
     },
@@ -126,21 +126,21 @@
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Room\nBookings"
+          "title": "Room\nbookings"
         },
         {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "CALLTRACKER",
-          "title": "Customer\nCalls"
+          "title": "Customer\ncalls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Customer\nEnquiries"
+          "title": "Customer\nenquiries"
         }
       ]
     },
@@ -152,21 +152,21 @@
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Customer\nOrders"
+          "title": "Customer\norders"
         },
         {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "CALLTRACKER",
-          "title": "Customer\nCalls"
+          "title": "Customer\ncalls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Customer\nEnquiries"
+          "title": "Customer\nenquiries"
         }
       ]
     },
@@ -178,21 +178,21 @@
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Customer\nOrders"
+          "title": "Customer\norders"
         },
         {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "CALLTRACKER",
-          "title": "Customer\nCalls"
+          "title": "Customer\ncalls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Customer\nEnquiries"
+          "title": "Customer\nenquiries"
         }
       ]
     },
@@ -211,21 +211,21 @@
           "isLock": false,
           "isHide": false,
           "premiumCode": "CALLTRACKER",
-          "title": "Customer\nCalls"
+          "title": "Customer\ncalls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Customer\nEnquiries"
+          "title": "Customer\nenquiries"
         },
         {
           "businessType": "ic_service_cataloge_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Service\nCatalogue"
+          "title": "Service\ncatalogue"
         }
       ]
     },
@@ -244,21 +244,21 @@
           "isLock": false,
           "isHide": false,
           "premiumCode": "CALLTRACKER",
-          "title": "Customer\nCalls"
+          "title": "Customer\ncalls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Customer\nEnquiries"
+          "title": "Customer\nenquiries"
         },
         {
           "businessType": "ic_service_cataloge_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Service\nCatalogue"
+          "title": "Service\ncatalogue"
         }
       ]
     },
@@ -277,21 +277,21 @@
           "isLock": false,
           "isHide": false,
           "premiumCode": "CALLTRACKER",
-          "title": "Customer\nCalls"
+          "title": "Customer\ncalls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Customer\nEnquiries"
+          "title": "Customer\nenquiries"
         },
         {
           "businessType": "ic_service_cataloge_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
-          "title": "Service\nCatalogue"
+          "title": "Service\ncatalogue"
         }
       ]
     }
