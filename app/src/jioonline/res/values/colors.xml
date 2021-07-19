@@ -5,6 +5,7 @@
   <color name="greenDark">#458b00</color>
 
   <color name="orange">@color/colorPrimary</color>
+  <color name="orange_light_n">#e371b7</color>
   <color name="colorAccentLight">@color/colorPrimaryDarkBlue</color>
   <color name="squash">@color/colorPrimaryDarkBlue</color>
   <color name="marigold">@color/colorPrimaryDarkBlue</color>
