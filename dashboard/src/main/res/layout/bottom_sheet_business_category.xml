@@ -73,7 +73,6 @@
         android:layout_marginTop="@dimen/size_12"
         android:layout_marginBottom="@dimen/size_16"
         android:enabled="true"
-        android:textAllCaps="false"
         android:gravity="center"
         android:textAllCaps="false"
         android:text="@string/contact_support_n"
