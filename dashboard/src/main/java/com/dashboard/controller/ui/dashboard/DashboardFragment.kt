@@ -993,9 +993,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           )
         }
       } else {
-        if (isBusinessCardShare) visitingCard(getString(R.string.my_business_card)) else showShortToast(
-          "Business detail getting error!"
-        )
+        if (isBusinessCardShare) visitingCard(getString(R.string.my_business_card)) else showShortToast("Business detail getting error!")
       }
     })
   }

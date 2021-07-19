@@ -5,19 +5,18 @@
   android:viewportHeight="18">
   <path
     android:fillAlpha="0.8"
-    android:fillColor="@color/colorPrimaryDark"
+    android:fillColor="@color/orange_light_n"
     android:pathData="M87,18H9C4.0294,18 0,13.9706 0,9C0,4.0294 4.0294,0 9,0H77L87,18Z"
-    android:strokeAlpha="0.8"/>
+    android:strokeAlpha="0.8" />
   <path
-    android:fillColor="@color/colorPrimary"
-    android:pathData="M87,0H9C4.0294,0 0,4.0294 0,9C0,13.9706 4.0294,18 9,18H77L87,0Z"/>
-</vector>
-<!--<vector xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:width="118dp"-->
-<!--    android:height="28dp"-->
-<!--    android:viewportWidth="118"-->
-<!--    android:viewportHeight="28">-->
-<!--  <path-->
-<!--      android:pathData="M117.787,0H0V28H104.248L117.787,0Z"-->
-<!--      android:fillColor="#BABABA"/>-->
-<!--</vector>-->
+    android:fillColor="@color/orange"
+    android:pathData="M87,0H9C4.0294,0 0,4.0294 0,9C0,13.9706 4.0294,18 9,18H77L87,0Z" />
+</vector><!--<vector xmlns:android="http://schemas.android.com/apk/res/android"-->
+  <!--    android:width="118dp"-->
+  <!--    android:height="28dp"-->
+  <!--    android:viewportWidth="118"-->
+  <!--    android:viewportHeight="28">-->
+  <!--  <path-->
+  <!--      android:pathData="M117.787,0H0V28H104.248L117.787,0Z"-->
+  <!--      android:fillColor="#BABABA"/>-->
+  <!--</vector>-->
