@@ -1,5 +1,6 @@
 package com.dashboard.controller.ui.more.holder
 
+import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.more.model.AboutAppSectionItem
 import com.dashboard.databinding.ItemBoostAddOnsBinding
 import com.dashboard.databinding.RecyclerItemAboutAppBinding
@@ -14,7 +15,7 @@ class AboutViewHolder(binding: RecyclerItemAboutAppBinding)
     binding.ctvHeading.text = data?.title
     binding.ctvSubtitle.text = data?.subtitle
     binding.civImage.setImageResource(activity?.resources?.getIdentifier(data?.icon, "drawable", activity?.packageName)!!)
-
+    binding.root.setOnClickListener { listener?.onItemClick(position,item,RecyclerViewActionType.ABOUT_VIEW_CLICK.ordinal) }
   }
 
 }
