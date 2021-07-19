@@ -47,7 +47,7 @@
               android:textAlignment="center"
               android:textColor="@color/white"
               app:textType="BODY_2"
-              tools:text="New Order" />
+              tools:text="New order" />
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/booking_id"
@@ -97,7 +97,7 @@
           android:paddingEnd="@dimen/size_10"
           android:text="@string/start_call"
           android:textAllCaps="false"
-          android:textColor="@color/orange"
+          android:textColor="@color/colorAccentLight"
           app:textType="HEADING_6" />
 
         <com.framework.views.customViews.CustomImageView

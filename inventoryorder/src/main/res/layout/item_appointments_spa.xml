@@ -166,13 +166,13 @@
                 style="@style/wrap_wrap"
                 android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/size_10"
+                android:fontFamily="@font/semi_bold"
                 android:gravity="top"
                 android:includeFontPadding="false"
                 android:text="02:33:00"
                 android:textAlignment="gravity"
                 android:textColor="@color/watermelon_light"
-                android:textSize="14sp"
-                 android:fontFamily="@font/semi_bold" />
+                android:textSize="14sp" />
             </LinearLayout>
 
 
@@ -212,13 +212,15 @@
               android:id="@+id/service_location"
               style="@style/wrap_wrap"
               layout="@layout/icon_text_item"
-              android:layout_marginTop="@dimen/size_2" />
+              android:layout_marginTop="@dimen/size_2"
+              tools:ignore="IncludeLayoutParam" />
 
             <include
               android:id="@+id/customer"
               style="@style/wrap_wrap"
               layout="@layout/icon_text_item"
-              android:layout_marginTop="@dimen/size_2" />
+              android:layout_marginTop="@dimen/size_2"
+              tools:ignore="IncludeLayoutParam" />
 
             <RelativeLayout
               style="@style/match_wrap"
@@ -250,7 +252,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/regular"
                 android:includeFontPadding="false"
-                android:textColor="@color/bg_dark_grey"
+                android:textColor="@color/black_4a4a4a"
                 tools:text="Honey wax and detan service" />
 
               <com.framework.views.customViews.CustomTextView
@@ -263,7 +265,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="Today 2:30-3:20 pm by Dr. XXXX"
-                android:textColor="@color/bg_dark_grey"
+                android:textColor="@color/black_4a4a4a"
                 android:visibility="visible"
                 app:textType="CAPTION"
                 tools:visibility="visible" />

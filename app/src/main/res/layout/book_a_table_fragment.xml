@@ -79,9 +79,10 @@
         android:background="@drawable/orange_button_click_effect"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"
+        android:textAllCaps="false"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
-        android:text="VIEW IN ADD-ON STORE"
+        android:text="@string/view_in_add_on_store"
         android:textColor="@color/white" />
 
 
