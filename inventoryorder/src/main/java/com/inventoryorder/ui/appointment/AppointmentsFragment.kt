@@ -5,12 +5,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import android.widget.EditText
 import android.widget.PopupWindow
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -56,8 +56,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
-class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(),
-  RecyclerItemClickListener {
+
+class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(), RecyclerItemClickListener {
 
   private lateinit var requestFilter: OrderFilterRequest
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
@@ -279,18 +279,15 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.CONFIRM -> {
-        requestFilter =
-          getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name))
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name))
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.DELIVERED -> {
-        requestFilter =
-          getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.CANCELLED -> {
-        requestFilter =
-          getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name))
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name))
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       else -> {
@@ -304,7 +301,10 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     super.onCreateOptionsMenu(menu, inflater)
     val searchItem = menu.findItem(R.id.menu_item_search)
     if (searchItem != null) {
-      searchView = searchItem.actionView as SearchView
+      searchView = searchItem.actionView as? SearchView
+      val searchEditText:EditText? = searchView?.findViewById(androidx.appcompat.R.id.search_src_text)
+      searchEditText?.setTextColor(Color.WHITE)
+      searchEditText?.setHintTextColor(getColor(R.color.white_50))
       searchView?.queryHint = resources.getString(R.string.queryHintAppointment)
       searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {

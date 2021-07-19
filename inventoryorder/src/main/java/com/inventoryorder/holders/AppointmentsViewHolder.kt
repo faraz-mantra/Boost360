@@ -37,11 +37,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     val data = item as? OrderItem
     data?.let { setDataResponse(it) }
     binding.mainView.setOnClickListener {
-      listener?.onItemClick(
-        adapterPosition,
-        data,
-        RecyclerViewActionType.ALL_BOOKING_ITEM_CLICKED.ordinal
-      )
+      listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.ALL_BOOKING_ITEM_CLICKED.ordinal)
     }
   }
 
@@ -51,41 +47,28 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
 
     if (statusIcon != null) binding.statusIcon.setImageResource(statusIcon) else binding.statusIcon.gone()
 
-    if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status()
-        .toUpperCase(Locale.ROOT)
-    ) {
+    if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT)) {
       binding.orderType.text = statusValue.plus(order.cancelledText())
     } else binding.orderType.text = statusValue
 
     binding.orderId.text = "# ${order.ReferenceNumber}"
 
     order.BillingDetails?.let { bill ->
-      val currency =
-        takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() }
-          ?: "INR"
-      val formatAmount =
-        "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.AmountPayableByBuyer!!))}"
+      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
+      val formatAmount = "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.AmountPayableByBuyer!!))}"
       val ss = SpannableString("$formatAmount")
       ss.setSpan(RelativeSizeSpan(0.5f), "$formatAmount".indexOf("."), "$formatAmount".length, 0)
       binding.txtRupees.text = ss
       binding.txtRupeesSymble.text = currency
     }
 
-    binding.txtOrderDate.text = "at ${
-      parseDate(
-        order.CreatedOn,
-        FORMAT_SERVER_DATE,
-        FORMAT_SERVER_TO_LOCAL,
-        timeZone = TimeZone.getTimeZone("IST")
-      )
-    }"
+    binding.txtOrderDate.text = "at ${parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL, timeZone = TimeZone.getTimeZone("IST"))}"
     binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
 
     binding.serviceLocation.icon.setImageResource(R.drawable.ic_service_location)
-    binding.serviceLocation.title.text =
-      "${getApplicationContext()?.getString(R.string.service_location)} :"
+    binding.serviceLocation.title.text = "${getApplicationContext()?.getString(R.string.service_location)} :"
     binding.serviceLocation.value.text = "Business"
-    binding.serviceLocation.value.text = order.SellerDetails?.Address?.City ?: "NA"
+//    binding.serviceLocation.value.text = order.SellerDetails?.Address?.City ?: "NA"
 
     binding.customer.icon.setImageResource(R.drawable.ic_customer)
     binding.customer.title.text = "${getApplicationContext()?.getString(R.string.customer)} :"
@@ -212,11 +195,9 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     }
 
     binding.payment.title.text = getApplicationContext()?.getString(R.string.payment_mode)
-    binding.payment.value.text =
-      fromHtml(order.PaymentDetails?.paymentWithColor(colorCode)?.trim() ?: "")
+    binding.payment.value.text = fromHtml(order.PaymentDetails?.paymentWithColor(colorCode)?.trim() ?: "")
 
-    val doctorName =
-      order.firstItemForAptConsult()?.product()?.extraItemProductConsultation()?.doctorName
+    val doctorName = order.firstItemForAptConsult()?.product()?.extraItemProductConsultation()?.doctorName
     binding.txtScheduledDate.text = fromHtml(
       "${
         order.firstItemForAptConsult()?.getScheduleDateAndTime()
@@ -227,8 +208,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     //----------------------------
     val location = order.SellerDetails?.Address?.City?.capitalizeUtil()
 
-    val details =
-      order.firstItemForAptConsult()?.Product?.extraItemProductConsultation()?.detailsConsultation()
+    val details = order.firstItemForAptConsult()?.Product?.extraItemProductConsultation()?.detailsConsultation()
     val scheduleDate = order.firstItemForAptConsult()?.scheduledStartDate()
 
     val dateApt = parseDate(scheduleDate, FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)

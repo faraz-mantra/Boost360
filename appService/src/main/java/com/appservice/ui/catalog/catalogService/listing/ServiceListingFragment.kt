@@ -54,8 +54,7 @@ import kotlinx.android.synthetic.main.fragment_service_detail.*
 import kotlinx.android.synthetic.main.recycler_item_service_timing.*
 import java.util.*
 
-class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(),
-  RecyclerItemClickListener {
+class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
   private lateinit var domainName: String
   private var session: UserSessionManager? = null
@@ -269,7 +268,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun setListingView(visibility: Int) {
     binding?.baseRecyclerView?.visibility = visibility
-    binding?.llActionButtons?.visibility = visibility
+    binding?.cbAddService?.visibility = visibility
   }
 
   private fun setEmptyView() {

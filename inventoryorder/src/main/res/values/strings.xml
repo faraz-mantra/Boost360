@@ -55,7 +55,7 @@
   <string name="go_to_current_week">Go to current week</string>
   <string name="consultation_type_camel_case">Consultation type</string>
   <string name="new_apppointment_camel_case">New appointment</string>
-  <string name="update_apt_consult" tools:ignore="ExtraTranslation">Update appointment</string>
+  <string name="update_apt_consult" tools:ignore="ExtraTranslation">Update Appointment</string>
   <string name="in_clinic">In-Clinic</string>
   <string name="consulting_service">Consulting service</string>
   <string name="start_time_camel_case">Start time</string>

@@ -36,8 +36,7 @@ import com.inventoryorder.ui.order.OrderInvoiceFragment
 import com.inventoryorder.ui.order.OrdersFragment
 import com.inventoryorder.ui.order.createorder.*
 
-open class FragmentContainerOrderActivity :
-  AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
   private var ordersFragment: OrdersFragment? = null

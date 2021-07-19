@@ -323,7 +323,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
     private void showAlertDialog() {
         String str = format(getResources().getString(R.string.error_right_fptag), deepLinkFpTag);
-        new AlertDialog.Builder(new ContextThemeWrapper(this,R.style.AlertDialogCustom)).setMessage(str)
+        new AlertDialog.Builder(new ContextThemeWrapper(this,R.style.CustomAlertDialogTheme)).setMessage(str)
                 .setCancelable(false)
                 .setPositiveButton(R.string.ok, (dialog, i) -> {
                     dialog.dismiss();
