@@ -3,8 +3,8 @@
     {
       "category_key": "HEALTHCARE - GENERAL",
       "experience_code": "DOC",
-      "webTemplateId" : "59d74e153872831a6483491e",
-      "category_Name": "Doctors &\nHealth Specialists",
+      "webTemplateId": "59d74e153872831a6483491e",
+      "category_Name": "Doctors &\nHealth specialists",
       "category_descriptor": "your healthcare business",
       "icon": "/icons/healthcare.svg",
       "channels": [
@@ -41,7 +41,7 @@
         {
           "type": "T_FEED",
           "priority": "recommended",
-          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from JioOnline.",
+          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
           "isSelected": false
         }
       ],
@@ -54,11 +54,11 @@
           "details": [
             {
               "title": "Website optimised for best experience of your patients",
-              "desc": "The internet is the first place that people go to when they want to explore treatment options. A detailed and well-structured website helps in establishing trust in your practice. JioOnline can help you create an attractive and well-designed website to impress patients and visitors. The site is mobile responsive, which means that people can read it both on their smartphones as well as laptops."
+              "desc": "The internet is the first place that people go to when they want to explore treatment options. A detailed and well-structured website helps in establishing trust in your practice. Boost can help you create an attractive and well-designed website to impress patients and visitors. The site is mobile responsive, which means that people can read it both on their smartphones as well as laptops."
             },
             {
               "title": "Appointment bookings & enquiries",
-              "desc": "JioOnline has many useful features such as end-to-end appointment bookings, enquiry facility etc. to assist your business. Doctors and healthcare specialists can use these features to see more patients and increase their efficiency."
+              "desc": "Boost has many useful features such as end-to-end appointment bookings, enquiry facility etc. to assist your business. Doctors and healthcare specialists can use these features to see more patients and increase their efficiency."
             },
             {
               "title": "Pre-installed payment gateway",
@@ -66,7 +66,7 @@
             },
             {
               "title": "Upgrade to a Custom Domain",
-              "desc": "When you create a JioOnline website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
+              "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
             }
           ]
         },
@@ -78,7 +78,7 @@
           "details": [
             {
               "title": "End-to-end appointment management",
-              "desc": "At JioOnline, we try to help doctors and healthcare specialists grow their business using the latest digital technologies. With this in mind, we have created a completely automated system to help your patients book their medical appointments online. Our system takes care of the entire booking process including scheduling appointments and making online payments."
+              "desc": "At Boost, we try to help doctors and healthcare specialists grow their business using the latest digital technologies. With this in mind, we have created a completely automated system to help your patients book their medical appointments online. Our system takes care of the entire booking process including scheduling appointments and making online payments."
             },
             {
               "title": "Two-way appointment reminders",
@@ -86,7 +86,7 @@
             },
             {
               "title": "Online service enquiry",
-              "desc": "Your JioOnline website has an Enquiry button through which patients can contact you. They can use the button to drop a question about your services, facilities, timings etc. This makes it easier for visitors to reach out to you."
+              "desc": "Your Boost website has an Enquiry button through which patients can contact you. They can use the button to drop a question about your services, facilities, timings etc. This makes it easier for visitors to reach out to you."
             },
             {
               "title": "Reply to patients enquiries instantly",
@@ -106,7 +106,7 @@
           "details": [
             {
               "title": "HIPAA - compliant data centres",
-              "desc": "At JioOnline, we take issues like patient confidentiality and data security very seriously. That is why we ensure that our security standards match up to global norms. Our data centres are fully compliant with the US Health Insurance Portability and Accountability Act of 1996 (HIPAA) which sets the standards for patient-doctor confidentiality. This ensures that all patient details remain secure with us."
+              "desc": "At Boost, we take issues like patient confidentiality and data security very seriously. That is why we ensure that our security standards match up to global norms. Our data centres are fully compliant with the US Health Insurance Portability and Accountability Act of 1996 (HIPAA) which sets the standards for patient-doctor confidentiality. This ensures that all patient details remain secure with us."
             },
             {
               "title": "Modern encryption technology",
@@ -122,10 +122,10 @@
           "details": [
             {
               "title": "Ready to use payment gateway",
-              "desc": "Collecting payments has never been easier! JioOnline comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
+              "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -146,19 +146,19 @@
           "details": [
             {
               "title": "Update your website & social media from any location",
-              "desc": "One of the biggest advantages of using JioOnline is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up notices, updates, health tips etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of JioOnline in your pocket!"
+              "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up notices, updates, health tips etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
               "title": "Put up unlimited images",
-              "desc": "At JioOnline, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase patient footfall by uploading relevant pictures of your clinic/practice. Use the power of images to get more patients to reach out to you."
+              "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase patient footfall by uploading relevant pictures of your clinic/practice. Use the power of images to get more patients to reach out to you."
             },
             {
               "title": "Showcase up to 10 different services",
-              "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of JioOnline to the fullest!"
+              "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of Boost to the fullest!"
             },
             {
               "title": "Display up to 50 updates/offers/blogs",
-              "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of JioOnline to the fullest!"
+              "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of Boost to the fullest!"
             }
           ]
         },
@@ -170,11 +170,11 @@
           "details": [
             {
               "title": "Advice on digital growth strategy",
-              "desc": "Joa, your digital assistant, will be providing suggestions on how to improve your website. JOA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
+              "desc": "Joa, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Joa are different for every member and are made after analysing each business separately."
             },
             {
               "title": "Weekly performance reporting",
-              "desc": "JioOnline gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, patient enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
+              "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, patient enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             },
             {
               "title": "Content tips",
@@ -187,7 +187,7 @@
     {
       "category_key": "EDUCATION",
       "experience_code": "EDU",
-      "webTemplateId" : "5a952f3dac626704fc9b6d86",
+      "webTemplateId": "5a952f3dac626704fc9b6d86",
       "category_Name": "Education\n& e-Coaching",
       "category_descriptor": "your education institute",
       "icon": "/icons/edu.svg",
@@ -225,20 +225,20 @@
         {
           "type": "T_FEED",
           "priority": "recommended",
-          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from JioOnline.",
+          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
           "isSelected": false
         }
       ],
       "sections": [
         {
-          "title": "Website Customised for Educational Insitutes",
+          "title": "Website customised for educational institutes",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
           "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
           "details": [
             {
               "title": "Automatic optimisation for search",
-              "desc": "The business website enabled via JioOnline, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
+              "desc": "The business website enabled via Boost, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
             },
             {
               "title": "Pre-installed payment gateway for online admissions",
@@ -246,11 +246,11 @@
             },
             {
               "title": "Upgrade to a custom domain",
-              "desc": "When you create a JioOnline website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
+              "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
             },
             {
               "title": "High speed & secure website",
-              "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with JioOnline which comes with a reliable SSL certificate and other important safety features to assist your retail business."
+              "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with Boost which comes with a reliable SSL certificate and other important safety features to assist your retail business."
             }
           ]
         },
@@ -262,11 +262,11 @@
           "details": [
             {
               "title": "Online booking & payment",
-              "desc": "JioOnline makes running an education institution or an e-coaching business much simpler through the use of advanced digital technology. With JioOnline, your students can browse courses, register, and pay directly from the website. No need to call up the centre or make physical visits! Grow your business and improve efficiency using our unique digital platform."
+              "desc": "Boost makes running an education institution or an e-coaching business much simpler through the use of advanced digital technology. With Boost, your students can browse courses, register, and pay directly from the website. No need to call up the centre or make physical visits! Grow your business and improve efficiency using our unique digital platform."
             },
             {
               "title": "Online Enquiries",
-              "desc": "Every JioOnline website comes with an Enquiry button to allow visitors to leave questions regarding classes, faculty etc. This makes it easier for customers to contact you. It brings business leads and gives you the chance to increase your admissions."
+              "desc": "Every Boost website comes with an Enquiry button to allow visitors to leave questions regarding classes, faculty etc. This makes it easier for customers to contact you. It brings business leads and gives you the chance to increase your admissions."
             },
             {
               "title": "Reply to Customer Enquiries Instantly",
@@ -286,10 +286,10 @@
           "details": [
             {
               "title": "Ready to use payment gateway",
-              "desc": "Collecting payments has never been easier! JioOnline comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
+              "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -310,39 +310,39 @@
           "details": [
             {
               "title": "Update your website & social media from any location",
-              "desc": "One of the biggest advantages of using JioOnline is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up notices, updates, health tips etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of JioOnline in your pocket!"
+              "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up notices, updates, health tips etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
               "title": "Put up unlimited images",
-              "desc": "At JioOnline, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase patient footfall by uploading relevant pictures of your clinic/practice. Use the power of images to get more patients to reach out to you."
+              "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase patient footfall by uploading relevant pictures of your clinic/practice. Use the power of images to get more patients to reach out to you."
             },
             {
               "title": "Showcase up to 10 different services",
-              "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of JioOnline to the fullest!"
+              "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of Boost to the fullest!"
             },
             {
               "title": "Display up to 50 updates/offers/blogs",
-              "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of JioOnline to the fullest!"
+              "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of Boost to the fullest!"
             }
           ]
         },
         {
-          "title": "Ria — your digital assistant",
+          "title": "Joa — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
           "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
-              "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
+              "desc": "Joa, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Joa are different for every member and are made after analysing each business separately."
             },
             {
               "title": "Weekly performance reporting",
-              "desc": "JioOnline gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, patient enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
+              "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, patient enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             },
             {
               "title": "Content tips",
-              "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher patient footfall."
+              "desc": "Besides helping you with your overall digital strategy, Joa will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher patient footfall."
             }
           ]
         },
@@ -358,7 +358,7 @@
             },
             {
               "title": "No public port/connection exposed",
-              "desc": "All the components that power JioOnline are secure and ensures your data is always safe from malicious attacks."
+              "desc": "All the components that power Boost are secure and ensures your data is always safe from malicious attacks."
             }
           ]
         }
@@ -367,7 +367,7 @@
     {
       "category_key": "HEALTHCARE - CLINICS",
       "experience_code": "HOS",
-      "webTemplateId" : "597f48fd38728384d4b85cdd",
+      "webTemplateId": "597f48fd38728384d4b85cdd",
       "category_Name": "Clinics &\nHospitals",
       "category_descriptor": "your healthcare business",
       "icon": "/icons/hospital.svg",
@@ -404,7 +404,7 @@
         {
           "type": "T_FEED",
           "priority": "important",
-          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from JioOnline.",
+          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
           "isSelected": false
         }
       ],
@@ -417,11 +417,11 @@
           "details": [
             {
               "title": "Best experience of your patients",
-              "desc": "The internet is the first place that people go to when they want to explore treatment options. A detailed and well-structured website helps in establishing trust in your hospital. JioOnline can help you create an attractive and well-designed website to impress patients and visitors. The website is mobile responsive, which means that people can read it both on their smartphones as well as laptops."
+              "desc": "The internet is the first place that people go to when they want to explore treatment options. A detailed and well-structured website helps in establishing trust in your hospital. Boost can help you create an attractive and well-designed website to impress patients and visitors. The website is mobile responsive, which means that people can read it both on their smartphones as well as laptops."
             },
             {
               "title": "Appointment bookings, enquiries & video consulting",
-              "desc": "JioOnline has many useful features such as end-to-end appointment bookings, enquiry facility, video consulting etc. to assist your business. Doctors and healthcare specialists of your medical institution can use these features to see more patients and increase their productivity."
+              "desc": "Boost has many useful features such as end-to-end appointment bookings, enquiry facility, video consulting etc. to assist your business. Doctors and healthcare specialists of your medical institution can use these features to see more patients and increase their productivity."
             },
             {
               "title": "Pre-Installed payment gateway",
@@ -429,7 +429,7 @@
             },
             {
               "title": "Upgrade to a Custom Domain",
-              "desc": "When you create a JioOnline website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
+              "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
             }
           ]
         },
@@ -441,7 +441,7 @@
           "details": [
             {
               "title": "End-to-end appointment management",
-              "desc": "At JioOnline, we try to help doctors and healthcare specialists grow their business using the latest digital technologies. With this in mind, we have created a completely automated system to help your patients book their medical appointments online. Our system takes care of the entire booking process including scheduling appointments and making online payments."
+              "desc": "At Boost, we try to help doctors and healthcare specialists grow their business using the latest digital technologies. With this in mind, we have created a completely automated system to help your patients book their medical appointments online. Our system takes care of the entire booking process including scheduling appointments and making online payments."
             },
             {
               "title": "Two-way appointment reminders",
@@ -449,7 +449,7 @@
             },
             {
               "title": "Online service enquiry",
-              "desc": "Your JioOnline website has an Enquiry button through which patients can contact you. They can use the button to drop a question about your services, facilities, timings etc. This makes it easier for visitors to reach out to you."
+              "desc": "Your Boost website has an Enquiry button through which patients can contact you. They can use the button to drop a question about your services, facilities, timings etc. This makes it easier for visitors to reach out to you."
             },
             {
               "title": "Reply to patients enquiries instantly",
@@ -469,7 +469,7 @@
           "details": [
             {
               "title": "HIPAA - compliant data centres",
-              "desc": "At JioOnline, we take issues like patient confidentiality and data security very seriously. That is why we ensure that our security standards match up to global norms. Our data centres are fully compliant with the US Health Insurance Portability and Accountability Act of 1996 (HIPAA) which sets the standards for patient-doctor confidentiality. This ensures that all patient details remain secure with us."
+              "desc": "At Boost, we take issues like patient confidentiality and data security very seriously. That is why we ensure that our security standards match up to global norms. Our data centres are fully compliant with the US Health Insurance Portability and Accountability Act of 1996 (HIPAA) which sets the standards for patient-doctor confidentiality. This ensures that all patient details remain secure with us."
             },
             {
               "title": "Modern encryption technology",
@@ -485,10 +485,10 @@
           "details": [
             {
               "title": "Ready to use payment gateway",
-              "desc": "Collecting payments has never been easier! JioOnline comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
+              "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -509,39 +509,39 @@
           "details": [
             {
               "title": "Update your website & social media from any location",
-              "desc": "One of the biggest advantages of using JioOnline is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up notices, updates, health tips etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of JioOnline in your pocket!"
+              "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up notices, updates, health tips etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
               "title": "Put up unlimited images",
-              "desc": "At JioOnline, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase patient footfall by uploading relevant pictures of your clinic/practice. Use the power of images to get more patients to reach out to you."
+              "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase patient footfall by uploading relevant pictures of your clinic/practice. Use the power of images to get more patients to reach out to you."
             },
             {
               "title": "Showcase up to 10 different services",
-              "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of JioOnline to the fullest!"
+              "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of Boost to the fullest!"
             },
             {
               "title": "Display Up To 50 updates/offers/blogs",
-              "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of JioOnline to the fullest!"
+              "desc": "Inform your patients about services offered by showcasing up to 10 different items. Mention price, description etc. to notify your audience about the most popular options. Grow your practice by using the power of Boost to the fullest!"
             }
           ]
         },
         {
-          "title": "Ria — your digital assistant",
+          "title": "Joa — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
           "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
-              "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
+              "desc": "Joa, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Joa are different for every member and are made after analysing each business separately."
             },
             {
               "title": "Weekly performance reporting",
-              "desc": "JioOnline gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, patient enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
+              "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, patient enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             },
             {
               "title": "Content tips",
-              "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher patient footfall."
+              "desc": "Besides helping you with your overall digital strategy, Joa will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher patient footfall."
             }
           ]
         }
@@ -550,7 +550,7 @@
     {
       "category_key": "SPA",
       "experience_code": "SPA",
-      "webTemplateId" : "5b34bd254030c804fbbd8414",
+      "webTemplateId": "5b34bd254030c804fbbd8414",
       "category_Name": "Spas\n& Wellness",
       "category_descriptor": "your spa",
       "icon": "/icons/spa.svg",
@@ -588,20 +588,20 @@
         {
           "type": "T_FEED",
           "priority": "learn_more",
-          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from JioOnline.",
+          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
           "isSelected": false
         }
       ],
       "sections": [
         {
-          "title": "Website Customised for Spa",
+          "title": "Website customised for spa",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
           "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
           "details": [
             {
               "title": "Automatic optimisation for search",
-              "desc": "The business website enabled via JioOnline, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
+              "desc": "The business website enabled via Boost, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
             },
             {
               "title": "Pre-installed payment gateway for paid appointments",
@@ -609,11 +609,11 @@
             },
             {
               "title": "Upgrade to a custom domain",
-              "desc": "When you create a JioOnline website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
+              "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
             },
             {
               "title": "High speed & secure website",
-              "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with JioOnline which comes with a reliable SSL certificate and other important safety features to assist your retail business."
+              "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with Boost which comes with a reliable SSL certificate and other important safety features to assist your retail business."
             }
           ]
         },
@@ -625,7 +625,7 @@
           "details": [
             {
               "title": "Online booking & payment",
-              "desc": "JioOnline makes running a spa or wellness centre much simpler through the use of advanced digital technology. With JioOnline, your customers can browse your services, book appointments, and pay directly from the website. No need to call you up! Grow your business and improve efficiency using our unique digital platform."
+              "desc": "Boost makes running a spa or wellness centre much simpler through the use of advanced digital technology. With Boost, your customers can browse your services, book appointments, and pay directly from the website. No need to call you up! Grow your business and improve efficiency using our unique digital platform."
             },
             {
               "title": "Two-way appointment reminders",
@@ -633,7 +633,7 @@
             },
             {
               "title": "Online enquiries",
-              "desc": "Every JioOnline website comes with an Enquiry button to allow visitors to leave questions regarding services, timing etc. This makes it easier for customers to contact you. It brings business leads and gives you the chance to increase your bookings."
+              "desc": "Every Boost website comes with an Enquiry button to allow visitors to leave questions regarding services, timing etc. This makes it easier for customers to contact you. It brings business leads and gives you the chance to increase your bookings."
             },
             {
               "title": "Reply to customer enquiries instantly",
@@ -653,10 +653,10 @@
           "details": [
             {
               "title": "Ready to use payment gateway",
-              "desc": "Collecting payments has never been easier! JioOnline comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
+              "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -670,46 +670,46 @@
           ]
         },
         {
-          "title": "Manage Your Digital Content",
+          "title": "Manage your digital content",
           "desc": "",
           "icon": "/icons/digital_content.svg",
           "boost_widget_key": "LATESTUPDATES,FEATUREDIMAGE,CUSTOMPAGES,IMAGEGALLERY,TIMINGS,PRODUCTCATALOGUE,SOCIALMEDIA,CONTACTDETAILS",
           "details": [
             {
               "title": "Update your website & social media from any location",
-              "desc": "One of the biggest advantages of using JioOnline is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up offers/discounts, updates, wellness tips, membership options etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of JioOnline in your pocket!"
+              "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up offers/discounts, updates, wellness tips, membership options etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
               "title": "Put up unlimited images",
-              "desc": "At JioOnline, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase bookings by uploading attractive pictures of your spa/wellness centre. Use the power of images to persuade more customers to reach out to you!"
+              "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase bookings by uploading attractive pictures of your spa/wellness centre. Use the power of images to persuade more customers to reach out to you!"
             },
             {
               "title": "Showcase up to 10 different dervices",
-              "desc": "Inform visitors about your facilities and services by showcasing up to 10 different items. Mention features, prices etc. to give details about the most popular options. Grow your business by using the power of JioOnline to the fullest!"
+              "desc": "Inform visitors about your facilities and services by showcasing up to 10 different items. Mention features, prices etc. to give details about the most popular options. Grow your business by using the power of Boost to the fullest!"
             },
             {
               "title": "Display up to 50 updates/offers/blogs",
-              "desc": "JioOnline allows you to display up to 50 different updates/offers/blogs on the website. And, the uploading process is amazingly quick and easy! All you need to do is log on to the app/website and hit a few buttons. JioOnline makes managing your website and social media accounts simple and effortless, saving you time and money."
+              "desc": "Boost allows you to display up to 50 different updates/offers/blogs on the website. And, the uploading process is amazingly quick and easy! All you need to do is log on to the app/website and hit a few buttons. Boost makes managing your website and social media accounts simple and effortless, saving you time and money."
             }
           ]
         },
         {
-          "title": "Ria — your digital assistant",
+          "title": "Joa — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
           "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
-              "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
+              "desc": "Joa, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Joa are different for every member and are made after analysing each business separately."
             },
             {
               "title": "Weekly performance reporting",
-              "desc": "JioOnline gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, patient enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
+              "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, patient enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             },
             {
               "title": "Content tips",
-              "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher patient footfall."
+              "desc": "Besides helping you with your overall digital strategy, Joa will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher patient footfall."
             }
           ]
         }
@@ -718,7 +718,7 @@
     {
       "category_key": "HOTEL & MOTELS",
       "experience_code": "HOT",
-      "webTemplateId" : "5b3b2b6aec3c7704fee7ae93",
+      "webTemplateId": "5b3b2b6aec3c7704fee7ae93",
       "category_Name": "Hotels\n& Motels",
       "category_descriptor": "your hotel",
       "icon": "/icons/hotels.svg",
@@ -756,28 +756,28 @@
         {
           "type": "T_FEED",
           "priority": "recommended",
-          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from JioOnline.",
+          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
           "isSelected": false
         }
       ],
       "sections": [
         {
-          "title": "Website Customised for Hotels",
+          "title": "Website customised for hotels",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
           "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
           "details": [
             {
               "title": "Automatic optimisation for search",
-              "desc": "The business website enabled via JioOnline, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
+              "desc": "The business website enabled via Boost, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
             },
             {
               "title": "Upgrade to a custom domain",
-              "desc": "When you create a JioOnline website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
+              "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
             },
             {
               "title": "High speed & secure website",
-              "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with JioOnline which comes with a reliable SSL certificate and other important safety features to assist your retail business."
+              "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with Boost which comes with a reliable SSL certificate and other important safety features to assist your retail business."
             }
           ]
         },
@@ -789,11 +789,11 @@
           "details": [
             {
               "title": "Booking management",
-              "desc": "These days, hotels and motels need online booking facility to compete strongly with their rivals. That is why JioOnline for hotels comes with a readymade booking engine. Now your guests can make reservations from the website itself. No need to call the hotel! Our booking system provides end-to-end inventory management to help you with your business."
+              "desc": "These days, hotels and motels need online booking facility to compete strongly with their rivals. That is why Boost for hotels comes with a readymade booking engine. Now your guests can make reservations from the website itself. No need to call the hotel! Our booking system provides end-to-end inventory management to help you with your business."
             },
             {
               "title": "Online enquiries",
-              "desc": "Every JioOnline website comes with an Enquiry button to allow visitors to leave questions regarding food, services, accommodation etc. This makes it easier for your customers to contact you. It brings business leads and gives you the chance to increase your occupancy rates."
+              "desc": "Every Boost website comes with an Enquiry button to allow visitors to leave questions regarding food, services, accommodation etc. This makes it easier for your customers to contact you. It brings business leads and gives you the chance to increase your occupancy rates."
             },
             {
               "title": "Reply to customer enquiries instantly",
@@ -821,10 +821,10 @@
           "details": [
             {
               "title": "Ready to use payment gateway",
-              "desc": "Collecting payments has never been easier! JioOnline comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
+              "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -845,39 +845,39 @@
           "details": [
             {
               "title": "Update your website & social media from any location",
-              "desc": "One of the biggest advantages of using JioOnline is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up offers/discounts, updates, wellness tips, membership options etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of JioOnline in your pocket!"
+              "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up offers/discounts, updates, wellness tips, membership options etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
               "title": "Put up unlimited images",
-              "desc": "At JioOnline, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase bookings by uploading attractive pictures of your spa/wellness centre. Use the power of images to persuade more customers to reach out to you!"
+              "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase bookings by uploading attractive pictures of your spa/wellness centre. Use the power of images to persuade more customers to reach out to you!"
             },
             {
               "title": "Showcase up to 10 different services",
-              "desc": "Inform visitors about your facilities and services by showcasing up to 10 different items. Mention features, prices etc. to give details about the most popular options. Grow your business by using the power of JioOnline to the fullest!"
+              "desc": "Inform visitors about your facilities and services by showcasing up to 10 different items. Mention features, prices etc. to give details about the most popular options. Grow your business by using the power of Boost to the fullest!"
             },
             {
               "title": "Display up to 50 updates/offers/blogs",
-              "desc": "JioOnline allows you to display up to 50 different updates/offers/blogs on the website. And, the uploading process is amazingly quick and easy! All you need to do is log on to the app/website and hit a few buttons. JioOnline makes managing your website and social media accounts simple and effortless, saving you time and money."
+              "desc": "Boost allows you to display up to 50 different updates/offers/blogs on the website. And, the uploading process is amazingly quick and easy! All you need to do is log on to the app/website and hit a few buttons. Boost makes managing your website and social media accounts simple and effortless, saving you time and money."
             }
           ]
         },
         {
-          "title": "Ria — your digital assistant",
+          "title": "Joa — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
           "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
-              "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
+              "desc": "Joa, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Joa are different for every member and are made after analysing each business separately."
             },
             {
               "title": "Weekly performance reporting",
-              "desc": "JioOnline gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, customer enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
+              "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, customer enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             },
             {
               "title": "Content Tips",
-              "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
+              "desc": "Besides helping you with your overall digital strategy, Joa will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
             }
           ]
         }
@@ -886,7 +886,7 @@
     {
       "category_key": "FOOD & BEVERAGES",
       "experience_code": "CAF",
-      "webTemplateId" : "5ad9c409889084051f87a4b6",
+      "webTemplateId": "5ad9c409889084051f87a4b6",
       "category_Name": "Restaurants\n& Cafes",
       "category_descriptor": "your F&B business",
       "icon": "/icons/cafe.svg",
@@ -924,20 +924,20 @@
         {
           "type": "T_FEED",
           "priority": "recommended",
-          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from JioOnline.",
+          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
           "isSelected": false
         }
       ],
       "sections": [
         {
-          "title": "Website Customised for Restaurants",
+          "title": "Website customised for restaurants",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
           "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
           "details": [
             {
               "title": "Automatic optimisation for search",
-              "desc": "The business website enabled via JioOnline, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
+              "desc": "The business website enabled via Boost, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
             },
             {
               "title": "Pre-installed payment gateway for online orders",
@@ -945,11 +945,11 @@
             },
             {
               "title": "Upgrade to a custom domain",
-              "desc": "When you create a JioOnline website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
+              "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
             },
             {
               "title": "High speed & secure website",
-              "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with JioOnline which comes with a reliable SSL certificate and other important safety features to assist your retail business."
+              "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with Boost which comes with a reliable SSL certificate and other important safety features to assist your retail business."
             }
           ]
         },
@@ -961,11 +961,11 @@
           "details": [
             {
               "title": "Online reservations",
-              "desc": "JioOnline helps you grow your restaurant business through the power of digital technology. Many guests prefer to book a table in advance and don’t like to wait for seating. JioOnline helps them make a reservation online without the need to call the restaurant. It makes bookings much simpler and helps you keep your seats filled."
+              "desc": "Boost helps you grow your restaurant business through the power of digital technology. Many guests prefer to book a table in advance and don’t like to wait for seating. Boost helps them make a reservation online without the need to call the restaurant. It makes bookings much simpler and helps you keep your seats filled."
             },
             {
               "title": "Takeaways & deliveries",
-              "desc": "Accepting online orders can help you grow your revenue and attract new customers. It also encourages larger orders by giving your customers more time to look through the menu and discover new items they would like to try. JioOnline has a pre-integrated online ordering system that helps restaurants and cafes cater to takeaways and deliveries."
+              "desc": "Accepting online orders can help you grow your revenue and attract new customers. It also encourages larger orders by giving your customers more time to look through the menu and discover new items they would like to try. Boost has a pre-integrated online ordering system that helps restaurants and cafes cater to takeaways and deliveries."
             },
             {
               "title": "Reply to customer enquiries instantly",
@@ -981,10 +981,10 @@
           "details": [
             {
               "title": "Ready to use payment gateway",
-              "desc": "Collecting payments has never been easier! JioOnline comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
+              "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -1005,39 +1005,39 @@
           "details": [
             {
               "title": "Update your website & social media from any location",
-              "desc": "One of the biggest advantages of using JioOnline is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up offers/discounts, updates, wellness tips, membership options etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of JioOnline in your pocket!"
+              "desc": "One of the biggest advantages of using Boost is that it makes managing your website and social media accounts totally easy! You can post updates from any location simply using your smartphone! No need for an office or a computer! Put up offers/discounts, updates, wellness tips, membership options etc. even while outside or travelling. Never lose touch with the digital side of your business when you have the power of Boost in your pocket!"
             },
             {
               "title": "Put up unlimited images",
-              "desc": "At JioOnline, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase bookings by uploading attractive pictures of your spa/wellness centre. Use the power of images to persuade more customers to reach out to you!"
+              "desc": "At Boost, we understand the power that pictures bring to marketing. That’s why we provide all our members with an unlimited picture gallery. Increase bookings by uploading attractive pictures of your spa/wellness centre. Use the power of images to persuade more customers to reach out to you!"
             },
             {
               "title": "Showcase up to 10 different services",
-              "desc": "Inform visitors about your facilities and services by showcasing up to 10 different items. Mention features, prices etc. to give details about the most popular options. Grow your business by using the power of JioOnline to the fullest!"
+              "desc": "Inform visitors about your facilities and services by showcasing up to 10 different items. Mention features, prices etc. to give details about the most popular options. Grow your business by using the power of Boost to the fullest!"
             },
             {
               "title": "Display up to 50 updates/offers/blogs",
-              "desc": "JioOnline allows you to display up to 50 different updates/offers/blogs on the website. And, the uploading process is amazingly quick and easy! All you need to do is log on to the app/website and hit a few buttons. JioOnline makes managing your website and social media accounts simple and effortless, saving you time and money."
+              "desc": "Boost allows you to display up to 50 different updates/offers/blogs on the website. And, the uploading process is amazingly quick and easy! All you need to do is log on to the app/website and hit a few buttons. Boost makes managing your website and social media accounts simple and effortless, saving you time and money."
             }
           ]
         },
         {
-          "title": "Ria — your digital assistant",
+          "title": "Joa — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
           "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
-              "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
+              "desc": "Joa, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Joa are different for every member and are made after analysing each business separately."
             },
             {
               "title": "Weekly performance reporting",
-              "desc": "JioOnline gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, customer enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
+              "desc": "Boost gives a complete picture of your online business through a variety of data and statistics. Find information on the number of unique visitors, customer enquiries, bookings, call logs, and more. Check your ROI on a weekly basis to ensure everything is on the right track."
             },
             {
               "title": "Content tips",
-              "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
+              "desc": "Besides helping you with your overall digital strategy, Joa will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
             }
           ]
         }
@@ -1046,7 +1046,7 @@
     {
       "category_key": "SALON",
       "experience_code": "SAL",
-      "webTemplateId" : "5b34bd254030c804fbbd8414",
+      "webTemplateId": "5b34bd254030c804fbbd8414",
       "category_Name": "Beauty\n& Salons",
       "category_descriptor": "your salon",
       "icon": "/icons/salon.svg",
@@ -1084,13 +1084,13 @@
         {
           "type": "T_FEED",
           "priority": "recommended",
-          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from JioOnline.",
+          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
           "isSelected": false
         }
       ],
       "sections": [
         {
-          "title": "Website Customised for Salon",
+          "title": "Website customised for salon",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
           "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
@@ -1148,7 +1148,7 @@
               "desc": "Collecting payments has never been easier! JioOnline comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -1186,14 +1186,14 @@
           ]
         },
         {
-          "title": "Ria — your digital assistant",
+          "title": "Joa — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
           "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
-              "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
+              "desc": "Joa, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Joa are different for every member and are made after analysing each business separately."
             },
             {
               "title": "Weekly performance reporting",
@@ -1201,7 +1201,7 @@
             },
             {
               "title": "Content tips",
-              "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
+              "desc": "Besides helping you with your overall digital strategy, Joa will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
             }
           ]
         }
@@ -1210,7 +1210,7 @@
     {
       "category_key": "MANUFACTURERS",
       "experience_code": "MFG",
-      "webTemplateId" : "590b3f09ee786c1d88879129",
+      "webTemplateId": "590b3f09ee786c1d88879129",
       "category_Name": "Manufacturing\n& Equipment",
       "category_descriptor": "your manufacturing business",
       "icon": "/icons/mfg.svg",
@@ -1254,7 +1254,7 @@
       ],
       "sections": [
         {
-          "title": "Website Customised for Manufacturers",
+          "title": "Website customised for manufacturers",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
           "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
@@ -1312,7 +1312,7 @@
               "desc": "Collecting payments has never been easier! JioOnline comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -1350,14 +1350,14 @@
           ]
         },
         {
-          "title": "Ria — your digital assistant",
+          "title": "Joa — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
           "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
-              "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
+              "desc": "Joa, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Joa are different for every member and are made after analysing each business separately."
             },
             {
               "title": "Weekly Performance Reporting",
@@ -1373,8 +1373,8 @@
     {
       "category_key": "OTHER RETAIL",
       "experience_code": "RTL",
-      "webTemplateId" : "5b864dd931bfd4054774ec1b",
-      "category_Name": "Other\n& Retail Business",
+      "webTemplateId": "5b864dd931bfd4054774ec1b",
+      "category_Name": "Other\n& Retail business",
       "category_descriptor": "your retail business",
       "icon": "/icons/rtl.svg",
       "channels": [
@@ -1441,7 +1441,7 @@
           ]
         },
         {
-          "title": "Manage your Digital content",
+          "title": "Manage your digital content",
           "desc": "",
           "icon": "/icons/digital_content.svg",
           "boost_widget_key": "LATESTUPDATES,FEATUREDIMAGE,CUSTOMPAGES,IMAGEGALLERY,TIMINGS,PRODUCTCATALOGUE,SOCIALMEDIA,CONTACTDETAILS",
@@ -1475,7 +1475,7 @@
               "desc": "Collecting payments has never been easier! JioOnline comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -1489,14 +1489,14 @@
           ]
         },
         {
-          "title": "Ria — your digital assistant",
+          "title": "Joa — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
           "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
-              "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
+              "desc": "Joa, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Joa are different for every member and are made after analysing each business separately."
             },
             {
               "title": "Weekly Performance Reporting",
@@ -1504,7 +1504,7 @@
             },
             {
               "title": "Content Tips",
-              "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
+              "desc": "Besides helping you with your overall digital strategy, Joa will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
             }
           ]
         }
@@ -1513,8 +1513,8 @@
     {
       "category_key": "OTHER SERVICES",
       "experience_code": "SVC",
-      "webTemplateId" : "5eda2675d0c6770001f67d91",
-      "category_Name": "Other\n& Service Business",
+      "webTemplateId": "5eda2675d0c6770001f67d91",
+      "category_Name": "Other\n& Service business",
       "category_descriptor": "your services business",
       "icon": "/icons/svc.svg",
       "channels": [
@@ -1557,7 +1557,7 @@
       ],
       "sections": [
         {
-          "title": "Website Customised for Service Business",
+          "title": "Website customised for service business",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
           "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
@@ -1615,7 +1615,7 @@
               "desc": "Collecting payments has never been easier! JioOnline comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -1629,14 +1629,14 @@
           ]
         },
         {
-          "title": "Ria — your digital assistant",
+          "title": "Joa — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
           "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
-              "desc": "Ria, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Ria are different for every member and are made after analysing each business separately."
+              "desc": "Joa, your digital assistant, will be providing suggestions on how to improve your website. RIA stands for Relationship Intelligence Agent which is an AI-based technology. Its job is to help you with your digital strategy. Recommendations from Joa are different for every member and are made after analysing each business separately."
             },
             {
               "title": "Weekly performance reporting",
@@ -1644,7 +1644,7 @@
             },
             {
               "title": "Content tips",
-              "desc": "Besides helping you with your overall digital strategy, Ria will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
+              "desc": "Besides helping you with your overall digital strategy, Joa will also provide tips on content strategy. You will get messages and reminders telling you what you can do to improve your website and social media presence. These tips will help you create better content which can result in higher leads and bookings."
             }
           ]
         }

@@ -787,12 +787,12 @@
     <item>Let\'s get some of your friends to see your site!</item>
   </string-array>
   <string-array name="on_boarding_btnTexts">
-    <item>Learn How Boost360 Works</item>
-    <item>Take Your Site Health To Minimum 80%</item>
-    <item>Add An \"About Us\" Page</item>
-    <item>Add Products</item>
-    <item>What\'s Next</item>
-    <item>Broadcast Your Business On WhatsApp</item>
+    <item>Learn how Boost360 works</item>
+    <item>Take your site health to minimum 80%</item>
+    <item>Add an \"About us\" page</item>
+    <item>Add products</item>
+    <item>What\'s next</item>
+    <item>Broadcast your business on WhatsApp</item>
   </string-array>
   <string-array name="social_array">
     <item>Facebook</item>

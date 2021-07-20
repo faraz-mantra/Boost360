@@ -14,7 +14,7 @@
       "isNewBtnShow": false,
       "isUpLineShow": true,
       "navType": "NAV_DIGITAL_CHANNEL",
-      "title": "My Digital Channels"
+      "title": "My digital channels"
     },
 //    {
 //      "isBottomLineShow": true,
@@ -71,7 +71,7 @@
       "isNewBtnShow": false,
       "isUpLineShow": false,
       "navType": "NAV_BOOST_KEYBOARD",
-      "title": "Business Keyboard"
+      "title": "Business keyboard"
     },
     {
       "isBottomLineShow": false,
