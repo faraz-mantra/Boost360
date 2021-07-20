@@ -28,8 +28,7 @@
         android:fontFamily="@font/regular"
         android:text="@string/from"
         android:textColor="@color/black_4a4a4a"
-        android:textSize="9sp"
-        android:textStyle="normal" />
+        android:textSize="9sp"/>
 
       <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/spinner_start_timing"

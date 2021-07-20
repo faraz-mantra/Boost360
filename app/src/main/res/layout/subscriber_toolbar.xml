@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<com.framework.views.customViews.CustomToolbar xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="?attr/actionBarSize"
   android:background="?attr/colorPrimary"
-  app:navigationIcon="@drawable/ic_back_arrow_new"
-  app:titleTextAppearance="@style/Toolbar.TitleText">
+  app:contentInsetEnd="0dp"
+  app:contentInsetLeft="0dp"
+  app:contentInsetRight="0dp"
+  app:contentInsetStart="0dp"
+  app:navigationIcon="@drawable/ic_back_arrow_new">
 
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:layout_marginEnd="15dp"
+    android:layout_marginEnd="10dp"
     android:gravity="center"
     android:orientation="horizontal">
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/titleTextView"
-      fontPath="Roboto-Medium.ttf"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="5dp"
+      android:layout_marginEnd="4dp"
       android:layout_weight="1"
       android:ellipsize="marquee"
+      android:includeFontPadding="false"
       android:fadingEdge="horizontal"
       android:fontFamily="@font/semi_bold"
       android:marqueeRepeatLimit="1"
@@ -37,7 +40,7 @@
       android:id="@+id/search_edittext"
       android:layout_width="0dp"
       android:layout_height="40dp"
-      android:layout_marginEnd="15dp"
+      android:layout_marginEnd="10dp"
       android:layout_weight="1"
       android:background="@android:color/transparent"
       android:ellipsize="end"
@@ -68,4 +71,4 @@
       android:visibility="gone" />
 
   </LinearLayout>
-</androidx.appcompat.widget.Toolbar>
+</com.framework.views.customViews.CustomToolbar>

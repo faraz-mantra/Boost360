@@ -46,7 +46,7 @@
         android:includeFontPadding="false"
         android:padding="@dimen/size_2"
         android:text="@string/reset"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorAccentLight"
         app:textAllCaps="false"
         app:textType="BODY_1" />
     </androidx.appcompat.widget.LinearLayoutCompat>

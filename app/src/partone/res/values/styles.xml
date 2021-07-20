@@ -19,6 +19,11 @@
   </style>
 
 
+  <style name="AppThemeSubscribe" parent="AppTheme.Base">
+    <item name="colorControlActivated">@color/white</item>
+    <item name="colorControlHighlight">@color/white</item>
+    <item name="colorControlNormal">@color/white</item>
+  </style>
   <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
     <item name="bottomSheetStyle">@style/AppModalStyle</item>
   </style>

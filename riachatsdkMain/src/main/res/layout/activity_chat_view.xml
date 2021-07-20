@@ -62,7 +62,6 @@
             android:layout_marginStart="3dp"
             android:text="is typing..."
             android:textColor="@color/white"
-            android:textStyle="italic"
             android:visibility="invisible" />
         </LinearLayout>
 

@@ -27,7 +27,6 @@
         android:fontFamily="@font/regular"
         android:padding="15sp"
         android:textFontWeight="600"
-        android:textStyle="normal"
         tools:text="4/8 services selected" />
     </com.framework.views.customViews.CustomCardView>
 

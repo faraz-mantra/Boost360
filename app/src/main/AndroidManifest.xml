@@ -1012,6 +1012,7 @@
     <activity
       android:name="com.nowfloats.Analytics_Screen.SubscribersActivity"
       android:launchMode="singleTask"
+      android:theme="@style/AppThemeSubscribe"
       android:screenOrientation="portrait">
       <intent-filter android:autoVerify="true">
         <action android:name="android.intent.action.VIEW" />

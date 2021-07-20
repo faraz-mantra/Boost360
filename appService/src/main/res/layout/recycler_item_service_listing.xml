@@ -73,7 +73,6 @@
           android:textColor="#828282"
           android:textFontWeight="400"
           android:textSize="10sp"
-          android:textStyle="normal"
           tools:text="Watch by Fastrack" />
 
         <com.framework.views.customViews.CustomTextView
@@ -140,7 +139,6 @@
             android:paddingEnd="4dp"
             android:textColor="@color/primary_text"
             android:textFontWeight="800"
-            android:textStyle="normal"
             app:textType="BODY_1"
             tools:text="INR 0" />
 

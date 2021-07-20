@@ -21,7 +21,7 @@ data class DrScoreSetupData(
   }
 
   fun getRemainingPercentage(): String {
-    return if (percentage ?: 0 >= 100) "$percentage% completed" else if (percentage!! == 0) "Get started" else "${100 - (percentage ?: 0)}% remaining"
+    return if (percentage ?: 0 >= 100) "$percentage% completed" else if (percentage!! == 0) "get started" else "${100 - (percentage ?: 0)}% remaining"
   }
 
   fun getPendingText(): String? {
