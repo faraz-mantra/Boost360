@@ -33,7 +33,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Patient\nenquiries"
+              "title": "Patient\nmessages"
             }
           ],
           "subTitle": "One place to manage all your patient interactions.",
@@ -409,7 +409,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Patient\nenquiries"
+              "title": "Patient\nmessages"
             }
           ],
           "subTitle": "One place to manage all your patient interactions.",
@@ -656,7 +656,7 @@
             {
               "businessType": "website_chatbot",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website\nchatbot"
             },
@@ -778,7 +778,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\nenquiries"
+              "title": "Customer\nmessages"
             }
           ],
           "subTitle": "One place to manage all your customer interactions.",
@@ -1133,7 +1133,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Student\nenquiries"
+              "title": "Student\nmessages"
             }
           ],
           "subTitle": "One place to manage all your student interactions.",
@@ -1387,7 +1387,7 @@
             {
               "businessType": "website_chatbot",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website\nchatbot"
             },
@@ -1509,7 +1509,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\nenquiries"
+              "title": "Customer\nmessages"
             }
           ],
           "subTitle": "One place to manage all your customer interactions.",
@@ -1892,7 +1892,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\nenquiries"
+              "title": "Customer\nmessages"
             }
           ],
           "subTitle": "One place to manage all your customer interactions.",
@@ -2282,7 +2282,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\nenquiries"
+              "title": "Customer\nmessages"
             }
           ],
           "subTitle": "One place to manage all your customer interactions.",
@@ -2651,7 +2651,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\nenquiries"
+              "title": "Customer\nmessages"
             }
           ],
           "subTitle": "One place to manage all your customer interactions.",
@@ -3013,7 +3013,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\nenquiries"
+              "title": "Customer\nmessages"
             }
           ],
           "subTitle": "One place to manage all your customer interactions.",
@@ -3375,7 +3375,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\nenquiries"
+              "title": "Customer\nmessages"
             }
           ],
           "subTitle": "One place to manage all your customer interactions.",

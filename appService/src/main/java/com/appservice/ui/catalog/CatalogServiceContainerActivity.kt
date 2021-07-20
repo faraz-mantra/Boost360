@@ -105,7 +105,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbarTitle(): String? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION -> resources.getString(R.string.other_information)
+      FragmentType.SERVICE_INFORMATION -> resources.getString(R.string.other_information_n)
       FragmentType.SERVICE_DETAIL_VIEW -> resources.getString(R.string.service_details)
       FragmentType.PRODUCT_DETAIL_VIEW -> resources.getString(R.string.product_details)
       FragmentType.PRODUCT_INFORMATION -> resources.getString(R.string.additional_information)

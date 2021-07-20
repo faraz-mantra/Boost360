@@ -416,7 +416,7 @@
   <string name="your_domain_will_be_automatically_renewed_based_on_your_active_boost_package" translatable="false">Your domain will be automatically renewed based on your active JioOnline package</string>
   <string name="error_right_fptag">This link is intended for the business %1$s! and you are not authorized to access this page. Please make sure you are signed in to the right JioOnline account.</string>
   <string name="custome_domain_instruction">We strongly recommend that you use an existing domain (if you have one) for your JioOnline website. Online discovery will be better as search engines already recognize your domain.</string>
-  <string name="how_to_use_boost">Learn how-to-use jioOnline</string>
+  <string name="how_to_use_boost">Learn how-to-use\njioOnline</string>
   <string name="message_2">is not authorized to support faster login to your JioOnline account.</string>
   <string name="keyboard_message">The JioOnline Keyboard is a customised business keyboard that allows you to share your updates and product offerings with the click of a button, without having to leave a chat.
         (We do not store or share any data that you type on the JioOnline Keyboard.)</string>
