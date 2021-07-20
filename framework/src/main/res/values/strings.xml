@@ -18,5 +18,20 @@
   <string name="twitter_package">com.twitter.android</string>
 
   <string name="read_more_n">…View more</string>
+  <string name="you_have_not_added_your_bank">You’ve not added your bank account yet.</string>
+  <string name="when_enabled_your_online_sales_will_be">When enabled, your online sales will be automatically credited to your bank account within 48 hours.</string>
+  <string name="my_bank_acccount">My Bank Account</string>
+  <string name="all_customer_payments_will_be_sent_to_this">All customer payments will be sent to this account. The handling fee will depend on the payment method selected in the e-commerce/appointment setup.</string>
+  <string name="add_bank_account">Add bank account</string>
+  <string name="now_is_your_chance_to_show_off">Now is your chance to show off!</string>
+  <string name="latest_news_and_updates"><![CDATA[Latest News & Updates]]></string>
+  <string name="lets_start_promoting_your_business">Let’s start promoting your business!</string>
+  <string name="you_can_post_regarding">You can post regarding offers, announcements, products or talk about the latest business update you may have.</string>
+  <string name="lets_add_services_to_your_catalogue">Let\'s add services to your catalogue.</string>
+  <string name="your_can_easily_add_detailed_information_about_your_services">You can easily add detailed information about your services and their prices to enable online appointments.</string>
+  <string name="services">Services</string>
+  <string name="appointment_setup">Appointment setup</string>
+  <string name="watch_how_it_works">Watch how it works</string>
+  <string name="add_a_service">Add a service</string>
 
 </resources>

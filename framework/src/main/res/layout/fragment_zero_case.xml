@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools">
-
+<androidx.core.widget.NestedScrollView
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -20,8 +22,10 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/ctv_title"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
+      android:gravity="center"
+      android:layout_marginHorizontal="40dp"
       android:fontFamily="sans-serif"
       android:textColor="@color/black_4a4a4a"
       android:textSize="20sp"
@@ -29,32 +33,34 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/riv_image_view"
-      app:layout_constraintVertical_bias="0.1"
+      app:layout_constraintVertical_bias="0.05"
       tools:text="This is a premium feature." />
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/ctv_desc"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginHorizontal="16dp"
       android:fontFamily="sans-serif"
+      android:gravity="center"
       android:textColor="@color/black_4a4a4a"
       android:textSize="14sp"
-      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/ctv_title"
-      app:layout_constraintVertical_bias="0.04"
+      android:layout_marginTop="16dp"
       tools:text="This is a premium feature." />
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/ll_btn_container"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_marginBottom="20dp"
+      android:layout_marginTop="16dp"
       android:orientation="vertical"
-      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/ctv_footer_text"
       app:layout_constraintTop_toBottomOf="@+id/ctv_desc"
-      app:layout_constraintVertical_bias="0.2">
+      app:layout_constraintVertical_bias="1">
 
       <com.framework.views.customViews.CustomCardView
         android:id="@+id/cv_primary"
@@ -86,7 +92,6 @@
             android:id="@+id/ctv_btn_primary_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="20dp"
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:text="Primary Button"
@@ -132,7 +137,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/share"
-            android:tint="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ctv_btn_secondary_title"
             app:layout_constraintHorizontal_bias="1"
@@ -198,7 +202,6 @@
             android:id="@+id/ctv_btn_title_tertiary"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="20dp"
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:text="Tertiary Button"
@@ -227,13 +230,18 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/ctv_footer_text"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
+      android:layout_margin="16dp"
+      android:gravity="center"
+      app:layout_constraintVertical_bias="1"
+      android:lines="4"
       android:text="dsadsadsadasdsadasdas"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/ll_btn_container" />
+      app:layout_constraintTop_toTopOf="parent" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
 </layout>
