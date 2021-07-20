@@ -310,7 +310,7 @@ class ParentCompareItemAdapter(
                     NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) +
                     "/" + bundles.min_purchase_months + " months"
               )
-              holder.tv_inlcuded_add_on.setText("Includes these " + it.size + " add-ons")
+              holder.tv_inlcuded_add_on.setText("Includes these " + it.size + " Add-ons")
 
             } else {
               holder.tv_price.setText(
@@ -318,7 +318,7 @@ class ParentCompareItemAdapter(
                     NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
                     + "/month"
               )
-              holder.tv_inlcuded_add_on.setText("Includes these " + it.size + " add-ons")
+              holder.tv_inlcuded_add_on.setText("Includes these " + it.size + " Add-ons")
             }
 
             if (bundles.primary_image != null && !bundles.primary_image.url.isNullOrEmpty()) {

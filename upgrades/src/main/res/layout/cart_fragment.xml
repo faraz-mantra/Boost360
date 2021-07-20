@@ -150,7 +150,7 @@
       android:paddingTop="@dimen/_10sdp"
       android:paddingEnd="@dimen/_20sdp"
       android:paddingBottom="@dimen/_10sdp"
-      android:text="View all recommended add-ons"
+      android:text="View all recommended Add-ons"
       android:textAllCaps="true"
       android:textColor="@color/white"
       app:layout_constraintEnd_toEndOf="parent"

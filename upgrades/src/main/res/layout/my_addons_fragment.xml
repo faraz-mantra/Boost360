@@ -207,7 +207,7 @@
               android:layout_height="wrap_content"
               android:fontFamily="@font/open_sans"
               android:lineSpacingExtra="1.3sp"
-              android:text="Currently using \n-- add-ons"
+              android:text="Currently using \n-- Add-ons"
               android:textColor="@color/common_text_color"
               android:textSize="@dimen/_14sdp" />
 
@@ -367,7 +367,7 @@
             android:layout_marginStart="18dp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_toStartOf="@id/paid_menu_layout"
-            android:text="-- Premium add-ons"
+            android:text="-- Premium Add-ons"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp" />
 
@@ -454,7 +454,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Remove add-ons"
+                android:text="Remove Add-ons"
                 android:textSize="@dimen/_9sdp" />
             </LinearLayout>
 
@@ -475,7 +475,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Get more add-ons"
+                android:text="Get more Add-ons"
                 android:textSize="@dimen/_9sdp" />
             </LinearLayout>
           </LinearLayout>
@@ -589,7 +589,7 @@
         android:gravity="center"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
-        android:text="View recommended add-ons"
+        android:text="View recommended Add-ons"
         android:textAllCaps="true"
         android:textColor="@color/white" />
     </LinearLayout>

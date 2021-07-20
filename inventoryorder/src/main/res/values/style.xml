@@ -2,10 +2,11 @@
 <resources>
 
   <style name="AppTheme.Order" parent="Theme.MaterialComponents.Light.DarkActionBar">
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/white</item>
-    <item name="colorControlNormal">@color/colorAccent</item>
+    <item name="android:colorPrimary">@color/colorPrimary</item>
+    <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="android:colorAccent">@color/white</item>
+    <item name="android:colorControlNormal">@color/colorAccent</item>
+    <item name="android:colorControlActivated">@color/colorAccent</item>
     <item name="android:windowAnimationStyle">@null</item>
     <item name="android:windowDisablePreview">true</item>
     <item name="windowActionBar">false</item>
@@ -22,6 +23,8 @@
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:colorControlNormal">@color/colorAccent</item>
+    <item name="android:colorControlActivated">@color/colorAccent</item>
     <item name="android:windowAnimationStyle">@null</item>
     <item name="android:windowDisablePreview">true</item>
     <item name="windowActionBar">false</item>

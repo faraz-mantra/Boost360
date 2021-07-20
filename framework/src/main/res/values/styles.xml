@@ -18,6 +18,7 @@
   </style>
 
   <style name="BottomSheetTheme" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+    <item name="colorSecondary">@color/colorAccent</item>
     <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
   </style>
 

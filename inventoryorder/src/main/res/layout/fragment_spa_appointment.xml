@@ -245,8 +245,8 @@
           android:text="@string/review_details"
           android:textAllCaps="false"
           android:textColor="@color/white"
-          app:fontFamily="@font/bold"
-          app:textType="CAPTION"
+          app:fontFamily="@font/semi_bold"
+          app:textType="HEADING_6"
           tools:ignore="UnusedAttribute" />
       </androidx.cardview.widget.CardView>
     </androidx.appcompat.widget.LinearLayoutCompat>

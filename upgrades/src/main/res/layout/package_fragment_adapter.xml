@@ -202,7 +202,7 @@
                 android:layout_marginStart="@dimen/_7sdp"
                 android:layout_marginEnd="@dimen/_9sdp"
                 android:fontFamily="@font/open_sans"
-                android:text="Includes all free forever add-ons. Ideal for small businesses that want to get started with online sales."
+                android:text="Includes all free forever Add-ons. Ideal for small businesses that want to get started with online sales."
                 android:textColor="#4A4A4A"
                 android:textFontWeight="400"
                 android:textSize="@dimen/txt_10sp" />
@@ -232,7 +232,7 @@
         android:layout_marginEnd="15dp"
         android:fontFamily="@font/open_sans"
         android:paddingTop="10dp"
-        android:text="Includes these 2 add-ons"
+        android:text="Includes these 2 Add-ons"
 
         android:textColor="#4A4A4A"
         android:textFontWeight="600"
