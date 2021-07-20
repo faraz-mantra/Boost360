@@ -61,7 +61,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun addItemToCart1(updatesModel: FeaturesModel) {
-        updatesLoader.postValue(true)
+        updatesLoader.postValue(false)
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = (discount * updatesModel.price) / 100.0
         val cartItem = CartModel(
@@ -177,7 +177,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun getCartItems() {
-        updatesLoader.postValue(true)
+        updatesLoader.postValue(false)
         compositeDisposable.add(
                 AppDatabase.getInstance(getApplication())!!
                         .cartDao()

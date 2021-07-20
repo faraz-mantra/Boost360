@@ -97,6 +97,7 @@ public class CustomPageFragment extends Fragment {
     if (custompageAdapter != null) {
       custompageAdapter.updateSelection(0);
       custompageAdapter.notifyDataSetChanged();
+      noOfImages = dataModel.size();
 
       if (dataModel.size() == 0) {
         emptylayout.setVisibility(View.VISIBLE);

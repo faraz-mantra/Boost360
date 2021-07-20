@@ -41,6 +41,7 @@ public class OtherImagesAdapter extends BaseAdapter {
         if (Constants.storeSecondaryImages != null)
         {
             return Constants.storeSecondaryImages.size();
+
         }
 
         return 0;
