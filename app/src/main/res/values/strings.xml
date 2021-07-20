@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="noti_msg_calls" translatable="false">Reach out to these customers before they go somewhere else!</string>
   <string name="noti_msg_enquires" translatable="false">Respond to these enquiries before it\'s too late!</string>
   <string name="noti_msg_orders" translatable="false">New order details, click to take action!</string>
@@ -1991,7 +1991,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="_15_05_2017" translatable="false">15-05-2017</string>
   <string name="_20_05_2020" translatable="false">20-05-2020</string>
   <string name="your_domain_will_be_automatically_renewed_based_on_your_active_boost_package" translatable="false">Your domain will be automatically renewed based on your active BOOST package</string>
-  <string name="view_in_add_on_store">View in aAdd-on store</string>
+  <string name="view_in_add_on_store" tools:ignore="MissingTranslation">View in Add-on store</string>
   <string name="your_business_emails" translatable="false">Your Business Emails</string>
   <string name="get_your_own_business_email_to_match_your_custom_domain_custom_email_address_give_business_authority_you_can_have_upto_3_email_addresses_associated_with_your_domain" translatable="false">Get your own business email, to match your custom domain. Custom email address give business authority. You can have upto 3 email addresses associated with your domain.</string>
   <string name="coming_soon" translatable="false">Coming soon...</string>
