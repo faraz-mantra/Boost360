@@ -22,10 +22,10 @@
       tools:itemCount="10"
       tools:listitem="@layout/recycler_item_service_listing" />
 
-    <include
-      android:id="@+id/service_listing_empty"
-      layout="@layout/fragment_service_listing_empty"
-      android:visibility="gone" />
+<!--    <include-->
+<!--      android:id="@+id/service_listing_empty"-->
+<!--      layout="@layout/fragment_service_listing_empty"-->
+<!--      android:visibility="gone" />-->
 
     <LinearLayout
       android:id="@+id/ll_action_buttons"

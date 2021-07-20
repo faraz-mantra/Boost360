@@ -8,11 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.SpannableString
-import android.text.TextPaint
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
-import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -37,23 +32,16 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.ui.model.*
-import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
-import com.framework.pref.getDomainName
 import com.framework.utils.ContentSharing
-import com.framework.views.zero.FragmentZeroCase
-import com.framework.views.zero.FragmentZeroCase.Companion
-import com.framework.views.zero.OnZeroCaseClicked
-import com.framework.views.zero.ZeroCaseObjectBuilder
-import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.*
 import com.framework.webengageconstant.*
 import com.google.android.material.snackbar.Snackbar
-import com.onboarding.nowfloats.bottomsheet.util.ObservableList.Companion.build
 import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.fragment_add_account_start.view.*
 import kotlinx.android.synthetic.main.fragment_service_detail.*
@@ -61,7 +49,7 @@ import kotlinx.android.synthetic.main.recycler_item_service_timing.*
 import java.util.*
 
 class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(),
-  RecyclerItemClickListener {
+  RecyclerItemClickListener, OnZeroCaseClicked {
 
   private lateinit var domainName: String
   private var session: UserSessionManager? = null
@@ -108,16 +96,14 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun onCreateView() {
     super.onCreateView()
     getBundleData()
-    layoutManagerN = LinearLayoutManager(baseActivity)
-    getListServiceFilterApi(isFirst = true, offSet = offSet, limit = limit)
-    WebEngageController.trackEvent(SERVICE_CATALOGUE_LIST, PAGE_VIEW, NO_EVENT_VALUE)
-    layoutManagerN?.let { scrollPagingListener(it) }
-    setOnClickListener(binding?.cbAddService, binding?.serviceListingEmpty?.cbAddService)
-    this.session = UserSessionManager(requireContext())
-    this.domainName = session?.getDomainName()!!
-
-//    addFragmentReplace(containerID = R.id.container, ZeroCaseObjectBuilder(ZeroCases.SERVICES,baseActivity).getRequest()
-//      .setListner(this).build(),true)
+//    layoutManagerN = LinearLayoutManager(baseActivity)
+//    getListServiceFilterApi(isFirst = true, offSet = offSet, limit = limit)
+//    WebEngageController.trackEvent(SERVICE_CATALOGUE_LIST, PAGE_VIEW, NO_EVENT_VALUE)
+//    layoutManagerN?.let { scrollPagingListener(it) }
+//    setOnClickListener(binding?.cbAddService, binding?.serviceListingEmpty?.cbAddService)
+//    this.session = UserSessionManager(requireContext())
+//    this.domainName = session?.getDomainName()!!
+    addFragmentReplace(containerID = R.id.container, RequestZeroCaseBuilder(ZeroCases.SERVICES, this, baseActivity).getRequest().build(), true)
 
   }
 
@@ -271,7 +257,15 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   }
 
   private fun setEmptyView(visibility: Int) {
-    binding?.serviceListingEmpty?.root?.visibility = visibility
+    when (visibility) {
+      View.GONE -> {
+
+      }
+      View.VISIBLE -> {
+        addFragmentReplace(containerID = R.id.container, RequestZeroCaseBuilder(ZeroCases.SERVICES, this, baseActivity).getRequest().build(), true)
+      }
+    }
+
     if (visibility == View.VISIBLE) setListingView(View.GONE) else setListingView(View.VISIBLE)
     setEmptyView()
   }
@@ -313,11 +307,11 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 //      spannableString.length,
 //      0
 //    )
-    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.text = spannableString
-    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.movementMethod =
-      LinkMovementMethod.getInstance()
-    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.highlightColor =
-      resources.getColor(android.R.color.transparent)
+//    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.text = spannableString
+//    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.movementMethod =
+//      LinkMovementMethod.getInstance()
+//    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.highlightColor =
+//      resources.getColor(android.R.color.transparent)
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -434,7 +428,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.cbAddService, binding?.serviceListingEmpty?.cbAddService -> {
+      binding?.cbAddService -> {
         startFragmentActivity(
           FragmentType.SERVICE_DETAIL_VIEW,
           bundle = sendBundleData(null),
@@ -488,19 +482,20 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     binding?.progress?.gone()
   }
 
-//  override fun primaryButtonClicked() {
-//    showShortToast("primary")
-//  }
-//
-//  override fun secondaryButtonClicked() {
-//    showShortToast("secondary")
-//
-//  }
-//
-//  override fun ternaryButtonClicked() {
-//    showShortToast("tertiary")
-//
-//  }
+
+  override fun primaryButtonClicked() {
+    showShortToast("primary")
+  }
+
+  override fun secondaryButtonClicked() {
+    showShortToast("secondary")
+
+  }
+
+  override fun ternaryButtonClicked() {
+    showShortToast("tertiary")
+
+  }
 }
 
 

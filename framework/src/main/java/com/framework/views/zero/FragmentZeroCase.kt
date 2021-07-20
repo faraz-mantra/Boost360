@@ -2,8 +2,10 @@ package com.framework.views.zero
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.framework.R
 import com.framework.base.BaseFragment
 import com.framework.databinding.FragmentZeroCaseBinding
@@ -61,11 +63,13 @@ class FragmentZeroCase : BaseFragment<FragmentZeroCaseBinding, BaseViewModel>() 
         return this
       }
 
-      fun setListner(click: OnZeroCaseClicked): ZeroCaseBuilder {
+      fun setListener(click: OnZeroCaseClicked): ZeroCaseBuilder {
         onZeroCaseClicked = click
         return this
       }
-
+      fun onZerothCaseListener(): OnZeroCaseClicked? {
+        return onZeroCaseClicked
+      }
       fun build(): FragmentZeroCase {
         val fragment = FragmentZeroCase()
         fragment.arguments = arguments
@@ -99,9 +103,9 @@ class FragmentZeroCase : BaseFragment<FragmentZeroCaseBinding, BaseViewModel>() 
     if (button != null) {
       // primary button properties
       if (button.primaryButtonTitle != null) {
-        if (button.primaryButtonBackground != null) {
-          binding?.cvPrimary?.setCardBackgroundColor(ColorStateList.valueOf(button.primaryButtonBackground))
-        } else binding?.cvPrimary?.setCardBackgroundColor(ColorStateList.valueOf(R.color.transparent!!))
+        if (button.primaryButtonBackground != null)
+          binding?.btnPrimary?.setBackgroundColor(button.primaryButtonBackground)
+          else binding?.btnPrimary?.setBackgroundColor(R.color.white!!)
         if (button.primaryButtonIconLeft != null)
           binding?.civIconLeft?.setImageResource(button.primaryButtonIconLeft)
         if (button.primaryButtonIconRight != null)
@@ -113,8 +117,8 @@ class FragmentZeroCase : BaseFragment<FragmentZeroCaseBinding, BaseViewModel>() 
       // secondary button properties
       if (button.secondaryButtonTitle != null) {
         if (button.secondaryButtonBackground != null)
-          binding?.cvSecondary?.setCardBackgroundColor(ColorStateList.valueOf(button.secondaryButtonBackground))
-        else binding?.cvSecondary?.setCardBackgroundColor(ColorStateList.valueOf(R.color.transparent!!))
+          binding?.btnSecondary?.setBackgroundColor(R.color.white!!)
+        else binding?.btnSecondary?.background = ContextCompat.getDrawable(requireContext(),R.drawable.stroke_accent)
         binding?.ctvBtnSecondaryTitle?.text = button.secondaryButtonTitle
         if (button.secondaryButtonIconLeft != null)
           binding?.civIconLeftSecondary?.setImageResource(button.secondaryButtonIconLeft)
@@ -126,8 +130,8 @@ class FragmentZeroCase : BaseFragment<FragmentZeroCaseBinding, BaseViewModel>() 
       // tertiary button properties
       if (button.tertiaryButtonTitle != null) {
         if (button.tertiaryButtonBackground != null)
-          binding?.cvTertiary?.setCardBackgroundColor(ColorStateList.valueOf(button.tertiaryButtonBackground))
-        else binding?.cvTertiary?.setCardBackgroundColor(ColorStateList.valueOf(R.color.transparent!!))
+          binding?.btnTertiary?.setBackgroundColor(button.tertiaryButtonBackground)
+        else binding?.btnTertiary?.setBackgroundColor(R.color.white!!)
         binding?.ctvBtnTitleTertiary?.text = button.tertiaryButtonTitle
         if (button.tertiaryButtonIconLeft != null)
           binding?.civIconLeftTertiary?.setImageResource(button.tertiaryButtonIconLeft)
@@ -181,31 +185,36 @@ data class ZeroCaseButton(
 
 
 enum class ZeroCases {
-  SERVICES, STAFF, APPOINTMENT, PRODUCT ,MY_BANK_ACCOUNT
+  SERVICES, STAFF, APPOINTMENT, PRODUCT ,MY_BANK_ACCOUNT , IMAGE_GALLERY,LATEST_NEWS_UPADATES
 }
 
-class ZeroCaseObjectBuilder(private var zeroCases: ZeroCases, private var context: Context) {
+class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZeroCaseClicked: OnZeroCaseClicked, private  var context: Context) {
   fun getRequest(): FragmentZeroCase.Companion.ZeroCaseBuilder {
     return when (zeroCases) {
       MY_BANK_ACCOUNT -> {
-        return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle("You’ve not added your bank account yet.")
+        return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.you_have_not_added_your_bank))
           .setDescription(
-            "When enabled, your online sales will be automatically credited to your bank account within 48 hours."
+            context.getString(R.string.when_enabled_your_online_sales_will_be)
           ).setIcon(R.drawable.ic_bank_zero_case)
-          .setToolBarTitle("My Bank Account")
-          .setFooterText("All customer payments will be sent to this account. The handling fee will depend on the payment method selected in the e-commerce/appointment setup.")
-          .setListner(context as OnZeroCaseClicked)
-          .setButton(ZeroCaseButton(primaryButtonTitle = "Add bank account", primaryButtonBackground = R.color.colorAccent))
+          .setToolBarTitle(context.getString(R.string.my_bank_acccount))
+          .setFooterText(context.getString(R.string.all_customer_payments_will_be_sent_to_this))
+          .setListener(onZeroCaseClicked)
+          .setButton(ZeroCaseButton(primaryButtonTitle = context.getString(R.string.add_bank_account), primaryButtonBackground = R.color.colorAccent,primaryButtonIconLeft = R.drawable.ic_create_white,secondaryButtonIconLeft = R.drawable.exo_icon_play,secondaryButtonTitle = context.getString(R.string.watch_how_it_works) ))
       }
-      PRODUCT -> {
-        return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle("Now is your chance to show off!")
+      IMAGE_GALLERY -> {
+        return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.now_is_your_chance_to_show_off))
           .setDescription("Make an impact and stand out with beautiful images of your business.").setFooterText(
             "Supported format: JPEG, PNG\n" +
                 "Recommended dimension: Square (min. 800*800px)\n" +
                 "Max file size: 800kb"
-          ).setIcon(R.drawable.ic_services_zero_case)
-          .setToolBarTitle("")
-          .setListner(context as OnZeroCaseClicked)
+          ).setIcon(R.drawable.ic_image_gallery_zero_case)
+          .setToolBarTitle("Image Gallery")
+          .setFooterText("Supported format: JPEG, PNG\n" +
+              "Recommended dimension: Square (min. 800*800px)\n" +
+              "Max file size: 800kb")
+          .setListener( onZeroCaseClicked)
+          .setButton(ZeroCaseButton(primaryButtonTitle = context.getString(R.string.add_bank_account), primaryButtonBackground = R.color.colorAccent,primaryButtonIconLeft = R.drawable.ic_create_white,secondaryButtonIconLeft = R.drawable.exo_icon_play,secondaryButtonTitle = context.getString(R.string.watch_how_it_works) ))
+
       }
       STAFF -> {
         return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle("Now is your chance to show off!")
@@ -213,9 +222,9 @@ class ZeroCaseObjectBuilder(private var zeroCases: ZeroCases, private var contex
             "Supported format: JPEG, PNG\n" +
                 "Recommended dimension: Square (min. 800*800px)\n" +
                 "Max file size: 800kb"
-          ).setIcon(R.drawable.ic_services_zero_case)
+          ).setIcon(R.drawable.ic_image_gallery_zero_case)
           .setToolBarTitle("")
-          .setListner(context as OnZeroCaseClicked)
+          .setListener(onZeroCaseClicked)
       }
       APPOINTMENT -> {
         return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle("Now is your chance to show off!")
@@ -223,22 +232,30 @@ class ZeroCaseObjectBuilder(private var zeroCases: ZeroCases, private var contex
             "Supported format: JPEG, PNG\n" +
                 "Recommended dimension: Square (min. 800*800px)\n" +
                 "Max file size: 800kb"
-          ).setIcon(R.drawable.ic_services_zero_case)
+          ).setIcon(R.drawable.ic_image_gallery_zero_case)
           .setToolBarTitle("")
-          .setListner(context as OnZeroCaseClicked)
+          .setButton(ZeroCaseButton())
+          .setListener(onZeroCaseClicked)
 
       }
-      PRODUCT ->
-        return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle("Now is your chance to show off!")
-          .setDescription("Make an impact and stand out with beautiful images of your business.").setFooterText(
-            "Supported format: JPEG, PNG\n" +
-                "Recommended dimension: Square (min. 800*800px)\n" +
-                "Max file size: 800kb"
-          ).setIcon(R.drawable.ic_services_zero_case)
-          .setToolBarTitle("")
-          .setListner(context as OnZeroCaseClicked)
-
-      else -> {}
+      LATEST_NEWS_UPADATES ->
+        return FragmentZeroCase.Companion.ZeroCaseBuilder().
+        setTitle(context.getString(R.string.lets_start_promoting_your_business))
+          .setDescription(context.getString(R.string.you_can_post_regarding)
+          ).setIcon(R.drawable.ic_latest_news_updates_zero_case)
+          .setToolBarTitle(context.getString(R.string.latest_news_and_updates))
+          .setListener(onZeroCaseClicked)
+      SERVICES ->{
+        return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.lets_add_services_to_your_catalogue))
+          .setDescription(context.getString(R.string.your_can_easily_add_detailed_information_about_your_services))
+          .setIcon(R.drawable.ic_services_zero_case)
+          .setToolBarTitle(context.getString(R.string.services))
+          .setFooterText(context.getString(R.string.all_customer_payments_will_be_sent_to_this))
+          .setListener(onZeroCaseClicked)
+          .setButton(ZeroCaseButton(primaryButtonTitle =context.getString(R.string.add_a_service), primaryButtonBackground = R.color.colorPrimary,primaryButtonIconLeft = R.drawable.ic_create_white,secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,secondaryButtonTitle = context.getString(
+                      R.string.appointment_setup) ,tertiaryButtonIconLeft =R.drawable.ic_services_tutorial_tertiary_icon,tertiaryButtonTitle = context.getString(R.string.watch_how_it_works) ))
+      }
+      PRODUCT -> TODO()
     }
     }
 
