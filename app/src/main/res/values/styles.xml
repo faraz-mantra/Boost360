@@ -5,6 +5,26 @@
     <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
   </style>
 
+  <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- customize the color palette -->
+    <item name="colorPrimary">@color/primaryColor</item>
+    <item name="colorPrimaryDark">@color/primaryColorDark</item>
+    <item name="colorAccent">@color/primaryColor</item>
+    <item name="colorControlActivated">@color/accentColor</item>
+    <item name="colorControlHighlight">@color/accentColor</item>
+    <item name="colorControlNormal">#eeeeee</item>
+    <item name="android:windowDisablePreview">true</item>
+    <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+    <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
+    <item name="android:alertDialogTheme">@style/AppAlertDialogN</item>
+  </style>
+
+  <style name="AppThemeSubscribe" parent="AppTheme.Base">
+    <item name="colorControlActivated">@color/white</item>
+    <item name="colorControlHighlight">@color/white</item>
+    <item name="colorControlNormal">@color/white</item>
+  </style>
+
   <style name="OtpWidget.OtpView" parent="Widget.AppCompat.EditText">
     <item name="android:background">@null</item>
     <item name="android:minHeight">0dp</item>
@@ -26,21 +46,6 @@
     <item name="windowActionModeOverlay">true</item>
     <item name="colorAccent">@color/primary_color</item>
     <item name="colorButtonNormal">@color/primary_color</item>
-  </style>
-
-
-  <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-    <!-- customize the color palette -->
-    <item name="colorPrimary">@color/primaryColor</item>
-    <item name="colorPrimaryDark">@color/primaryColorDark</item>
-    <item name="colorAccent">@color/primaryColor</item>
-    <item name="colorControlActivated">@color/accentColor</item>
-    <item name="colorControlHighlight">@color/accentColor</item>
-    <item name="colorControlNormal">#eeeeee</item>
-    <item name="android:windowDisablePreview">true</item>
-    <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
-    <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
-    <item name="android:alertDialogTheme">@style/AppAlertDialogN</item>
   </style>
 
   <style name="AppAlertDialogN" parent="ThemeOverlay.AppCompat.Dialog.Alert">
