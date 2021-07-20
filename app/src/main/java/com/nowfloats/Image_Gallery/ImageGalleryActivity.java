@@ -65,11 +65,12 @@ public class ImageGalleryActivity extends AppCompatActivity {
                 image_gallery_fragment.addImage();
             }
         }
+        binding.btnAdd.setOnClickListener(view -> image_gallery_fragment.addImage());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add, menu);
+//        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 

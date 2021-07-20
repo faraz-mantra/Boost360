@@ -102,6 +102,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
         initImageRecyclerView(binding.imageList);
         getBackgroundImages();
+        binding.btnAdd.setOnClickListener(view -> openImageChooser());
     }
 
 
@@ -148,7 +149,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add, menu);
+//        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 

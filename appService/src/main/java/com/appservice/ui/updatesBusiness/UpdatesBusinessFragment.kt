@@ -36,8 +36,7 @@ import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
-class UpdatesBusinessFragment :
-  AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
+class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
 
   private val STORAGE_CODE = 120
 
@@ -194,8 +193,7 @@ class UpdatesBusinessFragment :
       }
       return
     }
-    val subDomain =
-      if (isService(sessionLocal.fP_AppExperienceCode)) "all-services" else "all-products"
+    val subDomain = if (isService(sessionLocal.fP_AppExperienceCode)) "all-services" else "all-products"
     when (actionType) {
       RecyclerViewActionType.UPDATE_WHATS_APP_SHARE.ordinal -> {
         shareUpdates(

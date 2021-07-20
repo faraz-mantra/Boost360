@@ -82,13 +82,12 @@
           android:id="@+id/label_brand"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/regular"
           android:maxLines="2"
           android:paddingBottom="3dp"
           android:text="@string/watch_by_fastrack"
           android:textColor="@color/primaryTextColor"
           android:textSize="14sp"
-          android:textStyle="normal" />
+          android:fontFamily="@font/regular" />
 
         <TextView
           android:id="@+id/label_name"

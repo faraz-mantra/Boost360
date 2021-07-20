@@ -83,7 +83,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato"
-            android:text="ADD-ONS STORE"
+            android:text="Add-ons store"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textFontWeight="700"
@@ -227,7 +227,6 @@
           android:text="@string/view_my_add_ons"
           android:textColor="@color/addons_text_color"
           android:textSize="@dimen/txt_16sp"
-          android:textStyle="bold"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
@@ -396,33 +395,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-              android:id="@+id/package_compare_layout"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+          <LinearLayout
+            android:id="@+id/package_compare_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+              android:layout_width="10dp"
+              android:layout_height="10dp"
               android:layout_marginTop="2dp"
+              android:src="@drawable/ic_compare" />
+
+            <TextView
+              android:id="@+id/package_name1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/_4sdp"
               android:layout_marginEnd="@dimen/_10sdp"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintTop_toTopOf="parent">
-                <ImageView
-                  android:layout_width="10dp"
-                  android:layout_height="10dp"
-                  android:layout_marginTop="2dp"
-                  android:src="@drawable/ic_compare" />
-                <TextView
-                  android:id="@+id/package_name1"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:fontFamily="@font/open_sans"
-                  android:text="Compare"
-                  android:textStyle="bold"
-                  android:textColor="@color/addons_text_color"
-                  android:textFontWeight="600"
-                  android:textAllCaps="true"
-                  android:layout_marginStart="@dimen/_4sdp"
-                  android:layout_marginEnd="@dimen/_10sdp"
-                  android:textSize="@dimen/txt_12sp"/>
-            </LinearLayout>
+              android:fontFamily="@font/bold"
+              android:text="Compare"
+              android:textAllCaps="true"
+              android:textColor="@color/addons_text_color"
+              android:textFontWeight="600"
+              android:textSize="@dimen/txt_12sp" />
+          </LinearLayout>
 
 
           <androidx.viewpager2.widget.ViewPager2
@@ -527,13 +527,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/bold"
             android:text="hotels and motels"
             android:textAllCaps="false"
             android:textColor="@color/addons_text_color"
             android:textFontWeight="600"
             android:textSize="@dimen/txt_16sp"
-            android:textStyle="bold" />
+            />
         </LinearLayout>
       </RelativeLayout>
 
@@ -631,8 +631,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-            </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
+      </RelativeLayout>
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/feature_deals_layout"
@@ -780,7 +780,7 @@
           android:textColor="@color/white"
           android:textFontWeight="600"
           android:textSize="@dimen/txt_10sp"
-          android:textStyle="bold" />
+          />
 
         <LinearLayout
           android:id="@+id/callnow_layout"

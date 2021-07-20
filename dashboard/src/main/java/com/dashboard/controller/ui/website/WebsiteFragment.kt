@@ -162,9 +162,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
         session
       )
       WebsiteActionItem.IconType.latest_update_tips -> session?.let {
-        baseActivity.startUpdateLatestStory(
-          it
-        )
+        baseActivity.startUpdateLatestStory(it)
       }
       WebsiteActionItem.IconType.all_images -> baseActivity.startAllImage(session)
       WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(

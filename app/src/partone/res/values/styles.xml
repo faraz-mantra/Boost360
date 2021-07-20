@@ -15,10 +15,17 @@
     <item name="android:windowDisablePreview">true</item>
     <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
+    <item name="colorSecondary">@color/colorAccent</item>
     <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+    <item name="buttonStyle">@style/MyButtonBoost</item>
   </style>
 
 
+  <style name="AppThemeSubscribe" parent="AppTheme.Base">
+    <item name="colorControlActivated">@color/white</item>
+    <item name="colorControlHighlight">@color/white</item>
+    <item name="colorControlNormal">@color/white</item>
+  </style>
   <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
     <item name="bottomSheetStyle">@style/AppModalStyle</item>
   </style>
@@ -98,6 +105,7 @@
     <item name="android:layout_marginStart">@dimen/_15sdp</item>
     <item name="android:layout_marginEnd">@dimen/_15sdp</item>
     <item name="android:layout_marginTop">@dimen/_5sdp</item>
+    <item name="colorSecondary">@color/colorAccent</item>
     <item name="android:layout_marginBottom">@dimen/_5sdp</item>
     <item name="android:textCursorDrawable">@drawable/color_cursor_orange</item>
   </style>

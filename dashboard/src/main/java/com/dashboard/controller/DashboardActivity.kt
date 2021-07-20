@@ -60,7 +60,6 @@ import zendesk.support.Support
 import java.io.File
 import java.util.*
 
-
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
   private var doubleBackToExitPressedOnce = false

@@ -13,8 +13,7 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
-class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding, BaseViewModel>(),
-  RecyclerItemClickListener {
+class BottomSheetSelectFont : BaseBottomSheetDialog<BottomSheetSelectFontBinding, BaseViewModel>(), RecyclerItemClickListener {
 
   private var secondaryItem: SecondaryItem? = null
   private var primaryItem: PrimaryItem? = null

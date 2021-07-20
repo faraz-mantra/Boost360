@@ -9,6 +9,7 @@
     <item name="windowNoTitle">true</item>
     <item name="colorControlNormal">@color/colorAccent</item>
     <item name="android:windowDisablePreview">true</item>
+    <item name="colorSecondary">@color/colorAccent</item>
     <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
@@ -47,6 +48,7 @@
     <item name="colorControlNormal">#eeeeee</item>
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
+    <item name="colorSecondary">@color/colorAccent</item>
     <item name="android:windowDisablePreview">true</item>
     <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
@@ -293,7 +295,6 @@
     <item name="android:layout_width">wrap_content</item>
     <item name="android:textFontWeight" tools:ignore="NewApi">600</item>
     <item name="android:textColor">@color/black_4f4f4f</item>
-    <item name="android:textStyle">normal</item>
     <item name="textType">SUBHEADING_1</item>
     <item name="fontFamily">@font/regular</item>
     <item name="android:textSize">@dimen/size_12</item>
@@ -314,8 +315,6 @@
 
   <style name="StaffProfileTextContent" parent="TextStaffProfileHeadings">
     <item name="android:textColor">@color/gray_4e4e4e</item>
-    <item name="android:textStyle">normal</item>
-    <!--    <item name="android:textFontWeight">0</item>-->
     <item name="android:textAlignment">viewStart</item>
   </style>
 

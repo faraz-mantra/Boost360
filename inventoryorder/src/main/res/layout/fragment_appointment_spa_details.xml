@@ -278,6 +278,7 @@
               android:layout_weight="1"
               android:gravity="center"
               android:textAllCaps="false"
+              android:fontFamily="@font/semi_bold"
               android:textColor="@color/white"
               app:textType="HEADING_6"
               tools:text="Confirm appointment" />
@@ -376,10 +377,11 @@
             android:layout_marginEnd="@dimen/size_2"
             android:text="@string/appointment_send_email"
             android:textAllCaps="false"
-            app:tint="@color/colorAccentLight"
+            android:textColor="@color/colorAccentLight"
             app:layout_constraintBottom_toBottomOf="@id/image_email"
             app:layout_constraintStart_toEndOf="@id/image_email"
-            app:layout_constraintTop_toTopOf="@id/image_email" />
+            app:layout_constraintTop_toTopOf="@id/image_email"
+            app:tint="@color/colorAccentLight" />
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/image_phone"
@@ -399,10 +401,11 @@
             android:paddingStart="@dimen/size_8"
             android:text="@string/call"
             android:textAllCaps="false"
-            app:tint="@color/colorAccentLight"
+            android:textColor="@color/colorAccentLight"
             app:layout_constraintBottom_toBottomOf="@id/image_phone"
             app:layout_constraintStart_toEndOf="@id/image_phone"
-            app:layout_constraintTop_toTopOf="@id/image_phone" />
+            app:layout_constraintTop_toTopOf="@id/image_phone"
+            app:tint="@color/colorAccent_jio" />
 
           <androidx.constraintlayout.widget.Group
             android:id="@+id/group_customer_address"

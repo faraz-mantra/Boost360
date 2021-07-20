@@ -55,7 +55,7 @@
           android:layout_marginStart="2dp"
           android:text="@string/validity_1year"
           android:textSize="10sp"
-          android:textStyle="italic" />
+          android:fontFamily="@font/italic"/>
       </LinearLayout>
 
       <LinearLayout

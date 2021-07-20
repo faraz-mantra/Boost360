@@ -454,7 +454,8 @@
             android:layout_alignParentEnd="true"
             android:background="@drawable/rounded_button_enabled"
             android:minWidth="130dp"
-            android:text="SAVE INFO"
+            android:text="Save info"
+            android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 

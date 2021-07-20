@@ -828,7 +828,7 @@
     <item>YEARLY REPORT</item>
     <item>MONTHLY REPORT</item>
   </string-array>
-  <string name="business_enquiries_title">Customer Enquiries</string>
+  <string name="business_enquiries_title">Customer Messages</string>
   <string name="enquiries_title" translatable="false">Enquiries</string>
   <string name="payment_setting" translatable="false">Payment Settings</string>
   <string name="tag_for_partners">.nowfloats.com</string>
@@ -1191,7 +1191,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="pin_area_code">Pin/Area code</string>
   <string name="state_province">State / Province</string>
   <string name="nowfloats.com">.nowfloats.com</string>
-  <string name="add_a_page">Add a Page</string>
+  <string name="add_a_page">Add a page</string>
   <string name="top_up_plans_desc" translatable="false">"Top-up Plans","WildFire, Dictate, My Business App",
                     "You can add top ups to your website to get added features that enable your website to get more visibility and hence more business.",
                     "Check Top Up Plans"</string>
@@ -1289,7 +1289,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="site_appearance_upgrade_text">Upgrade now</string>
   <string name="site_meter_body_text">Complete the steps below to increase your site score. Higher score translates to more traffic to your site.</string>
   <string name="site_meter_more_traffic_text">Higher scores translates more traffic to your site.</string>
-  <string name="tool_bar_save_text">SAVE</string>
+  <string name="tool_bar_save_text">Save</string>
   <string name="single_row_card_upgrade_text">Upgrade</string>
   <string name="Setting_terms_of_use">Terms of use</string>
   <!--
@@ -1909,8 +1909,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="not_auth">not authorized.</string>
   <string name="message_1"><![CDATA[For now, please login via username & password. Once you do that, post login, we’ll show you an alert to authorize different channels such as gmail, facebook etc. for faster login.]]></string>
   <string name="message_2">is not authorized to support faster login to your Boost account.</string>
-  <string name="how_to_use_boost">Learn how-to-use boost</string>
-  <string name="view_support_tickets">View my support tickets</string>
+  <string name="how_to_use_boost">Learn how-to-use\nboost</string>
+  <string name="view_support_tickets">View my support\ntickets</string>
   <string name="loading_boost_dashboard_for_logged_in_user">Loading your business dashboard...</string>
   <string name="custome_domain_instruction">We strongly recommend that you use an existing domain (if you have one) for your Boost website. Online discovery will be better as search engines already recognize your domain.</string>
   <string-array name="boost_extensions">
