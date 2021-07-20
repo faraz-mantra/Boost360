@@ -656,7 +656,7 @@
             {
               "businessType": "website_chatbot",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website\ncatboat"
             },
@@ -1401,7 +1401,7 @@
             {
               "businessType": "website_chatbot",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website\nchatboat"
             },

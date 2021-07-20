@@ -1393,6 +1393,12 @@
         android:name="android.support.FILE_PROVIDER_PATHS"
         android:resource="@xml/provider_paths" />
     </provider>
+
+    <activity android:name="zendesk.support.guide.HelpCenterActivity"
+      android:theme="@style/ZendeskSdkTheme.Light" />
+
+    <activity android:name="zendesk.support.requestlist.RequestListActivity"
+      android:theme="@style/ZendeskSdkTheme.Light" />
   </application>
 
   <!-- Android 11 changes -->

@@ -9,6 +9,7 @@
     <item name="windowNoTitle">true</item>
     <item name="colorControlNormal">@color/colorAccent</item>
     <item name="android:windowDisablePreview">true</item>
+    <item name="colorSecondary">@color/colorAccent</item>
     <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
@@ -47,6 +48,7 @@
     <item name="colorControlNormal">#eeeeee</item>
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
+    <item name="colorSecondary">@color/colorAccent</item>
     <item name="android:windowDisablePreview">true</item>
     <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
