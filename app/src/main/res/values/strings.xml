@@ -903,7 +903,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="expired">EXPIRED</string>
   <string name="feching_search_detail">Fetching Search details&#8230;</string>
   <string name="week">Week</string>
-  <string name="unique_visitors">Website Visitors</string>
+  <string name="unique_visitors">Website visitors</string>
+  <string name="unique_visitors_n">Website Visitors</string>
   <string name="no_products_avail" translatable="false">No products available.</string>
   <string name="no_updates_avail" translatable="false">No updates available.</string>
   <string name="visit_this_month">visits this month</string>
@@ -1182,7 +1183,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="enter_the_reason">Enter other reason</string>
   <string name="submit">Submit</string>
   <string name="no_alerts">No alerts!</string>
-  <string name="overall_visits">Total Website Visits</string>
+  <string name="overall_visits_n">Total Website Visits</string>
+  <string name="overall_visits">Total website visits</string>
   <string name="address_line">Address Line</string>
   <string name="town_city">Town / City</string>
   <string name="pin_area_code">Pin/Area code</string>
@@ -1772,6 +1774,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="domain_linked">Your domain is successfully Linked to your NowFloats website</string>
   <string name="domain_linking_success">Domain Linking Successful</string>
   <string name="map_visits">Address views</string>
+  <string name="map_visits_n">Address Views</string>
   <string name="boost_keyboard">Boost Keyboard</string>
   <string name="enable_keyboard">Enable keyboard</string>
   <string name="otp_over_call">Tap here to get OTP over call</string>
@@ -2396,7 +2399,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="other_information">Other information</string>
   <string name="if_you_wish_to_change_email_address_please_contact_ria_nowfloats_com">If you wish to change email address, please contact ria@nowfloats.com</string>
   <string name="domain_is_a_great_first_step_towards_building_your_brand_on_web">Domain is a great first step towards building your brand on web.</string>
-  <string name="website_domain_not_enabled">Website Domain not enabled</string>
+  <string name="website_domain_not_enabled">Website domain not enabled</string>
   <string name="looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it">Looks like this add-on is not added to your current plan. Add it now to start using it.</string>
   <string name="if_you_wish_to_change_business_category_please_contact_ria_nowfloats_com">If you wish to change business category, please contact ria@nowfloats.com</string>
   <string name="products_">Products</string>

@@ -132,10 +132,10 @@
   <string name="customer_name">Customer name*</string>
   <string name="customer_phone_number">Customer phone number*</string>
   <string name="add_a_customer">Add a customer</string>
-  <string name="customer_email_id_optional">Customer email ID (Optional)</string>
+  <string name="customer_email_id_optional">Customer email ID (optional)</string>
   <string name="enter_customer_s_email_id">Enter customer’s email ID</string>
   <string name="address">Address*</string>
-  <string name="customer_gstin_optional">Customer GSTIN (Optional)</string>
+  <string name="customer_gstin_optional">Customer GSTIN (optional)</string>
   <string name="enter_customer_s_gstin">Enter customer’s GSTIN</string>
   <string name="type_customer_name">Type customer name</string>
   <string name="remove">Remove</string>
@@ -223,7 +223,7 @@
   <string name="appointment_serve">Appointment served successfully!</string>
   <string name="pick_a_type_of_appointment_from_the_options_below">Pick a type of appointment from the options below</string>
   <string name="cancellation_reason_not_update">Cancellation reason not update</string>
-  <string name="include_a_message_optional">Include a Message (optional)</string>
+  <string name="include_a_message_optional">Include a message (optional)</string>
   <string name="add">Add</string>
   <string name="no_products_found">No Products found</string>
   <string name="str_city">City*</string>
@@ -320,7 +320,7 @@
   <string name="string_review_and_confirm">Review and Confirm</string>
   <string name="select_appointment_date_and_time">Add appointment date and time</string>
   <string name="select_date_and_time">Select date and time</string>
-  <string name="select_staff">Select Staff</string>
+  <string name="select_staff">Select staff</string>
   <string name="monday_07_january_2021">Monday, 07 January 2021</string>
   <string name="not_able_to_get_services_list">Not able to get services list</string>
   <string name="not_able_to_get_booking_slots">Not able to get booking slots</string>
