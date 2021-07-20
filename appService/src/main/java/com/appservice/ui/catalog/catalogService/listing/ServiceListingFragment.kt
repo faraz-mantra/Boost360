@@ -46,8 +46,14 @@ import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getDomainName
 import com.framework.utils.ContentSharing
+import com.framework.views.zero.FragmentZeroCase
+import com.framework.views.zero.FragmentZeroCase.Companion
+import com.framework.views.zero.OnZeroCaseClicked
+import com.framework.views.zero.ZeroCaseObjectBuilder
+import com.framework.views.zero.ZeroCases
 import com.framework.webengageconstant.*
 import com.google.android.material.snackbar.Snackbar
+import com.onboarding.nowfloats.bottomsheet.util.ObservableList.Companion.build
 import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.fragment_add_account_start.view.*
 import kotlinx.android.synthetic.main.fragment_service_detail.*
@@ -109,6 +115,9 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     setOnClickListener(binding?.cbAddService, binding?.serviceListingEmpty?.cbAddService)
     this.session = UserSessionManager(requireContext())
     this.domainName = session?.getDomainName()!!
+
+//    addFragmentReplace(containerID = R.id.container, ZeroCaseObjectBuilder(ZeroCases.SERVICES,baseActivity).getRequest()
+//      .setListner(this).build(),true)
 
   }
 
@@ -478,6 +487,20 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun hideProgress() {
     binding?.progress?.gone()
   }
+
+//  override fun primaryButtonClicked() {
+//    showShortToast("primary")
+//  }
+//
+//  override fun secondaryButtonClicked() {
+//    showShortToast("secondary")
+//
+//  }
+//
+//  override fun ternaryButtonClicked() {
+//    showShortToast("tertiary")
+//
+//  }
 }
 
 
