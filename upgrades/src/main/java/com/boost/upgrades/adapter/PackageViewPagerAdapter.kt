@@ -45,6 +45,7 @@ class PackageViewPagerAdapter(
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
         holder.getNowButton.setOnClickListener {
+            holder.primaryImageCopy.visibility = View.VISIBLE
             holder.getNowButton.setFocusable(true)
             holder.getNowButton.background = ContextCompat.getDrawable(
                     activity.application,

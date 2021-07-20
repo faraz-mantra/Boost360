@@ -111,6 +111,7 @@ class CircleImageView : AppCompatImageView {
             setup()
         }
 
+
     override fun setImageBitmap(bm: Bitmap) {
         super.setImageBitmap(bm)
         mBitmap = bm

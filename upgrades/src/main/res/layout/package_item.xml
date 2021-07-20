@@ -53,6 +53,7 @@
                 <ImageView
                     android:id="@+id/package_primary_image_copy"
                     android:layout_width="50dp"
+                    android:visibility="gone"
                     android:layout_height="50dp"
                     android:layout_centerInParent="true"
                     android:layout_marginStart="@dimen/_8sdp"

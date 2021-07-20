@@ -33,7 +33,7 @@ class CircleAnimationUtil {
     private val mDisappearDuration = DEFAULT_DURATION_DISAPPEAR
     private var mContextReference: WeakReference<Activity?>? = null
     private var mBorderWidth = 1
-    private var mBorderColor = Color.TRANSPARENT
+    private var mBorderColor = Color.WHITE
 
     //    private CircleLayout mCircleLayout;
     private var mBitmap: Bitmap? = null
@@ -77,6 +77,7 @@ class CircleAnimationUtil {
         mBorderColor = color
         return this
     }
+
 
     fun setCircleDuration(duration: Int): CircleAnimationUtil {
         mCircleDuration = duration
@@ -191,7 +192,7 @@ class CircleAnimationUtil {
                     )
                     val sy = ObjectAnimator.ofFloat(mImageView, "scaleY", 1f, 0.1f)
                     val sx = ObjectAnimator.ofFloat(mImageView, "scaleX", 1f, 0.1f)
-                    animSetXY.playTogether(x1, y1, sx, sy,translatorX,translatorY)
+                    animSetXY.playTogether(x1, y1, sx, sy, translatorX, translatorY)
                     animSetXY.duration = mMoveDuration.toLong()
 
                     val animatorMoveSet = AnimatorSet()

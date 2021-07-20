@@ -113,6 +113,10 @@ public class Image_Gallery_Fragment extends Fragment implements
             gvImages.invalidate();
         if (otherImagesAdapter != null)
             otherImagesAdapter.notifyDataSetChanged();
+        imageCount =  otherImagesAdapter.getCount();
+
+        imageGalleryListener.imageCount(imageCount);
+
     }
 
     @Override
@@ -153,15 +157,16 @@ public class Image_Gallery_Fragment extends Fragment implements
         }
         Get_Feature_Details valueFeature = new Gson().fromJson(featureList, Get_Feature_Details.class);
         for (Get_Feature_DetailsItem aList : valueFeature) {
-            Log.v("Get_Feature_DetailsItem", " "+ aList.getFeatureKey());
+            Log.v("Get_Feature_DetailsItem", " " + aList.getFeatureKey());
             /*if (aList.getFeatureKey().equals("IMAGEGALLERY")) {
                 for (Get_Properties_Details pList : aList.getProperties()) {
                     if (pList.getKey().equals("LIMIT")) {
                         limitValue = Integer.parseInt(pList.getValue());
                     }
                 }
-            } else*/ if (aList.getFeatureKey().equals("UNLIMITED_CONTENT")) {
-Log.v("valueFeature", " "+ "UNLIMITED_CONTENT");
+            } else*/
+            if (aList.getFeatureKey().equals("UNLIMITED_CONTENT")) {
+                Log.v("valueFeature", " " + "UNLIMITED_CONTENT");
                 for (Get_Properties_Details pList : aList.getProperties()) {
                     /*if (pList.getKey().equals("LATESTUPDATES")) {
                         limitValue = Integer.parseInt(pList.getValue());
@@ -171,8 +176,9 @@ Log.v("valueFeature", " "+ "UNLIMITED_CONTENT");
                     else if (pList.getKey().equals("CUSTOM_PAGE")){
                         limitValue = Integer.parseInt(pList.getValue());
                     }
-                    else */if (pList.getKey().equals("IMAGE")){
-                        Log.v("valueFeature", " "+ "IMAGE");
+                    else */
+                    if (pList.getKey().equals("IMAGE")) {
+                        Log.v("valueFeature", " " + "IMAGE");
                         limitValue = Integer.parseInt(pList.getValue());
                     }
 
@@ -351,48 +357,6 @@ Log.v("valueFeature", " "+ "UNLIMITED_CONTENT");
             throw new ClassCastException(activity.toString()
                     + " must implement ImageGalleryListener");
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }
