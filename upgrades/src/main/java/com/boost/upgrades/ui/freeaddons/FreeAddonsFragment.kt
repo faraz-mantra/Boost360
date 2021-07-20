@@ -126,7 +126,7 @@ class FreeAddonsFragment : BaseFragment(), MyAddonsListener {
 
 
       if (totalFreeItemList != null) {
-        paid_title.setText(totalFreeItemList!!.size.toString() + " Free add-ons")
+        paid_title.setText(totalFreeItemList!!.size.toString() + " Free Add-ons")
 //                if (totalFreeItemList!!.size > 6) {
         val lessList = totalFreeItemList
         updateFreeAddonsRecycler(lessList)

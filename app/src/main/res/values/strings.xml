@@ -2255,7 +2255,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="take_action">Take action</string>
   <string name="inorganic_add_on_unavailable">Inorganic add-on unavailable</string>
   <string name="looks_like_you_have_not_installed_any_add_on_to_generate_inorganic_traffic_on_different_channels_such_as_facebook_ads_or_google_adwards">Looks like you have not installed any add-on to generate inorganic traffic on different channels such as Facebook Ads or Google Adwards.</string>
-  <string name="visit_from_a_desktop_to_explore_and_install_related_add_ons_to_see_inorganic_traffic_leads">Visit from a desktop to explore and install related add-ons to see inorganic traffic/leads</string>
+  <string name="visit_from_a_desktop_to_explore_and_install_related_add_ons_to_see_inorganic_traffic_leads">Visit from a desktop to explore and install related Add-ons to see inorganic traffic/leads</string>
   <string name="info">Info</string>
   <string name="accept_payment_via">Accept payment via</string>
   <string name="incomplete_payment_info">Incomplete payment info</string>
@@ -2798,7 +2798,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="accountsettingsfragment">accountSettingsFragment</string>
   <string name="last_payment_status">Last_payment_status</string>
   <string name="last_purchase_order_feature_keys">Last_Purchase_Order_Feature_Keys</string>
-  <string name="refreshing_your_business_dashboard">Refreshing your business dashboard with the digital add-ons you just purchased.</string>
+  <string name="refreshing_your_business_dashboard">Refreshing your business dashboard with the digital Add-ons you just purchased.</string>
   <string name="an_unexpacted_error_occured">An unexpected error occured.</string>
   <string name="auth_failed_please_try_again_later">Authentication failed. Please try later.</string>
   <string name="loading_data">Loading data...</string>
@@ -2808,7 +2808,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="post_image_uploading_error" translatable="false">Post image uploading error!</string>
   <string name="title_test_bitmap_array">Title test bitmap array</string>
   <string name="keyboard_analytics">Keyword Analytics</string>
-  <string name="from_a_desktop_to_explore_and_install_related_add_ons">\" from a desktop to explore and install related add-ons to see inorganic traffic/leads\"</string>
+  <string name="from_a_desktop_to_explore_and_install_related_add_ons">\" from a desktop to explore and install related Add-ons to see inorganic traffic/leads\"</string>
   <string name="to_enable_google_wildfire_with_us">To enable Google WildFire with us</string>
   <string name="to_enable_facebook_wildfire_with_us">To enable Facebook WildFire with us</string>
   <string name="facebook_ads">Facebook Ads</string>

@@ -391,9 +391,9 @@
   <string name="all_payment_on_your_boost_website_are_processed_through_this_payment_gateway_instead_of_default_boost_payment_gateway_when_you_add_a_new_product_service_on_your_business_website_please_make_sure_to_select_this_payment_gateway">All payment on your JioOnline website are processed through this payment gateway instead of default JioOnline Payment Gateway. When you add a new product service on your business website please make sure to select this payment gateway.</string>
   <string name="in_case_of_any_concerns">In case of any concerns, you can write to businesscare@jio.com. JioOnline Care Team is available during business hours.</string>
   <string name="open_boost">Open JioOnline</string>
-  <string name="boost_lite_boost_pro_boost_custom">jioOnline Lite, jioOnline Pro, jioOnline Custom</string>
-  <string name="your_nowfloats_website_runs_on_your_base_pack_once_your_base_pack_expires_all_your_features_and_functions_will_be_disabled_and_you_won_t_be_able_to_update_any_content">Your jioOnline website runs on your base pack Once your base pack expires, all your features and functions will be disabled and you won\'t be able to update any content.</string>
-  <string name="boost_plans">jioOnline plans</string>
+  <string name="boost_lite_boost_pro_boost_custom">JioOnline Lite, JioOnline Pro, JioOnline Custom</string>
+  <string name="your_nowfloats_website_runs_on_your_base_pack_once_your_base_pack_expires_all_your_features_and_functions_will_be_disabled_and_you_won_t_be_able_to_update_any_content">Your JioOnline website runs on your base pack Once your base pack expires, all your features and functions will be disabled and you won\'t be able to update any content.</string>
+  <string name="boost_plans">JioOnline plans</string>
   <string name="month_boost_demo_package_will_expire_on">\" month JioOnline demo package will expire on \"</string>
   <string name="tags_help_site_visitors_to_find_a_desire_item">Tags help site visitors find a desired item on your JioOnline website. You can add related tags here and reuse them across other related products. Selecting a tag filters all relevant inventory in your product catalog.</string>
   <string name="the_total_number_of_units">The total number of units you are willing to sell through your JioOnline website. Quantity decreases with orders that include this product.</string>
@@ -416,7 +416,7 @@
   <string name="your_domain_will_be_automatically_renewed_based_on_your_active_boost_package" translatable="false">Your domain will be automatically renewed based on your active JioOnline package</string>
   <string name="error_right_fptag">This link is intended for the business %1$s! and you are not authorized to access this page. Please make sure you are signed in to the right JioOnline account.</string>
   <string name="custome_domain_instruction">We strongly recommend that you use an existing domain (if you have one) for your JioOnline website. Online discovery will be better as search engines already recognize your domain.</string>
-  <string name="how_to_use_boost">Learn how-to-use\njioOnline</string>
+  <string name="how_to_use_boost">Learn how-to-use\nJioOnline</string>
   <string name="message_2">is not authorized to support faster login to your JioOnline account.</string>
   <string name="keyboard_message">The JioOnline Keyboard is a customised business keyboard that allows you to share your updates and product offerings with the click of a button, without having to leave a chat.
         (We do not store or share any data that you type on the JioOnline Keyboard.)</string>
@@ -429,8 +429,8 @@
   <string name="image_gallery_instructions_2" translatable="false">Number of images you can upload depends upon the JioOnline plan you’ve picked.</string>
   <string name="update_nowfloats_app">You are using an old version of JioOnline. Update the app to get new features and enhancements</string>
   <string name="facebook_chat_note" translatable="false"><b>Note:</b> Messages sent and received from\nFacebook via JioOnline will only be visible.</string>
-  <string name="all_boost_add_ons">All JioOnline add-ons</string>
-  <string name="search_boost_add_ons">Search JioOnline add-ons</string>
+  <string name="all_boost_add_ons">All JioOnline Add-ons</string>
+  <string name="search_boost_add_ons">Search JioOnline Add-ons</string>
   <string name="boost_features_mentioned_above">Enjoy all JioOnline features mentioned above</string>
   <string name="business_setup_boost">business is successfully setup on JioOnline.</string>
   <string name="processing_your_business_information">Setting up your business on JioOnline...</string>
@@ -452,7 +452,7 @@
   <string name="referral_text_1">Hey, Check out JioOnline. I have been using to run my business online. http://bit.ly/ApporWeb?ref=</string>
   <string name="referral_text_2">Hey, Check out JioOnline, I use it to run my business online. http://bit.ly/ApporWeb?ref=</string>
   <string name="upgrade_boost_tnc_link">Read JioOnline TnC</string>
-  <string name="failed_local_storage_message">Failed to download all premium add-ons to your local storage. We recommend you to un-install &amp; re-install the JioOnline App.\n\nIf the issue persists, please do write to ria@nowflaots.com</string>
+  <string name="failed_local_storage_message">Failed to download all premium Add-ons to your local storage. We recommend you to un-install &amp; re-install the JioOnline App.\n\nIf the issue persists, please do write to ria@nowflaots.com</string>
   <string name="marketoffer_howtoOne">Open the JioOnline app/website/mobile-web, search for packs and choose your preferred <b>packs/addon</b>.<br /></string>
   <string name="marketoffer_termTwo">This offer is valid only for your first ever transaction of the month on JioOnline.<br /></string>
   <string name="on_boost360">on JioOnline</string>

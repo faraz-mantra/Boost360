@@ -173,7 +173,7 @@
   <string name="delete_record_not_undone">Do you really want to delete these records? This process can not be undone.</string>
   <string name="crop_picture">Crop Picture</string>
   <string name="proceed">Proceed</string>
-  <string name="service_details">Service details</string>
+  <string name="service_details">Service Details</string>
   <string name="other_information">Other information</string>
   <string name="other_information_n">Other Information</string>
   <string name="product_details">Product Details</string>

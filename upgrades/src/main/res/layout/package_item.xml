@@ -69,7 +69,7 @@
           android:layout_height="wrap_content"
           android:fontFamily="@font/open_sans"
           android:lineSpacingExtra="2.3sp"
-          android:text="Get 6 more add-ons"
+          android:text="Get 6 more Add-ons"
           android:textColor="@color/common_text_color"
           android:textFontWeight="600"
           android:textSize="@dimen/txt_16sp"
