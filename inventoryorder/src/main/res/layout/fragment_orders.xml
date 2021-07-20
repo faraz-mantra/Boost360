@@ -227,6 +227,7 @@
           android:layout_margin="16dp"
           android:clickable="true"
           android:focusable="true"
+          android:backgroundTint="@color/colorAccentLight"
           app:fabIcon="@drawable/ic_add_white"
           app:fabSize="normal" />
       </androidx.coordinatorlayout.widget.CoordinatorLayout>
