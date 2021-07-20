@@ -373,14 +373,14 @@
 
   <string-array name="account_setting_tab_items">
     <!--<item>Seller Profile</item>-->
-    <item>My Business Profile</item>
-    <item>My Bank Account</item>
-    <item>My Business KYC</item>
-    <item>Self Branded Payment Gateway</item>
-    <item>JioOnline Extensions</item>
+    <item>My business profile</item>
+    <item>My bank account</item>
+    <item>My business KYC</item>
+    <item>Self branded payment gateway</item>
+    <item>JioOnline extensions</item>
     <!--        <item>Subscription History</item>-->
     <item>Domain and Email</item>
-    <item>Change Password</item>
+    <item>Change password</item>
     <item>Log out</item>
   </string-array>
   <string name="boost_extension">JioOnline extensions</string>
@@ -416,7 +416,7 @@
   <string name="your_domain_will_be_automatically_renewed_based_on_your_active_boost_package" translatable="false">Your domain will be automatically renewed based on your active JioOnline package</string>
   <string name="error_right_fptag">This link is intended for the business %1$s! and you are not authorized to access this page. Please make sure you are signed in to the right JioOnline account.</string>
   <string name="custome_domain_instruction">We strongly recommend that you use an existing domain (if you have one) for your JioOnline website. Online discovery will be better as search engines already recognize your domain.</string>
-  <string name="how_to_use_boost">Learn How-To-Use JioOnline</string>
+  <string name="how_to_use_boost">Learn how-to-use jioOnline</string>
   <string name="message_2">is not authorized to support faster login to your JioOnline account.</string>
   <string name="keyboard_message">The JioOnline Keyboard is a customised business keyboard that allows you to share your updates and product offerings with the click of a button, without having to leave a chat.
         (We do not store or share any data that you type on the JioOnline Keyboard.)</string>
@@ -468,12 +468,12 @@
   </string-array>
 
   <string-array name="on_boarding_btnTexts">
-    <item>Learn How JioOnline Works</item>
-    <item>Take Your Site Health To Minimum 80%</item>
-    <item>Add An \"About Us\" Page</item>
-    <item>Add Products</item>
-    <item>What\'s Next</item>
-    <item>Broadcast Your Business On WhatsApp</item>
+    <item>Learn how JioOnline works</item>
+    <item>Take your site health to minimum 80%</item>
+    <item>Add an \"About us\" page</item>
+    <item>Add products</item>
+    <item>What\'s next</item>
+    <item>Broadcast your business on WhatsApp</item>
   </string-array>
 
   <string-array name="wildfire_parent_0">
