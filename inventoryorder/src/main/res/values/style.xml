@@ -233,11 +233,11 @@
   </style>
 
   <style name="TextBoldStyle" parent="BaseTextView">
-    <item name="android:textStyle">bold</item>
+    <item name="android:fontFamily">@font/bold</item>
   </style>
 
   <style name="TextNormalStyle" parent="BaseTextView">
-    <item name="android:textStyle">normal</item>
+    <item name="android:fontFamily">@font/regular</item>
   </style>
 
   <style name="TextSemiBoldStyle" parent="BaseTextView">

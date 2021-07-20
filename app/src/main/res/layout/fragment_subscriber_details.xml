@@ -25,11 +25,11 @@
       android:id="@+id/subscriber_email"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:fontFamily="@font/semi_bold"
       android:gravity="center"
       android:text="@string/email"
       android:textColor="@color/white"
       android:textSize="22sp"
-       android:fontFamily="@font/semi_bold"
       app:textAllCaps="false" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -37,8 +37,9 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="5dp"
+      android:fontFamily="@font/italic"
       android:text="@string/date"
-      android:textStyle="italic" />
+      android:textColor="@color/white" />
   </LinearLayout>
 
   <androidx.appcompat.widget.AppCompatTextView

@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:text="@string/starting_from"
             android:textColor="@color/gray_979797"
-            android:textStyle="normal"
+            android:fontFamily="@font/regular"
             app:textType="BODY_1" />
 
           <com.framework.views.customViews.CustomTextView
@@ -131,10 +131,9 @@
           <com.framework.views.customViews.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
             android:text="@string/till"
             android:textColor="@color/gray_979797"
-            android:textStyle="normal"
+            android:fontFamily="@font/regular"
             app:textType="BODY_1" />
 
           <com.framework.views.customViews.CustomTextView
@@ -186,10 +185,9 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginBottom="@dimen/size_5"
-          android:fontFamily="@font/regular"
           android:text="@string/additional_break_info_optional"
           android:textColor="#979797"
-          android:textStyle="normal"
+          android:fontFamily="@font/regular"
           app:textType="BODY_1" />
 
         <com.framework.views.customViews.CustomEditText

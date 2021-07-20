@@ -303,6 +303,7 @@
           android:layout_weight="1"
           android:clickable="true"
           android:focusable="true"
+          android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:textAllCaps="false"
           android:textColor="@color/white"

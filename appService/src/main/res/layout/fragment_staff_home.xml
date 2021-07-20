@@ -30,7 +30,6 @@
       android:text="@string/what_services_you_give"
       android:textColor="@color/gray_light_4"
       android:textFontWeight="600"
-      android:textStyle="normal"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"

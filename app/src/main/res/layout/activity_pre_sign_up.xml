@@ -238,7 +238,6 @@
       </LinearLayout>
 
       <TextView
-        fontPath="Roboto-Regular.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_10"
@@ -250,7 +249,7 @@
         android:textColor="@color/gray"
         android:textColorHint="@color/primary"
         android:textSize="@dimen/small_text_size"
-        android:textStyle="italic" />
+        android:fontFamily="@font/regular" />
     </LinearLayout>
   </ScrollView>
 

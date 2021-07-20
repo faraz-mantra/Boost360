@@ -73,11 +73,11 @@
   <string name="i_have_an_instamojo_account">I have an Instamojo account</string>
   <string name="start_with_pan_card">Start with PAN card</string>
   <string name="get_started">Get started</string>
-  <string name="take_photo_of_your_pan_card">Take photo Of your PAN card</string>
+  <string name="take_photo_of_your_pan_card">Take Photo Of Your PAN Card</string>
   <string name="submit_documents_for_kyc">Submit documents for KYC</string>
   <string name="submit">Submit</string>
   <string name="pan_details">Pan details</string>
-  <string name="pan_number_individual_or_company">PAN number (Individual or Company)</string>
+  <string name="pan_number_individual_or_company">PAN number (individual or company)</string>
   <string name="enter_pan_number">Enter PAN number</string>
   <string name="name_as_mentioned_on_pan_card">Name as mentioned on PAN card</string>
   <string name="enter_name">Enter name</string>
@@ -171,7 +171,7 @@
   <string name="verify_business">verify your business</string>
   <string name="on_boost360">on Boost360</string>
   <string name="delete_record_not_undone">Do you really want to delete these records? This process can not be undone.</string>
-  <string name="crop_picture">Crop picture</string>
+  <string name="crop_picture">Crop Picture</string>
   <string name="proceed">Proceed</string>
   <string name="service_details">Service details</string>
   <string name="other_information">Other information</string>
