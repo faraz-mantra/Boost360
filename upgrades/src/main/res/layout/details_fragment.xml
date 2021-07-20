@@ -349,7 +349,6 @@
               android:text="@string/_90_off"
               android:textColor="@color/black"
               android:textSize="@dimen/_6sdp"
-              android:textStyle="normal"
               app:layout_constraintBottom_toTopOf="@+id/footer"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintLeft_toRightOf="@+id/orig_cost" />

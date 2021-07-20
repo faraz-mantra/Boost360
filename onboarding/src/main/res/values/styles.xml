@@ -8,6 +8,7 @@
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     <item name="android:windowBackground">@color/white</item>
+    <item name="colorSecondary">@color/colorAccent</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="android:windowDisablePreview">true</item>
     <item name="windowActionBar">false</item>

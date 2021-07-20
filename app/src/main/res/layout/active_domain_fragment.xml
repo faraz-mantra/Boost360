@@ -290,11 +290,10 @@
           android:layout_marginStart="@dimen/_30sdp"
           android:layout_marginTop="@dimen/_10sdp"
           android:layout_marginEnd="@dimen/_30sdp"
-          android:fontFamily="@font/regular"
           android:gravity="center"
           android:text="@string/business_emails_can_be_booked_only_if_your_domain_is_not_more_than_6_months_old"
           android:textSize="@dimen/_9sdp"
-          android:textStyle="italic"
+          android:fontFamily="@font/regular"
           android:visibility="gone" />
       </LinearLayout>
 

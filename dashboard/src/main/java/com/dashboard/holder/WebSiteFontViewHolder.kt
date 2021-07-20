@@ -14,8 +14,7 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
-class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) :
-  AppBaseRecyclerViewHolder<RecyclerItemSelectFontBinding>(binding) {
+class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) : AppBaseRecyclerViewHolder<RecyclerItemSelectFontBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -28,7 +27,7 @@ class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) :
         if (item.isSelected == true) {
           binding.ctvFontCurrent.visible()
           binding.ctvFontRadio.isChecked = false
-          binding.ctvFontCurrent.text = "CURRENT"
+          binding.ctvFontCurrent.text = "Current"
           binding.ctvFontCurrent.setTextColor(getResources()?.getColor(R.color.black_4a4a4a)!!)
           binding.ctvFontRadio.buttonTintList =
             ColorStateList.valueOf(getResources()?.getColor(R.color.black_4a4a4a)!!)
@@ -41,7 +40,7 @@ class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) :
         if (item.isNewSelected == true) {
           binding.ctvFontCurrent.visible()
           binding.ctvFontRadio.isChecked = true
-          binding.ctvFontCurrent.text = "NEW"
+          binding.ctvFontCurrent.text = "New"
           binding.ctvFontCurrent.setTextColor(getResources()?.getColor(R.color.colorAccentLight)!!)
           binding.ctvFontRadio.buttonTintList =
             ColorStateList.valueOf(getResources()?.getColor(R.color.colorAccentLight)!!)
@@ -50,7 +49,7 @@ class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) :
         if (item.isNewSelected == true && item.isSelected == true) {
           binding.ctvFontCurrent.visible()
           binding.ctvFontRadio.isChecked = true
-          binding.ctvFontCurrent.text = "CURRENT"
+          binding.ctvFontCurrent.text = "Current"
           binding.ctvFontCurrent.setTextColor(getResources()?.getColor(R.color.black_4a4a4a)!!)
           binding.ctvFontRadio.buttonTintList =
             ColorStateList.valueOf(getResources()?.getColor(R.color.colorAccent)!!)
@@ -67,7 +66,7 @@ class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) :
         if (item.isSelected == true) {
           binding.ctvFontCurrent.visible()
           binding.ctvFontRadio.isChecked = false
-          binding.ctvFontCurrent.text = "CURRENT"
+          binding.ctvFontCurrent.text = "Current"
           binding.ctvFontCurrent.setTextColor(getResources()?.getColor(R.color.black_4a4a4a)!!)
           binding.ctvFontRadio.buttonTintList =
             ColorStateList.valueOf(getResources()?.getColor(R.color.black_4a4a4a)!!)
@@ -81,7 +80,7 @@ class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) :
         if (item.isNewSelected == true) {
           binding.ctvFontCurrent.visible()
           binding.ctvFontRadio.isChecked = true
-          binding.ctvFontCurrent.text = "NEW"
+          binding.ctvFontCurrent.text = "New"
           binding.ctvFontCurrent.setTextColor(getResources()?.getColor(R.color.colorAccent)!!)
           binding.ctvFontRadio.buttonTintList =
             ColorStateList.valueOf(getResources()?.getColor(R.color.colorAccent)!!)
@@ -90,7 +89,7 @@ class WebSiteFontViewHolder(binding: RecyclerItemSelectFontBinding) :
         if (item.isNewSelected == true && item.isSelected == true) {
           binding.ctvFontCurrent.visible()
           binding.ctvFontRadio.isChecked = true
-          binding.ctvFontCurrent.text = "CURRENT"
+          binding.ctvFontCurrent.text = "Current"
           binding.ctvFontCurrent.setTextColor(getResources()?.getColor(R.color.black_4a4a4a)!!)
           binding.ctvFontRadio.buttonTintList =
             ColorStateList.valueOf(getResources()?.getColor(R.color.colorAccent)!!)

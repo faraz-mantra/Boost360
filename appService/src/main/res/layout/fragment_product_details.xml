@@ -294,7 +294,6 @@
                   android:text="@string/price_includes_taxes"
                   android:textColor="@color/primary_text"
                   android:textFontWeight="400"
-                  android:textStyle="normal"
                   android:theme="@style/ActiveTheme"
                   android:visibility="gone"
                   app:layout_constraintBottom_toBottomOf="parent"

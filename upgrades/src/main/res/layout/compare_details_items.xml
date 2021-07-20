@@ -57,17 +57,16 @@
       app:layout_constraintTop_toTopOf="parent">
 
 
-        <TextView
-          android:id="@+id/title"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          tools:text="Marketing"
-          android:textStyle="bold"
-          android:textAllCaps="true"
-          android:textFontWeight="600"
-          android:fontFamily="@font/open_sans"
-          android:textColor="@color/addons_text_color"
-          android:textSize="@dimen/txt_9sp" />
+      <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
+        android:textAllCaps="true"
+        android:textColor="#FFB900"
+        android:textFontWeight="600"
+        android:textSize="@dimen/txt_9sp"
+        tools:text="Marketing" />
 
       <TextView
         android:id="@+id/details"

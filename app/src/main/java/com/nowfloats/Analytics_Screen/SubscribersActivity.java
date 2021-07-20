@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.framework.views.fabButton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.nowfloats.Analytics_Screen.API.SubscriberApis;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.SubscribersAdapter;
@@ -59,13 +60,13 @@ import static com.framework.webengageconstant.EventValueKt.TO_BE_ADDED;
 
 public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener, SubscribersAdapter.SubscriberInterfaceMethods {
 
-
     private static final int SUBSCRIBER_REQUEST_CODE = 221;
     ArrayList<SubscriberModel> mSubscriberList = new ArrayList<>();
     SubscribersAdapter mSubscriberAdapter;
     TextView titleTextView;
     AutoCompleteTextView searchEditText;
-    ImageView deleteImage, searchImage;
+    ImageView searchImage;
+    FloatingActionButton deleteImage;
     LinearLayout emptyLayout;
     private UserSessionManager mSessionManager;
     private ProgressBar mProgressBar;
@@ -85,7 +86,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         searchEditText = (AutoCompleteTextView) findViewById(R.id.search_edittext);
-        deleteImage = (ImageView) findViewById(R.id.img_delete);
+        deleteImage = (FloatingActionButton) findViewById(R.id.btn_add);
         searchImage = (ImageView) findViewById(R.id.search_image);
 
         //autoCompleteAdapter = new SpinnerAdapter(this,searchList);
@@ -112,7 +113,6 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         });
-        deleteImage.setVisibility(View.VISIBLE);
         deleteImage.setOnClickListener(this);
         searchImage.setOnClickListener(this);
 
@@ -265,13 +265,12 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.img_delete:
+            case R.id.btn_add:
                 subscriberDialog();
                 break;
             case R.id.search_image:
                 titleTextView.setVisibility(View.GONE);
                 searchImage.setVisibility(View.GONE);
-                deleteImage.setVisibility(View.GONE);
                 searchEditText.setVisibility(View.VISIBLE);
                 searchEditText.requestFocus();
                 break;
@@ -355,7 +354,6 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                     searchEditText.clearFocus();
                     searchEditText.setText("");
                     searchEditText.setVisibility(View.GONE);
-                    deleteImage.setVisibility(View.VISIBLE);
                     titleTextView.setVisibility(View.VISIBLE);
                     searchImage.setVisibility(View.VISIBLE);
                     InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);

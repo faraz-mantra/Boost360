@@ -217,6 +217,7 @@
           style="@style/match_match"
           android:layout_gravity="center"
           android:layout_weight="1"
+          android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:textAllCaps="false"
           android:textColor="@color/white"

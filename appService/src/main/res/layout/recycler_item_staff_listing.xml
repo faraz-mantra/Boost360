@@ -75,7 +75,6 @@
           android:fontFamily="@font/regular"
           android:maxLines="1"
           android:textColor="@color/grey_dark_2"
-          android:textStyle="normal"
           android:visibility="visible"
           app:textType="CAPTION"
           tools:text="Anti-aging Expert" />
