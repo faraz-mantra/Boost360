@@ -10,6 +10,7 @@
     <item name="android:windowDisablePreview">true</item>
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
+    <item name="colorSecondary">@color/colorAccent</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="android:homeAsUpIndicator">@drawable/ic_arrow_left_30</item>
     <item name="searchViewStyle">@style/SearchView</item>
@@ -25,6 +26,7 @@
     <item name="android:windowDisablePreview">true</item>
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
+    <item name="colorSecondary">@color/colorAccent</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="android:homeAsUpIndicator">@drawable/ic_arrow_left_30</item>
     <item name="searchViewStyle">@style/SearchView</item>

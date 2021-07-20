@@ -21,8 +21,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 
-class CropImageFragment : AppBaseFragment<FragmentImageCropBinding, BaseViewModel>(),
-  CropImageView.OnSetImageUriCompleteListener, CropImageView.OnCropImageCompleteListener {
+class CropImageFragment : AppBaseFragment<FragmentImageCropBinding, BaseViewModel>(), CropImageView.OnSetImageUriCompleteListener, CropImageView.OnCropImageCompleteListener {
 
   private var croppedImageFile: File? = null
   private var session: SessionData? = null
