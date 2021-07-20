@@ -148,6 +148,7 @@
           android:layout_margin="16dp"
           android:clickable="true"
           android:focusable="true"
+          android:backgroundTint="@color/colorAccentLight"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:backgroundTint="@color/colorAccentLight"

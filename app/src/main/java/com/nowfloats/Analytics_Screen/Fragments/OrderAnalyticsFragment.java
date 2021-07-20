@@ -143,7 +143,7 @@ public class OrderAnalyticsFragment extends Fragment {
                 case 0:
                     float onlineOrders = 0, codOrders = 0;
                     int codPrevOrders = 0, onlinePrevOrders = 0;
-                    tvTitle.setText("TOTAL " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toUpperCase());
+                    tvTitle.setText("Total " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toLowerCase());
                     for (OrderStatusSummary.OrderStatus orderStatus : currentOrderStatus) {
 
                         if (orderStatus.getPaymentMethod().equalsIgnoreCase("COD")) {
@@ -179,8 +179,8 @@ public class OrderAnalyticsFragment extends Fragment {
                         onlinePrevOrders = (int) (((onlineOrders / onlinePrevOrders) - 1) * 100);
                     }
 
-                    xValues.add("Online Payment " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()) + ": " + (int) onlineOrders);
-                    xValues.add("COD " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()) + ": " + (int) codOrders);
+                    xValues.add("Online payment " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toLowerCase() + ": " + (int) onlineOrders);
+                    xValues.add("COD " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toLowerCase() + ": " + (int) codOrders);
 
                     totalOrders = onlineOrders + codOrders;
                     onlineOrders = (onlineOrders / totalOrders) * 100;
