@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -71,13 +70,13 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
 
         switch (mVisitsType) {
             case UNIQUE:
-                setTitle(getString(R.string.unique_visitors));
+                setTitle(getString(R.string.unique_visitors_n));
                 break;
             case TOTAL:
-                setTitle(getString(R.string.overall_visits));
+                setTitle(getString(R.string.overall_visits_n));
                 break;
             case MAP_VISITS:
-                setTitle(getString(R.string.map_visits));
+                setTitle(getString(R.string.map_visits_n));
                 break;
             default:
                 finish();

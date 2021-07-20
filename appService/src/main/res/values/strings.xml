@@ -115,7 +115,7 @@
   <string name="a_c_no_34565xxxxx45465">A/C No. 34565XXXXX45465</string>
   <string name="add_file_jpg_png">Add file (Jpg/png)</string>
   <string name="change_file_jpg_png">Change file (Jpg/png)</string>
-  <string name="additional_documents_optional">Additional documents (Optional)</string>
+  <string name="additional_documents_optional">Additional documents (optional)</string>
   <string name="add_multiple_files_jpg_png">Add multiple files (Jpg/png)</string>
   <string name="payment_gateway_docs_ready_note"><b>NOTE:</b> Keep your PAN card handy or a picture of it from your gallery would also do. Apart from this you should keep 1 month bank statement and establishment certificate to upload here (if applicable) for extended limit.</string>
   <string name="refresh_status_camel_case">Refresh status</string>
@@ -195,7 +195,7 @@
   <string name="add_staff_image">Add staff image</string>
   <string name="write_the_this_staff_specialises_in">Write the this staff specialises in</string>
   <string name="specialization">Specialization*</string>
-  <string name="staff_description_optional">Staff description (Optional)</string>
+  <string name="staff_description_optional">Staff description (optional)</string>
   <string name="describe_this_staff_in_around_2000_characters_at_max">Describe this staff in around 2000 characters at max…</string>
   <string name="years_of_experience">Years of experience*</string>
   <string name="is_available">Is available*</string>
@@ -214,7 +214,7 @@
   <string name="add_a_leave_break_for_br_gaurav_sharma">"Add a leave break for <br />Gaurav Sharma"</string>
   <string name="planning_a_break">Planning a break</string>
   <string name="starting_from">Starting from</string>
-  <string name="additional_break_info_optional">Additional break info (Optional)</string>
+  <string name="additional_break_info_optional">Additional break info (optional)</string>
   <string name="e_g_a_name_for_this_break_for_easy_identification_by_your_admin">e.g. a name for this break for easy identification by your admin</string>
   <string name="start_time">Start time</string>
   <string name="till">Till</string>
