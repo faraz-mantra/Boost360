@@ -131,7 +131,7 @@ dependencies {
     api 'com.webengage:android-sdk:3.+'
 
     //exoplayer
-    api 'com.google.android.exoplayer:exoplayer:2.11.3'
+    api 'com.google.android.exoplayer:exoplayer:2.14.1'
 
     // sms receiver apis
     api 'com.google.android.gms:play-services-auth:17.0.0'
