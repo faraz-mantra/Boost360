@@ -17,7 +17,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias=".4"
+      app:layout_constraintVertical_bias=".32"
       tools:src="@tools:sample/avatars" />
 
     <com.framework.views.customViews.CustomTextView
@@ -56,7 +56,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginBottom="20dp"
-      android:layout_marginTop="16dp"
+      android:layout_marginTop="100dp"
       android:orientation="vertical"
       app:layout_constraintBottom_toTopOf="@+id/ctv_footer_text"
       app:layout_constraintTop_toBottomOf="@+id/ctv_desc"
@@ -67,26 +67,14 @@
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_marginHorizontal="16dp"
-        app:cardBackgroundColor="@color/colorAccent"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
           android:id="@+id/btn_primary"
+          android:background="@color/colorAccent"
           android:layout_width="match_parent"
           android:layout_height="match_parent">
-
-          <com.framework.views.customViews.CustomImageView
-            android:id="@+id/civ_icon_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/share"
-            android:tint="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ctv_btn_primary_title"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/ctv_btn_primary_title"
@@ -98,7 +86,7 @@
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/civ_icon_left"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -106,11 +94,12 @@
             android:id="@+id/civ_icon_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
             android:src="@drawable/share"
-            android:visibility="gone"
+            android:visibility="visible"
+            app:layout_constraintHorizontal_bias="0.95"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ctv_btn_primary_title"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -132,28 +121,17 @@
           android:layout_height="match_parent"
           android:background="@drawable/stroke_accent">
 
-          <com.framework.views.customViews.CustomImageView
-            android:id="@+id/civ_icon_right_secondary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/share"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ctv_btn_secondary_title"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/ctv_btn_secondary_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="Activate this feature"
+            tools:text="Activate this feature"
             android:textColor="@color/colorAccent"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/civ_icon_left_secondary"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -161,11 +139,12 @@
             android:id="@+id/civ_icon_left_secondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
             android:src="@drawable/share"
-            android:visibility="gone"
+            android:visibility="visible"
+            app:layout_constraintHorizontal_bias="0.95"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ctv_btn_secondary_title"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -183,20 +162,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
           android:id="@+id/btn_tertiary"
+          android:background="@color/white"
           android:layout_width="match_parent"
           android:layout_height="match_parent">
-
-          <com.framework.views.customViews.CustomImageView
-            android:id="@+id/civ_icon_right_tertiary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/share"
-            android:tint="@color/colorAccent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ctv_btn_title_tertiary"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/ctv_btn_title_tertiary"
@@ -204,11 +172,11 @@
             android:layout_height="match_parent"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="Tertiary Button"
+            tools:text="Tertiary Button"
             android:textColor="@color/colorAccent"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/civ_icon_left_tertiary"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -216,11 +184,12 @@
             android:id="@+id/civ_icon_left_tertiary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
             android:src="@drawable/share"
-            android:visibility="gone"
+            android:visibility="visible"
+            app:layout_constraintHorizontal_bias="0.95"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ctv_btn_title_tertiary"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -236,7 +205,7 @@
       android:gravity="center"
       app:layout_constraintVertical_bias="1"
       android:lines="4"
-      android:text="dsadsadsadasdsadasdas"
+      tools:text="dsadsadsadasdsadasdas"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
