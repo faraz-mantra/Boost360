@@ -2,6 +2,7 @@
 <androidx.appcompat.widget.LinearLayoutCompat
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_height="wrap_content"
+  android:foreground="?attr/selectableItemBackgroundBorderless"
   android:orientation="vertical"
   android:layout_width="match_parent"
   xmlns:app="http://schemas.android.com/apk/res-auto">

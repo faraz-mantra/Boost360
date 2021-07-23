@@ -345,25 +345,14 @@ class FragmentCategory: AppBaseFragment<FragmentWebsitePagerBinding,DashboardVie
 
   private fun clickActionButton(type: WebsiteActionItem.IconType) {
     when (type) {
-      WebsiteActionItem.IconType.service_product_catalogue -> baseActivity.startListServiceProduct(
-        session
-      )
-      WebsiteActionItem.IconType.latest_update_tips -> session?.let {
-        baseActivity.startUpdateLatestStory(
-          it
-        )
-      }
+      WebsiteActionItem.IconType.service_product_catalogue -> baseActivity.startListServiceProduct(session)
+      WebsiteActionItem.IconType.latest_update_tips -> session?.let { baseActivity.startUpdateLatestStory(it) }
       WebsiteActionItem.IconType.all_images -> baseActivity.startAllImage(session)
-      WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(
-        session,
-        fragmentType = "Business_Profile_Fragment_V2"
-      )
+      WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
       WebsiteActionItem.IconType.testimonials -> baseActivity.startTestimonial(session)
       WebsiteActionItem.IconType.custom_page -> baseActivity.startCustomPage(session)
       WebsiteActionItem.IconType.project_teams -> baseActivity.startListProjectAndTeams(session)
-      WebsiteActionItem.IconType.unlimited_digital_brochures -> baseActivity.startListDigitalBrochure(
-        session
-      )
+      WebsiteActionItem.IconType.unlimited_digital_brochures -> baseActivity.startListDigitalBrochure(session)
       WebsiteActionItem.IconType.toppers_institute -> baseActivity.startListToppers(session)
       WebsiteActionItem.IconType.upcoming_batches -> baseActivity.startListBatches(session)
       WebsiteActionItem.IconType.faculty_management -> baseActivity.startFacultyMember(session)
