@@ -370,6 +370,7 @@
   <string name="shared_user_key">com.jioonline.kb.boostapp.sharedkey</string>
   <string name="ria_academy">JioOnline Academy</string>
   <string name="boost_keyboard">Business Keyboard</string>
+  <string name="boost_keyboard_n">Business keyboard</string>
 
   <string-array name="account_setting_tab_items">
     <!--<item>Seller Profile</item>-->
@@ -599,4 +600,6 @@
 
   <string name="twitter_consumer_key">TE20KJRCg35Sg3o8lM7OvTGRM</string>
   <string name="twitter_consumer_secret">mvHwpYzH4y2nJFdZfIHsyyEBnaZibMmtg3P5VnKKwGgIwFAn0M</string>
+
+  <string name="intro_video_url">https://cdn.nowfloats.com/jioonline/android/videos/JioOnlineHighResolution.mp4</string>
 </resources>
