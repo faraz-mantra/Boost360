@@ -60,8 +60,7 @@ import java.util.*
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
-class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKitViewModel>(),
-  RecyclerItemClickListener {
+class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKitViewModel>(), RecyclerItemClickListener {
 
   private val FILE_SELECT_CODE = 2000
   private var imagePickerMultiple: Boolean? = null

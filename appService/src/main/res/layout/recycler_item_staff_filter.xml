@@ -21,7 +21,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerVertical="true"
-      android:fontFamily="@font/open_sans"
+      android:fontFamily="@font/regular"
       android:textSize="13sp"
       tools:text="All"
       tools:textColor="@color/white" />
@@ -33,7 +33,7 @@
       android:layout_marginStart="@dimen/size_8"
       android:layout_toEndOf="@id/ctv_staff_status"
       android:background="@drawable/rounded_button_yellow"
-      android:fontFamily="@font/open_sans"
+      android:fontFamily="@font/regular"
       android:padding="@dimen/size_2"
       android:textAlignment="center"
       android:textColor="@color/black"

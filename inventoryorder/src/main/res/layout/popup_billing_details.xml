@@ -33,7 +33,7 @@
           android:paddingEnd="@dimen/size_28"
           android:paddingBottom="@dimen/size_14"
           android:text="@string/edit_customer_info"
-          android:textAllCaps="true" />
+          android:textAllCaps="false" />
 
         <View
           android:layout_width="match_parent"
@@ -52,7 +52,7 @@
           android:paddingEnd="@dimen/size_28"
           android:paddingBottom="@dimen/size_14"
           android:text="@string/edit_customer_address"
-          android:textAllCaps="true" />
+          android:textAllCaps="false" />
 
         <View
           android:layout_width="match_parent"
@@ -73,7 +73,7 @@
           android:paddingEnd="@dimen/size_28"
           android:paddingBottom="@dimen/size_14"
           android:text="@string/pick_another_customer"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:visibility="gone" />
       </LinearLayout>
     </androidx.cardview.widget.CardView>

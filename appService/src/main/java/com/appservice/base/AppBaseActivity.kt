@@ -1,23 +1,16 @@
 package com.appservice.base
 
-import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
 import android.view.MenuItem
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.ViewDataBinding
 import com.appservice.R
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 
-
-abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> :
-  BaseActivity<Binding, ViewModel>() {
-
+abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseActivity<Binding, ViewModel>() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -28,29 +21,15 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
 
   }
 
-  override fun getToolbarTitleTypeface(): Typeface? {
-    return ResourcesCompat.getFont(this, R.font.semi_bold)
-  }
-
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.heading_5)
-  }
-
-  override fun getNavIconScale(): Float {
-    return 1.0f
-  }
 
   override fun getToolbarBackgroundColor(): Int? {
-    return Color.parseColor("#747474")
+    return ContextCompat.getColor(this,R.color.colorPrimary)
   }
 
   override fun getToolbarTitleColor(): Int? {
-    return Color.parseColor("#FFFFFF")
+    return ContextCompat.getColor(this,R.color.white)
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return Gravity.CENTER
-  }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {

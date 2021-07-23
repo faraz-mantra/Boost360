@@ -16,7 +16,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/view_top"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="0dp"
       android:layout_weight="1"
       android:background="@drawable/rounded_bottom_white_d"
       android:gravity="center"
@@ -70,7 +70,7 @@
         android:layout_marginBottom="@dimen/size_40"
         android:background="@drawable/bg_rounded_10"
         android:gravity="center"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         app:textType="HEADING_6"
         tools:text="@string/get_started" />
     </androidx.appcompat.widget.LinearLayoutCompat>

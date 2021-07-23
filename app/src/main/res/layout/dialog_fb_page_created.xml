@@ -83,14 +83,14 @@
       android:text="@string/facebook_page"
       android:textColor="@color/com_facebook_blue"
       android:textSize="18sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:gravity="center"
       android:text="@string/congratulations"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:textSize="13sp" />
 
     <TextView

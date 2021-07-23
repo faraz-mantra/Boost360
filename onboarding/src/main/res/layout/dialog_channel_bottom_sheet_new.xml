@@ -90,7 +90,7 @@
         android:alpha="0"
         android:drawableEnd="@null"
         android:text="@string/done"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

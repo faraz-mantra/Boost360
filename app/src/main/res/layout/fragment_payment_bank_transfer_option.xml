@@ -318,7 +318,7 @@
         android:padding="10dp"
         android:text="Add Receipt"
         android:textColor="@color/white"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
 
       <androidx.cardview.widget.CardView xmlns:card="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cardView_main"
@@ -371,7 +371,7 @@
         android:padding="10dp"
         android:text="@string/add_other_image"
         android:textColor="@color/white"
-        android:textStyle="bold"
+         android:fontFamily="@font/semi_bold"
         android:visibility="gone" />
 
       <androidx.cardview.widget.CardView xmlns:card="http://schemas.android.com/apk/res-auto"

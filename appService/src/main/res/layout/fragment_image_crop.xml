@@ -25,7 +25,7 @@
       android:gravity="center"
       android:paddingVertical="@dimen/size_10"
       android:text="@string/proceed"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:textSize="@dimen/size_20"
       app:layout_constraintBottom_toBottomOf="parent" />
 

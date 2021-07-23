@@ -34,8 +34,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, ChannelPlanViewModel>(),
-  RecyclerItemClickListener {
+class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
 
   private var cardPosition = 0
   private var messageCard: String? = null

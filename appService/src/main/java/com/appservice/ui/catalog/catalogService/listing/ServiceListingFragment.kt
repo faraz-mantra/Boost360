@@ -18,6 +18,7 @@ import android.view.MenuInflater
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -54,8 +55,7 @@ import kotlinx.android.synthetic.main.fragment_service_detail.*
 import kotlinx.android.synthetic.main.recycler_item_service_timing.*
 import java.util.*
 
-class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(),
-  RecyclerItemClickListener {
+class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
   private lateinit var domainName: String
   private var session: UserSessionManager? = null
@@ -269,7 +269,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun setListingView(visibility: Int) {
     binding?.baseRecyclerView?.visibility = visibility
-    binding?.llActionButtons?.visibility = visibility
+    binding?.cbAddService?.visibility = visibility
   }
 
   private fun setEmptyView() {
@@ -369,11 +369,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   }
 
   private fun checkStoragePermission(): Boolean {
-    if (ActivityCompat.checkSelfPermission(
-        requireActivity(),
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-      ) == PackageManager.PERMISSION_DENIED
-    ) {
+    if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
       showDialog(
         requireActivity(),
         "Storage Permission",
@@ -407,13 +403,8 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     }
   }
 
-  fun showDialog(
-    mContext: Context?,
-    title: String?,
-    msg: String?,
-    listener: DialogInterface.OnClickListener
-  ) {
-    val builder = AlertDialog.Builder(mContext!!)
+  fun showDialog(mContext: Context?, title: String?, msg: String?, listener: DialogInterface.OnClickListener) {
+    val builder = AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
     builder.setTitle(title).setMessage(msg).setPositiveButton("Ok") { dialog, which ->
       dialog.dismiss()
       listener.onClick(dialog, which)

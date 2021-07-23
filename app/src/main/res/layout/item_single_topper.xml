@@ -62,13 +62,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/semi_bold"
             android:maxLines="1"
             android:singleLine="true"
             android:text="@{ourTopperResponseData.name}"
             android:textColor="#4A4A4A"
             android:textSize="@dimen/txt_16sp"
-            android:textStyle="bold"
             tools:text="Suchi" />
 
           <LinearLayout
@@ -211,7 +210,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:padding="@dimen/_10sdp"
         android:text="@string/delete_"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/red"
         android:textSize="@dimen/_12sdp" />
 

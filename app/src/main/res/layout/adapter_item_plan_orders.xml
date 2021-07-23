@@ -13,7 +13,7 @@
     android:gravity="center"
     android:padding="@dimen/margin_10"
     android:text="@string/sno"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 
   <TextView
     android:id="@+id/tv_payment_date"
@@ -23,7 +23,7 @@
     android:gravity="center"
     android:padding="@dimen/margin_10"
     android:text="@string/payment_date"
-    android:textStyle="bold"
+     android:fontFamily="@font/semi_bold"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp" />
 
@@ -35,7 +35,7 @@
     android:gravity="center"
     android:padding="@dimen/margin_10"
     android:text="@string/order_confirmation_id"
-    android:textStyle="bold"
+     android:fontFamily="@font/semi_bold"
     tools:layout_editor_absoluteX="97dp"
     tools:layout_editor_absoluteY="0dp" />
 
@@ -47,7 +47,7 @@
     android:gravity="center"
     android:padding="@dimen/margin_10"
     android:text="@string/package_name"
-    android:textStyle="bold"
+     android:fontFamily="@font/semi_bold"
     tools:layout_editor_absoluteX="81dp"
     tools:layout_editor_absoluteY="80dp" />
 
@@ -59,7 +59,7 @@
     android:gravity="center"
     android:padding="@dimen/margin_10"
     android:text="@string/total_amount_including_taxes"
-    android:textStyle="bold"
+     android:fontFamily="@font/semi_bold"
     tools:layout_editor_absoluteX="81dp"
     tools:layout_editor_absoluteY="80dp" />
 
@@ -71,7 +71,7 @@
     android:gravity="center"
     android:padding="@dimen/margin_10"
     android:text="@string/claim_id"
-    android:textStyle="bold"
+     android:fontFamily="@font/semi_bold"
     tools:layout_editor_absoluteX="81dp"
     tools:layout_editor_absoluteY="80dp" />
 
@@ -83,7 +83,7 @@
     android:gravity="center"
     android:padding="@dimen/margin_10"
     android:text="@string/payment_status"
-    android:textStyle="bold"
+     android:fontFamily="@font/semi_bold"
     tools:layout_editor_absoluteX="81dp"
     tools:layout_editor_absoluteY="80dp" />
 

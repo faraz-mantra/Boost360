@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="DashboardTheme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+  <style name="DashboardTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorAccent</item>
     <item name="colorAccent">@color/colorAccent</item>
@@ -9,12 +9,16 @@
     <item name="android:windowBackground">@color/white</item>
     <item name="android:screenOrientation">portrait</item>
     <item name="android:windowDisablePreview">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="colorSecondary">@color/colorAccent</item>
     <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
-    <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_toolbar_30_d</item>
+    <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_toolbar_d</item>
     <item name="searchViewStyle">@style/ThemeOverlay.SearchView</item>
     <item name="colorSurface">@color/white</item>
     <item name="colorControlActivated">@color/white</item>
+    <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
 
   <style name="DashboardThemeNew" parent="DashboardTheme">
@@ -34,7 +38,8 @@
     <item name="android:windowSoftInputMode">adjustResize</item>
     <item name="android:windowBackground">@color/transparent</item>
     <item name="bd_bg_color">@color/color_dialog_bg</item>
-    <item name="android:textColorPrimary">#212121</item>
+    <item name="android:textColorPrimary">@color/black_2A2A2A</item>
+    <item name="colorSecondary">@color/colorAccent</item>
   </style>
 
   <style name="ThemeOverlay.SearchView" parent="Widget.AppCompat.Light.SearchView">
@@ -76,5 +81,4 @@
     <item name="android:progressDrawable">@drawable/ic_progress_bar_horizontal_high</item>
     <!--    <item name="android:progressDrawable">@drawable/progress_bar_horizontal</item>-->
   </style>
-
 </resources>

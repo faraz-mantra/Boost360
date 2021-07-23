@@ -13,9 +13,9 @@
     android:layout_marginBottom="24dp"
     android:gravity="center"
     android:text="@string/fb_page_unavailable"
-    android:textAllCaps="true"
+    android:textAllCaps="false"
     android:textSize="18sp"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 
   <TextView
     android:layout_width="wrap_content"
@@ -45,5 +45,5 @@
     android:padding="8dp"
     android:text="PROCEED"
     android:textColor="@color/white"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 </LinearLayout>

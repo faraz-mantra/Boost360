@@ -30,19 +30,14 @@ import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.util.*
 
-class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) :
-  AppBaseRecyclerViewHolder<ItemAppointmentsSpaBinding>(binding) {
+class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRecyclerViewHolder<ItemAppointmentsSpaBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = item as? OrderItem
     data?.let { setDataResponse(position, it) }
     binding.mainView.setOnClickListener {
-      listener?.onItemClick(
-        position,
-        data,
-        RecyclerViewActionType.ALL_BOOKING_ITEM_CLICKED.ordinal
-      )
+      listener?.onItemClick(position, data, RecyclerViewActionType.ALL_BOOKING_ITEM_CLICKED.ordinal)
     }
   }
 
@@ -52,9 +47,7 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) :
 
     if (statusIcon != null) binding.statusIcon.setImageResource(statusIcon) else binding.statusIcon.gone()
 
-    if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status()
-        .toUpperCase(Locale.ROOT)
-    ) {
+    if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT)) {
       binding.orderType.text = statusValue.plus(order.cancelledText())
     } else binding.orderType.text = statusValue
 
@@ -64,27 +57,18 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) :
       val currency = takeIf {
         bill.getCurrencyCodeValue().isNullOrEmpty().not()
       }?.let { bill.getCurrencyCodeValue()?.trim() } ?: "INR"
-      val formatAmount =
-        "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.AmountPayableByBuyer!!))}"
+      val formatAmount = "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.AmountPayableByBuyer!!))}"
       val ss = SpannableString("$formatAmount")
       ss.setSpan(RelativeSizeSpan(0.5f), "$formatAmount".indexOf("."), "$formatAmount".length, 0)
       binding.txtRupees.text = ss
       binding.txtRupeesSymble.text = currency
     }
 
-    binding.txtOrderDate.text = "at ${
-      parseDate(
-        order.CreatedOn,
-        FORMAT_SERVER_DATE,
-        FORMAT_SERVER_TO_LOCAL,
-        timeZone = TimeZone.getTimeZone("IST")
-      )
-    }"
+    binding.txtOrderDate.text = "at ${parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL, timeZone = TimeZone.getTimeZone("IST"))}"
     binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
 
     binding.serviceLocation.icon.setImageResource(R.drawable.ic_service_location)
-    binding.serviceLocation.title.text =
-      "${getApplicationContext()?.getString(R.string.service_location)} :"
+    binding.serviceLocation.title.text = "${getApplicationContext()?.getString(R.string.service_location)} :"
     binding.serviceLocation.value.text = "Business"
 //    binding.serviceLocation.value.text = order.SellerDetails?.Address?.City ?: "NA"
 
@@ -176,12 +160,12 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) :
           )
         }
         OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
-          colorCode = "#52AAC6"
+          colorCode = "#4A4A4A"
           changeButtonStatus(
             btnOrderMenu.title,
             R.drawable.ic_in_transit_order_btn_bkg,
-            R.color.blue_52AAC6,
-            R.drawable.ic_arrow_down_blue
+            R.color.black_4a4a4a,
+            R.drawable.ic_arrow_down_4a4a4a
           )
         }
         else -> binding.lytStatusBtn.gone()
@@ -196,24 +180,17 @@ class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) :
       binding.ivDropdownAppointment.gone()
     } else {
       binding.ivDropdownAppointment.setOnClickListener {
-        listener?.onItemClickView(
-          position,
-          it,
-          order,
-          RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal
-        )
+        listener?.onItemClickView(position, it, order, RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal)
       }
       binding.divider.visible()
       binding.ivDropdownAppointment.visible()
     }
 
     binding.payment.title.text = getApplicationContext()?.getString(R.string.payment_mode)
-    binding.payment.value.text =
-      fromHtml(order.PaymentDetails?.paymentWithColor(colorCode)?.trim() ?: "")
+    binding.payment.value.text = fromHtml(order.PaymentDetails?.paymentWithColor(colorCode)?.trim() ?: "")
 
     val staffName = itemAptSpa?.getAptSpaExtraDetail()?.staffName
-    binding.txtScheduledDate.text =
-      fromHtml("${itemAptSpa?.getScheduleDateAndTimeSpa()}${if (staffName.isNullOrEmpty()) "" else " by <b><u>$staffName</u></b>"}")
+    binding.txtScheduledDate.text = fromHtml("${itemAptSpa?.getScheduleDateAndTimeSpa()}${if (staffName.isNullOrEmpty()) "" else " by <b><u>$staffName</u></b>"}")
 
   }
 

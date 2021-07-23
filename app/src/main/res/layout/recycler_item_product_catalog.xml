@@ -1,5 +1,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <!--
   <LinearLayout
@@ -81,13 +82,12 @@
           android:id="@+id/label_brand"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/regular"
           android:maxLines="2"
           android:paddingBottom="3dp"
           android:text="@string/watch_by_fastrack"
           android:textColor="@color/primaryTextColor"
           android:textSize="14sp"
-          android:textStyle="normal" />
+          android:fontFamily="@font/regular" />
 
         <TextView
           android:id="@+id/label_name"
@@ -99,7 +99,7 @@
           android:text="@string/fastrack_bare_basic_watch"
           android:textColor="@color/primaryTextColor"
           android:textSize="18sp"
-          android:textStyle="bold" />
+          tools:ignore="ObsoleteLayoutParam" />
 
       </LinearLayout>
 

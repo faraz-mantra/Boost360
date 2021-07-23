@@ -83,15 +83,14 @@
           android:layout_marginStart="@dimen/margin_15"
           android:layout_marginEnd="@dimen/margin_15"
           android:background="?attr/selectableItemBackground"
-          android:fontFamily="sans-serif"
+          android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:paddingTop="@dimen/margin_15"
           android:paddingBottom="@dimen/margin_15"
           android:text="Subscribers"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/primary"
-          android:textSize="@dimen/small_text_size"
-          android:textStyle="bold" />
+          android:textSize="@dimen/small_text_size" />
 
         <TextView
           android:id="@+id/tvTwo"
@@ -100,15 +99,14 @@
           android:layout_marginStart="@dimen/margin_15"
           android:layout_marginEnd="@dimen/margin_15"
           android:background="?attr/selectableItemBackground"
-          android:fontFamily="sans-serif"
+          android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:paddingTop="@dimen/margin_15"
           android:paddingBottom="@dimen/margin_15"
           android:text="Enquiries"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/primary"
-          android:textSize="@dimen/small_text_size"
-          android:textStyle="bold" />
+          android:textSize="@dimen/small_text_size" />
 
         <TextView
           android:id="@+id/tvThree"
@@ -117,15 +115,14 @@
           android:layout_marginStart="@dimen/margin_15"
           android:layout_marginEnd="@dimen/margin_15"
           android:background="?attr/selectableItemBackground"
-          android:fontFamily="sans-serif"
+          android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:paddingTop="@dimen/margin_15"
           android:paddingBottom="@dimen/margin_15"
           android:text="CALLS"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/primary"
-          android:textSize="@dimen/small_text_size"
-          android:textStyle="bold" />
+          android:textSize="@dimen/small_text_size" />
 
 
       </LinearLayout>
