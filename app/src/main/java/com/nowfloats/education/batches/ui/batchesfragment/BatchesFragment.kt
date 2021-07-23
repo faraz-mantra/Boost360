@@ -67,9 +67,9 @@ class BatchesFragment : BaseFragment(), ItemClickEventListener {
     viewModel.apply {
       upcomingBatchResponse.observe(viewLifecycleOwner, Observer {
         if (!it.Data.isNullOrEmpty()) {
-          hideLoader()
           setRecyclerviewAdapter(it.Data)
-        }
+        } else Toast.makeText(requireContext(), "Empty upcoming batches!", Toast.LENGTH_SHORT).show()
+        hideLoader()
       })
 
       errorResponse.observe(viewLifecycleOwner, Observer {
