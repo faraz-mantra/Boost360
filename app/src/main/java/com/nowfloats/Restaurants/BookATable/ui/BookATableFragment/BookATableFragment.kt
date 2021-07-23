@@ -93,11 +93,11 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
   fun setHeader() {
     title.text = "Book A Table"
     back_button.setOnClickListener {
-      (activity as BookATableActivity).onBackPressed()
+      (activity as? BookATableActivity)?.onBackPressed()
     }
     if (session?.storeWidgets?.contains("BOOKTABLE") == true) {
-      right_icon.setImageResource(R.drawable.ic_add_white)
-      right_icon_layout.setOnClickListener {
+      btn_add.visibility = View.VISIBLE
+      btn_add.setOnClickListener {
         val bookATableDetailsFragment = BookATableDetailsFragment.newInstance()
         val arg = Bundle()
         arg.putString("ScreenState", "new")
@@ -107,7 +107,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
           "BOOK_A_TABLE_DETAILS_FRAGMENT"
         )
       }
-    }
+    } else btn_add.visibility = View.GONE
 
   }
 
