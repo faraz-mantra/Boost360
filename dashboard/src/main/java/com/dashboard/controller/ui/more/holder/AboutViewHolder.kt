@@ -30,6 +30,7 @@ class AboutViewHolder(binding: RecyclerItemAboutAppBinding)
       binding.root.setOnClickListener { listener?.onItemClick(position,item,RecyclerViewActionType.ABOUT_VIEW_CLICK.ordinal) }
       if (data?.actionBtn!=null){
         binding.ctvNeedsAction.visible()
+         binding.ctvNeedsAction.text = data.actionBtn?.title
           binding.ctvNeedsAction.setTextColor(Color.parseColor(data.actionBtn?.textColor))
           binding.ctvNeedsAction.backgroundTintList = ColorStateList.valueOf((Color.parseColor(data.actionBtn?.color)))
       }else{
