@@ -28,6 +28,7 @@ import com.appservice.constant.FragmentType;
 import com.appservice.constant.IntentConstant;
 import com.framework.models.firestore.FirestoreManager;
 import com.framework.utils.ContentSharing;
+import com.framework.views.fabButton.FloatingActionButton;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.ProductGallery.Adapter.ProductCategoryRecyclerAdapter;
 import com.nowfloats.ProductGallery.Model.ImageListModel;
@@ -75,7 +76,6 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     private ActivityProductCatalogBinding binding;
     private ProductCategoryRecyclerAdapter adapter;
     private UserSessionManager session;
-    private MenuItem itemToAdd;
     private boolean stop = false;
     private boolean isLoading = false;
     private int limit = WidgetKey.WidgetLimit.FEATURE_NOT_AVAILABLE.getValue();
@@ -104,6 +104,8 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         getProducts(false);
         getWidgetLimit();
         checkIsAdd();
+        binding.btnAdd.setOnClickListener(v -> addProduct());
+        binding.btnAddCatalogue.setOnClickListener(v -> addProduct());
     }
 
     private void checkIsAdd() {
@@ -154,7 +156,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
                 if (data != null && response.getStatus() == 200) {
                     if (data.size() > 0) {
-                        if (itemToAdd != null) itemToAdd.setVisible(true);
+                        binding.btnAdd.setVisibility(View.VISIBLE);
                         binding.layoutEmptyView.setVisibility(View.GONE);
                         adapter.setData(data, flag);
                         onProductServiceAddedOrUpdated(data.size());
@@ -162,7 +164,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                     }
 
                     if (adapter.getItemCount() == 0) {
-                        if (itemToAdd != null) itemToAdd.setVisible(false);
+                        binding.btnAdd.setVisibility(View.GONE);
                         binding.layoutEmptyView.setVisibility(View.VISIBLE);
                     }
                 }
@@ -239,9 +241,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add, menu);
-        itemToAdd = menu.findItem(R.id.menu_add);
-        itemToAdd.setVisible(true);
+//        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 
