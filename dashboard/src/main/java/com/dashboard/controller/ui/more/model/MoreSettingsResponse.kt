@@ -17,7 +17,8 @@ data class MoreSettingsResponse(
 ) : BaseResponse(), Serializable
 
 data class AboutAppSectionItem(
-
+  @field:SerializedName("actionBtn")
+  var actionBtn: ActionBtn? = null,
   @field:SerializedName("subtitle")
   var subtitle: String? = null,
 
@@ -26,6 +27,8 @@ data class AboutAppSectionItem(
 
   @field:SerializedName("title")
   var title: String? = null,
+  @field:SerializedName("view_type_2")
+  var view_type_2: String? = null,
 ) : Serializable, AppBaseRecyclerViewItem {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.RECYCLER_ABOUT_APP.getLayout()
@@ -68,7 +71,9 @@ data class UsefulLinksItem(
 
   @field:SerializedName("title")
   var title: String? = null,
-) : Serializable, AppBaseRecyclerViewItem {
+
+
+  ) : Serializable, AppBaseRecyclerViewItem {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.RECYCLER_USEFUL_LINKS.getLayout()
   override fun getViewType(): Int {

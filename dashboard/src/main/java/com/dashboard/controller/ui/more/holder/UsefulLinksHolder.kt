@@ -25,8 +25,7 @@ class UsefulLinksHolder(binding: RecyclerItemUsefulLinksBinding) : AppBaseRecycl
         binding.ctvNeedsAction.setTextColor(Color.parseColor(data.actionBtn?.textColor))
         binding.ctvNeedsAction.backgroundTintList = ColorStateList.valueOf((Color.parseColor(data.actionBtn?.color)))
       }
-    }
-    else {
+    }else {
       binding.ctvNeedsAction.invisible()
     }
       val iconType = data?.icon?.let { UsefulLinksItem.IconType.fromName(it) }
