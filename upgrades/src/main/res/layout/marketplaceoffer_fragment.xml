@@ -112,11 +112,12 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nest"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:overScrollMode="never"
         android:scrollbars="none"
-        app:layout_constraintBottom_toBottomOf="@id/avail_coupon_submit1"
+        app:layout_constraintBottom_toTopOf="@id/avail_coupon_submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
@@ -924,29 +925,49 @@
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>-->
-                <TextView
-                    android:id="@+id/avail_coupon_submit"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_16sdp"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:layout_marginEnd="@dimen/_12sdp"
-                    android:background="@drawable/orange_button_click_effect"
-                    android:fontFamily="@font/open_sans_bold"
-                    android:gravity="center"
-                    android:padding="@dimen/_10sdp"
-                    android:text="Avail Now"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/txt_14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/howtoavail_layout" />
+<!--                <TextView-->
+<!--                    android:id="@+id/avail_coupon_submit"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="@dimen/_16sdp"-->
+<!--                    android:layout_marginStart="@dimen/_12sdp"-->
+<!--                    android:layout_marginEnd="@dimen/_12sdp"-->
+<!--                    android:background="@drawable/orange_button_click_effect"-->
+<!--                    android:fontFamily="@font/open_sans_bold"-->
+<!--                    android:gravity="center"-->
+<!--                    android:padding="@dimen/_10sdp"-->
+<!--                    android:text="Avail Now"-->
+<!--                    android:textAllCaps="true"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="@dimen/txt_14sp"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/howtoavail_layout" />-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/avail_coupon_submit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:background="@drawable/orange_button_click_effect"
+        android:fontFamily="@font/open_sans_bold"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="Avail Now"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt_14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nest"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:id="@+id/avail_coupon_submit1"
