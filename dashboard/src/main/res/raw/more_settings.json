@@ -3,10 +3,6 @@
   "useful_links": [
     {
       "icon": "ria_digital_assistant",
-      "actionBtn": {
-        "color": "#FFFFFF",
-        "title": "New"
-      },
       "isActionButtonEnabled": false,
       "subtitle": "FAQs, help & support, notifications etc.",
       "title": "Help and support"
@@ -15,7 +11,8 @@
       "icon": "business_kyc",
       "actionBtn": {
         "color": "#EB5757",
-        "title": "Need action"
+        "title": "Need action",
+        "text_color": "#FFFFFF"
       },
       "isActionButtonEnabled": true,
       "subtitle": "Govt mandated process to help you etc.",
@@ -23,10 +20,6 @@
     },
     {
       "icon": "boost_keyboard",
-      "actionBtn": {
-        "color": "#FFFFFF",
-        "title": "New"
-      },
       "isActionButtonEnabled": false,
       "subtitle": "Start business chat on any instant messaging app.",
       "title": "360 keyboard"
@@ -34,18 +27,19 @@
     {
       "icon": "refer_and_earn",
       "actionBtn": {
-        "color": "#FFFFFF",
-        "title": "New"
+        "color": "#7ED321",
+        "title": "New",
+        "text_color": "#FFFFFF"
       },
-      "isActionButtonEnabled": false,
+      "isActionButtonEnabled": true,
       "subtitle": "Share",
       "title": "Refer & earn"
     },
     {
-      "icon": "my_bank_accounts",
+      "icon": "my_bank_acccount",
       "actionBtn": {
         "color": "#F2FBE9",
-        "title": "New",
+        "title": "VERIFIED",
         "text_color": "#7ED321"
       },
       "isActionButtonEnabled": true,

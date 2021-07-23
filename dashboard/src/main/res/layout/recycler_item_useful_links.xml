@@ -4,12 +4,14 @@
   android:layout_height="wrap_content"
   android:elevation="@dimen/size_2"
   app:cardCornerRadius="@dimen/size_8"
+  android:clickable="true"
   app:cardUseCompatPadding="true"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:android="http://schemas.android.com/apk/res/android">
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
     android:layout_height="match_parent"
     android:padding="@dimen/size_8">
 
@@ -38,7 +40,7 @@
       android:id="@+id/riv_icon"
       android:layout_width="@dimen/size_40"
       android:layout_height="@dimen/size_40"
-      android:src="@drawable/ic_buildings"
+      android:src="@drawable/business_kyc"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 

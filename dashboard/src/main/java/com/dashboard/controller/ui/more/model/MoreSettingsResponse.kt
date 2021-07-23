@@ -26,8 +26,6 @@ data class AboutAppSectionItem(
 
   @field:SerializedName("title")
   var title: String? = null,
-	@SerializedName("type")
-	var type: String? = "",
 ) : Serializable, AppBaseRecyclerViewItem {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.RECYCLER_ABOUT_APP.getLayout()
@@ -70,8 +68,6 @@ data class UsefulLinksItem(
 
   @field:SerializedName("title")
   var title: String? = null,
-  @SerializedName("type")
-  var type: String? = "",
 ) : Serializable, AppBaseRecyclerViewItem {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.RECYCLER_USEFUL_LINKS.getLayout()
@@ -84,7 +80,7 @@ data class UsefulLinksItem(
     business_kyc(R.drawable.business_kyc),
     boost_keyboard(R.drawable.boost_keyboard),
     refer_and_earn(R.drawable.refer_and_earn),
-    my_bank_account(R.drawable.my_bank_acccount),
+    my_bank_acccount(R.drawable.my_bank_acccount),
     boost_academy(R.drawable.boost_academy),
     training_and_certification(R.drawable.training_and_certification),
     boost_extension(R.drawable.boost_extension);

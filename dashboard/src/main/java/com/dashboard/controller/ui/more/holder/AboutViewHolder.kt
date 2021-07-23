@@ -2,6 +2,7 @@ package com.dashboard.controller.ui.more.holder
 
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.more.model.AboutAppSectionItem
+import com.dashboard.controller.ui.more.model.UsefulLinksItem
 import com.dashboard.databinding.ItemBoostAddOnsBinding
 import com.dashboard.databinding.RecyclerItemAboutAppBinding
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
@@ -14,7 +15,8 @@ class AboutViewHolder(binding: RecyclerItemAboutAppBinding)
     val data = item as? AboutAppSectionItem
     binding.ctvHeading.text = data?.title
     binding.ctvSubtitle.text = data?.subtitle
-    binding.civImage.setImageResource(activity?.resources?.getIdentifier(data?.icon, "drawable", activity?.packageName)!!)
+    val iconType = data?.icon?.let { AboutAppSectionItem.IconType.fromName(it) }
+    iconType?.let { binding.civImage.setImageResource(iconType.icon) }
     binding.root.setOnClickListener { listener?.onItemClick(position,item,RecyclerViewActionType.ABOUT_VIEW_CLICK.ordinal) }
   }
 
