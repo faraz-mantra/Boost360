@@ -66,7 +66,7 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
         binding?.videoViewContainer?.isVisible = true;
         binding?.introImgContainer?.isVisible = false;
         binding?.progressBar?.isVisible = true
-        val mediaItem= MediaItem.fromUri("https://cdn.nowfloats.com/manage/assets/Content/videos/MobileIntroVideo.mp4")
+        val mediaItem= MediaItem.fromUri(getString(R.string.intro_video_url))
 // Set the media item to be played.
 // Set the media item to be played.
         player?.setMediaItem(mediaItem)
