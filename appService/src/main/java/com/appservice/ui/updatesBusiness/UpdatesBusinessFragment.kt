@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -248,13 +249,8 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   }
 }
 
-fun showDialog(
-  mContext: Context?,
-  title: String?,
-  msg: String?,
-  listener: DialogInterface.OnClickListener
-) {
-  val builder = AlertDialog.Builder(mContext!!)
+fun showDialog(mContext: Context?, title: String?, msg: String?, listener: DialogInterface.OnClickListener) {
+  val builder = AlertDialog.Builder(ContextThemeWrapper(mContext!!, R.style.CustomAlertDialogTheme))
   builder.setTitle(title).setMessage(msg).setPositiveButton("Ok") { dialog, which ->
     dialog.dismiss()
     listener.onClick(dialog, which)

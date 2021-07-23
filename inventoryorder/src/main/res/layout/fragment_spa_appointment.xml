@@ -237,16 +237,14 @@
           android:layout_margin="@dimen/size_20"
           android:background="@drawable/bg_rounded_yellow"
           android:gravity="center"
-          android:padding="@dimen/size_15"
-          android:paddingStart="@dimen/size_28"
-          android:paddingEnd="@dimen/size_28"
+          android:padding="@dimen/size_12"
           android:shadowRadius="0"
           android:stateListAnimator="@null"
           android:text="@string/review_details"
           android:textAllCaps="false"
           android:textColor="@color/white"
-          app:fontFamily="@font/bold"
-          app:textType="CAPTION"
+          app:fontFamily="@font/semi_bold"
+          app:textType="HEADING_6"
           tools:ignore="UnusedAttribute" />
       </androidx.cardview.widget.CardView>
     </androidx.appcompat.widget.LinearLayoutCompat>

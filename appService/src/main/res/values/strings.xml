@@ -51,7 +51,7 @@
   <string name="add_on_terms_and_conditions">Addon terms and conditions</string>
   <string name="add_on_not_active">Add-on not active</string>
   <string name="boost_not_added_message">You, have either not renewed this add-on or have not added this add-on ever before. To enjoy it’s benefits, go to add-on store to activate it for your Boost business website.</string>
-  <string name="view_in_add_on_store">View in Add-on store</string>
+  <string name="view_in_add_on_store">View in Add-ons store</string>
   <string name="self_branded_payment_gateway_camel_case">Self Branded Payment Gateway</string>
   <string name="add_on_terms_and_condition">Add-on terms and condition</string>
 
@@ -173,9 +173,10 @@
   <string name="delete_record_not_undone">Do you really want to delete these records? This process can not be undone.</string>
   <string name="crop_picture">Crop Picture</string>
   <string name="proceed">Proceed</string>
-  <string name="service_details">Service details</string>
+  <string name="service_details_n">Service Details</string>
   <string name="other_information">Other information</string>
-  <string name="product_details">Product Details</string>
+  <string name="other_information_n">Other Information</string>
+  <string name="product_details_n">Product Details</string>
   <string name="additional_information">Additional Info</string>
   <string name="testimonial_title">Testimonials</string>
   <string name="updates_title">Latest Updates</string>
@@ -570,7 +571,7 @@
   <string name="_4_products_under_this_category">4 products under this category</string>
   <string name="latest_update_data_not_found">Latest update data not found!</string>
   <string name="update_regularly_keep_customers_informed_brand">Update regularly to keep your customers informed about your brand</string>
-  <string name="post_an_update_n">Post An Update</string>
+  <string name="post_an_update_n">Post an Update</string>
   <string name="send_to_subscribers">Send to subscribers</string>
   <string name="enable">Enable</string>
   <string name="unable_to_send_website_updates_to_subscribers">Enable this feature to send website updates to your subscribers via email.</string>

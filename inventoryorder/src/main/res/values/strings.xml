@@ -54,7 +54,7 @@
   <string name="aug_sep_2020">Aug - Sep, 2020</string>
   <string name="go_to_current_week">Go to current week</string>
   <string name="consultation_type_camel_case">Consultation type</string>
-  <string name="new_apppointment_camel_case">New appointment</string>
+  <string name="new_apppointment_camel_case">New Appointment</string>
   <string name="update_apt_consult" tools:ignore="ExtraTranslation">Update Appointment</string>
   <string name="in_clinic">In-Clinic</string>
   <string name="consulting_service">Consulting service</string>
@@ -340,7 +340,7 @@
   <string name="view_appointment_dashboard">View appointment dashboard</string>
   <string name="appointment_created_successfully">Appointment created successfully</string>
   <string name="awaiting_confirmation_since">Awaiting confirmation since</string>
-  <string name="appointment_details">Appointment details</string>
+  <string name="appointment_details">Appointment Details</string>
   <string name="call_customer">Call customer</string>
   <string name="contact_number_not_available">Customer contact number not available</string>
   <string name="customer_email_not_available">Customer email not available</string>
