@@ -42,6 +42,15 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.package_fragment.*
+import kotlinx.android.synthetic.main.package_fragment.badge121
+import kotlinx.android.synthetic.main.package_fragment.offer_price
+import kotlinx.android.synthetic.main.package_fragment.package_addons_recycler
+import kotlinx.android.synthetic.main.package_fragment.package_back
+import kotlinx.android.synthetic.main.package_fragment.package_cart_icon
+import kotlinx.android.synthetic.main.package_fragment.package_profile_image
+import kotlinx.android.synthetic.main.package_fragment.package_submit
+import kotlinx.android.synthetic.main.package_fragment.package_title
+import kotlinx.android.synthetic.main.package_fragment_layout.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -92,6 +101,8 @@ class PackageFragment : BaseFragment() {
         initializeRecycler()
 
         package_title.setText(bundleData!!.name)
+
+
 
         if(requireArguments().containsKey("showCartIcon")){
             package_cart_icon.visibility = View.INVISIBLE
