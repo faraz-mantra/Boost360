@@ -91,8 +91,8 @@ public class BoostExtensionsFragment extends Fragment {
         .title("Integration key")
         .positiveText(R.string.copy_and_share)
         .negativeText(R.string.later)
-        .positiveColorRes(R.color.primaryColor)
-        .negativeColorRes(R.color.gray_40)
+        .positiveColorRes(R.color.colorAccentLight)
+        .negativeColorRes(R.color.black_4a4a4a)
         .callback(new MaterialDialog.ButtonCallback() {
           @Override
           public void onNegative(MaterialDialog dialog) {
@@ -128,8 +128,8 @@ public class BoostExtensionsFragment extends Fragment {
             .title("wordpress-plugin script")
             .positiveText(R.string.copy_and_share)
             .negativeText(R.string.later)
-            .positiveColorRes(R.color.primaryColor)
-            .negativeColorRes(R.color.gray_40)
+            .positiveColorRes(R.color.colorAccentLight)
+            .negativeColorRes(R.color.black_4a4a4a)
             .callback(new MaterialDialog.ButtonCallback() {
               @Override
               public void onNegative(MaterialDialog dialog) {
@@ -172,8 +172,8 @@ public class BoostExtensionsFragment extends Fragment {
         .title("website-plugin script")
         .positiveText(R.string.copy_and_share)
         .negativeText(R.string.later)
-        .positiveColorRes(R.color.primaryColor)
-        .negativeColorRes(R.color.gray_40)
+        .positiveColorRes(R.color.colorAccentLight)
+        .negativeColorRes(R.color.black_4a4a4a)
         .callback(new MaterialDialog.ButtonCallback() {
           @Override
           public void onNegative(MaterialDialog dialog) {
