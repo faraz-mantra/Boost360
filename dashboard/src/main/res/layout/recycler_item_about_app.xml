@@ -37,7 +37,7 @@
       android:textSize="12sp"
       app:layout_constraintBottom_toTopOf="@+id/ctv_subtitle"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.2"
+      app:layout_constraintHorizontal_bias="0.1"
       app:layout_constraintStart_toEndOf="@+id/ctv_heading"
       app:layout_constraintTop_toTopOf="parent" />
 
