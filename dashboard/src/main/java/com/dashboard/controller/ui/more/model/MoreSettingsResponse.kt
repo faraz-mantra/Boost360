@@ -33,21 +33,15 @@ data class AboutAppSectionItem(
 		return recyclerViewItemType
 	}
 	enum class IconType(var icon: Int) {
-		service_product_catalogue(R.drawable.ic_product_cataloge_d),
-		latest_update_tips(R.drawable.ic_daily_business_update_d),
-		all_images(R.drawable.picture_gallery),
-		business_profile(R.drawable.ic_customer_enquiries_d),
-		testimonials(R.drawable.ic_customer_testimonial_d),
-		custom_page(R.drawable.ic_custom_page_add),
-		project_teams(R.drawable.ic_project_teams_d),
-		unlimited_digital_brochures(R.drawable.ic_digital_brochures_d),
-		toppers_institute(R.drawable.toppers_institute_d),
-		upcoming_batches(R.drawable.ic_upcoming_batch_d),
-		faculty_management(R.drawable.ic_upcoming_batch_d),
-		places_look_around(R.drawable.places_look_around_d),
-		trip_adviser_ratings(R.drawable.trip_advisor_reviews_d),
-		seasonal_offers(R.drawable.ic_offer_d),
-		website_theme(R.drawable.ic_website_theme);
+		whats_new_version(R.drawable.whats_new_version),
+		frequently_asked_question(R.drawable.frequently_asked_question),
+		like_us_on_facebook(R.drawable.like_us_on_facebook),
+		follow_us_on_twitter(R.drawable.follow_us_on_twitter),
+		rate_us_on_google_play(R.drawable.rate_us_on_google_play),
+		rate_us_on_app_store(R.drawable.rate_us_on_app_store),
+		terms_of_usages(R.drawable.terms_of_usages),
+		privacy_policy(R.drawable.privacy_policy),
+		help_us_make_boost_better(R.drawable.help_us_make_boost_better);
 
 		companion object {
 			fun fromName(name: String?): IconType? =
@@ -81,21 +75,13 @@ data class UsefulLinksItem(
 	}
 	enum class IconType(var icon: Int) {
 		ria_digital_assistant(R.drawable.ria_digital_assistant),
-		riv_business(R.drawable.riv_business),
-		all_images(R.drawable.picture_gallery),
-		business_profile(R.drawable.ic_customer_enquiries_d),
-		testimonials(R.drawable.ic_customer_testimonial_d),
-		custom_page(R.drawable.ic_custom_page_add),
-		project_teams(R.drawable.ic_project_teams_d),
-		unlimited_digital_brochures(R.drawable.ic_digital_brochures_d),
-		toppers_institute(R.drawable.toppers_institute_d),
-		upcoming_batches(R.drawable.ic_upcoming_batch_d),
-		faculty_management(R.drawable.ic_upcoming_batch_d),
-		places_look_around(R.drawable.places_look_around_d),
-		trip_adviser_ratings(R.drawable.trip_advisor_reviews_d),
-		seasonal_offers(R.drawable.ic_offer_d),
-		website_theme(R.drawable.ic_website_theme);
-
+		business_kyc(R.drawable.business_kyc),
+		boost_keyboard(R.drawable.boost_keyboard),
+		refer_and_earn(R.drawable.refer_and_earn),
+		my_bank_account(R.drawable.my_bank_acccount),
+		boost_academy(R.drawable.boost_academy),
+		training_and_certification(R.drawable.training_and_certification),
+		boost_extension(R.drawable.boost_extension);
 		companion object {
 			fun fromName(name: String?): IconType? =
 				values().firstOrNull { it.name.equals(name, ignoreCase = true) }

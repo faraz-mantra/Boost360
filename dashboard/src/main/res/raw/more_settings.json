@@ -12,7 +12,7 @@
       "title": "Help and support"
     },
     {
-      "icon": "ic_buildings",
+      "icon": "business_kyc",
       "actionBtn": {
         "color": "#EB5757",
         "title": "Need action"
@@ -22,7 +22,7 @@
       "title": "My business KYC"
     },
     {
-      "icon": "riv_keyboard",
+      "icon": "boost_keyboard",
       "actionBtn": {
         "color": "#FFFFFF",
         "title": "New"
@@ -32,7 +32,7 @@
       "title": "360 keyboard"
     },
     {
-      "icon": "riv_users",
+      "icon": "refer_and_earn",
       "actionBtn": {
         "color": "#FFFFFF",
         "title": "New"
@@ -42,7 +42,7 @@
       "title": "Refer & earn"
     },
     {
-      "icon": "riv_bank_accounts",
+      "icon": "my_bank_accounts",
       "actionBtn": {
         "color": "#F2FBE9",
         "title": "New",
@@ -53,7 +53,7 @@
       "title": "My bank account"
     },
     {
-      "icon": "riv_academy",
+      "icon": "boost_academy",
       "actionBtn": {
         "color": "#FFFFFF",
         "title": "New"
@@ -63,7 +63,7 @@
       "title": "Boost 360 academy"
     },
     {
-      "icon": "riv_certification",
+      "icon": "training_and_certification",
       "actionBtn": {
         "color": "#FFFFFF",
         "title": "New"
@@ -73,7 +73,7 @@
       "title": "Boost 360 Training\n& certification"
     },
     {
-      "icon": "riv_extension",
+      "icon": "boost_extension",
       "actionBtn": {
         "color": "#FFFFFF",
         "title": "New"
@@ -85,42 +85,47 @@
   ],
 "about_app_section":[
   {
-    "icon": "ic_lightbulbfilament",
+    "icon": "whats_new_version",
     "subtitle": "Run Boost 360 account on your wordpress website.",
     "title": "What’s new in latest version"
   },
   {
-    "icon": "ic_circlewavyquestion",
+    "icon": "frequently_asked_question",
     "subtitle": "Run Boost 360 account on your wordpress website.",
     "title": "What’s new in latest version"
   },
   {
-    "icon": "ic_facebooklogo",
+    "icon": "like_us_on_facebook",
     "subtitle": "Run Boost 360 account on your wordpress website.",
     "title": "What’s new in latest version"
   },
   {
-    "icon": "ic_twitter",
+    "icon": "follow_us_on_twitter",
     "subtitle": "Run Boost 360 account on your wordpress website.",
     "title": "What’s new in latest version"
   },
   {
-    "icon": "ic_googleplaylogo",
+    "icon": "rate_us_on_google_play",
     "subtitle": "Run Boost 360 account on your wordpress website.",
     "title": "What’s new in latest version"
   },
   {
-    "icon": "ic_applelogo",
+    "icon": "rate_us_on_app_store",
     "subtitle": "Run Boost 360 account on your wordpress website.",
     "title": "What’s new in latest version"
   },
   {
-    "icon": "ic_terms",
+    "icon": "terms_of_usages",
     "subtitle": "Run Boost 360 account on your wordpress website.",
     "title": "What’s new in latest version"
   },
   {
-    "icon": "ic_shieldchevron",
+    "icon": "help_us_make_boost_better",
+    "subtitle": "Run Boost 360 account on your wordpress website.",
+    "title": "What’s new in latest version"
+  },
+  {
+    "icon": "privacy_policy",
     "subtitle": "Run Boost 360 account on your wordpress website.",
     "title": "What’s new in latest version"
   }
