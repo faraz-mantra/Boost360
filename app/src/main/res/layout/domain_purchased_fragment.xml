@@ -52,7 +52,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_10sdp"
           android:gravity="center"
-          android:text="Domain is a great first step towards building your brand on web."
+          android:text="@string/domain_is_a_great_first_step_towards_building_your_brand_on_web_n"
           android:textSize="@dimen/_15sdp" />
       </LinearLayout>
 
@@ -79,10 +79,10 @@
         android:background="@drawable/rounded_corner_button"
         android:gravity="center"
         android:padding="8dp"
-        android:text="have an existing domain"
-        android:textAllCaps="true"
-        android:textColor="@drawable/yellow_btn_hover_text_color"
+        android:text="@string/have_an_existing_domain_n"
+        android:textAllCaps="false"
         android:textSize="18sp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dummy_inst" />
@@ -108,7 +108,7 @@
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="--- or ---"
+          android:text="@string/or_n"
           android:textSize="@dimen/_15sdp" />
 
         <View
@@ -130,13 +130,13 @@
         android:layout_marginEnd="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_15sdp"
         android:background="@drawable/feature_deals_click_effect"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
-        android:text="book a new domain"
-        android:textAllCaps="true"
-        android:textColor="@color/app_text_yellow"
+        android:text="@string/book_a_new_domain_n"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccentLight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/or_dummy" />

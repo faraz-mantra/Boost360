@@ -94,8 +94,7 @@ import kotlin.collections.ArrayList
 const val IS_FIRST_LOAD = "isFirsLoad"
 const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
 
-class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(),
-  RecyclerItemClickListener {
+class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var deepLinkUtil: DeepLinkUtil? = null
   private var connectedChannels: ArrayList<String> = arrayListOf()
@@ -965,9 +964,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           )
         }
       } else {
-        if (isBusinessCardShare) visitingCard(getString(R.string.my_business_card)) else showShortToast(
-          "Business detail getting error!"
-        )
+        if (isBusinessCardShare) visitingCard(getString(R.string.my_business_card)) else showShortToast("Business detail getting error!")
       }
     })
   }

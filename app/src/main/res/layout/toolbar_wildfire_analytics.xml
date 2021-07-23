@@ -5,6 +5,7 @@
   android:layout_height="50dp"
   android:background="@color/primary_color"
   app:popupTheme="@style/PopupMenuStyle"
+  app:titleTextAppearance="@style/Toolbar.TitleText"
   app:theme="@style/MyCustomToolBarTheme">
 
   <androidx.appcompat.widget.AppCompatImageView
@@ -13,12 +14,14 @@
     android:layout_height="20dp"
     android:layout_marginEnd="10dp" />
 
-  <TextView
+  <com.framework.views.customViews.CustomTextView
     android:id="@+id/text1"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="10dp"
     android:text="@string/facebook"
+    android:fontFamily="@font/semi_bold"
+    app:textType="HEADING_6"
     android:textColor="@color/white"
-    android:textSize="18sp" />
+    />
 </androidx.appcompat.widget.Toolbar>

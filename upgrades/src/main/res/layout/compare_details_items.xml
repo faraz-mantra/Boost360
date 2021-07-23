@@ -61,12 +61,11 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/bold"
         android:textAllCaps="true"
         android:textColor="#FFB900"
         android:textFontWeight="600"
         android:textSize="@dimen/txt_9sp"
-        android:textStyle="bold"
         tools:text="Marketing" />
 
       <TextView

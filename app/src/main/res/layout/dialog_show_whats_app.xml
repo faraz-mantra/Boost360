@@ -14,7 +14,7 @@
     android:layout_marginEnd="24dp"
     android:text="@string/boost_bubble"
     android:textSize="18sp"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 
   <TextView
     android:layout_width="match_parent"

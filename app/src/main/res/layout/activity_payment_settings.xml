@@ -93,7 +93,7 @@
             android:text="@string/learn_more"
             android:textColor="@color/primary"
             android:textSize="12sp"
-            android:textStyle="italic" />
+            android:fontFamily="@font/italic"/>
 
           <TextView
             android:id="@+id/tv_deliv_learn_more"
@@ -230,7 +230,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@string/name_heading"
-              android:textStyle="bold" />
+               android:fontFamily="@font/semi_bold" />
 
             <TextView
               android:id="@+id/tv_person_name"
@@ -251,7 +251,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@string/bank_name"
-              android:textStyle="bold" />
+               android:fontFamily="@font/semi_bold" />
 
             <TextView
               android:id="@+id/tv_bank_name"
@@ -272,7 +272,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@string/account_number"
-              android:textStyle="bold" />
+               android:fontFamily="@font/semi_bold" />
 
             <TextView
               android:id="@+id/tv_acc_num"
@@ -293,7 +293,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@string/ifsc"
-              android:textStyle="bold" />
+               android:fontFamily="@font/semi_bold" />
 
             <TextView
               android:id="@+id/tv_ifsc"
@@ -314,7 +314,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@string/account_type"
-              android:textStyle="bold" />
+               android:fontFamily="@font/semi_bold" />
 
             <TextView
               android:id="@+id/tv_acc_type"
@@ -335,7 +335,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@string/pan_card"
-              android:textStyle="bold" />
+               android:fontFamily="@font/semi_bold" />
 
             <TextView
               android:id="@+id/tv_pan_card"
@@ -357,7 +357,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@string/gstin"
-              android:textStyle="bold" />
+               android:fontFamily="@font/semi_bold" />
 
             <TextView
               android:id="@+id/tv_gstin"

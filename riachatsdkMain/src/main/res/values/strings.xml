@@ -26,11 +26,11 @@
 
   <!-- TODO: Remove or change this placeholder text -->
   <string name="confirm_business_name">Confirm your business name</string>
-  <string name="confirmed_business_name">CONFIRMED BUSINESS NAME</string>
-  <string name="skip">SKIP</string>
-  <string name="done">DONE</string>
-  <string name="create_my_website">CREATE MY BUSINESS PROFILE</string>
-  <string name="locate_on_map">LOCATE ON MAP</string>
+  <string name="confirmed_business_name">Confirmed business name</string>
+  <string name="skip">Skip</string>
+  <string name="done">Done</string>
+  <string name="create_my_website">Create my business profile</string>
+  <string name="locate_on_map">Locate on map</string>
 
   <string name="settings_tou_url">https://www.getboost360.com/tnc/</string>
   <string name="settings_privacy_url">https://www.getboost360.com/privacy/</string>

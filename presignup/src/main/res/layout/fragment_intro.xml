@@ -13,7 +13,7 @@
     android:layout_height="wrap_content"
     android:drawableStart="@drawable/ic_replay_button"
     android:drawablePadding="@dimen/_5sdp"
-    android:fontFamily="@font/open_sans"
+    android:fontFamily="@font/regular"
     android:padding="@dimen/_10sdp"
     android:text="@string/replay_intro"
     android:textColor="@color/common_text_color"

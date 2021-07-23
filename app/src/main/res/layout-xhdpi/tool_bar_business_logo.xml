@@ -6,15 +6,15 @@
   android:background="?attr/colorPrimary"
   app:theme="@style/CustomToolbarTheme">
 
-  <TextView
+  <com.framework.views.customViews.CustomTextView
     android:id="@+id/titleTextView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:text="@string/text"
     android:textColor="@color/white"
-    android:textSize="18sp"
-    android:textStyle="bold" />
+    app:textType="HEADING_6"
+    android:fontFamily="@font/semi_bold" />
 
   <LinearLayout
     android:layout_width="match_parent"

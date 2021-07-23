@@ -83,7 +83,7 @@
           android:scrollHorizontally="true"
           android:text="@string/thinking_ink"
           android:textSize="15sp"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
         <ImageView
           android:id="@+id/background_image_view"

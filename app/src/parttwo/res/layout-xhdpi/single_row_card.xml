@@ -707,7 +707,7 @@
           android:text="i"
           android:textColor="#ffffff"
           android:textSize="16sp"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
       </RelativeLayout>
 

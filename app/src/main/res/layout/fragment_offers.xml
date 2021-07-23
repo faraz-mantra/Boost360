@@ -111,7 +111,7 @@
       android:text="@string/offers_soon"
       android:textColor="@color/zeroth_grey_title"
       android:textSize="@dimen/dgts__title_text_size"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
       android:layout_width="wrap_content"
@@ -128,7 +128,7 @@
       android:layout_height="wrap_content"
       android:layout_gravity="bottom|right"
       android:layout_margin="16dp"
-      android:src="@drawable/ic_add_white_24dp"
+      android:src="@drawable/ic_add_white"
       android:scaleType="fitCenter"
       fab:fab_colorNormal="@color/primaryColor"
       fab:fab_colorPressed="#fddc80"
@@ -142,7 +142,7 @@
     android:paddingRight="16dp"
     android:paddingBottom="16dp"
     android:scaleType="fitCenter"
-    android:src="@drawable/ic_add_white_24dp"
+    android:src="@drawable/ic_add_white"
     fab:menu_animationDelayPerItem="40"
     fab:menu_backgroundColor="#cc404040"
     fab:menu_colorNormal="@color/primaryColor"

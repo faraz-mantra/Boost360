@@ -62,7 +62,6 @@
             android:layout_marginStart="3dp"
             android:text="is typing..."
             android:textColor="@color/white"
-            android:textStyle="italic"
             android:visibility="invisible" />
         </LinearLayout>
 
@@ -75,7 +74,7 @@
           android:alpha="0.5"
           android:fontFamily="sans-serif"
           android:text="@string/login"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           android:textSize="16sp"
           android:textStyle="normal"

@@ -23,8 +23,7 @@ const val BUSINESS_REPORT = "BUSINESS_REPORT"
 const val WEBSITE_REPORT = "WEBSITE_REPORT"
 const val MY_ENQUIRIES = "MY_ENQUIRIES"
 
-class FilterBottomSheet : BaseBottomSheetDialog<BottomSheetFilterDateBinding, BaseViewModel>(),
-  RecyclerItemClickListener {
+class FilterBottomSheet : BaseBottomSheetDialog<BottomSheetFilterDateBinding, BaseViewModel>(), RecyclerItemClickListener {
 
   var onClicked: (filterDateModel: FilterDateModel) -> Unit = { }
   var filterDateModel: FilterDateModel? = null

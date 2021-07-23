@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
-            android:text="AAGCP768M"
+            tools:text="AAGCP768M"
             android:textAllCaps="true"
             android:textColor="@color/greyish_brown"
             app:fontFamily="@font/regular"
@@ -184,13 +184,11 @@
         style="@style/ButtonStyle.Rounded"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_refresh_btn"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingVertical="@dimen/size_12"
         android:text="@string/refresh_status_camel_case"
         android:textAllCaps="false"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -217,7 +215,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_6"
         android:layout_marginTop="@dimen/size_20"
-        android:text="Refreshing Status..."
+        android:text="@string/refreshing_status"
         android:textColor="@color/greyish_brown"
         app:fontFamily="@font/regular"
         app:textType="HEADING_7" />

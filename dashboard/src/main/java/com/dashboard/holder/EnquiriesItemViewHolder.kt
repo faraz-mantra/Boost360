@@ -7,7 +7,7 @@ import com.dashboard.model.live.customerItem.CustomerActionItem
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 
-class CustomerPatientItemViewHolder(binding: ItemCustomerPatientItemBinding) :
+class EnquiriesItemViewHolder(binding: ItemCustomerPatientItemBinding) :
   AppBaseRecyclerViewHolder<ItemCustomerPatientItemBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {

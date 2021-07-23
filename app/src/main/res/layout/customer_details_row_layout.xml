@@ -20,7 +20,7 @@
     android:text="RETURNED"
     android:textColor="@color/white"
     android:textSize="14sp"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 
   <TableLayout
     android:layout_width="match_parent"
@@ -46,7 +46,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="12sp"
-        android:textStyle="bold"
+         android:fontFamily="@font/semi_bold"
 
         />
     </TableRow>
@@ -69,7 +69,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="12sp"
-        android:textStyle="bold"
+         android:fontFamily="@font/semi_bold"
 
         />
     </TableRow>
@@ -93,7 +93,7 @@
         android:lines="3"
         android:maxLines="4"
         android:textSize="12sp"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
     </TableRow>
 
     <TableRow
@@ -114,7 +114,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="12sp"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
     </TableRow>
 
   </TableLayout>

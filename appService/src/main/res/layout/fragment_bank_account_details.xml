@@ -199,7 +199,7 @@
           android:gravity="center"
           android:text="@string/submit_for_verification"
           android:textAlignment="gravity"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           app:fontFamily="@font/semi_bold" />
 
@@ -271,7 +271,7 @@
           android:gravity="center"
           android:text="@string/refresh_status"
           android:textAlignment="gravity"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           app:fontFamily="@font/semi_bold" />
       </LinearLayout>

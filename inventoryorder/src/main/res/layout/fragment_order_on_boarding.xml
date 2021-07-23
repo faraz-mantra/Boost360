@@ -214,7 +214,7 @@
         android:padding="@dimen/size_14"
         android:text="@string/get_started"
         android:textColor="@color/black_4a4a4a"
-        app:textAllCaps="true"
+        app:textAllCaps="false"
         app:textType="BODY_1" />
     </LinearLayout>
   </androidx.constraintlayout.widget.ConstraintLayout>
