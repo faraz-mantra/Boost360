@@ -303,7 +303,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                     if (item.primary_image != null) item.primary_image.url else null,
                                                     Gson().toJson(item.included_features),
                                                     item.target_business_usecase,
-                                                    Gson().toJson(item.exclusive_to_categories)
+                                                    Gson().toJson(item.exclusive_to_categories),item.desc
                                             ))
                                         }
                                         Completable.fromAction {
@@ -618,7 +618,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                     if (item.primary_image != null) item.primary_image.url else null,
                                                     Gson().toJson(item.included_features),
                                                     item.target_business_usecase,
-                                                    Gson().toJson(item.exclusive_to_categories)
+                                                    Gson().toJson(item.exclusive_to_categories),item.desc
                                             ))
                                         }
                                         Completable.fromAction {
