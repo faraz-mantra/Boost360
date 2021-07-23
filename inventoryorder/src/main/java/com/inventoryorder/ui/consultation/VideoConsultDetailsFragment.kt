@@ -205,7 +205,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     val b = (PaymentDetailsN.STATUS.from(
       order.PaymentDetails?.Status ?: ""
     ) == PaymentDetailsN.STATUS.PENDING)
-    if (b) binding?.tvStatus?.setTextColor(getColor(R.color.watermelon_light_10))
+//    if (b) binding?.tvStatus?.setTextColor(getColor(R.color.watermelon_light_10))
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
     order.BillingDetails?.let { bill ->
       val currency =

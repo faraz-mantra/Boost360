@@ -242,42 +242,37 @@
 
             <androidx.appcompat.widget.LinearLayoutCompat
               style="@style/match_wrap"
+              android:layout_marginStart="@dimen/size_2"
+              android:layout_marginTop="@dimen/size_14"
               android:orientation="horizontal"
-              android:paddingStart="@dimen/size_2"
-              android:paddingTop="@dimen/size_18"
-              android:paddingBottom="@dimen/size_20"
-              android:weightSum="2">
-
-              <com.framework.views.customViews.CustomTextView
-                android:id="@+id/tvCustomerContactNumber"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                android:drawableStart="@drawable/ic_call_phone"
-                android:drawableTint="@color/colorAccentLight"
-                android:drawablePadding="@dimen/size_4"
-                android:includeFontPadding="false"
-                android:textColor="@color/colorAccentLight"
-                app:fontFamily="@font/semi_bold"
-                app:textType="CAPTION"
-                tools:text="+91 9013268178" />
+              tools:ignore="RtlSymmetry">
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvCustomerEmail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.2"
-                android:drawableStart="@drawable/ic_inbox"
+                style="@style/wrap_wrap"
+                android:drawableStart="@drawable/ic_inbox_orange"
+                android:drawablePadding="@dimen/size_8"
                 android:drawableTint="@color/colorAccentLight"
-                android:drawablePadding="@dimen/size_4"
-                android:ellipsize="end"
                 android:includeFontPadding="false"
-                android:maxLines="1"
+                android:textAllCaps="false"
                 android:textColor="@color/colorAccentLight"
-                app:fontFamily="@font/semi_bold"
-                app:textType="CAPTION"
-                tools:text="rahul@cantech.co" />
+                app:textAllCaps="false"
+                app:textType="BODY_1"
+                tools:text="@string/email" />
 
+              <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tvCustomerContactNumber"
+                style="@style/wrap_wrap"
+                android:layout_marginStart="@dimen/size_30"
+                android:drawableStart="@drawable/ic_call_phone_orange"
+                android:drawablePadding="@dimen/size_8"
+                android:drawableTint="@color/colorAccentLight"
+                android:includeFontPadding="false"
+                android:textAllCaps="false"
+                android:textColor="@color/colorAccentLight"
+                app:textAllCaps="false"
+                app:textType="BODY_1"
+                tools:text="@string/call_buyer" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
