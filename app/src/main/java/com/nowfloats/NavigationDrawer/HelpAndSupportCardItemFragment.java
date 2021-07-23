@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -238,12 +239,14 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                 }
                 break;
             case R.id.btn_my_tickets:
-                WebEngageController.trackEvent(SUPPORT_VIEW_TICKETS, VIEW_MY_SUPPORT_TICKETS, NULL);
-                RequestListActivity.builder().show(mContext);
+                Toast.makeText(mContext, "Coming soon...", Toast.LENGTH_SHORT).show();
+//                WebEngageController.trackEvent(SUPPORT_VIEW_TICKETS, VIEW_MY_SUPPORT_TICKETS, NULL);
+//                RequestListActivity.builder().show(mContext);
                 break;
             case R.id.btn_faqs:
-                WebEngageController.trackEvent(SUPPORT_LEARN, LEARN_HOW_TO_USE, NULL);
-                HelpCenterActivity.builder().show(mContext);
+                Toast.makeText(mContext, "Coming soon...", Toast.LENGTH_SHORT).show();
+//                WebEngageController.trackEvent(SUPPORT_LEARN, LEARN_HOW_TO_USE, NULL);
+//                HelpCenterActivity.builder().show(mContext);
                 break;
         }
     }
