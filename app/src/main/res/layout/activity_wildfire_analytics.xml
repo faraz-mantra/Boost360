@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:text="@string/_16_789"
         android:textSize="17sp"
-        android:textStyle="bold"
+         android:fontFamily="@font/semi_bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView4"
         app:layout_constraintStart_toStartOf="@+id/imageView4"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -114,7 +114,7 @@
         android:layout_height="wrap_content"
         android:text="@string/inr_0_16"
         android:textSize="17sp"
-        android:textStyle="bold"
+         android:fontFamily="@font/semi_bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView6"
         app:layout_constraintStart_toStartOf="@+id/imageView6"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />

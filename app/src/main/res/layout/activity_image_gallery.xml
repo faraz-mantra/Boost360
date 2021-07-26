@@ -48,6 +48,18 @@
 
       </androidx.core.widget.NestedScrollView>
 
+      <com.framework.views.fabButton.FloatingActionButton
+        android:id="@+id/btn_add"
+        style="@style/wrap_wrap"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/colorAccentLight"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_above="@+id/footer"
+        app:fabIcon="@drawable/ic_add_white"
+        app:fabSize="normal" />
+
       <LinearLayout
         android:id="@+id/footer"
         android:layout_width="match_parent"
@@ -69,7 +81,7 @@
           android:layout_marginTop="10dp"
           android:text="@string/image_gallery_instructions_2"
           android:textSize="12sp"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
       </LinearLayout>
 

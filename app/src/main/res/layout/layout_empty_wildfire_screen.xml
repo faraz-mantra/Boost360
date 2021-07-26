@@ -27,7 +27,7 @@
       android:text="@string/inorganic_add_on_unavailable"
       android:textColor="@color/zeroth_grey_title"
       android:textSize="18sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
       android:id="@+id/message_text2"

@@ -88,18 +88,6 @@ open class AppFragmentContainerActivity :
     }
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return when (type) {
-      FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS,
-      FragmentType.REGISTRATION_BUSINESS_WEBSITE,
-      FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE,
-      FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
-      FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
-      FragmentType.REGISTRATION_BUSINESS_WHATSAPP,
-      FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> ConversionUtils.dp2px(16f).toFloat()
-      else -> return super.getToolbarTitleSize()
-    }
-  }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {

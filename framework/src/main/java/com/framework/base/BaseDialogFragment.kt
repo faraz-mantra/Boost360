@@ -16,8 +16,7 @@ import com.framework.models.BaseViewModel
 import com.framework.views.blur.BlurView
 import com.framework.views.blur.RenderScriptBlur
 
-abstract class BaseDialogFragment<T : ViewDataBinding, ViewModel : BaseViewModel?> :
-  DialogFragment(), View.OnClickListener {
+abstract class BaseDialogFragment<T : ViewDataBinding, ViewModel : BaseViewModel?> : DialogFragment(), View.OnClickListener {
 
   protected var binding: T? = null
   protected var viewModel: ViewModel? = null

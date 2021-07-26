@@ -57,8 +57,7 @@ import io.reactivex.Completable
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MyDigitalChannelFragment :
-  AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
+class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
 
   private var connectedChannels: ArrayList<String> = arrayListOf()
 
@@ -306,14 +305,10 @@ class MyDigitalChannelFragment :
 
   private fun setViewChannels(channelsAccessToken: ChannelsType?) {
     requestFloatsModel = NavigatorManager.getRequest()
-    listDisconnect =
-      requestFloatsModel?.categoryDataModel?.channels?.filter { it.isSelected == false } as? ArrayList<ChannelModel>
-    listConnect =
-      requestFloatsModel?.categoryDataModel?.channels?.filter { it.isSelected == true } as? ArrayList<ChannelModel>
-    binding?.connectedTxt?.text =
-      "Connected (${listConnect?.size}/${requestFloatsModel?.categoryDataModel?.channels?.size})"
-    binding?.notConnectedTxt?.text =
-      "Not Connected (${listDisconnect?.size}/${requestFloatsModel?.categoryDataModel?.channels?.size})"
+    listDisconnect = requestFloatsModel?.categoryDataModel?.channels?.filter { it.isSelected == false } as? ArrayList<ChannelModel>
+    listConnect = requestFloatsModel?.categoryDataModel?.channels?.filter { it.isSelected == true } as? ArrayList<ChannelModel>
+    binding?.connectedTxt?.text = "Connected (${listConnect?.size}/${requestFloatsModel?.categoryDataModel?.channels?.size})"
+    binding?.notConnectedTxt?.text = "Not connected (${listDisconnect?.size}/${requestFloatsModel?.categoryDataModel?.channels?.size})"
 
     binding?.disconnectedBg?.post {
       var animObserver: Completable? = null
@@ -433,12 +428,11 @@ class MyDigitalChannelFragment :
         if (channel.isFacebookShop()) {
           val s = SpannableString(resources.getString(R.string.fp_shop_awaited_desc))
           Linkify.addLinks(s, Linkify.ALL)
-          AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.AlertDialogCustom))
+          AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
             .setTitle(getString(R.string.fp_shop_awaited_title))
             .setMessage(s)
             .setPositiveButton(resources.getString(R.string.okay), null).show()
-            .findViewById<TextView>(android.R.id.message).movementMethod =
-            LinkMovementMethod.getInstance()
+            .findViewById<TextView>(android.R.id.message).movementMethod = LinkMovementMethod.getInstance()
           return
         }
         listDisconnect?.map {
@@ -450,12 +444,8 @@ class MyDigitalChannelFragment :
         adapterDisconnect?.notifyItemChanged(position)
         val count = listDisconnect?.filter { it.isSelected == true }?.size ?: 0
         if (count > 0) {
-          if (count == 1)
-            binding?.syncBtn?.text =
-              "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channel)}"
-          else
-            binding?.syncBtn?.text =
-              "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channels)}"
+          if (count == 1) binding?.syncBtn?.text = "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channel)}"
+          else binding?.syncBtn?.text = "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channels)}"
           binding?.syncBtn?.visible()
         } else binding?.syncBtn?.gone()
         if (channelTypeClick.isNotEmpty()) {
@@ -493,11 +483,7 @@ class MyDigitalChannelFragment :
 
   private fun syncChannels() {
     if (selectedChannels.isNullOrEmpty().not()) {
-      WebEngageController.trackEvent(
-        MY_DIGITAL_CHANNEL_SYNC_BUTTON_CLICK,
-        MY_DIGITAL_CHANNEL,
-        NO_EVENT_VALUE
-      )
+      WebEngageController.trackEvent(MY_DIGITAL_CHANNEL_SYNC_BUTTON_CLICK, MY_DIGITAL_CHANNEL, NO_EVENT_VALUE)
       val bundle = Bundle()
       var totalPages = if (requestFloatsModel?.isUpdate == true) 0 else 2
       selectedChannels.let { channels ->
@@ -508,12 +494,7 @@ class MyDigitalChannelFragment :
         if (channels.haveWhatsAppChannels()) totalPages++
       }
       requestFloatsModel?.channels = ArrayList(selectedChannels)
-      NavigatorManager.pushToStackAndSaveRequest(
-        ScreenModel(
-          ScreenModel.Screen.CHANNEL_SELECT,
-          getToolbarTitle()
-        ), requestFloatsModel
-      )
+      NavigatorManager.pushToStackAndSaveRequest(ScreenModel(ScreenModel.Screen.CHANNEL_SELECT, getToolbarTitle()), requestFloatsModel)
       bundle.addInt(IntentConstant.TOTAL_PAGES, totalPages).addInt(IntentConstant.CURRENT_PAGES, 1)
       val channels = requestFloatsModel?.channels ?: return
       when {
@@ -584,8 +565,7 @@ class MyDigitalChannelFragment :
   private fun disConnectChannel(channel: ChannelModel) {
     showProgress(context?.getString(R.string.disconnecting_your_channel), false)
     if (channel.isWhatsAppChannel()) {
-      val request =
-        UpdateChannelActionDataRequest(ChannelActionData(), requestFloatsModel?.getWebSiteId())
+      val request = UpdateChannelActionDataRequest(ChannelActionData(), requestFloatsModel?.getWebSiteId())
       viewModel?.postUpdateWhatsappRequest(request = request, auth = WA_KEY)
         ?.observeOnce(viewLifecycleOwner, { responseManage(it) })
     } else {

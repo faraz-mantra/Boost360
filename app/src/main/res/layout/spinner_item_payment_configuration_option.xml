@@ -23,7 +23,7 @@
       android:text="@string/assured_purchase"
       android:textColor="@color/primaryTextColor"
       android:textSize="16sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
       android:id="@+id/label_description"

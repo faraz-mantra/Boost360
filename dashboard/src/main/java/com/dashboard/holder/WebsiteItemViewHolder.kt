@@ -10,8 +10,7 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.invisible
 import com.framework.extensions.visible
 
-class WebsiteItemViewHolder(binding: ItemWebsiteItemBinding) :
-  AppBaseRecyclerViewHolder<ItemWebsiteItemBinding>(binding) {
+class WebsiteItemViewHolder(binding: ItemWebsiteItemBinding) : AppBaseRecyclerViewHolder<ItemWebsiteItemBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)

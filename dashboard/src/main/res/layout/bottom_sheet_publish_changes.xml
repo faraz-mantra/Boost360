@@ -34,7 +34,7 @@
         android:layout_gravity="start"
         android:layout_marginHorizontal="@dimen/size_20"
         android:layout_marginTop="@dimen/size_4"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/changes_not_published"
         android:textAllCaps="false"
         android:textColor="@color/black_4a4a4a"
@@ -48,7 +48,7 @@
         android:layout_marginHorizontal="@dimen/size_20"
         android:layout_marginTop="@dimen/size_8"
         android:layout_marginBottom="@dimen/size_16"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:gravity="start"
         android:includeFontPadding="false"
         android:text="@string/you_have_unsaved_changes_on_this"
@@ -74,6 +74,7 @@
         android:layout_marginBottom="@dimen/size_16"
         android:enabled="true"
         android:gravity="center"
+        android:textAllCaps="false"
         android:text="@string/discard_exit" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 

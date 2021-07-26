@@ -63,8 +63,9 @@
             android:background="@drawable/bg_rounded_accent_6"
             android:gravity="center"
             android:text="@string/activate_now"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/white"
+            app:fontFamily="@font/semi_bold"
             app:textType="BODY_1" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 

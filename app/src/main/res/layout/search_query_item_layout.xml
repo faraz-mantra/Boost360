@@ -14,7 +14,7 @@
     android:ellipsize="end"
     android:gravity="start"
     android:singleLine="true"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 
   <TextView
     android:id="@+id/tv_value"
@@ -48,7 +48,7 @@
       android:layout_width="50dp"
       android:gravity="center"
       android:layout_gravity="center_vertical"
-      android:textStyle="bold"
+       android:fontFamily="@font/semi_bold"
       android:layout_height="wrap_content" />
    -->
 

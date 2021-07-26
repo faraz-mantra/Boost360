@@ -129,7 +129,7 @@
           android:paddingTop="@dimen/size_2"
           android:paddingBottom="@dimen/size_2"
           android:text="@string/improve"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/colorAccent"
           app:fontFamily="@font/semi_bold"
           app:textType="CAPTION" />

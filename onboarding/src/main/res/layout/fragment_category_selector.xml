@@ -47,7 +47,7 @@
       android:id="@+id/next"
       style="@style/FooterButtonStyle"
       android:text="@string/next"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:visibility="gone"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"

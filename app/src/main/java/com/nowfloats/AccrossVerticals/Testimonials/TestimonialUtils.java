@@ -46,12 +46,12 @@ public class TestimonialUtils {
     public static String getReviewSecondTitle(String experienceCode) {
         switch (experienceCode) {
             case "HOT":
-                return "Review City";
+                return "Review city";
             case "MFG":
             case "SPA":
             case "SAL":
             default:
-                return "Review Title";
+                return "Review title";
         }
     }
 
@@ -59,20 +59,20 @@ public class TestimonialUtils {
         switch (experienceCode) {
             case "DOC":
             case "HOS":
-                return "Your Review";
+                return "Your review";
             case "SAL":
-                return "Review Story";
+                return "Review story";
             case "HOT":
-                return "Review Testimonial";
+                return "Review testimonial";
             case "CAF":
-                return "Review Text";
+                return "Review text";
             case "MFG":
             case "EDU":
             case "SPA":
             case "SVC":
             case "RTL":
             default:
-                return "Review Description";
+                return "Review description";
         }
     }
 

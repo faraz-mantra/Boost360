@@ -65,5 +65,5 @@
     <item name="android:background">@color/primaryColor</item>
   </style>
 
-  <string name="save">SAVE</string>
+  <string name="save">Save</string>
 </resources>

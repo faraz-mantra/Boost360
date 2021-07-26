@@ -68,13 +68,15 @@
             android:layout_marginTop="@dimen/size_6"
             android:layout_marginBottom="@dimen/size_10"
             android:completionThreshold="0"
+            android:drawableTint="@color/colorAccentLight"
             android:gravity="center_vertical"
             android:hint="@string/select_service"
             android:inputType="textNoSuggestions"
             android:singleLine="true"
             app:drawableEndCompat="@drawable/ic_arrow_down_orange"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_service_name" />
+            app:layout_constraintTop_toBottomOf="@id/text_service_name"
+            tools:targetApi="m" />
 
           <androidx.constraintlayout.widget.Group
             android:id="@+id/group_timing"
@@ -208,14 +210,16 @@
             android:id="@+id/layout_customer"
             style="@style/match_wrap"
             layout="@layout/layout_customer_details"
-            android:layout_marginTop="@dimen/size_15" />
+            android:layout_marginTop="@dimen/size_15"
+            tools:ignore="IncludeLayoutParam" />
 
           <include
             android:id="@+id/layout_billing_addr"
             style="@style/match_wrap"
             layout="@layout/layout_address"
             android:layout_marginTop="@dimen/size_15"
-            android:layout_marginBottom="@dimen/size_10" />
+            android:layout_marginBottom="@dimen/size_10"
+            tools:ignore="IncludeLayoutParam" />
         </androidx.appcompat.widget.LinearLayoutCompat>
       </androidx.cardview.widget.CardView>
 
@@ -239,7 +243,7 @@
           android:shadowRadius="0"
           android:stateListAnimator="@null"
           android:text="@string/review_details"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           app:fontFamily="@font/bold"
           app:textType="CAPTION"
