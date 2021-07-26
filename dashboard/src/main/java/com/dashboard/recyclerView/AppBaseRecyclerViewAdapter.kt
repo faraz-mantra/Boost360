@@ -46,6 +46,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       WEBSITE_FONT_VIEW -> WebSiteFontViewHolder(binding as RecyclerItemSelectFontBinding)
       RECYCLER_USEFUL_LINKS -> UsefulLinksHolder(binding as RecyclerItemUsefulLinksBinding)
       RECYCLER_ABOUT_APP -> AboutViewHolder(binding as RecyclerItemAboutAppBinding)
+      BOOST_WEBSITE_ITEM_FEATURE_VIEW -> WebsiteItemFeatureViewHolder(binding  as WebsiteItemFeatureBinding)
     }
   }
 

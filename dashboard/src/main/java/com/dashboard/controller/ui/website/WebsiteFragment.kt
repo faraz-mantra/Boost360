@@ -314,7 +314,8 @@ class FragmentCategory: AppBaseFragment<FragmentWebsitePagerBinding,DashboardVie
 //                if (data.actionItem!!.size % 2 != 0) R.color.white_smoke_1 else R.color.white
 //              )
 //            )
-            setAdapterCustomer(if (arguments?.getInt(IntentConstant.POSITION.name) == 0) data?.actionItem!!.filter { it.isFeature == false } else data?.actionItem!!.filter { it.isFeature == true })
+            val position = arguments?.getInt(IntentConstant.POSITION.name)
+                setAdapterCustomer(if (position == 0) data?.actionItem!!.filter { it.isFeature == false } else data?.actionItem!!.filter { it.isFeature == true })
           }
         }
 

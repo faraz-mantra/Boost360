@@ -23,8 +23,12 @@ data class WebsiteActionItem(
   var type: String? = "",
 ) : Serializable, AppBaseRecyclerViewItem {
 
+
+
   var recyclerViewItemType: Int = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout()
   override fun getViewType(): Int {
+    if (this.isFeature==true)
+      return RecyclerViewItemType.BOOST_WEBSITE_ITEM_FEATURE_VIEW.getLayout()
     return recyclerViewItemType
   }
 

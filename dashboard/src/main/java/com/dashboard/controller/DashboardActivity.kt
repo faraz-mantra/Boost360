@@ -1,6 +1,8 @@
 package com.dashboard.controller
 
 import android.content.Intent
+import android.graphics.Typeface
+import android.graphics.fonts.FontFamily
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -304,6 +306,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       4 -> {
         mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
         toolbarPropertySet(pos)
+        getToolbar()?.getTitleTextView()?.apply { textSize  = 24f; typeface = Typeface.DEFAULT_BOLD}
       }
     }
   }

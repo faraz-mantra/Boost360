@@ -25,6 +25,7 @@ enum class RecyclerViewItemType {
   WEBSITE_FONT_VIEW,
   RECYCLER_USEFUL_LINKS,
   RECYCLER_ABOUT_APP,
+  BOOST_WEBSITE_ITEM_FEATURE_VIEW,
   FILTER_DATE_VIEW;
 
   @LayoutRes
@@ -41,6 +42,7 @@ enum class RecyclerViewItemType {
       BOOST_PREMIUM_ITEM_VIEW -> R.layout.item_boost_premium
       BOOST_ENQUIRIES_ITEM_VIEW -> R.layout.item_customer_patient_item
       BOOST_WEBSITE_ITEM_VIEW -> R.layout.item_website_item
+      BOOST_WEBSITE_ITEM_FEATURE_VIEW -> R.layout.website_item_feature
       ROI_SUMMARY_ITEM_VIEW -> R.layout.item_roi_summary
       GROWTH_STATE_ITEM_VIEW -> R.layout.item_growth_state
       BUSINESS_CONTENT_SETUP_ITEM_VIEW -> R.layout.item_business_content_setup
