@@ -36,7 +36,7 @@
         android:text="@string/for_variant_1"
         android:textColor="@android:color/white"
         android:textSize="12sp"
-        android:textStyle="bold"
+         android:fontFamily="@font/semi_bold"
         android:visibility="gone" />
 
       <TextView
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:text="Assured Purchase"
                 android:textSize="20sp"
-                android:textStyle="bold"
+                 android:fontFamily="@font/semi_bold"
                 android:textColor="@color/primaryTextColor" />
 
             <TextView
@@ -454,7 +454,8 @@
             android:layout_alignParentEnd="true"
             android:background="@drawable/rounded_button_enabled"
             android:minWidth="130dp"
-            android:text="SAVE INFO"
+            android:text="Save info"
+            android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 

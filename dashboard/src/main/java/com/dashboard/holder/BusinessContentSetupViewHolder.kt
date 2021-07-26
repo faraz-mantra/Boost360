@@ -12,8 +12,7 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
-class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) :
-  AppBaseRecyclerViewHolder<ItemBusinessContentSetupBinding>(binding), RecyclerItemClickListener {
+class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) : AppBaseRecyclerViewHolder<ItemBusinessContentSetupBinding>(binding), RecyclerItemClickListener {
 
   private var adapterSiteMeter: AppBaseRecyclerViewAdapter<DrScoreItem>? = null
   var list: ArrayList<DrScoreItem>? = null

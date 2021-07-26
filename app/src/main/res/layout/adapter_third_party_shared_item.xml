@@ -21,7 +21,7 @@
     android:padding="8dp"
     android:text="@string/helium_ballon"
     android:textSize="14sp"
-    android:textStyle="italic" />
+    android:fontFamily="@font/italic" />
 
   <ImageView
     android:id="@+id/img_cancel"

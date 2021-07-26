@@ -29,8 +29,7 @@ import com.framework.smsVerification.SMSReceiver
 import com.framework.smsVerification.SmsManager
 import com.framework.webengageconstant.*
 
-class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>(),
-  SMSReceiver.OTPReceiveListener {
+class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>(), SMSReceiver.OTPReceiveListener {
 
   private val TAG = OtpVerificationFragment::class.java.canonicalName;
   private var isCounterRunning = false

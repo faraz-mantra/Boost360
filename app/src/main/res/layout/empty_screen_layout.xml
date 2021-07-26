@@ -18,7 +18,7 @@
     android:layout_height="wrap_content"
     android:text="@string/updates_not_found"
     android:textSize="18sp"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 
   <TextView
     android:id="@+id/description_text"

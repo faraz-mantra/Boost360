@@ -25,7 +25,7 @@
       android:maxLines="1"
       android:text="@string/_07_september_2017"
       android:textSize="12sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
   </TableRow>
 
   <TableRow
@@ -48,7 +48,7 @@
       android:maxLines="1"
       android:text="@string/_12_september_2017"
       android:textSize="12sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
   </TableRow>
 
   <TableRow
@@ -72,7 +72,7 @@
       android:maxLines="1"
       android:text="@string/inr_600"
       android:textSize="12sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
   </TableRow>
 
   <TableRow
@@ -96,7 +96,7 @@
       android:maxLines="1"
       android:text="@string/inr_125"
       android:textSize="12sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
   </TableRow>
 
   <TableRow
@@ -120,7 +120,7 @@
       android:maxLines="1"
       android:text="@string/inr_80"
       android:textSize="12sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
   </TableRow>
 
   <TableRow
@@ -143,7 +143,7 @@
       android:maxLines="1"
       android:text="@string/inr_805"
       android:textSize="12sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
   </TableRow>
 
 

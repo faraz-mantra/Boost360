@@ -3,20 +3,28 @@
 
   <style name="AppBaseTheme" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorAccent</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:windowBackground">@color/white</item>
     <item name="android:screenOrientation">portrait</item>
-    <item name="android:windowDisablePreview">true</item>
-    <item name="actionMenuTextColor">@color/cerulean_blue</item>
-    <item name="android:actionMenuTextColor">@color/cerulean_blue</item>
     <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
-    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
-    <item name="toolbarStyle">@style/ToolbarStyle</item>
-    <item name="android:toolbarStyle" tools:ignore="NewApi">@style/ToolbarStyle</item>
+    <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
 
+  <style name="ZendeskSdkTheme.Light" parent="Theme.MaterialComponents.Light">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccentLight</item>
+    <item name="colorSecondary">@color/colorAccentLight</item>
+    <item name="colorOnSecondary">@android:color/white</item>
+    <item name="textColor">@color/white</item>
+    <item name="textAllCaps">false</item>
+    <item name="buttonStyle">@style/MyButtonZendesk</item>
+    <item name="colorControlActivated">@color/white</item>
+    <item name="colorControlHighlight">@color/white</item>
+    <item name="colorControlNormal">@color/white</item>
+  </style>
 
   <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
     <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
@@ -59,10 +67,6 @@
     <item name="background">@drawable/bg_rounded_white</item>
   </style>
 
-  <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
-    <item name="titleTextAppearance">@style/ToolbarStyle.TextAppearance</item>
-    <item name="android:background">@color/transparent</item>
-  </style>
 
   <style name="ToolbarStyle.TextAppearance" parent="TextAppearance.MaterialComponents.Body1">
     <item name="font">@font/bold</item>
@@ -107,12 +111,15 @@
   <style name="CustomAlertDialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
     <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
     <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+    <item name="android:textAllCaps">false</item>
   </style>
   <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
     <item name="android:textColor">@color/colorAccentNegative</item>
+    <item name="android:textAllCaps">false</item>
   </style>
   <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
     <item name="android:textColor">@color/colorAccentPositive</item>
+    <item name="android:textAllCaps">false</item>
   </style>
 
   <style name="MaterialCustomDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
@@ -122,9 +129,28 @@
 
   <style name="NegativeButtonStyleMaterial" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
     <item name="android:textColor">@color/colorAccentNegative</item>
+    <item name="android:textAllCaps">false</item>
   </style>
 
   <style name="PositiveButtonStyleMaterial" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
     <item name="android:textColor">@color/colorAccentPositive</item>
+    <item name="android:textAllCaps">false</item>
+  </style>
+
+  <style name="DialogTheme" parent="CustomAlertDialogTheme">
+    <item name="android:colorAccent">@color/colorAccentLight</item>
+    <item name="android:colorControlNormal">@color/colorAccentLight</item>
+    <item name="android:colorControlActivated">@color/colorAccentLight</item>
+    <item name="android:textAllCaps">false</item>
+  </style>
+
+  <style name="MyButtonBoost" parent="Widget.AppCompat.Button">
+    <item name="android:textAllCaps">false</item>
+  </style>
+
+  <style name="MyButtonZendesk" parent="Widget.AppCompat.Button">
+    <item name="android:textAllCaps">false</item>
+    <item name="android:colorAccent">@color/colorAccentLight</item>
+    <item name="android:backgroundTint">@color/colorAccentLight</item>
   </style>
 </resources>

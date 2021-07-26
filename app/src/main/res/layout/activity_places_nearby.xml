@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
@@ -16,6 +16,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="gone"
+    android:clipToPadding="false"
+    android:paddingBottom="@dimen/_50sdp"
+    android:layout_below="@+id/app_bar"
     tools:listitem="@layout/item_place_nearby" />
 
   <LinearLayout
@@ -23,6 +26,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:layout_below="@+id/app_bar"
     android:visibility="visible">
 
     <RelativeLayout
@@ -60,7 +64,7 @@
           android:id="@+id/feature_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:text="@string/places_to_look_around"
           android:textColor="@color/common_text_color"
           android:textSize="@dimen/_16sdp" />
@@ -69,7 +73,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_20sdp"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:text="@string/looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_with_this_feature_highlight_what_s_near_your_hotel"
           android:textSize="@dimen/_11sdp" />
@@ -82,8 +86,9 @@
           android:layout_marginTop="@dimen/_20sdp"
           android:layout_marginEnd="@dimen/_10sdp"
           android:background="@drawable/orange_button_click_effect"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:gravity="center"
+          android:textAllCaps="false"
           android:paddingTop="@dimen/_10sdp"
           android:paddingBottom="@dimen/_10sdp"
           android:text="@string/view_in_add_on_store"
@@ -96,4 +101,16 @@
 
   </LinearLayout>
 
-</LinearLayout>
+  <com.framework.views.fabButton.FloatingActionButton
+    android:id="@+id/btn_add"
+    style="@style/wrap_wrap"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentEnd="true"
+    android:layout_margin="16dp"
+    android:clickable="true"
+    android:backgroundTint="@color/colorAccentLight"
+    android:focusable="true"
+    app:fabIcon="@drawable/ic_add_white"
+    app:fabSize="normal" />
+
+</RelativeLayout>

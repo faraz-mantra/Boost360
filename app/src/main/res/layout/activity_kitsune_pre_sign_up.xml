@@ -53,10 +53,10 @@
       android:layout_gravity="center_vertical"
       android:gravity="center_horizontal"
       android:text="@string/login"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:textColor="@color/primaryColor"
       android:textSize="25sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
   </LinearLayout>
 

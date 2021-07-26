@@ -3,6 +3,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:background="#ffffff"
   tools:context="com.nowfloats.Analytics_Screen.SubscribersActivity">
 
@@ -14,7 +15,9 @@
     android:id="@+id/lv_subscribers"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@+id/app_bar"></androidx.recyclerview.widget.RecyclerView>
+    android:clipToPadding="false"
+    android:paddingBottom="@dimen/_50sdp"
+    android:layout_below="@+id/app_bar"/>
 
   <ProgressBar
     android:id="@+id/pb_subscriber"
@@ -47,7 +50,7 @@
       android:layout_marginBottom="3dp"
       android:text="@string/uh_oh_you_have_no_subscribers"
       android:textSize="20sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
       android:layout_width="wrap_content"
@@ -57,4 +60,15 @@
       android:textSize="15sp" />
   </LinearLayout>
 
+  <com.framework.views.fabButton.FloatingActionButton
+    android:id="@+id/btn_add"
+    style="@style/wrap_wrap"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentEnd="true"
+    android:layout_margin="16dp"
+    android:clickable="true"
+    android:backgroundTint="@color/colorAccentLight"
+    android:focusable="true"
+    app:fabIcon="@drawable/ic_add_white"
+    app:fabSize="normal" />
 </RelativeLayout>

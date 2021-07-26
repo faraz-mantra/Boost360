@@ -142,7 +142,7 @@
     <com.google.android.material.textfield.TextInputLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:hint="GSTN (Optional)">
+      android:hint="GSTN (optional)">
 
       <EditText
         android:id="@+id/et_gstn"

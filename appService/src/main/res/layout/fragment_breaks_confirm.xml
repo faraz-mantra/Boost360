@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:text="@string/break_111"
             android:textColor="@color/black_4a4a4a"
             android:textSize="@dimen/size_18"
@@ -103,7 +103,7 @@
             android:layout_alignStart="@id/ctv_from_date"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="@dimen/size_4"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:text="@string/from"
 
             android:textColor="@color/gray_979797" />
@@ -115,7 +115,7 @@
             android:layout_below="@id/ctv_from"
             android:layout_marginStart="@dimen/size_16"
             android:layout_toEndOf="@id/civ_calendar"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:textColor="@color/black_4a4a4a"
             android:textSize="@dimen/size_16"
             tools:text="22 Jul 2020 . 10:00 AM" />
@@ -138,7 +138,7 @@
             android:layout_alignStart="@id/ctv_from_date"
             android:layout_marginTop="@dimen/size_8"
             android:layout_marginBottom="@dimen/size_4"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:text="@string/till"
             android:textColor="@color/gray_979797" />
 
@@ -156,7 +156,7 @@
             android:layout_below="@id/ctv_till"
             android:layout_marginStart="@dimen/size_16"
             android:layout_toEndOf="@id/civ_calendar"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:textColor="@color/black_4a4a4a"
             android:textSize="@dimen/size_16"
             tools:text="22 Jul 2020 . 10:00 AM" />
@@ -169,7 +169,7 @@
             android:layout_alignStart="@id/ctv_till_date"
             android:layout_marginTop="@dimen/size_8"
             android:layout_marginBottom="@dimen/size_4"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:text="@string/duration"
             android:textColor="@color/gray_979797" />
 
@@ -188,7 +188,7 @@
             android:layout_below="@id/ctv_duration"
             android:layout_marginStart="@dimen/size_16"
             android:layout_toEndOf="@id/civ_calendar"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:textColor="@color/gray_66666"
             android:textSize="@dimen/size_16"
             tools:text="6 Days 8 hrs" />
@@ -206,7 +206,7 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_16"
           android:layout_marginTop="@dimen/size_16"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:text="@string/additional_break_info"
           android:textColor="@color/gray_979797"
           android:textSize="@dimen/size_12" />
@@ -216,7 +216,7 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_16"
           android:layout_marginBottom="@dimen/size_16"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:text="@string/friend_s_wedding"
           android:textColor="@color/black_4a4a4a"
           android:textSize="@dimen/size_16" />
@@ -229,7 +229,7 @@
       android:layout_height="wrap_content"
       android:layout_marginHorizontal="@dimen/size_16"
       android:background="@drawable/button_rounded_corner_blue"
-      android:fontFamily="@font/open_sans"
+      android:fontFamily="@font/regular"
       android:gravity="center_horizontal"
       android:paddingVertical="@dimen/size_12"
       android:text="@string/add_another_break"
@@ -239,7 +239,7 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/customCardView"
       app:layout_constraintVertical_bias="0.206"
-      app:textAllCaps="true" />
+      app:textAllCaps="false" />
 
     <FrameLayout
       android:id="@+id/frameLayout"
@@ -260,10 +260,10 @@
         android:layout_gravity="center"
         android:drawableEnd="@drawable/ic_arrow_right_white"
         android:drawablePadding="@dimen/size_16"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:gravity="center"
         android:text="@string/save"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textFontWeight="600"
         app:textType="BODY_1" />

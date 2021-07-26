@@ -261,7 +261,7 @@
               app:layout_constraintLeft_toLeftOf="parent"
               app:layout_constraintRight_toRightOf="parent"
               app:layout_constraintTop_toTopOf="parent"
-              app:textAllCaps="true"
+              app:textAllCaps="false"
               app:textType="BODY_1" />
 
 
@@ -387,7 +387,7 @@
               app:layout_constraintBottom_toBottomOf="@id/edt_service_tag"
               app:layout_constraintRight_toRightOf="parent"
               app:layout_constraintTop_toTopOf="@id/edt_service_tag"
-              app:textAllCaps="true"
+              app:textAllCaps="false"
               app:textType="BODY_1" />
 
           </androidx.constraintlayout.widget.ConstraintLayout>
@@ -501,7 +501,7 @@
             app:layout_constraintBottom_toBottomOf="@id/edt_service_tag"
             app:layout_constraintRight_toRightOf="@id/edt_service_tag"
             app:layout_constraintTop_toTopOf="@id/edt_service_tag"
-            app:textAllCaps="true"
+            app:textAllCaps="false"
             app:textType="BODY_1" />
 
           <com.framework.views.customViews.CustomTextView
@@ -867,7 +867,7 @@
               android:padding="@dimen/size_12"
               android:stateListAnimator="@null"
               android:text="@string/confirm"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/white"
               app:textType="HEADING_6" />
           </androidx.appcompat.widget.LinearLayoutCompat>

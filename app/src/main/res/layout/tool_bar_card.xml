@@ -7,14 +7,14 @@
   android:background="@color/primary_color"
   app:theme="@style/CustomToolbarTheme">
 
-  <TextView
+  <com.framework.views.customViews.CustomTextView
     android:id="@+id/titleProduct"
-    fontPath="Roboto-Medium.ttf"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="10dp"
     android:textColor="@color/white"
-    android:textSize="17sp"
+    android:fontFamily="@font/semi_bold"
+    app:textType="HEADING_6"
     tools:ignore="MissingPrefix" />
 
   <LinearLayout

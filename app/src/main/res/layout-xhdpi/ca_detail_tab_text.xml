@@ -9,11 +9,10 @@
     android:id="@+id/tab_textview"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:fontFamily="sans-serif"
+    android:fontFamily="@font/semi_bold"
     android:text="@string/alerts_text"
     android:textColor="@color/lt_black"
     android:textSize="18sp"
-    android:textStyle="bold"
     tools:ignore="MissingPrefix" />
 </LinearLayout>
 

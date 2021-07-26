@@ -32,7 +32,7 @@
       android:text="@string/title"
       android:textColor="@color/white"
       android:textSize="14sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
   </androidx.appcompat.widget.Toolbar>
 
   <FrameLayout

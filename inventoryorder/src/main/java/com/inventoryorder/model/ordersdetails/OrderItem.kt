@@ -65,8 +65,8 @@ data class OrderItem(
 
   fun deliveryType(): String? {
     return when (Mode?.toUpperCase(Locale.ROOT)) {
-      OrderSummaryRequest.OrderMode.DELIVERY.name -> "Home Delivery"
-      OrderSummaryRequest.OrderMode.PICKUP.name -> "Self Delivery"
+      OrderSummaryRequest.OrderMode.DELIVERY.name -> "Home delivery"
+      OrderSummaryRequest.OrderMode.PICKUP.name -> "Self delivery"
       else -> Mode?.capitalizeUtil()
     }
   }

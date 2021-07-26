@@ -642,8 +642,8 @@
   <string name="enter_the_reason">diğer nedeni girin</string>
   <string name="submit">GÖNDER</string>
   <string name="no_alerts">Hiçbir uyarı!</string>
-  <string name="overall_visits">Genel Ziyaretler</string>
-  <string name="unique_visitors">Genel Ziyaretler</string>
+  <string name="overall_visits_n">Genel Ziyaretler</string>
+  <string name="unique_visitors_n">Genel Ziyaretler</string>
   <string name="address_line">Adres satırı</string>
   <string name="town_city">İlçe / Şehir</string>
   <string name="pin_area_code">Pim / Alan Kodu</string>

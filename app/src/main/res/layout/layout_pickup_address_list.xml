@@ -30,7 +30,7 @@
         android:text="@string/pickup_address"
         android:textColor="@color/primaryTextColor"
         android:textSize="14sp"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
 
       <ImageButton
         android:id="@+id/ib_close"

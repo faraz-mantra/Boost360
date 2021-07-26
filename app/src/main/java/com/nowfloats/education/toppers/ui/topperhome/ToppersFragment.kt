@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.framework.views.fabButton.FloatingActionButton
 import com.nowfloats.education.helper.BaseFragment
 import com.nowfloats.education.helper.Constants.SUCCESS
 import com.nowfloats.education.helper.Constants.TOPPERS_DETAILS_FRAGMENT
@@ -67,10 +68,10 @@ class ToppersFragment : BaseFragment(), ItemClickEventListener {
   private fun initLiveDataObservers() {
     viewModel.apply {
       ourTopperResponse.observe(viewLifecycleOwner, Observer {
-          if (!it.Data.isNullOrEmpty()) {
-              setRecyclerviewAdapter(it.Data)
-          }else showToast(getString(R.string.our_topper_data_empty))
-          hideLoader()
+        if (!it.Data.isNullOrEmpty()) {
+          setRecyclerviewAdapter(it.Data)
+        } else showToast(getString(R.string.our_topper_data_empty))
+        hideLoader()
       })
 
       errorMessage.observe(viewLifecycleOwner, Observer {
@@ -79,15 +80,15 @@ class ToppersFragment : BaseFragment(), ItemClickEventListener {
       })
 
       deleteTopperResponse.observe(viewLifecycleOwner, Observer {
-          if (!it.isNullOrBlank()) {
-              if (it == SUCCESS) {
-                  Toast.makeText(requireContext(), getString(R.string.topper_deleted_successfully), Toast.LENGTH_SHORT).show()
-                  showLoader(getString(R.string.loading_topper))
-                  setDeleteTopperLiveDataValue("")
-                  viewModel.getOurToppers()
-              }
+        if (!it.isNullOrBlank()) {
+          if (it == SUCCESS) {
+            Toast.makeText(requireContext(), getString(R.string.topper_deleted_successfully), Toast.LENGTH_SHORT).show()
+            showLoader(getString(R.string.loading_topper))
+            setDeleteTopperLiveDataValue("")
+            viewModel.getOurToppers()
           }
-          hideLoader()
+        }
+        hideLoader()
       })
     }
   }
@@ -98,13 +99,12 @@ class ToppersFragment : BaseFragment(), ItemClickEventListener {
   }
 
   fun setHeader(view: View) {
-    val rightButton: LinearLayout = view.findViewById(R.id.right_icon_layout)
     val backButton: LinearLayout = view.findViewById(R.id.back_button)
-    val rightIcon: ImageView = view.findViewById(R.id.right_icon)
+    (view.findViewById(R.id.right_icon) as? ImageView)?.visibility = View.INVISIBLE
+    val btnAdd: FloatingActionButton = view.findViewById(R.id.btn_add)
     val title: TextView = view.findViewById(R.id.title)
     title.text = getString(R.string.our_toppers)
-    rightIcon.setImageResource(R.drawable.ic_add_white)
-    rightButton.setOnClickListener {
+    btnAdd.setOnClickListener {
       (activity as ToppersActivity).addFragment(
         TopperDetailsFragment.newInstance(),
         TOPPERS_DETAILS_FRAGMENT

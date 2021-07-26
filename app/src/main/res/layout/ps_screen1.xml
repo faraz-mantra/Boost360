@@ -25,10 +25,10 @@
       android:layout_width="230dp"
       android:layout_height="wrap_content"
       android:text="@string/pre_signup_screen_one_text"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:textColor="@color/white"
       android:textSize="11sp"
-      android:textStyle="bold"
+       android:fontFamily="@font/semi_bold"
       tools:ignore="MissingPrefix">
 
     </TextView>

@@ -109,7 +109,7 @@
             android:text="@string/not_opted_for_boost_alerts"
             android:textColor="@color/scarlet"
             android:visibility="gone"
-            app:textAllCaps="true"
+            app:textAllCaps="false"
             app:textType="SUBHEADING_1" />
 
           <com.framework.views.customViews.CustomTextView

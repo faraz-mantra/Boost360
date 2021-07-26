@@ -59,7 +59,6 @@ import zendesk.support.Support
 import java.io.File
 import java.util.*
 
-
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
   private var doubleBackToExitPressedOnce = false
@@ -360,9 +359,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     }
   }
 
-  override fun getNavIconScale(): Float {
-    return 1f
-  }
 
   override fun onItemClick(pos: Int) {
     super.onItemClick(pos)

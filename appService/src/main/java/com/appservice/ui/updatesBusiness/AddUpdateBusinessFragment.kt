@@ -46,8 +46,7 @@ const val isFirstTimeSendToSubscriber = "isFirstTimeSendToSubscriber"
 const val msgPost = "msg_post"
 const val imagePost = "image_post"
 
-class AddUpdateBusinessFragment :
-  AppBaseFragment<AddUpdateBusinessFragmentBinding, UpdatesViewModel>() {
+class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBinding, UpdatesViewModel>() {
 
   private val REQ_CODE_SPEECH_INPUT = 122
   private var isUpdate: Boolean = false
@@ -410,8 +409,7 @@ class AddUpdateBusinessFragment :
   }
 
   private fun getRequestBizImage(postImage: File?): RequestBody {
-    val responseBody =
-      postImage?.readBytes()?.let { it.toRequestBody("image/png".toMediaTypeOrNull(), 0, it.size) }
+    val responseBody = postImage?.readBytes()?.let { it.toRequestBody("image/png".toMediaTypeOrNull(), 0, it.size) }
     val fileName = takeIf { postImage?.name.isNullOrEmpty().not() }?.let { postImage?.name }
       ?: "biz_message_${Date().time}.png"
     return responseBody!!

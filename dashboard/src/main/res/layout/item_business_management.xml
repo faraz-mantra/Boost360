@@ -136,7 +136,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:maxLines="1"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/black_4a4a4a"
             app:autoSizeMaxTextSize="16sp"
             app:autoSizeMinTextSize="8sp"

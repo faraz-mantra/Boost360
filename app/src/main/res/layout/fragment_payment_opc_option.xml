@@ -38,7 +38,7 @@
           android:layout_gravity="center_vertical"
           android:layout_marginStart="10dp"
           android:text="Items"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
       </LinearLayout>
 
       <TableLayout
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Net Total"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <TextView
             android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Taxes"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <TextView
             android:layout_width="wrap_content"
@@ -100,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Deductions"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <TextView
             android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:text="Amount to be Paid"
             android:textColor="@color/green"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <TextView
             android:layout_width="wrap_content"
@@ -135,7 +135,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textColor="@color/green"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
         </TableRow>
       </TableLayout>
 
