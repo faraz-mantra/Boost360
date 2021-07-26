@@ -19,6 +19,7 @@
       android:hapticFeedbackEnabled="true"
       app:contentInsetStartWithNavigation="0dp"
       app:elevation="0dp"
+      app:titleTextAppearance="@style/Toolbar.TitleText"
       app:navigationIcon="@drawable/ic_toolbar_back"
       tools:title="Home">
 

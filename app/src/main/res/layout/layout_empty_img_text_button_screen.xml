@@ -17,7 +17,7 @@
     android:layout_marginTop="30dp"
     android:text="@string/main_text"
     android:textSize="20sp"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 
   <TextView
     android:id="@+id/message_text2"

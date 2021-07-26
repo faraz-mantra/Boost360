@@ -61,9 +61,9 @@
                 style="@style/wrap_wrap"
                 android:layout_marginStart="@dimen/size_4"
                 android:textAlignment="center"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
-                app:textAllCaps="true"
+                app:textAllCaps="false"
                 app:textType="BODY_1"
                 tools:drawableStart=""
                 tools:text="New Order" />
@@ -172,7 +172,7 @@
                 android:textAlignment="gravity"
                 android:textColor="@color/watermelon_light"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                 android:fontFamily="@font/semi_bold" />
             </LinearLayout>
 
 
@@ -212,13 +212,15 @@
               android:id="@+id/service_location"
               style="@style/wrap_wrap"
               layout="@layout/icon_text_item"
-              android:layout_marginTop="@dimen/size_2" />
+              android:layout_marginTop="@dimen/size_2"
+              tools:ignore="IncludeLayoutParam" />
 
             <include
               android:id="@+id/customer"
               style="@style/wrap_wrap"
               layout="@layout/icon_text_item"
-              android:layout_marginTop="@dimen/size_2" />
+              android:layout_marginTop="@dimen/size_2"
+              tools:ignore="IncludeLayoutParam" />
 
             <RelativeLayout
               style="@style/match_wrap"
@@ -250,7 +252,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/regular"
                 android:includeFontPadding="false"
-                android:textColor="@color/bg_dark_grey"
+                android:textColor="@color/black_4a4a4a"
                 tools:text="Honey wax and detan service" />
 
               <com.framework.views.customViews.CustomTextView
@@ -263,7 +265,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="Today 2:30-3:20 pm by Dr. XXXX"
-                android:textColor="@color/bg_dark_grey"
+                android:textColor="@color/black_4a4a4a"
                 android:visibility="visible"
                 app:textType="CAPTION"
                 tools:visibility="visible" />
@@ -302,10 +304,11 @@
           android:clickable="true"
           android:focusable="true"
           android:gravity="center"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
+          android:fontFamily="@font/semi_bold"
           android:textColor="@color/white"
           app:textType="HEADING_6"
-          tools:text="CONFIRM APPOINTMENT" />
+          tools:text="Confirm appointment" />
 
         <View
           android:id="@+id/divider"

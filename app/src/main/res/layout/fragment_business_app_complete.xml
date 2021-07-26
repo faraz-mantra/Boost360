@@ -75,7 +75,7 @@
         android:scrollHorizontally="true"
         android:text="@string/thinking_ink"
         android:textSize="18sp"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
     </LinearLayout>
 
   </LinearLayout>

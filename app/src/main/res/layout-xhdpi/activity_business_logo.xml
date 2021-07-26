@@ -81,6 +81,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/round_border_button"
             android:text="@string/change"
+            android:textAllCaps="false"
             android:textColor="@color/primaryColor"
             card_view:ignore="MissingPrefix" />
 
@@ -109,7 +110,7 @@
           android:layout_marginTop="10dp"
           android:text="@string/business_logo_instructions_2"
           android:textSize="12sp"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
       </LinearLayout>
 

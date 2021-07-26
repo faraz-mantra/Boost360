@@ -47,7 +47,7 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/create_website"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/primary"
         android:textSize="@dimen/medium_text_size" />
     </LinearLayout>
@@ -76,8 +76,8 @@
         android:layout_marginStart="8dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
-        android:text="LOGIN    "
-        android:textAllCaps="true"
+        android:text="Login    "
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/medium_text_size" />
     </LinearLayout>

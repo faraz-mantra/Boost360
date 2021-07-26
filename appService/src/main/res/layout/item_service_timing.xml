@@ -89,11 +89,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/size_2"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:text="@string/from"
             android:textColor="@color/black_4a4a4a"
-            android:textSize="9sp"
-            android:textStyle="normal" />
+            android:textSize="9sp" />
 
           <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinner_start_timing"
@@ -123,7 +122,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/size_2"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:text="@string/to"
             android:textColor="@color/black_4a4a4a"
             android:textSize="9sp"
@@ -149,7 +148,6 @@
         android:text="@string/apply_same_on_all_working_days"
         android:textColor="@color/black_4a4a4a"
         android:textSize="13sp"
-        android:textStyle="normal"
         android:theme="@style/ActiveTheme" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -18,12 +18,11 @@
       android:id="@+id/deal_title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:fontFamily="@font/open_sans"
+      android:fontFamily="@font/bold"
       android:text="Add-on deals"
       android:textColor="@color/common_text_color"
       android:textFontWeight="600"
-      android:textSize="@dimen/_14sdp"
-      android:textStyle="bold" />
+      android:textSize="@dimen/_14sdp" />
 
     <LinearLayout
       android:layout_width="wrap_content"
@@ -149,7 +148,7 @@
             android:layout_marginEnd="@dimen/_7sdp"
             android:textColor="#0068e0"
             android:textSize="@dimen/_9sdp"
-            android:textStyle="bold"
+            android:fontFamily="@font/bold"
             tools:text="₹400/month" />
 
 

@@ -7,15 +7,12 @@ import com.framework.extensions.underlineText
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
 import com.onboarding.nowfloats.databinding.ItemChannelsDisconnectBinding
-import com.onboarding.nowfloats.model.channel.ChannelModel
-import com.onboarding.nowfloats.model.channel.getDrawable
+import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.channel.getName
-import com.onboarding.nowfloats.model.channel.isGoogleBusinessChannel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
-class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBinding) :
-  AppBaseRecyclerViewHolder<ItemChannelsDisconnectBinding>(binding) {
+class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBinding) : AppBaseRecyclerViewHolder<ItemChannelsDisconnectBinding>(binding) {
 
   private var model: ChannelModel? = null
 
@@ -44,10 +41,8 @@ class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBi
   @SuppressLint("SetTextI18n")
   private fun setViews(model: ChannelModel) {
     setClickListeners(binding.card, binding.whysync)
-    binding.title.text =
-      if (model.isGoogleBusinessChannel()) activity?.resources?.getString(R.string.google_maps) else model.getName()
-    binding.whysync.text =
-      "Why Sync on ${if (model.isGoogleBusinessChannel()) activity?.resources?.getString(R.string.google_business_n) else model.getName()}"
+    binding.title.text = if (model.isGoogleBusinessChannel()) activity?.resources?.getString(R.string.google_maps) else model.getName()
+    binding.whysync.text = "Why sync on ${model.getName1()}"
     binding.whysync.underlineText(0, binding.whysync.text.length - 1)
     setSelection(model)
   }

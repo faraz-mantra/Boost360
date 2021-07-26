@@ -7,6 +7,7 @@
   app:contentInsetLeft="0dp"
   app:contentInsetStart="0dp"
   app:contentInsetStartWithNavigation="0dp"
+  app:titleTextAppearance="@style/Toolbar.TitleText"
   app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
   app:theme="@style/MyCustomToolBarTheme">
 
@@ -78,7 +79,7 @@
         android:text=""
         android:textColor="@color/white"
         android:textSize="12sp"
-        android:textStyle="italic" />
+        android:fontFamily="@font/italic" />
     </LinearLayout>
 
 

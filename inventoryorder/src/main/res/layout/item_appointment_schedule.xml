@@ -23,7 +23,7 @@
       android:paddingEnd="@dimen/size_22"
       android:paddingBottom="@dimen/size_10"
       android:text="@string/today"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:textColor="@color/primary_grey"
       android:visibility="visible"
       app:fontFamily="@font/semi_bold"

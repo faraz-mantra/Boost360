@@ -278,7 +278,7 @@ fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?, baseActivity: App
 
 fun alertDialogBusinessHours(baseActivity: AppCompatActivity, session: UserSessionManager?) {
   AlertDialog.Builder(
-    ContextThemeWrapper(baseActivity,R.style.AlertDialogCustom))
+    ContextThemeWrapper(baseActivity,R.style.CustomAlertDialogTheme))
     .setTitle(baseActivity.getString(R.string.features_not_available))
     .setMessage(baseActivity.getString(R.string.check_store_for_upgrade_info))
     .setPositiveButton(baseActivity.getString(R.string.goto_store)) { dialogInterface, i ->

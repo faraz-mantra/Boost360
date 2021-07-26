@@ -29,7 +29,7 @@ class GrowthStatsData(
     val list = ArrayList<GrowthStatsData>()
     list.add(
       GrowthStatsData(
-        title = "All Visits",
+        title = "All visits",
         value = summary?.getNoOfViews(),
         icon1 = R.drawable.ic_all_visit_d,
         type = GrowthType.ALL_VISITS.name
@@ -53,7 +53,7 @@ class GrowthStatsData(
     )
     list.add(
       GrowthStatsData(
-        title = "Newsletter Subscribers",
+        title = "Newsletter subscribers",
         value = summary?.getNoOfSubscribers(),
         icon1 = R.drawable.ic_news_subcription_d,
         type = GrowthType.NEWSLETTER_SUBSCRIPTION.name

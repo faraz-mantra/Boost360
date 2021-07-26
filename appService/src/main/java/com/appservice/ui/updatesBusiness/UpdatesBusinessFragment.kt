@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,8 +37,7 @@ import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
-class UpdatesBusinessFragment :
-  AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
+class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
 
   private val STORAGE_CODE = 120
 
@@ -194,8 +194,7 @@ class UpdatesBusinessFragment :
       }
       return
     }
-    val subDomain =
-      if (isService(sessionLocal.fP_AppExperienceCode)) "all-services" else "all-products"
+    val subDomain = if (isService(sessionLocal.fP_AppExperienceCode)) "all-services" else "all-products"
     when (actionType) {
       RecyclerViewActionType.UPDATE_WHATS_APP_SHARE.ordinal -> {
         shareUpdates(
@@ -250,13 +249,8 @@ class UpdatesBusinessFragment :
   }
 }
 
-fun showDialog(
-  mContext: Context?,
-  title: String?,
-  msg: String?,
-  listener: DialogInterface.OnClickListener
-) {
-  val builder = AlertDialog.Builder(mContext!!)
+fun showDialog(mContext: Context?, title: String?, msg: String?, listener: DialogInterface.OnClickListener) {
+  val builder = AlertDialog.Builder(ContextThemeWrapper(mContext!!, R.style.CustomAlertDialogTheme))
   builder.setTitle(title).setMessage(msg).setPositiveButton("Ok") { dialog, which ->
     dialog.dismiss()
     listener.onClick(dialog, which)

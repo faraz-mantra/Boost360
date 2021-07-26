@@ -19,6 +19,8 @@ public abstract class CountDownTimer {
     private long mPauseTime;
     private boolean mCancelled = false;
     private boolean mPaused = false;
+    private boolean isStarted = false;
+
     // handles counting down
     private Handler mHandler = new Handler() {
 
@@ -72,8 +74,13 @@ public abstract class CountDownTimer {
      * Do not call it from inside CountDownTimer threads
      */
     public final void cancel() {
+        isStarted = false;
         mHandler.removeMessages(MSG);
         mCancelled = true;
+    }
+
+    public boolean isStarted() {
+        return isStarted;
     }
 
     /**
@@ -88,6 +95,7 @@ public abstract class CountDownTimer {
         mHandler.sendMessage(mHandler.obtainMessage(MSG));
         mCancelled = false;
         mPaused = false;
+        isStarted = true;
         return this;
     }
 
@@ -99,6 +107,7 @@ public abstract class CountDownTimer {
         mPaused = true;
         return mPauseTime;
     }
+
 
     /**
      * Resume the countdown.

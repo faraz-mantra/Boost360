@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.upgrades.UpgradeActivity;
+import com.framework.views.fabButton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
@@ -113,31 +114,26 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
     public void setHeader() {
         LinearLayout rightButton, backButton;
         ImageView rightIcon;
+        FloatingActionButton btnAdd;
         TextView title;
 
         title = findViewById(R.id.title);
         backButton = findViewById(R.id.back_button);
         rightButton = findViewById(R.id.right_icon_layout);
         rightIcon = findViewById(R.id.right_icon);
+        rightIcon.setVisibility(View.INVISIBLE);
+        btnAdd = findViewById(R.id.btn_add);
         title.setText("Places to Look Around");
         if (session.getStoreWidgets().contains("PLACES-TO-LOOK-AROUND")) {
-            rightIcon.setImageResource(R.drawable.ic_add_white);
-            rightButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), PlacesNearByDetailsActivity.class);
-                    intent.putExtra("ScreenState", "new");
-                    startActivity(intent);
-                }
+            btnAdd.setVisibility(View.VISIBLE);
+            btnAdd.setOnClickListener(v -> {
+                Intent intent = new Intent(getApplicationContext(), PlacesNearByDetailsActivity.class);
+                intent.putExtra("ScreenState", "new");
+                startActivity(intent);
             });
-        }
+        }else btnAdd.setVisibility(View.GONE);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        backButton.setOnClickListener(v -> onBackPressed());
     }
 
     void loadData() {

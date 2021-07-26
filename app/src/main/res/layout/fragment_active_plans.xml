@@ -48,7 +48,7 @@
           android:layout_centerInParent="true"
           android:text="UPGRADE"
           android:textColor="@color/white"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
       </RelativeLayout>
 
     </LinearLayout>
@@ -83,7 +83,7 @@
           android:layout_height="wrap_content"
           android:text="PLANS IN USE"
           android:textColor="@color/white"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
       </LinearLayout>
 
       <androidx.recyclerview.widget.RecyclerView

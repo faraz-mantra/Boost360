@@ -49,9 +49,9 @@
                 style="@style/wrap_wrap"
                 android:layout_marginStart="@dimen/size_4"
                 android:textAlignment="center"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
-                app:textAllCaps="true"
+                app:textAllCaps="false"
                 app:textType="BODY_1"
                 tools:drawableStart=""
                 tools:text="New Order" />
@@ -255,11 +255,12 @@
               android:background="@null"
               android:gravity="center"
               android:paddingTop="@dimen/size_14"
+              android:fontFamily="@font/semi_bold"
               android:paddingBottom="@dimen/size_14"
               android:text="@string/send_payment_link"
               android:textAlignment="gravity"
-              android:textAllCaps="true"
-              android:textColor="@color/colorAccent_jio"
+              android:textAllCaps="false"
+              android:textColor="@color/colorAccentLight"
               android:visibility="gone"
               tools:visibility="visible" />
 
@@ -279,10 +280,11 @@
               android:background="@null"
               android:gravity="center"
               android:paddingTop="@dimen/size_14"
+              android:fontFamily="@font/semi_bold"
               android:paddingBottom="@dimen/size_14"
               android:text="@string/cancel_order_normal"
               android:textAlignment="gravity"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/watermelon_light_10"
               android:visibility="gone"
               tools:visibility="visible" />
@@ -320,10 +322,10 @@
                 style="@style/wrap_wrap"
                 android:gravity="end"
                 android:text="@string/change"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textColor="@color/orange"
                 android:visibility="invisible"
-                app:textAllCaps="true"
+                app:textAllCaps="false"
                 app:textType="BODY_1" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -358,12 +360,12 @@
                 style="@style/wrap_wrap"
                 android:drawableStart="@drawable/ic_inbox_orange"
                 android:drawablePadding="@dimen/size_8"
-                android:drawableTint="@color/colorAccent_jio"
+                android:drawableTint="@color/colorAccentLight"
                 android:includeFontPadding="false"
                 android:text="@string/email"
-                android:textAllCaps="true"
-                android:textColor="@color/colorAccent_jio"
-                app:textAllCaps="true"
+                android:textAllCaps="false"
+                android:textColor="@color/colorAccentLight"
+                app:textAllCaps="false"
                 app:textType="BODY_1" />
 
               <com.framework.views.customViews.CustomTextView
@@ -372,12 +374,12 @@
                 android:layout_marginStart="@dimen/size_30"
                 android:drawableStart="@drawable/ic_call_phone_orange"
                 android:drawablePadding="@dimen/size_8"
-                android:drawableTint="@color/colorAccent_jio"
+                android:drawableTint="@color/colorAccentLight"
                 android:includeFontPadding="false"
                 android:text="@string/call_buyer"
-                android:textAllCaps="true"
-                android:textColor="@color/colorAccent_jio"
-                app:textAllCaps="true"
+                android:textAllCaps="false"
+                android:textColor="@color/colorAccentLight"
+                app:textAllCaps="false"
                 app:textType="BODY_1" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -428,10 +430,10 @@
                 style="@style/wrap_wrap"
                 android:gravity="end"
                 android:text="@string/change"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textColor="@color/colorAccent_jio"
                 android:visibility="invisible"
-                app:textAllCaps="true"
+                app:textAllCaps="false"
                 app:textType="BODY_1" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -500,6 +502,7 @@
         android:padding="@dimen/size_12"
         android:stateListAnimator="@null"
         android:text="@string/confirm_order_n"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:visibility="gone"
         app:textType="HEADING_6"

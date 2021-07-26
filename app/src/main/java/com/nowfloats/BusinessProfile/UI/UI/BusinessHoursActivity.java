@@ -95,7 +95,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText(R.string.business_timings);
+        titleTextView.setText(R.string.business_timings_n);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
