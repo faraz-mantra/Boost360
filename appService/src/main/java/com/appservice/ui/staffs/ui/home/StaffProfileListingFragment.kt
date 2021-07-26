@@ -34,6 +34,9 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences
+import com.framework.views.zero.OnZeroCaseClicked
+import com.framework.views.zero.RequestZeroCaseBuilder
+import com.framework.views.zero.ZeroCases
 import com.framework.webengageconstant.*
 import com.inventoryorder.ui.tutorials.LearnHowItWorkBottomSheet
 import kotlinx.android.synthetic.main.fragment_staff_listing.*
@@ -41,7 +44,7 @@ import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
 import java.util.*
 
 class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffViewModel>(),
-  RecyclerItemClickListener, SearchView.OnQueryTextListener {
+  RecyclerItemClickListener, SearchView.OnQueryTextListener, OnZeroCaseClicked {
 
   private val list: ArrayList<DataItem> = arrayListOf()
   private val finalList: ArrayList<DataItem> = arrayListOf()
@@ -87,9 +90,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       layoutManagerN?.let { scrollPagingListener(it) }
       swipeRefreshListener()
       setOnClickListener(
-        binding?.staffEmpty?.btnAddStaff,
-        binding?.serviceEmpty?.cbAddService,
-        binding?.staffEmpty?.btnHowWork
+        binding?.serviceEmpty?.cbAddService
       )
     }
   }
@@ -240,9 +241,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun setEmptyView(isStaffEmpty: Boolean, isServiceEmpty: Boolean = false) {
-    binding?.serviceEmpty?.root?.visibility = if (isServiceEmpty) View.VISIBLE else View.GONE
-    binding?.staffEmpty?.root?.visibility =
-      if (isStaffEmpty && isServiceEmpty.not()) View.VISIBLE else View.GONE
+    if (isServiceEmpty)
+    addFragmentReplace(containerID = R.id.container, RequestZeroCaseBuilder(ZeroCases.STAFF_LISTING, this, baseActivity).getRequest().build(), true)
     binding?.rvStaffList?.visibility =
       if (isStaffEmpty || isServiceEmpty) View.GONE else View.VISIBLE
     if (this::menuAdd.isInitialized) menuAdd.isVisible = isServiceEmpty.not()
@@ -316,11 +316,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.staffEmpty?.btnAddStaff -> startStaffFragmentActivity(
-        FragmentType.STAFF_DETAILS_FRAGMENT,
-        clearTop = false,
-        isResult = true
-      )
+
       binding?.serviceEmpty?.cbAddService -> {
         isServiceAdd = true
         startFragmentActivity(
@@ -330,7 +326,6 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         )
       }
       binding?.staffLock?.btnStaffAddOns -> startStorePage()
-      binding?.staffEmpty?.btnHowWork -> openHelpBottomSheet()
     }
   }
 
@@ -407,6 +402,21 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     } catch (e: Exception) {
       showLongToast("Unable to start upgrade activity.")
     }
+  }
+
+  override fun primaryButtonClicked() {
+    startStaffFragmentActivity(
+      FragmentType.STAFF_DETAILS_FRAGMENT,
+      clearTop = false,
+      isResult = true)
+  }
+
+  override fun secondaryButtonClicked() {
+    openHelpBottomSheet()
+  }
+
+  override fun ternaryButtonClicked() {
+    TODO("Not yet implemented")
   }
 
 }

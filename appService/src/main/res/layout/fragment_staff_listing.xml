@@ -25,6 +25,7 @@
           android:layout_height="wrap_content"
           android:clipToPadding="false"
           android:orientation="vertical"
+          android:visibility=""
           android:paddingBottom="@dimen/size_30"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
           app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -36,10 +37,10 @@
           layout="@layout/fragment_service_listing_empty"
           android:visibility="gone" />
 
-        <include
-          android:id="@+id/staff_empty"
-          layout="@layout/fragment_staff_listing_empty"
-          android:visibility="gone" />
+<!--        <include-->
+<!--          android:id="@+id/staff_empty"-->
+<!--          layout="@layout/fragment_staff_listing_empty"-->
+<!--          android:visibility="gone" />-->
 
 
         <ProgressBar

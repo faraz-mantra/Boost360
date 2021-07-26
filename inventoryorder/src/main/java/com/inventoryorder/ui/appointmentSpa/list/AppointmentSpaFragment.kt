@@ -15,6 +15,9 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.views.zero.OnZeroCaseClicked
+import com.framework.views.zero.RequestZeroCaseBuilder
+import com.framework.views.zero.ZeroCases
 import com.framework.webengageconstant.APPOINTMENT_PAGE_LOAD
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
@@ -60,7 +63,7 @@ import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBinding>(),
-  RecyclerItemClickListener {
+  RecyclerItemClickListener, OnZeroCaseClicked {
 
   private lateinit var requestFilter: OrderFilterRequest
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
@@ -95,7 +98,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     super.onCreateView()
     WebEngageController.trackEvent(APPOINTMENT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
-    setOnClickListener(binding?.btnAdd, binding?.buttonAddApt)
+    setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
     requestFilter = getRequestFilterData(arrayListOf())
@@ -107,13 +110,17 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnAdd, binding?.buttonAddApt -> {
-        val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
-        bundle.putBoolean(IntentConstant.IS_VIDEO.name, false)
-        startFragmentOrderActivity(FragmentType.CREATE_SPA_APPOINTMENT, bundle, isResult = true)
+      binding?.btnAdd -> {
+        addAppointment()
       }
     }
+  }
+
+  private fun addAppointment() {
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+    bundle.putBoolean(IntentConstant.IS_VIDEO.name, false)
+    startFragmentOrderActivity(FragmentType.CREATE_SPA_APPOINTMENT, bundle, isResult = true)
   }
 
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
@@ -216,7 +223,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
 
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
     binding?.bookingRecycler?.visible()
-    binding?.errorView?.gone()
+//    binding?.errorView?.gone()
     binding?.btnAdd?.visible()
     if (orderAdapter != null) {
       orderAdapter?.notify(getDateWiseFilter(items))
@@ -224,9 +231,10 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   }
 
   private fun emptyView() {
-    binding?.bookingRecycler?.gone()
-    binding?.errorView?.visible()
-    binding?.btnAdd?.gone()
+    addFragmentReplace(containerID = R.id.container, RequestZeroCaseBuilder(ZeroCases.APPOINTMENT, this, baseActivity).getRequest().build(), true)
+//    binding?.bookingRecycler?.gone()
+//    binding?.errorView?.visible()
+//    binding?.btnAdd?.gone()
   }
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {
@@ -753,6 +761,16 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     orderListFinalList.clear()
     orderList.clear()
     clickFilterItem(filterItem)
+  }
+
+  override fun primaryButtonClicked() {
+    addAppointment()
+  }
+
+  override fun secondaryButtonClicked() {
+  }
+
+  override fun ternaryButtonClicked() {
   }
 
 //  private fun apiOrderListCall() {
