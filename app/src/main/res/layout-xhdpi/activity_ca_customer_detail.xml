@@ -22,11 +22,10 @@
       android:layout_weight="1"
       android:drawableLeft="@drawable/ic_ca_arrow_back_black_24dp"
       android:drawablePadding="@dimen/margin_10"
-      android:fontFamily="sans-serif"
+      android:fontFamily="@font/semi_bold"
       android:text="@string/potential_customers"
       android:textColor="#80000000"
-      android:textSize="@dimen/large_text_size"
-      android:textStyle="bold" />
+      android:textSize="@dimen/large_text_size" />
 
 
   </LinearLayout>
@@ -95,21 +94,19 @@
               android:id="@+id/tvValue"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:fontFamily="sans-serif"
+              android:fontFamily="@font/semi_bold"
               android:text="@string/_91_84932987498"
               android:textColor="#80000000"
-              android:textSize="16sp"
-              android:textStyle="bold" />
+              android:textSize="16sp" />
 
             <TextView
               android:id="@+id/tvExpiryDate"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/margin_2"
-              android:fontFamily="sans-serif-light"
+              android:fontFamily="@font/italic"
               android:textColor="#80000000"
-              android:textSize="12sp"
-              android:textStyle="italic" />
+              android:textSize="12sp" />
           </LinearLayout>
 
           <TextView
@@ -131,13 +128,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="@dimen/margin_10"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/semi_bold"
         android:gravity="end"
         android:text="@string/view_less"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/primary"
-        android:textSize="13sp"
-        android:textStyle="bold" />
+        android:textSize="13sp" />
 
       <View
         android:layout_width="match_parent"
@@ -197,7 +193,7 @@
           android:background="@color/primaryColor"
           android:fontFamily="sans-serif"
           android:text="@string/share"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@android:color/white"
           android:textSize="15sp"
           tools:ignore="MissingPrefix" />
@@ -210,7 +206,7 @@
           android:background="@drawable/ca_btn_call"
           android:fontFamily="sans-serif"
           android:text="@string/call"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/primary"
           android:textSize="15sp"
           tools:ignore="MissingPrefix" />

@@ -79,7 +79,7 @@
             android:layout_marginStart="32dp"
             android:layout_weight="1"
             android:text="@string/orders"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/gray"
             android:textSize="13sp" />
 
@@ -120,7 +120,7 @@
             android:layout_marginStart="32dp"
             android:layout_weight="1"
             android:text="@string/enquiries_"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/gray"
             android:textSize="13sp" />
 
@@ -162,7 +162,7 @@
             android:layout_marginStart="32dp"
             android:layout_weight="1"
             android:text="@string/calls"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/gray"
             android:textSize="13sp" />
 
@@ -204,7 +204,7 @@
             android:layout_marginStart="32dp"
             android:layout_weight="1"
             android:text="@string/subscribers_"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/gray"
             android:textSize="13sp" />
 
@@ -306,7 +306,7 @@
             android:layout_marginStart="32dp"
             android:layout_weight="1"
             android:text="@string/third_party_quiries"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/gray"
             android:textSize="13sp" />
 
@@ -344,7 +344,7 @@
             android:layout_marginStart="32dp"
             android:layout_weight="1"
             android:text="@string/facebook_chats"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/gray"
             android:textSize="13sp" />
 

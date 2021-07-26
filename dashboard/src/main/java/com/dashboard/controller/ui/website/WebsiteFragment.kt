@@ -8,7 +8,6 @@ import android.widget.PopupWindow
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -39,9 +38,7 @@ import com.framework.utils.changeLayersColor
 import com.framework.utils.fromHtml
 import com.framework.webengageconstant.DASHBOARD_WEBSITE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
-import com.google.android.material.tabs.TabLayout
 import java.util.*
-import kotlin.collections.ArrayList
 
 private val TAB_TITLES = arrayOf(
   "Content","Features"
@@ -124,7 +121,6 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     updateTimings()
   }
 
-
   private fun updateTimings() {
     var isOpen = false
     when (Calendar.getInstance()[Calendar.DAY_OF_WEEK]) {
@@ -171,8 +167,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
           .toLowerCase(Locale.ROOT).endsWith("pm"))
       }
     }
-    binding?.txtOpenClose?.text =
-      resources.getString(if (isOpen) R.string.open_now else R.string.close_now)
+    binding?.txtOpenClose?.text = resources.getString(if (isOpen) R.string.open_now else R.string.close_now)
     binding?.txtOpenClose?.setTextColor(if (isOpen) getColor(R.color.green_light) else getColor(R.color.red_F40000))
     binding?.ellipseOpenClose?.changeLayersColor(if (isOpen) R.color.green_light else R.color.red_F40000)
 

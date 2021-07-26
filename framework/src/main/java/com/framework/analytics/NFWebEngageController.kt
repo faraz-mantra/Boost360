@@ -15,6 +15,16 @@ object NFWebEngageController {
   private val TAG = "NFController"
 
 
+  fun trackAttribute(event_value: HashMap<String, Any>) {
+    if (event_value.isNullOrEmpty().not()) {
+      for ((key, value) in event_value.entries) {
+        weUser.setAttribute(key, value.toString())
+        FirebaseAnalyticsUtilsHelper.setUserProperty(key, value.toString())
+      }
+      AppsFlyerLib.getInstance().setAdditionalData(event_value)
+    }
+  }
+
   fun trackEvent(event_name: String, event_label: String, event_value: String? = NO_EVENT_VALUE) {
     val trackEvent: MutableMap<String, Any> = HashMap()
     trackEvent["event_name"] = event_name
@@ -90,12 +100,7 @@ object NFWebEngageController {
     }
   }
 
-  fun setUserContactAttributes(
-    email: String?,
-    mobile: String?,
-    name: String?,
-    clientId: String? = ""
-  ) {
+  fun setUserContactAttributes(email: String?, mobile: String?, name: String?, clientId: String? = "") {
     if (isUserLoggedIn) {
       if (!email.isNullOrEmpty()) {
         weUser.setEmail(email)

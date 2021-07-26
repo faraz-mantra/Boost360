@@ -19,8 +19,7 @@ import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
 
-open class AccountFragmentContainerActivity :
-  AppBaseActivity<ActivityFragmentContainerAccountBinding, BaseViewModel>() {
+open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerAccountBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
 
@@ -48,10 +47,6 @@ open class AccountFragmentContainerActivity :
 
   override fun getToolbar(): CustomToolbar? {
     return binding?.toolbar
-  }
-
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.body_2)
   }
 
   override fun customTheme(): Int? {

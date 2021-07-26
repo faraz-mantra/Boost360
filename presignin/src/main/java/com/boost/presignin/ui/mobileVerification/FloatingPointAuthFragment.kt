@@ -20,8 +20,7 @@ import com.framework.webengageconstant.PAGE_VIEW
 import com.framework.webengageconstant.PS_BUSINESS_ACCOUNT_PAGE_LOAD
 import kotlin.system.exitProcess
 
-class FloatingPointAuthFragment : AuthBaseFragment<FragmentFpListBinding>(),
-  RecyclerItemClickListener {
+class FloatingPointAuthFragment : AuthBaseFragment<FragmentFpListBinding>(), RecyclerItemClickListener {
 
   private var exitToast: Toast? = null
 

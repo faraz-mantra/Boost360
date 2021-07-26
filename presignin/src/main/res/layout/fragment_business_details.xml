@@ -162,7 +162,6 @@
     <com.framework.views.customViews.CustomButton
       android:id="@+id/confirm_button"
       style="@style/psn_button_style"
-      android:enabled="true"
       android:text="@string/choose_website_address"
       android:visibility="visible"
       app:layout_constraintBottom_toTopOf="@id/bottomGuide"

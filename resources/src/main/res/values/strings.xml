@@ -1,5 +1,5 @@
 <resources>
   <string name="app_name">Resources</string>
-  <string name="appointment_type">Appointment Type</string>
+  <string name="appointment_type">Appointment type</string>
   <string name="pick_a_type_of_appointment_from_the_options_below">Pick a type of appointment from the options below</string>
 </resources>

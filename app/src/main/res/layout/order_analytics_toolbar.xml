@@ -5,7 +5,8 @@
   android:layout_height="?attr/actionBarSize"
   android:background="?attr/colorPrimary"
   android:orientation="vertical"
-  app:theme="@style/CustomToolbarTheme">
+  app:navigationIcon="@drawable/ic_back_arrow_new"
+  app:titleTextAppearance="@style/Toolbar.TitleText">
 
   <LinearLayout
     android:layout_width="match_parent"
@@ -14,17 +15,18 @@
     android:layout_marginEnd="10dp"
     android:gravity="center_vertical">
 
-    <TextView
+    <com.framework.views.customViews.CustomTextView
       android:id="@+id/title"
       android:layout_width="0dp"
       android:layout_height="match_parent"
       android:layout_gravity="start"
       android:layout_weight="1"
+      android:fontFamily="@font/semi_bold"
       android:gravity="center_vertical"
       android:text="@string/order_analytics"
-      android:textColor="@color/white"
-      android:textSize="20sp"
-      android:textStyle="bold" />
+      app:fontFamily="@font/semi_bold"
+      app:textType="HEADING_6"
+      android:textColor="@color/white" />
 
     <ImageView
       android:id="@+id/social_img"

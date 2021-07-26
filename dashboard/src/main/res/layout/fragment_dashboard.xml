@@ -123,7 +123,7 @@
                       android:textColor="@color/white"
                       app:autoSizeMaxTextSize="18sp"
                       app:autoSizeMinTextSize="14sp"
-                      android:fontFamily="@font/open_sans"
+                      android:fontFamily="@font/regular"
                       app:autoSizeStepGranularity="1sp"
                       app:autoSizeTextType="uniform" />
 
@@ -133,7 +133,7 @@
                       android:layout_marginTop="@dimen/size_2"
                       android:ellipsize="end"
                       android:maxLines="2"
-                      android:fontFamily="@font/open_sans"
+                      android:fontFamily="@font/regular"
                       android:text="@string/improve_your_score_to_90"
                       android:textColor="@color/gray_text_hint"
                       app:textType="OVERLINE" />
@@ -150,10 +150,10 @@
                     android:includeFontPadding="false"
                     android:paddingEnd="@dimen/size_6"
                     android:text="@string/improve"
-                    android:textAllCaps="true"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
                     app:fontFamily="@font/semi_bold"
-                    app:textType="CAPTION"
+                    app:textType="BODY_1"
                     tools:ignore="RtlSymmetry" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -441,7 +441,7 @@
                     android:drawablePadding="@dimen/size_4"
                     android:text="@string/retry"
                     android:textColor="@color/colorAccent"
-                    app:textAllCaps="true"
+                    app:textAllCaps="false"
                     app:textType="BODY_1" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
               </FrameLayout>
@@ -601,7 +601,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/share_business_card"
                 android:textColor="@color/white"
-                app:textAllCaps="true"
+                app:textAllCaps="false"
+                android:fontFamily="@font/semi_bold"
                 app:textType="HEADING_6" />
 
               <com.framework.views.customViews.CustomImageView

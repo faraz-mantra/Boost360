@@ -10,8 +10,7 @@ import com.framework.extensions.afterTextChanged
 import com.framework.models.BaseViewModel
 import com.framework.utils.showKeyBoard
 
-class BusinessNameBottomSheet :
-  BaseBottomSheetDialog<BottomSheetBusinessNameBinding, BaseViewModel>() {
+class BusinessNameBottomSheet : BaseBottomSheetDialog<BottomSheetBusinessNameBinding, BaseViewModel>() {
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_business_name

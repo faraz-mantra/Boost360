@@ -64,10 +64,10 @@
         android:gravity="center"
         android:text="@string/share_on_whatsapp"
         android:textAlignment="gravity"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        app:fontFamily="@font/regular"
-        app:textType="HEADING_6" />
+        app:fontFamily="@font/semi_bold"
+        app:textType="BODY_1" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -93,10 +93,10 @@
         android:gravity="center"
         android:text="@string/share_on_messanger"
         android:textAlignment="gravity"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/black_4a4a4a"
-        app:fontFamily="@font/regular"
-        app:textType="HEADING_6" />
+        app:fontFamily="@font/semi_bold"
+        app:textType="BODY_1" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -122,10 +122,10 @@
         android:gravity="center"
         android:text="@string/share_on_instagram"
         android:textAlignment="gravity"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/black_4a4a4a"
-        app:fontFamily="@font/regular"
-        app:textType="HEADING_6" />
+        app:fontFamily="@font/semi_bold"
+        app:textType="BODY_1" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -151,10 +151,10 @@
         android:gravity="center"
         android:text="@string/share_on_telegram"
         android:textAlignment="gravity"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/black_4a4a4a"
-        app:fontFamily="@font/regular"
-        app:textType="HEADING_6" />
+        app:fontFamily="@font/semi_bold"
+        app:textType="BODY_1" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -180,10 +180,10 @@
         android:gravity="center"
         android:text="@string/share_on_email"
         android:textAlignment="gravity"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/black_4a4a4a"
-        app:fontFamily="@font/regular"
-        app:textType="HEADING_6" />
+        app:fontFamily="@font/semi_bold"
+        app:textType="BODY_1" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -209,10 +209,10 @@
         android:gravity="center"
         android:text="@string/share_on_others"
         android:textAlignment="gravity"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/black_4a4a4a"
-        app:fontFamily="@font/regular"
-        app:textType="HEADING_6" />
+        app:fontFamily="@font/semi_bold"
+        app:textType="BODY_1" />
     </RelativeLayout>
 
   </androidx.appcompat.widget.LinearLayoutCompat>

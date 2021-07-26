@@ -42,6 +42,7 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.BusinessProfile.UI.Model.FacebookFeedPullModel;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
@@ -101,7 +102,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
     SharedPreferences.Editor prefsEditor;
     ArrayList<String> items;
     Handler handler = new Handler();
-    private Toolbar toolbar;
+    private CustomToolbar  toolbar;
     //final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
     private SharedPreferences pref = null;
     private ImageView facebookHome;
@@ -149,7 +150,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         mSharedPreferences = this.getSharedPreferences(TwitterConnection.PREF_NAME, MODE_PRIVATE);
         activity = Social_Sharing_Activity.this;
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (CustomToolbar) findViewById(R.id.toolbar);
 
         Typeface myCustomFont = Typeface.createFromAsset(this.getAssets(), "Roboto-Light.ttf");
         Typeface myCustomFont_Medium = Typeface.createFromAsset(this.getAssets(), "Roboto-Regular.ttf");

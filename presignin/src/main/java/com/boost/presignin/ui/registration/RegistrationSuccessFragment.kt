@@ -44,8 +44,7 @@ private const val TIME_INTERVAL =
 
 private var mBackPressed: Long = 0
 
-class RegistrationSuccessFragment :
-  AppBaseFragment<FragmentRegistrationSuccessBinding, LoginSignUpViewModel>() {
+class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessBinding, LoginSignUpViewModel>() {
 
   private var floatsRequest: CategoryFloatsRequest? = null
   private var authToken: AuthTokenDataItem? = null

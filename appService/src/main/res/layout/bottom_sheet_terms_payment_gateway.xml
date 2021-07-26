@@ -72,7 +72,7 @@
           android:gravity="center"
           android:paddingVertical="@dimen/size_14"
           android:text="@string/i_understand"
-          android:textAllCaps="true" />
+          android:textAllCaps="false" />
 
       </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>

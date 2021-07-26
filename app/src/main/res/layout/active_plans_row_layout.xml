@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
 
       <LinearLayout
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="5dp"
           android:text="@string/_30_09_2016"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
         <TextView
           android:id="@+id/tv_validity"
@@ -55,7 +55,7 @@
           android:layout_marginStart="2dp"
           android:text="@string/validity_1year"
           android:textSize="10sp"
-          android:textStyle="italic" />
+          android:fontFamily="@font/italic"/>
       </LinearLayout>
 
       <LinearLayout
@@ -74,7 +74,7 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="5dp"
           android:text="@string/dummy_date_29_09_2017"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
         <TextView
           android:id="@+id/tv_expires_in"
@@ -101,7 +101,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="@string/plan_details_heading"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
         <TextView
           android:id="@+id/tv_package_details"
@@ -117,7 +117,7 @@
         android:layout_marginTop="5dp"
         android:text="@string/see_plan_details"
         android:textColor="@color/primary"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
     </LinearLayout>
 
   </LinearLayout>
@@ -135,7 +135,7 @@
       android:gravity="center"
       android:text="@string/renew_upgrade"
       android:textColor="@color/white"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
       android:id="@+id/tv_add_features"
@@ -146,6 +146,6 @@
       android:gravity="center"
       android:text="@string/add_features"
       android:textColor="@color/light_gray"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
   </LinearLayout>
 </LinearLayout>

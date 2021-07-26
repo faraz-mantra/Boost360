@@ -38,8 +38,7 @@ import com.inventoryorder.utils.WebEngageController
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
-class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding>(),
-  RecyclerItemClickListener {
+class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding>(), RecyclerItemClickListener {
 
   private var itemsAdapter: AppBaseRecyclerViewAdapter<ItemsItem>? = null
   private var layoutManagerN: LinearLayoutManager? = null

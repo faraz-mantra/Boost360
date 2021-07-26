@@ -10,8 +10,7 @@ import com.framework.extensions.afterTextChanged
 import com.framework.models.BaseViewModel
 import com.framework.utils.showKeyBoard
 
-class BusinessDescriptionBottomSheet :
-  BaseBottomSheetDialog<BottomSheetBusinessDescBinding, BaseViewModel>() {
+class BusinessDescriptionBottomSheet : BaseBottomSheetDialog<BottomSheetBusinessDescBinding, BaseViewModel>() {
 
   private var businessProfileModel: BusinessProfileModel? = null
 

@@ -75,7 +75,7 @@
                 android:gravity="center"
                 android:text="@string/to"
                 android:textSize="13sp"
-                android:textStyle="italic" />
+                android:fontFamily="@font/italic" />
 
               <ImageView
                 android:id="@+id/social_sharing_facebook_profile_image"
@@ -233,7 +233,7 @@
                 android:gravity="center"
                 android:text="@string/to"
                 android:textSize="13sp"
-                android:textStyle="italic" />
+                android:fontFamily="@font/italic" />
 
               <ImageView
                 android:id="@+id/social_sharing_facebook_shop"
@@ -472,7 +472,7 @@
                 android:gravity="center"
                 android:text="@string/to"
                 android:textSize="13sp"
-                android:textStyle="italic" />
+                android:fontFamily="@font/italic" />
 
               <TextView
                 android:layout_width="wrap_content"
@@ -850,7 +850,7 @@
                 android:gravity="center"
                 android:text="@string/to"
                 android:textSize="13sp"
-                android:textStyle="italic" />
+                android:fontFamily="@font/italic"/>
 
               <ImageView
                 android:layout_width="30dp"
