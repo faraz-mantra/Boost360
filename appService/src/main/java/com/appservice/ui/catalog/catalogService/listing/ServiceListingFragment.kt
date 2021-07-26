@@ -274,7 +274,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun setListingView(visibility: Int) {
     binding?.baseRecyclerView?.visibility = visibility
-    binding?.llActionButtons?.visibility = visibility
+    binding?.cbAddService?.visibility = visibility
   }
 
   private fun setEmptyView() {
