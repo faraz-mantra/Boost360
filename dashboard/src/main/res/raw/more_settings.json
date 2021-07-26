@@ -5,7 +5,7 @@
       "icon": "ria_digital_assistant",
       "isActionButtonEnabled": false,
       "subtitle": "FAQs, help & support, notifications etc.",
-      "title": "Help and support"
+      "title": "Help and Support"
     },
     {
       "icon": "business_kyc",
@@ -39,7 +39,7 @@
       "icon": "my_bank_acccount",
       "actionBtn": {
         "color": "#F2FBE9",
-        "title": "VERIFIED",
+        "title": "Verified",
         "text_color": "#7ED321"
       },
       "isActionButtonEnabled": true,

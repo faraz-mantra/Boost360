@@ -6,6 +6,9 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
 import android.widget.Toast
 import com.appservice.ui.updatesBusiness.showDialog
 import com.dashboard.R
@@ -22,12 +25,11 @@ import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
-import com.framework.pref.BASE_IMAGE_URL
-import com.framework.pref.FACEBOOK_PAGE_WITH_ID
-import com.framework.pref.FACEBOOK_URL
+import com.framework.pref.*
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_ADDRESS
+import com.framework.pref.Key_Preferences.GET_FP_DETAILS_DESCRIPTION
+import com.framework.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
-import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import java.util.*
 
@@ -48,31 +50,40 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   override fun onCreateView() {
     this.session = UserSessionManager(baseActivity)
     setData()
+    setOnClickListener(binding?.rivUsersImage, binding?.rivBusinessImage,binding?.civProfile)
   }
 
   private fun setData() {
-    var imageUri = session?.getFPDetails(GET_FP_DETAILS_LogoUrl)
-    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("BizImages") && imageUri.contains("http").not()) {
-      imageUri = BASE_IMAGE_URL + imageUri
+    var featureImageUrl = session?.getFPDetails(GET_FP_DETAILS_IMAGE_URI)
+    if (featureImageUrl.isNullOrEmpty().not() && featureImageUrl!!.contains("BizImages") && featureImageUrl.contains("http").not()) {
+      featureImageUrl = BASE_IMAGE_URL + featureImageUrl
+    }
+    var businessLogoUrl = session?.getFPDetails(GET_FP_DETAILS_LogoUrl)
+    if (businessLogoUrl.isNullOrEmpty().not() && businessLogoUrl!!.contains("BizImages") && businessLogoUrl.contains("http").not()) {
+      businessLogoUrl = BASE_IMAGE_URL + businessLogoUrl
     }
     binding?.rivUsersImage?.apply {
-      if (imageUri.isNullOrEmpty().not()) {
-        baseActivity.glideLoad(this, url = imageUri, placeholder = R.drawable.ic_placeholder, isCrop = true)
-      } else setImageResource(R.drawable.ic_add_logo_d)
+      if (featureImageUrl.isNullOrEmpty().not()) {
+        baseActivity.glideLoad(this, url = featureImageUrl, placeholder = R.drawable.ic_placeholder, isCrop = true)
+      }
     }
     binding?.rivBusinessImage?.apply {
-      if (imageUri.isNullOrEmpty().not()) {
-        baseActivity.glideLoad(this, url = imageUri, placeholder = R.drawable.ic_placeholder, isCrop = true)
-      } else setImageResource(R.drawable.ic_add_logo_d)
+      if (businessLogoUrl.isNullOrEmpty().not()) {
+        baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.ic_placeholder, isCrop = true)
+      }
     }
     binding?.ctvName?.text = session?.userProfileName ?: session?.fpTag
-    val content = StringBuilder()
-    if (session?.fPEmail != null) content.append(session?.fPEmail).append(",")
-    if (session?.userPrimaryMobile != null) content.append(session?.userPrimaryMobile).append(",")
-    if (session?.userProfileName != null) content.append(session?.userProfileName)
-    binding?.ctvContent?.text = content ?: ""
+//    val content = StringBuilder()
+//    if (session?.fPEmail != null) content.append(session?.fPEmail).append(",")
+//    if (session?.userPrimaryMobile != null) content.append(session?.userPrimaryMobile).append(",")
+//    if (session?.userProfileName != null) content.append(session?.userProfileName)
+//    binding?.ctvContent?.text = content ?: ""
+    val city = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
+    val country = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
+    val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
+    binding?.ctvContent?.text = session?.getFPDetails(GET_FP_DETAILS_DESCRIPTION)
     binding?.ctvBusinessName?.text = session?.fPName ?: session?.fpTag
-    binding?.ctvBusinessAddress?.text = session?.getFPDetails(GET_FP_DETAILS_ADDRESS)
+    binding?.ctvBusinessAddress?.text = location
     setRecyclerView()
   }
 
@@ -206,6 +217,25 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     }
   }
 
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when(v){
+      binding?.rivUsersImage->{
+        baseActivity.startFeatureLogo(session)
+      }
+      binding?.rivBusinessImage->{
+        baseActivity.startBusinessLogo(session)
+      }
+      binding?.civProfile->{
+        baseActivity.startBusinessProfileDetailEdit(session)
+      }
+    }
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    super.onCreateOptionsMenu(menu, inflater)
+    inflater.inflate(R.menu.menu_more,menu)
+  }
   private fun likeUsFacebook(context: Context, review: String) {
     val facebookIntent: Intent = try {
       context.packageManager.getPackageInfo(context.getString(R.string.facebook_package), 0)
