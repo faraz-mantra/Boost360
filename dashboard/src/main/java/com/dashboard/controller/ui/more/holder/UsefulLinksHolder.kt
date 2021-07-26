@@ -13,6 +13,7 @@ import com.framework.extensions.visible
 
 
 class UsefulLinksHolder(binding: RecyclerItemUsefulLinksBinding) : AppBaseRecyclerViewHolder<RecyclerItemUsefulLinksBinding>(binding) {
+
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = item as? UsefulLinksItem
@@ -33,7 +34,4 @@ class UsefulLinksHolder(binding: RecyclerItemUsefulLinksBinding) : AppBaseRecycl
       binding.root.setOnClickListener { listener?.onItemClick(position, item, RecyclerViewActionType.USEFUL_LINKS_CLICK.ordinal) }
 
     }
-
-
-
 }

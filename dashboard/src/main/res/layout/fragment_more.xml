@@ -7,141 +7,132 @@
 
   </data>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
+  <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/view_background_1">
+    android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-      android:id="@+id/constraintLayout4"
+    <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@color/black_4a4a4a"
+      android:layout_height="match_parent"
       android:orientation="vertical"
-      android:padding="@dimen/size_16"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
+      android:background="@color/view_background_1">
 
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/customTextView8"
-        android:layout_width="wrap_content"
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/bold"
-        android:text="@string/menu"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/black_4a4a4a"
+        android:orientation="vertical"
+        android:padding="@dimen/size_16">
 
-      <com.framework.views.customViews.CustomImageView
-        android:id="@+id/customImageView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_help_white"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/customTextView8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/customTextView8"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/bold"
+          android:text="@string/menu"
+          android:textColor="@color/white"
+          android:textSize="24sp"
+          android:visibility="gone"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
 
-      <com.framework.views.roundedimageview.RoundedImageView
-        android:id="@+id/riv_users_image"
-        android:layout_width="80dp"
-        android:layout_height="@dimen/size_80"
-        android:layout_marginTop="@dimen/size_16"
-        android:src="@drawable/dummy_staff_img"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customTextView8"
-        app:riv_border_color="@color/white"
-        app:riv_border_width="2dp"
-        app:riv_corner_radius="@dimen/size_10"
-        app:riv_mutate_background="true"
-        app:riv_oval="false" />
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/customImageView7"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_help_white"
+          android:visibility="gone"
+          app:layout_constraintBottom_toBottomOf="@+id/customTextView8"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
 
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/ctv_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_16"
-        android:background="@drawable/rounded_stroke_3"
-        android:backgroundTint="@color/dark_gray"
-        android:fontFamily="@font/barlow_semi_bold"
-        android:gravity="center"
-        android:includeFontPadding="true"
-        android:paddingHorizontal="@dimen/size_8"
-        android:paddingVertical="2dp"
-        android:text="SUPER ADMIN"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/riv_users_image"
-        app:layout_constraintTop_toTopOf="@+id/riv_users_image" />
+        <com.framework.views.roundedimageview.RoundedImageView
+          android:id="@+id/riv_users_image"
+          android:layout_width="80dp"
+          android:layout_height="@dimen/size_80"
+          android:layout_marginTop="@dimen/size_16"
+          android:src="@drawable/dummy_staff_img"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/customTextView8"
+          app:riv_border_color="@color/white"
+          app:riv_border_width="2dp"
+          app:riv_corner_radius="@dimen/size_10"
+          app:riv_mutate_background="true"
+          app:riv_oval="false" />
 
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/ctv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_16"
-        android:fontFamily="@font/semi_bold"
-        android:gravity="center"
-        android:includeFontPadding="true"
-        android:paddingVertical="2dp"
-        android:text="Santosh Kamat"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/riv_users_image"
-        app:layout_constraintTop_toBottomOf="@+id/ctv_type" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_type"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_16"
+          android:background="@drawable/rounded_stroke_3"
+          android:backgroundTint="@color/dark_gray"
+          android:fontFamily="@font/barlow_semi_bold"
+          android:gravity="center"
+          android:includeFontPadding="true"
+          android:paddingHorizontal="@dimen/size_8"
+          android:paddingVertical="2dp"
+          android:text="SUPER ADMIN"
+          android:textColor="@color/white"
+          android:textSize="12sp"
+          app:layout_constraintStart_toEndOf="@+id/riv_users_image"
+          app:layout_constraintTop_toTopOf="@+id/riv_users_image" />
 
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/ctv_content"
-        android:layout_width="0dp"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_16"
-        android:fontFamily="@font/open_sans"
-        android:gravity="start"
-        android:includeFontPadding="true"
-        android:text="@string/your_email_mobile_no_username_password_payment_info_etc"
-        android:textColor="@color/gray_text_hint"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/customImageView4"
-        app:layout_constraintStart_toEndOf="@+id/riv_users_image"
-        app:layout_constraintTop_toBottomOf="@+id/ctv_name" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_16"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:includeFontPadding="true"
+          android:paddingVertical="2dp"
+          android:text="Santosh Kamat"
+          android:textColor="@color/white"
+          android:textSize="16sp"
+          app:layout_constraintStart_toEndOf="@+id/riv_users_image"
+          app:layout_constraintTop_toBottomOf="@+id/ctv_type" />
 
-      <com.framework.views.customViews.CustomImageView
-        android:id="@+id/customImageView4"
-        android:layout_width="@dimen/size_16"
-        android:layout_height="16dp"
-        android:src="@drawable/ic_arrow_right_7_white_d"
-        app:layout_constraintBottom_toBottomOf="@+id/ctv_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customTextView8" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_content"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_16"
+          android:ellipsize="end"
+          android:fontFamily="@font/regular"
+          android:gravity="start"
+          android:includeFontPadding="true"
+          android:maxLines="2"
+          android:text="@string/your_email_mobile_no_username_password_payment_info_etc"
+          android:textColor="@color/gray_text_hint"
+          android:textSize="12sp"
+          app:layout_constraintEnd_toStartOf="@+id/customImageView4"
+          app:layout_constraintStart_toEndOf="@+id/riv_users_image"
+          app:layout_constraintTop_toBottomOf="@+id/ctv_name" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/customImageView4"
+          android:layout_width="@dimen/size_16"
+          android:layout_height="16dp"
+          android:src="@drawable/ic_arrow_right_7_white_d"
+          app:layout_constraintBottom_toBottomOf="@+id/ctv_content"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/customTextView8" />
 
-    <View
-      android:id="@+id/view3"
-      android:layout_width="match_parent"
-      android:layout_height="1dp"
-      android:background="@color/gray_5c5c5c"
-      app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
-      app:layout_constraintVertical_bias="0" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.core.widget.NestedScrollView
-      android:id="@+id/nestedScrollView"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:fillViewport="true"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/view3">
+      <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_5c5c5c" />
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/linearLayoutCompat5"
@@ -158,7 +149,7 @@
             android:id="@+id/ctv_manage_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:text="@string/currently_managing"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -215,11 +206,11 @@
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_16"
-              android:fontFamily="@font/open_sans"
+              android:ellipsize="end"
+              android:fontFamily="@font/regular"
               android:gravity="start"
               android:includeFontPadding="true"
               android:maxLines="1"
-              android:ellipsize="end"
               android:text="gdfsfdsfjadfndsjkfdnsjkfdsfjkdsbfjkdsbfjdksfbdsjfbdskjfbdsfjkdsfbnjdskfbdskjfbdskjfdskjfsdkjfds"
               android:textColor="@color/gray_eeee"
               android:textSize="16sp"
@@ -273,7 +264,7 @@
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_4"
-              android:fontFamily="@font/open_sans_semibold"
+              android:fontFamily="@font/semi_bold"
               android:gravity="start"
               android:includeFontPadding="true"
               android:text="@string/my_boost_360_subscription"
@@ -289,7 +280,7 @@
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/_6dp"
-              android:fontFamily="@font/open_sans"
+              android:fontFamily="@font/regular"
               android:gravity="start"
               android:includeFontPadding="true"
               android:text="@string/upgrade_website_with_great_features_offers_for_you_current_plan_purchase_history_invoice_and_more"
@@ -860,10 +851,10 @@
 
           <!--          </androidx.appcompat.widget.LinearLayoutCompat>-->
           <com.framework.views.viewgroups.BaseRecyclerView
+            android:id="@+id/rv_useful_links"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:id="@+id/rv_useful_links"
             android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/ctv_useful_links_heading"
@@ -916,6 +907,6 @@
             android:src="@drawable/ic_boost_360_slogan" />
         </androidx.appcompat.widget.LinearLayoutCompat>
       </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-  </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.core.widget.NestedScrollView>
 </layout>

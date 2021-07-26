@@ -12,8 +12,8 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
-class AboutViewHolder(binding: RecyclerItemAboutAppBinding)
-  :AppBaseRecyclerViewHolder<RecyclerItemAboutAppBinding>(binding) {
+class AboutViewHolder(binding: RecyclerItemAboutAppBinding) :AppBaseRecyclerViewHolder<RecyclerItemAboutAppBinding>(binding) {
+
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = item as? AboutAppSectionItem
@@ -39,5 +39,4 @@ class AboutViewHolder(binding: RecyclerItemAboutAppBinding)
     }
 
   }
-
 }
