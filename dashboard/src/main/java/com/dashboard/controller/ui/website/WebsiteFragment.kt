@@ -9,6 +9,7 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.IntentConstant
@@ -248,7 +249,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
 
 
 class CategoriesPagerAdapter(private var context: Context, fm: FragmentManager)
-  : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+  : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
   override fun getItem(position: Int): Fragment {
     // getItem is called to instantiate the fragment for the given page.
@@ -289,6 +290,10 @@ class FragmentCategory: AppBaseFragment<FragmentWebsitePagerBinding,DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
+  }
+
+  override fun onResume() {
+    super.onResume()
     getWebsiteData()
   }
   private fun getWebsiteData() {
@@ -314,10 +319,12 @@ class FragmentCategory: AppBaseFragment<FragmentWebsitePagerBinding,DashboardVie
 //                if (data.actionItem!!.size % 2 != 0) R.color.white_smoke_1 else R.color.white
 //              )
 //            )
-            setAdapterCustomer(if(arguments?.getInt(IntentConstant.POSITION.name)==0) data?.actionItem!!.filter { it. isFeature==false}else data?.actionItem!!.filter { it. isFeature==true})
+            setAdapterCustomer(if (arguments?.getInt(IntentConstant.POSITION.name) == 0) data?.actionItem!!.filter { it.isFeature == false } else data?.actionItem!!.filter { it.isFeature == true })
           }
         }
+
       })
+
   }
 
 
