@@ -32,9 +32,11 @@ import com.framework.webengageconstant.*
 import java.util.*
 
 class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(), RecyclerItemClickListener {
+
   private var session: UserSessionManager? = null
   val TWITTER_URL = "https://twitter.com/Nowfloats"
   val TWITTER_ID_URL = "twitter://user?screen_name=nowfloats"
+
   override fun getLayout(): Int {
     return R.layout.fragment_more
   }
@@ -50,34 +52,28 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
 
   private fun setData() {
     var imageUri = session?.getFPDetails(GET_FP_DETAILS_LogoUrl)
-    if (imageUri.isNullOrEmpty()
-        .not() && imageUri!!.contains("BizImages") && imageUri.contains("http").not()
-    ) {
+    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("BizImages") && imageUri.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
     }
     binding?.rivUsersImage?.apply {
       if (imageUri.isNullOrEmpty().not()) {
-        baseActivity.glideLoad(this,url = imageUri,placeholder = R.drawable.ic_placeholder,isCrop = true)
+        baseActivity.glideLoad(this, url = imageUri, placeholder = R.drawable.ic_placeholder, isCrop = true)
       } else setImageResource(R.drawable.ic_add_logo_d)
     }
     binding?.rivBusinessImage?.apply {
       if (imageUri.isNullOrEmpty().not()) {
-        baseActivity.glideLoad(this,url = imageUri,placeholder = R.drawable.ic_placeholder,isCrop = true)
+        baseActivity.glideLoad(this, url = imageUri, placeholder = R.drawable.ic_placeholder, isCrop = true)
       } else setImageResource(R.drawable.ic_add_logo_d)
     }
-    binding?.ctvName?.text = session?.userProfileName ?:session?.fpTag
+    binding?.ctvName?.text = session?.userProfileName ?: session?.fpTag
     val content = StringBuilder()
-    if (session?.fPEmail!=null)
-    content.append(session?.fPEmail).append(",")
-    if (session?.userPrimaryMobile!=null)
-      content.append(session?.userPrimaryMobile).append(",")
-    if (session?.userProfileName!=null)
-      content.append(session?.userProfileName)
-    binding?.ctvContent?.text = content?:""
-    binding?.ctvBusinessName?.text = session?.fPName?:session?.fpTag
+    if (session?.fPEmail != null) content.append(session?.fPEmail).append(",")
+    if (session?.userPrimaryMobile != null) content.append(session?.userPrimaryMobile).append(",")
+    if (session?.userProfileName != null) content.append(session?.userProfileName)
+    binding?.ctvContent?.text = content ?: ""
+    binding?.ctvBusinessName?.text = session?.fPName ?: session?.fpTag
     binding?.ctvBusinessAddress?.text = session?.getFPDetails(GET_FP_DETAILS_ADDRESS)
     setRecyclerView()
-
   }
 
   private fun setRecyclerView() {
@@ -97,7 +93,6 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       RecyclerViewActionType.USEFUL_LINKS_CLICK.ordinal -> {
         val usefulLinksItem = item as? UsefulLinksItem
         usefulLinksItem?.icon?.let { UsefulLinksItem.IconType.fromName(it) }?.let { clickUsefulButton(it) }
-
       }
     }
   }
@@ -119,15 +114,15 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
           intent.putExtra("WEBSITE_NAME", getString(R.string.product_training_link))
           startActivity(intent)
         } else {
-         showDialog(baseActivity,getString(R.string.restricted_access),getString(R.string.you_need_to_buy_the_one_time_pack_for_boost),object: DialogInterface.OnClickListener {
-           override fun onClick(dialog: DialogInterface?, which: Int) {
-             dialog?.dismiss()
-           }
-         })
+          showDialog(baseActivity, getString(R.string.restricted_access), getString(R.string.you_need_to_buy_the_one_time_pack_for_boost), object : DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+              dialog?.dismiss()
+            }
+          })
         }
       }
     }
-    if (intent!=null){
+    if (intent != null) {
       startActivity(intent)
     }
   }
@@ -160,7 +155,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
           requireActivity().packageManager.getPackageInfo(getString(R.string.twitter_package), 0)
           intent.data = Uri.parse(TWITTER_ID_URL)
         } catch (e1: PackageManager.NameNotFoundException) {
-          intent.setData(Uri.parse(TWITTER_URL))
+          intent.data = Uri.parse(TWITTER_URL)
           e1.printStackTrace()
         }
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
@@ -174,8 +169,8 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
         intent.putExtra("WEBSITE_NAME", resources.getString(R.string.settings_privacy_url))
       }
       AboutAppSectionItem.IconType.like_us_on_facebook -> {
-       WebEngageController.trackEvent(ABOUT_BOOST_FB_LIKE, NO_EVENT_LABLE, NULL)
-       likeUsFacebook(baseActivity, "")
+        WebEngageController.trackEvent(ABOUT_BOOST_FB_LIKE, NO_EVENT_LABLE, NULL)
+        likeUsFacebook(baseActivity, "")
       }
       AboutAppSectionItem.IconType.rate_us_on_app_store -> {
         WebEngageController.trackEvent(ABOUT_BOOST_PLAY_STORE_RATING, NO_EVENT_LABLE, NULL)
@@ -205,14 +200,12 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
           intent.putExtra("WEBSITE_NAME", url)
         }
       }
-
     }
-    if (intent!=null){
+    if (intent != null) {
       startActivity(intent)
-
     }
-
   }
+
   private fun likeUsFacebook(context: Context, review: String) {
     val facebookIntent: Intent = try {
       context.packageManager.getPackageInfo(context.getString(R.string.facebook_package), 0)
@@ -220,14 +213,12 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     } catch (e: Exception) {
       Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK_URL + review))
     }
-    /* }else{
-            facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
-        }*/facebookIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
+    /* }else{facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));}*/
+    facebookIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
     try {
       context.startActivity(facebookIntent)
     } catch (e: Exception) {
       Toast.makeText(context, context.getString(R.string.unable_to_open_facebook), Toast.LENGTH_SHORT).show()
     }
   }
-
 }
