@@ -103,7 +103,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
   private var isManualSelectionModeEnd: Boolean = false
 
   private var showFeatureUI: Boolean = false
-  private lateinit var businessFeaturesManager: BusinessFeaturesManager
+  private var businessFeaturesManager: BusinessFeaturesManager?=null
 
   companion object {
     private var instance: TextInputManager? = null
@@ -222,7 +222,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     Timber.i("onDestroy()")
     inputEventDispatcher.keyEventReceiver = null
     inputEventDispatcher.close()
-    businessFeaturesManager.clearObservers()
+    businessFeaturesManager?.clearObservers()
     cancel()
     layoutManager.onDestroy()
     instance = null
@@ -290,7 +290,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     smartbarView?.updateSmartbarState()
     if (keyboardMode == KeyboardMode.BUSINESS_FEATURES) {
       val tabPos = SmartbarView.getSmartViewBinding().businessFeatureTabLayout.selectedTabPosition
-      businessFeaturesManager.showSelectedBusinessFeature(tabPos, BusinessFeatureEnum.values()[tabPos])
+      businessFeaturesManager?.showSelectedBusinessFeature(tabPos, BusinessFeatureEnum.values()[tabPos])
     }
   }
 
@@ -322,7 +322,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     textViewFlipper?.displayedChild = textViewFlipper?.indexOfChild(
       when (mode) {
         KeyboardMode.EDITING -> editingKeyboardView
-        KeyboardMode.BUSINESS_FEATURES -> businessFeaturesManager.getBindingRoot()
+        KeyboardMode.BUSINESS_FEATURES -> businessFeaturesManager?.getBindingRoot()
         else -> keyboardViews[mode]
       }
     )?.coerceAtLeast(0) ?: 0
@@ -824,7 +824,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
   override fun onTabSelected(tab: TabLayout.Tab?) {
     if (showFeatureUI) setActiveKeyboardMode(KeyboardMode.BUSINESS_FEATURES) else setActiveKeyboardMode(KeyboardMode.CHARACTERS)
     val tabPosition = tab?.position
-    tabPosition?.let { BusinessFeatureEnum.values()[it] }?.let { businessFeaturesManager.showSelectedBusinessFeature(tabPosition, it) }
+    tabPosition?.let { BusinessFeatureEnum.values()[it] }?.let { businessFeaturesManager?.showSelectedBusinessFeature(tabPosition, it) }
   }
 
   override fun onTabUnselected(tab: TabLayout.Tab?) {

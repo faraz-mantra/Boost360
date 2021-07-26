@@ -146,7 +146,7 @@ object NFWebEngageController {
   fun setCategory(userCategory: String?) {
     try {
       if (!userCategory.isNullOrEmpty()) {
-        val activity = weAnalytics.activity.get()
+        val activity = weAnalytics?.activity?.get()
         val version = activity?.packageManager?.getPackageInfo(activity.packageName, 0)?.versionName
         weUser.setAttribute("Category", userCategory)
         weUser.setAttribute("Version", version ?: "")
