@@ -86,14 +86,15 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat4">
 
-      <androidx.appcompat.widget.LinearLayoutCompat
+      <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white_smoke_1"
-        android:orientation="vertical">
+       >
 
         <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/linearLayoutCompat6"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="@color/black_4a4a4a"
@@ -102,7 +103,10 @@
           android:paddingStart="@dimen/size_16"
           android:paddingTop="@dimen/size_6"
           android:paddingEnd="@dimen/size_16"
-          android:paddingBottom="@dimen/size_20">
+          android:paddingBottom="@dimen/size_20"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -419,20 +423,23 @@
         <androidx.viewpager.widget.ViewPager
           android:id="@+id/pager"
           android:layout_width="match_parent"
-          android:layout_weight="1"
+          android:layout_height="0dp"
           android:nestedScrollingEnabled="true"
-          android:layout_height="0dp">
+          app:layout_constraintHeight_percent="0.60"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat6">
+
           <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabIndicatorColor="@color/colorAccent"
             app:tabIndicatorFullWidth="false"
-            app:tabTextAppearance="@style/TabTextApperance"
             app:tabSelectedTextColor="@color/colorAccent"
+            app:tabTextAppearance="@style/TabTextApperance"
             app:tabTextColor="@color/black_4a4a4a" />
         </androidx.viewpager.widget.ViewPager>
-      </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
   </androidx.constraintlayout.widget.ConstraintLayout>
 

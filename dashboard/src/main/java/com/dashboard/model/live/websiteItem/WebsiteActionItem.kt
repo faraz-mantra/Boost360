@@ -10,7 +10,7 @@ data class WebsiteActionItem(
   @SerializedName("isLock")
   var isLock: Boolean? = false,
   @SerializedName("isFeature")
-  var isFeature: Boolean? = false,
+  var isFeature: Boolean? = null,
   @SerializedName("premiumCode")
   var premiumCode: String? = "",
   @SerializedName("title")

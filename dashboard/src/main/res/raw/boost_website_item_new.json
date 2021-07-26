@@ -593,7 +593,7 @@
         {
           "title": "Service Catalogue",
           "count": 432,
-          "isFeature": true,
+          "isFeature": false,
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
           "type": "service_product_catalogue",
           "isLock": false,
