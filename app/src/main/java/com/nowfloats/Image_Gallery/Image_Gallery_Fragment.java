@@ -109,15 +109,11 @@ public class Image_Gallery_Fragment extends Fragment implements
     public void onResume() {
         super.onResume();
 
-        if (gvImages != null)
-            gvImages.invalidate();
-        if (otherImagesAdapter != null)
-            otherImagesAdapter.notifyDataSetChanged();
-        imageCount =  otherImagesAdapter.getCount();
-
-        imageGalleryListener.imageCount(imageCount);
-
-    }
+    if (gvImages != null)
+      gvImages.invalidate();
+    if (otherImagesAdapter != null)
+      otherImagesAdapter.notifyDataSetChanged();
+  }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
