@@ -1,16 +1,10 @@
 package com.nowfloats.Image_Gallery;
 
 import android.annotation.SuppressLint;
-
 import androidx.databinding.DataBindingUtil;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,8 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.dashboard.utils.ActivityUtilsKt;
-import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
@@ -42,23 +34,20 @@ public class ImageGalleryActivity extends AppCompatActivity {
 
     ActivityImageGalleryBinding binding;
     private int noOfImages = 0;
-    private int imageLimit = 0;
     ArrayList<String> purchasedWidgetList = new ArrayList<String>();
-    private com.framework.pref.UserSessionManager session;
-    private AppCompatActivity mContext;
-
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_image_gallery);
         MixPanelController.track(MixPanelController.IMAGE_GALLERY, null);
-        mContext = this;
 
         setSupportActionBar(binding.appBar.toolbar);
         Methods.isOnline(ImageGalleryActivity.this);
-        session = new com.framework.pref.UserSessionManager(getApplicationContext());
-        if (getSupportActionBar() != null) {
+
+        if (getSupportActionBar() != null)
+        {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -72,29 +61,26 @@ public class ImageGalleryActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fm_site_appearance, image_gallery_fragment, TAG_IMAGE).
                 commit();
 
-        if (savedInstanceState != null && image_gallery_fragment != null) {
+        if(savedInstanceState != null && image_gallery_fragment != null){
             Boolean startCreateMode = savedInstanceState.getBoolean("create_image", false);
-            if (startCreateMode) {
+            if(startCreateMode){
                 image_gallery_fragment.addImage();
             }
         }
-//        noOfImages =  image_gallery_fragment.getImageCount();
-    }
-
-    public void onResume() {
-        super.onResume();
-//        noOfImages =  image_gallery_fragment.getImageCount();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
 
                 finish();
@@ -162,16 +148,5 @@ public class ImageGalleryActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void imageCount(int count) {
-        noOfImages = count;
-        Log.d("imagesReceived", " 5 : " + count);
-    }
-
-    @Override
-    public void imageLimit(int limit) {
-        imageLimit = limit;
     }
 }
