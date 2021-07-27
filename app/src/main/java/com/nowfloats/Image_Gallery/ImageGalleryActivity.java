@@ -87,63 +87,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
                 break;
 
             case R.id.menu_add:
-                if (imageLimit == 0) {
-
-
-                    if (noOfImages < 3) {
-                        Log.d("imagesReceived", " 1 : " + noOfImages);
-                        image_gallery_fragment.addImage();
-                    } else {
-                        new AlertDialog.Builder(this)
-                                .setTitle("Limit Reached")
-                                .setMessage("You have reached the limit of content updates. Please upgrade to next plan to grow your business.")
-
-                                // Specifying a listener allows you to take an action before dismissing the dialog.
-                                // The dialog is automatically dismissed when a dialog button is clicked.
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // Continue with delete operation
-                                        ActivityUtilsKt.initiateAddonMarketplace(mContext,session,false,"comparePackageSelection","",false);
-
-                                    }
-                                })
-
-                                // A null listener allows the button to dismiss the dialog and take no further action.
-                                .setNegativeButton(android.R.string.no, null)
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .show();
-//                        ActivityUtilsKt.initiateAddonMarketplace(this,session,false,"comparePackageSelection","",false);
-                    }
-                } else {
-                    if (noOfImages < imageLimit) {
-
-                        image_gallery_fragment.addImage();
-                    } else {
-                        new AlertDialog.Builder(this)
-                                .setTitle("Limit Reached")
-                                .setMessage("You have reached the limit of content updates. Please upgrade to next plan to grow your business.")
-
-                                // Specifying a listener allows you to take an action before dismissing the dialog.
-                                // The dialog is automatically dismissed when a dialog button is clicked.
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // Continue with delete operation
-                                        ActivityUtilsKt.initiateAddonMarketplace(mContext,session,false,"comparePackageSelection","",false);
-
-                                    }
-                                })
-
-                                // A null listener allows the button to dismiss the dialog and take no further action.
-                                .setNegativeButton(android.R.string.no, null)
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .show();
-//                        ActivityUtilsKt.initiateAddonMarketplace(session, false, "comparePackageSelection", "");
-//                        ActivityUtilsKt.initiateAddonMarketplace(this,session,false,"comparePackageSelection","",false);
-                    }
-
-                }
-
-//                image_gallery_fragment.addImage();
+                image_gallery_fragment.addImage();
                 break;
         }
 
