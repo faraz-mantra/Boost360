@@ -143,25 +143,19 @@ public class Image_Gallery_Fragment extends Fragment implements
 
   }
 
-    @Override
-    public void imagesReceived() {
-        activity.runOnUiThread(() -> {
-            if (progressLayout != null) progressLayout.setVisibility(View.GONE);
-        });
-        if (gvImages != null) {
-            gvImages.invalidateViews();
-            if (otherImagesAdapter != null) otherImagesAdapter.notifyDataSetChanged();
-            if (emptyGalleryLayout != null && otherImagesAdapter.getCount() != 0) {
-                emptyGalleryLayout.setVisibility(View.GONE);
-                imageCount = otherImagesAdapter.getCount();
-                Log.d("imageGalleryListener", " 3 :  " + imageGalleryListener);
-                imageGalleryListener.imageCount(imageCount);
-                Log.d("imagesReceived", " 3 :  " + imageCount);
-            }
-        }
-        ArrayList<String> serverImage = Constants.storeSecondaryImages;
-        onImageGalleryAddedOrUpdated(serverImage != null && !serverImage.isEmpty());
+  @Override
+  public void imagesReceived() {
+    activity.runOnUiThread(() -> {
+      if (progressLayout != null) progressLayout.setVisibility(View.GONE);
+    });
+    if (gvImages != null) {
+      gvImages.invalidateViews();
+      if (otherImagesAdapter != null) otherImagesAdapter.notifyDataSetChanged();
+      if (emptyGalleryLayout != null && otherImagesAdapter.getCount() != 0) {emptyGalleryLayout.setVisibility(View.GONE);}
     }
+    ArrayList<String> serverImage = Constants.storeSecondaryImages;
+    onImageGalleryAddedOrUpdated(serverImage != null && !serverImage.isEmpty());
+  }
 
   private void onImageGalleryAddedOrUpdated(Boolean isAdded) {
     FirestoreManager instance = FirestoreManager.INSTANCE;
@@ -296,15 +290,9 @@ public class Image_Gallery_Fragment extends Fragment implements
     }
   }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            imageGalleryListener = (ImageGalleryListener) activity;
-        } catch (Exception e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement ImageGalleryListener");
-        }
+  @Override
+  public void onAttach(Activity activity) {
+    super.onAttach(activity);
 
 
   }
@@ -614,12 +602,7 @@ public class Image_Gallery_Fragment extends Fragment implements
     gvImages.invalidate();
   }
 
-    public void addImage() {
-        selectImage();
-    }
-
-    public int getImageCount() {
-        Log.d("imagesReceived", " 4 : " + imageCount);
-        return imageCount;
-    }
+  public void addImage() {
+    selectImage();
+  }
 }
