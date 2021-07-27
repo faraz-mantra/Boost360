@@ -88,18 +88,7 @@ public class Image_Gallery_Fragment extends Fragment implements
 
   private final int gallery_req_id = 6;
 
-    ArrayList<String> purchasedWidgetList = new ArrayList<String>();
-    String featureList = null;
-    int limitValue = 0;
-    int imageCount = 0;
-    ImageGalleryListener imageGalleryListener = null;
-
-    public Image_Gallery_Fragment getInstance(ImageGalleryListener mListener) {
-        Log.d("imageGalleryListener", " " + mListener);
-        imageGalleryListener = mListener;
-        return new Image_Gallery_Fragment();
-    }
-
+  ArrayList<String> purchasedWidgetList = new ArrayList<String>();
 
   @Override
   public void onResume() {

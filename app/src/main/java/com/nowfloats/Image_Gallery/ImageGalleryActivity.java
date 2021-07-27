@@ -34,7 +34,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 @SuppressLint("ValidFragment")
-public class ImageGalleryActivity extends AppCompatActivity implements ImageGalleryListener {
+public class ImageGalleryActivity extends AppCompatActivity {
 
     private Image_Gallery_Fragment image_gallery_fragment;
 
@@ -67,8 +67,7 @@ public class ImageGalleryActivity extends AppCompatActivity implements ImageGall
 
         binding.appBar.toolbarTitle.setText(getResources().getString(R.string.image_gallery));
 
-//        image_gallery_fragment = new Image_Gallery_Fragment();
-        image_gallery_fragment = new Image_Gallery_Fragment().getInstance(this);
+        image_gallery_fragment = new Image_Gallery_Fragment();
         findViewById(R.id.fm_site_appearance).setVisibility(View.VISIBLE);
         getSupportFragmentManager().beginTransaction().replace(R.id.fm_site_appearance, image_gallery_fragment, TAG_IMAGE).
                 commit();
