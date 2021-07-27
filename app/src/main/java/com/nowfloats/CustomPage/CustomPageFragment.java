@@ -1,15 +1,11 @@
 package com.nowfloats.CustomPage;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,26 +16,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.dashboard.utils.ActivityUtilsKt;
 import com.framework.models.firestore.FirestoreManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 import com.nowfloats.CustomPage.Model.CustomPageEvent;
 import com.nowfloats.CustomPage.Model.CustomPageLink;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.on_boarding.OnBoardingApiCalls;
-import com.nowfloats.signup.UI.Model.Get_Feature_Details;
-import com.nowfloats.signup.UI.Model.Get_Feature_DetailsItem;
-import com.nowfloats.signup.UI.Model.Get_Properties_Details;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -74,7 +64,6 @@ public class CustomPageFragment extends Fragment {
   private LinearLayout emptylayout, progress_layout;
   UserSessionManager session;
   Activity activity;
-  AppCompatActivity activityContext;
   public static boolean customPageDeleteCheck = false;
   private TextView titleTextView;
   private ImageView delete;
@@ -83,11 +72,6 @@ public class CustomPageFragment extends Fragment {
 //    private View deleteView = null;
   public CustomPageDeleteInterface deleteInterface;
   CustomPageLink customPageLink;
-  String featureList = null;
-  int limitValue = 0;
-  private int noOfImages = 0;
-  private Context mContext;
-  private com.framework.pref.UserSessionManager mSession;
 
   @Override
   public void onResume() {
@@ -157,65 +141,7 @@ public class CustomPageFragment extends Fragment {
 
     final FloatingActionButton addProduct = view.findViewById(R.id.fab_custom_page);
 
-//    addProduct.setOnClickListener(v -> addProduct());
-    addProduct.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                  if (limitValue == 0) {
-
-
-                    if (noOfImages < 1) {
-                     addProduct();
-                    } else {
-                      new AlertDialog.Builder(getActivity())
-                              .setTitle("Limit Reached")
-                              .setMessage("You have reached the limit of content updates. Please upgrade to next plan to grow your business.")
-
-                              // Specifying a listener allows you to take an action before dismissing the dialog.
-                              // The dialog is automatically dismissed when a dialog button is clicked.
-                              .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                  // Continue with delete operation
-                                  ActivityUtilsKt.initiateAddonMarketplace(((CustomPageActivity)getActivity()) ,mSession,false,"comparePackageSelection","",false);
-
-                                }
-                              })
-
-                              // A null listener allows the button to dismiss the dialog and take no further action.
-                              .setNegativeButton(android.R.string.no, null)
-                              .setIcon(android.R.drawable.ic_dialog_alert)
-                              .show();
-//                        ActivityUtilsKt.initiateAddonMarketplace(this,session,false,"comparePackageSelection","",false);
-                    }
-                  } else {
-                    if (noOfImages < limitValue) {
-
-                      addProduct();
-                    } else {
-                      new AlertDialog.Builder(getActivity())
-                              .setTitle("Limit Reached")
-                              .setMessage("You have reached the limit of content updates. Please upgrade to next plan to grow your business.")
-
-                              // Specifying a listener allows you to take an action before dismissing the dialog.
-                              // The dialog is automatically dismissed when a dialog button is clicked.
-                              .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                  // Continue with delete operation
-                                  ActivityUtilsKt.initiateAddonMarketplace(((CustomPageActivity)getActivity()),mSession,false,"comparePackageSelection","",false);
-
-                                }
-                              })
-
-                              // A null listener allows the button to dismiss the dialog and take no further action.
-                              .setNegativeButton(android.R.string.no, null)
-                              .setIcon(android.R.drawable.ic_dialog_alert)
-                              .show();
-                    }
-
-                  }
-//                  addProduct();
-                }
-            });
+    addProduct.setOnClickListener(v -> addProduct());
     if ((activity instanceof CustomPageActivity) && ((CustomPageActivity) activity).isAdd) addProduct();
   }
 
@@ -223,34 +149,13 @@ public class CustomPageFragment extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 //        setContentView(R.layout.fragment_custom_page);
-    activityContext = (AppCompatActivity) mContext;
+
     activity = getActivity();
-    mContext = getContext();
-    mSession = new com.framework.pref.UserSessionManager(activity);
     pageInterface = Constants.restAdapter.create(CustomPageInterface.class);
     session = new UserSessionManager(activity.getApplicationContext(), activity);
     bus = BusProvider.getInstance().getBus();
     deleteInterface = (CustomPageDeleteInterface) activity;
 
-    Bundle bundle = activity.getIntent().getExtras();
-    if (bundle != null) {
-      featureList = bundle.getString("featureWidgets");
-    }
-    Get_Feature_Details valueFeature = new Gson().fromJson(featureList, Get_Feature_Details.class);
-    for (Get_Feature_DetailsItem aList : valueFeature) {
-      Log.v("Get_Feature_DetailsItem", " "+ aList.getFeatureKey());
-            if (aList.getFeatureKey().equals("UNLIMITED_CONTENT")) {
-        Log.v("valueFeature", " "+ "UNLIMITED_CONTENT");
-        for (Get_Properties_Details pList : aList.getProperties()) {
-                     if (pList.getKey().equals("CUSTOM_PAGE")){
-                        limitValue = Integer.parseInt(pList.getValue());
-                    }
-
-
-        }
-
-      }
-    }
 //        toolbar = (Toolbar) findViewById(R.id.tool_bar_product_detail);
     // defaultColor = activity.getResources().getColor(R.color.primaryColor);
 //        toolbar.setBackgroundResource(defaultColor);
@@ -310,7 +215,6 @@ public class CustomPageFragment extends Fragment {
   @Subscribe
   public void getPageList(CustomPageEvent response) {
     dataModel = (ArrayList<CustomPageModel>) response.model;
-    noOfImages = dataModel.size();
     if (dataModel != null) {
       onCustomPageAddedOrUpdated(!dataModel.isEmpty());
       if (dataModel.isEmpty()) emptylayout.setVisibility(View.VISIBLE);

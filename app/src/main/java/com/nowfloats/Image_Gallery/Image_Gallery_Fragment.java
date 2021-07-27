@@ -119,56 +119,23 @@ public class Image_Gallery_Fragment extends Fragment implements
 
   private void initializeControls(View view) {
 
-        activity = getActivity();
-        session = new UserSessionManager(getContext(), activity);
-        gvImages = view.findViewById(R.id.grid);
-        emptyGalleryLayout = view.findViewById(R.id.layout_empty);
-        progressLayout = view.findViewById(R.id.layout_progress);
-        progressLayout.setVisibility(View.VISIBLE);
-        otherImagesAdapter = new OtherImagesAdapter(activity);
-        if (otherImagesAdapter.getCount() == 0) {
-            emptyGalleryLayout.setVisibility(View.VISIBLE);
-        } else {
-            emptyGalleryLayout.setVisibility(View.GONE);
-        }
-        Bundle bundle = activity.getIntent().getExtras();
-        if (bundle != null) {
-            purchasedWidgetList = bundle.getStringArrayList("userPurchsedWidgets");
-            featureList = bundle.getString("featureWidgets");
-        }
-        Get_Feature_Details valueFeature = new Gson().fromJson(featureList, Get_Feature_Details.class);
-        for (Get_Feature_DetailsItem aList : valueFeature) {
-            Log.v("Get_Feature_DetailsItem", " " + aList.getFeatureKey());
-            /*if (aList.getFeatureKey().equals("IMAGEGALLERY")) {
-                for (Get_Properties_Details pList : aList.getProperties()) {
-                    if (pList.getKey().equals("LIMIT")) {
-                        limitValue = Integer.parseInt(pList.getValue());
-                    }
-                }
-            } else*/
-            if (aList.getFeatureKey().equals("UNLIMITED_CONTENT")) {
-                Log.v("valueFeature", " " + "UNLIMITED_CONTENT");
-                for (Get_Properties_Details pList : aList.getProperties()) {
-                    /*if (pList.getKey().equals("LATESTUPDATES")) {
-                        limitValue = Integer.parseInt(pList.getValue());
-                    }else if (pList.getKey().equals("PRODUCT_CATALOUGE")){
-                        limitValue = Integer.parseInt(pList.getValue());
-                    }
-                    else if (pList.getKey().equals("CUSTOM_PAGE")){
-                        limitValue = Integer.parseInt(pList.getValue());
-                    }
-                    else */
-                    if (pList.getKey().equals("IMAGE")) {
-                        Log.v("valueFeature", " " + "IMAGE");
-                        limitValue = Integer.parseInt(pList.getValue());
-                    }
-
-
-                }
-                imageGalleryListener.imageLimit(limitValue);
-            }
-        }
-        gvImages.setAdapter(otherImagesAdapter);
+    activity = getActivity();
+    session = new UserSessionManager(getContext(), activity);
+    gvImages = view.findViewById(R.id.grid);
+    emptyGalleryLayout = view.findViewById(R.id.layout_empty);
+    progressLayout = view.findViewById(R.id.layout_progress);
+    progressLayout.setVisibility(View.VISIBLE);
+    otherImagesAdapter = new OtherImagesAdapter(activity);
+    if (otherImagesAdapter.getCount() == 0) {
+      emptyGalleryLayout.setVisibility(View.VISIBLE);
+    } else {
+      emptyGalleryLayout.setVisibility(View.GONE);
+    }
+    Bundle bundle = activity.getIntent().getExtras();
+    if (bundle != null) {
+      purchasedWidgetList = bundle.getStringArrayList("userPurchsedWidgets");
+    }
+    gvImages.setAdapter(otherImagesAdapter);
 
     GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface(activity, session);
     gallery.setGalleryInterfaceListener(this);
