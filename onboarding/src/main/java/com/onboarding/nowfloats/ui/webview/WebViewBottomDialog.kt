@@ -3,6 +3,7 @@ package com.onboarding.nowfloats.ui.webview
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.view.View
 import android.webkit.*
 import com.framework.base.BaseBottomSheetDialog
@@ -74,8 +75,23 @@ class WebViewBottomDialog : BaseBottomSheetDialog<WebViewBottomsheetBinding, Bas
     binding?.webview?.webViewClient = object : WebViewClient() {
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         binding?.progressBar?.visible()
-        view.loadUrl(url)
-        return false
+        return if (
+          url.startsWith("mailto:") || url.startsWith("tel:") || url.startsWith("geo:")
+          || url.startsWith("whatsapp:") || url.startsWith("spotify:")
+        ) {
+          try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+          } catch (e: Exception) {
+            e.printStackTrace()
+            view.loadUrl(url)
+            false
+          }
+          true
+        } else {
+          view.loadUrl(url)
+          false
+        }
       }
 
       override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
