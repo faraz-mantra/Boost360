@@ -207,7 +207,6 @@ fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOp
     intent.putExtra("screenType", screenType)
     intent.putExtra("accountType", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
     intent.putStringArrayListExtra("userPurchsedWidgets", session.getStoreWidgets() as ArrayList<String>)
-    intent.putExtra("featureWidgets", session.getFeatureDetails(Key_Preferences.FEATURE_DETAILS))
     if (session.fPEmail != null) {
       intent.putExtra("email", session.fPEmail)
     } else {
@@ -354,7 +353,6 @@ fun AppCompatActivity.startAddImageGallery(session: UserSessionManager?, isCreat
     WebEngageController.trackEvent(IMAGE_GALLERY, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.nowfloats.Image_Gallery.ImageGalleryActivity"))
     webIntent.putStringArrayListExtra("userPurchsedWidgets", session?.getStoreWidgets() as ArrayList<String>)
-    webIntent.putExtra("featureWidgets", session.getFeatureDetails(Key_Preferences.FEATURE_DETAILS))
     webIntent.putExtra("create_image", isCreate)
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

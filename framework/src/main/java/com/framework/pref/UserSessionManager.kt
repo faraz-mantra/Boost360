@@ -582,19 +582,8 @@ class UserSessionManager(var activity: Context) {
       e.printStackTrace()
     }
   }
-  fun storeFeatureDetails(key: String, value: String?) {
-    try {
-      editor.putString(key.trim { it <= ' ' }, value?.trim { it <= ' ' } ?: "")
-      editor.apply()
-    } catch (e: Exception) {
-      e.printStackTrace()
-    }
-  }
 
   fun getFPDetails(key: String): String? {
-    return pref.getString(key.trim { it <= ' ' }, "")
-  }
-  fun getFeatureDetails(key: String): String? {
     return pref.getString(key.trim { it <= ' ' }, "")
   }
 
