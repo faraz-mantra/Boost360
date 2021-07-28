@@ -16,6 +16,9 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
+import com.framework.views.zero.OnZeroCaseClicked
+import com.framework.views.zero.RequestZeroCaseBuilder
+import com.framework.views.zero.ZeroCases
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.ORDER_PAGE_LOAD
 import com.framework.webengageconstant.PAGE_VIEW
@@ -61,7 +64,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
-open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener {
+open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener, OnZeroCaseClicked {
 
   lateinit var mPopupWindow: PopupWindow
   private lateinit var requestFilter: OrderFilterRequest
@@ -94,7 +97,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(ORDER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    setOnClickListener(binding?.btnAdd, binding?.buttonAddApt)
+    setOnClickListener(binding?.btnAdd)
     apiSellerSummary()
     layoutManagerN = LinearLayoutManager(baseActivity)
     layoutManagerN?.let { scrollPagingListener(it) }
@@ -107,19 +110,23 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnAdd, binding?.buttonAddApt -> {
-        val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
-        if (!PreferencesUtils.instance.getData(
-            PreferenceConstant.SHOW_CREATE_ORDER_WELCOME,
-            false
-          )
-        ) {
-          startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, bundle, isResult = true)
-        } else {
-          startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle, isResult = true)
-        }
+      binding?.btnAdd -> {
+        addOrders()
       }
+    }
+  }
+
+  private fun addOrders() {
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
+    if (!PreferencesUtils.instance.getData(
+        PreferenceConstant.SHOW_CREATE_ORDER_WELCOME,
+        false
+      )
+    ) {
+      startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, bundle, isResult = true)
+    } else {
+      startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle, isResult = true)
     }
   }
 
@@ -197,7 +204,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
     binding?.orderRecycler?.visible()
-    binding?.errorView?.gone()
+//    binding?.errorView?.gone()
     if (orderAdapter != null) {
       orderAdapter?.notify(getNewList(items))
     } else setAdapterOrderList(getNewList(items))
@@ -647,12 +654,15 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   }
 
   private fun emptyView() {
-    binding?.orderRecycler?.gone()
-    binding?.errorView?.visible()
-    binding?.btnActionTutorials?.setOnClickListener {
-      val sheet = LearnHowItWorkBottomSheet()
-      sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
-    }
+//    binding?.orderRecycler?.gone()
+//    binding?.errorView?.visible()
+
+//    binding?.btnActionTutorials?.setOnClickListener {
+//      val sheet = LearnHowItWorkBottomSheet()
+//      sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
+//    }
+    addFragmentReplace(containerID = R.id.container, RequestZeroCaseBuilder(ZeroCases.ORDERS, this, baseActivity).getRequest().build(), true)
+
   }
 
   private fun getRequestFilterData(
@@ -746,5 +756,18 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       )
     }
     return queryList
+  }
+
+  override fun primaryButtonClicked() {
+    addOrders()
+  }
+
+  override fun secondaryButtonClicked() {
+    val sheet = LearnHowItWorkBottomSheet()
+    sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
+  }
+
+  override fun ternaryButtonClicked() {
+    TODO("Not yet implemented")
   }
 }

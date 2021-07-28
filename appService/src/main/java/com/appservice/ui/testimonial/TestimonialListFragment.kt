@@ -14,10 +14,13 @@ import com.appservice.rest.TaskCode
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.views.zero.OnZeroCaseClicked
+import com.framework.views.zero.RequestZeroCaseBuilder
+import com.framework.views.zero.ZeroCases
 import org.json.JSONObject
 import java.util.ArrayList
 
-class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListBinding>() {
+class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListBinding>(), OnZeroCaseClicked {
 
   private var isEdit: Boolean = false
   private var headerToken = "59c89bbb5d64370a04c9aea1"
@@ -63,12 +66,14 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
       TaskCode.GET_TESTIMONIAL.ordinal -> {
         val response = (it as? TestimonialDataResponse)
         if (response?.data.isNullOrEmpty().not()) {
-          binding?.emptyLayout?.gone()
+//          binding?.emptyLayout?.gone()
           binding?.rvTestimonial?.visible()
           setTestimonialAdapter(response?.data!!)
         } else {
           binding?.rvTestimonial?.gone()
-          binding?.emptyLayout?.visible()
+//          binding?.emptyLayout?.visible()
+          addFragmentReplace(containerID = R.id.container, RequestZeroCaseBuilder(ZeroCases.TESTIMONIAL, this, baseActivity).getRequest().build(), true)
+
         }
       }
     }
@@ -90,16 +95,32 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.menu_add -> {
-        val bundle: Bundle = Bundle.EMPTY
-        startTestimonialFragmentActivity(
-          FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT,
-          bundle,
-          clearTop = false,
-          isResult = true
-        )
+        addTestimonial()
         true
       }
       else -> super.onOptionsItemSelected(item)
     }
+  }
+
+  private fun addTestimonial() {
+    val bundle: Bundle = Bundle.EMPTY
+    startTestimonialFragmentActivity(
+      FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT,
+      bundle,
+      clearTop = false,
+      isResult = true
+    )
+  }
+
+  override fun primaryButtonClicked() {
+    addTestimonial()
+  }
+
+  override fun secondaryButtonClicked() {
+    TODO("Not yet implemented")
+  }
+
+  override fun ternaryButtonClicked() {
+    TODO("Not yet implemented")
   }
 }
