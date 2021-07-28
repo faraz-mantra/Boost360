@@ -5,7 +5,8 @@ import com.onboarding.nowfloats.databinding.ItemFeatureDetailsBottomSheetBinding
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
-class FeatureDetailsRecyclerViewHolder(binding: ItemFeatureDetailsBottomSheetBinding) : AppBaseRecyclerViewHolder<ItemFeatureDetailsBottomSheetBinding>(binding) {
+class FeatureDetailsRecyclerViewHolder(binding: ItemFeatureDetailsBottomSheetBinding) :
+  AppBaseRecyclerViewHolder<ItemFeatureDetailsBottomSheetBinding>(binding) {
 
   var model: DetailsFeature? = null
 

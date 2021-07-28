@@ -1,166 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#FBFBFB"
+  android:orientation="vertical">
+
+  <include
+    android:id="@+id/app_bar"
+    layout="@layout/new_custome_app_bar" />
+
+  <LinearLayout
+    android:id="@+id/primary_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FBFBFB">
+    android:visibility="gone"
+    tools:visibility="gone">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/new_custome_app_bar"/>
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/_10sdp"
+      android:fontFamily="@font/regular"
+      android:text="@string/every_project_has_an_expert_team_and_your_team_can_be_highlighted_individually_in_this_section"
+      android:textColor="#747474"
+      android:textSize="@dimen/_13sdp" />
 
     <LinearLayout
-        android:id="@+id/primary_layout"
-        android:layout_width="match_parent"
+      android:id="@+id/project_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/_10sdp"
+      android:layout_marginTop="@dimen/_10sdp"
+      android:background="@drawable/all_side_small_curve_bg"
+      android:elevation="@dimen/_2sdp"
+      android:foreground="?android:attr/selectableItemBackground"
+      android:orientation="horizontal">
+
+      <TextView
+        android:id="@+id/project_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="@dimen/_10sdp"
+        android:text="@string/projects_listing_0"
+        android:textColor="#787878"
+        android:textSize="@dimen/_14sdp" />
+
+      <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:padding="@dimen/_10sdp"
+        app:srcCompat="@drawable/ic_front_arrow_orange" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/team_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/_10sdp"
+      android:layout_marginTop="@dimen/_10sdp"
+      android:background="@drawable/all_side_small_curve_bg"
+      android:elevation="@dimen/_2sdp"
+      android:foreground="?android:attr/selectableItemBackground"
+      android:orientation="horizontal">
+
+      <TextView
+        android:id="@+id/team_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="@dimen/_10sdp"
+        android:text="@string/team_listing_0"
+        android:textColor="#787878"
+        android:textSize="@dimen/_14sdp" />
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:padding="@dimen/_10sdp"
+        app:srcCompat="@drawable/ic_front_arrow_orange" />
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/secondary_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:visibility="visible"
+    tools:visibility="visible">
+
+    <RelativeLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:padding="@dimen/_20sdp">
+
+      <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circle_feature_bg"
+        android:elevation="@dimen/_2sdp"
+        android:gravity="center">
+
+        <ImageView
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          app:srcCompat="@drawable/ic_expiry_lock" />
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="gone">
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="70dp"
+        android:paddingRight="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_20sdp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
-            android:fontFamily="@font/open_sans"
-            android:text="@string/every_project_has_an_expert_team_and_your_team_can_be_highlighted_individually_in_this_section"
-            android:textColor="#747474"
-            android:textSize="@dimen/_13sdp" />
+          android:id="@+id/feature_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/semi_bold"
+          android:text="@string/projects_amp_teams"
+          android:textColor="@color/common_text_color"
+          android:textSize="@dimen/_16sdp" />
 
-        <LinearLayout
-            android:id="@+id/project_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/all_side_small_curve_bg"
-            android:elevation="@dimen/_2sdp"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:orientation="horizontal">
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_20sdp"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:text="@string/looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_every_project_has_an_expert_team_and_your_team_can_be_highlighted_individually_in_this_section"
+          android:textSize="@dimen/_11sdp" />
 
-            <TextView
-                android:id="@+id/project_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/_10sdp"
-                android:text="@string/projects_listing_0"
-                android:textColor="#787878"
-                android:textSize="@dimen/_14sdp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:padding="@dimen/_10sdp"
-                app:srcCompat="@drawable/ic_front_arrow_orange" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/team_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/all_side_small_curve_bg"
-            android:elevation="@dimen/_2sdp"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/team_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/_10sdp"
-                android:text="@string/team_listing_0"
-                android:textColor="#787878"
-                android:textSize="@dimen/_14sdp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:padding="@dimen/_10sdp"
-                app:srcCompat="@drawable/ic_front_arrow_orange" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/secondary_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:visibility="visible"
-        tools:visibility="visible">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_20sdp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"
-                android:elevation="@dimen/_2sdp"
-                android:background="@drawable/circle_feature_bg"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    app:srcCompat="@drawable/ic_expiry_lock"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:gravity="center"
-                android:paddingTop="70dp"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingRight="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_20sdp"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/feature_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/projects_amp_teams"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:textColor="@color/common_text_color"
-                    android:textSize="@dimen/_16sdp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_every_project_has_an_expert_team_and_your_team_can_be_highlighted_individually_in_this_section"
-                    android:gravity="center"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:textSize="@dimen/_11sdp"
-                    android:layout_marginTop="@dimen/_20sdp"/>
-
-                <TextView
-                    android:id="@+id/buy_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/orange_button_click_effect"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
-                    android:gravity="center"
-                    android:text="@string/view_in_add_on_store"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="@dimen/_20sdp"/>
+        <TextView
+          android:id="@+id/buy_item"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_10sdp"
+          android:layout_marginTop="@dimen/_20sdp"
+          android:layout_marginEnd="@dimen/_10sdp"
+          android:background="@drawable/orange_button_click_effect"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:textAllCaps="false"
+          android:paddingTop="@dimen/_10sdp"
+          android:paddingBottom="@dimen/_10sdp"
+          android:text="@string/view_in_add_on_store"
+          android:textColor="@color/white" />
 
 
-            </LinearLayout>
+      </LinearLayout>
 
-        </RelativeLayout>
+    </RelativeLayout>
 
-    </LinearLayout>
+  </LinearLayout>
 
 </LinearLayout>

@@ -1,17 +1,20 @@
 package nfkeyboard.activity;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.EditText;
 
 
-public class TestMainActivity extends AppCompatActivity{
+public class TestMainActivity extends AppCompatActivity {
 
     // Used to load the 'native-lib' library on application startup.
 
     SpellCheckerManager spellCheckerManager;
     EditText query;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +30,10 @@ public class TestMainActivity extends AppCompatActivity{
         getLifecycle().addObserver(spellCheckerManager);
     }
 
-    public void goClick(View v){
+    public void goClick(View v) {
         spellCheckerManager.getSuggestions(query.getText().toString());
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -1,131 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cardView"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/cardView"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@color/white"
+  android:clickable="true"
+  android:focusable="true">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:clickable="true"
-    android:focusable="true">
+    android:layout_height="@dimen/_50sdp">
+
+    <LinearLayout
+      android:id="@+id/card_payment_check_layout"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:padding="@dimen/_8sdp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <RadioButton
+        android:id="@+id/card_payment_addons_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/SelectCardPayment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginEnd="@dimen/_5sdp"
+      android:gravity="center_vertical"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/card_payment_addons_amount_layout"
+      app:layout_constraintStart_toEndOf="@+id/card_payment_check_layout"
+      app:layout_constraintTop_toTopOf="parent">
+
+
+      <TextView
+        android:id="@+id/card_payment_addons_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_semibold"
+        android:lineSpacingExtra="1.3sp"
+        android:text="SBI Debit Card"
+        android:textColor="#2a2a2a" />
+
+      <TextView
+        android:id="@+id/card_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:lineSpacingExtra="1.3sp"
+        android:text="***1854"
+        android:textColor="#2a2a2a"
+        android:textSize="@dimen/_8sdp" />
+
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp">
+      android:id="@+id/card_payment_addons_amount_layout"
+      android:layout_width="@dimen/_60sdp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/_5sdp"
+      android:gravity="center"
+      android:padding="@dimen/_5sdp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/card_cvv"
+      app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/card_payment_check_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+      <ImageView
+        android:id="@+id/card_type_image"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_15sdp"
+        android:src="@drawable/visa"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <RadioButton
-                android:id="@+id/card_payment_addons_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:theme="@style/SelectCardPayment"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/card_payment_addons_amount_layout"
-            app:layout_constraintStart_toEndOf="@+id/card_payment_check_layout"
-            app:layout_constraintTop_toTopOf="parent">
-
-
-            <TextView
-                android:id="@+id/card_payment_addons_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_semibold"
-                android:lineSpacingExtra="1.3sp"
-                android:text="SBI Debit Card"
-                android:textColor="#2a2a2a" />
-
-            <TextView
-                android:id="@+id/card_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
-                android:lineSpacingExtra="1.3sp"
-                android:text="***1854"
-                android:textColor="#2a2a2a"
-                android:textSize="@dimen/_8sdp" />
-
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/card_payment_addons_amount_layout"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/card_cvv"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/card_type_image"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_15sdp"
-                android:src="@drawable/visa"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Abhishek Mohanty"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/card_type_image"
-                android:textColor="@color/common_text_color"
-                android:textSize="@dimen/_6sdp"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <EditText
-            android:id="@+id/card_cvv"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:gravity="center"
-            android:hint="CVV"
-            android:inputType="number"
-            android:singleLine="true"
-            android:maxLength="3"
-            android:textSize="@dimen/_12sdp"
-            android:digits="1234567890"
-            android:textCursorDrawable="@drawable/color_cursor"
-            android:textColor="@color/common_text_color"
-            android:imeOptions="actionDone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/cvv_bg"/>
-
-        <View
-            android:id="@+id/card_payment_addons_view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/material_grey_200"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Abhishek Mohanty"
+        android:textColor="@color/common_text_color"
+        android:textSize="@dimen/_6sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_type_image" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <EditText
+      android:id="@+id/card_cvv"
+      android:layout_width="@dimen/_40sdp"
+      android:layout_height="@dimen/_20sdp"
+      android:layout_marginEnd="@dimen/_10sdp"
+      android:background="@drawable/cvv_bg"
+      android:digits="1234567890"
+      android:gravity="center"
+      android:hint="CVV"
+      android:imeOptions="actionDone"
+      android:inputType="number"
+      android:maxLength="3"
+      android:singleLine="true"
+      android:textColor="@color/common_text_color"
+      android:textCursorDrawable="@drawable/color_cursor"
+      android:textSize="@dimen/_12sdp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+      android:id="@+id/card_payment_addons_view"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/material_grey_200"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
 

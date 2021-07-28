@@ -1,10 +1,18 @@
 package com.dashboard.controller.ui.website
 
+import android.graphics.ColorFilter
 import android.os.Build
 import android.view.*
 import android.widget.PopupWindow
+import androidx.annotation.ColorRes
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.SimpleColorFilter
+import com.airbnb.lottie.model.KeyPath
+import com.airbnb.lottie.value.LottieValueCallback
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
@@ -19,6 +27,7 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.extensions.gone
 import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -27,6 +36,7 @@ import com.framework.pref.BASE_IMAGE_URL
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.utils.ContentSharing
+import com.framework.utils.changeLayersColor
 import com.framework.utils.fromHtml
 import com.framework.webengageconstant.DASHBOARD_WEBSITE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
@@ -79,7 +89,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   private fun setUserData() {
     val desc = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)
     binding?.txtDesc?.apply {
-      if (desc.isNullOrEmpty().not()) visible() else invisible()
+      if (desc.isNullOrEmpty().not()) visible() else gone()
       text = desc
     }
     binding?.txtBusinessName?.text =
@@ -160,9 +170,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
         session
       )
       WebsiteActionItem.IconType.latest_update_tips -> session?.let {
-        baseActivity.startUpdateLatestStory(
-          it
-        )
+        baseActivity.startUpdateLatestStory(it)
       }
       WebsiteActionItem.IconType.all_images -> baseActivity.startAllImage(session)
       WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(
@@ -232,16 +240,12 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
           .toLowerCase(Locale.ROOT).endsWith("pm"))
       }
     }
-    binding?.txtOpenClose?.text =
-      resources.getString(if (isOpen) R.string.open_now else R.string.close_now)
-    binding?.ellipseOpenClose?.setTintColor(
-      getColor(
-        baseActivity,
-        if (isOpen) R.color.green_light else R.color.red_F40000
-      )
-    )
+    binding?.txtOpenClose?.text = resources.getString(if (isOpen) R.string.open_now else R.string.close_now)
+    binding?.txtOpenClose?.setTextColor(if (isOpen) getColor(R.color.green_light) else getColor(R.color.red_F40000))
+    binding?.ellipseOpenClose?.changeLayersColor(if (isOpen) R.color.green_light else R.color.red_F40000)
 
   }
+
 
   override fun onClick(v: View) {
     super.onClick(v)

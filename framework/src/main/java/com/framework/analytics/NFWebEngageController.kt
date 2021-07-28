@@ -15,6 +15,16 @@ object NFWebEngageController {
   private val TAG = "NFController"
 
 
+  fun trackAttribute(event_value: HashMap<String, Any>) {
+    if (event_value.isNullOrEmpty().not()) {
+      for ((key, value) in event_value.entries) {
+        weUser.setAttribute(key, value.toString())
+        FirebaseAnalyticsUtilsHelper.setUserProperty(key, value.toString())
+      }
+      AppsFlyerLib.getInstance().setAdditionalData(event_value)
+    }
+  }
+
   fun trackEvent(event_name: String, event_label: String, event_value: String? = NO_EVENT_VALUE) {
     val trackEvent: MutableMap<String, Any> = HashMap()
     trackEvent["event_name"] = event_name
@@ -30,7 +40,8 @@ object NFWebEngageController {
 
     //AppsFlyerEvent...
     try {
-      AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
+      AppsFlyerLib.getInstance()
+        .logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
     } catch (e: Exception) {
       e.printStackTrace()
     }
@@ -59,7 +70,12 @@ object NFWebEngageController {
     }
   }
 
-  fun trackEventLoad(event_name: String, event_label: String, event_value: HashMap<String, Any>, value: String) {
+  fun trackEventLoad(
+    event_name: String,
+    event_label: String,
+    event_value: HashMap<String, Any>,
+    value: String
+  ) {
     if (event_value.size > 0) {
       event_value["event_name"] = event_name
       event_value["event_label"] = event_label

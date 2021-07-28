@@ -21,7 +21,9 @@ import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+
 import androidx.core.view.ViewCompat;
+
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +38,7 @@ public final class SetupStartIndicatorView extends LinearLayout {
         setOrientation(HORIZONTAL);
         LayoutInflater.from(context).inflate(R.layout.setup_start_indicator_label, this);
 
-        final LabelView labelView = (LabelView)findViewById(R.id.setup_start_label);
+        final LabelView labelView = (LabelView) findViewById(R.id.setup_start_label);
         labelView.setIndicatorView(findViewById(R.id.setup_start_indicator));
     }
 

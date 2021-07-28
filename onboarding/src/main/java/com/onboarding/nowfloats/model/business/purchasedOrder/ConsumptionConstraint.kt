@@ -9,4 +9,4 @@ data class ConsumptionConstraint(
   var metricKey: String? = null,
   @SerializedName("MetricValue")
   var metricValue: Int? = null
-): Serializable
+) : Serializable

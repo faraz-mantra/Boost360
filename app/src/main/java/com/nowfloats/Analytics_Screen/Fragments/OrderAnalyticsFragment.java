@@ -3,10 +3,12 @@ package com.nowfloats.Analytics_Screen.Fragments;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,13 +43,13 @@ public class OrderAnalyticsFragment extends Fragment {
     private ArrayList<Integer> colors = new ArrayList<>();
     private RecyclerView rvLegend;
     private UserSessionManager mSession;
+    private DecimalFormat mFormat;
 
     public static Fragment getInstance(Bundle b) {
         Fragment frag = new OrderAnalyticsFragment();
         frag.setArguments(b);
         return frag;
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,54 +120,6 @@ public class OrderAnalyticsFragment extends Fragment {
         pieChart.getLegend().setEnabled(false);
     }
 
-    public class LegendAdapter extends RecyclerView.Adapter<LegendViewHolder> {
-        private int[] colorcodes;
-        private String[] labels;
-
-        public LegendAdapter(int[] colorcodes,
-                             String[] labels) {
-            this.colorcodes = colorcodes;
-            this.labels = labels;
-        }
-
-        @Override
-        public LegendViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.legend_item, parent, false);
-            return new LegendViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(final LegendViewHolder holder, final int position) {
-            final String label = labels[position];
-            holder.tvLabel.setText(xValues.get(position));
-            holder.tvColor.setBackgroundColor(colorcodes[position]);
-        }
-
-        @Override
-        public int getItemCount() {
-            return xValues.size();
-        }
-    }
-
-    private DecimalFormat mFormat;
-
-    public class MyYAxisValueFormatter implements IValueFormatter {
-
-        public MyYAxisValueFormatter() {
-        }
-
-        @Override
-        public String getFormattedValue(float value, Entry entry, int dataSetIndex,
-                                        ViewPortHandler viewPortHandler) {
-
-            String label = ((PieEntry) entry).getLabel();
-            if (((PieEntry) entry).getData() != null) {
-                label = ((PieEntry) entry).getData() + "";
-            }
-            return label;
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -186,7 +140,7 @@ public class OrderAnalyticsFragment extends Fragment {
                 case 0:
                     float onlineOrders = 0, codOrders = 0;
                     int codPrevOrders = 0, onlinePrevOrders = 0;
-                    tvTitle.setText("TOTAL "+ Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toUpperCase());
+                    tvTitle.setText("Total " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toLowerCase());
                     for (OrderStatusSummary.OrderStatus orderStatus : currentOrderStatus) {
 
                         if (orderStatus.getPaymentMethod().equalsIgnoreCase("COD")) {
@@ -222,8 +176,8 @@ public class OrderAnalyticsFragment extends Fragment {
                         onlinePrevOrders = (int) (((onlineOrders / onlinePrevOrders) - 1) * 100);
                     }
 
-                    xValues.add("Online Payment "+Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode())+": " + (int) onlineOrders);
-                    xValues.add("COD "+Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode())+": " + (int) codOrders);
+                    xValues.add("Online payment " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toLowerCase() + ": " + (int) onlineOrders);
+                    xValues.add("COD " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toLowerCase() + ": " + (int) codOrders);
 
                     totalOrders = onlineOrders + codOrders;
                     onlineOrders = (onlineOrders / totalOrders) * 100;
@@ -245,11 +199,11 @@ public class OrderAnalyticsFragment extends Fragment {
                     colors.add(Color.parseColor("#96c800"));
                     break;
                 case 1:
-                    tvTitle.setText("COD "+ Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toUpperCase());
+                    tvTitle.setText("COD " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toUpperCase());
                     calculateOrders("COD");
                     break;
                 case 2:
-                    tvTitle.setText("ONLINE PAYMENT "+ Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toUpperCase());
+                    tvTitle.setText("ONLINE PAYMENT " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toUpperCase());
                     calculateOrders("ONLINEPAYMENT");
                     break;
             }
@@ -323,7 +277,7 @@ public class OrderAnalyticsFragment extends Fragment {
 
         if (confirmedOrders > 0.0f) {
             colors.add(Color.parseColor("#fdd400"));
-            xValues.add("Confirmed "+Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode())+": " + (int) confirmedOrders);
+            xValues.add("Confirmed " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()) + ": " + (int) confirmedOrders);
 
             if (prevConfirmedOrders == 0) {
                 prevConfirmedOrders = (int) (confirmedOrders * 100);
@@ -344,7 +298,7 @@ public class OrderAnalyticsFragment extends Fragment {
 
         if (successfulOrders > 0.0f) {
             colors.add(Color.parseColor("#158b44"));
-            xValues.add("Successful "+Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode())+": " + (int) successfulOrders);
+            xValues.add("Successful " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()) + ": " + (int) successfulOrders);
 
 
             if (prevSuccessfulOrders == 0) {
@@ -366,7 +320,7 @@ public class OrderAnalyticsFragment extends Fragment {
 
         if (cancelledOrders > 0.0f) {
             colors.add(Color.parseColor("#f58020"));
-            xValues.add("Cancelled "+Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode())+": " + (int) cancelledOrders);
+            xValues.add("Cancelled " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()) + ": " + (int) cancelledOrders);
 
             if (prevCancelledOrders == 0) {
                 prevCancelledOrders = (int) (cancelledOrders * 100);
@@ -385,7 +339,7 @@ public class OrderAnalyticsFragment extends Fragment {
 
         if (escalatedOrders > 0.0f) {
             colors.add(Color.parseColor("#ffb900"));
-            xValues.add("Escalated "+Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode())+": " + (int) escalatedOrders);
+            xValues.add("Escalated " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()) + ": " + (int) escalatedOrders);
 
 
             if (prevEscalatedOrders == 0) {
@@ -406,7 +360,7 @@ public class OrderAnalyticsFragment extends Fragment {
 
         if (placedOrders > 0.0f) {
             colors.add(Color.parseColor("#49ce75"));
-            xValues.add("Placed "+Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode())+": " + (int) placedOrders);
+            xValues.add("Placed " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()) + ": " + (int) placedOrders);
 
             if (prevPlacedOrders == 0) {
                 prevPlacedOrders = (int) (placedOrders * 100);
@@ -423,6 +377,52 @@ public class OrderAnalyticsFragment extends Fragment {
             }
         }
 
+    }
+
+    public class LegendAdapter extends RecyclerView.Adapter<LegendViewHolder> {
+        private int[] colorcodes;
+        private String[] labels;
+
+        public LegendAdapter(int[] colorcodes,
+                             String[] labels) {
+            this.colorcodes = colorcodes;
+            this.labels = labels;
+        }
+
+        @Override
+        public LegendViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.legend_item, parent, false);
+            return new LegendViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(final LegendViewHolder holder, final int position) {
+            final String label = labels[position];
+            holder.tvLabel.setText(xValues.get(position));
+            holder.tvColor.setBackgroundColor(colorcodes[position]);
+        }
+
+        @Override
+        public int getItemCount() {
+            return xValues.size();
+        }
+    }
+
+    public class MyYAxisValueFormatter implements IValueFormatter {
+
+        public MyYAxisValueFormatter() {
+        }
+
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex,
+                                        ViewPortHandler viewPortHandler) {
+
+            String label = ((PieEntry) entry).getLabel();
+            if (((PieEntry) entry).getData() != null) {
+                label = ((PieEntry) entry).getData() + "";
+            }
+            return label;
+        }
     }
 
 }

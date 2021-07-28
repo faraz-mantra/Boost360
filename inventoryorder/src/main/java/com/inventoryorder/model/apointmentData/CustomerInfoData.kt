@@ -15,4 +15,4 @@ data class CustomerInfoData(
   var mobileNumber: String? = null,
   @SerializedName("Name")
   var name: String? = null
-):Serializable
+) : Serializable

@@ -10,7 +10,8 @@ import com.inventoryorder.rest.services.InventoryOrderRemoteDataSource
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-object ProductOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSource, AppBaseLocalService>() {
+object ProductOrderRepository :
+  AppBaseRepository<InventoryOrderRemoteDataSource, AppBaseLocalService>() {
 
   override fun getRemoteDataSourceClass(): Class<InventoryOrderRemoteDataSource> {
     return InventoryOrderRemoteDataSource::class.java
@@ -21,7 +22,10 @@ object ProductOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSource
   }
 
   fun getProductDetails(productId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getProductDetails(productId), TaskCode.PRODUCT_ORDER_DETAILS_TASK)
+    return makeRemoteRequest(
+      remoteDataSource.getProductDetails(productId),
+      TaskCode.PRODUCT_ORDER_DETAILS_TASK
+    )
   }
 
   fun getDoctorData(fpTag: String?): Observable<BaseResponse> {
@@ -29,7 +33,10 @@ object ProductOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSource
   }
 
   fun sendMail(request: SendMailRequest?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.sendMail(getHeaderEmail(),request), TaskCode.SEND_MAIL)
+    return makeRemoteRequest(
+      remoteDataSource.sendMail(getHeaderEmail(), request),
+      TaskCode.SEND_MAIL
+    )
   }
 
   override fun getApiClient(): Retrofit {

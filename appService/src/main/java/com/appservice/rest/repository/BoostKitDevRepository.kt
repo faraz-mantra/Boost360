@@ -14,11 +14,28 @@ import retrofit2.Retrofit
 object BoostKitDevRepository : AppBaseRepository<BoostKitDevRemoteData, AppBaseLocalService>() {
 
   fun getWebActionList(themeID: String?, websiteId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getWebActionList(themeID, websiteId), TaskCode.GET_WEB_ACTION_TESTIMONIAL)
+    return makeRemoteRequest(
+      remoteDataSource.getWebActionList(themeID, websiteId),
+      TaskCode.GET_WEB_ACTION_TESTIMONIAL
+    )
   }
 
-  fun getTestimonialsList(token: String?,testimonialType: String?, query: JSONObject?, skip: Int, limit: Int): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getTestimonialsList(token,testimonialType, query, skip, limit), TaskCode.GET_TESTIMONIAL)
+  fun getTestimonialsList(
+    token: String?,
+    testimonialType: String?,
+    query: JSONObject?,
+    skip: Int,
+    limit: Int
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getTestimonialsList(
+        token,
+        testimonialType,
+        query,
+        skip,
+        limit
+      ), TaskCode.GET_TESTIMONIAL
+    )
   }
 
 //  fun addTestimonials(token: String?, testimonialType: String?, body: AddTestimonialsData?): Observable<BaseResponse> {
@@ -29,8 +46,15 @@ object BoostKitDevRepository : AppBaseRepository<BoostKitDevRemoteData, AppBaseL
 //    return makeRemoteRequest(remoteDataSource.updateTestimonials(token, testimonialType, body), TaskCode.UPDATE_TESTIMONIAL)
 //  }
 
-  fun deleteTestimonials(token: String?,testimonialType: String?, body: DeleteTestimonialRequest?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.deleteTestimonials(token,testimonialType, body), TaskCode.DELETE_TESTIMONIAL)
+  fun deleteTestimonials(
+    token: String?,
+    testimonialType: String?,
+    body: DeleteTestimonialRequest?
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.deleteTestimonials(token, testimonialType, body),
+      TaskCode.DELETE_TESTIMONIAL
+    )
   }
 
 

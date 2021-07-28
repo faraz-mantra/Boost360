@@ -32,7 +32,8 @@ import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenRespons
 import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 import java.util.*
 
-class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, CategoryViewModel>(), ChannelSelectorAnimator.OnAnimationCompleteListener, MotionLayout.TransitionListener {
+class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, CategoryViewModel>(),
+  ChannelSelectorAnimator.OnAnimationCompleteListener, MotionLayout.TransitionListener {
 
   private var requestFloatsModel: RequestFloatsModel? = null
   private val animations = ChannelSelectorAnimator()
@@ -60,8 +61,8 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
     binding?.categoryView?.visible()
     binding?.imageRiya?.post {
       animations.setViews(
-          motionLayout = binding?.motionLayout, imageView = binding?.imageView,
-          titleForeground = binding?.titleForeground, subTitleForeground = binding?.subTitleForeground
+        motionLayout = binding?.motionLayout, imageView = binding?.imageView,
+        titleForeground = binding?.titleForeground, subTitleForeground = binding?.subTitleForeground
       )
       animations.listener = this
       animations.startAnimation()
@@ -83,10 +84,17 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
         val fpTag = bundle.getString(GET_FP_DETAILS_TAG)
         showProgress()
         viewModel.getCategories(this).observeOnce(this, Observer {
-          if (it?.error != null) errorMessage(it.error?.localizedMessage ?: "${resources?.getString(R.string.error_getting_category_data)}")
+          if (it?.error != null) errorMessage(
+            it.error?.localizedMessage ?: "${
+              resources?.getString(
+                R.string.error_getting_category_data
+              )
+            }"
+          )
           else {
             val categoryList = (it as? ResponseDataCategory)?.data
-            val categoryData = categoryList?.singleOrNull { c -> c.experienceCode() == experienceCode }
+            val categoryData =
+              categoryList?.singleOrNull { c -> c.experienceCode() == experienceCode }
             if (categoryData != null) {
               viewModel.getChannelsAccessToken(floatingPoint).observeOnce(this, Observer { it1 ->
                 if (it1.error is NoNetworkException) errorMessage(resources.getString(R.string.internet_connection_not_available))
@@ -105,7 +113,12 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
   }
 
 
-  private fun setDataRequestChannels(categoryData: CategoryDataModel, channelsAccessToken: List<NFXAccessToken>?, floatingPoint: String?, fpTag: String?) {
+  private fun setDataRequestChannels(
+    categoryData: CategoryDataModel,
+    channelsAccessToken: List<NFXAccessToken>?,
+    floatingPoint: String?,
+    fpTag: String?
+  ) {
     val requestFloatsNew = RequestFloatsModel()
     requestFloatsNew.categoryDataModel = categoryData
     requestFloatsNew.categoryDataModel?.resetIsSelect()
@@ -120,8 +133,10 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
           ChannelAccessToken.AccessTokenType.twitter.name,
           -> {
             if (it.isValidType()) {
-              val data = ChannelAccessToken(type = it.type(), userAccessTokenKey = it.UserAccessTokenKey,
-                  userAccountId = it.UserAccountId, userAccountName = it.UserAccountName)
+              val data = ChannelAccessToken(
+                type = it.type(), userAccessTokenKey = it.UserAccessTokenKey,
+                userAccountId = it.UserAccountId, userAccountName = it.UserAccountName
+              )
               requestFloatsNew.channelAccessTokens?.add(data)
             }
           }
@@ -139,20 +154,23 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
   }
 
   private fun getWhatsAppData(requestFloatsNew: RequestFloatsModel) {
-    viewModel.getWhatsappBusiness(request = requestFloatsNew.fpTag, auth = WA_KEY).observeOnce(this, Observer {
-      if ((it.error is NoNetworkException).not()) {
-        if (it.isSuccess()) {
-          val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
-          if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
-            requestFloatsNew.categoryDataModel?.channels?.forEach { it4 -> if (it4.isWhatsAppChannel()) it4.isSelected = true }
-            requestFloatsNew.channelActionDatas?.add(ChannelActionData(response.active_whatsapp_number?.trim()))
+    viewModel.getWhatsappBusiness(request = requestFloatsNew.fpTag, auth = WA_KEY)
+      .observeOnce(this, Observer {
+        if ((it.error is NoNetworkException).not()) {
+          if (it.isSuccess()) {
+            val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
+            if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
+              requestFloatsNew.categoryDataModel?.channels?.forEach { it4 ->
+                if (it4.isWhatsAppChannel()) it4.isSelected = true
+              }
+              requestFloatsNew.channelActionDatas?.add(ChannelActionData(response.active_whatsapp_number?.trim()))
+            }
           }
         }
-      }
-      NavigatorManager.updateRequest(requestFloatsNew)
-      createViewChannel()
-      hideProgress()
-    })
+        NavigatorManager.updateRequest(requestFloatsNew)
+        createViewChannel()
+        hideProgress()
+      })
   }
 
   private fun errorMessage(message: String) {
@@ -162,7 +180,8 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
 
 
   private fun setHeaderWelcomeText() {
-    binding?.digitalPlanWelcomeMessage?.text = "${getString(R.string.business_boost_success)} ${requestFloatsModel?.categoryDataModel?.category_descriptor}"
+    binding?.digitalPlanWelcomeMessage?.text =
+      "${getString(R.string.business_boost_success)} ${requestFloatsModel?.categoryDataModel?.category_descriptor}"
   }
 
   private fun setCategoryImage() {
@@ -177,14 +196,24 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
     }
   }
 
-  override fun onTransitionTrigger(motionLayout: MotionLayout?, triggerId: Int, positive: Boolean, progress: Float) {
+  override fun onTransitionTrigger(
+    motionLayout: MotionLayout?,
+    triggerId: Int,
+    positive: Boolean,
+    progress: Float
+  ) {
   }
 
   override fun onTransitionStarted(motionLayout: MotionLayout?, startId: Int, endId: Int) {
 
   }
 
-  override fun onTransitionChange(motionLayout: MotionLayout?, startId: Int, endId: Int, progress: Float) {
+  override fun onTransitionChange(
+    motionLayout: MotionLayout?,
+    startId: Int,
+    endId: Int,
+    progress: Float
+  ) {
   }
 
   override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {

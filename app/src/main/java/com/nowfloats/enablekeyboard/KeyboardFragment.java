@@ -106,9 +106,9 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     mainLayout = view.findViewById(R.id.main_layout);
     secondaryLayout = view.findViewById(R.id.secondary_layout);
     buyItemButton = view.findViewById(R.id.buy_item);
-    List<String> storeKeys=session.getStoreWidgets();
-    if ((storeKeys!=null && storeKeys.contains("BOOSTKEYBOARD"))||
-        (Constants.currentActivePackageId != null && Constants.currentActivePackageId.contains("59ce2ae56431a80b009cb1fa"))) {
+    List<String> storeKeys = session.getStoreWidgets();
+    if ((storeKeys != null && storeKeys.contains("BOOSTKEYBOARD")) || (Constants.currentActivePackageId != null &&
+        Constants.currentActivePackageId.contains("59ce2ae56431a80b009cb1fa"))) {
       mainLayout.setVisibility(View.VISIBLE);
       secondaryLayout.setVisibility(View.GONE);
     } else {
@@ -130,7 +130,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
       if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
         tvBoostThemes.setText("RedTim Keyboard Themes");
       } else {
-        tvBoostThemes.setText("Boost Keyboard Themes");
+        tvBoostThemes.setText(getResources().getString(R.string.boost_keyboard_themes_n));
       }
       rvKeyboardThemes = view.findViewById(R.id.rv_keyboard_themes);
       rvKeyboardThemes.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));

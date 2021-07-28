@@ -84,7 +84,7 @@
           style="@style/psn_heading_style"
           android:layout_width="wrap_content"
           android:layout_marginTop="0dp"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:gravity="center"
           android:text="@string/downtown_nspa_salon"
           app:textType="HEADING_2" />
@@ -94,7 +94,7 @@
           style="@style/psn_subheading_style"
           android:layout_width="wrap_content"
           android:layout_marginTop="@dimen/_4sdp"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:text="@string/downtownspa_nowfloats_com"
           android:textColor="@color/link_color"
           app:textType="BODY_2" />

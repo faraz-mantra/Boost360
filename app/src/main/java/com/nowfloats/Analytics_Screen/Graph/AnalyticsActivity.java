@@ -3,14 +3,17 @@ package com.nowfloats.Analytics_Screen.Graph;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import com.framework.views.customViews.CustomToolbar;
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -48,19 +51,18 @@ import static com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment.PARAM
 public class AnalyticsActivity extends AppCompatActivity implements MonthFragment.OnYearDataClickListener {
 
     public String[] tabs;
+    public boolean rowExist = true;
+    public int yearData, monthData, weekData;
     int[] months;
     int[] weeks;
     int[] days;
     String pattern = "MM-dd-yyyy";
-    int curYear,curWeek,curMonth,curDay,curDate;
+    int curYear, curWeek, curMonth, curDay, curDate;
     ViewPager pager;
-    public boolean rowExist=true;
     AnalyticsAdapter analyticsAdapter;
-    public int yearData,monthData,weekData;
-    private String startDate="01-01-2016",endDate ;
     ContentLoadingProgressBar progressBar;
-
-    Toolbar toolbar;
+    CustomToolbar toolbar;
+    private String startDate = "01-01-2016", endDate;
     private int tableName;
     private UserSessionManager session;
 
@@ -74,27 +76,27 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         curYear = c.get(Calendar.YEAR);
         curWeek = c.get(Calendar.WEEK_OF_MONTH);
         curMonth = c.get(Calendar.MONTH);
-        curDay=c.get(Calendar.DAY_OF_WEEK);
-        curDate=c.get(Calendar.DAY_OF_MONTH);
+        curDay = c.get(Calendar.DAY_OF_WEEK);
+        curDate = c.get(Calendar.DAY_OF_MONTH);
 
-        months=new int[curMonth+1];
-        days=new int[curDay];
-        weeks=new int[curWeek];
+        months = new int[curMonth + 1];
+        days = new int[curDay];
+        weeks = new int[curWeek];
 
         Intent intent = getIntent();
-        tableName = intent.getIntExtra("table_name",-1);
-        if(tableName == Constants.VISITORS_TABLE){
-            setTitle(getString(R.string.unique_visitors));
-        }else{
-            setTitle(getString(R.string.overall_visits));
+        tableName = intent.getIntExtra("table_name", -1);
+        if (tableName == Constants.VISITORS_TABLE) {
+            setTitle(getString(R.string.unique_visitors_n));
+        } else {
+            setTitle(getString(R.string.overall_visits_n));
         }
         session = new UserSessionManager(getApplicationContext(), this);
 
-        endDate =new SimpleDateFormat(pattern, Locale.ENGLISH).format(new Date());
-        DashboardDetails details=new DashboardDetails();
+        endDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(new Date());
+        DashboardDetails details = new DashboardDetails();
 
-        SaveDataCounts saveDataCounts =new SaveDataCounts(AnalyticsActivity.this,tableName);
-        DatabaseModel modelResponse =saveDataCounts.getDataArrays();
+        SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this, tableName);
+        DatabaseModel modelResponse = saveDataCounts.getDataArrays();
         try {
             if (modelResponse == null) {
                 rowExist = false;
@@ -190,66 +192,69 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                 details.setData(session.getFpTag(), Constants.clientId, startDate, endDate);
                 getEntityList(details);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
     }
 
     private void init() {
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (CustomToolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar()!=null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         pager = (ViewPager) findViewById(R.id.viewpager_main);
-        tabs=getResources().getStringArray(R.array.tabs);
+        tabs = getResources().getStringArray(R.array.tabs);
 
 
-        progressBar= (ContentLoadingProgressBar) findViewById(R.id.progressBar_analytic);
+        progressBar = (ContentLoadingProgressBar) findViewById(R.id.progressBar_analytic);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(pager);
 
         setProgressVisible();
     }
-    private int addArray(int[] array){
-        int sum=0;
-        for(int x:array)
-            sum+=x;
+
+    private int addArray(int[] array) {
+        int sum = 0;
+        for (int x : array)
+            sum += x;
         return sum;
     }
+
     private void setProgressVisible() {
         progressBar.setVisibility(View.VISIBLE);
     }
+
     private void setProgressHide() {
         progressBar.setVisibility(View.GONE);
     }
 
     private void getEntityList(DashboardDetails dashboardDetails) {
 
-        HashMap<String, String> map=new HashMap<>();
-        map.put("clientId",dashboardDetails.getClientId());
-        map.put("startDate",dashboardDetails.getStartDate());
-        map.put("endDate",dashboardDetails.getEndDate());
-        map.put("detailstype",String.valueOf(tableName));
-        map.put("scope",session.getISEnterprise().equals("true") ? "1" : "0");
+        HashMap<String, String> map = new HashMap<>();
+        map.put("clientId", dashboardDetails.getClientId());
+        map.put("startDate", dashboardDetails.getStartDate());
+        map.put("endDate", dashboardDetails.getEndDate());
+        map.put("detailstype", String.valueOf(tableName));
+        map.put("scope", session.getISEnterprise().equals("true") ? "1" : "0");
 
         AnalyticsFetch.FetchDetails details = Constants.restAdapter.create(AnalyticsFetch.FetchDetails.class);
-        details.getDataCount(dashboardDetails.getfpTag(),map, new Callback<DashboardResponse>() {
+        details.getDataCount(dashboardDetails.getfpTag(), map, new Callback<DashboardResponse>() {
             @Override
             public void success(final DashboardResponse dashboardResponse, Response response) {
                 //Log.v("ggg",startDate+"success"+endDate);
                 try {
                     new Task(dashboardResponse).execute();
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if(rowExist) {
-                    SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this,tableName);
+                if (rowExist) {
+                    SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this, tableName);
                     DatabaseModel modelResponse = saveDataCounts.getDataArrays();
                     weeks = modelResponse.getMonth();
                     months = modelResponse.getYear();
@@ -259,12 +264,11 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                     weekData = modelResponse.getWeekCount();
                 }
                 setPagerAdapter();
-                Toast.makeText(AnalyticsActivity.this,"Error while retrieving data",Toast.LENGTH_SHORT).show();
+                Toast.makeText(AnalyticsActivity.this, "Error while retrieving data", Toast.LENGTH_SHORT).show();
                 // Log.e("error",error+"");
             }
         });
     }
-
 
 
     @Override
@@ -274,40 +278,39 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         try {
             final int month = dataSetIndex + 1;
             String dateString = month + "-01-" + calendar.get(Calendar.YEAR);
-            final DateFormat dateFormat = new SimpleDateFormat(pattern,Locale.ENGLISH);
+            final DateFormat dateFormat = new SimpleDateFormat(pattern, Locale.ENGLISH);
             Date date = dateFormat.parse(dateString);
             String firstDate = getFirstDay(date);
             String lastDate = (month + 1) + "-01-" + calendar.get(Calendar.YEAR);
-            if(month==(calendar.get(Calendar.MONTH)+1)){
+            if (month == (calendar.get(Calendar.MONTH) + 1)) {
                 lastDate = dateFormat.format(new Date());
             }
             final String lastDateUsed = getLastDay(date);
-            HashMap<String, String> map=new HashMap<>();
-            map.put("clientId",Constants.clientId);
-            map.put("startDate",firstDate);
-            map.put("endDate",lastDate);
-            map.put("detailstype",String.valueOf(tableName));
-            map.put("scope",session.getISEnterprise().equals("true") ? "1" : "0");
+            HashMap<String, String> map = new HashMap<>();
+            map.put("clientId", Constants.clientId);
+            map.put("startDate", firstDate);
+            map.put("endDate", lastDate);
+            map.put("detailstype", String.valueOf(tableName));
+            map.put("scope", session.getISEnterprise().equals("true") ? "1" : "0");
             BoostLog.d("Current Start:", firstDate + " -  " + lastDate);
 
 
             AnalyticsFetch.FetchDetails details = Constants.restAdapter.create(AnalyticsFetch.FetchDetails.class);
-            details.getDataCount(session.getFpTag(),map, new Callback<DashboardResponse>() {
+            details.getDataCount(session.getFpTag(), map, new Callback<DashboardResponse>() {
                 @Override
                 public void success(final DashboardResponse dashboardResponse, Response response) {
                     progressBar.setVisibility(View.GONE);
                     int[] weekDataArr;
                     try {
                         Calendar localCalendar = Calendar.getInstance();
-                        if(localCalendar.get(Calendar.MONTH) == dataSetIndex){
+                        if (localCalendar.get(Calendar.MONTH) == dataSetIndex) {
 
                             weekDataArr = new int[localCalendar.get(Calendar.WEEK_OF_MONTH)];
-                        }
-                        else {
+                        } else {
                             localCalendar.setTime(dateFormat.parse(lastDateUsed));
                             weekDataArr = new int[localCalendar.get(Calendar.WEEK_OF_MONTH)];
                         }
-                    }catch (ParseException e){
+                    } catch (ParseException e) {
                         weekDataArr = new int[6];
                     }
                     try {
@@ -332,7 +335,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                                 .add(R.id.activity_main_analytics, MonthFragment.newInstance(b), "MothFragment")
                                 .addToBackStack("MothFragment")
                                 .commit();
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -346,41 +349,58 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             });
 
 
-
-        }catch (Exception exception){
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
 
-    public String getFirstDay(Date d) throws Exception
-    {
+    public String getFirstDay(Date d) throws Exception {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(d);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         Date dddd = calendar.getTime();
-        SimpleDateFormat sdf1 = new SimpleDateFormat(pattern,Locale.ENGLISH);
+        SimpleDateFormat sdf1 = new SimpleDateFormat(pattern, Locale.ENGLISH);
         return sdf1.format(dddd);
     }
 
-    public String getLastDay(Date d) throws Exception
-    {
+    public String getLastDay(Date d) throws Exception {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(d);
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         Date dddd = calendar.getTime();
-        SimpleDateFormat sdf1 = new SimpleDateFormat(pattern,Locale.ENGLISH);
+        SimpleDateFormat sdf1 = new SimpleDateFormat(pattern, Locale.ENGLISH);
         return sdf1.format(dddd);
     }
 
-    private class Task extends AsyncTask<Void,Void,Void>{
+    private void setPagerAdapter() {
+        setProgressHide();
+        analyticsAdapter = new AnalyticsAdapter(getSupportFragmentManager());
+        pager.setAdapter(analyticsAdapter);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            finish();
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private class Task extends AsyncTask<Void, Void, Void> {
 
         DashboardResponse dashboardResponse;
-        Task(DashboardResponse dashboardResponse){
-            this.dashboardResponse=dashboardResponse;
+
+        Task(DashboardResponse dashboardResponse) {
+            this.dashboardResponse = dashboardResponse;
         }
+
         @Override
         protected Void doInBackground(Void... voids) {
-            if (dashboardResponse == null||dashboardResponse.getEntity()==null){
+            if (dashboardResponse == null || dashboardResponse.getEntity() == null) {
                 return null;
             }
             try {
@@ -411,10 +431,10 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                     }
                     // Log.v("ggg",c.get(Calendar.DATE)+" month "+month+" day_month "+day+" data "+months[month]);
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            DatabaseModel model=new DatabaseModel();
+            DatabaseModel model = new DatabaseModel();
             model.setYear(months);
             model.setMonth(weeks);
             model.setWeek(days);
@@ -422,8 +442,8 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             model.setYearCount(yearData);
             model.setWeekCount(weekData);
             model.setDate(String.valueOf(Calendar.getInstance().getTimeInMillis()));
-            SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this,tableName);
-            if(rowExist)
+            SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this, tableName);
+            if (rowExist)
                 saveDataCounts.updateDataCount(model);
             else
                 saveDataCounts.addDataCount(model);
@@ -437,13 +457,6 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         }
     }
 
-    private void setPagerAdapter() {
-        setProgressHide();
-        analyticsAdapter = new AnalyticsAdapter(getSupportFragmentManager());
-        pager.setAdapter(analyticsAdapter);
-
-    }
-
     private class AnalyticsAdapter extends FragmentStatePagerAdapter {
 
         AnalyticsAdapter(FragmentManager fm) {
@@ -452,29 +465,29 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
 
         @Override
         public Fragment getItem(int position) {
-            Bundle b=new Bundle();
+            Bundle b = new Bundle();
             MonthFragment monthFragment;
             switch (position) {
                 case 0:
-                    b.putIntArray(PARAMETER1,days);
-                    b.putInt(PARAMETER2,weekData);
-                    b.putInt(PARAMETER3,0);
+                    b.putIntArray(PARAMETER1, days);
+                    b.putInt(PARAMETER2, weekData);
+                    b.putInt(PARAMETER3, 0);
                     b.putString(PARAMETER4, getString(R.string.visits_this_week));
                     monthFragment = MonthFragment.newInstance(b);
                     break;
                 case 1:
-                    b.putIntArray(PARAMETER1,weeks);
-                    b.putInt(PARAMETER2,monthData);
-                    b.putInt(PARAMETER3,1);
+                    b.putIntArray(PARAMETER1, weeks);
+                    b.putInt(PARAMETER2, monthData);
+                    b.putInt(PARAMETER3, 1);
                     b.putString(PARAMETER4, getString(R.string.visit_this_month));
-                    b.putInt(MONTH_PARAMETER, Calendar.getInstance().get(Calendar.MONTH)+1);
+                    b.putInt(MONTH_PARAMETER, Calendar.getInstance().get(Calendar.MONTH) + 1);
                     monthFragment = MonthFragment.newInstance(b);
                     break;
                 default:
-                    b.putIntArray(PARAMETER1,months);
-                    b.putInt(PARAMETER2,yearData);
-                    b.putInt(PARAMETER3,2);
-                    b.putString(PARAMETER4,getString(R.string.visits_this_year));
+                    b.putIntArray(PARAMETER1, months);
+                    b.putInt(PARAMETER2, yearData);
+                    b.putInt(PARAMETER3, 2);
+                    b.putString(PARAMETER4, getString(R.string.visits_this_year));
                     monthFragment = MonthFragment.newInstance(b);
                     monthFragment.setYearDataListener(AnalyticsActivity.this);
                     break;
@@ -491,16 +504,5 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         public int getCount() {
             return tabs.length;
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if(id==android.R.id.home){
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,23 +1,13 @@
 package com.nowfloats.hotel.seasonalOffers;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.core.view.ViewCompat;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -34,18 +24,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-
-
 import com.google.gson.GsonBuilder;
-import com.nowfloats.AccrossVerticals.API.UploadProfileImage;
-import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsFeedbackActivity;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.hotel.API.HotelAPIInterfaces;
 import com.nowfloats.hotel.API.UploadOfferImage;
-import com.nowfloats.hotel.API.UploadPlaceNearByImage;
 import com.nowfloats.hotel.API.model.AddOffer.ActionData;
 import com.nowfloats.hotel.API.model.AddOffer.AddOfferRequest;
 import com.nowfloats.hotel.API.model.AddOffer.OfferImage;
@@ -53,10 +46,12 @@ import com.nowfloats.hotel.API.model.DeleteOffer.DeleteOfferRequest;
 import com.nowfloats.hotel.API.model.GetOffers.Data;
 import com.nowfloats.hotel.API.model.UpdateOffer.UpdateOfferRequest;
 import com.nowfloats.hotel.Interfaces.SeasonalOffersDetailsListener;
-import com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.io.File;
@@ -64,7 +59,6 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -73,8 +67,15 @@ import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
+import static com.framework.webengageconstant.EventLabelKt.UPDATED_BUINSESS_LOGO;
+import static com.framework.webengageconstant.EventNameKt.UPLOAD_LOGO;
+
 public class SeasonalOffersDetailsActivity extends AppCompatActivity implements SeasonalOffersDetailsListener {
 
+    private static final int GALLERY_PHOTO = 2;
+    private static final int CAMERA_PHOTO = 1;
+    private final int gallery_req_id = 0;
+    private final int media_req_id = 1;
     Data existingItemData = null;
     String ScreenType = "", itemId = "", uploadedImageURL = "";
     EditText offerTitleText, currentPriceText, discountText, offerDescriptionText;
@@ -87,10 +88,6 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
     ImageButton removeOfferImage;
     double mrpPrice = 0, offerPrice = 0;
     UserSessionManager session;
-    private final int gallery_req_id = 0;
-    private final int media_req_id = 1;
-    private static final int GALLERY_PHOTO = 2;
-    private static final int CAMERA_PHOTO = 1;
     boolean checkButtonClickStatus = false;
     private ProgressDialog progressDialog;
 
@@ -142,7 +139,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
                     mrpPrice = Double.parseDouble(currentPriceText.getText().toString());
                     offerPrice = (discount * mrpPrice) / 100;
                     offerPriceText.setText("Rs." + String.valueOf(offerPrice));
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), getString(R.string.fields_are_empty), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -197,37 +194,46 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
     }
 
     public void showDialogToGetImage() {
-        final MaterialDialog dialog = new MaterialDialog.Builder(SeasonalOffersDetailsActivity.this)
-                .customView(R.layout.featuredimage_popup, true)
-                .show();
-
-        PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
-        View view = dialog.getCustomView();
-        TextView title = (TextView) view.findViewById(R.id.textview_heading);
-        title.setText("Upload Image");
-        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-        cameraImg.setColorFilter(whiteLabelFilter);
-        galleryImg.setColorFilter(whiteLabelFilter);
-
-        takeCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cameraIntent();
-                dialog.dismiss();
-            }
-        });
-
-        takeGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                galleryIntent();
-                dialog.dismiss();
-
-            }
-        });
+        final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+        imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
+//        final MaterialDialog dialog = new MaterialDialog.Builder(SeasonalOffersDetailsActivity.this)
+//                .customView(R.layout.featuredimage_popup, true)
+//                .show();
+//
+//        PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
+//        View view = dialog.getCustomView();
+//        TextView title = (TextView) view.findViewById(R.id.textview_heading);
+//        title.setText("Upload Image");
+//        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+//        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+//        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+//        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+//        cameraImg.setColorFilter(whiteLabelFilter);
+//        galleryImg.setColorFilter(whiteLabelFilter);
+//
+//        takeCamera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                cameraIntent();
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        takeGallery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                galleryIntent();
+//                dialog.dismiss();
+//
+//            }
+//        });
+    }
+    private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
+        if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
+            cameraIntent();
+        } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
+            galleryIntent();
+        }
     }
 
     public void displayData() {
@@ -325,7 +331,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
     }
 
     public void updateOffersImage() {
-        if (path!=null) {
+        if (path != null) {
             Glide.with(SeasonalOffersDetailsActivity.this).load(path).into(offerImage);
             removeOfferImage.setVisibility(View.VISIBLE);
         }
@@ -503,7 +509,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
 
     public void uploadImageToServer() {
         try {
-            if(validateInput()) {
+            if (validateInput()) {
                 String fname = "SeasonalOffers" + System.currentTimeMillis();
                 if (!Util.isNullOrEmpty(path)) {
                     if (!TextUtils.isEmpty(path)) {

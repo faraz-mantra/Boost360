@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-      android:paddingStart="@dimen/size_14"
-      android:paddingEnd="@dimen/size_14">
+    android:paddingStart="@dimen/size_14"
+    android:paddingEnd="@dimen/size_14">
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
@@ -15,22 +15,22 @@
       android:orientation="horizontal">
 
       <View
-        android:background="@drawable/shape_bullet"
         android:layout_width="@dimen/size_4"
         android:layout_height="@dimen/size_4"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/size_4"
-        android:layout_marginEnd="@dimen/size_8" />
+        android:layout_marginEnd="@dimen/size_8"
+        android:background="@drawable/shape_bullet" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:includeFontPadding="false"
         android:text="@string/upto_50_latest_news_updates"
         android:textColor="@color/warm_grey"
         app:fontFamily="@font/bold"
-        app:textType="SUBTITLE_1"
-        android:includeFontPadding="false" />
+        app:textType="SUBTITLE_1" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -38,12 +38,12 @@
       android:id="@+id/desc"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/a_business_owner_or_manager_the_decision_to_opt_for_offshore_software"
-      app:fontFamily="@font/regular"
       android:layout_marginStart="@dimen/size_16"
       android:layout_marginTop="@dimen/size_8"
       android:layout_marginBottom="@dimen/size_16"
+      android:text="@string/a_business_owner_or_manager_the_decision_to_opt_for_offshore_software"
       android:textColor="@color/warm_grey"
+      app:fontFamily="@font/regular"
       app:textType="SUBTITLE_1" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 

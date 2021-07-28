@@ -30,13 +30,14 @@
         android:layout_height="@dimen/size_34"
         android:layout_marginTop="@dimen/size_6"
         tools:srcCompat="@drawable/ic_add_photo_d" />
+
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/is_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginStart="@dimen/size_20"
-        app:srcCompat="@drawable/ic_new_label_d"/>
+        app:srcCompat="@drawable/ic_new_label_d" />
     </FrameLayout>
 
 
@@ -46,8 +47,8 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/size_4"
       android:layout_marginEnd="@dimen/size_4"
-      android:paddingEnd="@dimen/size_4"
       android:gravity="center"
+      android:paddingEnd="@dimen/size_4"
       android:textAlignment="gravity"
       android:textColor="@color/black_4a4a4a"
       app:textType="CAPTION"

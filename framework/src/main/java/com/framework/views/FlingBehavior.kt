@@ -15,8 +15,8 @@ class FlingBehavior : AppBarLayout.Behavior {
   constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
 
   override fun onNestedFling(
-          @NonNull coordinatorLayout: CoordinatorLayout, @NonNull child: AppBarLayout,
-          @NonNull target: View, velocityX: Float, velocityY: Float, consumed: Boolean
+    @NonNull coordinatorLayout: CoordinatorLayout, @NonNull child: AppBarLayout,
+    @NonNull target: View, velocityX: Float, velocityY: Float, consumed: Boolean
   ): Boolean {
     var velocityY = velocityY
     var consumed = consumed
@@ -31,8 +31,8 @@ class FlingBehavior : AppBarLayout.Behavior {
   }
 
   override fun onNestedPreScroll(
-          coordinatorLayout: CoordinatorLayout, child: AppBarLayout,
-          target: View, dx: Int, dy: Int, consumed: IntArray, type: Int
+    coordinatorLayout: CoordinatorLayout, child: AppBarLayout,
+    target: View, dx: Int, dy: Int, consumed: IntArray, type: Int
   ) {
     super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type)
     isPositive = dy > 0

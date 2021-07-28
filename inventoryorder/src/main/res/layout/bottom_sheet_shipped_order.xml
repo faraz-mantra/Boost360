@@ -123,28 +123,29 @@
             app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextField
+            android:id="@+id/edt_number"
             style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_20"
-            android:id="@+id/edt_number"
             android:background="@drawable/bg_rect_edit_txt"
             android:hint="@string/_91_xxxxx_xxxxx"
             android:inputType="number"
+            android:maxLength="10"
             android:padding="@dimen/size_12"
             android:singleLine="true"
-            android:maxLength="10"
             android:textColor="@color/warm_grey_10"
             android:textColorHint="@color/primary_grey"
             tools:ignore="UnusedAttribute" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/partner_edt_view"
           android:layout_width="match_parent"
-          android:visibility="gone"
           android:layout_height="wrap_content"
-          android:orientation="vertical">
+          android:orientation="vertical"
+          android:visibility="gone">
 
           <com.framework.views.customViews.CustomTextView
             style="@style/match_wrap"
@@ -155,11 +156,11 @@
             app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextField
+            android:id="@+id/edt_consignment_id"
             style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_20"
-            android:id="@+id/edt_consignment_id"
             android:background="@drawable/bg_rect_edit_txt"
             android:hint="@string/paste_consignment_id"
             android:padding="@dimen/size_12"
@@ -177,11 +178,11 @@
             app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextField
+            android:id="@+id/edt_tracking_url"
             style="@style/match_wrap"
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_20"
-            android:id="@+id/edt_tracking_url"
             android:background="@drawable/bg_rect_edit_txt"
             android:hint="@string/paste_consignment_tracking_url"
             android:padding="@dimen/size_12"
@@ -191,6 +192,7 @@
             tools:ignore="UnusedAttribute" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <com.framework.views.customViews.CustomTextView
           style="@style/match_wrap"
           android:layout_marginStart="@dimen/size_20"
@@ -232,7 +234,7 @@
         android:layout_marginEnd="@dimen/size_10"
         android:padding="@dimen/size_4"
         android:text="@string/go_back"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/pinkish_grey"
         app:fontFamily="@font/semi_bold"
         app:textType="BODY_3" />
@@ -249,7 +251,7 @@
         android:shadowRadius="0"
         android:stateListAnimator="@null"
         android:text="@string/notify_customer"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         app:fontFamily="@font/bold"
         app:textType="CAPTION"

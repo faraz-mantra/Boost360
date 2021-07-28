@@ -19,7 +19,11 @@ class CustomButton : AppCompatButton {
     setCustomAttrs(context, attrs)
   }
 
-  constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
+  constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
+    context,
+    attrs,
+    defStyle
+  ) {
     setCustomAttrs(context, attrs)
   }
 
@@ -38,7 +42,6 @@ class CustomButton : AppCompatButton {
     val textType = TextType.values().firstOrNull {
       it.type == typedArray?.getInt(R.styleable.CustomTextView_textType, -1)
     }
-
     this.setTextStyle(textType)
   }
 

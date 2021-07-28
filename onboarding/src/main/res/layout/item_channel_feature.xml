@@ -55,9 +55,9 @@
             android:id="@+id/arrow"
             android:layout_width="@dimen/size_14"
             android:layout_height="@dimen/size_14"
-            android:scaleType="fitStart"
-            android:layout_marginTop="@dimen/size_2"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/size_2"
+            android:scaleType="fitStart"
             app:srcCompat="@drawable/ic_dropdown_n" />
 
         </LinearLayout>

@@ -26,45 +26,7 @@ import java.util.ArrayList;
 
 public class ProductGalleryAdapter extends BaseAdapter {
 
-    public class ViewHolder {
-        public ImageView ProductImageView, shareImage;
-        public TextView Product_Name;
-        public TextView Currency_Type;
-        public TextView OriginalPrice;
-        public FrameLayout flMain;
-        public FrameLayout flOverlay;
-        public View vwOverlay;
-        private int position = -1;
-
-
-        ViewHolder(View vi){
-            ProductImageView = (ImageView) vi.findViewById(R.id.proudct_image_view);
-            Product_Name = (TextView) vi.findViewById(R.id.product_name);
-            OriginalPrice = (TextView) vi.findViewById(R.id.product_price);
-            Currency_Type = (TextView) vi.findViewById(R.id.product_currency);
-            flMain = (FrameLayout) vi.findViewById(R.id.flMain);
-            flOverlay = (FrameLayout) vi.findViewById(R.id.flOverlay);
-            vwOverlay = (View) vi.findViewById(R.id.vwOverlay);
-            shareImage = vi.findViewById(R.id.share_img);
-            shareImage.setOnClickListener(new View.OnClickListener() {
-
-
-                @Override
-                public void onClick(View view) {
-                    Intent sendIntent = new Intent();
-                    sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, productItemModelList.get(position).ProductUrl);
-                    sendIntent.setType("text/plain");
-                    sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    activity.startActivity(sendIntent);
-                }
-            });
-        }
-        void setPosition(int position){
-            this.position = position;
-        }
-    }
-
+    public boolean showChecker = false;
     private ViewHolder viewHolder;
 
     private Activity activity;
@@ -74,8 +36,6 @@ public class ProductGalleryAdapter extends BaseAdapter {
     private Product_Gallery_Fragment.FROM from;
 
     private ArrayList<ProductListModel> productItemModelList;
-
-    public boolean showChecker = false;
 
     public ProductGalleryAdapter(Activity activity, String currency, Product_Gallery_Fragment.FROM from) {
         this.activity = activity;
@@ -90,7 +50,6 @@ public class ProductGalleryAdapter extends BaseAdapter {
             return productItemModelList.size();
         return 0;
     }
-
 
     @Override
     public Object getItem(int position) {
@@ -189,5 +148,45 @@ public class ProductGalleryAdapter extends BaseAdapter {
         params.gravity = Gravity.NO_GRAVITY;
         v.setLayoutParams(params);
         v.invalidate();
+    }
+
+    public class ViewHolder {
+        public ImageView ProductImageView, shareImage;
+        public TextView Product_Name;
+        public TextView Currency_Type;
+        public TextView OriginalPrice;
+        public FrameLayout flMain;
+        public FrameLayout flOverlay;
+        public View vwOverlay;
+        private int position = -1;
+
+
+        ViewHolder(View vi) {
+            ProductImageView = (ImageView) vi.findViewById(R.id.proudct_image_view);
+            Product_Name = (TextView) vi.findViewById(R.id.product_name);
+            OriginalPrice = (TextView) vi.findViewById(R.id.product_price);
+            Currency_Type = (TextView) vi.findViewById(R.id.product_currency);
+            flMain = (FrameLayout) vi.findViewById(R.id.flMain);
+            flOverlay = (FrameLayout) vi.findViewById(R.id.flOverlay);
+            vwOverlay = (View) vi.findViewById(R.id.vwOverlay);
+            shareImage = vi.findViewById(R.id.share_img);
+            shareImage.setOnClickListener(new View.OnClickListener() {
+
+
+                @Override
+                public void onClick(View view) {
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, productItemModelList.get(position).ProductUrl);
+                    sendIntent.setType("text/plain");
+                    sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    activity.startActivity(sendIntent);
+                }
+            });
+        }
+
+        void setPosition(int position) {
+            this.position = position;
+        }
     }
 }

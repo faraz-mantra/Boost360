@@ -1,60 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_gravity="center"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp"
-    android:background="?android:selectableItemBackground"
-    android:layout_height="wrap_content">
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_gravity="center"
+  android:background="?android:selectableItemBackground"
+  android:orientation="horizontal"
+  android:paddingStart="10dp"
+  android:paddingTop="10dp"
+  android:paddingEnd="10dp"
+  android:paddingBottom="10dp">
 
-    <com.makeramen.RoundedImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/img_chat_user"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_user"
-        app:riv_border_color="#ffffff"
-        app:riv_corner_radius="30dip"
-        app:riv_mutate_background="true"
-        app:riv_oval="true" />
+  <com.makeramen.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/img_chat_user"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:scaleType="centerCrop"
+    android:src="@drawable/ic_user"
+    app:riv_border_color="#ffffff"
+    app:riv_corner_radius="30dip"
+    app:riv_mutate_background="true"
+    app:riv_oval="true" />
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="10dp"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <TextView
+        android:id="@+id/tv_chat_user"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ellipsize="marquee"
+        android:fontFamily="sans-serif"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+      <TextView
+        android:id="@+id/tv_chat_date"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginStart="10dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_chat_user"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:ellipsize="marquee"
-                android:textSize="16sp"/>
-            <TextView
-                android:id="@+id/tv_chat_date"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:textSize="12sp"
-                android:text=""/>
-        </LinearLayout>
-        <TextView
-            android:id="@+id/tv_chat_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:ellipsize="marquee"
-            android:text=""/>
+        android:layout_marginStart="5dp"
+        android:text=""
+        android:textSize="12sp" />
     </LinearLayout>
+
+    <TextView
+      android:id="@+id/tv_chat_message"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ellipsize="marquee"
+      android:singleLine="true"
+      android:text="" />
+  </LinearLayout>
 </LinearLayout>

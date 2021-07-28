@@ -67,7 +67,11 @@ class WebPreSignInBottomDialog : BaseBottomSheetDialog<WebPresignInBottomsheetBi
         binding?.progressBar?.gone()
       }
 
-      override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+      override fun onReceivedError(
+        view: WebView?,
+        request: WebResourceRequest?,
+        error: WebResourceError?
+      ) {
         super.onReceivedError(view, request, error)
         binding?.agreeBtn?.setOnClickListener { onClicked() }
         binding?.progressBar?.gone()

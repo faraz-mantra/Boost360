@@ -28,12 +28,12 @@ import java.util.Set;
  * Created by Admin on 28-08-2017.
  */
 
-public class FacebookHandler{
+public class FacebookHandler {
 
     private CallbackManager callbackManager;
     private FacebookCallbacks facebookCallbacks;
 
-    public FacebookHandler(FacebookCallbacks callbacks,Context context){
+    public FacebookHandler(FacebookCallbacks callbacks, Context context) {
         facebookCallbacks = callbacks;
         FacebookSdk.sdkInitialize(context.getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -51,9 +51,9 @@ public class FacebookHandler{
                 boolean readContain = permissions.containsAll(publishPermissions);
                 boolean publishContain = permissions.containsAll(publishPermissions);
                 // Log.v("ggg",contain+"permission"+loginResult.getAccessToken().getPermissions());
-                if(!publishContain){
-                    logInWithPublishPermissions(loginManager,viewReference, publishPermissions);
-                }else{
+                if (!publishContain) {
+                    logInWithPublishPermissions(loginManager, viewReference, publishPermissions);
+                } else {
                     facebookCallbacks.onLoginSuccess(loginResult);
                 }
             }
@@ -72,8 +72,9 @@ public class FacebookHandler{
                 com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
             }
         });
-        logInWithReadPermissions(loginManager,viewReference, readPermissions);
+        logInWithReadPermissions(loginManager, viewReference, readPermissions);
     }
+
     public void getFacebookReadPermissions(final Object viewReference, final List<String> readPermissions) {
 
         final LoginManager loginManager = LoginManager.getInstance();
@@ -84,9 +85,9 @@ public class FacebookHandler{
                 Set<String> permissions = loginResult.getAccessToken().getPermissions();
                 boolean contain = permissions.containsAll(readPermissions);
                 // Log.v("ggg",contain+"permission"+loginResult.getAccessToken().getPermissions());
-                if(contain){
+                if (contain) {
                     facebookCallbacks.onLoginSuccess(loginResult);
-                }else{
+                } else {
                     facebookCallbacks.onAllPermissionNotGiven(permissions);
                     // all permission not given
                 }
@@ -108,7 +109,7 @@ public class FacebookHandler{
                 com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
             }
         });
-        logInWithReadPermissions(loginManager,viewReference, readPermissions);
+        logInWithReadPermissions(loginManager, viewReference, readPermissions);
     }
 
     public void getFacebookWritePermissions(final Object viewReference, final List<String> writePermission) {
@@ -121,10 +122,10 @@ public class FacebookHandler{
                 Set<String> permissions = loginResult.getAccessToken().getPermissions();
                 boolean contain = permissions.containsAll(writePermission);
                 // Log.v("ggg",contain+"permission"+loginResult.getAccessToken().getPermissions());
-                if(contain){
+                if (contain) {
                     facebookCallbacks.onLoginSuccess(loginResult);
-                }else{
-                   facebookCallbacks.onAllPermissionNotGiven(permissions);
+                } else {
+                    facebookCallbacks.onAllPermissionNotGiven(permissions);
                 }
 
 
@@ -144,12 +145,13 @@ public class FacebookHandler{
                 com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
             }
         });
-        logInWithPublishPermissions(loginManager,viewReference, writePermission);
+        logInWithPublishPermissions(loginManager, viewReference, writePermission);
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent intent){
-        callbackManager.onActivityResult(requestCode,resultCode,intent);
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        callbackManager.onActivityResult(requestCode, resultCode, intent);
     }
+
     public void getFacebookProfile(final AccessToken accessToken) {
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id,name,email");
@@ -157,8 +159,7 @@ public class FacebookHandler{
                 new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        try
-                        {
+                        try {
                             facebookCallbacks.onProfileConnected(response.getJSONObject(), accessToken);
                             getFacebookPages(accessToken);
                         } catch (Exception e) {
@@ -183,8 +184,7 @@ public class FacebookHandler{
                         try {
                             JSONObject pageMe = response.getJSONObject();
                             pages = pageMe.getJSONArray("data");
-                            if (pages != null)
-                            {
+                            if (pages != null) {
                                 int size = pages.length();
                                 pagesNameList = new ArrayList<String>(size);
                                 for (int i = 0; i < size; i++) {
@@ -194,8 +194,8 @@ public class FacebookHandler{
 
                         } catch (Exception e1) {
                             e1.printStackTrace();
-                        }finally {
-                            facebookCallbacks.onProfilePages(pages,pagesNameList);
+                        } finally {
+                            facebookCallbacks.onProfilePages(pages, pagesNameList);
                         }
 
                     }
@@ -204,39 +204,44 @@ public class FacebookHandler{
         request.executeAsync();
     }
 
-    private void logInWithPublishPermissions(LoginManager manager, Object reference, List<String> permissions){
-        if(reference instanceof Fragment){
+    private void logInWithPublishPermissions(LoginManager manager, Object reference, List<String> permissions) {
+        if (reference instanceof Fragment) {
             manager.logInWithPublishPermissions((Fragment) reference, permissions);
-        }else if(reference instanceof androidx.fragment.app.Fragment){
+        } else if (reference instanceof androidx.fragment.app.Fragment) {
             manager.logInWithPublishPermissions((androidx.fragment.app.Fragment) reference, permissions);
-        }else if(reference instanceof Activity){
+        } else if (reference instanceof Activity) {
             manager.logInWithPublishPermissions((Activity) reference, permissions);
-        }else{
+        } else {
             facebookCallbacks.onError();
         }
 
     }
 
-    private void logInWithReadPermissions(LoginManager manager, Object reference, List<String> permissions){
-        if(reference instanceof Fragment){
+    private void logInWithReadPermissions(LoginManager manager, Object reference, List<String> permissions) {
+        if (reference instanceof Fragment) {
             manager.logInWithReadPermissions((Fragment) reference, permissions);
-        }else if(reference instanceof androidx.fragment.app.Fragment){
+        } else if (reference instanceof androidx.fragment.app.Fragment) {
             manager.logInWithReadPermissions((androidx.fragment.app.Fragment) reference, permissions);
-        }else if(reference instanceof Activity){
+        } else if (reference instanceof Activity) {
             manager.logInWithReadPermissions((Activity) reference, permissions);
-        }else{
+        } else {
             facebookCallbacks.onError();
         }
 
     }
 
-    public interface FacebookCallbacks{
+    public interface FacebookCallbacks {
         void onError();
+
         void onCancel();
+
         void onAllPermissionNotGiven(Collection<String> givenPermissions);
+
         void onLoginSuccess(LoginResult result);
+
         void onProfilePages(JSONArray pages, ArrayList<String> pagesName);
-        void onProfileConnected(JSONObject profile,AccessToken token);
+
+        void onProfileConnected(JSONObject profile, AccessToken token);
 
     }
 }

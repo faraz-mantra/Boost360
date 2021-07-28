@@ -70,16 +70,22 @@ class FloatingPointAuthFragment : AuthBaseFragment<FragmentFpListBinding>(), Rec
     setOnClickListener(binding?.btnGoToDashboard)
     setAdapterFPList()
     binding?.backIv?.setOnClickListener { goBack() }
-    activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-      override fun handleOnBackPressed() {
-        goBack()
-      }
-    })
+    activity?.onBackPressedDispatcher?.addCallback(
+      viewLifecycleOwner,
+      object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+          goBack()
+        }
+      })
   }
 
   private fun setAdapterFPList() {
     if (fpListAuth.isNotEmpty()) {
-      this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = fpListAuth!!, itemClickListener = this)
+      this.adapter = AppBaseRecyclerViewAdapter(
+        activity = baseActivity,
+        list = fpListAuth!!,
+        itemClickListener = this
+      )
       binding?.rvBusinessList?.adapter = adapter
     } else {
       showLongToast(getString(R.string.unable_to_find_business_account_associated))
@@ -88,7 +94,11 @@ class FloatingPointAuthFragment : AuthBaseFragment<FragmentFpListBinding>(), Rec
 
   private fun goBack() {
     if (exitToast == null || exitToast?.view == null || exitToast?.view?.windowToken == null) {
-      exitToast = Toast.makeText(baseActivity, resources.getString(R.string.press_again_exit), Toast.LENGTH_SHORT)
+      exitToast = Toast.makeText(
+        baseActivity,
+        resources.getString(R.string.press_again_exit),
+        Toast.LENGTH_SHORT
+      )
       exitToast?.show()
     } else {
       exitToast?.cancel()

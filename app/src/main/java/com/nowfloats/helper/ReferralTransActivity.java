@@ -19,11 +19,12 @@ import static com.nowfloats.util.Constants.REFERRAL_CAMPAIGN_CODE;
 
 public class ReferralTransActivity extends AppCompatActivity {
     UserSessionManager session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         session = new UserSessionManager(getApplicationContext(), ReferralTransActivity.this);
-        if(!TextUtils.isEmpty(session.getFPEmail())){
+        if (!TextUtils.isEmpty(session.getFPEmail())) {
             InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
                     session.getUserProfileName(),
                     session.getFPEmail(),
@@ -31,7 +32,7 @@ public class ReferralTransActivity extends AppCompatActivity {
                     REFERRAL_CAMPAIGN_CODE, null, null
             );
             inviteReferralLogin();
-        } else if(!TextUtils.isEmpty(session.getUserProfileEmail())){
+        } else if (!TextUtils.isEmpty(session.getUserProfileEmail())) {
             InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
                     session.getUserProfileName(),
                     session.getUserProfileEmail(),
@@ -39,20 +40,20 @@ public class ReferralTransActivity extends AppCompatActivity {
                     REFERRAL_CAMPAIGN_CODE, null, null
             );
             inviteReferralLogin();
-        }else{
+        } else {
             Toast.makeText(getApplicationContext(), R.string.an_unexpacted_error, Toast.LENGTH_LONG).show();
         }
         finish();
     }
 
-    private void inviteReferralLogin(){
+    private void inviteReferralLogin() {
         InviteReferralsApi.getInstance(getApplicationContext()).userDetailListener(jsonObject -> {
             Log.d("Referral Details", jsonObject.toString());
             try {
                 String status = jsonObject.get("Authentication").toString();
-                if(status.toLowerCase().equals("success")){
+                if (status.toLowerCase().equals("success")) {
                     InviteReferralsApi.getInstance(getApplicationContext()).inline_btn(REFERRAL_CAMPAIGN_CODE);
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_try_again), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {

@@ -33,27 +33,27 @@ import io.separ.neural.inputmethod.compat.IntentCompatUtils;
  * This class detects the {@link Intent#ACTION_MY_PACKAGE_REPLACED} broadcast intent when this IME
  * package has been replaced by a newer version of the same package. This class also detects
  * {@link Intent#ACTION_BOOT_COMPLETED} and {@link Intent#ACTION_USER_INITIALIZE} broadcast intent.
- *
+ * <p>
  * If this IME has already been installed in the system image and a new version of this IME has
  * been installed, {@link Intent#ACTION_MY_PACKAGE_REPLACED} is received by this receiver and it
  * will hide the setup wizard's icon.
- *
+ * <p>
  * If this IME has already been installed in the data partition and a new version of this IME has
  * been installed, {@link Intent#ACTION_MY_PACKAGE_REPLACED} is received by this receiver but it
  * will not hide the setup wizard's icon, and the icon will appear on the launcher.
- *
+ * <p>
  * If this IME hasn't been installed yet and has been newly installed, no
  * {@link Intent#ACTION_MY_PACKAGE_REPLACED} will be sent and the setup wizard's icon will appear
  * on the launcher.
- *
+ * <p>
  * When the device has been booted, {@link Intent#ACTION_BOOT_COMPLETED} is received by this
  * receiver and it checks whether the setup wizard's icon should be appeared or not on the launcher
  * depending on which partition this IME is installed.
- *
+ * <p>
  * When a multiuser account has been created, {@link Intent#ACTION_USER_INITIALIZE} is received
  * by this receiver and it checks the whether the setup wizard's icon should be appeared or not on
  * the launcher depending on which partition this IME is installed.
- *
+ * <p>
  * When the system locale has been changed, {@link Intent#ACTION_LOCALE_CHANGED} is received by
  * this receiver and the {@link KeyboardLayoutSet}'s cache is cleared.
  */
@@ -85,7 +85,7 @@ public final class SystemBroadcastReceiver extends BroadcastReceiver {
         // 3) a new user has been created.
         // There is no good reason to keep the process alive if this IME isn't a current IME.
         final InputMethodManager imm =
-                (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         // Called to check whether this IME has been triggered by the current user or not
         final boolean isInputMethodManagerValidForUserOfThisProcess =
                 !imm.getInputMethodList().isEmpty();

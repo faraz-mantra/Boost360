@@ -11,8 +11,12 @@ import com.nowfloats.Store.PaymentOptionsActivity;
 public interface OnPaymentOptionClick {
 
     void onOptionClicked(PaymentOptionsActivity.PaymentType type);
+
     void onPickImage(PaymentOptionsActivity.PaymentType type, int requestCode);
+
     void showProcess(String message);
+
     void hideProcess();
+
     void setResult(Intent intent);
 }

@@ -1,86 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+  <data>
 
-    </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/iv_staff_image"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:minWidth="@dimen/size_120"
+      android:minHeight="@dimen/size_120"
+      android:src="@drawable/ic_vacation"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintDimensionRatio="4:4"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.498"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.177" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/ctv_summery"
+      style="@style/TextDescription"
+      android:text="@string/you_can_add_scheduled_breaks_for_your_staff_when_they_need_it"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/iv_staff_image"
+      app:layout_constraintVertical_bias="0.22"
+      app:textType="BODY_1" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/ctv_heading"
+      style="@style/TextDescription"
+      android:text="@string/add_a_leave_break_for_br_gaurav_sharma"
+      android:textColor="@color/black_4a4a4a"
+      android:textSize="16sp"
+       android:fontFamily="@font/semi_bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/iv_staff_image"
+      app:layout_constraintVertical_bias="0.065"
+      app:textType="HEADING_5" />
+
+    <FrameLayout
+      android:id="@+id/fl_add_breaks"
+      style="@style/ButtonStyle.Rounded.Solid"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/ctv_summery"
+      app:layout_constraintVertical_bias="0.307">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/text_btn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_staff_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="@dimen/size_120"
-            android:minHeight="@dimen/size_120"
-            android:src="@drawable/ic_vacation"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="4:4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.177" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:text="@string/add_a_break"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textFontWeight="600"
+        app:textType="BODY_1" />
+    </FrameLayout>
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/ctv_summery"
-            style="@style/TextDescription"
-            android:text="@string/you_can_add_scheduled_breaks_for_your_staff_when_they_need_it"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_staff_image"
-            app:layout_constraintVertical_bias="0.22"
-            app:textType="BODY_1" />
+    <com.framework.views.customViews.CustomTextView
+      style="@style/TextDescription"
+      android:text="@string/what_happens_to_already_booked_appoin"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/fl_add_breaks"
+      app:layout_constraintVertical_bias="0.042"
+      app:textType="BODY_1" />
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/ctv_heading"
-            style="@style/TextDescription"
-            android:text="@string/add_a_leave_break_for_br_gaurav_sharma"
-            android:textColor="@color/black_4a4a4a"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_staff_image"
-            app:layout_constraintVertical_bias="0.065"
-            app:textType="HEADING_5" />
-
-        <FrameLayout
-            android:id="@+id/fl_add_breaks"
-            style="@style/ButtonStyle.Rounded.Solid"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ctv_summery"
-            app:layout_constraintVertical_bias="0.307">
-
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/text_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center"
-                android:text="@string/add_a_break"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textFontWeight="600"
-                app:textType="BODY_1" />
-        </FrameLayout>
-
-        <com.framework.views.customViews.CustomTextView
-            style="@style/TextDescription"
-            android:text="@string/what_happens_to_already_booked_appoin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fl_add_breaks"
-            app:layout_constraintVertical_bias="0.042"
-            app:textType="BODY_1" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

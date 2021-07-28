@@ -13,24 +13,20 @@ public class WhatsAppBusinessNumberModel {
     //@SerializedName("IsArchived")
     //boolean isArchived;
 
-    public void setId(String id)
-    {
-        this.id = id;
-    }
-
-    public String getId()
-    {
+    public String getId() {
         return this.id;
     }
 
-    public void setWhatsAppNumber(String whatsAppNumber)
-    {
-        this.whatsAppNumber = whatsAppNumber;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getWhatsAppNumber()
-    {
+    public String getWhatsAppNumber() {
         return this.whatsAppNumber;
+    }
+
+    public void setWhatsAppNumber(String whatsAppNumber) {
+        this.whatsAppNumber = whatsAppNumber;
     }
 
     /*public void setIsArchived(boolean isArchived)

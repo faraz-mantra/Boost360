@@ -9,34 +9,29 @@ import java.io.DataOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class UploadImage extends AsyncTask<String,String,String>
-{
+public class UploadImage extends AsyncTask<String, String, String> {
     private String url;
     private byte[] imageData;
     private String productId;
     private int responseCode;
     private ImageUploadListener listener;
 
-    public UploadImage(String url, byte[] imageData, String productId)
-    {
+    public UploadImage(String url, byte[] imageData, String productId) {
         this.url = url;
         this.imageData = imageData;
         this.productId = productId;
     }
 
     @Override
-    protected void onPreExecute()
-    {
+    protected void onPreExecute() {
         listener.onPreExecute();
     }
 
     @Override
-    protected String doInBackground(String... strings)
-    {
+    protected String doInBackground(String... strings) {
         DataOutputStream outputStream;
 
-        try
-        {
+        try {
             URL new_url = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) new_url.openConnection();
 
@@ -48,10 +43,9 @@ public class UploadImage extends AsyncTask<String,String,String>
             // Enable PUT method
             connection.setRequestMethod(Constants.HTTP_PUT);
             connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setRequestProperty("Content-Type","application/octet-stream");
+            connection.setRequestProperty("Content-Type", "application/octet-stream");
 
-            if (imageData != null)
-            {
+            if (imageData != null) {
                 outputStream = new DataOutputStream(connection.getOutputStream());
                 outputStream.write(imageData, 0, imageData.length);
             }
@@ -107,7 +101,7 @@ public class UploadImage extends AsyncTask<String,String,String>
                 }*/
         } catch (Exception ex) {
             ex.printStackTrace();
-            Log.e("UploadImage >>","error --->>>"+ ex.toString());
+            Log.e("UploadImage >>", "error --->>>" + ex.toString());
             //flag = false;
         } /*finally {
                 try {
@@ -121,20 +115,19 @@ public class UploadImage extends AsyncTask<String,String,String>
     }
 
     @Override
-    protected void onPostExecute(final String result){
+    protected void onPostExecute(final String result) {
 
         listener.onPostExecute(result, responseCode);
-       // Log.d("FILE_UPLOAD_RESPONSE", "RESPONSE: " + result);
+        // Log.d("FILE_UPLOAD_RESPONSE", "RESPONSE: " + result);
     }
 
-    public void setImageUploadListener(ImageUploadListener listener)
-    {
+    public void setImageUploadListener(ImageUploadListener listener) {
         this.listener = listener;
     }
 
-    public interface ImageUploadListener
-    {
+    public interface ImageUploadListener {
         void onPreExecute();
+
         void onPostExecute(String result, int responseCode);
     }
 }

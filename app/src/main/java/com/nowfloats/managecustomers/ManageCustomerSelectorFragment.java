@@ -3,10 +3,12 @@ package com.nowfloats.managecustomers;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.cardview.widget.CardView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.thinksity.R;
 public class ManageCustomerSelectorFragment extends Fragment {
 
     float elevation = 0f;
+
     public static Fragment getInstanse(int pos) {
         Fragment frag = new ManageCustomerSelectorFragment();
         Bundle b = new Bundle();

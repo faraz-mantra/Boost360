@@ -1,4 +1,5 @@
 package com.framework.models.firestore;
+
 import com.google.gson.annotations.SerializedName
 
 /*
@@ -13,8 +14,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
 
-data class Error (
+data class Error(
 
-		@SerializedName("log_message") val log_message : String,
-		@SerializedName("error_code") val error_code : Int
+  @SerializedName("log_message") val log_message: String,
+  @SerializedName("error_code") val error_code: Int
 )

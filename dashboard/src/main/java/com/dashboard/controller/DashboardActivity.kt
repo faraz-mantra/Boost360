@@ -2,10 +2,12 @@ package com.dashboard.controller
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.StrictMode
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavArgument
@@ -39,6 +41,7 @@ import com.framework.models.firestore.FirestoreManager.initData
 import com.framework.pref.*
 import com.framework.utils.AppsFlyerUtils
 import com.framework.utils.fromHtml
+import com.framework.utils.roundToFloat
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
 import com.framework.webengageconstant.*
@@ -58,7 +61,7 @@ import java.util.*
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
-  private var exitToast: Toast? = null
+  private var doubleBackToExitPressedOnce = false
   private var mDeepLinkUrl: String? = null;
   private var mPayload: String? = null
   private var deepLinkUtil: DeepLinkUtil? = null
@@ -88,7 +91,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onCreateView()
     session = UserSessionManager(this)
     session?.let { deepLinkUtil = DeepLinkUtil(this, it) }
-    mNavController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
+    mNavController =
+      (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
     val graph = mNavController.graph
     graph.addArgument("data", NavArgument.Builder().setDefaultValue("data").build())
     mNavController.graph = graph
@@ -107,7 +111,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   private fun UserSessionManager.initializeWebEngageLogin() {
     WebEngageController.setUserContactInfoProperties(this)
+    WebEngageController.setUserContactInfoProperties(this)
     WebEngageController.setFPTag(this.fpTag)
+    WebEngageController.trackAttribute(this)
   }
 
   private fun initialize() {
@@ -167,7 +173,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onResume() {
     super.onResume()
     setUserData()
-    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage, binding?.drawerView?.txtDomainName)
+    setOnClickListener(
+      binding?.drawerView?.btnSiteMeter,
+      binding?.drawerView?.imgBusinessLogo,
+      binding?.drawerView?.backgroundImage,
+      binding?.drawerView?.txtDomainName
+    )
   }
 
   override fun getToolbar(): CustomToolbar? {
@@ -178,25 +189,38 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   fun setPercentageData(score: Int) {
     val isHigh = (score >= 85)
     binding?.drawerView?.txtPercentage?.text = "$score% "
-    binding?.drawerView?.progressBar?.progress = score
-//    binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-//    binding?.drawerView?.progressBar?.progressDrawable = ContextCompat.getDrawable(this, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+    val percentage = ((100 - score).toDouble() / 100).roundToFloat(2)
+    (binding?.drawerView?.progressBar?.layoutParams as? ConstraintLayout.LayoutParams)?.matchConstraintPercentWidth = percentage
+    binding?.drawerView?.progressBar?.requestLayout()
   }
 
   private fun setUserData() {
-    binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
+    binding?.drawerView?.txtBusinessName?.text =
+      session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
     setPercentageData(FirestoreManager.getDrScoreData()?.getDrsTotal() ?: 0)
     var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
     if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
     }
-    binding?.drawerView?.imgBusinessLogo?.let { glideLoad(it, imageUri ?: "", R.drawable.business_edit_profile_icon_d) }
+    binding?.drawerView?.imgBusinessLogo?.let {
+      glideLoad(
+        it,
+        imageUri ?: "",
+        R.drawable.business_edit_profile_icon_d
+      )
+    }
     var bgImageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)
     if (bgImageUri.isNullOrEmpty().not() && bgImageUri!!.contains("http").not()) {
       bgImageUri = BASE_IMAGE_URL + bgImageUri
     }
-    binding?.drawerView?.bgImage?.let { glideLoad(it, bgImageUri ?: "", R.drawable.general_services_background_img_d) }
+    binding?.drawerView?.bgImage?.let {
+      glideLoad(
+        it,
+        bgImageUri ?: "",
+        R.drawable.general_services_background_img_d
+      )
+    }
   }
 
   private fun setDrawerHome() {
@@ -204,7 +228,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val response = it as? DrawerHomeDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         binding?.drawerView?.rvLeftDrawer?.apply {
-          adapterDrawer = AppBaseRecyclerViewAdapter(this@DashboardActivity, checkLockData(response.data!!), this@DashboardActivity)
+          adapterDrawer = AppBaseRecyclerViewAdapter(
+            this@DashboardActivity,
+            checkLockData(response.data!!),
+            this@DashboardActivity
+          )
           adapter = adapterDrawer
         }
       } else showShortToast(this.getString(R.string.navigation_data_error))
@@ -218,10 +246,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           it1.title = getDefaultTrasactionsTaxonomyFromServiceCode(session?.fP_AppExperienceCode)
         }
         DrawerHomeData.NavType.NAV_CALLS.name -> {
-          it1.isLockShow = (session?.getStoreWidgets()?.firstOrNull { it == PremiumCode.CALLTRACKER.value } == null)
+          it1.isLockShow = (session?.getStoreWidgets()
+            ?.firstOrNull { it == PremiumCode.CALLTRACKER.value } == null)
         }
         DrawerHomeData.NavType.NAV_BOOST_KEYBOARD.name -> {
-          it1.isLockShow = (session?.getStoreWidgets()?.firstOrNull { it == PremiumCode.BOOSTKEYBOARD.value } == null)
+          it1.isLockShow = (session?.getStoreWidgets()
+            ?.firstOrNull { it == PremiumCode.BOOSTKEYBOARD.value } == null)
         }
       }
     }
@@ -253,7 +283,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when (pos) {
       1 -> {
         val dataWebsite = welcomeData?.get(0)
-        if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let { showWelcomeDialog(it) }
+        if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let {
+          showWelcomeDialog(
+            it
+          )
+        }
         else {
           mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
           toolbarPropertySet(pos)
@@ -261,7 +295,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       }
       2 -> {
         val dataCustomer = welcomeData?.get(1)
-        if (dataCustomer?.welcomeType?.let { getIsShowWelcome(it) } != true) dataCustomer?.let { showWelcomeDialog(it) }
+        if (dataCustomer?.welcomeType?.let { getIsShowWelcome(it) } != true) dataCustomer?.let {
+          showWelcomeDialog(
+            it
+          )
+        }
         else {
           mNavController.navigate(R.id.navigation_enquiries, Bundle(), getNavOptions())
           toolbarPropertySet(pos)
@@ -269,7 +307,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       }
       3 -> {
         val dataAddOns = welcomeData?.get(2)
-        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
+        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let {
+          showWelcomeDialog(
+            it
+          )
+        }
         else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
 
       }
@@ -317,9 +359,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     }
   }
 
-  override fun getNavIconScale(): Float {
-    return 1f
-  }
 
   override fun onItemClick(pos: Int) {
     super.onItemClick(pos)
@@ -333,7 +372,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun getNavOptions(): NavOptions {
-    return NavOptions.Builder().setExitAnim(R.anim.slide_out_left).setEnterAnim(R.anim.slide_in_right).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right).setLaunchSingleTop(true).build()
+    return NavOptions.Builder().setExitAnim(R.anim.slide_out_left)
+      .setEnterAnim(R.anim.slide_in_right).setPopEnterAnim(R.anim.slide_in_left)
+      .setPopExitAnim(R.anim.slide_out_right).setLaunchSingleTop(true).build()
   }
 
   private fun openDashboard(isSet: Boolean = true) {
@@ -348,20 +389,24 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK && isSecondaryImage) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
       if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
-    } else childFragments?.forEach { fragment -> fragment.onActivityResult(requestCode, resultCode, data) }
+    } else childFragments?.forEach { fragment ->
+      fragment.onActivityResult(
+        requestCode,
+        resultCode,
+        data
+      )
+    }
   }
 
   override fun onBackPressed() {
     when {
       (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) -> binding?.drawerLayout?.closeDrawers()
       (mNavController.currentDestination?.id == R.id.navigation_dashboard) -> {
-        if (exitToast == null || exitToast?.view == null || exitToast?.view?.windowToken == null) {
-          exitToast = Toast.makeText(this, resources.getString(R.string.press_again_exit), Toast.LENGTH_SHORT)
-          exitToast?.show()
-        } else {
-          exitToast?.cancel()
-          this.finish()
-        }
+        if (!doubleBackToExitPressedOnce) {
+          this.doubleBackToExitPressedOnce = true
+          showShortToast(resources.getString(R.string.press_again_exit))
+          Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+        } else this.finish()
       }
       else -> openDashboard()
     }
@@ -402,7 +447,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       DrawerHomeData.NavType.NAV_MANAGE_CONTENT -> session?.let { this.startManageContentActivity(it) }
       DrawerHomeData.NavType.NAV_CALLS -> this.startVmnCallCard(session)
       DrawerHomeData.NavType.NAV_ENQUIRY -> this.startBusinessEnquiry(session)
-      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let { this.startManageInventoryActivity(it) }
+      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let {
+        this.startManageInventoryActivity(
+          it
+        )
+      }
       DrawerHomeData.NavType.NAV_NEWS_LETTER_SUB -> this.startSubscriber(session)
       DrawerHomeData.NavType.NAV_BOOST_KEYBOARD -> session?.let { this.startKeyboardActivity(it) }
       DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let {
@@ -438,21 +487,27 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     val imageFile = File(path)
     isSecondaryImage = false
     showProgress()
-    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this, androidx.lifecycle.Observer {
-      if (it.isSuccess()) {
-        if (it.stringResponse.isNullOrEmpty().not()) {
-          session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)
-          binding?.drawerView?.bgImage?.let { it1 -> glideLoad(it1, it.stringResponse ?: "", R.drawable.general_services_background_img_d) }
-        }
-      } else showLongToast(it.message())
-      hideProgress()
-    })
+    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile))
+      .observeOnce(this, androidx.lifecycle.Observer {
+        if (it.isSuccess()) {
+          if (it.stringResponse.isNullOrEmpty().not()) {
+            session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)
+            binding?.drawerView?.bgImage?.let { it1 ->
+              glideLoad(
+                it1,
+                it.stringResponse ?: "",
+                R.drawable.general_services_background_img_d
+              )
+            }
+          }
+        } else showLongToast(it.message())
+        hideProgress()
+      })
   }
 
   private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
     val responseBody = RequestBody.create("image/png".toMediaTypeOrNull(), businessImage.readBytes())
-    val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
-      ?: "bg_${UUID.randomUUID()}.png"
+    val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name } ?: "bg_${UUID.randomUUID()}.png"
     return UploadFileBusinessRequest(clientId, session?.fPID, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
   }
 
@@ -476,7 +531,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun getWelcomeData() {
     viewModel.getWelcomeDashboardData(this).observeOnce(this, androidx.lifecycle.Observer {
       val response = it as? WelcomeDashboardResponse
-      val data = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.actionItem
+      val data = response?.data?.firstOrNull { it1 ->
+        it1.type.equals(
+          session?.fP_AppExperienceCode,
+          ignoreCase = true
+        )
+      }?.actionItem
       if (response?.isSuccess() == true && data.isNullOrEmpty().not()) {
         this.welcomeData = data
       }

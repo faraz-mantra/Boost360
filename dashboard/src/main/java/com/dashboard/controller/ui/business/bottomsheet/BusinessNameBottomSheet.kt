@@ -26,9 +26,10 @@ class BusinessNameBottomSheet : BaseBottomSheetDialog<BottomSheetBusinessNameBin
   override fun onCreateView() {
     dialog.behavior.isDraggable = false
     setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnPublish)
-    this.businessProfileModel = arguments?.get(IntentConstant.BUSINESS_DETAILS.name) as? BusinessProfileModel
+    this.businessProfileModel =
+      arguments?.get(IntentConstant.BUSINESS_DETAILS.name) as? BusinessProfileModel
     binding?.cetBusinessName?.setText(businessProfileModel?.businessName)
-    binding?.cetBusinessName?.setSelection(businessProfileModel?.businessName?.length?:0)
+    binding?.cetBusinessName?.setSelection(businessProfileModel?.businessName?.length ?: 0)
     binding?.btnPublish?.isEnabled = false
     binding?.ctvBusinessNameCount?.text = "${binding?.cetBusinessName?.text?.length}/40"
     binding?.cetBusinessName?.afterTextChanged { updateText(it) }
@@ -37,7 +38,8 @@ class BusinessNameBottomSheet : BaseBottomSheetDialog<BottomSheetBusinessNameBin
 
   private fun updateText(s: String) {
     binding?.ctvBusinessNameCount?.text = "${s?.length}/40"
-    binding?.btnPublish?.isEnabled = binding?.cetBusinessName?.text?.length ?: 0 > 0 && businessProfileModel?.businessName?.trim()!=s.trim()
+    binding?.btnPublish?.isEnabled =
+      binding?.cetBusinessName?.text?.length ?: 0 > 0 && businessProfileModel?.businessName?.trim() != s.trim()
   }
 
   override fun onClick(v: View) {

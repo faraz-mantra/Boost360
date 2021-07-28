@@ -51,7 +51,7 @@ final class DynamicGridKeyboard extends Keyboard {
     private List<Key> mCachedGridKeys;
 
     public DynamicGridKeyboard(final SharedPreferences prefs, final Keyboard templateKeyboard,
-            final int maxKeyCount, final int categoryId) {
+                               final int maxKeyCount, final int categoryId) {
         super(templateKeyboard);
         final Key key0 = getTemplateKey(TEMPLATE_KEY_CODE_0);
         final Key key1 = getTemplateKey(TEMPLATE_KEY_CODE_1);
@@ -60,6 +60,30 @@ final class DynamicGridKeyboard extends Keyboard {
         mColumnsNum = mBaseWidth / mHorizontalStep;
         mMaxKeyCount = maxKeyCount;
         mPrefs = prefs;
+    }
+
+    private static Key getKeyByCode(final Collection<DynamicGridKeyboard> keyboards,
+                                    final int code) {
+        for (final DynamicGridKeyboard keyboard : keyboards) {
+            for (final Key key : keyboard.getSortedKeys()) {
+                if (key.getCode() == code) {
+                    return key;
+                }
+            }
+        }
+        return null;
+    }
+
+    private static Key getKeyByOutputText(final Collection<DynamicGridKeyboard> keyboards,
+                                          final String outputText) {
+        for (final DynamicGridKeyboard keyboard : keyboards) {
+            for (final Key key : keyboard.getSortedKeys()) {
+                if (outputText.equals(key.getOutputText())) {
+                    return key;
+                }
+            }
+        }
+        return null;
     }
 
     private Key getTemplateKey(final int code) {
@@ -105,40 +129,16 @@ final class DynamicGridKeyboard extends Keyboard {
         }
     }
 
-    private static Key getKeyByCode(final Collection<DynamicGridKeyboard> keyboards,
-            final int code) {
-        for (final DynamicGridKeyboard keyboard : keyboards) {
-            for (final Key key : keyboard.getSortedKeys()) {
-                if (key.getCode() == code) {
-                    return key;
-                }
-            }
-        }
-        return null;
-    }
-
-    private static Key getKeyByOutputText(final Collection<DynamicGridKeyboard> keyboards,
-            final String outputText) {
-        for (final DynamicGridKeyboard keyboard : keyboards) {
-            for (final Key key : keyboard.getSortedKeys()) {
-                if (outputText.equals(key.getOutputText())) {
-                    return key;
-                }
-            }
-        }
-        return null;
-    }
-
     public void loadRecentKeys(final Collection<DynamicGridKeyboard> keyboards) {
         final String str = Settings.readEmojiRecentKeys(mPrefs);
         final List<Object> keys = JsonUtils.jsonStrToList(str);
         for (final Object o : keys) {
             final Key key;
             if (o instanceof Integer) {
-                final int code = (Integer)o;
+                final int code = (Integer) o;
                 key = getKeyByCode(keyboards, code);
             } else if (o instanceof String) {
-                final String outputText = (String)o;
+                final String outputText = (String) o;
                 key = getKeyByOutputText(keyboards, outputText);
             } else {
                 Log.w(TAG, "Invalid object: " + o);

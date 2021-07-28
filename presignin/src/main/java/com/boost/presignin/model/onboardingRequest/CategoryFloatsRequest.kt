@@ -10,22 +10,22 @@ import java.io.Serializable
 const val CATEGORY_REQUEST_SAVE = "CATEGORY_REQUEST_SAVE"
 
 data class CategoryFloatsRequest(
-    val requestProfile: CreateProfileRequest? = null,
-    var categoryDataModel: CategoryDataModel? = null,
-    var businessUrl: String? = null,
-    var webSiteUrl: String? = null,
-    var whatsAppFlag: Boolean? = null,
-    var floatingPointId: String? = null,
-    var fpTag: String? = null,
-    var isUpdate: Boolean? = false,
-    @SerializedName("businessName")
-    var businessName: String? = null,
-    @SerializedName("domainName")
-    var domainName: String? = null,
-    @SerializedName("userBusinessEmail")
-    var userBusinessEmail: String? = "",
-    @SerializedName("userBusinessMobile")
-    var userBusinessMobile: String? = null,
+  val requestProfile: CreateProfileRequest? = null,
+  var categoryDataModel: CategoryDataModel? = null,
+  var businessUrl: String? = null,
+  var webSiteUrl: String? = null,
+  var whatsAppFlag: Boolean? = null,
+  var floatingPointId: String? = null,
+  var fpTag: String? = null,
+  var isUpdate: Boolean? = false,
+  @SerializedName("businessName")
+  var businessName: String? = null,
+  @SerializedName("domainName")
+  var domainName: String? = null,
+  @SerializedName("userBusinessEmail")
+  var userBusinessEmail: String? = "",
+  @SerializedName("userBusinessMobile")
+  var userBusinessMobile: String? = null,
 ) : Serializable {
 
   fun getWebSiteId(): String? {

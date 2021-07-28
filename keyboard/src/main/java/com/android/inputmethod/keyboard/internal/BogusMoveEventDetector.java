@@ -35,6 +35,12 @@ public final class BogusMoveEventDetector {
     private static final float BOGUS_MOVE_RADIUS_THRESHOLD = 1.14f;
 
     private static boolean sNeedsProximateBogusDownMoveUpEventHack;
+    // Accumulated distance from actual and artificial down keys.
+    /* package */ int mAccumulatedDistanceFromDownKey;
+    private int mAccumulatedDistanceThreshold;
+    private int mRadiusThreshold;
+    private int mActualDownX;
+    private int mActualDownY;
 
     public static void init(final Resources res) {
         // The proximate bogus down move up event hack is needed for a device such like,
@@ -57,19 +63,15 @@ public final class BogusMoveEventDetector {
         sNeedsProximateBogusDownMoveUpEventHack = needsTheHack;
     }
 
-    private int mAccumulatedDistanceThreshold;
-    private int mRadiusThreshold;
-
-    // Accumulated distance from actual and artificial down keys.
-    /* package */ int mAccumulatedDistanceFromDownKey;
-    private int mActualDownX;
-    private int mActualDownY;
+    private static int getDistance(final int x1, final int y1, final int x2, final int y2) {
+        return (int) Math.hypot(x1 - x2, y1 - y2);
+    }
 
     public void setKeyboardGeometry(final int keyWidth, final int keyHeight) {
-        final float keyDiagonal = (float)Math.hypot(keyWidth, keyHeight);
-        mAccumulatedDistanceThreshold = (int)(
+        final float keyDiagonal = (float) Math.hypot(keyWidth, keyHeight);
+        mAccumulatedDistanceThreshold = (int) (
                 keyDiagonal * BOGUS_MOVE_ACCUMULATED_DISTANCE_THRESHOLD);
-        mRadiusThreshold = (int)(keyDiagonal * BOGUS_MOVE_RADIUS_THRESHOLD);
+        mRadiusThreshold = (int) (keyDiagonal * BOGUS_MOVE_RADIUS_THRESHOLD);
     }
 
     public void onActualDownEvent(final int x, final int y) {
@@ -102,10 +104,6 @@ public final class BogusMoveEventDetector {
 
     public int getDistanceFromDownEvent(final int x, final int y) {
         return getDistance(x, y, mActualDownX, mActualDownY);
-    }
-
-    private static int getDistance(final int x1, final int y1, final int x2, final int y2) {
-        return (int)Math.hypot(x1 - x2, y1 - y2);
     }
 
     public boolean isCloseToActualDownEvent(final int x, final int y) {

@@ -5,9 +5,9 @@ import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
 data class GstDetailModel(
-    var title: String? = null,
-    var value: String? = null,
-    var recyclerViewItem: Int = RecyclerViewItemType.GST_DETAILS_VIEW.getLayout()
+  var title: String? = null,
+  var value: String? = null,
+  var recyclerViewItem: Int = RecyclerViewItemType.GST_DETAILS_VIEW.getLayout()
 ) : AppBaseRecyclerViewItem, Serializable {
 
   override fun getViewType(): Int {

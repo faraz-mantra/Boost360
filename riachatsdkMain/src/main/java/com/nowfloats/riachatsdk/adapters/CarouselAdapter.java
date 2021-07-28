@@ -1,7 +1,9 @@
 package com.nowfloats.riachatsdk.adapters;
 
 import android.content.Context;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -31,7 +33,8 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
     private Context mContext;
     private int visibleItemPos = 0;
     private DisplayMetrics metrics;
-    private int leftSpace,topSpace,padding,paddingTop;
+    private int leftSpace, topSpace, padding, paddingTop;
+
     public CarouselAdapter(Context mContext, List<Items> items, Map<String, String> dataMap) {
         this.mContext = mContext;
         itemsList = items;

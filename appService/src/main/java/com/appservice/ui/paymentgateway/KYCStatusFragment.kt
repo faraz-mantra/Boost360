@@ -63,7 +63,7 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
 
   private fun getKycDetails() {
     showProgress()
-    viewModel?.getKycData(session?.auth_1,getQuery())?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getKycData(session?.auth_1, getQuery())?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         val resp = it as? PaymentKycDataResponse
         if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -84,14 +84,28 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
 
   private fun setData(dataKyc: DataKyc) {
     if (dataKyc.isVerified == DataKyc.Verify.ALLOW_EDIT.name) menuEdit?.isVisible = true
-    dataKyc.panCardDocument?.let { activity?.glideLoad(binding?.ivPanCardImage!!, it, R.drawable.placeholder_image) }
+    dataKyc.panCardDocument?.let {
+      activity?.glideLoad(
+        binding?.ivPanCardImage!!,
+        it,
+        R.drawable.placeholder_image
+      )
+    }
     binding?.tvPanNumber?.text = dataKyc.panNumber?.toUpperCase(Locale.ROOT)
     binding?.tvPanName?.text = dataKyc.nameOfPanHolder
     binding?.tvBankAccNumber?.text = "A/C No. ${dataKyc.bankAccountNumber}"
     binding?.tvBankBranchDetails?.text = "${dataKyc.nameOfBank} - ${dataKyc.bankBranchName}"
     if (dataKyc.isVerified == DataKyc.Verify.YES.name) {
-      session?.fpTag?.let { it1 -> WebEngageController.trackEvent(KYC_VERIFICATION, KYC_VERIFIED, it1) }
-      startFragmentPaymentActivity(FragmentType.KYC_DETAIL_NEW, Bundle().apply { putSerializable(IntentConstant.KYC_DETAIL.name, dataKyc) })
+      session?.fpTag?.let { it1 ->
+        WebEngageController.trackEvent(
+          KYC_VERIFICATION,
+          KYC_VERIFIED,
+          it1
+        )
+      }
+      startFragmentPaymentActivity(
+        FragmentType.KYC_DETAIL_NEW,
+        Bundle().apply { putSerializable(IntentConstant.KYC_DETAIL.name, dataKyc) })
       baseActivity.finish()
     } else binding?.mainView?.visible()
   }
@@ -104,11 +118,18 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
 
   private fun updateUiData() {
     binding?.mainView?.visible()
-    saveKycData?.actionData?.panCardDocument?.let { activity?.glideLoad(binding?.ivPanCardImage!!, it, R.drawable.placeholder_image) }
+    saveKycData?.actionData?.panCardDocument?.let {
+      activity?.glideLoad(
+        binding?.ivPanCardImage!!,
+        it,
+        R.drawable.placeholder_image
+      )
+    }
     binding?.tvPanNumber?.text = saveKycData?.actionData?.panNumber
     binding?.tvPanName?.text = saveKycData?.actionData?.nameOfPanHolder
     binding?.tvBankAccNumber?.text = "A/C No. ${saveKycData?.actionData?.bankAccountNumber}"
-    binding?.tvBankBranchDetails?.text = "${saveKycData?.actionData?.nameOfBank} - ${saveKycData?.actionData?.bankBranchName}"
+    binding?.tvBankBranchDetails?.text =
+      "${saveKycData?.actionData?.nameOfBank} - ${saveKycData?.actionData?.bankBranchName}"
   }
 
   private fun initLottieAnimation() {
@@ -124,7 +145,7 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
     super.onClick(v)
     when (v) {
       binding?.btnKycStatusRefresh -> {
-        binding?.txtVerification?.post{
+        binding?.txtVerification?.post {
           initLottieAnimationRefresh()
           binding?.mainView?.gone()
           binding?.refreshView?.visible()
@@ -136,14 +157,14 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
               binding?.lottieAnimationRefresh?.pauseAnimation()
               binding?.mainView?.visible()
               binding?.refreshView?.gone()
-              (binding?.txtVerification?.fadeIn())?.andThen(binding?.txtDescKyc?.fadeIn(400L))?.andThen(binding?.btnKycStatusRefresh?.fadeIn(400L))?.subscribe()
+              (binding?.txtVerification?.fadeIn())?.andThen(binding?.txtDescKyc?.fadeIn(400L))
+                ?.andThen(binding?.btnKycStatusRefresh?.fadeIn(400L))?.subscribe()
             }
           }
         }
       }
     }
   }
-
 
 
   private fun initLottieAnimationRefresh() {
@@ -161,7 +182,8 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
   fun onNavPressed() {
     if (saveKycData != null) {
       try {
-        val intent = Intent(baseActivity, Class.forName("com.dashboard.controller.DashboardActivity"))
+        val intent =
+          Intent(baseActivity, Class.forName("com.dashboard.controller.DashboardActivity"))
         baseActivity.startActivity(intent)
       } catch (e: Exception) {
         baseActivity.finish()

@@ -14,10 +14,6 @@ enum PaddingMode {
         this.id = id;
     }
 
-    public int getID() {
-        return this.id;
-    }
-
     public static PaddingMode getMode(int id) {
         switch (id) {
             case 1:
@@ -27,5 +23,9 @@ enum PaddingMode {
             default:
                 return NO;
         }
+    }
+
+    public int getID() {
+        return this.id;
     }
 }

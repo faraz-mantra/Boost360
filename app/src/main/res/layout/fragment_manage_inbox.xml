@@ -1,126 +1,126 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:card_view="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="fill_parent"
+  android:background="@color/white"
+  android:orientation="vertical">
 
-    <ScrollView
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+      android:id="@+id/business_profile_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="2dp"
+      android:orientation="vertical">
+
+      <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white"
+        android:visibility="gone"
+        app:cardElevation="3dp"
+        card_view:cardCornerRadius="3dp">
 
         <LinearLayout
-            android:id="@+id/business_profile_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="24dp"
+          android:layout_marginTop="24dp"
+          android:layout_marginBottom="24dp"
+          android:orientation="horizontal">
+
+          <com.makeramen.RoundedImageView
+            android:id="@+id/businessProfileIcon_ProfileV2"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_gravity="left"
+            android:scaleType="fitXY"
+            android:src="@drawable/manage_inventory"
+            android:tint="@color/primary"
+            app:riv_border_color="#333333"
+            app:riv_border_width="0dip"
+            app:riv_corner_radius="30dip"
+            app:riv_mutate_background="true"
+            app:riv_oval="true" />
+
+          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/margin_10"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/white"
-                app:cardElevation="3dp"
-                android:visibility="gone"
-                card_view:cardCornerRadius="3dp">
+            <TextView
+              android:id="@+id/websiteTitleTextView_ProfileV2"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:ellipsize="end"
+              android:maxLines="2"
+              android:text="Manage your order fulfillment process"
+              android:textColor="@color/primaryColor"
+              android:textSize="19sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="24dp"
-                    android:orientation="horizontal">
+            <TextView
+              android:id="@+id/categoryTextView_ProfileV2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/websiteTitleTextView_ProfileV2"
+              android:layout_marginStart="10dp"
+              android:layout_toRightOf="@id/businessProfileIcon_ProfileV2"
+              android:ellipsize="end"
+              android:singleLine="true"
+              android:textColor="#949494"
+              android:textSize="12sp" />
 
-                    <com.makeramen.RoundedImageView
-                        android:id="@+id/businessProfileIcon_ProfileV2"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:layout_gravity="left"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/manage_inventory"
-                        android:tint="@color/primary"
-                        app:riv_border_color="#333333"
-                        app:riv_border_width="0dip"
-                        app:riv_corner_radius="30dip"
-                        app:riv_mutate_background="true"
-                        app:riv_oval="true" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="@dimen/margin_10"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/websiteTitleTextView_ProfileV2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:text="Manage your order fulfillment process"
-                            android:textColor="@color/primaryColor"
-                            android:textSize="19sp" />
-
-                        <TextView
-                            android:id="@+id/categoryTextView_ProfileV2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/websiteTitleTextView_ProfileV2"
-                            android:layout_marginStart="10dp"
-                            android:layout_toRightOf="@id/businessProfileIcon_ProfileV2"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:textColor="#949494"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <ScrollView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:fillViewport="true">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white" >
-
-                    <include
-                        android:id="@+id/businessProfile_List_ProfileV2"
-                        layout="@layout/manage_inbox_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </androidx.cardview.widget.CardView>
-
-            </ScrollView>
+          </LinearLayout>
 
         </LinearLayout>
 
-    </ScrollView>
+      </androidx.cardview.widget.CardView>
 
-    <LinearLayout
-        android:id="@+id/progress_layout"
+      <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
-        <ProgressBar
-            android:id="@+id/visits_progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <androidx.cardview.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white">
+
+          <include
+            android:id="@+id/businessProfile_List_ProfileV2"
+            layout="@layout/manage_inbox_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        </androidx.cardview.widget.CardView>
+
+      </ScrollView>
 
     </LinearLayout>
+
+  </ScrollView>
+
+  <LinearLayout
+    android:id="@+id/progress_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <ProgressBar
+      android:id="@+id/visits_progressBar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+
+  </LinearLayout>
 
 </FrameLayout>

@@ -1,134 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="@color/white"
-    android:layout_marginTop="4dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_marginTop="4dp"
+  android:background="@color/white"
+  android:orientation="vertical">
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/iv_package_icon"
-            android:layout_width="55dp"
-            android:layout_height="55dp" />
-        <LinearLayout
-            android:layout_marginStart="10dp"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_package_name"
-                android:textStyle="bold"
-                android:layout_gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Activation Date:" />
-                <TextView
-                    android:id="@+id/tv_activation_date"
-                    android:textStyle="bold"
-                    android:layout_marginStart="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/_30_09_2016" />
-                <TextView
-                    android:id="@+id/tv_validity"
-                    android:textStyle="italic"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="10sp"
-                    android:layout_marginStart="2dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/validity_1year" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/expiry_date_heading" />
-                <TextView
-                    android:id="@+id/tv_expiry_date"
-                    android:textStyle="bold"
-                    android:layout_marginStart="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dummy_date_29_09_2017" />
-                <TextView
-                    android:id="@+id/tv_expires_in"
-                    android:textStyle="italic"
-                    android:textSize="10sp"
-                    android:textColor="@color/green"
-                    android:layout_marginStart="2dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/expires_in_15_days" />
-            </LinearLayout>
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
 
-            <LinearLayout
-                android:id="@+id/ll_plan_details"
-                android:visibility="gone"
-                android:animateLayoutChanges="true"
-                android:orientation="vertical"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:text="@string/plan_details_heading"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/tv_package_details"
-                    android:lineSpacingExtra="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <TextView
-                android:id="@+id/tv_see_plan_details"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/primary"
-                android:text="@string/see_plan_details"/>
-        </LinearLayout>
+    <ImageView
+      android:id="@+id/iv_package_icon"
+      android:layout_width="55dp"
+      android:layout_height="55dp" />
 
-    </LinearLayout>
     <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="10dp"
+      android:orientation="vertical">
+
+      <TextView
+        android:id="@+id/tv_package_name"
         android:layout_width="match_parent"
-        android:layout_height="35dp">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+         android:fontFamily="@font/semi_bold" />
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp">
+
         <TextView
-            android:id="@+id/tv_renew_upgrade"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:background="@color/primary"
-            android:text="@string/renew_upgrade"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_height="match_parent" />
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Activation Date:" />
+
         <TextView
-            android:id="@+id/tv_add_features"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:background="@drawable/add_features_btn_bg"
-            android:text="@string/add_features"
-            android:textColor="@color/light_gray"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_height="match_parent" />
+          android:id="@+id/tv_activation_date"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="5dp"
+          android:text="@string/_30_09_2016"
+           android:fontFamily="@font/semi_bold" />
+
+        <TextView
+          android:id="@+id/tv_validity"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_marginStart="2dp"
+          android:text="@string/validity_1year"
+          android:textSize="10sp"
+          android:fontFamily="@font/italic"/>
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/expiry_date_heading" />
+
+        <TextView
+          android:id="@+id/tv_expiry_date"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="5dp"
+          android:text="@string/dummy_date_29_09_2017"
+           android:fontFamily="@font/semi_bold" />
+
+        <TextView
+          android:id="@+id/tv_expires_in"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_marginStart="2dp"
+          android:text="@string/expires_in_15_days"
+          android:textColor="@color/green"
+          android:textSize="10sp"
+          android:textStyle="italic" />
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/ll_plan_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/plan_details_heading"
+           android:fontFamily="@font/semi_bold" />
+
+        <TextView
+          android:id="@+id/tv_package_details"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:lineSpacingExtra="5dp" />
+      </LinearLayout>
+
+      <TextView
+        android:id="@+id/tv_see_plan_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/see_plan_details"
+        android:textColor="@color/primary"
+         android:fontFamily="@font/semi_bold" />
     </LinearLayout>
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="35dp">
+
+    <TextView
+      android:id="@+id/tv_renew_upgrade"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:background="@color/primary"
+      android:gravity="center"
+      android:text="@string/renew_upgrade"
+      android:textColor="@color/white"
+       android:fontFamily="@font/semi_bold" />
+
+    <TextView
+      android:id="@+id/tv_add_features"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:background="@drawable/add_features_btn_bg"
+      android:gravity="center"
+      android:text="@string/add_features"
+      android:textColor="@color/light_gray"
+       android:fontFamily="@font/semi_bold" />
+  </LinearLayout>
 </LinearLayout>

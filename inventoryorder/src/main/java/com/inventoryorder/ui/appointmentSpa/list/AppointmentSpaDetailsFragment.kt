@@ -132,7 +132,10 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
   }
 
   private fun addProductToOrder() {
-    productList?.forEach { orderItem?.Items?.firstOrNull { it1 -> it1.Product?._id?.trim() == it.Product?._id?.trim() }?.product_detail = it.Product }
+    productList?.forEach {
+      orderItem?.Items?.firstOrNull { it1 -> it1.Product?._id?.trim() == it.Product?._id?.trim() }?.product_detail =
+        it.Product
+    }
     binding?.mainView?.visible()
     binding?.error?.gone()
     setDetails(orderItem)
@@ -144,17 +147,30 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     val product = order?.firstItemForAptConsult()?.product()
     val extraDataSpa = order?.firstItemForAptConsult()?.getAptSpaExtraDetail()
     binding?.ctvAppointmentId?.text = "#${order?.ReferenceNumber}"
-    binding?.textDateTime?.text = DateUtils.parseDate(order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST"))
+    binding?.textDateTime?.text = DateUtils.parseDate(
+      order?.CreatedOn,
+      DateUtils.FORMAT_SERVER_DATE,
+      DateUtils.FORMAT_SERVER_TO_LOCAL_3,
+      timeZone = TimeZone.getTimeZone("IST")
+    )
 
-    binding?.textAmount?.text = "${order?.BillingDetails?.CurrencyCode} ${order?.BillingDetails?.GrossAmount}"
+    binding?.textAmount?.text =
+      "${order?.BillingDetails?.CurrencyCode} ${order?.BillingDetails?.GrossAmount}"
 
     binding?.textServiceName?.text = product?.Name
 
-    val appointmentDate = "${extraDataSpa?.startTime()} on ${DateUtils.parseDate(extraDataSpa?.scheduledDateTime ?: "", DateUtils.FORMAT_YYYY_MM_DD, DateUtils.FORMAT_SERVER_TO_LOCAL_5)}"
+    val appointmentDate = "${extraDataSpa?.startTime()} on ${
+      DateUtils.parseDate(
+        extraDataSpa?.scheduledDateTime ?: "",
+        DateUtils.FORMAT_YYYY_MM_DD,
+        DateUtils.FORMAT_SERVER_TO_LOCAL_5
+      )
+    }"
 
     binding?.textDate?.text = appointmentDate
 
-    binding?.textStaff?.text = if (!extraDataSpa?.staffName.isNullOrBlank()) "Staff : ${extraDataSpa?.staffName}" else ""
+    binding?.textStaff?.text =
+      if (!extraDataSpa?.staffName.isNullOrBlank()) "Staff : ${extraDataSpa?.staffName}" else ""
     binding?.textAppointmentAmount?.text = "${product?.getCurrencyCodeValue()} ${product?.price()}"
 
     if (product?.ImageUri.isNullOrEmpty().not()) {
@@ -164,15 +180,20 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     binding?.textCustomerName?.text = order?.BuyerDetails?.ContactDetails?.FullName
     if (order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber.isNullOrEmpty()) {
       binding?.textCustomerPhone?.gone()
-    }else{ binding?.textCustomerPhone?.visible()}
-    binding?.textCustomerPhone?.text = "Phone: ${order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber}"
-      if (order?.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty()) {
-          binding?.textCustomerEmail?.gone()
-      }else{ binding?.textCustomerEmail?.visible()}
+    } else {
+      binding?.textCustomerPhone?.visible()
+    }
+    binding?.textCustomerPhone?.text =
+      "Phone: ${order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber}"
+    if (order?.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty()) {
+      binding?.textCustomerEmail?.gone()
+    } else {
+      binding?.textCustomerEmail?.visible()
+    }
     binding?.textCustomerEmail?.text = "Email: ${order?.BuyerDetails?.ContactDetails?.EmailId}"
-    if (order?.BuyerDetails?.GSTIN ==null||order.BuyerDetails.GSTIN=="") {
+    if (order?.BuyerDetails?.GSTIN == null || order.BuyerDetails.GSTIN == "") {
       binding?.ctvGstin?.gone()
-    }else binding?.ctvGstin?.visible()
+    } else binding?.ctvGstin?.visible()
     binding?.ctvGstin?.text = "GSTIN: ${order?.BuyerDetails?.GSTIN as? String}"
     binding?.textPaymentStatusDropdown?.text = "${order?.PaymentDetails?.statusValue()}"
     binding?.textPaymentTypeDropdown?.text = "${order?.PaymentDetails?.methodValue()}"
@@ -196,40 +217,84 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
       when (val btnOrderMenu = btnStatusMenu!!.removeFirst()) {
         OrderMenuModel.MenuStatus.CONFIRM_APPOINTMENT -> {
           colorCode = "#f16629"
-          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
+          changeButtonStatus(
+            btnOrderMenu.title,
+            R.drawable.ic_initiated_order_btn_bkg,
+            R.color.white,
+            R.drawable.ic_arrow_down_white
+          )
         }
         OrderMenuModel.MenuStatus.START_APPOINTMENT -> {
           colorCode = "#f16629"
-          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_initiated_order_btn_green, R.color.white, R.drawable.ic_arrow_down_white)
+          changeButtonStatus(
+            btnOrderMenu.title,
+            R.drawable.ic_initiated_order_btn_green,
+            R.color.white,
+            R.drawable.ic_arrow_down_white
+          )
         }
         OrderMenuModel.MenuStatus.REQUEST_PAYMENT -> {
           colorCode = "#f16629"
-          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
+          changeButtonStatus(
+            btnOrderMenu.title,
+            R.drawable.ic_initiated_order_btn_bkg,
+            R.color.white,
+            R.drawable.ic_arrow_down_white
+          )
         }
         OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT -> {
           colorCode = "#9B9B9B"
-          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_cancelled_order_btn_bkg, R.color.warm_grey_two, R.drawable.ic_arrow_down_grey)
+          changeButtonStatus(
+            btnOrderMenu.title,
+            R.drawable.ic_cancelled_order_btn_bkg,
+            R.color.warm_grey_two,
+            R.drawable.ic_arrow_down_grey
+          )
         }
         OrderMenuModel.MenuStatus.SEND_RE_BOOKING -> {
           colorCode = "#9B9B9B"
-          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_cancelled_order_btn_bkg, R.color.warm_grey_two, R.drawable.ic_arrow_down_grey)
+          changeButtonStatus(
+            btnOrderMenu.title,
+            R.drawable.ic_cancelled_order_btn_bkg,
+            R.color.warm_grey_two,
+            R.drawable.ic_arrow_down_grey
+          )
         }
         OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> {
           colorCode = "#FFB900"
-          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_confirmed_order_btn_bkg, R.color.orange, R.drawable.ic_arrow_down_orange)
+          changeButtonStatus(
+            btnOrderMenu.title,
+            R.drawable.ic_confirmed_order_btn_bkg,
+            R.color.orange,
+            R.drawable.ic_arrow_down_orange
+          )
         }
         OrderMenuModel.MenuStatus.MARK_AS_SERVED -> {
           colorCode = "#78AF00"
-          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_transit_order_btn_green, R.color.green_78AF00, R.drawable.ic_arrow_down_green)
+          changeButtonStatus(
+            btnOrderMenu.title,
+            R.drawable.ic_transit_order_btn_green,
+            R.color.green_78AF00,
+            R.drawable.ic_arrow_down_green
+          )
         }
         OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
-          colorCode = "#52AAC6"
-          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_in_transit_order_btn_bkg, R.color.blue_52AAC6, R.drawable.ic_arrow_down_blue)
+          colorCode = "#4A4A4A"
+          changeButtonStatus(
+            btnOrderMenu.title,
+            R.drawable.ic_in_transit_order_btn_bkg,
+            R.color.black_4a4a4a,
+            R.drawable.ic_arrow_down_4a4a4a
+          )
         }
         else -> binding?.lytStatusBtn?.gone()
       }
       binding?.tvDropdownOrderStatus?.setOnClickListener {
-        orderItem?.let { it1 -> clickActionAptButton(order.appointmentSpaButtonStatus().firstOrNull(), it1) }
+        orderItem?.let { it1 ->
+          clickActionAptButton(
+            order.appointmentSpaButtonStatus().firstOrNull(), it1
+          )
+        }
       }
     } else binding?.lytStatusBtn?.gone()
 
@@ -260,13 +325,20 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
   private fun popUpMenuButton(view: View) {
     val list = OrderMenuModel().getAppointmentMenu(orderItem)
     if (list.isNotEmpty()) list.removeAt(0)
-    val orderMenuView: View = LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
+    val orderMenuView: View =
+      LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
     val rvOrderMenu: RecyclerView? = orderMenuView.findViewById(R.id.rv_menu_order)
     rvOrderMenu?.apply {
-      val adapterMenu = AppBaseRecyclerViewAdapter(baseActivity, list, this@AppointmentSpaDetailsFragment)
+      val adapterMenu =
+        AppBaseRecyclerViewAdapter(baseActivity, list, this@AppointmentSpaDetailsFragment)
       adapter = adapterMenu
     }
-    mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
+    mPopupWindow = PopupWindow(
+      orderMenuView,
+      WindowManager.LayoutParams.MATCH_PARENT,
+      WindowManager.LayoutParams.WRAP_CONTENT,
+      true
+    )
     mPopupWindow.showAsDropDown(view, 0, 0)
   }
 
@@ -278,7 +350,9 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.menu_item_invoice -> {
-        startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
+        startFragmentOrderActivity(
+          FragmentType.ORDER_INVOICE_VIEW,
+          Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
         true
       }
       else -> super.onOptionsItemSelected(item)
@@ -296,7 +370,12 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     binding?.error?.text = message
   }
 
-  private fun changeButtonStatus(btnTitle: String, @DrawableRes buttonBkg: Int, @ColorRes dropDownDividerColor: Int, @DrawableRes resId: Int) {
+  private fun changeButtonStatus(
+    btnTitle: String,
+    @DrawableRes buttonBkg: Int,
+    @ColorRes dropDownDividerColor: Int,
+    @DrawableRes resId: Int
+  ) {
     activity?.let {
       binding?.tvDropdownOrderStatus?.text = btnTitle
       binding?.tvDropdownOrderStatus?.visibility = View.VISIBLE
@@ -333,7 +412,10 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
           showProgress()
           sendPaymentLinkApt(getString(R.string.payment_request_send))
         }
-        sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentAptSheetDialog::class.java.name)
+        sheetRequestPayment.show(
+          this.parentFragmentManager,
+          RequestPaymentAptSheetDialog::class.java.name
+        )
       }
       OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT -> {
         this.orderItem = orderItem
@@ -346,7 +428,10 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
         val markPaymentDoneSheet = MarkPaymentDoneAptSheetDialog()
         markPaymentDoneSheet.setData(orderItem)
         markPaymentDoneSheet.onClicked = { markReceivedPaymentRequest(it) }
-        markPaymentDoneSheet.show(this.parentFragmentManager, MarkPaymentDoneAptSheetDialog::class.java.name)
+        markPaymentDoneSheet.show(
+          this.parentFragmentManager,
+          MarkPaymentDoneAptSheetDialog::class.java.name
+        )
       }
       OrderMenuModel.MenuStatus.MARK_AS_SERVED -> {
         val sheetServed = ServedAptSheetDialog()
@@ -364,13 +449,19 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
         val sheetFeedbackApt = SendFeedbackAptSheetDialog()
         sheetFeedbackApt.setData(orderItem)
         sheetFeedbackApt.onClicked = { sendFeedbackRequestApt(it) }
-        sheetFeedbackApt.show(this.parentFragmentManager, SendFeedbackAptSheetDialog::class.java.name)
+        sheetFeedbackApt.show(
+          this.parentFragmentManager,
+          SendFeedbackAptSheetDialog::class.java.name
+        )
       }
       OrderMenuModel.MenuStatus.SEND_RE_BOOKING -> {
         val sheetReBookingApt = SendReBookingAptSheetDialog()
         sheetReBookingApt.setData(orderItem)
         sheetReBookingApt.onClicked = { sendReBookingRequestApt() }
-        sheetReBookingApt.show(this.parentFragmentManager, SendReBookingAptSheetDialog::class.java.name)
+        sheetReBookingApt.show(
+          this.parentFragmentManager,
+          SendReBookingAptSheetDialog::class.java.name
+        )
       }
       else -> {
       }
@@ -381,7 +472,12 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     showProgress()
     viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.apt_start_success)) }
+        orderItem?._id?.let { it1 ->
+          apiGetOrderDetails(
+            it1,
+            resources.getString(R.string.apt_start_success)
+          )
+        }
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -391,21 +487,32 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
 
   private fun sendReBookingRequestApt() {
     showProgress()
-    viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.re_booking_reminder)) }
-      } else {
-        showLongToast(it.message())
-        hideProgress()
-      }
-    })
+    viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)
+      ?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) {
+          orderItem?._id?.let { it1 ->
+            apiGetOrderDetails(
+              it1,
+              resources.getString(R.string.re_booking_reminder)
+            )
+          }
+        } else {
+          showLongToast(it.message())
+          hideProgress()
+        }
+      })
   }
 
   private fun sendFeedbackRequestApt(request: FeedbackRequest) {
     showProgress()
     viewModel?.sendOrderFeedbackRequest(clientId, request)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.appointment_feedback_requested)) }
+        orderItem?._id?.let { it1 ->
+          apiGetOrderDetails(
+            it1,
+            resources.getString(R.string.appointment_feedback_requested)
+          )
+        }
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -418,8 +525,17 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         if (message.isNotEmpty()) {
-          updateReason(resources.getString(R.string.appointment_serve), UpdateExtraPropertyRequest.PropertyType.DELIVERY.name, ExtraPropertiesOrder(deliveryRemark = message))
-        } else orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.appointment_serve)) }
+          updateReason(
+            resources.getString(R.string.appointment_serve),
+            UpdateExtraPropertyRequest.PropertyType.DELIVERY.name,
+            ExtraPropertiesOrder(deliveryRemark = message)
+          )
+        } else orderItem?._id?.let { it1 ->
+          apiGetOrderDetails(
+            it1,
+            resources.getString(R.string.appointment_serve)
+          )
+        }
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -429,44 +545,75 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
 
   private fun apiCancelApt(cancellingEntity: String, reasonText: String) {
     showProgress()
-    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.isSuccess()) {
-        val data = it as? OrderConfirmStatus
-        if (reasonText.isNotEmpty()) {
-          updateReason(resources.getString(R.string.appointment_cancel), UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name, ExtraPropertiesOrder(cancellationRemark = reasonText))
-        } else orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.appointment_cancel)) }
-      } else {
-        showLongToast(it.message())
-        hideProgress()
-      }
-    })
+    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)
+      ?.observeOnce(viewLifecycleOwner, Observer {
+        if (it.isSuccess()) {
+          val data = it as? OrderConfirmStatus
+          if (reasonText.isNotEmpty()) {
+            updateReason(
+              resources.getString(R.string.appointment_cancel),
+              UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name,
+              ExtraPropertiesOrder(cancellationRemark = reasonText)
+            )
+          } else orderItem?._id?.let { it1 ->
+            apiGetOrderDetails(
+              it1,
+              resources.getString(R.string.appointment_cancel)
+            )
+          }
+        } else {
+          showLongToast(it.message())
+          hideProgress()
+        }
+      })
   }
 
-  private fun updateReason(message: String, type: String, extraPropertiesOrder: ExtraPropertiesOrder) {
-    val propertyRequest = UpdateOrderNPropertyRequest(updateExtraPropertyType = type, existingKeyName = "", orderId = this.orderItem?._id, extraPropertiesOrder = extraPropertiesOrder)
-    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)?.observeOnce(viewLifecycleOwner, {
-      orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, message) }
-    })
+  private fun updateReason(
+    message: String,
+    type: String,
+    extraPropertiesOrder: ExtraPropertiesOrder
+  ) {
+    val propertyRequest = UpdateOrderNPropertyRequest(
+      updateExtraPropertyType = type,
+      existingKeyName = "",
+      orderId = this.orderItem?._id,
+      extraPropertiesOrder = extraPropertiesOrder
+    )
+    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)
+      ?.observeOnce(viewLifecycleOwner, {
+        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, message) }
+      })
   }
 
   private fun apiConfirmApt(isSendPaymentLink: Boolean) {
     showProgress()
-    viewModel?.confirmOrder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.isSuccess()) {
-        if (isSendPaymentLink) sendPaymentLinkApt(getString(R.string.appointment_confirmed))
-        else orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, getString(R.string.appointment_confirmed)) }
-      } else {
-        showLongToast(it.message())
-        hideProgress()
-      }
-    })
+    viewModel?.confirmOrder(clientId, this.orderItem?._id)
+      ?.observeOnce(viewLifecycleOwner, Observer {
+        if (it.isSuccess()) {
+          if (isSendPaymentLink) sendPaymentLinkApt(getString(R.string.appointment_confirmed))
+          else orderItem?._id?.let { it1 ->
+            apiGetOrderDetails(
+              it1,
+              getString(R.string.appointment_confirmed)
+            )
+          }
+        } else {
+          showLongToast(it.message())
+          hideProgress()
+        }
+      })
   }
 
   private fun markReceivedPaymentRequest(request: PaymentReceivedRequest) {
     showProgress()
     viewModel?.markPaymentReceivedMerchant(clientId, request)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, getString(R.string.payment_confirmed)) }
+        orderItem?._id?.let { it1 ->
+          apiGetOrderDetails(
+            it1,
+            getString(R.string.payment_confirmed)
+          )
+        }
       } else {
         showLongToast(it.message())
         hideProgress()

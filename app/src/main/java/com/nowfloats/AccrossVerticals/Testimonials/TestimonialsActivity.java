@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dashboard.utils.CodeUtilsKt;
 import com.framework.utils.ContentSharing;
+import com.framework.views.fabButton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
@@ -45,15 +46,16 @@ import retrofit.converter.GsonConverter;
 
 public class TestimonialsActivity extends AppCompatActivity implements TestimonialsListener {
 
+    public static List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
     TextView addTestimonialsButton;
     ProgressDialog vmnProgressBar;
     List<TestimonialData> dataList = new ArrayList<>();
-    LinearLayout rightButton, backButton;
+    LinearLayout backButton;
+    FloatingActionButton rightButton;
     ImageView rightIcon;
     TextView title;
     private String headerToken = "59c89bbb5d64370a04c9aea1";
     private String testimonialType = "testimonials";
-    public static List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
     private LinearLayout mainLayout, secondaryLayout;
     private com.framework.pref.UserSessionManager session;
     private TestimonialsAdapter testimonialsAdapter;
@@ -116,10 +118,8 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     public void setHeader() {
         title = findViewById(R.id.title);
         backButton = findViewById(R.id.back_button);
-        rightButton = findViewById(R.id.right_icon_layout);
-        rightIcon = findViewById(R.id.right_icon);
-        title.setText("Testimonials");
-        rightIcon.setImageResource(R.drawable.ic_add_white);
+        rightButton = findViewById(R.id.btn_add);
+        title.setText(getResources().getString(R.string.testimonials));
         rightButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
             intent.putExtra("ScreenState", "new");
@@ -254,7 +254,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         } else {
             subDomain = "all-services";
         }
-        ContentSharing.Companion.shareTestimonial(this,data.getDescription(), data.getUsername(), session.getRootAliasURI() + "/testimonials", session.getRootAliasURI() + "/"+subDomain, session.getFPPrimaryContactNumber(), false);
+        ContentSharing.Companion.shareTestimonial(this, data.getDescription(), data.getUsername(), session.getRootAliasURI() + "/testimonials", session.getRootAliasURI() + "/" + subDomain, session.getFPPrimaryContactNumber(), false);
     }
 
     void updateRecyclerMenuOption(int pos, boolean status) {

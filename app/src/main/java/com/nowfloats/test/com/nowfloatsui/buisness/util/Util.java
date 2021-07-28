@@ -78,7 +78,7 @@ public class Util {
 
     public static boolean toastFlag = true;
     static UserSessionManager session;
-    private static HashMap<String,Integer > backgroundImages = new HashMap<String,Integer>();
+    private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
 
 
     public static String getDataFromServer(String content,
@@ -158,8 +158,6 @@ public class Util {
 
         return response;
     }
-
-
 
 
     public static String getDataFromServer(String content,
@@ -245,9 +243,6 @@ public class Util {
 
         return response;
     }
-
-
-
 
 
     public static String shortUrl(String serverDataFetchUri) {
@@ -353,8 +348,6 @@ public class Util {
             is.close();
         }
     }
-
-
 
 
     public static String processDate(String tDate) {
@@ -502,8 +495,8 @@ public class Util {
         }
     }
 
-    public static void addBackgroundImages(){
-        if (backgroundImages.size()==0){
+    public static void addBackgroundImages() {
+        if (backgroundImages.size() == 0) {
             backgroundImages.put("GENERALSERVICES", R.drawable.general_services_background_img);
             /*backgroundImages.put("ARCHITECTURE",R.drawable.architecture_background_img);
             backgroundImages.put("AUTOMOTIVE",R.drawable.automotive_background_img);
@@ -542,49 +535,46 @@ public class Util {
         }
     }
 
-    public static void changeDefaultBackgroundImage(String category){
+    public static void changeDefaultBackgroundImage(String category) {
 
-        try{
-            Constants.DefaultBackgroundImage = backgroundImages.get(category.replaceAll(" ",""));
+        try {
+            Constants.DefaultBackgroundImage = backgroundImages.get(category.replaceAll(" ", ""));
             //Constants.storedBackgroundImage = Constants.DefaultBackgroundImage ;
-            if (SidePanelFragment.containerImage!=null)
+            if (SidePanelFragment.containerImage != null)
                 SidePanelFragment.containerImage.setImageResource(Constants.DefaultBackgroundImage);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void GettingBackGroundId(final UserSessionManager session)
-    {
-        Thread thread = new Thread(new Runnable(){
+    public static void GettingBackGroundId(final UserSessionManager session) {
+        Thread thread = new Thread(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 //code to do the HTTP request
 
-                String serverUri = Constants.GetBackgroundImage+"?clientId="+ Constants.clientId+"&fpId="+session.getFPID();
+                String serverUri = Constants.GetBackgroundImage + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID();
                 try {
 
                     HttpClient client = new DefaultHttpClient();
                     HttpGet httpRequest = new HttpGet(serverUri);
                     HttpResponse responseOfSite = client.execute(httpRequest);
-                    HttpEntity entity =(HttpEntity) ((HttpResponse) responseOfSite).getEntity();
+                    HttpEntity entity = (HttpEntity) ((HttpResponse) responseOfSite).getEntity();
                     if (entity != null) {
                         String str = (EntityUtils.toString(entity));
                         JSONArray bgjsonarray = new JSONArray(str);
-                        if((bgjsonarray)!=null){
-                            int len=bgjsonarray.length();
-                            String storedBackgroundImage = bgjsonarray.getString(len-1);
-                            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE,storedBackgroundImage);
-                        }else{
-                            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE,"");
+                        if ((bgjsonarray) != null) {
+                            int len = bgjsonarray.length();
+                            String storedBackgroundImage = bgjsonarray.getString(len - 1);
+                            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, storedBackgroundImage);
+                        } else {
+                            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, "");
                         }
-                    }else{
-                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE,"");
+                    } else {
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, "");
                     }
-                }
-                catch(Exception e)
-                {
+                } catch (Exception e) {
                     System.out.println();
 
                 }
@@ -611,7 +601,6 @@ public class Util {
             StrictMode.setThreadPolicy(policy);
 
 
-
             StatusLine status = response.getStatusLine();
 
             if (status.getStatusCode() == 200) {
@@ -633,11 +622,10 @@ public class Util {
     }
 
 
-
     public static void storeImageInTemp(String storeImageUri, Context ctx) throws IOException {
 
         File outputFile = null;
-        String baseName = Constants.NOW_FLOATS_API_URL+""+ storeImageUri;
+        String baseName = Constants.NOW_FLOATS_API_URL + "" + storeImageUri;
         URL wallpaperURL = null;
         try {
             wallpaperURL = new URL(baseName);
@@ -651,11 +639,11 @@ public class Util {
             e.printStackTrace();
         }
         InputStream inputStream = new BufferedInputStream(wallpaperURL.openStream(), 10240);
-        File cacheDir =  new File(getAppPicCacheDir((Activity) ctx));//  getCacheFolder(ctx);
+        File cacheDir = new File(getAppPicCacheDir((Activity) ctx));//  getCacheFolder(ctx);
         File cacheFile = new File(cacheDir, "localFileName.jpg");
         FileOutputStream outputStream = new FileOutputStream(cacheFile);
-        Log.d("Cache Dir","Base Name : "+baseName+" wallpaper : "+wallpaperURL.getPath());
-        Log.d("Cache Dir","######### Cache Dir #######"+cacheFile.getPath());
+        Log.d("Cache Dir", "Base Name : " + baseName + " wallpaper : " + wallpaperURL.getPath());
+        Log.d("Cache Dir", "######### Cache Dir #######" + cacheFile.getPath());
         byte buffer[] = new byte[1024];
         int dataSize;
         int loadedSize = 0;
@@ -664,7 +652,7 @@ public class Util {
             //publishProgress(loadedSize);
             outputStream.write(buffer, 0, dataSize);
         }
-       Log.d("Cache Dir","Data Size : "+dataSize+" "+outputStream);
+        Log.d("Cache Dir", "Data Size : " + dataSize + " " + outputStream);
         outputStream.close();
     }
 
@@ -673,12 +661,12 @@ public class Util {
         File cacheDir = null;
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             cacheDir = new File(Environment.getExternalStorageDirectory(), "cachefolder");
-            if(!cacheDir.isDirectory()) {
+            if (!cacheDir.isDirectory()) {
                 cacheDir.mkdirs();
             }
         }
 
-        if(!cacheDir.isDirectory()) {
+        if (!cacheDir.isDirectory()) {
             cacheDir = context.getCacheDir(); //get system cache folder
         }
 
@@ -701,7 +689,7 @@ public class Util {
 //            day = originalDay + "";
 //
 //        else
-            day = originalDay + "";
+        day = originalDay + "";
 
         return day;
     }
@@ -734,7 +722,7 @@ public class Util {
         String tempDir = null;
         String dir = Constants.dataDirectory;
         File sdcard = app.getExternalCacheDir();
-        Log.d("sdCard","sdCard : "+sdcard);
+        Log.d("sdCard", "sdCard : " + sdcard);
         File pictureDir = new File(sdcard, dir);
         tempDir = pictureDir.getAbsolutePath();
         return tempDir;
@@ -749,48 +737,15 @@ public class Util {
 
     }
 
-    public void setPicture(Uri uri, Activity ctx) {
-        String path = "";
-        Bitmap bmp;
-        path = getPath(uri,ctx);
-        path = Util.saveBitmap(path, ctx, 720,
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) + System.currentTimeMillis());
-        if (!Util.isNullOrEmpty(path)) {
-            bmp = Util.getBitmap(path, ctx);
-            if (bmp != null) {
-                // bmp = Bitmap.createScaledBitmap(bmp, 300, 300,true);
-                //RoundCorners_image roundCorner = new RoundCorners_image();
-                bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 30);
-
-               // msg.setHint("Add some text to give context to the picture.");
-                String eol = System.getProperty("line.separator");
-                // updateHint.setText("CHANGE" + eol + "PHOTO");
-            }
-        }
-    }
-
-    public String getPath(Uri uri, Activity ctx) {
-        try {
-            String[] projection = { MediaStore.Images.Media.DATA };
-            Cursor cursor = ctx.managedQuery(uri, projection, null, null, null);
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } catch (Exception e) {
-        }
-        return null;
-    }
-
     public static String saveBitmap(Bitmap bitmap, Activity app, String name) {
         String imgpath = "fail";
         try {
 
             String baseName = name + ".jpg";
             File pictureDir = new File(getPicCacheDir(app));
-            Log.d("pic Dir ","pictureDir : "+pictureDir);
+            Log.d("pic Dir ", "pictureDir : " + pictureDir);
             pictureDir.mkdirs();
-            Log.d("Util","pictureDir : "+pictureDir);
+            Log.d("Util", "pictureDir : " + pictureDir);
             File f = new File(pictureDir, baseName);
             if (f.exists()) {
                 f.delete();
@@ -803,14 +758,13 @@ public class Util {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        catch(OutOfMemoryError E){
+        } catch (OutOfMemoryError E) {
             //Log.d("ANDRO_ASYNC",String.format("catch Out Of Memory error"));
             E.printStackTrace();
             System.gc();
-           // toast("Uh oh. Something went wrong. Please try again", app);
+            // toast("Uh oh. Something went wrong. Please try again", app);
         }
-        Log.d("Util","imagePath : "+imgpath);
+        Log.d("Util", "imagePath : " + imgpath);
         return imgpath;
     }
 
@@ -832,12 +786,11 @@ public class Util {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        catch(OutOfMemoryError E){
+        } catch (OutOfMemoryError E) {
             //Log.d("ANDRO_ASYNC",String.format("catch Out Of Memory error"));
             E.printStackTrace();
             System.gc();
-           // toast("Uh oh. Something went wrong. Please try again", app);
+            // toast("Uh oh. Something went wrong. Please try again", app);
         }
         return imgpath;
     }
@@ -848,7 +801,7 @@ public class Util {
 
     public static String saveBitmap(String path, Activity app, int mWidth,
                                     String fname) {
-        Log.d("saveBitmap","saveBitmap : "+path);
+        Log.d("saveBitmap", "saveBitmap : " + path);
         String imgpath = "fail";
 
         try {
@@ -882,11 +835,11 @@ public class Util {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }catch(OutOfMemoryError E){
+        } catch (OutOfMemoryError E) {
             //Log.d("ANDRO_ASYNC",String.format("catch Out Of Memory error"));
             E.printStackTrace();
             System.gc();
-           // toast("Uh oh. Something went wrong. Please try again", app);
+            // toast("Uh oh. Something went wrong. Please try again", app);
         }
         return imgpath;
     }
@@ -894,9 +847,10 @@ public class Util {
     public static Bitmap getBitmap(String path, Activity app) {
         return getBitmap(path, app, 720);
     }
+
     public static float rotationForImage(Context context, Uri uri) {
         if (uri.getScheme().equals("content")) {
-            String[] projection = { MediaStore.Images.ImageColumns.ORIENTATION };
+            String[] projection = {MediaStore.Images.ImageColumns.ORIENTATION};
             Cursor c = context.getContentResolver().query(uri, projection,
                     null, null, null);
             if (c.moveToFirst()) {
@@ -910,7 +864,7 @@ public class Util {
                                 ExifInterface.ORIENTATION_NORMAL));
                 return rotation;
             } catch (IOException e) {
-               // Util.log("Error checking exif");
+                // Util.log("Error checking exif");
             }
         }
         return 0f;
@@ -926,18 +880,18 @@ public class Util {
         }
         return 0;
     }
+
     // Read bitmap
-    public static Bitmap readBitmap(Uri selectedImage,Activity act) {
+    public static Bitmap readBitmap(Uri selectedImage, Activity act) {
         Bitmap bm = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 5;
-        AssetFileDescriptor fileDescriptor =null;
+        AssetFileDescriptor fileDescriptor = null;
         try {
-            fileDescriptor = act.getContentResolver().openAssetFileDescriptor(selectedImage,"r");
+            fileDescriptor = act.getContentResolver().openAssetFileDescriptor(selectedImage, "r");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        finally{
+        } finally {
             try {
                 bm = BitmapFactory.decodeFileDescriptor(fileDescriptor.getFileDescriptor(), null, options);
                 fileDescriptor.close();
@@ -947,14 +901,15 @@ public class Util {
         }
         return bm;
     }
-    public static Bitmap RotateBitmap(Bitmap source, float angle)
-    {
+
+    public static Bitmap RotateBitmap(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
+
     public static Bitmap getBitmap(String path, Activity app, int mWidth) {
-        if(path == null){
+        if (path == null) {
             return null;
         }
         Uri uri = Uri.fromFile(new File(path));
@@ -990,7 +945,7 @@ public class Util {
             if (rotation != 0f) {
                 matrix.preRotate(rotation);
             }
-            if(b!=null) {
+            if (b != null) {
                 b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(),
                         matrix, true);
             }
@@ -999,11 +954,43 @@ public class Util {
             return b;
         } catch (IOException e) {
             return null;
-        }
-        catch (OutOfMemoryError e) {
+        } catch (OutOfMemoryError e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void setPicture(Uri uri, Activity ctx) {
+        String path = "";
+        Bitmap bmp;
+        path = getPath(uri, ctx);
+        path = Util.saveBitmap(path, ctx, 720,
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) + System.currentTimeMillis());
+        if (!Util.isNullOrEmpty(path)) {
+            bmp = Util.getBitmap(path, ctx);
+            if (bmp != null) {
+                // bmp = Bitmap.createScaledBitmap(bmp, 300, 300,true);
+                //RoundCorners_image roundCorner = new RoundCorners_image();
+                bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 30);
+
+                // msg.setHint("Add some text to give context to the picture.");
+                String eol = System.getProperty("line.separator");
+                // updateHint.setText("CHANGE" + eol + "PHOTO");
+            }
+        }
+    }
+
+    public String getPath(Uri uri, Activity ctx) {
+        try {
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = ctx.managedQuery(uri, projection, null, null, null);
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } catch (Exception e) {
+        }
+        return null;
     }
 
 }

@@ -3,7 +3,9 @@ package com.nowfloats.NavigationDrawer.API.twitter;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+
 import androidx.core.content.ContextCompat;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -27,13 +29,13 @@ import retrofit.http.POST;
 
 public class FacebookFeedPullRegistrationAsyncTask {
 
-    private SharedPreferences pref = null;
-    private Activity appContext = null;
     ProgressDialog pd = null;
     TextView fromPage;
     CheckBox checkBox;
     UserSessionManager sessionManager;
     ImageView ivFbPageAutoPull;
+    private SharedPreferences pref = null;
+    private Activity appContext = null;
 
 
     public FacebookFeedPullRegistrationAsyncTask(Activity context, TextView FromPage, ImageView ivFbPageAutoPull, CheckBox Checkbox, UserSessionManager sessionManager) {
@@ -43,6 +45,7 @@ public class FacebookFeedPullRegistrationAsyncTask {
         this.sessionManager = sessionManager;
         this.ivFbPageAutoPull = ivFbPageAutoPull;
     }
+
     public void autoRegister(final FacebookFeedPullModel.Registration obj) {
         pd = ProgressDialog.show(appContext, null, "Please wait");
         pd.setCancelable(true);
@@ -69,7 +72,7 @@ public class FacebookFeedPullRegistrationAsyncTask {
                     ivFbPageAutoPull.setImageResource(R.drawable.facebook_page);
                     checkBox.setChecked(obj.getAutoPublish());
                     pref.edit().putBoolean("FBFeedPullAutoPublish", obj.getAutoPublish()).apply();
-                }else{
+                } else {
                     checkBox.setChecked(false);
                     pref.edit().putBoolean("FBFeedPullAutoPublish", false).apply();
                 }
@@ -87,34 +90,34 @@ public class FacebookFeedPullRegistrationAsyncTask {
             }
         });
     }
-    public void autoUpdate(final FacebookFeedPullModel.Update obj){
+
+    public void autoUpdate(final FacebookFeedPullModel.Update obj) {
         pd = ProgressDialog.show(appContext, null, "Please wait");
         pd.setCancelable(true);
         pd.show();
-        pref = appContext.getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
+        pref = appContext.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         RestAdapter adapter = new RestAdapter.Builder()/*
                 .setLog(new AndroidLog("ggg"))
                 .setLogLevel(RestAdapter.LogLevel.FULL)*/
                 .setEndpoint(Constants.NOW_FLOATS_API_URL)
                 .build();
-        pullRegistration reg= adapter.create(pullRegistration.class);
+        pullRegistration reg = adapter.create(pullRegistration.class);
         reg.autoUpdate(obj, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                if(pd!=null){
+                if (pd != null) {
                     pd.dismiss();
                 }
-                if(!Util.isNullOrEmpty(s)) {
+                if (!Util.isNullOrEmpty(s)) {
                     sessionManager.storeFPDetails(Key_Preferences.FB_PULL_ENABLED, String.valueOf(obj.getAutoPublish()));
                     sessionManager.storeFPDetails(Key_Preferences.FB_PULL_PAGE_NAME, obj.getFacebookPageName());
 
-                    if(!obj.getAutoPublish()){
+                    if (!obj.getAutoPublish()) {
                         fromPage.setVisibility(View.GONE);
                         Toast.makeText(appContext, "Auto Pull for Updates will be turned OFF", Toast.LENGTH_SHORT).show();
                         ivFbPageAutoPull.setImageDrawable(ContextCompat.getDrawable(appContext, R.drawable.facebookpage_icon_inactive));
                         ivFbPageAutoPull.setColorFilter(ContextCompat.getColor(appContext, R.color.light_gray));
-                    }
-                    else{
+                    } else {
                         fromPage.setVisibility(View.VISIBLE);
                         fromPage.setText(obj.getFacebookPageName());
                         Toast.makeText(appContext, "Auto Pull for Updates will be turned ON", Toast.LENGTH_SHORT).show();
@@ -124,7 +127,7 @@ public class FacebookFeedPullRegistrationAsyncTask {
 
                     pref.edit().putBoolean("FBFeedPullAutoPublish", obj.getAutoPublish()).apply();
                     checkBox.setChecked(obj.getAutoPublish());
-                }else{
+                } else {
                     checkBox.setChecked(!obj.getAutoPublish());
                     pref.edit().putBoolean("FBFeedPullAutoPublish", !obj.getAutoPublish()).apply();
                 }
@@ -132,8 +135,8 @@ public class FacebookFeedPullRegistrationAsyncTask {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.v("ggg",error+"");
-                if(pd!=null){
+                Log.v("ggg", error + "");
+                if (pd != null) {
                     pd.dismiss();
                 }
                 checkBox.setChecked(!obj.getAutoPublish());
@@ -144,7 +147,7 @@ public class FacebookFeedPullRegistrationAsyncTask {
 
     }
 
-    interface pullRegistration{
+    interface pullRegistration {
         @POST("/Discover/v1/FloatingPoint/AutoPublishMessages")
         void autoRegistration(@Body FacebookFeedPullModel.Registration obj, Callback<String> response);
 

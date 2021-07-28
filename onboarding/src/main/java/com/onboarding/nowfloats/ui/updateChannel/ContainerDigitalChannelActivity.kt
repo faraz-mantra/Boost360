@@ -61,17 +61,11 @@ class ContainerDigitalChannelActivity : AppBaseActivity<ActivityFragmentContaine
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.MY_DIGITAL_CHANNEL .name-> ContextCompat.getDrawable(this, R.drawable.ic_round_arrow_white_n)
+      FragmentType.MY_DIGITAL_CHANNEL.name -> ContextCompat.getDrawable(this, R.drawable.ic_round_arrow_white_n)
       else -> super.getNavigationIcon()
     }
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return when (type) {
-      FragmentType.MY_DIGITAL_CHANNEL.name -> ConversionUtils.dp2px(16f).toFloat()
-      else -> return super.getToolbarTitleSize()
-    }
-  }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
@@ -80,12 +74,6 @@ class ContainerDigitalChannelActivity : AppBaseActivity<ActivityFragmentContaine
     }
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return when (type) {
-      FragmentType.MY_DIGITAL_CHANNEL.name -> Gravity.CENTER
-      else -> super.getToolbarTitleGravity()
-    }
-  }
 
   override fun getToolbarTitle(): String? {
     return when (type) {
@@ -143,7 +131,11 @@ class ContainerDigitalChannelActivity : AppBaseActivity<ActivityFragmentContaine
   }
 }
 
-fun Fragment.startFragmentChannelActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
+fun Fragment.startFragmentChannelActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false
+) {
   val intent = Intent(activity, ContainerDigitalChannelActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -151,7 +143,11 @@ fun Fragment.startFragmentChannelActivity(type: FragmentType, bundle: Bundle = B
   startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentChannelActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
+fun AppCompatActivity.startFragmentChannelActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false
+) {
   val intent = Intent(this, ContainerDigitalChannelActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

@@ -33,9 +33,9 @@
       android:clipToPadding="false"
       android:paddingBottom="@dimen/size_80"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-      tools:itemCount="6"
-      app:layout_constraintTop_toBottomOf="@+id/ctv_text_header"
       app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/ctv_text_header"
+      tools:itemCount="6"
       tools:listitem="@layout/item_service_timing" />
 
 
@@ -51,7 +51,7 @@
       android:gravity="center"
       android:stateListAnimator="@null"
       android:text="@string/save"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:textColor="@color/white"
       app:layout_constraintBottom_toBottomOf="parent"
       app:textType="HEADING_6" />

@@ -7,52 +7,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/linearLayoutCompat4"
       android:layout_width="match_parent"
       android:layout_height="@dimen/size_56"
-      android:background="@color/gray_4e4e4e"
+      android:background="@color/black_4a4a4a"
+      android:gravity="center_vertical"
+      android:paddingHorizontal="@dimen/size_12"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent">
 
-      <com.framework.views.roundedimageview.RoundedImageView
+      <com.framework.views.customViews.CustomImageView
         android:id="@+id/back"
-        android:layout_width="@dimen/size_36"
-        android:layout_height="@dimen/size_36"
-        android:layout_marginStart="@dimen/size_12"
-        android:layout_marginTop="@dimen/size_12"
-        android:padding="@dimen/_6dp"
-        android:src="@drawable/ic_back_arrow_toolbar_d"
-        app:riv_corner_radius="@dimen/size_18"
-        app:riv_mutate_background="true" />
+        android:layout_width="@dimen/size_30"
+        android:layout_height="@dimen/size_30"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="@dimen/size_7"
+        android:src="@drawable/ic_back_arrow_toolbar_d" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_toolbar_title"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/size_8"
-        android:layout_toStartOf="@+id/more"
-        android:layout_toEndOf="@+id/back"
-        android:fontFamily="@font/bold"
+        android:layout_marginStart="@dimen/size_12"
+        android:layout_marginEnd="@dimen/size_6"
+        android:layout_weight="1"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center_vertical"
-        android:padding="@dimen/_6dp"
+        android:includeFontPadding="false"
         android:text="@string/website_style_customisation"
+        android:textAlignment="gravity"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        app:textType="HEADING_6" />
 
-      <com.framework.views.roundedimageview.RoundedImageView
+      <com.framework.views.customViews.CustomImageView
         android:id="@+id/more"
-        android:layout_width="@dimen/size_36"
-        android:layout_height="@dimen/size_36"
+        android:layout_width="@dimen/size_34"
+        android:layout_height="@dimen/size_34"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/size_12"
-        android:layout_marginEnd="@dimen/size_12"
-        android:padding="@dimen/size_4"
-        android:src="@drawable/ic_baseline_more_vert_24"
-        app:riv_corner_radius="@dimen/size_18"
-        app:riv_mutate_background="true" />
-    </RelativeLayout>
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="@dimen/size_5"
+        android:src="@drawable/ic_baseline_more_vert_24" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <ScrollView
       android:layout_width="match_parent"
@@ -71,7 +68,7 @@
           android:id="@+id/customCardView3"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@color/gray_4e4e4e"
+          android:background="@color/black_4a4a4a"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent">
@@ -101,23 +98,36 @@
               app:contentPaddingBottom="@dimen/size_8"
               app:contentPaddingTop="@dimen/size_8">
 
-              <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_website"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="@dimen/size_16"
-                android:fontFamily="@font/regular"
-                android:textColor="@color/white"
-                tools:text="dasdadsadsadsasasdsadassda" />
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/size_12"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-              <com.framework.views.customViews.CustomImageView
-                android:id="@+id/civ_open_website"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginHorizontal="@dimen/size_16"
-                android:src="@drawable/ic_arrowsquareupright" />
+                <com.framework.views.customViews.CustomTextView
+                  android:id="@+id/ctv_website"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_marginEnd="@dimen/size_6"
+                  android:layout_weight="1"
+                  android:fontFamily="@font/regular"
+                  android:includeFontPadding="false"
+                  android:textColor="@color/white"
+                  app:autoSizeMaxTextSize="16sp"
+                  app:autoSizeMinTextSize="10sp"
+                  android:maxLines="1"
+                  app:autoSizeStepGranularity="1sp"
+                  app:autoSizeTextType="uniform"
+                  tools:text="www.nowfloat.com" />
+
+                <com.framework.views.customViews.CustomImageView
+                  android:id="@+id/civ_open_website"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:src="@drawable/ic_arrowsquareupright" />
+              </LinearLayout>
+
             </com.framework.views.customViews.CustomCardView>
 
           </LinearLayout>
@@ -317,7 +327,7 @@
 
         </com.framework.views.customViews.CustomCardView>
 
-        <com.framework.views.customViews.CustomCardView
+        <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/customCardView7"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -336,20 +346,19 @@
               android:id="@+id/btn_done"
               style="@style/ButtonStyle.Rounded.Solid"
               android:layout_width="match_parent"
-              android:layout_height="@dimen/size_38"
+              android:layout_height="@dimen/size_40"
               android:fontFamily="@font/semi_bold"
               android:gravity="center"
+              android:stateListAnimator="@null"
               android:text="@string/publish_changes"
-              android:textAllCaps="true"
-              android:textSize="14sp"
+              android:textAllCaps="false"
+              app:textType="BODY_1"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintRight_toRightOf="parent"
-              app:layout_constraintTop_toTopOf="parent"
-
-              />
+              app:layout_constraintTop_toTopOf="parent" />
 
           </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.framework.views.customViews.CustomCardView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
 
       </androidx.constraintlayout.widget.ConstraintLayout>

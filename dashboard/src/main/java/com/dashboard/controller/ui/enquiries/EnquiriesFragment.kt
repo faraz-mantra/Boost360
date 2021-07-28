@@ -44,7 +44,11 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
-    setDataSellerSummary(OrderSummaryModel().getTotalOrder(TOTAL_SELLER_ENQUIRIES), SummaryEntity().getUserSummary(USER_MY_ENQUIRIES), CallSummaryResponse().getCallSummary(CALL_MY_ENQUIRIES))
+    setDataSellerSummary(
+      OrderSummaryModel().getTotalOrder(TOTAL_SELLER_ENQUIRIES),
+      SummaryEntity().getUserSummary(USER_MY_ENQUIRIES),
+      CallSummaryResponse().getCallSummary(CALL_MY_ENQUIRIES)
+    )
     binding?.filterBtn?.setOnClickListener { showFilterBottomSheet() }
     WebEngageController.trackEvent(DASHBOARD_ENQUIRIES_PAGE, PAGE_VIEW, session?.fpTag)
   }
@@ -58,27 +62,56 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
       binding?.titleFilter?.text = it.title
       WebEngageController.trackEvent(CLICK_DATE_RANGE, CLICK, TO_BE_ADDED)
     }
-    filterBottomSheet.show(this@EnquiriesFragment.parentFragmentManager, FilterBottomSheet::class.java.name)
+    filterBottomSheet.show(
+      this@EnquiriesFragment.parentFragmentManager,
+      FilterBottomSheet::class.java.name
+    )
   }
 
   private fun apiSellerSummary(enquiriesFilter: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
-    viewModel?.getSellerSummaryV2_5(clientId_ORDER, session?.fpTag, getRequestSellerSummary(enquiriesFilter))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+    viewModel?.getSellerSummaryV2_5(
+      clientId_ORDER,
+      session?.fpTag,
+      getRequestSellerSummary(enquiriesFilter)
+    )?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
       val response1 = it as? OrderSummaryResponse
       response1?.Data?.saveTotalOrder(TOTAL_SELLER_ENQUIRIES)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
-      viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope, enquiriesFilter.startDate, enquiriesFilter.endDate)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { it1 ->
+      viewModel?.getUserSummary(
+        session?.fpTag,
+        clientId,
+        session?.fPParentId,
+        scope,
+        enquiriesFilter.startDate,
+        enquiriesFilter.endDate
+      )?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { it1 ->
         val response2 = it1 as? UserSummaryResponse
-        viewModel?.getSubscriberCount(session?.fpTag, clientId, enquiriesFilter.startDate, enquiriesFilter.endDate)?.observeOnce(viewLifecycleOwner, { it2 ->
+        viewModel?.getSubscriberCount(
+          session?.fpTag,
+          clientId,
+          enquiriesFilter.startDate,
+          enquiriesFilter.endDate
+        )?.observeOnce(viewLifecycleOwner, { it2 ->
           val subscriberCount = (it2.anyResponse as? Double)?.toInt() ?: 0
           val summary = response2?.getSummary()
           summary?.noOfSubscribers = subscriberCount
           summary?.saveData(USER_MY_ENQUIRIES)
           val identifierType = if (session?.iSEnterprise == "true") "MULTI" else "SINGLE"
-          viewModel?.getUserCallSummary(clientId, session?.fPParentId, identifierType, enquiriesFilter.startDate, enquiriesFilter.endDate)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { it2 ->
+          viewModel?.getUserCallSummary(
+            clientId,
+            session?.fPParentId,
+            identifierType,
+            enquiriesFilter.startDate,
+            enquiriesFilter.endDate
+          )?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { it2 ->
             val response3 = it2 as? CallSummaryResponse
             response3?.saveData(CALL_MY_ENQUIRIES)
-            setDataSellerSummary(response1?.Data?.getTotalOrders(), response2?.getSummary(), response3?.getTotalCalls())
+            setDataSellerSummary(
+              response1?.Data?.getTotalOrders(),
+              response2?.getSummary(),
+              response3?.getTotalCalls()
+            )
             if (isLoader) hideProgress()
           })
         })
@@ -86,22 +119,38 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
     })
   }
 
-  private fun setDataSellerSummary(orderCount: String?, summary: SummaryEntity?, callCount: String?) {
+  private fun setDataSellerSummary(
+    orderCount: String?,
+    summary: SummaryEntity?,
+    callCount: String?
+  ) {
     viewModel?.getBoostCustomerItem(baseActivity)?.observeOnce(viewLifecycleOwner, { it0 ->
       val response = it0 as? BoostCustomerItemResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-        val data = response.data?.firstOrNull { it.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
+        val data = response.data?.firstOrNull {
+          it.type.equals(
+            session?.fP_AppExperienceCode,
+            ignoreCase = true
+          )
+        }
         if (data != null && data.actionItem.isNullOrEmpty().not()) {
-          data.actionItem!!.map { it2 -> if (it2.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it2.premiumCode).not()) it2.isLock = true }
+          data.actionItem!!.map { it2 ->
+            if (it2.premiumCode.isNullOrEmpty()
+                .not() && session.checkIsPremiumUnlock(it2.premiumCode).not()
+            ) it2.isLock = true
+          }
           data.actionItem?.forEach { it3 ->
             when (CustomerActionItem.IconType.fromName(it3.type)) {
               CustomerActionItem.IconType.customer_orders,
               CustomerActionItem.IconType.in_clinic_appointments,
               -> it3.orderCount = orderCount ?: ""
               CustomerActionItem.IconType.video_consultations -> it3.consultCount = ""
-              CustomerActionItem.IconType.patient_customer_calls -> it3.customerCalls = callCount ?: ""
-              CustomerActionItem.IconType.patient_customer_messages -> it3.messageCount = summary?.getNoOfMessages() ?: ""
-              CustomerActionItem.IconType.newsletter_subscribers -> it3.subscriptionCount = summary?.getNoOfSubscribers()
+              CustomerActionItem.IconType.patient_customer_calls -> it3.customerCalls =
+                callCount ?: ""
+              CustomerActionItem.IconType.patient_customer_messages -> it3.messageCount =
+                summary?.getNoOfMessages() ?: ""
+              CustomerActionItem.IconType.newsletter_subscribers -> it3.subscriptionCount =
+                summary?.getNoOfSubscribers()
             }
           }
           setAdapterCustomer(data.actionItem!!)
@@ -111,10 +160,13 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
   }
 
   private fun setAdapterCustomer(actionItem: ArrayList<CustomerActionItem>) {
-    actionItem.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_ENQUIRIES_ITEM_VIEW.getLayout() }
+    actionItem.map {
+      it.recyclerViewItemType = RecyclerViewItemType.BOOST_ENQUIRIES_ITEM_VIEW.getLayout()
+    }
     binding?.rvCustomer?.apply {
       if (adapterACustomer == null) {
-        adapterACustomer = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@EnquiriesFragment)
+        adapterACustomer =
+          AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@EnquiriesFragment)
 //        addItemDecoration(DividerItemDecoration(baseActivity, DividerItemDecoration.VERTICAL))
         adapter = adapterACustomer
       } else adapterACustomer?.notify(actionItem)
@@ -132,11 +184,22 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
 
   private fun clickActionButton(type: CustomerActionItem.IconType) {
     when (type) {
-      CustomerActionItem.IconType.customer_orders -> baseActivity.startOrderAptConsultList(session, isOrder = true)
-      CustomerActionItem.IconType.in_clinic_appointments -> baseActivity.startOrderAptConsultList(session, isConsult = false)
-      CustomerActionItem.IconType.video_consultations -> baseActivity.startOrderAptConsultList(session, isConsult = true)
+      CustomerActionItem.IconType.customer_orders -> baseActivity.startOrderAptConsultList(
+        session,
+        isOrder = true
+      )
+      CustomerActionItem.IconType.in_clinic_appointments -> baseActivity.startOrderAptConsultList(
+        session,
+        isConsult = false
+      )
+      CustomerActionItem.IconType.video_consultations -> baseActivity.startOrderAptConsultList(
+        session,
+        isConsult = true
+      )
       CustomerActionItem.IconType.patient_customer_calls -> baseActivity.startVmnCallCard(session)
-      CustomerActionItem.IconType.patient_customer_messages -> baseActivity.startBusinessEnquiry(session)
+      CustomerActionItem.IconType.patient_customer_messages -> baseActivity.startBusinessEnquiry(
+        session
+      )
       CustomerActionItem.IconType.newsletter_subscribers -> baseActivity.startSubscriber(session)
     }
   }

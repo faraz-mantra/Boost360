@@ -4,8 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   tools:context=".ui.order.createorder.BillingDetailFragment">
 
-  <androidx.core.widget.NestedScrollView
-    style="@style/match_match">
+  <androidx.core.widget.NestedScrollView style="@style/match_match">
 
     <androidx.appcompat.widget.LinearLayoutCompat
       style="@style/match_wrap"
@@ -40,8 +39,7 @@
           app:fontFamily="@font/semi_bold"
           app:textType="BODY_2" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-          style="@style/match_wrap">
+        <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_wrap">
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_name"
@@ -128,8 +126,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableEnd="@drawable/ic_arrow_down_orange"
-            android:drawableTint="@color/grey_dark_2"
             android:drawablePadding="@dimen/size_8"
+            android:drawableTint="@color/grey_dark_2"
             android:gravity="right"
             android:includeFontPadding="false"
             android:maxLines="1"
@@ -219,14 +217,14 @@
 
       <include
         android:id="@+id/layout_order_shipping_address"
-        layout="@layout/layout_order_address"
         style="@style/match_wrap"
+        layout="@layout/layout_order_address"
         android:layout_margin="@dimen/size_12" />
 
       <include
         android:id="@+id/layout_order_billing_address"
-        layout="@layout/layout_order_address"
         style="@style/match_wrap"
+        layout="@layout/layout_order_address"
         android:layout_margin="@dimen/size_12"
         android:visibility="gone" />
 
@@ -253,13 +251,13 @@
           android:id="@+id/tv_add_more"
           style="@style/wrap_wrap"
           android:text="@string/add_more"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/orange"
           app:fontFamily="@font/semi_bold"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintRight_toRightOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-          app:textAllCaps="true"
+          app:textAllCaps="false"
           app:textType="BODY_1" />
 
       </androidx.constraintlayout.widget.ConstraintLayout>
@@ -287,8 +285,8 @@
         <com.framework.views.customViews.CustomTextView
           style="@style/wrap_wrap"
           android:layout_gravity="center_vertical"
-          android:fontFamily="@font/regular"
           android:layout_marginTop="@dimen/size_6"
+          android:fontFamily="@font/regular"
           android:text="@string/all_items_in_cart_have_prices_including_18_gst"
           android:textColor="@color/black_4a4a4a"
           android:textSize="12sp" />
@@ -350,7 +348,7 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:text="-₹1,000.00"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/green_light_1"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_1" />
@@ -379,12 +377,12 @@
             android:gravity="start"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:visibility="gone"
             android:paddingStart="@dimen/size_10"
             android:paddingEnd="@dimen/size_10"
             android:text="@string/edit"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/orange"
+            android:visibility="gone"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_1" />
 
@@ -397,7 +395,7 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:text="@string/add"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/orange"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_1" />
@@ -410,7 +408,7 @@
             android:gravity="right"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/orange"
             android:visibility="gone"
             app:fontFamily="@font/semi_bold"
@@ -475,7 +473,7 @@
             android:gravity="right"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/black_2A2A2A"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_1"
@@ -503,10 +501,10 @@
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/confirm_order"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           app:fontFamily="@font/semi_bold"
-          app:textType="BODY_1"/>
+          app:textType="BODY_1" />
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/button_go_back"
@@ -518,7 +516,7 @@
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/go_back"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/orange"
           app:fontFamily="@font/semi_bold"
           app:textType="BODY_1" />

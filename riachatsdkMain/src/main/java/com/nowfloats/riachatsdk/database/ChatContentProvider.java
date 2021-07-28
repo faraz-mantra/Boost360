@@ -19,25 +19,20 @@ import android.util.Log;
  */
 public class ChatContentProvider extends ContentProvider {
 
-    private final String TAG = ChatContentProvider.class.getName();
-
-
     private static final int CHAT_HISTORY = 1;
     private static final int CHAT_VALUES = 2;
-
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    public static String dbName = "chatbot.db";
 
     static {
         sUriMatcher.addURI(ChatDbConstants.AUTHORITY, ChatDbConstants.IChatHistory.tableName, CHAT_HISTORY);
         sUriMatcher.addURI(ChatDbConstants.AUTHORITY, ChatDbConstants.IChatValues.tableName, CHAT_VALUES);
     }
 
-
+    private final String TAG = ChatContentProvider.class.getName();
     private ChatDatabaseOpenHelper boostDatabaseHelper;
     private SQLiteDatabase db;
     private Context context;
-    public static String dbName = "chatbot.db";
-
 
     @Override
     public boolean onCreate() {

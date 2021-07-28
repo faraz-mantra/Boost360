@@ -7,7 +7,8 @@ import com.appservice.databinding.BottomsheetInactiveStaffBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
-class InActiveBottomSheet : BaseBottomSheetDialog<BottomsheetInactiveStaffBinding, BaseViewModel>() {
+class InActiveBottomSheet :
+  BaseBottomSheetDialog<BottomsheetInactiveStaffBinding, BaseViewModel>() {
   private var value: Boolean = true
   var onClicked: (value: Boolean) -> Unit = { }
   var onBackPres: () -> Unit = { }

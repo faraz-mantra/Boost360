@@ -112,9 +112,9 @@
             android:background="@drawable/rounded_edit_stroke"
             android:hint="@string/enter_pan_number"
             android:inputType="textCapCharacters"
-            android:singleLine="true"
             android:maxLines="1"
-            android:textAllCaps="true"
+            android:singleLine="true"
+            android:textAllCaps="false"
             android:textColorHint="@color/gray_text_hint"
             app:fontFamily="@font/regular" />
 
@@ -136,8 +136,8 @@
             android:background="@drawable/rounded_edit_stroke"
             android:hint="@string/enter_name"
             android:inputType="textCapWords"
-            android:singleLine="true"
             android:maxLines="1"
+            android:singleLine="true"
             android:textColorHint="@color/gray_text_hint"
             app:fontFamily="@font/regular" />
 
@@ -262,8 +262,8 @@
               android:background="@drawable/rounded_edit_stroke"
               android:hint="@string/enter_account_no"
               android:inputType="number"
-              android:singleLine="true"
               android:maxLines="1"
+              android:singleLine="true"
               android:textColorHint="@color/gray_text_hint"
               app:fontFamily="@font/regular" />
 
@@ -285,8 +285,8 @@
               android:background="@drawable/rounded_edit_stroke"
               android:hint="@string/enter_name"
               android:inputType="textCapWords"
-              android:singleLine="true"
               android:maxLines="1"
+              android:singleLine="true"
               android:textColorHint="@color/gray_text_hint"
               app:fontFamily="@font/regular" />
 
@@ -310,8 +310,8 @@
               android:hint="@string/enter_ifsc_code"
               android:inputType="textCapCharacters"
               android:maxLength="11"
-              android:singleLine="true"
               android:maxLines="1"
+              android:singleLine="true"
               android:textColorHint="@color/gray_text_hint"
               app:fontFamily="@font/regular" />
 
@@ -332,12 +332,12 @@
               android:layout_marginTop="@dimen/size_2"
               android:background="@drawable/rounded_edit_stroke"
               android:hint="@string/enter_bank_name"
+              android:imeOptions="actionDone"
               android:inputType="textCapWords"
-              android:singleLine="true"
               android:maxLines="1"
+              android:singleLine="true"
               android:textColorHint="@color/gray_text_hint"
-              app:fontFamily="@font/regular"
-              android:imeOptions="actionDone"  />
+              app:fontFamily="@font/regular" />
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/txtBranch"
@@ -360,13 +360,13 @@
               android:focusable="false"
               android:focusableInTouchMode="false"
               android:hint="@string/bank_branch"
+              android:imeOptions="actionDone"
               android:inputType="textCapWords"
-              android:singleLine="true"
               android:maxLines="1"
+              android:singleLine="true"
               android:textColorHint="@color/gray_text_hint"
               android:visibility="gone"
-              app:fontFamily="@font/regular"
-              android:imeOptions="actionDone"  />
+              app:fontFamily="@font/regular" />
 
           </LinearLayout>
 
@@ -484,7 +484,7 @@
               android:text="@string/add_file_jpg_png"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/regular"
-              app:textType="BODY_1"/>
+              app:textType="BODY_1" />
           </FrameLayout>
 
           <!--Additional Documents Preview-->
@@ -556,8 +556,8 @@
         android:gravity="center"
         android:paddingVertical="@dimen/size_14"
         android:text="@string/submit_verification"
-        android:textAllCaps="true"
-        android:textStyle="bold"
+        android:textAllCaps="false"
+         android:fontFamily="@font/semi_bold"
         app:layout_constraintBottom_toBottomOf="parent" />
     </FrameLayout>
 

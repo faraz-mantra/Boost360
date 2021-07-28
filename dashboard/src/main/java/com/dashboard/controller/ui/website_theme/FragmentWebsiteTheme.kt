@@ -62,8 +62,16 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(WEBSITE_STYLE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    setOnClickListener(binding?.ctfPrimaryFont, binding?.ctfSecondaryFont, binding?.btnDone, binding?.openWebsite, binding?.more, binding?.back)
-    this.sessionData = arguments?.get(com.appservice.constant.IntentConstant.SESSION_DATA.name) as? SessionData
+    setOnClickListener(
+      binding?.ctfPrimaryFont,
+      binding?.ctfSecondaryFont,
+      binding?.btnDone,
+      binding?.openWebsite,
+      binding?.more,
+      binding?.back
+    )
+    this.sessionData =
+      arguments?.get(com.appservice.constant.IntentConstant.SESSION_DATA.name) as? SessionData
     getWebsiteTheme(sessionData)
     setWebsiteData()
     hideActionButtons()
@@ -71,8 +79,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   }
 
   private fun setWebsiteData() {
-    binding?.ctvWebsite?.text =
-      fromHtml("<u>${UserSessionManager(baseActivity).getDomainName()}</u>")
+    binding?.ctvWebsite?.text = fromHtml("<u>${UserSessionManager(baseActivity).getDomainName()}</u>")
   }
 
   private fun getWebsiteTheme(sessionData: SessionData?) {
@@ -94,8 +101,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   }
 
   private fun setColor() {
-    this.colorsItem = colors?.firstOrNull { it.isSelected == true }
-      ?: colors?.firstOrNull { it.defaultColor == true }
+    this.colorsItem = colors?.firstOrNull { it.isSelected == true } ?: colors?.firstOrNull { it.defaultColor == true }
     val defaultColorCode = colors?.firstOrNull { it.defaultColor == true }?.primary
     if (defaultColorCode != null) {
       binding?.rivDefaultColor?.setBackgroundColor(Color.parseColor(defaultColorCode))
@@ -131,12 +137,12 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
 
     if (this.primaryItem != null) {
       binding?.ctfPrimaryFont?.setText("${this.primaryItem?.description} ${if (this.primaryItem?.defaultFont == true) "(default)" else ""}")
-    }else{
+    } else {
       binding?.ctfPrimaryFont?.setText(getString(R.string.choose_primary_font))
     }
     if (this.secondaryItem != null) {
       binding?.ctfSecondaryFont?.setText("${this.secondaryItem?.description} ${if (this.secondaryItem?.defaultFont == true) "(default)" else ""}")
-    }else{
+    } else {
       binding?.ctfSecondaryFont?.setText(getString(R.string.choose_secondary_font))
     }
   }
@@ -160,7 +166,8 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
 
   private fun showPrimaryFontsBottomSheet(fontsList: ArrayList<PrimaryItem?>?) {
     val bottomSheetSelectFont = BottomSheetSelectFont()
-    bottomSheetSelectFont.arguments = Bundle().apply { putSerializable(IntentConstant.FONT_LIST_PRIMARY.name, fontsList) }
+    bottomSheetSelectFont.arguments =
+      Bundle().apply { putSerializable(IntentConstant.FONT_LIST_PRIMARY.name, fontsList) }
     bottomSheetSelectFont.onPrimaryClicked = {
       this.primaryItem = it
       binding?.ctfPrimaryFont?.setText(it.description)
@@ -179,7 +186,8 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
 
   private fun showSecondaryFontsBottomSheet(fontsList: ArrayList<SecondaryItem?>?) {
     val bottomSheetSelectFont = BottomSheetSelectFont()
-    bottomSheetSelectFont.arguments = Bundle().apply { putSerializable(IntentConstant.FONT_LIST_SECONDARY.name, fontsList) }
+    bottomSheetSelectFont.arguments =
+      Bundle().apply { putSerializable(IntentConstant.FONT_LIST_SECONDARY.name, fontsList) }
     bottomSheetSelectFont.onSecondaryClicked = {
       this.secondaryItem = it
       binding?.ctfSecondaryFont?.setText(it.description)
@@ -298,15 +306,9 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   private fun showPopupWindow(anchor: View) {
     val view =
       LayoutInflater.from(baseActivity).inflate(R.layout.popup_window_website_menu, null)
-    this.popupWindow = PopupWindow(
-      view,
-      WindowManager.LayoutParams.WRAP_CONTENT,
-      WindowManager.LayoutParams.WRAP_CONTENT,
-      true
-    )
+    this.popupWindow = PopupWindow(view, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
     val needHelp = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.need_help)
-    val resetDefault =
-      this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.reset_default)
+    val resetDefault = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.reset_default)
     needHelp?.setOnClickListener {
       this.popupWindow?.dismiss()
     }
@@ -348,13 +350,16 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
           websiteThemePublishBottomSheet.dismiss()
           WebEngageController.trackEvent(WEBSITE_STYLE_CANCEL, CLICK, NO_EVENT_VALUE)
 
-          }
-          TypeSuccess.PUBLISH_CHANGES.name -> {
-            websiteThemePublishBottomSheet.dismiss()
-            updateAPI(false)
-          }
+        }
+        TypeSuccess.PUBLISH_CHANGES.name -> {
+          websiteThemePublishBottomSheet.dismiss()
+          updateAPI(false)
         }
       }
-      websiteThemePublishBottomSheet.show(parentFragmentManager,WebSiteThemePublishBottomSheet::javaClass.name)
     }
+    websiteThemePublishBottomSheet.show(
+      parentFragmentManager,
+      WebSiteThemePublishBottomSheet::javaClass.name
+    )
+  }
 }

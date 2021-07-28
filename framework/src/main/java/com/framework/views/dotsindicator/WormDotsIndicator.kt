@@ -18,8 +18,10 @@ import androidx.dynamicanimation.animation.SpringForce
 import com.framework.R
 import com.framework.views.dotsindicator.BaseDotsIndicator.Type.WORM
 
-class WormDotsIndicator @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
-                                                  defStyleAttr: Int = 0) : BaseDotsIndicator(context, attrs, defStyleAttr) {
+class WormDotsIndicator @JvmOverloads constructor(
+  context: Context, attrs: AttributeSet? = null,
+  defStyleAttr: Int = 0
+) : BaseDotsIndicator(context, attrs, defStyleAttr) {
   private var dotIndicatorView: ImageView? = null
   private var dotIndicatorLayout: View? = null
 
@@ -33,8 +35,10 @@ class WormDotsIndicator @JvmOverloads constructor(context: Context, attrs: Attri
   private val strokeDotsLinearLayout: LinearLayout = LinearLayout(context)
 
   init {
-    val linearParams = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-        ViewGroup.LayoutParams.WRAP_CONTENT)
+    val linearParams = LayoutParams(
+      ViewGroup.LayoutParams.WRAP_CONTENT,
+      ViewGroup.LayoutParams.WRAP_CONTENT
+    )
     val horizontalPadding = dpToPx(24)
     setPadding(horizontalPadding, 0, horizontalPadding, 0)
     clipToPadding = false
@@ -54,8 +58,10 @@ class WormDotsIndicator @JvmOverloads constructor(context: Context, attrs: Attri
       dotsStrokeColor = a.getColor(R.styleable.WormDotsIndicator_dotsStrokeColor, dotIndicatorColor)
 
       // Spring dots attributes
-      dotsStrokeWidth = a.getDimension(R.styleable.WormDotsIndicator_dotsStrokeWidth,
-          dotsStrokeWidth.toFloat()).toInt()
+      dotsStrokeWidth = a.getDimension(
+        R.styleable.WormDotsIndicator_dotsStrokeWidth,
+        dotsStrokeWidth.toFloat()
+      ).toInt()
 
       a.recycle()
     }
@@ -117,8 +123,10 @@ class WormDotsIndicator @JvmOverloads constructor(context: Context, attrs: Attri
   }
 
   private fun buildDot(stroke: Boolean): ViewGroup {
-    val dot = LayoutInflater.from(context).inflate(R.layout.dot_layout, this,
-        false) as ViewGroup
+    val dot = LayoutInflater.from(context).inflate(
+      R.layout.dot_layout, this,
+      false
+    ) as ViewGroup
     if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN_MR1) {
       dot.layoutDirection = View.LAYOUT_DIRECTION_LTR
     }
@@ -162,7 +170,8 @@ class WormDotsIndicator @JvmOverloads constructor(context: Context, attrs: Attri
 
       override fun onPageScrolled(selectedPosition: Int, nextPosition: Int, positionOffset: Float) {
         val x = (dots[selectedPosition].parent as ViewGroup).left.toFloat()
-        val nextX = (dots[if (nextPosition == -1) selectedPosition else nextPosition].parent as ViewGroup).left
+        val nextX =
+          (dots[if (nextPosition == -1) selectedPosition else nextPosition].parent as ViewGroup).left
             .toFloat()
         val xFinalPosition: Float
         val widthFinalPosition: Float

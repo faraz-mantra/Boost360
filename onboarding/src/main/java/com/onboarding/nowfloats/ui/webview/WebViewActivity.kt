@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.webkit.*
+import androidx.core.content.ContextCompat
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
@@ -65,7 +66,11 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
         binding?.progressBar?.gone()
       }
 
-      override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+      override fun onReceivedError(
+        view: WebView?,
+        request: WebResourceRequest?,
+        error: WebResourceError?
+      ) {
         super.onReceivedError(view, request, error)
         binding?.progressBar?.gone()
       }
@@ -73,17 +78,10 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
     binding?.webview?.loadUrl(urlData.getWebViewUrl())
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.heading_7)
-  }
-
   override fun getToolbarSubTitle(): String? {
     return domainUrl.checkHttp()
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return Gravity.NO_GRAVITY
-  }
 
   override fun getToolbarTitle(): String? {
     return resources.getString(R.string.app_name)
@@ -91,6 +89,10 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
 
   override fun getToolbar(): CustomToolbar? {
     return binding?.appBarLayout?.toolbar
+  }
+
+  override fun getToolbarTitleColor(): Int? {
+    return ContextCompat.getColor(this,R.color.black_4a4a4a)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

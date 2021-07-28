@@ -5,10 +5,9 @@ package com.nowfloats.NavigationDrawer.model;
  */
 public class Restricted_FP_Event {
 
-    public String response ;
+    public String response;
 
-    public Restricted_FP_Event(String response)
-    {
-        this.response = response ;
+    public Restricted_FP_Event(String response) {
+        this.response = response;
     }
 }

@@ -112,10 +112,10 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="@dimen/size_20"
-                  android:text="ADD PRODUCT IMAGE"
+                  android:text="@string/add_product_image_n"
                   android:textColor="@color/dodger_blue_two"
                   app:fontFamily="@font/semi_bold"
-                  app:textAllCaps="true"
+                  app:textAllCaps="false"
                   app:textType="BODY_1" />
               </LinearLayout>
 
@@ -211,18 +211,18 @@
               app:textType="BODY_3" />
 
             <com.framework.views.customViews.CustomTextField
-                android:id="@+id/tv_desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_5"
-                android:background="@drawable/bg_rect_edit_txt"
-                android:gravity="top|start"
-                android:hint="@string/describe_this_product_in_around_2000_characters_at_max"
-                android:inputType="textMultiLine"
-                android:padding="@dimen/size_12"
-                android:textColor="@color/warm_grey_10"
-                android:textColorHint="@color/primary_grey"
-                tools:ignore="UnusedAttribute" />
+              android:id="@+id/tv_desc"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_5"
+              android:background="@drawable/bg_rect_edit_txt"
+              android:gravity="top|start"
+              android:hint="@string/describe_this_product_in_around_2000_characters_at_max"
+              android:inputType="textMultiLine"
+              android:padding="@dimen/size_12"
+              android:textColor="@color/warm_grey_10"
+              android:textColorHint="@color/primary_grey"
+              tools:ignore="UnusedAttribute" />
 
 
             <com.framework.views.customViews.CustomTextView
@@ -290,11 +290,10 @@
                   android:id="@+id/cb_price_include"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:fontFamily="@font/open_sans"
+                  android:fontFamily="@font/regular"
                   android:text="@string/price_includes_taxes"
                   android:textColor="@color/primary_text"
                   android:textFontWeight="400"
-                  android:textStyle="normal"
                   android:theme="@style/ActiveTheme"
                   android:visibility="gone"
                   app:layout_constraintBottom_toBottomOf="parent"
@@ -466,7 +465,7 @@
                       app:layout_constraintBottom_toBottomOf="parent"
                       app:layout_constraintRight_toRightOf="parent"
                       app:layout_constraintTop_toTopOf="parent"
-                      app:textAllCaps="true" />
+                      app:textAllCaps="false" />
 
                   </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -666,7 +665,7 @@
                   app:layout_constraintBottom_toBottomOf="parent"
                   app:layout_constraintRight_toRightOf="parent"
                   app:layout_constraintTop_toTopOf="parent"
-                  app:textAllCaps="true" />
+                  app:textAllCaps="false" />
 
               </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -902,7 +901,7 @@
                 android:gravity="center"
                 android:stateListAnimator="@null"
                 android:text="@string/save_amp_publish"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

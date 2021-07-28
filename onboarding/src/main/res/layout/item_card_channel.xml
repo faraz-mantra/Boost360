@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+  <data>
 
-    </data>
+  </data>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/container_channels"
-        android:orientation="horizontal">
+  <LinearLayout
+    android:id="@+id/container_channels"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/civ_fb_page"
-            android:tag="facebookpage"
-            android:layout_width="@dimen/size_18"
-            android:layout_height="@dimen/size_18"
-            app:srcCompat="@drawable/ic_facebook_page_n" />
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/civ_fb_page"
+      android:layout_width="@dimen/size_18"
+      android:layout_height="@dimen/size_18"
+      android:tag="facebookpage"
+      app:srcCompat="@drawable/ic_facebook_page_n" />
 
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/civ_gooogle_business"
-            android:layout_width="@dimen/size_18"
-            android:layout_height="@dimen/size_18"
-            android:tag="googlemybusiness"
-            android:layout_marginStart="@dimen/size_4"
-            app:srcCompat="@drawable/ic_google_maps_n" />
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/civ_gooogle_business"
+      android:layout_width="@dimen/size_18"
+      android:layout_height="@dimen/size_18"
+      android:layout_marginStart="@dimen/size_4"
+      android:tag="googlemybusiness"
+      app:srcCompat="@drawable/ic_google_maps_n" />
 
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/civ_whatsapp_business"
-            android:layout_width="@dimen/size_18"
-            android:tag="WAB"
-            android:layout_height="@dimen/size_18"
-            android:layout_marginStart="@dimen/size_4"
-            app:srcCompat="@drawable/ic_whatsapp_business_n" />
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/civ_whatsapp_business"
+      android:layout_width="@dimen/size_18"
+      android:layout_height="@dimen/size_18"
+      android:layout_marginStart="@dimen/size_4"
+      android:tag="WAB"
+      app:srcCompat="@drawable/ic_whatsapp_business_n" />
 
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/civ_twitter"
-            android:layout_width="@dimen/size_18"
-            android:tag="twitter"
-            android:layout_height="@dimen/size_18"
-            android:layout_marginStart="@dimen/size_4"
-            app:srcCompat="@drawable/ic_twitter_n" />
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/civ_twitter"
+      android:layout_width="@dimen/size_18"
+      android:layout_height="@dimen/size_18"
+      android:layout_marginStart="@dimen/size_4"
+      android:tag="twitter"
+      app:srcCompat="@drawable/ic_twitter_n" />
 
-    </LinearLayout>
+  </LinearLayout>
 </layout>

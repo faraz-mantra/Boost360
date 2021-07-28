@@ -42,45 +42,42 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 
-public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String> {
+public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String> {
 
-    public static int uploadTypePrimary	=	1;
-    public static int uploadTypeGallery	=	2;
-    public static int uploadTypeLogo	=	3;
+    public static int uploadTypePrimary = 1;
+    public static int uploadTypeGallery = 2;
+    public static int uploadTypeLogo = 3;
     public static int uploadTypeBackground = 4;
-
-    public Activity appContext 	= null;
-    ProgressDialog pd 				= null;
-    String path 					= null;
-    private SharedPreferences pref 	= null;
+    static int chunkLength = 30000;
+    public Activity appContext = null;
+    ProgressDialog pd = null;
+    String path = null;
+    String responseMessage = "";
+    Boolean success = false, isPrimary = false, isGallery = false, isLogo = false, isParallel, isGalleryImage = false;
+    String clientIdConcatedWithQoutes = "\"" + Constants.clientId + "\"";
+    int size = 0;
+    SharedPreferences.Editor prefsEditor;
+    String backImgPath = "";
+    UserSessionManager session;
+    Boolean isBackgroundImage = false;
+    boolean isSilent = false;
+    String fpID;
+    private SharedPreferences pref = null;
     private String backImg = null;
     private Boolean IsbackImgDeleted = false;
     private Boolean delImg = false;
-
-    String responseMessage			= "";
-    Boolean success 				= false,isPrimary = false, isGallery = false,isLogo = false, isParallel, isGalleryImage=false;
-    String clientIdConcatedWithQoutes = "\"" + Constants.clientId +"\"";
-    int size = 0;
-    SharedPreferences.Editor prefsEditor;
-    static int chunkLength = 30000;
-    String backImgPath = "";
-    UserSessionManager session ;
-    Boolean isBackgroundImage = false;
-
-    boolean isSilent = false;
     private String category;
-    String fpID ;
 
-    public UploadPictureAsyncTask(Activity context ,String path ,Boolean isPrimary, Boolean isLogo,String fpID) {
-        this.appContext	=  	context;
-        this.path	= 	path;
+    public UploadPictureAsyncTask(Activity context, String path, Boolean isPrimary, Boolean isLogo, String fpID) {
+        this.appContext = context;
+        this.path = path;
         this.isPrimary = isPrimary;
         this.isLogo = isLogo;
         this.fpID = fpID;
-        session = new UserSessionManager(context.getApplicationContext(),context);
+        session = new UserSessionManager(context.getApplicationContext(), context);
     }
 
-    public UploadPictureAsyncTask(Activity context,String path,Boolean IsUpdateBackgrundImage,String fpID){
+    public UploadPictureAsyncTask(Activity context, String path, Boolean IsUpdateBackgrundImage, String fpID) {
         this.appContext = context;
         this.path = path;
         this.fpID = fpID;
@@ -95,9 +92,8 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 
     @Override
     protected void onPreExecute() {
-        if(!isSilent && (delImg==false))
-        {
-            pd= ProgressDialog.show(appContext, "", appContext.getString(R.string.uploading_image));
+        if (!isSilent && (delImg == false)) {
+            pd = ProgressDialog.show(appContext, "", appContext.getString(R.string.uploading_image));
             pd.setCancelable(false);
 
         }
@@ -108,17 +104,15 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
     @Override
     protected void onPostExecute(String result) {
 
-        if(!isSilent)
-        {
+        if (!isSilent) {
             onPost();
         }
 
     }
 
 
-    public void onPost()
-    {
-        if (success) Methods.showSnackBarPositive(appContext,"Image updated successfully");
+    public void onPost() {
+        if (success) Methods.showSnackBarPositive(appContext, "Image updated successfully");
         if (success && isPrimary) {
             Constants.uploadedImg = path;
             pd.dismiss();
@@ -136,36 +130,33 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
                 e.printStackTrace();
             }
 
-        }
-
-        else if(success && isLogo){
+        } else if (success && isLogo) {
             pd.dismiss();
             Constants.isImgUploaded = true;
             Constants.uploadedImg = path;
             Bitmap bmp = Util.getBitmap(path, appContext);
             Business_Logo_Activity.logoimageView.setImageBitmap(bmp);
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl,path);
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl, path);
             session.storeFPLogo(Constants.uploadedImg);
 
 
-        }
-        else if(success && isBackgroundImage){
+        } else if (success && isBackgroundImage) {
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            try{
+            try {
                 Util.GettingBackGroundId(session);
-            } catch(Exception e){e.printStackTrace();}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             pd.dismiss();
             Bitmap bmp = Util.getBitmap(path, appContext);
             SidePanelFragment.containerImage.setImageBitmap(bmp);
-        }
-        else if (IsbackImgDeleted){
+        } else if (IsbackImgDeleted) {
             pd.dismiss();
-        }
-        else if(Util.isNetworkStatusAvialable(appContext)){
+        } else if (Util.isNetworkStatusAvialable(appContext)) {
             pd.dismiss();
         }
 
@@ -174,20 +165,20 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
     @Override
     protected String doInBackground(Void... params) {
         String response = "";
-        if(!Util.isNullOrEmpty(path)){
-            uploadImage(path);}
-        if(success){
+        if (!Util.isNullOrEmpty(path)) {
+            uploadImage(path);
+        }
+        if (success) {
             getFpData();
         }
-        if(IsbackImgDeleted)
-        {
-           // removebackgroundImg();
+        if (IsbackImgDeleted) {
+            // removebackgroundImg();
         }
-        return response ;
+        return response;
     }
 
 
-    public void uploadImage(String imagePath){
+    public void uploadImage(String imagePath) {
         try {
             FileInputStream fileInputStream = null;
             File img = new File(imagePath);
@@ -203,7 +194,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             Bitmap bmp = BitmapFactory.decodeFile(imagePath, options);
-            if(bmp != null) {
+            if (bmp != null) {
                 if ((f.length() / 1024) > 100) {
                     bmp.compress(CompressFormat.JPEG, 70, bos);
                 } else {
@@ -269,22 +260,26 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
                     sendDataToServer(uri, bitmapdata);
                 }
             }
-        }catch (Exception e){e.printStackTrace(); System.gc();}
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.gc();
+        }
     }
-    public void getFpData(){
 
-        if(isBackgroundImage){
+    public void getFpData() {
 
-          //  try {
-                Util.GettingBackGroundId(session);
-                //Thread.sleep(3000);
-          //  } catch (InterruptedException e) {
-          //      e.printStackTrace();
-          //  }
-        }else{
+        if (isBackgroundImage) {
+
+            //  try {
+            Util.GettingBackGroundId(session);
+            //Thread.sleep(3000);
+            //  } catch (InterruptedException e) {
+            //      e.printStackTrace();
+            //  }
+        } else {
             String response = "";
-            try{
-                String url = Constants.NOW_FLOATS_API_URL+"/Discover/v1/floatingPoint/"
+            try {
+                String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/"
                         + "nf-app/" + session.getFPID();
                 String clientIdConcatedWithQoutes = "\"" + Constants.clientId + "\"";
 
@@ -293,18 +288,17 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
                         Constants.HTTP_POST, url);
                 if (response.length() > 1) {
                     Constants.hasStoreData = true;
-                    JSONObject store 				= new JSONObject(response);
+                    JSONObject store = new JSONObject(response);
 
-                    if(response.contains("ImageUri"))
-                        Constants.storePrimaryImage 	= store.getString("ImageUri");
+                    if (response.contains("ImageUri"))
+                        Constants.storePrimaryImage = store.getString("ImageUri");
                     if (response.contains("LogoUrl")) {
                         Constants.StoreLogoUri = store.getString("LogoUrl");
                         Constants.StoreLogoUri = Constants.StoreLogoUri.replaceFirst(
                                 "/", "");
-                        if (!Util.isNullOrEmpty(Constants.StoreLogoUri)){
+                        if (!Util.isNullOrEmpty(Constants.StoreLogoUri)) {
                             //MixPanelController.setProperties("Logo", "True");
-                        }
-                        else{
+                        } else {
                             // MixPanelController.setProperties("Logo", "False");
                         }
                         //session.storeLogoURI(Constants.StoreLogoUri);
@@ -315,11 +309,11 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
                     if (response.contains("SecondaryTileImages")) {
                         try {
                             JSONArray array = store.getJSONArray("SecondaryTileImages");
-                            if(array != null){
+                            if (array != null) {
                                 int len = array.length();
                                 Constants.storeSecondaryImages = new ArrayList<String>();
                                 if (len != 0) {
-                                    for(int i = 0 ; i < len ; i++){
+                                    for (int i = 0; i < len; i++) {
                                         Constants.storeSecondaryImages.add(array.getString(i));
                                     }
                                 }
@@ -432,7 +426,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 //
 //    }
 
-    public void sendDataToServer(String url, byte[] BytesToBeSent){
+    public void sendDataToServer(String url, byte[] BytesToBeSent) {
         DataOutputStream outputStream = null;
 
         BoostLog.d("BackGroundImage Url", url);
@@ -466,15 +460,13 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 
             String responseMessage = connection.getResponseMessage();
 
-            if (responseCode	== 200  || responseCode	== 202)
-            {
+            if (responseCode == 200 || responseCode == 202) {
                 success = true;
             }
 
             InputStreamReader inputStreamReader = null;
-            BufferedReader bufferedReader =  null;
-            try
-            {
+            BufferedReader bufferedReader = null;
+            try {
                 inputStreamReader = new InputStreamReader(connection.getInputStream());
                 bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -484,32 +476,30 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 
                 boolean isFirst = true;
 
-                while((temp = bufferedReader.readLine())!=null)
-                {
-                    if(!isFirst)
+                while ((temp = bufferedReader.readLine()) != null) {
+                    if (!isFirst)
                         responseContent.append(Constants.NEW_LINE);
                     responseContent.append(temp);
                     isFirst = false;
                 }
 
                 String response = responseContent.toString();
-                if(!Util.isNullOrEmpty(response))
+                if (!Util.isNullOrEmpty(response))
                     Constants.serviceResponse = response;
                 else
                     Constants.serviceResponse = "";
-            }
-            catch(Exception e){}
-            finally
-            {
-                try{
+            } catch (Exception e) {
+            } finally {
+                try {
                     inputStreamReader.close();
-                }catch (Exception e) {}
-                try{
+                } catch (Exception e) {
+                }
+                try {
                     bufferedReader.close();
-                }catch (Exception e) {}
+                } catch (Exception e) {
+                }
 
             }
-
 
 
         } catch (Exception ex) {

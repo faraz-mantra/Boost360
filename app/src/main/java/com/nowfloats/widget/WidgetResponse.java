@@ -18,13 +18,11 @@ public class WidgetResponse {
     public List<AllPackage> allPackages;
 
 
-    public List<ActivePackage> getActivePackages()
-    {
+    public List<ActivePackage> getActivePackages() {
         return activePackages;
     }
 
-    public void setActivePackages(List<ActivePackage> activePackages)
-    {
+    public void setActivePackages(List<ActivePackage> activePackages) {
         this.activePackages = activePackages;
     }
 }

@@ -8,7 +8,7 @@ import com.framework.adapters.RecyclerViewItemClickListener
 import java.io.Serializable
 
 open class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view), Serializable,
-        OnClickListener {
+  OnClickListener {
 
   protected var context: Context = view.context
   var listener: RecyclerViewItemClickListener? = null

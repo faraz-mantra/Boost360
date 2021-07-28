@@ -10,7 +10,18 @@ import com.google.gson.annotations.SerializedName;
  * Created by NowFloats on 17-08-2017.
  */
 
-public class MerchantProfileModel implements Parcelable{
+public class MerchantProfileModel implements Parcelable {
+    public static final Creator<MerchantProfileModel> CREATOR = new Creator<MerchantProfileModel>() {
+        @Override
+        public MerchantProfileModel createFromParcel(Parcel in) {
+            return new MerchantProfileModel(in);
+        }
+
+        @Override
+        public MerchantProfileModel[] newArray(int size) {
+            return new MerchantProfileModel[size];
+        }
+    };
     @SerializedName("_id")
     @Expose
     private String id;
@@ -75,7 +86,7 @@ public class MerchantProfileModel implements Parcelable{
     @Expose
     private Double applicableTxnCharge;
 
-    public MerchantProfileModel(){
+    public MerchantProfileModel() {
 
     }
 
@@ -99,18 +110,6 @@ public class MerchantProfileModel implements Parcelable{
         updatedOn = in.readString();
         applicableTxnCharge = in.readDouble();
     }
-
-    public static final Creator<MerchantProfileModel> CREATOR = new Creator<MerchantProfileModel>() {
-        @Override
-        public MerchantProfileModel createFromParcel(Parcel in) {
-            return new MerchantProfileModel(in);
-        }
-
-        @Override
-        public MerchantProfileModel[] newArray(int size) {
-            return new MerchantProfileModel[size];
-        }
-    };
 
     public Boolean getArchived() {
         return isArchived;

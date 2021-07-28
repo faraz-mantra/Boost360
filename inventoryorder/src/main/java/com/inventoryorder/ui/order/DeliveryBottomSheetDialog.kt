@@ -10,7 +10,9 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 
-class DeliveryBottomSheetDialog : BaseBottomSheetDialog<BottomSheetPickUpDeliveryOptionBinding, BaseViewModel>(), RecyclerItemClickListener {
+class DeliveryBottomSheetDialog :
+  BaseBottomSheetDialog<BottomSheetPickUpDeliveryOptionBinding, BaseViewModel>(),
+  RecyclerItemClickListener {
 
   private var list = ArrayList<DeliveryModel>()
   private var adapter: AppBaseRecyclerViewAdapter<DeliveryModel>? = null
@@ -41,7 +43,9 @@ class DeliveryBottomSheetDialog : BaseBottomSheetDialog<BottomSheetPickUpDeliver
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     val deliveryItem = item as? DeliveryModel
-    list.forEach { it.isSelected = (it.deliveryOptionSelectedName == deliveryItem?.deliveryOptionSelectedName) }
+    list.forEach {
+      it.isSelected = (it.deliveryOptionSelectedName == deliveryItem?.deliveryOptionSelectedName)
+    }
     adapter?.notifyDataSetChanged()
     onDoneClicked((item as? DeliveryModel))
     dismiss()

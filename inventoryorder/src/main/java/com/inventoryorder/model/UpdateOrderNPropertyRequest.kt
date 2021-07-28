@@ -6,14 +6,14 @@ import com.inventoryorder.model.orderRequest.extraProperty.ExtraPropertiesOrder
 import java.io.Serializable
 
 data class UpdateOrderNPropertyRequest(
-    @SerializedName("existingKeyName")
-    var existingKeyName: String? = null,
-    @SerializedName("orderId")
-    var orderId: String? = null,
-    @SerializedName("updateExtraPropertyType")
-    var updateExtraPropertyType: String? = PropertyType.ITEM.name,
-    @SerializedName("extraProperties")
-    var extraPropertiesOrder: ExtraPropertiesOrder? = null,
+  @SerializedName("existingKeyName")
+  var existingKeyName: String? = null,
+  @SerializedName("orderId")
+  var orderId: String? = null,
+  @SerializedName("updateExtraPropertyType")
+  var updateExtraPropertyType: String? = PropertyType.ITEM.name,
+  @SerializedName("extraProperties")
+  var extraPropertiesOrder: ExtraPropertiesOrder? = null,
 ) : BaseRequest(), Serializable {
 
   enum class PropertyType {

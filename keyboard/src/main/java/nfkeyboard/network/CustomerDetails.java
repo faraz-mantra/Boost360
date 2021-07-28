@@ -3,6 +3,7 @@ package nfkeyboard.network;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -113,11 +114,6 @@ public class CustomerDetails {
     public void setFPWebWidgets(ArrayList<String> FPWebWidgets) {
         this.FPWebWidgets = FPWebWidgets;
     }
-
-
-
-
-
 
 
 }

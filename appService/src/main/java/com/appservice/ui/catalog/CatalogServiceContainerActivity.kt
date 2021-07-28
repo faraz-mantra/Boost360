@@ -74,15 +74,11 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     return binding?.appBarLayout?.toolbar
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.heading_7)
-  }
-
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
-      FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY,
-      -> ContextCompat.getColor(this, R.color.orange)
+      FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY, -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> ContextCompat.getColor(this, R.color.color_primary)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -106,9 +102,6 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     }
   }
 
-  override fun getNavIconScale(): Float {
-    return 1.0f
-  }
 
   override fun getToolbarTitle(): String? {
     return when (type) {
@@ -123,12 +116,6 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     }
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return when (type) {
-      FragmentType.SERVICE_TIMING_FRAGMENT, FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> Gravity.CENTER
-      else -> Gravity.START
-    }
-  }
 
 
   private fun shouldAddToBackStack(): Boolean {
@@ -191,7 +178,12 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   }
 }
 
-fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+fun Fragment.startFragmentActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false,
+  isResult: Boolean = false
+) {
   val intent = Intent(activity, CatalogServiceContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -199,15 +191,28 @@ fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle()
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false) {
+fun startFragmentActivityNew(
+  activity: Activity,
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean,
+  isResult: Boolean = false
+) {
   val intent = Intent(activity, CatalogServiceContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-  if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(intent, 300)
+  if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(
+    intent,
+    300
+  )
 }
 
-fun AppCompatActivity.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
+fun AppCompatActivity.startFragmentActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false
+) {
   val intent = Intent(this, CatalogServiceContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

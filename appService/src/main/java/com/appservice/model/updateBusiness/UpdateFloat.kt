@@ -42,7 +42,12 @@ data class UpdateFloat(
     if (sDate?.contains("/Date") == true) sDate = sDate.replace("/Date(", "").replace(")/", "")
     val epochTime = sDate?.toLongOrNull()
     return if (epochTime != null) Date(epochTime).parseDate(FORMAT_SERVER_TO_LOCAL_3) ?: ""
-    else parseDate(sDate, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("UTC")) ?: ""
+    else parseDate(
+      sDate,
+      FORMAT_SERVER_DATE,
+      FORMAT_SERVER_TO_LOCAL_3,
+      timeZone = TimeZone.getTimeZone("UTC")
+    ) ?: ""
   }
 
   fun getLoaderItem(): UpdateFloat {

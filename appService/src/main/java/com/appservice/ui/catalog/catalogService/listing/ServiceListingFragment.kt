@@ -18,6 +18,7 @@ import android.view.MenuInflater
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -144,14 +145,24 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     })
   }
 
-  private fun getListServiceFilterApi(searchString: String = "", isFirst: Boolean = false, offSet: Int? = null, limit: Int? = null) {
+  private fun getListServiceFilterApi(
+    searchString: String = "",
+    isFirst: Boolean = false,
+    offSet: Int? = null,
+    limit: Int? = null
+  ) {
     if (isFirst || searchString.isNotEmpty()) showProgress()
-    viewModel?.getSearchListings(fpTag, fpId, searchString, offSet, limit)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        setServiceDataItems((it as? ServiceSearchListingResponse)?.result, searchString.isNotEmpty(), isFirst)
-      } else if (isFirst) showShortToast(it.message())
-      if (isFirst || searchString.isNotEmpty()) hideProgress()
-    })
+    viewModel?.getSearchListings(fpTag, fpId, searchString, offSet, limit)
+      ?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) {
+          setServiceDataItems(
+            (it as? ServiceSearchListingResponse)?.result,
+            searchString.isNotEmpty(),
+            isFirst
+          )
+        } else if (isFirst) showShortToast(it.message())
+        if (isFirst || searchString.isNotEmpty()) hideProgress()
+      })
   }
 
   private fun setServiceDataItems(
@@ -258,42 +269,41 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun setListingView(visibility: Int) {
     binding?.baseRecyclerView?.visibility = visibility
-    binding?.llActionButtons?.visibility = visibility
+    binding?.cbAddService?.visibility = visibility
   }
 
   private fun setEmptyView() {
-    val spannableString =
-      SpannableString(resources.getString(R.string.you_don_t_have_any_service_added_to_your_digital_catalog_as_of_yet_watch_video))
-    val clickableSpan = object : ClickableSpan() {
-      override fun onClick(widget: View) {
-        showShortToast("video link")
-      }
-
-      override fun updateDrawState(ds: TextPaint) {
-        super.updateDrawState(ds)
-        ds.isUnderlineText = false
-      }
-    }
-    spannableString.setSpan(
-      clickableSpan,
-      spannableString.length.minus(11),
-      spannableString.length,
-      0
-    )
-    spannableString.setSpan(
-      ForegroundColorSpan(
-        ContextCompat.getColor(
-          requireActivity(),
-          R.color.black_4a4a4a
-        )
-      ), spannableString.length.minus(11), spannableString.length, 0
-    )
-    spannableString.setSpan(
-      UnderlineSpan(),
-      spannableString.length.minus(11),
-      spannableString.length,
-      0
-    )
+    val spannableString = SpannableString(resources.getString(R.string.you_don_t_have_any_service_added_to_your_digital_catalog_as_of_yet_watch_video))
+//    val clickableSpan = object : ClickableSpan() {
+//      override fun onClick(widget: View) {
+//        showShortToast("video link")
+//      }
+//
+//      override fun updateDrawState(ds: TextPaint) {
+//        super.updateDrawState(ds)
+//        ds.isUnderlineText = false
+//      }
+//    }
+//    spannableString.setSpan(
+//      clickableSpan,
+//      spannableString.length.minus(11),
+//      spannableString.length,
+//      0
+//    )
+//    spannableString.setSpan(
+//      ForegroundColorSpan(
+//        ContextCompat.getColor(
+//          requireActivity(),
+//          R.color.black_4a4a4a
+//        )
+//      ), spannableString.length.minus(11), spannableString.length, 0
+//    )
+//    spannableString.setSpan(
+//      UnderlineSpan(),
+//      spannableString.length.minus(11),
+//      spannableString.length,
+//      0
+//    )
     binding?.serviceListingEmpty?.ctvAddServiceSubheading?.text = spannableString
     binding?.serviceListingEmpty?.ctvAddServiceSubheading?.movementMethod =
       LinkMovementMethod.getInstance()
@@ -359,11 +369,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   }
 
   private fun checkStoragePermission(): Boolean {
-    if (ActivityCompat.checkSelfPermission(
-        requireActivity(),
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-      ) == PackageManager.PERMISSION_DENIED
-    ) {
+    if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
       showDialog(
         requireActivity(),
         "Storage Permission",
@@ -397,13 +403,8 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     }
   }
 
-  fun showDialog(
-    mContext: Context?,
-    title: String?,
-    msg: String?,
-    listener: DialogInterface.OnClickListener
-  ) {
-    val builder = AlertDialog.Builder(mContext!!)
+  fun showDialog(mContext: Context?, title: String?, msg: String?, listener: DialogInterface.OnClickListener) {
+    val builder = AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
     builder.setTitle(title).setMessage(msg).setPositiveButton("Ok") { dialog, which ->
       dialog.dismiss()
       listener.onClick(dialog, which)

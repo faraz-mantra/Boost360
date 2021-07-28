@@ -99,7 +99,10 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     binding?.edtBankBranch?.gone()
   }
 
-  private fun getUserDetails(isPendingToastShow: Boolean = false, isServiceCreation: Boolean = false) {
+  private fun getUserDetails(
+    isPendingToastShow: Boolean = false,
+    isServiceCreation: Boolean = false
+  ) {
     showProgress()
     viewModel?.userAccountDetails(fpId, clientId)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
@@ -113,7 +116,11 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
           goBackFragment(response.result?.bankAccountDetails!!)
         } else checkBankAccountDetail(response.result, isPendingToastShow)
       } else {
-        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.adding_bank_account), resources.getDimensionPixelSize(R.dimen.size_36))
+        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(
+          resources.getString(
+            R.string.adding_bank_account
+          ), resources.getDimensionPixelSize(R.dimen.size_36)
+        )
         isUpdated = false
       }
     })
@@ -133,9 +140,17 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       menuClose?.isVisible = true
       setEditTextAll(result.bankAccountDetails)
       if ((result.bankAccountDetails?.kYCDetails?.verificationStatus == KYCDetails.Status.PENDING.name).not()) {
-        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.link_bank_account), resources.getDimensionPixelSize(R.dimen.size_10))
+        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(
+          resources.getString(
+            R.string.link_bank_account
+          ), resources.getDimensionPixelSize(R.dimen.size_10)
+        )
         binding?.verificationBtn?.text = resources.getString(R.string.change_bank_detail)
-        var buttonDrawable: Drawable = (binding?.verificationBtn?.background ?: ContextCompat.getDrawable(baseActivity, R.drawable.bg_button_rounded_orange)) as Drawable
+        var buttonDrawable: Drawable =
+          (binding?.verificationBtn?.background ?: ContextCompat.getDrawable(
+            baseActivity,
+            R.drawable.bg_button_rounded_orange
+          )) as Drawable
         buttonDrawable = DrawableCompat.wrap(buttonDrawable)
         DrawableCompat.setTint(buttonDrawable, ContextCompat.getColor(baseActivity, R.color.pinkish_grey))
         binding?.verificationBtn?.background = buttonDrawable
@@ -144,7 +159,11 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimaryDark)
       } else {
         if (isPendingToastShow) showLongToast(resources.getString(R.string.account_verification_pending))
-        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.my_bank_account), resources.getDimensionPixelSize(R.dimen.size_10))
+        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(
+          resources.getString(
+            R.string.my_bank_account
+          ), resources.getDimensionPixelSize(R.dimen.size_10)
+        )
       }
       onBankAccountAddedOrUpdated(true)
     } else {
@@ -184,7 +203,9 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       }
       binding?.whyBtn -> bottomSheetWhy()
       binding?.verificationBtn -> {
-        if (binding?.verificationBtn?.text?.toString()?.trim() != resources.getString(R.string.refresh_status).trim()) {
+        if (binding?.verificationBtn?.text?.toString()
+            ?.trim() != resources.getString(R.string.refresh_status).trim()
+        ) {
           uiUpdate(true)
           menuClose?.isVisible = false
         } else getUserDetails(true)
@@ -194,20 +215,34 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
 
   private fun uiUpdate(isEditable: Boolean) {
-    val views = arrayListOf(binding?.edtAccountName, binding?.edtAccountNumber, binding?.edtAlias, binding?.edtIfsc)
+    val views = arrayListOf(
+      binding?.edtAccountName,
+      binding?.edtAccountNumber,
+      binding?.edtAlias,
+      binding?.edtIfsc
+    )
     if (!isValidIfsc) views.add(binding?.edtBankName)
-    else binding?.edtBankName?.background = ContextCompat.getDrawable(baseActivity, if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill)
+    else binding?.edtBankName?.background = ContextCompat.getDrawable(
+      baseActivity,
+      if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill
+    )
 
     binding?.verificationUi?.visibility = if (isEditable) View.GONE else View.VISIBLE
     binding?.createUi?.visibility = if (isEditable) View.VISIBLE else View.GONE
     binding?.edtConfirmNumber?.visibility = if (isEditable) View.VISIBLE else View.GONE
     binding?.titleConfirmAccount?.visibility = if (isEditable) View.VISIBLE else View.GONE
     views.forEach {
-      it?.background = ContextCompat.getDrawable(baseActivity, if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill)
+      it?.background = ContextCompat.getDrawable(
+        baseActivity,
+        if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill
+      )
       it?.isFocusable = isEditable
       it?.isFocusableInTouchMode = isEditable
     }
-    binding?.edtBankBranch?.background = ContextCompat.getDrawable(baseActivity, if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill)
+    binding?.edtBankBranch?.background = ContextCompat.getDrawable(
+      baseActivity,
+      if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill
+    )
 
     binding?.edtAccountName?.hint = if (isEditable) resources.getString(R.string.write_the_name_as_mentioned_in_bank_account) else ""
     binding?.edtAccountNumber?.hint = if (isEditable) resources.getString(R.string.xxxxxxxxxxxxxxxxxx) else ""
@@ -217,16 +252,20 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     binding?.edtIfsc?.hint = if (isEditable) resources.getString(R.string.type_ifsc_code) else ""
     if (isEditable) {
       (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.adding_bank_account), resources.getDimensionPixelSize(R.dimen.size_36))
-      binding?.submitBtn?.apply { background = ContextCompat.getDrawable(baseActivity, R.drawable.bg_button_rounded_orange) }
       (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.color_primary, R.color.color_primary_dark)
     }
   }
 
   private fun createApiAccount() {
     showProgress()
-    request = AccountCreateRequest(clientId = clientId, floatingPointId = fpId, bankAccountDetails = requestAccount,
-        additionalKYCDocuments = AccountCreateRequest().setKYCBlankValue(), registeredBusinessAddress = AccountCreateRequest().setAddressBlankValue(),
-        registeredBusinessContactDetails = AccountCreateRequest().setContactDetailBlankValue(), taxDetails = AccountCreateRequest().setTaxBlankValue()/*, paymentGatewayDetails = AccountCreateRequest().setPaymentsGateway()*/
+    request = AccountCreateRequest(
+      clientId = clientId,
+      floatingPointId = fpId,
+      bankAccountDetails = requestAccount,
+      additionalKYCDocuments = AccountCreateRequest().setKYCBlankValue(),
+      registeredBusinessAddress = AccountCreateRequest().setAddressBlankValue(),
+      registeredBusinessContactDetails = AccountCreateRequest().setContactDetailBlankValue(),
+      taxDetails = AccountCreateRequest().setTaxBlankValue()/*, paymentGatewayDetails = AccountCreateRequest().setPaymentsGateway()*/
     )
     viewModel?.createAccount(request)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
@@ -240,7 +279,11 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         val editor = pref?.edit()
         editor?.putBoolean(PreferenceConstant.IS_ACCOUNT_SAVE, true)
         editor?.apply()
-        WebEngageController.trackEvent(BANK_ACCOUNT_SUBMITTED_FOR_VERIFICATION, BANK_ACCOUNT, event_value = FLOATING_POINT_ID)
+        WebEngageController.trackEvent(
+          BANK_ACCOUNT_SUBMITTED_FOR_VERIFICATION,
+          BANK_ACCOUNT,
+          event_value = FLOATING_POINT_ID
+        )
       } else {
         hideProgress()
         showLongToast(response?.errorN?.getMessage())
@@ -250,25 +293,33 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   private fun updateApiAccount() {
     showProgress()
-    viewModel?.updateAccount(fpId, clientId, requestAccount)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        hideProgress()
-        showLongToast(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
-      val response = it as? AccountCreateResponse
-      if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
-        getUserDetails(isServiceCreation = isServiceCreation)
-        WebEngageController.trackEvent(BANK_ACCOUNT_DETAILS_UPDATED, BANK_ACCOUNT, FLOATING_POINT_ID)
-      } else {
-        hideProgress()
-        showLongToast(response?.errorN?.getMessage())
-      }
-    })
+    viewModel?.updateAccount(fpId, clientId, requestAccount)
+      ?.observeOnce(viewLifecycleOwner, Observer {
+        if (it.error is NoNetworkException) {
+          hideProgress()
+          showLongToast(resources.getString(R.string.internet_connection_not_available))
+          return@Observer
+        }
+        val response = it as? AccountCreateResponse
+        if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
+          getUserDetails(isServiceCreation = isServiceCreation)
+          WebEngageController.trackEvent(
+            BANK_ACCOUNT_DETAILS_UPDATED,
+            BANK_ACCOUNT,
+            FLOATING_POINT_ID
+          )
+        } else {
+          hideProgress()
+          showLongToast(response?.errorN?.getMessage())
+        }
+      })
   }
 
   private fun bottomSheetWhy() {
-    WhyBottomSheet().show(this@BankAccountFragment.parentFragmentManager, WhyBottomSheet::class.java.name)
+    WhyBottomSheet().show(
+      this@BankAccountFragment.parentFragmentManager,
+      WhyBottomSheet::class.java.name
+    )
   }
 
   private fun isValid(): Boolean {
@@ -300,7 +351,14 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       showShortToast(getString(R.string.bank_name_cant_empty))
       return false
     }
-    requestAccount = BankAccountDetailsN(accountName = nameAccount, accountNumber = accountNumber, iFSC = ifsc, bankName = bankName, accountAlias = alias, kYCDetails = BankAccountDetailsN().kycObj())
+    requestAccount = BankAccountDetailsN(
+      accountName = nameAccount,
+      accountNumber = accountNumber,
+      iFSC = ifsc,
+      bankName = bankName,
+      accountAlias = alias,
+      kYCDetails = BankAccountDetailsN().kycObj()
+    )
 //    requestPayment = PaymentGatewayDetails(configType = "", accountId = "", paymentConfig = PaymentGatewayDetails().payObj())
     return true
   }

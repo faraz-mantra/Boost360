@@ -1,168 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
-    <data class="FacultyManagementBinding">
+  <data class="FacultyManagementBinding">
 
-        <variable
-            name="facultyManagementData"
-            type="com.nowfloats.education.faculty.model.Data" />
-    </data>
+    <variable
+      name="facultyManagementData"
+      type="com.nowfloats.education.faculty.model.Data" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/_2sdp"
+    android:paddingStart="@dimen/_15sdp"
+    android:paddingTop="@dimen/_15sdp"
+    android:paddingEnd="@dimen/_15sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/main_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/_5sdp"
+      android:background="@drawable/all_side_curve_bg"
+      android:elevation="@dimen/_2sdp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="@dimen/_2sdp"
-        android:paddingStart="@dimen/_15sdp"
-        android:paddingTop="@dimen/_15sdp"
-        android:paddingEnd="@dimen/_15sdp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/main_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5sdp"
-            android:background="@drawable/all_side_curve_bg"
-            android:elevation="@dimen/_2sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/top_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/topper_row_profile_image"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:src="@{facultyManagementData.profileimage.url}"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_facebook_menu" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="@id/topper_row_profile_image"
-                    app:layout_constraintEnd_toStartOf="@id/single_item_menu_button"
-                    app:layout_constraintStart_toEndOf="@id/topper_row_profile_image"
-                    app:layout_constraintTop_toTopOf="@id/topper_row_profile_image">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/open_sans"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:text="@{facultyManagementData.name}"
-                        android:textColor="#4A4A4A"
-                        android:textSize="@dimen/txt_16sp"
-                        android:textStyle="bold"
-                        tools:text="Suchi" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxEms="16"
-                        android:maxLines="1"
-                        android:text="@{facultyManagementData.title}"
-                        android:textColor="#747474"
-                        android:textSize="@dimen/txt_12sp"
-                        tools:text="Tata Motors" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/single_item_menu_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_10sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_dot_menu" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:id="@+id/dummy_view"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_3sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:background="@drawable/dotted_line"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/top_layout" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/_10sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dummy_view">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:ellipsize="end"
-                    android:lineSpacingExtra="1dp"
-                    android:maxLines="3"
-                    android:text="@{facultyManagementData.description}"
-                    android:textAlignment="textStart"
-                    android:textColor="#747474"
-                    android:textSize="@dimen/txt_12sp"
-                    tools:text="@string/dummy_lorem_ipsum" />
-
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+          android:id="@+id/topper_row_profile_image"
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:layout_margin="@dimen/_10sdp"
+          android:src="@{facultyManagementData.profileimage.url}"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:srcCompat="@drawable/ic_facebook_menu" />
 
         <LinearLayout
-            android:id="@+id/menu_options"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_10sdp"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toBottomOf="@id/topper_row_profile_image"
+          app:layout_constraintEnd_toStartOf="@id/single_item_menu_button"
+          app:layout_constraintStart_toEndOf="@id/topper_row_profile_image"
+          app:layout_constraintTop_toTopOf="@id/topper_row_profile_image">
+
+          <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_15sdp"
-            android:background="@drawable/all_side_curve_bg"
-            android:elevation="@dimen/_4sdp"
-            android:orientation="vertical"
-            android:padding="@dimen/_10sdp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
+            android:ellipsize="end"
+            android:fontFamily="@font/semi_bold"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="@{facultyManagementData.name}"
+            android:textColor="#4A4A4A"
+            android:textSize="@dimen/txt_16sp"
+            tools:text="Suchi" />
 
-            <TextView
-                android:id="@+id/edit_faculty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/_10sdp"
-                android:text="@string/edit"
-                android:textSize="@dimen/_12sdp" />
-
-            <TextView
-                android:id="@+id/delete_faculty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/_10sdp"
-                android:text="@string/delete_"
-                android:textAllCaps="true"
-                android:textColor="@color/red"
-                android:textSize="@dimen/_12sdp" />
-
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxEms="16"
+            android:maxLines="1"
+            android:text="@{facultyManagementData.title}"
+            android:textColor="#747474"
+            android:textSize="@dimen/txt_12sp"
+            tools:text="Tata Motors" />
         </LinearLayout>
+
+        <ImageView
+          android:id="@+id/single_item_menu_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:padding="@dimen/_10sdp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:srcCompat="@drawable/ic_dot_menu" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <View
+        android:id="@+id/dummy_view"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_3sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@drawable/dotted_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_layout" />
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dummy_view">
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_5sdp"
+          android:ellipsize="end"
+          android:lineSpacingExtra="1dp"
+          android:maxLines="3"
+          android:text="@{facultyManagementData.description}"
+          android:textAlignment="textStart"
+          android:textColor="#747474"
+          android:textSize="@dimen/txt_12sp"
+          tools:text="@string/dummy_lorem_ipsum" />
+
+      </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+      android:id="@+id/menu_options"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/_15sdp"
+      android:background="@drawable/all_side_curve_bg"
+      android:elevation="@dimen/_4sdp"
+      android:orientation="vertical"
+      android:padding="@dimen/_10sdp"
+      android:visibility="gone"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:visibility="visible">
+
+      <TextView
+        android:id="@+id/edit_faculty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:text="@string/edit"
+        android:textSize="@dimen/_12sdp" />
+
+      <TextView
+        android:id="@+id/delete_faculty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:text="@string/delete_"
+        android:textAllCaps="false"
+        android:textColor="@color/red"
+        android:textSize="@dimen/_12sdp" />
+
+    </LinearLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

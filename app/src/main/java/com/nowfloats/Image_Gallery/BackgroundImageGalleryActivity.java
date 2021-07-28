@@ -5,7 +5,9 @@ import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+
 import androidx.databinding.DataBindingUtil;
+
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Build;
@@ -13,6 +15,7 @@ import android.os.Bundle;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -20,6 +23,7 @@ import androidx.core.content.FileProvider;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -64,9 +68,12 @@ import static com.framework.webengageconstant.EventNameKt.DELETE_BACKGROUND_IMAG
 import static com.framework.webengageconstant.EventNameKt.UPLOAD_BACKGROUND_IMAGE;
 
 
-public class BackgroundImageGalleryActivity extends AppCompatActivity implements UploadFaviconImage.OnImageUpload
-{
+public class BackgroundImageGalleryActivity extends AppCompatActivity implements UploadFaviconImage.OnImageUpload {
 
+    private final int CAMERA_PERMISSION_REQUEST_CODE = 1;
+    private final int IMAGE_DELETE_REQUEST_CODE = 2;
+    private final int CAMERA_IMAGE_REQUEST_CODE = 101;
+    private final int GALLERY_IMAGE_REQUEST_CODE = 102;
     ActivityBackgroundImageGalleryBinding binding;
     private UserSessionManager session;
     private ImagesRecyclerAdapter adapter;
@@ -74,23 +81,15 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
     private Uri primaryUri;
     private ProgressDialog dialog;
 
-    private final int CAMERA_PERMISSION_REQUEST_CODE = 1;
-    private final int IMAGE_DELETE_REQUEST_CODE = 2;
-    private final int CAMERA_IMAGE_REQUEST_CODE = 101;
-    private final int GALLERY_IMAGE_REQUEST_CODE = 102;
-
-
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_background_image_gallery);
 
         setSupportActionBar(binding.appBar.toolbar);
         Methods.isOnline(BackgroundImageGalleryActivity.this);
 
-        if (getSupportActionBar() != null)
-        {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -103,27 +102,27 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
         initImageRecyclerView(binding.imageList);
         getBackgroundImages();
+        binding.btnAdd.setOnClickListener(view -> openImageChooser());
     }
 
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
     }
+
     /**
      * Initialize pickup address list adapter
+     *
      * @param recyclerView
      */
-    private void initImageRecyclerView(RecyclerView recyclerView)
-    {
+    private void initImageRecyclerView(RecyclerView recyclerView) {
         adapter = new ImagesRecyclerAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void getBackgroundImages()
-    {
+    private void getBackgroundImages() {
         binding.pbLoading.setVisibility(View.VISIBLE);
 
         ImageApi imageApi = Constants.restAdapter.create(ImageApi.class);
@@ -135,8 +134,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
                 binding.pbLoading.setVisibility(View.GONE);
 
-                if(strings != null && strings.size() >0)
-                {
+                if (strings != null && strings.size() > 0) {
                     adapter.setData(strings);
                 }
             }
@@ -149,108 +147,15 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
         });
     }
 
-
-    /**
-     * Product Pickup Address Dynamic Input Filed
-     */
-    class ImagesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-    {
-        List<String> images = new ArrayList<>();
-
-        @NonNull
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i)
-        {
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_background_images, viewGroup, false);
-            return new ImagesRecyclerAdapter.ImageViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i)
-        {
-            if (holder instanceof ImagesRecyclerAdapter.ImageViewHolder)
-            {
-                final ImageViewHolder viewHolder = (ImageViewHolder) holder;
-
-                String url = images.get(i);
-
-                try
-                {
-                    if(!TextUtils.isEmpty(url))
-                    {
-                        Picasso.get().load(url).into(viewHolder.imageView);
-                    }
-                }
-
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        @Override
-        public int getItemCount()
-        {
-            return images == null ? 0 : images.size();
-        }
-
-        class ImageViewHolder extends RecyclerView.ViewHolder
-        {
-            ImageView imageView;
-
-            private ImageViewHolder(View itemView)
-            {
-                super(itemView);
-
-                imageView = itemView.findViewById(R.id.image);
-
-                itemView.setOnClickListener(v -> {
-
-                    String[] array = new String[images.size()];
-                    images.toArray(array);
-
-                    Intent intent = new Intent(BackgroundImageGalleryActivity.this, ImageViewerActivity.class);
-                    intent.putExtra("POSITION", getAdapterPosition());
-                    intent.putExtra("IMAGES", array);
-                    startActivityForResult(intent, IMAGE_DELETE_REQUEST_CODE);
-                });
-            }
-        }
-
-        public void setData(List<String> images)
-        {
-            this.images.clear();
-            this.images.addAll(images);
-            notifyDataSetChanged();
-        }
-
-        private void addImage(String url)
-        {
-            this.images.add(0, url);
-            notifyDataSetChanged();
-        }
-
-        private void removeImage(int position)
-        {
-            this.images.remove(position);
-            notifyDataSetChanged();
-        }
-    }
-
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.menu_add, menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
 
                 finish();
@@ -265,10 +170,8 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    private void openImageChooser()
-    {
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
-        {
+    private void openImageChooser() {
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
             Methods.showFeatureNotAvailDialog(BackgroundImageGalleryActivity.this);
             return;
         }
@@ -304,24 +207,22 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
     }
 
     private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
-        if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
-            MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
+        if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
+            MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA, null);
             cameraIntent(CAMERA_IMAGE_REQUEST_CODE);
-        }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
-            MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
+        } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
+            MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY, null);
             openImagePicker(GALLERY_IMAGE_REQUEST_CODE, 1);
         }
     }
 
-
     /**
      * Check camera permission
+     *
      * @param requestCode
      */
-    private void cameraIntent(int requestCode)
-    {
-        try
-        {
+    private void cameraIntent(int requestCode) {
+        try {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                     PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
@@ -330,69 +231,49 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                         ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
 
                     Methods.showApplicationPermissions(getString(R.string.camera_and_storage_permission), getString(R.string.we_need_this_permission), this);
-                }
-
-                else
-                {
+                } else {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
                 }
-            }
-
-            else
-            {
+            } else {
                 startCamera(requestCode);
             }
-        }
-
-        catch (ActivityNotFoundException e)
-        {
+        } catch (ActivityNotFoundException e) {
             String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(this, errorMessage);
         }
     }
 
-
     /**
      * Start camera intent
+     *
      * @param requestCode
      */
-    private void startCamera(int requestCode)
-    {
+    private void startCamera(int requestCode) {
         File mediaStorageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "boost");
 
-        if(!mediaStorageDir.exists())
-        {
+        if (!mediaStorageDir.exists()) {
             mediaStorageDir.mkdir();
         }
 
         /**
          * Check if we're running on Android 5.0 or higher
          */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             primaryUri = FileProvider.getUriForFile(this,
                     Constants.PACKAGE_NAME + ".provider",
                     new File(mediaStorageDir + "/" + System.currentTimeMillis() + ".jpg"));
-        }
-
-        else
-        {
+        } else {
             primaryUri = Uri.fromFile(new File(mediaStorageDir + "/" + System.currentTimeMillis() + ".jpg"));
         }
 
-        try
-        {
+        try {
             Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, primaryUri);
             startActivityForResult(intent, requestCode);
-        }
-
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Toast.makeText(getApplicationContext(), R.string.failed_to_open_camera, Toast.LENGTH_LONG).show();
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -420,15 +301,12 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
         }
     }
 
-
-    public void uploadPrimaryPicture(String path)
-    {
-        if(!Methods.isOnline(BackgroundImageGalleryActivity.this))
-        {
+    public void uploadPrimaryPicture(String path) {
+        if (!Methods.isOnline(BackgroundImageGalleryActivity.this)) {
             return;
         }
 
-        new AlertArchive(Constants.alertInterface,"LOGO",session.getFPID());
+        new AlertArchive(Constants.alertInterface, "LOGO", session.getFPID());
 
         String s_uuid = UUID.randomUUID().toString();
         s_uuid = s_uuid.replace("-", "");
@@ -441,7 +319,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                 "&reqType=sequential&reqtId=" +
                 s_uuid + "&";
 
-        String url = uri + "totalChunks=1&currentChunkNumber=1" ;
+        String url = uri + "totalChunks=1&currentChunkNumber=1";
 
         UploadFaviconImage upload = new UploadFaviconImage(path, url);
         upload.setUploadListener(this);
@@ -458,35 +336,29 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
     @Override
     public void onPostUpload(boolean isSuccess, String response) {
 
-        if(isSuccess)
-        {
+        if (isSuccess) {
             Methods.showSnackBarPositive(this, getString(R.string.image_added_successfully));
 
             String url = response.replace("\\", "").replace("\"", "");
             adapter.addImage(url);
 
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, response.replace("\\", "").replace("\"", ""));
-        }
-
-        else
-        {
+        } else {
             Methods.showSnackBarNegative(this, getString(R.string.failed_to_upload_image));
         }
 
-        if(dialog != null && dialog.isShowing())
-        {
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
     }
 
-
     /**
      * Open image picker activity
+     *
      * @param requestCode
      * @param max
      */
-    private void openImagePicker(int requestCode, int max)
-    {
+    private void openImagePicker(int requestCode, int max) {
         boolean folderMode = true;
         boolean multipleMode = true;
 
@@ -501,5 +373,78 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                 .setRequestCode(requestCode)
                 .setKeepScreenOn(true)
                 .start();
+    }
+
+    /**
+     * Product Pickup Address Dynamic Input Filed
+     */
+    class ImagesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        List<String> images = new ArrayList<>();
+
+        @NonNull
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_background_images, viewGroup, false);
+            return new ImagesRecyclerAdapter.ImageViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
+            if (holder instanceof ImagesRecyclerAdapter.ImageViewHolder) {
+                final ImageViewHolder viewHolder = (ImageViewHolder) holder;
+
+                String url = images.get(i);
+
+                try {
+                    if (!TextUtils.isEmpty(url)) {
+                        Picasso.get().load(url).into(viewHolder.imageView);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return images == null ? 0 : images.size();
+        }
+
+        public void setData(List<String> images) {
+            this.images.clear();
+            this.images.addAll(images);
+            notifyDataSetChanged();
+        }
+
+        private void addImage(String url) {
+            this.images.add(0, url);
+            notifyDataSetChanged();
+        }
+
+        private void removeImage(int position) {
+            this.images.remove(position);
+            notifyDataSetChanged();
+        }
+
+        class ImageViewHolder extends RecyclerView.ViewHolder {
+            ImageView imageView;
+
+            private ImageViewHolder(View itemView) {
+                super(itemView);
+
+                imageView = itemView.findViewById(R.id.image);
+
+                itemView.setOnClickListener(v -> {
+
+                    String[] array = new String[images.size()];
+                    images.toArray(array);
+
+                    Intent intent = new Intent(BackgroundImageGalleryActivity.this, ImageViewerActivity.class);
+                    intent.putExtra("POSITION", getAdapterPosition());
+                    intent.putExtra("IMAGES", array);
+                    startActivityForResult(intent, IMAGE_DELETE_REQUEST_CODE);
+                });
+            }
+        }
     }
 }

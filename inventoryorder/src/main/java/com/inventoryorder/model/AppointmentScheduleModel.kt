@@ -4,9 +4,10 @@ import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 
-class AppointmentScheduleModel(var appointMeantSchedule: String? = null,
-                               var isSelected: Boolean = false,
-                               var isLastItem: Boolean = false
+class AppointmentScheduleModel(
+  var appointMeantSchedule: String? = null,
+  var isSelected: Boolean = false,
+  var isLastItem: Boolean = false
 ) : AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
@@ -15,7 +16,7 @@ class AppointmentScheduleModel(var appointMeantSchedule: String? = null,
 
   fun setSelectedItemBackground(): Int {
     return takeIf { isSelected }?.let { R.color.light_grey }
-        ?: R.drawable.item_appointment_schedule_background_2
+      ?: R.drawable.item_appointment_schedule_background_2
   }
 
   fun setSelectedItemColor(): Int {

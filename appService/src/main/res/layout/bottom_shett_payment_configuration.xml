@@ -115,7 +115,7 @@
               android:text="@string/add_bank_detail"
               android:textColor="@color/dodger_blue_two"
               app:fontFamily="@font/bold"
-              app:textAllCaps="true"
+              app:textAllCaps="false"
               app:textType="BODY_1" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
@@ -239,12 +239,12 @@
           android:layout_width="@dimen/size_110"
           android:layout_height="@dimen/size_46"
           android:layout_marginEnd="@dimen/size_20"
+          android:background="@null"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
-          android:background="@null"
           android:stateListAnimator="@null"
           android:text="@string/cancel"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/pinkish_grey"
           app:textType="HEADING_6" />
 
@@ -257,7 +257,7 @@
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/done"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           app:textType="HEADING_6" />
 

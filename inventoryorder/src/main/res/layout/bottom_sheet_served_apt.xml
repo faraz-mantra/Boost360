@@ -91,10 +91,10 @@
         android:layout_marginEnd="@dimen/size_10"
         android:padding="@dimen/size_4"
         android:text="@string/cancel"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/pinkish_grey"
         app:fontFamily="@font/semi_bold"
-        app:textType="BODY_1"/>
+        app:textType="BODY_1" />
 
       <com.framework.views.customViews.CustomButton
         android:id="@+id/buttonDone"
@@ -107,7 +107,7 @@
         android:paddingEnd="@dimen/size_28"
         android:stateListAnimator="@null"
         android:text="@string/done"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         app:fontFamily="@font/semi_bold"
         app:textType="BODY_1"

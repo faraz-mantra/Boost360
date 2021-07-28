@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/flTopView"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/flTopView"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/white"
+  android:gravity="center"
+  android:orientation="vertical"
+  android:padding="@dimen/margin_10">
+
+  <TextView
+    fontPath="Roboto-Medium.ttf"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
+    android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="vertical"
-    android:padding="@dimen/margin_10">
+    android:text="@string/enjoying_feature"
+    android:textColor="@color/primary"
+    android:textSize="@dimen/large_text_size"
+    tools:ignore="MissingPrefix" />
 
-    <TextView
-        fontPath="Roboto-Medium.ttf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/enjoying_feature"
-        android:textColor="@color/primary"
-        android:textSize="@dimen/large_text_size"
-        tools:ignore="MissingPrefix" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_20"
-        android:gravity="center"
-        android:text="@string/tap_a_star_to_rate_it"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/medium_text_size" />
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_20"
+    android:gravity="center"
+    android:text="@string/tap_a_star_to_rate_it"
+    android:textColor="@color/gray"
+    android:textSize="@dimen/medium_text_size" />
 
 
-    <RatingBar
-        android:id="@+id/ratingbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/margin_20"
-        android:isIndicator="true"
-        android:numStars="5"
-        android:secondaryProgressTint="@color/light_gray"
-        android:progressBackgroundTint="#ddd"
-        android:rating="1" />
+  <RatingBar
+    android:id="@+id/ratingbar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="@dimen/margin_20"
+    android:isIndicator="true"
+    android:numStars="5"
+    android:progressBackgroundTint="#ddd"
+    android:rating="1"
+    android:secondaryProgressTint="@color/light_gray" />
 
 
 </LinearLayout>

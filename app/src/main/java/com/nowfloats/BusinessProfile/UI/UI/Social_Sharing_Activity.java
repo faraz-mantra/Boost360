@@ -42,6 +42,7 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.BusinessProfile.UI.Model.FacebookFeedPullModel;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
@@ -81,56 +82,49 @@ import static com.framework.webengageconstant.EventNameKt.FB_PAGE_SHARING_FAILED
 public class Social_Sharing_Activity extends AppCompatActivity implements NfxRequestClient.NfxCallBackListener, TwitterConnection.TwitterResult {
     private static final int PAGE_NO_FOUND = 404;
     private static final int FB_PAGE_CREATION = 101;
-    private Toolbar toolbar;
-    int size = 0;
-    boolean[] checkedPages;
-    UserSessionManager session;
+    private final static String FB_PAGE_DEFAULT_LOGO = "https://s3.ap-south-1.amazonaws.com/nfx-content-cdn/logo.png";
+    private final static String FB_PAGE_COVER_PHOTO = "https://cdn.nowfloats.com/fpbkgd-kitsune/abstract/24.jpg";
     private final int LIGHT_HOUSE_EXPIRE = 0;
     private final int WILD_FIRE_EXPIRE = 1;
     private final int DEMO_EXPIRE = 3;
-
-
-    TextView connectTextView, topFeatureTextView;
-    //final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
-    private SharedPreferences pref = null;
-    SharedPreferences.Editor prefsEditor;
-    private ImageView facebookHome;
-    private ImageView facebookPage;
-    private ImageView twitter;
-    private ImageView ivFbPageAutoPull;
-    private TextView facebookHomeStatus, facebookPageStatus, twitterStatus, fbPullStatus;
-    private CheckBox facebookHomeCheckBox, facebookPageCheckBox, twitterCheckBox;
-    private CheckBox facebookautopost;
-    ArrayList<String> items;
-    private int numberOfUpdates = 0;
-    private boolean numberOfUpdatesSelected = false;
-    private Activity activity;
-
-    private SharedPreferences mSharedPreferences = null;
-    private ProgressDialog progressDialog = null;
-    private int mNewPosition = -1;
-
-
-    //Rahul Twitter
-
-
     private final int FBTYPE = 0;
     private final int FBPAGETYPE = 1;
     private final int TWITTERTYPE = 2;
     private final int FB_DECTIVATION = 3;
     private final int FB_PAGE_DEACTIVATION = 4;
     private final int TWITTER_DEACTIVATION = 11;
-    private final static String FB_PAGE_DEFAULT_LOGO = "https://s3.ap-south-1.amazonaws.com/nfx-content-cdn/logo.png";
-    private final static String FB_PAGE_COVER_PHOTO = "https://cdn.nowfloats.com/fpbkgd-kitsune/abstract/24.jpg";
     private final int FROM_AUTOPOST = 1;
     private final int FROM_FB_PAGE = 0;
+    int size = 0;
+    boolean[] checkedPages;
+    UserSessionManager session;
+    TextView connectTextView, topFeatureTextView;
+    SharedPreferences.Editor prefsEditor;
+    ArrayList<String> items;
+    Handler handler = new Handler();
+    private CustomToolbar  toolbar;
+    //final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
+    private SharedPreferences pref = null;
+    private ImageView facebookHome;
+    private ImageView facebookPage;
 
 
+    //Rahul Twitter
+    private ImageView twitter;
+    private ImageView ivFbPageAutoPull;
+    private TextView facebookHomeStatus, facebookPageStatus, twitterStatus, fbPullStatus;
+    private CheckBox facebookHomeCheckBox, facebookPageCheckBox, twitterCheckBox;
+    private CheckBox facebookautopost;
+    private int numberOfUpdates = 0;
+    private boolean numberOfUpdatesSelected = false;
+    private Activity activity;
+    private SharedPreferences mSharedPreferences = null;
+    private ProgressDialog progressDialog = null;
+    private int mNewPosition = -1;
     private CallbackManager callbackManager;
     private TextView arrowTextView;
     private TwitterConnection twitterConnection;
     private String fpPageName;
-    Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +142,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         setContentView(R.layout.activity_social_sharing2);
 
 
-
         session = new UserSessionManager(getApplicationContext(), Social_Sharing_Activity.this);
         // Facebook_Auto_Publish_API.autoPublish(Social_Sharing_Activity.this,session.getFPID());
         Methods.isOnline(Social_Sharing_Activity.this);
@@ -157,7 +150,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         mSharedPreferences = this.getSharedPreferences(TwitterConnection.PREF_NAME, MODE_PRIVATE);
         activity = Social_Sharing_Activity.this;
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (CustomToolbar) findViewById(R.id.toolbar);
 
         Typeface myCustomFont = Typeface.createFromAsset(this.getAssets(), "Roboto-Light.ttf");
         Typeface myCustomFont_Medium = Typeface.createFromAsset(this.getAssets(), "Roboto-Regular.ttf");
@@ -232,10 +225,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         facebookPageCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                     facebookPageCheckBox.setChecked(false);
                     Toast.makeText(Social_Sharing_Activity.this, "Facebook is not working", Toast.LENGTH_SHORT).show();
-                }else if (facebookPageCheckBox.isChecked()) {
+                } else if (facebookPageCheckBox.isChecked()) {
                     //Toast.makeText(Social_Sharing_Activity.this,"Reconnect with facebook",Toast.LENGTH_SHORT).show();
                     facebookPageCheckBox.setChecked(false);
                     handler.postDelayed(new Runnable() {
@@ -261,7 +254,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                             .setmName("");
                     requestClient.connectNfx();
 
-                   showLoader(getString(R.string.wait_while_unsubscribing));
+                    showLoader(getString(R.string.wait_while_unsubscribing));
                 }
             }
         });
@@ -269,10 +262,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         facebookHomeCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                     facebookHomeCheckBox.setChecked(false);
                     Toast.makeText(Social_Sharing_Activity.this, getString(R.string.facebook_is_not_working), Toast.LENGTH_SHORT).show();
-                }else if (facebookHomeCheckBox.isChecked()) {
+                } else if (facebookHomeCheckBox.isChecked()) {
                     facebookHomeCheckBox.setChecked(false);
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -318,10 +311,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
                 String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
                 String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
-                if (BuildConfig.APPLICATION_ID.equals("com.redtim")){
+                if (BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                     facebookautopost.setChecked(false);
                     Toast.makeText(Social_Sharing_Activity.this, getString(R.string.facebook_is_not_working), Toast.LENGTH_SHORT).show();
-                }else  if (paymentState.equals("-1")) {
+                } else if (paymentState.equals("-1")) {
                     try {
 
                         if (Constants.PACKAGE_NAME.equals("com.kitsune.biz")) {
@@ -353,9 +346,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         });
 
 
-
-
-
         twitterCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -383,7 +373,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                             .setmCallType(TWITTER_DEACTIVATION)
                             .setmName("");
                     requestClient1.connectNfx();
-                   showLoader(getString(R.string.wait_while_unsubscribing));
+                    showLoader(getString(R.string.wait_while_unsubscribing));
 
                 }
             }
@@ -868,14 +858,15 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             @Override
             public void onError(FacebookException error) {
                 onFBPageError(from);
-                WebEngageController.trackEvent(FB_PAGE_SHARING_FAILED,EVENT_LABEL_FB_PAGE_SHARING_FAILED,session.getFpTag());
+                WebEngageController.trackEvent(FB_PAGE_SHARING_FAILED, EVENT_LABEL_FB_PAGE_SHARING_FAILED, session.getFpTag());
                 //Log.v("ggg",error.toString()+"fberror");
             }
         });
         loginManager.logInWithReadPermissions(this, readPermissions);
     }
+
     private void showLoader(final String message) {
-        if(isFinishing()) return;
+        if (isFinishing()) return;
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(activity);
             progressDialog.setCanceledOnTouchOutside(false);
@@ -890,6 +881,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             progressDialog.dismiss();
         }
     }
+
     private void getFacebookProfile(final AccessToken accessToken, final int from) {
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id,name,email");
@@ -1093,7 +1085,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                         .setmName(username);
                 requestClient.connectNfx();
 
-               showLoader(getString(R.string.wait_while_subscribing));
+                showLoader(getString(R.string.wait_while_subscribing));
 
                 SharedPreferences.Editor e = mSharedPreferences.edit();
                 e.putString(TwitterConnection.PREF_KEY_OAUTH_TOKEN, twitterSession.getAuthToken().token);
@@ -1273,8 +1265,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                                     builder.dismiss();
                                     if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
                                         createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-                                    }else{
-                                        Methods.materialDialog(activity, "Alert",getString(R.string.your_account_is_expired_please_renew_it));
+                                    } else {
+                                        Methods.materialDialog(activity, "Alert", getString(R.string.your_account_is_expired_please_renew_it));
                                     }
                                 }
                             });

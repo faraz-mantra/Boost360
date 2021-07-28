@@ -2,112 +2,112 @@
   "data": [
     {
       "id": "boolean_add_business_name",
-      "title": "Add Business Name",
+      "title": "Add business name",
       "desc": "  "
     },
     {
       "id": "boolean_add_business_description",
-      "title": "Add Business Description",
+      "title": "Add business description",
       "desc": "Tell customers about your business."
     },
     {
       "id": "boolean_add_clinic_logo",
-      "title": "Add Business Logo",
+      "title": "Add business logo",
       "desc": "  "
     },
     {
       "id": "boolean_add_featured_image_video",
-      "title": "Add Featured Image",
+      "title": "Add featured image",
       "desc": "An image that describes your business visually."
     },
-//    {
-//      "id": "boolean_select_what_you_sell",
-//      "title": "Select What You Sell",
-//      "desc": ""
-//    },
+    //    {
+    //      "id": "boolean_select_what_you_sell",
+    //      "title": "Select what you sell",
+    //      "desc": ""
+    //    },
     {
       "id": "boolean_add_business_hours",
-      "title": "Add Business Hours",
+      "title": "Add business hours",
       "desc": "Mention the hours during which you are available to customers."
     },
     {
       "id": "boolean_add_contact_details",
-      "title": "Add Business Contact Details",
+      "title": "Add business contact details",
       "desc": "Make it easy for customers to get in touch with you."
     },
     {
       "id": "boolean_add_custom_domain_name_and_ssl",
-      "title": "Custom Domain & SSL Security",
+      "title": "Custom domain & SSL security",
       "desc": "Add a branded name to website & enable security."
     },
     {
       "id": "number_updates_posted",
-      "title": "Post 3 Updates",
+      "title": "Post 3 updates",
       "desc": "Add updates like new products, tips, offers, events etc."
     },
     {
       "id": "boolean_social_channel_connected",
-      "title": "Connect Social Media Channels",
+      "title": "Connect social media channels",
       "desc": "  "
     },
     {
       "id": "number_services_added",
-      "title": "Add 2 Services to Catalogue",
+      "title": "Add 2 services to catalogue",
       "desc": "This will make it easier for customers to schedule an appointment."
     },
     {
       "id": "number_products_added",
-      "title": "Add 2 Products to Catalogue",
+      "title": "Add 2 products to catalogue",
       "desc": "This will make it easier for customers to browse and order online."
     },
     {
       "id": "boolean_add_bank_account",
-      "title": "Add Bank Account",
+      "title": "Add bank account",
       "desc": "All your online payments will be sent to this account."
     },
     {
       "id": "boolean_image_uploaded_to_gallery",
-      "title": "Upload Images to Gallery",
+      "title": "Upload images to gallery",
       "desc": "Add images to improve customer engagement on website."
     },
     {
       "id": "boolean_create_custom_page",
-      "title": "Create a Custom Page",
+      "title": "Create a custom page",
       "desc": "Add unique content to your website with the Boost WYSWIG editor."
     },
     {
       "id": "boolean_share_business_card",
-      "title": "Share Business Card with Customers",
+      "title": "Share business card with customers",
       "desc": "Send your digital business card via Whatsapp or other social media."
     },
-//    {
-//      "id": "boolean_create_doctor_e_profile",
-//      "title": "Doctor E-Profile",
-//      "desc": ""
-//    },
+    //    {
+    //      "id": "boolean_create_doctor_e_profile",
+    //      "title": "Doctor E-profile",
+    //      "desc": ""
+    //    },
     {
       "id": "boolean_create_sample_in_clinic_appointment",
-      "title": "Create a Sample In-Clinic Appointment",
+      "title": "Create a sample In-clinic appointment",
       "desc": "Explore how to manage your patient appointments."
     },
     {
       "id": "boolean_create_sample_video_consultation",
-      "title": "Create a Sample Video consultation",
+      "title": "Create a sample video consultation",
       "desc": "Now offer tele-medicine interactions to all your patients."
     },
-//    {
-//      "id": "boolean_manage_appointment_settings",
-//      "title": "Manage Appointment Settings",
-//      "desc": ""
-//    },
+    //    {
+    //      "id": "boolean_manage_appointment_settings",
+    //      "title": "Manage appointment settings",
+    //      "desc": ""
+    //    },
     {
       "id": "boolean_respond_to_customer_enquiries",
-      "title": "Respond to Customer Enquiries",
+      "title": "Respond to customer enquiries",
       "desc": "Explore how to manage all your online enquiries."
     },
     {
       "id": "boolean_create_staff",
-      "title": "Add Staff",
+      "title": "Add staff",
       "desc": "Add detailed information about your staff to build credibility and trust amongst clients."
     }
   ]

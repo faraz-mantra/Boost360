@@ -89,7 +89,7 @@
         android:gravity="center"
         android:text="@string/add_bank_account"
         android:textAlignment="gravity"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/greyish_brown"
         app:fontFamily="@font/semi_bold"
         tools:ignore="UnusedAttribute" />

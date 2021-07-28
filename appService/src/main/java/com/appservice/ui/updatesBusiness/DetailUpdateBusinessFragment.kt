@@ -10,6 +10,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.app.ActivityCompat
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -37,7 +38,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.json.JSONArray
 import org.json.JSONObject
 
-class DetailUpdateBusinessFragment : AppBaseFragment<DetailBusinessFragmentBinding, UpdatesViewModel>() {
+class DetailUpdateBusinessFragment :
+  AppBaseFragment<DetailBusinessFragmentBinding, UpdatesViewModel>() {
 
   private val STORAGE_CODE = 120
 
@@ -88,26 +90,47 @@ class DetailUpdateBusinessFragment : AppBaseFragment<DetailBusinessFragmentBindi
     } else if (data.imageUri?.contains("/storage/emulated") == true || data.imageUri?.contains("/mnt/sdcard") == true) {
       activity?.let { FileUtils(it).getBitmap(data.imageUri, 720) }
     } else if (data.imageUri.isNullOrEmpty().not()) {
-      activity?.glideLoad(binding?.mainImageView!!, data.imageUri ?: "", R.drawable.placeholder_image_n)
+      activity?.glideLoad(
+        binding?.mainImageView!!,
+        data.imageUri ?: "",
+        R.drawable.placeholder_image_n
+      )
     } else binding?.mainImageView?.gone()
 
     binding?.headingTextView?.text = data.message
     binding?.dateTextView?.text = data.getDateValue()
-    binding?.shareData?.setNoDoubleClickListener({ shareUpdate(RecyclerViewActionType.UPDATE_OTHER_SHARE.ordinal, updateFloat) })
-    binding?.shareWhatsapp?.setNoDoubleClickListener({ shareUpdate(RecyclerViewActionType.UPDATE_WHATS_APP_SHARE.ordinal, updateFloat) })
-    binding?.shareFacebook?.setNoDoubleClickListener({ shareUpdate(RecyclerViewActionType.UPDATE_FP_APP_SHARE.ordinal, updateFloat) })
+    binding?.shareData?.setNoDoubleClickListener({
+      shareUpdate(
+        RecyclerViewActionType.UPDATE_OTHER_SHARE.ordinal,
+        updateFloat
+      )
+    })
+    binding?.shareWhatsapp?.setNoDoubleClickListener({
+      shareUpdate(
+        RecyclerViewActionType.UPDATE_WHATS_APP_SHARE.ordinal,
+        updateFloat
+      )
+    })
+    binding?.shareFacebook?.setNoDoubleClickListener({
+      shareUpdate(
+        RecyclerViewActionType.UPDATE_FP_APP_SHARE.ordinal,
+        updateFloat
+      )
+    })
   }
 
   private fun getBizMessage(data: UpdateFloat) {
     viewModel?.getBizWebMessage(data.id, clientId)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         try {
-          val json: JSONObject? = JSONObject(it.parseStringResponse() ?: "").getJSONObject("targetFloat")
+          val json: JSONObject? =
+            JSONObject(it.parseStringResponse() ?: "").getJSONObject("targetFloat")
           val keyword: JSONArray? = json?.getJSONArray("_keywords")
           val jsonObj = keyword.toString()
           val indexOfOpenBracket: Int = jsonObj.indexOf("[")
           val indexOfLastBracket: Int = jsonObj.lastIndexOf("]")
-          val tags: String = jsonObj.substring(indexOfOpenBracket + 1, indexOfLastBracket).replace(",".toRegex(), "\\|").replace("\"", " ")
+          val tags: String = jsonObj.substring(indexOfOpenBracket + 1, indexOfLastBracket)
+            .replace(",".toRegex(), "\\|").replace("\"", " ")
           binding?.messagetag?.text = tags.substring(1)
         } catch (e: Exception) {
           e.printStackTrace()
@@ -117,36 +140,77 @@ class DetailUpdateBusinessFragment : AppBaseFragment<DetailBusinessFragmentBindi
   }
 
   private fun shareUpdate(actionType: Int, float: UpdateFloat?) {
-    if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-      showDialog(baseActivity, "Storage Permission", "To share service image, we need storage permission.") { _: DialogInterface?, _: Int ->
+    if (ActivityCompat.checkSelfPermission(
+        baseActivity,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+      ) == PackageManager.PERMISSION_DENIED
+    ) {
+      showDialog(
+        baseActivity,
+        "Storage Permission",
+        "To share service image, we need storage permission."
+      ) { _: DialogInterface?, _: Int ->
         requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_CODE)
       }
       return
     }
-    val subDomain = if (isService(sessionLocal.fP_AppExperienceCode)) "all-services" else "all-products"
+    val subDomain =
+      if (isService(sessionLocal.fP_AppExperienceCode)) "all-services" else "all-products"
     when (actionType) {
       RecyclerViewActionType.UPDATE_WHATS_APP_SHARE.ordinal -> {
-        ContentSharing.shareUpdates(baseActivity, float?.message ?: "", float?.url, sessionLocal.getDomainName() + "/" + subDomain, sessionLocal.userPrimaryMobile ?: "", true, false, float?.imageUri)
+        ContentSharing.shareUpdates(
+          baseActivity,
+          float?.message ?: "",
+          float?.url,
+          sessionLocal.getDomainName() + "/" + subDomain,
+          sessionLocal.userPrimaryMobile ?: "",
+          true,
+          false,
+          float?.imageUri
+        )
       }
       RecyclerViewActionType.UPDATE_OTHER_SHARE.ordinal -> {
-        ContentSharing.shareUpdates(baseActivity, float?.message ?: "", float?.url, sessionLocal.getDomainName() + "/" + subDomain, sessionLocal.userPrimaryMobile ?: "", false, false, float?.imageUri)
+        ContentSharing.shareUpdates(
+          baseActivity,
+          float?.message ?: "",
+          float?.url,
+          sessionLocal.getDomainName() + "/" + subDomain,
+          sessionLocal.userPrimaryMobile ?: "",
+          false,
+          false,
+          float?.imageUri
+        )
       }
       RecyclerViewActionType.UPDATE_FP_APP_SHARE.ordinal -> {
-        ContentSharing.shareUpdates(baseActivity, float?.message ?: "", float?.url, sessionLocal.getDomainName() + "/" + subDomain, sessionLocal.userPrimaryMobile ?: "", false, true, float?.imageUri)
+        ContentSharing.shareUpdates(
+          baseActivity,
+          float?.message ?: "",
+          float?.url,
+          sessionLocal.getDomainName() + "/" + subDomain,
+          sessionLocal.userPrimaryMobile ?: "",
+          false,
+          true,
+          float?.imageUri
+        )
       }
     }
   }
 
 
   private fun apiDeleteUpdateBusiness() {
-    AlertDialog.Builder(baseActivity)
+    AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
       .setCancelable(false)
       .setTitle(R.string.are_you_sure_want_to_delete)
       .setPositiveButton(R.string.delete_) { dialog: DialogInterface, _: Int ->
         dialog.dismiss()
         showProgress()
         WebEngageController.trackEvent(EVENT_NAME_UPDATE_DELETE, DELETE, sessionLocal.fpTag)
-        viewModel?.deleteBizMessageUpdate(DeleteBizMessageRequest(clientId = clientId, dealId = updateFloat?.id))?.observeOnce(viewLifecycleOwner, {
+        viewModel?.deleteBizMessageUpdate(
+          DeleteBizMessageRequest(
+            clientId = clientId,
+            dealId = updateFloat?.id
+          )
+        )?.observeOnce(viewLifecycleOwner, {
           if (it.isSuccess()) {
             showShortToast(getString(R.string.successfully_deleted))
             onBackResult()

@@ -30,18 +30,18 @@ public class Email_Service {
             params.put("address", email);
             params.put("apikey", apiKey);
             Log.i("email verification data", "API call Started");
-           // final Email_Validation_Model email_validation = "" ;
+            // final Email_Validation_Model email_validation = "" ;
             Retro_Signup_Interface emailValidation = Constants.validEmailAdapter.create(Retro_Signup_Interface.class);
             emailValidation.get_IsValidEmail(params, new Callback<Email_Validation_Model>() {
                 @Override
                 public void success(Email_Validation_Model email_validation_models, Response response) {
-                      bus.post(new ValidationEvent(email_validation_models));
+                    bus.post(new ValidationEvent(email_validation_models));
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     MaterialProgressBar.dismissProgressBar();
-                  //  bus.post(new ValidationEvent(email_validation));
+                    //  bus.post(new ValidationEvent(email_validation));
                     Methods.showSnackBarNegative(activity, activity.getString(R.string.email_validation__failed));
                 }
             });

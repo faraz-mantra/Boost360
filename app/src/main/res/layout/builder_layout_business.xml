@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="horizontal"
-    android:padding="20dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
 
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  android:orientation="horizontal"
+  android:padding="20dp">
 
-    <CheckBox
-        android:shadowColor="#000000"
+  <CheckBox
+    android:id="@+id/GMBBusinessCheckBox"
 
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
 
-        android:checked="true"
+    android:checked="true"
 
 
+    android:shadowColor="#000000" />
 
-        android:id="@+id/GMBBusinessCheckBox"/>
-
-    <TextView
-        android:layout_marginStart="20dp"
-        android:textColor="#000"
-        android:text="This is my business name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Business_Name"/>
+  <TextView
+    android:id="@+id/Business_Name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="20dp"
+    android:text="This is my business name"
+    android:textColor="#000" />
 
 </LinearLayout>

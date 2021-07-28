@@ -3,7 +3,9 @@ package com.romeo.mylibrary.ui;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -58,7 +60,7 @@ public class InstaMojoMainActivity extends AppCompatActivity {
     private ProgressDialog pd;
 
     private OrderDataModel mOrderData;
-    private String mCurrentEnv = null, mAccessToken = null, mFinalTransactionID =null, mWebhook = null;
+    private String mCurrentEnv = null, mAccessToken = null, mFinalTransactionID = null, mWebhook = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,26 +83,26 @@ public class InstaMojoMainActivity extends AppCompatActivity {
         tvPhoneNumber = (TextView) findViewById(R.id.tv_payer_ph_no);
 
         ivPackageType = (ImageView) findViewById(R.id.iv_package);
-        if(mOrderData.getExpires().toLowerCase().contains("lite")){
+        if (mOrderData.getExpires().toLowerCase().contains("lite")) {
             ivPackageType.setImageDrawable(getResources().getDrawable(R.drawable.boost_lite_logo));
-        }else if(mOrderData.getExpires().toLowerCase().contains("pro")) {
+        } else if (mOrderData.getExpires().toLowerCase().contains("pro")) {
             ivPackageType.setImageDrawable(getResources().getDrawable(R.drawable.boost_pro_logo));
-        }else if(mOrderData.getExpires().toLowerCase().contains("wildfire")){
+        } else if (mOrderData.getExpires().toLowerCase().contains("wildfire")) {
             ivPackageType.setImageDrawable(getResources().getDrawable(R.drawable.wildfire));
         }
 
         btnProceedToPay = (Button) findViewById(R.id.btn_proceed_to_pay);
 
         tvUserName.setText(" " + mOrderData.getUsername());
-        tvBusinessName.setText(" " +mOrderData.getBusinessName());
-        tvEmail.setText(" " +mOrderData.getEmail());
-        tvPrice.setText( " " + mOrderData.getCurrency() + " "+NumberFormat.getIntegerInstance(Locale.US).format(Long.valueOf(mOrderData.getPrice())));
-        tvExpires.setText(" " +mOrderData.getExpires());
+        tvBusinessName.setText(" " + mOrderData.getBusinessName());
+        tvEmail.setText(" " + mOrderData.getEmail());
+        tvPrice.setText(" " + mOrderData.getCurrency() + " " + NumberFormat.getIntegerInstance(Locale.US).format(Long.valueOf(mOrderData.getPrice())));
+        tvExpires.setText(" " + mOrderData.getExpires());
         tvExpires.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         tvExpires.setSingleLine(true);
         tvExpires.setMarqueeRepeatLimit(5);
         tvExpires.setSelected(true);
-        tvPhoneNumber.setText(" " +mOrderData.getPhNo());
+        tvPhoneNumber.setText(" " + mOrderData.getPhNo());
 
         pd = new ProgressDialog(this);
         pd.setMessage(getString(R.string.please_wait_));
@@ -113,9 +115,9 @@ public class InstaMojoMainActivity extends AppCompatActivity {
                 fetchTokenAndTransactionId();
             }
         });
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             mCurrentEnv = "Test";
-        }else {
+        } else {
             mCurrentEnv = "Production";
         }
         Instamojo.initialize(getApplicationContext());
@@ -205,6 +207,7 @@ public class InstaMojoMainActivity extends AppCompatActivity {
         });*/
         createOrder(mAccessToken, mFinalTransactionID);
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -221,40 +224,40 @@ public class InstaMojoMainActivity extends AppCompatActivity {
                 mOrderData.getReason().trim());
         order.setWebhook(mWebhook);
 
-            if (!order.isValidName()) {
-                showToast("Buyer name is invalid");
-                return;
-            }
+        if (!order.isValidName()) {
+            showToast("Buyer name is invalid");
+            return;
+        }
 
-            if (!order.isValidEmail()) {
-                showToast("Buyer email is invalid");
-                return;
-            }
+        if (!order.isValidEmail()) {
+            showToast("Buyer email is invalid");
+            return;
+        }
 
-            if (!order.isValidPhone()) {
-                showToast("Buyer phone is invalid");
-                return;
-            }
+        if (!order.isValidPhone()) {
+            showToast("Buyer phone is invalid");
+            return;
+        }
 
-            if (!order.isValidAmount()) {
-                showToast("Amount is invalid or has more than two decimal places");
-                return;
-            }
+        if (!order.isValidAmount()) {
+            showToast("Amount is invalid or has more than two decimal places");
+            return;
+        }
 
-            if (!order.isValidDescription()) {
-                showToast("Description is invalid");
-                return;
-            }
+        if (!order.isValidDescription()) {
+            showToast("Description is invalid");
+            return;
+        }
 
-            if (!order.isValidTransactionID()) {
-                showToast("Transaction is Invalid");
-                return;
-            }
+        if (!order.isValidTransactionID()) {
+            showToast("Transaction is Invalid");
+            return;
+        }
 
-            if (!order.isValidRedirectURL()) {
-                showToast("Redirection URL is invalid");
-                return;
-            }
+        if (!order.isValidRedirectURL()) {
+            showToast("Redirection URL is invalid");
+            return;
+        }
 
         pd.show();
         Request request = new Request(order, new OrderRequestCallBack() {
@@ -319,7 +322,7 @@ public class InstaMojoMainActivity extends AppCompatActivity {
         });
 
         request.execute();
-    
+
     }
 
     private void startPreCreatedUI(Order order) {
@@ -329,6 +332,7 @@ public class InstaMojoMainActivity extends AppCompatActivity {
         intent.putExtra(com.instamojo.android.helpers.Constants.ORDER, order);
         startActivityForResult(intent, com.instamojo.android.helpers.Constants.REQUEST_CODE);
     }
+
     private void startCustomUI(Order order) {
         //Custom UI Implementation
         /*Intent intent = new Intent(getBaseContext(), CustomPaymentActivity.class);
@@ -348,11 +352,11 @@ public class InstaMojoMainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == com.instamojo.android.helpers.Constants.REQUEST_CODE && data != null) {
-            String orderID = 
+            String orderID =
                     data.getStringExtra(com.instamojo.android.helpers.Constants.ORDER_ID);
-            String transactionID = 
+            String transactionID =
                     data.getStringExtra(com.instamojo.android.helpers.Constants.TRANSACTION_ID);
-            String paymentID = 
+            String paymentID =
                     data.getStringExtra(com.instamojo.android.helpers.Constants.PAYMENT_ID);
 
             // Check transactionID, orderID, and orderID for null 
@@ -361,18 +365,18 @@ public class InstaMojoMainActivity extends AppCompatActivity {
                 checkPaymentStatus(transactionID);
             } else {
                 showToast("Oops!! Payment was cancelled");
-                Intent resultData =new Intent();
+                Intent resultData = new Intent();
                 resultData.putExtra(Constants.RESULT_SUCCESS_KEY, false);
                 resultData.putExtra(Constants.RESULT_STATUS, "Error");
                 resultData.putExtra(Constants.ERROR_MESSAGE, "Payment Error");
-                if(paymentID!=null) {
+                if (paymentID != null) {
                     resultData.putExtra(Constants.PAYMENT_ID, paymentID);
-                }else {
+                } else {
                     resultData.putExtra(Constants.PAYMENT_ID, "0");
                 }
-                if(transactionID!=null) {
+                if (transactionID != null) {
                     resultData.putExtra(Constants.TRANSACTION_ID, transactionID);
-                }else {
+                } else {
                     resultData.putExtra(Constants.TRANSACTION_ID, "0");
                 }
                 resultData.putExtra(Constants.FINAL_AMOUNT, "0");
@@ -451,23 +455,23 @@ public class InstaMojoMainActivity extends AppCompatActivity {
                         }
                         if (finalStatus == null) {
                             showToast(finalErrorMessage);
-                            Intent resultData =new Intent();
+                            Intent resultData = new Intent();
                             resultData.putExtra(Constants.RESULT_SUCCESS_KEY, false);
                             resultData.putExtra(Constants.RESULT_STATUS, "Failure");
                             resultData.putExtra(Constants.ERROR_MESSAGE, finalErrorMessage);
-                            if(finalPaymentID!=null) {
+                            if (finalPaymentID != null) {
                                 resultData.putExtra(Constants.PAYMENT_ID, finalPaymentID);
-                            }else {
+                            } else {
                                 resultData.putExtra(Constants.PAYMENT_ID, "0");
                             }
-                            if(transactionID!=null) {
+                            if (transactionID != null) {
                                 resultData.putExtra(Constants.TRANSACTION_ID, transactionID);
-                            }else {
+                            } else {
                                 resultData.putExtra(Constants.TRANSACTION_ID, "0");
                             }
-                            if(finalAmount!=null){
+                            if (finalAmount != null) {
                                 resultData.putExtra(Constants.FINAL_AMOUNT, finalAmount);
-                            }else {
+                            } else {
                                 resultData.putExtra(Constants.FINAL_AMOUNT, "0");
                             }
                             setResult(RESULT_OK, resultData);
@@ -478,23 +482,23 @@ public class InstaMojoMainActivity extends AppCompatActivity {
 
                         if (!finalStatus.equalsIgnoreCase("successful")) {
                             showToast("Transaction still pending");
-                            Intent resultData =new Intent();
+                            Intent resultData = new Intent();
                             resultData.putExtra(Constants.RESULT_SUCCESS_KEY, false);
                             resultData.putExtra(Constants.RESULT_STATUS, "Pending");
                             resultData.putExtra(Constants.ERROR_MESSAGE, "Payment Pending");
-                            if(finalPaymentID!=null) {
+                            if (finalPaymentID != null) {
                                 resultData.putExtra(Constants.PAYMENT_ID, finalPaymentID);
-                            }else {
+                            } else {
                                 resultData.putExtra(Constants.PAYMENT_ID, "0");
                             }
-                            if(transactionID!=null) {
+                            if (transactionID != null) {
                                 resultData.putExtra(Constants.TRANSACTION_ID, transactionID);
-                            }else {
+                            } else {
                                 resultData.putExtra(Constants.TRANSACTION_ID, "0");
                             }
-                            if(finalAmount!=null){
+                            if (finalAmount != null) {
                                 resultData.putExtra(Constants.FINAL_AMOUNT, finalAmount);
-                            }else {
+                            } else {
                                 resultData.putExtra(Constants.FINAL_AMOUNT, "0");
                             }
                             setResult(RESULT_OK, resultData);
@@ -507,19 +511,19 @@ public class InstaMojoMainActivity extends AppCompatActivity {
                         resultData.putExtra(Constants.RESULT_SUCCESS_KEY, true);
                         resultData.putExtra(Constants.RESULT_STATUS, "Success");
                         resultData.putExtra(Constants.ERROR_MESSAGE, "Payment Successful");
-                        if(finalPaymentID!=null) {
+                        if (finalPaymentID != null) {
                             resultData.putExtra(Constants.PAYMENT_ID, finalPaymentID);
-                        }else {
+                        } else {
                             resultData.putExtra(Constants.PAYMENT_ID, "0");
                         }
-                        if(transactionID!=null) {
+                        if (transactionID != null) {
                             resultData.putExtra(Constants.TRANSACTION_ID, transactionID);
-                        }else {
+                        } else {
                             resultData.putExtra(Constants.TRANSACTION_ID, "0");
                         }
-                        if(finalAmount!=null){
+                        if (finalAmount != null) {
                             resultData.putExtra(Constants.FINAL_AMOUNT, finalAmount);
-                        }else {
+                        } else {
                             resultData.putExtra(Constants.FINAL_AMOUNT, "0");
                         }
                         setResult(RESULT_OK, resultData);

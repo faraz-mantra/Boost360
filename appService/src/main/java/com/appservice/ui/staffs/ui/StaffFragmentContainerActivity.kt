@@ -30,7 +30,8 @@ import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
-class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+class StaffFragmentContainerActivity :
+  AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var fragmentType: FragmentType? = null
   private var staffAddFragment: StaffAddFragment? = null
@@ -47,12 +48,6 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     return R.layout.activity_fragment_container
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return when (fragmentType) {
-      FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT, FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> Gravity.START
-      else -> super.getToolbarTitleGravity()
-    }
-  }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
     return BaseViewModel::class.java
@@ -86,7 +81,8 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
   override fun onCreate(savedInstanceState: Bundle?) {
     when (intent.extras) {
       null -> fragmentType = FragmentType.STAFF_HOME_FRAGMENT
-      else -> intent?.extras?.getInt(FRAGMENT_TYPE)?.let { fragmentType = FragmentType.values()[it] }
+      else -> intent?.extras?.getInt(FRAGMENT_TYPE)
+        ?.let { fragmentType = FragmentType.values()[it] }
     }
     super.onCreate(savedInstanceState)
   }
@@ -95,9 +91,6 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     return binding?.appBarLayout?.toolbar
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.heading_7)
-  }
 
 
   override fun customTheme(): Int? {
@@ -220,7 +213,12 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 }
 
 
-fun Fragment.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+fun Fragment.startStaffFragmentActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false,
+  isResult: Boolean = false
+) {
   val intent = Intent(activity, StaffFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -228,15 +226,29 @@ fun Fragment.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bun
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startStaffFragmentActivity(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false, requestCode: Int = Constants.REQUEST_CODE) {
+fun startStaffFragmentActivity(
+  activity: Activity,
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean,
+  isResult: Boolean = false,
+  requestCode: Int = Constants.REQUEST_CODE
+) {
   val intent = Intent(activity, StaffFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-  if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(intent, requestCode)
+  if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(
+    intent,
+    requestCode
+  )
 }
 
-fun AppCompatActivity.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
+fun AppCompatActivity.startStaffFragmentActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false
+) {
   val intent = Intent(this, StaffFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

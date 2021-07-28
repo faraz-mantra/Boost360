@@ -7,25 +7,25 @@ import java.io.Serializable
 
 data class AppointmentfaqResponse(
 
-        @field:SerializedName("Contents")
-        var contents: ArrayList<ContentsItem>? = null,
+  @field:SerializedName("Contents")
+  var contents: ArrayList<ContentsItem>? = null,
 
-        @field:SerializedName("Fragment Data")
-        var fragmentData: FragmentData? = null,
+  @field:SerializedName("Fragment Data")
+  var fragmentData: FragmentData? = null,
 ) : Serializable
 
 
 data class ContentsItem(
 
-        @field:SerializedName("question")
-        var question: String? = null,
+  @field:SerializedName("question")
+  var question: String? = null,
 
-        @field:SerializedName("answer")
-        var answer: String? = null,
+  @field:SerializedName("answer")
+  var answer: String? = null,
 
-        ) : Serializable, AppBaseRecyclerViewItem {
-    var recyclerViewType = RecyclerViewItemType.ITEM_FAQ.getLayout()
-    override fun getViewType(): Int {
-        return recyclerViewType
-    }
+  ) : Serializable, AppBaseRecyclerViewItem {
+  var recyclerViewType = RecyclerViewItemType.ITEM_FAQ.getLayout()
+  override fun getViewType(): Int {
+    return recyclerViewType
+  }
 }
