@@ -19,6 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dashboard.utils.CodeUtilsKt;
 import com.framework.utils.ContentSharing;
 import com.framework.views.fabButton.FloatingActionButton;
+import com.framework.views.zero.FragmentZeroCase;
+import com.framework.views.zero.OnZeroCaseClicked;
+import com.framework.views.zero.RequestZeroCaseBuilder;
+import com.framework.views.zero.ZeroCases;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
@@ -44,10 +48,10 @@ import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
-public class TestimonialsActivity extends AppCompatActivity implements TestimonialsListener {
+public class TestimonialsActivity extends AppCompatActivity implements TestimonialsListener, OnZeroCaseClicked {
 
     public static List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
-    TextView addTestimonialsButton;
+//    TextView addTestimonialsButton;
     ProgressDialog vmnProgressBar;
     List<TestimonialData> dataList = new ArrayList<>();
     LinearLayout backButton;
@@ -56,7 +60,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     TextView title;
     private String headerToken = "59c89bbb5d64370a04c9aea1";
     private String testimonialType = "testimonials";
-    private LinearLayout mainLayout, secondaryLayout;
+    private LinearLayout mainLayout;
     private com.framework.pref.UserSessionManager session;
     private TestimonialsAdapter testimonialsAdapter;
     private RecyclerView recyclerView;
@@ -97,22 +101,22 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         vmnProgressBar.setMessage(getString(R.string.please_wait));
         vmnProgressBar.setCancelable(false);
 
-        addTestimonialsButton = findViewById(R.id.add_testimonials);
+//        addTestimonialsButton = findViewById(R.id.add_testimonials);
         recyclerView = findViewById(R.id.testimonials_recycler);
         testimonialsAdapter = new TestimonialsAdapter(new ArrayList(), this, session, this);
         initialiseRecycler();
 
         //show or hide if feature is available to user
         mainLayout = (LinearLayout) findViewById(R.id.main_layout);
-        secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
+//        secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
 
         mainLayout.setOnClickListener(v -> updateRecyclerMenuOption(-1, false));
 
-        addTestimonialsButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
-            intent.putExtra("ScreenState", "new");
-            startActivity(intent);
-        });
+//        addTestimonialsButton.setOnClickListener(v -> {
+//            Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
+//            intent.putExtra("ScreenState", "new");
+//            startActivity(intent);
+//        });
     }
 
     public void setHeader() {
@@ -161,11 +165,12 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                         dataList = testimonialModel.getData();
                         updateRecyclerView();
                         mainLayout.setVisibility(View.VISIBLE);
-                        secondaryLayout.setVisibility(View.GONE);
                         rightButton.setVisibility(View.VISIBLE);
                     } else {
                         mainLayout.setVisibility(View.GONE);
-                        secondaryLayout.setVisibility(View.VISIBLE);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_testimonial,
+                                new RequestZeroCaseBuilder(ZeroCases.TESTIMONIAL, TestimonialsActivity.this, getApplicationContext()).getRequest().build(), FragmentZeroCase.class.getName())
+                                .commit();
                         rightButton.setVisibility(View.INVISIBLE);
                     }
                 }
@@ -327,5 +332,22 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void primaryButtonClicked() {
+        Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
+        intent.putExtra("ScreenState", "new");
+        startActivity(intent);
+    }
+
+    @Override
+    public void secondaryButtonClicked() {
+
+    }
+
+    @Override
+    public void ternaryButtonClicked() {
+
     }
 }
