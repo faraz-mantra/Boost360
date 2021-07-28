@@ -33,6 +33,10 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.framework.models.firestore.FirestoreManager;
+import com.framework.views.zero.FragmentZeroCase;
+import com.framework.views.zero.OnZeroCaseClicked;
+import com.framework.views.zero.RequestZeroCaseBuilder;
+import com.framework.views.zero.ZeroCases;
 import com.nowfloats.Login.GetGalleryImagesAsyncTask_Interface;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
@@ -60,7 +64,7 @@ import static com.framework.webengageconstant.EventNameKt.UPLOAD_GALLERY_IMAGE;
 public class Image_Gallery_Fragment extends Fragment implements
         UploadPictureAsyncTask.UploadPictureInterface,
         DeleteGalleryImages.DeleteGalleryInterface,
-        GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface {
+        GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface, OnZeroCaseClicked {
 
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_GALLERY = 2;
@@ -75,7 +79,7 @@ public class Image_Gallery_Fragment extends Fragment implements
     private String imageUrl = "";
     private UserSessionManager session;
     private Activity activity;
-    private LinearLayout progressLayout, emptyGalleryLayout;
+    private LinearLayout progressLayout;
 
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
@@ -237,15 +241,19 @@ public class Image_Gallery_Fragment extends Fragment implements
         activity = getActivity();
         session = new UserSessionManager(getContext(), activity);
         gvImages = view.findViewById(R.id.grid);
-        emptyGalleryLayout = view.findViewById(R.id.layout_empty);
+//        emptyGalleryLayout = view.findViewById(R.id.layout_empty);
         progressLayout = view.findViewById(R.id.layout_progress);
         progressLayout.setVisibility(View.VISIBLE);
         otherImagesAdapter = new OtherImagesAdapter(activity);
         if (otherImagesAdapter.getCount() == 0) {
-            emptyGalleryLayout.setVisibility(View.VISIBLE);
-        } else {
-            emptyGalleryLayout.setVisibility(View.GONE);
+//            emptyGalleryLayout.setVisibility(View.VISIBLE);
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,
+                    new RequestZeroCaseBuilder(ZeroCases.IMAGE_GALLERY, this, requireActivity()).getRequest().build(), FragmentZeroCase.class.getName())
+                    .commit();
         }
+//        else {
+//            emptyGalleryLayout.setVisibility(View.GONE);
+//        }
         Bundle bundle = activity.getIntent().getExtras();
         if (bundle != null) {
             purchasedWidgetList = bundle.getStringArrayList("userPurchsedWidgets");
@@ -266,9 +274,9 @@ public class Image_Gallery_Fragment extends Fragment implements
         if (gvImages != null) {
             gvImages.invalidateViews();
             if (otherImagesAdapter != null) otherImagesAdapter.notifyDataSetChanged();
-            if (emptyGalleryLayout != null && otherImagesAdapter.getCount() != 0) {
-                emptyGalleryLayout.setVisibility(View.GONE);
-            }
+//            if (emptyGalleryLayout != null && otherImagesAdapter.getCount() != 0) {
+//                emptyGalleryLayout.setVisibility(View.GONE);
+//            }
         }
         ArrayList<String> serverImage = Constants.storeSecondaryImages;
         onImageGalleryAddedOrUpdated(serverImage != null && !serverImage.isEmpty());
@@ -591,5 +599,20 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     public void addImage() {
         selectImage();
+    }
+
+    @Override
+    public void primaryButtonClicked() {
+       selectImage();
+    }
+
+    @Override
+    public void secondaryButtonClicked() {
+
+    }
+
+    @Override
+    public void ternaryButtonClicked() {
+
     }
 }

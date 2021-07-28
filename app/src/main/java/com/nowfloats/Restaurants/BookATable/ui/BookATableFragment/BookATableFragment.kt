@@ -13,6 +13,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.UpgradeActivity
+import com.framework.views.zero.FragmentZeroCase
+import com.framework.views.zero.OnZeroCaseClicked
+import com.framework.views.zero.RequestZeroCaseBuilder
+import com.framework.views.zero.ZeroCases
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.nowfloats.Login.UserSessionManager
@@ -38,7 +42,7 @@ import retrofit.client.Response
 import retrofit.converter.GsonConverter
 
 
-class BookATableFragment : BaseFragment(), BookTableFragmentListener {
+class BookATableFragment : BaseFragment(), BookTableFragmentListener, OnZeroCaseClicked {
 
   lateinit var adapter: BookTableAdapter
   var session: UserSessionManager? = null
@@ -63,10 +67,10 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
 
     book_table_recycler.adapter = adapter
     session = UserSessionManager(requireContext(), requireActivity())
-
-    buy_item.setOnClickListener {
-      initiateBuyFromMarketplace()
-    }
+//
+//    buy_item.setOnClickListener {
+//      initiateBuyFromMarketplace()
+//    }
 
     //setheader
     setHeader()
@@ -74,14 +78,19 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
 
     if (session?.storeWidgets?.contains("BOOKTABLE") == true) {
       book_table_recycler.visibility = View.VISIBLE
-      empty_layout.setVisibility(View.GONE)
       loadData()
     } else {
       book_table_recycler.visibility = View.GONE
-      empty_layout.setVisibility(View.VISIBLE)
+      emptyView()
     }
   }
-
+  private fun emptyView() {
+    requireActivity().supportFragmentManager.beginTransaction().replace(
+      R.id.ao_fragment_container,
+      RequestZeroCaseBuilder(ZeroCases.TABLE_BOOKING, this, requireActivity()).getRequest().build(), FragmentZeroCase::class.java.name
+    )
+      .commit()
+  }
   private fun initializeRecycler() {
     val gridLayoutManager = GridLayoutManager(requireContext(), 1)
     gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -260,5 +269,17 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
       progressDialog.dismiss()
       requireActivity().onBackPressed()
     }, 1000)
+  }
+
+  override fun primaryButtonClicked() {
+    initiateBuyFromMarketplace()
+  }
+
+  override fun secondaryButtonClicked() {
+    TODO("Not yet implemented")
+  }
+
+  override fun ternaryButtonClicked() {
+    TODO("Not yet implemented")
   }
 }

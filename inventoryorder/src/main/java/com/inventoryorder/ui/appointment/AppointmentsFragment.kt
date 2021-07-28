@@ -760,6 +760,10 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     TODO("Not yet implemented")
   }
 
+  override fun onBackPressed() {
+    TODO("Not yet implemented")
+  }
+
 //  private fun apiOrderListCall() {
 //    when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {
 //      OrderSummaryModel.OrderSummaryType.RECEIVED -> {

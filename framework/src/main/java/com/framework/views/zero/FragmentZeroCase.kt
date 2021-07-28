@@ -159,6 +159,7 @@ interface OnZeroCaseClicked {
   fun primaryButtonClicked()
   fun secondaryButtonClicked()
   fun ternaryButtonClicked()
+  fun onBackPressed()
 }
 
 data class ZeroCaseButton(
