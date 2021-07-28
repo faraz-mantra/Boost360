@@ -17,6 +17,12 @@
     android:label="@string/my_website"
     tools:layout="@layout/fragment_website" />
 
+
+  <fragment
+    android:id="@+id/navigation_marketplace"
+    android:name="com.addons.ui.home.MarketPlaceHomeFragment"
+    android:label="ADD-ONS STORE" />
+
   <fragment
     android:id="@+id/navigation_enquiries"
     android:name="com.dashboard.controller.ui.enquiries.EnquiriesFragment"

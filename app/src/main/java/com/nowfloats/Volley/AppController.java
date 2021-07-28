@@ -12,6 +12,8 @@ import android.util.Log;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
+import com.addons.MarketPlaceApplication;
+import com.addons.ui.home.MarketPlaceHomeFragment;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
@@ -110,6 +112,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 //        SmartLookController.initiateSmartLook(this.getString(R.string.samrt_look_api_key));
         BaseOrderApplication.instance = this;
         BaseOrderApplication.initModule(this);
+        MarketPlaceApplication.instance = this;
+        MarketPlaceApplication.initModule(this);
         BaseBoardingApplication.instance = this;
         BaseBoardingApplication.initModule(this);
         AppServiceApplication.instance = this;

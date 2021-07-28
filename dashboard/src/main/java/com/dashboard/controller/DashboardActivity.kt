@@ -271,6 +271,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       0 -> openDashboard(false)
       1 -> checkWelcomeShowScreen(pos)
       2 -> checkWelcomeShowScreen(pos)
+      3 -> checkWelcomeShowScreen(pos)
       else -> {
         mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
         toolbarPropertySet(0)
@@ -312,7 +313,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
             it
           )
         }
-        else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+        else session?.let {
+//          this.initiateAddonMarketplace(it, false, "", "")
+          mNavController.navigate(R.id.navigation_marketplace, Bundle(), getNavOptions())
+          toolbarPropertySet(pos)
+        }
 
       }
     }
@@ -324,7 +329,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     dialog.onClicked = { type ->
       when (type) {
         WelcomeData.WelcomeType.ADD_ON_MARKETPLACE.name -> {
-          session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+          session?.let {
+//            this.initiateAddonMarketplace(it, false, "", "")
+            mNavController.navigate(R.id.navigation_marketplace, Bundle(), getNavOptions())
+            toolbarPropertySet(3)
+          }
         }
         WelcomeData.WelcomeType.WEBSITE_CONTENT.name -> {
           mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
@@ -343,6 +352,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when (pos) {
       1 -> showToolbar(getString(R.string.my_website))
       2 -> showToolbar(getString(R.string.my_enquiry))
+      3-> showToolbar("Add-Ons")
       else -> {
         changeTheme(R.color.colorPrimary, R.color.colorPrimary)
         getToolbar()?.apply { visibility = View.GONE }

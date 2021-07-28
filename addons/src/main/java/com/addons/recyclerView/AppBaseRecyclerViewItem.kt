@@ -1,0 +1,3 @@
+package com.addons.recyclerView
+
+interface AppBaseRecyclerViewItem : BaseRecyclerViewItem
