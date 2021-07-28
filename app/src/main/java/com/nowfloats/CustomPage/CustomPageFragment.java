@@ -23,6 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.framework.models.firestore.FirestoreManager;
+import com.framework.views.zero.FragmentZeroCase;
+import com.framework.views.zero.OnZeroCaseClicked;
+import com.framework.views.zero.RequestZeroCaseBuilder;
+import com.framework.views.zero.ZeroCases;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nowfloats.CustomPage.Model.CustomPageEvent;
 import com.nowfloats.CustomPage.Model.CustomPageLink;
@@ -54,7 +58,7 @@ import static com.framework.webengageconstant.EventNameKt.CREATE_ACUSTOMPAGE;
 /**
  * Created by guru on 25/08/2015.
  */
-public class CustomPageFragment extends Fragment {
+public class CustomPageFragment extends Fragment implements OnZeroCaseClicked {
     public static RecyclerView recyclerView;
     public static CustomPageAdapter custompageAdapter;
     public static ArrayList<CustomPageModel> dataModel = new ArrayList<>();
@@ -69,7 +73,7 @@ public class CustomPageFragment extends Fragment {
     UserSessionManager session;
     Activity activity;
     CustomPageLink customPageLink;
-    private LinearLayout emptylayout, progress_layout;
+    private LinearLayout progress_layout;
     private TextView titleTextView;
     private ImageView delete;
 
@@ -83,9 +87,9 @@ public class CustomPageFragment extends Fragment {
             custompageAdapter.notifyDataSetChanged();
 
             if (dataModel.size() == 0) {
-                emptylayout.setVisibility(View.VISIBLE);
+                emptyView();
             } else {
-                emptylayout.setVisibility(View.GONE);
+//                emptylayout.setVisibility(View.GONE);
             }
         }
         if (recyclerView != null)
@@ -112,6 +116,12 @@ public class CustomPageFragment extends Fragment {
         customPageDeleteCheck = false;
     }
 
+    private void emptyView() {
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,
+                new RequestZeroCaseBuilder(ZeroCases.CUSTOM_PAGES, this, requireActivity()).getRequest().build(), FragmentZeroCase.class.getName())
+                .commit();
+    }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -132,7 +142,7 @@ public class CustomPageFragment extends Fragment {
         final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLinearLayoutManager);
         recyclerView.setItemAnimator(new FadeInUpAnimator());
-        emptylayout = (LinearLayout) view.findViewById(R.id.emptycustompage);
+//        emptylayout = (LinearLayout) view.findViewById(R.id.emptycustompage);
         progress_layout = (LinearLayout) view.findViewById(R.id.progress_custom_page);
         progress_layout.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
@@ -218,8 +228,7 @@ public class CustomPageFragment extends Fragment {
         dataModel = (ArrayList<CustomPageModel>) response.model;
         if (dataModel != null) {
             onCustomPageAddedOrUpdated(!dataModel.isEmpty());
-            if (dataModel.isEmpty()) emptylayout.setVisibility(View.VISIBLE);
-            else emptylayout.setVisibility(View.GONE);
+            if (dataModel.isEmpty()) emptyView();
 
             if (!session.getOnBoardingStatus() && dataModel.size() != session.getCustomPageCount()) {
                 session.setCustomPageCount(dataModel.size());
@@ -235,7 +244,7 @@ public class CustomPageFragment extends Fragment {
             custompageAdapter.notifyDataSetChanged();
             recyclerView.invalidate();
         } else {
-            emptylayout.setVisibility(View.VISIBLE);
+            emptyView();
         }
     }
 
@@ -457,5 +466,20 @@ public class CustomPageFragment extends Fragment {
                 openAddCustomPageActivity();
             }
         }
+    }
+
+    @Override
+    public void primaryButtonClicked() {
+        addProduct();
+    }
+
+    @Override
+    public void secondaryButtonClicked() {
+
+    }
+
+    @Override
+    public void ternaryButtonClicked() {
+
     }
 }
