@@ -137,7 +137,7 @@
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_60sdp"
                         android:background="@drawable/ic_marketplace_arrow"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/welcomeTxtView"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -232,6 +232,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/ic_rectangle_366"
+                                        android:gravity="center_horizontal"
                                         android:text="Recommended for you"
                                         android:textColor="#219653"
                                         android:textSize="11sp"></TextView>
@@ -252,7 +253,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/brochureUploadRL"
                                 android:layout_alignParentEnd="true"
-                                android:layout_margin="10dp">
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="10dp">
 
                                 <TextView
                                     android:id="@+id/bUtxtView"
@@ -264,12 +268,12 @@
                                     android:textSize="@dimen/txt_11sp"></TextView>
 
                                 <TextView
-                                    android:layout_below="@id/bUtxtView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_below="@id/bUtxtView"
                                     android:layout_marginTop="13dp"
-                                    android:text="VIEW DETAILS"
-                                    android:fontFamily="@font/open_sans_bold"></TextView>
+                                    android:fontFamily="@font/open_sans_bold"
+                                    android:text="VIEW DETAILS"></TextView>
                             </RelativeLayout>
                         </RelativeLayout>
 
