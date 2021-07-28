@@ -24,6 +24,10 @@ import android.widget.LinearLayout;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.framework.views.zero.FragmentZeroCase;
+import com.framework.views.zero.OnZeroCaseClicked;
+import com.framework.views.zero.RequestZeroCaseBuilder;
+import com.framework.views.zero.ZeroCases;
 import com.github.clans.fab.FloatingActionMenu;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.OffersApiService;
@@ -44,7 +48,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class OffersFragment extends Fragment implements View.OnClickListener {
+public class OffersFragment extends Fragment implements View.OnClickListener, OnZeroCaseClicked {
     LinearLayout retryLayout, emptyMsgLayout;
     ButteryProgressBar progressBar;
     CardView progressCrd;
@@ -225,8 +229,12 @@ public class OffersFragment extends Fragment implements View.OnClickListener {
                 for (int i = 0; i < offerSize; i++) {
                     offersModelList.add(result.floats.get(i));
                 }
-                if (offersModelList.size() > 0 && emptyMsgLayout.getVisibility() == View.VISIBLE) {
-                    emptyMsgLayout.setVisibility(View.GONE);
+                if (offersModelList.size() ==0||offersModelList==null) {
+                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,
+                            new RequestZeroCaseBuilder(ZeroCases.SERVICES, this, requireActivity()).getRequest().build(), FragmentZeroCase.class.getName())
+                            .commit();
+
+
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -234,6 +242,21 @@ public class OffersFragment extends Fragment implements View.OnClickListener {
         } else {
             Methods.showSnackBarNegative(getActivity(), getString(R.string.offer_getting_error));
         }
+
+    }
+
+    @Override
+    public void primaryButtonClicked() {
+
+    }
+
+    @Override
+    public void secondaryButtonClicked() {
+
+    }
+
+    @Override
+    public void ternaryButtonClicked() {
 
     }
 
