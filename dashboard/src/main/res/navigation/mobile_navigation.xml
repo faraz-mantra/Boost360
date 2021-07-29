@@ -20,7 +20,7 @@
 
   <fragment
     android:id="@+id/navigation_marketplace"
-    android:name="com.addons.ui.home.MarketPlaceHomeFragment"
+    android:name="com.marketplace.ui.home.MarketPlaceHomeFragment"
     android:label="ADD-ONS STORE" />
 
   <fragment

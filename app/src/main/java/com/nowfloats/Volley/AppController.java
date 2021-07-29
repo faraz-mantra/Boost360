@@ -12,8 +12,7 @@ import android.util.Log;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
-import com.addons.MarketPlaceApplication;
-import com.addons.ui.home.MarketPlaceHomeFragment;
+import com.marketplace.MarketPlaceApplication;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
@@ -25,14 +24,12 @@ import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.inventoryorder.BaseOrderApplication;
-import com.invitereferrals.invitereferrals.IRInterfaces.IRTrackReferrerCode;
 import com.invitereferrals.invitereferrals.InviteReferralsApi;
 import com.invitereferrals.invitereferrals.InviteReferralsApplication;
 import com.nowfloats.education.koindi.KoinBaseApplication;
 import com.framework.utils.AppsFlyerUtils;
 import com.nowfloats.util.Constants;
 import com.onboarding.nowfloats.BaseBoardingApplication;
-import com.thinksity.R;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
 import com.webengage.sdk.android.WebEngageConfig;
 

@@ -41,5 +41,5 @@ dependencies {
     api project(path: ':inventoryorder')
     api project(path: ':appService')
     api project(path: ':presignin')
-    api project(path: ':addons')
+    api project(path: ':marketplace')
 }

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#40000000"
+  android:fillViewport="true"
+  android:overScrollMode="never"
+  android:scrollbars="none">
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:orientation="vertical">
+
+      <ImageView
+        android:id="@+id/close_popup"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_close_popup" />
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/feature_curve_top_bg_popup">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/marketplace_layout1"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:padding="@dimen/_15sdp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+          <ImageView
+            android:id="@+id/welcome_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_user_expert_consultant" />
+
+          <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans"
+            android:text="Before you proceed!
+Please confirm below details."
+            android:textColor="#4A4A4A"
+            android:textFontWeight="700"
+            android:textSize="@dimen/txt_15sp"
+            app:layout_constraintBottom_toBottomOf="@id/welcome_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/welcome_image"
+            app:layout_constraintTop_toTopOf="@id/welcome_image" />
+
+          <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/open_sans"
+            android:text="This information will be used to generate and send the invoices to you for all your purchases on add-on marketplace."
+            android:textColor="#747474"
+            android:textFontWeight="400"
+            android:textSize="@dimen/txt_12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/welcome_image" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/curve_top_bg"
+          android:orientation="vertical"
+          android:padding="@dimen/_20sdp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/marketplace_layout1">
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_5sdp"
+            android:text="Business contact number"
+            android:textColor="@color/common_text_color"
+            android:textSize="@dimen/_10sdp" />
+
+
+          <EditText
+            android:id="@+id/business_contact_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_fill_kyc"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fontFamily="@font/open_sans"
+            android:gravity="bottom"
+            android:hint="@string/_10_digit_mobile_number"
+            android:inputType="phone"
+            android:textColor="#4A4A4A"
+            android:textColorHint="#4A4A4A"
+            android:textFontWeight="400"
+            android:textSize="@dimen/txt_14sp" />
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_5sdp"
+            android:text="Business email address"
+            android:textColor="@color/common_text_color"
+            android:textSize="@dimen/_10sdp" />
+
+
+          <EditText
+            android:id="@+id/business_email_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_fill_kyc"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fontFamily="@font/open_sans"
+            android:gravity="bottom"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress"
+            android:textColor="#4A4A4A"
+            android:textColorHint="#4A4A4A"
+            android:textFontWeight="400"
+            android:textSize="@dimen/txt_14sp" />
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_5sdp"
+            android:text="Business Location"
+            android:textColor="@color/common_text_color"
+            android:textSize="@dimen/_10sdp" />
+
+
+          <!--                <EditText
+                              android:id="@+id/business_city_name"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:background="@drawable/rounded_edit_fill_kyc"
+                              android:focusable="true"
+                              android:focusableInTouchMode="true"
+                              android:fontFamily="@font/open_sans"
+                              android:gravity="bottom"
+                              android:textSize="@dimen/txt_14sp"
+                              android:textFontWeight="400"
+                              android:hint="City name"
+                              android:inputType="textEmailAddress"
+                              android:textColor="#4A4A4A"
+                              android:textColorHint="#4A4A4A" />-->
+
+          <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/business_city_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_fill_kyc"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fontFamily="@font/open_sans"
+            android:gravity="bottom"
+            android:hint="City name"
+            android:inputType="textEmailAddress"
+            android:textColor="#4A4A4A"
+            android:textColorHint="#4A4A4A"
+            android:textFontWeight="400"
+            android:textSize="@dimen/txt_14sp" />
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_5sdp"
+            android:text="GST Number (Optional)"
+            android:textColor="@color/common_text_color"
+            android:textSize="@dimen/_10sdp" />
+
+
+          <EditText
+            android:id="@+id/business_gst_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_fill_kyc"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fontFamily="@font/open_sans"
+            android:gravity="bottom"
+            android:hint="XX XXXXXXXXXX XXX"
+            android:inputType="text"
+            android:textColor="#4A4A4A"
+            android:textColorHint="#4A4A4A"
+            android:textFontWeight="400"
+            android:textSize="@dimen/txt_14sp" />
+
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="@dimen/_15sdp"
+            android:paddingBottom="@dimen/_15sdp">
+
+            <CheckBox
+              android:id="@+id/confirm_checkbox"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="I hereby confirm that above info is correct." />
+          </LinearLayout>
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+              android:id="@+id/middle_guideline1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+              android:id="@+id/confirm_btn"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/_10sdp"
+              android:layout_marginTop="@dimen/_10sdp"
+              android:background="@drawable/orange_button_click_effect"
+              android:fontFamily="@font/open_sans_semibold"
+              android:gravity="center"
+              android:padding="@dimen/_10sdp"
+              android:text="Confirm and Save"
+              android:textAllCaps="true"
+              android:textColor="@color/white"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+  </RelativeLayout>
+</androidx.core.widget.NestedScrollView>
