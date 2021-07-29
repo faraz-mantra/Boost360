@@ -28,10 +28,10 @@ class BusinessDescriptionBottomSheet : BaseBottomSheetDialog<BottomSheetBusiness
     dialog.behavior.isDraggable = false
     binding?.btnSaveDesc?.isEnabled = false
     setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnSaveDesc)
-    this.businessProfileModel =
-      arguments?.get(IntentConstant.BUSINESS_DETAILS.name) as? BusinessProfileModel
+    this.businessProfileModel = arguments?.get(IntentConstant.BUSINESS_DETAILS.name) as? BusinessProfileModel
     binding?.cetBusinessDesc?.setText(businessProfileModel?.businessDesc)
     binding?.cetBusinessDesc?.setSelection(businessProfileModel?.businessDesc?.length ?: 0)
+    baseActivity.showKeyBoard(binding?.cetBusinessDesc)
     binding?.cetBusinessDesc?.afterTextChanged {
       binding?.btnSaveDesc?.isEnabled =
         binding?.cetBusinessDesc?.text?.trim()?.length ?: 0 > 0 && businessProfileModel?.businessDesc?.trim() != it.trim()
