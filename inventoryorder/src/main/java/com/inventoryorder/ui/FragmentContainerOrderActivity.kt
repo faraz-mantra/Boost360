@@ -170,14 +170,14 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ALL_VIDEO_CONSULT_VIEW -> resources.getString(R.string.video_consultation)
       FragmentType.APPOINTMENT_SPA_DETAIL_VIEW,
       FragmentType.APPOINTMENT_DETAIL_VIEW,
-      -> getString(R.string.appointment_details)
+      -> getString(R.string.appointment_details_n)
       FragmentType.ORDER_DETAIL_VIEW,
       FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
       -> getString(R.string.hash_xxxxxxxx)
-      FragmentType.CREATE_NEW_BOOKING -> resources.getString(R.string.new_booking)
-      FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> resources.getString(R.string.new_booking)
-      FragmentType.CREATE_APPOINTMENT_VIEW -> getString(R.string.new_apppointment_camel_case)
-      FragmentType.ADD_CUSTOMER -> getString(R.string.add_a_customer)
+      FragmentType.CREATE_NEW_BOOKING -> resources.getString(R.string.new_booking_n)
+      FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> resources.getString(R.string.new_booking_n)
+      FragmentType.CREATE_APPOINTMENT_VIEW -> getString(R.string.new_appointment_n)
+      FragmentType.ADD_CUSTOMER -> getString(R.string.add_a_customer_n)
       FragmentType.ADD_PRODUCT -> getString(R.string.add_product)
       FragmentType.BILLING_DETAIL -> getString(R.string.review_confirm)
       FragmentType.ORDER_INVOICE_VIEW -> getString(R.string.invoice_preview)
@@ -193,9 +193,9 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
 
   override fun getToolbarSubTitle(): String? {
     return when (type) {
-      FragmentType.ADD_PRODUCT -> "STEP 1/3"
-      FragmentType.ADD_CUSTOMER -> "STEP 2/3"
-      FragmentType.BILLING_DETAIL -> "STEP 3/3"
+      FragmentType.ADD_PRODUCT -> "Step 1/3"
+      FragmentType.ADD_CUSTOMER -> "Step 2/3"
+      FragmentType.BILLING_DETAIL -> "Step 3/3"
       else -> super.getToolbarSubTitle()
     }
   }

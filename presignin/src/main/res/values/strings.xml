@@ -130,11 +130,11 @@
   <string name="need_help"><u>Need help?</u></string>
   <string name="try_a_different_number">Try a different number</string>
   <string name="no_business_account_available_with">No business account available with</string>
-  <string name="step_1_2">STEP 1/2</string>
+  <string name="step_1_2">Step 1/2</string>
   <string name="user_not_available">username/subdomain not available. Try with something else</string>
   <string name="go_back">Go back</string>
   <string name="i_agree_n">I agree</string>
-  <string name="login_with_mobile_number">Login with Mobile number</string>
+  <string name="login_with_mobile_number">Login with mobile number</string>
   <string name="business_setup_process">Business setup process, please wait...</string>
   <string name="this_is_your_registered_mobile_number">This is your registered mobile number</string>
   <string name="number_to_login_via_otp_change_tap_on_change_number">You can also use above number to login via OTP verification. In case you want to change this number, tap on ‘Change number ’.</string>
