@@ -42,9 +42,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ServiceInformationFragment :
-  AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModelV1>(),
-  RecyclerItemClickListener {
+class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModelV1>(), RecyclerItemClickListener {
 
   private var product: ServiceModelV1? = null
   private var isEdit: Boolean = false

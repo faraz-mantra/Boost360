@@ -30,8 +30,7 @@ import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
 
-class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(),
-  RecyclerItemClickListener {
+class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), RecyclerItemClickListener {
 
   private var productList: ArrayList<ProductItem> = ArrayList()
   private var finalProductList: ArrayList<ProductItem> = ArrayList()
