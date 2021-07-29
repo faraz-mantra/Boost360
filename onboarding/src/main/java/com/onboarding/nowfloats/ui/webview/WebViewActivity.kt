@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.webkit.*
@@ -19,7 +18,6 @@ import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.databinding.ActivityWebViewNBinding
 import com.onboarding.nowfloats.utils.checkHttp
 import com.onboarding.nowfloats.utils.getWebViewUrl
-
 
 class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>() {
 

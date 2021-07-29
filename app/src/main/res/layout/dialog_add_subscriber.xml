@@ -9,12 +9,13 @@
     android:id="@+id/title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Add Subscriber"
-    android:textSize="18sp"
-     android:fontFamily="@font/semi_bold" />
+    android:fontFamily="@font/semi_bold"
+    android:text="Add subscriber"
+    android:textSize="18sp" />
 
-  <EditText
+  <com.framework.views.customViews.CustomEditText
     android:id="@+id/edittext"
+    style="@style/edittext_style"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
