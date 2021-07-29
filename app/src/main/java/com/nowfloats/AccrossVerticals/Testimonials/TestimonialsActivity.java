@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +24,10 @@ import com.framework.views.zero.FragmentZeroCase;
 import com.framework.views.zero.OnZeroCaseClicked;
 import com.framework.views.zero.RequestZeroCaseBuilder;
 import com.framework.views.zero.ZeroCases;
+import com.framework.views.zero.old.AppFragmentZeroCase;
+import com.framework.views.zero.old.AppOnZeroCaseClicked;
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
+import com.framework.views.zero.old.AppZeroCases;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
@@ -48,7 +53,7 @@ import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
-public class TestimonialsActivity extends AppCompatActivity implements TestimonialsListener, OnZeroCaseClicked {
+public class TestimonialsActivity extends AppCompatActivity implements TestimonialsListener, AppOnZeroCaseClicked {
 
     public static List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
 //    TextView addTestimonialsButton;
@@ -65,6 +70,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     private TestimonialsAdapter testimonialsAdapter;
     private RecyclerView recyclerView;
     private boolean isLoad = false;
+    private FrameLayout fragmentContainer = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +106,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         vmnProgressBar.setIndeterminate(true);
         vmnProgressBar.setMessage(getString(R.string.please_wait));
         vmnProgressBar.setCancelable(false);
-
+        fragmentContainer = findViewById(R.id.fragment_container_testimonial);
 //        addTestimonialsButton = findViewById(R.id.add_testimonials);
         recyclerView = findViewById(R.id.testimonials_recycler);
         testimonialsAdapter = new TestimonialsAdapter(new ArrayList(), this, session, this);
@@ -130,7 +136,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
             startActivity(intent);
         });
 
-        backButton.setOnClickListener(v -> onBackPressed());
+        backButton.setOnClickListener(v ->finishAfterTransition());
     }
 
     private void initialiseRecycler() {
@@ -166,10 +172,13 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                         updateRecyclerView();
                         mainLayout.setVisibility(View.VISIBLE);
                         rightButton.setVisibility(View.VISIBLE);
+                        fragmentContainer.setVisibility(View.GONE);
+
                     } else {
                         mainLayout.setVisibility(View.GONE);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_testimonial,
-                                new RequestZeroCaseBuilder(ZeroCases.TESTIMONIAL, TestimonialsActivity.this, getApplicationContext()).getRequest().build(), FragmentZeroCase.class.getName())
+                        fragmentContainer.setVisibility(View.VISIBLE);
+                        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_testimonial,
+                                new AppRequestZeroCaseBuilder(AppZeroCases.TESTIMONIAL,TestimonialsActivity.this  , getApplicationContext()).getRequest().build(), AppFragmentZeroCase.class.getName())
                                 .commit();
                         rightButton.setVisibility(View.INVISIBLE);
                     }
@@ -349,5 +358,10 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     @Override
     public void ternaryButtonClicked() {
 
+    }
+
+    @Override
+    public void appOnBackPressed() {
+        finishAfterTransition();
     }
 }

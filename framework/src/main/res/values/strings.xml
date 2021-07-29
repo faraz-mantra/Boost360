@@ -36,8 +36,8 @@
   <string name="tool_bar_customer_messages">Customer Messages</string>
   <string name="customer_messages_description">Not to worry - post 2-3 updates per week on your website to increase your chances of attracting new customers.</string>
   <string name="customer_messages_title">You don’t have any messages yet.</string>
-  <string name="testimonial_title">This is a premium feature.</string>
-  <string name="testimonial_description">You can showcase customer reviews with this feature to attract more potential customers.</string>
+  <string name="testimonial_title_zero">This is a premium feature.</string>
+  <string name="testimonial_description_zero">You can showcase customer reviews with this feature to attract more potential customers.</string>
   <string name="tool_bar_testimonial">Testimonials</string>
   <string name="activate_this_feature">Activate this feature</string>
   <string name="news_letter_description">Your customers can subscribe to your website to find out about latest offers or new product launches.</string>

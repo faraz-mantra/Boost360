@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -398,7 +399,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       intent.putExtra("profileUrl", sessionLocal.fPLogo)
       intent.putExtra("buyItemKey", "${StatusKyc.STAFFPROFILE.name}15")// feature key
       baseActivity.startActivity(intent)
-      Handler().postDelayed({ hideProgress() }, 1000)
+      Handler(Looper.getMainLooper()).postDelayed({ hideProgress() }, 1000)
     } catch (e: Exception) {
       showLongToast("Unable to start upgrade activity.")
     }
@@ -417,6 +418,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   override fun ternaryButtonClicked() {
     TODO("Not yet implemented")
+  }
+
+  override fun onBackPressed() {
+    baseActivity.finishAfterTransition()
   }
 
 }

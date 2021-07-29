@@ -260,6 +260,11 @@ public class OffersFragment extends Fragment implements View.OnClickListener, On
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
 
     interface OnRenewPlanClickListener {
         void onRenewPlanSelected();

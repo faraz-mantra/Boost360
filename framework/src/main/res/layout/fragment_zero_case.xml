@@ -17,7 +17,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias=".32"
+      app:layout_constraintVertical_bias=".20"
       tools:src="@tools:sample/avatars" />
 
     <com.framework.views.customViews.CustomTextView
@@ -56,7 +56,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginBottom="20dp"
-      android:layout_marginTop="100dp"
+      android:layout_marginTop="70dp"
       android:orientation="vertical"
       app:layout_constraintBottom_toTopOf="@+id/ctv_footer_text"
       app:layout_constraintTop_toBottomOf="@+id/ctv_desc"

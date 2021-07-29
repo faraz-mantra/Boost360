@@ -770,4 +770,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   override fun ternaryButtonClicked() {
     TODO("Not yet implemented")
   }
+
+  override fun onBackPressed() {
+    TODO("Not yet implemented")
+  }
 }

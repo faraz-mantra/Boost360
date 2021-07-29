@@ -123,4 +123,8 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
   override fun ternaryButtonClicked() {
     TODO("Not yet implemented")
   }
+
+  override fun onBackPressed() {
+    baseActivity.finishAfterTransition()
+  }
 }
