@@ -105,7 +105,7 @@ class RegistrationBusinessWhatsAppFragment :
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.confirmBtn -> if (binding?.number?.length() == 10) gotoBusinessApiCallDetails()
+      binding?.confirmBtn -> if (ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString()?:"")) gotoBusinessApiCallDetails()
       binding?.skip -> {
         updateInfo()
         gotoBusinessApiCallDetails()
