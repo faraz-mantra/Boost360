@@ -20,7 +20,6 @@ import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -603,7 +602,7 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     @Override
     public void primaryButtonClicked() {
-       selectImage();
+        selectImage();
     }
 
     @Override
@@ -613,6 +612,11 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     @Override
     public void ternaryButtonClicked() {
+
+    }
+
+    @Override
+    public void onBackPressed() {
 
     }
 }

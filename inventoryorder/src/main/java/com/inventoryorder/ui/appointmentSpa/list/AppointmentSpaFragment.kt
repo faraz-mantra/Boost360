@@ -773,6 +773,9 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   override fun ternaryButtonClicked() {
   }
 
+  override fun onBackPressed() {
+  }
+
 //  private fun apiOrderListCall() {
 //    when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {
 //      OrderSummaryModel.OrderSummaryType.RECEIVED -> {

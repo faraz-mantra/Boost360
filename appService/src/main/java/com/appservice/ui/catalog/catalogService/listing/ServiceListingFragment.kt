@@ -150,7 +150,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   ) {
     if (isFirst || searchString.isNotEmpty()) showProgress()
     viewModel?.getSearchListings(fpTag, fpId, searchString, offSet, limit)
-      ?.observeOnce(viewLifecycleOwner, {
+      ?.observeOnce(baseActivity, {
         if (it.isSuccess()) {
           setServiceDataItems(
             (it as? ServiceSearchListingResponse)?.result,
@@ -172,6 +172,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
       onServiceAddedOrUpdated(listService?.size ?: 0)
       if (isFirstLoad) finalList.clear()
       if (listService.isNullOrEmpty().not()) {
+        removeZeroCaseFragment()
         removeLoader()
         setEmptyView(View.GONE)
         TOTAL_ELEMENTS = resultService?.paging?.count ?: 0
@@ -189,6 +190,10 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         setAdapterNotify()
       }
     }
+  }
+
+  private fun removeZeroCaseFragment() {
+    parentFragmentManager.popBackStack()
   }
 
   private fun onServiceAddedOrUpdated(count: Int) {
@@ -422,13 +427,17 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     super.onClick(v)
     when (v) {
       binding?.cbAddService -> {
-        startFragmentActivity(
-          FragmentType.SERVICE_DETAIL_VIEW,
-          bundle = sendBundleData(null),
-          isResult = true
-        )
+        addService()
       }
     }
+  }
+
+  private fun addService() {
+    startFragmentActivity(
+      FragmentType.SERVICE_DETAIL_VIEW,
+      bundle = sendBundleData(null),
+      isResult = true
+    )
   }
 
   private fun openSortingBottomSheet() {
@@ -477,17 +486,19 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
 
   override fun primaryButtonClicked() {
-    showShortToast("primary")
+   addService()
   }
 
   override fun secondaryButtonClicked() {
-    showShortToast("secondary")
 
   }
 
   override fun ternaryButtonClicked() {
-    showShortToast("tertiary")
 
+  }
+
+  override fun onBackPressed() {
+    baseActivity.finishAfterTransition()
   }
 }
 

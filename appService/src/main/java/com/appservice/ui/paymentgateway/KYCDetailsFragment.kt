@@ -179,8 +179,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       ?: "pan_card_${Date()}.jpg"
     val mimType = panCarImage?.getMimeType() ?: "multipart/form-data"
     val requestBody = panCarImage?.let { it.asRequestBody(mimType.toMediaTypeOrNull()) }
-    val bodyPanCard =
-      requestBody?.let { MultipartBody.Part.createFormData("file", filePancard, it) }
+    val bodyPanCard = requestBody?.let { MultipartBody.Part.createFormData("file", filePancard, it) }
     viewModel?.putUploadFile(session?.auth_1, bodyPanCard, filePancard)
       ?.observeOnce(viewLifecycleOwner, Observer {
         if ((it.error is NoNetworkException).not()) {
