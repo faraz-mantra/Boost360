@@ -201,4 +201,5 @@
   <string name="choose_secondary_font">Choose Secondary Font</string>
   <string name="boost_360_faqs">https://www.getboost360.com/faqs/</string>
   <string name="share_on_more_website">Share on more</string>
+    <string name="sentry_url">https://1fce85eb88e34494b19eda2760a98407@o282435.ingest.sentry.io/5854491</string>
 </resources>

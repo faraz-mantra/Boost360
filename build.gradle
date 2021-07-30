@@ -34,6 +34,9 @@ allprojects {
             dirs 'libs'
         }
         maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
+        maven {
+            url "https://sdk.smartlook.com/android/release"
+        }
     }
 }
 subprojects {

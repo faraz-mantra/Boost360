@@ -33,6 +33,7 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.analytics.SentryController
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
@@ -90,6 +91,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onCreateView() {
     super.onCreateView()
+    SentryController.captureException()
     session = UserSessionManager(this)
     session?.let { deepLinkUtil = DeepLinkUtil(this, it) }
     mNavController =
