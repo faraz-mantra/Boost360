@@ -26,7 +26,6 @@ class FragmentZeroCase : BaseFragment<FragmentZeroCaseBinding, BaseViewModel>() 
 
   companion object {
     var onZeroCaseClicked: OnZeroCaseClicked? = null
-
     class ZeroCaseBuilder {
       var arguments: Bundle? = null
 

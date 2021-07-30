@@ -54,6 +54,7 @@ import java.util.*
 class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(),
   RecyclerItemClickListener, OnZeroCaseClicked {
 
+  private  var fragmentZeroCase: FragmentZeroCase?=null
   private lateinit var domainName: String
   private var session: UserSessionManager? = null
   private val list: ArrayList<ItemsItem> = arrayListOf()
@@ -106,6 +107,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     setOnClickListener(binding?.cbAddService)
     this.session = UserSessionManager(requireContext())
     this.domainName = session?.getDomainName()!!
+    this.fragmentZeroCase = RequestZeroCaseBuilder(ZeroCases.SERVICES, this, baseActivity).getRequest().build()
 
   }
 
@@ -194,6 +196,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun removeZeroCaseFragment() {
     parentFragmentManager.popBackStack()
+    parentFragmentManager.beginTransaction().detach(fragmentZeroCase!!).commit()
   }
 
   private fun onServiceAddedOrUpdated(count: Int) {
@@ -266,10 +269,10 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   private fun setEmptyView(visibility: Int) {
     when (visibility) {
       View.GONE -> {
-
+//        removeZeroCaseFragment()
       }
       View.VISIBLE -> {
-        addFragmentReplace(containerID = R.id.container, RequestZeroCaseBuilder(ZeroCases.SERVICES, this, baseActivity).getRequest().build(), true)
+        addFragmentReplace(containerID = R.id.container,fragmentZeroCase!! , true)
       }
     }
 
@@ -486,7 +489,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
 
   override fun primaryButtonClicked() {
-   addService()
+    addService()
   }
 
   override fun secondaryButtonClicked() {
