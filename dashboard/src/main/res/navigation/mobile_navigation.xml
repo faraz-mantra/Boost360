@@ -21,7 +21,7 @@
   <fragment
     android:id="@+id/navigation_marketplace"
     android:name="com.marketplace.ui.home.MarketPlaceHomeFragment"
-    android:label="ADD-ONS STORE" />
+    tools:layout="@layout/fragment_marketplace_home"/>
 
   <fragment
     android:id="@+id/navigation_enquiries"

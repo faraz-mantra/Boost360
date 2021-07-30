@@ -3,11 +3,11 @@ package com.marketplace.ui.home
 import com.framework.models.BaseViewModel
 import com.marketplace.R
 import com.marketplace.base.AppBaseFragment
-import com.marketplace.databinding.FrgamentMarketplaceHomeBinding
+import com.marketplace.databinding.FragmentMarketplaceHomeBinding
 
-class MarketPlaceHomeFragment :AppBaseFragment<FrgamentMarketplaceHomeBinding,BaseViewModel>() {
+class MarketPlaceHomeFragment :AppBaseFragment<FragmentMarketplaceHomeBinding,BaseViewModel>() {
     override fun getLayout(): Int {
-        return R.layout.frgament_marketplace_home
+        return R.layout.fragment_marketplace_home
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {
