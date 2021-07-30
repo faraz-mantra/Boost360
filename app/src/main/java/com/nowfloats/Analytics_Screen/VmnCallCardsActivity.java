@@ -54,6 +54,7 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 public class VmnCallCardsActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = "VmnCallCardsActivity";
     UserSessionManager sessionManager;
     CardView viewCallLogCard;
     TextView missedCountText, receivedCountText, allCountText, virtualNumberText, buyItemButton, potentialCallsText, trackAllCall, trackMissedCall, trackConnectedCall, webCallCount, phoneCallCount;
@@ -216,6 +217,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
         buyItemButton = (TextView) findViewById(R.id.buy_item);
         List<String> keys = session.getStoreWidgets();
+        Log.i(TAG, "store widgets: "+keys.toString());
         if (keys != null && keys.contains("CALLTRACKER")) {
             //oldCode
 //            setVmnTotalCallCount();
@@ -307,6 +309,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
 
     private void getCalls() {
+        Log.i(TAG, "getCalls: function called");
         stopApiCall = true;
         showProgress();
         final String startOffset = String.valueOf(offset);
@@ -320,6 +323,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         trackerApis.trackerCalls(hashMap, new Callback<ArrayList<VmnCallModel>>() {
             @Override
             public void success(ArrayList<VmnCallModel> vmnCallModels, Response response) {
+                Log.i(TAG, "getCalls success: ");
                 hideProgress();
                 if (vmnCallModels == null || response.getStatus() != 200) {
                     Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
@@ -367,6 +371,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 //                vmnCallAdapter.notifyItemInserted(sizeOfList + i);
             }
         }
+        Log.i(TAG, "updateRecyclerData: header list size "+getSelectedTypeList(headerList).size());
         vmnCallAdapter.updateList(getSelectedTypeList(headerList));
         if (getSelectedTypeList(headerList).size() == 0) {
             noCallTrackLayout.setVisibility(View.VISIBLE);

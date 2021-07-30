@@ -107,7 +107,9 @@ const val VISITORS_TABLE = 1
 
 class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager) {
 
+  private val TAG = "DeepLinkUtil"
   fun deepLinkPage(url: String, buyItemKey: String, isFromRia: Boolean) {
+    Log.i(TAG, "deepLinkPage: "+url)
     try {
       if (url.isNotEmpty()) {
         if (url.contains(keyboard) || url.contains(keyboardSettings)) {
