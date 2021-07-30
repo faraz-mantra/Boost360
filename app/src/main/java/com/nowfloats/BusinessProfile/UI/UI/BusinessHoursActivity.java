@@ -340,7 +340,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
     private void onBusinessHourAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData().getMetricdetail() == null) return;
+        if (instance.getDrScoreData()==null || instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_add_business_hours(isAdded);
         instance.updateDocument();
     }
