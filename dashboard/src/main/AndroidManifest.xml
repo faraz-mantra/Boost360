@@ -7,6 +7,7 @@
   <application
     android:requestLegacyExternalStorage="true"
     tools:ignore="UnusedAttribute">
+    <meta-data android:name="io.sentry.dsn" android:value="@string/sentry_url" />
 
     <activity
       android:name=".controller.DashboardActivity"
