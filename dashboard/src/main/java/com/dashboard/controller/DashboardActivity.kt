@@ -91,7 +91,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onCreateView() {
     super.onCreateView()
-    SentryController.captureException()
     session = UserSessionManager(this)
     session?.let { deepLinkUtil = DeepLinkUtil(this, it) }
     mNavController =
