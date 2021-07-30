@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -23,10 +24,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.framework.models.firestore.FirestoreManager;
-import com.framework.views.zero.FragmentZeroCase;
-import com.framework.views.zero.OnZeroCaseClicked;
-import com.framework.views.zero.RequestZeroCaseBuilder;
-import com.framework.views.zero.ZeroCases;
+import com.framework.views.zero.old.AppFragmentZeroCase;
+import com.framework.views.zero.old.AppOnZeroCaseClicked;
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
+import com.framework.views.zero.old.AppZeroCases;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nowfloats.CustomPage.Model.CustomPageEvent;
 import com.nowfloats.CustomPage.Model.CustomPageLink;
@@ -58,7 +59,7 @@ import static com.framework.webengageconstant.EventNameKt.CREATE_ACUSTOMPAGE;
 /**
  * Created by guru on 25/08/2015.
  */
-public class CustomPageFragment extends Fragment implements OnZeroCaseClicked {
+public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked {
     public static RecyclerView recyclerView;
     public static CustomPageAdapter custompageAdapter;
     public static ArrayList<CustomPageModel> dataModel = new ArrayList<>();
@@ -76,6 +77,7 @@ public class CustomPageFragment extends Fragment implements OnZeroCaseClicked {
     private LinearLayout progress_layout;
     private TextView titleTextView;
     private ImageView delete;
+    private AppFragmentZeroCase zeroCaseFragment;
 
     @Override
     public void onResume() {
@@ -90,6 +92,7 @@ public class CustomPageFragment extends Fragment implements OnZeroCaseClicked {
                 emptyView();
             } else {
 //                emptylayout.setVisibility(View.GONE);
+//                removeZeroCaseFragment();
             }
         }
         if (recyclerView != null)
@@ -117,8 +120,8 @@ public class CustomPageFragment extends Fragment implements OnZeroCaseClicked {
     }
 
     private void emptyView() {
-        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,
-                new RequestZeroCaseBuilder(ZeroCases.CUSTOM_PAGES, this, requireActivity()).getRequest().build(), FragmentZeroCase.class.getName())
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fm_site_appearance,
+               zeroCaseFragment , AppFragmentZeroCase.class.getName())
                 .commit();
     }
 
@@ -147,10 +150,8 @@ public class CustomPageFragment extends Fragment implements OnZeroCaseClicked {
         progress_layout.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setItemAnimator(null);
-
-
+        this.zeroCaseFragment=new AppRequestZeroCaseBuilder(AppZeroCases.CUSTOM_PAGES, this, requireActivity()).getRequest().build();
         final FloatingActionButton addProduct = view.findViewById(R.id.fab_custom_page);
-
         addProduct.setOnClickListener(v -> addProduct());
         if ((activity instanceof CustomPageActivity) && ((CustomPageActivity) activity).isAdd)
             addProduct();
@@ -217,6 +218,8 @@ public class CustomPageFragment extends Fragment implements OnZeroCaseClicked {
 
     public void isRefreshList() {
         LoadPageList(activity, bus);
+
+
     }
 
     private void LoadPageList(Activity activity, Bus bus) {
@@ -229,8 +232,8 @@ public class CustomPageFragment extends Fragment implements OnZeroCaseClicked {
         if (dataModel != null) {
             onCustomPageAddedOrUpdated(!dataModel.isEmpty());
             if (dataModel.isEmpty()) emptyView();
-
             if (!session.getOnBoardingStatus() && dataModel.size() != session.getCustomPageCount()) {
+                removeZeroCaseFragment();
                 session.setCustomPageCount(dataModel.size());
                 OnBoardingApiCalls.updateData(session.getFpTag(), String.format("custom_page:%s", dataModel.size() > 0 ? "true" : "false"));
             }
@@ -246,6 +249,12 @@ public class CustomPageFragment extends Fragment implements OnZeroCaseClicked {
         } else {
             emptyView();
         }
+    }
+    private void removeZeroCaseFragment() {
+//        if (zeroCaseFragment.isVisible()) {
+            getParentFragmentManager().popBackStack();
+            getParentFragmentManager().beginTransaction().detach(zeroCaseFragment).commit();
+//        }
     }
 
     private void onCustomPageAddedOrUpdated(boolean isAdded) {
@@ -470,7 +479,7 @@ public class CustomPageFragment extends Fragment implements OnZeroCaseClicked {
 
     @Override
     public void primaryButtonClicked() {
-        addProduct();
+        openAddCustomPageActivity();
     }
 
     @Override
@@ -481,5 +490,16 @@ public class CustomPageFragment extends Fragment implements OnZeroCaseClicked {
     @Override
     public void ternaryButtonClicked() {
 
+    }
+
+    @Override
+    public void appOnBackPressed() {
+    requireActivity().finishAfterTransition();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(activity, "callback", Toast.LENGTH_SHORT).show();
     }
 }
