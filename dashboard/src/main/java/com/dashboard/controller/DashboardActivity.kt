@@ -103,7 +103,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     setDrawerHome()
     val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
     binding?.drawerView?.txtVersion?.text = "Version $versionName"
-    intentDataCheckAndDeepLink()
+    intentDataCheckAndDeepLink(intent)
     getWelcomeData()
     session?.initializeWebEngageLogin()
     initialize()
@@ -131,8 +131,13 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     initialiseZendeskSupportSdk()
   }
 
-  private fun intentDataCheckAndDeepLink() {
-    if (intent.extras != null) {
+  override fun onNewIntent(intent: Intent?) {
+    super.onNewIntent(intent)
+    intentDataCheckAndDeepLink(intent)
+  }
+  private fun intentDataCheckAndDeepLink(intent: Intent?) {
+    Log.i(TAG, "intentDataCheckAndDeepLink: ")
+    if (intent?.extras != null) {
       if (intent.extras!!.containsKey("url")) mDeepLinkUrl = intent.extras!!.getString("url")
       if (intent.extras!!.containsKey("payload")) mPayload = intent.extras!!.getString("payload")
     }
