@@ -663,7 +663,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
     private void onBusinessUpdateAddedOrUpdated(Integer count) {
         if (count == null) count = 0;
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData().getMetricdetail() == null) return;
+        if (instance.getDrScoreData()==null || instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setNumber_updates_posted(count);
         instance.updateDocument();
         activity.finish();
