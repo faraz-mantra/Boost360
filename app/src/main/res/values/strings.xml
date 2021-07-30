@@ -1777,6 +1777,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="map_visits">Address views</string>
   <string name="map_visits_n">Address Views</string>
   <string name="boost_keyboard">Boost Keyboard</string>
+  <string name="boost_keyboard_n">Boost keyboard</string>
   <string name="enable_keyboard">Enable keyboard</string>
   <string name="otp_over_call">Tap here to get OTP over call</string>
   <string name="sam">Sam</string>
@@ -3064,7 +3065,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="book_a_new_domain_n">Book a new domain</string>
   <string name="or_n">--- or ---</string>
   <string name="domain_is_a_great_first_step_towards_building_your_brand_on_web_n">Domain is a great first step towards building your brand on web.</string>
-  <string name="boost_keyboard_themes_n">Boost Keyboard Themes</string>
+  <string name="boost_keyboard_themes_n">Boost keyboard themes</string>
   <string name="seasional_offer_n">Seasonal Offers</string>
 
   <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
