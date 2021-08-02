@@ -16,6 +16,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
+import com.framework.views.zero.FragmentZeroCase
 import com.framework.views.zero.OnZeroCaseClicked
 import com.framework.views.zero.RequestZeroCaseBuilder
 import com.framework.views.zero.ZeroCases
@@ -65,7 +66,7 @@ import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener, OnZeroCaseClicked {
-
+  private lateinit var zeroCaseFragment: FragmentZeroCase
   lateinit var mPopupWindow: PopupWindow
   private lateinit var requestFilter: OrderFilterRequest
   private var typeAdapter: AppBaseRecyclerViewAdapter<OrderSummaryModel>? = null
@@ -105,6 +106,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     binding?.swipeRefresh?.setOnRefreshListener {
       if (typeList.isNullOrEmpty()) apiSellerSummary() else loadNewData()
     }
+    this.zeroCaseFragment = RequestZeroCaseBuilder(ZeroCases.ORDERS, this, baseActivity).getRequest().build()
   }
 
   override fun onClick(v: View) {
@@ -205,6 +207,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
     binding?.orderRecycler?.visible()
 //    binding?.errorView?.gone()
+    removeZeroCaseFragment()
     if (orderAdapter != null) {
       orderAdapter?.notify(getNewList(items))
     } else setAdapterOrderList(getNewList(items))
@@ -653,16 +656,29 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     }
   }
 
+  //  private fun emptyView() {
+////    binding?.orderRecycler?.gone()
+////    binding?.errorView?.visible()
+//
+////    binding?.btnActionTutorials?.setOnClickListener {
+////      val sheet = LearnHowItWorkBottomSheet()
+////      sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
+////    }
+////    addFragmentReplace(containerID = R.id.container, RequestZeroCaseBuilder(ZeroCases.ORDERS, this, baseActivity).getRequest().build(), true)
+//
+//  }
   private fun emptyView() {
-//    binding?.orderRecycler?.gone()
+    addFragmentReplace(containerID = R.id.container, zeroCaseFragment, true)
+//    binding?.bookingRecycler?.gone()
 //    binding?.errorView?.visible()
+//    binding?.btnAdd?.gone()
+  }
 
-//    binding?.btnActionTutorials?.setOnClickListener {
-//      val sheet = LearnHowItWorkBottomSheet()
-//      sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
-//    }
-    addFragmentReplace(containerID = R.id.container, RequestZeroCaseBuilder(ZeroCases.ORDERS, this, baseActivity).getRequest().build(), true)
-
+  fun removeZeroCaseFragment() {
+//        if (zeroCaseFragment.isVisible()) {
+    parentFragmentManager.popBackStack()
+    parentFragmentManager.beginTransaction().detach(zeroCaseFragment).commit()
+//        }
   }
 
   private fun getRequestFilterData(

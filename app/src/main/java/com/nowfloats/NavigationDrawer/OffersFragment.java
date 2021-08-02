@@ -49,7 +49,7 @@ import java.util.List;
 
 
 public class OffersFragment extends Fragment implements View.OnClickListener, OnZeroCaseClicked {
-    LinearLayout retryLayout, emptyMsgLayout;
+    LinearLayout retryLayout;
     ButteryProgressBar progressBar;
     CardView progressCrd;
     RecyclerView recyclerView;
@@ -109,7 +109,6 @@ public class OffersFragment extends Fragment implements View.OnClickListener, On
         progressBar = (ButteryProgressBar) view.findViewById(R.id.progressbar);
         retryLayout = (LinearLayout) view.findViewById(R.id.postRetryLayout);
         fabButton = (FloatingActionMenu) view.findViewById(R.id.fab);
-        emptyMsgLayout = (LinearLayout) view.findViewById(R.id.emptymsglayout);
         view.findViewById(R.id.fab_offer).setOnClickListener(this);
         view.findViewById(R.id.fab_update).setOnClickListener(this);
         ImageView retryPost = (ImageView) view.findViewById(R.id.retryPost);
@@ -229,9 +228,9 @@ public class OffersFragment extends Fragment implements View.OnClickListener, On
                 for (int i = 0; i < offerSize; i++) {
                     offersModelList.add(result.floats.get(i));
                 }
-                if (offersModelList.size() ==0||offersModelList==null) {
+                if (offersModelList.size() == 0) {
                     requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,
-                            new RequestZeroCaseBuilder(ZeroCases.SERVICES, this, requireActivity()).getRequest().build(), FragmentZeroCase.class.getName())
+                            new RequestZeroCaseBuilder(ZeroCases.SEASONAL_OFFERS, this, requireActivity()).getRequest().build(), FragmentZeroCase.class.getName())
                             .commit();
 
 

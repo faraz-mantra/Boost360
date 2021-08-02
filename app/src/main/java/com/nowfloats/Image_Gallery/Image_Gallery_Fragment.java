@@ -36,6 +36,10 @@ import com.framework.views.zero.FragmentZeroCase;
 import com.framework.views.zero.OnZeroCaseClicked;
 import com.framework.views.zero.RequestZeroCaseBuilder;
 import com.framework.views.zero.ZeroCases;
+import com.framework.views.zero.old.AppFragmentZeroCase;
+import com.framework.views.zero.old.AppOnZeroCaseClicked;
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
+import com.framework.views.zero.old.AppZeroCases;
 import com.nowfloats.Login.GetGalleryImagesAsyncTask_Interface;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
@@ -63,7 +67,7 @@ import static com.framework.webengageconstant.EventNameKt.UPLOAD_GALLERY_IMAGE;
 public class Image_Gallery_Fragment extends Fragment implements
         UploadPictureAsyncTask.UploadPictureInterface,
         DeleteGalleryImages.DeleteGalleryInterface,
-        GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface, OnZeroCaseClicked {
+        GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface, AppOnZeroCaseClicked {
 
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_GALLERY = 2;
@@ -79,6 +83,7 @@ public class Image_Gallery_Fragment extends Fragment implements
     private UserSessionManager session;
     private Activity activity;
     private LinearLayout progressLayout;
+    private AppFragmentZeroCase appFragmentZeroCase;
 
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
@@ -217,7 +222,12 @@ public class Image_Gallery_Fragment extends Fragment implements
         if (otherImagesAdapter != null)
             otherImagesAdapter.notifyDataSetChanged();
     }
-
+    public void removeZeroCaseFragment() {
+//        if (zeroCaseFragment.isVisible()) {
+        getParentFragmentManager().popBackStack();
+        getParentFragmentManager().beginTransaction().detach(appFragmentZeroCase).commit();
+//        }
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -240,19 +250,21 @@ public class Image_Gallery_Fragment extends Fragment implements
         activity = getActivity();
         session = new UserSessionManager(getContext(), activity);
         gvImages = view.findViewById(R.id.grid);
+        this. appFragmentZeroCase = new AppRequestZeroCaseBuilder(AppZeroCases.IMAGE_GALLERY, this, requireActivity()).getRequest().build();
 //        emptyGalleryLayout = view.findViewById(R.id.layout_empty);
         progressLayout = view.findViewById(R.id.layout_progress);
         progressLayout.setVisibility(View.VISIBLE);
+
         otherImagesAdapter = new OtherImagesAdapter(activity);
         if (otherImagesAdapter.getCount() == 0) {
 //            emptyGalleryLayout.setVisibility(View.VISIBLE);
-            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,
-                    new RequestZeroCaseBuilder(ZeroCases.IMAGE_GALLERY, this, requireActivity()).getRequest().build(), FragmentZeroCase.class.getName())
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,appFragmentZeroCase
+                   , AppFragmentZeroCase.class.getName())
                     .commit();
         }
-//        else {
-//            emptyGalleryLayout.setVisibility(View.GONE);
-//        }
+        else {
+            removeZeroCaseFragment();
+        }
         Bundle bundle = activity.getIntent().getExtras();
         if (bundle != null) {
             purchasedWidgetList = bundle.getStringArrayList("userPurchsedWidgets");
@@ -615,8 +627,10 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     }
 
-    @Override
-    public void onBackPressed() {
 
+
+    @Override
+    public void appOnBackPressed() {
+        requireActivity().finishAfterTransition();
     }
 }

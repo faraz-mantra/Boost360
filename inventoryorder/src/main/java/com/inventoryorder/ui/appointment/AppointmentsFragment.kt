@@ -15,6 +15,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.views.zero.FragmentZeroCase
 import com.framework.views.zero.OnZeroCaseClicked
 import com.framework.views.zero.RequestZeroCaseBuilder
 import com.framework.views.zero.ZeroCases
@@ -61,7 +62,7 @@ import kotlin.math.roundToInt
 
 
 class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(), RecyclerItemClickListener, OnZeroCaseClicked {
-
+  private lateinit var zeroCaseFragment: FragmentZeroCase
   private lateinit var requestFilter: OrderFilterRequest
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
   private var orderList = ArrayList<OrderItem>()
@@ -102,6 +103,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
     binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
+    this.zeroCaseFragment = RequestZeroCaseBuilder(ZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
   }
 
   override fun onClick(v: View) {
@@ -218,14 +220,23 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
     binding?.bookingRecycler?.visible()
+    removeZeroCaseFragment()
     if (orderAdapter != null) {
       orderAdapter?.notify(getDateWiseFilter(items))
     } else setAdapterAppointmentList(getDateWiseFilter(items))
   }
 
   private fun emptyView() {
-    addFragmentReplace(containerID = R.id.container, RequestZeroCaseBuilder(ZeroCases.APPOINTMENT, this, baseActivity).getRequest().build(), true)
-
+    addFragmentReplace(containerID = R.id.container,zeroCaseFragment , true)
+//    binding?.bookingRecycler?.gone()
+//    binding?.errorView?.visible()
+//    binding?.btnAdd?.gone()
+  }
+  fun removeZeroCaseFragment() {
+//        if (zeroCaseFragment.isVisible()) {
+    parentFragmentManager.popBackStack()
+    parentFragmentManager.beginTransaction().detach(zeroCaseFragment).commit()
+//        }
   }
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {

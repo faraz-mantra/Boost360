@@ -35,6 +35,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences
+import com.framework.views.zero.FragmentZeroCase
 import com.framework.views.zero.OnZeroCaseClicked
 import com.framework.views.zero.RequestZeroCaseBuilder
 import com.framework.views.zero.ZeroCases
@@ -47,6 +48,7 @@ import java.util.*
 class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffViewModel>(),
   RecyclerItemClickListener, SearchView.OnQueryTextListener, OnZeroCaseClicked {
 
+  private var fragmentZeroCase: FragmentZeroCase?=null
   private val list: ArrayList<DataItem> = arrayListOf()
   private val finalList: ArrayList<DataItem> = arrayListOf()
   private var adapterStaff: AppBaseRecyclerViewAdapter<DataItem>? = null
@@ -94,6 +96,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         binding?.serviceEmpty?.cbAddService
       )
     }
+    this.fragmentZeroCase = RequestZeroCaseBuilder(ZeroCases.STAFF_LISTING, this, baseActivity).getRequest().build()
   }
 
   private fun isLockStaff(): Boolean {
@@ -243,10 +246,16 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   private fun setEmptyView(isStaffEmpty: Boolean, isServiceEmpty: Boolean = false) {
     if (isServiceEmpty)
-    addFragmentReplace(containerID = R.id.container, RequestZeroCaseBuilder(ZeroCases.STAFF_LISTING, this, baseActivity).getRequest().build(), true)
+    addFragmentReplace(containerID = R.id.container, fragmentZeroCase!!, true)
+    else removeZeroCase()
     binding?.rvStaffList?.visibility =
       if (isStaffEmpty || isServiceEmpty) View.GONE else View.VISIBLE
     if (this::menuAdd.isInitialized) menuAdd.isVisible = isServiceEmpty.not()
+  }
+
+  private fun removeZeroCase() {
+    parentFragmentManager.popBackStack()
+    parentFragmentManager.beginTransaction().detach(fragmentZeroCase!!).commit()
   }
 
   private fun removeLoader() {
