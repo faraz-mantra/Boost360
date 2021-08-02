@@ -440,6 +440,7 @@
   <string name="setting_logout">Logout</string>
   <string name="signup_subd">^[a&#8211;zA&#8211;Z0&#8211;9][a&#8211;zA&#8211;Z0&#8211;9&#8211;]{1,61}[a&#8211;zA&#8211;Z0&#8211;9]$</string>
   <string name="notification" translatable="false">Notification</string>
+  <string name="notification_n" translatable="false">Notifications</string>
 
   <!-- Deep Linking URLs  -->
 
@@ -1010,7 +1011,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="can_not_share_image_offline_mode">Can\'t Share image content in Offline Mode</string>
   <string name="no_app_to_share">No apps to share</string>
   <string name="share">Share</string>
-  <string name="post_update">Post An Update</string>
+  <string name="post_update">Post an Update</string>
   <string name="send_to_your_customers" translatable="false">Send to your customers</string>
   <string name="post_in_capital">Post</string>
   <string name="enter_message">Please enter a message</string>
@@ -1776,6 +1777,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="map_visits">Address views</string>
   <string name="map_visits_n">Address Views</string>
   <string name="boost_keyboard">Boost Keyboard</string>
+  <string name="boost_keyboard_n">Boost keyboard</string>
   <string name="enable_keyboard">Enable keyboard</string>
   <string name="otp_over_call">Tap here to get OTP over call</string>
   <string name="sam">Sam</string>
@@ -1923,6 +1925,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="candidate_details">Candidate Details</string>
   <string name="batch_details">Batch Details</string>
   <string name="faculty_management">Faculty Management</string>
+  <string name="faculty_management_n">Faculty management</string>
   <string name="faculty_management_feature_description">Looks like this add-on is not added to your current plan. Add it now to share your lecturer’s expertise by including awards, papers they’ve written.</string>
   <string name="faculty_details">Faculty Details</string>
   <string name="our_toppers">Toppers</string>
@@ -1989,7 +1992,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="_15_05_2017" translatable="false">15-05-2017</string>
   <string name="_20_05_2020" translatable="false">20-05-2020</string>
   <string name="your_domain_will_be_automatically_renewed_based_on_your_active_boost_package" translatable="false">Your domain will be automatically renewed based on your active BOOST package</string>
-  <string name="view_in_add_on_store">View in add-on store</string>
+  <string name="view_in_add_on_store">View in Add-ons store</string>
   <string name="your_business_emails" translatable="false">Your Business Emails</string>
   <string name="get_your_own_business_email_to_match_your_custom_domain_custom_email_address_give_business_authority_you_can_have_upto_3_email_addresses_associated_with_your_domain" translatable="false">Get your own business email, to match your custom domain. Custom email address give business authority. You can have upto 3 email addresses associated with your domain.</string>
   <string name="coming_soon" translatable="false">Coming soon...</string>
@@ -2018,6 +2021,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="https_facebook_com">https://facebook.com/</string>
   <string name="save_contact_info">Save contact info</string>
   <string name="digital_brochures">Digital Brochures</string>
+  <string name="digital_brochures_n">Digital brochures</string>
   <string name="looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_digital_brochures_can_turn_out_to_be_the_real_deal_makers_for_you">Looks like this add-on is not added to your current plan. Add it now to start using it. Digital brochures can turn out to be the real deal makers for you.</string>
   <string name="brochure_name">Brochure name</string>
   <string name="basic_info_heading">Basic info</string>
@@ -2253,7 +2257,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="take_action">Take action</string>
   <string name="inorganic_add_on_unavailable">Inorganic add-on unavailable</string>
   <string name="looks_like_you_have_not_installed_any_add_on_to_generate_inorganic_traffic_on_different_channels_such_as_facebook_ads_or_google_adwards">Looks like you have not installed any add-on to generate inorganic traffic on different channels such as Facebook Ads or Google Adwards.</string>
-  <string name="visit_from_a_desktop_to_explore_and_install_related_add_ons_to_see_inorganic_traffic_leads">Visit from a desktop to explore and install related add-ons to see inorganic traffic/leads</string>
+  <string name="visit_from_a_desktop_to_explore_and_install_related_add_ons_to_see_inorganic_traffic_leads">Visit from a desktop to explore and install related Add-ons to see inorganic traffic/leads</string>
   <string name="info">Info</string>
   <string name="accept_payment_via">Accept payment via</string>
   <string name="incomplete_payment_info">Incomplete payment info</string>
@@ -2796,7 +2800,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="accountsettingsfragment">accountSettingsFragment</string>
   <string name="last_payment_status">Last_payment_status</string>
   <string name="last_purchase_order_feature_keys">Last_Purchase_Order_Feature_Keys</string>
-  <string name="refreshing_your_business_dashboard">Refreshing your business dashboard with the digital add-ons you just purchased.</string>
+  <string name="refreshing_your_business_dashboard">Refreshing your business dashboard with the digital Add-ons you just purchased.</string>
   <string name="an_unexpacted_error_occured">An unexpected error occured.</string>
   <string name="auth_failed_please_try_again_later">Authentication failed. Please try later.</string>
   <string name="loading_data">Loading data...</string>
@@ -2806,7 +2810,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="post_image_uploading_error" translatable="false">Post image uploading error!</string>
   <string name="title_test_bitmap_array">Title test bitmap array</string>
   <string name="keyboard_analytics">Keyword Analytics</string>
-  <string name="from_a_desktop_to_explore_and_install_related_add_ons">\" from a desktop to explore and install related add-ons to see inorganic traffic/leads\"</string>
+  <string name="from_a_desktop_to_explore_and_install_related_add_ons">\" from a desktop to explore and install related Add-ons to see inorganic traffic/leads\"</string>
   <string name="to_enable_google_wildfire_with_us">To enable Google WildFire with us</string>
   <string name="to_enable_facebook_wildfire_with_us">To enable Facebook WildFire with us</string>
   <string name="facebook_ads">Facebook Ads</string>
@@ -3061,7 +3065,8 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="book_a_new_domain_n">Book a new domain</string>
   <string name="or_n">--- or ---</string>
   <string name="domain_is_a_great_first_step_towards_building_your_brand_on_web_n">Domain is a great first step towards building your brand on web.</string>
-  <string name="boost_keyboard_themes_n">Boost Keyboard Themes</string>
+  <string name="boost_keyboard_themes_n">Boost keyboard themes</string>
+  <string name="seasional_offer_n">Seasonal Offers</string>
 
   <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
   <!--    <string name="ir_statusBarColor">#ffb900</string>-->

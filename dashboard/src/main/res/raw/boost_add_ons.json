@@ -960,7 +960,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -1733,7 +1733,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -2506,7 +2506,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -2882,7 +2882,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -3258,7 +3258,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -3648,7 +3648,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"

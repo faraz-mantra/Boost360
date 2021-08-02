@@ -199,11 +199,11 @@ public class OrderAnalyticsFragment extends Fragment {
                     colors.add(Color.parseColor("#96c800"));
                     break;
                 case 1:
-                    tvTitle.setText("COD " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toUpperCase());
+                    tvTitle.setText("COD " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toLowerCase());
                     calculateOrders("COD");
                     break;
                 case 2:
-                    tvTitle.setText("ONLINE PAYMENT " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toUpperCase());
+                    tvTitle.setText("Online payment " + Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toLowerCase());
                     calculateOrders("ONLINEPAYMENT");
                     break;
             }

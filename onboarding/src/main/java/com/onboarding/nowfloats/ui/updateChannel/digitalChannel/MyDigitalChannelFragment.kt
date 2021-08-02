@@ -1,8 +1,8 @@
 package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.SpannableString
@@ -12,6 +12,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.view.ContextThemeWrapper
 import com.framework.base.BaseResponse
@@ -56,6 +57,7 @@ import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 import io.reactivex.Completable
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
 
@@ -420,7 +422,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     }
   }
 
-  @SuppressLint("SetTextI18n")
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     val channel = item as ChannelModel
     when (actionType) {
@@ -428,11 +429,12 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         if (channel.isFacebookShop()) {
           val s = SpannableString(resources.getString(R.string.fp_shop_awaited_desc))
           Linkify.addLinks(s, Linkify.ALL)
-          AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
-            .setTitle(getString(R.string.fp_shop_awaited_title))
-            .setMessage(s)
-            .setPositiveButton(resources.getString(R.string.okay), null).show()
-            .findViewById<TextView>(android.R.id.message).movementMethod = LinkMovementMethod.getInstance()
+          val builder = AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
+          builder.setTitle(getString(R.string.fp_shop_awaited_title)).setMessage(s).setPositiveButton(resources.getString(R.string.okay), null)
+          val alert: AlertDialog = builder.create()
+          alert.show()
+          alert.findViewById<TextView>(android.R.id.message).movementMethod = LinkMovementMethod.getInstance()
+          alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorAccentLight))
           return
         }
         listDisconnect?.map {
