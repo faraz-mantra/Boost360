@@ -45,9 +45,11 @@ import com.framework.utils.roundToFloat
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
 import com.framework.webengageconstant.*
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.iid.FirebaseInstanceId
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
+import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.webengage.sdk.android.WebEngage
 import com.zopim.android.sdk.api.ZopimChat
@@ -108,6 +110,27 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     session?.initializeWebEngageLogin()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
+
+    //registerFirebaseToken()
+  }
+
+  private fun registerFirebaseToken() {
+    viewModel.getFirebaseToken().observe(this,{
+      val response = it as FirebaseTokenResponse
+      val token = response.Result?:""
+      Log.i(TAG, "registerFirebaseToken: "+token)
+      FirebaseAuth.getInstance().signInWithCustomToken(token).addOnCompleteListener(this) { task ->
+        if (task.isSuccessful) {
+          // Sign in success, update UI with the signed-in user's information
+          Log.d(TAG, "signInWithCustomToken:success")
+
+        } else {
+          // If sign in fails, display a message to the user.
+          Log.w(TAG, "signInWithCustomToken:failure", task.exception)
+
+        }
+      }
+    })
   }
 
   private fun UserSessionManager.initializeWebEngageLogin() {

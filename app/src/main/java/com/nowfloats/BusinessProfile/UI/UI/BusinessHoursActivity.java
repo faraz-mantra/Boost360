@@ -726,4 +726,11 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
         super.onDestroy();
         bus.unregister(this);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        bus.unregister(this);
+
+    }
 }
