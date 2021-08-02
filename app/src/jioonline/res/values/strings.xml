@@ -384,7 +384,7 @@
     <item>Change password</item>
     <item>Log out</item>
   </string-array>
-  <string name="boost_extension">JioOnline extensions</string>
+  <string name="boost_extension">JioOnline Extensions</string>
   <string name="enable_boost_keyboard">Enable business keyboard</string>
   <string name="about">About JioOnline</string>
   <string name="boost_payment_gateway">JioOnline payment gateway</string>
