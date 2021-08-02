@@ -81,18 +81,24 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.REVIEW_SPA_DETAILS -> R.style.AppThemeReviewAndConfirm
-      FragmentType.CREATE_NEW_BOOKING,
-      FragmentType.CREATE_NEW_BOOKING_PAGE_2,
-      -> R.style.AppTheme_Order_create
-      FragmentType.CREATE_APPOINTMENT_VIEW,
-      FragmentType.APPOINTMENT_DETAIL_VIEW,
+
       FragmentType.CREATE_NEW_ORDER,
-      FragmentType.ADD_CUSTOMER,
-      FragmentType.ADD_PRODUCT,
-      FragmentType.BILLING_DETAIL,
+      FragmentType.APPOINTMENT_DETAIL_VIEW,
       FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
       FragmentType.ORDER_DETAIL_VIEW,
       -> R.style.AppTheme_Order_create_appointment
+
+      FragmentType.CREATE_NEW_BOOKING,
+      FragmentType.CREATE_NEW_BOOKING_PAGE_2,
+      -> R.style.AppTheme_Order_create
+
+      FragmentType.CREATE_APPOINTMENT_VIEW,
+      FragmentType.CREATE_SPA_APPOINTMENT,
+      FragmentType.ADD_PRODUCT,
+      FragmentType.ADD_CUSTOMER,
+      FragmentType.BILLING_DETAIL
+      -> R.style.Add_Order_create_appointment
+
       else -> super.customTheme()
     }
   }

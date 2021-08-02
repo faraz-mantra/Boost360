@@ -20,8 +20,7 @@ import com.onboarding.nowfloats.viewmodel.CityViewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CitySearchDialog : BaseDialogFragment<DialogCitySearchBinding, CityViewModel>(),
-  RecyclerItemClickListener {
+class CitySearchDialog : BaseDialogFragment<DialogCitySearchBinding, CityViewModel>(), RecyclerItemClickListener {
 
   private var cityList = ArrayList<CityDataModel>()
   private var cityListFilter = ArrayList<CityDataModel>()
@@ -37,7 +36,7 @@ class CitySearchDialog : BaseDialogFragment<DialogCitySearchBinding, CityViewMod
   }
 
   override fun getTheme(): Int {
-    return R.style.MaterialDialogThemeFull
+    return R.style.CityDialogThemeFull
   }
 
   override fun onCreateView() {
