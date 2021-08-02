@@ -10,12 +10,13 @@
     <item name="colorPrimary">@color/primaryColor</item>
     <item name="colorPrimaryDark">@color/primaryColorDark</item>
     <item name="colorAccent">@color/primaryColor</item>
-    <item name="colorControlActivated">@color/accentColor</item>
-    <item name="colorControlHighlight">@color/accentColor</item>
+    <item name="colorControlActivated">@color/black_4a4a4a</item>
+    <item name="colorControlHighlight">@color/black_4a4a4a</item>
     <item name="colorControlNormal">#eeeeee</item>
     <item name="android:windowDisablePreview">true</item>
     <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
+    <item name="colorSecondary">@color/black_4a4a4a</item>
     <item name="android:alertDialogTheme">@style/AppAlertDialogN</item>
   </style>
 
@@ -76,8 +77,8 @@
     <item name="colorPrimary">@color/primaryColor</item>
     <item name="colorPrimaryDark">@color/primaryColorDark</item>
     <item name="colorAccent">@color/primaryColor</item>
-    <item name="colorControlActivated">@color/accentColor</item>
-    <item name="colorControlHighlight">@color/accentColor</item>
+    <item name="colorControlActivated">@color/black_4a4a4a</item>
+    <item name="colorControlHighlight">@color/black_4a4a4a</item>
     <item name="colorControlNormal">#eeeeee</item>
     <item name="android:windowDisablePreview">true</item>
     <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
@@ -145,8 +146,8 @@
     <item name="fab_hideAnimation">@anim/jump_to_down</item>
     <item name="fab_shadowColor">#444</item>
     <item name="fab_colorNormal">@color/primaryColor</item>
-    <item name="fab_colorPressed">#F2AB00</item>
-    <item name="fab_colorRipple">#D99200</item>
+    <item name="fab_colorPressed">@color/primaryColor</item>
+    <item name="fab_colorRipple">@color/primaryColorDark</item>
   </style>
 
   <style name="Theme.Transparent" parent="android:Theme">
