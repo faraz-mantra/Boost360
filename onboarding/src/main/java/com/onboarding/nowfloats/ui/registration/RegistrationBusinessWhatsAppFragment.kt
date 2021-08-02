@@ -18,8 +18,7 @@ import com.onboarding.nowfloats.model.channel.request.ChannelActionData
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
-class RegistrationBusinessWhatsAppFragment :
-  BaseRegistrationFragment<FragmentRegistrationBusinessWhatsappBinding>() {
+class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWhatsappBinding>() {
 
   private var whatsAppData: ChannelActionData = ChannelActionData()
   private var whatsAppAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
@@ -105,7 +104,7 @@ class RegistrationBusinessWhatsAppFragment :
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.confirmBtn -> if (binding?.number?.length() == 10) gotoBusinessApiCallDetails()
+      binding?.confirmBtn -> if (ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString()?:"")) gotoBusinessApiCallDetails()
       binding?.skip -> {
         updateInfo()
         gotoBusinessApiCallDetails()

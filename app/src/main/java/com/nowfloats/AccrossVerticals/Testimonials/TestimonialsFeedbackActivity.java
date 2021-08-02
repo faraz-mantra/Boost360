@@ -148,7 +148,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         });
 
         saveButton.setOnClickListener(v -> {
-            if (path != null) {
+            if (path != null && isValide()) {
                 showLoader(getString(R.string.uploading_image_please_wait));
                 new Handler().postDelayed(() -> uploadImageToServer(), 200);
             } else {
@@ -171,6 +171,10 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         reviewTitleLabel.setText(getReviewSecondTitle(session.getFP_AppExperienceCode()));
         reviewDescriptionLabel.setText(getDescTitle(session.getFP_AppExperienceCode()));
 
+    }
+
+    private boolean isValide() {
+        return false;
     }
 
     public void displayData() {

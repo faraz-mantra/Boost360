@@ -26,14 +26,14 @@ class BusinessNameBottomSheet : BaseBottomSheetDialog<BottomSheetBusinessNameBin
   override fun onCreateView() {
     dialog.behavior.isDraggable = false
     setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnPublish)
-    this.businessProfileModel =
-      arguments?.get(IntentConstant.BUSINESS_DETAILS.name) as? BusinessProfileModel
+    this.businessProfileModel = arguments?.get(IntentConstant.BUSINESS_DETAILS.name) as? BusinessProfileModel
     binding?.cetBusinessName?.setText(businessProfileModel?.businessName)
     binding?.cetBusinessName?.setSelection(businessProfileModel?.businessName?.length ?: 0)
+    baseActivity.showKeyBoard(binding?.cetBusinessName)
     binding?.btnPublish?.isEnabled = false
     binding?.ctvBusinessNameCount?.text = "${binding?.cetBusinessName?.text?.length}/40"
     binding?.cetBusinessName?.afterTextChanged { updateText(it) }
-    baseActivity.showKeyBoard(binding?.cetBusinessName)
+ 
   }
 
   private fun updateText(s: String) {

@@ -269,7 +269,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="@string/boost_keyboard"
+            android:text="@string/boost_keyboard_n"
             android:textColor="@color/gray"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView5"

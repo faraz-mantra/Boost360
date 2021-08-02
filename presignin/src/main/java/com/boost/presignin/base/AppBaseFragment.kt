@@ -88,13 +88,10 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     val s = SpannableString(resources.getString(R.string.need_help_desc))
     Linkify.addLinks(s, Linkify.ALL)
     val alertDialog = AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
-    alertDialog.setTitle(getString(R.string.need_help_title)).setMessage(s)
-      .setPositiveButton(resources.getString(R.string.okay), null)
+    alertDialog.setTitle(getString(R.string.need_help_title)).setMessage(s).setPositiveButton(resources.getString(R.string.okay), null)
     val alert = alertDialog.create()
     alert.show()
-    alert.findViewById<TextView>(android.R.id.message)?.movementMethod =
-      LinkMovementMethod.getInstance()
-    alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorAccent))
+    alert.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
+    alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorAccentLight))
   }
-
 }

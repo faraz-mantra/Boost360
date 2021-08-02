@@ -79,7 +79,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
 
     private void onFeatureLogoAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData().getMetricdetail() == null) return;
+        if (instance.getDrScoreData()==null || instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_add_featured_image_video(isAdded);
         instance.updateDocument();
     }

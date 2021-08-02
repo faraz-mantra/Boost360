@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.framework.views.customViews.CustomEditText;
 import com.framework.views.fabButton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.nowfloats.Analytics_Screen.API.SubscriberApis;
@@ -291,7 +292,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
 
     private void subscriberDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_subscriber, null);
-        final EditText email = (EditText) view.findViewById(R.id.edittext);
+        final CustomEditText email = (CustomEditText) view.findViewById(R.id.edittext);
         new MaterialDialog.Builder(this)
                 .customView(view, false)
                 .positiveText("Add")
