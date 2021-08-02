@@ -50,6 +50,12 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
     binding?.webview?.settings?.allowFileAccess = true
     binding?.webview?.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
     binding?.webview?.webChromeClient = WebChromeClient()
+    val webSettings = binding?.webview?.settings
+    webSettings?.javaScriptCanOpenWindowsAutomatically = true
+    webSettings?.setSupportMultipleWindows(true)
+    webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
+    webSettings?.domStorageEnabled = true
+    
     binding?.webview?.webViewClient = object : WebViewClient() {
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         binding?.progressBar?.visible()
