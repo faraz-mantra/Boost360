@@ -23,8 +23,8 @@
   </style>
 
   <style name="DashboardThemeNew" parent="DashboardTheme">
-    <item name="colorPrimary">@color/black_4a4a4a</item>
-    <item name="colorPrimaryDark">@color/black_4a4a4a</item>
+    <item name="colorPrimary">@color/black_4a4a4a_jio</item>
+    <item name="colorPrimaryDark">@color/black_4a4a4a_jio</item>
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
@@ -56,7 +56,6 @@
     <item name="android:drawableEnd">@drawable/ic_edit_business</item>
     <item name="android:textColor">@color/warm_grey_10</item>
     <item name="android:textColorHint">@color/primary_grey</item>
-    <item name="android:textCursorDrawable">@drawable/color_cursor</item>
   </style>
 
   <style name="BusinessProfile_Text_Title">

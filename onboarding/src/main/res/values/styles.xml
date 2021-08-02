@@ -101,12 +101,11 @@
   </style>
 
   <style name="Onboarding.TextFieldStyle">
-    <item name="backgroundTint">@color/edittext_focusable</item>
-    <!--    <item name="backgroundTint">#f89f18</item>-->
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:textColor">@color/black_4a4a4a</item>
     <item name="android:layout_marginBottom">@dimen/size_10</item>
+    <item name="backgroundTint">@color/edittext_color</item>
     <item name="textType">HEADING_7</item>
     <item name="android:maxLines">1</item>
     <item name="android:singleLine">true</item>

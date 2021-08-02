@@ -70,6 +70,7 @@
             android:completionThreshold="0"
             android:gravity="center_vertical"
             android:hint="@string/select_service"
+            android:textCursorDrawable="@drawable/cursor_drawable"
             android:inputType="textNoSuggestions"
             android:singleLine="true"
             app:drawableEndCompat="@drawable/ic_arrow_down_orange"
