@@ -62,9 +62,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun customTheme(): Int? {
     return when (type) {
-      FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
-      FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_LISTING,
-      -> R.style.CatalogTheme
+      FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_LISTING -> R.style.CatalogTheme
+      FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION -> R.style.AddCatalogTheme
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> R.style.CatalogTheme_Information
       else -> super.customTheme()
     }
@@ -77,7 +76,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
-      FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY, -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY,
+      -> ContextCompat.getColor(this, R.color.colorPrimary)
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> ContextCompat.getColor(this, R.color.color_primary)
       else -> super.getToolbarBackgroundColor()
     }
@@ -115,7 +115,6 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       else -> super.getToolbarTitle()
     }
   }
-
 
 
   private fun shouldAddToBackStack(): Boolean {

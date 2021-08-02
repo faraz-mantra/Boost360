@@ -18,8 +18,7 @@ import com.onboarding.nowfloats.model.channel.request.ChannelActionData
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
-class RegistrationBusinessWhatsAppFragment :
-  BaseRegistrationFragment<FragmentRegistrationBusinessWhatsappBinding>() {
+class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWhatsappBinding>() {
 
   private var whatsAppData: ChannelActionData = ChannelActionData()
   private var whatsAppAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null

@@ -20,8 +20,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.views.customViews.CustomToolbar
 import java.util.*
 
-open class UpdateBusinessContainerActivity :
-  AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
   private var session: UserSessionManager? = null
@@ -46,6 +45,12 @@ open class UpdateBusinessContainerActivity :
     setFragment()
   }
 
+  override fun customTheme(): Int? {
+    return when(type){
+      FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT-> R.style.AddUpdateTheme
+      else->return super.customTheme()
+    }
+  }
 
   override fun getToolbar(): CustomToolbar? {
     return binding?.appBarLayout?.toolbar
@@ -73,10 +78,7 @@ open class UpdateBusinessContainerActivity :
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getDrawable(
-        this,
-        R.drawable.ic_back_arrow_new
-      )
+      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
       else -> super.getNavigationIcon()
     }
   }
