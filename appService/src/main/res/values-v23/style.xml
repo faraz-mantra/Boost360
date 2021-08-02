@@ -5,7 +5,7 @@
     <item name="colorPrimary">@color/white</item>
     <item name="colorPrimaryDark">@color/white</item>
     <item name="android:windowLightStatusBar">true</item>
-    <item name="colorSecondary">@color/colorAccent</item>
+    <item name="colorSecondary">@color/black_4a4a4a</item>
     <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
 </resources>
