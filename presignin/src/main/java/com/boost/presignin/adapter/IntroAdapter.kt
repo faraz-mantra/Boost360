@@ -1,5 +1,6 @@
 package com.boost.presignin.adapter
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -12,11 +13,13 @@ class IntroAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle,
     val playPauseState: (state: Boolean) -> Unit,
 ) : FragmentStateAdapter(fragmentManager, lifecycle) {
 
+  private val TAG = "IntroAdapter"
   override fun getItemCount(): Int {
     return items.size
   }
 
   override fun createFragment(position: Int): Fragment {
+    Log.i(TAG, "createFragment: ")
     return PreSignInIntroFragment.newInstance(items[position], position).apply {
       this.onSkip = skip
       this.playPause = playPauseState

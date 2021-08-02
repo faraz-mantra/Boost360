@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.home
 
+import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
@@ -17,6 +18,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
@@ -45,7 +48,7 @@ import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.packages.PackageFragmentNew
 import com.boost.upgrades.ui.webview.WebViewFragment
-import com.boost.upgrades.utils.Constants
+import com.boost.upgrades.utils.*
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.COMPARE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MARKET_OFFER_FRAGMENT
@@ -53,16 +56,16 @@ import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.NEW_PACKAGE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PACKAGE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
-import com.boost.upgrades.utils.HorizontalMarginItemDecoration
-import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
-import com.boost.upgrades.utils.WebEngageController
+import com.dashboard.utils.DeepLinkUtil
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.inventoryorder.utils.DynamicLinkParams
+import com.inventoryorder.utils.DynamicLinksManager
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -103,6 +106,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     var originalBundlePrice = 0
     var featuresList: List<FeaturesModel>? = null
     private var session: UserSessionManager? = null
+    private var deepLinkUtil: DeepLinkUtil? = null
+
 
     companion object {
         fun newInstance() = HomeFragment()
@@ -137,6 +142,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         cart_list = localStorage.getCartItems()
         prefs = SharedPrefs(activity as UpgradeActivity)
         session = UserSessionManager(requireActivity())
+        session?.let { deepLinkUtil = DeepLinkUtil(requireActivity() as AppCompatActivity, it) }
+
         return root
     }
 
@@ -661,6 +668,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
         viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
             if (it != null && it.size > 0) {
+//                packageInCartStatus = false
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
                 badge.setText(badgeNumber.toString())
@@ -676,6 +684,19 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     updateFeatureDealsViewPager(list, it)
                 }
             }
+
+            /*if (viewModel.allBundleResult.value != null){
+                var list = viewModel.allBundleResult.value!!
+                if (list.size > 0){
+                    for (item in list){
+                        it.forEach {
+                            if(it.item_id.equals(item.bundle_id)){
+                                packageInCartStatus = true
+                            }
+                        }
+                    }
+                }
+            }*/
 
             /*if (viewModel.allBundleResult.value != null) {
 
@@ -708,6 +729,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
         viewModel.cartResultBack().observe(this, androidx.lifecycle.Observer {
             if (it != null && it.size > 0) {
+//                packageInCartStatus = false
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
                 badge.setText(badgeNumber.toString())
@@ -860,6 +882,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         viewModel.getFeedBackLink().observe(this, androidx.lifecycle.Observer {
             Log.e("getFeedBackLink", it.toString())
             feedBackLink = it
+        })
+
+        viewModel.getBundleExxists().observe(this,androidx.lifecycle.Observer{
+            Log.d("getBundleExxists", it.toString())
         })
     }
 
@@ -1083,6 +1109,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 //        WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, CLICK, item?.name
 //                ?: NO_EVENT_VALUE)
 
+
+
         val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
         item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
         item!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
@@ -1092,11 +1120,11 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
         WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, event_attributes)
 
-      /*  val packageFragment = PackageFragment.newInstance()
-        val args = Bundle()
-        args.putString("bundleData", Gson().toJson(item))
-        packageFragment.arguments = args
-        (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)*/
+        /*  val packageFragment = PackageFragment.newInstance()
+          val args = Bundle()
+          args.putString("bundleData", Gson().toJson(item))
+          packageFragment.arguments = args
+          (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)*/
         val packageFragment = PackageFragmentNew.newInstance()
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
@@ -1132,12 +1160,13 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         } else {
             if (!item!!.cta_bundle_identifier.isNullOrBlank()) {
                 if (item!!.cta_bundle_identifier != null) {
-                    if(item.cta_bundle_identifier.contains("#")){
+                    if (item.cta_bundle_identifier.contains("#")) {
 
-                        var cataCategoryIdentifier = item.cta_bundle_identifier.trim().split("#").toTypedArray()
+                        var cataCategoryIdentifier =
+                            item.cta_bundle_identifier.trim().split("#").toTypedArray()
                         var bundleCategory = cataCategoryIdentifier.get(0)
                         var bundleID = cataCategoryIdentifier.get(1)
-                        if((activity as UpgradeActivity).experienceCode.equals(bundleCategory)){
+                        if ((activity as UpgradeActivity).experienceCode.equals(bundleCategory)) {
                             CompositeDisposable().add(
                                 AppDatabase.getInstance(requireActivity().application)!!
                                     .bundlesDao()
@@ -1155,11 +1184,12 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                                     .subscribe({
                                                         var selectedBundle: Bundles? = null
                                                         var item = it
-                                                        val temp = Gson().fromJson<List<IncludedFeature>>(
-                                                            item.included_features,
-                                                            object :
-                                                                TypeToken<List<IncludedFeature>>() {}.type
-                                                        )
+                                                        val temp =
+                                                            Gson().fromJson<List<IncludedFeature>>(
+                                                                item.included_features,
+                                                                object :
+                                                                    TypeToken<List<IncludedFeature>>() {}.type
+                                                            )
                                                         selectedBundle = Bundles(
                                                             bundleID,
                                                             temp,
@@ -1170,12 +1200,14 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                                             item.target_business_usecase,
                                                             Gson().fromJson<List<String>>(
                                                                 item.exclusive_to_categories,
-                                                                object : TypeToken<List<String>>() {}.type
+                                                                object :
+                                                                    TypeToken<List<String>>() {}.type
                                                             ),
                                                             null,
                                                             item.desc
                                                         )
-                                                        val packageFragment = PackageFragment.newInstance()
+                                                        val packageFragment =
+                                                            PackageFragment.newInstance()
                                                         val args = Bundle()
                                                         args.putString(
                                                             "bundleData",
@@ -1203,88 +1235,110 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                     })
                             )
                         }
-                        Log.d("bundleCategory", " bundleCategory: "+ bundleCategory + " bundleID: "+ bundleID + " "+ (activity as UpgradeActivity).experienceCode)
-                    }else{
-                    CompositeDisposable().add(
-                        AppDatabase.getInstance(requireActivity().application)!!
-                            .bundlesDao()
-                            .checkBundleKeyExist(item!!.cta_bundle_identifier)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({
-                                if (it == 1) {
-                                    CompositeDisposable().add(
-                                        AppDatabase.getInstance(requireActivity().application)!!
-                                            .bundlesDao()
-                                            .getBundleItemById(item!!.cta_bundle_identifier)
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe({
-                                                var selectedBundle: Bundles? = null
-                                                var item = it
+                        Log.d(
+                            "bundleCategory",
+                            " bundleCategory: " + bundleCategory + " bundleID: " + bundleID + " " + (activity as UpgradeActivity).experienceCode
+                        )
+                    } else {
+                        CompositeDisposable().add(
+                            AppDatabase.getInstance(requireActivity().application)!!
+                                .bundlesDao()
+                                .checkBundleKeyExist(item!!.cta_bundle_identifier)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({
+                                    if (it == 1) {
+                                        CompositeDisposable().add(
+                                            AppDatabase.getInstance(requireActivity().application)!!
+                                                .bundlesDao()
+                                                .getBundleItemById(item!!.cta_bundle_identifier)
+                                                .subscribeOn(Schedulers.io())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe({
+                                                    var selectedBundle: Bundles? = null
+                                                    var item = it
 
-                                                val temp = Gson().fromJson<List<IncludedFeature>>(
-                                                    item.included_features,
-                                                    object :
-                                                        TypeToken<List<IncludedFeature>>() {}.type
-                                                )
-                                                selectedBundle = Bundles(
-                                                    item.bundle_id,
-                                                    temp,
-                                                    item.min_purchase_months,
-                                                    item.name,
-                                                    item.overall_discount_percent,
-                                                    PrimaryImage(item.primary_image),
-                                                    item.target_business_usecase,
-                                                    Gson().fromJson<List<String>>(
-                                                        item.exclusive_to_categories,
-                                                        object : TypeToken<List<String>>() {}.type
-                                                    ),
-                                                    null,
-                                                    item.desc
-                                                )
-                                                val packageFragment = PackageFragment.newInstance()
-                                                val args = Bundle()
-                                                args.putString(
-                                                    "bundleData",
-                                                    Gson().toJson(selectedBundle)
-                                                )
-                                                packageFragment.arguments = args
-                                                (activity as UpgradeActivity).addFragment(
-                                                    packageFragment,
-                                                    PACKAGE_FRAGMENT
-                                                )
+                                                    val temp =
+                                                        Gson().fromJson<List<IncludedFeature>>(
+                                                            item.included_features,
+                                                            object :
+                                                                TypeToken<List<IncludedFeature>>() {}.type
+                                                        )
+                                                    selectedBundle = Bundles(
+                                                        item.bundle_id,
+                                                        temp,
+                                                        item.min_purchase_months,
+                                                        item.name,
+                                                        item.overall_discount_percent,
+                                                        PrimaryImage(item.primary_image),
+                                                        item.target_business_usecase,
+                                                        Gson().fromJson<List<String>>(
+                                                            item.exclusive_to_categories,
+                                                            object :
+                                                                TypeToken<List<String>>() {}.type
+                                                        ),
+                                                        null,
+                                                        item.desc
+                                                    )
+                                                    val packageFragment =
+                                                        PackageFragment.newInstance()
+                                                    val args = Bundle()
+                                                    args.putString(
+                                                        "bundleData",
+                                                        Gson().toJson(selectedBundle)
+                                                    )
+                                                    packageFragment.arguments = args
+                                                    (activity as UpgradeActivity).addFragment(
+                                                        packageFragment,
+                                                        PACKAGE_FRAGMENT
+                                                    )
 
-                                            }, {
-                                                it.printStackTrace()
-                                            })
-                                    )
-                                } else {
-                                    Toasty.error(
-                                        requireContext(),
-                                        "Bundle Not Available To This Account",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
-                            }, {
-                                it.printStackTrace()
-                            })
-                    )
-                }
+                                                }, {
+                                                    it.printStackTrace()
+                                                })
+                                        )
+                                    } else {
+                                        Toasty.error(
+                                            requireContext(),
+                                            "Bundle Not Available To This Account",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                }, {
+                                    it.printStackTrace()
+                                })
+                        )
+                    }
                 }
             } else {
                 if (!item!!.cta_web_link.isNullOrBlank()) {
                     if (item!!.cta_web_link != null) {
 
-                        val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
-                        val args = Bundle()
-                        args.putString("title", "")
-                        args.putString("link", item!!.cta_web_link)
-                        webViewFragment.arguments = args
-                        (activity as UpgradeActivity).addFragment(
-                            webViewFragment,
-                            Constants.WEB_VIEW_FRAGMENT
-                        )
+                        if (item!!.cta_web_link.contains("com.biz2.nowfloats.keyboard.home")) {
+
+                            val deepHashMap: HashMap<DynamicLinkParams, String> =
+                                DynamicLinksManager().getURILinkParams(Uri.parse(item.cta_web_link))
+                            if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
+                                val viewType = deepHashMap[DynamicLinkParams.viewType]
+                                val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
+                                deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
+                            } else deepLinkUtil?.deepLinkPage(item.cta_web_link!!, "", false)
+
+                        } else {
+
+                            val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
+                            val args = Bundle()
+                            args.putString("title", "")
+                            args.putString("link", item!!.cta_web_link)
+                            webViewFragment.arguments = args
+                            (activity as UpgradeActivity).addFragment(
+                                webViewFragment,
+                                Constants.WEB_VIEW_FRAGMENT
+                            )
+
+                        }
+
+
                     }
                 } else if (!item.coupon_code.isNullOrBlank() || !item.cta_offer_identifier.isNullOrBlank()) {
                     if (item.coupon_code != null || item.cta_offer_identifier != null) {
@@ -1519,18 +1573,38 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         video_sub_desc.text = videoItem.desc
     }
 
-    override fun onPackageAddToCart(item: Bundles?) {
-        Log.v("onPackageAddToCart", " " + item.toString())
+    override fun onPackageAddToCart(item: Bundles?,imageView: ImageView) {
+        Log.d("onPackageAddToCart", " " + item.toString())
 //        var bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
 //        var bundleData =  Gson().fromJson<PackageBundles>(item.toString(), object : TypeToken<PackageBundles>() {}.type)
+
         if (!packageInCartStatus) {
             if (item != null) {
 
-                val itemIds = arrayListOf<String>()
+                CompositeDisposable().add(
+                    AppDatabase.getInstance(requireActivity().application)!!
+                        .cartDao()
+                        .checkCartBundleExist(item._kid)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            if (it == 0) {
+                                makeFlyAnimation(imageView)
+                                callBundleCart(item,imageView)
+                            }else{
+
+                            }
+                        }, {
+//                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                        })
+                )
+
+//                makeFlyAnimation(imageView)
+
+                /*val itemIds = arrayListOf<String>()
                 for (i in item.included_features) {
                     itemIds.add(i.feature_code)
                 }
-
                 CompositeDisposable().add(
                     AppDatabase.getInstance(requireActivity().application)!!
                         .featuresDao()
@@ -1563,7 +1637,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
                                 //clear cartOrderInfo from SharedPref to requestAPI again
                                 prefs.storeCartOrderInfo(null)
-                                viewModel.addItemToCartPackage(
+                                viewModel.addItemToCartPackage1(
                                     CartModel(
                                         item!!._kid,
                                         null,
@@ -1618,55 +1692,17 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 //                badge121.setText(badgeNumber.toString())
 //                badge121.visibility = View.VISIBLE
                                 Constants.CART_VALUE = badgeNumber
-                                viewModel.getCartItems()
+//                                viewModel.getCartItems()
                             },
                             {
                                 it.printStackTrace()
 
                             }
                         )
-                )
+                )*/
 
-
-                /* //clear cartOrderInfo from SharedPref to requestAPI again
-                 prefs.storeCartOrderInfo(null)
-                 viewModel.addItemToCartPackage(CartModel(
-                         item!!._kid,
-                         null,
-                         null,
-                         item!!.name,
-                         "",
-                         item!!.primary_image!!.url,
-                         offeredBundlePrice.toDouble(),
-                         originalBundlePrice.toDouble(),
-                         item!!.overall_discount_percent,
-                         1,
-                         if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
-                         "bundles",
-                         null
-                 ))
-                 val event_attributes: HashMap<String, Any> = HashMap()
-                 item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
-                 item!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
-                 event_attributes.put("Package Price", originalBundlePrice)
-                 event_attributes.put("Discounted Price", offeredBundlePrice)
-                 event_attributes.put("Discount %", item!!.overall_discount_percent)
-                 item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                 WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", ADDONS_MARKETPLACE, event_attributes)
-        //                packageInCartStatus = true
-        //                package_submit.background = ContextCompat.getDrawable(
-        //                        requireContext(),
-        //                        R.drawable.added_to_cart_grey
-        //                )
-        //                package_submit.setTextColor(Color.parseColor("#bbbbbb"))
-        //                package_submit.setText(getString(R.string.added_to_cart))
-                 badgeNumber = badgeNumber + 1
-        //                badge121.setText(badgeNumber.toString())
-        //                badge121.visibility = View.VISIBLE
-                 Constants.CART_VALUE = badgeNumber*/
             }
         }
-
     }
 
     /*fun checkBannerDetails(list: ArrayList<PromoBanners>){
@@ -2314,6 +2350,115 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 Toast.LENGTH_LONG
             ).show()
         }
+    }
+
+    private fun makeFlyAnimation(targetView: ImageView) {
+
+        CircleAnimationUtil().attachActivity(activity).setTargetView(targetView).setMoveDuration(600)
+            .setDestView(imageViewCart1).setAnimationListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {}
+                override fun onAnimationEnd(animation: Animator) {
+                    viewModel.getCartItems()
+
+                }
+
+
+                override fun onAnimationCancel(animation: Animator) {}
+                override fun onAnimationRepeat(animation: Animator) {}
+            }).startAnimation()
+
+    }
+
+    fun callBundleCart(item: Bundles, imageView: ImageView){
+        val itemIds = arrayListOf<String>()
+        for (i in item.included_features) {
+            itemIds.add(i.feature_code)
+        }
+        CompositeDisposable().add(
+            AppDatabase.getInstance(requireActivity().application)!!
+                .featuresDao()
+                .getallFeaturesInList(itemIds)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        featuresList = it
+                        var bundleMonthlyMRP = 0
+                        val minMonth: Int =
+                            if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
+
+                        for (singleItem in it) {
+                            for (item in item!!.included_features) {
+                                if (singleItem.feature_code == item.feature_code) {
+                                    bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
+                                }
+                            }
+                        }
+
+                        offeredBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
+                        originalBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
+
+                        if (item!!.overall_discount_percent > 0)
+                            offeredBundlePrice =
+                                originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100)
+                        else
+                            offeredBundlePrice = originalBundlePrice
+
+                        //clear cartOrderInfo from SharedPref to requestAPI again
+                        prefs.storeCartOrderInfo(null)
+                        viewModel.addItemToCartPackage1(
+                            CartModel(
+                                item!!._kid,
+                                null,
+                                null,
+                                item!!.name,
+                                "",
+                                item!!.primary_image!!.url,
+                                offeredBundlePrice.toDouble(),
+                                originalBundlePrice.toDouble(),
+                                item!!.overall_discount_percent,
+                                1,
+                                if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
+                                "bundles",
+                                null
+                            )
+                        )
+                        val event_attributes: HashMap<String, Any> = HashMap()
+                        item!!.name?.let { it1 ->
+                            event_attributes.put(
+                                "Package Name",
+                                it1
+                            )
+                        }
+                        item!!.target_business_usecase?.let { it1 ->
+                            event_attributes.put(
+                                "Package Tag",
+                                it1
+                            )
+                        }
+                        event_attributes.put("Package Price", originalBundlePrice)
+                        event_attributes.put("Discounted Price", offeredBundlePrice)
+                        event_attributes.put("Discount %", item!!.overall_discount_percent)
+                        item!!.min_purchase_months?.let { it1 ->
+                            event_attributes.put(
+                                "Validity",
+                                it1
+                            )
+                        }
+                        WebEngageController.trackEvent(
+                            ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART,
+                            ADDED,
+                            event_attributes
+                        )
+                        badgeNumber = badgeNumber + 1
+                        Constants.CART_VALUE = badgeNumber
+                    },
+                    {
+                        it.printStackTrace()
+
+                    }
+                )
+        )
     }
 
 }

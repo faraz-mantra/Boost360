@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.view.ContextThemeWrapper;
+
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.appservice.model.accountDetails.AccountDetailsResponse;
@@ -319,7 +321,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
     private void showAlertDialog() {
         String str = format(getResources().getString(R.string.error_right_fptag), deepLinkFpTag);
-        new AlertDialog.Builder(this).setMessage(str)
+        new AlertDialog.Builder(new ContextThemeWrapper(this,R.style.AlertDialogCustom)).setMessage(str)
                 .setCancelable(false)
                 .setPositiveButton(R.string.ok, (dialog, i) -> {
                     dialog.dismiss();

@@ -112,8 +112,8 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
                         .customView(R.layout.exit_dialog, true)
                         .positiveText("Delete")
                         .negativeText("Cancel")
-                        .positiveColorRes(R.color.primaryColor)
-                        .negativeColorRes(R.color.light_gray)
+                        .negativeColorRes(R.color.black_4a4a4a)
+                        .positiveColorRes(R.color.colorAccent_jio)
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
