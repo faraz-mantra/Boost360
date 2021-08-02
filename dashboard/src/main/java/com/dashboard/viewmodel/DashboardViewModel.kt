@@ -17,10 +17,7 @@ import com.inventoryorder.rest.repositories.ApiWithFloatRepository
 import com.inventoryorder.rest.repositories.InventoryOrderRepository
 import com.onboarding.nowfloats.model.nfxProcess.NFXProcessRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
-import com.onboarding.nowfloats.rest.repositories.CategoryRepository
-import com.onboarding.nowfloats.rest.repositories.ChannelRepository
-import com.onboarding.nowfloats.rest.repositories.UploadImageRepository
-import com.onboarding.nowfloats.rest.repositories.WhatsAppRepository
+import com.onboarding.nowfloats.rest.repositories.*
 import okhttp3.RequestBody
 import org.json.JSONObject
 import java.io.File
@@ -29,6 +26,10 @@ class DashboardViewModel : BaseViewModel() {
 
   fun getCategories(context: Context): LiveData<BaseResponse> {
     return CategoryRepository.getCategories(context).toLiveData()
+  }
+
+  fun getFirebaseToken(): LiveData<BaseResponse> {
+    return GoogleAuthRepository.getFirebaseAuthToken().toLiveData()
   }
 
   @Deprecated("NFX token API")
