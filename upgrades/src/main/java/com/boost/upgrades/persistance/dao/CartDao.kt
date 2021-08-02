@@ -39,4 +39,7 @@ interface CartDao {
 
   @Query("SELECT EXISTS(SELECT * FROM Cart WHERE boost_widget_key IS NULL )")
   fun checkCartFeatureTableKeyExist(): Single<Int>
+
+  @Query("SELECT EXISTS(SELECT * FROM Cart WHERE item_id=:kid )")
+  fun checkCartBundleExist(kid: String): Single<Int>
 }
