@@ -33,7 +33,7 @@
   </style>
 
   <style name="BottomDialog" parent="BottomSheetTheme">
-
+    <item name="android:windowSoftInputMode">adjustResize</item>
     <item name="android:textColorPrimary">@color/black_2A2A2A</item>
   </style>
 
