@@ -250,7 +250,7 @@ public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked
             emptyView();
         }
     }
-    private void removeZeroCaseFragment() {
+    public void removeZeroCaseFragment() {
 //        if (zeroCaseFragment.isVisible()) {
             getParentFragmentManager().popBackStack();
             getParentFragmentManager().beginTransaction().detach(zeroCaseFragment).commit();
