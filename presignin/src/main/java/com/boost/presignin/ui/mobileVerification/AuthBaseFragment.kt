@@ -24,8 +24,7 @@ import com.framework.pref.saveAccessTokenAuth
 import com.framework.webengageconstant.*
 import java.util.HashMap
 
-abstract class AuthBaseFragment<Binding : ViewDataBinding> :
-  AppBaseFragment<Binding, LoginSignUpViewModel>() {
+abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Binding, LoginSignUpViewModel>() {
 
   protected lateinit var session: UserSessionManager
 

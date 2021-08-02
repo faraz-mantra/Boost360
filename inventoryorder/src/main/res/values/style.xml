@@ -5,17 +5,17 @@
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/white</item>
-    <item name="colorControlNormal">@color/colorAccent</item>
-    <item name="android:colorControlActivated">@color/colorAccent</item>
+    <item name="colorControlNormal">@color/white</item>
     <item name="android:windowAnimationStyle">@null</item>
     <item name="android:windowDisablePreview">true</item>
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
-    <item name="colorSecondary">@color/colorAccent</item>
+    <item name="colorSecondary">@color/black_4a4a4a</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="android:homeAsUpIndicator">@drawable/ic_arrow_left_30</item>
     <item name="searchViewStyle">@style/SearchView</item>
     <item name="colorSurface">@color/white</item>
+    <item name="editTextStyle">@style/ComposeEditText</item>
     <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
 
@@ -23,22 +23,24 @@
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
-    <item name="android:colorControlNormal">@color/colorAccent</item>
-    <item name="android:colorControlActivated">@color/colorAccent</item>
     <item name="android:windowAnimationStyle">@null</item>
     <item name="android:windowDisablePreview">true</item>
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
-    <item name="colorSecondary">@color/colorAccent</item>
+    <item name="colorSecondary">@color/black_4a4a4a</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="android:homeAsUpIndicator">@drawable/ic_arrow_left_30</item>
     <item name="searchViewStyle">@style/SearchView</item>
     <item name="colorSurface">@color/white</item>
     <item name="android:windowIsFloating">false</item>
     <item name="android:timePickerStyle">@style/MyDatePicker</item>
+    <item name="editTextStyle">@style/ComposeEditText</item>
     <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
   </style>
-
+  <style name="Add.Order.create_appointment" parent="AppTheme.Order.create_appointment">
+    <item name="colorAccent">@color/black_4a4a4a</item>
+    <item name="colorSecondary">@color/black_4a4a4a</item>
+  </style>
   <style name="AppThemeReviewAndConfirm">
     <item name="bottomSheetDialogTheme">@style/DialogStyle</item>
   </style>
@@ -50,8 +52,8 @@
   </style>
 
   <style name="AppTheme.Order.create" parent="AppTheme.Order">
-    <item name="colorAccent">@color/colorAccent</item>
     <item name="android:timePickerStyle">@style/MyDatePicker</item>
+    <item name="colorAccent">@color/black_4a4a4a</item>
   </style>
 
   <style name="Theme.TransparentPickInventory" parent="android:Theme">

@@ -16,7 +16,6 @@ import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
-import com.framework.smsVerification.AppSignatureHashHelper
 import com.framework.utils.makeLinks
 import com.framework.webengageconstant.*
 
@@ -113,8 +112,6 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
       }
     }
-
-    val hashes = AppSignatureHashHelper(this).appSignatures
 
   }
 

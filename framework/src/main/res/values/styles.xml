@@ -10,7 +10,7 @@
     <item name="windowNoTitle">true</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
-    <item name="colorSecondary">@color/colorAccent</item>
+    <item name="colorSecondary">@color/black_4a4a4a</item>
   </style>
 
   <style name="CustomBottomSheet" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
@@ -18,7 +18,11 @@
   </style>
 
   <style name="BottomSheetTheme" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
-    <item name="colorSecondary">@color/colorAccent</item>
+    <item name="colorSecondary">@color/black_4a4a4a</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
     <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
   </style>
 
@@ -32,6 +36,10 @@
     <item name="android:windowIsFloating">false</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:windowCloseOnTouchOutside">false</item>
+  </style>
+
+  <style name="CityDialogThemeFull" parent="MaterialDialogThemeFull">
+    <item name="colorAccent">@color/black_4a4a4a</item>
   </style>
 
   <style name="MaterialDialogThemeFullN" parent="MaterialDialogThemeFull">
@@ -115,4 +123,9 @@
     <item name="android:textColor">@color/white</item>
   </style>
 
+  <style name="ComposeEditText" parent="Widget.AppCompat.EditText">
+    <item name="colorAccent">@color/black_4a4a4a</item>
+    <item name="fontFamily">@font/regular</item>
+    <item name="editTextColor">@color/black_4a4a4a</item>
+  </style>
 </resources>

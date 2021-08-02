@@ -154,7 +154,7 @@
   <string name="select_secondary_font">Select secondary font</string>
   <string name="website_updated">Website updated</string>
   <string name="your_changes_are_saved_successfully_published_and_live_on_your_website_click_on_below_button_to_see_it_live_or_share_with_in_your_connections">Your changes are saved successfully published and live on your website. Click on below button to see it live or share with in your connections.</string>
-  <string name="view_changes_live">VIEW changes live</string>
+  <string name="view_changes_live">View changes live</string>
   <string name="reset_website_style">Reset website style</string>
   <string name="this_will_change_the_fonts_and_color_of_your_website_to_default_ones_shown_below">This will change the fonts and color of your website to default ones (shown below).</string>
   <string name="default_font">Default font</string>
@@ -193,7 +193,7 @@
   <string name="please_enter_valid_business_description">please enter valid business description</string>
   <string name="business_name_published_successfully">Business name published successfully</string>
   <string name="business_description_published_successfully">Business description published successfully</string>
-  <string name="add_business_image">add business logo</string>
+  <string name="add_business_image">Add business logo</string>
   <string name="error_updating_business">Error updating business profile, please try again.</string>
   <string name="active">Active</string>
   <string name="inactive">Inactive</string>

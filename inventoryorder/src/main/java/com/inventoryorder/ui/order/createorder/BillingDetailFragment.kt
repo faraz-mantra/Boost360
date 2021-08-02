@@ -80,9 +80,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       binding?.textAddDeliveryFeeEdit,
       binding?.tvAddMore
     )
-    createOrderRequest =
-      (arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as? OrderInitiateRequest)
-        ?: OrderInitiateRequest()
+    createOrderRequest = (arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as? OrderInitiateRequest) ?: OrderInitiateRequest()
     setUpData()
     getTotalPayableAmount()
     preparePaymentStatusOptions()
