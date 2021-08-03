@@ -45,8 +45,4 @@ object EndPoints {
   const val GET_GMB_ACCOUNT_LIST = "v4/accounts"
   const val GET_GMB_ACCOUNT_LOCATIONS = "v4/accounts/{user_id}/locations"
   const val POST_GOOGLE_AUTH_TOKENS = "oauth2/v4/token"
-
-  //FIREBASE TOKEN
-  const val GET_FIREBASE_TOKEN = "https://api2.withfloats.com/discover/v1/FloatingPoint/GetFirebaseAuthToken"
-
 }

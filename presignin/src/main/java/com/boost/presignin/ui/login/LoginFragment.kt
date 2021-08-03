@@ -3,7 +3,6 @@ package com.boost.presignin.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -28,7 +27,6 @@ import com.framework.webengageconstant.*
 
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
-  private val TAG = "LoginFragment"
   private var resultLogin: VerificationRequestResult? = null
 
   companion object {
@@ -60,7 +58,6 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
   override fun onCreateView() {
     super.onCreateView()
-    Log.i(TAG, "onCreateView: ")
     WebEngageController.trackEvent(PS_LOGIN_USERNAME_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.usernameEt?.onTextChanged { onDataChanged() }
     binding?.passEt?.onTextChanged { onDataChanged() }

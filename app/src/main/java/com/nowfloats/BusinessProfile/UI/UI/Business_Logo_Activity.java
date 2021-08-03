@@ -343,7 +343,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
     private void onBusinessLogoAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData()==null || instance.getDrScoreData().getMetricdetail() == null) return;
+        if (instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_add_clinic_logo(isAdded);
         instance.updateDocument();
     }

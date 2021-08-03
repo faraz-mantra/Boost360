@@ -55,31 +55,30 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 public class VmnCallCardsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "VmnCallCardsActivity";
-    UserSessionManager sessionManager;
-    CardView viewCallLogCard;
-    TextView missedCountText, receivedCountText, allCountText, virtualNumberText, buyItemButton, potentialCallsText, trackAllCall, trackMissedCall, trackConnectedCall, webCallCount, phoneCallCount;
-    Toolbar toolbar;
-    ProgressDialog vmnProgressBar;
-    ImageView seeMoreLessImage;
-    ConstraintLayout parentLayout, helpWebPhoneLayout, primaryLayout;
-    View backgroundLayout, dottedLine1, dottedLine2;
-    boolean seeMoreLessStatus = false;
-    int totalCallCount = 0;
-    int totalPotentialCallCount = 0;
-    boolean stopApiCall;
-    boolean allowCallPlayFlag; // This flag allows only one audio to play at a time. True means an audio can be played.
-    ArrayList<VmnCallModel> headerList = new ArrayList<>();
-    VmnCall_Adapter vmnCallAdapter;
-    RecyclerView mRecyclerView;
-    String selectedViewType = "ALL";
-    LinearLayout noCallTrackLayout;
-    LinearLayout secondLayout;
-    LinearLayout firstLayout;
-    TextView tvNoCallRecorded;
-    private LinearLayout seeMoreLess, mainLayout, userInfoLayout, secondaryLayout, websiteHelper, phoneHelper, websiteHelperInfo, phoneHelperInfo;
-    private UserSessionManager session;
-    private int offset = 0;
+  UserSessionManager sessionManager;
+  CardView viewCallLogCard;
+  TextView missedCountText, receivedCountText, allCountText, virtualNumberText, buyItemButton, potentialCallsText, trackAllCall, trackMissedCall, trackConnectedCall, webCallCount, phoneCallCount;
+  Toolbar toolbar;
+  ProgressDialog vmnProgressBar;
+  ImageView seeMoreLessImage;
+  ConstraintLayout parentLayout, helpWebPhoneLayout, primaryLayout;
+  View backgroundLayout, dottedLine1, dottedLine2;
+  boolean seeMoreLessStatus = false;
+  int totalCallCount = 0;
+  int totalPotentialCallCount = 0;
+  boolean stopApiCall;
+  boolean allowCallPlayFlag; // This flag allows only one audio to play at a time. True means an audio can be played.
+  ArrayList<VmnCallModel> headerList = new ArrayList<>();
+  VmnCall_Adapter vmnCallAdapter;
+  RecyclerView mRecyclerView;
+  String selectedViewType = "ALL";
+  LinearLayout noCallTrackLayout;
+  LinearLayout secondLayout;
+  LinearLayout firstLayout;
+  TextView tvNoCallRecorded;
+  private LinearLayout seeMoreLess, mainLayout, userInfoLayout, secondaryLayout, websiteHelper, phoneHelper, websiteHelperInfo, phoneHelperInfo;
+  private UserSessionManager session;
+  private int offset = 0;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -215,12 +214,11 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     secondLayout = findViewById(R.id.second_layout);
     firstLayout = findViewById(R.id.first_layout);
 
-        secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
-        buyItemButton = (TextView) findViewById(R.id.buy_item);
-        List<String> keys = session.getStoreWidgets();
-        Log.i(TAG, "store widgets: "+keys.toString());
-        if (keys != null && keys.contains("CALLTRACKER")) {
-            //oldCode
+    secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
+    buyItemButton = (TextView) findViewById(R.id.buy_item);
+    List<String> keys = session.getStoreWidgets();
+    if (keys != null && keys.contains("CALLTRACKER")) {
+      //oldCode
 //            setVmnTotalCallCount();
       //newCode
       getWebsiteCallCount();
@@ -309,31 +307,29 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
   }
 
 
-    private void getCalls() {
-        Log.i(TAG, "getCalls: function called");
-        stopApiCall = true;
-        showProgress();
-        final String startOffset = String.valueOf(offset);
-        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("clientId", Constants.clientId);
-        hashMap.put("fpid", sessionManager.getISEnterprise().equals("true") ? sessionManager.getFPParentId() : sessionManager.getFPID());
-        hashMap.put("offset", startOffset);
-        hashMap.put("limit", String.valueOf(100));
-        hashMap.put("identifierType", sessionManager.getISEnterprise().equals("true") ? "MULTI" : "SINGLE");
-        trackerApis.trackerCalls(hashMap, new Callback<ArrayList<VmnCallModel>>() {
-            @Override
-            public void success(ArrayList<VmnCallModel> vmnCallModels, Response response) {
-                Log.i(TAG, "getCalls success: ");
-                hideProgress();
-                if (vmnCallModels == null || response.getStatus() != 200) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                int size = vmnCallModels.size();
-                Log.v("getCalls", " " + size);
-                stopApiCall = size < 100;
-                updateRecyclerData(vmnCallModels);
+  private void getCalls() {
+    stopApiCall = true;
+    showProgress();
+    final String startOffset = String.valueOf(offset);
+    CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
+    Map<String, String> hashMap = new HashMap<>();
+    hashMap.put("clientId", Constants.clientId);
+    hashMap.put("fpid", sessionManager.getISEnterprise().equals("true") ? sessionManager.getFPParentId() : sessionManager.getFPID());
+    hashMap.put("offset", startOffset);
+    hashMap.put("limit", String.valueOf(100));
+    hashMap.put("identifierType", sessionManager.getISEnterprise().equals("true") ? "MULTI" : "SINGLE");
+    trackerApis.trackerCalls(hashMap, new Callback<ArrayList<VmnCallModel>>() {
+      @Override
+      public void success(ArrayList<VmnCallModel> vmnCallModels, Response response) {
+        hideProgress();
+        if (vmnCallModels == null || response.getStatus() != 200) {
+          Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+          return;
+        }
+        int size = vmnCallModels.size();
+        Log.v("getCalls", " " + size);
+        stopApiCall = size < 100;
+        updateRecyclerData(vmnCallModels);
 
         if (size != 0) {
           offset += 100;
@@ -370,17 +366,16 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         VmnCallModel model = newItems.get(i);
         headerList.add(model);
 //                vmnCallAdapter.notifyItemInserted(sizeOfList + i);
-            }
-        }
-        Log.i(TAG, "updateRecyclerData: header list size "+getSelectedTypeList(headerList).size());
-        vmnCallAdapter.updateList(getSelectedTypeList(headerList));
-        if (getSelectedTypeList(headerList).size() == 0) {
-            noCallTrackLayout.setVisibility(View.VISIBLE);
-            if (selectedViewType.equals("CONNECTED")) {
-                tvNoCallRecorded.setText("No calls connected yet");
-            } else if (selectedViewType.equals("MISSED")) {
-                tvNoCallRecorded.setText("No missed calls yet");
-            }
+      }
+    }
+    vmnCallAdapter.updateList(getSelectedTypeList(headerList));
+    if (getSelectedTypeList(headerList).size() == 0) {
+      noCallTrackLayout.setVisibility(View.VISIBLE);
+      if (selectedViewType.equals("CONNECTED")) {
+        tvNoCallRecorded.setText("No calls connected yet");
+      } else if (selectedViewType.equals("MISSED")) {
+        tvNoCallRecorded.setText("No missed calls yet");
+      }
 
     } else {
       noCallTrackLayout.setVisibility(View.GONE);
