@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -48,6 +49,7 @@ import java.util.*
 class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffViewModel>(),
   RecyclerItemClickListener, SearchView.OnQueryTextListener, OnZeroCaseClicked {
 
+  private val TAG = "StaffProfileListingFrag"
   private var fragmentZeroCase: FragmentZeroCase?=null
   private val list: ArrayList<DataItem> = arrayListOf()
   private val finalList: ArrayList<DataItem> = arrayListOf()
@@ -136,7 +138,9 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     showProgressN()
     viewModel?.getSearchListings(UserSession.fpTag, UserSession.fpId, "", 0, 1)
       ?.observeOnce(viewLifecycleOwner, {
-        if ((it as? ServiceSearchListingResponse)?.result?.data.isNullOrEmpty().not()) {
+        val data = (it as? ServiceSearchListingResponse)?.result?.data
+        Log.i(TAG, "getListServiceFilterApi: "+data?.size)
+        if (data.isNullOrEmpty().not()) {
           checkIsAddNewStaff()
           fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
           isServiceEmpty = false
@@ -205,6 +209,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     isFirstLoad: Boolean
   ) {
     val listStaff = resultStaff?.data
+    Log.i(TAG, "setStaffDataItems: "+listStaff?.size)
+
     if (isSearchString.not()) {
       if (isFirstLoad) finalList.clear()
       onStaffAddedOrUpdated(listStaff.isNullOrEmpty().not())
@@ -245,8 +251,9 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun setEmptyView(isStaffEmpty: Boolean, isServiceEmpty: Boolean = false) {
-    if (isServiceEmpty)
-    addFragmentReplace(containerID = R.id.container, fragmentZeroCase!!, true)
+    Log.i(TAG, "setEmptyView: "+isStaffEmpty+" "+isServiceEmpty)
+    if (isStaffEmpty)
+    addFragment(containerID = R.id.container, fragmentZeroCase!!, true)
     else removeZeroCase()
     binding?.rvStaffList?.visibility =
       if (isStaffEmpty || isServiceEmpty) View.GONE else View.VISIBLE
@@ -254,8 +261,9 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun removeZeroCase() {
-    parentFragmentManager.popBackStack()
-    parentFragmentManager.beginTransaction().detach(fragmentZeroCase!!).commit()
+   /* parentFragmentManager.popBackStack()
+    parentFragmentManager.beginTransaction().detach(fragmentZeroCase!!).commit()*/
+    removeFragment(FragmentZeroCase::class.java.name)
   }
 
   private fun removeLoader() {
@@ -371,8 +379,13 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       if (isRefresh) {
         this.offSet = PAGE_START
         this.limit = PAGE_SIZE
-        if (isServiceAdd) getListServiceFilterApi()
-        else fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
+        Log.i(TAG, "onActivityResult: "+isServiceAdd)
+        if (isServiceAdd){
+          getListServiceFilterApi()
+        }
+        else{
+          fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
+        }
       }
     }
   }
@@ -438,3 +451,4 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 fun getFilterRequest(offSet: Int, limit: Int): GetStaffListingRequest {
   return GetStaffListingRequest(FilterBy(offset = offSet, limit = limit), UserSession.fpTag, "")
 }
+
