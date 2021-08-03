@@ -259,7 +259,7 @@ public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked
 
     private void onCustomPageAddedOrUpdated(boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData()==null || instance.getDrScoreData().getMetricdetail() == null) return;
+        if (instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_create_custom_page(isAdded);
         instance.updateDocument();
     }

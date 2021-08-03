@@ -114,7 +114,7 @@ dependencies {
     //razorpay
 //  implementation project(name: "razorpay-android-3.8.8", ext: 'aar')
     implementation files('libs/razorpay-android-3.8.8.aar')
-//
+
     //wenengage analytics
     implementation 'com.webengage:android-sdk:3.+'
 
@@ -123,6 +123,4 @@ dependencies {
 //    implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:2.1.0'
 
     implementation 'com.appsflyer:af-android-sdk:6.0.0'
-
-    api project(path: ':dashboard')
 }

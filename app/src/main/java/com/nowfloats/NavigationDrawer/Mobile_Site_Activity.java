@@ -91,23 +91,8 @@ public class Mobile_Site_Activity extends AppCompatActivity {
             //If you will not use this method url links are opeen in new brower not in webview
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (
-                    url.startsWith("mailto:") || url.startsWith("tel:") || url.startsWith("geo:")
-                        || url.startsWith("whatsapp:") || url.startsWith("spotify:")
-                ) {
-                    try {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                        startActivity(intent);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        view.loadUrl(url);
-                        return false;
-                    }
-                    return  true;
-                } else {
-                    view.loadUrl(url);
-                    return  false;
-                }
+                view.loadUrl(url);
+                return true;
             }
 
             //Show loader on url load

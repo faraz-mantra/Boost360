@@ -1,9 +1,7 @@
 package com.boost.presignin.dialog
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -62,32 +60,17 @@ class WebViewDialog : DialogFragment() {
 
   @SuppressLint("SetJavaScriptEnabled")
   private fun loadData(urlData: String) {
-    binding.webview.settings.javaScriptEnabled = true
-    binding.webview.settings.loadWithOverviewMode = true
-    binding.webview.settings.useWideViewPort = true
-    binding.webview.settings.allowFileAccess = true
+    binding.webview.settings?.javaScriptEnabled = true
+    binding.webview.settings?.loadWithOverviewMode = true
+    binding.webview.settings?.useWideViewPort = true
+    binding.webview.settings?.allowFileAccess = true
     binding.webview.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
     binding.webview.webChromeClient = WebChromeClient()
     binding.webview.webViewClient = object : WebViewClient() {
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         binding.progressBar.visible()
-        return if (
-          url.startsWith("mailto:") || url.startsWith("tel:") || url.startsWith("geo:")
-          || url.startsWith("whatsapp:") || url.startsWith("spotify:")
-        ) {
-          try {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            startActivity(intent)
-          } catch (e: Exception) {
-            e.printStackTrace()
-            view.loadUrl(url)
-            false
-          }
-          true
-        } else {
-          view.loadUrl(url)
-          false
-        }
+        view.loadUrl(url)
+        return false
       }
 
       override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
