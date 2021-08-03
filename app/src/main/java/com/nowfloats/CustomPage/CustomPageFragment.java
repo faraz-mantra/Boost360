@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,6 +61,7 @@ import static com.framework.webengageconstant.EventNameKt.CREATE_ACUSTOMPAGE;
  * Created by guru on 25/08/2015.
  */
 public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked {
+    private static final String TAG = "CustomPageFragment";
     public static RecyclerView recyclerView;
     public static CustomPageAdapter custompageAdapter;
     public static ArrayList<CustomPageModel> dataModel = new ArrayList<>();
@@ -83,6 +85,7 @@ public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked
     public void onResume() {
         MixPanelController.track("CustomPages", null);
         super.onResume();
+        Log.i(TAG, "onResume: bus registered");
         bus.register(this);
         if (custompageAdapter != null) {
             custompageAdapter.updateSelection(0);
@@ -223,12 +226,14 @@ public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked
     }
 
     private void LoadPageList(Activity activity, Bus bus) {
+        Log.i(TAG, "LoadPageList: ");
         new CustomPageService().GetPages(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), Constants.clientId, pageInterface, bus);
     }
 
     @Subscribe
     public void getPageList(CustomPageEvent response) {
         dataModel = (ArrayList<CustomPageModel>) response.model;
+        Log.i(TAG, "getPageList: "+dataModel.size());
         if (dataModel != null) {
             onCustomPageAddedOrUpdated(!dataModel.isEmpty());
             if (dataModel.isEmpty()) emptyView();
@@ -441,12 +446,15 @@ public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked
     }
 
     private void openAddCustomPageActivity() {
+        Log.i(TAG, "openAddCustomPageActivity: ");
         MixPanelController.track("AddCustomPage", null);
         WebEngageController.trackEvent(CREATE_ACUSTOMPAGE, CLICKED_POST_A_CUSTOMPAGE, session.getFpTag());
         Intent intent = new Intent(activity, CreateCustomPageActivity.class);
-        if ((activity instanceof CustomPageActivity) && ((CustomPageActivity) activity).isAdd)
+        if ((activity instanceof CustomPageActivity)){
             activity.startActivityForResult(intent, 202);
-        else activity.startActivity(intent);
+
+        }
+
         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 

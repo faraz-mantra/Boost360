@@ -149,7 +149,7 @@ class AppFragmentZeroCase : Fragment() {
     } else {
       binding.llBtnContainer.visibility = View.GONE
     }
-    activity?.onBackPressedDispatcher?.addCallback(callback)
+  //  activity?.onBackPressedDispatcher?.addCallback(callback)
   }
 
   var callback = object : OnBackPressedCallback(true) {

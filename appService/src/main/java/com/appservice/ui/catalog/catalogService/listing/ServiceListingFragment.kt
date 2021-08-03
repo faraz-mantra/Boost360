@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.SpannableString
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -43,6 +44,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.getDomainName
 import com.framework.utils.ContentSharing
 import com.framework.views.zero.*
+import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.webengageconstant.*
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Target
@@ -54,6 +56,7 @@ import java.util.*
 class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(),
   RecyclerItemClickListener, OnZeroCaseClicked {
 
+  private val TAG = "ServiceListingFragment"
   private  var fragmentZeroCase: FragmentZeroCase?=null
   private lateinit var domainName: String
   private var session: UserSessionManager? = null
@@ -99,6 +102,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   override fun onCreateView() {
     super.onCreateView()
+    Log.i(TAG, "onCreateView: ")
     getBundleData()
     layoutManagerN = LinearLayoutManager(baseActivity)
     getListServiceFilterApi(isFirst = true, offSet = offSet, limit = limit)
@@ -170,11 +174,15 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     isFirstLoad: Boolean
   ) {
     val listService = resultService?.data as? ArrayList<ItemsItem>
+
     if (isSearchString.not()) {
+      Log.i(TAG, "setServiceDataItems: "+listService?.size+" "+isFirstLoad+" ")
+
       onServiceAddedOrUpdated(listService?.size ?: 0)
       if (isFirstLoad) finalList.clear()
       if (listService.isNullOrEmpty().not()) {
-        removeZeroCaseFragment()
+        Log.i(TAG, "setServiceDataItems: list is null or empty not")
+       // removeZeroCaseFragment()
         removeLoader()
         setEmptyView(View.GONE)
         TOTAL_ELEMENTS = resultService?.paging?.count ?: 0
@@ -195,8 +203,9 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   }
 
   private fun removeZeroCaseFragment() {
-    parentFragmentManager.popBackStack()
-    parentFragmentManager.beginTransaction().detach(fragmentZeroCase!!).commit()
+    /*parentFragmentManager.popBackStack()
+    parentFragmentManager.beginTransaction().detach(fragmentZeroCase!!).commit()*/
+    removeFragment(FragmentZeroCase::class.java.name)
   }
 
   private fun onServiceAddedOrUpdated(count: Int) {
@@ -267,12 +276,13 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   }
 
   private fun setEmptyView(visibility: Int) {
+    Log.i(TAG, "setEmptyView: ")
     when (visibility) {
       View.GONE -> {
-//        removeZeroCaseFragment()
+        removeZeroCaseFragment()
       }
       View.VISIBLE -> {
-        addFragmentReplace(containerID = R.id.container,fragmentZeroCase!! , true)
+        addFragment(containerID = R.id.container,fragmentZeroCase!! , true)
       }
     }
 

@@ -100,7 +100,9 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
             R.drawable.placeholder_image
           )
         }
+        if (staffDetails?.specialisations?.isNotEmpty() == true)
         binding?.ctvSpecialization?.text = staffDetails?.specialisations?.get(0)?.value
+
         if (staffDetails?.isAvailable == false) showInactiveProfile()
         fetchServices()
         setTimings()

@@ -21,6 +21,7 @@ import com.framework.R
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
 import com.framework.utils.hideKeyBoard
+import com.framework.views.zero.FragmentZeroCase
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -128,12 +129,33 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   // Transactions
-  fun addFragmentReplace(containerID: Int, fragment: Fragment, addToBackStack: Boolean) {
-    val fragmentTransaction = fragmentManager?.beginTransaction()
-    if (addToBackStack) fragmentTransaction?.addToBackStack(null)
+  open fun addFragmentReplace(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean) {
+    if (activity?.supportFragmentManager?.isDestroyed == true) return
+    if (containerID == null || fragment == null) return
+
+    val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+    if (addToBackStack) {
+      fragmentTransaction?.addToBackStack(fragment.javaClass.name)
+    }
     fragmentTransaction?.replace(containerID, fragment)?.commit()
   }
 
+  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean) {
+    if (activity?.supportFragmentManager?.isDestroyed == true) return
+    if (containerID == null || fragment == null) return
+
+    val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+    if (addToBackStack) {
+      fragmentTransaction?.addToBackStack(fragment.javaClass.name)
+    }
+    fragmentTransaction?.add(containerID, fragment,fragment.javaClass.name)?.commit()
+  }
+
+  fun removeFragment(name:String){
+    val fm = activity?.supportFragmentManager
+    fm?.popBackStack(name, 0)
+    activity?.supportFragmentManager?.popBackStack()
+  }
   fun getTopFragment(): Fragment? {
     parentFragmentManager.run {
       return when (backStackEntryCount) {
