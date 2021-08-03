@@ -754,7 +754,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
                 netAmount += item.price
                 val widget = Widget(data?.category
                         ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
-                        item.discount, Expiry("MONTHS", default_validity_months), listOf(), true, true, item.item_name
+                        item.discount, Expiry("DAYS", 30), listOf(), true, true, item.item_name
                         ?: "",
                         item.price, item.MRPPrice, null, 1, "MONTHLY", item.boost_widget_key
                         ?: "", item.item_id)
@@ -826,8 +826,8 @@ Log.v("package_validity_months", " "+ package_validity_months)
                             item.description_title,
                             item.discount,
                             Expiry(
-                                    "MONTHS",
-                                    default_validity_months
+                                    "DAYS",
+                                    validity_days
                             ),
                             listOf(),
                             true,
@@ -886,7 +886,8 @@ Log.v("package_validity_months", " "+ package_validity_months)
                                                     singleFeature.description_title,
                                                     singleIndludedFeature.feature_price_discount_percent,
                                                     Expiry(
-                                                            "MONTHS",default_validity_months
+                                                            "DAYS",
+                                                            30 * singleBundle.min_purchase_months
                                                     ),
                                                     listOf(),
                                                     true,
@@ -1006,7 +1007,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
                 netAmount += item.price
                 val widget = Widget(data?.category
                         ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
-                        item.discount, Expiry("MONTHS", default_validity_months), listOf(), true, true, item.item_name
+                        item.discount, Expiry("DAYS", 30), listOf(), true, true, item.item_name
                         ?: "",
                         item.price, item.MRPPrice, null, 1, "MONTHLY", item.boost_widget_key
                         ?: "", item.item_id)
@@ -1079,8 +1080,8 @@ Log.v("package_validity_months", " "+ package_validity_months)
                             item.description_title,
                             item.discount,
                             Expiry(
-                                    "MONTHS",
-                                    default_validity_months
+                                    "DAYS",
+                                    validity_days
                             ),
                             listOf(),
                             true,
@@ -1139,7 +1140,8 @@ Log.v("package_validity_months", " "+ package_validity_months)
                                                     singleFeature.description_title,
                                                     singleIndludedFeature.feature_price_discount_percent,
                                                     Expiry(
-                                                            "MONTHS",default_validity_months
+                                                            "DAYS",
+                                                            30 * singleBundle.min_purchase_months
                                                     ),
                                                     listOf(),
                                                     true,
@@ -1782,7 +1784,6 @@ Log.v("package_validity_months", " "+ package_validity_months)
         args.putString("contact", (activity as UpgradeActivity).mobileNo)
         prefs.storeCardIds(cartItems)
         prefs.storeCouponIds(couponCode)
-        prefs.storeValidityMonths(default_validity_months.toString())
         paymentFragment.arguments = args
         (activity as UpgradeActivity).addFragment(
                 paymentFragment,

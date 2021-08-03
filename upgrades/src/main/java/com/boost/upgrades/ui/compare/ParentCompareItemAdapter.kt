@@ -181,7 +181,7 @@ parentViewHolder.package_submit.setOnClickListener{
     )
     parentViewHolder.package_submit.setTextColor(Color.parseColor("#bbbbbb"))
     parentViewHolder.package_submit.setText("Added To Cart")
-    homeListener.onPackageClicked(parentItem,parentViewHolder.package_profile_image_compare_new)
+    homeListener.onPackageClicked(parentItem)
 }
 
     }
@@ -225,7 +225,6 @@ parentViewHolder.package_submit.setOnClickListener{
         val package_profile_image: ImageView
         val parent_item_title: TextView
         val tv_inlcuded_add_on: TextView
-        val package_profile_image_compare_new:ImageView
 
         init {
             PackageItemTitle = itemView
@@ -249,8 +248,6 @@ parentViewHolder.package_submit.setOnClickListener{
             tv_inlcuded_add_on = itemView
                     .findViewById(
                             R.id.tv_inlcuded_add_on)
-            package_profile_image_compare_new = itemView.findViewById(R.id.package_profile_image_compare_new)
-
         }
     }
 
@@ -301,10 +298,8 @@ parentViewHolder.package_submit.setOnClickListener{
 
                                     if(bundles.primary_image != null && !bundles.primary_image.url.isNullOrEmpty()){
                                         Glide.with(holder.itemView.context).load(bundles.primary_image.url).into(holder.package_profile_image)
-                                        Glide.with(holder.itemView.context).load(bundles.primary_image.url).into(holder.package_profile_image_compare_new)
                                     } else {
                                         holder.package_profile_image.setImageResource(R.drawable.rectangle_copy_18)
-                                        holder.package_profile_image_compare_new.setImageResource(R.drawable.rectangle_copy_18)
                                     }
                                 },
                                 {

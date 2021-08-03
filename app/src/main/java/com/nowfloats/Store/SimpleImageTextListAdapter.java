@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.framework.pref.UserSessionManager;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
@@ -27,11 +26,9 @@ public class SimpleImageTextListAdapter extends RecyclerView.Adapter<SimpleImage
     private String[] myTextStrings;
     private int[] myImagesIds;
     private OnItemClickCallback onItemClickCallback;
-    private UserSessionManager session;
 
     public SimpleImageTextListAdapter(Context context, OnItemClickCallback itemClickCallback) {
         mContext = context;
-        session = new UserSessionManager(mContext);
         onItemClickCallback = itemClickCallback;
     }
 
@@ -45,13 +42,13 @@ public class SimpleImageTextListAdapter extends RecyclerView.Adapter<SimpleImage
     public void onBindViewHolder(MyListItemHolder holder, int position) {
         holder.image1.setImageResource(myImagesIds[position]);
         holder.text1.setText(myTextStrings[position]);
-        if (myTextStrings[position].equals("Domain and Email") && !session.getStoreWidgets().contains("DOMAINPURCHASE")
-                || myTextStrings[position].equals("Projects & Teams") && !session.getStoreWidgets().contains("PROJECTTEAM")
-                || myTextStrings[position].equals("Places to look around") && !session.getStoreWidgets().contains("PLACES-TO-LOOK-AROUND")
-                || myTextStrings[position].equals("Unlimited digital brochures") && !session.getStoreWidgets().contains("BROCHURE")
-                || myTextStrings[position].equals("Tripadvisor Ratings") && !session.getStoreWidgets().contains("TRIPADVISOR-REVIEWS")
-                || myTextStrings[position].equals("Toppers of Institute") && !session.getStoreWidgets().contains(TOPPER_FEATURE)
-                || myTextStrings[position].equals("Faculty Management") && !session.getStoreWidgets().contains(FACULTY_MANAGEMENT_FEATURE)
+        if (myTextStrings[position].equals("Domain and Email") && !Constants.StoreWidgets.contains("DOMAINPURCHASE")
+                || myTextStrings[position].equals("Projects & Teams") && !Constants.StoreWidgets.contains("PROJECTTEAM")
+                || myTextStrings[position].equals("Places to look around") && !Constants.StoreWidgets.contains("PLACES-TO-LOOK-AROUND")
+                || myTextStrings[position].equals("Unlimited digital brochures") && !Constants.StoreWidgets.contains("BROCHURE")
+                || myTextStrings[position].equals("Tripadvisor Ratings") && !Constants.StoreWidgets.contains("TRIPADVISOR-REVIEWS")
+                || myTextStrings[position].equals("Toppers of Institute") && !Constants.StoreWidgets.contains(TOPPER_FEATURE)
+                || myTextStrings[position].equals("Faculty Management") && !Constants.StoreWidgets.contains(FACULTY_MANAGEMENT_FEATURE)
                 /*|| myTextStrings[position].equals("Seasonal Offers") && !Constants.StoreWidgets.contains("OFFERS")*/ //this is free widget
         ) {
             holder.featureLock.setVisibility(View.VISIBLE);

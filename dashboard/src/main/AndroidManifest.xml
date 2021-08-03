@@ -28,10 +28,6 @@
           android:pathPrefix="/"
           android:scheme="http" />
       </intent-filter>
-      <intent-filter>
-        <action android:name="com.dashboard.controller.DashboardActivity"/>
-        <category android:name="android.intent.category.DEFAULT" />
-      </intent-filter>
     </activity>
 
     <activity

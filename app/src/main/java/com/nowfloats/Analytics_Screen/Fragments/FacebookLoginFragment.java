@@ -201,12 +201,12 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                 new MaterialDialog.Builder(mContext)
                         .title(getString(R.string.select_page))
                         .items(items)
+                        .widgetColorRes(R.color.primaryColor)
                         .cancelable(false)
                         .positiveText("Ok")
                         .autoDismiss(false)
                         .negativeText("Cancel")
-                        .negativeColorRes(R.color.black_4a4a4a)
-                        .positiveColorRes(R.color.colorAccent_jio)
+                        .negativeColorRes(R.color.light_gray)
                         .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                             @Override
                             public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {

@@ -28,7 +28,6 @@ class SharedPrefs(activity: Activity) {
     private val CART_IDS = "CART_IDS"
     private val COUPON_IDS = "COUPON_IDS"
     private val CART_COUPON_DETAILS = "CART_COUPON_DETAILS"
-    private val VALIDITY_MONTHS = "VALIDITY_MONTHS"
 
     private val temp_cartAmount = "Cart_Orig_Price"
     private val temp_couponDiscount = "Coupon_Discount"
@@ -139,16 +138,6 @@ class SharedPrefs(activity: Activity) {
 
     fun getCardIds(): List<String?>? {
         val str = pref!!.getString(CART_IDS, "")
-        return if (TextUtils.isEmpty(str)) ArrayList() else Gson().fromJson(str, object : TypeToken<List<String?>?>() {}.type)
-    }
-
-    fun storeValidityMonths(orderDetails: String?){
-        val orderInfo = Gson().toJson(orderDetails)
-        editor!!.putString(VALIDITY_MONTHS, orderInfo).apply()
-    }
-
-    fun getValidityMonths(): List<String?>? {
-        val str = pref!!.getString(VALIDITY_MONTHS, "")
         return if (TextUtils.isEmpty(str)) ArrayList() else Gson().fromJson(str, object : TypeToken<List<String?>?>() {}.type)
     }
 

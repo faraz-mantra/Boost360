@@ -582,7 +582,7 @@
             android:src="@drawable/ic_email"
             app:layout_constraintStart_toStartOf="@id/text_customer_email"
             app:layout_constraintTop_toBottomOf="@id/text_customer_email"
-            app:tint="@color/colorAccent_jio" />
+            app:tint="@color/orange" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_email"
@@ -596,7 +596,7 @@
             android:text="Send email"
             android:textAlignment="gravity"
             android:textAllCaps="true"
-            android:textColor="@color/colorAccent_jio"
+            android:textColor="@color/orange"
             android:textSize="14sp"
             android:textStyle="bold"
             app:autoSizeMaxTextSize="12sp"
@@ -616,7 +616,7 @@
             app:layout_constraintBottom_toBottomOf="@id/text_email"
             app:layout_constraintStart_toEndOf="@id/text_email"
             app:layout_constraintTop_toTopOf="@id/text_email"
-            app:tint="@color/colorAccent_jio"  />
+            app:tint="@color/orange" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_phone"
@@ -630,7 +630,7 @@
             android:text="@string/call_customer"
             android:textAlignment="gravity"
             android:textAllCaps="true"
-            android:textColor="@color/colorAccent_jio"
+            android:textColor="@color/orange"
             android:textSize="14sp"
             android:textStyle="bold"
             app:autoSizeMaxTextSize="12sp"

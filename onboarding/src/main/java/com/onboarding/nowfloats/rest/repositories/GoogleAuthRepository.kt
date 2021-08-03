@@ -1,7 +1,6 @@
 package com.onboarding.nowfloats.rest.repositories
 
 import com.framework.base.BaseResponse
-import com.framework.pref.clientId
 import com.onboarding.nowfloats.base.rest.AppBaseLocalService
 import com.onboarding.nowfloats.base.rest.AppBaseRepository
 import com.onboarding.nowfloats.model.googleAuth.GoogleAuthTokenRequest
@@ -23,14 +22,6 @@ object GoogleAuthRepository : AppBaseRepository<GoogleAuthRemoteDataSource, AppB
 
   fun getGoogleAuthToken(req: GoogleAuthTokenRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getGoogleAuthToken(req?.client_id, req?.client_secret, req?.auth_code, req?.grant_type, req?.redirect_uri), Taskcode.POST_GOOGLE_AUTH_TOKEN)
-  }
-
-  fun getFirebaseAuthToken(): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.getFirebaseToken(
-       client_id= clientId
-      ), Taskcode.GET_FIREBASE_TOKEN
-    )
   }
 
   override fun getApiClient(): Retrofit {

@@ -575,8 +575,8 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
                             .content(getResources().getString(R.string.check_store_for_upgrade_info))
                             .positiveText(getResources().getString(R.string.goto_store))
                             .negativeText(getResources().getString(R.string.cancel))
-                            .negativeColorRes(R.color.black_4a4a4a)
-                            .positiveColorRes(R.color.colorAccent_jio)
+                            .positiveColorRes(R.color.primaryColor)
+                            .negativeColorRes(R.color.light_gray)
                             .callback(new MaterialDialog.ButtonCallback() {
                                 @Override
                                 public void onNegative(MaterialDialog dialog) {
@@ -831,8 +831,8 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
                 .customView(R.layout.dialog_link_layout, false)
                 .positiveText(postiveBtn)
                 .negativeText(negativeBtn)
-                .negativeColorRes(R.color.black_4a4a4a)
-                .positiveColorRes(R.color.colorAccent_jio)
+                .positiveColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.primaryColor)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {

@@ -1,5 +1,8 @@
 package com.nowfloats.hotel.tripadvisor;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,15 +10,13 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 
 import com.boost.upgrades.UpgradeActivity;
 import com.google.gson.Gson;
@@ -42,6 +43,7 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 public class TripAdvisorActivity extends AppCompatActivity {
 
+    private ProgressDialog progressDialog;
     public UserSessionManager session;
     RelativeLayout emptyLayout;
     TextView buyItemButton, saveButton;
@@ -50,7 +52,7 @@ public class TripAdvisorActivity extends AppCompatActivity {
     SwitchCompat switchSetting;
     EditText widgetSnippet;
     boolean editState = false;
-    private ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +77,9 @@ public class TripAdvisorActivity extends AppCompatActivity {
         switchSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
+                if(isChecked){
                     widgetSnippet.setTextColor(getResources().getColor(R.color.common_text_color));
-                } else {
+                }else{
                     widgetSnippet.setTextColor(getResources().getColor(R.color.d9d9d9));
                 }
                 editState = true;
@@ -90,11 +92,11 @@ public class TripAdvisorActivity extends AppCompatActivity {
         widgetSnippet.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                if(hasFocus){
                     editState = true;
                     saveButton.setVisibility(View.VISIBLE);
                     widgetSnippet.setTextColor(getResources().getColor(R.color.common_text_color));
-                } else {
+                }else{
                     widgetSnippet.setTextColor(getResources().getColor(R.color.d9d9d9));
                 }
             }
@@ -124,7 +126,7 @@ public class TripAdvisorActivity extends AppCompatActivity {
             public void onClick(View v) {
                 widgetSnippet.clearFocus();
                 Methods.hideKeyboard(TripAdvisorActivity.this);
-                if (validateData()) {
+                if(validateData()) {
                     if (tripAdvisorData == null) {
                         //call addtripadvisor api
                         addData();
@@ -141,14 +143,15 @@ public class TripAdvisorActivity extends AppCompatActivity {
         });
 
 
+
         //setHeader
         setHeader();
 
-        if (session.getStoreWidgets().contains("TRIPADVISOR-REVIEWS")){
+        if (Constants.StoreWidgets.contains("TRIPADVISOR-REVIEWS")){
             emptyLayout.setVisibility(View.GONE);
             primaryLayout.setVisibility(View.VISIBLE);
             loadData();
-        } else {
+        }else{
             emptyLayout.setVisibility(View.VISIBLE);
             primaryLayout.setVisibility(View.GONE);
         }
@@ -156,7 +159,7 @@ public class TripAdvisorActivity extends AppCompatActivity {
     }
 
     private boolean validateData() {
-        if (widgetSnippet.getText().toString().isEmpty()) {
+        if(widgetSnippet.getText().toString().isEmpty()){
             Toast.makeText(getApplicationContext(), getString(R.string.fields_are_empty), Toast.LENGTH_LONG).show();
             return false;
         }
@@ -181,11 +184,11 @@ public class TripAdvisorActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if (getTripAdvisorData.getData().size() > 0) {
+                    if(getTripAdvisorData.getData().size()>0) {
                         tripAdvisorData = getTripAdvisorData.getData().get(0);
                         updateUIforTripAdvisor();
                         saveButton.setVisibility(View.GONE);
-                    } else {
+                    }else{
                         saveButton.setVisibility(View.VISIBLE);
                     }
                 }
@@ -277,7 +280,7 @@ public class TripAdvisorActivity extends AppCompatActivity {
                 @Override
                 public void failure(RetrofitError error) {
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(TripAdvisorActivity.this, getString(R.string.successfully_updated_trip_advisor_details));
+                        Methods.showSnackBarPositive(TripAdvisorActivity.this,  getString(R.string.successfully_updated_trip_advisor_details));
                         finish();
                     } else {
                         Methods.showSnackBarNegative(TripAdvisorActivity.this, getString(R.string.something_went_wrong));
@@ -290,8 +293,8 @@ public class TripAdvisorActivity extends AppCompatActivity {
         }
     }
 
-    void updateUIforTripAdvisor() {
-        if (tripAdvisorData != null) {
+    void updateUIforTripAdvisor(){
+        if(tripAdvisorData!=null) {
             widgetSnippet.setText(tripAdvisorData.getWidgetSnippet());
             widgetSnippet.setTextColor(getResources().getColor(R.color.d9d9d9));
             if (tripAdvisorData.getShowWidget()) {
@@ -302,7 +305,7 @@ public class TripAdvisorActivity extends AppCompatActivity {
         }
     }
 
-    public void setHeader() {
+    public void setHeader(){
         LinearLayout backButton;
         TextView title;
 
@@ -375,7 +378,7 @@ public class TripAdvisorActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
             finish();
-        }, 1000);
+        },1000);
     }
 
 

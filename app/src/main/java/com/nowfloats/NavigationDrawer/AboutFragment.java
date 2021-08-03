@@ -47,7 +47,7 @@ public class AboutFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_upgrade, container, false);
+        return inflater.inflate(R.layout.fragment_upgrade, container,false);
     }
 
     @Override
@@ -64,22 +64,22 @@ public class AboutFragment extends Fragment {
         final String[] adapterTexts = getResources().getStringArray(R.array.about_tab_items);
         final TypedArray imagesArray = getResources().obtainTypedArray(R.array.about_sidepanel);
         final int[] adapterImages = new int[adapterTexts.length];
-        for (int i = 0; i < adapterTexts.length; i++) {
-            adapterImages[i] = imagesArray.getResourceId(i, -1);
+        for (int i = 0; i<adapterTexts.length;i++){
+            adapterImages[i] = imagesArray.getResourceId(i,-1);
         }
         imagesArray.recycle();
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
         UserSessionManager session = new UserSessionManager(getContext(), getActivity());
         SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(mContext, new OnItemClickCallback() {
             @Override
             public void onItemClick(int pos) {
                 Intent intent = null;
-                switch (pos) {
+                switch(pos){
                     case 0:
                         WebEngageController.trackEvent(ABOUT_BOOST_TRAINING, EVENT_LABEL_NULL, NULL);
-                        if(session.getStoreWidgets().contains("MERCHANT_TRAINING")) {
+                        if(Constants.StoreWidgets.contains("MERCHANT_TRAINING")) {
                             intent = new Intent(mContext, Mobile_Site_Activity.class);
                             intent.putExtra("WEBSITE_NAME", getString(R.string.product_training_link));
                         } else {
@@ -93,7 +93,7 @@ public class AboutFragment extends Fragment {
                     case 1:
                         WebEngageController.trackEvent(ABOUT_BOOST_FAQS, NO_EVENT_LABLE, NULL);
                         intent = new Intent(mContext, Mobile_Site_Activity.class);
-                        intent.putExtra("WEBSITE_NAME", getString(R.string.setting_faq_url));
+                        intent.putExtra("WEBSITE_NAME",getString(R.string.setting_faq_url));
                         break;
                     case 2:
                         WebEngageController.trackEvent(ABOUT_BOOST_FB_LIKE, NO_EVENT_LABLE, NULL);
@@ -138,13 +138,13 @@ public class AboutFragment extends Fragment {
                     default:
                         return;
                 }
-                if (intent != null) {
+                if(intent != null) {
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
         });
-        adapter.setItems(adapterImages, adapterTexts);
+        adapter.setItems(adapterImages,adapterTexts);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setAdapter(adapter);
     }
@@ -152,7 +152,8 @@ public class AboutFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (mContext instanceof HomeActivity && HomeActivity.headerText != null) {
+        if (mContext instanceof HomeActivity && HomeActivity.headerText != null)
+        {
             HomeActivity.headerText.setText(getString(R.string.about));
         }
     }

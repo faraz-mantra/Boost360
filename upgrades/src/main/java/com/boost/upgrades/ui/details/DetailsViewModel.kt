@@ -61,7 +61,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun addItemToCart1(updatesModel: FeaturesModel) {
-        updatesLoader.postValue(false)
+        updatesLoader.postValue(true)
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = (discount * updatesModel.price) / 100.0
         val cartItem = CartModel(
@@ -98,7 +98,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun addItemToCart(updatesModel: FeaturesModel) {
-        updatesLoader.postValue(false)
+        updatesLoader.postValue(true)
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = (discount * updatesModel.price) / 100.0
         val cartItem = CartModel(
@@ -141,7 +141,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
                                                     .subscribeOn(Schedulers.io())
                                                     .observeOn(AndroidSchedulers.mainThread())
                                                     .doOnComplete {
-//                                                        getCartItems()
+                                                        getCartItems()
                                                         updatesLoader.postValue(false)
                                                     }
                                                     .doOnError {
@@ -159,7 +159,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .doOnComplete {
-//                                            getCartItems()
+                                            getCartItems()
                                             updatesLoader.postValue(false)
                                         }
                                         .doOnError {
@@ -177,7 +177,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun getCartItems() {
-        updatesLoader.postValue(false)
+        updatesLoader.postValue(true)
         compositeDisposable.add(
                 AppDatabase.getInstance(getApplication())!!
                         .cartDao()
