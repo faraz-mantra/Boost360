@@ -59,7 +59,7 @@ public class FacebookLeadsFragment extends Fragment {
         //show or hide if feature is available to user
         secondaryLayout = view.findViewById(R.id.secondary_layout);
         buyItemButton = view.findViewById(R.id.buy_item);
-        if (Constants.StoreWidgets.contains("WILDFIRE_FB_LEAD_ADS")) {
+        if (session.getStoreWidgets().contains("WILDFIRE_FB_LEAD_ADS")) {
             secondaryLayout.setVisibility(View.GONE);
         } else {
             secondaryLayout.setVisibility(View.VISIBLE);
@@ -98,8 +98,8 @@ public class FacebookLeadsFragment extends Fragment {
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }

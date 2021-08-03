@@ -175,6 +175,15 @@
 
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/package_profile_image_copy_new"
+                    android:layout_width="@dimen/pad_70dp"
+                    android:layout_height="@dimen/pad_70dp"
+                    android:src="@drawable/group"
+                    android:layout_margin="20dp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/const_title"

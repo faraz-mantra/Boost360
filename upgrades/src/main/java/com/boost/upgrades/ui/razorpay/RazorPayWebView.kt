@@ -99,6 +99,7 @@ class RazorPayWebView : DialogFragment() {
                         event_attributes.put("rev",(revenue / 100))
                         event_attributes.put("cartIds", Utils.filterBraces(prefs.getCardIds().toString()))
                         event_attributes.put("couponIds",Utils.filterQuotes(prefs.getCouponIds().toString()))
+                        event_attributes.put("validityMonths",prefs.getValidityMonths().toString())
                         WebEngageController.trackEvent(ADDONS_MARKETPLACE_PAYMENT_SUCCESS, ADDONS_MARKETPLACE, event_attributes)
 
 //                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment Success",
@@ -142,6 +143,7 @@ class RazorPayWebView : DialogFragment() {
         prefs.storeLatestOrderStatus(1)
         prefs.storeCardIds(null)
         prefs.storeCouponIds(null)
+        prefs.storeValidityMonths(null)
         //RAZORPAY payment ID IS NOT BEEN USED  ---> renamed to prefs.storeTransactionIdFromCart()
 //        prefs.storeLatestPaymentIdFromPG(paymentTransactionId)
 

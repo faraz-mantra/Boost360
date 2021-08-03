@@ -29,13 +29,12 @@ import retrofit.client.Response;
 
 public class DomainEmailActivity extends AppCompatActivity {
 
-    private ProgressDialog vmnProgressBar;
     public UserSessionManager session;
-
+    public String clientid = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
+    private ProgressDialog vmnProgressBar;
     private Fragment currentFragment = null;
     private FragmentManager fragmentManager = null;
     private FragmentTransaction fragmentTransaction = null;
-    public String clientid = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +72,9 @@ public class DomainEmailActivity extends AppCompatActivity {
     }
 
     private void createView() {
-        if (Constants.StoreWidgets.contains("DOMAINPURCHASE")) {
+        if (session.getStoreWidgets().contains("DOMAINPURCHASE")) {
             loadData();
-        }else{
+        } else {
             addFragment(new DomainNotPurchaseFragment(), "DOMAIN_NOT_PURCHASE_FRAGMENT");
             onDomainAddedOrUpdated(false);
         }
@@ -133,7 +132,7 @@ public class DomainEmailActivity extends AppCompatActivity {
         }
     }
 
-    private void loadData(){
+    private void loadData() {
         try {
             showProgress();
             APIInterfaces APICalls = new RestAdapter.Builder()
@@ -151,10 +150,10 @@ public class DomainEmailActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if(domainData.getDomainName()!=null && !domainData.getDomainName().isEmpty()){
+                    if (domainData.getDomainName() != null && !domainData.getDomainName().isEmpty()) {
                         addFragment(new ActiveDomainFragment(), "ACTIVE_DOMAIN_FRAGMENT");
                         onDomainAddedOrUpdated(true);
-                    }else{
+                    } else {
                         addFragment(new DomainPurchasedFragment(), "DOMAIN_PURCHASE_FRAGMENT");
                     }
                 }
@@ -172,7 +171,7 @@ public class DomainEmailActivity extends AppCompatActivity {
 
     private void onDomainAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if(instance.getDrScoreData().getMetricdetail()==null) return;
+        if (instance.getDrScoreData()==null || instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_add_custom_domain_name_and_ssl(isAdded);
         instance.updateDocument();
     }
