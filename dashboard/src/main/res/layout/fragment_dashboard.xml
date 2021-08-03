@@ -123,7 +123,6 @@
                       android:textColor="@color/white"
                       app:autoSizeMaxTextSize="18sp"
                       app:autoSizeMinTextSize="14sp"
-                      android:fontFamily="@font/open_sans"
                       app:autoSizeStepGranularity="1sp"
                       app:autoSizeTextType="uniform" />
 
@@ -133,7 +132,6 @@
                       android:layout_marginTop="@dimen/size_2"
                       android:ellipsize="end"
                       android:maxLines="2"
-                      android:fontFamily="@font/open_sans"
                       android:text="@string/improve_your_score_to_90"
                       android:textColor="@color/gray_text_hint"
                       app:textType="OVERLINE" />

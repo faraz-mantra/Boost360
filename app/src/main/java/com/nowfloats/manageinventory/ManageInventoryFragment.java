@@ -267,7 +267,7 @@ public class ManageInventoryFragment extends Fragment {
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
                 });
-                if (session.getStoreWidgets().contains("BOOKTABLE")) {
+                if (Constants.StoreWidgets.contains("BOOKTABLE")) {
                     lockIcon.setVisibility(View.GONE);
                 } else {
                     lockIcon.setVisibility(View.VISIBLE);

@@ -27,116 +27,108 @@ import org.koin.android.ext.android.inject
 
 class ToppersFragment : BaseFragment(), ItemClickEventListener {
 
-  private val viewModel by inject<ToppersViewModel>()
-  private val toppersAdapter: TopperAdapter by lazy { TopperAdapter(this) }
-  private lateinit var toppersActivity: ToppersActivity
+    private val viewModel by inject<ToppersViewModel>()
+    private val toppersAdapter: TopperAdapter by lazy { TopperAdapter(this) }
+    private lateinit var toppersActivity: ToppersActivity
 
-  override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.toppers_fragment, container, false)
-  }
-
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-
-    toppersActivity = activity as ToppersActivity
-    setHeader(view)
-    initLiveDataObservers()
-    initBatchesRecyclerview(view)
-  }
-
-  private fun initBatchesRecyclerview(view: View) {
-    val recyclerview = view.findViewById<RecyclerView>(R.id.topper_recycler)
-    val gridLayoutManager = GridLayoutManager(requireContext(), 1)
-    gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-    recyclerview.apply {
-      layoutManager = gridLayoutManager
-      adapter = toppersAdapter
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.toppers_fragment, container, false)
     }
 
-    if (Utils.isNetworkConnected(requireContext())) {
-      showLoader(getString(R.string.loading_our_topper))
-      viewModel.getOurToppers()
-    } else {
-      showToast(resources.getString(R.string.noInternet))
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        toppersActivity = activity as ToppersActivity
+        setHeader(view)
+        initLiveDataObservers()
+        initBatchesRecyclerview(view)
     }
-  }
 
-  private fun initLiveDataObservers() {
-    viewModel.apply {
-      ourTopperResponse.observe(viewLifecycleOwner, Observer {
-          if (!it.Data.isNullOrEmpty()) {
-              setRecyclerviewAdapter(it.Data)
-          }else showToast(getString(R.string.our_topper_data_empty))
-          hideLoader()
-      })
+    private fun initBatchesRecyclerview(view: View) {
+        val recyclerview = view.findViewById<RecyclerView>(R.id.topper_recycler)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerview.apply {
+            layoutManager = gridLayoutManager
+            adapter = toppersAdapter
+        }
 
-      errorMessage.observe(viewLifecycleOwner, Observer {
-        hideLoader()
-        Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
-      })
-
-      deleteTopperResponse.observe(viewLifecycleOwner, Observer {
-          if (!it.isNullOrBlank()) {
-              if (it == SUCCESS) {
-                  Toast.makeText(requireContext(), getString(R.string.topper_deleted_successfully), Toast.LENGTH_SHORT).show()
-                  showLoader(getString(R.string.loading_topper))
-                  setDeleteTopperLiveDataValue("")
-                  viewModel.getOurToppers()
-              }
-          }
-          hideLoader()
-      })
+        if (Utils.isNetworkConnected(requireContext())) {
+            showLoader(getString(R.string.loading_our_topper))
+            viewModel.getOurToppers()
+        } else {
+            showToast(resources.getString(R.string.noInternet))
+        }
     }
-  }
 
-  private fun setRecyclerviewAdapter(topperResponseData: List<Data>) {
-    toppersAdapter.items = topperResponseData
-    toppersAdapter.notifyDataSetChanged()
-  }
+    private fun initLiveDataObservers() {
+        viewModel.apply {
+            ourTopperResponse.observe(viewLifecycleOwner, Observer {
+                if (!it.Data.isNullOrEmpty()) {
+                    hideLoader()
+                    setRecyclerviewAdapter(it.Data)
+                }
+            })
 
-  fun setHeader(view: View) {
-    val rightButton: LinearLayout = view.findViewById(R.id.right_icon_layout)
-    val backButton: LinearLayout = view.findViewById(R.id.back_button)
-    val rightIcon: ImageView = view.findViewById(R.id.right_icon)
-    val title: TextView = view.findViewById(R.id.title)
-    title.text = getString(R.string.our_toppers)
-    rightIcon.setImageResource(R.drawable.ic_add_white)
-    rightButton.setOnClickListener {
-      (activity as ToppersActivity).addFragment(
-        TopperDetailsFragment.newInstance(),
-        TOPPERS_DETAILS_FRAGMENT
-      )
+            errorMessage.observe(viewLifecycleOwner, Observer {
+                hideLoader()
+                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+            })
+
+            deleteTopperResponse.observe(viewLifecycleOwner, Observer {
+                if (!it.isNullOrBlank()) {
+                    if (it == SUCCESS) {
+                        hideLoader()
+                        Toast.makeText(requireContext(), getString(R.string.topper_deleted_successfully), Toast.LENGTH_SHORT).show()
+                        showLoader(getString(R.string.loading_topper))
+                        setDeleteTopperLiveDataValue("")
+                        viewModel.getOurToppers()
+                    }
+                }
+            })
+        }
     }
-    backButton.setOnClickListener { requireActivity().onBackPressed() }
-  }
 
-  override fun itemMenuOptionStatus(pos: Int, status: Boolean) {
-    updateItemMenuOptionStatus(pos, status)
-  }
+    private fun setRecyclerviewAdapter(topperResponseData: List<Data>) {
+        toppersAdapter.items = topperResponseData
+        toppersAdapter.notifyDataSetChanged()
+    }
 
-  override fun onEditClick(data: Any, position: Int) {
-    toppersAdapter.menuOption(position, false)
-    (activity as ToppersActivity).addFragment(
-      TopperDetailsFragment.newInstance(data as Data, true),
-      TOPPERS_FRAGMENT
-    )
-  }
+    fun setHeader(view: View) {
+        val rightButton: LinearLayout = view.findViewById(R.id.right_icon_layout)
+        val backButton: LinearLayout = view.findViewById(R.id.back_button)
+        val rightIcon: ImageView = view.findViewById(R.id.right_icon)
+        val title: TextView = view.findViewById(R.id.title)
+        title.text = getString(R.string.our_toppers)
+        rightIcon.setImageResource(R.drawable.ic_add_white)
+        rightButton.setOnClickListener {
+            (activity as ToppersActivity).addFragment(TopperDetailsFragment.newInstance(), TOPPERS_DETAILS_FRAGMENT)
+        }
+        backButton.setOnClickListener { requireActivity().onBackPressed() }
+    }
 
-  override fun onDeleteClick(data: Any, position: Int) {
-    toppersAdapter.menuOption(position, false)
-    showLoader(getString(R.string.deleting_topper))
-    viewModel.deleteOurTopper(data as Data)
-  }
+    override fun itemMenuOptionStatus(pos: Int, status: Boolean) {
+        updateItemMenuOptionStatus(pos, status)
+    }
 
-  private fun updateItemMenuOptionStatus(position: Int, status: Boolean) {
-    toppersAdapter.menuOption(position, status)
-    toppersAdapter.notifyDataSetChanged()
-  }
+    override fun onEditClick(data: Any, position: Int) {
+        toppersAdapter.menuOption(position, false)
+        (activity as ToppersActivity).addFragment(TopperDetailsFragment.newInstance(data as Data, true), TOPPERS_FRAGMENT)
+    }
 
-  companion object {
-    fun newInstance(): ToppersFragment = ToppersFragment()
-  }
+    override fun onDeleteClick(data: Any, position: Int) {
+        toppersAdapter.menuOption(position, false)
+        showLoader(getString(R.string.deleting_topper))
+        viewModel.deleteOurTopper(data as Data)
+    }
+
+    private fun updateItemMenuOptionStatus(position: Int, status: Boolean) {
+        toppersAdapter.menuOption(position, status)
+        toppersAdapter.notifyDataSetChanged()
+    }
+
+    companion object {
+        fun newInstance(): ToppersFragment = ToppersFragment()
+    }
 }

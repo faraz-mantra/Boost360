@@ -92,8 +92,8 @@ public class DomainNotPurchaseFragment extends Fragment {
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getUserPrimaryMobile() != null) {
-            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
+        if (session.getFPPrimaryContactNumber() != null) {
+            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }

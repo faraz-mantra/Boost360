@@ -12,8 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import androidx.appcompat.view.ContextThemeWrapper;
-
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.appservice.model.accountDetails.AccountDetailsResponse;
@@ -321,7 +319,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
     private void showAlertDialog() {
         String str = format(getResources().getString(R.string.error_right_fptag), deepLinkFpTag);
-        new AlertDialog.Builder(new ContextThemeWrapper(this,R.style.AlertDialogCustom)).setMessage(str)
+        new AlertDialog.Builder(this).setMessage(str)
                 .setCancelable(false)
                 .setPositiveButton(R.string.ok, (dialog, i) -> {
                     dialog.dismiss();
@@ -345,8 +343,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getUserPrimaryMobile() != null) {
-            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
+        if (session.getFPPrimaryContactNumber() != null) {
+            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }

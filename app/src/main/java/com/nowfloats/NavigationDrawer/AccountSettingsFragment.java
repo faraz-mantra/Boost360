@@ -204,7 +204,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         session.setFpEmail(sessionManager.getFPEmail());
         session.setFpNumber(sessionManager.getFPPrimaryContactNumber());
         session.setSelfBrandedAdd(sessionManager.isSelfBrandedKycAdd());
-        session.setPaymentGateway(sessionManager.getStoreWidgets().contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name()));
+        session.setPaymentGateway(Constants.StoreWidgets.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name()));
         Bundle bundle = new Bundle();
         bundle.putSerializable(com.appservice.constant.IntentConstant.SESSION_DATA.name(), session);
         return bundle;
@@ -218,8 +218,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .customView(R.layout.exit_dialog, true)
                 .positiveText(getString(R.string.setting_logout))
                 .negativeText(getString(R.string.cancel))
-                .negativeColorRes(R.color.black_4a4a4a)
-                .positiveColorRes(R.color.colorAccent_jio)
+                .positiveColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.light_gray)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -243,8 +243,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .customView(R.layout.change_password, true)
                 .positiveText(getString(R.string.ok))
                 .negativeText(getString(R.string.cancel))
-                .negativeColorRes(R.color.black_4a4a4a)
-                .positiveColorRes(R.color.colorAccent_jio)
+                .positiveColorRes(R.color.primaryColor)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onNegative(MaterialDialog dialog) {
@@ -384,8 +383,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .customView(R.layout.dialog_link_layout, false)
                 .positiveText(postiveBtn)
                 .negativeText(negativeBtn)
-                .negativeColorRes(R.color.black_4a4a4a)
-                .positiveColorRes(R.color.colorAccent_jio)
+                .positiveColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.primaryColor)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {

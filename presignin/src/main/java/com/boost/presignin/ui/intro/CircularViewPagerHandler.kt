@@ -4,7 +4,7 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 
 
-open class CircularViewPagerHandler(var mViewPager: ViewPager2) : ViewPager2.OnPageChangeCallback() {
+class CircularViewPagerHandler(var mViewPager: ViewPager2) : ViewPager2.OnPageChangeCallback() {
 
   private var mCurrentPosition = 0
   private var mScrollState = 0

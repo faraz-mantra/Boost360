@@ -23,7 +23,7 @@ import java.io.FileNotFoundException
 
 class CropImageFragment : AppBaseFragment<FragmentImageCropBinding, BaseViewModel>(), CropImageView.OnSetImageUriCompleteListener, CropImageView.OnCropImageCompleteListener {
 
-  private var croppedImageFile: File? = null
+  private var croppedImageFile: File = File(Environment.getExternalStorageDirectory(), "photo.jpg")
   private var session: SessionData? = null
   private var isEdit: Boolean = false
 
@@ -46,7 +46,6 @@ class CropImageFragment : AppBaseFragment<FragmentImageCropBinding, BaseViewMode
 
   override fun onCreateView() {
     super.onCreateView()
-    croppedImageFile = File(context?.cacheDir, "photo.jpg")
     isEdit = arguments?.getBoolean(IntentConstant.IS_EDIT.name) ?: false
     session = arguments?.getSerializable(IntentConstant.SESSION_DATA.name) as? SessionData
     if (session == null) return

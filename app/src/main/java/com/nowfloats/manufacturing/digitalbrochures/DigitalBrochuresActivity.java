@@ -85,7 +85,7 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
         //setheader
         setHeader();
 
-        if (session.getStoreWidgets().contains("BROCHURE")) {
+        if (Constants.StoreWidgets.contains("BROCHURE")) {
             recyclerView.setVisibility(View.VISIBLE);
             emptyLayout.setVisibility(View.GONE);
         } else {
@@ -97,7 +97,7 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
     @Override
     protected void onResume() {
         super.onResume();
-        if (session.getStoreWidgets().contains("BROCHURE")) {
+        if (Constants.StoreWidgets.contains("BROCHURE")) {
             if (Utils.isNetworkConnected(DigitalBrochuresActivity.this)) {
                 loadData();
             } else {
@@ -282,8 +282,8 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getUserPrimaryMobile() != null) {
-            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
+        if (session.getFPPrimaryContactNumber() != null) {
+            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }

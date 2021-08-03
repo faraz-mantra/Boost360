@@ -115,7 +115,7 @@
                   android:layout_marginEnd="@dimen/size_4"
                   android:layout_marginBottom="@dimen/size_8"
                   android:src="@drawable/facebook_icon_share"
-                  android:visibility="gone"
+                  android:visibility="visible"
                   app:layout_constraintBottom_toBottomOf="parent"
                   app:layout_constraintEnd_toStartOf="@+id/share_whatsapp"
                   app:layout_constraintHorizontal_bias="0.5"

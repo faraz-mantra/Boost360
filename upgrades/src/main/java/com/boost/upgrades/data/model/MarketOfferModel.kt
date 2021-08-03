@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "MarketOffers")
 data class MarketOfferModel(
 
-//        @PrimaryKey
+        @PrimaryKey
         @ColumnInfo(name = "coupon_code")
         var coupon_code: String,
 
@@ -20,9 +20,8 @@ data class MarketOfferModel(
         @ColumnInfo(name = "updatedon")
         var updatedon: String? = null,
 
-        @PrimaryKey
         @ColumnInfo(name = "_kid")
-        var _kid: String,
+        var _kid: String? = null,
 
         @ColumnInfo(name = "websiteid")
         var websiteid: String? = null,

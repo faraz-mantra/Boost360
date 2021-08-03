@@ -95,7 +95,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
             }
         });
 
-        if (session.getStoreWidgets().contains("PROJECTTEAM")) {
+        if (Constants.StoreWidgets.contains("PROJECTTEAM")) {
             primaryLayout.setVisibility(View.VISIBLE);
             secoundaryLayout.setVisibility(View.GONE);
         } else {
@@ -108,7 +108,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (session.getStoreWidgets().contains("PROJECTTEAM")) {
+        if (Constants.StoreWidgets.contains("PROJECTTEAM")) {
             if (Utils.isNetworkConnected(ProjectAndTermsActivity.this)) {
                 loadProjectsData();
                 loadTeamData();
@@ -220,8 +220,8 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getUserPrimaryMobile() != null) {
-            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
+        if (session.getFPPrimaryContactNumber() != null) {
+            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }
