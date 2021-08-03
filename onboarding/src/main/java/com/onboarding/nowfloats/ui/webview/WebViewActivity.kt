@@ -1,7 +1,9 @@
 package com.onboarding.nowfloats.ui.webview
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
@@ -17,6 +19,7 @@ import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.databinding.ActivityWebViewNBinding
 import com.onboarding.nowfloats.utils.checkHttp
 import com.onboarding.nowfloats.utils.getWebViewUrl
+
 
 class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>() {
 
@@ -48,11 +51,32 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
     binding?.webview?.settings?.allowFileAccess = true
     binding?.webview?.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
     binding?.webview?.webChromeClient = WebChromeClient()
+    val webSettings = binding?.webview?.settings
+    webSettings?.javaScriptCanOpenWindowsAutomatically = true
+    webSettings?.setSupportMultipleWindows(true)
+    webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
+    webSettings?.domStorageEnabled = true
+
     binding?.webview?.webViewClient = object : WebViewClient() {
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         binding?.progressBar?.visible()
-        view.loadUrl(url)
-        return false
+        return if (
+          url.startsWith("mailto:") || url.startsWith("tel:") || url.startsWith("geo:")
+          || url.startsWith("whatsapp:") || url.startsWith("spotify:")
+        ) {
+          try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+          } catch (e: Exception) {
+            e.printStackTrace()
+            view.loadUrl(url)
+            false
+          }
+          true
+        } else {
+          view.loadUrl(url)
+          false
+        }
       }
 
       override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -78,10 +102,18 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
     binding?.webview?.loadUrl(urlData.getWebViewUrl())
   }
 
+
+  override fun getToolbarTitleSize(): Float? {
+    return resources.getDimension(R.dimen.heading_7)
+  }
+
   override fun getToolbarSubTitle(): String? {
     return domainUrl.checkHttp()
   }
 
+  override fun getToolbarTitleGravity(): Int {
+    return Gravity.NO_GRAVITY
+  }
 
   override fun getToolbarTitle(): String? {
     return resources.getString(R.string.app_name)

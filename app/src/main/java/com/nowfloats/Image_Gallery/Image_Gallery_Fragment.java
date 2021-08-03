@@ -295,7 +295,7 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     private void onImageGalleryAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData().getMetricdetail() == null) return;
+        if (instance.getDrScoreData()==null || instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_image_uploaded_to_gallery(isAdded);
         instance.updateDocument();
     }
