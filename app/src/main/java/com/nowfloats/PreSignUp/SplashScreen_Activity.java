@@ -345,8 +345,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }
