@@ -2344,13 +2344,13 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="add_multiple_images">Add multiple images</string>
   <string name="available_units">Available units</string>
   <string name="product_name">Product name:</string>
-  <string name="one_piece_anime_full">One piece Anime full</string>
+  <string name="one_piece_anime_full">One piece anime full</string>
   <string name="unit_price">Unit price:</string>
   <string name="discount_">Discount:</string>
-  <string name="final_price">Final Price:</string>
+  <string name="final_price">Final price:</string>
   <string name="inr_200">INR 200</string>
-  <string name="i_m_late_wallclock">I\'m Late Wallclock</string>
-  <string name="add_keywords_nto_your_product">Add Keywords\nto your Product</string>
+  <string name="i_m_late_wallclock">I\'m late wallclock</string>
+  <string name="add_keywords_nto_your_product">Add keywords\nto your Product</string>
   <string name="enter_product_keyword">Enter product keyword</string>
   <string name="add">Add</string>
   <string name="image_name">Image name</string>
