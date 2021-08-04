@@ -6,7 +6,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -25,10 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.framework.models.firestore.FirestoreManager;
-import com.framework.views.zero.old.AppFragmentZeroCase;
-import com.framework.views.zero.old.AppOnZeroCaseClicked;
-import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
-import com.framework.views.zero.old.AppZeroCases;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nowfloats.CustomPage.Model.CustomPageEvent;
 import com.nowfloats.CustomPage.Model.CustomPageLink;
@@ -60,8 +54,7 @@ import static com.framework.webengageconstant.EventNameKt.CREATE_ACUSTOMPAGE;
 /**
  * Created by guru on 25/08/2015.
  */
-public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked {
-    private static final String TAG = "CustomPageFragment";
+public class CustomPageFragment extends Fragment {
     public static RecyclerView recyclerView;
     public static CustomPageAdapter custompageAdapter;
     public static ArrayList<CustomPageModel> dataModel = new ArrayList<>();
@@ -76,26 +69,23 @@ public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked
     UserSessionManager session;
     Activity activity;
     CustomPageLink customPageLink;
-    private LinearLayout progress_layout;
+    private LinearLayout emptylayout, progress_layout;
     private TextView titleTextView;
     private ImageView delete;
-    private AppFragmentZeroCase zeroCaseFragment;
 
     @Override
     public void onResume() {
         MixPanelController.track("CustomPages", null);
         super.onResume();
-        Log.i(TAG, "onResume: bus registered");
         bus.register(this);
         if (custompageAdapter != null) {
             custompageAdapter.updateSelection(0);
             custompageAdapter.notifyDataSetChanged();
 
             if (dataModel.size() == 0) {
-                emptyView();
+                emptylayout.setVisibility(View.VISIBLE);
             } else {
-//                emptylayout.setVisibility(View.GONE);
-//                removeZeroCaseFragment();
+                emptylayout.setVisibility(View.GONE);
             }
         }
         if (recyclerView != null)
@@ -122,12 +112,6 @@ public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked
         customPageDeleteCheck = false;
     }
 
-    private void emptyView() {
-        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fm_site_appearance,
-               zeroCaseFragment , AppFragmentZeroCase.class.getName())
-                .commit();
-    }
-
     @Override
     public void onPause() {
         super.onPause();
@@ -148,13 +132,15 @@ public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked
         final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLinearLayoutManager);
         recyclerView.setItemAnimator(new FadeInUpAnimator());
-//        emptylayout = (LinearLayout) view.findViewById(R.id.emptycustompage);
+        emptylayout = (LinearLayout) view.findViewById(R.id.emptycustompage);
         progress_layout = (LinearLayout) view.findViewById(R.id.progress_custom_page);
         progress_layout.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setItemAnimator(null);
-        this.zeroCaseFragment=new AppRequestZeroCaseBuilder(AppZeroCases.CUSTOM_PAGES, this, requireActivity()).getRequest().build();
+
+
         final FloatingActionButton addProduct = view.findViewById(R.id.fab_custom_page);
+
         addProduct.setOnClickListener(v -> addProduct());
         if ((activity instanceof CustomPageActivity) && ((CustomPageActivity) activity).isAdd)
             addProduct();
@@ -221,24 +207,21 @@ public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked
 
     public void isRefreshList() {
         LoadPageList(activity, bus);
-
-
     }
 
     private void LoadPageList(Activity activity, Bus bus) {
-        Log.i(TAG, "LoadPageList: ");
         new CustomPageService().GetPages(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), Constants.clientId, pageInterface, bus);
     }
 
     @Subscribe
     public void getPageList(CustomPageEvent response) {
         dataModel = (ArrayList<CustomPageModel>) response.model;
-        Log.i(TAG, "getPageList: "+dataModel.size());
         if (dataModel != null) {
             onCustomPageAddedOrUpdated(!dataModel.isEmpty());
-            if (dataModel.isEmpty()) emptyView();
+            if (dataModel.isEmpty()) emptylayout.setVisibility(View.VISIBLE);
+            else emptylayout.setVisibility(View.GONE);
+
             if (!session.getOnBoardingStatus() && dataModel.size() != session.getCustomPageCount()) {
-                removeZeroCaseFragment();
                 session.setCustomPageCount(dataModel.size());
                 OnBoardingApiCalls.updateData(session.getFpTag(), String.format("custom_page:%s", dataModel.size() > 0 ? "true" : "false"));
             }
@@ -252,19 +235,13 @@ public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked
             custompageAdapter.notifyDataSetChanged();
             recyclerView.invalidate();
         } else {
-            emptyView();
+            emptylayout.setVisibility(View.VISIBLE);
         }
-    }
-    public void removeZeroCaseFragment() {
-//        if (zeroCaseFragment.isVisible()) {
-            getParentFragmentManager().popBackStack();
-            getParentFragmentManager().beginTransaction().detach(zeroCaseFragment).commit();
-//        }
     }
 
     private void onCustomPageAddedOrUpdated(boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData().getMetricdetail() == null) return;
+        if (instance.getDrScoreData()==null || instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_create_custom_page(isAdded);
         instance.updateDocument();
     }
@@ -446,15 +423,12 @@ public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked
     }
 
     private void openAddCustomPageActivity() {
-        Log.i(TAG, "openAddCustomPageActivity: ");
         MixPanelController.track("AddCustomPage", null);
         WebEngageController.trackEvent(CREATE_ACUSTOMPAGE, CLICKED_POST_A_CUSTOMPAGE, session.getFpTag());
         Intent intent = new Intent(activity, CreateCustomPageActivity.class);
-        if ((activity instanceof CustomPageActivity)){
+        if ((activity instanceof CustomPageActivity) && ((CustomPageActivity) activity).isAdd)
             activity.startActivityForResult(intent, 202);
-
-        }
-
+        else activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
@@ -483,31 +457,5 @@ public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked
                 openAddCustomPageActivity();
             }
         }
-    }
-
-    @Override
-    public void primaryButtonClicked() {
-        openAddCustomPageActivity();
-    }
-
-    @Override
-    public void secondaryButtonClicked() {
-
-    }
-
-    @Override
-    public void ternaryButtonClicked() {
-
-    }
-
-    @Override
-    public void appOnBackPressed() {
-    requireActivity().finishAfterTransition();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(activity, "callback", Toast.LENGTH_SHORT).show();
     }
 }
