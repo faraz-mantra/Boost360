@@ -44,6 +44,7 @@
         android:gravity="center_vertical"
         android:textCursorDrawable="@drawable/cursor_drawable"
         android:hint="@string/type_customer_name"
+        android:textCursorDrawable="@drawable/cursor_drawable"
         android:textColorHint="@color/black_202A2A2A"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_service_name" />
@@ -99,6 +100,7 @@
       android:layout_marginBottom="@dimen/size_10"
       android:gravity="center_vertical"
       android:hint="@string/enter_customer_s_email_id"
+      android:textCursorDrawable="@drawable/cursor_drawable"
       android:imeOptions="actionNext"
       android:inputType="textEmailAddress"
       android:textCursorDrawable="@drawable/cursor_drawable"
@@ -155,6 +157,7 @@
         android:layout_marginBottom="@dimen/size_10"
         android:gravity="center_vertical"
         android:hint="@string/enter_customer_s_gstin"
+        android:textCursorDrawable="@drawable/cursor_drawable"
         android:imeOptions="actionNext"
         android:textCursorDrawable="@drawable/cursor_drawable"
         android:inputType="textCapCharacters"
