@@ -719,18 +719,30 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
   @Override
   protected void onResume() {
     super.onResume();
-    bus.register(this);
+    try{
+      bus.register(this);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
   }
 
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    bus.unregister(this);
+    try{
+      bus.unregister(this);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
   }
 
   @Override
   protected void onStop() {
     super.onStop();
-    bus.unregister(this);
+    try{
+      bus.unregister(this);
+    }catch (Exception e){
+      e.printStackTrace();
+    }
   }
 }
