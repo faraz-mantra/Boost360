@@ -50,8 +50,7 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
       binding?.textGoBack,
       binding?.layoutBillingAddr?.editCity
     )
-    createOrderRequest =
-      arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
+    createOrderRequest = arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
     setUpData()
   }
 

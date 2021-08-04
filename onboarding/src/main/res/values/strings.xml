@@ -67,7 +67,7 @@
   <string name="do_you_already_have_a_twitter_profile">Does your business already have a Twitter profile?</string>
   <string name="setting_up_or_syncing_your_twitter_business_profile">Setting up or Syncing your Twitter business profile</string>
   <string name="yes_link_my_existing_twitter_profile">Yes, link my existing Twitter profile</string>
-  <string name="yes_sync_my_twitter_profile">Yes, Sync my Twitter profile</string>
+  <string name="yes_sync_my_twitter_profile">Yes, sync my twitter profile</string>
 
   <string name="congratulations_new">Congratulations</string>
   <string name="business_cant_empty">Business name can\'t be empty</string>
@@ -182,7 +182,7 @@
   <string name="select_the_location_on_map">Select a location on map</string>
   <string name="google_login_error">Google login error.</string>
   <string name="disable_boost_notifications">Disable boost notification</string>
-  <string name="not_opted_for_boost_alerts">Not Opted For Boost Alerts</string>
+  <string name="not_opted_for_boost_alerts">Not opted For boost alerts</string>
   <string name="disconnect_channel">Disconnect channel</string>
   <string name="error_in_your_phone_call">Error in your phone call!</string>
   <string name="coming_soon">Coming soon…</string>

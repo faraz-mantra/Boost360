@@ -74,7 +74,7 @@ public class BusinessAddressUpdateApi {
     }
 
     public void update() {
-        pd = ProgressDialog.show(appContext, null, "Updating Your Address");
+        pd = ProgressDialog.show(appContext, null, "Updating your address");
         pd.show();
         UpdateCallApi callApi = Constants.restAdapter.create(UpdateCallApi.class);
         callApi.updateAddress(addressModel, new Callback<JsonArray>() {

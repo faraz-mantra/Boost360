@@ -50,7 +50,6 @@
         android:lines="10"
         android:minLines="6"
         android:scrollbars="vertical"
-        android:textCursorDrawable="@drawable/color_cursor"
         android:textSize="14sp" />
 
       <com.framework.views.customViews.CustomButton

@@ -10,8 +10,7 @@ enum class TypeSuccess {
   CLOSE, VISIT_WEBSITE
 }
 
-class CreateServiceSuccessBottomSheet :
-  BaseBottomSheetDialog<BottomSheetServiceCreatedSuccessfullyBinding, BaseViewModel>() {
+class CreateServiceSuccessBottomSheet : BaseBottomSheetDialog<BottomSheetServiceCreatedSuccessfullyBinding, BaseViewModel>() {
 
   var onClicked: (value: String) -> Unit = { }
   var isEdit: Boolean = false

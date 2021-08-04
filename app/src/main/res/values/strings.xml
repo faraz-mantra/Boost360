@@ -1777,6 +1777,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="map_visits">Address views</string>
   <string name="map_visits_n">Address Views</string>
   <string name="boost_keyboard">Boost Keyboard</string>
+  <string name="boost_keyboard_n">Boost keyboard</string>
   <string name="enable_keyboard">Enable keyboard</string>
   <string name="otp_over_call">Tap here to get OTP over call</string>
   <string name="sam">Sam</string>
@@ -1869,10 +1870,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="label_product_type">%s Type/Category (If any)</string>
 
   <string-array name="images_content_list_items">
-    <item>Business Logo</item>
-    <item>Featured Image</item>
-    <item>Image Gallery</item>
-    <item>Background Images</item>
+    <item>Business logo</item>
+    <item>Featured image</item>
+    <item>Image gallery</item>
+    <item>Background images</item>
     <item>Favicon</item>
   </string-array>
   <string name="title_activity_background_image_gallery">BackgroundImageGalleryActivity</string>
@@ -2540,7 +2541,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="successfully_added">" Successfully Added"</string>
   <string name="please_wait_">Please wait...</string>
   <string name="you_have_new_notifications">You have new notifications</string>
-  <string name="updating_your_address" translatable="false">Updating Your Address</string>
+  <string name="updating_your_address" translatable="false">Updating your address</string>
   <string name="your_business_has_been_updated_successfully">Your business address has been updated successfully</string>
   <string name="uh_oh_somthing_went_wrong_please_try_again" translatable="false">Uh oh. Something went wrong. Please try again</string>
   <string name="changes_are_successfully_updated" translatable="false">Changes are successfully updated</string>
@@ -3064,7 +3065,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="book_a_new_domain_n">Book a new domain</string>
   <string name="or_n">--- or ---</string>
   <string name="domain_is_a_great_first_step_towards_building_your_brand_on_web_n">Domain is a great first step towards building your brand on web.</string>
-  <string name="boost_keyboard_themes_n">Boost Keyboard Themes</string>
+  <string name="boost_keyboard_themes_n">Boost keyboard themes</string>
   <string name="seasional_offer_n">Seasonal Offers</string>
 
   <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
