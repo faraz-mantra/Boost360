@@ -23,6 +23,7 @@ import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
 import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
+import com.dashboard.model.live.caplimit_feature.CapLimitFeatureResponseItem
 import com.dashboard.model.live.drawerData.DrawerHomeData
 import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.model.live.welcomeData.WelcomeDashboardResponse
@@ -109,15 +110,25 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     session?.initializeWebEngageLogin()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
-
+    reloadCapLimitData()
     //registerFirebaseToken()
   }
 
+  private fun reloadCapLimitData() {
+    viewModel.getCapLimitFeatureDetails(session?.fPID, clientId).observeOnce(this, {
+      if (it.isSuccess()) {
+        val capLimitList = it as? Array<CapLimitFeatureResponseItem>
+        val item = capLimitList?.firstOrNull { it1 -> (it1.featureKey == CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name) } ?: CapLimitFeatureResponseItem()
+        item.saveCapData()
+      }
+    })
+  }
+
   private fun registerFirebaseToken() {
-    viewModel.getFirebaseToken().observe(this,{
+    viewModel.getFirebaseToken().observe(this, {
       val response = it as FirebaseTokenResponse
-      val token = response.Result?:""
-      Log.i(TAG, "registerFirebaseToken: "+token)
+      val token = response.Result ?: ""
+      Log.i(TAG, "registerFirebaseToken: " + token)
       FirebaseAuth.getInstance().signInWithCustomToken(token).addOnCompleteListener(this) { task ->
         if (task.isSuccessful) {
           // Sign in success, update UI with the signed-in user's information
@@ -157,6 +168,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onNewIntent(intent)
     intentDataCheckAndDeepLink(intent)
   }
+
   private fun intentDataCheckAndDeepLink(intent: Intent?) {
     Log.i(TAG, "intentDataCheckAndDeepLink: ")
     if (intent?.extras != null) {

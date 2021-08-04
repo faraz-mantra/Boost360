@@ -2,6 +2,7 @@ package com.dashboard
 
 import androidx.multidex.MultiDexApplication
 import com.dashboard.rest.EndPoints
+import com.dashboard.rest.EndPoints.AZURE_WEBSITE_NET_URL
 import com.dashboard.rest.EndPoints.BOOST_KIT_NEW_BASE
 import com.dashboard.rest.EndPoints.DEV_BOOST_KIT_URL
 import com.dashboard.rest.EndPoints.NOW_FLOATS_BASE
@@ -33,6 +34,7 @@ open class AppDashboardApplication : BaseApplication() {
       WithFloatsTwoApiClient.shared.init(EndPoints.WITH_FLOATS_TWO_BASE)
       PluginFloatsApiClient.shared.init(PLUGIN_FLOATS_URL)
       NowFloatsApiClient.shared.init(NOW_FLOATS_BASE)
+      AzureWebsiteNetApiClient.shared.init(AZURE_WEBSITE_NET_URL)
     }
   }
 }
