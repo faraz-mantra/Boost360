@@ -59,12 +59,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
     webSettings?.domStorageEnabled = true
 
     binding?.webview?.webChromeClient = object :WebChromeClient(){
-      override fun onCreateWindow(
-        view: WebView?,
-        isDialog: Boolean,
-        isUserGesture: Boolean,
-        resultMsg: Message?
-      ): Boolean {
+      override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
         val result = view!!.hitTestResult
         val data = result.extra
         val context= view.context
