@@ -21,23 +21,58 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal">
 
         <androidx.cardview.widget.CardView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_width="@dimen/size_60"
+          android:layout_height="@dimen/size_60"
           app:cardCornerRadius="5dp"
           android:layout_gravity="center_horizontal"
           android:background="@color/white"
           app:cardElevation="4dp">
 
           <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/size_30"
+            android:layout_height="@dimen/size_30"
             android:layout_margin="5dp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_mp_home_arrow"/>
 
+
         </androidx.cardview.widget.CardView>
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:text="Welcome to Boost 360"
+          android:fontFamily="@font/regular"
+          android:textColor="@color/black"
+          android:textSize="14sp"
+          android:layout_gravity="center"/>
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="5dp"
+          android:textSize="23sp"
+          android:text="Feature Marketplace"
+          android:layout_gravity="center"
+          android:fontFamily="@font/regular"
+          android:textStyle="bold"
+          android:textColor="@color/black"/>
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
+          android:textColor="#FFB900"
+          android:text="MY CURRENT PLAN "
+          android:layout_gravity="center"
+          android:textSize="14sp"
+          android:textStyle="bold"
+          android:drawableEnd="@drawable/ic_mp_home_arrow_right"/>
 
 
 
