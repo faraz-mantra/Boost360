@@ -106,7 +106,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
     binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
-   this.zeroCaseFragment = RequestZeroCaseBuilder(ZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
+    this.zeroCaseFragment = RequestZeroCaseBuilder(ZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
   }
 
   override fun onClick(v: View) {
@@ -234,16 +234,11 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   }
 
   private fun emptyView() {
-    addFragmentReplace(containerID = R.id.container,zeroCaseFragment , true)
-//    binding?.bookingRecycler?.gone()
-//    binding?.errorView?.visible()
-//    binding?.btnAdd?.gone()
+    addFragment(containerID = R.id.container, zeroCaseFragment, true)
   }
-  fun removeZeroCaseFragment() {
-//        if (zeroCaseFragment.isVisible()) {
-    parentFragmentManager.popBackStack()
-    parentFragmentManager.beginTransaction().detach(zeroCaseFragment).commit()
-//        }
+
+  private fun removeZeroCaseFragment() {
+    removeFragment(zeroCaseFragment::class.java.name)
   }
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {

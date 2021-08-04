@@ -668,16 +668,13 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 //
 //  }
   private fun emptyView() {
-    addFragmentReplace(containerID = R.id.container, zeroCaseFragment, true)
-//    binding?.bookingRecycler?.gone()
-//    binding?.errorView?.visible()
-//    binding?.btnAdd?.gone()
+    addFragment(containerID = R.id.container, zeroCaseFragment, true)
+
   }
 
-  fun removeZeroCaseFragment() {
+  private fun removeZeroCaseFragment() {
 //        if (zeroCaseFragment.isVisible()) {
-    parentFragmentManager.popBackStack()
-    parentFragmentManager.beginTransaction().detach(zeroCaseFragment).commit()
+removeFragment(zeroCaseFragment::javaClass.name)
 //        }
   }
 
