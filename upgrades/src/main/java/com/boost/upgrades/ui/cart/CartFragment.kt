@@ -809,7 +809,10 @@ Log.v("package_validity_months", " "+ package_validity_months)
                         totalValidityDays = validity_days
                         Log.v("totalValidityDays", " "+ totalValidityDays)
                         netPrice = netPrice * default_validity_months
-                        net_quantity = default_validity_months
+//                        net_quantity = default_validity_months
+                        var actualQuantity = outputExtendedProps.find { it.Key =="LIMIT" }?.Value
+                        net_quantity = actualQuantity?.toInt()!!
+                        Log.v("default"," "+ actualQuantity)
                         mrp_price = mrp_price * default_validity_months
                     }
 
@@ -1062,7 +1065,9 @@ Log.v("package_validity_months", " "+ package_validity_months)
                         totalValidityDays = validity_days
                         Log.v("totalValidityDays1", " "+ totalValidityDays)
                         netPrice = netPrice * default_validity_months
-                        net_quantity = default_validity_months
+//                        net_quantity = default_validity_months
+                        val actualQuantity = outputExtendedProps.find { it.Key =="LIMIT" }?.Value
+                        net_quantity = actualQuantity?.toInt()!!
                         mrp_price = mrp_price * default_validity_months
                     }
 
