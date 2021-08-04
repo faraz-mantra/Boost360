@@ -61,12 +61,12 @@ class UnlockFeatureFragment(
       intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets)
       intent.putExtra("fpTag", it.fpTag)
       if (it.fpEmail != null) {
-        intent.putExtra("email", it.fpEmail)
+        intent.putExtra("email", it.userProfileEmail)
       } else {
         intent.putExtra("email", "ria@nowfloats.com")
       }
       if (it.fpPrimaryContactNumber != null) {
-        intent.putExtra("mobileNo", it.fpPrimaryContactNumber)
+        intent.putExtra("mobileNo", it.userPrimaryMobile)
       } else {
         intent.putExtra("mobileNo", "9160004303")
       }
