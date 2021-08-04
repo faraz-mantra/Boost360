@@ -342,13 +342,13 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-        if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
+        if (session.getUserProfileEmail() != null) {
+            intent.putExtra("email", session.getUserProfileEmail());
         } else {
             intent.putExtra("email",CONTACT_EMAIL_ID);
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", CONTACT_PHONE_ID);
         }

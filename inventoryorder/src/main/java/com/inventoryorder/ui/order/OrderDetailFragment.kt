@@ -257,12 +257,10 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
         ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     }
-    binding?.tvShippingCost?.text =
-      "Shipping Cost: $currency ${DecimalFormat("##,##,##0").format(shippingCost)}"
-    binding?.tvTotalOrderAmount?.text =
-      "Total Amount: $currency ${DecimalFormat("##,##,##0").format(salePrice + shippingCost)}"
+    binding?.tvShippingCost?.text = "Shipping cost: $currency ${DecimalFormat("##,##,##0").format(shippingCost)}"
+    binding?.tvTotalOrderAmount?.text = "Total amount: $currency ${DecimalFormat("##,##,##0").format(salePrice + shippingCost)}"
 //        binding?.tvShippingCost?.text = "Shipping Cost: $currency $shippingCost"
-//        binding?.tvTotalOrderAmount?.text = "Total Amount: $currency ${salePrice + shippingCost}"
+//        binding?.tvTotalOrderAmount?.text = "Total amount: $currency ${salePrice + shippingCost}"
 
   }
 

@@ -253,8 +253,8 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
         } else {
             intent.putExtra("email", CONTACT_EMAIL_ID);
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", CONTACT_PHONE_ID);
         }

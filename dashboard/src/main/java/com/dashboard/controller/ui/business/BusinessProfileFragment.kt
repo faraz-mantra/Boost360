@@ -320,8 +320,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
         )
       )
     }
-    businessProfileUpdateRequest =
-      BusinessProfileUpdateRequest(session?.fpTag, clientId2, updateItemList)
+    businessProfileUpdateRequest = BusinessProfileUpdateRequest(session?.fpTag, clientId2, updateItemList)
     viewModel?.updateBusinessProfile(businessProfileUpdateRequest!!)
       ?.observeOnce(viewLifecycleOwner, {
         if (it.isSuccess()) {
