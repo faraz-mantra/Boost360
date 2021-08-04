@@ -511,7 +511,7 @@
   <string name="make_above_domain_as_my_boost_website_s_web_address_url">Make above domain as my JioOnline website’s web address/URL.</string>
   <string name="make_boost_website_as_a_subdomain_of_this_domain_e_g_shop_yourdomain_com">Make JioOnline website as a subdomain of this domain.(e.g. shop.yourdomain.com)</string>
   <string name="visibility_create_account">gone</string>
-  <string name="you_are_currently_on_the_default_support_plan">You are currently on the default support plan. This gives you access to JioLocal care team via email only, with a promise of 72 hours SLA.\n\nYou can upgrade to premium support to get direct access to JioLocal Care team by phone, email and chat,\nwith a promise of 1 hour SLA.</string>
+  <string name="you_are_currently_on_the_default_support_plan">You are currently on the default support plan. This gives you access to JioLocal care team via email only, with a promise of 72 hours SLA.\n\nYou can upgrade to premium support to get direct access to JioLocal care team by phone, email and chat,\nwith a promise of 1 hour SLA.</string>
 
   <string name="package_name_sign_up_visibility" translatable="false">com.jio.online</string>
 
