@@ -104,6 +104,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         getProducts(false);
         getWidgetLimit();
         checkIsAdd();
+        binding.btnAddCatalogue.setOnClickListener(view -> addProduct());
     }
 
     private void checkIsAdd() {

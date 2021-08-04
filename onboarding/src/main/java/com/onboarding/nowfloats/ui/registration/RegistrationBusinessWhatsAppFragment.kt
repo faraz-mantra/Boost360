@@ -63,10 +63,9 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
     this.whatsAppData = whatsAppData
     binding?.number?.setText(whatsAppData.active_whatsapp_number)
     binding?.confirmBtn?.post {
-      onNumberValid(
-        ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString() ?: ""),
-        0F
-      )
+      val b = ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString() ?: "")
+      onNumberValid(b, 0F)
+      if (b.not()) showShortToast(getString(R.string.phone_number_invalid))
     }
   }
 
@@ -104,7 +103,7 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.confirmBtn -> if (ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString()?:"")) gotoBusinessApiCallDetails()
+      binding?.confirmBtn -> if (ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString() ?: "")) gotoBusinessApiCallDetails()
       binding?.skip -> {
         updateInfo()
         gotoBusinessApiCallDetails()
