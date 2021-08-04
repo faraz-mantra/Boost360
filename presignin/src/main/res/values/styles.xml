@@ -4,11 +4,12 @@
   <style name="AppTheme.Pre.Signin" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorAccent">@color/black_4a4a4a</item>
     <item name="android:windowAnimationStyle">@null</item>
     <item name="android:windowDisablePreview">true</item>
     <item name="android:windowBackground">@color/white</item>
     <item name="android:statusBarColor">@color/white</item>
+    <item name="editTextStyle">@style/ComposeEditText</item>
     <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
   </style>
 
@@ -180,8 +181,10 @@
     <item name="drawableTint">@color/psn_edittext_color</item>
     <item name="backgroundTint">@color/psn_edittext_color</item>
     <item name="android:layout_width">0dp</item>
+    <item name="colorAccent">@color/black_4a4a4a</item>
     <item name="android:textCursorDrawable">@drawable/cursor_drawable</item>
     <item name="android:layout_height">wrap_content</item>
+    <item name="colorSecondary">@color/black_4a4a4a</item>
     <item name="android:drawablePadding">@dimen/_4sdp</item>
     <item name="android:paddingBottom">@dimen/_16sdp</item>
     <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
@@ -235,6 +238,5 @@
     <item name="android:fontFamily">@font/semi_bold</item>
     <item name="android:gravity">center</item>
   </style>
-
 
 </resources>

@@ -69,23 +69,23 @@ public class ImageMenuActivity extends AppCompatActivity {
                 Intent intent = null;
 
                 switch (adapterTexts[pos]) {
-                    case "Business Logo":
+                    case "Business logo":
 
                         MixPanelController.track(EventKeysWL.LOGO, null);
                         intent = new Intent(ImageMenuActivity.this, Business_Logo_Activity.class);
                         break;
 
-                    case "Featured Image":
+                    case "Featured image":
 
                         intent = new Intent(ImageMenuActivity.this, FeaturedImageActivity.class);
                         break;
 
-                    case "Image Gallery":
+                    case "Image gallery":
 
                         intent = new Intent(ImageMenuActivity.this, ImageGalleryActivity.class);
                         break;
 
-                    case "Background Images":
+                    case "Background images":
 
                         intent = new Intent(ImageMenuActivity.this, BackgroundImageGalleryActivity.class);
                         break;
