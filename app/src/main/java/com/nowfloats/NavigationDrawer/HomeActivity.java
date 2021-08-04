@@ -1600,12 +1600,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
         if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
+            intent.putExtra("email", session.getUserProfileEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }

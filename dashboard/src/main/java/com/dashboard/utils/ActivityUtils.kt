@@ -247,12 +247,12 @@ fun AppCompatActivity.initiateAddonMarketplace(
       session.getStoreWidgets() as ArrayList<String>
     )
     if (session.fPEmail != null) {
-      intent.putExtra("email", session.fPEmail)
+      intent.putExtra("email", session.userProfileEmail)
     } else {
       intent.putExtra("email", "ria@nowfloats.com")
     }
     if (session.fPPrimaryContactNumber != null) {
-      intent.putExtra("mobileNo", session.fPPrimaryContactNumber)
+      intent.putExtra("mobileNo", session.userPrimaryMobile)
     } else {
       intent.putExtra("mobileNo", "9160004303")
     }

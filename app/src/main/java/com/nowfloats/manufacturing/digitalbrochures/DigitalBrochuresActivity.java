@@ -249,35 +249,35 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
     }
   }
 
-  private void initiateBuyFromMarketplace() {
-    ProgressDialog progressDialog = new ProgressDialog(DigitalBrochuresActivity.this);
-    String status = "Loading. Please wait...";
-    progressDialog.setMessage(status);
-    progressDialog.setCancelable(false);
-    progressDialog.show();
-    Intent intent = new Intent(DigitalBrochuresActivity.this, UpgradeActivity.class);
-    intent.putExtra("expCode", session.getFP_AppExperienceCode());
-    intent.putExtra("fpName", session.getFPName());
-    intent.putExtra("fpid", session.getFPID());
-    intent.putExtra("fpTag", session.getFpTag());
-    intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
-    intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-    if (session.getFPEmail() != null) {
-      intent.putExtra("email", session.getFPEmail());
-    } else {
-      intent.putExtra("email", "ria@nowfloats.com");
+    private void initiateBuyFromMarketplace() {
+        ProgressDialog progressDialog = new ProgressDialog(DigitalBrochuresActivity.this);
+        String status = "Loading. Please wait...";
+        progressDialog.setMessage(status);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Intent intent = new Intent(DigitalBrochuresActivity.this, UpgradeActivity.class);
+        intent.putExtra("expCode", session.getFP_AppExperienceCode());
+        intent.putExtra("fpName", session.getFPName());
+        intent.putExtra("fpid", session.getFPID());
+        intent.putExtra("fpTag", session.getFpTag());
+        intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
+        intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
+        if (session.getFPEmail() != null) {
+            intent.putExtra("email", session.getFPEmail());
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com");
+        }
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
+        } else {
+            intent.putExtra("mobileNo", "9160004303");
+        }
+        intent.putExtra("profileUrl", session.getFPLogo());
+        intent.putExtra("buyItemKey", "BROCHURE");
+        startActivity(intent);
+        new Handler().postDelayed(() -> {
+            progressDialog.dismiss();
+            finish();
+        }, 1000);
     }
-    if (session.getFPPrimaryContactNumber() != null) {
-      intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
-    } else {
-      intent.putExtra("mobileNo", "9160004303");
-    }
-    intent.putExtra("profileUrl", session.getFPLogo());
-    intent.putExtra("buyItemKey", "BROCHURE");
-    startActivity(intent);
-    new Handler().postDelayed(() -> {
-      progressDialog.dismiss();
-      finish();
-    }, 1000);
-  }
 }
