@@ -597,7 +597,6 @@
   <string name="post_n">Post</string>
   <string name="refreshing_status">Refreshing status...</string>
 
-
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
