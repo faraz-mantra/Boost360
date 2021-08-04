@@ -175,4 +175,20 @@ public class SharedPrefUtil {
     }
     return null;
   }
+
+
+  public Long getLastSyncTime(){
+    if (sBoostPref != null) {
+     String value= sBoostPref.getString(PrefConstants.INSTANCE.getLAST_SYNC_TIME(), null);
+     if (value!=null){
+       return Long.valueOf(value);
+     }
+    }
+    return null;
+  }
+  public void setLastSyncTime(Long timeinmilis){
+    if (sBoostPref != null) {
+      sBoostPref.edit().putString(PrefConstants.INSTANCE.getLAST_SYNC_TIME(),timeinmilis.toString()).apply();
+    }
+  }
 }

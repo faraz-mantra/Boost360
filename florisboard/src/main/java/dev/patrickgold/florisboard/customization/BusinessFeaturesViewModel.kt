@@ -83,11 +83,17 @@ class BusinessFeaturesViewModel {
     get() = _details
 
   fun getDetails(fpTag: String?, clientId: String) {
-    job?.cancel()
-    job = CoroutineScope(Dispatchers.IO).launch {
+    Log.i(TAG, "getDetails: called")
+    CoroutineScope(Dispatchers.IO).launch {
       val details = BusinessFeatureRepository.getAllDetails(fpTag, clientId)
+      Log.i(TAG, "getDetails: "+details.code())
       withContext(Dispatchers.Main) {
-        if (details.isSuccessful) _details.value = details.body()
+        Log.i(TAG, "getDetails: response")
+
+        if (details.isSuccessful){
+          _details.value = details.body()
+          Log.i(TAG, "getDetails: success")
+        }
         else {
           if (details.code()==Constants.UNAUTHORIZED_STATUS_CODE){
             _error.value = Constants.TOKEN_EXPIRED_MESSAGE

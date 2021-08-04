@@ -23,6 +23,7 @@ data class CustomerDetails(
   var rootAliasUri: String,
   var lat: Double = 0.0,
   var lng: Double = 0.0,
+  var FPWebWidgets:ArrayList<String>?=null,
 ) : BaseRecyclerItem() {
   override fun getViewType(): Int = FeaturesEnum.DETAILS.ordinal
 }

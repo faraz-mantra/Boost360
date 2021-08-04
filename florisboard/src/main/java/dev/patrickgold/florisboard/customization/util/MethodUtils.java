@@ -15,6 +15,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Admin on 26-02-2018.
@@ -119,5 +120,9 @@ public class MethodUtils {
       return false;
     }
     return status;
+  }
+
+  public static long getDaysDiff(Long startTime, Long endTime){
+    return TimeUnit.MILLISECONDS.toDays(startTime-endTime);
   }
 }

@@ -11,7 +11,6 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputConnection
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.inputmethod.EditorInfoCompat
@@ -32,6 +31,7 @@ import com.framework.pref.*
 import com.framework.utils.*
 import com.framework.views.customViews.CustomImageView
 import com.framework.views.dotsindicator.OffsetPageTransformer
+import com.google.gson.Gson
 import com.onboarding.nowfloats.extensions.capitalizeWords
 import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCCESS
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
@@ -74,7 +74,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private val TAG = "BusinessFeaturesManager"
   private lateinit var binding: BusinessFeaturesLayoutBinding
   private lateinit var viewModel: BusinessFeaturesViewModel
-
+  private var businessFeatureEnum:BusinessFeatureEnum?=null
   private val photosSet = mutableSetOf<Photo>()
   private lateinit var mContext: Context
   private var florisBoard: FlorisBoard? = null
@@ -157,6 +157,8 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     apiObserveUpdates()
     apiObservePhotos()
     apiObserveStaff()
+    apiObserveUserDetails()
+    Log.i(TAG, "onRegisterInputView: ")
   }
 
   private fun RecyclerView.paginationListenerProduct(layoutManager: LinearLayoutManager, isPagerSnap: Boolean = true) {
@@ -191,6 +193,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   fun showSelectedBusinessFeature(tagPosition: Int, businessFeatureEnum: BusinessFeatureEnum) {
+    this.businessFeatureEnum = businessFeatureEnum
     this.tagPosition = tagPosition
     this.currentSelectedFeature = businessFeatureEnum
     this.listenerRequest = null
@@ -198,9 +201,21 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.view?.apply {
       if (isStaffVisible(session?.fP_AppExperienceCode ?: "")) visible() else gone()
     }
+    Log.i(TAG, "showSelectedBusinessFeature: ")
+    val lastSyncTime = SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).lastSyncTime
     if (session?.isUserLoggedIn == false) {
         updateUiOnUserUnAuthorized()
-    } else if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") == true) {
+    } else if (lastSyncTime==null||MethodUtils
+        .getDaysDiff(System.currentTimeMillis(),lastSyncTime)>=1){
+      Log.i(TAG, "last sync is greater than 24 hour: "+lastSyncTime)
+      viewModel.getDetails(session?.fpTag, clientId)
+    }else{
+      loadDataBasesOnTab()
+    }
+  }
+
+  private fun loadDataBasesOnTab() {
+    if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") == true) {
       if (MethodUtils.isOnline(mContext)) {
         binding.pleaseLoginCard.gone()
         binding.businessFeatureProgress.visible()
@@ -294,6 +309,18 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     }
   }
 
+  private fun apiObserveUserDetails(){
+    viewModel.details.observeForever{
+      Log.i(TAG, "apiObserveUserDetails: "+Gson().toJson(it.FPWebWidgets))
+      it.FPWebWidgets?.let { list->
+        session?.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(list))
+        SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).lastSyncTime = System.currentTimeMillis()
+        loadDataBasesOnTab()
+      }
+
+    }
+  }
+
   private fun apiObservePhotos() {
     viewModel.photos.observeForever {
       Timber.e("photos - $it.")
@@ -310,7 +337,11 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   private fun apiObserveServiceProduct() {
+    Log.i(TAG, "apiObserveServiceProduct: ")
+
     viewModel.products.observeForever {
+      Log.i(TAG, "apiObserveServiceProduct: observer")
+
       Timber.i("products - $it.")
       binding.businessFeatureProgress.gone()
       this.adapterProductService.removeLoaderN()
