@@ -81,7 +81,7 @@
           android:layout_marginTop="10dp"
           android:text="@string/image_gallery_instructions_2"
           android:textSize="12sp"
-           android:fontFamily="@font/semi_bold" />
+          android:fontFamily="@font/semi_bold" />
 
       </LinearLayout>
 
