@@ -282,8 +282,8 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }
