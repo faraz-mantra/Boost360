@@ -10,6 +10,7 @@ class GetGalleryImagesAsyncTask : AsyncTask<Void?, String?, ArrayList<String>?>(
 
   interface GetGalleryImagesInterface {
     fun imagesReceived(listImage: ArrayList<String>)
+    fun onFailed(code:Int?)
   }
 
   private var clientIdWithQuotes = "\"" + Constants.clientId + "\""
@@ -24,7 +25,8 @@ class GetGalleryImagesAsyncTask : AsyncTask<Void?, String?, ArrayList<String>?>(
   override fun doInBackground(vararg params: Void?): ArrayList<String> {
     val result = ArrayList<String>()
     try {
-      val response = Util.getDataFromServer(clientIdWithQuotes, Constants.HTTP_POST, Constants.LoadStoreURI.toString() + fpId, Constants.BG_SERVICE_CONTENT_TYPE_JSON)
+      val response = Util.getDataFromServer(clientIdWithQuotes, Constants.HTTP_POST,
+        Constants.LoadStoreURI.toString() + fpId, Constants.BG_SERVICE_CONTENT_TYPE_JSON,galleryInterface)
       if (response.isNotEmpty()) {
         val store = JSONObject(response)
         if (response.contains("ImageUri")) Constants.storePrimaryImage = store.getString("ImageUri")

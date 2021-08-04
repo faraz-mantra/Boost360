@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import dev.patrickgold.florisboard.customization.network.GetGalleryImagesAsyncTask;
+
 /**
  * Created by Shimona on 01-06-2018.
  */
@@ -13,7 +15,8 @@ import java.net.URL;
 public class Util {
 
     public static String getDataFromServer(String content,
-                                           String requestMethod, String serverUrl, String contentType) {
+                                           String requestMethod, String serverUrl, String contentType,
+                                           GetGalleryImagesAsyncTask.GetGalleryImagesInterface galleryInterface) {
         String response = "", responseMessage = "";
         Boolean success = false;
         DataOutputStream outputStream = null;
@@ -46,6 +49,8 @@ public class Util {
             if (responseCode == 200 || responseCode == 202) {
                 success = true;
 
+            }else {
+                galleryInterface.onFailed(responseCode);
             }
 
             InputStreamReader inputStreamReader = null;
@@ -71,10 +76,12 @@ public class Util {
                 response = responseContent.toString();
 
             } catch (Exception e) {
+
             } finally {
                 try {
                     inputStreamReader.close();
                 } catch (Exception e) {
+
                 }
                 try {
                     bufferedReader.close();
@@ -90,6 +97,7 @@ public class Util {
                 outputStream.flush();
                 outputStream.close();
             } catch (Exception e) {
+
             }
         }
 

@@ -8,8 +8,10 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputConnection
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.inputmethod.EditorInfoCompat
@@ -60,6 +62,7 @@ import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
 
+
 // keyborad ImePresenterImpl
 
 class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : OnItemClickListener {
@@ -68,6 +71,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     onRegisterInputView(inputView, florisBoard)
   }
 
+  private val TAG = "BusinessFeaturesManager"
   private lateinit var binding: BusinessFeaturesLayoutBinding
   private lateinit var viewModel: BusinessFeaturesViewModel
 
@@ -195,10 +199,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       if (isStaffVisible(session?.fP_AppExperienceCode ?: "")) visible() else gone()
     }
     if (session?.isUserLoggedIn == false) {
-      Timber.i("Please do login")
-      binding.textView.text = mContext.getString(R.string.please_login)
-      binding.pleaseLoginCard.visible()
-      binding.pleaseLoginCard.setOnClickListener { MethodUtils.startBoostActivity(mContext) }
+        updateUiOnUserUnAuthorized()
     } else if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") == true) {
       if (MethodUtils.isOnline(mContext)) {
         binding.pleaseLoginCard.gone()
@@ -269,6 +270,13 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     }
   }
 
+  private fun updateUiOnUserUnAuthorized() {
+    Timber.i("Please do login")
+    binding.textView.text = mContext.getString(R.string.please_login)
+    binding.pleaseLoginCard.visible()
+    binding.pleaseLoginCard.setOnClickListener { MethodUtils.startBoostActivity(mContext) }
+  }
+
   private fun visibleSelectType(isI: Boolean = false, isII: Boolean = false, isIII: Boolean = false, isIV: Boolean = false, isV: Boolean = false) {
     binding.productShareRvList.visibility = if (isI) View.VISIBLE else View.GONE
     binding.updateRvList.visibility = if (isII) View.VISIBLE else View.GONE
@@ -281,6 +289,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private fun errorObserveListener() {
     viewModel.error.observeForever {
       binding.businessFeatureProgress.gone()
+      updateUiOnUserUnAuthorized()
       Toast.makeText(mContext, it, Toast.LENGTH_SHORT).show()
     }
   }
@@ -544,6 +553,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   private fun onClickedShareInventory(item: BaseRecyclerItem) {
+    Log.i(TAG, "onClickedShareInventory: ")
     val product = item as? Product
     if (NetworkUtils.isNetworkConnected()) {
       val shareText = String.format("*%s*\n*%s* %s\n\n-------------\n%s\n", product?.name?.trim { it <= ' ' },
@@ -596,7 +606,10 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       } else {
         mContext.grantUriPermission(packageNames[0], contentUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
       }
-      if (it.currentInputConnection != null) it.currentInputConnection.commitText(shareText, 1)
+      if (it.currentInputConnection != null){
+        it.currentInputConnection.commitText(shareText, 1)
+      }
+      Log.i(TAG, "commitImageWithText: ")
       InputConnectionCompat.commitContent(it.currentInputConnection, it.currentInputEditorInfo, inputContentInfo, flags, null)
     }
   }
@@ -719,4 +732,6 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   fun getBindingRoot(): View {
     return binding.root
   }
+
+
 }

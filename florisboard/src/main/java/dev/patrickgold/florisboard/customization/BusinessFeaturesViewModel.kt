@@ -1,6 +1,7 @@
 package dev.patrickgold.florisboard.customization
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
@@ -17,12 +18,14 @@ import dev.patrickgold.florisboard.customization.model.response.staff.StaffListi
 import dev.patrickgold.florisboard.customization.model.response.staff.StaffResult
 import dev.patrickgold.florisboard.customization.network.GetGalleryImagesAsyncTask
 import dev.patrickgold.florisboard.customization.network.repository.*
+import dev.patrickgold.florisboard.customization.util.Constants
 import kotlinx.coroutines.*
 import timber.log.Timber
 
 
 class BusinessFeaturesViewModel {
 
+  private  val TAG = "BusinessFeaturesViewMod"
   var job: Job? = null
 
   private val _error = MutableLiveData<String>()
@@ -39,7 +42,13 @@ class BusinessFeaturesViewModel {
       val updates = BusinessFeatureRepository.getAllUpdates(fpId, clientId, skipBy, limit)
       withContext(Dispatchers.Main) {
         if (updates.isSuccessful) _updates.value = updates.body()
-        else _error.value = "Business Update getting error!"
+        else{
+          if (updates.code()==Constants.UNAUTHORIZED_STATUS_CODE){
+            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+          }else{
+            _error.value = "Business Update getting error!"
+          }
+        }
       }
     }
   }
@@ -53,8 +62,18 @@ class BusinessFeaturesViewModel {
     job = CoroutineScope(Dispatchers.IO).launch {
       val products = BusinessFeatureRepository.getAllProducts(fpTag, clientId, skipBy, identifierType)
       withContext(Dispatchers.Main) {
-        if (products.isSuccessful) _products.postValue(products.body() ?: arrayListOf())
-        else _error.value = "Inventory getting error!"
+        Log.i(TAG, "getProducts: "+products.code())
+
+        if (products.isSuccessful){
+          _products.postValue(products.body() ?: arrayListOf())
+        }
+        else {
+          if (products.code()==Constants.UNAUTHORIZED_STATUS_CODE){
+            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+          }else{
+            _error.value = "Inventory getting error!"
+          }
+        }
       }
     }
   }
@@ -69,7 +88,13 @@ class BusinessFeaturesViewModel {
       val details = BusinessFeatureRepository.getAllDetails(fpTag, clientId)
       withContext(Dispatchers.Main) {
         if (details.isSuccessful) _details.value = details.body()
-        else _error.value = "Detail getting error!"
+        else {
+          if (details.code()==Constants.UNAUTHORIZED_STATUS_CODE){
+            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+          }else{
+            _error.value = "Detail getting error!"
+          }
+        }
       }
     }
   }
@@ -84,7 +109,14 @@ class BusinessFeaturesViewModel {
       val channelStatus = NfxFloatRepository.getChannelsStatus(fpId)
       withContext(Dispatchers.Main) {
         if (channelStatus.isSuccessful) _channelStatus.value = channelStatus.body()
-        else _channelStatus.value = ChannelAccessStatusResponse(success = false)
+        else {
+          if (channelStatus.code()==Constants.UNAUTHORIZED_STATUS_CODE){
+            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+          }else{
+            _error.value = "Inventory getting error!"
+          }
+          _channelStatus.value = ChannelAccessStatusResponse(success = false)
+        }
       }
     }
   }
@@ -129,7 +161,15 @@ class BusinessFeaturesViewModel {
       val merchantProfile = BoostFloatRepository.getMerchantProfile(floatingId)
       withContext(Dispatchers.Main) {
         if (merchantProfile.isSuccessful) _merchantProfile.value = merchantProfile.body()
-        else _merchantProfile.value = MerchantProfileResponse()
+        else {
+          if (merchantProfile.code()==Constants.UNAUTHORIZED_STATUS_CODE){
+            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+          }else{
+            _error.value = "Inventory getting error!"
+          }
+          _merchantProfile.value = MerchantProfileResponse()
+        }
+
       }
     }
   }
@@ -148,6 +188,12 @@ class BusinessFeaturesViewModel {
             _photo.value = listImage.map { url -> Photo().apply { imageUri = url } }
           }
         }
+
+        override fun onFailed(code: Int?) {
+          if (code==Constants.UNAUTHORIZED_STATUS_CODE){
+            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+          }
+        }
       }, fpId)
     }
   }
@@ -163,7 +209,13 @@ class BusinessFeaturesViewModel {
       withContext(Dispatchers.Main) {
         if (staffResponse.isSuccessful) {
           _staff.value = staffResponse.body()?.result?:StaffResult()
-        } else _error.value = "Staff getting error!"
+        } else {
+          if (staffResponse.code()==Constants.UNAUTHORIZED_STATUS_CODE){
+            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+          }else{
+            _error.value = "Staff getting error!"
+          }
+        }
       }
     }
   }

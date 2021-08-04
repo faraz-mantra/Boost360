@@ -22,4 +22,8 @@ public class Constants {
   public static String LoadStoreURI = NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/";
 
   public static String storePrimaryImage = null;
+
+  public static int UNAUTHORIZED_STATUS_CODE= 401;
+
+  public static String TOKEN_EXPIRED_MESSAGE= "Token Expired. Please Login Again";
 }
