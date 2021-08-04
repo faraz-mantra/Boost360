@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Message
+import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
@@ -55,9 +57,25 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
     webSettings?.setSupportMultipleWindows(true)
     webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
     webSettings?.domStorageEnabled = true
-    
+
+    binding?.webview?.webChromeClient = object :WebChromeClient(){
+      override fun onCreateWindow(
+        view: WebView?,
+        isDialog: Boolean,
+        isUserGesture: Boolean,
+        resultMsg: Message?
+      ): Boolean {
+        val result = view!!.hitTestResult
+        val data = result.extra
+        val context= view.context
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data))
+        context.startActivity(browserIntent)
+        return false
+      }
+    }
     binding?.webview?.webViewClient = object : WebViewClient() {
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+        Log.i(TAG, "shouldOverrideUrlLoading: "+url)
         binding?.progressBar?.visible()
         return if (
           url.startsWith("mailto:") || url.startsWith("tel:") || url.startsWith("geo:")
