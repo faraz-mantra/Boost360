@@ -243,12 +243,12 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
     intent.putExtra("loginid", session!!.userProfileId)
     intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets)
     intent.putExtra("fpTag", session!!.fpTag)
-    if (session!!.fpEmail != null) {
+    if (session!!.userProfileEmail != null) {
       intent.putExtra("email", session!!.userProfileEmail)
     } else {
       intent.putExtra("email", "ria@nowfloats.com")
     }
-    if (session!!.fpPrimaryContactNumber != null) {
+    if (session!!.userPrimaryMobile != null) {
       intent.putExtra("mobileNo", session!!.userPrimaryMobile)
     } else {
       intent.putExtra("mobileNo", "9160004303")

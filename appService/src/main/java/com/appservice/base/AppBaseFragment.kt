@@ -19,8 +19,7 @@ import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 
-abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> :
-  BaseFragment<Binding, ViewModel>() {
+abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseFragment<Binding, ViewModel>() {
 
   protected var appBaseActivity: AppBaseActivity<*, *>? = null
   private var progressView: ProgressDialog? = null

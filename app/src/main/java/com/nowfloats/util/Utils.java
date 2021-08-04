@@ -418,8 +418,8 @@ public class Utils {
             intent.putExtra("screenType", screenType);
             intent.putExtra("accountType", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
             intent.putStringArrayListExtra("userPurchsedWidgets", (ArrayList<String>) session.getStoreWidgets());
-            if (session.getFPEmail() != null) {
-                intent.putExtra("email", session.getFPEmail());
+            if (session.getUserProfileEmail() != null) {
+                intent.putExtra("email", session.getUserProfileEmail());
             } else {
                 intent.putExtra("email", "ria@nowfloats.com");
             }
