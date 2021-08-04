@@ -390,7 +390,7 @@
   <string name="boost_payment_gateway">JioOnline payment gateway</string>
   <string name="payment_gateway_not_added_please_add_first">JioOnline Payment gateway not added, please add first.</string>
   <string name="all_payment_on_your_boost_website_are_processed_through_this_payment_gateway_instead_of_default_boost_payment_gateway_when_you_add_a_new_product_service_on_your_business_website_please_make_sure_to_select_this_payment_gateway">All payment on your JioOnline website are processed through this payment gateway instead of default JioOnline Payment Gateway. When you add a new product service on your business website please make sure to select this payment gateway.</string>
-  <string name="in_case_of_any_concerns">In case of any concerns, you can write to businesscare@jio.com. JioOnline Care Team is available during business hours.</string>
+  <string name="in_case_of_any_concerns">In case of any concerns, you can write to businesscare@jio.com. JioOnline care team is available during business hours.</string>
   <string name="open_boost">Open JioOnline</string>
   <string name="boost_lite_boost_pro_boost_custom">JioOnline Lite, JioOnline Pro, JioOnline Custom</string>
   <string name="your_nowfloats_website_runs_on_your_base_pack_once_your_base_pack_expires_all_your_features_and_functions_will_be_disabled_and_you_won_t_be_able_to_update_any_content">Your JioOnline website runs on your base pack Once your base pack expires, all your features and functions will be disabled and you won\'t be able to update any content.</string>
@@ -511,7 +511,7 @@
   <string name="make_above_domain_as_my_boost_website_s_web_address_url">Make above domain as my JioOnline website’s web address/URL.</string>
   <string name="make_boost_website_as_a_subdomain_of_this_domain_e_g_shop_yourdomain_com">Make JioOnline website as a subdomain of this domain.(e.g. shop.yourdomain.com)</string>
   <string name="visibility_create_account">gone</string>
-  <string name="you_are_currently_on_the_default_support_plan">You are currently on the default support plan. This gives you access to JioLocal Care team via email only, with a promise of 72 hours SLA.\n\nYou can upgrade to premium support to get direct access to JioLocal Care team by phone, email and chat,\nwith a promise of 1 hour SLA.</string>
+  <string name="you_are_currently_on_the_default_support_plan">You are currently on the default support plan. This gives you access to JioLocal care team via email only, with a promise of 72 hours SLA.\n\nYou can upgrade to premium support to get direct access to JioLocal Care team by phone, email and chat,\nwith a promise of 1 hour SLA.</string>
 
   <string name="package_name_sign_up_visibility" translatable="false">com.jio.online</string>
 
@@ -602,4 +602,12 @@
   <string name="twitter_consumer_secret">mvHwpYzH4y2nJFdZfIHsyyEBnaZibMmtg3P5VnKKwGgIwFAn0M</string>
 
   <string name="intro_video_url">https://cdn.nowfloats.com/jioonline/android/videos/JioOnlineHighResolution.mp4</string>
+
+  <string name="boost_send_reason_for_cancellation_desc">JioOnline will send an email and an SMS to the customer on your behalf, informing them of the cancellation of this order and the reason for cancellation, if any.</string>
+  <string name="boost_will_send_an_email_and_an_sms_confirmation_of_this_order">JioOnline will send an email and an SMS to the customer on your behalf, informing them of the confirmation of this order</string>
+  <string name="boost_will_send_payment_link_this_order">JioOnline will send payment link to the customer on your behalf. Upon successful payment it will reflect againt this order.</string>
+  <string name="boost_will_send_an_email_and_an_sms_feedback_of_their_overall_buying_experiance">JioOnline will send an email and an SMS to the customer on your behalf, informing them about the order successfully getting delivered and requesting a feedback of their overall buying experience.</string>
+  <string name="please_make_sure_above_details_are_correct_delivery_person_details_partner">Please make sure above details are correct. JioOnline will send an email and an SMS to the customer on your behalf, informing them of the order being ‘Shipped’ along with consignment tracking details.</string>
+
+
 </resources>

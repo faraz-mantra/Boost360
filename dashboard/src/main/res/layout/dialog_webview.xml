@@ -75,7 +75,7 @@
         android:layout_height="@dimen/size_3"
         android:indeterminate="true"
         android:scaleY="4"
-        android:theme="@style/ActiveThemeJio"
+        android:theme="@style/ActiveTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/app_bar_layout" />
