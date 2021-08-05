@@ -70,9 +70,9 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener {
     viewModel.apply {
       ourFacultyResponse.observe(viewLifecycleOwner, Observer {
         if (!it.Data.isNullOrEmpty()) {
-          hideLoader()
           setRecyclerviewAdapter(it.Data)
-        }
+        } else showToast("Faculty data not found!")
+        hideLoader()
       })
 
       errorMessage.observe(viewLifecycleOwner, Observer {
@@ -82,13 +82,9 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener {
 
       deleteFacultyResponse.observe(viewLifecycleOwner, Observer {
         if (!it.isNullOrBlank()) {
+          hideLoader()
           if (it == SUCCESS) {
-            hideLoader()
-            Toast.makeText(
-              requireContext(),
-              getString(R.string.faculty_deleted_successfully),
-              Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(requireContext(), getString(R.string.faculty_deleted_successfully), Toast.LENGTH_SHORT).show()
             showLoader("Loading Faculty")
             setDeleteFacultyLiveDataValue("")
             viewModel.getOurFaculty()
