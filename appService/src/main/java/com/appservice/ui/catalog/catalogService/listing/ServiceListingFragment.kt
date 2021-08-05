@@ -111,7 +111,8 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     setOnClickListener(binding?.cbAddService)
     this.session = UserSessionManager(requireContext())
     this.domainName = session?.getDomainName()!!
-    this.fragmentZeroCase = RequestZeroCaseBuilder(ZeroCases.SERVICES, this, baseActivity).getRequest().build()
+
+    this.fragmentZeroCase = RequestZeroCaseBuilder(ZeroCases.SERVICES, this, baseActivity,).getRequest().build()
 
   }
 
