@@ -1931,13 +1931,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="our_toppers">Toppers</string>
   <string name="our_toppers_feature_description">Looks like this add-on is not added to your current plan. Add it now to start using it.
 With this feature, you can show off your top rankers to help people gain trust in your coaching centre.</string>
-  <string name="course_name">Course name <p><font color="red">*</font></p></string>
-  <string name="course_timings">Course timings <p><font color="red">*</font></p></string>
-  <string name="course_duration">Course duration <p><font color="red">*</font></p></string>
-  <string name="commencement_date">Commencement date <p><font color="red">*</font></p></string>
-  <string name="name">Name <p><font color="red">*</font></p></string>
-  <string name="add_profile_image">Add profile image <p><font color="red">*</font></p></string>
-  <string name="course_type">Course type <p><font color="red">*</font></p></string>
+  <string name="course_name">Course name <p><font color="">*</font></p></string>
+  <string name="course_timings">Course timings <p><font color="">*</font></p></string>
+  <string name="course_duration">Course duration <p><font color="">*</font></p></string>
+  <string name="commencement_date">Commencement date <p><font color="">*</font></p></string>
+  <string name="name">Name <p><font color="">*</font></p></string>
+  <string name="add_profile_image">Add profile image <p><font color="">*</font></p></string>
+  <string name="course_type">Course type <p><font color="">*</font></p></string>
   <string name="upcoming_batches">Upcoming Batches</string>
   <string name="upcoming_batches_feature_description">Looks like this add-on is not added to your current plan. Add it now to start using it.
 With this feature, students and their parents can browse and learn about the upcoming batches you are offering their starting date etc and drop a question regarding that if they may have.</string>
