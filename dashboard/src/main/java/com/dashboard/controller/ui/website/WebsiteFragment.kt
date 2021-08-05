@@ -39,6 +39,8 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 import java.util.*
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.core.view.marginEnd
+import com.framework.views.customViews.CustomImageView
 
 class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
@@ -230,9 +232,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     inflater.inflate(R.menu.menu_website_theme, menu)
     val item = menu.findItem(R.id.menu_whatsapp_share)?.actionView
     item?.findViewById<LinearLayoutCompat>(R.id.share_whatsapp)?.setOnClickListener { shareWhatsAppText() }
-    val locButton = menu.findItem(R.id.menu_more)?.actionView as? ImageView
-    locButton?.setImageResource(R.drawable.ic_baseline_more_vert_24)
-    locButton?.setOnClickListener { openPopUp(it) }
+    item?.findViewById<CustomImageView>(R.id.more_share)?.setOnClickListener { openPopUp(it) }
   }
 
   private fun showPopupWindow(anchor: View) {
