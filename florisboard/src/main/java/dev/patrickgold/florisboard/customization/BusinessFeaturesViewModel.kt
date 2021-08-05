@@ -116,21 +116,28 @@ class BusinessFeaturesViewModel {
     if (NetworkUtils.isNetworkConnected()){
       job?.cancel()
       job = CoroutineScope(Dispatchers.IO).launch {
-        val channelStatus = NfxFloatRepository.getChannelsStatus(fpId)
-        withContext(Dispatchers.Main) {
-          Log.i(TAG, "getChannelsAccessTokenStatus: response ")
-          if (channelStatus.isSuccessful) _channelStatus.value = channelStatus.body()
-          else {
-            if (channelStatus.code()==Constants.UNAUTHORIZED_STATUS_CODE){
-              _error.value = Constants.TOKEN_EXPIRED_MESSAGE
-            }else{
-              _error.value = "Inventory getting error!"
+        try {
+          val channelStatus = NfxFloatRepository.getChannelsStatus(fpId)
+          withContext(Dispatchers.Main) {
+            Log.i(TAG, "getChannelsAccessTokenStatus: response ")
+            if (channelStatus.isSuccessful) _channelStatus.value = channelStatus.body()
+            else {
+              if (channelStatus.code()==Constants.UNAUTHORIZED_STATUS_CODE){
+                _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+              }else{
+                _error.value = "Inventory getting error!"
+              }
+              _channelStatus.value = ChannelAccessStatusResponse(success = false)
             }
-            _channelStatus.value = ChannelAccessStatusResponse(success = false)
           }
+        }catch (e:Exception){
+          Log.i(TAG, "getChannelsAccessTokenStatus: "+e.message)
         }
+
       }
     }
+
+
 
   }
 
