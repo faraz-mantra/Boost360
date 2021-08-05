@@ -234,10 +234,12 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   }
 
   private fun emptyView() {
+    setHasOptionsMenu(false)
     addFragment(containerID = R.id.container, zeroCaseFragment, true)
   }
 
   private fun removeZeroCaseFragment() {
+    setHasOptionsMenu(true)
     removeFragment(zeroCaseFragment::class.java.name)
   }
 
