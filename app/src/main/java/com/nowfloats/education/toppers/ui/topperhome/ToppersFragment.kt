@@ -70,11 +70,14 @@ class ToppersFragment : BaseFragment(), ItemClickEventListener {
       ourTopperResponse.observe(viewLifecycleOwner, Observer {
         if (!it.Data.isNullOrEmpty()) {
           setRecyclerviewAdapter(it.Data)
-        } else showToast(getString(R.string.our_topper_data_empty))
+        } else{
+          setRecyclerviewAdapter(arrayListOf())
+          showToast(getString(R.string.our_topper_data_empty))
+        }
         hideLoader()
       })
 
-      errorMessage.observe(viewLifecycleOwner, Observer {
+      errorMessage.observe(viewLifecycleOwner, {
         hideLoader()
         Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
       })
