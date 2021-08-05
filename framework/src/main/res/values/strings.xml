@@ -18,7 +18,6 @@
   <string name="twitter_package">com.twitter.android</string>
 
   <string name="read_more_n">…View more</string>
-  <string name="you_have_not_added_your_bank">You’ve not added your bank account yet.</string>
   <string name="when_enabled_your_online_sales_will_be">When enabled, your online sales will be automatically credited to your bank account within 48 hours.</string>
   <string name="my_bank_acccount">My Bank Account</string>
   <string name="all_customer_payments_will_be_sent_to_this">All customer payments will be sent to this account. The handling fee will depend on the payment method selected in the e-commerce/appointment setup.</string>
@@ -26,11 +25,11 @@
   <string name="now_is_your_chance_to_show_off">Now is your chance to show off!</string>
   <string name="latest_news_and_updates"><![CDATA[Latest News & Updates]]></string>
   <string name="lets_start_promoting_your_business">Let’s start promoting your business!</string>
-  <string name="you_can_post_regarding">You can post regarding offers, announcements, products or talk about the latest business update you may have.</string>
+  <string name="you_can_post_regarding">You can post offers, announcements, or talk about the products you offer.</string>
   <string name="lets_add_services_to_your_catalogue">Let\'s add services to your catalogue.</string>
   <string name="your_can_easily_add_detailed_information_about_your_services">You can easily add detailed information about your services and their prices to enable online appointments.</string>
   <string name="services">Services</string>
-  <string name="appointment_setup">Appointment setup</string>
+  <string name="appointment_setup">Enable online appointments</string>
   <string name="watch_how_it_works">Watch how it works</string>
   <string name="add_a_service">Add a service</string>
   <string name="tool_bar_customer_messages">Customer Messages</string>
@@ -39,15 +38,14 @@
   <string name="testimonial_title_zero">This is a premium feature.</string>
   <string name="testimonial_description_zero">You can showcase customer reviews with this feature to attract more potential customers.</string>
   <string name="tool_bar_testimonial">Testimonials</string>
-  <string name="activate_this_feature">Activate this feature</string>
   <string name="news_letter_description">Your customers can subscribe to your website to find out about latest offers or new product launches.</string>
   <string name="tool_bar_news_subscription">Newsletter Subscribers</string>
   <string name="news_subscription_title">No subscribers yet.</string>
-  <string name="send_subscription_invite">Send subscription invite</string>
+  <string name="send_subscription_invite">Invite customers to subscribe</string>
   <string name="appointment_description">Once a patient schedules a consultation on your website, they will appear here. You can also create a booking on behalf of any patient by clicking the button below.</string>
   <string name="no_appointment_yet">No appointments yet.</string>
   <string name="tool_bar_appointment_title">Appointments</string>
-  <string name="image_gallery_description">Make an impact and stand out with beautiful images of your business.</string>
+  <string name="image_gallery_description">Make an impact and stand out with beautiful images.</string>
   <string name="image_gallery_footer">Supported format: JPEG, PNG Recommended dimension: Square (min. 800*800px) Max file size: 800kb</string>
   <string name="tool_bar_image_gallery">Image Gallery</string>
   <string name="book_an_appointment">Book an appointment</string>
@@ -74,5 +72,11 @@
   <string name="faculty_management_description">Allow your students to see your staff and the subjects they teach. This helps in buiilding reputation of your educational institute.</string>
   <string name="team_member_tool_bar_title">Team Members</string>
   <string name="team_members_description">Allow your students to see your staff and the subjects they teach. This</string>
+  <string name="activate_this_feature">Activate this feature</string>
+  <string name="upload_photos">Upload photos</string>
+  <string name="see_how_enqaries_works">See how enquiries work</string>
+  <string name="post_an_update">Post an update</string>
+  <string name="add_a_product">Add a product</string>
+  <string name="setup_ecommerce">Setup eCommerce</string>
 
 </resources>
