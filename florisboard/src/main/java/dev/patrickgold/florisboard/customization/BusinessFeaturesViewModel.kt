@@ -85,24 +85,32 @@ class BusinessFeaturesViewModel {
 
   fun getDetails(fpTag: String?, clientId: String) {
     Log.i(TAG, "getDetails: called")
-    CoroutineScope(Dispatchers.IO).launch {
-      val details = BusinessFeatureRepository.getAllDetails(fpTag, clientId)
-      Log.i(TAG, "getDetails: "+details.code())
-      withContext(Dispatchers.Main) {
-        Log.i(TAG, "getDetails: response")
 
-        if (details.isSuccessful){
-          _details.value = details.body()
-          Log.i(TAG, "getDetails: success")
-        }
-        else {
-          if (details.code()==Constants.UNAUTHORIZED_STATUS_CODE){
-            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
-          }else{
-            _error.value = "Detail getting error!"
+    CoroutineScope(Dispatchers.IO).launch {
+      try {
+        val details = BusinessFeatureRepository.getAllDetails(fpTag, clientId)
+        Log.i(TAG, "getDetails: "+details.code())
+        withContext(Dispatchers.Main) {
+          Log.i(TAG, "getDetails: response")
+
+          if (details.isSuccessful){
+            _details.value = details.body()
+            Log.i(TAG, "getDetails: success")
+          }
+          else {
+            if (details.code()==Constants.UNAUTHORIZED_STATUS_CODE){
+              _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+            }else{
+              _error.value = "Detail getting error!"
+            }
           }
         }
+      }catch (e:Exception){
+        Log.e(TAG, "getDetails: "+e.localizedMessage)
+
+        //_error.value = e.localizedMessage
       }
+
     }
   }
 
