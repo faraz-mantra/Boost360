@@ -24,8 +24,7 @@ import com.thinksity.databinding.BatchesDetailsBinding
 import org.koin.android.ext.android.inject
 import java.util.*
 
-class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(),
-  CustomTimePickerDialog.OnTimeSetListener {
+class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(), CustomTimePickerDialog.OnTimeSetListener {
 
   constructor() : this(null)
 
@@ -100,9 +99,6 @@ class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(),
       if (addUpdateBatch) {
         showLoader(getString(R.string.deleting_batch))
         viewModel.deleteUpcomingBatch(batchesData as Data)
-      } else {
-        Toast.makeText(requireContext(), getString(R.string.no_batch_found), Toast.LENGTH_SHORT)
-          .show()
       }
     }
     backButton.setOnClickListener { requireActivity().onBackPressed() }
