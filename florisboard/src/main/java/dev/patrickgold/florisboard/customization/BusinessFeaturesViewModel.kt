@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.framework.utils.NetworkUtils
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
 import com.onboarding.nowfloats.model.profile.MerchantProfileResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
@@ -110,21 +111,27 @@ class BusinessFeaturesViewModel {
     get() = _channelStatus
 
   fun getChannelsAccessTokenStatus(fpId: String?) {
-    job?.cancel()
-    job = CoroutineScope(Dispatchers.IO).launch {
-      val channelStatus = NfxFloatRepository.getChannelsStatus(fpId)
-      withContext(Dispatchers.Main) {
-        if (channelStatus.isSuccessful) _channelStatus.value = channelStatus.body()
-        else {
-          if (channelStatus.code()==Constants.UNAUTHORIZED_STATUS_CODE){
-            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
-          }else{
-            _error.value = "Inventory getting error!"
+    Log.i(TAG, "getChannelAccessTokenStatus: called")
+
+    if (NetworkUtils.isNetworkConnected()){
+      job?.cancel()
+      job = CoroutineScope(Dispatchers.IO).launch {
+        val channelStatus = NfxFloatRepository.getChannelsStatus(fpId)
+        withContext(Dispatchers.Main) {
+          Log.i(TAG, "getChannelsAccessTokenStatus: response ")
+          if (channelStatus.isSuccessful) _channelStatus.value = channelStatus.body()
+          else {
+            if (channelStatus.code()==Constants.UNAUTHORIZED_STATUS_CODE){
+              _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+            }else{
+              _error.value = "Inventory getting error!"
+            }
+            _channelStatus.value = ChannelAccessStatusResponse(success = false)
           }
-          _channelStatus.value = ChannelAccessStatusResponse(success = false)
         }
       }
     }
+
   }
 
   private val _channelWhatsApp = MutableLiveData<ChannelWhatsappResponse>()
