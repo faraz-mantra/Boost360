@@ -280,15 +280,17 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     Log.i(TAG, "setEmptyView: ")
     when (visibility) {
       View.GONE -> {
+        setHasOptionsMenu(true)
         removeZeroCaseFragment()
       }
       View.VISIBLE -> {
+        setHasOptionsMenu(false)
         addFragment(containerID = R.id.container,fragmentZeroCase!! , true)
       }
     }
 
     if (visibility == View.VISIBLE) setListingView(View.GONE) else setListingView(View.VISIBLE)
-    setEmptyView()
+//    setEmptyView()
   }
 
   private fun setListingView(visibility: Int) {

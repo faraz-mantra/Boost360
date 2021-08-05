@@ -252,9 +252,13 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   private fun setEmptyView(isStaffEmpty: Boolean, isServiceEmpty: Boolean = false) {
     Log.i(TAG, "setEmptyView: "+isStaffEmpty+" "+isServiceEmpty)
-    if (isStaffEmpty)
-    addFragment(containerID = R.id.container, fragmentZeroCase!!, true)
-    else removeZeroCase()
+    if (isStaffEmpty){
+      setHasOptionsMenu(false)
+    addFragment(containerID = R.id.container, fragmentZeroCase!!, true)}
+    else {
+      setHasOptionsMenu(true)
+      removeZeroCase()
+    }
     binding?.rvStaffList?.visibility =
       if (isStaffEmpty || isServiceEmpty) View.GONE else View.VISIBLE
     if (this::menuAdd.isInitialized) menuAdd.isVisible = isServiceEmpty.not()

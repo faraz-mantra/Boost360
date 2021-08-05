@@ -24,10 +24,6 @@ import android.widget.LinearLayout;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.framework.views.zero.FragmentZeroCase;
-import com.framework.views.zero.OnZeroCaseClicked;
-import com.framework.views.zero.RequestZeroCaseBuilder;
-import com.framework.views.zero.ZeroCases;
 import com.github.clans.fab.FloatingActionMenu;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.OffersApiService;
@@ -48,8 +44,8 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class OffersFragment extends Fragment implements View.OnClickListener, OnZeroCaseClicked {
-    LinearLayout retryLayout;
+public class OffersFragment extends Fragment implements View.OnClickListener {
+    LinearLayout retryLayout, emptyMsgLayout;
     ButteryProgressBar progressBar;
     CardView progressCrd;
     RecyclerView recyclerView;
@@ -109,6 +105,7 @@ public class OffersFragment extends Fragment implements View.OnClickListener, On
         progressBar = (ButteryProgressBar) view.findViewById(R.id.progressbar);
         retryLayout = (LinearLayout) view.findViewById(R.id.postRetryLayout);
         fabButton = (FloatingActionMenu) view.findViewById(R.id.fab);
+        emptyMsgLayout = (LinearLayout) view.findViewById(R.id.emptymsglayout);
         view.findViewById(R.id.fab_offer).setOnClickListener(this);
         view.findViewById(R.id.fab_update).setOnClickListener(this);
         ImageView retryPost = (ImageView) view.findViewById(R.id.retryPost);
@@ -228,12 +225,8 @@ public class OffersFragment extends Fragment implements View.OnClickListener, On
                 for (int i = 0; i < offerSize; i++) {
                     offersModelList.add(result.floats.get(i));
                 }
-                if (offersModelList.size() == 0) {
-                    requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,
-                            new RequestZeroCaseBuilder(ZeroCases.SEASONAL_OFFERS, this, requireActivity()).getRequest().build(), FragmentZeroCase.class.getName())
-                            .commit();
-
-
+                if (offersModelList.size() > 0 && emptyMsgLayout.getVisibility() == View.VISIBLE) {
+                    emptyMsgLayout.setVisibility(View.GONE);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -241,26 +234,6 @@ public class OffersFragment extends Fragment implements View.OnClickListener, On
         } else {
             Methods.showSnackBarNegative(getActivity(), getString(R.string.offer_getting_error));
         }
-
-    }
-
-    @Override
-    public void primaryButtonClicked() {
-
-    }
-
-    @Override
-    public void secondaryButtonClicked() {
-
-    }
-
-    @Override
-    public void ternaryButtonClicked() {
-
-    }
-
-    @Override
-    public void onBackPressed() {
 
     }
 
