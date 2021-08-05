@@ -40,6 +40,7 @@ import com.framework.models.firestore.FirestoreManager
 import com.framework.models.firestore.FirestoreManager.initData
 import com.framework.pref.*
 import com.framework.utils.AppsFlyerUtils
+import com.framework.utils.ConversionUtils
 import com.framework.utils.fromHtml
 import com.framework.utils.roundToFloat
 import com.framework.views.bottombar.OnItemSelectedListener
@@ -93,8 +94,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onCreateView()
     session = UserSessionManager(this)
     session?.let { deepLinkUtil = DeepLinkUtil(this, it) }
-    mNavController =
-      (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
+    mNavController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
     val graph = mNavController.graph
     graph.addArgument("data", NavArgument.Builder().setDefaultValue("data").build())
     mNavController.graph = graph
@@ -109,7 +109,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     session?.initializeWebEngageLogin()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
-
     //registerFirebaseToken()
   }
 
@@ -122,11 +121,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         if (task.isSuccessful) {
           // Sign in success, update UI with the signed-in user's information
           Log.d(TAG, "signInWithCustomToken:success")
-
         } else {
           // If sign in fails, display a message to the user.
           Log.w(TAG, "signInWithCustomToken:failure", task.exception)
-
         }
       }
     })
@@ -144,9 +141,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
     FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
       val token = instanceIdResult.token
-      if (token.isNullOrEmpty().not()) {
+      if (token.isNotEmpty()) {
         WebEngage.get().setRegistrationID(token)
-        AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().token ?: "")
+        AnaCore.saveFcmToken(this, token)
         AnaCore.registerUser(this, session?.fpTag ?: "", ANA_BUSINESS_ID, ANA_CHAT_API_URL)
       }
     }
@@ -213,6 +210,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     return binding?.toolbar
   }
 
+  override fun getToolbarTitleSize(): Float {
+    return ConversionUtils.dp2px(18f).toFloat()
+  }
 
   fun setPercentageData(score: Int) {
     val isHigh = (score >= 85)
@@ -223,8 +223,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun setUserData() {
-    binding?.drawerView?.txtBusinessName?.text =
-      session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
+    binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
     setPercentageData(FirestoreManager.getDrScoreData()?.getDrsTotal() ?: 0)
     var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
@@ -232,21 +231,14 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       imageUri = BASE_IMAGE_URL + imageUri
     }
     binding?.drawerView?.imgBusinessLogo?.let {
-      glideLoad(
-        it,
-        imageUri ?: "",
-        R.drawable.business_edit_profile_icon_d
-      )
+      glideLoad(it, imageUri ?: "", R.drawable.business_edit_profile_icon_d)
     }
     var bgImageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)
     if (bgImageUri.isNullOrEmpty().not() && bgImageUri!!.contains("http").not()) {
       bgImageUri = BASE_IMAGE_URL + bgImageUri
     }
     binding?.drawerView?.bgImage?.let {
-      glideLoad(
-        it,
-        bgImageUri ?: "",
-        R.drawable.general_services_background_img_d
+      glideLoad(it, bgImageUri ?: "", R.drawable.general_services_background_img_d
       )
     }
   }
@@ -274,12 +266,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           it1.title = getDefaultTrasactionsTaxonomyFromServiceCode(session?.fP_AppExperienceCode)
         }
         DrawerHomeData.NavType.NAV_CALLS.name -> {
-          it1.isLockShow = (session?.getStoreWidgets()
-            ?.firstOrNull { it == PremiumCode.CALLTRACKER.value } == null)
+          it1.isLockShow = (session?.getStoreWidgets()?.firstOrNull { it == PremiumCode.CALLTRACKER.value } == null)
         }
         DrawerHomeData.NavType.NAV_BOOST_KEYBOARD.name -> {
-          it1.isLockShow = (session?.getStoreWidgets()
-            ?.firstOrNull { it == PremiumCode.BOOSTKEYBOARD.value } == null)
+          it1.isLockShow = (session?.getStoreWidgets()?.firstOrNull { it == PremiumCode.BOOSTKEYBOARD.value } == null)
         }
       }
     }
@@ -312,9 +302,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       1 -> {
         val dataWebsite = welcomeData?.get(0)
         if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let {
-          showWelcomeDialog(
-            it
-          )
+          showWelcomeDialog(it)
         }
         else {
           mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
@@ -324,9 +312,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       2 -> {
         val dataCustomer = welcomeData?.get(1)
         if (dataCustomer?.welcomeType?.let { getIsShowWelcome(it) } != true) dataCustomer?.let {
-          showWelcomeDialog(
-            it
-          )
+          showWelcomeDialog(it)
         }
         else {
           mNavController.navigate(R.id.navigation_enquiries, Bundle(), getNavOptions())
@@ -336,9 +322,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       3 -> {
         val dataAddOns = welcomeData?.get(2)
         if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let {
-          showWelcomeDialog(
-            it
-          )
+          showWelcomeDialog(it)
         }
         else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
 
@@ -382,9 +366,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     changeTheme(R.color.black_4a4a4a, R.color.black_4a4a4a)
     getToolbar()?.apply {
       visibility = View.VISIBLE
-      setTitle(title)
       supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
+    setToolbarTitle(title)
   }
 
 
