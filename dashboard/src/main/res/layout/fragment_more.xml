@@ -15,8 +15,8 @@
     <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:orientation="vertical"
-      android:background="@color/view_background_1">
+      android:background="@color/view_background_1"
+      android:orientation="vertical">
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
@@ -24,8 +24,8 @@
         android:layout_height="wrap_content"
         android:background="@color/black_4a4a4a"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/size_16"
-        android:paddingHorizontal="@dimen/size_16">
+        android:paddingHorizontal="@dimen/size_16"
+        android:paddingBottom="@dimen/size_16">
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/customTextView8"
@@ -91,11 +91,11 @@
           android:gravity="center"
           android:includeFontPadding="true"
           android:paddingVertical="2dp"
-          tools:text="Santosh Kamat"
           android:textColor="@color/white"
           android:textSize="16sp"
           app:layout_constraintStart_toEndOf="@+id/riv_users_image"
-          app:layout_constraintTop_toBottomOf="@+id/ctv_type" />
+          app:layout_constraintTop_toBottomOf="@+id/ctv_type"
+          tools:text="Santosh Kamat" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_content"
@@ -117,9 +117,9 @@
         <com.framework.views.customViews.CustomImageView
           android:id="@+id/civ_profile"
           android:layout_width="@dimen/size_32"
-          android:padding="@dimen/size_8"
-          android:foreground="?attr/selectableItemBackgroundBorderless"
           android:layout_height="@dimen/size_32"
+          android:foreground="?attr/selectableItemBackgroundBorderless"
+          android:padding="@dimen/size_8"
           android:src="@drawable/ic_arrow_right_7_white_d"
           app:layout_constraintBottom_toBottomOf="@+id/ctv_content"
           app:layout_constraintEnd_toEndOf="parent"
@@ -227,6 +227,8 @@
           </androidx.constraintlayout.widget.ConstraintLayout>
 
           <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/boost_subscription"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_16"
@@ -312,9 +314,9 @@
             android:id="@+id/ctv_useful_links_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
             android:fontFamily="@font/bold"
             android:gravity="start"
-            android:layout_marginTop="@dimen/size_16"
             android:includeFontPadding="true"
             android:text="@string/useful_links"
             android:textAllCaps="false"
@@ -876,11 +878,11 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="@dimen/size_16"
+          android:layout_marginTop="8dp"
           android:fontFamily="@font/bold"
           android:gravity="start"
           android:includeFontPadding="true"
           android:text="@string/about_boost_360"
-          android:layout_marginTop="8dp"
           android:textAllCaps="false"
           android:textColor="@color/black_4a4a4a"
           android:textSize="16sp"
@@ -905,27 +907,31 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="6"
             tools:listitem="@layout/recycler_item_about_app" />
+
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/size_30"
-            android:layout_height="wrap_content">
+            android:gravity="center"
+            android:orientation="vertical">
+
             <View
               android:layout_width="@dimen/size_70"
-              android:background="@color/color_orange_more"
-              android:layout_height="@dimen/size_1"/>
+              android:layout_height="@dimen/size_1"
+              android:background="@color/color_orange_more" />
+
             <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
-              android:textSize="10sp"
               android:text="@string/boost_360_is_proudly_made_in_india"
-              android:textColor="@color/gray_828282" />
+              android:textColor="@color/gray_828282"
+              android:textSize="10sp" />
+
             <View
               android:layout_width="@dimen/size_70"
-              android:background="@color/green_more"
-              android:layout_height="@dimen/size_1"/>
+              android:layout_height="@dimen/size_1"
+              android:background="@color/green_more" />
           </androidx.appcompat.widget.LinearLayoutCompat>
 
 

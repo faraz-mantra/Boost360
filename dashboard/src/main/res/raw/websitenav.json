@@ -1,0 +1,63 @@
+{
+
+  "website_customisation":[
+      {
+        "icon": "whats_new_version",
+        "subtitle": "Let the website speak your style. Customise your website look & feel and take it closer to your brand.",
+        "title": "Font & color styles",
+        "actionBtn": {
+          "color": "#FFB900",
+          "text_color":"#FFFFFF",
+          "title": "V16.4"
+        }
+      },
+    {
+      "icon": "frequently_asked_question",
+      "subtitle": "Run Boost 360 account on your wordpress website.",
+      "title": "Frequently asked questions"
+    },
+    {
+      "icon": "like_us_on_facebook",
+      "subtitle": "Run Boost 360 account on your wordpress website.",
+      "title": "Like us on Facebook"
+    },
+    {
+      "icon": "follow_us_on_twitter",
+      "subtitle": "Run Boost 360 account on your wordpress website.",
+      "title": "Follow us on Twitter"
+    },
+    {
+      "icon": "rate_us_on_google_play",
+      "subtitle": "Run Boost 360 account on your wordpress website.",
+      "title": "Rate us on Playstore"
+    },
+    //  {
+    //    "icon": "rate_us_on_app_store",
+    //    "subtitle": "Run Boost 360 account on your wordpress website.",
+    //    "title": "Rate us on Appstore"
+    //  },
+    {
+      "icon": "terms_of_usages",
+      "subtitle": "Last updated on",
+      "title": "Terms of use"
+    },
+
+    {
+      "icon": "privacy_policy",
+      "subtitle": "Run Boost 360 account on your wordpress website.",
+      "title": "Privacy policy"
+    }
+    //,
+    //  {
+    //    "view_type_2": "We’re listening :)"
+    //
+    //  }
+    //,
+    //  {
+    //    "icon": "help_us_make_boost_better",
+    //    "subtitle": "Suggest a feature or share a your feedback.",
+    //    "title": "Help us make Boost 360 better"
+    //  }
+  ]
+
+}

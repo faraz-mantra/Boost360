@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.appservice.ui.updatesBusiness.showDialog
@@ -50,7 +51,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   override fun onCreateView() {
     this.session = UserSessionManager(baseActivity)
     setData()
-    setOnClickListener(binding?.rivUsersImage, binding?.rivBusinessImage,binding?.civProfile)
+    setOnClickListener(binding?.rivUsersImage, binding?.rivBusinessImage,binding?.civProfile,binding?.boostSubscription)
   }
 
   private fun setData() {
@@ -147,11 +148,8 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
           intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
           intent.putExtra("WEBSITE_NAME", getString(R.string.setting_faq_url))
         } else {
-          showDialog(baseActivity, getString(R.string.restricted_access), getString(R.string.you_need_to_buy_the_one_time_pack_for_boost), object : DialogInterface.OnClickListener {
-            override fun onClick(dialog: DialogInterface?, which: Int) {
-              dialog?.dismiss()
-            }
-          })
+          showDialog(baseActivity, getString(R.string.restricted_access), getString(R.string.you_need_to_buy_the_one_time_pack_for_boost)
+          ) { dialog, which -> dialog?.dismiss() }
         }
       }
       AboutAppSectionItem.IconType.terms_of_usages -> {
@@ -229,12 +227,27 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       binding?.civProfile->{
         baseActivity.startBusinessProfileDetailEdit(session)
       }
+      binding?.boostSubscription->{
+        baseActivity.initiateAddonMarketplace(session!!, false, "", "")
+      }
     }
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_more,menu)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
+      R.id.menu_help -> {
+        needHelp()
+        return true
+      }
+      else -> {
+      }
+    }
+    return super.onOptionsItemSelected(item)
   }
   private fun likeUsFacebook(context: Context, review: String) {
     val facebookIntent: Intent = try {
