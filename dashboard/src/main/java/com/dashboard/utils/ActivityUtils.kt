@@ -914,8 +914,7 @@ fun AppCompatActivity.startWebsiteTheme(session: UserSessionManager?) {
 fun AppCompatActivity.startListSeasonalOffer(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(SEASONAL_OFFER_PAGE, CLICK, TO_BE_ADDED)
-    val webIntent =
-      Intent(this, Class.forName("com.nowfloats.hotel.seasonalOffers.SeasonalOffersActivity"))
+    val webIntent = Intent(this, Class.forName("com.nowfloats.hotel.seasonalOffers.SeasonalOffersActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
