@@ -83,7 +83,7 @@ class OrderConfirmationFragment : BaseFragment() {
     order_needs_help.setOnClickListener {
       Toasty.info(
         requireContext(),
-        "In case of any concerns, you can write to ria@nowfloats.com. Boost Care Team is available during business hours."
+        "In case of any concerns, you can write to ria@nowfloats.com. Boost care Team is available during business hours."
       ).show()
     }
 
