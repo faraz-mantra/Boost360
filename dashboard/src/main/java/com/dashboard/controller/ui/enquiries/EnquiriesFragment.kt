@@ -44,13 +44,13 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
+    WebEngageController.trackEvent(DASHBOARD_ENQUIRIES_PAGE, PAGE_VIEW, session?.fpTag)
     setDataSellerSummary(
       OrderSummaryModel().getTotalOrder(TOTAL_SELLER_ENQUIRIES),
       SummaryEntity().getUserSummary(USER_MY_ENQUIRIES),
       CallSummaryResponse().getCallSummary(CALL_MY_ENQUIRIES)
     )
     binding?.filterBtn?.setOnClickListener { showFilterBottomSheet() }
-    WebEngageController.trackEvent(DASHBOARD_ENQUIRIES_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
   private fun showFilterBottomSheet() {
@@ -104,7 +104,7 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
             identifierType,
             enquiriesFilter.startDate,
             enquiriesFilter.endDate
-          )?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { it2 ->
+          )?.observeOnce(viewLifecycleOwner, { it2 ->
             val response3 = it2 as? CallSummaryResponse
             response3?.saveData(CALL_MY_ENQUIRIES)
             setDataSellerSummary(

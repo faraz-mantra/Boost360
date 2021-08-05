@@ -2790,7 +2790,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="new_picture">New picture</string>
   <string name="from_your_camera">From your Camera</string>
   <string name="upgrade_to_premium_support">Upgrade to premium support</string>
-  <string name="you_are_currently_on_the_default_support_plan">You are currently on the default support plan. This gives you access to Boost care team via email only, with a promise of 72 hours SLA.\n\nYou can upgrade to premium support to get direct access to Boost Care team by phone, email and chat,\nwith a promise of 1 hour SLA.</string>
+  <string name="you_are_currently_on_the_default_support_plan">You are currently on the default support plan. This gives you access to Boost care team via email only, with a promise of 72 hours SLA.\n\nYou can upgrade to premium support to get direct access to Boost care team by phone, email and chat,\nwith a promise of 1 hour SLA.</string>
   <string name="need_help_with_boost">Need help with Boost360 [</string>
   <string name="unable_to_post_message">Unable to post message</string>
   <string name="image_upload_sent_check_triggered">Image UpLoAd sent_check Triggered</string>

@@ -80,9 +80,9 @@ class OrderConfirmationFragment : BaseFragment() {
       (activity as UpgradeActivity).goBackToMyAddonsScreen()
     }
 
-      order_needs_help.setOnClickListener {
-          Toasty.info(requireContext(),getString(R.string.in_case_of_any_concerns)).show()
-      }
+    order_needs_help.setOnClickListener {
+      Toasty.info(requireContext(), getString(R.string.in_case_of_any_concerns)).show()
+    }
 
     WebEngageController.trackEvent(
       EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM,
