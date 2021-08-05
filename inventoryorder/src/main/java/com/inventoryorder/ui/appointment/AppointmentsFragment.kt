@@ -227,6 +227,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
   private fun emptyView() {
+    setHasOptionsMenu(false)
     addFragment(containerID = R.id.container, zeroCaseFragment, true)
 //    binding?.bookingRecycler?.gone()
 //    binding?.errorView?.visible()
@@ -235,6 +236,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   private fun removeZeroCaseFragment() {
 //        if (zeroCaseFragment.isVisible()) {
+    setHasOptionsMenu(true)
     removeFragment(zeroCaseFragment::class.java.name)
 //        }
   }

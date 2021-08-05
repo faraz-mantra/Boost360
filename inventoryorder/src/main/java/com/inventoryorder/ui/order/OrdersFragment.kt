@@ -668,14 +668,14 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 //
 //  }
   private fun emptyView() {
+    setHasOptionsMenu(false)
     addFragment(containerID = R.id.container, zeroCaseFragment, true)
 
   }
 
   private fun removeZeroCaseFragment() {
-//        if (zeroCaseFragment.isVisible()) {
-removeFragment(zeroCaseFragment::javaClass.name)
-//        }
+    setHasOptionsMenu(true)
+    removeFragment(zeroCaseFragment::javaClass.name)
   }
 
   private fun getRequestFilterData(
