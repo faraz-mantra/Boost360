@@ -59,7 +59,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/forgot"
-      android:textColor="@color/pinkish_grey"
+      android:textColor="@color/black_4a4a4a"
       app:layout_constraintBottom_toBottomOf="@id/pass_et"
       app:layout_constraintTop_toTopOf="@id/pass_et"
       tools:ignore="MissingConstraints" />
