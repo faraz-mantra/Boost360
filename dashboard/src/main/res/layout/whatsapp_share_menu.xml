@@ -11,8 +11,8 @@
 
   <com.framework.views.customViews.CustomImageView
     android:id="@+id/button_share"
-    android:layout_width="@dimen/size_45"
-    android:layout_height="@dimen/size_28"
+    android:layout_width="@dimen/size_40"
+    android:layout_height="@dimen/size_24"
     android:paddingHorizontal="@dimen/size_4"
     android:src="@drawable/ic_whatsapp_business" />
 
@@ -20,8 +20,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginStart="@dimen/_6dp"
+    android:layout_marginStart="@dimen/size_2"
     android:text="@string/share"
+    android:fontFamily="@font/semi_bold"
     android:textAllCaps="false"
     android:textColor="@color/white" />
 </androidx.appcompat.widget.LinearLayoutCompat>

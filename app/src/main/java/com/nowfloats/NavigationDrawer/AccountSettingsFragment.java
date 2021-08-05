@@ -219,21 +219,11 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .positiveText(getString(R.string.setting_logout))
                 .negativeText(getString(R.string.cancel))
                 .negativeColorRes(R.color.black_4a4a4a)
-                .positiveColorRes(R.color.colorAccent_jio)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        sessionManager.logoutUser();
-//                        dialog.dismiss();
-//                        WebEngageController.logout();
-                    }
+                .positiveColorRes(R.color.colorAccentLight)
+                .onPositive((dialog, which) -> {
+                    sessionManager.logoutUser();
                 })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        dialog.dismiss();
-                    }
-                })
+                .onNegative((dialog, which) -> dialog.dismiss())
                 .show();
     }
 
