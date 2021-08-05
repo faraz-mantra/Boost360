@@ -28,10 +28,6 @@ import com.appservice.constant.FragmentType;
 import com.appservice.constant.IntentConstant;
 import com.framework.models.firestore.FirestoreManager;
 import com.framework.utils.ContentSharing;
-import com.framework.views.zero.FragmentZeroCase;
-import com.framework.views.zero.OnZeroCaseClicked;
-import com.framework.views.zero.RequestZeroCaseBuilder;
-import com.framework.views.zero.ZeroCases;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.ProductGallery.Adapter.ProductCategoryRecyclerAdapter;
 import com.nowfloats.ProductGallery.Model.ImageListModel;
@@ -67,7 +63,7 @@ import static com.framework.webengageconstant.EventNameKt.PRODUCT_CATALOGUE_LIST
 import static com.framework.webengageconstant.EventValueKt.EVENT_VALUE_MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 
-public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener, OnZeroCaseClicked {
+public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener {
 
     // For sharing
     private static final int STORAGE_CODE = 120;
@@ -100,8 +96,8 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             getSupportActionBar().setTitle("");
             binding.layoutToolbar.toolbarTitle.setText(Utils.getProductCatalogTaxonomyFromServiceCode(session.getFP_AppExperienceCode()));
             binding.layoutToolbar.toolbar.setNavigationIcon(R.drawable.ic_back_arrow_white);
-//            binding.tvMessage.setText(String.format(getString(R.string.product_empty_view_message),
-//                    Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()).toLowerCase()));
+            binding.tvMessage.setText(String.format(getString(R.string.product_empty_view_message),
+                    Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()).toLowerCase()));
         }
 
         this.initProductRecyclerView();
@@ -159,7 +155,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                 if (data != null && response.getStatus() == 200) {
                     if (data.size() > 0) {
                         if (itemToAdd != null) itemToAdd.setVisible(true);
-
+                        binding.layoutEmptyView.setVisibility(View.GONE);
                         adapter.setData(data, flag);
                         onProductServiceAddedOrUpdated(data.size());
                         return;
@@ -167,7 +163,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
                     if (adapter.getItemCount() == 0) {
                         if (itemToAdd != null) itemToAdd.setVisible(false);
-                      emptyView();
+                        binding.layoutEmptyView.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -184,16 +180,11 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             }
         });
     }
-    private void emptyView() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,
-                new RequestZeroCaseBuilder(ZeroCases.PRODUCT, this, this).getRequest().build(), FragmentZeroCase.class.getName())
-                .commit();
-    }
 
     private void onProductServiceAddedOrUpdated(int count) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
         String type = Utils.getProductType(session.getFP_AppExperienceCode());
-        if (instance.getDrScoreData().getMetricdetail() == null) return;
+        if (instance.getDrScoreData()==null || instance.getDrScoreData().getMetricdetail() == null) return;
         if (type.toUpperCase().equals("SERVICES")) {
             instance.getDrScoreData().getMetricdetail().setNumber_services_added(count);
         } else instance.getDrScoreData().getMetricdetail().setNumber_products_added(count);
@@ -480,18 +471,4 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     }
 
 
-    @Override
-    public void primaryButtonClicked() {
-        addProduct();
-    }
-
-    @Override
-    public void secondaryButtonClicked() {
-
-    }
-
-    @Override
-    public void ternaryButtonClicked() {
-
-    }
 }
