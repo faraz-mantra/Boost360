@@ -179,11 +179,15 @@ class PreSignInIntroFragment : AppBaseFragment<FragmentPreSigninIntroBinding, Ba
       WebEngageController.trackEvent(PS_CLICKED_INTRO_VIDEO_SKIP, VIDEO_SKIPPED, NO_EVENT_VALUE)
       binding?.playPauseLottie?.isVisible = true
       try {
-        player?.release()
+        player?.stop()
       } catch (e: Exception) {
         Log.e("SKIP_VIDEO_SUSPEND", e.localizedMessage)
       }
       timer?.cancel()
+      binding?.playPauseLottie?.isVisible = false
+      binding?.introImgContainer?.isVisible = true
+      binding?.videoViewContainer?.isVisible = false
+      binding?.progressBar?.isVisible = false
       (requireActivity() as? IntroActivity)?.slideNextPage()
     }
   }
