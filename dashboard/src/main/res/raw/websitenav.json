@@ -2,62 +2,35 @@
 
   "website_customisation":[
       {
-        "icon": "whats_new_version",
+        "icon": "ic_fonts",
         "subtitle": "Let the website speak your style. Customise your website look & feel and take it closer to your brand.",
         "title": "Font & color styles",
         "actionBtn": {
           "color": "#FFB900",
           "text_color":"#FFFFFF",
-          "title": "V16.4"
+          "title": "New"
         }
       },
     {
-      "icon": "frequently_asked_question",
-      "subtitle": "Run Boost 360 account on your wordpress website.",
-      "title": "Frequently asked questions"
+      "icon": "ic_diamonds",
+      "subtitle": "Your logo is a visual identity of your business that appears on top of your business website.",
+      "title": "My business logo"
     },
     {
-      "icon": "like_us_on_facebook",
-      "subtitle": "Run Boost 360 account on your wordpress website.",
-      "title": "Like us on Facebook"
+      "icon": "ic_background_images",
+      "subtitle": "These are set of images which stay behind the key content and set the brand-mood of your website.",
+      "title": "Background images"
     },
     {
-      "icon": "follow_us_on_twitter",
-      "subtitle": "Run Boost 360 account on your wordpress website.",
-      "title": "Follow us on Twitter"
+      "icon": "ic_favicon",
+      "subtitle": "Your customers can see it on the edge of your browser where your website is opened.",
+      "title": "Browser favicon"
     },
     {
-      "icon": "rate_us_on_google_play",
-      "subtitle": "Run Boost 360 account on your wordpress website.",
-      "title": "Rate us on Playstore"
-    },
-    //  {
-    //    "icon": "rate_us_on_app_store",
-    //    "subtitle": "Run Boost 360 account on your wordpress website.",
-    //    "title": "Rate us on Appstore"
-    //  },
-    {
-      "icon": "terms_of_usages",
-      "subtitle": "Last updated on",
-      "title": "Terms of use"
-    },
-
-    {
-      "icon": "privacy_policy",
-      "subtitle": "Run Boost 360 account on your wordpress website.",
-      "title": "Privacy policy"
+      "icon": "ic_featured_image",
+      "subtitle": "It is a key visual to define your business. It appears along with your business description.",
+      "title": "Featured image"
     }
-    //,
-    //  {
-    //    "view_type_2": "We’re listening :)"
-    //
-    //  }
-    //,
-    //  {
-    //    "icon": "help_us_make_boost_better",
-    //    "subtitle": "Suggest a feature or share a your feedback.",
-    //    "title": "Help us make Boost 360 better"
-    //  }
   ]
 
 }

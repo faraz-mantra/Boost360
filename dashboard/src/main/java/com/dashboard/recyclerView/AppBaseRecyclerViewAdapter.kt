@@ -6,6 +6,7 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.dashboard.R
 import com.dashboard.constant.RecyclerViewItemType.*
+import com.dashboard.controller.ui.customisationnav.holder.WebsiteNavHolder
 import com.dashboard.controller.ui.more.holder.AboutViewHolder
 import com.dashboard.controller.ui.more.holder.UsefulLinksHolder
 import com.dashboard.databinding.*
@@ -47,6 +48,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RECYCLER_USEFUL_LINKS -> UsefulLinksHolder(binding as RecyclerItemUsefulLinksBinding)
       RECYCLER_ABOUT_APP -> AboutViewHolder(binding as RecyclerItemAboutAppBinding)
       BOOST_WEBSITE_ITEM_FEATURE_VIEW -> WebsiteItemFeatureViewHolder(binding  as WebsiteItemFeatureBinding)
+      RECYCLER_WEBSITE_NAV -> WebsiteNavHolder(binding = binding as RecyclerItemWebsiteNavBinding)
     }
   }
 

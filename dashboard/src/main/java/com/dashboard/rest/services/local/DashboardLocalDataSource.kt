@@ -3,6 +3,7 @@ package com.dashboard.rest.services.local
 import android.content.Context
 import com.dashboard.R
 import com.dashboard.base.rest.AppBaseLocalService
+import com.dashboard.controller.ui.customisationnav.model.WebsiteNavModel
 import com.dashboard.controller.ui.more.model.MoreSettingsResponse
 import com.dashboard.model.live.addOns.ManageAddOnsBusinessResponse
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
@@ -43,6 +44,9 @@ object DashboardLocalDataSource : AppBaseLocalService() {
   }
   fun getMoreSettings(context: Context): Observable<BaseResponse> {
     return fromJsonRes(context, R.raw.more_settings, MoreSettingsResponse::class.java)
+  }
+  fun getWebsiteNavData(context: Context): Observable<BaseResponse> {
+    return fromJsonRes(context, R.raw.websitenav, WebsiteNavModel::class.java)
   }
   fun getDrScoreUi(context: Context): Observable<BaseResponse> {
     return fromJsonRes(context, R.raw.dr_score_ui, DrScoreUiDataResponse::class.java)
