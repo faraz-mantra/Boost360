@@ -926,6 +926,20 @@ fun AppCompatActivity.startWebsiteTheme(session: UserSessionManager?) {
     e.printStackTrace()
   }
 }
+fun AppCompatActivity.startWebsiteNav(session: UserSessionManager?) {
+  try {
+    WebEngageController.trackEvent(WEBSITE_NAV, CLICK, TO_BE_ADDED)
+    session?.getBundleDataKyc()?.let {
+      startFragmentDashboardActivity(
+        com.dashboard.constant.FragmentType.FRAGMENT_WEBSITE_NAV,
+        it,
+        false
+      )
+    }
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
 
 fun AppCompatActivity.startListSeasonalOffer(session: UserSessionManager?) {
   try {

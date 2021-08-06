@@ -183,7 +183,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       )
       binding?.btnProfileLogo -> baseActivity.startBusinessLogo(session)
       binding?.editProfile -> baseActivity.startBusinessProfileDetailEdit(session)
-      binding?.websiteThemeCustomization -> baseActivity.startWebsiteTheme(session)
+      binding?.websiteThemeCustomization -> baseActivity.startWebsiteNav(session)
 //      binding?.contactDetail -> baseActivity.startBusinessInfoEmail(session)
       binding?.businessTiming -> baseActivity.startBusinessHours(session)
       binding?.shareWhatsapp -> shareWhatsAppText()

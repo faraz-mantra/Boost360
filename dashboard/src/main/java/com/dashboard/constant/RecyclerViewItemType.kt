@@ -26,6 +26,7 @@ enum class RecyclerViewItemType {
   RECYCLER_USEFUL_LINKS,
   RECYCLER_ABOUT_APP,
   BOOST_WEBSITE_ITEM_FEATURE_VIEW,
+  RECYCLER_WEBSITE_NAV,
   FILTER_DATE_VIEW;
 
   @LayoutRes
@@ -54,6 +55,7 @@ enum class RecyclerViewItemType {
       WEBSITE_FONT_VIEW -> R.layout.recycler_item_select_font
       RECYCLER_USEFUL_LINKS -> R.layout.recycler_item_useful_links
       RECYCLER_ABOUT_APP -> R.layout.recycler_item_about_app
+      RECYCLER_WEBSITE_NAV -> R.layout.recycler_item_website_nav
     }
   }
 }
