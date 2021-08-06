@@ -183,7 +183,7 @@ public class ContactInformationActivity extends BaseActivity {
                 .autoDismiss(false)
                 .canceledOnTouchOutside(false)
                 .negativeColorRes(R.color.gray_transparent)
-                .positiveColorRes(R.color.primary_color)
+                .positiveColorRes(R.color.colorAccentLight)
                 .onPositive((dialog, which) -> {
 
                     String numText = number.getText().toString().trim();
@@ -218,7 +218,7 @@ public class ContactInformationActivity extends BaseActivity {
                 .positiveText("VERIFY")
                 .canceledOnTouchOutside(false)
                 .negativeColorRes(R.color.gray_transparent)
-                .positiveColorRes(R.color.primary_color)
+                .positiveColorRes(R.color.colorAccentLight)
                 .onPositive((dialog, which) -> {
 
                     String numText = otp.getText().toString().trim();
@@ -245,10 +245,10 @@ public class ContactInformationActivity extends BaseActivity {
         }
 
         return new MaterialDialog.Builder(ContactInformationActivity.this)
-                .title("Call Tracker is enabled")
+                .title("Call tracker is enabled")
                 .customView(dialogView, false)
                 .positiveText(getString(R.string.ok))
-                .positiveColorRes(R.color.primary_color)
+                .positiveColorRes(R.color.colorAccentLight)
                 .callback(new MaterialDialog.ButtonCallback() {
 
                     @Override
@@ -369,7 +369,7 @@ public class ContactInformationActivity extends BaseActivity {
 
     private void onContactInfoAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData().getMetricdetail() == null) return;
+        if (instance.getDrScoreData()==null || instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_add_contact_details(isAdded);
         instance.updateDocument();
     }

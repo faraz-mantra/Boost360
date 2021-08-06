@@ -110,10 +110,10 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
 
             @Override
             public void onClick(View v) {
-                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-                    Methods.showFeatureNotAvailDialog(FaviconImageActivity.this);
-                    return;
-                }
+//                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+//                    Methods.showFeatureNotAvailDialog(FaviconImageActivity.this);
+//                    return;
+//                }
 
                 final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
                 imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());

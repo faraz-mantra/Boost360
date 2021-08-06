@@ -76,7 +76,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Pictures\ngallery"
+              "title": "Picture\ngallery"
             },
             {
               "businessType": "ic_custom_page_add",
@@ -452,7 +452,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Pictures\ngallery"
+              "title": "Picture\ngallery"
             },
             {
               "businessType": "ic_custom_page_add",
@@ -807,7 +807,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Pictures\ngallery"
+              "title": "Picture\ngallery"
             },
             {
               "businessType": "ic_custom_page_add",
@@ -960,7 +960,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -1190,7 +1190,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Pictures\ngallery"
+              "title": "Picture\ngallery"
             },
             {
               "businessType": "ic_custom_page_add",
@@ -1573,7 +1573,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Pictures\ngallery"
+              "title": "Picture\ngallery"
             },
             {
               "businessType": "ic_custom_page_add",
@@ -1733,7 +1733,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -1977,7 +1977,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Pictures\ngallery"
+              "title": "Picture\ngallery"
             },
             {
               "businessType": "ic_custom_page_add",
@@ -2353,7 +2353,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Pictures\ngallery"
+              "title": "Picture\ngallery"
             },
             {
               "businessType": "ic_custom_page_add",
@@ -2506,7 +2506,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -2722,7 +2722,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Pictures\ngallery"
+              "title": "Picture\ngallery"
             },
             {
               "businessType": "ic_custom_page_add",
@@ -2882,7 +2882,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -3098,7 +3098,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Pictures\ngallery"
+              "title": "Picture\ngallery"
             },
             {
               "businessType": "ic_custom_page_add",
@@ -3258,7 +3258,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -3488,7 +3488,7 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Pictures\ngallery"
+              "title": "Picture\ngallery"
             },
             {
               "businessType": "ic_custom_page_add",
@@ -3648,7 +3648,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": false,
+              "isLock": true,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"

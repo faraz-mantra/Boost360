@@ -1,6 +1,7 @@
 package com.onboarding.nowfloats.rest.repositories
 
 import com.framework.base.BaseResponse
+import com.framework.pref.clientId
 import com.onboarding.nowfloats.base.rest.AppBaseLocalService
 import com.onboarding.nowfloats.base.rest.AppBaseRepository
 import com.onboarding.nowfloats.model.googleAuth.GoogleAuthTokenRequest
@@ -29,6 +30,14 @@ object GoogleAuthRepository : AppBaseRepository<GoogleAuthRemoteDataSource, AppB
         req?.grant_type,
         req?.redirect_uri
       ), Taskcode.POST_GOOGLE_AUTH_TOKEN
+    )
+  }
+
+  fun getFirebaseAuthToken(): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getFirebaseToken(
+       client_id= clientId
+      ), Taskcode.GET_FIREBASE_TOKEN
     )
   }
 

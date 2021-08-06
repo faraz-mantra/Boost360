@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.framework.views.fabButton.FloatingActionButton
 import com.nowfloats.education.faculty.FacultyActivity
 import com.nowfloats.education.faculty.adapter.FacultyManagementAdapter
 import com.nowfloats.education.faculty.model.Data
@@ -69,9 +70,9 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener {
     viewModel.apply {
       ourFacultyResponse.observe(viewLifecycleOwner, Observer {
         if (!it.Data.isNullOrEmpty()) {
-          hideLoader()
           setRecyclerviewAdapter(it.Data)
-        }
+        } else showToast("Faculty data not found!")
+        hideLoader()
       })
 
       errorMessage.observe(viewLifecycleOwner, Observer {
@@ -81,13 +82,9 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener {
 
       deleteFacultyResponse.observe(viewLifecycleOwner, Observer {
         if (!it.isNullOrBlank()) {
+          hideLoader()
           if (it == SUCCESS) {
-            hideLoader()
-            Toast.makeText(
-              requireContext(),
-              getString(R.string.faculty_deleted_successfully),
-              Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(requireContext(), getString(R.string.faculty_deleted_successfully), Toast.LENGTH_SHORT).show()
             showLoader("Loading Faculty")
             setDeleteFacultyLiveDataValue("")
             viewModel.getOurFaculty()
@@ -103,13 +100,12 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener {
   }
 
   private fun setHeader(view: View) {
-    val rightButton: LinearLayout = view.findViewById(R.id.right_icon_layout)
     val backButton: LinearLayout = view.findViewById(R.id.back_button)
-    val rightIcon: ImageView = view.findViewById(R.id.right_icon)
+    (view.findViewById(R.id.right_icon) as? ImageView)?.visibility = View.INVISIBLE
+    val btnAdd: FloatingActionButton = view.findViewById(R.id.btn_add)
     val title: TextView = view.findViewById(R.id.title)
     title.text = getString(R.string.faculty_management)
-    rightIcon.setImageResource(R.drawable.ic_add_white)
-    rightButton.setOnClickListener {
+    btnAdd.setOnClickListener {
       (activity as FacultyActivity).addFragment(
         FacultyDetailsFragment.newInstance(),
         FACULTY_DETAILS_FRAGMENT

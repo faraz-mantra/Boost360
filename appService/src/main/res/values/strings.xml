@@ -30,14 +30,14 @@
   <string name="link_your_account">Linked bank account</string>
   <string name="change_bank_detail">Change bank details</string>
   <string name="submit_for_verification">Submit for verification</string>
-  <string name="write_the_name_as_mentioned_in_bank_account">Write the name as mentioned in Bank account</string>
+  <string name="write_the_name_as_mentioned_in_bank_account">Write the name as mentioned in bank account</string>
   <string name="xxxxxxxxxxxxxxxxxx">XXXXXXXXXXXXXXXXXX</string>
 
   <string name="my_bank_account">My Bank Account</string>
   <string name="adding_bank_account">Adding Bank Account</string>
   <string name="link_bank_account">Link Bank Account</string>
 
-  <string name="write_the_name_of_your_bank">Write the Name of your bank</string>
+  <string name="write_the_name_of_your_bank">Write the name of your bank</string>
   <string name="write_account_alias">Write account alias</string>
   <string name="type_ifsc_code">Type IFSC code</string>
   <string name="add_bank_account">Add bank account</string>
@@ -46,12 +46,12 @@
   <string name="account_verification_pending">Your account verification is pending</string>
   <string name="self_branded_payment_gateway">Self Branded Payment Gateway</string>
   <string name="about_this_add_on"> About this add-on</string>
-  <string name="gateway_description">This payment gateway is powered by <b>Instamojo</b>, which allows you to collect your customers’ payment directly into your bank account without any delay, (unlike the default payment gateway provided by Boost). With this add-on acticvated on your Boost website your customers see that they are paying to your business and not to Boost.</string>
+  <string name="gateway_description">This payment gateway is powered by <b>Instamojo</b>, which allows you to collect your customers’ payment directly into your bank account without any delay, (unlike the default payment gateway provided by Boost). With this add-on acticvated on your boost website your customers see that they are paying to your business and not to boost.</string>
   <string name="important_colon">IMPORTANT:</string>
   <string name="add_on_terms_and_conditions">Addon terms and conditions</string>
   <string name="add_on_not_active">Add-on not active</string>
-  <string name="boost_not_added_message">You, have either not renewed this add-on or have not added this add-on ever before. To enjoy it’s benefits, go to add-on store to activate it for your Boost business website.</string>
-  <string name="view_in_add_on_store">View in Add-on store</string>
+  <string name="boost_not_added_message">You, have either not renewed this add-on or have not added this add-on ever before. To enjoy it’s benefits, go to add-on store to activate it for your boost business website.</string>
+  <string name="view_in_add_on_store">View in Add-ons store</string>
   <string name="self_branded_payment_gateway_camel_case">Self Branded Payment Gateway</string>
   <string name="add_on_terms_and_condition">Add-on terms and condition</string>
 
@@ -62,7 +62,7 @@
   </string>
 
   <string name="payment_gateway_terms_point_one">Boost currently supports Instamojo as ONLY OPTION as a custom payment gateway. If you want to activate it, get this add-on from our marketplace, and then for it’s activation, we’ll ask you to either create Instamojo account yourself or else we will help you do KYC and help you setup this account.\n\n</string>
-  <string name="payment_gateway_terms_point_two">Please note that Boost just acts as a fecilitator helping businesses like you to get most out of your Business website.\n\n</string>
+  <string name="payment_gateway_terms_point_two">Please note that boost just acts as a fecilitator helping businesses like you to get most out of your Business website.\n\n</string>
   <string name="payment_gateway_terms_point_three">Boost in no way is associated with Instamojo or claim any kind of responsibility related to the custom payment gateway.\n\n</string>
   <string name="payment_gateway_terms_point_four">Instamojo logo or brand name belongs to it’s respective owners.\n\n</string>
   <string name="payment_gateway_terms_point_five">If you do not do the kyc, Instamojo has a monthly INR 10,000 limit. Once you complete the KYC this limit get’s removed.\n</string>
@@ -139,7 +139,7 @@
   <string name="kyc_not_done">KYC not done!</string>
   <string name="start_your_kyc">Start your KYC</string>
   <string name="update_your_kyc">Update your KYC</string>
-  <string name="start_branded_payment_desc">To start using your \'Branded custom payment gateway\' on your Boost website, we\'ll need to verify your business details along with a bank account (if not provided already) using your business PAN card and 1-month bank statement respectively.</string>
+  <string name="start_branded_payment_desc">To start using your \'Branded custom payment gateway\' on your boost website, we\'ll need to verify your business details along with a bank account (if not provided already) using your business PAN card and 1-month bank statement respectively.</string>
   <string name="view_details">View details</string>
   <string name="business_kyc_verification_underway">Business KYC\nVerification Underway...</string>
   <string name="business_kyc_verify">Business KYC verify</string>
@@ -174,8 +174,11 @@
   <string name="crop_picture">Crop Picture</string>
   <string name="proceed">Proceed</string>
   <string name="service_details">Service details</string>
+  <string name="service_details_n">Service Details</string>
   <string name="other_information">Other information</string>
+  <string name="other_information_n">Other Information</string>
   <string name="product_details">Product Details</string>
+  <string name="product_details_n">Product Details</string>
   <string name="additional_information">Additional Info</string>
   <string name="testimonial_title">Testimonials</string>
   <string name="updates_title">Latest Updates</string>
@@ -267,7 +270,7 @@
 
   <!--  end of staff modules strings-->
   <string name="why_do_we_need_your_bank_account">Why do we need your bank account?</string>
-  <string name="collect_boost_business_website_desc">This account is being used to send you money collected from your customers who are making payments on your Boost Business website.</string>
+  <string name="collect_boost_business_website_desc">This account is being used to send you money collected from your customers who are making payments on your boost Business website.</string>
   <string name="product_category">Product category*</string>
   <string name="select_or_create_a_service_category">Select or create a service category</string>
   <string name="write_the_name_of_your_product">Write the name of your product</string>
@@ -459,8 +462,10 @@
   <string name="successfully_deleted">Successfully deleted</string>
   <string name="successfully_saved">Successfully saved</string>
   <string name="successfully_update">Successfully updated</string>
-  <string name="product_saved_and_published_live_on_your_website_or_share">Your product is successfully saved and published live on your website. Click on below button to see it live or share with in your connections.</string>
-  <string name="product_update_and_published_live_on_your_website_or_share">Your product is successfully updated and published live on your website. Click on below button to see it live or share with in your connections.</string>
+<!--  <string name="product_saved_and_published_live_on_your_website_or_share">Your product is successfully saved and published live on your website. Click on below button to see it live or share with in your connections.</string>-->
+  <string name="product_saved_and_published_live_on_your_website_or_share">Your product is successfully saved and published\nlive on your website.</string>
+<!--  <string name="product_update_and_published_live_on_your_website_or_share">Your product is successfully updated and published live on your website. Click on below button to see it live or share with in your connections.</string>-->
+  <string name="product_update_and_published_live_on_your_website_or_share">Your product is successfully updated and published\nlive on your website.</string>
   <string name="image_uploading">Uploading image, please wait...</string>
   <string name="error_select_service">Please select at least one service provided by this staff</string>
   <string name="business_closed">Business closed</string>
@@ -570,7 +575,7 @@
   <string name="_4_products_under_this_category">4 products under this category</string>
   <string name="latest_update_data_not_found">Latest update data not found!</string>
   <string name="update_regularly_keep_customers_informed_brand">Update regularly to keep your customers informed about your brand</string>
-  <string name="post_an_update_n">Post An Update</string>
+  <string name="post_an_update_n">Post an Update</string>
   <string name="send_to_subscribers">Send to subscribers</string>
   <string name="enable">Enable</string>
   <string name="unable_to_send_website_updates_to_subscribers">Enable this feature to send website updates to your subscribers via email.</string>

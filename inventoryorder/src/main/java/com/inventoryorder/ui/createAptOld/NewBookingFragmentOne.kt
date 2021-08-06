@@ -19,8 +19,7 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NewBookingFragmentOne : BaseInventoryFragment<FragmentNewBookingOneBinding>(),
-  RecyclerItemClickListener {
+class NewBookingFragmentOne : BaseInventoryFragment<FragmentNewBookingOneBinding>(), RecyclerItemClickListener {
 
   private var choosePurposeList = ChoosePurposeModel().getData()
   private var selectAppointmentList = AppointMentTypeModel().getData()

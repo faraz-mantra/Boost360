@@ -6,6 +6,8 @@
   <color name="colorAccentLight">#ffb900</color>
   <color name="colorPrimary_10">#1AFFB900</color>
   <color name="colorPrimaryDark">#d99d00</color>
+  <color name="accentLight_1">#FFD461</color>
+  <color name="accentLight_2">#FFF1CC</color>
   <color name="colorPrimaryVariant">#5092F5</color>
   <color name="statusBarColor">@color/colorPrimaryVariant</color>
   <color name="colorOnPrimary">#FFFFFF</color>
@@ -32,6 +34,7 @@
   <color name="white_snow">#fbfbfb</color>
   <color name="white_0">#00ffffff</color>
   <color name="black">#000000</color>
+  <color name="black_4a4a4a">#4A4A4A</color>
   <color name="transparent">#00000000</color>
   <color name="shadow">#33000000</color>
   <color name="color_dialog_bg">#FDFDFE</color>
