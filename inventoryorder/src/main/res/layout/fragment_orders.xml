@@ -11,227 +11,239 @@
     android:id="@+id/swipe_refresh"
     style="@style/match_wrap">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-      style="@style/match_match"
-      android:background="@color/lightest_grey"
-      android:orientation="vertical"
-      tools:context=".ui.FragmentContainerOrderActivity">
-
-      <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_46"
-        android:background="@color/white"
-        android:gravity="center_vertical">
-
-        <com.framework.views.viewgroups.BaseRecyclerView
-          android:id="@+id/type_recycler"
-          style="@style/match_wrap"
-          android:orientation="horizontal"
-          android:overScrollMode="never"
-          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-          tools:itemCount="3"
-          tools:listitem="@layout/item_order_type" />
-
-      </LinearLayout>
-
-      <View
-        android:id="@+id/view_shadow"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_3"
-        android:background="@drawable/down_shadow" />
-
-      <androidx.coordinatorlayout.widget.CoordinatorLayout style="@style/match_match">
-
-
-        <com.framework.views.viewgroups.BaseRecyclerView
-          android:id="@+id/order_recycler"
-          style="@style/match_wrap"
+        android:layout_height="match_parent">
+      <androidx.appcompat.widget.LinearLayoutCompat
+          style="@style/match_match"
+          android:id="@+id/mainlayout"
+          android:background="@color/lightest_grey"
           android:orientation="vertical"
-          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-          app:layout_behavior="@string/appbar_scrolling_view_behavior"
-          tools:itemCount="10"
-          tools:listitem="@layout/item_order"
-          tools:visibility="gone" />
+          tools:context=".ui.FragmentContainerOrderActivity">
 
-        <ProgressBar
-          android:id="@+id/progress"
-          style="@style/wrap_wrap"
-          android:layout_gravity="center"
-          android:indeterminate="true"
-          android:theme="@style/progressBar" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_46"
+            android:background="@color/white"
+            android:gravity="center_vertical">
 
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--          android:id="@+id/error_view"-->
-<!--          style="@style/match_match"-->
-<!--          android:layout_marginStart="@dimen/size_50"-->
-<!--          android:layout_marginEnd="@dimen/size_50"-->
-<!--          android:visibility="gone"-->
-<!--          tools:visibility="visible">-->
+          <com.framework.views.viewgroups.BaseRecyclerView
+              android:id="@+id/type_recycler"
+              style="@style/match_wrap"
+              android:orientation="horizontal"
+              android:overScrollMode="never"
+              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+              tools:itemCount="3"
+              tools:listitem="@layout/item_order_type" />
 
-<!--          <LinearLayout-->
-<!--            android:id="@+id/linearLayout2"-->
-<!--            style="@style/wrap_wrap"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:gravity="center"-->
-<!--            android:orientation="vertical"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent">-->
+        </LinearLayout>
 
-<!--            <com.framework.views.customViews.CustomImageView-->
-<!--              android:layout_width="@dimen/size_170"-->
-<!--              android:layout_height="@dimen/size_160"-->
-<!--              app:srcCompat="@drawable/ic_empty_appointment_icon" />-->
+        <View
+            android:id="@+id/view_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_3"
+            android:background="@drawable/down_shadow" />
 
-<!--            <com.framework.views.customViews.CustomTextView-->
-<!--              style="@style/wrap_wrap"-->
-<!--              android:layout_marginTop="@dimen/size_10"-->
-<!--              android:gravity="center"-->
-<!--              android:text="@string/no_orders_so_far"-->
-<!--              android:textAlignment="gravity"-->
-<!--              android:textColor="@color/greyish_brown"-->
-<!--              app:fontFamily="@font/semi_bold"-->
-<!--              app:textType="HEADING_4" />-->
-
-<!--            <com.framework.views.customViews.CustomTextView-->
-<!--              style="@style/wrap_wrap"-->
-<!--              android:layout_marginTop="@dimen/size_6"-->
-<!--              android:gravity="center"-->
-<!--              android:text="@string/tap_below_button_to_log_a_sample_offline_order"-->
-<!--              android:textAlignment="gravity"-->
-<!--              android:textColor="@color/grey_light_2"-->
-<!--              app:textType="HEADING_6" />-->
-
-<!--            <com.framework.views.customViews.CustomButton-->
-<!--              android:id="@+id/buttonAddApt"-->
-<!--              android:layout_width="match_parent"-->
-<!--              android:layout_height="@dimen/size_40"-->
-<!--              android:layout_marginTop="@dimen/size_20"-->
-<!--              android:background="@drawable/button_rounded_6"-->
-<!--              android:gravity="center"-->
-<!--              android:stateListAnimator="@null"-->
-<!--              android:text="@string/make_a_sample_order"-->
-<!--              android:textAllCaps="false"-->
-<!--              android:textColor="@color/white"-->
-<!--              app:fontFamily="@font/semi_bold"-->
-<!--              app:textType="BODY_1" />-->
-<!--          </LinearLayout>-->
-
-<!--          <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:id="@+id/btn_action_tutorials"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:visibility="gone"-->
-<!--            app:layout_constraintBottom_toTopOf="@+id/linearLayout3"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent">-->
+        <androidx.coordinatorlayout.widget.CoordinatorLayout style="@style/match_match">
 
 
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--              android:layout_width="0dp"-->
-<!--              android:layout_height="wrap_content"-->
-<!--              android:layout_marginHorizontal="@dimen/size_10"-->
-<!--              android:background="@drawable/bg_rounded_button"-->
-<!--              app:layout_constraintBottom_toBottomOf="parent"-->
-<!--              app:layout_constraintEnd_toEndOf="parent"-->
-<!--              app:layout_constraintStart_toStartOf="parent"-->
-<!--              app:layout_constraintTop_toTopOf="parent"-->
-<!--              app:layout_constraintWidth_percent="0.70">-->
+          <com.framework.views.viewgroups.BaseRecyclerView
+              android:id="@+id/order_recycler"
+              style="@style/match_wrap"
+              android:orientation="vertical"
+              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+              app:layout_behavior="@string/appbar_scrolling_view_behavior"
+              tools:itemCount="10"
+              tools:listitem="@layout/item_order"
+              tools:visibility="gone" />
 
-<!--              <com.framework.views.customViews.CustomImageView-->
-<!--                android:id="@+id/customImageView3"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginVertical="@dimen/size_8"-->
-<!--                android:src="@drawable/ria_white_circle"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="0.05"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
+          <ProgressBar
+              android:id="@+id/progress"
+              style="@style/wrap_wrap"
+              android:layout_gravity="center"
+              android:indeterminate="true"
+              android:theme="@style/progressBar" />
 
-<!--              <com.framework.views.customViews.CustomTextView-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:fontFamily="@font/semi_bold"-->
-<!--                android:gravity="start"-->
-<!--                android:paddingStart="@dimen/size_10"-->
-<!--                android:text="@string/see_how_it_works"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="16sp"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="0"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/customImageView3"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+          <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+          <!--          android:id="@+id/error_view"-->
+          <!--          style="@style/match_match"-->
+          <!--          android:layout_marginStart="@dimen/size_50"-->
+          <!--          android:layout_marginEnd="@dimen/size_50"-->
+          <!--          android:visibility="gone"-->
+          <!--          tools:visibility="visible">-->
 
-<!--            <com.framework.views.roundedimageview.RoundedImageView-->
-<!--              android:id="@+id/roundedImageView"-->
-<!--              android:layout_width="@dimen/size_80"-->
-<!--              android:layout_height="@dimen/size_80"-->
-<!--              android:background="@color/yellow_orange_22"-->
-<!--              app:layout_constraintBottom_toBottomOf="parent"-->
-<!--              app:layout_constraintEnd_toEndOf="parent"-->
-<!--              app:layout_constraintHorizontal_bias="0.1"-->
-<!--              app:layout_constraintStart_toStartOf="parent"-->
-<!--              app:layout_constraintTop_toTopOf="parent"-->
-<!--              app:riv_mutate_background="true"-->
-<!--              app:riv_oval="true" />-->
-<!--          </androidx.constraintlayout.widget.ConstraintLayout>-->
+          <!--          <LinearLayout-->
+          <!--            android:id="@+id/linearLayout2"-->
+          <!--            style="@style/wrap_wrap"-->
+          <!--            android:layout_gravity="center"-->
+          <!--            android:gravity="center"-->
+          <!--            android:orientation="vertical"-->
+          <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+          <!--            app:layout_constraintEnd_toEndOf="parent"-->
+          <!--            app:layout_constraintStart_toStartOf="parent"-->
+          <!--            app:layout_constraintTop_toTopOf="parent">-->
 
-<!--          <LinearLayout-->
-<!--            android:id="@+id/linearLayout3"-->
-<!--            style="@style/match_wrap"-->
+          <!--            <com.framework.views.customViews.CustomImageView-->
+          <!--              android:layout_width="@dimen/size_170"-->
+          <!--              android:layout_height="@dimen/size_160"-->
+          <!--              app:srcCompat="@drawable/ic_empty_appointment_icon" />-->
 
-<!--            android:gravity="center"-->
-<!--            android:orientation="vertical"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent">-->
+          <!--            <com.framework.views.customViews.CustomTextView-->
+          <!--              style="@style/wrap_wrap"-->
+          <!--              android:layout_marginTop="@dimen/size_10"-->
+          <!--              android:gravity="center"-->
+          <!--              android:text="@string/no_orders_so_far"-->
+          <!--              android:textAlignment="gravity"-->
+          <!--              android:textColor="@color/greyish_brown"-->
+          <!--              app:fontFamily="@font/semi_bold"-->
+          <!--              app:textType="HEADING_4" />-->
 
-<!--            <com.framework.views.customViews.CustomTextView-->
-<!--              style="@style/wrap_wrap"-->
-<!--              android:layout_marginTop="@dimen/size_6"-->
-<!--              android:gravity="center"-->
-<!--              android:text="To learn more about how ‘orders’ work,"-->
-<!--              android:textAlignment="gravity"-->
-<!--              android:textColor="@color/grey_light_2"-->
-<!--              app:textType="BODY_1" />-->
+          <!--            <com.framework.views.customViews.CustomTextView-->
+          <!--              style="@style/wrap_wrap"-->
+          <!--              android:layout_marginTop="@dimen/size_6"-->
+          <!--              android:gravity="center"-->
+          <!--              android:text="@string/tap_below_button_to_log_a_sample_offline_order"-->
+          <!--              android:textAlignment="gravity"-->
+          <!--              android:textColor="@color/grey_light_2"-->
+          <!--              app:textType="HEADING_6" />-->
 
-<!--            <LinearLayout-->
-<!--              style="@style/match_wrap"-->
-<!--              android:layout_marginBottom="@dimen/size_20"-->
-<!--              android:gravity="center"-->
-<!--              android:orientation="horizontal">-->
+          <!--            <com.framework.views.customViews.CustomButton-->
+          <!--              android:id="@+id/buttonAddApt"-->
+          <!--              android:layout_width="match_parent"-->
+          <!--              android:layout_height="@dimen/size_40"-->
+          <!--              android:layout_marginTop="@dimen/size_20"-->
+          <!--              android:background="@drawable/button_rounded_6"-->
+          <!--              android:gravity="center"-->
+          <!--              android:stateListAnimator="@null"-->
+          <!--              android:text="@string/make_a_sample_order"-->
+          <!--              android:textAllCaps="false"-->
+          <!--              android:textColor="@color/white"-->
+          <!--              app:fontFamily="@font/semi_bold"-->
+          <!--              app:textType="BODY_1" />-->
+          <!--          </LinearLayout>-->
 
-<!--              <com.framework.views.customViews.CustomTextView-->
-<!--                style="@style/wrap_wrap"-->
-<!--                android:text="click on the ‘"-->
-<!--                android:textColor="@color/grey_light_2"-->
-<!--                app:textType="BODY_1" />-->
+          <!--          <androidx.constraintlayout.widget.ConstraintLayout-->
+          <!--            android:id="@+id/btn_action_tutorials"-->
+          <!--            android:layout_width="match_parent"-->
+          <!--            android:layout_height="wrap_content"-->
+          <!--            android:visibility="gone"-->
+          <!--            app:layout_constraintBottom_toTopOf="@+id/linearLayout3"-->
+          <!--            app:layout_constraintEnd_toEndOf="parent"-->
+          <!--            app:layout_constraintStart_toStartOf="parent">-->
 
-<!--              <com.framework.views.customViews.CustomTextView-->
-<!--                style="@style/wrap_wrap"-->
-<!--                android:drawableStart="@drawable/ic_about_apt_icon"-->
-<!--                android:text="’ icon on top right."-->
-<!--                android:textColor="@color/warm_grey"-->
-<!--                app:textType="BODY_1" />-->
-<!--            </LinearLayout>-->
-<!--          </LinearLayout>-->
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-        <com.framework.views.fabButton.FloatingActionButton
-          android:id="@+id/btn_add"
-          style="@style/wrap_wrap"
-          android:layout_gravity="bottom|right"
-          android:layout_margin="16dp"
-          android:clickable="true"
-          android:focusable="true"
-          android:backgroundTint="@color/colorAccentLight"
-          app:fabIcon="@drawable/ic_add_white"
-          app:fabSize="normal" />
-      </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+          <!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+          <!--              android:layout_width="0dp"-->
+          <!--              android:layout_height="wrap_content"-->
+          <!--              android:layout_marginHorizontal="@dimen/size_10"-->
+          <!--              android:background="@drawable/bg_rounded_button"-->
+          <!--              app:layout_constraintBottom_toBottomOf="parent"-->
+          <!--              app:layout_constraintEnd_toEndOf="parent"-->
+          <!--              app:layout_constraintStart_toStartOf="parent"-->
+          <!--              app:layout_constraintTop_toTopOf="parent"-->
+          <!--              app:layout_constraintWidth_percent="0.70">-->
+
+          <!--              <com.framework.views.customViews.CustomImageView-->
+          <!--                android:id="@+id/customImageView3"-->
+          <!--                android:layout_width="wrap_content"-->
+          <!--                android:layout_height="wrap_content"-->
+          <!--                android:layout_marginVertical="@dimen/size_8"-->
+          <!--                android:src="@drawable/ria_white_circle"-->
+          <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+          <!--                app:layout_constraintEnd_toEndOf="parent"-->
+          <!--                app:layout_constraintHorizontal_bias="0.05"-->
+          <!--                app:layout_constraintStart_toStartOf="parent"-->
+          <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+          <!--              <com.framework.views.customViews.CustomTextView-->
+          <!--                android:layout_width="0dp"-->
+          <!--                android:layout_height="wrap_content"-->
+          <!--                android:fontFamily="@font/semi_bold"-->
+          <!--                android:gravity="start"-->
+          <!--                android:paddingStart="@dimen/size_10"-->
+          <!--                android:text="@string/see_how_it_works"-->
+          <!--                android:textColor="@color/white"-->
+          <!--                android:textSize="16sp"-->
+          <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+          <!--                app:layout_constraintEnd_toEndOf="parent"-->
+          <!--                app:layout_constraintHorizontal_bias="0"-->
+          <!--                app:layout_constraintStart_toEndOf="@+id/customImageView3"-->
+          <!--                app:layout_constraintTop_toTopOf="parent" />-->
+          <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+          <!--            <com.framework.views.roundedimageview.RoundedImageView-->
+          <!--              android:id="@+id/roundedImageView"-->
+          <!--              android:layout_width="@dimen/size_80"-->
+          <!--              android:layout_height="@dimen/size_80"-->
+          <!--              android:background="@color/yellow_orange_22"-->
+          <!--              app:layout_constraintBottom_toBottomOf="parent"-->
+          <!--              app:layout_constraintEnd_toEndOf="parent"-->
+          <!--              app:layout_constraintHorizontal_bias="0.1"-->
+          <!--              app:layout_constraintStart_toStartOf="parent"-->
+          <!--              app:layout_constraintTop_toTopOf="parent"-->
+          <!--              app:riv_mutate_background="true"-->
+          <!--              app:riv_oval="true" />-->
+          <!--          </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+          <!--          <LinearLayout-->
+          <!--            android:id="@+id/linearLayout3"-->
+          <!--            style="@style/match_wrap"-->
+
+          <!--            android:gravity="center"-->
+          <!--            android:orientation="vertical"-->
+          <!--            app:layout_constraintBottom_toBottomOf="parent">-->
+
+          <!--            <com.framework.views.customViews.CustomTextView-->
+          <!--              style="@style/wrap_wrap"-->
+          <!--              android:layout_marginTop="@dimen/size_6"-->
+          <!--              android:gravity="center"-->
+          <!--              android:text="To learn more about how ‘orders’ work,"-->
+          <!--              android:textAlignment="gravity"-->
+          <!--              android:textColor="@color/grey_light_2"-->
+          <!--              app:textType="BODY_1" />-->
+
+          <!--            <LinearLayout-->
+          <!--              style="@style/match_wrap"-->
+          <!--              android:layout_marginBottom="@dimen/size_20"-->
+          <!--              android:gravity="center"-->
+          <!--              android:orientation="horizontal">-->
+
+          <!--              <com.framework.views.customViews.CustomTextView-->
+          <!--                style="@style/wrap_wrap"-->
+          <!--                android:text="click on the ‘"-->
+          <!--                android:textColor="@color/grey_light_2"-->
+          <!--                app:textType="BODY_1" />-->
+
+          <!--              <com.framework.views.customViews.CustomTextView-->
+          <!--                style="@style/wrap_wrap"-->
+          <!--                android:drawableStart="@drawable/ic_about_apt_icon"-->
+          <!--                android:text="’ icon on top right."-->
+          <!--                android:textColor="@color/warm_grey"-->
+          <!--                app:textType="BODY_1" />-->
+          <!--            </LinearLayout>-->
+          <!--          </LinearLayout>-->
+          <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+          <com.framework.views.fabButton.FloatingActionButton
+              android:id="@+id/btn_add"
+              style="@style/wrap_wrap"
+              android:layout_gravity="bottom|right"
+              android:layout_margin="16dp"
+              android:clickable="true"
+              android:focusable="true"
+              android:backgroundTint="@color/colorAccentLight"
+              app:fabIcon="@drawable/ic_add_white"
+              app:fabSize="normal" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+      <FrameLayout
+          android:visibility="gone"
+          android:id="@+id/child_container"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"/>
+    </RelativeLayout>
+
+
   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </layout>

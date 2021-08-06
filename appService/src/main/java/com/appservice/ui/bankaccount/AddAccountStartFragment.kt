@@ -39,7 +39,7 @@ class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, 
     super.onCreateView()
     setOnClickListener(binding?.closeBtn, binding?.startBtn)
     (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(getString(R.string.my_bank_acccount))
-    addFragment(R.id.container,RequestZeroCaseBuilder(ZeroCases.MY_BANK_ACCOUNT,this,baseActivity).getRequest().build(),true)
+    addFragmentReplace(R.id.container,RequestZeroCaseBuilder(ZeroCases.MY_BANK_ACCOUNT,this,baseActivity).getRequest().build(),false)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

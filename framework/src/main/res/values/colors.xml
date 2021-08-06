@@ -25,6 +25,7 @@
   <color name="light_grey_2">#ebebeb</color>
   <color name="snackbar_positive_color">#5DAC01</color>
   <color name="snackbar_negative_color">#E02200</color>
+
   <color name="white">#FFFFFF</color>
   <color name="white_70">#B3FFFFFF</color>
   <color name="white_50">#80FFFFFF</color>
@@ -35,9 +36,11 @@
   <color name="transparent">#00000000</color>
   <color name="shadow">#33000000</color>
   <color name="color_dialog_bg">#FDFDFE</color>
+
   <!-- fab-->
   <color name="colorFabText">#F5F5F5</color>
   <color name="colorFabIcon">#F5F5F5</color>
   <color name="colorShadowStart">#5e5e5e</color>
   <color name="colorShadowEnd">#c7c7c7</color>
+
 </resources>

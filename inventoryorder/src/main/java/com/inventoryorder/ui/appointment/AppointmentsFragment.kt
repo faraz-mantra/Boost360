@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.PopupWindow
@@ -74,7 +75,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   lateinit var mPopupWindow: PopupWindow
   private var orderItem: OrderItem? = null
   private var position: Int? = null
-
+  private  val TAG = "AppointmentsFragment"
   /* Paging */
   private var isLoadingD = false
   private var isSearchItem = false
@@ -94,6 +95,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun onCreateView() {
     super.onCreateView()
+    Log.i(TAG, "onCreateView: ")
     WebEngageController.trackEvent(APPOINTMENT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
@@ -104,6 +106,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
     binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
     this.zeroCaseFragment = RequestZeroCaseBuilder(ZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
+    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
+
   }
 
   override fun onClick(v: View) {
@@ -156,15 +160,18 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     isSearch: Boolean = false
   ) {
     if (isFirst || isSearch) showProgressLoad()
+
     viewModel?.getSellerOrdersFilter(request)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgressLoad()
       if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
+        Log.i(TAG, "getSellerOrdersFilterApi: "+response?.Items?.size)
         if (isSearch.not()) {
           if (isRefresh) orderListFinalList.clear()
           val isDataNotEmpty = (response != null && response.Items.isNullOrEmpty().not())
           onInClinicAptAddedOrUpdated(isDataNotEmpty)//Dr score
           if (isDataNotEmpty) {
+            nonEmptyView()
             orderList.clear()
             removeLoader()
             val list = response!!.Items?.map { item ->
@@ -179,6 +186,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
           } else emptyView()
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
+            nonEmptyView()
             val list = response.Items?.map { item ->
               item.recyclerViewType = RecyclerViewItemType.APPOINTMENT_ITEM_TYPE.getLayout();item
             } as ArrayList<OrderItem>
@@ -193,6 +201,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         }
       } else showLongToast(it.message())
     })
+  }
+
+  private fun nonEmptyView() {
+    setHasOptionsMenu(true)
+    binding?.mainlayout?.visible()
+    binding?.childContainer?.gone()
   }
 
   private fun showProgressLoad() {
@@ -227,8 +241,11 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
   private fun emptyView() {
+    Log.i(TAG, "emptyView: ")
     setHasOptionsMenu(false)
-    addFragment(containerID = R.id.container, zeroCaseFragment, true)
+    binding?.mainlayout?.gone()
+    binding?.childContainer?.visible()
+
 //    binding?.bookingRecycler?.gone()
 //    binding?.errorView?.visible()
 //    binding?.btnAdd?.gone()

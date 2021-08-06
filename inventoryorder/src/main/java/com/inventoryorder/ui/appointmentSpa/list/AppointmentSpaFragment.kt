@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.PopupWindow
@@ -107,6 +108,9 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
     binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
     this.zeroCaseFragment = RequestZeroCaseBuilder(ZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
+    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
+
+
   }
 
   override fun onClick(v: View) {
@@ -168,6 +172,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
           val isDataNotEmpty = (response != null && response.Items.isNullOrEmpty().not())
           onInClinicAptAddedOrUpdated(isDataNotEmpty)//Dr score
           if (isDataNotEmpty) {
+            nonEmptyView()
             orderList.clear()
             removeLoader()
             val list = response!!.Items?.map { item ->
@@ -183,6 +188,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
           } else emptyView()
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
+            nonEmptyView()
             val list = response.Items?.map { item ->
               item.recyclerViewType =
                 RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout();item
@@ -233,13 +239,25 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     } else setAdapterAppointmentList(getDateWiseFilter(items))
   }
 
+
+
+  private fun nonEmptyView() {
+    setHasOptionsMenu(true)
+    binding?.mainlayout?.visible()
+    binding?.childContainer?.gone()
+  }
+
   private fun emptyView() {
     setHasOptionsMenu(false)
-    addFragment(containerID = R.id.container, zeroCaseFragment, true)
+    binding?.mainlayout?.gone()
+    binding?.childContainer?.visible()
+
+//    binding?.bookingRecycler?.gone()
+//    binding?.errorView?.visible()
+//    binding?.btnAdd?.gone()
   }
 
   private fun removeZeroCaseFragment() {
-    setHasOptionsMenu(true)
     removeFragment(zeroCaseFragment::class.java.name)
   }
 

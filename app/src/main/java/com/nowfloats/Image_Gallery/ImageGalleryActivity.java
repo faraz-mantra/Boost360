@@ -35,11 +35,12 @@ public class ImageGalleryActivity extends AppCompatActivity {
     ArrayList<String> purchasedWidgetList = new ArrayList<String>();
     private Image_Gallery_Fragment image_gallery_fragment;
     private int noOfImages = 0;
-
+    private static final String TAG = "ImageGalleryActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_image_gallery);
+        Log.i(TAG, "onCreate: ");
         MixPanelController.track(MixPanelController.IMAGE_GALLERY, null);
 
         setSupportActionBar(binding.appBar.toolbar);

@@ -113,6 +113,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     this.domainName = session?.getDomainName()!!
 
     this.fragmentZeroCase = RequestZeroCaseBuilder(ZeroCases.SERVICES, this, baseActivity,).getRequest().build()
+    addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase,false)
 
   }
 
@@ -281,11 +282,13 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     when (visibility) {
       View.GONE -> {
         setHasOptionsMenu(true)
-        removeZeroCaseFragment()
+        binding?.mainlayout?.visible()
+        binding?.childContainer?.gone()
       }
       View.VISIBLE -> {
         setHasOptionsMenu(false)
-        addFragment(containerID = R.id.container,fragmentZeroCase!! , true)
+        binding?.mainlayout?.gone()
+        binding?.childContainer?.visible()
       }
     }
 
