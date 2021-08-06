@@ -158,7 +158,7 @@
   <string name="discount_amount_not_greater_than_price">Discount amount can\'t be greater than price</string>
   <string name="please_fill_other_info">Please fill other information service.</string>
   <string name="contact_support">Contact Support</string>
-  <string name="update_bank_detail">Update Bank Detail</string>
+  <string name="update_bank_detail">Update bank detail</string>
   <string name="add_bank_detail">Add Bank Detail</string>
   <string name="boost_payment_gateway">Boost payment gateway</string>
   <string name="the_service_can_be_offered_either_at_the_business_location_or_at_client_s_location">The service can be offered either at the business location or at client’s location.</string>
