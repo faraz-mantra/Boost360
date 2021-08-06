@@ -56,6 +56,7 @@ import static com.framework.webengageconstant.EventNameKt.FEATURED_IMAGE_ADDED;
 import static com.framework.webengageconstant.EventNameKt.UPLOAD_FEATURED_IMAGE;
 
 public class FeaturedImageActivity extends AppCompatActivity {
+    private static final String TAG = "FeaturedImageActivity";
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_GALLERY = 2;
     private static final int ACTION_REQUEST_IMAGE_EDIT = 3;
@@ -79,7 +80,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
 
     private void onFeatureLogoAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData().getMetricdetail() == null) return;
+        if (instance.getDrScoreData()==null || instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_add_featured_image_video(isAdded);
         instance.updateDocument();
     }
@@ -172,10 +173,10 @@ public class FeaturedImageActivity extends AppCompatActivity {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-                    Methods.showFeatureNotAvailDialog(FeaturedImageActivity.this);
-                    return;
-                }
+//                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+//                    Methods.showFeatureNotAvailDialog(FeaturedImageActivity.this);
+//                    return;
+//                }
 //                final MaterialDialog dialog = new MaterialDialog.Builder(FeaturedImageActivity.this)
 //                        .customView(R.layout.featuredimage_popup,true)
 //                        .show();
@@ -365,6 +366,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         try {
             if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode)) {
+                Log.i(TAG, "onActivityResult: photo result recieved");
                 try {
                     CameraBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                     imageUrl = Methods.getRealPathFromURI(this, imageUri);

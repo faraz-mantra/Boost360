@@ -37,7 +37,7 @@
       android:layout_marginEnd="@dimen/_15sdp"
       android:background="@drawable/edit_text_bg_elevated_education"
       android:elevation="@dimen/_2sdp"
-      android:hint="Enter Course Name"
+      android:hint="Enter course name"
       android:text="@={batchedData.coursecategorytag}"
       android:textSize="@dimen/_12sdp" />
 
@@ -78,7 +78,7 @@
       android:layout_marginEnd="@dimen/_15sdp"
       android:background="@drawable/edit_text_bg_elevated_education"
       android:elevation="@dimen/_2sdp"
-      android:hint="Days/Months/Weekly"
+      android:hint="Days/ Months/ Weekly"
       android:text="@={batchedData.duration}"
       android:textSize="@dimen/_12sdp" />
 

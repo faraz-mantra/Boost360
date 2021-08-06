@@ -5,7 +5,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.os.Message
 import android.view.MenuItem
 import android.view.View
 import android.webkit.*
@@ -72,11 +74,42 @@ class OrderInvoiceFragment : BaseInventoryFragment<FragmentOrderInoiceBinding>()
     binding?.webview?.settings?.allowFileAccess = true
     binding?.webview?.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
     binding?.webview?.webChromeClient = WebChromeClient()
+    val webSettings = binding?.webview?.settings
+    webSettings?.javaScriptCanOpenWindowsAutomatically = true
+    webSettings?.setSupportMultipleWindows(true)
+    webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
+    webSettings?.domStorageEnabled = true
+
+    binding?.webview?.webChromeClient = object :WebChromeClient(){
+      override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
+        val result = view!!.hitTestResult
+        val data = result.extra
+        val context= view.context
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data))
+        context.startActivity(browserIntent)
+        return false
+      }
+    }
     binding?.webview?.webViewClient = object : WebViewClient() {
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         binding?.progressBar?.visible()
-        view.loadUrl(url)
-        return false
+        return if (
+          url.startsWith("mailto:") || url.startsWith("tel:") || url.startsWith("geo:")
+          || url.startsWith("whatsapp:") || url.startsWith("spotify:")
+        ) {
+          try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+          } catch (e: Exception) {
+            e.printStackTrace()
+            view.loadUrl(url)
+            false
+          }
+          true
+        } else {
+          view.loadUrl(url)
+          false
+        }
       }
 
       override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {

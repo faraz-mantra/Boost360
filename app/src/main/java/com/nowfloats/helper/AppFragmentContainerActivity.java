@@ -105,7 +105,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
       case ABOUT_BOOST:
         return getString(R.string.about);
       case NOTIFICATION_VIEW:
-        return getString(R.string.notification);
+        return getString(R.string.notification_n);
       case UPDATE_LATEST_STORY_VIEW:
         return Utils.getLatestUpdatesTaxonomyFromServiceCode(session.getFP_AppExperienceCode());
       case MANAGE_CUSTOMER_VIEW:

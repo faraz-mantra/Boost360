@@ -48,14 +48,13 @@
             app:shadowRadius="2dp"
             app:shadowShape="oval"
             app:shadowSide="all"
-            app:srcCompat="@drawable/ic_ria_circle"
             tools:alpha="1">
 
             <com.framework.views.customViews.CustomImageView
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:padding="@dimen/size_1"
-              app:srcCompat="@drawable/ic_ria_circle" />
+              app:srcCompat="@drawable/ic_ria_channel" />
           </com.framework.views.shadowview.ShadowLayout>
 
           <com.framework.views.customViews.CustomTextView

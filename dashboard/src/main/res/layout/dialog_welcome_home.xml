@@ -51,7 +51,7 @@
         android:layout_marginTop="@dimen/size_26"
         android:gravity="center"
         app:textType="HEADING_6"
-        tools:text="You can explore and purchase add-ons for your website starting at ₹50/month." />
+        tools:text="You can explore and purchase Add-ons for your website starting at ₹50/month." />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat

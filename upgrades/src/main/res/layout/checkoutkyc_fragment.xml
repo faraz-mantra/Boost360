@@ -189,7 +189,7 @@ Please confirm below details."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/_5sdp"
-            android:text="GST Number (Optional)"
+            android:text="GST Number (optional)"
             android:textColor="@color/common_text_color"
             android:textSize="@dimen/_10sdp" />
 

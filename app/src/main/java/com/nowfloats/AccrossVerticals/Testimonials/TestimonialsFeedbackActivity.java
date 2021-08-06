@@ -173,6 +173,10 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
 
     }
 
+    private boolean isValide() {
+        return false;
+    }
+
     public void displayData() {
         existingItemData = new Gson().fromJson(getIntent().getStringExtra("data"), TestimonialData.class);
         itemId = existingItemData.getId();
@@ -386,14 +390,21 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     }
 
     private boolean validateInput() {
-        if (!(userNameText.getText().toString().isEmpty() || reviewTitleText.getText().toString().isEmpty() || reviewDescriptionText.getText().toString().isEmpty()) ||
-                !(isProfileDescFill(session.getFP_AppExperienceCode()) == View.VISIBLE && profileDescEdt.getText().toString().isEmpty())) {
+        if (userNameText.getText().toString().isEmpty()){
+            return messageInpute();
+        }else if (reviewTitleText.getText().toString().isEmpty()){
+            return messageInpute();
+        }else  if (reviewDescriptionText.getText().toString().isEmpty() || (isProfileDescFill(session.getFP_AppExperienceCode()) == View.VISIBLE && profileDescEdt.getText().toString().isEmpty())){
+            return messageInpute();
+        }else {
             return true;
-        } else {
-            Toast.makeText(getApplicationContext(), "Fields are Empty...", Toast.LENGTH_SHORT).show();
-            hideLoader();
-            return false;
         }
+    }
+
+    private boolean messageInpute() {
+        Toast.makeText(getApplicationContext(), "Fields are Empty...", Toast.LENGTH_SHORT).show();
+        hideLoader();
+        return false;
     }
 
     public void cameraIntent() {
