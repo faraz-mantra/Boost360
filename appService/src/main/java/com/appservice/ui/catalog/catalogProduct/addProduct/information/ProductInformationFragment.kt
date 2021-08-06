@@ -35,9 +35,7 @@ import com.framework.webengageconstant.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class ProductInformationFragment :
-  AppBaseFragment<FragmentProductInformationBinding, ServiceViewModel>(),
-  RecyclerItemClickListener {
+class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
   private var product: CatalogProduct? = null
   private var isEdit: Boolean? = null

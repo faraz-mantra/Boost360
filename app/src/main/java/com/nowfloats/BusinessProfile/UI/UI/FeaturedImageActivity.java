@@ -56,6 +56,7 @@ import static com.framework.webengageconstant.EventNameKt.FEATURED_IMAGE_ADDED;
 import static com.framework.webengageconstant.EventNameKt.UPLOAD_FEATURED_IMAGE;
 
 public class FeaturedImageActivity extends AppCompatActivity {
+    private static final String TAG = "FeaturedImageActivity";
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_GALLERY = 2;
     private static final int ACTION_REQUEST_IMAGE_EDIT = 3;
@@ -365,6 +366,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         try {
             if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode)) {
+                Log.i(TAG, "onActivityResult: photo result recieved");
                 try {
                     CameraBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                     imageUrl = Methods.getRealPathFromURI(this, imageUri);

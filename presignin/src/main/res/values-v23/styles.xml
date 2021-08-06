@@ -4,11 +4,14 @@
   <style name="AppTheme.Pre.Signin" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorAccent">@color/black_4a4a4a</item>
+    <item name="colorControlHighlight">@color/colorAccent</item>
+    <item name="colorControlNormal">@color/colorAccentLight</item>
     <item name="android:windowAnimationStyle">@null</item>
     <item name="android:windowDisablePreview">true</item>
     <item name="android:windowBackground">@color/white</item>
     <item name="android:statusBarColor">@color/white</item>
+    <item name="editTextStyle">@style/ComposeEditText</item>
     <item name="android:windowLightStatusBar">true</item>
   </style>
 </resources>

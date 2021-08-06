@@ -21,8 +21,7 @@ import com.onboarding.nowfloats.databinding.ActivityFragmentContainerUpdateBindi
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyDigitalChannelFragment
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyVisitingCardFragment
 
-open class DigitalChannelActivity :
-  AppBaseActivity<ActivityFragmentContainerUpdateBinding, BaseViewModel>() {
+open class DigitalChannelActivity : AppBaseActivity<ActivityFragmentContainerUpdateBinding, BaseViewModel>() {
 
   private var isStartActivity: Boolean? = null
 

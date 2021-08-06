@@ -38,6 +38,7 @@
             android:layout_margin="@dimen/size_6"
             android:background="@null"
             android:gravity="top|left"
+            android:textCursorDrawable="@drawable/cursor_drawable"
             android:hint="@string/update_regularly_keep_customers_informed_brand"
             android:inputType="textCapSentences|textMultiLine|textAutoCorrect"
             android:lines="10"
