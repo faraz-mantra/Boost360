@@ -14,7 +14,7 @@
     android:paddingTop="10dp"
     android:paddingRight="24dp"
     android:paddingBottom="10dp"
-    android:text="Change Primary Number"
+    android:text="Change primary number"
     android:textColor="@color/primaryColor"
     android:textSize="15sp"
      android:fontFamily="@font/semi_bold" />
@@ -36,7 +36,7 @@
     android:layout_marginTop="20dp"
     android:digits="0123456789"
     android:gravity="center"
-    android:hint="Enter New Number"
+    android:hint="Enter new number"
     android:inputType="phone"
     android:maxLength="12"
     android:paddingStart="24dp"

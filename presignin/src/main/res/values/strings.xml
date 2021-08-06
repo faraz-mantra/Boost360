@@ -111,7 +111,7 @@
   <string name="downtownspa_nowfloats_com">downtownspa.nowfloats.com</string>
   <string name="downtown_nspa_salon">Downtown\nSpa Salon</string>
   <string name="unable_to_find_business_account_associated">Unable to find business account associated with this number!</string>
-  <string name="sit_tight">SIT TIGHT.</string>
+  <string name="sit_tight">Sit tight.</string>
 
   <string name="boost360_terms_conditions" translatable="false"><![CDATA[Boost360 - Terms & Conditions]]></string>
   <string name="enter_a_valid_website_name">Enter a valid website name</string>
@@ -124,17 +124,17 @@
   <string name="this_email_is_already_in_use">This email is already in use.</string>
   <string name="let_me_know_which_of_the_following_describes_the_business_you_are_running">Let me know, which of the following describes the business you are running?</string>
   <string name="access_token_create_error">Access token creating error, please try again.</string>
-  <string name="step_2_2">STEP 2/2</string>
+  <string name="step_2_2">Step 2/2</string>
   <string name="signin_nowfloats_com">.nowfloats.com</string>
   <string name="login_with_username_or_email">Login with username or email</string>
   <string name="need_help"><u>Need help?</u></string>
   <string name="try_a_different_number">Try a different number</string>
   <string name="no_business_account_available_with">No business account available with</string>
-  <string name="step_1_2">STEP 1/2</string>
+  <string name="step_1_2">Step 1/2</string>
   <string name="user_not_available">username/subdomain not available. Try with something else</string>
   <string name="go_back">Go back</string>
   <string name="i_agree_n">I agree</string>
-  <string name="login_with_mobile_number">Login with Mobile number</string>
+  <string name="login_with_mobile_number">Login with mobile number</string>
   <string name="business_setup_process">Business setup process, please wait...</string>
   <string name="this_is_your_registered_mobile_number">This is your registered mobile number</string>
   <string name="number_to_login_via_otp_change_tap_on_change_number">You can also use above number to login via OTP verification. In case you want to change this number, tap on ‘Change number ’.</string>

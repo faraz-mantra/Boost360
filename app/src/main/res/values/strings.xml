@@ -1777,6 +1777,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="map_visits">Address views</string>
   <string name="map_visits_n">Address Views</string>
   <string name="boost_keyboard">Boost Keyboard</string>
+  <string name="boost_keyboard_n">Boost keyboard</string>
   <string name="enable_keyboard">Enable keyboard</string>
   <string name="otp_over_call">Tap here to get OTP over call</string>
   <string name="sam">Sam</string>
@@ -1869,10 +1870,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="label_product_type">%s Type/Category (If any)</string>
 
   <string-array name="images_content_list_items">
-    <item>Business Logo</item>
-    <item>Featured Image</item>
-    <item>Image Gallery</item>
-    <item>Background Images</item>
+    <item>Business logo</item>
+    <item>Featured image</item>
+    <item>Image gallery</item>
+    <item>Background images</item>
     <item>Favicon</item>
   </string-array>
   <string name="title_activity_background_image_gallery">BackgroundImageGalleryActivity</string>
@@ -1930,13 +1931,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="our_toppers">Toppers</string>
   <string name="our_toppers_feature_description">Looks like this add-on is not added to your current plan. Add it now to start using it.
 With this feature, you can show off your top rankers to help people gain trust in your coaching centre.</string>
-  <string name="course_name">Course name <p><font color="red">*</font></p></string>
-  <string name="course_timings">Course timings <p><font color="red">*</font></p></string>
-  <string name="course_duration">Course duration <p><font color="red">*</font></p></string>
-  <string name="commencement_date">Commencement date <p><font color="red">*</font></p></string>
-  <string name="name">Name <p><font color="red">*</font></p></string>
-  <string name="add_profile_image">Add profile image <p><font color="red">*</font></p></string>
-  <string name="course_type">Course type <p><font color="red">*</font></p></string>
+  <string name="course_name">Course name <p><font color="">*</font></p></string>
+  <string name="course_timings">Course timings <p><font color="">*</font></p></string>
+  <string name="course_duration">Course duration <p><font color="">*</font></p></string>
+  <string name="commencement_date">Commencement date <p><font color="">*</font></p></string>
+  <string name="name">Name <p><font color="">*</font></p></string>
+  <string name="add_profile_image">Add profile image <p><font color="">*</font></p></string>
+  <string name="course_type">Course type <p><font color="">*</font></p></string>
   <string name="upcoming_batches">Upcoming Batches</string>
   <string name="upcoming_batches_feature_description">Looks like this add-on is not added to your current plan. Add it now to start using it.
 With this feature, students and their parents can browse and learn about the upcoming batches you are offering their starting date etc and drop a question regarding that if they may have.</string>
@@ -2343,13 +2344,13 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="add_multiple_images">Add multiple images</string>
   <string name="available_units">Available units</string>
   <string name="product_name">Product name:</string>
-  <string name="one_piece_anime_full">One piece Anime full</string>
+  <string name="one_piece_anime_full">One piece anime full</string>
   <string name="unit_price">Unit price:</string>
   <string name="discount_">Discount:</string>
-  <string name="final_price">Final Price:</string>
+  <string name="final_price">Final price:</string>
   <string name="inr_200">INR 200</string>
-  <string name="i_m_late_wallclock">I\'m Late Wallclock</string>
-  <string name="add_keywords_nto_your_product">Add Keywords\nto your Product</string>
+  <string name="i_m_late_wallclock">I\'m late wallclock</string>
+  <string name="add_keywords_nto_your_product">Add keywords\nto your Product</string>
   <string name="enter_product_keyword">Enter product keyword</string>
   <string name="add">Add</string>
   <string name="image_name">Image name</string>
@@ -2540,7 +2541,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="successfully_added">" Successfully Added"</string>
   <string name="please_wait_">Please wait...</string>
   <string name="you_have_new_notifications">You have new notifications</string>
-  <string name="updating_your_address" translatable="false">Updating Your Address</string>
+  <string name="updating_your_address" translatable="false">Updating your address</string>
   <string name="your_business_has_been_updated_successfully">Your business address has been updated successfully</string>
   <string name="uh_oh_somthing_went_wrong_please_try_again" translatable="false">Uh oh. Something went wrong. Please try again</string>
   <string name="changes_are_successfully_updated" translatable="false">Changes are successfully updated</string>
@@ -3064,7 +3065,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="book_a_new_domain_n">Book a new domain</string>
   <string name="or_n">--- or ---</string>
   <string name="domain_is_a_great_first_step_towards_building_your_brand_on_web_n">Domain is a great first step towards building your brand on web.</string>
-  <string name="boost_keyboard_themes_n">Boost Keyboard Themes</string>
+  <string name="boost_keyboard_themes_n">Boost keyboard themes</string>
   <string name="seasional_offer_n">Seasonal Offers</string>
 
   <!--    <string name="ir_actionbarBackground">#ffb900</string>-->

@@ -183,7 +183,7 @@ public class ContactInformationActivity extends BaseActivity {
                 .autoDismiss(false)
                 .canceledOnTouchOutside(false)
                 .negativeColorRes(R.color.gray_transparent)
-                .positiveColorRes(R.color.primary_color)
+                .positiveColorRes(R.color.colorAccentLight)
                 .onPositive((dialog, which) -> {
 
                     String numText = number.getText().toString().trim();
@@ -218,7 +218,7 @@ public class ContactInformationActivity extends BaseActivity {
                 .positiveText("VERIFY")
                 .canceledOnTouchOutside(false)
                 .negativeColorRes(R.color.gray_transparent)
-                .positiveColorRes(R.color.primary_color)
+                .positiveColorRes(R.color.colorAccentLight)
                 .onPositive((dialog, which) -> {
 
                     String numText = otp.getText().toString().trim();
@@ -245,10 +245,10 @@ public class ContactInformationActivity extends BaseActivity {
         }
 
         return new MaterialDialog.Builder(ContactInformationActivity.this)
-                .title("Call Tracker is enabled")
+                .title("Call tracker is enabled")
                 .customView(dialogView, false)
                 .positiveText(getString(R.string.ok))
-                .positiveColorRes(R.color.primary_color)
+                .positiveColorRes(R.color.colorAccentLight)
                 .callback(new MaterialDialog.ButtonCallback() {
 
                     @Override

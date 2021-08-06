@@ -24,6 +24,9 @@ import com.framework.pref.clientId
 import com.framework.utils.ValidationUtils
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
+import android.widget.Toast
+
+import android.view.View.OnFocusChangeListener
 
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
@@ -53,7 +56,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
   override fun onResume() {
     super.onResume()
-    binding?.usernameEt?.post{ baseActivity.showKeyBoard(binding?.usernameEt) }
+    binding?.usernameEt?.post { baseActivity.showKeyBoard(binding?.usernameEt) }
   }
 
   override fun onCreateView() {
@@ -69,6 +72,9 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
     )
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener { goBack() }
+    binding?.passEt?.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
+      binding?.forgotTv?.setTextColor(if (hasFocus) getColor(R.color.colorAccentLight) else getColor(R.color.pinkish_grey))
+    }
   }
 
   private fun goBack() {

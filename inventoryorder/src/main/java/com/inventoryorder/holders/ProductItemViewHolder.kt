@@ -9,8 +9,7 @@ import com.inventoryorder.model.order.ProductItem
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class ProductItemViewHolder(binding: ItemProductBinding) :
-  AppBaseRecyclerViewHolder<ItemProductBinding>(binding) {
+class ProductItemViewHolder(binding: ItemProductBinding) : AppBaseRecyclerViewHolder<ItemProductBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
