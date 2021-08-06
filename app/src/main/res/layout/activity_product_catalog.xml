@@ -20,54 +20,54 @@
       app:layout_behavior="@string/appbar_scrolling_view_behavior"
       tools:context="com.nowfloats.ProductGallery.ProductCatalogActivity">
 
-<!--      <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--        android:id="@+id/layout_empty_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:background="@color/white"-->
-<!--        android:padding="@dimen/margin_50"-->
-<!--        android:visibility="gone">-->
+      <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layout_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="@dimen/margin_50"
+        android:visibility="gone">
 
-<!--        <RelativeLayout-->
-<!--          android:layout_width="match_parent"-->
-<!--          android:layout_height="wrap_content"-->
-<!--          android:layout_centerInParent="true">-->
+        <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true">
 
-<!--          <ImageView-->
-<!--            android:id="@+id/iv_empty"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            app:srcCompat="@drawable/no_product" />-->
+          <ImageView
+            android:id="@+id/iv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/no_product" />
 
-<!--          <TextView-->
-<!--            android:id="@+id/tv_message"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/iv_empty"-->
-<!--            android:layout_marginTop="30dp"-->
-<!--            android:gravity="center"-->
-<!--            android:text="@string/you_have_no_products_listed_on_your_site_as_of_yet"-->
-<!--            android:textColor="@color/secondaryTextColor"-->
-<!--            android:textSize="14sp" />-->
+          <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_empty"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="@string/you_have_no_products_listed_on_your_site_as_of_yet"
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="14sp" />
 
-<!--          <Button-->
-<!--            android:id="@+id/btn_add_catalogue"-->
-<!--            style="?android:attr/borderlessButtonStyle"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/tv_message"-->
-<!--            android:layout_marginStart="@dimen/margin_30"-->
-<!--            android:layout_marginTop="@dimen/margin_30"-->
-<!--            android:layout_marginEnd="@dimen/margin_30"-->
-<!--            android:background="@drawable/rounded_button_enabled"-->
-<!--            android:onClick="onAddNewProduct"-->
-<!--            android:text="@string/add_to_catalogue"-->
-<!--            android:textColor="@android:color/white" />-->
+          <Button
+            android:id="@+id/btn_add_catalogue"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_message"
+            android:layout_marginStart="@dimen/margin_30"
+            android:layout_marginTop="@dimen/margin_30"
+            android:layout_marginEnd="@dimen/margin_30"
+            android:background="@drawable/rounded_button_enabled"
+            android:onClick="onAddNewProduct"
+            android:text="@string/add_to_catalogue"
+            android:textColor="@android:color/white" />
 
-<!--        </RelativeLayout>-->
+        </RelativeLayout>
 
-<!--      </RelativeLayout>-->
+      </RelativeLayout>
 
       <!--
       <include

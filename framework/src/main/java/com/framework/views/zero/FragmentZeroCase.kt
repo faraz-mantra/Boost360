@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.content.ContextCompat
 import com.framework.R
@@ -26,6 +25,7 @@ class FragmentZeroCase : BaseFragment<FragmentZeroCaseBinding, BaseViewModel>() 
 
   companion object {
     var onZeroCaseClicked: OnZeroCaseClicked? = null
+
     class ZeroCaseBuilder {
       var arguments: Bundle? = null
 
@@ -63,13 +63,20 @@ class FragmentZeroCase : BaseFragment<FragmentZeroCaseBinding, BaseViewModel>() 
         return this
       }
 
+      fun isPremium(isPremium: Boolean?): ZeroCaseBuilder {
+        arguments!!.putBoolean("isPremium", isPremium?:false)
+        return this
+      }
+
       fun setListener(click: OnZeroCaseClicked): ZeroCaseBuilder {
         onZeroCaseClicked = click
         return this
       }
+
       fun onZerothCaseListener(): OnZeroCaseClicked? {
         return onZeroCaseClicked
       }
+
       fun build(): FragmentZeroCase {
         val fragment = FragmentZeroCase()
         fragment.arguments = arguments
@@ -89,6 +96,7 @@ class FragmentZeroCase : BaseFragment<FragmentZeroCaseBinding, BaseViewModel>() 
     val toolbarTitle = arguments?.getString("toolbar", null)
     val icon = arguments?.getInt("icon")
     val footerText = arguments?.getString("footer")
+    val isPremium = arguments?.getBoolean("isPremium",false)
     val button = arguments?.getSerializable("buttons") as? ZeroCaseButton
     binding?.ctvTitle?.text = title
     binding?.ctvDesc?.text = description
@@ -105,10 +113,10 @@ class FragmentZeroCase : BaseFragment<FragmentZeroCaseBinding, BaseViewModel>() 
       if (button.primaryButtonTitle != null) {
         if (button.primaryButtonBackground != null)
           binding?.btnPrimary?.setBackgroundColor(getColor(button.primaryButtonBackground))
-          else binding?.btnPrimary?.setBackgroundColor(R.color.white!!)
+        else binding?.btnPrimary?.setBackgroundColor(R.color.white!!)
         if (button.primaryButtonIconLeft != null)
-          binding?.civIconLeft?.setImageDrawable(getDrawable(requireContext(),button.primaryButtonIconLeft))
-        binding?.ctvBtnPrimaryTitle?.text = button.primaryButtonTitle
+          binding?.civIconLeft?.setImageDrawable(if (isPremium == true) getDrawable(requireContext(),R.drawable.ic_lockkey) else getDrawable(requireContext(), button.primaryButtonIconLeft))
+        binding?.ctvBtnPrimaryTitle?.text = if(isPremium==true) getString(R.string.activate_this_feature) else button.primaryButtonTitle
       } else {
         binding?.cvPrimary?.gone()
       }
@@ -116,10 +124,10 @@ class FragmentZeroCase : BaseFragment<FragmentZeroCaseBinding, BaseViewModel>() 
       if (button.secondaryButtonTitle != null) {
         if (button.secondaryButtonBackground != null)
           binding?.btnSecondary?.setBackgroundColor(getColor(R.color.white!!))
-        else binding?.btnSecondary?.background = ContextCompat.getDrawable(requireContext(),R.drawable.stroke_accent)
+        else binding?.btnSecondary?.background = ContextCompat.getDrawable(requireContext(), R.drawable.stroke_accent)
         binding?.ctvBtnSecondaryTitle?.text = button.secondaryButtonTitle
         if (button.secondaryButtonIconLeft != null)
-          binding?.civIconLeftSecondary?.setImageDrawable(getDrawable(requireContext(),button.secondaryButtonIconLeft))
+          binding?.civIconLeftSecondary?.setImageDrawable(getDrawable(requireContext(), button.secondaryButtonIconLeft))
       } else {
         binding?.cvSecondary?.gone()
       }
@@ -130,20 +138,22 @@ class FragmentZeroCase : BaseFragment<FragmentZeroCaseBinding, BaseViewModel>() 
         else binding?.btnTertiary?.setBackgroundColor(getColor(R.color.white!!))
         binding?.ctvBtnTitleTertiary?.text = button.tertiaryButtonTitle
         if (button.tertiaryButtonIconLeft != null)
-          binding?.civIconLeftTertiary?.setImageDrawable(getDrawable(requireContext(),button.tertiaryButtonIconLeft))
+          binding?.civIconLeftTertiary?.setImageDrawable(getDrawable(requireContext(), button.tertiaryButtonIconLeft))
       } else {
         binding?.cvTertiary?.gone()
       }
     } else {
       binding?.llBtnContainer?.visibility = View.GONE
     }
-    baseActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
-   }
+    baseActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+  }
+
   var callback = object : OnBackPressedCallback(true) {
     override fun handleOnBackPressed() {
       onZeroCaseClicked?.onBackPressed()
     }
   }
+
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
@@ -181,21 +191,21 @@ data class ZeroCaseButton(
 
 
 enum class ZeroCases {
-  SERVICES, STAFF_LISTING, APPOINTMENT, PRODUCT ,MY_BANK_ACCOUNT , IMAGE_GALLERY,LATEST_NEWS_UPADATES , CUSTOMER_MESSAGES,TESTIMONIAL,NEWS_LETTER_SUBSCRIPTION
-  , ORDERS , SEASONAL_OFFERS ,BUSINESS_CALLS,UPCOMING_BATCHES,FACULTY_MANAGEMENT,TEAM_MEMBERS , DOCTOR_PROFILE,PROJECTS,CUSTOM_PAGES,CLIENT_LOGOS,WEBSITE_FAQ,RESTURANT_STORY,MENU_PICTURES,BUSINESS_KEYBOARD,TABLE_BOOKING,ROOMS_LISTING,RESTURANT_MENU
+  SERVICES, STAFF_LISTING, APPOINTMENT, PRODUCT, MY_BANK_ACCOUNT, IMAGE_GALLERY, LATEST_NEWS_UPADATES, CUSTOMER_MESSAGES, TESTIMONIAL, NEWS_LETTER_SUBSCRIPTION, ORDERS, SEASONAL_OFFERS, BUSINESS_CALLS, UPCOMING_BATCHES, FACULTY_MANAGEMENT, TEAM_MEMBERS, DOCTOR_PROFILE, PROJECTS, CUSTOM_PAGES, CLIENT_LOGOS, WEBSITE_FAQ, RESTURANT_STORY, MENU_PICTURES, BUSINESS_KEYBOARD, TABLE_BOOKING, ROOMS_LISTING, RESTURANT_MENU
 }
 
-class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZeroCaseClicked: OnZeroCaseClicked, private  var context: Context) {
+class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZeroCaseClicked: OnZeroCaseClicked, private var context: Context,private  var isPremium:Boolean?=false) {
   fun getRequest(): FragmentZeroCase.Companion.ZeroCaseBuilder {
     when (zeroCases) {
       MY_BANK_ACCOUNT -> {
-        return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.you_have_not_added_your_bank))
+        return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.my_bank_acccount))
           .setDescription(
             context.getString(R.string.when_enabled_your_online_sales_will_be)
           ).setIcon(R.drawable.ic_bank_zero_case)
           .setToolBarTitle(context.getString(R.string.my_bank_acccount))
           .setFooterText(context.getString(R.string.all_customer_payments_will_be_sent_to_this))
           .setListener(onZeroCaseClicked)
+          .isPremium(isPremium)
           .setButton(
             ZeroCaseButton(
               primaryButtonTitle = context.getString(R.string.add_bank_account),
@@ -212,10 +222,11 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
             context.getString(R.string.image_gallery_footer)
           ).setIcon(R.drawable.ic_image_gallery_zero_case)
           .setToolBarTitle(context.getString(R.string.tool_bar_image_gallery))
+          .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
-              primaryButtonTitle = context.getString(R.string.add_bank_account),
+              primaryButtonTitle = context.getString(R.string.upload_photos),
               primaryButtonBackground = R.color.colorAccent,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
@@ -226,16 +237,20 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
       }
       APPOINTMENT -> {
         return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.no_appointment_yet))
-          .setDescription(context.getString(R.string.appointment_description)
+          .setDescription(
+            context.getString(R.string.appointment_description)
           ).setIcon(R.drawable.ic_calendarx)
           .setToolBarTitle(context.getString(R.string.tool_bar_appointment_title))
-          .setButton( ZeroCaseButton(
+          .isPremium(isPremium)
+          .setButton(
+            ZeroCaseButton(
               primaryButtonTitle = context.getString(R.string.book_an_appointment),
-            primaryButtonBackground = R.color.colorAccent,
-            primaryButtonIconLeft = R.drawable.ic_create_white,
-            secondaryButtonIconLeft = R.drawable.exo_icon_play,
-            secondaryButtonTitle = context.getString(R.string.watch_how_it_works)
-          ))
+              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonIconLeft = R.drawable.ic_create_white,
+              secondaryButtonIconLeft = R.drawable.exo_icon_play,
+              secondaryButtonTitle = context.getString(R.string.watch_how_it_works)
+            )
+          )
           .setListener(onZeroCaseClicked)
 
       }
@@ -245,12 +260,25 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
             context.getString(R.string.you_can_post_regarding)
           ).setIcon(R.drawable.ic_latest_news_updates_zero_case)
           .setToolBarTitle(context.getString(R.string.latest_news_and_updates))
+          .isPremium(isPremium)
+          .setButton(
+            ZeroCaseButton(
+              primaryButtonTitle = context.getString(R.string.post_an_update),
+              primaryButtonBackground = R.color.colorPrimary,
+              primaryButtonIconLeft = R.drawable.ic_create_white,
+              secondaryButtonIconLeft = R.drawable.ic_services_tutorial_tertiary_icon,
+              secondaryButtonTitle = context.getString(
+                R.string.appointment_setup
+              )
+            )
+          )
           .setListener(onZeroCaseClicked)
       SERVICES -> {
         return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.lets_add_services_to_your_catalogue))
           .setDescription(context.getString(R.string.your_can_easily_add_detailed_information_about_your_services))
           .setIcon(R.drawable.ic_services_zero_case)
           .setToolBarTitle(context.getString(R.string.services))
+          .isPremium(isPremium)
           .setFooterText(context.getString(R.string.all_customer_payments_will_be_sent_to_this))
           .setListener(onZeroCaseClicked)
           .setButton(
@@ -272,16 +300,17 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setDescription(context.getString(R.string.product_description))
           .setIcon(R.drawable.ic_resource_package)
           .setToolBarTitle(context.getString(R.string.product))
+          .isPremium(isPremium)
           .setFooterText(context.getString(R.string.product_footer))
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
-              primaryButtonTitle = context.getString(R.string.add_a_service),
+              primaryButtonTitle = context.getString(R.string.add_a_product),
               primaryButtonBackground = R.color.colorPrimary,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
               secondaryButtonTitle = context.getString(
-                R.string.appointment_setup
+                R.string.setup_ecommerce
               ),
               tertiaryButtonIconLeft = R.drawable.ic_services_tutorial_tertiary_icon,
               tertiaryButtonTitle = context.getString(R.string.watch_how_it_works)
@@ -292,12 +321,13 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
         return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.customer_messages_title))
           .setDescription(context.getString(R.string.customer_messages_description))
           .setIcon(R.drawable.ic_customer_messages_zero_case)
+          .isPremium(isPremium)
           .setToolBarTitle(context.getString(R.string.tool_bar_customer_messages))
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
               secondaryButtonIconLeft = R.drawable.exo_icon_play, secondaryButtonTitle = context.getString(
-                R.string.watch_how_it_works
+                R.string.see_how_enqaries_works
               )
             )
           )
@@ -307,6 +337,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setDescription(context.getString(R.string.testimonial_description_zero))
           .setIcon(R.drawable.ic_testimonial_zero_case)
           .setToolBarTitle(context.getString(R.string.tool_bar_testimonial))
+          .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
@@ -324,6 +355,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
         return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.news_subscription_title))
           .setDescription(context.getString(R.string.news_letter_description))
           .setIcon(R.drawable.ic_usercirclegear)
+          .isPremium(isPremium)
           .setToolBarTitle(context.getString(R.string.tool_bar_news_subscription))
           .setListener(onZeroCaseClicked)
           .setButton(
@@ -338,10 +370,11 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
             )
           )
       }
-      STAFF_LISTING ->  {
+      STAFF_LISTING -> {
         return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.staff_listing_title))
           .setDescription(context.getString(R.string.staff_listing_desc))
           .setIcon(R.drawable.ic_users_zero_case)
+          .isPremium(isPremium)
           .setToolBarTitle(context.getString(R.string.tool_bar_staff_listing))
           .setListener(onZeroCaseClicked)
           .setButton(
@@ -356,30 +389,31 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
             )
           )
       }
-      ORDERS ->
-        {
-          return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.orders_title))
-            .setDescription(context.getString(R.string.orders_description))
-            .setIcon(R.drawable.ic_archivebox)
-            .setToolBarTitle(context.getString(R.string.tool_bar_orders))
-            .setListener(onZeroCaseClicked)
-            .setButton(
-              ZeroCaseButton(
-                primaryButtonIconLeft = R.drawable.ic_marketplace_cart,
-                primaryButtonTitle = context.getString(R.string.create_an_offline_order),
-                primaryButtonBackground = R.color.colorAccent,
-                secondaryButtonIconLeft = R.drawable.exo_icon_play,
-                secondaryButtonTitle = context.getString(
-                  R.string.watch_how_it_works
-                )
+      ORDERS -> {
+        return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.orders_title))
+          .setDescription(context.getString(R.string.orders_description))
+          .setIcon(R.drawable.ic_archivebox)
+          .isPremium(isPremium)
+          .setToolBarTitle(context.getString(R.string.tool_bar_orders))
+          .setListener(onZeroCaseClicked)
+          .setButton(
+            ZeroCaseButton(
+              primaryButtonIconLeft = R.drawable.ic_marketplace_cart,
+              primaryButtonTitle = context.getString(R.string.create_an_offline_order),
+              primaryButtonBackground = R.color.colorAccent,
+              secondaryButtonIconLeft = R.drawable.exo_icon_play,
+              secondaryButtonTitle = context.getString(
+                R.string.watch_how_it_works
               )
             )
+          )
       }
       SEASONAL_OFFERS -> {
         return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.seasonal_offers))
           .setDescription(context.getString(R.string.seasonal_offer_description))
           .setIcon(R.drawable.ic_percent)
           .setToolBarTitle(context.getString(R.string.toolbar_seasonal_offers))
+          .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
@@ -393,11 +427,12 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
             )
           )
       }
-      BUSINESS_CALLS ->{
+      BUSINESS_CALLS -> {
         return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.this_is_premium_feature))
           .setDescription(context.getString(R.string.business_calls_description))
           .setIcon(R.drawable.ic_phoneincoming)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
+          .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
@@ -418,6 +453,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setDescription(context.getString(R.string.upcoming_batches_description))
           .setIcon(R.drawable.ic_usersfour)
           .setToolBarTitle(context.getString(R.string.upcoming_batches_tool_bar_title))
+          .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
@@ -436,6 +472,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setDescription(context.getString(R.string.faculty_management_description))
           .setIcon(R.drawable.ic_chalkboardteacher)
           .setToolBarTitle(context.getString(R.string.faculty_management_tool_bar_title))
+          .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
@@ -453,6 +490,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
         return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.this_is_premium_feature))
           .setDescription(context.getString(R.string.team_members_description))
           .setIcon(R.drawable.ic_usersthree)
+          .isPremium(isPremium)
           .setToolBarTitle(context.getString(R.string.team_member_tool_bar_title))
           .setListener(onZeroCaseClicked)
           .setButton(
@@ -472,6 +510,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setDescription(context.getString(R.string.business_calls_description))
           .setIcon(R.drawable.ic_diagnosis)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
+          .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
@@ -490,6 +529,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setDescription(context.getString(R.string.business_calls_description))
           .setIcon(R.drawable.ic_phoneincoming)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
+          .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
@@ -509,6 +549,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setIcon(R.drawable.ic_phoneincoming)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
           .setListener(onZeroCaseClicked)
+          .isPremium(isPremium)
           .setButton(
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
@@ -526,6 +567,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setDescription(context.getString(R.string.business_calls_description))
           .setIcon(R.drawable.ic_phoneincoming)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
+          .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
@@ -545,6 +587,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setIcon(R.drawable.ic_phoneincoming)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
           .setListener(onZeroCaseClicked)
+          .isPremium(isPremium)
           .setButton(
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
@@ -563,6 +606,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setIcon(R.drawable.ic_phoneincoming)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
           .setListener(onZeroCaseClicked)
+          .isPremium(isPremium)
           .setButton(
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
@@ -581,6 +625,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setIcon(R.drawable.ic_phoneincoming)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
           .setListener(onZeroCaseClicked)
+          .isPremium(isPremium)
           .setButton(
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
@@ -599,6 +644,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setIcon(R.drawable.ic_phoneincoming)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
           .setListener(onZeroCaseClicked)
+          .isPremium(isPremium)
           .setButton(
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
@@ -616,6 +662,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setDescription(context.getString(R.string.business_calls_description))
           .setIcon(R.drawable.ic_phoneincoming)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
+          .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
@@ -635,6 +682,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setIcon(R.drawable.ic_phoneincoming)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
           .setListener(onZeroCaseClicked)
+          .isPremium(isPremium)
           .setButton(
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
@@ -653,6 +701,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setIcon(R.drawable.ic_phoneincoming)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
           .setListener(onZeroCaseClicked)
+          .isPremium(isPremium)
           .setButton(
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,

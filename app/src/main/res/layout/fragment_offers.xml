@@ -16,7 +16,7 @@
       android:id="@+id/progressbar"
       android:layout_width="match_parent"
       android:layout_height="7dp"
-      android:visibility="visible" />
+      android:visibility="visible"></com.nowfloats.util.ButteryProgressBar>
 
     <androidx.cardview.widget.CardView
       android:id="@+id/progressCard"
@@ -90,37 +90,37 @@
 
   </LinearLayout>
 
-<!--  <LinearLayout-->
-<!--    android:id="@+id/emptymsglayout"-->
-<!--    android:layout_width="fill_parent"-->
-<!--    android:layout_height="fill_parent"-->
-<!--    android:gravity="center"-->
-<!--    android:orientation="vertical"-->
-<!--    android:visibility="visible">-->
+  <LinearLayout
+    android:id="@+id/emptymsglayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="visible">
 
-<!--    <ImageView-->
-<!--      android:layout_width="wrap_content"-->
-<!--      android:layout_height="wrap_content"-->
-<!--      android:src="@drawable/home_zerothicon" />-->
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/home_zerothicon" />
 
-<!--    <TextView-->
-<!--      android:layout_width="wrap_content"-->
-<!--      android:layout_height="wrap_content"-->
-<!--      android:layout_marginTop="@dimen/dgts__padding_title"-->
-<!--      android:layout_marginBottom="@dimen/dgts__padding_title"-->
-<!--      android:text="@string/offers_soon"-->
-<!--      android:textColor="@color/zeroth_grey_title"-->
-<!--      android:textSize="@dimen/dgts__title_text_size"-->
-<!--       android:fontFamily="@font/semi_bold" />-->
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/dgts__padding_title"
+      android:layout_marginBottom="@dimen/dgts__padding_title"
+      android:text="@string/offers_soon"
+      android:textColor="@color/zeroth_grey_title"
+      android:textSize="@dimen/dgts__title_text_size"
+      android:fontFamily="@font/semi_bold" />
 
-<!--    <TextView-->
-<!--      android:layout_width="wrap_content"-->
-<!--      android:layout_height="wrap_content"-->
-<!--      android:gravity="center"-->
-<!--      android:text="@string/offers_empty"-->
-<!--      android:textColor="@color/zeroth_grey"-->
-<!--      android:textSize="15sp" />-->
-<!--  </LinearLayout>-->
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="@string/offers_empty"
+      android:textColor="@color/zeroth_grey"
+      android:textSize="15sp" />
+  </LinearLayout>
 
   <!--<com.melnykov.fab.FloatingActionButton
       android:id="@+id/fab"
