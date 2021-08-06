@@ -188,7 +188,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases, private 
   fun getRequest(): AppFragmentZeroCase.Companion.AppZeroCaseBuilder {
     when (AppZeroCases) {
       MY_BANK_ACCOUNT -> {
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.you_have_not_added_your_bank))
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.my_bank_acccount))
           .setDescription(
             context.getString(R.string.when_enabled_your_online_sales_will_be)
           ).setIcon(R.drawable.ic_bank_zero_case)

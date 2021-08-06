@@ -98,18 +98,18 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         binding?.serviceEmpty?.cbAddService
       )
     }
-    this.fragmentZeroCase = RequestZeroCaseBuilder(ZeroCases.STAFF_LISTING, this, baseActivity).getRequest().build()
+    this.fragmentZeroCase = RequestZeroCaseBuilder(ZeroCases.STAFF_LISTING, this, baseActivity,isLockStaff()).getRequest().build()
   }
 
   private fun isLockStaff(): Boolean {
     return if (sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE.name) == true) {
       binding?.staffListSwipeRefresh?.visible()
-      binding?.staffLock?.root?.gone()
+//      binding?.staffLock?.root?.gone()
       false
     } else {
       binding?.staffListSwipeRefresh?.gone()
-      binding?.staffLock?.root?.visible()
-      binding?.staffLock?.btnStaffAddOns?.setOnClickListener(this)
+//      binding?.staffLock?.root?.visible()
+//      binding?.staffLock?.btnStaffAddOns?.setOnClickListener(this)
       true
     }
   }
@@ -252,9 +252,13 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   private fun setEmptyView(isStaffEmpty: Boolean, isServiceEmpty: Boolean = false) {
     Log.i(TAG, "setEmptyView: "+isStaffEmpty+" "+isServiceEmpty)
-    if (isStaffEmpty)
-    addFragment(containerID = R.id.container, fragmentZeroCase!!, true)
-    else removeZeroCase()
+    if (isStaffEmpty){
+      setHasOptionsMenu(false)
+    addFragment(containerID = R.id.container, fragmentZeroCase!!, true)}
+    else {
+      setHasOptionsMenu(true)
+      removeZeroCase()
+    }
     binding?.rvStaffList?.visibility =
       if (isStaffEmpty || isServiceEmpty) View.GONE else View.VISIBLE
     if (this::menuAdd.isInitialized) menuAdd.isVisible = isServiceEmpty.not()
@@ -343,7 +347,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
           isResult = true
         )
       }
-      binding?.staffLock?.btnStaffAddOns -> startStorePage()
+//      binding?.staffLock?.btnStaffAddOns -> startStorePage()
     }
   }
 
@@ -428,6 +432,9 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   override fun primaryButtonClicked() {
+    if (isLockStaff())
+      startStorePage()
+    else
     startStaffFragmentActivity(
       FragmentType.STAFF_DETAILS_FRAGMENT,
       clearTop = false,
@@ -439,7 +446,6 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   override fun ternaryButtonClicked() {
-    TODO("Not yet implemented")
   }
 
   override fun onBackPressed() {

@@ -52,10 +52,10 @@
       </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <include
-      android:id="@+id/staff_lock"
-      layout="@layout/staff_lock_view"
-      android:visibility="gone" />
+<!--    <include-->
+<!--      android:id="@+id/staff_lock"-->
+<!--      layout="@layout/staff_lock_view"-->
+<!--      android:visibility="visible" />-->
   </FrameLayout>
 
 </layout>

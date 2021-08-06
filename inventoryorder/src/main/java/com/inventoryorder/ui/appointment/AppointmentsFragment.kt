@@ -227,15 +227,17 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
   private fun emptyView() {
-    addFragmentReplace(containerID = R.id.container,zeroCaseFragment , true)
+    setHasOptionsMenu(false)
+    addFragment(containerID = R.id.container, zeroCaseFragment, true)
 //    binding?.bookingRecycler?.gone()
 //    binding?.errorView?.visible()
 //    binding?.btnAdd?.gone()
   }
-  fun removeZeroCaseFragment() {
+
+  private fun removeZeroCaseFragment() {
 //        if (zeroCaseFragment.isVisible()) {
-    parentFragmentManager.popBackStack()
-    parentFragmentManager.beginTransaction().detach(zeroCaseFragment).commit()
+    setHasOptionsMenu(true)
+    removeFragment(zeroCaseFragment::class.java.name)
 //        }
   }
 
@@ -316,7 +318,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     val searchItem = menu.findItem(R.id.menu_item_search)
     if (searchItem != null) {
       searchView = searchItem.actionView as? SearchView
-      val searchEditText:EditText? = searchView?.findViewById(androidx.appcompat.R.id.search_src_text)
+      val searchEditText: EditText? = searchView?.findViewById(androidx.appcompat.R.id.search_src_text)
       searchEditText?.setTextColor(Color.WHITE)
       searchEditText?.setHintTextColor(getColor(R.color.white_50))
       searchView?.queryHint = resources.getString(R.string.queryHintAppointment)
@@ -760,7 +762,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
   override fun primaryButtonClicked() {
-  addAppointment()
+    addAppointment()
   }
 
   override fun secondaryButtonClicked() {
