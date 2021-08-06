@@ -608,6 +608,6 @@
   <string name="boost_will_send_payment_link_this_order">JioOnline will send payment link to the customer on your behalf. Upon successful payment it will reflect againt this order.</string>
   <string name="boost_will_send_an_email_and_an_sms_feedback_of_their_overall_buying_experiance">JioOnline will send an email and an SMS to the customer on your behalf, informing them about the order successfully getting delivered and requesting a feedback of their overall buying experience.</string>
   <string name="please_make_sure_above_details_are_correct_delivery_person_details_partner">Please make sure above details are correct. JioOnline will send an email and an SMS to the customer on your behalf, informing them of the order being ‘Shipped’ along with consignment tracking details.</string>
-
+  <string name="please_make_sure_above_details_are_correct_delivery_person_details">Please make sure above details are correct. JioOnline will send an email and an SMS to the customer on your behalf, informing them of the order being ‘out for delivery’ along with delivery person details.</string>
 
 </resources>
