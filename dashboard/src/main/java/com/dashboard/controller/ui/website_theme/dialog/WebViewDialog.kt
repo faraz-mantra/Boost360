@@ -2,8 +2,10 @@ package com.dashboard.controller.ui.website_theme.dialog
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Paint
+import android.net.Uri
 import android.os.Bundle
 import android.os.Message
 import android.view.LayoutInflater

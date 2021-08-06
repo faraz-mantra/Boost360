@@ -1,7 +1,9 @@
 package com.boost.presignin.dialog
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.os.Message
 import android.view.LayoutInflater

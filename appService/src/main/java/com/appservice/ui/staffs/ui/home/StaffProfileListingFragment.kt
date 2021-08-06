@@ -99,15 +99,17 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       )
     }
     this.fragmentZeroCase = RequestZeroCaseBuilder(ZeroCases.STAFF_LISTING, this, baseActivity,isLockStaff()).getRequest().build()
+    addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase,false)
+
   }
 
   private fun isLockStaff(): Boolean {
     return if (sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE.name) == true) {
-      binding?.staffListSwipeRefresh?.visible()
+      binding?.mainlayout?.visible()
 //      binding?.staffLock?.root?.gone()
       false
     } else {
-      binding?.staffListSwipeRefresh?.gone()
+      binding?.mainlayout?.gone()
 //      binding?.staffLock?.root?.visible()
 //      binding?.staffLock?.btnStaffAddOns?.setOnClickListener(this)
       true
@@ -153,13 +155,13 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun swipeRefreshListener() {
-    binding?.staffListSwipeRefresh?.setOnRefreshListener {
+    binding?.mainlayout?.setOnRefreshListener {
       if (isServiceEmpty.not()) {
-        binding?.staffListSwipeRefresh?.isRefreshing = true
+        binding?.mainlayout?.isRefreshing = true
         this.offSet = PAGE_START
         this.limit = PAGE_SIZE
         fetchStaffListing(isProgress = false, isFirst = true, offSet = offSet, limit = limit)
-      } else binding?.staffListSwipeRefresh?.isRefreshing = false
+      } else binding?.mainlayout?.isRefreshing = false
     }
   }
 
@@ -254,16 +256,30 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     Log.i(TAG, "setEmptyView: "+isStaffEmpty+" "+isServiceEmpty)
     if (isStaffEmpty){
       setHasOptionsMenu(false)
-    addFragment(containerID = R.id.container, fragmentZeroCase!!, true)}
+      emptyView()
+    }
     else {
       setHasOptionsMenu(true)
-      removeZeroCase()
+      nonEmptyView()
     }
     binding?.rvStaffList?.visibility =
       if (isStaffEmpty || isServiceEmpty) View.GONE else View.VISIBLE
     if (this::menuAdd.isInitialized) menuAdd.isVisible = isServiceEmpty.not()
   }
 
+  private fun nonEmptyView() {
+    setHasOptionsMenu(true)
+    binding?.mainlayout?.visible()
+    binding?.childContainer?.gone()
+  }
+
+  private fun emptyView() {
+    Log.i(TAG, "emptyView: ")
+    setHasOptionsMenu(false)
+    binding?.mainlayout?.gone()
+    binding?.childContainer?.visible()
+
+  }
   private fun removeZeroCase() {
    /* parentFragmentManager.popBackStack()
     parentFragmentManager.beginTransaction().detach(fragmentZeroCase!!).commit()*/
@@ -399,7 +415,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   fun hideProgressN() {
-    binding?.staffListSwipeRefresh?.isRefreshing = false
+    binding?.mainlayout?.isRefreshing = false
     binding?.progress?.gone()
   }
 

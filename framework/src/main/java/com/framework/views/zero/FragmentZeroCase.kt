@@ -145,7 +145,7 @@ class FragmentZeroCase : BaseFragment<FragmentZeroCaseBinding, BaseViewModel>() 
     } else {
       binding?.llBtnContainer?.visibility = View.GONE
     }
-    baseActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    //baseActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
   }
 
   var callback = object : OnBackPressedCallback(true) {

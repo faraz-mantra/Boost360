@@ -76,7 +76,7 @@ public class Image_Gallery_Fragment extends Fragment implements
     private UserSessionManager session;
     private Activity activity;
     private LinearLayout progressLayout, emptyGalleryLayout;
-
+    private static final String TAG = "Image_Gallery_Fragment";
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
      * Framework Documents, as well as the _data field for the MediaStore and
@@ -208,7 +208,7 @@ public class Image_Gallery_Fragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-
+        Log.i(TAG, "onResume: ");
         if (gvImages != null)
             gvImages.invalidate();
         if (otherImagesAdapter != null)
@@ -260,6 +260,7 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     @Override
     public void imagesReceived() {
+        Log.i(TAG, "imagesReceived: ");
         activity.runOnUiThread(() -> {
             if (progressLayout != null) progressLayout.setVisibility(View.GONE);
         });

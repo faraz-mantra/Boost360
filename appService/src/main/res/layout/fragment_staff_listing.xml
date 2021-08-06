@@ -10,7 +10,7 @@
     android:layout_height="match_parent">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-      android:id="@+id/staff_list_swipe_refresh"
+      android:id="@+id/mainlayout"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
@@ -52,6 +52,11 @@
       </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <FrameLayout
+        android:visibility="gone"
+        android:id="@+id/child_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 <!--    <include-->
 <!--      android:id="@+id/staff_lock"-->
 <!--      layout="@layout/staff_lock_view"-->
