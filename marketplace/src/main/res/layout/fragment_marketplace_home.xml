@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
@@ -8,7 +9,8 @@
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
@@ -22,8 +24,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
+        android:background="@color/black"
         android:orientation="vertical">
 
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:background="@drawable/mp_home_curve_bg_grey"
+          android:orientation="vertical">
         <androidx.cardview.widget.CardView
           android:layout_width="@dimen/size_60"
           android:layout_height="@dimen/size_60"
@@ -80,8 +89,8 @@
           android:id="@+id/brochureUploadCardView"
           android:layout_width="360dp"
           android:layout_height="158dp"
-          android:layout_margin="18dp"
           android:layout_gravity="center"
+          android:layout_margin="18dp"
           android:background="@color/white"
           android:elevation="5dp"
           app:cardCornerRadius="10dp">
@@ -112,11 +121,10 @@
                   android:layout_height="wrap_content"
                   android:layout_alignParentStart="true"
                   android:elevation="4dp"
-                  android:src="@drawable/ic_mp_home_brochure_image"/>
+                  android:src="@drawable/ic_mp_home_brochure_image" />
 
 
               </androidx.cardview.widget.CardView>
-
 
 
               <LinearLayout
@@ -131,18 +139,18 @@
                   android:fontFamily="@font/regular"
                   android:text="Brochure Upload"
                   android:textColor="@color/black"
-                  android:textStyle="bold"
-                  android:textSize="16sp"></TextView>
+                  android:textSize="16sp"
+                  android:textStyle="bold"></TextView>
 
                 <TextView
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:background="@drawable/ic_mp_home_recommended_bg"
                   android:gravity="center"
                   android:text="Recommended for you"
-                  android:background="@drawable/ic_mp_home_recommended_bg"
                   android:textColor="#219653"
-                  android:textStyle="bold"
-                  android:textSize="11sp"></TextView>
+                  android:textSize="11sp"
+                  android:textStyle="bold"></TextView>
               </LinearLayout>
 
               <ImageView
@@ -180,17 +188,212 @@
                 android:layout_marginTop="13dp"
                 android:fontFamily="@font/regular"
                 android:text="VIEW DETAILS"
-                android:textStyle="bold"
                 android:textColor="#FFB900"
-                ></TextView>
+                android:textStyle="bold"></TextView>
             </RelativeLayout>
           </RelativeLayout>
 
 
         </androidx.cardview.widget.CardView>
 
+        <RelativeLayout
+          android:id="@+id/mp_banner_rl_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/header">
+
+          <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/mp_shimmer_view_banner"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            tools:visibility="visible">
+
+            <!-- Adding 7 rows of placeholders -->
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+              <include layout="@layout/banner_data_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+
+            </LinearLayout>
+
+          </com.facebook.shimmer.ShimmerFrameLayout>
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mp_banner_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:visibility="visible">
+
+            <androidx.viewpager2.widget.ViewPager2
+              android:id="@+id/mp_banner_viewpager"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:clipChildren="false"
+              android:clipToPadding="false"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              tools:listitem="@layout/marketplace_snippet_item" />
+
+            <com.framework.views.dotsindicator.DotsIndicator
+              android:id="@+id/mp_banner_dot_indicator"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerHorizontal="true"
+              android:layout_marginTop="10dp"
+              app:dotsColor="@color/gray_light"
+              app:dotsCornerRadius="8dp"
+              app:dotsSize="6dp"
+              app:dotsSpacing="4dp"
+              app:dotsWidthFactor="2.5"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@id/mp_banner_viewpager"
+              app:progressMode="false"
+              app:selectedDotColor="@color/orange" />
+
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+          android:id="@+id/package_rl_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/black"
+          android:layout_below="@+id/mp_banner_rl_layout">
+
+          <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/mp_shimmer_view_package"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible">
+
+            <!-- Adding 7 rows of placeholders -->
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+              <include layout="@layout/banner_placeholder_layout" />
+
+
+            </LinearLayout>
+
+          </com.facebook.shimmer.ShimmerFrameLayout>
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mp_package_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+              android:id="@+id/package_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="15dp"
+              android:fontFamily="@font/regular"
+              android:text="Save upto 60% with feature packs"
+              android:textColor="@color/white"
+              android:textFontWeight="600"
+              android:textSize="16sp"
+              android:textStyle="bold"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.viewpager2.widget.ViewPager2
+              android:id="@+id/package_viewpager"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:clipChildren="false"
+              android:clipToPadding="false"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@id/package_name"
+              tools:listitem="@layout/marketplace_snippet_item" />
+
+            <com.framework.views.dotsindicator.DotsIndicator
+              android:id="@+id/package_indicator"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerHorizontal="true"
+              android:layout_marginTop="10dp"
+              app:dotsColor="@color/gray_light"
+              app:dotsCornerRadius="8dp"
+              app:dotsSize="6dp"
+              app:dotsSpacing="4dp"
+              app:dotsWidthFactor="2.5"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@id/package_viewpager"
+              app:progressMode="false"
+              app:selectedDotColor="@color/orange" />
+          </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+
 
       </LinearLayout>
+
+
 
 
     </androidx.core.widget.NestedScrollView>
