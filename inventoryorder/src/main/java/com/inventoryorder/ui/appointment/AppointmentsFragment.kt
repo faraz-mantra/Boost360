@@ -209,6 +209,14 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     binding?.childContainer?.gone()
   }
 
+  private fun emptyView() {
+    Log.i(TAG, "emptyView: ")
+    setHasOptionsMenu(false)
+    binding?.mainlayout?.gone()
+    binding?.childContainer?.visible()
+
+  }
+
   private fun showProgressLoad() {
     if (binding?.swipeRefresh?.isRefreshing == false) binding?.progress?.visible()
   }
@@ -240,16 +248,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     } else setAdapterAppointmentList(getDateWiseFilter(items))
   }
 
-  private fun emptyView() {
-    Log.i(TAG, "emptyView: ")
-    setHasOptionsMenu(false)
-    binding?.mainlayout?.gone()
-    binding?.childContainer?.visible()
-
-//    binding?.bookingRecycler?.gone()
-//    binding?.errorView?.visible()
-//    binding?.btnAdd?.gone()
-  }
 
 
 

@@ -84,5 +84,7 @@
   <string name="no_course_desc">Provide all the details about your courses, including faculty, timings, duration, and the option for students to enroll online.</string>
   <string name="add_a_course">Add a course</string>
   <string name="add_enrolment_setup">Add enrolment setup</string>
+  <string name="brochures_desc">Allow your students to see your staff and the subjects they teach. This</string>
+  <string name="digital_brochures">Digital Brochures</string>
 
 </resources>

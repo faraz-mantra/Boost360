@@ -181,7 +181,7 @@ data class ZeroCaseButton(
 
 
 enum class AppZeroCases {
-  SERVICES, STAFF_LISTING, APPOINTMENT, PRODUCT, MY_BANK_ACCOUNT, IMAGE_GALLERY, LATEST_NEWS_UPADATES, CUSTOMER_MESSAGES, TESTIMONIAL, NEWS_LETTER_SUBSCRIPTION, ORDERS, SEASONAL_OFFERS, BUSINESS_CALLS, UPCOMING_BATCHES, FACULTY_MANAGEMENT, TEAM_MEMBERS, DOCTOR_PROFILE, PROJECTS, CUSTOM_PAGES, CLIENT_LOGOS, WEBSITE_FAQ, RESTURANT_STORY, MENU_PICTURES, BUSINESS_KEYBOARD, TABLE_BOOKING, ROOMS_LISTING, RESTURANT_MENU
+  SERVICES, STAFF_LISTING, APPOINTMENT, PRODUCT, MY_BANK_ACCOUNT, IMAGE_GALLERY, LATEST_NEWS_UPADATES, CUSTOMER_MESSAGES, TESTIMONIAL, NEWS_LETTER_SUBSCRIPTION, ORDERS, SEASONAL_OFFERS, BUSINESS_CALLS, UPCOMING_BATCHES, FACULTY_MANAGEMENT, TEAM_MEMBERS, DOCTOR_PROFILE, PROJECTS, CUSTOM_PAGES, CLIENT_LOGOS, WEBSITE_FAQ, RESTURANT_STORY, MENU_PICTURES, BUSINESS_KEYBOARD, TABLE_BOOKING, ROOMS_LISTING, RESTURANT_MENU,BROCHURES
 }
 
 class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases, private var onZeroCaseClicked: AppOnZeroCaseClicked, private var context: Context) {
@@ -653,6 +653,24 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases, private 
           .setDescription(context.getString(R.string.business_calls_description))
           .setIcon(R.drawable.ic_phoneincoming)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
+          .setListener(onZeroCaseClicked)
+          .setButton(
+            ZeroCaseButton(
+              primaryButtonIconLeft = R.drawable.ic_lockkey,
+              primaryButtonTitle = context.getString(R.string.activate_this_feature),
+              primaryButtonBackground = R.color.colorAccent,
+              secondaryButtonIconLeft = R.drawable.exo_icon_play,
+              secondaryButtonTitle = context.getString(
+                R.string.watch_how_it_works
+              )
+            )
+          )
+      }
+      BROCHURES -> {
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.this_is_premium_feature))
+          .setDescription(context.getString(R.string.brochures_desc))
+          .setIcon(R.drawable.ic_brochures)
+          .setToolBarTitle(context.getString(R.string.digital_brochures))
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
