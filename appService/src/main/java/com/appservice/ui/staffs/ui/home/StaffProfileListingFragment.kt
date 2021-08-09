@@ -280,11 +280,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     binding?.childContainer?.visible()
 
   }
-  private fun removeZeroCase() {
-   /* parentFragmentManager.popBackStack()
-    parentFragmentManager.beginTransaction().detach(fragmentZeroCase!!).commit()*/
-    removeFragment(FragmentZeroCase::class.java.name)
-  }
+
 
   private fun removeLoader() {
     if (isLoadingD) {

@@ -204,11 +204,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     }
   }
 
-  private fun removeZeroCaseFragment() {
-    /*parentFragmentManager.popBackStack()
-    parentFragmentManager.beginTransaction().detach(fragmentZeroCase!!).commit()*/
-    removeFragment(FragmentZeroCase::class.java.name)
-  }
+
 
   private fun onServiceAddedOrUpdated(count: Int) {
     val instance = FirestoreManager

@@ -234,7 +234,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
     binding?.bookingRecycler?.visible()
-    removeZeroCaseFragment()
+    nonEmptyView()
     if (orderAdapter != null) {
       orderAdapter?.notify(getDateWiseFilter(items))
     } else setAdapterAppointmentList(getDateWiseFilter(items))
@@ -251,12 +251,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 //    binding?.btnAdd?.gone()
   }
 
-  private fun removeZeroCaseFragment() {
-//        if (zeroCaseFragment.isVisible()) {
-    setHasOptionsMenu(true)
-    removeFragment(zeroCaseFragment::class.java.name)
-//        }
-  }
+
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {
     val list = ArrayList<OrderItem>()
