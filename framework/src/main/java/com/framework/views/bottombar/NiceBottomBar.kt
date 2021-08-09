@@ -277,11 +277,11 @@ class NiceBottomBar : View {
     paintBadge.color = itemTextColorActive
 
 
-    canvas.drawRoundRect(item.rect,10f,10f,paintBadge)
-    canvas.drawCircle(
-      item.rect.centerX() + itemIconSize / 2 - 4,
-      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10, 20f, paintBadge
-    )
+    canvas.drawRect(item.rect.apply { item.rect.centerX() + itemIconSize / 2 - 4;(height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10 },paintBadge)
+//    canvas.drawCircle(
+//      item.rect.centerX() + itemIconSize / 2 - 4,
+//      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10, 20f, paintBadge
+//    )
     paintBadge.style = Paint.Style.STROKE
     paintBadge.color = barBackgroundColor
 
