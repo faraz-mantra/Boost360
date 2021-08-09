@@ -71,7 +71,7 @@
   <string name="faculty_management_tool_bar_title">Faculty Management</string>
   <string name="faculty_management_description">Allow your students to see your staff and the subjects they teach. This helps in buiilding reputation of your educational institute.</string>
   <string name="team_member_tool_bar_title">Team Members</string>
-  <string name="team_members_description">Allow your students to see your staff and the subjects they teach. This</string>
+  <string name="team_members_description">Add credibility and generate trust by showcasing the people that make your business stand out.</string>
   <string name="activate_this_feature">Activate this feature</string>
   <string name="upload_photos">Upload photos</string>
   <string name="see_how_enqaries_works">See how enquiries work</string>
@@ -80,5 +80,9 @@
   <string name="setup_ecommerce">Setup eCommerce</string>
   <string name="toppers_description">A topper’s list serves as social proof of your institution’s capabilities and and encourage parents and children to enroll in courses at your institution.</string>
   <string name="toppers_title">Toppers</string>
+  <string name="no_courses_added_yet">No Course Added Yet</string>
+  <string name="no_course_desc">Provide all the details about your courses, including faculty, timings, duration, and the option for students to enroll online.</string>
+  <string name="add_a_course">Add a course</string>
+  <string name="add_enrolment_setup">Add enrolment setup</string>
 
 </resources>

@@ -161,9 +161,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                 isLoading = false;
 
                 binding.pbLoading.setVisibility(View.GONE);
-                emptyView();
-
-                /*if (data != null && response.getStatus() == 200) {
+               if (data != null && response.getStatus() == 200) {
                     if (data.size() > 0) {
                         if (itemToAdd != null) itemToAdd.setVisible(true);
                         nonEmptyView();
@@ -176,7 +174,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                         if (itemToAdd != null) itemToAdd.setVisible(false);
                         emptyView();
                     }
-                }*/
+                }
 
                 stop = true;
             }
