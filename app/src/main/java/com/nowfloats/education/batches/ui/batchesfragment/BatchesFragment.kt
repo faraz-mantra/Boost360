@@ -1,6 +1,7 @@
 package com.nowfloats.education.batches.ui.batchesfragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,42 +9,44 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.DataBindingComponent
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.utils.Utils
+import com.framework.base.BaseFragment
+import com.framework.extensions.gone
+import com.framework.extensions.visible
+import com.framework.models.BaseViewModel
 import com.framework.views.fabButton.FloatingActionButton
+import com.framework.views.zero.FragmentZeroCase
+import com.framework.views.zero.OnZeroCaseClicked
+import com.framework.views.zero.RequestZeroCaseBuilder
+import com.framework.views.zero.ZeroCases
 
 import com.nowfloats.education.batches.BatchesActivity
 import com.nowfloats.education.batches.adapter.BatchesAdapter
 import com.nowfloats.education.batches.model.Data
 import com.nowfloats.education.batches.ui.batchesdetails.BatchesDetailsFragment
-import com.nowfloats.education.helper.BaseFragment
 import com.nowfloats.education.helper.Constants.BATCHES_DETAILS_FRAGMENT
 import com.nowfloats.education.helper.Constants.SUCCESS
 import com.nowfloats.education.helper.ItemClickEventListener
 import com.thinksity.R
+import com.thinksity.databinding.BatchesFragmentBinding
 import org.koin.android.ext.android.inject
 
-class BatchesFragment : BaseFragment(), ItemClickEventListener {
+class BatchesFragment : BaseFragment<BatchesFragmentBinding, BaseViewModel>(), ItemClickEventListener, OnZeroCaseClicked {
 
-  private val viewModel by inject<BatchesViewModel>()
+  private val myViewModel by inject<BatchesViewModel>()
   private val batchesAdapter: BatchesAdapter by lazy { BatchesAdapter(this) }
+  private lateinit var zeroCaseFragment: FragmentZeroCase
 
-  override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.batches_fragment, container, false)
-  }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    setHeader(view)
-    initLiveDataObservers()
-    initBatchesRecyclerview(view)
   }
 
   private fun initBatchesRecyclerview(view: View) {
@@ -57,18 +60,19 @@ class BatchesFragment : BaseFragment(), ItemClickEventListener {
 
     if (Utils.isConnectedToInternet(requireContext())) {
       showLoader(getString(R.string.loading_batches))
-      viewModel.getUpcomingBatches()
+      myViewModel.getUpcomingBatches()
     } else {
-      showToast(getString(R.string.no_internet))
+      showLongToast(getString(R.string.no_internet))
     }
   }
 
   private fun initLiveDataObservers() {
-    viewModel.apply {
+    myViewModel.apply {
       upcomingBatchResponse.observe(viewLifecycleOwner, Observer {
         if (!it.Data.isNullOrEmpty()) {
+          nonEmptyView()
           setRecyclerviewAdapter(it.Data)
-        }else showToast("Batches not found!")
+        }else emptyView()
         hideLoader()
       })
 
@@ -126,7 +130,7 @@ class BatchesFragment : BaseFragment(), ItemClickEventListener {
   override fun onDeleteClick(data: Any, position: Int) {
     batchesAdapter.menuOption(position, false)
     showLoader("Deleting batch")
-    viewModel.deleteUpcomingBatch(data as Data)
+    myViewModel.deleteUpcomingBatch(data as Data)
   }
 
   private fun updateItemMenuOptionStatus(position: Int, status: Boolean) {
@@ -136,5 +140,52 @@ class BatchesFragment : BaseFragment(), ItemClickEventListener {
 
   companion object {
     fun newInstance(): BatchesFragment = BatchesFragment()
+  }
+
+  private fun nonEmptyView() {
+    setHasOptionsMenu(true)
+    binding?.mainlayout?.visible()
+    binding?.childContainer?.gone()
+  }
+  private fun emptyView() {
+    setHasOptionsMenu(false)
+    binding?.mainlayout?.gone()
+    binding?.childContainer?.visible()
+  }
+  override fun primaryButtonClicked() {
+    (activity as BatchesActivity).addFragment(
+      BatchesDetailsFragment.newInstance(),
+      BATCHES_DETAILS_FRAGMENT
+    )
+  }
+
+  override fun secondaryButtonClicked() {
+  }
+
+  override fun ternaryButtonClicked() {
+  }
+
+  override fun onBackPressed() {
+  }
+
+  override fun getLayout(): Int {
+    return R.layout.batches_fragment
+  }
+
+  override fun getViewModelClass(): Class<BaseViewModel> {
+    return BaseViewModel::class.java
+  }
+
+  override fun onCreateView() {
+    zeroCaseFragment = RequestZeroCaseBuilder(ZeroCases.UPCOMING_BATCHES, this, requireActivity()).getRequest().build()
+    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
+
+    binding?.root?.let {
+      setHeader(it)
+      initLiveDataObservers()
+      initBatchesRecyclerview(it)
+    }
+
+
   }
 }

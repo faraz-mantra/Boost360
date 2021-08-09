@@ -1,6 +1,7 @@
 package com.framework.base
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -34,6 +35,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   protected var binding: Binding? = null
   protected var navigator: Navigator? = null
   protected var compositeDisposable = CompositeDisposable()
+  private var progressDialog: ProgressDialog? = null
 
 
   protected abstract fun getLayout(): Int
@@ -183,6 +185,22 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
 
   protected fun getFont(@FontRes font: Int): Typeface? {
     return ResourcesCompat.getFont(baseActivity, font)
+  }
+  fun showLoader(message: String?) {
+    if (activity == null || !isAdded) return
+    if (progressDialog == null) {
+      progressDialog = ProgressDialog(activity)
+      progressDialog?.setCanceledOnTouchOutside(false)
+      progressDialog?.setCancelable(false)
+    }
+    progressDialog?.setMessage(message)
+    progressDialog?.show()
+  }
+
+  fun hideLoader() {
+    if (progressDialog != null && progressDialog?.isShowing()!!) {
+      progressDialog?.dismiss()
+    }
   }
 
   override fun onStop() {

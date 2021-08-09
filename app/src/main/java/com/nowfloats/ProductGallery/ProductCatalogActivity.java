@@ -28,6 +28,10 @@ import com.appservice.constant.FragmentType;
 import com.appservice.constant.IntentConstant;
 import com.framework.models.firestore.FirestoreManager;
 import com.framework.utils.ContentSharing;
+import com.framework.views.zero.old.AppFragmentZeroCase;
+import com.framework.views.zero.old.AppOnZeroCaseClicked;
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
+import com.framework.views.zero.old.AppZeroCases;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.ProductGallery.Adapter.ProductCategoryRecyclerAdapter;
 import com.nowfloats.ProductGallery.Model.ImageListModel;
@@ -63,7 +67,7 @@ import static com.framework.webengageconstant.EventNameKt.PRODUCT_CATALOGUE_LIST
 import static com.framework.webengageconstant.EventValueKt.EVENT_VALUE_MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 
-public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener {
+public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener, AppOnZeroCaseClicked {
 
     // For sharing
     private static final int STORAGE_CODE = 120;
@@ -79,11 +83,15 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     private boolean stop = false;
     private boolean isLoading = false;
     private int limit = WidgetKey.WidgetLimit.FEATURE_NOT_AVAILABLE.getValue();
+    private AppFragmentZeroCase appFragmentZeroCase;
+    private static final String TAG = "ProductCatalogActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_catalog);
+        appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.SERVICES,this,this).getRequest().build();
+        getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(),appFragmentZeroCase).commit();
         WebEngageController.trackEvent(PRODUCT_CATALOGUE_LIST, PAGE_VIEW, EVENT_VALUE_MANAGE_CONTENT);
         setSupportActionBar(binding.layoutToolbar.toolbar);
 
@@ -96,15 +104,15 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             getSupportActionBar().setTitle("");
             binding.layoutToolbar.toolbarTitle.setText(Utils.getProductCatalogTaxonomyFromServiceCode(session.getFP_AppExperienceCode()));
             binding.layoutToolbar.toolbar.setNavigationIcon(R.drawable.ic_back_arrow_white);
-            binding.tvMessage.setText(String.format(getString(R.string.product_empty_view_message),
-                    Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()).toLowerCase()));
+          /*  binding.tvMessage.setText(String.format(getString(R.string.product_empty_view_message),
+                    Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()).toLowerCase()));*/
         }
 
         this.initProductRecyclerView();
         getProducts(false);
         getWidgetLimit();
         checkIsAdd();
-        binding.btnAddCatalogue.setOnClickListener(view -> addProduct());
+//        binding.btnAddCatalogue.setOnClickListener(view -> addProduct());
     }
 
     private void checkIsAdd() {
@@ -149,14 +157,16 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             @Override
             public void success(List<Product> data, Response response) {
 
+                Log.i(TAG, "success: ");
                 isLoading = false;
 
                 binding.pbLoading.setVisibility(View.GONE);
+                emptyView();
 
-                if (data != null && response.getStatus() == 200) {
+                /*if (data != null && response.getStatus() == 200) {
                     if (data.size() > 0) {
                         if (itemToAdd != null) itemToAdd.setVisible(true);
-                        binding.layoutEmptyView.setVisibility(View.GONE);
+                        nonEmptyView();
                         adapter.setData(data, flag);
                         onProductServiceAddedOrUpdated(data.size());
                         return;
@@ -164,9 +174,9 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
                     if (adapter.getItemCount() == 0) {
                         if (itemToAdd != null) itemToAdd.setVisible(false);
-                        binding.layoutEmptyView.setVisibility(View.VISIBLE);
+                        emptyView();
                     }
-                }
+                }*/
 
                 stop = true;
             }
@@ -472,4 +482,35 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     }
 
 
+    private void nonEmptyView() {
+        binding.mainlayout.setVisibility(View.VISIBLE);
+        binding.childContainer.setVisibility(View.GONE);
+    }
+
+
+    private void emptyView() {
+        binding.mainlayout.setVisibility(View.GONE);
+        binding.childContainer.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void primaryButtonClicked() {
+        addProduct();
+    }
+
+    @Override
+    public void secondaryButtonClicked() {
+
+    }
+
+    @Override
+    public void ternaryButtonClicked() {
+
+    }
+
+    @Override
+    public void appOnBackPressed() {
+
+    }
 }

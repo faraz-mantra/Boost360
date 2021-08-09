@@ -11,6 +11,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.framework.base.BaseActivity
+import com.framework.models.BaseViewModel
 import com.nowfloats.Login.UserSessionManager
 import com.nowfloats.education.helper.Constants
 import com.nowfloats.education.helper.Constants.TOPPERS_FRAGMENT
@@ -18,9 +20,10 @@ import com.nowfloats.education.model.UnlockFeatureModel
 import com.nowfloats.education.toppers.ui.topperhome.ToppersFragment
 import com.nowfloats.education.unlockfeature.UnlockFeatureFragment
 import com.thinksity.R
+import com.thinksity.databinding.ActivityToppersBinding
 import java.util.*
 
-class ToppersActivity : AppCompatActivity() {
+class ToppersActivity : BaseActivity<ActivityToppersBinding, BaseViewModel>() {
   private var progressDialog: ProgressDialog? = null
   private val hmPrices = HashMap<String, Int>()
   var session: UserSessionManager? = null
@@ -28,12 +31,7 @@ class ToppersActivity : AppCompatActivity() {
   private var currentFragment: Fragment? = null
   private var fragmentManager: FragmentManager? = null
   private var fragmentTransaction: FragmentTransaction? = null
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_toppers)
-    initializeView()
-    initView()
-  }
+
 
   private fun initView() {
     supportFragmentManager.addOnBackStackChangedListener {
@@ -138,5 +136,18 @@ class ToppersActivity : AppCompatActivity() {
 
   companion object {
     var headerText: TextView? = null
+  }
+
+  override fun getLayout(): Int {
+    return R.layout.activity_toppers
+  }
+
+  override fun getViewModelClass(): Class<BaseViewModel> {
+    return BaseViewModel::class.java
+  }
+
+  override fun onCreateView() {
+    initializeView()
+    initView()
   }
 }

@@ -214,7 +214,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
     binding?.orderRecycler?.visible()
 //    binding?.errorView?.gone()
-    removeZeroCaseFragment()
+    nonEmptyView()
     if (orderAdapter != null) {
       orderAdapter?.notify(getNewList(items))
     } else setAdapterOrderList(getNewList(items))
@@ -691,10 +691,6 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     setHasOptionsMenu(true)
     binding?.mainlayout?.visible()
     binding?.childContainer?.gone()
-  }
-  private fun removeZeroCaseFragment() {
-    setHasOptionsMenu(true)
-    removeFragment(zeroCaseFragment::javaClass.name)
   }
 
   private fun getRequestFilterData(
