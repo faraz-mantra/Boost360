@@ -178,10 +178,10 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
     }
 
     private void openImageChooser() {
-        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-            Methods.showFeatureNotAvailDialog(BackgroundImageGalleryActivity.this);
-            return;
-        }
+//        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+//            Methods.showFeatureNotAvailDialog(BackgroundImageGalleryActivity.this);
+//            return;
+//        }
 
         final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
         imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
