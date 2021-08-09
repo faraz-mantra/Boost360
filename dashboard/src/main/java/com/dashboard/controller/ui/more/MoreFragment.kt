@@ -144,13 +144,9 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     when (type) {
       AboutAppSectionItem.IconType.whats_new_version -> showShortToast("Coming soon")
       AboutAppSectionItem.IconType.frequently_asked_question -> {
-        if (session!!.getStoreWidgets()!!.contains("MERCHANT_TRAINING")) {
-          intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
-          intent.putExtra("WEBSITE_NAME", getString(R.string.setting_faq_url))
-        } else {
-          showDialog(baseActivity, getString(R.string.restricted_access), getString(R.string.you_need_to_buy_the_one_time_pack_for_boost)
-          ) { dialog, which -> dialog?.dismiss() }
-        }
+        WebEngageController.trackEvent(ABOUT_BOOST_FAQS, NO_EVENT_LABLE, NULL)
+        intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
+        intent.putExtra("WEBSITE_NAME", getString(R.string.setting_faq_url))
       }
       AboutAppSectionItem.IconType.terms_of_usages -> {
         WebEngageController.trackEvent(ABOUT_BOOST_TNC, NO_EVENT_LABLE, NULL)
