@@ -1,6 +1,7 @@
 package com.nowfloats.manufacturing.digitalbrochures;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,11 @@ import android.widget.Toast;
 
 import com.boost.upgrades.UpgradeActivity;
 import com.framework.views.fabButton.FloatingActionButton;
+import com.framework.views.zero.OnZeroCaseClicked;
+import com.framework.views.zero.old.AppFragmentZeroCase;
+import com.framework.views.zero.old.AppOnZeroCaseClicked;
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
+import com.framework.views.zero.old.AppZeroCases;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
@@ -32,6 +38,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
+import com.thinksity.databinding.ActivityDigitalBrochuresBinding;
 
 import org.json.JSONObject;
 
@@ -48,45 +55,62 @@ import retrofit.converter.GsonConverter;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 
-public class DigitalBrochuresActivity extends AppCompatActivity implements DigitalBrochuresListener {
+public class DigitalBrochuresActivity extends AppCompatActivity implements DigitalBrochuresListener, AppOnZeroCaseClicked {
 
   public static TextView headerText;
   public UserSessionManager session;
-  RelativeLayout emptyLayout;
+ // RelativeLayout emptyLayout;
   RecyclerView recyclerView;
   List<Data> dataList;
   DigitalBrochuresAdapter adapter;
-  TextView buyButton;
+ // TextView buyButton;
   private ProgressDialog progressDialog;
-
+  private AppFragmentZeroCase appFragmentZeroCase;
+  private ActivityDigitalBrochuresBinding binding;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_digital_brochures);
+    binding = DataBindingUtil.setContentView(this,R.layout.activity_digital_brochures);
+    appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.BROCHURES,this,this).getRequest().build();
+    getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(),appFragmentZeroCase).commit();
     initView();
+  }
+
+  private void nonEmptyView() {
+    binding.mainlayout.setVisibility(View.VISIBLE);
+    binding.childContainer.setVisibility(View.GONE);
+  }
+
+
+  private void emptyView() {
+    binding.mainlayout.setVisibility(View.GONE);
+    binding.childContainer.setVisibility(View.VISIBLE);
+
   }
 
   private void initView() {
     session = new UserSessionManager(this, this);
-    buyButton = findViewById(R.id.buy_item);
-    emptyLayout = findViewById(R.id.empty_layout);
+    //buyButton = findViewById(R.id.buy_item);
+    //emptyLayout = findViewById(R.id.empty_layout);
     recyclerView = findViewById(R.id.digital_brochure_recycler);
     adapter = new DigitalBrochuresAdapter(new ArrayList(), this);
 
     recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
     recyclerView.setAdapter(adapter);
 
-    buyButton.setOnClickListener(v -> initiateBuyFromMarketplace());
+   // buyButton.setOnClickListener(v -> initiateBuyFromMarketplace());
 
     //setheader
     setHeader();
 
     if (session.getStoreWidgets().contains("BROCHURE")) {
-      recyclerView.setVisibility(View.VISIBLE);
-      emptyLayout.setVisibility(View.GONE);
+    /*  recyclerView.setVisibility(View.VISIBLE);
+      emptyLayout.setVisibility(View.GONE);*/
+      nonEmptyView();
     } else {
-      recyclerView.setVisibility(View.GONE);
-      emptyLayout.setVisibility(View.VISIBLE);
+     /* recyclerView.setVisibility(View.GONE);
+      emptyLayout.setVisibility(View.VISIBLE);*/
+      emptyView();
     }
   }
 
@@ -122,7 +146,12 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
           }
 
           dataList = getBrochuresData.getData();
-          updateRecyclerView();
+          if (dataList.size()>0) {
+            updateRecyclerView();
+            nonEmptyView();
+          }else {
+            emptyView();
+          }
         }
 
         @Override
@@ -150,13 +179,17 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
     if (session.getStoreWidgets().contains("BROCHURE")) {
       btnAdd.setVisibility(View.VISIBLE);
       btnAdd.setOnClickListener(v -> {
-        Intent brochuresIntent = new Intent(DigitalBrochuresActivity.this, DigitalBrochuresDetailsActivity.class);
-        brochuresIntent.putExtra("ScreenState", "new");
-        startActivity(brochuresIntent);
+       addBroucher();
       });
     } else btnAdd.setVisibility(View.GONE);
 
     backButton.setOnClickListener(v -> onBackPressed());
+  }
+
+  private void addBroucher() {
+    Intent brochuresIntent = new Intent(DigitalBrochuresActivity.this, DigitalBrochuresDetailsActivity.class);
+    brochuresIntent.putExtra("ScreenState", "new");
+    startActivity(brochuresIntent);
   }
 
   private void showLoader(final String message) {
@@ -280,4 +313,24 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
             finish();
         }, 1000);
     }
+
+  @Override
+  public void primaryButtonClicked() {
+    addBroucher();
+  }
+
+  @Override
+  public void secondaryButtonClicked() {
+
+  }
+
+  @Override
+  public void ternaryButtonClicked() {
+
+  }
+
+  @Override
+  public void appOnBackPressed() {
+
+  }
 }

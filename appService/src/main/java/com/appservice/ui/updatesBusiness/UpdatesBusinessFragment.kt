@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
@@ -33,11 +34,15 @@ import com.framework.extensions.visible
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing.Companion.shareUpdates
 import com.framework.utils.showKeyBoard
+import com.framework.views.zero.FragmentZeroCase
+import com.framework.views.zero.OnZeroCaseClicked
+import com.framework.views.zero.RequestZeroCaseBuilder
+import com.framework.views.zero.ZeroCases
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
-class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
+class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener,OnZeroCaseClicked {
 
   private val STORAGE_CODE = 120
 
@@ -49,6 +54,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   private var TOTAL_ELEMENTS = 0
   private var offSet: Int = PaginationScrollListener.PAGE_START
   private var isLastPageD = false
+  private lateinit var zeroCaseFragment: FragmentZeroCase
 
   companion object {
     @JvmStatic
@@ -76,6 +82,21 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
     binding?.btnAdd?.setOnClickListener {
       startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
     }
+    this.zeroCaseFragment = RequestZeroCaseBuilder(ZeroCases.LATEST_NEWS_UPADATES, this, baseActivity).getRequest().build()
+    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
+  }
+
+  private fun nonEmptyView() {
+    setHasOptionsMenu(true)
+    binding?.mainlayout?.visible()
+    binding?.childContainer?.gone()
+  }
+
+  private fun emptyView() {
+    setHasOptionsMenu(false)
+    binding?.mainlayout?.gone()
+    binding?.childContainer?.visible()
+
   }
 
   private fun scrollPagingListener() {
@@ -107,7 +128,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   }
 
   private fun listUpdateApi(offSet: Int) {
-    binding?.emptyView?.gone()
+    nonEmptyView()
     hitApi(
       viewModel?.getMessageUpdates(getRequestUpdate(offSet)),
       R.string.latest_update_data_not_found
@@ -118,7 +139,8 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
     super.onSuccess(it)
     removeLoader()
     val data = it as? BusinessUpdateResponse
-    if (data?.floats.isNullOrEmpty().not()) {
+    if (false) {
+      nonEmptyView()
       listFloat.addAll(data?.floats!!)
       isLastPageD = (listFloat.size == data.totalCount ?: 0)
       if (adapterUpdate == null) {
@@ -129,13 +151,13 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
         }
       } else adapterUpdate?.notifyDataSetChanged()
 
-    } else if (listFloat.isEmpty()) binding?.emptyView?.visible()
+    } else if (listFloat.isEmpty()) emptyView()
     hideProgress()
   }
 
   override fun onFailure(it: BaseResponse) {
     super.onFailure(it)
-    binding?.emptyView?.visible()
+    emptyView()
     hideProgress()
     removeLoader()
   }
@@ -246,6 +268,20 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
         listUpdateApi(offSet = offSet)
       }
     }
+  }
+
+  override fun primaryButtonClicked() {
+    startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
+
+  }
+
+  override fun secondaryButtonClicked() {
+  }
+
+  override fun ternaryButtonClicked() {
+  }
+
+  override fun onBackPressed() {
   }
 }
 

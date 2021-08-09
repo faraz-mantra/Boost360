@@ -9,14 +9,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.UpgradeActivity
+import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.framework.views.zero.FragmentZeroCase
 import com.framework.views.zero.OnZeroCaseClicked
 import com.framework.views.zero.RequestZeroCaseBuilder
 import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.nowfloats.Login.UserSessionManager
@@ -31,6 +38,7 @@ import com.nowfloats.Restaurants.Interfaces.BookTableFragmentListener
 import com.nowfloats.util.Constants
 import com.nowfloats.util.Methods
 import com.thinksity.R
+import com.thinksity.databinding.BookATableFragmentBinding
 import kotlinx.android.synthetic.main.book_a_table_fragment.*
 import kotlinx.android.synthetic.main.new_custome_app_bar.*
 import org.json.JSONObject
@@ -42,12 +50,13 @@ import retrofit.client.Response
 import retrofit.converter.GsonConverter
 
 
-class BookATableFragment : BaseFragment(), BookTableFragmentListener, OnZeroCaseClicked {
+class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroCaseClicked {
 
   lateinit var adapter: BookTableAdapter
   var session: UserSessionManager? = null
   var dataList: List<Data>? = null
-
+  lateinit var zerothCaseFragmentZeroCase: AppFragmentZeroCase
+  lateinit var binding:BookATableFragmentBinding
   companion object {
     fun newInstance() = BookATableFragment()
   }
@@ -58,8 +67,9 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, OnZeroCase
   ): View? {
 
     adapter = BookTableAdapter(ArrayList(), this)
+    binding = DataBindingUtil.inflate(inflater,R.layout.book_a_table_fragment,container,false)
 
-    return inflater.inflate(R.layout.book_a_table_fragment, container, false)
+    return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,6 +77,9 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, OnZeroCase
 
     book_table_recycler.adapter = adapter
     session = UserSessionManager(requireContext(), requireActivity())
+    zerothCaseFragmentZeroCase =AppRequestZeroCaseBuilder(AppZeroCases.TABLE_BOOKING, this, requireActivity()).getRequest().build()
+    requireActivity().supportFragmentManager.beginTransaction().add(binding.childContainer.id,zerothCaseFragmentZeroCase).commit()
+
 //
 //    buy_item.setOnClickListener {
 //      initiateBuyFromMarketplace()
@@ -84,13 +97,19 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, OnZeroCase
       emptyView()
     }
   }
-  private fun emptyView() {
-    requireActivity().supportFragmentManager.beginTransaction().replace(
-      R.id.ao_fragment_container,
-      RequestZeroCaseBuilder(ZeroCases.TABLE_BOOKING, this, requireActivity()).getRequest().build(), FragmentZeroCase::class.java.name
-    )
-      .commit()
+  private fun nonEmptyView() {
+    setHasOptionsMenu(true)
+    binding.mainlayout?.visible()
+    binding.childContainer?.gone()
   }
+
+  private fun emptyView() {
+    setHasOptionsMenu(false)
+    binding.mainlayout?.gone()
+    binding.childContainer?.visible()
+
+  }
+
   private fun initializeRecycler() {
     val gridLayoutManager = GridLayoutManager(requireContext(), 1)
     gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -148,7 +167,12 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, OnZeroCase
             return
           }
           dataList = getBookTableData.Data
-          updateRecyclerView()
+          if (dataList?.isEmpty() == true){
+            emptyView()
+          }else{
+            updateRecyclerView()
+            nonEmptyView()
+          }
         }
 
         override fun failure(error: RetrofitError) {
@@ -276,10 +300,12 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, OnZeroCase
   }
 
   override fun secondaryButtonClicked() {
-    TODO("Not yet implemented")
   }
 
   override fun ternaryButtonClicked() {
-    TODO("Not yet implemented")
+  }
+
+  override fun appOnBackPressed() {
+
   }
 }
