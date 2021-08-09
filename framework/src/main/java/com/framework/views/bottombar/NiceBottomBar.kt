@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.*
@@ -20,6 +21,7 @@ import com.framework.views.bottombar.Constants.WHITE_COLOR_HEX
 import kotlin.math.abs
 
 class NiceBottomBar : View {
+  private  val TAG = "NiceBottomBar"
 
   // Default attribute values
   private var barBackgroundColor = Color.parseColor(WHITE_COLOR_HEX)
@@ -34,12 +36,14 @@ class NiceBottomBar : View {
   private var itemTextColorActive = Color.parseColor(DEFAULT_TEXT_COLOR_ACTIVE)
   private var itemTextSize = d2p(11.0f)
   private var itemBadgeColor = itemTextColorActive
+  private var itemBadgeTextColor = Color.parseColor(DEFAULT_TEXT_COLOR)
   private var itemFontActive = 0
   private var itemFontInActive = 0
   private var activeFontTypeface: Typeface? = null
   private var inActiveFontTypeface: Typeface? = null
   private var activeItem = 0
   private var clickPosition: ArrayList<Int>? = null
+  private  var badgeText:String?=null
 
   /**
    * Dynamic variables
@@ -85,7 +89,7 @@ class NiceBottomBar : View {
     isAntiAlias = true
     style = Paint.Style.FILL
     color = itemBadgeColor
-    strokeWidth = 4f
+    strokeWidth = 1f
   }
 
   constructor(context: Context) : super(context)
@@ -115,6 +119,8 @@ class NiceBottomBar : View {
     barIndicatorGravity =
       typedArray.getInt(R.styleable.NiceBottomBar_indicatorGravity, this.barIndicatorGravity)
     itemBadgeColor = typedArray.getColor(R.styleable.NiceBottomBar_badgeColor, this.itemBadgeColor)
+    badgeText = typedArray.getString(R.styleable.NiceBottomBar_textBadge)
+    itemBadgeTextColor = typedArray.getColor(R.styleable.NiceBottomBar_textBadgeColor, this.itemBadgeTextColor)
     itemFontActive =
       typedArray.getResourceId(R.styleable.NiceBottomBar_itemFontActive, this.itemFontActive)
     itemFontInActive =
@@ -217,7 +223,7 @@ class NiceBottomBar : View {
 
       // Draw item badge
       if (item.badgeSize > 0)
-        drawBadge(canvas, item)
+        drawBadge(canvas, item,badgeText)
     }
 
     // Draw indicator
@@ -265,21 +271,27 @@ class NiceBottomBar : View {
   }
 
   // Draw item badge
-  private fun drawBadge(canvas: Canvas, item: BottomBarItem) {
+  private fun drawBadge(canvas: Canvas, item: BottomBarItem, badgeText: String?) {
+    Log.i(TAG, "drawBadge: "+badgeText)
     paintBadge.style = Paint.Style.FILL
     paintBadge.color = itemTextColorActive
 
-    canvas.drawCircle(
-      item.rect.centerX() + itemIconSize / 2 - 4,
-      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10, item.badgeSize, paintBadge
-    )
-
+//    canvas.drawCircle(
+//      item.rect.centerX() + itemIconSize / 2 - 4,
+//      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10, item.badgeSize, paintBadge
+//    )
     paintBadge.style = Paint.Style.STROKE
     paintBadge.color = barBackgroundColor
 
-    canvas.drawCircle(
+//    canvas.drawCircle(
+//      item.rect.centerX() + itemIconSize / 2 - 4,
+//      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10, item.badgeSize, paintBadge
+//    )
+    canvas.drawText(
+      badgeText?:"",
       item.rect.centerX() + itemIconSize / 2 - 4,
-      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10, item.badgeSize, paintBadge
+      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10,
+      paintText.apply { color=Color.WHITE;textSize = 7f }
     )
   }
 

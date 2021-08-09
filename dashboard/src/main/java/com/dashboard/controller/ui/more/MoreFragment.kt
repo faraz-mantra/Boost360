@@ -183,7 +183,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       }
       AboutAppSectionItem.IconType.rate_us_on_app_store -> {
         WebEngageController.trackEvent(ABOUT_BOOST_PLAY_STORE_RATING, NO_EVENT_LABLE, NULL)
-        val uri = Uri.parse("market://details?id=" + appBaseActivity?.applicationContext?.packageName)
+        val uri = Uri.parse("market://details?id=" + baseActivity?.applicationContext?.packageName)
         val goToMarket = Intent(Intent.ACTION_VIEW, uri)
         goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         try {
@@ -197,7 +197,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       }
       AboutAppSectionItem.IconType.rate_us_on_google_play -> {
         WebEngageController.trackEvent(ABOUT_BOOST_PLAY_STORE_RATING, NO_EVENT_LABLE, NULL)
-        val uri = Uri.parse("market://details?id=" + appBaseActivity?.applicationContext?.packageName)
+        val uri = Uri.parse("market://details?id=" + baseActivity?.applicationContext?.packageName)
         val goToMarket = Intent(Intent.ACTION_VIEW, uri)
         goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         try {

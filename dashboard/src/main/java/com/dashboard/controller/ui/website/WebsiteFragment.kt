@@ -1,29 +1,42 @@
 package com.dashboard.controller.ui.website
 
+import android.content.Context
 import android.os.Build
+import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat.getColor
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
+import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
 import com.dashboard.databinding.FragmentWebsiteBinding
+import com.dashboard.databinding.FragmentWebsitePagerBinding
 import com.dashboard.model.live.websiteItem.WebsiteActionItem
+import com.dashboard.model.live.websiteItem.WebsiteData
 import com.dashboard.model.live.websiteItem.WebsiteDataResponse
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
+import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.pref.BASE_IMAGE_URL
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.utils.ContentSharing
+import com.framework.utils.changeLayersColor
 import com.framework.utils.fromHtml
 import com.framework.views.customViews.CustomImageView
 import com.framework.webengageconstant.DASHBOARD_WEBSITE_PAGE
@@ -58,7 +71,6 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       binding?.websiteThemeCustomization, binding?.businessTiming
     )
     WebEngageController.trackEvent(DASHBOARD_WEBSITE_PAGE, PAGE_VIEW, session?.fpTag)
-    getWebsiteData()
     setupViewPager()
     this.websiteLink = fromHtml("<u>${session?.getDomainName()}</u>").toString()
     businessName = session?.fPName!!
@@ -96,57 +108,12 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     updateTimings()
   }
 
-  private fun getWebsiteData() {
-    viewModel?.getBoostWebsiteItem(baseActivity)
-      ?.observeOnce(viewLifecycleOwner, { it0 ->
-        val response = it0 as? WebsiteDataResponse
-        if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-          val data = response.data?.firstOrNull {
-            it.type.equals(session?.fP_AppExperienceCode, ignoreCase = true)
-          }
-          if (data != null && data.actionItem.isNullOrEmpty().not()) {
-            data.actionItem!!.map { it2 ->
-              if (it2.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it2.premiumCode).not()) it2.isLock = true
-            }
-            binding?.mainContent?.setBackgroundColor(
-              getColor(baseActivity, if (data.actionItem!!.size % 2 != 0) R.color.white_smoke_1 else R.color.white)
-            )
-            setAdapterCustomer(data.actionItem!!)
-          }
-        }
-      })
-  }
-
-  private fun setAdapterCustomer(actionItem: ArrayList<WebsiteActionItem>) {
-    actionItem.map {
-      it.recyclerViewItemType = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout()
-    }
-    if (adapterWebsite == null) {
-      binding?.rvEnquiries?.apply {
-        adapterWebsite = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@WebsiteFragment)
-        adapter = adapterWebsite
-      }
-    } else adapterWebsite?.notify(actionItem)
-  }
-
-  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-    when (actionType) {
-      RecyclerViewActionType.WEBSITE_ITEM_CLICK.ordinal -> {
-        val data = item as? WebsiteActionItem ?: return
-        data.type?.let { WebsiteActionItem.IconType.fromName(it) }?.let { clickActionButton(it) }
-      }
-    }
-  }
-
   private fun clickActionButton(type: WebsiteActionItem.IconType) {
     when (type) {
       WebsiteActionItem.IconType.service_product_catalogue -> baseActivity.startListServiceProduct(session)
       WebsiteActionItem.IconType.latest_update_tips -> session?.let { baseActivity.startUpdateLatestStory(it) }
       WebsiteActionItem.IconType.all_images -> baseActivity.startAllImage(session)
-      WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(
-        session,
-        fragmentType = "Business_Profile_Fragment_V2"
-      )
+      WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
       WebsiteActionItem.IconType.testimonials -> baseActivity.startTestimonial(session)
       WebsiteActionItem.IconType.custom_page -> baseActivity.startCustomPage(session)
       WebsiteActionItem.IconType.project_teams -> baseActivity.startListProjectAndTeams(session)
@@ -285,7 +252,7 @@ class FragmentCategory: AppBaseFragment<FragmentWebsitePagerBinding,DashboardVie
   override fun getLayout(): Int {
     return R.layout.fragment_website_pager
   }
-  var data:WebsiteData?= null
+  var data: WebsiteData?= null
   override fun getViewModelClass(): Class<DashboardViewModel> {
    return DashboardViewModel::class.java
   }

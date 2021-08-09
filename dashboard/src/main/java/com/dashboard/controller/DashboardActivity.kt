@@ -1,6 +1,7 @@
 package com.dashboard.controller
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -110,6 +111,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
     //registerFirebaseToken()
+    binding?.navView?.setBadge(1)
   }
 
   private fun registerFirebaseToken() {
