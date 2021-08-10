@@ -109,22 +109,23 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     session?.initializeWebEngageLogin()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
-
     registerFirebaseToken()
   }
 
   private fun registerFirebaseToken() {
-    viewModel.getFirebaseToken().observe(this,{
-      val response = it as FirebaseTokenResponse
-      val token = response.Result?:""
-      Log.i(TAG, "registerFirebaseToken: "+token)
-      FirebaseAuth.getInstance().signInWithCustomToken(token).addOnCompleteListener(this) { task ->
-        if (task.isSuccessful) {
-          // Sign in success, update UI with the signed-in user's information
-          Log.d(TAG, "signInWithCustomToken:success")
-        } else {
-          // If sign in fails, display a message to the user.
-          Log.w(TAG, "signInWithCustomToken:failure", task.exception)
+    viewModel.getFirebaseToken().observe(this, {
+      val response = it as? FirebaseTokenResponse
+      val token = response?.Result
+      Log.i(TAG, "registerFirebaseToken: $token")
+      token?.let { it1 ->
+        FirebaseAuth.getInstance().signInWithCustomToken(it1).addOnCompleteListener(this) { task ->
+          if (task.isSuccessful) {
+            // Sign in success, update UI with the signed-in user's information
+            Log.d(TAG, "signInWithCustomToken:success")
+          } else {
+            // If sign in fails, display a message to the user.
+            Log.w(TAG, "signInWithCustomToken:failure", task.exception)
+          }
         }
       }
     })
@@ -155,6 +156,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onNewIntent(intent)
     intentDataCheckAndDeepLink(intent)
   }
+
   private fun intentDataCheckAndDeepLink(intent: Intent?) {
     Log.i(TAG, "intentDataCheckAndDeepLink: ")
     if (intent?.extras != null) {
@@ -239,7 +241,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       bgImageUri = BASE_IMAGE_URL + bgImageUri
     }
     binding?.drawerView?.bgImage?.let {
-      glideLoad(it, bgImageUri ?: "", R.drawable.general_services_background_img_d
+      glideLoad(
+        it, bgImageUri ?: "", R.drawable.general_services_background_img_d
       )
     }
   }

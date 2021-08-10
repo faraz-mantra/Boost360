@@ -1316,7 +1316,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="offer_start_date">Start date:</string>
   <string name="offer_end_date">End date:</string>
   <string name="offer_discount">Discount percentage:</string>
-  <string name="createOffersTitle">Post An Offer</string>
+  <string name="createOffersTitle">Post an Offer</string>
   <string name="offers_title_error">Please enter the title</string>
   <string name="offers_desc_error">Please enter description for the offer</string>
   <string name="offers_start_date_error">Please choose start date for the offer</string>
