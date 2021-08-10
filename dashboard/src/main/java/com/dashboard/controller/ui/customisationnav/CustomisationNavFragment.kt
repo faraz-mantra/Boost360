@@ -70,7 +70,7 @@ class CustomisationNavFragment : AppBaseFragment<FragmentNavCustomisationBinding
 
   private fun clickNavButton(type: WebsiteCustomisationItem.IconType) {
     when (type) {
-      ic_diamonds -> baseActivity.startFeviconImage(session)
+      ic_diamonds -> baseActivity.startBusinessLogo(session)
       ic_fonts ->   baseActivity.startWebsiteTheme(session)
       ic_background_images ->   baseActivity.startBackgroundImageGallery(session)
       ic_favicon ->   baseActivity.startFeviconImage(session)
