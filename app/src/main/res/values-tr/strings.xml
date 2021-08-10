@@ -33,7 +33,7 @@
   <string name="offer_start_date">Start Date:</string>
   <string name="offer_end_date">End Date:</string>
   <string name="offer_discount">Discount Percentage:</string>
-  <string name="createOffersTitle">Post An Offer</string>
+  <string name="createOffersTitle">Post an Offer</string>
   <string name="offers_title_error">Please enter the title</string>
   <string name="offers_desc_error">Please enter description for the offer</string>
   <string name="offers_start_date_error">Please choose start date for the offer</string>
