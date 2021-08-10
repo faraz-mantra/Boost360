@@ -1006,8 +1006,8 @@
 
     <com.framework.views.customViews.CustomCardView
       android:id="@+id/scroll_down_btn"
-      android:layout_width="@dimen/size_30"
-      android:layout_height="@dimen/size_30"
+      android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
       android:layout_gravity="bottom|center_horizontal"
       android:layout_marginBottom="@dimen/size_16"
       android:clickable="true"
