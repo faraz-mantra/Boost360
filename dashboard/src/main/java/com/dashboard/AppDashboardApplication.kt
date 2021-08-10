@@ -1,5 +1,6 @@
 package com.dashboard
 
+import android.util.Log
 import androidx.multidex.MultiDexApplication
 import com.dashboard.rest.EndPoints
 import com.dashboard.rest.EndPoints.BOOST_KIT_NEW_BASE
@@ -34,5 +35,11 @@ open class AppDashboardApplication : BaseApplication() {
       PluginFloatsApiClient.shared.init(PLUGIN_FLOATS_URL)
       NowFloatsApiClient.shared.init(NOW_FLOATS_BASE)
     }
+  }
+
+  override fun onCreate() {
+    super.onCreate()
+    Log.i(TAG, "onCreate: ")
+
   }
 }
