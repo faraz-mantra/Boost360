@@ -410,6 +410,101 @@
           </LinearLayout>
 
 
+          <RelativeLayout
+            android:id="@+id/recommended_addons_rl_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mp_home_recommended_features_rl_layout">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+              android:id="@+id/shimmer_view_recomm_addons"
+              android:layout_width="match_parent"
+              android:layout_height="250dp"
+              android:layout_gravity="center"
+              android:layout_margin="10dp"
+              android:background="@color/white"
+              android:orientation="vertical"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              tools:visibility="visible">
+
+              <!-- Adding 7 rows of placeholders -->
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/banner_data_placeholder_layout" />
+
+                <include layout="@layout/banner_data_placeholder_layout" />
+
+                <include layout="@layout/banner_placeholder_layout" />
+
+                <include layout="@layout/banner_placeholder_layout" />
+
+                <include layout="@layout/banner_placeholder_layout" />
+
+                <include layout="@layout/banner_placeholder_layout" />
+
+                <include layout="@layout/banner_placeholder_layout" />
+
+                <include layout="@layout/banner_placeholder_layout" />
+
+                <include layout="@layout/banner_placeholder_layout" />
+
+
+              </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <LinearLayout
+              android:id="@+id/mp_home_recommended_addons_layout"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="16dp"
+              android:orientation="vertical"
+              android:paddingTop="10dp">
+
+
+              <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recommended_features_section"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@color/transparent"
+                android:overScrollMode="never" />
+
+              <TextView
+                android:id="@+id/all_recommended_addons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recycler"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/bold"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="10dp"
+                android:text="View All"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            </LinearLayout>
+          </RelativeLayout>
+
 
         </LinearLayout>
 
