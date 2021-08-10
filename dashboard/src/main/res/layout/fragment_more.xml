@@ -198,7 +198,7 @@
               android:gravity="start"
               android:includeFontPadding="true"
               android:maxLines="1"
-              tools::text="@string/business_name"
+              tools:text="@string/business_name"
               android:textColor="@color/white"
               android:textSize="16sp"
               app:layout_constraintEnd_toStartOf="@+id/arrow_bottom"
