@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.*
@@ -21,8 +20,6 @@ import com.framework.views.bottombar.Constants.WHITE_COLOR_HEX
 import kotlin.math.abs
 
 class NiceBottomBar : View {
-  private var canvas: Canvas? = null
-  private val TAG = "NiceBottomBar"
 
   // Default attribute values
   private var barBackgroundColor = Color.parseColor(WHITE_COLOR_HEX)
@@ -37,7 +34,6 @@ class NiceBottomBar : View {
   private var itemTextColorActive = Color.parseColor(DEFAULT_TEXT_COLOR_ACTIVE)
   private var itemTextSize = d2p(11.0f)
   private var itemBadgeColor = itemTextColorActive
-  private var itemBadgeTextColor = Color.parseColor(DEFAULT_TEXT_COLOR)
   private var itemFontActive = 0
   private var itemFontInActive = 0
   private var activeFontTypeface: Typeface? = null
@@ -89,53 +85,34 @@ class NiceBottomBar : View {
     isAntiAlias = true
     style = Paint.Style.FILL
     color = itemBadgeColor
-    strokeWidth = 1f
+    strokeWidth = 4f
   }
 
   constructor(context: Context) : super(context)
   constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
     pref = context.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
     val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.NiceBottomBar, 0, 0)
-    barBackgroundColor =
-      typedArray.getColor(R.styleable.NiceBottomBar_backgroundColor, this.barBackgroundColor)
-    barIndicatorColor =
-      typedArray.getColor(R.styleable.NiceBottomBar_indicatorColor, this.barIndicatorColor)
-    barIndicatorWidth =
-      typedArray.getDimension(R.styleable.NiceBottomBar_indicatorWidth, this.barIndicatorWidth)
-    barIndicatorEnabled =
-      typedArray.getBoolean(R.styleable.NiceBottomBar_indicatorEnabled, this.barIndicatorEnabled)
+    barBackgroundColor = typedArray.getColor(R.styleable.NiceBottomBar_backgroundColor, this.barBackgroundColor)
+    barIndicatorColor = typedArray.getColor(R.styleable.NiceBottomBar_indicatorColor, this.barIndicatorColor)
+    barIndicatorWidth = typedArray.getDimension(R.styleable.NiceBottomBar_indicatorWidth, this.barIndicatorWidth)
+    barIndicatorEnabled = typedArray.getBoolean(R.styleable.NiceBottomBar_indicatorEnabled, this.barIndicatorEnabled)
     itemTextColor = typedArray.getColor(R.styleable.NiceBottomBar_textColor, this.itemTextColor)
-    itemTextColorActive =
-      typedArray.getColor(R.styleable.NiceBottomBar_textColorActive, this.itemTextColorActive)
+    itemTextColorActive = typedArray.getColor(R.styleable.NiceBottomBar_textColorActive, this.itemTextColorActive)
     itemTextSize = typedArray.getDimension(R.styleable.NiceBottomBar_textSize, this.itemTextSize)
     itemIconSize = typedArray.getDimension(R.styleable.NiceBottomBar_iconSize, this.itemIconSize)
-    itemIconMargin =
-      typedArray.getDimension(R.styleable.NiceBottomBar_iconMargin, this.itemIconMargin)
+    itemIconMargin = typedArray.getDimension(R.styleable.NiceBottomBar_iconMargin, this.itemIconMargin)
     activeItem = typedArray.getInt(R.styleable.NiceBottomBar_activeItem, this.activeItem)
-    barIndicatorInterpolator = typedArray.getInt(
-      R.styleable.NiceBottomBar_indicatorInterpolator,
-      this.barIndicatorInterpolator
-    )
-    barIndicatorGravity =
-      typedArray.getInt(R.styleable.NiceBottomBar_indicatorGravity, this.barIndicatorGravity)
+    barIndicatorInterpolator = typedArray.getInt(R.styleable.NiceBottomBar_indicatorInterpolator, this.barIndicatorInterpolator)
+    barIndicatorGravity = typedArray.getInt(R.styleable.NiceBottomBar_indicatorGravity, this.barIndicatorGravity)
     itemBadgeColor = typedArray.getColor(R.styleable.NiceBottomBar_badgeColor, this.itemBadgeColor)
-    itemBadgeTextColor = typedArray.getColor(R.styleable.NiceBottomBar_textBadgeColor, this.itemBadgeTextColor)
-    itemFontActive =
-      typedArray.getResourceId(R.styleable.NiceBottomBar_itemFontActive, this.itemFontActive)
-    itemFontInActive =
-      typedArray.getResourceId(R.styleable.NiceBottomBar_itemFontInActive, this.itemFontInActive)
-    items =
-      BottomBarParser(context, typedArray.getResourceId(R.styleable.NiceBottomBar_menu, 0)).parse()
-    itemsInActive =
-      BottomBarParser(context, typedArray.getResourceId(R.styleable.NiceBottomBar_menu, 0)).parse()
-    itemsActive = BottomBarParser(
-      context,
-      typedArray.getResourceId(R.styleable.NiceBottomBar_activeMenu, 0)
-    ).parse()
+    itemFontActive = typedArray.getResourceId(R.styleable.NiceBottomBar_itemFontActive, this.itemFontActive)
+    itemFontInActive = typedArray.getResourceId(R.styleable.NiceBottomBar_itemFontInActive, this.itemFontInActive)
+    items = BottomBarParser(context, typedArray.getResourceId(R.styleable.NiceBottomBar_menu, 0)).parse()
+    itemsInActive = BottomBarParser(context, typedArray.getResourceId(R.styleable.NiceBottomBar_menu, 0)).parse()
+    itemsActive = BottomBarParser(context, typedArray.getResourceId(R.styleable.NiceBottomBar_activeMenu, 0)).parse()
     val clickPositionValue = typedArray.getString(R.styleable.NiceBottomBar_clickPosition)
     clickPosition = ArrayList()
-    clickPositionValue?.split(",")
-      ?.forEach { it.toIntOrNull()?.let { it1 -> clickPosition!!.add(it1) } }
+    clickPositionValue?.split(",")?.forEach { it.toIntOrNull()?.let { it1 -> clickPosition!!.add(it1) } }
     typedArray.recycle()
 
     setBackgroundColor(barBackgroundColor)
@@ -148,8 +125,7 @@ class NiceBottomBar : View {
 
     // paintText.typeface
     if (itemFontActive != 0) activeFontTypeface = ResourcesCompat.getFont(context, itemFontActive)
-    if (itemFontInActive != 0) inActiveFontTypeface =
-      ResourcesCompat.getFont(context, itemFontInActive)
+    if (itemFontInActive != 0) inActiveFontTypeface = ResourcesCompat.getFont(context, itemFontInActive)
   }
 
   override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -182,7 +158,7 @@ class NiceBottomBar : View {
 
   override fun onDraw(canvas: Canvas) {
     super.onDraw(canvas)
-    this.canvas = canvas
+
     val textHeight = (paintText.descent() + paintText.ascent()) / 2
 
     // Push the item components from the top a bit if the indicator is at the top
@@ -192,48 +168,32 @@ class NiceBottomBar : View {
       if (itemsActive.isNullOrEmpty().not() && (itemsActive.size == items.size)) {
         item.icon = if (i == activeItem) itemsActive[i].icon else itemsInActive[i].icon
         item.title = if (i == activeItem) itemsActive[i].title else itemsInActive[i].title
-      } else DrawableCompat.setTint(
-        item.icon,
-        if (i == activeItem) currentActiveItemColor else itemTextColor
-      )
+      } else DrawableCompat.setTint(item.icon, if (i == activeItem) currentActiveItemColor else itemTextColor)
 
       item.icon.mutate()
-      item.icon.setBounds(
-        item.rect.centerX().toInt() - itemIconSize.toInt() / 2,
+      item.icon.setBounds(item.rect.centerX().toInt() - itemIconSize.toInt() / 2,
         height / 2 - itemIconSize.toInt() - itemIconMargin.toInt() / 2 + additionalTopMargin.toInt(),
         item.rect.centerX().toInt() + itemIconSize.toInt() / 2,
-        height / 2 - itemIconMargin.toInt() / 2 + additionalTopMargin.toInt()
-      )
+        height / 2 - itemIconMargin.toInt() / 2 + additionalTopMargin.toInt())
 
       item.icon.draw(canvas)
 
       // Draw item title
       this.paintText.color = if (i == activeItem) currentActiveItemColor else itemTextColor
-      (if (i == activeItem) activeFontTypeface else inActiveFontTypeface)?.let {
-        this.paintText.typeface = it
-      }
+      (if (i == activeItem) activeFontTypeface else inActiveFontTypeface)?.let { this.paintText.typeface = it }
 
-      canvas.drawText(
-        item.title,
-        item.rect.centerX(),
-        item.rect.centerY() - textHeight + itemIconSize / 2 + (this.itemIconMargin / 2) + additionalTopMargin,
-        paintText
-      )
+      canvas.drawText(item.title, item.rect.centerX(),
+        item.rect.centerY() - textHeight + itemIconSize / 2 + (this.itemIconMargin / 2) + additionalTopMargin, paintText)
 
       // Draw item badge
       if (item.badgeSize > 0)
-        drawBadge(canvas, item, item.badgeText)
+        drawBadge(canvas, item)
     }
 
     // Draw indicator
     if (barIndicatorEnabled)
-      canvas.drawLine(
-        indicatorLocation - barIndicatorWidth / 2,
-        (if (barIndicatorGravity == 1) height - 5.0f else 5f),
-        indicatorLocation + barIndicatorWidth / 2,
-        (if (barIndicatorGravity == 1) height - 5.0f else 5f),
-        paintIndicator
-      )
+      canvas.drawLine(indicatorLocation - barIndicatorWidth / 2, (if (barIndicatorGravity == 1) height - 5.0f else 5f),
+        indicatorLocation + barIndicatorWidth / 2, (if (barIndicatorGravity == 1) height - 5.0f else 5f), paintIndicator)
   }
 
   // Handle item clicks
@@ -270,37 +230,23 @@ class NiceBottomBar : View {
   }
 
   // Draw item badge
-  private fun drawBadge(canvas: Canvas, item: BottomBarItem, badgeText: String?) {
-    Log.i(TAG, "drawBadge: " + badgeText)
-    Log.i(TAG, "drawBadge33:" + item.badgeText)
+  private fun drawBadge(canvas: Canvas, item: BottomBarItem) {
     paintBadge.style = Paint.Style.FILL
-    paintBadge.color = Color.RED
+    paintBadge.color = itemTextColorActive
 
-//    canvas.drawRoundRect(item.rect.apply { right=100f; left=100f;top=100f;bottom=100f },item.rect.centerX() + itemIconSize / 2 - 4,
-//      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10,paintBadge)
+    canvas.drawCircle(item.rect.centerX() + itemIconSize / 2 - 4,
+      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10, item.badgeSize, paintBadge)
 
-    canvas.drawCircle(
-      item.rect.centerX() + itemIconSize / 2 - 4,
-      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10, 25f, paintBadge
-    )
-//    canvas.drawRoundRect(item.rect.apply {top=100f;bottom=100f;right=100f;left=100f },200f,200f,paintBadge)
     paintBadge.style = Paint.Style.STROKE
     paintBadge.color = barBackgroundColor
 
-
-    canvas.drawText(
-      badgeText ?: "",
-      item.rect.centerX() + itemIconSize / 2 - 4,
-      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 16,
-      paintText.apply { color = Color.WHITE;textSize = 32f }
-    )
+    canvas.drawCircle(item.rect.centerX() + itemIconSize / 2 - 4,
+      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10, item.badgeSize, paintBadge)
   }
 
   // Add item badge
-  fun setBadge(pos: Int, count: String) {
-    if (pos >= 0 && pos < items.size && items[pos].badgeSize == 0f) {
-//      drawBadge(Canvas(),items[pos],count)
-      items[pos].badgeText=count
+  fun setBadge(pos: Int) {
+    if (pos > 0 && pos < items.size && items[pos].badgeSize == 0f) {
       val animator = ValueAnimator.ofFloat(0f, 15f)
       animator.duration = 100
       animator.addUpdateListener { animation ->

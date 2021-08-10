@@ -48,12 +48,6 @@ object AssuredPurchaseRepository :
       TaskCode.CONFIRM_ORDER_TASK
     )
   }
-  fun getOrderCount(clientId: String?, sellerId: String?,orderStatus:Int?,startDate: String?, endDate: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.getOrdersCount(clientId, sellerId,orderStatus,startDate, endDate),
-      TaskCode.GET_ALL_ORDERS
-    )
-  }
 
   fun postOrderUpdate(clientId: String?, request: OrderInitiateRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(

@@ -1,8 +1,6 @@
 package com.inventoryorder.rest.services
 
-import com.inventoryorder.model.badges.BadgeCountResponse
 import com.inventoryorder.model.mapDetail.VisitsModelResponse
-import com.inventoryorder.model.spaAppointment.GetServiceListingResponse
 import com.inventoryorder.model.summary.UserSummaryResponse
 import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.EndPoints

@@ -2,8 +2,6 @@ package com.dashboard.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
-import com.appservice.rest.repository.KitWebActionRepository
 import com.appservice.rest.repository.WithFloatTwoRepository
 import com.dashboard.rest.repository.DevBoostKitRepository
 import com.dashboard.rest.repository.PluginFloatRepository
@@ -11,27 +9,26 @@ import com.dashboard.rest.repository.WithFloatRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
-import com.inventoryorder.model.badges.CustomerEnquiriesCountRequest
 import com.inventoryorder.model.summary.request.SellerSummaryRequest
 import com.inventoryorder.rest.repositories.ApiTwoWithFloatRepository
 import com.inventoryorder.rest.repositories.ApiWithFloatRepository
-import com.inventoryorder.rest.repositories.AssuredPurchaseRepository
 import com.inventoryorder.rest.repositories.InventoryOrderRepository
 import com.onboarding.nowfloats.model.nfxProcess.NFXProcessRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.onboarding.nowfloats.rest.repositories.*
 import okhttp3.RequestBody
 import org.json.JSONObject
-import java.io.File
 
 class DashboardViewModel : BaseViewModel() {
 
   fun getCategories(context: Context): LiveData<BaseResponse> {
     return CategoryRepository.getCategories(context).toLiveData()
   }
+
   fun getMoreSettings(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getMoreSettings(context).toLiveData()
   }
+
   fun getWebsiteNavData(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getWebsiteNavData(context).toLiveData()
   }
@@ -88,18 +85,6 @@ class DashboardViewModel : BaseViewModel() {
 
   fun getDrScoreUi(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getDrScoreUi(context).toLiveData()
-  }
-  fun getSubscriberCountBadge(fpTag: String?, clientId: String?,  startDate: String?, endDate: String?): LiveData<BaseResponse> {
-    return ApiTwoWithFloatRepository.getSubscribersCount(fpTag,clientId,startDate,endDate).toLiveData()
-  }
-  fun getTotalCallsCount(fpId: String?, clientId: String?,callStatus:Int?,  startDate: String?, endDate: String?): LiveData<BaseResponse> {
-    return ApiTwoWithFloatRepository.getTotalCallsCount(fpId,clientId,callStatus,startDate,endDate).toLiveData()
-  }
-  fun getTotalCustomerEnquiriesCount(request: CustomerEnquiriesCountRequest): LiveData<BaseResponse> {
-    return ApiTwoWithFloatRepository.getTotalCustomerEnquiriesCount(request).toLiveData()
-  }
-  fun getOrdersCount(clientId: String?, sellerId: String?,orderStatus:Int?,startDate: String?, endDate: String?): LiveData<BaseResponse> {
-    return AssuredPurchaseRepository.getOrderCount(clientId,sellerId,orderStatus,startDate,endDate).toLiveData()
   }
 
   fun getQuickActionData(context: Context): LiveData<BaseResponse> {
