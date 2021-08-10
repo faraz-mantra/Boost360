@@ -109,7 +109,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     session?.initializeWebEngageLogin()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
-    //registerFirebaseToken()
+
+    registerFirebaseToken()
   }
 
   private fun registerFirebaseToken() {
