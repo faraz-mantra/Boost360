@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -26,6 +27,10 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.framework.views.customViews.CustomEditText;
 import com.framework.views.fabButton.FloatingActionButton;
+import com.framework.views.zero.old.AppFragmentZeroCase;
+import com.framework.views.zero.old.AppOnZeroCaseClicked;
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
+import com.framework.views.zero.old.AppZeroCases;
 import com.google.gson.Gson;
 import com.nowfloats.Analytics_Screen.API.SubscriberApis;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.SubscribersAdapter;
@@ -39,6 +44,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
+import com.thinksity.databinding.ActivitySubscribersBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +65,8 @@ import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_NEWSLETTER_
 import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 import static com.framework.webengageconstant.EventValueKt.TO_BE_ADDED;
 
-public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener, SubscribersAdapter.SubscriberInterfaceMethods {
+public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener,
+        SubscribersAdapter.SubscriberInterfaceMethods, AppOnZeroCaseClicked {
 
     private static final int SUBSCRIBER_REQUEST_CODE = 221;
     ArrayList<SubscriberModel> mSubscriberList = new ArrayList<>();
@@ -68,7 +75,6 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     AutoCompleteTextView searchEditText;
     ImageView searchImage;
     FloatingActionButton deleteImage;
-    LinearLayout emptyLayout;
     private UserSessionManager mSessionManager;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
@@ -76,13 +82,17 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     private LinearLayoutManager mLayoutManager;
     private boolean stop;
     private int itemClicked = -1;
+    private AppFragmentZeroCase appFragmentZeroCase;
+    private ActivitySubscribersBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WebEngageController.trackEvent(CLICKED_ON_NEWSLETTER_SUBSCRIPTIONS, NEWSLETTER_SUBSCRIPTIONS, NO_EVENT_VALUE);
         MixPanelController.track(EventKeysWL.SIDE_PANEL_SUBSCRIBERS, null);
-        setContentView(R.layout.activity_subscribers);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_subscribers);
+        appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.NEWS_LETTER_SUBSCRIPTION,this,this).getRequest().build();
+        getSupportFragmentManager().beginTransaction().replace(binding.childContainer.getId(),appFragmentZeroCase).commit();
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
@@ -118,7 +128,6 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         searchImage.setOnClickListener(this);
 
         titleTextView.setText(getResources().getString(R.string.subscriptions));
-        emptyLayout = (LinearLayout) findViewById(R.id.emplty_layout);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -212,8 +221,10 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 if (newItems >= 10) {
                     stop = false;
                 }
-                if (mSubscriberList.size() == 0) {
-                    emptyLayout.setVisibility(View.VISIBLE);
+                if (true) {
+                    emptyView();
+                }else {
+                    nonEmptyView();
                 }
             }
 
@@ -367,4 +378,36 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         return super.onOptionsItemSelected(item);
     }
 
+    private void nonEmptyView() {
+        binding.mainlayout.setVisibility(View.VISIBLE);
+        binding.childContainer.setVisibility(View.GONE);
+    }
+
+
+    private void emptyView() {
+        binding.mainlayout.setVisibility(View.GONE);
+        binding.childContainer.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void primaryButtonClicked() {
+        subscriberDialog();
+
+    }
+
+    @Override
+    public void secondaryButtonClicked() {
+
+    }
+
+    @Override
+    public void ternaryButtonClicked() {
+
+    }
+
+    @Override
+    public void appOnBackPressed() {
+
+    }
 }
