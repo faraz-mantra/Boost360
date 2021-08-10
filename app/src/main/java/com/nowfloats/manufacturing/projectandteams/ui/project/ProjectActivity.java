@@ -64,7 +64,7 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_project_category);
         appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.PROJECTS,this,this).getRequest().build();
-        getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(),appFragmentZeroCase).commit();
+        getSupportFragmentManager().beginTransaction().replace(binding.childContainer.getId(),appFragmentZeroCase).commit();
 
         initView();
     }

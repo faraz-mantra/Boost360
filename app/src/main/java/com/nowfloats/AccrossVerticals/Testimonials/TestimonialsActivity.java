@@ -71,6 +71,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     private RecyclerView recyclerView;
     private boolean isLoad = false;
     private FrameLayout fragmentContainer = null;
+    private AppFragmentZeroCase appFragmentZeroCase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,10 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     }
 
     void initialization() {
+        appFragmentZeroCase = new AppRequestZeroCaseBuilder(AppZeroCases.TESTIMONIAL,TestimonialsActivity.this  , getApplicationContext()).getRequest().build();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_testimonial,
+                appFragmentZeroCase, AppFragmentZeroCase.class.getName())
+                .commit();
         vmnProgressBar = new ProgressDialog(this);
         vmnProgressBar.setIndeterminate(true);
         vmnProgressBar.setMessage(getString(R.string.please_wait));
@@ -177,9 +182,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                     } else {
                         mainLayout.setVisibility(View.GONE);
                         fragmentContainer.setVisibility(View.VISIBLE);
-                        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_testimonial,
-                                new AppRequestZeroCaseBuilder(AppZeroCases.TESTIMONIAL,TestimonialsActivity.this  , getApplicationContext()).getRequest().build(), AppFragmentZeroCase.class.getName())
-                                .commit();
+
                         rightButton.setVisibility(View.INVISIBLE);
                     }
                 }
