@@ -153,8 +153,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.viewEmptyEnquiries?.btnEmailEnquiries,
       binding?.viewEmptyEnquiries?.btnOtherShareEnquiries
     )
-    val versionName: String =
-      baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
+    val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion1?.text = "Version $versionName"
     binding?.txtVersion2?.text = "Version $versionName"
     getAllDashboardSummary()
