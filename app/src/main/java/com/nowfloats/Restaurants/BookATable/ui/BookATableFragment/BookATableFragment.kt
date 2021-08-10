@@ -91,7 +91,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
   }
 
   fun setHeader() {
-    title.text = "Book A Table"
+    title.text = "Book a Table"
     back_button.setOnClickListener {
       (activity as? BookATableActivity)?.onBackPressed()
     }
