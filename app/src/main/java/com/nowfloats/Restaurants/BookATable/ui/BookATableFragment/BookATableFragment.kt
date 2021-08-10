@@ -77,8 +77,8 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
 
     book_table_recycler.adapter = adapter
     session = UserSessionManager(requireContext(), requireActivity())
-    zerothCaseFragmentZeroCase =AppRequestZeroCaseBuilder(AppZeroCases.TABLE_BOOKING, this, requireActivity()).getRequest().build()
-    requireActivity().supportFragmentManager.beginTransaction().add(binding.childContainer.id,zerothCaseFragmentZeroCase).commit()
+    zerothCaseFragmentZeroCase =AppRequestZeroCaseBuilder(AppZeroCases.TABLE_BOOKING, this, requireActivity(),isPremium()).getRequest().build()
+    requireActivity().supportFragmentManager.beginTransaction().replace(binding.childContainer.id,zerothCaseFragmentZeroCase).commit()
 
 //
 //    buy_item.setOnClickListener {
@@ -89,13 +89,17 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
     setHeader()
     initializeRecycler()
 
-    if (session?.storeWidgets?.contains("BOOKTABLE") == true) {
+    if (isPremium()) {
       book_table_recycler.visibility = View.VISIBLE
       loadData()
     } else {
       book_table_recycler.visibility = View.GONE
       emptyView()
     }
+  }
+
+  private fun isPremium(): Boolean {
+    return session?.storeWidgets?.contains("BOOKTABLE") == true
   }
   private fun nonEmptyView() {
     setHasOptionsMenu(true)
@@ -123,8 +127,9 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
     back_button.setOnClickListener {
       (activity as? BookATableActivity)?.onBackPressed()
     }
-    if (session?.storeWidgets?.contains("BOOKTABLE") == true) {
+    if (isPremium()) {
       btn_add.visibility = View.VISIBLE
+      nonEmptyView()
       btn_add.setOnClickListener {
         val bookATableDetailsFragment = BookATableDetailsFragment.newInstance()
         val arg = Bundle()
@@ -135,7 +140,10 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
           "BOOK_A_TABLE_DETAILS_FRAGMENT"
         )
       }
-    } else btn_add.visibility = View.GONE
+    } else{
+      btn_add.visibility = View.GONE
+      emptyView()
+    }
 
   }
 

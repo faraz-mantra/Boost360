@@ -139,7 +139,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
     super.onSuccess(it)
     removeLoader()
     val data = it as? BusinessUpdateResponse
-    if (false) {
+    if (data?.floats.isNullOrEmpty().not()) {
       nonEmptyView()
       listFloat.addAll(data?.floats!!)
       isLastPageD = (listFloat.size == data.totalCount ?: 0)

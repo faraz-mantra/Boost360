@@ -75,7 +75,7 @@
   <string name="activate_this_feature">Activate this feature</string>
   <string name="upload_photos">Upload photos</string>
   <string name="see_how_enqaries_works">See how enquiries work</string>
-  <string name="post_an_update">Post an update</string>
+  <string name="post_an_update">Add an update</string>
   <string name="add_a_product">Add a product</string>
   <string name="setup_ecommerce">Setup eCommerce</string>
   <string name="toppers_description">A topper’s list serves as social proof of your institution’s capabilities and and encourage parents and children to enroll in courses at your institution.</string>
@@ -86,5 +86,14 @@
   <string name="add_enrolment_setup">Add enrolment setup</string>
   <string name="brochures_desc">Allow your students to see your staff and the subjects they teach. This</string>
   <string name="digital_brochures">Digital Brochures</string>
+    <string name="no_staff_member_listed_yet">No staff member listed yet!</string>
+  <string name="add_a_staff">Add a staff member</string>
+  <string name="keyboard_desc">With business keyboard, share deals, offers, product details quickly as you chat with potential customers on WhatsApp, Instagram, Telegram, Facebook Messenger, etc.</string>
+  <string name="no_brochure_added">No brochure added yet.</string>
+  <string name="allow_your_students_to_see">"Allow your students to see "</string>
+  <string name="add_a_brochure">Add a brochure</string>
+  <string name="no_dine_in_table_booked_yet">No dine-in table booked yet</string>
+  <string name="book_table_desc">Owner info helps your potential customer establish trust by knowing who is running this spa/salon. This brief profile also captures other important info such as experiance in this field etc.</string>
+  <string name="book_a_table">Book a table</string>
 
 </resources>

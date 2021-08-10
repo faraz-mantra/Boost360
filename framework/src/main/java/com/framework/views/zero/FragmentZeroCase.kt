@@ -196,6 +196,12 @@ enum class ZeroCases {
 
 class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZeroCaseClicked: OnZeroCaseClicked, private var context: Context,private  var isPremium:Boolean?=false) {
   fun getRequest(): FragmentZeroCase.Companion.ZeroCaseBuilder {
+
+    var title:String=""
+    var desc:String=""
+    var primaryButtonTitle:String=""
+    var primaryButtonIconLeft:Int=-1
+
     when (zeroCases) {
       MY_BANK_ACCOUNT -> {
         return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.my_bank_acccount))
@@ -268,7 +274,7 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.ic_services_tutorial_tertiary_icon,
               secondaryButtonTitle = context.getString(
-                R.string.appointment_setup
+                R.string.watch_how_it_works
               )
             )
           )
@@ -371,7 +377,18 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           )
       }
       STAFF_LISTING -> {
-        return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(context.getString(R.string.staff_listing_title))
+
+        if (isPremium == true){
+          title = context.getString(R.string.no_staff_member_listed_yet)
+          primaryButtonTitle = context.getString(R.string.add_a_staff)
+          primaryButtonIconLeft = R.drawable.ic_create_white
+        }else{
+          title = context.getString(R.string.staff_listing_title)
+          primaryButtonTitle = context.getString(R.string.activate_this_feature)
+          primaryButtonIconLeft = R.drawable.ic_lockkey
+        }
+
+        return FragmentZeroCase.Companion.ZeroCaseBuilder().setTitle(title)
           .setDescription(context.getString(R.string.staff_listing_desc))
           .setIcon(R.drawable.ic_users_zero_case)
           .isPremium(isPremium)
@@ -379,8 +396,8 @@ class RequestZeroCaseBuilder(private var zeroCases: ZeroCases, private var onZer
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
-              primaryButtonIconLeft = R.drawable.ic_lockkey,
-              primaryButtonTitle = context.getString(R.string.activate_this_feature),
+              primaryButtonIconLeft = primaryButtonIconLeft,
+              primaryButtonTitle = primaryButtonTitle,
               primaryButtonBackground = R.color.colorAccent,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
