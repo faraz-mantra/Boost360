@@ -10,9 +10,6 @@ object EndPoints {
   const val SEND_SMS = "discover/v1/floatingpoint/CreateSMSHighPriorityIndia"
   const val GET_BIZ_FLOATS_MESSAGE = "/Discover/v1/floatingPoint/bizFloats"
   const val GET_PRODUCT_LIST = "Product/v1/GetListings"
-  const val GET_SUBSCRIBER_COUNT = "/discover/v1/FloatingPoint/GetSubscribersCount"
-  const val GET_TOTAL_CALLS_COUNT = "/discover/v1/floatingPoint/GetTotalCalls"
-  const val FETCH_CUSTOMER_ENQUIRIES_COUNT = "/discover/v1/floatingPoint/fetchCustomerEnquiriesCount"
 
   // API with float
   const val BOOST_API_WITH_FLOAT = "https://api.withfloats.com"
@@ -36,7 +33,6 @@ object EndPoints {
   const val GET_CONFIRM_ORDER_2_5 = "api/assuredPurchase/v2.5/ConfirmOrder"
   const val GET_ORDER_DETAIL_2_5 = "api/assuredPurchase/v2.5/GetOrderDetails"
   const val POST_UPDATE_ORDER = "api/assuredPurchase/v2/UpdateOrder"
-  const val GET_TOTAL_ORDERS_COUNT = "api/assuredPurchase/v2/GetOrdersCount"
 
   const val GET_SELLER_SUMMARY_URL = "api/assuredPurchase/v2/SellerSummary"
   const val GET_SELLER_SUMMARY_V2_5_URL = "api/assuredPurchase/v2.5/SellerSummary"

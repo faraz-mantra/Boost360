@@ -3,7 +3,6 @@ package com.inventoryorder.rest.services
 import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.OrderInitiateResponse
 import com.inventoryorder.model.UpdateOrderNPropertyRequest
-import com.inventoryorder.model.badges.OrderCountResponse
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.rest.EndPoints
@@ -59,12 +58,4 @@ interface AssuredPurchaseDataSource {
     @Query("clientId") clientId: String?,
     @Query("orderId") orderId: String?,
   ): Observable<Response<OrderDetailResponse>>
-  @GET(EndPoints.GET_TOTAL_ORDERS_COUNT)
-  fun getOrdersCount(
-    @Query("clientId") clientId: String?,
-    @Query("sellerId") sellerId: String?,
-    @Query("orderStatus") orderStatus: Int?,
-    @Query("startDate") startDate: String?,
-    @Query("endDate") endDate: String?
-  ): Observable<Response<OrderCountResponse>>
 }
