@@ -270,6 +270,8 @@
     <attr name="itemFontInActive" format="reference" />
     <attr name="textColorActive" format="color" />
     <attr name="clickPosition" format="string" />
+    <attr name="textBadge" format="string" />
+    <attr name="textBadgeColor" format="color" />
 
     <attr name="textSize" format="dimension" />
     <attr name="iconSize" format="dimension" />

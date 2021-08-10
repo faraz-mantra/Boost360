@@ -38,8 +38,8 @@
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/img_lock"
-        android:layout_width="@dimen/size_30"
-        android:layout_height="@dimen/size_30"
+        android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
         android:layout_gravity="end|top"
         android:elevation="2dp"
         app:srcCompat="@drawable/ic_lock_add_ons_d" />
