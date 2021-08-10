@@ -3,6 +3,8 @@ package com.inventoryorder.rest.repositories
 import com.framework.base.BaseResponse
 import com.inventoryorder.base.rest.AppBaseLocalService
 import com.inventoryorder.base.rest.AppBaseRepository
+import com.inventoryorder.model.badges.CustomerEnquiriesCountRequest
+import com.inventoryorder.rest.EndPoints.GET_TOTAL_CALLS_COUNT
 import com.inventoryorder.rest.TaskCode
 import com.inventoryorder.rest.apiClients.Api2WithFloatClient
 import com.inventoryorder.rest.services.WithFloatTwoDataSource
@@ -49,7 +51,24 @@ object ApiTwoWithFloatRepository :
       TaskCode.GET_ALL_PRODUCT_LIST
     )
   }
-
+  fun getSubscribersCount(fpTag: String?, clientId: String?,  startDate: String?, endDate: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getSubscribersCount(clientId = clientId,fpTag = fpTag,startDate = startDate,endDate = endDate),
+      TaskCode.GET_ALL_SUBSCRIBER_COUNT
+    )
+  }
+  fun getTotalCallsCount(fpId: String?, clientId: String?,callStatus:Int?,  startDate: String?, endDate: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getTotalCallsCount(clientId,fpId = fpId,callStatus,startDate = startDate,endDate),
+      TaskCode.GET_TOTAL_CALLS_COUNT
+    )
+  }
+  fun getTotalCustomerEnquiriesCount(request:CustomerEnquiriesCountRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getTotalCustomerEnquiriesCount(request),
+      TaskCode.GET_CUSTOMER_ENQUIRIES_COUNT
+    )
+  }
   override fun getLocalDataSourceInstance(): AppBaseLocalService {
     return AppBaseLocalService()
   }

@@ -21,7 +21,8 @@ import com.framework.views.bottombar.Constants.WHITE_COLOR_HEX
 import kotlin.math.abs
 
 class NiceBottomBar : View {
-  private  val TAG = "NiceBottomBar"
+  private var canvas: Canvas? = null
+  private val TAG = "NiceBottomBar"
 
   // Default attribute values
   private var barBackgroundColor = Color.parseColor(WHITE_COLOR_HEX)
@@ -43,7 +44,6 @@ class NiceBottomBar : View {
   private var inActiveFontTypeface: Typeface? = null
   private var activeItem = 0
   private var clickPosition: ArrayList<Int>? = null
-  private  var badgeText:String?=null
 
   /**
    * Dynamic variables
@@ -119,7 +119,6 @@ class NiceBottomBar : View {
     barIndicatorGravity =
       typedArray.getInt(R.styleable.NiceBottomBar_indicatorGravity, this.barIndicatorGravity)
     itemBadgeColor = typedArray.getColor(R.styleable.NiceBottomBar_badgeColor, this.itemBadgeColor)
-    badgeText = typedArray.getString(R.styleable.NiceBottomBar_textBadge)
     itemBadgeTextColor = typedArray.getColor(R.styleable.NiceBottomBar_textBadgeColor, this.itemBadgeTextColor)
     itemFontActive =
       typedArray.getResourceId(R.styleable.NiceBottomBar_itemFontActive, this.itemFontActive)
@@ -183,7 +182,7 @@ class NiceBottomBar : View {
 
   override fun onDraw(canvas: Canvas) {
     super.onDraw(canvas)
-
+    this.canvas = canvas
     val textHeight = (paintText.descent() + paintText.ascent()) / 2
 
     // Push the item components from the top a bit if the indicator is at the top
@@ -223,7 +222,7 @@ class NiceBottomBar : View {
 
       // Draw item badge
       if (item.badgeSize > 0)
-        drawBadge(canvas, item,badgeText)
+        drawBadge(canvas, item, item.badgeText)
     }
 
     // Draw indicator
@@ -272,31 +271,36 @@ class NiceBottomBar : View {
 
   // Draw item badge
   private fun drawBadge(canvas: Canvas, item: BottomBarItem, badgeText: String?) {
-    Log.i(TAG, "drawBadge: "+badgeText)
+    Log.i(TAG, "drawBadge: " + badgeText)
+    Log.i(TAG, "drawBadge33:" + item.badgeText)
     paintBadge.style = Paint.Style.FILL
-    paintBadge.color = itemTextColorActive
+    paintBadge.color = Color.RED
 
+//    canvas.drawRoundRect(item.rect.apply { right=100f; left=100f;top=100f;bottom=100f },item.rect.centerX() + itemIconSize / 2 - 4,
+//      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10,paintBadge)
 
-    canvas.drawRect(item.rect.apply { item.rect.centerX() + itemIconSize / 2 - 4;(height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10 },paintBadge)
-//    canvas.drawCircle(
-//      item.rect.centerX() + itemIconSize / 2 - 4,
-//      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10, 20f, paintBadge
-//    )
+    canvas.drawCircle(
+      item.rect.centerX() + itemIconSize / 2 - 4,
+      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10, 25f, paintBadge
+    )
+//    canvas.drawRoundRect(item.rect.apply {top=100f;bottom=100f;right=100f;left=100f },200f,200f,paintBadge)
     paintBadge.style = Paint.Style.STROKE
     paintBadge.color = barBackgroundColor
 
 
     canvas.drawText(
-      "50",
+      badgeText ?: "",
       item.rect.centerX() + itemIconSize / 2 - 4,
-      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10,
-      paintText.apply { color=Color.RED;textSize = 32f }
+      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 16,
+      paintText.apply { color = Color.WHITE;textSize = 32f }
     )
   }
 
   // Add item badge
-  fun setBadge(pos: Int) {
-    if (pos > 0 && pos < items.size && items[pos].badgeSize == 0f) {
+  fun setBadge(pos: Int, count: String) {
+    if (pos >= 0 && pos < items.size && items[pos].badgeSize == 0f) {
+//      drawBadge(Canvas(),items[pos],count)
+      items[pos].badgeText=count
       val animator = ValueAnimator.ofFloat(0f, 15f)
       animator.duration = 100
       animator.addUpdateListener { animation ->

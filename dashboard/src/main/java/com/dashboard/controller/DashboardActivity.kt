@@ -22,6 +22,8 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
+import com.dashboard.controller.ui.dashboard.FILTER_WEBSITE_REPORT
+import com.dashboard.controller.ui.dashboard.FilterDateModel
 import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
 import com.dashboard.model.live.drawerData.DrawerHomeData
@@ -40,15 +42,14 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.models.firestore.FirestoreManager
 import com.framework.models.firestore.FirestoreManager.initData
 import com.framework.pref.*
-import com.framework.utils.AppsFlyerUtils
-import com.framework.utils.ConversionUtils
-import com.framework.utils.fromHtml
-import com.framework.utils.roundToFloat
+import com.framework.utils.*
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
 import com.framework.webengageconstant.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.iid.FirebaseInstanceId
+import com.inventoryorder.model.badges.BadgeCountResponse
+import com.inventoryorder.model.badges.CustomerEnquiriesCountRequest
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
 import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
@@ -61,7 +62,9 @@ import zendesk.core.AnonymousIdentity
 import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
+import com.inventoryorder.model.badges.OrderCountResponse as BadgesOrderCountResponse
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
@@ -111,14 +114,85 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
     //registerFirebaseToken()
-    binding?.navView?.setBadge(1)
+//    binding?.navView?.setBadge(1, "9+")
+    hitBadgesApi()
+  }
+
+  private fun hitBadgesApi() {
+    val date = Date()
+    var modifiedDate: String = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(date)
+    val websiteFilter = FilterDateModel().getDateFilter(FILTER_WEBSITE_REPORT)?.apply {startDate =modifiedDate;endDate=modifiedDate }
+    showProgress()
+    viewModel.getOrdersCount(clientId, session?.fpTag, 0, null, null).observeOnce(this, {
+      hideProgress()
+      when (it.isSuccess()) {
+        true -> {
+          val data = it as? BadgesOrderCountResponse
+          if (data != null) {
+//            binding?.navView?.setBadge(0, if (data.data ?: 0 > 9) "9+" else "${data.data}")
+            binding?.navView?.setBadge(0,  "9+")
+            hitCustomerEnquiries(websiteFilter)
+          }
+        }
+      }
+    })
+  }
+
+  private fun hitCustomerEnquiries(websiteFilter: FilterDateModel?) {
+    showProgress()
+    viewModel.getTotalCustomerEnquiriesCount(CustomerEnquiriesCountRequest(listOf(session?.fPID), clientId = clientId, startDate = websiteFilter?.startDate, endDate = websiteFilter?.endDate))
+      .observeOnce(this, {
+        hideProgress()
+        when (it.isSuccess()) {
+          true -> {
+            val data = it as? BadgeCountResponse
+            if (data != null) {
+              binding?.navView?.setBadge(1, if (data.result ?: 0 > 9) "9+" else "${data.result}")
+              hitTotalCallsCount(websiteFilter)
+            }
+          }
+        }
+      })
+  }
+
+  private fun hitTotalCallsCount(websiteFilter: FilterDateModel?) {
+    showProgress()
+    viewModel.getTotalCallsCount(session?.fPID, clientId,0,websiteFilter?.startDate,websiteFilter?.endDate).observeOnce(this,{
+      hideProgress()
+      when (it.isSuccess()) {
+        true -> {
+          val data = it as? BadgeCountResponse
+          if (data != null) {
+            binding?.navView?.setBadge(2, if (data.result ?: 0 > 9) "9+" else "${data.result}")
+            hitSubscriberCount(websiteFilter)
+          }
+        }
+      }
+
+    })
+
+  }
+
+  private fun hitSubscriberCount(websiteFilter: FilterDateModel?) {
+    showProgress()
+    viewModel.getSubscriberCountBadge(session?.fpTag, clientId,"2021-01-01",websiteFilter?.endDate).observeOnce(this,{
+      hideProgress()
+      when (it.isSuccess()) {
+        true -> {
+          val data = it as? BadgeCountResponse
+          if (data != null)
+            binding?.navView?.setBadge(3, if (data.result ?: 0 > 9) "9+" else "${data.result}")
+        }
+      }
+
+    })
   }
 
   private fun registerFirebaseToken() {
-    viewModel.getFirebaseToken().observe(this,{
+    viewModel.getFirebaseToken().observe(this, {
       val response = it as FirebaseTokenResponse
-      val token = response.Result?:""
-      Log.i(TAG, "registerFirebaseToken: "+token)
+      val token = response.Result ?: ""
+      Log.i(TAG, "registerFirebaseToken: " + token)
       FirebaseAuth.getInstance().signInWithCustomToken(token).addOnCompleteListener(this) { task ->
         if (task.isSuccessful) {
           // Sign in success, update UI with the signed-in user's information
@@ -156,6 +230,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onNewIntent(intent)
     intentDataCheckAndDeepLink(intent)
   }
+
   private fun intentDataCheckAndDeepLink(intent: Intent?) {
     Log.i(TAG, "intentDataCheckAndDeepLink: ")
     if (intent?.extras != null) {
@@ -240,7 +315,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       bgImageUri = BASE_IMAGE_URL + bgImageUri
     }
     binding?.drawerView?.bgImage?.let {
-      glideLoad(it, bgImageUri ?: "", R.drawable.general_services_background_img_d
+      glideLoad(
+        it, bgImageUri ?: "", R.drawable.general_services_background_img_d
       )
     }
   }
@@ -333,7 +409,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       4 -> {
         mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
         toolbarPropertySet(pos)
-        getToolbar()?.getTitleTextView()?.apply { textSize  = 24f; typeface = Typeface.DEFAULT_BOLD}
+        getToolbar()?.getTitleTextView()?.apply { textSize = 24f; typeface = Typeface.DEFAULT_BOLD }
       }
     }
   }
