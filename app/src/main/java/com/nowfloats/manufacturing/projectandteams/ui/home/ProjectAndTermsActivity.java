@@ -152,7 +152,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
                         return;
                     }
 
-                    projectTitle.setText("Projects Listing (" + getProjectsData.getData().size() + ")");
+                    projectTitle.setText("Projects listing (" + getProjectsData.getData().size() + ")");
                 }
 
                 @Override
@@ -186,7 +186,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
                         return;
                     }
 
-                    teamTitle.setText("Team Listing (" + getTeamsData.getData().size() + ")");
+                    teamTitle.setText("Team listing (" + getTeamsData.getData().size() + ")");
                 }
 
                 @Override

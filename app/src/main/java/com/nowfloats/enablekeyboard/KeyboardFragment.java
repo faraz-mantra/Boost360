@@ -107,7 +107,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     secondaryLayout = view.findViewById(R.id.secondary_layout);
     buyItemButton = view.findViewById(R.id.buy_item);
     List<String> storeKeys = session.getStoreWidgets();
-    if ((storeKeys != null && storeKeys.contains("BOOSTKEYBOARD")) || (Constants.currentActivePackageId != null &&
+    if ((storeKeys != null && !storeKeys.contains("BOOSTKEYBOARD")) || (Constants.currentActivePackageId != null &&
         Constants.currentActivePackageId.contains("59ce2ae56431a80b009cb1fa"))) {
       mainLayout.setVisibility(View.VISIBLE);
       secondaryLayout.setVisibility(View.GONE);
@@ -324,7 +324,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     switch (v.getId()) {
       case R.id.keyboard_info:
         MixPanelController.track(EventKeysWL.MERCHANT_EDUCATION_BOOST_KEYBOARD, null);
-        showOverlay(overLayout1, getString(R.string.boost_keyboard), getString(R.string.keyboard_message));
+        showOverlay(overLayout1, getString(R.string.boost_keyboard_n), getString(R.string.keyboard_message));
         break;
       case R.id.ll_enable_keyboard:
         startActivity(new Intent(getActivity(), BoostKeyboardActivity.class));

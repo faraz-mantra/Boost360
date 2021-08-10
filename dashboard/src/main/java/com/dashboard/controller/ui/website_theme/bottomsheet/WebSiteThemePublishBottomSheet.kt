@@ -10,8 +10,7 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
 
-class WebSiteThemePublishBottomSheet :
-  BaseBottomSheetDialog<BottomSheetPublishChangesBinding, BaseViewModel>() {
+class WebSiteThemePublishBottomSheet : BaseBottomSheetDialog<BottomSheetPublishChangesBinding, BaseViewModel>() {
 
   var onClicked: (value: String) -> Unit = { }
   override fun getLayout(): Int {
