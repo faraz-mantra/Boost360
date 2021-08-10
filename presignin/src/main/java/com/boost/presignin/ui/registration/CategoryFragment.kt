@@ -53,18 +53,8 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
   override fun onCreateView() {
     WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     baseAdapter = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(), this)
-    val gridLayoutManager = GridLayoutManager(baseActivity, 2)
-    gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-      override fun getSpanSize(position: Int): Int {
-        return when (baseAdapter.getItemViewType(position)) {
-          RecyclerViewItemType.SECTION_HEADER_ITEM.getLayout() -> 2
-          else -> 1
-        }
-      }
-    }
-    binding?.recyclerView?.layoutManager = gridLayoutManager
+    binding?.civBack?.setOnClickListener { baseActivity.onNavPressed() }
     binding?.recyclerView?.adapter = baseAdapter
-
     viewModel?.getCategories(requireContext())?.observeOnce(viewLifecycleOwner) {
       if (it.error != null) return@observeOnce
       val categoryResponse = it as ResponseDataCategory
@@ -86,8 +76,6 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
         ), true
       )
     }
-    val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
-    backButton?.setOnClickListener { baseActivity.onNavPressed() }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -99,7 +87,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
             it.isSelected = (it.category_key == (item as? CategoryDataModel)?.category_key)
           }
         }
-        baseAdapter.notifyDataSetChanged()
+        binding?.recyclerView?.post { baseAdapter.notifyDataSetChanged() }
         binding?.confirmButton?.visible()
       }
     }

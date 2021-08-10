@@ -22,7 +22,7 @@
     <activity
       android:name=".ui.registration.RegistrationActivity"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.Pre.Signin"
+      android:theme="@style/AppTheme.Registration"
       android:windowSoftInputMode="adjustPan" />
 
     <activity
