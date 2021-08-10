@@ -73,7 +73,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
         baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.ic_placeholder, isCrop = true)
       }
     }
-    binding?.ctvName?.text = session?.userProfileName ?: session?.fpTag
+    binding?.ctvName?.text = (session?.userProfileName ?: session?.fpTag)?.capitalizeUtil()
 //    val content = StringBuilder()
 //    if (session?.fPEmail != null) content.append(session?.fPEmail).append(",")
 //    if (session?.userPrimaryMobile != null) content.append(session?.userPrimaryMobile).append(",")
