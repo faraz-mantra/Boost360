@@ -71,8 +71,7 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     binding = DataBindingUtil.setContentView(this,R.layout.activity_digital_brochures);
-    appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.BROCHURES,this,this).getRequest().build();
-    getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(),appFragmentZeroCase).commit();
+
     initView();
   }
 
@@ -103,7 +102,7 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
     //setheader
     setHeader();
 
-    if (session.getStoreWidgets().contains("BROCHURE")) {
+    if (isPremium()) {
     /*  recyclerView.setVisibility(View.VISIBLE);
       emptyLayout.setVisibility(View.GONE);*/
       nonEmptyView();
@@ -114,15 +113,28 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
     }
   }
 
+  private boolean isPremium(){
+      if (session.getStoreWidgets().contains("BROCHURE")){
+          return true;
+      }else {
+          return false;
+      }
+  }
+
   @Override
   protected void onResume() {
     super.onResume();
-    if (session.getStoreWidgets().contains("BROCHURE")) {
+      appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.BROCHURES,this,this,isPremium()).getRequest().build();
+      getSupportFragmentManager().beginTransaction().replace(binding.childContainer.getId(),appFragmentZeroCase).commit();
+    if (isPremium()) {
+        nonEmptyView();
       if (Utils.isNetworkConnected(DigitalBrochuresActivity.this)) {
         loadData();
       } else {
         Methods.showSnackBarNegative(DigitalBrochuresActivity.this, getString(R.string.no_internet_connection));
       }
+    }else {
+        emptyView();
     }
   }
 
@@ -316,7 +328,12 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
 
   @Override
   public void primaryButtonClicked() {
-    addBroucher();
+
+      if (isPremium()) {
+          addBroucher();
+      }else {
+          initiateBuyFromMarketplace();
+      }
   }
 
   @Override

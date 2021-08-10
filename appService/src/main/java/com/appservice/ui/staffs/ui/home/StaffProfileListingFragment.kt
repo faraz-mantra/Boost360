@@ -87,6 +87,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   override fun onCreateView() {
     super.onCreateView()
+    Log.i(TAG, "onCreateView: ")
+    this.fragmentZeroCase = RequestZeroCaseBuilder(ZeroCases.STAFF_LISTING, this, baseActivity,!isLockStaff()).getRequest().build()
+    addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase,false)
+
     getBundleData()
     if (isLockStaff().not()) {
       layoutManagerN = LinearLayoutManager(baseActivity)
@@ -97,21 +101,19 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       setOnClickListener(
         binding?.serviceEmpty?.cbAddService
       )
+    }else{
+      emptyView()
     }
-    this.fragmentZeroCase = RequestZeroCaseBuilder(ZeroCases.STAFF_LISTING, this, baseActivity,isLockStaff()).getRequest().build()
-    addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase,false)
+
 
   }
 
   private fun isLockStaff(): Boolean {
     return if (sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE.name) == true) {
-      binding?.mainlayout?.visible()
-//      binding?.staffLock?.root?.gone()
+     nonEmptyView()
       false
     } else {
-      binding?.mainlayout?.gone()
-//      binding?.staffLock?.root?.visible()
-//      binding?.staffLock?.btnStaffAddOns?.setOnClickListener(this)
+     emptyView()
       true
     }
   }
