@@ -182,7 +182,7 @@
   <string name="select_the_location_on_map">Select a location on map</string>
   <string name="google_login_error">Google login error.</string>
   <string name="disable_boost_notifications">Disable boost notification</string>
-  <string name="not_opted_for_boost_alerts">Not opted For boost alerts</string>
+  <string name="not_opted_for_boost_alerts">Not opted for boost alerts</string>
   <string name="disconnect_channel">Disconnect channel</string>
   <string name="error_in_your_phone_call">Error in your phone call!</string>
   <string name="coming_soon">Coming soon…</string>

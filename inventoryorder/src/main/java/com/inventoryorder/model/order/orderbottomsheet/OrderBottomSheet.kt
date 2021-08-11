@@ -15,8 +15,7 @@ data class OrderBottomSheet(
     val optionsList = ArrayList<BottomSheetOptionsItem>()
     val bottomSheetOptionsItem2 = BottomSheetOptionsItem()
     bottomSheetOptionsItem2.title = activity.getString(R.string.playment_already_received)
-    bottomSheetOptionsItem2.description =
-      activity.getString(R.string.customer_paid_via_cash_card_upi)
+    bottomSheetOptionsItem2.description = activity.getString(R.string.customer_paid_via_cash_card_upi)
     bottomSheetOptionsItem2.displayValue = activity.getString(R.string.payment_received)
     bottomSheetOptionsItem2.serverValue = PaymentDetailsN.STATUS.SUCCESS.name
     val bottomSheetOptionsItem1 = BottomSheetOptionsItem()

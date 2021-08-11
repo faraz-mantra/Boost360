@@ -227,17 +227,13 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent">
 
-      <com.framework.views.customViews.CustomTextView
+      <com.framework.views.customViews.CustomButton
         android:id="@+id/tvCancel"
-        style="@style/wrap_wrap"
-        android:layout_gravity="center"
-        android:layout_marginEnd="@dimen/size_10"
-        android:padding="@dimen/size_4"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_marginEnd="@dimen/size_20"
         android:text="@string/go_back"
-        android:textAllCaps="false"
-        android:textColor="@color/pinkish_grey"
-        app:fontFamily="@font/semi_bold"
-        app:textType="BODY_3" />
+        android:background="@drawable/bg_rounded_yellow_light"
+        android:textColor="@color/colorAccentLight"/>
 
       <com.framework.views.customViews.CustomButton
         android:id="@+id/buttonDone"
