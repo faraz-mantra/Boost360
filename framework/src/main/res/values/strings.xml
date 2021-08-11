@@ -95,5 +95,30 @@
   <string name="no_dine_in_table_booked_yet">No dine-in table booked yet</string>
   <string name="book_table_desc">Owner info helps your potential customer establish trust by knowing who is running this spa/salon. This brief profile also captures other important info such as experiance in this field etc.</string>
   <string name="book_a_table">Book a table</string>
+  <string name="you_havent_posted_testimonial_yet">You haven\'t posted a testimonial yet.</string>
+  <string name="add_a_testimonial">Add a testimonial</string>
+  <string name="no_batch_create_yet">No batch created yet</string>
+  <string name="create_a_batch">Create a batch</string>
+  <string name="highlight_your_strength">Highlight your strength</string>
+  <string name="add_a_faculty_member">Add a faculty member</string>
+  <string name="introduce_your_team_members">Introduce your team members.</string>
+  <string name="add_a_team_member">Add a team member</string>
+  <string name="no_project_added_yet">No project added yet.</string>
+  <string name="projects_zero_case_desc">Allow your students to see your staff and the subjects they teach. This</string>
+  <string name="add_a_project">Add a project</string>
+  <string name="no_topper_student_listed_yet">No topper student listed yet.</string>
+  <string name="add_a_topper">Add a topper</string>
+  <string name="no_custom_page_created_yet">No custom page created yet.</string>
+  <string name="custom_page_desc">Like the name suggests, custom pages let’s you add longer customized posts on your website under ‘more’ menu item. Feel free to build a page of your choice by using multiple pictures, richtext editor and embed youtube videos etc.</string>
+  <string name="create_custom_page">Create custom page</string>
+  <string name="no_client_logo_added_yet">No client logo added yet.</string>
+  <string name="no_client_logo_desc">Owner info helps your potential customer establish trust by knowing who is running this spa/salon. This brief profile also captures other important info such as experiance in this field etc.</string>
+  <string name="add_client_logo">Add client logo</string>
+  <string name="restaurant_story_title">Have a story behind your restaurant? Tell it here!</string>
+  <string name="restaurant_story_desc">Owner info helps your potential customer establish trust by knowing who is running this spa/salon. This brief profile also captures other important info such as experiance in this field etc.</string>
+  <string name="add_restaurant_story">Add restaurant story</string>
+  <string name="menu_picture_title"><![CDATA[Click & upload menu pictures!]]></string>
+  <string name="menu_picture_desc">Owner info helps your potential customer establish trust by knowing who is running this spa/salon. This brief profile also captures other important info such as experiance in this field etc.</string>
+  <string name="upload_menu_pictures">Upload menu pictures</string>
 
 </resources>
