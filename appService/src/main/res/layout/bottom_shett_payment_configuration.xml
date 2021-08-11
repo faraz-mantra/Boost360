@@ -237,21 +237,21 @@
         <com.framework.views.customViews.CustomButton
           android:id="@+id/btn_cancel"
           android:layout_width="@dimen/size_110"
-          android:layout_height="@dimen/size_46"
+          android:layout_height="@dimen/size_42"
           android:layout_marginEnd="@dimen/size_20"
-          android:background="@null"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/cancel"
           android:textAllCaps="false"
-          android:textColor="@color/pinkish_grey"
+          android:background="@drawable/bg_rounded_yellow_light"
+          android:textColor="@color/colorAccentLight"
           app:textType="HEADING_6" />
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/btn_done"
           android:layout_width="@dimen/size_110"
-          android:layout_height="@dimen/size_46"
+          android:layout_height="@dimen/size_42"
           android:background="@drawable/button_proceed"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"

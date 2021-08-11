@@ -7,8 +7,7 @@ import com.inventoryorder.model.ordersummary.OrderMenuModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class OrderMenuHolder(binding: ItemOrderMenuBinding) :
-  AppBaseRecyclerViewHolder<ItemOrderMenuBinding>(binding) {
+class OrderMenuHolder(binding: ItemOrderMenuBinding) : AppBaseRecyclerViewHolder<ItemOrderMenuBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)

@@ -298,10 +298,11 @@ fun businessAddOnsClick(
     )
     ManageBusinessData.BusinessType.table_reservations_d -> baseActivity.startBookTable(session)
     ManageBusinessData.BusinessType.sales_analytics -> baseActivity.startAptOrderSummary(session)
-    ManageBusinessData.BusinessType.search_analytics -> baseActivity.startSearchQuery(session)
+//    ManageBusinessData.BusinessType.search_analytics -> baseActivity.startSearchQuery(session)
     ManageBusinessData.BusinessType.ic_staff_profile_d -> baseActivity.startListStaff(session)
 
     ManageBusinessData.BusinessType.room_booking_engine_d,
+    ManageBusinessData.BusinessType.search_analytics,
     ManageBusinessData.BusinessType.ic_ivr_faculty,
     ManageBusinessData.BusinessType.boost_payment_gateway,
     ManageBusinessData.BusinessType.advertising_google_fb,

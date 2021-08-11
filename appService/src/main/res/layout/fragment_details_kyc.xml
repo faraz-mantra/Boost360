@@ -49,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="Your Self Branded\nPayment gateway is LIVE!"
+                android:text="@string/your_self_branded_npayment_gateway_is_live"
                 android:textAlignment="gravity"
                 android:textColor="@color/greyish_brown"
                 app:fontFamily="@font/semi_bold"
@@ -161,7 +161,7 @@
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total money collected till date"
+            android:text="@string/total_money_collected_till_date"
             android:textColor="@color/greyish_brown"
             app:textType="BODY_1" />
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -256,7 +256,7 @@
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Money refund till date"
+            android:text="@string/money_refund_till_date"
             android:textColor="@color/greyish_brown"
             app:textType="BODY_1" />
         </androidx.appcompat.widget.LinearLayoutCompat>

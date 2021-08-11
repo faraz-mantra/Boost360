@@ -78,7 +78,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   }
 
   private fun setWebsiteData() {
-    binding?.ctvWebsite?.text = fromHtml("<u>${UserSessionManager(baseActivity).getDomainName()}</u>")
+    binding?.ctvWebsite?.text = UserSessionManager(baseActivity).getDomainName()
   }
 
   private fun getWebsiteTheme(sessionData: SessionData?) {
