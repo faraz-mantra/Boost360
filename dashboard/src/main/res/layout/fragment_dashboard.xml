@@ -975,7 +975,6 @@
                 <com.framework.views.customViews.CustomImageView
                   android:layout_width="@dimen/size_122"
                   android:layout_height="@dimen/size_24"
-                  android:tint="@color/colorLightGrey"
                   app:srcCompat="@drawable/ic_boost_logo_d" />
 
                 <com.framework.views.customViews.CustomTextView
