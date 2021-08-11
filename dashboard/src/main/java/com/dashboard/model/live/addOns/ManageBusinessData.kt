@@ -36,21 +36,15 @@ class ManageBusinessData(
     ic_custom_page_add("ic_custom_page_add", R.drawable.ic_custom_page_add),
     ic_customer_testimonial_d("ic_customer_testimonial_d", R.drawable.ic_customer_testimonial_d),
     unlimited_content_updates("unlimited_content_updates", R.drawable.unlimited_content_updates),
-    website_social_share_plugin(
-      "website_social_share_plugin",
-      R.drawable.website_social_share_plugin
-    ),
+    website_social_share_plugin("website_social_share_plugin", R.drawable.website_social_share_plugin),
     autamated_seo_d("autamated_seo_d", R.drawable.autamated_seo_d),
-    unlimited_website_bandwidth(
-      "unlimited_website_bandwidth",
-      R.drawable.unlimited_website_bandwidth
-    ),
+    unlimited_website_bandwidth("unlimited_website_bandwidth", R.drawable.unlimited_website_bandwidth),
     clinic_basic_info("clinic_basic_info", R.drawable.ic_business_info_n),
     clinic_logo("clinic_logo", R.drawable.clinic_logo),
     featured_image_video("featured_image_video", R.drawable.picture_gallery),
     business_hours("business_hours", R.drawable.business_hours),
     contact_details("contact_details", R.drawable.contact_details),
-    business_kyc_verification("business_kyc_verification", R.drawable.boost_payment_gateway),
+    business_kyc_verification("business_kyc_verification", R.drawable.boost_business_kyc_d),
     boost_payment_gateway("boost_payment_gateway", R.drawable.boost_payment_gateway),
     domain_name_ssl("domain_name_ssl", R.drawable.domain_name_ssl),
     my_email_accounts("my_email_accounts", R.drawable.my_email_accounts),
@@ -58,10 +52,7 @@ class ManageBusinessData(
     my_bank_account("my_bank_account", R.drawable.my_bank_account),
     custom_payment_gateway("custom_payment_gateway", R.drawable.custom_payment_gateway),
     e_commerce_website("e_commerce_website", R.drawable.e_commerce_website),
-    content_sync_acros_channels(
-      "content_sync_acros_channels",
-      R.drawable.content_sync_acros_channels
-    ),
+    content_sync_acros_channels("content_sync_acros_channels", R.drawable.content_sync_acros_channels),
     facebook_likebox_plugin("facebook_likebox_plugin", R.drawable.facebook_likebox_plugin),
     ic_customer_call_tracker_d("ic_customer_call_tracker_d", R.drawable.ic_customer_call_d),
     ic_ivr_faculty("ic_ivr_faculty", R.drawable.ic_tracker_ivr_d),
@@ -108,10 +99,7 @@ class ManageBusinessData(
   }
 
   fun getLastSeenData(): ArrayList<ManageBusinessData> {
-    return ArrayList(
-      convertStringToList(
-        PreferencesUtils.instance.getData(LAST_SEEN_DATA, "") ?: ""
-      ) ?: ArrayList()
+    return ArrayList(convertStringToList(PreferencesUtils.instance.getData(LAST_SEEN_DATA, "") ?: "") ?: ArrayList()
     )
   }
 
