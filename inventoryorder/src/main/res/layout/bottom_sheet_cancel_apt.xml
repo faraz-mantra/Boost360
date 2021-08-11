@@ -152,7 +152,6 @@
         style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/size_38"
-        android:backgroundTint="@color/lemon_light"
         android:text="@string/cancel_appointment_n"
         android:textColor="@color/white" />
 

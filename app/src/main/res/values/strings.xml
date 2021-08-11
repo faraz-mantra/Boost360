@@ -1971,13 +1971,13 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="samrt_look_api_key" translatable="false">2976fda0fc620d3186eca19884bd55ac125b56e4</string>
   <string name="contact_number_not_valid" translatable="false">Please enter valid contact number</string>
   <string name="email_not_Empty" translatable="false">Email can\'t be empty.</string>
-  <string name="enter_company_description_100_characters_max" translatable="false">Enter company description <br /> (100 Characters max)</string>
+  <string name="enter_company_description_100_characters_max" translatable="false">Enter company description <br /> (100 characters max)</string>
   <string name="client_name" translatable="false">Client name</string>
   <string name="enter_client_name" translatable="false">Enter client name</string>
   <string name="client_category" translatable="false">Client category</string>
   <string name="enter_client_category" translatable="false">Enter client category</string>
   <string name="project_client_requirement" translatable="false">Project client requirement</string>
-  <string name="enter_description_200_characters_max" translatable="false">Enter description <br /> (200 Characters max)</string>
+  <string name="enter_description_200_characters_max" translatable="false">Enter description <br /> (200 characters max)</string>
   <string name="our_approach" translatable="false">Our approach</string>
   <string name="budget" translatable="false">Budget</string>
   <string name="date_of_completion" translatable="false">Date of completion</string>
