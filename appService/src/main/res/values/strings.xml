@@ -309,7 +309,7 @@
   <string name="error_upload_secondary_images">Error while uploading secondary product images, please try again.</string>
   <string name="error_upload_product_image">Product image uploading error, please try again.</string>
   <string name="error_unknown">Oops some unknown error occurred, please try again.</string>
-  <string name="clients_can_book_this_service_for_free">Clients can book this service for FREE.</string>
+  <string name="clients_can_book_this_service_for_free">Clients can book this service for FREE</string>
   <string name="select_service_delivery_config">Select service delivery config</string>
   <string name="channels_service_specifications_service_category_etc">Channels, Service specifications, Weekly schedule, etc.</string>
   <string name="paste_your_url_here">Paste your URL here...</string>

@@ -179,7 +179,7 @@
   <style name="RadioButtonStyle">
     <item name="android:layout_marginStart">@dimen/size_16</item>
     <item name="android:layout_marginEnd">@dimen/size_16</item>
-    <item name="android:buttonTint">@color/light_blue_1</item>
+    <item name="android:buttonTint">@color/colorAccent</item>
     <item name="android:textColor">@color/black_2A2A2A</item>
     <item name="android:fontFamily">@font/regular</item>
     <item name="android:layout_width">match_parent</item>
