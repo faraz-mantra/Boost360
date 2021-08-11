@@ -538,11 +538,11 @@
   <string name="want_to_sell_this_product_online">Want to sell this product online?</string>
   <string name="price_includes_taxes">Price includes taxes</string>
   <string name="price_without_tax_inr">Price without tax (INR)</string>
-  <string name="xx_xxx">XX,XXX</string>
+  <string name="xx_xxx">XXXX</string>
   <string name="discount_amt_inr">Discount amt. (INR)</string>
   <string name="xxx">XXX</string>
   <string name="final_price">Final price</string>
-  <string name="inr_xx_xxx">INR XX,XXX</string>
+  <string name="inr_xx_xxx">INR XXXX</string>
   <string name="select_how_you_want_to_receive_money">Select, how you want to receive money.</string>
   <string name="kotak_mahindra_bnak_345547684878">Kotak Mahindra Bnak - 345547684878</string>
   <string name="add_external_url">Add external URL</string>
