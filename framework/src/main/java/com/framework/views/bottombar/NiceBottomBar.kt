@@ -31,11 +31,11 @@ class NiceBottomBar : View {
   private var barIndicatorWidth = d2p(50f)
   private var barIndicatorEnabled = true
   private var barIndicatorGravity = 1
-  private var itemIconSize = d2p(18f)
+  private var itemIconSize = d2p(20f)
   private var itemIconMargin = d2p(3f)
   private var itemTextColor = Color.parseColor(DEFAULT_TEXT_COLOR)
   private var itemTextColorActive = Color.parseColor(DEFAULT_TEXT_COLOR_ACTIVE)
-  private var itemTextSize = d2p(11.0f)
+  private var itemTextSize = d2p(0.0f)
   private var itemBadgeColor = itemTextColorActive
   private var itemBadgeTextColor = Color.parseColor(DEFAULT_TEXT_COLOR)
   private var itemFontActive = 0
@@ -186,7 +186,7 @@ class NiceBottomBar : View {
     val textHeight = (paintText.descent() + paintText.ascent()) / 2
 
     // Push the item components from the top a bit if the indicator is at the top
-    val additionalTopMargin = if (barIndicatorGravity == 1) 0f else 10f
+    val additionalTopMargin = if (barIndicatorGravity == 1) 20f else 20f
     for ((i, item) in items.withIndex()) {
 
       if (itemsActive.isNullOrEmpty().not() && (itemsActive.size == items.size)) {
@@ -226,14 +226,14 @@ class NiceBottomBar : View {
     }
 
     // Draw indicator
-    if (barIndicatorEnabled)
-      canvas.drawLine(
-        indicatorLocation - barIndicatorWidth / 2,
-        (if (barIndicatorGravity == 1) height - 5.0f else 5f),
-        indicatorLocation + barIndicatorWidth / 2,
-        (if (barIndicatorGravity == 1) height - 5.0f else 5f),
-        paintIndicator
-      )
+//    if (barIndicatorEnabled)
+//      canvas.drawLine(
+//        indicatorLocation - barIndicatorWidth / 2,
+//        (if (barIndicatorGravity == 1) height - 5.0f else 5f),
+//        indicatorLocation + barIndicatorWidth / 2,
+//        (if (barIndicatorGravity == 1) height - 5.0f else 5f),
+//        paintIndicator
+//      )
   }
 
   // Handle item clicks
