@@ -73,13 +73,13 @@
           android:backgroundTint="@color/dark_gray"
           android:fontFamily="@font/barlow_semi_bold"
           android:gravity="center"
-          android:visibility="gone"
           android:includeFontPadding="true"
           android:paddingHorizontal="@dimen/size_8"
           android:paddingVertical="2dp"
           android:text="@string/super_admin"
           android:textColor="@color/white"
           android:textSize="12sp"
+          android:visibility="gone"
           app:layout_constraintStart_toEndOf="@+id/riv_users_image"
           app:layout_constraintTop_toTopOf="@+id/riv_users_image" />
 
@@ -108,12 +108,12 @@
           android:gravity="start"
           android:includeFontPadding="true"
           android:maxLines="2"
-          tools:text="@string/your_email_mobile_no_username_password_payment_info_etc"
           android:textColor="@color/gray_text_hint"
           android:textSize="11sp"
           app:layout_constraintEnd_toStartOf="@+id/civ_profile"
           app:layout_constraintStart_toEndOf="@+id/riv_users_image"
-          app:layout_constraintTop_toBottomOf="@+id/ctv_name" />
+          app:layout_constraintTop_toBottomOf="@+id/ctv_name"
+          tools:text="@string/your_email_mobile_no_username_password_payment_info_etc" />
 
         <com.framework.views.customViews.CustomImageView
           android:id="@+id/civ_profile"
@@ -160,81 +160,105 @@
 
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_10"
-            android:background="@drawable/rounded_stroke_grey"
-            android:backgroundTint="@color/gray_828282"
-            android:padding="@dimen/size_16">
+            android:layout_marginTop="@dimen/size_8"
+            android:layout_height="wrap_content">
 
-            <com.framework.views.customViews.CustomImageView
-              android:id="@+id/arrow_bottom"
-              android:layout_width="@dimen/size_16"
-              android:layout_height="@dimen/size_16"
-              android:src="@drawable/ic_arrow_down_grey_staff"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+              android:id="@+id/constraintLayout6"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="@dimen/size_16"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintTop_toTopOf="parent"
-              app:layout_constraintVertical_bias="0" />
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent">
+
+              <com.framework.views.customViews.CustomImageView
+                android:id="@+id/arrow_bottom"
+                android:layout_width="@dimen/size_16"
+                android:layout_height="@dimen/size_16"
+                android:src="@drawable/ic_arrow_down_grey_staff"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0" />
+
+              <com.framework.views.roundedimageview.RoundedImageView
+                android:id="@+id/riv_business_image"
+                android:layout_width="@dimen/size_50"
+                android:layout_height="@dimen/size_50"
+                android:src="@drawable/dummy_staff_img"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_corner_radius="@dimen/size_8"
+                app:riv_mutate_background="true"
+                app:riv_oval="false" />
+
+              <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_business_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_16"
+                android:ellipsize="end"
+                android:fontFamily="@font/semi_bold"
+                android:gravity="start"
+                android:includeFontPadding="true"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/arrow_bottom"
+                app:layout_constraintStart_toEndOf="@+id/riv_business_image"
+                app:layout_constraintTop_toTopOf="@+id/riv_business_image"
+                tools:text="@string/business_name" />
+
+              <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_business_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_16"
+                android:ellipsize="end"
+                android:fontFamily="@font/regular"
+                android:gravity="start"
+                android:includeFontPadding="true"
+                android:maxLines="1"
+                android:textColor="@color/gray_eeee"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/riv_business_image"
+                app:layout_constraintEnd_toStartOf="@+id/arrow_bottom"
+                app:layout_constraintStart_toEndOf="@+id/riv_business_image"
+                app:layout_constraintTop_toBottomOf="@+id/ctv_business_name"
+                app:layout_constraintVertical_bias="1"
+                tools:text="gdfsfdsfjadfndsjkfdnsjkfdsfjkdsbfjkdsbfjdksfbdsjfbdskjfbdsfjkdsfbnjdskfbdskjfbdskjfdskjfsdkjfds" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.framework.views.roundedimageview.RoundedImageView
-              android:id="@+id/riv_business_image"
-              android:layout_width="@dimen/size_50"
-              android:layout_height="@dimen/size_50"
-              android:src="@drawable/dummy_staff_img"
+              android:layout_width="0dp"
+              android:layout_height="0dp"
+              android:alpha=".20"
+              android:id="@+id/riv_currently_manage"
+              android:scaleType="centerCrop"
               app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent"
-              app:riv_corner_radius="@dimen/size_8"
-              app:riv_mutate_background="true"
-              app:riv_oval="false" />
-
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/ctv_business_name"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_marginStart="@dimen/size_16"
-              android:ellipsize="end"
-              android:fontFamily="@font/semi_bold"
-              android:gravity="start"
-              android:includeFontPadding="true"
-              android:maxLines="1"
-              tools:text="@string/business_name"
-              android:textColor="@color/white"
-              android:textSize="16sp"
-              app:layout_constraintEnd_toStartOf="@+id/arrow_bottom"
-              app:layout_constraintStart_toEndOf="@+id/riv_business_image"
-              app:layout_constraintTop_toTopOf="@+id/riv_business_image" />
-
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/ctv_business_address"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_marginStart="@dimen/size_16"
-              android:ellipsize="end"
-              android:fontFamily="@font/regular"
-              android:gravity="start"
-              android:includeFontPadding="true"
-              android:maxLines="1"
-              tools:text="gdfsfdsfjadfndsjkfdnsjkfdsfjkdsbfjkdsbfjdksfbdsjfbdskjfbdsfjkdsfbnjdskfbdskjfbdskjfdskjfsdkjfds"
-              android:textColor="@color/gray_eeee"
-              android:textSize="16sp"
-              app:layout_constraintBottom_toBottomOf="@+id/riv_business_image"
-              app:layout_constraintEnd_toStartOf="@+id/arrow_bottom"
-              app:layout_constraintStart_toEndOf="@+id/riv_business_image"
-              app:layout_constraintTop_toBottomOf="@+id/ctv_business_name"
-              app:layout_constraintVertical_bias="1" />
+              app:riv_corner_radius="@dimen/size_10"
+              app:riv_mutate_background="true" />
 
 
           </androidx.constraintlayout.widget.ConstraintLayout>
 
           <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/boost_subscription"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_16"
             android:background="@drawable/rounded_stroke_grey"
             android:backgroundTint="@color/white"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:padding="@dimen/size_16">
 
             <com.framework.views.customViews.CustomImageView

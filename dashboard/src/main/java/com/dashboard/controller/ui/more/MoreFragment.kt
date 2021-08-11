@@ -73,6 +73,11 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
         baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.ic_placeholder, isCrop = true)
       }
     }
+    binding?.rivCurrentlyManage?.apply {
+      if (featureImageUrl.isNullOrEmpty().not()) {
+        baseActivity.glideLoad(this, url = featureImageUrl, placeholder = R.drawable.ic_placeholder, isCrop = true)
+      }
+    }
     binding?.ctvName?.text = (session?.userProfileName ?: session?.fpTag)?.capitalizeUtil()
 //    val content = StringBuilder()
 //    if (session?.fPEmail != null) content.append(session?.fPEmail).append(",")
