@@ -3057,8 +3057,8 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="add_featured_image">Add Featured Image</string>
   <string name="logo_updated_successfully">Logo uploaded successfully.</string>
   <string name="add_logo">Add logo</string>
-  <string name="business_timings">Business timings</string>
-  <string name="business_timings_n">Business Timings</string>
+  <string name="business_timings">Business hours</string>
+  <string name="business_timings_n">Business Hours</string>
   <string name="review_title_testimonial">Review title</string>
   <string name="review_description_testimonial">Review description</string>
   <string name="our_topper_data_empty">Our toppers data empty!</string>
