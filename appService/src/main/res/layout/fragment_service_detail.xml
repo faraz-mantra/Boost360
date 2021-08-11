@@ -350,7 +350,7 @@
 
                 <com.framework.views.customViews.CustomTextField
                   android:id="@+id/amount_edt"
-                  android:layout_width="@dimen/size_110"
+                  android:layout_width="@dimen/size_100"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="@dimen/size_5"
                   android:background="@drawable/bg_rect_edit_txt"
@@ -386,7 +386,7 @@
 
                 <com.framework.views.customViews.CustomTextField
                   android:id="@+id/discount_edt"
-                  android:layout_width="@dimen/size_110"
+                  android:layout_width="@dimen/size_100"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="@dimen/size_5"
                   android:background="@drawable/bg_rect_edit_txt"
