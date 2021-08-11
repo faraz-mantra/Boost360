@@ -141,7 +141,7 @@
   <string name="update_your_kyc">Update your KYC</string>
   <string name="start_branded_payment_desc">To start using your \'Branded custom payment gateway\' on your boost website, we\'ll need to verify your business details along with a bank account (if not provided already) using your business PAN card and 1-month bank statement respectively.</string>
   <string name="view_details">View details</string>
-  <string name="business_kyc_verification_underway">Business KYC\nVerification Underway...</string>
+  <string name="business_kyc_verification_underway">Business KYC\nverification underway...</string>
   <string name="business_kyc_verify">Business KYC verify</string>
   <string name="submit_verification">Submit for verification</string>
   <string name="business_kyc_verification_underway_n">Business KYC verification underway</string>
@@ -596,6 +596,10 @@
   <string name="add_product_image_n">Add product image</string>
   <string name="post_n">Post</string>
   <string name="refreshing_status">Refreshing status...</string>
+  <string name="total_money_collected_till_date">Total money collected till date</string>
+  <string name="your_self_branded_npayment_gateway_is_live">Your Self Branded\nPayment gateway is LIVE!</string>
+  <string name="all_payment_on_your_boost_website_are_processed_through_this_payment_gateway_instead_of_default_boost_payment_gateway_when_you_add_a_new_product_service_on_your_business_website_please_make_sure_to_select_this_payment_gateway">All payment on your Boost website are processed through this payment gateway instead of default Boost Payment Gateway. When you add a new product service on your business website please make sure to select this payment gateway.</string>
+  <string name="money_refund_till_date">Money refund till date</string>
 
 
   <array name="stock_availbility">

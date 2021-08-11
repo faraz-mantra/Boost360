@@ -104,7 +104,7 @@
         android:letterSpacing="0.04"
         android:stateListAnimator="@null"
         android:text="@string/view_info"
-        android:textColor="@color/orange" />
+        android:textColor="@color/colorAccentLight" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.cardview.widget.CardView>
 
