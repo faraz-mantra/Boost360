@@ -162,10 +162,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     }
   }
 
-  private fun onPaymentStatusSelected(
-    bottomSheetOptionsItem: BottomSheetOptionsItem,
-    orderBottomSheet: OrderBottomSheet
-  ) {
+  private fun onPaymentStatusSelected(bottomSheetOptionsItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) {
     binding?.tvPaymentStatus?.text = bottomSheetOptionsItem?.displayValue
     orderInitiateRequest?.paymentDetails?.status = bottomSheetOptionsItem?.serverValue
     paymentStatus = bottomSheetOptionsItem?.serverValue!!
@@ -173,8 +170,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   }
 
   private fun showAddServiceFeeDialog() {
-    val addDeliveryFeeBottomSheetDialog =
-      AddDeliveryFeeBottomSheetDialog(serviceFee, AppConstant.TYPE_APPOINTMENT)
+    val addDeliveryFeeBottomSheetDialog = AddDeliveryFeeBottomSheetDialog(serviceFee, AppConstant.TYPE_APPOINTMENT)
     addDeliveryFeeBottomSheetDialog.onClicked = { onServiceFeeAdded(it) }
     addDeliveryFeeBottomSheetDialog.show(
       this.parentFragmentManager,

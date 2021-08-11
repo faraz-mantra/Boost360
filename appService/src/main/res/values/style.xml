@@ -360,8 +360,8 @@
     <item name="android:layout_marginBottom">@dimen/size_30</item>
     <item name="android:layout_marginEnd">@dimen/size_30</item>
     <item name="android:fontFamily">@font/regular</item>
-    <item name="android:textColor">@color/greyish_brown</item>
-    <item name="android:background">@drawable/bg_button_rounded_greyish_brown_outlined</item>
+    <item name="android:textColor">@color/colorAccentLight</item>
+    <item name="android:background">@drawable/bg_button_rounded_accent_outlined</item>
   </style>
 
   <style name="ButtonStyle.Outlined.Green" parent="ButtonStyle.Rounded.Outlined">
