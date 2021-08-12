@@ -20,6 +20,10 @@ import com.framework.views.zero.FragmentZeroCase
 import com.framework.views.zero.OnZeroCaseClicked
 import com.framework.views.zero.RequestZeroCaseBuilder
 import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.APPOINTMENT_PAGE_LOAD
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
@@ -64,9 +68,9 @@ import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBinding>(),
-  RecyclerItemClickListener, OnZeroCaseClicked {
+  RecyclerItemClickListener, AppOnZeroCaseClicked {
 
-  private lateinit var zeroCaseFragment: FragmentZeroCase
+  private lateinit var zeroCaseFragment: AppFragmentZeroCase
   private lateinit var requestFilter: OrderFilterRequest
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
   private var orderList = ArrayList<OrderItem>()
@@ -107,7 +111,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
     binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
-    this.zeroCaseFragment = RequestZeroCaseBuilder(ZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
+    this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
 
 
@@ -795,9 +799,11 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   override fun ternaryButtonClicked() {
   }
 
-  override fun onBackPressed() {
-    baseActivity.finishAfterTransition()
+  override fun appOnBackPressed() {
+
   }
+
+
 
 //  private fun apiOrderListCall() {
 //    when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {

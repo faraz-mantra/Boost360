@@ -120,5 +120,9 @@
   <string name="menu_picture_title"><![CDATA[Click & upload menu pictures!]]></string>
   <string name="menu_picture_desc">Owner info helps your potential customer establish trust by knowing who is running this spa/salon. This brief profile also captures other important info such as experiance in this field etc.</string>
   <string name="upload_menu_pictures">Upload menu pictures</string>
+    <string name="spa_zero_case_title">Let\'s add services to your spa catalogue.</string>
+  <string name="spa_zero_case_desc">You can easily add detailed information about your services and their prices to enable online appointments.</string>
+  <string name="no_service_created_yet">No service added yet</string>
+  <string name="lets_add_food_item_to_this_menu">Let\'s add food items to your menu</string>
 
 </resources>

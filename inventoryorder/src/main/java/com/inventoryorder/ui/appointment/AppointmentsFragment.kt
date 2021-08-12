@@ -20,6 +20,10 @@ import com.framework.views.zero.FragmentZeroCase
 import com.framework.views.zero.OnZeroCaseClicked
 import com.framework.views.zero.RequestZeroCaseBuilder
 import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.*
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
@@ -62,8 +66,8 @@ import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 
-class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(), RecyclerItemClickListener, OnZeroCaseClicked {
-  private lateinit var zeroCaseFragment: FragmentZeroCase
+class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(), RecyclerItemClickListener, AppOnZeroCaseClicked {
+  private lateinit var zeroCaseFragment: AppFragmentZeroCase
   private lateinit var requestFilter: OrderFilterRequest
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
   private var orderList = ArrayList<OrderItem>()
@@ -105,7 +109,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
     binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
-    this.zeroCaseFragment = RequestZeroCaseBuilder(ZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
+    this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
 
   }
@@ -776,16 +780,16 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
   override fun secondaryButtonClicked() {
-    TODO("Not yet implemented")
   }
 
   override fun ternaryButtonClicked() {
-    TODO("Not yet implemented")
   }
 
-  override fun onBackPressed() {
-    TODO("Not yet implemented")
+  override fun appOnBackPressed() {
+
   }
+
+
 
 //  private fun apiOrderListCall() {
 //    when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {

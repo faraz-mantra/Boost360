@@ -89,13 +89,14 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        session = new UserSessionManager(getApplicationContext(), this);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_catalog);
-        appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.SERVICES,this,this).getRequest().build();
+        appFragmentZeroCase =new AppRequestZeroCaseBuilder(getZeroCaseFromServiceCode(session.getFP_AppExperienceCode()),this,this).getRequest().build();
         getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(),appFragmentZeroCase).commit();
         WebEngageController.trackEvent(PRODUCT_CATALOGUE_LIST, PAGE_VIEW, EVENT_VALUE_MANAGE_CONTENT);
         setSupportActionBar(binding.layoutToolbar.toolbar);
 
-        session = new UserSessionManager(getApplicationContext(), this);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -103,6 +104,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
             getSupportActionBar().setTitle("");
             binding.layoutToolbar.toolbarTitle.setText(Utils.getProductCatalogTaxonomyFromServiceCode(session.getFP_AppExperienceCode()));
+
             binding.layoutToolbar.toolbar.setNavigationIcon(R.drawable.ic_back_arrow_white);
           /*  binding.tvMessage.setText(String.format(getString(R.string.product_empty_view_message),
                     Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()).toLowerCase()));*/
@@ -113,6 +115,21 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         getWidgetLimit();
         checkIsAdd();
 //        binding.btnAddCatalogue.setOnClickListener(view -> addProduct());
+    }
+
+    public static AppZeroCases getZeroCaseFromServiceCode(String category_code) {
+        switch (category_code) {
+            case "HOS":
+                return AppZeroCases.HOSPITAL_SERVICES;
+            case "SPA":
+                return AppZeroCases.SPA_SERVICES;
+            case "SAL":
+                return AppZeroCases.SALON_SERVICES;
+            case "EDU":
+                return AppZeroCases.EDUCATION_SERVICES;
+            default:
+                return AppZeroCases.SERVICES;
+        }
     }
 
     private void checkIsAdd() {

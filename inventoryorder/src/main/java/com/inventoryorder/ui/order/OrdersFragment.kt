@@ -21,6 +21,10 @@ import com.framework.views.zero.FragmentZeroCase
 import com.framework.views.zero.OnZeroCaseClicked
 import com.framework.views.zero.RequestZeroCaseBuilder
 import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.ORDER_PAGE_LOAD
 import com.framework.webengageconstant.PAGE_VIEW
@@ -66,9 +70,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
-open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener, OnZeroCaseClicked {
+open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener, AppOnZeroCaseClicked {
   private var totalOrders: Int=0
-  private lateinit var zeroCaseFragment: FragmentZeroCase
+  private lateinit var zeroCaseFragment: AppFragmentZeroCase
   lateinit var mPopupWindow: PopupWindow
   private lateinit var requestFilter: OrderFilterRequest
   private var typeAdapter: AppBaseRecyclerViewAdapter<OrderSummaryModel>? = null
@@ -109,7 +113,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     binding?.swipeRefresh?.setOnRefreshListener {
       if (typeList.isNullOrEmpty()) apiSellerSummary() else loadNewData()
     }
-    this.zeroCaseFragment = RequestZeroCaseBuilder(ZeroCases.ORDERS, this, baseActivity).getRequest().build()
+    this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.ORDERS, this, baseActivity).getRequest().build()
 
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
 
@@ -798,7 +802,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   override fun ternaryButtonClicked() {
   }
 
-  override fun onBackPressed() {
+  override fun appOnBackPressed() {
 
   }
+
 }

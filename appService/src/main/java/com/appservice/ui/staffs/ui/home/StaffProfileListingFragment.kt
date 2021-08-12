@@ -40,6 +40,10 @@ import com.framework.views.zero.FragmentZeroCase
 import com.framework.views.zero.OnZeroCaseClicked
 import com.framework.views.zero.RequestZeroCaseBuilder
 import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.*
 import com.inventoryorder.ui.tutorials.LearnHowItWorkBottomSheet
 import kotlinx.android.synthetic.main.fragment_staff_listing.*
@@ -47,10 +51,10 @@ import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
 import java.util.*
 
 class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffViewModel>(),
-  RecyclerItemClickListener, SearchView.OnQueryTextListener, OnZeroCaseClicked {
+  RecyclerItemClickListener, SearchView.OnQueryTextListener, AppOnZeroCaseClicked {
 
   private val TAG = "StaffProfileListingFrag"
-  private var fragmentZeroCase: FragmentZeroCase?=null
+  private var fragmentZeroCase: AppFragmentZeroCase?=null
   private val list: ArrayList<DataItem> = arrayListOf()
   private val finalList: ArrayList<DataItem> = arrayListOf()
   private var adapterStaff: AppBaseRecyclerViewAdapter<DataItem>? = null
@@ -88,7 +92,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   override fun onCreateView() {
     super.onCreateView()
     Log.i(TAG, "onCreateView: ")
-    this.fragmentZeroCase = RequestZeroCaseBuilder(ZeroCases.STAFF_LISTING, this, baseActivity,!isLockStaff()).getRequest().build()
+    this.fragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.STAFF_LISTING, this, baseActivity,!isLockStaff()).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase,false)
 
     getBundleData()
@@ -462,9 +466,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   override fun ternaryButtonClicked() {
   }
 
-  override fun onBackPressed() {
-    baseActivity.finishAfterTransition()
+  override fun appOnBackPressed() {
+
   }
+
 
 }
 

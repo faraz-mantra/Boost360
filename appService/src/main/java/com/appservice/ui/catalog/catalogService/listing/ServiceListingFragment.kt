@@ -45,6 +45,9 @@ import com.framework.pref.getDomainName
 import com.framework.utils.ContentSharing
 import com.framework.views.zero.*
 import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.*
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Target
@@ -54,10 +57,10 @@ import kotlinx.android.synthetic.main.recycler_item_service_timing.*
 import java.util.*
 
 class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(),
-  RecyclerItemClickListener, OnZeroCaseClicked {
+  RecyclerItemClickListener, AppOnZeroCaseClicked {
 
   private val TAG = "ServiceListingFragment"
-  private  var fragmentZeroCase: FragmentZeroCase?=null
+  private  var fragmentZeroCase: AppFragmentZeroCase?=null
   private lateinit var domainName: String
   private var session: UserSessionManager? = null
   private val list: ArrayList<ItemsItem> = arrayListOf()
@@ -112,7 +115,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     this.session = UserSessionManager(requireContext())
     this.domainName = session?.getDomainName()!!
 
-    this.fragmentZeroCase = RequestZeroCaseBuilder(ZeroCases.SERVICES, this, baseActivity,).getRequest().build()
+    this.fragmentZeroCase =AppRequestZeroCaseBuilder(AppZeroCases.SERVICES, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase,false)
 
   }
@@ -512,9 +515,10 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   }
 
-  override fun onBackPressed() {
-    baseActivity.finishAfterTransition()
+  override fun appOnBackPressed() {
+
   }
+
 }
 
 

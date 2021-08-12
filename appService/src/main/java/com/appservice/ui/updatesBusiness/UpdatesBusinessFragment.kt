@@ -38,11 +38,16 @@ import com.framework.views.zero.FragmentZeroCase
 import com.framework.views.zero.OnZeroCaseClicked
 import com.framework.views.zero.RequestZeroCaseBuilder
 import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
-class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener,OnZeroCaseClicked {
+class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(),
+  RecyclerItemClickListener,AppOnZeroCaseClicked {
 
   private val STORAGE_CODE = 120
 
@@ -54,7 +59,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   private var TOTAL_ELEMENTS = 0
   private var offSet: Int = PaginationScrollListener.PAGE_START
   private var isLastPageD = false
-  private lateinit var zeroCaseFragment: FragmentZeroCase
+  private lateinit var zeroCaseFragment: AppFragmentZeroCase
 
   companion object {
     @JvmStatic
@@ -82,7 +87,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
     binding?.btnAdd?.setOnClickListener {
       startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
     }
-    this.zeroCaseFragment = RequestZeroCaseBuilder(ZeroCases.LATEST_NEWS_UPADATES, this, baseActivity).getRequest().build()
+    this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.LATEST_NEWS_UPADATES, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
   }
 
@@ -281,8 +286,10 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   override fun ternaryButtonClicked() {
   }
 
-  override fun onBackPressed() {
+  override fun appOnBackPressed() {
   }
+
+
 }
 
 fun showDialog(mContext: Context?, title: String?, msg: String?, listener: DialogInterface.OnClickListener) {
