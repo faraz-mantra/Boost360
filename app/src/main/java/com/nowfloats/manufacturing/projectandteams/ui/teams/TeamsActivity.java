@@ -63,7 +63,7 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_team_category);
-        appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.TEAM_MEMBERS,this,this).getRequest().build();
+        appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.TEAM_MEMBERS,this,this,true).getRequest().build();
         getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(),appFragmentZeroCase).commit();
         initView();
     }
