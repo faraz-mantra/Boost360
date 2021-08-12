@@ -379,14 +379,14 @@
             android:id="@+id/text_phone"
             style="@style/TextBoldStyle"
             android:layout_marginEnd="@dimen/size_2"
+            android:layout_marginTop="@dimen/size_20"
             android:text="@string/call_n"
             android:drawableStart="@drawable/ic_phone"
             android:textAllCaps="false"
             android:drawablePadding="@dimen/size_6"
             android:textColor="@color/colorAccentLight"
-            app:layout_constraintBottom_toBottomOf="@id/text_email"
             app:layout_constraintStart_toEndOf="@id/text_email"
-            app:layout_constraintTop_toTopOf="@id/text_email"
+            app:layout_constraintTop_toBottomOf="@id/ctv_gstin"
             app:tint="@color/colorAccent_jio"
             tools:ignore="RtlSymmetry" />
 
@@ -403,7 +403,7 @@
             android:background="@color/grey_dark_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_email" />
+            app:layout_constraintTop_toBottomOf="@id/text_phone" />
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/image_location_pointer"
