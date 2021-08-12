@@ -54,7 +54,7 @@
           android:layout_width="64dp"
           android:layout_height="@dimen/size_64"
           android:layout_marginTop="@dimen/size_4"
-          android:src="@drawable/dummy_staff_img"
+          tools:src="@drawable/dummy_staff_img"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/customTextView8"
@@ -93,7 +93,7 @@
           android:includeFontPadding="true"
           android:paddingVertical="2dp"
           android:textColor="@color/white"
-          android:textSize="16sp"
+          app:textType="HEADING_6"
           app:layout_constraintStart_toEndOf="@+id/riv_users_image"
           app:layout_constraintTop_toBottomOf="@+id/ctv_type"
           tools:text="Santosh Kamat" />
@@ -104,6 +104,7 @@
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="@dimen/size_16"
           android:ellipsize="end"
+          android:textFontWeight="400"
           android:fontFamily="@font/regular"
           android:gravity="start"
           android:includeFontPadding="true"
@@ -152,6 +153,7 @@
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/ctv_manage_heading"
             android:layout_width="wrap_content"
+            android:textFontWeight="400"
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
             android:text="@string/currently_managing"
@@ -161,9 +163,21 @@
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/size_8"
+            android:background="@drawable/white_stroke_10dp"
             android:layout_height="wrap_content">
 
-
+            <com.framework.views.roundedimageview.RoundedImageView
+              android:layout_width="0dp"
+              android:layout_height="0dp"
+              android:alpha=".20"
+              android:id="@+id/riv_currently_manage"
+              android:scaleType="centerCrop"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              app:riv_corner_radius="@dimen/size_10"
+              app:riv_mutate_background="true" />
             <androidx.constraintlayout.widget.ConstraintLayout
               android:id="@+id/constraintLayout6"
               android:layout_width="match_parent"
@@ -177,6 +191,7 @@
               <com.framework.views.customViews.CustomImageView
                 android:id="@+id/arrow_bottom"
                 android:layout_width="@dimen/size_16"
+                android:visibility="invisible"
                 android:layout_height="@dimen/size_16"
                 android:src="@drawable/ic_arrow_down_grey_staff"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -186,9 +201,11 @@
 
               <com.framework.views.roundedimageview.RoundedImageView
                 android:id="@+id/riv_business_image"
-                android:layout_width="@dimen/size_50"
-                android:layout_height="@dimen/size_50"
-                android:src="@drawable/dummy_staff_img"
+                android:layout_width="@dimen/size_42"
+                android:layout_height="@dimen/size_42"
+                app:riv_border_width="1dp"
+                app:riv_border_color="@color/white"
+                tools:src="@drawable/dummy_staff_img"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -204,10 +221,10 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/semi_bold"
                 android:gravity="start"
-                android:includeFontPadding="true"
                 android:maxLines="1"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textFontWeight="700"
+                app:textType="HEADING_6"
                 app:layout_constraintEnd_toStartOf="@+id/arrow_bottom"
                 app:layout_constraintStart_toEndOf="@+id/riv_business_image"
                 app:layout_constraintTop_toTopOf="@+id/riv_business_image"
@@ -224,7 +241,7 @@
                 android:includeFontPadding="true"
                 android:maxLines="1"
                 android:textColor="@color/gray_eeee"
-                android:textSize="16sp"
+                app:textType="CAPTION"
                 app:layout_constraintBottom_toBottomOf="@+id/riv_business_image"
                 app:layout_constraintEnd_toStartOf="@+id/arrow_bottom"
                 app:layout_constraintStart_toEndOf="@+id/riv_business_image"
@@ -235,18 +252,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.framework.views.roundedimageview.RoundedImageView
-              android:layout_width="0dp"
-              android:layout_height="0dp"
-              android:alpha=".20"
-              android:id="@+id/riv_currently_manage"
-              android:scaleType="centerCrop"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toTopOf="parent"
-              app:riv_corner_radius="@dimen/size_10"
-              app:riv_mutate_background="true" />
+
 
 
           </androidx.constraintlayout.widget.ConstraintLayout>
@@ -316,7 +322,9 @@
               android:text="@string/upgrade_website_with_great_features_offers_for_you_current_plan_purchase_history_invoice_and_more"
               android:textAllCaps="false"
               android:textColor="@color/gray_828282"
+              android:textFontWeight="400"
               android:textSize="11sp"
+              app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toBottomOf="@+id/ctv_subscription_heading" />
@@ -948,11 +956,11 @@
             <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:textFontWeight="400"
               android:layout_gravity="center"
               android:text="@string/boost_360_is_proudly_made_in_india"
               android:textColor="@color/gray_828282"
               android:textSize="10sp" />
-
             <View
               android:layout_width="@dimen/size_70"
               android:layout_height="@dimen/size_1"
