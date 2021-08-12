@@ -389,7 +389,6 @@
   <string name="about">About JioOnline</string>
   <string name="boost_payment_gateway">JioOnline payment gateway</string>
   <string name="payment_gateway_not_added_please_add_first">JioOnline Payment gateway not added, please add first.</string>
-  <string name="all_payment_on_your_boost_website_are_processed_through_this_payment_gateway_instead_of_default_boost_payment_gateway_when_you_add_a_new_product_service_on_your_business_website_please_make_sure_to_select_this_payment_gateway">All payment on your JioOnline website are processed through this payment gateway instead of default JioOnline Payment Gateway. When you add a new product service on your business website please make sure to select this payment gateway.</string>
   <string name="in_case_of_any_concerns">In case of any concerns, you can write to businesscare@jio.com. JioOnline care team is available during business hours.</string>
   <string name="open_boost">Open JioOnline</string>
   <string name="boost_lite_boost_pro_boost_custom">JioOnline Lite, JioOnline Pro, JioOnline Custom</string>
@@ -439,8 +438,8 @@
   <string name="twitter_allows_digital_business_boost">Using JioOnline, you can now communicate with your followers on Twitter to build brand awareness and reach out to new customers.</string>
   <string name="google_allows_digital_business_boost">Using JioOnline, you can now directly communicate with your customers on Google and reach out to more potential users.</string>
   <string name="facebook_page_allows_digital_business_boost">Using JioOnline, you can now directly communicate with your customers on Facebook and reach out to more potential users.</string>
-  <string name="facebook_shop_allows_digital_business_boost">Using JioOnline, all your products and services will start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.</string>
-  <string name="channels_belong_to_respective_owners_boost_360_does_not_own_them"><b>Disclaimer:</b> The Names and Logos of Google Search, Google Maps, Facebook Page, Facebook Shop, WhatsApp Business &amp; Twitter belong to their respective owners. JioOnline does not own them.</string>
+  <string name="facebook_shop_allows_digital_business_boost">Using JioOnline, all your products and services will start appearing in the Facebook marketplace, allowing many more potential customers to discover your business and buy your products.</string>
+  <string name="channels_belong_to_respective_owners_boost_360_does_not_own_them"><b>Disclaimer:</b> The Names and Logos of Google search, Google maps, Facebook page, Facebook shop, WhatsApp business &amp; Twitter belong to their respective owners. JioOnline does not own them.</string>
   <string name="boost360_terms_conditions"><![CDATA[JioOnline - Terms & Conditions]]></string>
   <string name="entransactional_updates_whatsapp_number">Allow JioOnline to send entransactional updates regarding you orders, invoices along with other promotional messages on this WhatsApp number.</string>
   <string name="not_opted_for_boost_alerts">Not opted for JioOnline alerts</string>
