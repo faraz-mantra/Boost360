@@ -621,7 +621,7 @@
             android:background="@color/grey_dark_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_email" />
+            app:layout_constraintTop_toBottomOf="@id/text_phone" />
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/image_location_pointer"
