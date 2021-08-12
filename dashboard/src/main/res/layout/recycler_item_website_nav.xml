@@ -19,13 +19,13 @@
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/civ_image"
-        app:layout_constraintVertical_bias="0"
-        android:layout_width="20dp"
-        android:layout_height="@dimen/size_20"
-        android:src="@drawable/whats_new_version"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="@dimen/size_16"
+        android:layout_height="@dimen/size_16"
+        android:src="@drawable/ic_fonts"
+        app:layout_constraintBottom_toBottomOf="@+id/ctv_heading"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/ctv_heading"
+         />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_needs_action"
@@ -54,16 +54,17 @@
         android:id="@+id/ctv_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_4"
-        android:maxLines="1"
         android:fontFamily="@font/semi_bold"
-        tools:text="Font &amp; color styles"
+        android:maxLines="1"
         android:textColor="@color/black_4a4a4a"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/civ_image"
-        app:layout_constraintStart_toEndOf="@+id/civ_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintVertical_bias="0"
+        tools:text="Font &amp; color styles" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_subtitle"
