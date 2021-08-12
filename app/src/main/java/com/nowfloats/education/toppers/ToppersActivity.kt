@@ -3,6 +3,7 @@ package com.nowfloats.education.toppers
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
@@ -11,8 +12,12 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.boost.upgrades.UpgradeActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.nowfloats.Login.UserSessionManager
 import com.nowfloats.education.helper.Constants
 import com.nowfloats.education.helper.Constants.TOPPERS_FRAGMENT
@@ -47,17 +52,8 @@ class ToppersActivity : BaseActivity<ActivityToppersBinding, BaseViewModel>() {
 
   private fun initializeView() {
     session = UserSessionManager(this, this)
+    addFragment(ToppersFragment.newInstance(), TOPPERS_FRAGMENT)
 
-        if (session?.storeWidgets?.contains(Constants.TOPPER_FEATURE)==true) {
-            addFragment(ToppersFragment.newInstance(), TOPPERS_FRAGMENT)
-        } else {
-            val unlockFeatureModel = UnlockFeatureModel(
-                    buyItemKey = Constants.TOPPER_FEATURE,
-                    titleFeatureName = getString(R.string.our_toppers),
-                    featureDescription = getString(R.string.our_toppers_feature_description)
-            )
-            addFragment(UnlockFeatureFragment.newInstance(session, unlockFeatureModel), Constants.UNLOCK_FEATURE_FRAGMENT)
-        }
     }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -150,4 +146,6 @@ class ToppersActivity : BaseActivity<ActivityToppersBinding, BaseViewModel>() {
     initializeView()
     initView()
   }
+
+
 }

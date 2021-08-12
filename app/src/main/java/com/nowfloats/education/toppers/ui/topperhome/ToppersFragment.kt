@@ -1,6 +1,9 @@
 package com.nowfloats.education.toppers.ui.topperhome
 
+import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.upgrades.UpgradeActivity
 import com.framework.base.BaseFragment
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -23,7 +27,13 @@ import com.framework.views.zero.FragmentZeroCase
 import com.framework.views.zero.OnZeroCaseClicked
 import com.framework.views.zero.RequestZeroCaseBuilder
 import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.inventoryorder.model.ordersdetails.OrderItem
+import com.nowfloats.Login.UserSessionManager
+import com.nowfloats.education.helper.Constants
 import com.nowfloats.education.helper.Constants.SUCCESS
 import com.nowfloats.education.helper.Constants.TOPPERS_DETAILS_FRAGMENT
 import com.nowfloats.education.helper.Constants.TOPPERS_FRAGMENT
@@ -38,12 +48,13 @@ import com.thinksity.databinding.ToppersFragmentBinding
 import org.koin.android.ext.android.inject
 
 class ToppersFragment : BaseFragment<ToppersFragmentBinding, BaseViewModel>(), ItemClickEventListener,
-  OnZeroCaseClicked {
+  AppOnZeroCaseClicked {
 
   private val myViewModel by inject<ToppersViewModel>()
   private val toppersAdapter: TopperAdapter by lazy { TopperAdapter(this) }
   private lateinit var toppersActivity: ToppersActivity
-  private lateinit var zeroCaseFragment: FragmentZeroCase
+  private lateinit var zeroCaseFragment: AppFragmentZeroCase
+  private var session:UserSessionManager?=null
 
 
 
@@ -152,17 +163,27 @@ class ToppersFragment : BaseFragment<ToppersFragmentBinding, BaseViewModel>(), I
   }
 
   override fun onCreateView() {
-    zeroCaseFragment = RequestZeroCaseBuilder(ZeroCases.TOPPERS, this, baseActivity).getRequest().build()
+    session = UserSessionManager(requireActivity(),requireActivity())
+    zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.TOPPERS, this, baseActivity,isPremium()).getRequest().build()
 
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
 
     toppersActivity = activity as ToppersActivity
     binding?.root?.let {
       setHeader(it)
-      initLiveDataObservers()
-      initBatchesRecyclerview(it)
+      if (isPremium()){
+        initLiveDataObservers()
+        initBatchesRecyclerview(it)
+        nonEmptyView()
+      }else{
+        emptyView()
+      }
     }
 
+  }
+
+  fun isPremium(): Boolean {
+    return session?.storeWidgets?.contains(Constants.TOPPER_FEATURE)==true
   }
 
   private fun nonEmptyView() {
@@ -183,10 +204,15 @@ class ToppersFragment : BaseFragment<ToppersFragmentBinding, BaseViewModel>(), I
   }
 
   override fun primaryButtonClicked() {
-    (activity as ToppersActivity).addFragment(
-      TopperDetailsFragment.newInstance(),
-      TOPPERS_DETAILS_FRAGMENT
-    )
+    if (isPremium()){
+      (activity as ToppersActivity).addFragment(
+        TopperDetailsFragment.newInstance(),
+        TOPPERS_DETAILS_FRAGMENT
+      )
+    }else{
+      initiateBuyFromMarketplace()
+    }
+
   }
 
 
@@ -197,6 +223,43 @@ class ToppersFragment : BaseFragment<ToppersFragmentBinding, BaseViewModel>(), I
   override fun ternaryButtonClicked() {
   }
 
-  override fun onBackPressed() {
+  override fun appOnBackPressed() {
+
   }
+
+  private fun initiateBuyFromMarketplace() {
+    session?.let {
+      val progressDialog = ProgressDialog(requireActivity())
+      val status = "Loading. Please wait..."
+      progressDialog.setMessage(status)
+      progressDialog.setCancelable(false)
+      progressDialog.show()
+      val intent = Intent(requireActivity(), UpgradeActivity::class.java)
+      intent.putExtra("expCode", it.fP_AppExperienceCode)
+      intent.putExtra("fpName", it.fpName)
+      intent.putExtra("fpid", it.fpid)
+      intent.putExtra("loginid", it.userProfileId)
+      intent.putStringArrayListExtra("userPurchsedWidgets", com.nowfloats.util.Constants.StoreWidgets)
+      intent.putExtra("fpTag", it.fpTag)
+      if (it.userProfileEmail != null) {
+        intent.putExtra("email", it.userProfileEmail)
+      } else {
+        intent.putExtra("email", "ria@nowfloats.com")
+      }
+      if (it.userPrimaryMobile != null) {
+        intent.putExtra("mobileNo", it.userPrimaryMobile)
+      } else {
+        intent.putExtra("mobileNo", "9160004303")
+      }
+      intent.putExtra("profileUrl", it.fpLogo)
+      intent.putExtra("buyItemKey", Constants.TOPPER_FEATURE)
+      startActivity(intent)
+      Handler().postDelayed({
+        progressDialog.dismiss()
+        requireActivity().finish()
+      }, 1000)
+    }
+  }
+
+
 }

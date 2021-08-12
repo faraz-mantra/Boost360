@@ -17,10 +17,13 @@ import com.framework.extensions.visible
 import com.framework.views.zero.OnZeroCaseClicked
 import com.framework.views.zero.RequestZeroCaseBuilder
 import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import org.json.JSONObject
 import java.util.ArrayList
 
-class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListBinding>(), OnZeroCaseClicked {
+class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListBinding>(), AppOnZeroCaseClicked {
 
   private var isEdit: Boolean = false
   private var headerToken = "59c89bbb5d64370a04c9aea1"
@@ -72,7 +75,8 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
         } else {
           binding?.rvTestimonial?.gone()
 //          binding?.emptyLayout?.visible()
-          addFragmentReplace(containerID = R.id.container, RequestZeroCaseBuilder(ZeroCases.TESTIMONIAL, this, baseActivity).getRequest().build(), true)
+          addFragmentReplace(containerID = R.id.container, AppRequestZeroCaseBuilder(AppZeroCases.TESTIMONIAL,
+            this, baseActivity).getRequest().build(), true)
 
         }
       }
@@ -117,14 +121,14 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
   }
 
   override fun secondaryButtonClicked() {
-    TODO("Not yet implemented")
   }
 
   override fun ternaryButtonClicked() {
-    TODO("Not yet implemented")
   }
 
-  override fun onBackPressed() {
-    baseActivity.finishAfterTransition()
+  override fun appOnBackPressed() {
+
   }
+
+
 }

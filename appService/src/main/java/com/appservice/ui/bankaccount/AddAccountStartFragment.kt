@@ -15,8 +15,11 @@ import com.framework.views.zero.FragmentZeroCase
 import com.framework.views.zero.OnZeroCaseClicked
 import com.framework.views.zero.RequestZeroCaseBuilder
 import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 
-class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, BaseViewModel>(), OnZeroCaseClicked {
+class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, BaseViewModel>(), AppOnZeroCaseClicked {
   private  val TAG = "AddAccountStartFragment"
   companion object {
     @JvmStatic
@@ -39,7 +42,7 @@ class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, 
     super.onCreateView()
     setOnClickListener(binding?.closeBtn, binding?.startBtn)
     (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(getString(R.string.my_bank_acccount))
-    addFragmentReplace(R.id.container,RequestZeroCaseBuilder(ZeroCases.MY_BANK_ACCOUNT,this,baseActivity).getRequest().build(),false)
+    addFragmentReplace(R.id.container,AppRequestZeroCaseBuilder(AppZeroCases.MY_BANK_ACCOUNT,this,baseActivity).getRequest().build(),false)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -89,8 +92,8 @@ class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, 
     Log.i(TAG, "ternaryButtonClicked: ")
   }
 
-  override fun onBackPressed() {
-    Log.i(TAG, "onBackPressed: ")
-   baseActivity.finishAfterTransition()
+  override fun appOnBackPressed() {
+
   }
+
 }

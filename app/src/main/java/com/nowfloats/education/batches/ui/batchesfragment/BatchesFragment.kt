@@ -25,6 +25,10 @@ import com.framework.views.zero.FragmentZeroCase
 import com.framework.views.zero.OnZeroCaseClicked
 import com.framework.views.zero.RequestZeroCaseBuilder
 import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 
 import com.nowfloats.education.batches.BatchesActivity
 import com.nowfloats.education.batches.adapter.BatchesAdapter
@@ -37,11 +41,11 @@ import com.thinksity.R
 import com.thinksity.databinding.BatchesFragmentBinding
 import org.koin.android.ext.android.inject
 
-class BatchesFragment : BaseFragment<BatchesFragmentBinding, BaseViewModel>(), ItemClickEventListener, OnZeroCaseClicked {
+class BatchesFragment : BaseFragment<BatchesFragmentBinding, BaseViewModel>(), ItemClickEventListener, AppOnZeroCaseClicked {
 
   private val myViewModel by inject<BatchesViewModel>()
   private val batchesAdapter: BatchesAdapter by lazy { BatchesAdapter(this) }
-  private lateinit var zeroCaseFragment: FragmentZeroCase
+  private lateinit var zeroCaseFragment: AppFragmentZeroCase
 
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -165,8 +169,10 @@ class BatchesFragment : BaseFragment<BatchesFragmentBinding, BaseViewModel>(), I
   override fun ternaryButtonClicked() {
   }
 
-  override fun onBackPressed() {
+  override fun appOnBackPressed() {
+
   }
+
 
   override fun getLayout(): Int {
     return R.layout.batches_fragment
@@ -177,7 +183,7 @@ class BatchesFragment : BaseFragment<BatchesFragmentBinding, BaseViewModel>(), I
   }
 
   override fun onCreateView() {
-    zeroCaseFragment = RequestZeroCaseBuilder(ZeroCases.UPCOMING_BATCHES, this, requireActivity()).getRequest().build()
+    zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.UPCOMING_BATCHES, this, requireActivity()).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
 
     binding?.root?.let {

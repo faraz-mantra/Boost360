@@ -193,7 +193,8 @@ enum class AppZeroCases {
   TESTIMONIAL, NEWS_LETTER_SUBSCRIPTION, ORDERS, SEASONAL_OFFERS, BUSINESS_CALLS,
   UPCOMING_BATCHES, FACULTY_MANAGEMENT, TEAM_MEMBERS, DOCTOR_PROFILE, PROJECTS,
   CUSTOM_PAGES, CLIENT_LOGOS, WEBSITE_FAQ, RESTURANT_STORY, MENU_PICTURES,
-  BUSINESS_KEYBOARD, TABLE_BOOKING, ROOMS_LISTING,TOPPERS, RESTURANT_MENU,BROCHURES
+  BUSINESS_KEYBOARD, TABLE_BOOKING, ROOMS_LISTING,TOPPERS, RESTURANT_MENU,BROCHURES,SPA_SERVICES,
+  SALON_SERVICES,RESTAURANT_SERVICES,EDUCATION_SERVICES,HOSPITAL_SERVICES
 }
 
 
@@ -855,6 +856,106 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
               )
+            )
+          )
+      }
+      SPA_SERVICES -> {
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.spa_zero_case_title))
+          .setDescription(context.getString(R.string.spa_zero_case_desc))
+          .setIcon(R.drawable.ic_flowerlotus)
+          .isPremium(isPremium)
+          .setListener(onZeroCaseClicked)
+          .setButton(
+            ZeroCaseButton(
+              primaryButtonTitle = context.getString(R.string.add_a_service),
+              primaryButtonBackground = R.color.colorPrimary,
+              primaryButtonIconLeft = R.drawable.ic_create_white,
+              secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
+              secondaryButtonTitle = context.getString(
+                R.string.appointment_setup
+              ),
+              tertiaryButtonIconLeft = R.drawable.ic_services_tutorial_tertiary_icon,
+              tertiaryButtonTitle = context.getString(R.string.watch_how_it_works)
+            )
+          )
+      }
+      HOSPITAL_SERVICES -> {
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.no_service_created_yet))
+          .setDescription(context.getString(R.string.your_can_easily_add_detailed_information_about_your_services))
+          .setIcon(R.drawable.ic_policy)
+          .isPremium(isPremium)
+          .setListener(onZeroCaseClicked)
+          .setButton(
+            ZeroCaseButton(
+              primaryButtonTitle = context.getString(R.string.add_a_service),
+              primaryButtonBackground = R.color.colorPrimary,
+              primaryButtonIconLeft = R.drawable.ic_create_white,
+              secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
+              secondaryButtonTitle = context.getString(
+                R.string.appointment_setup
+              ),
+              tertiaryButtonIconLeft = R.drawable.ic_services_tutorial_tertiary_icon,
+              tertiaryButtonTitle = context.getString(R.string.watch_how_it_works)
+            )
+          )
+      }
+      SALON_SERVICES-> {
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.lets_add_services_to_your_catalogue))
+          .setDescription(context.getString(R.string.your_can_easily_add_detailed_information_about_your_services))
+          .setIcon(R.drawable.ic_scissors)
+          .isPremium(isPremium)
+          .setListener(onZeroCaseClicked)
+          .setButton(
+            ZeroCaseButton(
+              primaryButtonTitle = context.getString(R.string.add_a_service),
+              primaryButtonBackground = R.color.colorPrimary,
+              primaryButtonIconLeft = R.drawable.ic_create_white,
+              secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
+              secondaryButtonTitle = context.getString(
+                R.string.appointment_setup
+              ),
+              tertiaryButtonIconLeft = R.drawable.ic_services_tutorial_tertiary_icon,
+              tertiaryButtonTitle = context.getString(R.string.watch_how_it_works)
+            )
+          )
+      }
+      RESTAURANT_SERVICES -> {
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.lets_add_food_item_to_this_menu))
+          .setDescription(context.getString(R.string.your_can_easily_add_detailed_information_about_your_services))
+          .setIcon(R.drawable.ic_pizza)
+          .isPremium(isPremium)
+          .setListener(onZeroCaseClicked)
+          .setButton(
+            ZeroCaseButton(
+              primaryButtonTitle = context.getString(R.string.add_a_service),
+              primaryButtonBackground = R.color.colorPrimary,
+              primaryButtonIconLeft = R.drawable.ic_create_white,
+              secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
+              secondaryButtonTitle = context.getString(
+                R.string.appointment_setup
+              ),
+              tertiaryButtonIconLeft = R.drawable.ic_services_tutorial_tertiary_icon,
+              tertiaryButtonTitle = context.getString(R.string.watch_how_it_works)
+            )
+          )
+      }
+      EDUCATION_SERVICES -> {
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.no_courses_added_yet))
+          .setDescription(context.getString(R.string.your_can_easily_add_detailed_information_about_your_services))
+          .setIcon(R.drawable.ic_book)
+          .isPremium(isPremium)
+          .setListener(onZeroCaseClicked)
+          .setButton(
+            ZeroCaseButton(
+              primaryButtonTitle = context.getString(R.string.add_a_service),
+              primaryButtonBackground = R.color.colorPrimary,
+              primaryButtonIconLeft = R.drawable.ic_create_white,
+              secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
+              secondaryButtonTitle = context.getString(
+                R.string.appointment_setup
+              ),
+              tertiaryButtonIconLeft = R.drawable.ic_services_tutorial_tertiary_icon,
+              tertiaryButtonTitle = context.getString(R.string.watch_how_it_works)
             )
           )
       }
