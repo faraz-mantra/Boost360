@@ -36,7 +36,7 @@
         android:fontFamily="@font/semi_bold"
         android:gravity="center_vertical"
         android:includeFontPadding="false"
-        android:text="@string/website_style_customisation"
+        android:text="@string/fonts_and_color_styles"
         android:textAlignment="gravity"
         android:textColor="@color/white"
         app:textType="HEADING_6" />
