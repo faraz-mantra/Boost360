@@ -2,6 +2,7 @@ package com.nowfloats.Image_Gallery;
 
 import android.annotation.SuppressLint;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
@@ -89,5 +91,18 @@ public class ImageGalleryActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "onActivityResult: ");
+        if (requestCode==202){
+            if (Constants.storeSecondaryImages.isEmpty()){
+                binding.btnAdd.setVisibility(View.GONE);
+            }else {
+                binding.btnAdd.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }
