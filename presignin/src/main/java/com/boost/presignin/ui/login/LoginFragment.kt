@@ -73,7 +73,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener { goBack() }
     binding?.passEt?.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
-      binding?.forgotTv?.setTextColor(if (hasFocus) getColor(R.color.colorAccentLight) else getColor(R.color.pinkish_grey))
+      binding?.forgotTv?.setTextColor(if (hasFocus) getColor(R.color.colorAccentLight) else getColor(R.color.black_4a4a4a))
     }
   }
 
@@ -110,16 +110,9 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
   private fun loginApiVerify(userName: String?, password: String?) {
     showProgress()
     viewModel?.verifyUserProfile(
-      UserProfileVerificationRequest(
-        loginKey = userName,
-        loginSecret = password,
-        clientId = clientId
-      )
-    )?.observeOnce(viewLifecycleOwner, {
+      UserProfileVerificationRequest(loginKey = userName, loginSecret = password, clientId = clientId))?.observeOnce(viewLifecycleOwner, {
       val response = it as? VerificationRequestResult
-      if (response?.isSuccess() == true && response.loginId.isNullOrEmpty()
-          .not() && response.authTokens.isNullOrEmpty().not()
-      ) {
+      if (response?.isSuccess() == true && response.loginId.isNullOrEmpty().not() && response.authTokens.isNullOrEmpty().not()) {
         storeUserDetail(response)
       } else {
         hideProgress()
@@ -140,10 +133,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
       authTokenData()?.createAccessTokenAuth()
     } else {
       navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
-        putInt(
-          FRAGMENT_TYPE,
-          FP_LIST_FRAGMENT
-        );putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
+        putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
       })
     }
 //    }

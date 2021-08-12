@@ -186,7 +186,13 @@ public class Get_FP_Details_Model implements Serializable {
     }
 
     public ArrayList<CategoryModel> getCategory() {
-        return Category;
+        if (Category != null) return Category;
+        else return new ArrayList<>();
+    }
+
+    public String getFpCategory() {
+        if (!getCategory().isEmpty()) return getCategory().get(0).getKey();
+        else return "";
     }
 
     public void setCategory(ArrayList<CategoryModel> category) {
@@ -474,7 +480,8 @@ public class Get_FP_Details_Model implements Serializable {
     }
 
     public String getApplicationId() {
-        return ApplicationId;
+        if (ApplicationId != null) return ApplicationId;
+        else return "";
     }
 
     public void setApplicationId(String applicationId) {
@@ -482,7 +489,8 @@ public class Get_FP_Details_Model implements Serializable {
     }
 
     public String getCountry() {
-        return Country;
+        if (Country != null) return Country;
+        else return "";
     }
 
     public void setCountry(String country) {
@@ -586,7 +594,8 @@ public class Get_FP_Details_Model implements Serializable {
     }
 
     public String getAccountManagerId() {
-        return AccountManagerId;
+        if (AccountManagerId != null) return AccountManagerId;
+        else return "";
     }
 
     public void setAccountManagerId(String accountManagerId) {

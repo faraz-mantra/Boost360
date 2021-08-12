@@ -12,8 +12,8 @@
   <string name="chat_agent_name">Ria</string>
   <string name="chat_agent_name_full">(Relationship Intelligence Agent)</string>
   <string name="house_plot_num">House/Plot Number</string>
-  <string name="street_address_opt">Street Address 2 (Optional)</string>
-  <string name="land_mark">Landmark (Optional)</string>
+  <string name="street_address_opt">Street Address 2 (optional)</string>
+  <string name="land_mark">Landmark (optional)</string>
   <string name="state">State</string>
   <string name="noInternet">No Internet Connection</string>
 

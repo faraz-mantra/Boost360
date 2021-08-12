@@ -30,19 +30,19 @@
   <string name="website">Website</string>
   <string name="website1">website</string>
   <string name="fb_page">Facebook page</string>
-  <string name="fb_page1">facebook page</string>
+  <string name="fb_page1">Facebook page</string>
   <string name="google_maps">Google maps</string>
-  <string name="google_maps1">google maps</string>
+  <string name="google_maps1">Google maps</string>
   <string name="fb_shop">Facebook shop</string>
-  <string name="fb_shop1">facebook shop</string>
+  <string name="fb_shop1">Facebook shop</string>
   <string name="whatsapp_business">WhatsApp</string>
-  <string name="whatsapp_business1">whatsApp</string>
+  <string name="whatsapp_business1">WhatsApp</string>
   <string name="twitter_profile">Twitter Profile</string>
-  <string name="twitter_profile1">twitter profile</string>
+  <string name="twitter_profile1">Twitter profile</string>
   <string name="google_business">Google maps (Google My Business)</string>
-  <string name="google_business1">google maps (Google My Business)</string>
+  <string name="google_business1">Google maps (Google My Business)</string>
   <string name="google_business_n">Google maps (GMB)</string>
-  <string name="google_business_n1">google maps (GMB)</string>
+  <string name="google_business_n1">Google maps (GMB)</string>
   <string name="important">Important</string>
   <string name="recommended">Recommended</string>
 
@@ -67,7 +67,7 @@
   <string name="do_you_already_have_a_twitter_profile">Does your business already have a Twitter profile?</string>
   <string name="setting_up_or_syncing_your_twitter_business_profile">Setting up or Syncing your Twitter business profile</string>
   <string name="yes_link_my_existing_twitter_profile">Yes, link my existing Twitter profile</string>
-  <string name="yes_sync_my_twitter_profile">Yes, sync my twitter profile</string>
+  <string name="yes_sync_my_twitter_profile">Yes, sync my Twitter profile</string>
 
   <string name="congratulations_new">Congratulations</string>
   <string name="business_cant_empty">Business name can\'t be empty</string>

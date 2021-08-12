@@ -433,7 +433,7 @@ public class ContactInformationActivity extends BaseActivity {
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, binding.editDisplayContactNumber2.getText().toString());
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3, binding.editDisplayContactNumber3.getText().toString());
 
-                Methods.showSnackBarPositive(ContactInformationActivity.this, "Information Updated Successfully");
+                Methods.showSnackBarPositive(ContactInformationActivity.this, "Information updated successfully");
                 WebEngageController.trackEvent(BUSINESS_CONTACT_ADDED, BUSINESS_DESCRIPTION, session.getFpTag());
                 onContactInfoAddedOrUpdated(true);
             }

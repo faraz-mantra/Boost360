@@ -82,7 +82,7 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/_5sdp"
           android:text="@string/astreak"
-          android:textColor="@color/primary"
+          android:textColor="@color/greyish_brown"
           android:textSize="@dimen/_11sdp" />
 
       </LinearLayout>
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:text="@string/astreak"
-            android:textColor="@color/primary"
+            android:textColor="@color/greyish_brown"
             android:textSize="@dimen/_11sdp"
             android:visibility="gone" />
 
@@ -171,7 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:text="@string/astreak"
-            android:textColor="@color/primary"
+            android:textColor="@color/greyish_brown"
             android:textSize="@dimen/_11sdp" />
 
         </LinearLayout>
@@ -215,7 +215,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:text="@string/astreak"
-            android:textColor="@color/primary"
+            android:textColor="@color/greyish_brown"
             android:textSize="@dimen/_11sdp" />
 
         </LinearLayout>

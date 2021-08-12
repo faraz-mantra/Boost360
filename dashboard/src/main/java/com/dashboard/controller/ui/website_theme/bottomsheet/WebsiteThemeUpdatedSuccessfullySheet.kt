@@ -14,8 +14,7 @@ enum class TypeSuccess {
   CLOSE, VISIT_WEBSITE, PUBLISH_CHANGES, DISCARD, GO_BACK
 }
 
-class WebsiteThemeUpdatedSuccessfullySheet :
-  BaseBottomSheetDialog<BottomSheetThemeUpdatedSuccessfullyBinding, BaseViewModel>() {
+class WebsiteThemeUpdatedSuccessfullySheet : BaseBottomSheetDialog<BottomSheetThemeUpdatedSuccessfullyBinding, BaseViewModel>() {
 
   private lateinit var websiteLink: String
   private lateinit var businessName: String
