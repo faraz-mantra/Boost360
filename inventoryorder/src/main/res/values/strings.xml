@@ -484,6 +484,7 @@
   <string name="appointment_details_empty">Appointment detail empty.</string>
   <string name="appointment_send_email">Send email</string>
   <string name="call">call</string>
+  <string name="call_n">Call</string>
   <string name="customer_info">Customer info</string>
   <string name="payment_status">Payment status</string>
   <string name="customer_address">Customer address</string>
