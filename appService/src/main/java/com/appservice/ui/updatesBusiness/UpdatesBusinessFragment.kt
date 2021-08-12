@@ -31,6 +31,7 @@ import com.appservice.viewmodel.UpdatesViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing.Companion.shareUpdates
 import com.framework.utils.showKeyBoard
@@ -157,6 +158,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
       } else adapterUpdate?.notifyDataSetChanged()
 
     } else if (listFloat.isEmpty()) emptyView()
+    onBusinessUpdateAddedOrUpdated(data?.floats?.size?:0)
     hideProgress()
   }
 
@@ -289,7 +291,13 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   override fun appOnBackPressed() {
   }
 
-
+  open fun onBusinessUpdateAddedOrUpdated(count: Int) {
+    val instance = FirestoreManager
+    if (instance.getDrScoreData() != null && instance.getDrScoreData()!!.metricdetail != null) {
+      instance.getDrScoreData()!!.metricdetail!!.number_updates_posted = count
+      instance.updateDocument()
+    }
+  }
 }
 
 fun showDialog(mContext: Context?, title: String?, msg: String?, listener: DialogInterface.OnClickListener) {
@@ -300,3 +308,4 @@ fun showDialog(mContext: Context?, title: String?, msg: String?, listener: Dialo
   }
   builder.create().show()
 }
+
