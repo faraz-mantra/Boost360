@@ -644,7 +644,7 @@ fun AppCompatActivity.startBusinessInfoEmail(session: UserSessionManager?) {
 fun AppCompatActivity.startAllImage(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(IMAGE_MENU_PAGE, CLICK, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.ImageMenuActivity"))
+    val webIntent = Intent(this, Class.forName("com.nowfloats.Image_Gallery.ImageGalleryActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
