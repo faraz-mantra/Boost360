@@ -86,7 +86,8 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.ALL_BOOST_ADD_ONS -> resources.getString(R.string.all_boost_add_ons)
-      FragmentType.FRAGMENT_WEBSITE_THEME,FragmentType.FRAGMENT_WEBSITE_NAV  -> getString(R.string.website_style_customisation)
+      FragmentType.FRAGMENT_WEBSITE_NAV -> getString(R.string.website_style_customisation)
+//      FragmentType.FRAGMENT_WEBSITE_THEME  -> getString(R.string.fonts_and_color_styles)
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> getString(R.string.business_profile_)
       else -> super.getToolbarTitle()
     }
