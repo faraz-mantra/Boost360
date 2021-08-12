@@ -1165,7 +1165,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="log_in"> Login</string>
   <string name="phone_number">Phone number</string>
   <string name="share_website">Share website</string>
-  <string name="tell_world_about_your_business_on_facebook_twitter">Tell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitter</string>
+  <string name="tell_world_about_your_business_on_facebook_twitter">Tell the world about your business share it on Facebook and TwitterTell the world about your business share it on Facebook and TwitterTell the world about your business share it on Facebook and TwitterTell the world about your business share it on Facebook and TwitterTell the world about your business share it on Facebook and TwitterTell the world about your business share it on Facebook and Twitter</string>
   <string name="search">Search</string>
   <string name="select_a_product_to_share" translatable="false">Select a product to share</string>
   <string name="write_page_title">Write page title (e.g. About Us, Why Us? etc.)</string>
@@ -1316,7 +1316,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="offer_start_date">Start date:</string>
   <string name="offer_end_date">End date:</string>
   <string name="offer_discount">Discount percentage:</string>
-  <string name="createOffersTitle">Post An Offer</string>
+  <string name="createOffersTitle">Post an Offer</string>
   <string name="offers_title_error">Please enter the title</string>
   <string name="offers_desc_error">Please enter description for the offer</string>
   <string name="offers_start_date_error">Please choose start date for the offer</string>
@@ -1608,12 +1608,12 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
   <string name="deeplink_business_app">businessapp</string>
   <string name="fb_page_creation_message">Gather more leads and drive more\ntraffic to your website through a\nFacebook Page</string>
-  <string name="get_facebook_page">Get a facebook page</string>
+  <string name="get_facebook_page">Get a Facebook page</string>
   <string name="fb_page_creation_title">Looks like you don’t have a\nFacebook page</string>
   <string name="more_details">More details</string>
   <string name="fb_page_unavailable">A Facebook page with\nyour business name is\nunavailable.</string>
   <string name="suggestions_for_page_name">Here\'s a suggestion\nfor an available Page name</string>
-  <string name="your_facebook_page_is_created">Your facebook page is created</string>
+  <string name="your_facebook_page_is_created">Your Facebook page is created</string>
   <string name="connect_page_to_nowfloats">Connect your account to\nautomatically share all updates\nto your Facebook Page.</string>
   <string name="control">Connect</string>
   <string name="domain_characters">-0123456789abcdefghijklmnopqrstuvwxyz</string>
@@ -1720,9 +1720,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <item>If you are listed on an e-commerce marketplace like Amazon, Paytm, Flipkart etc, you can use the URL of the relevant product on the NowFloats Product catalogue.</item>
   </string-array>
   <string name="analylitcs">Analytics</string>
-  <string name="website_customers">Website Customers</string>
-  <string name="social_interactions">Social Interactions</string>
-  <string name="cross_platform">Cross Platform</string>
+  <string name="website_customers">Website customers</string>
+  <string name="social_interactions">Social interactions</string>
+  <string name="cross_platform">Cross platform</string>
 
   <string name="manage_website">Manage Website</string>
   <string name="my_facebook_chats">My Facebook Chats</string>
@@ -1759,8 +1759,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string-array name="about_tab_items">
     <item>Boost360 training &amp; certification program</item>
     <item>FAQs</item>
-    <item>Like us on facebook</item>
-    <item>Follow us on twitter</item>
+    <item>Like us on Facebook</item>
+    <item>Follow us on Twitter</item>
     <item>Rate us on play store</item>
     <item>Terms of use</item>
     <item>Data privacy policy</item>
@@ -1770,14 +1770,15 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="testimonials">Testimonials</string>
   <!--<string name="keyboard_message">The Boost Keyboard allows you to share your products and updates without leaving a chat.We do not store, send or share any data that is typed on the Boost Keyboard.</string>
   -->
-  <string name="keyboard_message">The Boost Keyboard is a customised business keyboard that allows you to share your updates and product offerings with the click of a button, without having to leave a chat.
-(We do not store or share any data that you type on the Boost Keyboard.)</string>
+  <string name="keyboard_message">The Boost keyboard is a customised business keyboard that allows you to share your updates and product offerings with the click of a button, without having to leave a chat.
+(We do not store or share any data that you type on the Boost keyboard.)</string>
   <string name="domain_linked">Your domain is successfully Linked to your NowFloats website</string>
   <string name="domain_linking_success">Domain Linking Successful</string>
   <string name="map_visits">Address views</string>
   <string name="map_visits_n">Address Views</string>
   <string name="boost_keyboard">Boost Keyboard</string>
   <string name="boost_keyboard_n">Boost keyboard</string>
+  <string name="enable_keyboard_n">Enable Keyboard</string>
   <string name="enable_keyboard">Enable keyboard</string>
   <string name="otp_over_call">Tap here to get OTP over call</string>
   <string name="sam">Sam</string>
@@ -1907,7 +1908,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="html_tags_exception">Sorry, you can\'t enter HTML tags</string>
   <string name="uh_oh">Uh-Oh!</string>
   <string name="not_auth">not authorized.</string>
-  <string name="message_1"><![CDATA[For now, please login via username & password. Once you do that, post login, we’ll show you an alert to authorize different channels such as gmail, facebook etc. for faster login.]]></string>
+  <string name="message_1"><![CDATA[For now, please login via username & password. Once you do that, post login, we’ll show you an alert to authorize different channels such as gmail, Facebook etc. for faster login.]]></string>
   <string name="message_2">is not authorized to support faster login to your Boost account.</string>
   <string name="how_to_use_boost">Learn how-to-use\nboost</string>
   <string name="view_support_tickets">View my support\ntickets</string>
@@ -1970,19 +1971,19 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="samrt_look_api_key" translatable="false">2976fda0fc620d3186eca19884bd55ac125b56e4</string>
   <string name="contact_number_not_valid" translatable="false">Please enter valid contact number</string>
   <string name="email_not_Empty" translatable="false">Email can\'t be empty.</string>
-  <string name="enter_company_description_100_characters_max" translatable="false">Enter company description <br /> (100 Characters Max)</string>
-  <string name="client_name" translatable="false">Client Name</string>
-  <string name="enter_client_name" translatable="false">Enter Client Name</string>
-  <string name="client_category" translatable="false">Client Category</string>
-  <string name="enter_client_category" translatable="false">Enter Client Category</string>
-  <string name="project_client_requirement" translatable="false">Project Client Requirement</string>
-  <string name="enter_description_200_characters_max" translatable="false">Enter Description <br /> (200 Characters Max)</string>
+  <string name="enter_company_description_100_characters_max" translatable="false">Enter company description <br /> (100 Characters max)</string>
+  <string name="client_name" translatable="false">Client name</string>
+  <string name="enter_client_name" translatable="false">Enter client name</string>
+  <string name="client_category" translatable="false">Client category</string>
+  <string name="enter_client_category" translatable="false">Enter client category</string>
+  <string name="project_client_requirement" translatable="false">Project client requirement</string>
+  <string name="enter_description_200_characters_max" translatable="false">Enter description <br /> (200 Characters max)</string>
   <string name="our_approach" translatable="false">Our approach</string>
   <string name="budget" translatable="false">Budget</string>
   <string name="date_of_completion" translatable="false">Date of completion</string>
   <string name="maximum_3" translatable="false">Maximum 3</string>
   <string name="jpg_png_800x800px" translatable="false">Jpg/png (800x800px)</string>
-  <string name="completed" translatable="false">COMPLETED</string>
+  <string name="completed" translatable="false">Completed</string>
   <string name="in_progress" translatable="false">In progress</string>
   <string name="withdraw" translatable="false">Withdraw</string>
   <string name="about_company" translatable="false">About company</string>
@@ -2029,7 +2030,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="attach_brochure">Attach brochure</string>
   <string name="enter_brochure_url_link">Enter brochure URL link</string>
   <string name="or">--or--</string>
-  <string name="upload_file">Uoload file</string>
+  <string name="upload_file">Upload file</string>
   <string name="brochure_pdf">Brochure.pdf</string>
   <string name="product_category">Product category</string>
   <string name="services">Services</string>
@@ -2038,7 +2039,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="ready_to_log_in">Ready to Log in?</string>
   <string name="forgot">Forgot?</string>
   <string name="log_in_heading">Log in</string>
-  <string name="via_facebook">Via facebook</string>
+  <string name="via_facebook">Via Facebook</string>
   <string name="via_google">Via google</string>
   <string name="via_mobile_otp">Via mobile OTP</string>
   <string name="click_on_below_to_add_nimages_for_your_product">Click on + below to add<br />Images for your product</string>
@@ -2108,11 +2109,11 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="designation" translatable="false">Designation</string>
   <string name="company_title" translatable="false">Company title</string>
   <string name="facebook_profile">Facebook profile</string>
-  <string name="enter_facebook_url">Enter facebook URL</string>
+  <string name="enter_facebook_url">Enter Facebook URL</string>
   <string name="twitter_profile">Twitter profile</string>
-  <string name="enter_twitter_url">Enter twitter URL</string>
+  <string name="enter_twitter_url">Enter Twitter URL</string>
   <string name="skype_profile">Skype profile</string>
-  <string name="enter_skype_url">Enter skype URL</string>
+  <string name="enter_skype_url">Enter Skype URL</string>
   <string name="with_the_feature_you_can_showcase_your_customer_reviews_and_highlight_their_experience_on_the_homepage_of_your_website">With the feature, you can showcase your customer reviews and highlight their experience on the homepage of your website.</string>
   <string name="astreak">*</string>
   <string name="enter_company_title" translatable="false">Enter company title</string>
@@ -2361,7 +2362,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="fastrack_bare_basic_watch">Fastrack Bare Basic Watch</string>
   <string name="this_is_a_wedding_makeup_description">This is a wedding makeup description</string>
   <string name="price">Price:</string>
-  <string name="facebook_share_button">facebook share button</string>
+  <string name="facebook_share_button">Facebook share button</string>
   <string name="change_">Change</string>
   <string name="_21_july_2017" translatable="false">21 july, 2017</string>
   <string name="outgoing">Outgoing</string>
@@ -2482,7 +2483,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="header">Header</string>
   <string name="value">value</string>
   <string name="problem_to_open_boost">Problem to open Boost</string>
-  <string name="problem_to_open_whats_app">Problem to open whatsApp</string>
+  <string name="problem_to_open_whats_app">Problem to open WhatsApp</string>
   <string name="you_have_successfully_requested_to_link_a_domain">You have successfully requested to link a domain, Our team will contact you with in 48 hours.</string>
   <string name="domain_is_available_">Domain is available</string>
   <string name="submit_email_request">Submit Email request</string>
@@ -2523,10 +2524,10 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="successfully_updated_testimonials">Successfully updated testimonials</string>
   <string name="something_went_wrong_try_later">Something went wrong. try later!!</string>
   <string name="updating_record_please_wait">Updating record, please wait...</string>
-  <string name="your_facebook_session_has_expired">Your facebook session has expired, please login.</string>
-  <string name="please_connect_your_facebook_page">Please connect your facebook page.</string>
-  <string name="please_select_any_facebook_page">Please select any facebook page</string>
-  <string name="you_cannot_select_the_same_facebook_page_to_share_your_update">You cannot select the same facebook Page to share your updates. This will lead to an indefinite loop of updates on your website and facebook Page.</string>
+  <string name="your_facebook_session_has_expired">Your Facebook session has expired, please login.</string>
+  <string name="please_connect_your_facebook_page">Please connect your Facebook page.</string>
+  <string name="please_select_any_facebook_page">Please select any Facebook page</string>
+  <string name="you_cannot_select_the_same_facebook_page_to_share_your_update">You cannot select the same Facebook Page to share your updates. This will lead to an indefinite loop of updates on your website and Facebook Page.</string>
   <string name="something_went_wrong_please">Something went wrong!!! Please try later.</string>
   <string name="this_feature_is_available_for_paid_customers">This feature is available to paid customers only.</string>
   <string name="site_health_should_be_eighty_percent">Site Health Should Be 80%</string>
@@ -2557,8 +2558,8 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="calling_access_token_api">calling accessTokenApi</string>
   <string name="successfully_api_response">successfully api response</string>
   <string name="updates_will_reflect_on_your_website"><![CDATA[Updates will reflect on your website one hour after getting posted on the Facebook Page. Please <u>do not</u> select this option if you are using social share from your website.]]></string>
-  <string name="you_cannot_select_the_same_facebook_page_to_share_your_updates">You cannot select the same Facebook Page to share your updates. This will lead to an indefinite loop of updates on your website and facebook Page.</string>
-  <string name="you_cannot_select_the_same_facebook_page_to_auto_update_your_website">You cannot select the same Facebook Page to auto-update your website. This will lead to an indefinite loop of updates on your website and facebook Page.</string>
+  <string name="you_cannot_select_the_same_facebook_page_to_share_your_updates">You cannot select the same Facebook Page to share your updates. This will lead to an indefinite loop of updates on your website and Facebook Page.</string>
+  <string name="you_cannot_select_the_same_facebook_page_to_auto_update_your_website">You cannot select the same Facebook Page to auto-update your website. This will lead to an indefinite loop of updates on your website and Facebook Page.</string>
   <string name="done_">Done</string>
   <string name="something_went_wrong_try_again_">Something went wrong!!! Please try later.</string>
   <string name="your_account_is_expired_please_renew_it">Your account is expired, please renew it</string>
@@ -2739,7 +2740,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="email_">Email</string>
   <string name="add_your_email">Add your email</string>
   <string name="help_customer_to_find_you">Help your customers find you</string>
-  <string name="connect_to_fb_twitter">Connect to facebook and twitter</string>
+  <string name="connect_to_fb_twitter">Connect to facebook and Twitter</string>
   <string name="describe_you_business">Describe your business</string>
   <string name="add_business_name">Add business name</string>
   <string name="add_a_relevent_name">Add a relevant image</string>
@@ -2788,7 +2789,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="new_picture">New picture</string>
   <string name="from_your_camera">From your Camera</string>
   <string name="upgrade_to_premium_support">Upgrade to premium support</string>
-  <string name="you_are_currently_on_the_default_support_plan">You are currently on the default support plan. This gives you access to Boost Care team via email only, with a promise of 72 hours SLA.\n\nYou can upgrade to premium support to get direct access to Boost Care team by phone, email and chat,\nwith a promise of 1 hour SLA.</string>
+  <string name="you_are_currently_on_the_default_support_plan">You are currently on the default support plan. This gives you access to Boost care team via email only, with a promise of 72 hours SLA.\n\nYou can upgrade to premium support to get direct access to Boost care team by phone, email and chat,\nwith a promise of 1 hour SLA.</string>
   <string name="need_help_with_boost">Need help with Boost360 [</string>
   <string name="unable_to_post_message">Unable to post message</string>
   <string name="image_upload_sent_check_triggered">Image UpLoAd sent_check Triggered</string>
@@ -2996,7 +2997,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="add_other_image">Add other image</string>
   <string name="cheque_image">Cheque image</string>
   <string name="other_cheque_image">Other cheque image</string>
-  <string name="open_whatsapp">Open whatsApp</string>
+  <string name="open_whatsapp">Open WhatsApp</string>
   <string name="a">A</string>
   <string name="first_name">First name*</string>
   <string name="password_">Password*</string>

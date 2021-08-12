@@ -173,10 +173,10 @@ public class FeaturedImageActivity extends AppCompatActivity {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-                    Methods.showFeatureNotAvailDialog(FeaturedImageActivity.this);
-                    return;
-                }
+//                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+//                    Methods.showFeatureNotAvailDialog(FeaturedImageActivity.this);
+//                    return;
+//                }
 //                final MaterialDialog dialog = new MaterialDialog.Builder(FeaturedImageActivity.this)
 //                        .customView(R.layout.featuredimage_popup,true)
 //                        .show();

@@ -72,9 +72,9 @@ public class Get_FP_Details_Service {
                     if (get_fp_details_model != null) {
                         ProcessFPDetails.storeFPDetails(activity, get_fp_details_model);
                         UserSessionManager mSession = new UserSessionManager(activity.getApplicationContext(), activity);
-                        String accId = get_fp_details_model.AccountManagerId;
-                        String appId = get_fp_details_model.ApplicationId;
-                        String country = get_fp_details_model.Country;
+                        String accId = get_fp_details_model.getAccountManagerId();
+                        String appId = get_fp_details_model.getApplicationId();
+                        String country = get_fp_details_model.getCountry();
 
                         Map<String, String> params = new HashMap<>();
                         if (accId.length() > 0) {
@@ -85,7 +85,7 @@ public class Get_FP_Details_Service {
                         params.put("clientId", Constants.clientId);
                         params.put("fpId", mSession.getFPID());
                         params.put("country", country.toLowerCase());
-                        params.put("fpCategory", get_fp_details_model.getCategory().get(0).getKey());
+                        params.put("fpCategory", get_fp_details_model.getFpCategory());
                         Log.d("getStoreList_fpId: ", mSession.getFPID());
                         FirestoreManager.INSTANCE.initData(mSession.getFpTag(), mSession.getFPID(), Constants.clientId);
                         Constants.restAdapter.create(StoreInterface.class).getStoreList(params, new Callback<PricingPlansModel>() {

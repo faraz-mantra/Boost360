@@ -232,7 +232,7 @@
           android:layout_centerVertical="true"
           android:fontFamily="@font/regular"
           android:gravity="center"
-          android:text="Add Images"
+          android:text="Add images"
           android:textAllCaps="false"
           android:textSize="@dimen/_13sdp" />
       </RelativeLayout>

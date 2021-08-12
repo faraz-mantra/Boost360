@@ -300,15 +300,11 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
     rightIcon = findViewById(R.id.right_icon);
     title.setText("Offer Details");
     rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
-    rightButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (ScreenType != null && ScreenType.equals("edit")) {
-          showLoader(getString(R.string.deleting_record_please_wait));
-          deleteRecord(itemId);
-          return;
-        }
-        finish();
+    rightButton.setOnClickListener(v -> {
+      if (ScreenType != null && ScreenType.equals("edit")) {
+        showLoader(getString(R.string.deleting_record_please_wait));
+        deleteRecord(itemId);
+        return;
       }
     });
 
