@@ -1430,7 +1430,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": true,
-              "isHide": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Social sharing analytics"
             },
@@ -1813,7 +1813,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": true,
-              "isHide": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Social sharing analytics"
             },
@@ -2203,7 +2203,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": true,
-              "isHide": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Social sharing analytics"
             },
@@ -2572,7 +2572,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": true,
-              "isHide": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Social sharing analytics"
             },
@@ -2934,7 +2934,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": true,
-              "isHide": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Social sharing analytics"
             },
@@ -3296,7 +3296,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": true,
-              "isHide": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Social sharing analytics"
             },
@@ -3672,7 +3672,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": true,
-              "isHide": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Social sharing analytics"
             },
