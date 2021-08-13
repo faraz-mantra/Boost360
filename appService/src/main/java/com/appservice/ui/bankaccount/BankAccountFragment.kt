@@ -227,7 +227,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill
     )
 
-    binding?.verificationUi?.visibility = if (isEditable) View.GONE else View.VISIBLE
+//    binding?.verificationUi?.visibility = if (isEditable) View.GONE else View.VISIBLE
     binding?.createUi?.visibility = if (isEditable) View.VISIBLE else View.GONE
     binding?.edtConfirmNumber?.visibility = if (isEditable) View.VISIBLE else View.GONE
     binding?.titleConfirmAccount?.visibility = if (isEditable) View.VISIBLE else View.GONE
