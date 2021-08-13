@@ -722,30 +722,30 @@
             android:background="@drawable/mp_home_expert_guidance_bg">
 
 
-          <LinearLayout
-            android:id="@+id/mp_home_expert_guidance_image_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="40dp"
-            android:orientation="vertical">
-
-
-            <ImageView
-              android:id="@+id/callnow_image"
+            <LinearLayout
+              android:id="@+id/mp_home_expert_guidance_image_ll"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_centerHorizontal="true"
-              android:layout_centerVertical="true"
-              android:layout_marginStart="15dp"
-              android:layout_marginTop="15dp"
-              android:layout_marginEnd="15dp"
-              android:layout_marginBottom="15dp"
-              android:visibility="visible"
-              app:srcCompat="@drawable/ic_mp_home_expert_guidance_person"
-              tools:visibility="visible" />
+              android:layout_alignParentStart="true"
+              android:layout_marginStart="40dp"
+              android:orientation="vertical">
 
-          </LinearLayout>
+
+              <ImageView
+                android:id="@+id/callnow_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_mp_home_expert_guidance_person"
+                tools:visibility="visible" />
+
+            </LinearLayout>
 
             <LinearLayout
               android:id="@+id/callnow_layout"
@@ -761,9 +761,9 @@
                 android:id="@+id/callnow_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:text="Need help to decide?"
                 android:textColor="@color/black"
-                android:layout_marginTop="15dp"
                 android:textSize="12sp" />
 
               <TextView
@@ -804,9 +804,6 @@
           </RelativeLayout>
 
 
-
-
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -838,9 +835,6 @@
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent">
 
-
-
-
               <LinearLayout
                 android:id="@+id/ll_refer_banner"
                 android:layout_width="wrap_content"
@@ -859,42 +853,19 @@
                   android:src="@drawable/ic_mp_home_referral_banner"
                   android:textSize="14sp" />
 
-              </LinearLayout>
-
-
-              <RelativeLayout
-                android:id="@+id/rl_refer_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ll_refer_banner"
-                android:layout_margin="5dp">
-
                 <TextView
                   android:id="@+id/textView6"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_centerHorizontal="true"
-                  android:text="Invite your friends to Boost 360!"
+                  android:gravity="center"
+                  android:text="REFER\nBOOST 360\n GET\n 20% OFF."
                   android:textColor="#FF9F00"
-                  android:textSize="18sp"
+                  android:textSize="24sp"
                   android:textStyle="bold" />
 
-                <TextView
-                  android:id="@+id/ref_txt"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_below="@+id/textView6"
-                  android:layout_centerHorizontal="true"
-                  android:layout_marginStart="16dp"
-                  android:layout_marginEnd="16dp"
-                  android:gravity="center"
-                  android:minLines="2"
-                  android:padding="8dp"
-                  android:text="Refer a friend today and both of you will receive special discounts when they signup."
-                  android:textColor="#4a4a4a"
-                  android:textSize="10sp" />
+              </LinearLayout>
 
-              </RelativeLayout>
+
             </RelativeLayout>
           </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -902,30 +873,17 @@
           <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/footer"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/bottom_box">
 
-            <TextView
-              android:id="@+id/refet_text"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:fontFamily="@font/regular"
-              android:gravity="center_horizontal"
-              android:paddingTop="10dp"
-              android:text="Refer NOW via:"
-              android:textColor="#747474"
-              android:textSize="11sp"
-              android:visibility="gone"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
               android:id="@+id/refer_and_earn"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginEnd="10dp"
+              android:layout_marginEnd="36dp"
               android:layout_marginBottom="16dp"
+              android:layout_marginStart="36dp"
               android:background="@drawable/mp_home_orange_btn_click_effect"
               android:clickable="true"
               android:focusable="true"
@@ -935,32 +893,39 @@
               android:paddingTop="10dp"
               android:paddingEnd="20dp"
               android:paddingBottom="10dp"
-              android:text="Refer Now"
+              android:text="Start referring"
               android:textAllCaps="true"
               android:textColor="@color/white"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent" />
 
-
-
             <TextView
-              android:id="@+id/boost360_tnc"
-              android:layout_width="wrap_content"
+              android:id="@+id/view_referal_btn"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:layout_below="@id/refer_and_earn"
+              android:layout_marginStart="36dp"
+              android:layout_marginEnd="36dp"
+              android:layout_marginTop="10dp"
+              android:background="@drawable/mp_home_share_click_effect"
+              android:clickable="true"
+              android:focusable="true"
               android:fontFamily="@font/regular"
-              android:gravity="center_horizontal"
-              android:padding="20dp"
-              android:text="Read how referral works"
-              android:textColor="#747474"
-              android:textSize="10sp"
-              android:visibility="gone"
+              android:gravity="center"
+              android:paddingStart="30dp"
+              android:paddingTop="10dp"
+              android:paddingEnd="30dp"
+              android:paddingBottom="10dp"
+              android:text="View referral items"
+              android:textColor="#FFB900"
+              android:textFontWeight="700"
+              android:textSize="13sp"
+              android:textStyle="bold"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toBottomOf="@id/refer_and_earn"
               />
-
-
 
 
           </androidx.constraintlayout.widget.ConstraintLayout>
@@ -979,24 +944,32 @@
             android:orientation="vertical"
             android:paddingTop="20dp">
 
-            <ImageView
-              android:layout_width="55dp"
-              android:layout_height="55dp"
-              app:srcCompat="@drawable/ic_mp_home_feedback" />
-
-            <TextView
-              android:layout_width="wrap_content"
+            <LinearLayout
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="15dp"
-              android:fontFamily="@font/regular"
-              android:text="Help us make Boost better"
-              android:textSize="18sp" />
+              android:layout_gravity="center"
+              android:gravity="center"
+              android:orientation="horizontal">
+
+              <ImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                app:srcCompat="@drawable/ic_mp_home_feedback" />
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/bold"
+                android:text="Help us make\nBoost better"
+                android:textSize="18sp" />
+
+            </LinearLayout>
 
             <TextView
               android:id="@+id/share_feedback_button"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_below="@id/recycler"
               android:layout_marginStart="10dp"
               android:layout_marginTop="16dp"
               android:layout_marginEnd="10dp"
@@ -1019,8 +992,6 @@
           </LinearLayout>
 
         </RelativeLayout>
-
-
 
 
       </LinearLayout>
