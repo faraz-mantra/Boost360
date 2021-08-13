@@ -16,6 +16,7 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.more.model.AboutAppSectionItem
+import com.dashboard.controller.ui.more.model.AboutAppSectionItem.IconType.*
 import com.dashboard.controller.ui.more.model.MoreSettingsResponse
 import com.dashboard.controller.ui.more.model.UsefulLinksItem
 import com.dashboard.databinding.FragmentMoreBinding
@@ -141,18 +142,18 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   private fun clickAppActionButton(type: AboutAppSectionItem.IconType) {
     var intent: Intent? = null
     when (type) {
-      AboutAppSectionItem.IconType.whats_new_version -> showShortToast("Coming soon")
-      AboutAppSectionItem.IconType.frequently_asked_question -> {
+      whats_new_version -> showShortToast("Coming soon")
+      frequently_asked_question -> {
         WebEngageController.trackEvent(ABOUT_BOOST_FAQS, NO_EVENT_LABLE, NULL)
         intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
         intent.putExtra("WEBSITE_NAME", getString(R.string.setting_faq_url))
       }
-      AboutAppSectionItem.IconType.terms_of_usages -> {
+      terms_of_usages -> {
         WebEngageController.trackEvent(ABOUT_BOOST_TNC, NO_EVENT_LABLE, NULL)
         intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
         intent.putExtra("WEBSITE_NAME", resources.getString(R.string.settings_tou_url))
       }
-      AboutAppSectionItem.IconType.follow_us_on_twitter -> {
+      follow_us_on_twitter -> {
         WebEngageController.trackEvent(ABOUT_BOOST_TWITTER_LIKE, NO_EVENT_LABLE, NULL)
         intent = Intent(Intent.ACTION_VIEW)
         try {
@@ -164,19 +165,19 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
         }
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
       }
-      AboutAppSectionItem.IconType.help_us_make_boost_better -> {
+      help_us_make_boost_better -> {
         showShortToast("Coming soon.")
       }
-      AboutAppSectionItem.IconType.privacy_policy -> {
+      privacy_policy -> {
         WebEngageController.trackEvent(ABOUT_BOOST_PRIVACY, NO_EVENT_LABLE, NULL)
         intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
         intent.putExtra("WEBSITE_NAME", resources.getString(R.string.settings_privacy_url))
       }
-      AboutAppSectionItem.IconType.like_us_on_facebook -> {
+      like_us_on_facebook -> {
         WebEngageController.trackEvent(ABOUT_BOOST_FB_LIKE, NO_EVENT_LABLE, NULL)
         likeUsFacebook(baseActivity, "")
       }
-      AboutAppSectionItem.IconType.rate_us_on_app_store -> {
+      rate_us_on_app_store -> {
         WebEngageController.trackEvent(ABOUT_BOOST_PLAY_STORE_RATING, NO_EVENT_LABLE, NULL)
         val uri = Uri.parse("market://details?id=" + baseActivity?.applicationContext?.packageName)
         val goToMarket = Intent(Intent.ACTION_VIEW, uri)
@@ -190,7 +191,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
           intent.putExtra("WEBSITE_NAME", url)
         }
       }
-      AboutAppSectionItem.IconType.rate_us_on_google_play -> {
+      rate_us_on_google_play -> {
         WebEngageController.trackEvent(ABOUT_BOOST_PLAY_STORE_RATING, NO_EVENT_LABLE, NULL)
         val uri = Uri.parse("market://details?id=" + baseActivity?.applicationContext?.packageName)
         val goToMarket = Intent(Intent.ACTION_VIEW, uri)
@@ -204,6 +205,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
           intent.putExtra("WEBSITE_NAME", url)
         }
       }
+      logout -> logout()
     }
     if (intent != null) {
       startActivity(intent)

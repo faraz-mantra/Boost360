@@ -123,12 +123,18 @@
     "icon": "privacy_policy",
     "subtitle": "Run Boost 360 account on your wordpress website.",
     "title": "Privacy policy"
+  },
+
+  {
+    "view_type_2": "We’re listening :)"
+
+  },
+  {
+    "icon": "logout",
+    "subtitle": "Logout your current session from Boost 360.",
+    "title": "Logout"
   }
 //,
-//  {
-//    "view_type_2": "We’re listening :)"
-//
-//  }
 //,
 //  {
 //    "icon": "help_us_make_boost_better",

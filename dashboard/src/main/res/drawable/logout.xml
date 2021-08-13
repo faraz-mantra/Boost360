@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:drawable="@drawable/logout_img"
+    android:top="@dimen/size_2"
+    android:bottom="@dimen/size_2"
+    android:left="@dimen/size_2"
+    android:right="@dimen/size_2"/>
+</layer-list>

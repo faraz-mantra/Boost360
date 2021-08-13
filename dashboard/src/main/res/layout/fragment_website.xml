@@ -359,7 +359,6 @@
           android:layout_height="wrap_content"
           app:tabIndicatorColor="@color/colorAccent"
           app:tabIndicatorFullWidth="false"
-          style="@style/TabTextApperance"
           app:tabSelectedTextColor="@color/colorAccent"
           app:tabTextColor="@color/black_4a4a4a" />
       </androidx.viewpager.widget.ViewPager>

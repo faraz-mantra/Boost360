@@ -15,7 +15,7 @@
       android:id="@+id/civ_image"
       android:layout_width="30dp"
       android:layout_height="@dimen/size_30"
-      android:src="@drawable/whats_new_version"
+      android:src="@drawable/follow_us_on_twitter"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
