@@ -55,6 +55,7 @@
       tools:text="This is a premium feature." />
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_marginHorizontal="16dp"
       android:id="@+id/ll_btn_container"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
