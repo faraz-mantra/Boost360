@@ -44,6 +44,7 @@
           android:layout_marginEnd="4dp"
           android:ellipsize="end"
           android:gravity="start"
+          android:fontFamily="@font/bold"
           android:maxLines="2"
           android:textColor="@color/black_4a4a4a"
           app:layout_constraintEnd_toStartOf="@+id/category_image"

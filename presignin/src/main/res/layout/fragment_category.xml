@@ -14,7 +14,8 @@
       android:layout_height="?attr/actionBarSize"
       android:orientation="horizontal"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent">
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/civ_back"
@@ -31,8 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/size_16"
-        android:includeFontPadding="true"
         android:fontFamily="@font/semi_bold"
+        android:includeFontPadding="true"
         android:text="@string/select_your_business_type"
         android:textColor="@color/black_3C3C3C"
         android:textSize="16sp" />
@@ -69,7 +70,6 @@
           android:text="@string/select_business_category"
           android:visibility="gone"
           tools:ignore="MissingConstraints" />
-
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/sub_heading_tv"
           style="@style/psn_subheading_style"
@@ -97,11 +97,12 @@
       </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
     <com.framework.views.customViews.CustomButton
       android:id="@+id/confirm_button"
       style="@style/psn_button_style"
       android:layout_width="match_parent"
-      android:height="70dp"
+      android:height="@dimen/_80sdp"
       android:background="@color/colorAccent"
       android:drawableEnd="@null"
       android:enabled="true"
@@ -109,6 +110,8 @@
       android:text="@string/confirm_proceed"
       android:visibility="visible"
       app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
       tools:ignore="MissingConstraints,UnknownId" />
 
 

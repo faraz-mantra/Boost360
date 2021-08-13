@@ -19,6 +19,7 @@ import com.boost.presignin.recyclerView.RecyclerItemClickListener
 import com.boost.presignin.rest.response.ResponseDataCategory
 import com.boost.presignin.viewmodel.CategoryVideoModel
 import com.framework.base.BaseFragment
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.webengageconstant.*
@@ -88,7 +89,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
           }
         }
         binding?.recyclerView?.post { baseAdapter.notifyDataSetChanged() }
-        binding?.confirmButton?.visible()
+        if (categoryList.filter { it.isSelected }.isNullOrEmpty()) binding?.confirmButton?.gone() else binding?.confirmButton?.visible()
       }
     }
   }
