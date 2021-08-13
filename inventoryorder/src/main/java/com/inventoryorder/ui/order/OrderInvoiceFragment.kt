@@ -51,16 +51,8 @@ class OrderInvoiceFragment : BaseInventoryFragment<FragmentOrderInoiceBinding>()
       val waIntent = Intent(Intent.ACTION_SEND)
       waIntent.type = "text/plain"
       waIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.str_order_invoice))
-      waIntent.putExtra(
-        Intent.EXTRA_TEXT,
-        "${getString(R.string.please_use_below_link)} \n$domainUrl"
-      )
-      baseActivity.startActivity(
-        Intent.createChooser(
-          waIntent,
-          getString(R.string.str_share_invoice)
-        )
-      )
+      waIntent.putExtra(Intent.EXTRA_TEXT, "${getString(R.string.please_use_below_link)} \n$domainUrl")
+      baseActivity.startActivity(Intent.createChooser(waIntent, getString(R.string.str_share_invoice)))
     } catch (e: Exception) {
       showLongToast(getString(R.string.error_sharing_invoice_please_try_again))
     }
