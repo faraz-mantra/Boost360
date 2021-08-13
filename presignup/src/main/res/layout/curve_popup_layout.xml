@@ -179,7 +179,7 @@
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/_5sdp"
-      android:drawableStart="@drawable/ic_phone"
+      android:drawableStart="@drawable/ic_phone_n"
       android:drawablePadding="@dimen/_10sdp"
       android:elevation="@dimen/_2sdp"
       android:fontFamily="@font/semi_bold"
