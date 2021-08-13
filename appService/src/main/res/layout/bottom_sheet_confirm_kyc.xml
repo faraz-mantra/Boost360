@@ -192,11 +192,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_40"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingVertical="@dimen/size_14"
         android:text="@string/confirm_and_submit"
         android:textAllCaps="false"
-         android:fontFamily="@font/semi_bold"
         app:layout_constraintBottom_toBottomOf="parent" />
 
       <com.framework.views.customViews.CustomTextView
@@ -206,12 +206,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_20"
         android:background="@drawable/rounded_refresh_btn"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingVertical="@dimen/size_14"
         android:text="@string/cancel_and_review"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
-         android:fontFamily="@font/semi_bold"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

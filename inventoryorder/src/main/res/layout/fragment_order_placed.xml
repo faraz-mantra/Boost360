@@ -246,7 +246,7 @@
               android:layout_height="@dimen/size_16"
               android:layout_gravity="center"
               android:src="@drawable/ic_billing_address"
-              app:tint="@color/orange" />
+              app:tint="@color/colorAccentLight" />
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/text_invoice"
@@ -257,7 +257,7 @@
               android:gravity="end"
               android:text="@string/invoice"
               android:textAllCaps="false"
-              android:textColor="@color/orange"
+              android:textColor="@color/colorAccentLight"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_1" />
           </LinearLayout>
