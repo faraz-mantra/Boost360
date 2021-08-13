@@ -34,7 +34,7 @@ class CategoryRecyclerViewHolder constructor(binding: ItemCategoryLayoutBinding)
   }
 
   private fun onCardClicked() {
-    model?.isSelected = model?.isSelected?.not() ?: true
+    model?.isSelected = model?.isSelected != true && binding.check.isChecked!=true
     listener?.onItemClick(
       position = adapterPosition,
       item = model,
@@ -63,7 +63,7 @@ class CategoryRecyclerViewHolder constructor(binding: ItemCategoryLayoutBinding)
     val drawable = model?.getImage(activity) ?: return
     binding.image.setImageDrawable(drawable)
     binding.image.setTintColor(getColor(R.color.black_4a4a4a)!!)
-    binding.categoryImage.setImageDrawable(model.getCategoryImage(activity))
+    binding.categoryImage.setImageDrawable(model.getCategoryImage(activity,model.isSelected))
     setClickListeners(binding.card)
     setCardSelection(model.isSelected)
 
