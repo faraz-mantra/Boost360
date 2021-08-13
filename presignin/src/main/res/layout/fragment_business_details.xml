@@ -78,7 +78,6 @@
           style="@style/psn_login_edittext_style"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/_16sdp"
           android:drawableStart="@drawable/ic_business_detail_catelog"
           android:hint="@string/your_business_name_hint"
           android:inputType="textCapWords"
@@ -90,7 +89,6 @@
           style="@style/psn_login_edittext_style"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/_16sdp"
           android:drawableStart="@drawable/ic_business_detail_email"
           android:hint="@string/your_business_email_optional"
           android:inputType="textEmailAddress"
@@ -163,6 +161,7 @@
       android:id="@+id/confirm_button"
       style="@style/psn_button_style"
       android:text="@string/choose_website_address"
+      android:drawableEnd="@null"
       android:visibility="visible"
       app:layout_constraintBottom_toTopOf="@id/bottomGuide"
       tools:ignore="MissingConstraints,UnknownId" />
