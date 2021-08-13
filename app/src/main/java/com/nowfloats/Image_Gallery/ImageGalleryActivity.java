@@ -44,7 +44,11 @@ public class ImageGalleryActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_image_gallery);
         Log.i(TAG, "onCreate: ");
         MixPanelController.track(MixPanelController.IMAGE_GALLERY, null);
-
+        if (Constants.storeSecondaryImages.isEmpty()){
+            binding.btnAdd.setVisibility(View.GONE);
+        }else {
+            binding.btnAdd.setVisibility(View.VISIBLE);
+        }
         setSupportActionBar(binding.appBar.toolbar);
         Methods.isOnline(ImageGalleryActivity.this);
 
