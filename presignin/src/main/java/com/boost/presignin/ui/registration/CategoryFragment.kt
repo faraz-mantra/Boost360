@@ -84,7 +84,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
         category = item as? CategoryDataModel
         for (listItem in categoryList) {
           (listItem as? CategoryDataModel)?.let {
-            it.isSelected = (it.category_key == (item as? CategoryDataModel)?.category_key)
+            it.isSelected = (it.category_key == (item as? CategoryDataModel)?.category_key) && it.isSelected!=false
           }
         }
         binding?.recyclerView?.post { baseAdapter.notifyDataSetChanged() }

@@ -86,7 +86,7 @@
           android:clipToPadding="false"
           android:orientation="vertical"
           android:overScrollMode="never"
-          android:paddingBottom="@dimen/_80sdp"
+          android:paddingBottom="@dimen/_5sdp"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintTop_toBottomOf="@id/sub_heading_tv"
@@ -107,7 +107,7 @@
       android:enabled="true"
       android:gravity="center"
       android:text="@string/confirm_proceed"
-      android:visibility="invisible"
+      android:visibility="visible"
       app:layout_constraintBottom_toBottomOf="parent"
       tools:ignore="MissingConstraints,UnknownId" />
 
