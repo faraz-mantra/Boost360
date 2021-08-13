@@ -151,8 +151,8 @@
     <item name="android:layout_height">@dimen/_36sdp</item>
     <item name="android:gravity">center</item>
     <item name="android:drawablePadding">@dimen/_4sdp</item>
-    <item name="android:fontFamily">@font/bold</item>
-    <item name="fontFamily">@font/bold</item>
+    <item name="android:fontFamily">@font/regular</item>
+    <item name="fontFamily">@font/regular</item>
     <item name="android:paddingStart">@dimen/_16sdp</item>
     <item name="android:paddingEnd">@dimen/_16sdp</item>
     <item name="android:drawableEnd">@drawable/ic_singin_next_icon</item>
