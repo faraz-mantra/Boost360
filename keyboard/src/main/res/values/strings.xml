@@ -651,6 +651,7 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
   <string name="tv_share_link">Share Link</string>
   <string name="tv_share">Share</string>
   <string name="tv_name">Name:</string>
+  <string name="tv_name_n">Name</string>
   <string name="tv_price">Price:</string>
   <string name="tv_discount">Discount:</string>
   <string name="tv_description">Description:</string>

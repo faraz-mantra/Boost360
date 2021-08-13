@@ -74,13 +74,12 @@
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="@string/tv_name"
+          android:text="@string/tv_name_n"
           android:textSize="@dimen/_11sdp" />
 
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_5sdp"
           android:text="@string/astreak"
           android:textColor="@color/greyish_brown"
           android:textSize="@dimen/_11sdp" />
@@ -124,7 +123,6 @@
             android:id="@+id/is_fill_img_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
             android:text="@string/astreak"
             android:textColor="@color/greyish_brown"
             android:textSize="@dimen/_11sdp"
@@ -169,7 +167,6 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
             android:text="@string/astreak"
             android:textColor="@color/greyish_brown"
             android:textSize="@dimen/_11sdp" />
@@ -213,7 +210,6 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
             android:text="@string/astreak"
             android:textColor="@color/greyish_brown"
             android:textSize="@dimen/_11sdp" />
