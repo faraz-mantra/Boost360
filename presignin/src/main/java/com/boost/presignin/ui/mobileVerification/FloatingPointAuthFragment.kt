@@ -65,7 +65,7 @@ class FloatingPointAuthFragment : AuthBaseFragment<FragmentFpListBinding>(), Rec
 
   override fun onCreateView() {
     super.onCreateView()
-    baseActivity.hideKeyBoard()
+    binding?.root?.post { baseActivity.hideKeyBoard() }
     WebEngageController.trackEvent(PS_BUSINESS_ACCOUNT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.btnGoToDashboard)
     setAdapterFPList()
