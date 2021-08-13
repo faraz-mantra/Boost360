@@ -133,7 +133,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
                 } else {
                     Picasso.get().load(R.drawable.featured_photo_default).into(logoimageView);
                     onFeatureLogoAddedOrUpdated(false);
-                    uploadButton.setText(getResources().getString(R.string.add_logo));
+                    uploadButton.setText(getResources().getString(R.string.add_featured_image));
                 }
             }
 

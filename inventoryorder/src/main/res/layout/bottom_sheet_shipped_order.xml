@@ -227,31 +227,20 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent">
 
-      <com.framework.views.customViews.CustomButton
+      <com.framework.views.customViews.CustomTextView
         android:id="@+id/tvCancel"
         style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-        android:layout_marginEnd="@dimen/size_20"
-        android:text="@string/go_back"
+        android:layout_marginEnd="@dimen/size_10"
         android:background="@drawable/bg_rounded_yellow_light"
-        android:textColor="@color/colorAccentLight"/>
+        android:textColor="@color/colorAccentLight"
+        android:text="@string/go_back" />
 
       <com.framework.views.customViews.CustomButton
         android:id="@+id/buttonDone"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/size_36"
-        android:layout_gravity="center"
-        android:background="@drawable/button_rounded_6"
-        android:gravity="center"
-        android:paddingStart="@dimen/size_28"
-        android:paddingEnd="@dimen/size_28"
-        android:shadowRadius="0"
-        android:stateListAnimator="@null"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:background="@drawable/button_proceed"
         android:text="@string/notify_customer"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:fontFamily="@font/bold"
-        app:textType="CAPTION"
-        tools:ignore="UnusedAttribute" />
+        android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
