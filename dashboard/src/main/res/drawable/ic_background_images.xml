@@ -1,4 +1,6 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
+<layer-list  xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:top="3dp" android:left="3dp" android:right="3dp" android:bottom="3dp">
+<vector
     android:width="21dp"
     android:height="21dp"
     android:viewportWidth="21"
@@ -86,3 +88,5 @@
       android:fillColor="#4A4A4A"
       android:strokeColor="#4A4A4A"/>
 </vector>
+  </item>
+</layer-list>
