@@ -19,8 +19,8 @@
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/civ_image"
-        android:layout_width="@dimen/size_16"
-        android:layout_height="@dimen/size_16"
+        android:layout_width="@dimen/size_20"
+        android:layout_height="@dimen/size_20"
         android:src="@drawable/ic_fonts"
         app:layout_constraintBottom_toBottomOf="@+id/ctv_heading"
         app:layout_constraintStart_toStartOf="parent"

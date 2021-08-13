@@ -1,6 +1,8 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="21dp"
-    android:height="21dp"
+<layer-list  xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:top="1dp" android:left="1dp" android:right="1dp" android:bottom="1dp">
+<vector
+    android:width="@dimen/size_20"
+    android:height="@dimen/size_20"
     android:viewportWidth="21"
     android:viewportHeight="21">
   <path
@@ -23,3 +25,5 @@
       android:strokeColor="#4A4A4A"
       android:strokeLineCap="round"/>
 </vector>
+  </item>
+</layer-list>
