@@ -12,6 +12,18 @@ import java.util.StringTokenizer;
 
 public class OrderDataModel implements Parcelable {
 
+    public static final Creator<OrderDataModel> CREATOR = new Creator<OrderDataModel>() {
+
+        @Override
+        public OrderDataModel createFromParcel(Parcel parcel) {
+            return new OrderDataModel(parcel);
+        }
+
+        @Override
+        public OrderDataModel[] newArray(int i) {
+            return new OrderDataModel[i];
+        }
+    };
     private String mUsername;
     private String mBusinessName;
     private String mEmail;
@@ -30,6 +42,17 @@ public class OrderDataModel implements Parcelable {
         this.mPhNo = mPhNo;
         this.mReason = mReason;
         this.mCurrency = mCurrency;
+    }
+
+    private OrderDataModel(Parcel in) {
+        this.mUsername = in.readString();
+        this.mBusinessName = in.readString();
+        this.mEmail = in.readString();
+        this.mPrice = in.readString();
+        this.mExpires = in.readString();
+        this.mPhNo = in.readString();
+        this.mReason = in.readString();
+        this.mCurrency = in.readString();
     }
 
     public String getUsername() {
@@ -59,7 +82,8 @@ public class OrderDataModel implements Parcelable {
     public String getReason() {
         return mReason;
     }
-    public String getCurrency(){
+
+    public String getCurrency() {
         return mCurrency;
     }
 
@@ -79,30 +103,6 @@ public class OrderDataModel implements Parcelable {
         parcel.writeString(mReason);
         parcel.writeString(mCurrency);
 
-    }
-
-    public static final Creator<OrderDataModel> CREATOR = new Creator<OrderDataModel>(){
-
-        @Override
-        public OrderDataModel createFromParcel(Parcel parcel) {
-            return new OrderDataModel(parcel);
-        }
-
-        @Override
-        public OrderDataModel[] newArray(int i) {
-            return new OrderDataModel[i];
-        }
-    };
-
-    private OrderDataModel(Parcel in){
-        this.mUsername = in.readString();
-        this.mBusinessName = in.readString();
-        this.mEmail = in.readString();
-        this.mPrice = in.readString();
-        this.mExpires = in.readString();
-        this.mPhNo = in.readString();
-        this.mReason = in.readString();
-        this.mCurrency = in.readString();
     }
 
 }

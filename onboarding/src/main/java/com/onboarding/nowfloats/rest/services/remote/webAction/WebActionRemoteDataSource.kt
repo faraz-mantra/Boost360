@@ -10,8 +10,15 @@ import retrofit2.http.*
 interface WebActionRemoteDataSource {
 
   @POST(EndPoints.POST_UPDATE_WHATSAPP_URL)
-  fun updateWhatsAppNumber(@Header("Authorization") auth: String, @Body request: UpdateChannelActionDataRequest): Observable<Response<String>>
+  fun updateWhatsAppNumber(
+    @Header("Authorization") auth: String,
+    @Body request: UpdateChannelActionDataRequest
+  ): Observable<Response<String>>
 
   @GET(EndPoints.GET_WHATSAPP_BUSINESS)
-  fun getWhatsAppBusiness(@Header("Authorization") auth: String, @Query("query") request: String?, @Query("limit") limit: Int? = 1): Observable<Response<ChannelWhatsappResponse>>
+  fun getWhatsAppBusiness(
+    @Header("Authorization") auth: String,
+    @Query("query") request: String?,
+    @Query("limit") limit: Int? = 1
+  ): Observable<Response<ChannelWhatsappResponse>>
 }

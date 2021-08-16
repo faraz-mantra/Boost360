@@ -17,7 +17,8 @@ import com.dashboard.utils.rotateImage
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
-class BoostAddOnsViewHolder(binding: ItemBoostAddOnsBinding) : AppBaseRecyclerViewHolder<ItemBoostAddOnsBinding>(binding), RecyclerItemClickListener {
+class BoostAddOnsViewHolder(binding: ItemBoostAddOnsBinding) :
+  AppBaseRecyclerViewHolder<ItemBoostAddOnsBinding>(binding), RecyclerItemClickListener {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -26,15 +27,27 @@ class BoostAddOnsViewHolder(binding: ItemBoostAddOnsBinding) : AppBaseRecyclerVi
     binding.txtSubTitle.text = data.subTitle
 
     if (data.isLastSeen.not()) {
-      activity?.resources?.getDimensionPixelSize(R.dimen.size_74)?.let { binding.contentParent.layoutParams.height = it }
-      activity?.resources?.getDimensionPixelSize(R.dimen.size_10)?.let { binding.view.layoutParams.height = it }
-      activity?.let { binding.imgSymbol.setTintColor(ContextCompat.getColor(it, R.color.greyish_brown)) }
-      binding.mainContent.background = activity?.let { ContextCompat.getDrawable(it, R.color.white_smoke) }
+      activity?.resources?.getDimensionPixelSize(R.dimen.size_74)
+        ?.let { binding.contentParent.layoutParams.height = it }
+      activity?.resources?.getDimensionPixelSize(R.dimen.size_10)
+        ?.let { binding.view.layoutParams.height = it }
+      activity?.let {
+        binding.imgSymbol.setTintColor(
+          ContextCompat.getColor(
+            it,
+            R.color.greyish_brown
+          )
+        )
+      }
+      binding.mainContent.background =
+        activity?.let { ContextCompat.getDrawable(it, R.color.white_smoke) }
       setExpendStatusView(data)
       binding.imgArrow.rotation = if (data.isExpend) ROTATED_POSITION else INITIAL_POSITION
     } else {
-      activity?.resources?.getDimensionPixelSize(R.dimen.size_40)?.let { binding.contentParent.layoutParams.height = it }
-      activity?.resources?.getDimensionPixelSize(R.dimen.size_16)?.let { binding.view.layoutParams.height = it }
+      activity?.resources?.getDimensionPixelSize(R.dimen.size_40)
+        ?.let { binding.contentParent.layoutParams.height = it }
+      activity?.resources?.getDimensionPixelSize(R.dimen.size_16)
+        ?.let { binding.view.layoutParams.height = it }
       setLastSeenView(data)
     }
 
@@ -43,7 +56,8 @@ class BoostAddOnsViewHolder(binding: ItemBoostAddOnsBinding) : AppBaseRecyclerVi
       activity?.let {
         binding.rvManageBusiness.apply {
           visible()
-          val adapter1 = AppBaseRecyclerViewAdapter(it, data.manageBusinessList!!, this@BoostAddOnsViewHolder)
+          val adapter1 =
+            AppBaseRecyclerViewAdapter(it, data.manageBusinessList!!, this@BoostAddOnsViewHolder)
           val layoutManager1: GridLayoutManager = object : GridLayoutManager(context, 4) {
             override fun canScrollVertically(): Boolean {
               return false
@@ -67,9 +81,30 @@ class BoostAddOnsViewHolder(binding: ItemBoostAddOnsBinding) : AppBaseRecyclerVi
   }
 
   private fun setExpendStatusView(data: AllBoostAddOnsData) {
-    activity?.let { binding.imgArrow.setTintColor(ContextCompat.getColor(it, if (data.isExpend) R.color.grey_dim_2 else R.color.colorAccent)) }
-    activity?.let { binding.txtTitle.setTextColor(ContextCompat.getColor(it, if (data.isExpend) R.color.greyish_brown else R.color.colorAccent)) }
-    activity?.let { binding.contentParent.setCardBackgroundColor(ContextCompat.getColorStateList(it, if (data.isExpend) R.color.white_smoke else R.color.white)) }
+    activity?.let {
+      binding.imgArrow.setTintColor(
+        ContextCompat.getColor(
+          it,
+          if (data.isExpend) R.color.grey_dim_2 else R.color.colorAccent
+        )
+      )
+    }
+    activity?.let {
+      binding.txtTitle.setTextColor(
+        ContextCompat.getColor(
+          it,
+          if (data.isExpend) R.color.greyish_brown else R.color.colorAccent
+        )
+      )
+    }
+    activity?.let {
+      binding.contentParent.setCardBackgroundColor(
+        ContextCompat.getColorStateList(
+          it,
+          if (data.isExpend) R.color.white_smoke else R.color.white
+        )
+      )
+    }
     binding.contentParent.cardElevation = if (data.isExpend) 0F else 2F
     binding.rvManageBusiness.visibility = if (data.isExpend) View.VISIBLE else View.GONE
   }
@@ -77,9 +112,23 @@ class BoostAddOnsViewHolder(binding: ItemBoostAddOnsBinding) : AppBaseRecyclerVi
   private fun setLastSeenView(data: AllBoostAddOnsData) {
     binding.imgArrow.visibility = View.INVISIBLE
     binding.mainContent.background = activity?.let { ContextCompat.getDrawable(it, R.color.white) }
-    activity?.let { binding.contentParent.setCardBackgroundColor(ContextCompat.getColorStateList(it, R.color.white)) }
+    activity?.let {
+      binding.contentParent.setCardBackgroundColor(
+        ContextCompat.getColorStateList(
+          it,
+          R.color.white
+        )
+      )
+    }
     binding.contentParent.cardElevation = 0F
-    activity?.let { binding.imgSymbol.setTintColor(ContextCompat.getColor(it, R.color.colorAccent)) }
+    activity?.let {
+      binding.imgSymbol.setTintColor(
+        ContextCompat.getColor(
+          it,
+          R.color.colorAccent
+        )
+      )
+    }
     activity?.let { binding.txtTitle.setTextColor(ContextCompat.getColor(it, R.color.colorAccent)) }
   }
 

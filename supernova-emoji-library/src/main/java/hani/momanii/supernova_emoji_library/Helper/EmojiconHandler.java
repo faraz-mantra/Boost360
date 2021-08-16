@@ -33,9 +33,6 @@ import hani.momanii.supernova_emoji_library.R;
 
 
 public final class EmojiconHandler {
-    private EmojiconHandler() {
-    }
-
     private static final SparseIntArray sEmojisMap = new SparseIntArray(1029);
     private static final SparseIntArray sSoftbanksMap = new SparseIntArray(471);
     private static Map<String, Integer> sEmojisModifiedMap = new HashMap<>();
@@ -525,7 +522,6 @@ public final class EmojiconHandler {
         //sport
 
 
-
 ///CARS
 
         sEmojisMap.put(0x1f697, R.drawable.emoji_1f697);
@@ -639,7 +635,6 @@ public final class EmojiconHandler {
         sEmojisMap.put(0x26ea, R.drawable.emoji_26ea);
         sEmojisMap.put(0x1f54c, R.drawable.emoji_1f54c);
         sEmojisMap.put(0x1f54b, R.drawable.emoji_1f54b);
-
 
 
         ///
@@ -827,7 +822,6 @@ public final class EmojiconHandler {
         sEmojisMap.put(0x1f50e, R.drawable.emoji_1f50e);
 
         ///ELECT
-
 
 
         /// SIGNES
@@ -1061,6 +1055,9 @@ public final class EmojiconHandler {
 
     }
 
+    private EmojiconHandler() {
+    }
+
     private static boolean isSoftBankEmoji(char c) {
         return ((c >> 12) == 0xe);
     }
@@ -1208,12 +1205,12 @@ public final class EmojiconHandler {
                         int resourceId = 0;
                         if (sEmojisModifiedMap.containsKey(resourceName)) {
                             resourceId = sEmojisModifiedMap.get(resourceName);
-                        } else if (!sInexistentEmojis.contains(resourceName)){
+                        } else if (!sInexistentEmojis.contains(resourceName)) {
                             resourceId = context.getResources().getIdentifier(resourceName, "drawable", context.getApplicationContext().getPackageName());
                             if (resourceId != 0) {
                                 sEmojisModifiedMap.put(resourceName, resourceId);
                             } else {
-                              sInexistentEmojis.add(resourceName);
+                                sInexistentEmojis.add(resourceName);
                             }
                         }
 

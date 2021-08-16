@@ -46,7 +46,7 @@
           android:ellipsize="end"
           android:maxLines="2"
           android:text="@string/manage_business_description"
-          android:textColor="@color/black_4a4a4a"
+          android:textColor="@color/warm_grey"
           app:textType="CAPTION" />
       </LinearLayout>
 
@@ -69,23 +69,22 @@
       android:layout_below="@+id/viewOne"
       android:background="@color/white" />
 
-    <com.framework.views.customViews.CustomCardView
+    <FrameLayout
       android:id="@+id/btn_show_all"
       android:layout_width="wrap_content"
-      android:layout_height="@dimen/size_28"
+      android:layout_height="@dimen/size_30"
       android:layout_alignBottom="@+id/viewTwo"
       android:layout_centerHorizontal="true"
       android:layout_marginBottom="@dimen/_14dp"
-      app:cardBackgroundColor="@color/white"
-      app:cardCornerRadius="@dimen/size_14">
+      android:background="@drawable/ic_round_white_stroke">
 
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center|center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/size_14"
-        android:paddingEnd="@dimen/size_14">
+        android:paddingStart="@dimen/size_20"
+        android:paddingEnd="@dimen/size_20">
 
         <com.framework.views.customViews.CustomTextView
           android:layout_width="wrap_content"
@@ -105,10 +104,11 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_3"
           android:layout_marginBottom="0.5dp"
+          android:visibility="gone"
           app:srcCompat="@drawable/ic_arrow_right_9_d" />
       </LinearLayout>
 
-    </com.framework.views.customViews.CustomCardView>
+    </FrameLayout>
 
   </RelativeLayout>
 </layout>

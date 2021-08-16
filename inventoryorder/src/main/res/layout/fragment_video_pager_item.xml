@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.framework.views.customViews.CustomCardView
+      android:id="@+id/customCardView"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_200"
+      app:cardCornerRadius="@dimen/size_8"
+      app:cardUseCompatPadding="true"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/video_thumbnails"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/black_10" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scaleType="centerInside"
+          app:srcCompat="@drawable/play_video_thumbs" />
+      </FrameLayout>
+
+
+    </com.framework.views.customViews.CustomCardView>
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/ctv_video_title"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_5"
+      android:layout_marginTop="@dimen/size_10"
+      android:fontFamily="@font/bold"
+      android:textColor="@color/black_4a4a4a"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/customCardView"
+      app:layout_constraintWidth_percent="0.75"
+      tools:text="HELLOEFNJNJSNJSNFJSNF" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/ctv_video_duration"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_10"
+      android:gravity="end"
+      android:textColor="@color/black_4a4a4a"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/ctv_video_title"
+      app:layout_constraintTop_toBottomOf="@+id/customCardView"
+      app:layout_constraintWidth_percent="0.20"
+      tools:text="4:23" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

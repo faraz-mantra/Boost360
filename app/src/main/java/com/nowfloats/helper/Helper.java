@@ -12,50 +12,38 @@ import java.util.Currency;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class Helper
-{
+public class Helper {
 
-    public static DecimalFormat getCurrencyFormatter()
-    {
+    public static DecimalFormat getCurrencyFormatter() {
         return new DecimalFormat("#,##,##,##,##,##,##,###.##");
     }
 
-    public static void loadCurrency()
-    {
+    public static void loadCurrency() {
         //currencyValue = getString(R.string.currency_text);
         //binding.editCurrency.setText(currencyValue);
 
         new Thread(() -> {
 
-            if (Constants.Currency_Country_Map == null)
-            {
+            if (Constants.Currency_Country_Map == null) {
                 Constants.Currency_Country_Map = new HashMap<>();
                 Constants.currencyArray = new ArrayList<>();
             }
 
-            if (Constants.Currency_Country_Map.size() == 0)
-            {
-                for (Locale locale : Locale.getAvailableLocales())
-                {
+            if (Constants.Currency_Country_Map.size() == 0) {
+                for (Locale locale : Locale.getAvailableLocales()) {
 
-                    try
-                    {
-                        if (locale != null && locale.getISO3Country() != null && Currency.getInstance(locale) != null)
-                        {
+                    try {
+                        if (locale != null && locale.getISO3Country() != null && Currency.getInstance(locale) != null) {
                             Currency currency = Currency.getInstance(locale);
                             String loc_currency = currency.getCurrencyCode();
                             String country = locale.getDisplayCountry();
 
-                            if (!Constants.Currency_Country_Map.containsKey(country.toLowerCase()))
-                            {
+                            if (!Constants.Currency_Country_Map.containsKey(country.toLowerCase())) {
                                 Constants.Currency_Country_Map.put(country.toLowerCase(), loc_currency);
                                 Constants.currencyArray.add(country + "-" + loc_currency);
                             }
                         }
-                    }
-
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         System.gc();
                         e.printStackTrace();
                     }
@@ -74,8 +62,7 @@ public class Helper
         }).start();
     }
 
-    public static boolean fileExist(String file_name)
-    {
+    public static boolean fileExist(String file_name) {
 
         File imgFile = new File(file_name);
         {

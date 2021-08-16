@@ -10,6 +10,15 @@ import java.util.ArrayList;
  * Created by guru on 08-06-2015.
  */
 public class ProductListModel implements Parcelable {
+    public static final Parcelable.Creator<ProductListModel> CREATOR = new Parcelable.Creator<ProductListModel>() {
+        public ProductListModel createFromParcel(Parcel in) {
+            return new ProductListModel(in);
+        }
+
+        public ProductListModel[] newArray(int size) {
+            return new ProductListModel[size];
+        }
+    };
     public String BuyOnlineLink;
     public String CurrencyCode;
     public String Description;
@@ -36,10 +45,40 @@ public class ProductListModel implements Parcelable {
     public String TotalQueries;
     public String CreatedOn;
     public String ProductIndex;
-    public Uri picimageURI =null;
+    public Uri picimageURI = null;
     public String UpdatedOn;
     public boolean isProductSelected;
 
+    public ProductListModel(Parcel in) {
+        this.BuyOnlineLink = in.readString();
+        this.CurrencyCode = in.readString();
+        this.Description = in.readString();
+        this.DiscountAmount = in.readString();
+        this.ExternalSourceId = in.readString();
+        this.IsArchived = in.readString();
+        this.IsAvailable = in.readString();
+        this.IsFreeShipmentAvailable = in.readString();
+        this.Name = in.readString();
+        this.Price = in.readString();
+        this.ProductUrl = in.readString();
+        this.Priority = in.readString();
+        this.ShipmentDuration = in.readString();
+        this._keywords = in.readArrayList(ProductListModel.this.getClass().getClassLoader());
+        this.ApplicationId = in.readString();
+        this.FPTag = in.readString();
+        this.ImageUri = in.readString();
+        this.Images = new ArrayList<ImageListModel>();
+        in.readTypedList(Images, ImageListModel.CREATOR);
+        this.MerchantName = in.readString();
+        this.TileImageUri = in.readString();
+        this._id = in.readString();
+        this.GPId = in.readString();
+        this.TotalQueries = in.readString();
+        this.CreatedOn = in.readString();
+        this.UpdatedOn = in.readString();
+        this.ProductIndex = in.readString();
+        this.availableUnits = in.readInt();
+    }
 
     @Override
     public int describeContents() {
@@ -76,44 +115,4 @@ public class ProductListModel implements Parcelable {
         parcel.writeString(ProductIndex);
         parcel.writeInt(availableUnits);
     }
-
-    public ProductListModel(Parcel in) {
-        this.BuyOnlineLink = in.readString();
-        this.CurrencyCode = in.readString();
-        this.Description = in.readString();
-        this.DiscountAmount = in.readString();
-        this.ExternalSourceId = in.readString();
-        this.IsArchived = in.readString();
-        this.IsAvailable = in.readString();
-        this.IsFreeShipmentAvailable = in.readString();
-        this.Name = in.readString();
-        this.Price = in.readString();
-        this.ProductUrl = in.readString();
-        this.Priority = in.readString();
-        this.ShipmentDuration = in.readString();
-        this._keywords = in.readArrayList(ProductListModel.this.getClass().getClassLoader());
-        this.ApplicationId = in.readString();
-        this.FPTag = in.readString();
-        this.ImageUri = in.readString();
-        this.Images = new ArrayList<ImageListModel>();
-        in.readTypedList(Images, ImageListModel.CREATOR);
-        this.MerchantName = in.readString();
-        this.TileImageUri = in.readString();
-        this._id = in.readString();
-        this.GPId = in.readString();
-        this.TotalQueries = in.readString();
-        this.CreatedOn = in.readString();
-        this.UpdatedOn = in.readString();
-        this.ProductIndex = in.readString();
-        this.availableUnits = in.readInt();
-    }
-
-    public static final Parcelable.Creator<ProductListModel> CREATOR = new Parcelable.Creator<ProductListModel>() {
-        public ProductListModel createFromParcel(Parcel in) {
-            return new ProductListModel(in);
-        }
-        public ProductListModel[] newArray(int size) {
-            return new ProductListModel[size];
-        }
-    };
 }

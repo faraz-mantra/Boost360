@@ -3,7 +3,9 @@ package com.dashboard.controller.ui.drScore
 import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ContextThemeWrapper
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.IntentConstant
@@ -15,9 +17,9 @@ import com.dashboard.controller.ui.dashboard.getLocalSession
 import com.dashboard.databinding.FragmentDigitalReadinessScoreBinding
 import com.dashboard.model.live.drScore.*
 import com.dashboard.model.live.shareUser.ShareUserDetailResponse
-import com.dashboard.pref.Key_Preferences
-import com.dashboard.pref.UserSessionManager
-import com.dashboard.pref.WA_KEY
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
+import com.framework.pref.WA_KEY
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -29,12 +31,14 @@ import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
+import com.framework.utils.roundToFloat
 import com.framework.utils.saveData
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.DIGITAL_READINESS_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import com.google.android.material.snackbar.Snackbar
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
+import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
@@ -82,7 +86,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       val response = it as? DrScoreUiDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         val drScoreData = FirestoreManager.getDrScoreData()
-        isHigh = (drScoreData != null && drScoreData.getDrsTotal() >= 80)
+        isHigh = (drScoreData != null && drScoreData.getDrsTotal() >= 85)
         val drScoreSetupList = drScoreData?.getDrScoreData(response.data)
         if (drScoreSetupList.isNullOrEmpty().not()) {
           drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout() }
@@ -99,14 +103,16 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
             }
           } else adapterPager?.notify(drScoreSetupList)
         } else Snackbar.make(binding?.root!!, getString(R.string.digital_readiness_score_failed_to_load), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
-        binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "90%")
-        binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-        binding?.txtPercentage?.text = "${drScoreData?.getDrsTotal()}%"
-        binding?.progressBar?.progress = drScoreData?.getDrsTotal() ?: 0
-        binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+        binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "85%")
+//        binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
+        binding?.txtReadinessScore?.text = "${drScoreData?.getDrsTotal() ?: 0}"
+//        binding?.progressBar?.progress = drScoreData?.getDrsTotal() ?: 0
+        val percentage = ((100 - drScoreData?.getDrsTotal()!!).toDouble() / 100).roundToFloat(2)
+        (binding?.progressBar?.layoutParams as? ConstraintLayout.LayoutParams)?.matchConstraintPercentWidth = percentage
+        binding?.progressBar?.requestLayout()
+//        binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
 
       } else Snackbar.make(binding?.root!!, getString(R.string.digital_readiness_score_failed_to_load), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
-
     })
 
   }
@@ -116,77 +122,16 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
     when (actionType) {
       RecyclerViewActionType.DIGITAL_SCORE_READINESS_CLICK.ordinal -> {
         val data = item as? DrScoreItem ?: return
-        clickEventUpdateScoreN(DrScoreItem.DrScoreItemType.fromName(data.drScoreUiData?.id))
+        val type = DrScoreItem.DrScoreItemType.fromName(data.drScoreUiData?.id)
+        if (type == DrScoreItem.DrScoreItemType.boolean_share_business_card) {
+          val messageChannelUrl = PreferencesUtils.instance.getData(PreferenceConstant.CHANNEL_SHARE_URL, "")
+          if (messageChannelUrl.isNullOrEmpty().not()) visitingCardDetailText(messageChannelUrl)
+          else getChannelAccessToken(true)
+        } else clickEventUpdateScoreN(type, baseActivity, session)
       }
     }
   }
 
-  private fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?) {
-    when (type) {
-      DrScoreItem.DrScoreItemType.boolean_add_business_name -> {
-//        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty())
-        baseActivity.startBusinessProfileDetailEdit(session)
-      }
-      DrScoreItem.DrScoreItemType.boolean_add_business_description -> {
-//        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty())
-        baseActivity.startBusinessProfileDetailEdit(session)
-      }
-      DrScoreItem.DrScoreItemType.boolean_add_clinic_logo -> {
-//        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl).isNullOrEmpty())
-        baseActivity.startBusinessLogo(session)
-      }
-
-      DrScoreItem.DrScoreItemType.boolean_add_business_hours -> {
-        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS) == "TIMINGS") baseActivity.startBusinessHours(session)
-        else alertDialogBusinessHours()
-      }
-      DrScoreItem.DrScoreItemType.boolean_add_contact_details -> {
-        baseActivity.startBusinessInfoEmail(session)
-      }
-      DrScoreItem.DrScoreItemType.boolean_add_custom_domain_name_and_ssl -> {
-        baseActivity.startDomainDetail(session)
-      }
-      DrScoreItem.DrScoreItemType.number_updates_posted -> {
-        session?.let { baseActivity.startUpdateLatestStory(it) }
-      }
-      DrScoreItem.DrScoreItemType.boolean_social_channel_connected -> {
-        session?.let { baseActivity.startDigitalChannel(it) }
-      }
-      DrScoreItem.DrScoreItemType.number_services_added, DrScoreItem.DrScoreItemType.number_products_added -> {
-        baseActivity.startListServiceProduct(session)
-      }
-      DrScoreItem.DrScoreItemType.boolean_add_bank_account -> {
-        baseActivity.startMyBankAccount(session)
-      }
-      DrScoreItem.DrScoreItemType.boolean_image_uploaded_to_gallery -> {
-        baseActivity.startAddImageGallery(session, false)
-      }
-      DrScoreItem.DrScoreItemType.boolean_create_custom_page -> {
-        baseActivity.startCustomPage(session, false)
-      }
-      DrScoreItem.DrScoreItemType.boolean_share_business_card -> {
-        val messageChannelUrl = PreferencesUtils.instance.getData(PreferenceConstant.CHANNEL_SHARE_URL, "")
-        if (messageChannelUrl.isNullOrEmpty().not()) visitingCardDetailText(messageChannelUrl)
-        else getChannelAccessToken(true)
-      }
-      DrScoreItem.DrScoreItemType.boolean_create_sample_in_clinic_appointment -> {
-        baseActivity.startOrderAptConsultList(session, isConsult = false)
-      }
-      DrScoreItem.DrScoreItemType.boolean_create_sample_video_consultation -> {
-        baseActivity.startOrderAptConsultList(session, isConsult = true)
-      }
-      DrScoreItem.DrScoreItemType.boolean_respond_to_customer_enquiries -> {
-        baseActivity.startBusinessEnquiry(session)
-      }
-      DrScoreItem.DrScoreItemType.boolean_add_featured_image_video -> {
-        baseActivity.startFeatureLogo(session)
-      }
-      DrScoreItem.DrScoreItemType.boolean_select_what_you_sell,
-      DrScoreItem.DrScoreItemType.boolean_create_doctor_e_profile,
-      DrScoreItem.DrScoreItemType.boolean_manage_appointment_settings,
-      -> Toast.makeText(baseActivity, "Coming soon...", Toast.LENGTH_SHORT).show()
-    }
-  }
 
   private fun visitingCardDetailText(shareChannelText: String?) {
     viewModel?.getBoostVisitingMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
@@ -216,17 +161,15 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 
   private fun getChannelAccessToken(isShowLoader: Boolean = false) {
     if (isShowLoader) showProgress()
-    viewModel?.getChannelsAccessToken(session?.fPID)?.observeOnce(this, {
+    viewModel?.getChannelsAccessTokenStatus(session?.fPID)?.observeOnce(this, {
       var urlString = ""
       if (it.isSuccess()) {
-        val channelsAccessToken = (it as? ChannelsAccessTokenResponse)?.NFXAccessTokens
-        channelsAccessToken?.forEach { it1 ->
-          when (it1.type()) {
-            ChannelAccessToken.AccessTokenType.facebookpage.name ->
-              if (it1.UserAccountId.isNullOrEmpty().not()) urlString = "\n⚡ *Facebook: https://www.facebook.com/${it1.UserAccountId}*"
-            ChannelAccessToken.AccessTokenType.twitter.name ->
-              if (it1.UserAccountName.isNullOrEmpty().not()) urlString += "\n⚡ *Twitter: https://twitter.com/${it1.UserAccountName?.trim()}*"
-          }
+        val response = it as? ChannelAccessStatusResponse
+        if (response?.channels?.facebookpage?.account?.accountId.isNullOrEmpty().not()) {
+          urlString = "\n⚡ *Facebook: https://www.facebook.com/${response?.channels?.facebookpage?.account?.accountId}*"
+        }
+        if (response?.channels?.twitter?.account?.accountName.isNullOrEmpty().not()) {
+          urlString += "\n⚡ *Twitter: https://twitter.com/${response?.channels?.twitter?.account?.accountName?.trim()}*"
         }
       }
       getWhatsAppData(urlString, isShowLoader)
@@ -235,7 +178,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 
   private fun getWhatsAppData(urlString: String, isShowLoader: Boolean = false) {
     var urlStringN = urlString
-    viewModel?.getWhatsappBusiness(session?.fpTag, WA_KEY)?.observeOnce(this, {
+    viewModel?.getWhatsappBusiness(request = session?.fpTag, auth = WA_KEY)?.observeOnce(this, {
       if (isShowLoader) hideProgress()
       if (it.isSuccess()) {
         val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
@@ -247,16 +190,6 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       PreferencesUtils.instance.saveData(PreferenceConstant.CHANNEL_SHARE_URL, urlStringN)
       if (isShowLoader) visitingCardDetailText(urlStringN)
     })
-  }
-
-  private fun alertDialogBusinessHours() {
-    AlertDialog.Builder(baseActivity)
-        .setTitle(getString(R.string.features_not_available))
-        .setMessage(getString(R.string.check_store_for_upgrade_info))
-        .setPositiveButton(getString(R.string.goto_store)) { dialogInterface, i ->
-          baseActivity.startPricingPlan(session)
-          dialogInterface.dismiss()
-        }.setNegativeButton(getString(R.string.cancel)) { dialogInterface, _ -> dialogInterface.dismiss() }.show()
   }
 
   override fun showProgress(title: String?, cancelable: Boolean?) {
@@ -276,4 +209,80 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
     super.onStart()
     FirestoreManager.listener = { getSiteMeter() }
   }
+}
+
+fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?, baseActivity: AppCompatActivity, session: UserSessionManager?) {
+  WebEngageController.trackEvent(DIGITAL_READINESS_PAGE, PAGE_VIEW, session?.fpTag)
+  when (type) {
+    DrScoreItem.DrScoreItemType.boolean_add_business_name -> {
+//        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty())
+      baseActivity.startBusinessProfileDetailEdit(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_add_business_description -> {
+//        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty())
+      baseActivity.startBusinessProfileDetailEdit(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_add_clinic_logo -> {
+//        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl).isNullOrEmpty())
+      baseActivity.startBusinessLogo(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_add_business_hours -> {
+      if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS) == "TIMINGS") baseActivity.startBusinessHours(session)
+      else alertDialogBusinessHours(baseActivity, session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_add_contact_details -> {
+      baseActivity.startBusinessInfoEmail(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_create_staff -> {
+      baseActivity.startAddStaff(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_add_custom_domain_name_and_ssl -> {
+      baseActivity.startDomainDetail(session)
+    }
+    DrScoreItem.DrScoreItemType.number_updates_posted -> {
+      session?.let { baseActivity.startUpdateLatestStory(it) }
+    }
+    DrScoreItem.DrScoreItemType.boolean_social_channel_connected -> {
+      session?.let { baseActivity.startDigitalChannel(it) }
+    }
+    DrScoreItem.DrScoreItemType.number_services_added, DrScoreItem.DrScoreItemType.number_products_added -> {
+      baseActivity.startListServiceProduct(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_add_bank_account -> {
+      baseActivity.startMyBankAccount(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_image_uploaded_to_gallery -> {
+      baseActivity.startAddImageGallery(session, false)
+    }
+    DrScoreItem.DrScoreItemType.boolean_create_custom_page -> {
+      baseActivity.startCustomPage(session, false)
+    }
+    DrScoreItem.DrScoreItemType.boolean_create_sample_in_clinic_appointment -> {
+      baseActivity.startOrderAptConsultList(session, isConsult = false)
+    }
+    DrScoreItem.DrScoreItemType.boolean_create_sample_video_consultation -> {
+      baseActivity.startOrderAptConsultList(session, isConsult = true)
+    }
+    DrScoreItem.DrScoreItemType.boolean_respond_to_customer_enquiries -> {
+      baseActivity.startBusinessEnquiry(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_add_featured_image_video -> {
+      baseActivity.startFeatureLogo(session)
+    }
+    DrScoreItem.DrScoreItemType.boolean_select_what_you_sell,
+    DrScoreItem.DrScoreItemType.boolean_create_doctor_e_profile,
+    DrScoreItem.DrScoreItemType.boolean_manage_appointment_settings,
+    -> Toast.makeText(baseActivity, "Coming soon...", Toast.LENGTH_SHORT).show()
+  }
+}
+
+fun alertDialogBusinessHours(baseActivity: AppCompatActivity, session: UserSessionManager?) {
+  AlertDialog.Builder(
+    ContextThemeWrapper(baseActivity,R.style.AlertDialogCustom))
+    .setTitle(baseActivity.getString(R.string.features_not_available))
+    .setMessage(baseActivity.getString(R.string.check_store_for_upgrade_info))
+    .setPositiveButton(baseActivity.getString(R.string.goto_store)) { dialogInterface, i ->
+      baseActivity.startPricingPlan(session)
+      dialogInterface.dismiss()
+    }.setNegativeButton(baseActivity.getString(R.string.cancel)) { dialogInterface, _ -> dialogInterface.dismiss() }.show()
 }

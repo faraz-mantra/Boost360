@@ -6,7 +6,10 @@ package com.nowfloats.webactions.webactioninterfaces;
 
 public interface IUpdate {
     public <T> IUpdate addToSet(String key, T value);
+
     public <T> IUpdate removeFromSet(String key, T value);
+
     public IUpdate clearSet();
+
     public CharSequence toUpdateString();
 }

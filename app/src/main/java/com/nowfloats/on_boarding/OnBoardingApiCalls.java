@@ -17,10 +17,10 @@ import retrofit.client.Response;
 
 public class OnBoardingApiCalls {
 
-    public static void updateData(String fptag, String value){
+    public static void updateData(String fptag, String value) {
         OnBoardingWebActionApis apis = Constants.webActionAdapter.create(OnBoardingWebActionApis.class);
         OnBoardingUpdateModel model = new OnBoardingUpdateModel();
-        model.setQuery(String.format("{fptag:'%s'}",fptag));
+        model.setQuery(String.format("{fptag:'%s'}", fptag));
         model.setUpdateValue(String.format("{$set:{%s}}", value));
         apis.updateData(model, new Callback<String>() {
             @Override
@@ -30,12 +30,12 @@ public class OnBoardingApiCalls {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.v("ggg",error.getMessage());
+                Log.v("ggg", error.getMessage());
             }
         });
     }
 
-    public static void addData(OnBoardingStepsModel boardingStepsModel){
+    public static void addData(OnBoardingStepsModel boardingStepsModel) {
 
         OnBoardingAddModel model = new OnBoardingAddModel();
         model.setActionData(boardingStepsModel);

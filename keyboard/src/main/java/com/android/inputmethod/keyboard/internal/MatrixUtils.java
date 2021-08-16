@@ -29,21 +29,13 @@ import io.separ.neural.inputmethod.annotations.UsedForTesting;
 @UsedForTesting
 public class MatrixUtils {
     private static final String TAG = MatrixUtils.class.getSimpleName();
-    public static class MatrixOperationFailedException extends Exception {
-        private static final long serialVersionUID = 4384485606788583829L;
-
-        public MatrixOperationFailedException(String msg) {
-            super(msg);
-            Log.d(TAG, msg);
-        }
-    }
 
     /**
      * A utility function to inverse matrix.
      * Find a pivot and swap the row of squareMatrix0 and squareMatrix1
      */
     private static void findPivotAndSwapRow(final int row, final float[][] squareMatrix0,
-            final float[][] squareMatrix1, final int size) {
+                                            final float[][] squareMatrix1, final int size) {
         int ip = row;
         float pivot = Math.abs(squareMatrix0[row][row]);
         for (int i = row + 1; i < size; ++i) {
@@ -69,7 +61,7 @@ public class MatrixUtils {
      * sweeping method of Gauss Jordan elimination
      */
     private static void sweep(final int row, final float[][] squareMatrix0,
-            final float[][] squareMatrix1, final int size) throws MatrixOperationFailedException {
+                              final float[][] squareMatrix1, final int size) throws MatrixOperationFailedException {
         final float pivot = squareMatrix0[row][row];
         if (pivot == 0) {
             throw new MatrixOperationFailedException("Inverse failed. Invalid pivot");
@@ -98,7 +90,7 @@ public class MatrixUtils {
      */
     @UsedForTesting
     public static void inverse(final float[][] squareMatrix,
-            final float[][] inverseMatrix) throws MatrixOperationFailedException {
+                               final float[][] inverseMatrix) throws MatrixOperationFailedException {
         final int size = squareMatrix.length;
         if (squareMatrix[0].length != size || inverseMatrix.length != size
                 || inverseMatrix[0].length != size) {
@@ -120,7 +112,7 @@ public class MatrixUtils {
      */
     @UsedForTesting
     public static void multiply(final float[][] m0, final float[][] m1,
-            final float[][] retval) throws MatrixOperationFailedException {
+                                final float[][] retval) throws MatrixOperationFailedException {
         if (m0[0].length != m1.length) {
             throw new MatrixOperationFailedException(
                     "--- invalid length for multiply " + m0[0].length + ", " + m1.length);
@@ -161,5 +153,14 @@ public class MatrixUtils {
             Log.d(TAG, sb.toString());
         }
         Log.d(TAG, "---------------------*/");
+    }
+
+    public static class MatrixOperationFailedException extends Exception {
+        private static final long serialVersionUID = 4384485606788583829L;
+
+        public MatrixOperationFailedException(String msg) {
+            super(msg);
+            Log.d(TAG, msg);
+        }
     }
 }

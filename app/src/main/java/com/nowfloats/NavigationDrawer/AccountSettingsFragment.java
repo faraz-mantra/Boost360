@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -29,6 +30,7 @@ import com.appservice.constant.FragmentType;
 import com.appservice.constant.IntentConstant;
 import com.appservice.model.SessionData;
 import com.appservice.model.StatusKyc;
+import com.dashboard.controller.DashboardFragmentContainerActivityKt;
 import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.nowfloats.BusinessProfile.UI.UI.changePasswordAsyncTask;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
@@ -72,14 +74,15 @@ import static com.framework.webengageconstant.EventValueKt.NULL;
 
 public class AccountSettingsFragment extends Fragment implements DomainApiService.DomainCallback {
 
+    private final static int LIGHT_HOUSE_EXPIRED = -1, DEMO = 0, DEMO_EXPIRED = -2;
+    Boolean confirmCheckerActive = false;
+    UserSessionManager sessionManager;
     private Context mContext;
     private EditText old_pwd, new_pwd, confirm_pwd;
-    Boolean confirmCheckerActive = false;
     private ImageView confirmChecker;
-    UserSessionManager sessionManager;
     private ProgressDialog progressDialog;
     private DomainApiService domainApiService;
-    private final static int LIGHT_HOUSE_EXPIRED = -1, DEMO = 0, DEMO_EXPIRED = -2;
+    private boolean isAlreadyCalled = false;
 
     @Nullable
     @Override
@@ -118,9 +121,11 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 Intent intent = null;
                 switch (adapterTexts[pos]) {
                     case "My Business Profile":
-                        intent = new Intent(mContext, FragmentsFactoryActivity.class);
-                        intent.putExtra("fragmentName", "Business_Profile_Fragment_V2");
-                        startActivity(intent);
+//                        intent = new Intent(mContext, FragmentsFactoryActivity.class);
+//                        intent.putExtra("fragmentName", "Business_Profile_Fragment_V2");
+//                        startActivity(intent);
+                        DashboardFragmentContainerActivityKt.startFragmentDashboardActivity(((AppCompatActivity) requireActivity())
+                                , com.dashboard.constant.FragmentType.FRAGMENT_BUSINESS_PROFILE, new Bundle(), false);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
                     case "My Bank Account":
@@ -143,7 +148,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         Bundle b1 = getBundleDataKyc();
                         if (sessionManager.isSelfBrandedKycAdd()) {
                             startFragmentPaymentActivityNew(getActivity(), com.appservice.constant.FragmentType.KYC_STATUS, b1, false);
-                        } else startFragmentPaymentActivityNew(getActivity(), FragmentType.BUSINESS_KYC_VIEW, b1, false);
+                        } else
+                            startFragmentPaymentActivityNew(getActivity(), FragmentType.BUSINESS_KYC_VIEW, b1, false);
                         break;
                     case "Boost Extensions":
                         intent = new Intent(mContext, Boost360ExtensionsActivity.class);
@@ -200,13 +206,11 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         session.setFpEmail(sessionManager.getFPEmail());
         session.setFpNumber(sessionManager.getFPPrimaryContactNumber());
         session.setSelfBrandedAdd(sessionManager.isSelfBrandedKycAdd());
-        session.setPaymentGateway(Constants.StoreWidgets.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name()));
+        session.setPaymentGateway(sessionManager.getStoreWidgets().contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name()));
         Bundle bundle = new Bundle();
         bundle.putSerializable(com.appservice.constant.IntentConstant.SESSION_DATA.name(), session);
         return bundle;
     }
-
-
 
     public void logoutAlertDialog_Material() {
 
@@ -214,8 +218,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .customView(R.layout.exit_dialog, true)
                 .positiveText(getString(R.string.setting_logout))
                 .negativeText(getString(R.string.cancel))
-                .positiveColorRes(R.color.primaryColor)
-                .negativeColorRes(R.color.light_gray)
+                .negativeColorRes(R.color.black_4a4a4a)
+                .positiveColorRes(R.color.colorAccent_jio)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -239,7 +243,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .customView(R.layout.change_password, true)
                 .positiveText(getString(R.string.ok))
                 .negativeText(getString(R.string.cancel))
-                .positiveColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.black_4a4a4a)
+                .positiveColorRes(R.color.colorAccent_jio)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onNegative(MaterialDialog dialog) {
@@ -379,8 +384,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .customView(R.layout.dialog_link_layout, false)
                 .positiveText(postiveBtn)
                 .negativeText(negativeBtn)
-                .positiveColorRes(R.color.primaryColor)
-                .negativeColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.black_4a4a4a)
+                .positiveColorRes(R.color.colorAccent_jio)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
@@ -505,7 +510,6 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         message.setText(Methods.fromHtml(dialogMessage));
     }
 
-
     @Override
     public void getDomainDetails(DomainDetails domainDetails) {
         hideLoader();
@@ -535,14 +539,10 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
 
     }
 
-
     @Override
     public void domainBookStatus(String response) {
 
     }
-
-    private boolean isAlreadyCalled = false;
-
 
     private void showDomainDetails() {
         isAlreadyCalled = true;
@@ -554,19 +554,19 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    private enum DialogFrom {
-        DOMAIN_AVAILABLE,
-        CONTACTS_AND_EMAIL_REQUIRED,
-        CATEGORY_REQUIRED,
-        ADDRESS_REQUIRED,
-        DEFAULT
-    }
-
     @Override
     public void onResume() {
         super.onResume();
         if (mContext instanceof HomeActivity && HomeActivity.headerText != null) {
             HomeActivity.headerText.setText(getString(R.string.account_settings));
         }
+    }
+
+    private enum DialogFrom {
+        DOMAIN_AVAILABLE,
+        CONTACTS_AND_EMAIL_REQUIRED,
+        CATEGORY_REQUIRED,
+        ADDRESS_REQUIRED,
+        DEFAULT
     }
 }

@@ -172,22 +172,32 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         ImportantNoticeDialog.ImportantNoticeDialogListener, SwipeUtils.SelectionChanger, ColorManager.OnFinishCalculateProfile, PresenterToImeInterface {
     private static final String TAG = LatinIME.class.getSimpleName();
     private static final boolean TRACE = false;
-    private static boolean DEBUG = false;
-
     private static final int EXTENDED_TOUCHABLE_REGION_HEIGHT = 100;
-
     private static final int PENDING_IMS_CALLBACK_DURATION = 800;
-
     private static final int DELAY_WAIT_FOR_DICTIONARY_LOAD = 2000; // 2s
-
     private static final int PERIOD_FOR_AUDIO_AND_HAPTIC_FEEDBACK_IN_KEY_REPEAT = 2;
-
     /**
      * The name of the scheme used by the Package Manager to warn of a new package installation,
      * replacement or removal.
      */
     private static final String SCHEME_PACKAGE = "package";
+    public static Context mResContext;
+    public static InputConnection mInputCOnnection;
+    public static Context mAppContext;
+    private static boolean DEBUG = false;
 
+    // Loading the native library eagerly to avoid unexpected UnsatisfiedLinkError at the initial
+    // JNI call as much as possible.
+    static {
+        JniUtils.loadNativeLibrary();
+    }
+
+    public final UIHandler mHandler = new UIHandler(this);
+    // We expect to have only one decoder in almost all cases, hence the default capacity of 1.
+    // If it turns out we need several, it will get grown seamlessly.
+    final SparseArray<HardwareEventDecoder> mHardwareEventDecoders = new SparseArray<>(1);
+    @UsedForTesting
+    final KeyboardSwitcher mKeyboardSwitcher;
     private final Settings mSettings;
     private final DictionaryFacilitator mDictionaryFacilitator =
             new DictionaryFacilitator(
@@ -205,51 +215,117 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                     });
     private final InputLogic mInputLogic = new InputLogic(this /* LatinIME */,
             this /* SuggestionStripViewAccessor */, mDictionaryFacilitator);
-    // We expect to have only one decoder in almost all cases, hence the default capacity of 1.
-    // If it turns out we need several, it will get grown seamlessly.
-    final SparseArray<HardwareEventDecoder> mHardwareEventDecoders = new SparseArray<>(1);
     private final ImePresenterImpl mImePresenter;
-
-    // TODO: Move these {@link View}s to {@link KeyboardSwitcher}.
-    private View mInputView;
-    private SuggestionStripView mSuggestionStripView;
-    private TextView mExtractEditText;
-
-    private EventBusHandler mEventHandler;
-
-    private RichInputMethodManager mRichImm;
-    @UsedForTesting
-    final KeyboardSwitcher mKeyboardSwitcher;
     private final SubtypeSwitcher mSubtypeSwitcher;
     private final SubtypeState mSubtypeState = new SubtypeState();
 
     private final SpecialKeyDetector mSpecialKeyDetector;
-    // Working variable for {@link #startShowingInputView()} and
-    // {@link #onEvaluateInputViewShown()}.
-    private boolean mIsExecutingStartShowingInputView;
-
     // Object for reacting to adding/removing a dictionary pack.
     private final BroadcastReceiver mDictionaryPackInstallReceiver =
             new DictionaryPackInstallBroadcastReceiver(this);
-
     private final BroadcastReceiver mDictionaryDumpBroadcastReceiver =
             new DictionaryDumpBroadcastReceiver(this);
-
-    private AlertDialog mOptionsDialog;
-
     private final boolean mIsHardwareAcceleratedDrawingEnabled;
-
-    public final UIHandler mHandler = new UIHandler(this);
-
+    // receive ringer mode change and network state change.
+    private final BroadcastReceiver mConnectivityAndRingerModeChangeReceiver =
+            new MyBroadcastReceiver();
+    // TODO: Move these {@link View}s to {@link KeyboardSwitcher}.
+    private View mInputView;
+    private SuggestionStripView mSuggestionStripView;
+    private TextView mExtractEditText;
+    private final ViewTreeObserver.OnPreDrawListener mExtractTextViewPreDrawListener =
+            new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    onExtractTextViewPreDraw();
+                    return true;
+                }
+            };
+    private EventBusHandler mEventHandler;
+    private RichInputMethodManager mRichImm;
+    // Working variable for {@link #startShowingInputView()} and
+    // {@link #onEvaluateInputViewShown()}.
+    private boolean mIsExecutingStartShowingInputView;
+    private AlertDialog mOptionsDialog;
     private NavManager navManager;
-
     private TopDisplayController mTopDisplayController;
     private ImePresenterImpl.TabType serviceTab;
     private boolean isWindowHidden = false;
-    public static Context mResContext;
     private int mLanguageIndex = 0;
-    public static InputConnection mInputCOnnection;
-    public static Context mAppContext;
+    private ColorManager colorManager;
+    private String currentPackageName;
+    private long lastStickerInsertionTime = 0;
+    private long lastEmojiInsertionTime = 0;
+
+    public LatinIME() {
+        super();
+        mSettings = Settings.getInstance();
+        mSubtypeSwitcher = SubtypeSwitcher.getInstance();
+        mKeyboardSwitcher = KeyboardSwitcher.getInstance();
+        mImePresenter = new ImePresenterImpl(this, this, mKeyboardSwitcher);
+        mKeyboardSwitcher.setPresenterListener(mImePresenter);
+        mKeyboardSwitcher.setUrlToBitmapInterface(mImePresenter);
+        mKeyboardSwitcher.setGalleryImageListener(mImePresenter);
+        mSpecialKeyDetector = new SpecialKeyDetector(this);
+        mIsHardwareAcceleratedDrawingEnabled =
+                InputMethodServiceCompatUtils.enableHardwareAcceleration(this);
+        Log.i(TAG, "Hardware accelerated drawing: " + mIsHardwareAcceleratedDrawingEnabled);
+    }
+
+    public static Context setLocale(Context context, String language) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return updateResources(context, language);
+        }
+
+        return updateResourcesLegacy(context, language);
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    private static Context updateResources(Context context, String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+
+        Configuration configuration = context.getResources().getConfiguration();
+        configuration.setLocale(locale);
+
+        return context.createConfigurationContext(configuration);
+    }
+
+    @SuppressWarnings("deprecation")
+    private static Context updateResourcesLegacy(Context context, String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+
+        Resources resources = context.getResources();
+
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = locale;
+
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+
+        return context;
+    }
+
+    // A helper method to split the code point and the key code. Ultimately, they should not be
+    // squashed into the same variable, and this method should be removed.
+    private static Event createSoftwareKeypressEvent(final int keyCodeOrCodePoint, final int keyX,
+                                                     final int keyY, final boolean isKeyRepeat) {
+        final int keyCode;
+        final int codePoint;
+        if (keyCodeOrCodePoint <= 0) {
+            keyCode = keyCodeOrCodePoint;
+            codePoint = Event.NOT_A_CODE_POINT;
+        } else {
+            keyCode = Event.NOT_A_KEY_CODE;
+            codePoint = keyCodeOrCodePoint;
+        }
+        return Event.createSoftwareKeypressEvent(codePoint, keyCode, keyX, keyY, isKeyRepeat);
+    }
+
+    private static boolean isBackWordStopChar(int c) {
+        return !Character.isLetter(c);
+    }
 
     @Override
     public void onCopy() {
@@ -397,359 +473,6 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     @Override
     public EditorInfo getImeCurrentEditorInfo() {
         return getCurrentInputEditorInfo();
-    }
-
-    public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> {
-        private static final int MSG_UPDATE_SHIFT_STATE = 0;
-        private static final int MSG_PENDING_IMS_CALLBACK = 1;
-        private static final int MSG_UPDATE_SUGGESTION_STRIP = 2;
-        private static final int MSG_SHOW_GESTURE_PREVIEW_AND_SUGGESTION_STRIP = 3;
-        private static final int MSG_RESUME_SUGGESTIONS = 4;
-        private static final int MSG_REOPEN_DICTIONARIES = 5;
-        private static final int MSG_UPDATE_TAIL_BATCH_INPUT_COMPLETED = 6;
-        private static final int MSG_RESET_CACHES = 7;
-        private static final int MSG_WAIT_FOR_DICTIONARY_LOAD = 8;
-        // Update this when adding new messages
-        private static final int MSG_LAST = MSG_WAIT_FOR_DICTIONARY_LOAD;
-
-        private static final int ARG1_NOT_GESTURE_INPUT = 0;
-        private static final int ARG1_DISMISS_GESTURE_FLOATING_PREVIEW_TEXT = 1;
-        private static final int ARG1_SHOW_GESTURE_FLOATING_PREVIEW_TEXT = 2;
-        private static final int ARG2_UNUSED = 0;
-        private static final int ARG1_FALSE = 0;
-        private static final int ARG1_TRUE = 1;
-
-        private int mDelayInMillisecondsToUpdateSuggestions;
-        private int mDelayInMillisecondsToUpdateShiftState;
-
-        public UIHandler(final LatinIME ownerInstance) {
-            super(ownerInstance);
-        }
-
-        public void onCreate() {
-            final LatinIME latinIme = getOwnerInstance();
-            if (latinIme == null) {
-                return;
-            }
-            final Resources res = latinIme.getResources();
-            mDelayInMillisecondsToUpdateSuggestions = res.getInteger(
-                    R.integer.config_delay_in_milliseconds_to_update_suggestions);
-            mDelayInMillisecondsToUpdateShiftState = res.getInteger(
-                    R.integer.config_delay_in_milliseconds_to_update_shift_state);
-        }
-
-        @Override
-        public void handleMessage(final Message msg) {
-            final LatinIME latinIme = getOwnerInstance();
-            if (latinIme == null) {
-                return;
-            }
-            final KeyboardSwitcher switcher = latinIme.mKeyboardSwitcher;
-            switch (msg.what) {
-                case MSG_UPDATE_SUGGESTION_STRIP:
-                    cancelUpdateSuggestionStrip();
-                    latinIme.mInputLogic.performUpdateSuggestionStripSync(
-                            latinIme.mSettings.getCurrent(), msg.arg1 /* inputStyle */);
-                    break;
-                case MSG_UPDATE_SHIFT_STATE:
-                    switcher.requestUpdatingShiftState(latinIme.getCurrentAutoCapsState(),
-                            latinIme.getCurrentRecapitalizeState());
-                    break;
-                case MSG_SHOW_GESTURE_PREVIEW_AND_SUGGESTION_STRIP:
-                    if (msg.arg1 == ARG1_NOT_GESTURE_INPUT) {
-                        final SuggestedWords suggestedWords = (SuggestedWords) msg.obj;
-                        latinIme.showSuggestionStrip(suggestedWords);
-                    } else {
-                        latinIme.showGesturePreviewAndSuggestionStrip((SuggestedWords) msg.obj,
-                                msg.arg1 == ARG1_DISMISS_GESTURE_FLOATING_PREVIEW_TEXT);
-                    }
-                    break;
-                case MSG_RESUME_SUGGESTIONS:
-                    latinIme.mInputLogic.restartSuggestionsOnWordTouchedByCursor(
-                            latinIme.mSettings.getCurrent(),
-                            msg.arg1 == ARG1_TRUE /* shouldIncludeResumedWordInSuggestions */,
-                            latinIme.mKeyboardSwitcher.getCurrentKeyboardScriptId());
-                    break;
-                case MSG_REOPEN_DICTIONARIES:
-                    // We need to re-evaluate the currently composing word in case the script has
-                    // changed.
-                    postWaitForDictionaryLoad();
-                    latinIme.resetSuggest();
-                    break;
-                case MSG_UPDATE_TAIL_BATCH_INPUT_COMPLETED:
-                    latinIme.mInputLogic.onUpdateTailBatchInputCompleted(
-                            latinIme.mSettings.getCurrent(),
-                            (SuggestedWords) msg.obj, latinIme.mKeyboardSwitcher);
-                    if (latinIme.mInputLogic.isSearchingResults()) {
-                        latinIme.mTopDisplayController.runSearch(latinIme.mInputLogic.getSearchText());
-                    }
-                    break;
-                case MSG_RESET_CACHES:
-                    final SettingsValues settingsValues = latinIme.mSettings.getCurrent();
-                    if (latinIme.mInputLogic.retryResetCachesAndReturnSuccess(
-                            msg.arg1 == ARG1_TRUE /* tryResumeSuggestions */,
-                            msg.arg2 /* remainingTries */, this /* handler */)) {
-                        // If we were able to reset the caches, then we can reload the keyboard.
-                        // Otherwise, we'll do it when we can.
-                        latinIme.mKeyboardSwitcher.loadKeyboard(latinIme.getCurrentInputEditorInfo(),
-                                settingsValues, latinIme.getCurrentAutoCapsState(),
-                                latinIme.getCurrentRecapitalizeState());
-                    }
-                    break;
-                case MSG_WAIT_FOR_DICTIONARY_LOAD:
-                    Log.i(TAG, "Timeout waiting for dictionary load");
-                    break;
-            }
-        }
-
-        public void postUpdateSuggestionStrip(final int inputStyle) {
-            sendMessageDelayed(obtainMessage(MSG_UPDATE_SUGGESTION_STRIP, inputStyle,
-                    0 /* ignored */), mDelayInMillisecondsToUpdateSuggestions);
-        }
-
-        public void postReopenDictionaries() {
-            sendMessage(obtainMessage(MSG_REOPEN_DICTIONARIES));
-        }
-
-        public void postResumeSuggestions(final boolean shouldIncludeResumedWordInSuggestions,
-                                          final boolean shouldDelay) {
-            final LatinIME latinIme = getOwnerInstance();
-            if (latinIme == null) {
-                return;
-            }
-            if (!latinIme.mSettings.getCurrent().isSuggestionsEnabledPerUserSettings()) {
-                return;
-            }
-            removeMessages(MSG_RESUME_SUGGESTIONS);
-            if (shouldDelay) {
-                sendMessageDelayed(obtainMessage(MSG_RESUME_SUGGESTIONS,
-                        shouldIncludeResumedWordInSuggestions ? ARG1_TRUE : ARG1_FALSE,
-                        0 /* ignored */), mDelayInMillisecondsToUpdateSuggestions);
-            } else {
-                sendMessage(obtainMessage(MSG_RESUME_SUGGESTIONS,
-                        shouldIncludeResumedWordInSuggestions ? ARG1_TRUE : ARG1_FALSE,
-                        0 /* ignored */));
-            }
-        }
-
-        public void postResetCaches(final boolean tryResumeSuggestions, final int remainingTries) {
-            removeMessages(MSG_RESET_CACHES);
-            sendMessage(obtainMessage(MSG_RESET_CACHES, tryResumeSuggestions ? 1 : 0,
-                    remainingTries, null));
-        }
-
-        public void postWaitForDictionaryLoad() {
-            sendMessageDelayed(obtainMessage(MSG_WAIT_FOR_DICTIONARY_LOAD),
-                    DELAY_WAIT_FOR_DICTIONARY_LOAD);
-        }
-
-        public void cancelWaitForDictionaryLoad() {
-            removeMessages(MSG_WAIT_FOR_DICTIONARY_LOAD);
-        }
-
-        public boolean hasPendingWaitForDictionaryLoad() {
-            return hasMessages(MSG_WAIT_FOR_DICTIONARY_LOAD);
-        }
-
-        public void cancelUpdateSuggestionStrip() {
-            removeMessages(MSG_UPDATE_SUGGESTION_STRIP);
-        }
-
-        public boolean hasPendingUpdateSuggestions() {
-            return hasMessages(MSG_UPDATE_SUGGESTION_STRIP);
-        }
-
-        public boolean hasPendingReopenDictionaries() {
-            return hasMessages(MSG_REOPEN_DICTIONARIES);
-        }
-
-        public void postUpdateShiftState() {
-            removeMessages(MSG_UPDATE_SHIFT_STATE);
-            sendMessageDelayed(obtainMessage(MSG_UPDATE_SHIFT_STATE),
-                    mDelayInMillisecondsToUpdateShiftState);
-        }
-
-        @UsedForTesting
-        public void removeAllMessages() {
-            for (int i = 0; i <= MSG_LAST; ++i) {
-                removeMessages(i);
-            }
-        }
-
-        public void showGesturePreviewAndSuggestionStrip(final SuggestedWords suggestedWords,
-                                                         final boolean dismissGestureFloatingPreviewText) {
-            removeMessages(MSG_SHOW_GESTURE_PREVIEW_AND_SUGGESTION_STRIP);
-            final int arg1 = dismissGestureFloatingPreviewText
-                    ? ARG1_DISMISS_GESTURE_FLOATING_PREVIEW_TEXT
-                    : ARG1_SHOW_GESTURE_FLOATING_PREVIEW_TEXT;
-            obtainMessage(MSG_SHOW_GESTURE_PREVIEW_AND_SUGGESTION_STRIP, arg1,
-                    ARG2_UNUSED, suggestedWords).sendToTarget();
-        }
-
-        public void showSuggestionStrip(final SuggestedWords suggestedWords) {
-            removeMessages(MSG_SHOW_GESTURE_PREVIEW_AND_SUGGESTION_STRIP);
-            obtainMessage(MSG_SHOW_GESTURE_PREVIEW_AND_SUGGESTION_STRIP,
-                    ARG1_NOT_GESTURE_INPUT, ARG2_UNUSED, suggestedWords).sendToTarget();
-        }
-
-        public void showTailBatchInputResult(final SuggestedWords suggestedWords) {
-            obtainMessage(MSG_UPDATE_TAIL_BATCH_INPUT_COMPLETED, suggestedWords).sendToTarget();
-        }
-
-        // Working variables for the following methods.
-        private boolean mIsOrientationChanging;
-        private boolean mPendingSuccessiveImsCallback;
-        private boolean mHasPendingStartInput;
-        private boolean mHasPendingFinishInputView;
-        private boolean mHasPendingFinishInput;
-        private EditorInfo mAppliedEditorInfo;
-
-        public void startOrientationChanging() {
-            removeMessages(MSG_PENDING_IMS_CALLBACK);
-            resetPendingImsCallback();
-            mIsOrientationChanging = true;
-            final LatinIME latinIme = getOwnerInstance();
-            if (latinIme == null) {
-                return;
-            }
-            if (latinIme.isInputViewShown()) {
-                latinIme.mKeyboardSwitcher.saveKeyboardState();
-            }
-        }
-
-        private void resetPendingImsCallback() {
-            mHasPendingFinishInputView = false;
-            mHasPendingFinishInput = false;
-            mHasPendingStartInput = false;
-        }
-
-        private void executePendingImsCallback(final LatinIME latinIme, final EditorInfo editorInfo,
-                                               boolean restarting) {
-            if (mHasPendingFinishInputView) {
-                latinIme.onFinishInputViewInternal(mHasPendingFinishInput);
-            }
-            if (mHasPendingFinishInput) {
-                latinIme.onFinishInputInternal();
-            }
-            if (mHasPendingStartInput) {
-                latinIme.onStartInputInternal(editorInfo, restarting);
-            }
-            resetPendingImsCallback();
-        }
-
-        public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
-            if (hasMessages(MSG_PENDING_IMS_CALLBACK)) {
-                // Typically this is the second onStartInput after orientation changed.
-                mHasPendingStartInput = true;
-            } else {
-                if (mIsOrientationChanging && restarting) {
-                    // This is the first onStartInput after orientation changed.
-                    mIsOrientationChanging = false;
-                    mPendingSuccessiveImsCallback = true;
-                }
-                final LatinIME latinIme = getOwnerInstance();
-                if (latinIme != null) {
-                    executePendingImsCallback(latinIme, editorInfo, restarting);
-                    latinIme.onStartInputInternal(editorInfo, restarting);
-                }
-            }
-        }
-
-        public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
-            if (hasMessages(MSG_PENDING_IMS_CALLBACK)
-                    && KeyboardId.equivalentEditorInfoForKeyboard(editorInfo, mAppliedEditorInfo)) {
-                // Typically this is the second onStartInputView after orientation changed.
-                resetPendingImsCallback();
-            } else {
-                if (mPendingSuccessiveImsCallback) {
-                    // This is the first onStartInputView after orientation changed.
-                    mPendingSuccessiveImsCallback = false;
-                    resetPendingImsCallback();
-                    sendMessageDelayed(obtainMessage(MSG_PENDING_IMS_CALLBACK),
-                            PENDING_IMS_CALLBACK_DURATION);
-                }
-                final LatinIME latinIme = getOwnerInstance();
-                if (latinIme != null) {
-                    executePendingImsCallback(latinIme, editorInfo, restarting);
-                    latinIme.onStartInputViewInternal(editorInfo, restarting);
-                    mAppliedEditorInfo = editorInfo;
-                }
-            }
-        }
-
-        public void onFinishInputView(final boolean finishingInput) {
-            if (hasMessages(MSG_PENDING_IMS_CALLBACK)) {
-                // Typically this is the first onFinishInputView after orientation changed.
-                mHasPendingFinishInputView = true;
-            } else {
-                final LatinIME latinIme = getOwnerInstance();
-                if (latinIme != null) {
-                    latinIme.onFinishInputViewInternal(finishingInput);
-                    mAppliedEditorInfo = null;
-                }
-            }
-        }
-
-        public void onFinishInput() {
-            if (hasMessages(MSG_PENDING_IMS_CALLBACK)) {
-                // Typically this is the first onFinishInput after orientation changed.
-                mHasPendingFinishInput = true;
-            } else {
-                final LatinIME latinIme = getOwnerInstance();
-                if (latinIme != null) {
-                    executePendingImsCallback(latinIme, null, false);
-                    latinIme.onFinishInputInternal();
-                }
-            }
-        }
-    }
-
-    static final class SubtypeState {
-        private InputMethodSubtype mLastActiveSubtype;
-        private boolean mCurrentSubtypeHasBeenUsed;
-
-        public void setCurrentSubtypeHasBeenUsed() {
-            mCurrentSubtypeHasBeenUsed = true;
-        }
-
-        public void switchSubtype(final IBinder token, final RichInputMethodManager richImm) {
-            final InputMethodSubtype currentSubtype = richImm.getInputMethodManager()
-                    .getCurrentInputMethodSubtype();
-            final InputMethodSubtype lastActiveSubtype = mLastActiveSubtype;
-            final boolean currentSubtypeHasBeenUsed = mCurrentSubtypeHasBeenUsed;
-            if (currentSubtypeHasBeenUsed) {
-                mLastActiveSubtype = currentSubtype;
-                mCurrentSubtypeHasBeenUsed = false;
-            }
-            if (currentSubtypeHasBeenUsed
-                    && richImm.checkIfSubtypeBelongsToThisImeAndEnabled(lastActiveSubtype)
-                    && !currentSubtype.equals(lastActiveSubtype)) {
-                richImm.setInputMethodAndSubtype(token, lastActiveSubtype);
-                return;
-            }
-            richImm.switchToNextInputMethod(token, true /* onlyCurrentIme */);
-        }
-    }
-
-    // Loading the native library eagerly to avoid unexpected UnsatisfiedLinkError at the initial
-    // JNI call as much as possible.
-    static {
-        JniUtils.loadNativeLibrary();
-    }
-
-    public LatinIME() {
-        super();
-        mSettings = Settings.getInstance();
-        mSubtypeSwitcher = SubtypeSwitcher.getInstance();
-        mKeyboardSwitcher = KeyboardSwitcher.getInstance();
-        mImePresenter = new ImePresenterImpl(this, this, mKeyboardSwitcher);
-        mKeyboardSwitcher.setPresenterListener(mImePresenter);
-        mKeyboardSwitcher.setUrlToBitmapInterface(mImePresenter);
-        mKeyboardSwitcher.setGalleryImageListener(mImePresenter);
-        mSpecialKeyDetector = new SpecialKeyDetector(this);
-        mIsHardwareAcceleratedDrawingEnabled =
-                InputMethodServiceCompatUtils.enableHardwareAcceleration(this);
-        Log.i(TAG, "Hardware accelerated drawing: " + mIsHardwareAcceleratedDrawingEnabled);
     }
 
     @Override
@@ -1040,15 +763,6 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         }
     }
 
-    private final ViewTreeObserver.OnPreDrawListener mExtractTextViewPreDrawListener =
-            new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw() {
-                    onExtractTextViewPreDraw();
-                    return true;
-                }
-            };
-
     private void onExtractTextViewPreDraw() {
         if (!ProductionFlags.ENABLE_CURSOR_ANCHOR_INFO_CALLBACK || !isFullscreenMode()
                 || mExtractEditText == null) {
@@ -1099,42 +813,6 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                 }
             }
         }
-    }
-
-
-    public static Context setLocale(Context context, String language) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return updateResources(context, language);
-        }
-
-        return updateResourcesLegacy(context, language);
-    }
-
-    @TargetApi(Build.VERSION_CODES.N)
-    private static Context updateResources(Context context, String language) {
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-
-        Configuration configuration = context.getResources().getConfiguration();
-        configuration.setLocale(locale);
-
-        return context.createConfigurationContext(configuration);
-    }
-
-    @SuppressWarnings("deprecation")
-    private static Context updateResourcesLegacy(Context context, String language) {
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-
-        Resources resources = context.getResources();
-
-        Configuration configuration = resources.getConfiguration();
-        configuration.locale = locale;
-
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-
-        return context;
     }
 
     @Override
@@ -1197,9 +875,6 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     private void onStartInputInternal(final EditorInfo editorInfo, final boolean restarting) {
         super.onStartInput(editorInfo, restarting);
     }
-
-    private ColorManager colorManager;
-    private String currentPackageName;
 
     private void handleKeyboardColor(EditorInfo editorInfo) {
         currentPackageName = editorInfo.packageName;
@@ -1798,22 +1473,6 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         return codeToSend;
     }
 
-    // A helper method to split the code point and the key code. Ultimately, they should not be
-    // squashed into the same variable, and this method should be removed.
-    private static Event createSoftwareKeypressEvent(final int keyCodeOrCodePoint, final int keyX,
-                                                     final int keyY, final boolean isKeyRepeat) {
-        final int keyCode;
-        final int codePoint;
-        if (keyCodeOrCodePoint <= 0) {
-            keyCode = keyCodeOrCodePoint;
-            codePoint = Event.NOT_A_CODE_POINT;
-        } else {
-            keyCode = Event.NOT_A_KEY_CODE;
-            codePoint = keyCodeOrCodePoint;
-        }
-        return Event.createSoftwareKeypressEvent(codePoint, keyCode, keyX, keyY, isKeyRepeat);
-    }
-
     public void SendRichContentSample(int id) {
         final File imagesDir = new File(getFilesDir(), "images");
         imagesDir.mkdirs();
@@ -2167,6 +1826,11 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         return newDecoder;
     }
 
+    // onKeyDown and onKeyUp are the main events we are interested in. There are two more events
+    // related to handling of hardware key events that we may want to implement in the future:
+    // boolean onKeyLongPress(final int keyCode, final KeyEvent event);
+    // boolean onKeyMultiple(final int keyCode, final int count, final KeyEvent event);
+
     // Hooks for hardware keyboard
     @Override
     public boolean onKeyDown(final int keyCode, final KeyEvent keyEvent) {
@@ -2199,20 +1863,10 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         return mInputLogic.mCurrentlyPressedHardwareKeys.remove(keyIdentifier) || super.onKeyUp(keyCode, keyEvent);
     }
 
-    // onKeyDown and onKeyUp are the main events we are interested in. There are two more events
-    // related to handling of hardware key events that we may want to implement in the future:
-    // boolean onKeyLongPress(final int keyCode, final KeyEvent event);
-    // boolean onKeyMultiple(final int keyCode, final int count, final KeyEvent event);
-
-
     @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
         return super.onKeyLongPress(keyCode, event);
     }
-
-    // receive ringer mode change and network state change.
-    private final BroadcastReceiver mConnectivityAndRingerModeChangeReceiver =
-            new MyBroadcastReceiver();
 
     private void launchSettings() {
         if (mInputLogic.isSearchingResults()) {
@@ -2440,10 +2094,6 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         switchToNextSubtype();
     }
 
-    private static boolean isBackWordStopChar(int c) {
-        return !Character.isLetter(c);
-    }
-
     public void forceSuggestedWord(String word) {
         SuggestedWordInfo info = new SuggestedWordInfo(word, 0, 0, null, 0, 0);
         ArrayList<SuggestedWordInfo> infoList = new ArrayList();
@@ -2506,8 +2156,387 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         }
     }
 
-    private long lastStickerInsertionTime = 0;
-    private long lastEmojiInsertionTime = 0;
+    public void setMixPanel(Context mContext) {
+
+        if (!TextUtils.isEmpty(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag())) {
+
+            MixPanelUtils.setMixPanel(mContext);
+
+            MixPanelUtils.sendMixPanelProperties(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getBusinessName(),
+                    SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getEmail(),
+                    SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag(),
+                    SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFPDetailsCreatedOn());
+
+            setMixPanelProperties();
+        }
+    }
+
+    private void setMixPanelProperties() {
+
+        try {
+            JSONObject store = new JSONObject();
+            store.put("Business Name", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getBusinessName());
+            store.put("Tag", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getFpTag());
+            store.put("Primary contact", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getPrimaryContactNumber());
+            store.put("$phone", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getPrimaryContactNumber());
+            store.put("$email", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getEmail());
+            store.put("$city", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getCity());
+            store.put("$country_code", getCountryCode());
+            if (TextUtils.isEmpty(SharedPrefUtil.fromBoostPref().getsBoostPref(this).getRootAliasURI()) || SharedPrefUtil.fromBoostPref().getsBoostPref(this).getRootAliasURI().equals("null")) {
+                store.put("Domain", "False");
+            } else {
+                store.put("Domain", "True");
+            }
+            store.put("FpId", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getFpId());
+            MixPanelUtils.identify(SharedPrefUtil.fromBoostPref().getsBoostPref(this).getFpTag(), store, SharedPrefUtil.fromBoostPref().getsBoostPref(this).getFpId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private String getCountryCode() {
+        String[] string_array = this.getResources().getStringArray(R.array.CountryCodes);
+        for (String country_phone : string_array) {
+            String[] Codes = country_phone.split(",");
+            if (Codes[0].equalsIgnoreCase(SharedPrefUtil.fromBoostPref().getsBoostPref(this).getCountryPhoneCode())) {
+                return Codes[1];
+            }
+        }
+        return "";
+    }
+
+    public static final class UIHandler extends LeakGuardHandlerWrapper<LatinIME> {
+        private static final int MSG_UPDATE_SHIFT_STATE = 0;
+        private static final int MSG_PENDING_IMS_CALLBACK = 1;
+        private static final int MSG_UPDATE_SUGGESTION_STRIP = 2;
+        private static final int MSG_SHOW_GESTURE_PREVIEW_AND_SUGGESTION_STRIP = 3;
+        private static final int MSG_RESUME_SUGGESTIONS = 4;
+        private static final int MSG_REOPEN_DICTIONARIES = 5;
+        private static final int MSG_UPDATE_TAIL_BATCH_INPUT_COMPLETED = 6;
+        private static final int MSG_RESET_CACHES = 7;
+        private static final int MSG_WAIT_FOR_DICTIONARY_LOAD = 8;
+        // Update this when adding new messages
+        private static final int MSG_LAST = MSG_WAIT_FOR_DICTIONARY_LOAD;
+
+        private static final int ARG1_NOT_GESTURE_INPUT = 0;
+        private static final int ARG1_DISMISS_GESTURE_FLOATING_PREVIEW_TEXT = 1;
+        private static final int ARG1_SHOW_GESTURE_FLOATING_PREVIEW_TEXT = 2;
+        private static final int ARG2_UNUSED = 0;
+        private static final int ARG1_FALSE = 0;
+        private static final int ARG1_TRUE = 1;
+
+        private int mDelayInMillisecondsToUpdateSuggestions;
+        private int mDelayInMillisecondsToUpdateShiftState;
+        // Working variables for the following methods.
+        private boolean mIsOrientationChanging;
+        private boolean mPendingSuccessiveImsCallback;
+        private boolean mHasPendingStartInput;
+        private boolean mHasPendingFinishInputView;
+        private boolean mHasPendingFinishInput;
+        private EditorInfo mAppliedEditorInfo;
+
+        public UIHandler(final LatinIME ownerInstance) {
+            super(ownerInstance);
+        }
+
+        public void onCreate() {
+            final LatinIME latinIme = getOwnerInstance();
+            if (latinIme == null) {
+                return;
+            }
+            final Resources res = latinIme.getResources();
+            mDelayInMillisecondsToUpdateSuggestions = res.getInteger(
+                    R.integer.config_delay_in_milliseconds_to_update_suggestions);
+            mDelayInMillisecondsToUpdateShiftState = res.getInteger(
+                    R.integer.config_delay_in_milliseconds_to_update_shift_state);
+        }
+
+        @Override
+        public void handleMessage(final Message msg) {
+            final LatinIME latinIme = getOwnerInstance();
+            if (latinIme == null) {
+                return;
+            }
+            final KeyboardSwitcher switcher = latinIme.mKeyboardSwitcher;
+            switch (msg.what) {
+                case MSG_UPDATE_SUGGESTION_STRIP:
+                    cancelUpdateSuggestionStrip();
+                    latinIme.mInputLogic.performUpdateSuggestionStripSync(
+                            latinIme.mSettings.getCurrent(), msg.arg1 /* inputStyle */);
+                    break;
+                case MSG_UPDATE_SHIFT_STATE:
+                    switcher.requestUpdatingShiftState(latinIme.getCurrentAutoCapsState(),
+                            latinIme.getCurrentRecapitalizeState());
+                    break;
+                case MSG_SHOW_GESTURE_PREVIEW_AND_SUGGESTION_STRIP:
+                    if (msg.arg1 == ARG1_NOT_GESTURE_INPUT) {
+                        final SuggestedWords suggestedWords = (SuggestedWords) msg.obj;
+                        latinIme.showSuggestionStrip(suggestedWords);
+                    } else {
+                        latinIme.showGesturePreviewAndSuggestionStrip((SuggestedWords) msg.obj,
+                                msg.arg1 == ARG1_DISMISS_GESTURE_FLOATING_PREVIEW_TEXT);
+                    }
+                    break;
+                case MSG_RESUME_SUGGESTIONS:
+                    latinIme.mInputLogic.restartSuggestionsOnWordTouchedByCursor(
+                            latinIme.mSettings.getCurrent(),
+                            msg.arg1 == ARG1_TRUE /* shouldIncludeResumedWordInSuggestions */,
+                            latinIme.mKeyboardSwitcher.getCurrentKeyboardScriptId());
+                    break;
+                case MSG_REOPEN_DICTIONARIES:
+                    // We need to re-evaluate the currently composing word in case the script has
+                    // changed.
+                    postWaitForDictionaryLoad();
+                    latinIme.resetSuggest();
+                    break;
+                case MSG_UPDATE_TAIL_BATCH_INPUT_COMPLETED:
+                    latinIme.mInputLogic.onUpdateTailBatchInputCompleted(
+                            latinIme.mSettings.getCurrent(),
+                            (SuggestedWords) msg.obj, latinIme.mKeyboardSwitcher);
+                    if (latinIme.mInputLogic.isSearchingResults()) {
+                        latinIme.mTopDisplayController.runSearch(latinIme.mInputLogic.getSearchText());
+                    }
+                    break;
+                case MSG_RESET_CACHES:
+                    final SettingsValues settingsValues = latinIme.mSettings.getCurrent();
+                    if (latinIme.mInputLogic.retryResetCachesAndReturnSuccess(
+                            msg.arg1 == ARG1_TRUE /* tryResumeSuggestions */,
+                            msg.arg2 /* remainingTries */, this /* handler */)) {
+                        // If we were able to reset the caches, then we can reload the keyboard.
+                        // Otherwise, we'll do it when we can.
+                        latinIme.mKeyboardSwitcher.loadKeyboard(latinIme.getCurrentInputEditorInfo(),
+                                settingsValues, latinIme.getCurrentAutoCapsState(),
+                                latinIme.getCurrentRecapitalizeState());
+                    }
+                    break;
+                case MSG_WAIT_FOR_DICTIONARY_LOAD:
+                    Log.i(TAG, "Timeout waiting for dictionary load");
+                    break;
+            }
+        }
+
+        public void postUpdateSuggestionStrip(final int inputStyle) {
+            sendMessageDelayed(obtainMessage(MSG_UPDATE_SUGGESTION_STRIP, inputStyle,
+                    0 /* ignored */), mDelayInMillisecondsToUpdateSuggestions);
+        }
+
+        public void postReopenDictionaries() {
+            sendMessage(obtainMessage(MSG_REOPEN_DICTIONARIES));
+        }
+
+        public void postResumeSuggestions(final boolean shouldIncludeResumedWordInSuggestions,
+                                          final boolean shouldDelay) {
+            final LatinIME latinIme = getOwnerInstance();
+            if (latinIme == null) {
+                return;
+            }
+            if (!latinIme.mSettings.getCurrent().isSuggestionsEnabledPerUserSettings()) {
+                return;
+            }
+            removeMessages(MSG_RESUME_SUGGESTIONS);
+            if (shouldDelay) {
+                sendMessageDelayed(obtainMessage(MSG_RESUME_SUGGESTIONS,
+                        shouldIncludeResumedWordInSuggestions ? ARG1_TRUE : ARG1_FALSE,
+                        0 /* ignored */), mDelayInMillisecondsToUpdateSuggestions);
+            } else {
+                sendMessage(obtainMessage(MSG_RESUME_SUGGESTIONS,
+                        shouldIncludeResumedWordInSuggestions ? ARG1_TRUE : ARG1_FALSE,
+                        0 /* ignored */));
+            }
+        }
+
+        public void postResetCaches(final boolean tryResumeSuggestions, final int remainingTries) {
+            removeMessages(MSG_RESET_CACHES);
+            sendMessage(obtainMessage(MSG_RESET_CACHES, tryResumeSuggestions ? 1 : 0,
+                    remainingTries, null));
+        }
+
+        public void postWaitForDictionaryLoad() {
+            sendMessageDelayed(obtainMessage(MSG_WAIT_FOR_DICTIONARY_LOAD),
+                    DELAY_WAIT_FOR_DICTIONARY_LOAD);
+        }
+
+        public void cancelWaitForDictionaryLoad() {
+            removeMessages(MSG_WAIT_FOR_DICTIONARY_LOAD);
+        }
+
+        public boolean hasPendingWaitForDictionaryLoad() {
+            return hasMessages(MSG_WAIT_FOR_DICTIONARY_LOAD);
+        }
+
+        public void cancelUpdateSuggestionStrip() {
+            removeMessages(MSG_UPDATE_SUGGESTION_STRIP);
+        }
+
+        public boolean hasPendingUpdateSuggestions() {
+            return hasMessages(MSG_UPDATE_SUGGESTION_STRIP);
+        }
+
+        public boolean hasPendingReopenDictionaries() {
+            return hasMessages(MSG_REOPEN_DICTIONARIES);
+        }
+
+        public void postUpdateShiftState() {
+            removeMessages(MSG_UPDATE_SHIFT_STATE);
+            sendMessageDelayed(obtainMessage(MSG_UPDATE_SHIFT_STATE),
+                    mDelayInMillisecondsToUpdateShiftState);
+        }
+
+        @UsedForTesting
+        public void removeAllMessages() {
+            for (int i = 0; i <= MSG_LAST; ++i) {
+                removeMessages(i);
+            }
+        }
+
+        public void showGesturePreviewAndSuggestionStrip(final SuggestedWords suggestedWords,
+                                                         final boolean dismissGestureFloatingPreviewText) {
+            removeMessages(MSG_SHOW_GESTURE_PREVIEW_AND_SUGGESTION_STRIP);
+            final int arg1 = dismissGestureFloatingPreviewText
+                    ? ARG1_DISMISS_GESTURE_FLOATING_PREVIEW_TEXT
+                    : ARG1_SHOW_GESTURE_FLOATING_PREVIEW_TEXT;
+            obtainMessage(MSG_SHOW_GESTURE_PREVIEW_AND_SUGGESTION_STRIP, arg1,
+                    ARG2_UNUSED, suggestedWords).sendToTarget();
+        }
+
+        public void showSuggestionStrip(final SuggestedWords suggestedWords) {
+            removeMessages(MSG_SHOW_GESTURE_PREVIEW_AND_SUGGESTION_STRIP);
+            obtainMessage(MSG_SHOW_GESTURE_PREVIEW_AND_SUGGESTION_STRIP,
+                    ARG1_NOT_GESTURE_INPUT, ARG2_UNUSED, suggestedWords).sendToTarget();
+        }
+
+        public void showTailBatchInputResult(final SuggestedWords suggestedWords) {
+            obtainMessage(MSG_UPDATE_TAIL_BATCH_INPUT_COMPLETED, suggestedWords).sendToTarget();
+        }
+
+        public void startOrientationChanging() {
+            removeMessages(MSG_PENDING_IMS_CALLBACK);
+            resetPendingImsCallback();
+            mIsOrientationChanging = true;
+            final LatinIME latinIme = getOwnerInstance();
+            if (latinIme == null) {
+                return;
+            }
+            if (latinIme.isInputViewShown()) {
+                latinIme.mKeyboardSwitcher.saveKeyboardState();
+            }
+        }
+
+        private void resetPendingImsCallback() {
+            mHasPendingFinishInputView = false;
+            mHasPendingFinishInput = false;
+            mHasPendingStartInput = false;
+        }
+
+        private void executePendingImsCallback(final LatinIME latinIme, final EditorInfo editorInfo,
+                                               boolean restarting) {
+            if (mHasPendingFinishInputView) {
+                latinIme.onFinishInputViewInternal(mHasPendingFinishInput);
+            }
+            if (mHasPendingFinishInput) {
+                latinIme.onFinishInputInternal();
+            }
+            if (mHasPendingStartInput) {
+                latinIme.onStartInputInternal(editorInfo, restarting);
+            }
+            resetPendingImsCallback();
+        }
+
+        public void onStartInput(final EditorInfo editorInfo, final boolean restarting) {
+            if (hasMessages(MSG_PENDING_IMS_CALLBACK)) {
+                // Typically this is the second onStartInput after orientation changed.
+                mHasPendingStartInput = true;
+            } else {
+                if (mIsOrientationChanging && restarting) {
+                    // This is the first onStartInput after orientation changed.
+                    mIsOrientationChanging = false;
+                    mPendingSuccessiveImsCallback = true;
+                }
+                final LatinIME latinIme = getOwnerInstance();
+                if (latinIme != null) {
+                    executePendingImsCallback(latinIme, editorInfo, restarting);
+                    latinIme.onStartInputInternal(editorInfo, restarting);
+                }
+            }
+        }
+
+        public void onStartInputView(final EditorInfo editorInfo, final boolean restarting) {
+            if (hasMessages(MSG_PENDING_IMS_CALLBACK)
+                    && KeyboardId.equivalentEditorInfoForKeyboard(editorInfo, mAppliedEditorInfo)) {
+                // Typically this is the second onStartInputView after orientation changed.
+                resetPendingImsCallback();
+            } else {
+                if (mPendingSuccessiveImsCallback) {
+                    // This is the first onStartInputView after orientation changed.
+                    mPendingSuccessiveImsCallback = false;
+                    resetPendingImsCallback();
+                    sendMessageDelayed(obtainMessage(MSG_PENDING_IMS_CALLBACK),
+                            PENDING_IMS_CALLBACK_DURATION);
+                }
+                final LatinIME latinIme = getOwnerInstance();
+                if (latinIme != null) {
+                    executePendingImsCallback(latinIme, editorInfo, restarting);
+                    latinIme.onStartInputViewInternal(editorInfo, restarting);
+                    mAppliedEditorInfo = editorInfo;
+                }
+            }
+        }
+
+        public void onFinishInputView(final boolean finishingInput) {
+            if (hasMessages(MSG_PENDING_IMS_CALLBACK)) {
+                // Typically this is the first onFinishInputView after orientation changed.
+                mHasPendingFinishInputView = true;
+            } else {
+                final LatinIME latinIme = getOwnerInstance();
+                if (latinIme != null) {
+                    latinIme.onFinishInputViewInternal(finishingInput);
+                    mAppliedEditorInfo = null;
+                }
+            }
+        }
+
+        public void onFinishInput() {
+            if (hasMessages(MSG_PENDING_IMS_CALLBACK)) {
+                // Typically this is the first onFinishInput after orientation changed.
+                mHasPendingFinishInput = true;
+            } else {
+                final LatinIME latinIme = getOwnerInstance();
+                if (latinIme != null) {
+                    executePendingImsCallback(latinIme, null, false);
+                    latinIme.onFinishInputInternal();
+                }
+            }
+        }
+    }
+
+    static final class SubtypeState {
+        private InputMethodSubtype mLastActiveSubtype;
+        private boolean mCurrentSubtypeHasBeenUsed;
+
+        public void setCurrentSubtypeHasBeenUsed() {
+            mCurrentSubtypeHasBeenUsed = true;
+        }
+
+        public void switchSubtype(final IBinder token, final RichInputMethodManager richImm) {
+            final InputMethodSubtype currentSubtype = richImm.getInputMethodManager()
+                    .getCurrentInputMethodSubtype();
+            final InputMethodSubtype lastActiveSubtype = mLastActiveSubtype;
+            final boolean currentSubtypeHasBeenUsed = mCurrentSubtypeHasBeenUsed;
+            if (currentSubtypeHasBeenUsed) {
+                mLastActiveSubtype = currentSubtype;
+                mCurrentSubtypeHasBeenUsed = false;
+            }
+            if (currentSubtypeHasBeenUsed
+                    && richImm.checkIfSubtypeBelongsToThisImeAndEnabled(lastActiveSubtype)
+                    && !currentSubtype.equals(lastActiveSubtype)) {
+                richImm.setInputMethodAndSubtype(token, lastActiveSubtype);
+                return;
+            }
+            richImm.switchToNextInputMethod(token, true /* onlyCurrentIme */);
+        }
+    }
 
     private static class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
@@ -2654,58 +2683,6 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             });
         }
 
-    }
-
-    public void setMixPanel(Context mContext) {
-
-        if (!TextUtils.isEmpty(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag())) {
-
-            MixPanelUtils.setMixPanel(mContext);
-
-            MixPanelUtils.sendMixPanelProperties(SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getBusinessName(),
-                    SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getEmail(),
-                    SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFpTag(),
-                    SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).getFPDetailsCreatedOn());
-
-            setMixPanelProperties();
-        }
-    }
-
-
-    private void setMixPanelProperties() {
-
-        try {
-            JSONObject store = new JSONObject();
-            store.put("Business Name", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getBusinessName());
-            store.put("Tag", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getFpTag());
-            store.put("Primary contact", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getPrimaryContactNumber());
-            store.put("$phone", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getPrimaryContactNumber());
-            store.put("$email", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getEmail());
-            store.put("$city", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getCity());
-            store.put("$country_code", getCountryCode());
-            if (TextUtils.isEmpty(SharedPrefUtil.fromBoostPref().getsBoostPref(this).getRootAliasURI()) || SharedPrefUtil.fromBoostPref().getsBoostPref(this).getRootAliasURI().equals("null")) {
-                store.put("Domain", "False");
-            } else {
-                store.put("Domain", "True");
-            }
-            store.put("FpId", SharedPrefUtil.fromBoostPref().getsBoostPref(this).getFpId());
-            MixPanelUtils.identify(SharedPrefUtil.fromBoostPref().getsBoostPref(this).getFpTag(), store, SharedPrefUtil.fromBoostPref().getsBoostPref(this).getFpId());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private String getCountryCode() {
-        String[] string_array = this.getResources().getStringArray(R.array.CountryCodes);
-        for (String country_phone : string_array) {
-            String[] Codes = country_phone.split(",");
-            if (Codes[0].equalsIgnoreCase(SharedPrefUtil.fromBoostPref().getsBoostPref(this).getCountryPhoneCode())) {
-                return Codes[1];
-            }
-        }
-        return "";
     }
 
 

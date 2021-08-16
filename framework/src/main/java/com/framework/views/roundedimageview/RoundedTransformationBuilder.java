@@ -3,6 +3,7 @@ package com.framework.views.roundedimageview;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.widget.ImageView;
@@ -145,17 +146,21 @@ public final class RoundedTransformationBuilder {
         return new Transformation() {
             @Override
             public Bitmap transform(Bitmap source) {
-                Bitmap transformed = RoundedDrawable.fromBitmap(source)
-                        .setScaleType(mScaleType)
-                        .setCornerRadius(mCornerRadii[0], mCornerRadii[1], mCornerRadii[2], mCornerRadii[3])
-                        .setBorderWidth(mBorderWidth)
-                        .setBorderColor(mBorderColor)
-                        .setOval(mOval)
-                        .toBitmap();
-                if (!source.equals(transformed)) {
-                    source.recycle();
+                Drawable drawable = RoundedDrawable.fromBitmap(source);
+                if (drawable != null) {
+                    Bitmap transformed = ((RoundedDrawable) drawable)
+                            .setScaleType(mScaleType)
+                            .setCornerRadius(mCornerRadii[0], mCornerRadii[1], mCornerRadii[2], mCornerRadii[3])
+                            .setBorderWidth(mBorderWidth)
+                            .setBorderColor(mBorderColor)
+                            .setOval(mOval)
+                            .toBitmap();
+                    if (!source.equals(transformed)) {
+                        source.recycle();
+                    }
+                    return transformed;
                 }
-                return transformed;
+                return source;
             }
 
             @Override

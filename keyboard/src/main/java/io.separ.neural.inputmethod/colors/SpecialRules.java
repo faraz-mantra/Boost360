@@ -7,7 +7,9 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.Settings;
+
 import androidx.core.content.ContextCompat;
+
 import android.text.TextUtils;
 
 import io.separ.neural.inputmethod.indic.Constants;
@@ -20,44 +22,6 @@ import io.separ.neural.inputmethod.indic.R;
 
 public class SpecialRules {
     private static final String TAG;
-
-    /* renamed from: com.android.inputmethodcommon.SpecialRules.1 */
-    static /* synthetic */ class C03051 {
-        static final /* synthetic */ int[] $SwitchMap$com$android$inputmethodcommon$SpecialRules$Rule;
-
-        static {
-            $SwitchMap$com$android$inputmethodcommon$SpecialRules$Rule = new int[Rule.values().length];
-            try {
-                $SwitchMap$com$android$inputmethodcommon$SpecialRules$Rule[Rule.GOOGLE_MESSENGER.ordinal()] = 1;
-            } catch (NoSuchFieldError e) {
-            }
-            try {
-                $SwitchMap$com$android$inputmethodcommon$SpecialRules$Rule[Rule.TINDER.ordinal()] = 2;
-            } catch (NoSuchFieldError e2) {
-            }
-            try {
-                $SwitchMap$com$android$inputmethodcommon$SpecialRules$Rule[Rule.INSTAGRAM.ordinal()] = 3;
-            } catch (NoSuchFieldError e3) {
-            }
-            try {
-                $SwitchMap$com$android$inputmethodcommon$SpecialRules$Rule[Rule.PLAY_STORE.ordinal()] = 4;
-            } catch (NoSuchFieldError e4) {
-            }
-            try {
-                $SwitchMap$com$android$inputmethodcommon$SpecialRules$Rule[Rule.CHROME.ordinal()] = 5;
-            } catch (NoSuchFieldError e5) {
-            }
-        }
-    }
-
-    public enum Rule {
-        GOOGLE_MESSENGER,
-        INSTAGRAM,
-        PLAY_STORE,
-        CHROME,
-        TINDER,
-        NONE
-    }
 
     static {
         TAG = SpecialRules.class.getSimpleName();
@@ -247,5 +211,43 @@ public class SpecialRules {
             }
         }
         return false;
+    }
+
+    public enum Rule {
+        GOOGLE_MESSENGER,
+        INSTAGRAM,
+        PLAY_STORE,
+        CHROME,
+        TINDER,
+        NONE
+    }
+
+    /* renamed from: com.android.inputmethodcommon.SpecialRules.1 */
+    static /* synthetic */ class C03051 {
+        static final /* synthetic */ int[] $SwitchMap$com$android$inputmethodcommon$SpecialRules$Rule;
+
+        static {
+            $SwitchMap$com$android$inputmethodcommon$SpecialRules$Rule = new int[Rule.values().length];
+            try {
+                $SwitchMap$com$android$inputmethodcommon$SpecialRules$Rule[Rule.GOOGLE_MESSENGER.ordinal()] = 1;
+            } catch (NoSuchFieldError e) {
+            }
+            try {
+                $SwitchMap$com$android$inputmethodcommon$SpecialRules$Rule[Rule.TINDER.ordinal()] = 2;
+            } catch (NoSuchFieldError e2) {
+            }
+            try {
+                $SwitchMap$com$android$inputmethodcommon$SpecialRules$Rule[Rule.INSTAGRAM.ordinal()] = 3;
+            } catch (NoSuchFieldError e3) {
+            }
+            try {
+                $SwitchMap$com$android$inputmethodcommon$SpecialRules$Rule[Rule.PLAY_STORE.ordinal()] = 4;
+            } catch (NoSuchFieldError e4) {
+            }
+            try {
+                $SwitchMap$com$android$inputmethodcommon$SpecialRules$Rule[Rule.CHROME.ordinal()] = 5;
+            } catch (NoSuchFieldError e5) {
+            }
+        }
     }
 }

@@ -1,517 +1,519 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        style="@style/ParentLayoutStyle"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+  <androidx.coordinatorlayout.widget.CoordinatorLayout
+    style="@style/ParentLayoutStyle"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include
-            android:id="@+id/app_bar"
-            layout="@layout/appbar_layout" />
+    <include
+      android:id="@+id/app_bar"
+      layout="@layout/appbar_layout" />
 
-        <androidx.core.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@android:color/white"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_15">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/margin_10"
+          android:orientation="vertical">
+
+          <LinearLayout
+            android:id="@+id/layout_primary_contact_number"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+              style="@style/ProductLabelTextStyle"
+              android:text="Registered contact number" />
+
+            <ImageButton
+              android:id="@+id/ib_info_primary"
+              style="@style/ProductHelpButtonStyle"
+              android:visibility="invisible" />
+
+          </LinearLayout>
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/grey_rectangle_background"
+            android:orientation="horizontal">
+
+            <EditText
+              android:id="@+id/edit_primary_code"
+              android:layout_width="50dp"
+              android:layout_height="match_parent"
+              android:enabled="false"
+              android:padding="10dp"
+              android:textColor="@color/primaryTextColor"
+              android:textSize="14sp" />
+
+            <EditText
+              android:id="@+id/edit_primary_contact_number"
+              style="@style/ProductEditTextStyle"
+              android:layout_weight="1"
+              android:hint="XXXXXXXXXX"
+              android:inputType="number" />
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:id="@+id/layout_call_tracker_number"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/margin_10"
+          android:orientation="vertical">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+              style="@style/ProductLabelTextStyle"
+              android:text="@string/call_tracker_number" />
+
+            <ImageButton
+              android:id="@+id/ib_info_call_tracker_number"
+              style="@style/ProductHelpButtonStyle"
+              android:visibility="invisible" />
+
+          </LinearLayout>
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/grey_rectangle_background"
+            android:orientation="horizontal">
+
+            <EditText
+              android:id="@+id/edit_call_tracker_number_code"
+              android:layout_width="50dp"
+              android:layout_height="match_parent"
+              android:enabled="false"
+              android:padding="10dp"
+              android:textColor="@color/primaryTextColor"
+              android:textSize="14sp" />
+
+            <EditText
+              android:id="@+id/edit_call_tracker_number"
+              style="@style/ProductEditTextStyle"
+              android:layout_weight="1"
+              android:hint="@string/xxxxxxxxxx"
+              android:inputType="number" />
+
+            <TextView
+              android:id="@+id/tv_vmn_report"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_margin="@dimen/margin_8"
+              android:background="@drawable/white_rectangle_background"
+              android:gravity="center"
+              android:minWidth="100dp"
+              android:padding="3dp"
+              android:text="@string/view_report"
+              android:textAllCaps="true"
+              android:textColor="@color/primaryTextColor"
+              android:textSize="12sp" />
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:id="@+id/layout_display_contact_number_1"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/margin_10"
+          android:orientation="vertical">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+              style="@style/ProductLabelTextStyle"
+              android:text="@string/display_contact_number_1" />
+
+            <ImageButton
+              android:id="@+id/ib_info_display_1"
+              style="@style/ProductHelpButtonStyle"
+              android:visibility="invisible" />
+
+          </LinearLayout>
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/grey_rectangle_background"
+            android:orientation="horizontal">
+
+            <EditText
+              android:id="@+id/edit_display_contact_number_code_1"
+              android:layout_width="50dp"
+              android:layout_height="match_parent"
+              android:enabled="false"
+              android:padding="10dp"
+              android:textColor="@color/primaryTextColor"
+              android:textSize="14sp" />
+
+            <EditText
+              android:id="@+id/edit_display_contact_number_1"
+              style="@style/ProductEditTextStyle"
+              android:hint="@string/xxxxxxxxxx"
+              android:inputType="number" />
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:id="@+id/layout_display_contact_number_2"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/margin_10"
+          android:orientation="vertical">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+              style="@style/ProductLabelTextStyle"
+              android:text="@string/display_contact_number_2" />
+
+            <ImageButton
+              android:id="@+id/ib_info_display_2"
+              style="@style/ProductHelpButtonStyle"
+              android:visibility="invisible" />
+
+          </LinearLayout>
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/grey_rectangle_background"
+            android:orientation="horizontal">
+
+            <EditText
+              android:id="@+id/edit_display_contact_number_code_2"
+              android:layout_width="50dp"
+              android:layout_height="match_parent"
+              android:enabled="false"
+              android:padding="10dp"
+              android:textColor="@color/primaryTextColor"
+              android:textSize="14sp" />
+
+            <EditText
+              android:id="@+id/edit_display_contact_number_2"
+              style="@style/ProductEditTextStyle"
+              android:hint="@string/xxxxxxxxxx"
+              android:inputType="number" />
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:id="@+id/layout_display_contact_number_3"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/margin_10"
+          android:orientation="vertical">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+              style="@style/ProductLabelTextStyle"
+              android:text="@string/display_contact_number_3" />
+
+            <ImageButton
+              android:id="@+id/ib_info_display_3"
+              style="@style/ProductHelpButtonStyle"
+              android:visibility="invisible" />
+
+          </LinearLayout>
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/grey_rectangle_background"
+            android:orientation="horizontal">
+
+            <EditText
+              android:id="@+id/edit_display_contact_number_code_3"
+              android:layout_width="50dp"
+              android:layout_height="match_parent"
+              android:enabled="false"
+              android:padding="10dp"
+              android:textColor="@color/primaryTextColor"
+              android:textSize="14sp" />
+
+            <EditText
+              android:id="@+id/edit_display_contact_number_3"
+              style="@style/ProductEditTextStyle"
+              android:hint="@string/xxxxxxxxxx"
+              android:inputType="number" />
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/margin_10"
+          android:orientation="vertical">
+
+          <LinearLayout
+            android:id="@+id/layout_whatsapp_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+              style="@style/ProductLabelTextStyle"
+              android:text="@string/whatsapp_for_business_number" />
+
+            <ImageButton
+              android:id="@+id/ib_info_whatsapp"
+              style="@style/ProductHelpButtonStyle" />
+
+          </LinearLayout>
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/grey_rectangle_background"
+            android:orientation="horizontal">
+
+            <EditText
+              android:id="@+id/edit_whatsapp_code"
+              android:layout_width="50dp"
+              android:layout_height="match_parent"
+              android:enabled="false"
+              android:padding="10dp"
+              android:textColor="@color/primaryTextColor"
+              android:textSize="14sp" />
+
+            <EditText
+              android:id="@+id/edit_whatsapp_number"
+              style="@style/ProductEditTextStyle"
+              android:layout_weight="1"
+              android:hint="@string/xxxxxxxxxx"
+              android:inputType="number" />
+
+            <FrameLayout
+              android:layout_width="50dp"
+              android:layout_height="match_parent"
+              android:layout_marginTop="1dp"
+              android:layout_marginEnd="1dp"
+              android:layout_marginBottom="1dp"
+              android:background="@android:color/white">
+
+              <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_whatsapp_for_business" />
+
+            </FrameLayout>
+
+          </LinearLayout>
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/margin_15"
-                android:orientation="vertical" >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/layout_primary_contact_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            style="@style/ProductLabelTextStyle"
-                            android:text="Registered Contact Number"/>
-
-                        <ImageButton
-                            android:id="@+id/ib_info_primary"
-                            android:visibility="invisible"
-                            style="@style/ProductHelpButtonStyle"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5"
-                        android:orientation="horizontal"
-                        android:background="@drawable/grey_rectangle_background">
-
-                        <EditText
-                            android:id="@+id/edit_primary_code"
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/primaryTextColor"
-                            android:padding="10dp"
-                            android:textSize="14sp"
-                            android:enabled="false" />
-
-                        <EditText
-                            android:id="@+id/edit_primary_contact_number"
-                            style="@style/ProductEditTextStyle"
-                            android:hint="XXXXXXXXXX"
-                            android:layout_weight="1"
-                            android:inputType="number"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_call_tracker_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            style="@style/ProductLabelTextStyle"
-                            android:text="@string/call_tracker_number"/>
-
-                        <ImageButton
-                            android:id="@+id/ib_info_call_tracker_number"
-                            android:visibility="invisible"
-                            style="@style/ProductHelpButtonStyle"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5"
-                        android:orientation="horizontal"
-                        android:background="@drawable/grey_rectangle_background">
-
-                        <EditText
-                            android:id="@+id/edit_call_tracker_number_code"
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/primaryTextColor"
-                            android:padding="10dp"
-                            android:textSize="14sp"
-                            android:enabled="false" />
-
-                        <EditText
-                            android:id="@+id/edit_call_tracker_number"
-                            style="@style/ProductEditTextStyle"
-                            android:layout_weight="1"
-                            android:hint="@string/xxxxxxxxxx"
-                            android:inputType="number"/>
-
-                        <TextView
-                            android:id="@+id/tv_vmn_report"
-                            android:layout_height="match_parent"
-                            android:layout_width="wrap_content"
-                            android:minWidth="100dp"
-                            android:textColor="@color/primaryTextColor"
-                            android:padding="3dp"
-                            android:layout_margin="@dimen/margin_8"
-                            android:gravity="center"
-                            android:textSize="12sp"
-                            android:textAllCaps="true"
-                            android:background="@drawable/white_rectangle_background"
-                            android:text="@string/view_report"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_display_contact_number_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            style="@style/ProductLabelTextStyle"
-                            android:text="@string/display_contact_number_1"/>
-
-                        <ImageButton
-                            android:id="@+id/ib_info_display_1"
-                            android:visibility="invisible"
-                            style="@style/ProductHelpButtonStyle"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5"
-                        android:orientation="horizontal"
-                        android:background="@drawable/grey_rectangle_background">
-
-                        <EditText
-                            android:id="@+id/edit_display_contact_number_code_1"
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/primaryTextColor"
-                            android:padding="10dp"
-                            android:textSize="14sp"
-                            android:enabled="false" />
-
-                        <EditText
-                            android:id="@+id/edit_display_contact_number_1"
-                            style="@style/ProductEditTextStyle"
-                            android:hint="@string/xxxxxxxxxx"
-                            android:inputType="number"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_display_contact_number_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            style="@style/ProductLabelTextStyle"
-                            android:text="@string/display_contact_number_2"/>
-
-                        <ImageButton
-                            android:id="@+id/ib_info_display_2"
-                            android:visibility="invisible"
-                            style="@style/ProductHelpButtonStyle"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5"
-                        android:orientation="horizontal"
-                        android:background="@drawable/grey_rectangle_background">
-
-                        <EditText
-                            android:id="@+id/edit_display_contact_number_code_2"
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/primaryTextColor"
-                            android:padding="10dp"
-                            android:textSize="14sp"
-                            android:enabled="false" />
-
-                        <EditText
-                            android:id="@+id/edit_display_contact_number_2"
-                            style="@style/ProductEditTextStyle"
-                            android:hint="@string/xxxxxxxxxx"
-                            android:inputType="number" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_display_contact_number_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            style="@style/ProductLabelTextStyle"
-                            android:text="@string/display_contact_number_3"/>
-
-                        <ImageButton
-                            android:id="@+id/ib_info_display_3"
-                            android:visibility="invisible"
-                            style="@style/ProductHelpButtonStyle"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5"
-                        android:orientation="horizontal"
-                        android:background="@drawable/grey_rectangle_background">
-
-                        <EditText
-                            android:id="@+id/edit_display_contact_number_code_3"
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/primaryTextColor"
-                            android:padding="10dp"
-                            android:textSize="14sp"
-                            android:enabled="false" />
-
-                        <EditText
-                            android:id="@+id/edit_display_contact_number_3"
-                            style="@style/ProductEditTextStyle"
-                            android:hint="@string/xxxxxxxxxx"
-                            android:inputType="number"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/layout_whatsapp_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            style="@style/ProductLabelTextStyle"
-                            android:text="@string/whatsapp_for_business_number"/>
-
-                        <ImageButton
-                            android:id="@+id/ib_info_whatsapp"
-                            style="@style/ProductHelpButtonStyle"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5"
-                        android:orientation="horizontal"
-                        android:background="@drawable/grey_rectangle_background">
-
-                        <EditText
-                            android:id="@+id/edit_whatsapp_code"
-                            android:layout_width="50dp"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/primaryTextColor"
-                            android:padding="10dp"
-                            android:textSize="14sp"
-                            android:enabled="false" />
-
-                        <EditText
-                            android:id="@+id/edit_whatsapp_number"
-                            style="@style/ProductEditTextStyle"
-                            android:layout_weight="1"
-                            android:hint="@string/xxxxxxxxxx"
-                            android:inputType="number"/>
-
-                        <FrameLayout
-                            android:layout_width="50dp"
-                            android:background="@android:color/white"
-                            android:layout_marginTop="1dp"
-                            android:layout_marginBottom="1dp"
-                            android:layout_marginEnd="1dp"
-                            android:layout_height="match_parent">
-
-                            <ImageView
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:layout_gravity="center"
-                                app:srcCompat="@drawable/ic_whatsapp_for_business"/>
-
-                        </FrameLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_10"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:id="@+id/layout_website"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal" >
-
-                            <TextView
-                                style="@style/ProductLabelTextStyle"
-                                android:text="@string/other_website_address_if_any"/>
-
-                            <ImageButton
-                                android:id="@+id/ib_info_website"
-                                android:visibility="invisible"
-                                style="@style/ProductHelpButtonStyle"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_5"
-                            android:orientation="horizontal"
-                            android:background="@drawable/white_rectangle_background">
-
-                            <LinearLayout
-                                android:id="@+id/layout_spinner_http_protocol"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:minWidth="230dp"
-                                android:orientation="horizontal"
-                                android:layout_weight="1"
-                                android:padding="1dp">
-
-                                <Spinner
-                                    android:id="@+id/spinner_http_protocol"
-                                    style="@style/ProductSpinnerStyle"
-                                    android:layout_weight="1"
-                                    android:background="@null"
-                                    android:layout_gravity="center_vertical"
-                                    android:entries="@array/http_protocol" />
-
-                                <ImageView
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginTop="2dp"
-                                    app:srcCompat="@drawable/ic_spinner_down_arrow"/>
-
-                            </LinearLayout>
-
-                            <EditText
-                                android:id="@+id/edit_website_address"
-                                style="@style/ProductEditTextStyle"
-                                android:layout_weight="1"
-                                android:inputType="textWebEditText"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_10"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:id="@+id/layout_email_address"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal" >
-
-                            <TextView
-                                style="@style/ProductLabelTextStyle"
-                                android:text="@string/business_email_address"/>
-
-                            <ImageButton
-                                android:id="@+id/ib_info_email_address"
-                                android:visibility="invisible"
-                                style="@style/ProductHelpButtonStyle"/>
-
-                        </LinearLayout>
-
-                        <EditText
-                            android:id="@+id/edit_business_email_address"
-                            style="@style/ProductEditTextStyle"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_5"
-                            android:enabled="false"
-                            android:hint="@string/xxxxxxxxxx"
-                            android:inputType="textEmailAddress" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_10"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:id="@+id/layout_facebook_page_widget"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal" >
-
-                            <TextView
-                                style="@style/ProductLabelTextStyle"
-                                android:text="@string/facebook_page_widget"/>
-
-                            <ImageButton
-                                android:id="@+id/ib_info_fb_page_widget"
-                                android:visibility="invisible"
-                                style="@style/ProductHelpButtonStyle"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_5"
-                            android:orientation="horizontal"
-                            android:background="@drawable/white_rectangle_background">
-
-                            <TextView
-                                android:layout_height="match_parent"
-                                android:layout_width="wrap_content"
-                                android:textColor="@color/primaryTextColor"
-                                android:padding="10dp"
-                                android:textSize="14sp"
-                                android:text="@string/https_facebook_com"/>
-
-                            <EditText
-                                android:id="@+id/edit_fb_page_widget"
-                                style="@style/ProductEditTextStyle"
-                                android:layout_weight="1"
-                                android:inputType="textWebEditText"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/btn_save"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_button_enabled"
-                        style="?android:attr/borderlessButtonStyle"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="bottom"
-                        android:layout_marginTop="@dimen/margin_40"
-                        android:layout_marginBottom="@dimen/margin_10"
-                        android:onClick="onSaveClick"
-                        android:text="@string/save_contact_info" />
-
-                </LinearLayout>
+              android:id="@+id/layout_website"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+              <TextView
+                style="@style/ProductLabelTextStyle"
+                android:text="@string/other_website_address_if_any" />
+
+              <ImageButton
+                android:id="@+id/ib_info_website"
+                style="@style/ProductHelpButtonStyle"
+                android:visibility="invisible" />
 
             </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/margin_5"
+              android:background="@drawable/white_rectangle_background"
+              android:orientation="horizontal">
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+              <LinearLayout
+                android:id="@+id/layout_spinner_http_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:minWidth="230dp"
+                android:orientation="horizontal"
+                android:padding="1dp">
+
+                <Spinner
+                  android:id="@+id/spinner_http_protocol"
+                  style="@style/ProductSpinnerStyle"
+                  android:layout_gravity="center_vertical"
+                  android:layout_weight="1"
+                  android:background="@null"
+                  android:entries="@array/http_protocol" />
+
+                <ImageView
+                  android:layout_width="24dp"
+                  android:layout_height="24dp"
+                  android:layout_gravity="center_vertical"
+                  android:layout_marginTop="2dp"
+                  app:srcCompat="@drawable/ic_spinner_down_arrow" />
+
+              </LinearLayout>
+
+              <EditText
+                android:id="@+id/edit_website_address"
+                style="@style/ProductEditTextStyle"
+                android:layout_weight="1"
+                android:inputType="text"
+                android:textAllCaps="false" />
+
+            </LinearLayout>
+
+          </LinearLayout>
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:orientation="vertical">
+
+            <LinearLayout
+              android:id="@+id/layout_email_address"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+              <TextView
+                style="@style/ProductLabelTextStyle"
+                android:text="@string/business_email_address" />
+
+              <ImageButton
+                android:id="@+id/ib_info_email_address"
+                style="@style/ProductHelpButtonStyle"
+                android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <EditText
+              android:id="@+id/edit_business_email_address"
+              style="@style/ProductEditTextStyle"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/margin_5"
+              android:hint="@string/xxxxxxxxxx"
+              android:inputType="textEmailAddress" />
+
+          </LinearLayout>
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+              android:id="@+id/layout_facebook_page_widget"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+              <TextView
+                style="@style/ProductLabelTextStyle"
+                android:text="@string/facebook_page_widget" />
+
+              <ImageButton
+                android:id="@+id/ib_info_fb_page_widget"
+                style="@style/ProductHelpButtonStyle"
+                android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/margin_5"
+              android:background="@drawable/white_rectangle_background"
+              android:orientation="horizontal"
+              android:visibility="gone">
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:text="@string/https_facebook_com"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="14sp" />
+
+              <EditText
+                android:id="@+id/edit_fb_page_widget"
+                style="@style/ProductEditTextStyle"
+                android:layout_weight="1"
+                android:inputType="textWebEditText" />
+
+            </LinearLayout>
+
+          </LinearLayout>
+
+          <Button
+            android:id="@+id/btn_save"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="@dimen/margin_40"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:background="@drawable/rounded_button_enabled"
+            android:onClick="onSaveClick"
+            android:text="@string/save_contact_info"
+            android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+      </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

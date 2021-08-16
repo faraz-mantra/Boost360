@@ -1,0 +1,91 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/ll_root_business_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/size_10"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:background="@drawable/bg_corners_stroke"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:padding="@dimen/size_10">
+
+      <com.framework.views.roundedimageview.RoundedImageView
+        android:id="@+id/image_icon"
+        android:layout_width="@dimen/size_50"
+        android:layout_height="@dimen/size_50"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_border_color="@color/gray_light_3"
+        app:riv_border_width="1dp"
+        app:riv_corner_radius="@dimen/size_4"
+        app:riv_mutate_background="true"
+        app:riv_oval="false"
+        app:srcCompat="@drawable/placeholder_image_n"
+        tools:ignore="MissingClass" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_business_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textColor="@color/black_4a4a4a"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/customRadioButton"
+        app:layout_constraintStart_toEndOf="@+id/image_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        app:textType="HEADING_5"
+        tools:text="Test" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_web_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:drawableStart="@drawable/ic_business_card_selection"
+        android:drawablePadding="@dimen/_4sdp"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:textColor="@color/blue_4A90E2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_icon"
+        app:layout_constraintTop_toBottomOf="@+id/ctv_business_name"
+        app:layout_constraintVertical_bias="0.1"
+        app:textType="BODY_1"
+        tools:text="www.google.com" />
+
+
+      <com.framework.views.customViews.CustomRadioButton
+        android:id="@+id/customRadioButton"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/ctv_business_desc"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/size_10"
+      android:layout_marginBottom="@dimen/size_10"
+      android:ellipsize="end"
+      android:maxLines="2"
+      android:textColor="@color/black_4a4a4a"
+      app:textType="BODY_2"
+      tools:text="Very happy with the treatment of Dr Lohia. Getting treatment under him from last one month there is tremendous relief. Thank you doctor and thanks hospital for the good services" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

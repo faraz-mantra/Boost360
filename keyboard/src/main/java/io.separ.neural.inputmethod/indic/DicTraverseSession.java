@@ -25,17 +25,23 @@ public final class DicTraverseSession {
         JniUtils.loadNativeLibrary();
     }
 
-    private static native long setDicTraverseSessionNative(String locale, long dictSize);
-    private static native void initDicTraverseSessionNative(long nativeDicTraverseSession,
-            long dictionary, int[] previousWord, int previousWordLength);
-    private static native void releaseDicTraverseSessionNative(long nativeDicTraverseSession);
-
     private long mNativeDicTraverseSession;
 
     public DicTraverseSession(Locale locale, long dictionary, long dictSize) {
         mNativeDicTraverseSession = createNativeDicTraverseSession(
                 locale != null ? locale.toString() : "", dictSize);
         initSession(dictionary);
+    }
+
+    private static native long setDicTraverseSessionNative(String locale, long dictSize);
+
+    private static native void initDicTraverseSessionNative(long nativeDicTraverseSession,
+                                                            long dictionary, int[] previousWord, int previousWordLength);
+
+    private static native void releaseDicTraverseSessionNative(long nativeDicTraverseSession);
+
+    private static long createNativeDicTraverseSession(String locale, long dictSize) {
+        return setDicTraverseSessionNative(locale, dictSize);
     }
 
     public long getSession() {
@@ -49,10 +55,6 @@ public final class DicTraverseSession {
     public void initSession(long dictionary, int[] previousWord, int previousWordLength) {
         initDicTraverseSessionNative(
                 mNativeDicTraverseSession, dictionary, previousWord, previousWordLength);
-    }
-
-    private static long createNativeDicTraverseSession(String locale, long dictSize) {
-        return setDicTraverseSessionNative(locale, dictSize);
     }
 
     private void closeInternal() {

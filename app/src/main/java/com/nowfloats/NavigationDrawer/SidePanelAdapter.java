@@ -1,7 +1,9 @@
 package com.nowfloats.NavigationDrawer;
 
 import android.content.Context;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,9 +20,8 @@ public class SidePanelAdapter extends RecyclerView.Adapter<SidePanelAdapter.MyVi
 
     private LayoutInflater inflater;
 
-    public SidePanelAdapter(Context context)
-    {
-        inflater=LayoutInflater.from(context);
+    public SidePanelAdapter(Context context) {
+        inflater = LayoutInflater.from(context);
 
     }
 
@@ -28,8 +29,8 @@ public class SidePanelAdapter extends RecyclerView.Adapter<SidePanelAdapter.MyVi
     @Override
     public SidePanelAdapter.MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 
-        View view=inflater.inflate(R.layout.single_row_card, viewGroup,false);
-        MyViewHolder holder=new MyViewHolder(view);
+        View view = inflater.inflate(R.layout.single_row_card, viewGroup, false);
+        MyViewHolder holder = new MyViewHolder(view);
         return holder;
 
     }
@@ -54,13 +55,14 @@ public class SidePanelAdapter extends RecyclerView.Adapter<SidePanelAdapter.MyVi
         return 0;
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         ImageView icon;
+
         public MyViewHolder(View itemView) {
             super(itemView);
-           // title= (TextView) itemView.findViewById(R.id.listText);
-           // icon= (ImageView) itemView.findViewById(R.id.listIcon);
+            // title= (TextView) itemView.findViewById(R.id.listText);
+            // icon= (ImageView) itemView.findViewById(R.id.listIcon);
         }
     }
 }

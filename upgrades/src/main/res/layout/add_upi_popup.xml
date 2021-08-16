@@ -1,124 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/upi_popup_outer_layout"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/upi_popup_outer_layout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#1d000000"
+  android:clickable="true"
+  android:focusable="true"
+  android:orientation="vertical">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/upi_popup_container_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#1d000000"
-    android:clickable="true"
-    android:focusable="true"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@drawable/curve_top_bg"
+    android:padding="@dimen/_10sdp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/upi_popup_container_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/curve_top_bg"
-        android:padding="@dimen/_10sdp">
+    <TextView
+      android:id="@+id/upi_popup_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/open_sans_semibold"
+      android:paddingStart="@dimen/_5sdp"
+      android:paddingTop="@dimen/_5sdp"
+      android:paddingEnd="@dimen/_5sdp"
+      android:paddingBottom="@dimen/_15sdp"
+      android:text="Add existing UPI ID"
+      android:textColor="@color/common_text_color"
+      android:textSize="@dimen/_14sdp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/upi_popup_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_semibold"
-            android:paddingStart="@dimen/_5sdp"
-            android:paddingEnd="@dimen/_5sdp"
-            android:paddingTop="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_15sdp"
-            android:text="Add existing UPI ID"
-            android:textSize="@dimen/_14sdp"
-            android:textColor="@color/common_text_color"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+      android:id="@+id/upi_popup_value"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/edittext_bottom_line_bg"
+      android:hint="eg. 7898789@upi"
+      android:inputType="text"
+      android:paddingStart="@dimen/_5sdp"
+      android:paddingBottom="@dimen/_5sdp"
+      android:textColor="@color/common_text_color"
+      android:textColorHint="@color/material_grey_400"
+      android:textCursorDrawable="@drawable/color_cursor"
+      android:textSize="@dimen/_12sdp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/upi_popup_title" />
 
-        <EditText
-            android:id="@+id/upi_popup_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_bottom_line_bg"
-            android:hint="eg. 7898789@upi"
-            android:paddingStart="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_5sdp"
-            android:inputType="text"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="@color/common_text_color"
-            android:textColorHint="@color/material_grey_400"
-            android:textCursorDrawable="@drawable/color_cursor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/upi_popup_title" />
+    <TextView
+      android:id="@+id/invalid_UPI"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:drawableRight="@drawable/ic_error_status_icon"
+      android:drawablePadding="@dimen/_5sdp"
+      android:fontFamily="@font/open_sans_semibold"
+      android:text="Invalid UPI ID"
+      android:textColor="#f24747"
+      android:textSize="@dimen/_8sdp"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="@id/upi_popup_value"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="@id/upi_popup_value"
+      tools:visibility="visible" />
 
-        <TextView
-            android:id="@+id/invalid_UPI"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/upi_popup_value"
-            app:layout_constraintBottom_toBottomOf="@id/upi_popup_value"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="Invalid UPI ID"
-            android:textColor="#f24747"
-            android:fontFamily="@font/open_sans_semibold"
-            android:textSize="@dimen/_8sdp"
-            android:drawablePadding="@dimen/_5sdp"
-            android:drawableRight="@drawable/ic_error_status_icon"
-            android:visibility="gone"
-            tools:visibility="visible"/>
+    <TextView
+      android:id="@+id/upi_popup_description"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/_3sdp"
+      android:layout_marginTop="@dimen/_5sdp"
+      android:text="UPI ID is the format of mobile number@bank or Username@bank"
+      android:textColor="#747474"
+      android:textSize="@dimen/_9sdp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/upi_popup_value" />
 
-        <TextView
-            android:id="@+id/upi_popup_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginStart="@dimen/_3sdp"
-            android:text="UPI ID is the format of mobile number@bank or Username@bank"
-            android:textColor="#747474"
-            android:textSize="@dimen/_9sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/upi_popup_value" />
+    <CheckBox
+      android:id="@+id/save_upi_info"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/_10sdp"
+      android:layout_marginEnd="@dimen/_10sdp"
+      android:layout_marginBottom="@dimen/_10sdp"
+      android:theme="@style/SaveCardCheckBox"
+      android:visibility="gone"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/upi_popup_description" />
 
-        <CheckBox
-            android:id="@+id/save_upi_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:theme="@style/SaveCardCheckBox"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/upi_popup_description"
-            android:visibility="gone"/>
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Securely save your VPA"
+      android:textColor="#747474"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="@id/save_upi_info"
+      app:layout_constraintStart_toEndOf="@id/save_upi_info"
+      app:layout_constraintTop_toTopOf="@id/save_upi_info" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Securely save your VPA"
-            android:textColor="#747474"
-            app:layout_constraintBottom_toBottomOf="@id/save_upi_info"
-            app:layout_constraintStart_toEndOf="@id/save_upi_info"
-            app:layout_constraintTop_toTopOf="@id/save_upi_info"
-            android:visibility="gone"/>
+    <TextView
+      android:id="@+id/upi_popup_submit"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/_30sdp"
+      android:background="@drawable/orange_button_click_effect"
+      android:fontFamily="@font/open_sans_semibold"
+      android:gravity="center"
+      android:paddingStart="@dimen/_30sdp"
+      android:paddingTop="@dimen/_10sdp"
+      android:paddingEnd="@dimen/_30sdp"
+      android:paddingBottom="@dimen/_10sdp"
+      android:text="VERIFY AND PAY"
+      android:textColor="@color/white"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/save_upi_info" />
 
-        <TextView
-            android:id="@+id/upi_popup_submit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:background="@drawable/orange_button_click_effect"
-            android:fontFamily="@font/open_sans_semibold"
-            android:gravity="center"
-            android:paddingStart="@dimen/_30sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_30sdp"
-            android:paddingBottom="@dimen/_10sdp"
-            android:text="VERIFY AND PAY"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/save_upi_info" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

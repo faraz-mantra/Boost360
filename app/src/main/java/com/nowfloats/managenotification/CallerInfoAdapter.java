@@ -3,8 +3,10 @@ package com.nowfloats.managenotification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,7 @@ import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
 
 public class CallerInfoAdapter extends RecyclerView.Adapter<CallerInfoAdapter.MyHolder> {
 
+    final Gson gson = new Gson();
     private Context mContext;
     private ArrayList<VmnCallModel> mCallList;
     private ArrayList<Business_Enquiry_Model> mEnquiryList;
@@ -38,7 +41,6 @@ public class CallerInfoAdapter extends RecyclerView.Adapter<CallerInfoAdapter.My
     private NOTI_TYPE noti_type;
     private int leftMargin, callTopMargin, enQTopMargin;
     private SharedPreferences pref;
-    final Gson gson = new Gson();
 
     public <T> CallerInfoAdapter(Context context, NOTI_TYPE noti_type, ArrayList<T> list, SharedPreferences pref) {
         mContext = context;
@@ -59,12 +61,6 @@ public class CallerInfoAdapter extends RecyclerView.Adapter<CallerInfoAdapter.My
                 mOrderList = (ArrayList<OrderModel>) list;
                 break;
         }
-    }
-
-    public enum NOTI_TYPE {
-        CALLS,
-        ENQUIRIES,
-        ORDERS
     }
 
     @NonNull
@@ -216,6 +212,12 @@ public class CallerInfoAdapter extends RecyclerView.Adapter<CallerInfoAdapter.My
                 return mOrderList.size();
         }
         return 0;
+    }
+
+    public enum NOTI_TYPE {
+        CALLS,
+        ENQUIRIES,
+        ORDERS
     }
 
     class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

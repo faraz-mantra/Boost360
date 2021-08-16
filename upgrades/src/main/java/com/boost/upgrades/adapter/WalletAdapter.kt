@@ -13,55 +13,59 @@ import com.bumptech.glide.Glide
 import com.razorpay.Razorpay
 
 
-class WalletAdapter(razorpay: Razorpay, itemList: ArrayList<String>, val listener: PaymentListener) :
-    RecyclerView.Adapter<WalletAdapter.upgradeViewHolder>() {
+class WalletAdapter(
+  razorpay: Razorpay,
+  itemList: ArrayList<String>,
+  val listener: PaymentListener
+) :
+  RecyclerView.Adapter<WalletAdapter.upgradeViewHolder>() {
 
-    private var list = ArrayList<String>()
-    private lateinit var context: Context
-    private lateinit var razorpay: Razorpay
+  private var list = ArrayList<String>()
+  private lateinit var context: Context
+  private lateinit var razorpay: Razorpay
 
-    init {
-        this.list = itemList
-        this.razorpay = razorpay
+  init {
+    this.list = itemList
+    this.razorpay = razorpay
+  }
+
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
+    val itemView = LayoutInflater.from(parent?.context).inflate(
+      R.layout.wallet_item, parent, false
+    )
+    context = itemView.context
+
+    return upgradeViewHolder(itemView)
+  }
+
+  override fun getItemCount(): Int {
+    return list.size
+  }
+
+  override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
+
+    holder.title.setText(list.get(position))
+    holder.itemView.setOnClickListener {
+      listener.walletSelected(list.get(position))
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
-        val itemView = LayoutInflater.from(parent?.context).inflate(
-            R.layout.wallet_item, parent, false
-        )
-        context = itemView.context
-
-        return upgradeViewHolder(itemView)
+    Glide.with(context).load(razorpay.getWalletSqLogoUrl(list.get(position))).into(holder.image)
+    if (list.size - 1 == position) {
+      holder.view.visibility = View.GONE
     }
+  }
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+  fun addupdates(items: ArrayList<String>) {
+    val initPosition = list.size
+    list.clear()
+    list.addAll(items)
+    notifyItemRangeInserted(initPosition, list.size)
+  }
 
-    override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
+  class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        holder.title.setText(list.get(position))
-        holder.itemView.setOnClickListener {
-            listener.walletSelected(list.get(position))
-        }
-        Glide.with(context).load(razorpay.getWalletSqLogoUrl(list.get(position))).into(holder.image)
-        if(list.size - 1 == position) {
-            holder.view.visibility = View.GONE
-        }
-    }
+    var view = itemView.findViewById<View>(R.id.wallet_view_dummy)!!
+    var title = itemView.findViewById<TextView>(R.id.wallet_payment_title)!!
+    var image = itemView.findViewById<ImageView>(R.id.wallet_profile_image)!!
 
-    fun addupdates(items: ArrayList<String>) {
-        val initPosition = list.size
-        list.clear()
-        list.addAll(items)
-        notifyItemRangeInserted(initPosition, list.size)
-    }
-
-    class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        var view = itemView.findViewById<View>(R.id.wallet_view_dummy)!!
-        var title = itemView.findViewById<TextView>(R.id.wallet_payment_title)!!
-        var image = itemView.findViewById<ImageView>(R.id.wallet_profile_image)!!
-
-    }
+  }
 }

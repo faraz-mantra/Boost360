@@ -9,12 +9,16 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class BusinessInfoModel(
-    var businessName: String? = null,
-    var addressCity: String? = null,
-    var email: String? = null,
-    var number: String? = null,
-    var domainName: String? = null
+  var businessName: String? = null,
+  var addressCity: String? = null,
+  var email: String? = null,
+  var number: String? = null,
+  var domainName: String? = null
 ) : Parcelable {
+
+  fun getNumberN(): String? {
+    return if (number.isNullOrEmpty().not()) number else null
+  }
 
   fun getEmailN(): String? {
     return if (email.isNullOrEmpty().not()) email else null
@@ -29,11 +33,11 @@ class BusinessInfoModel(
   }
 
   constructor(source: Parcel) : this(
-      source.readString(),
-      source.readString(),
-      source.readString(),
-      source.readString(),
-      source.readString()
+    source.readString(),
+    source.readString(),
+    source.readString(),
+    source.readString(),
+    source.readString()
   )
 
   override fun describeContents() = 0
@@ -48,10 +52,11 @@ class BusinessInfoModel(
 
   companion object {
     @JvmField
-    val CREATOR: Parcelable.Creator<BusinessInfoModel> = object : Parcelable.Creator<BusinessInfoModel> {
-      override fun createFromParcel(source: Parcel): BusinessInfoModel = BusinessInfoModel(source)
-      override fun newArray(size: Int): Array<BusinessInfoModel?> = arrayOfNulls(size)
-    }
+    val CREATOR: Parcelable.Creator<BusinessInfoModel> =
+      object : Parcelable.Creator<BusinessInfoModel> {
+        override fun createFromParcel(source: Parcel): BusinessInfoModel = BusinessInfoModel(source)
+        override fun newArray(size: Int): Array<BusinessInfoModel?> = arrayOfNulls(size)
+      }
   }
 
   fun getUrlStatusCode(url: String): LiveData<Int> {

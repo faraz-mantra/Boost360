@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.framework.models.firestore.FirestoreManager;
+import com.framework.views.customViews.CustomButton;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
@@ -78,10 +79,11 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
     EditText etSunOpen, etSunClose, etMonOpen, etTueOpen, etWedOpen, etThuOpen, etFriOpen, etSatOpen, etSatClose, etFriClose, etMonClose, etThuClose, etTueClose, etWedClose;
     int currentId = NO_ID;
     Toolbar toolbar;
-    TextView titleTextView, saveTextView;
+    TextView titleTextView;
+    CustomButton saveButton;
     LinearLayout linearLayoutAllTime;
-    private UserSessionManager session;
     CheckBox checkBoxAllTime;
+    private UserSessionManager session;
     private SwitchCompat switchSun, switchMon, switchTue, switchWed, switchThu, switchFri, switchSat;
 
     @Override
@@ -93,24 +95,22 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText("Business Hours");
+        titleTextView.setText(R.string.business_timings);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        saveTextView = (TextView) toolbar.findViewById(R.id.saveTextView);
-        saveTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
-                if (Methods.isOnline(BusinessHoursActivity.this)) {
-                    WebEngageController.trackEvent(BUSINESS_HOURS_SAVED, BUSINESS_PROFILE, session.getFpTag());
-                    uploadbusinessTimingsInfo();
-                } else {
-                    Methods.snackbarNoInternet(BusinessHoursActivity.this);
-                }
+        TextView saveText = (TextView) toolbar.findViewById(R.id.saveTextView);
+        saveText.setVisibility(View.GONE);
+        saveButton = findViewById(R.id.btn_save_info);
+        saveButton.setOnClickListener(v -> {
+            MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
+            if (Methods.isOnline(BusinessHoursActivity.this)) {
+                WebEngageController.trackEvent(BUSINESS_HOURS_SAVED, BUSINESS_PROFILE, session.getFpTag());
+                uploadbusinessTimingsInfo();
+            } else {
+                Methods.snackbarNoInternet(BusinessHoursActivity.this);
             }
         });
         etSunOpen = (EditText) findViewById(R.id.et_sun_open);
@@ -281,8 +281,9 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             e.printStackTrace();
         }
 
-        UploadProfileAsyncTask upa = new UploadProfileAsyncTask(BusinessHoursActivity.this, dayData, profilesattr);
-        upa.execute();
+        new UploadProfileAsyncTask(BusinessHoursActivity.this, dayData, profilesattr, isSuccess -> {
+            if (isSuccess) saveButton.setVisibility(View.GONE);
+        }).execute();
         session.setBusinessHours(openAtleastOneDayFlag);
         onBusinessHourAddedOrUpdated(openAtleastOneDayFlag);
     }
@@ -507,9 +508,9 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
         String hours = time.substring(0,time.indexOf(":")+1);
         String minutes = time.substring(time.indexOf(":"),time.indexOf(" "));
         if (time.toLowerCase().endsWith("am")){
-
+  
         }else if(time.toLowerCase().endsWith("pm")){
-
+  
         }
         Integer.parseInt(hours)
     }*/
@@ -592,6 +593,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
                 } else {
                     WebEngageController.trackEvent(SUNDAY_MARKED_ON, TOGGLE_SUNDAY, NULL);
                 }
+                saveButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.switch_mon:
                 if (!switchMon.isChecked()) {
@@ -600,6 +602,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
                 } else {
                     WebEngageController.trackEvent(MONDAY_MARKED_ON, TOGGLE_MONDAY, NULL);
                 }
+                saveButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.switch_tue:
                 if (!switchTue.isChecked()) {
@@ -608,6 +611,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
                 } else {
                     WebEngageController.trackEvent(TUESDAY_MARKED_ON, TOGGLE_TUESDAY, NULL);
                 }
+                saveButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.switch_wed:
                 if (!switchWed.isChecked()) {
@@ -616,6 +620,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
                 } else {
                     WebEngageController.trackEvent(WEDNESDAY_MARKED_ON, TOGGLE_WEDNESDAY, NULL);
                 }
+                saveButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.switch_thu:
                 if (!switchThu.isChecked()) {
@@ -624,6 +629,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
                 } else {
                     WebEngageController.trackEvent(THURSDAY_MARKED_ON, TOGGLE_THURSDAY, NULL);
                 }
+                saveButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.switch_fri:
                 if (!switchFri.isChecked()) {
@@ -632,6 +638,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
                 } else {
                     WebEngageController.trackEvent(FRIDAY_MARKED_ON, TOGGLE_FRIDAY, NULL);
                 }
+                saveButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.switch_sat:
                 if (!switchSat.isChecked()) {
@@ -640,6 +647,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
                 } else {
                     WebEngageController.trackEvent(SATURDAY_MARKED_ON, TOGGLE_SATURDAY, NULL);
                 }
+                saveButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.chbx_same_time:
                 if (checkBoxAllTime.isChecked()) {
@@ -647,9 +655,8 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
                     linearLayoutAllTime.setVisibility(View.VISIBLE);
                     findViewById(R.id.et_all_close).setOnTouchListener(BusinessHoursActivity.this);
                     findViewById(R.id.et_all_open).setOnTouchListener(BusinessHoursActivity.this);
-                } else {
-
                 }
+                saveButton.setVisibility(View.VISIBLE);
                 break;
         }
     }

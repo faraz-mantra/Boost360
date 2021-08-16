@@ -31,7 +31,12 @@ class ConfirmAptSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmAptBinding
   }
 
   override fun onCreateView() {
-    setOnClickListener(binding?.buttonDone, binding?.buttonDoneN, binding?.tvCancel, binding?.tvCancelN)
+    setOnClickListener(
+      binding?.buttonDone,
+      binding?.buttonDoneN,
+      binding?.tvCancel,
+      binding?.tvCancelN
+    )
     binding?.tvSubTitle?.text = "Appointment ID #${orderItem?.ReferenceNumber ?: ""}"
     val method = PaymentDetailsN.METHOD.fromType(orderItem?.PaymentDetails?.method())
     val statusPayment = PaymentDetailsN.STATUS.from(orderItem?.PaymentDetails?.status())
@@ -48,14 +53,25 @@ class ConfirmAptSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmAptBinding
     } else binding?.checkboxEmail?.gone()
 
 
-    binding?.txtSymbol?.text=orderItem?.BillingDetails?.getCurrencyCodeValue()?:"INR"
-    binding?.txtPrice?.text="${orderItem?.BillingDetails?.AmountPayableByBuyer?:0.0}"
-    val isPaymentDone = (method == PaymentDetailsN.METHOD.FREE || (method != PaymentDetailsN.METHOD.FREE && statusPayment == PaymentDetailsN.STATUS.SUCCESS))
+    binding?.txtSymbol?.text = orderItem?.BillingDetails?.getCurrencyCodeValue() ?: "INR"
+    binding?.txtPrice?.text = "${orderItem?.BillingDetails?.AmountPayableByBuyer ?: 0.0}"
+    val isPaymentDone =
+      (method == PaymentDetailsN.METHOD.FREE || (method != PaymentDetailsN.METHOD.FREE && statusPayment == PaymentDetailsN.STATUS.SUCCESS))
     binding?.txtDeliveryMode?.text = fromHtml("Service Location: <b>Home</b>")
-    binding?.txtPaymentMode?.text = fromHtml("Payment mode: <b>${orderItem?.PaymentDetails?.methodValue()}</b>")
-    binding?.txtPaymentStatus?.text = fromHtml("Payment status: <b>${orderItem?.PaymentDetails?.status()}</b>")
-    val iconPayment = ContextCompat.getDrawable(baseActivity, if (isPaymentDone) R.drawable.ic_order_status_success else R.drawable.ic_order_status_pending)
-    binding?.txtPaymentStatus?.setCompoundDrawablesWithIntrinsicBounds(iconPayment, null, null, null)
+    binding?.txtPaymentMode?.text =
+      fromHtml("Payment mode: <b>${orderItem?.PaymentDetails?.methodValue()}</b>")
+    binding?.txtPaymentStatus?.text =
+      fromHtml("Payment status: <b>${orderItem?.PaymentDetails?.status()}</b>")
+    val iconPayment = ContextCompat.getDrawable(
+      baseActivity,
+      if (isPaymentDone) R.drawable.ic_order_status_success else R.drawable.ic_order_status_pending
+    )
+    binding?.txtPaymentStatus?.setCompoundDrawablesWithIntrinsicBounds(
+      iconPayment,
+      null,
+      null,
+      null
+    )
     if (isPaymentDone.not()) {
       checkUi()
       binding?.btnCheckOnlineLink?.setOnClickListener {
@@ -68,7 +84,8 @@ class ConfirmAptSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmAptBinding
       binding?.btnCheckOnlineLink?.gone()
       binding?.btnVertical?.gone()
       binding?.btnHorizontal?.visible()
-      binding?.txtNote?.text = "${getString(R.string.send_an_email_and_an_sms_confirmation_of_this_apt)}."
+      binding?.txtNote?.text =
+        "${getString(R.string.send_an_email_and_an_sms_confirmation_of_this_apt)}."
     }
   }
 
@@ -78,15 +95,27 @@ class ConfirmAptSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmAptBinding
       binding?.btnVertical?.visible()
       binding?.btnHorizontal?.gone()
       binding?.line?.gone()
-      binding?.btnCheckOnlineLink?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_order_online_link_check, 0, 0, 0)
-      binding?.txtNote?.text = "${getString(R.string.send_an_email_and_an_sms_confirmation_of_this_apt)} ${getString(R.string.boost_along_payment_order)}"
+      binding?.btnCheckOnlineLink?.setCompoundDrawablesWithIntrinsicBounds(
+        R.drawable.ic_order_online_link_check,
+        0,
+        0,
+        0
+      )
+      binding?.txtNote?.text =
+        "${getString(R.string.send_an_email_and_an_sms_confirmation_of_this_apt)} ${getString(R.string.boost_along_payment_order)}"
     } else {
       binding?.onlinePaymentLinkCheck?.gone()
       binding?.btnVertical?.gone()
       binding?.btnHorizontal?.visible()
       binding?.line?.visible()
-      binding?.btnCheckOnlineLink?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_order_online_link_uncheck, 0, 0, 0)
-      binding?.txtNote?.text = "${getString(R.string.send_an_email_and_an_sms_confirmation_of_this_apt)}."
+      binding?.btnCheckOnlineLink?.setCompoundDrawablesWithIntrinsicBounds(
+        R.drawable.ic_order_online_link_uncheck,
+        0,
+        0,
+        0
+      )
+      binding?.txtNote?.text =
+        "${getString(R.string.send_an_email_and_an_sms_confirmation_of_this_apt)}."
 
     }
   }

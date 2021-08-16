@@ -61,26 +61,29 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class    Business_Profile_Fragment_V2 extends Fragment implements DomainApiService.DomainCallback {
-    TextView businessAddressLayout, contactInformationLayout, businessHoursLayout, businessLogoLayout, socialSharingLayout,
-            tvCustomPages, tvPhotoGallery, tvSiteAppearance, tvDomainDetails;
+public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiService.DomainCallback {
+    private final static int LIGHT_HOUSE_EXPIRED = -1, DEMO = 0, DEMO_EXPIRED = -2;
+    private static final String DOMAIN_SUCCESS_STATUS = "17";
+    private static final String PAYMENT_STATE_SUCCESS = "1";
+    private static final String ROOT_ALIAS_URI = "nowfloats";
+    private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
     public static ImageView businessProfileImageView;
     public static TextView websiteTextView;
     public static TextView businessInfoTextView;
     public static TextView category;
+    TextView businessAddressLayout, contactInformationLayout, businessHoursLayout, businessLogoLayout, socialSharingLayout,
+            tvCustomPages, tvPhotoGallery, tvSiteAppearance, tvDomainDetails;
     Typeface robotoLight;
-    private SharedPreferences pref = null;
     UserSessionManager session;
     SharedPreferences.Editor prefsEditor;
+    private SharedPreferences pref = null;
     private Activity activity;
     private DomainApiService domainApiService;
-
     private GMBHandler GmbHandler;
-
-    private final static int LIGHT_HOUSE_EXPIRED = -1, DEMO = 0, DEMO_EXPIRED = -2;
-
-
     private ProgressDialog progressDialog;
+    private Get_FP_Details_Model get_fp_details_model;
+    private boolean isAlreadyCalled = false;
+    private boolean isDomainDetailsAvali = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,8 +94,7 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View mainView = inflater.inflate(R.layout.fragment_business_profile_v3, container, false);
         pref = activity.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
@@ -109,7 +111,6 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
 
         return mainView;
     }
-
 
     @Override
     public void onViewCreated(final View mainView, Bundle savedInstanceState) {
@@ -429,7 +430,6 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
         BoostLog.d("Test", "OnCeate View is called");
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -441,7 +441,6 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
 
         super.onStop();
     }
-
 
     /*
      * Domain Details Param
@@ -480,9 +479,6 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
             }
         });
     }
-
-
-    private static final String DOMAIN_SUCCESS_STATUS = "17";
 
     @Override
     public void getDomainDetails(DomainDetails domainDetails) {
@@ -533,26 +529,11 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
 
     }
 
-    private static final String PAYMENT_STATE_SUCCESS = "1";
-    private static final String ROOT_ALIAS_URI = "nowfloats";
-    private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
-    private Get_FP_Details_Model get_fp_details_model;
-    private boolean isAlreadyCalled = false;
-    private boolean isDomainDetailsAvali = false;
-
     private void showDomainDetails() {
         isAlreadyCalled = true;
         Intent domainIntent = new Intent(activity, DomainDetailsActivity.class);
         startActivity(domainIntent);
         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
-
-    private enum DialogFrom {
-        DOMAIN_AVAILABLE,
-        CONTACTS_AND_EMAIL_REQUIRED,
-        CATEGORY_REQUIRED,
-        ADDRESS_REQUIRED,
-        DEFAULT
     }
 
     private HashMap<String, String> getLinkDomainParam() {
@@ -690,7 +671,6 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
         tvMessage.setText(message);
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -709,12 +689,10 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
 
     }
 
-
     @Override
     public void onDetach() {
         super.onDetach();
     }
-
 
     public void shareWebsite(String text) {
         final Intent intent = new Intent(Intent.ACTION_SEND);
@@ -724,5 +702,14 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
         prefsEditor.putBoolean("shareWebsite", true);
         prefsEditor.commit();
         session.setWebsiteshare(true);
+    }
+
+
+    private enum DialogFrom {
+        DOMAIN_AVAILABLE,
+        CONTACTS_AND_EMAIL_REQUIRED,
+        CATEGORY_REQUIRED,
+        ADDRESS_REQUIRED,
+        DEFAULT
     }
 }

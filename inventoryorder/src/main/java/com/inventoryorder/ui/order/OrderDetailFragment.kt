@@ -71,7 +71,10 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       showProgress()
       apiGetOrderDetails(it, "")
     }
-    setOnClickListener(binding?.tvCustomerContactNumber, binding?.tvCustomerEmail) //binding?.btnPickUp,
+    setOnClickListener(
+      binding?.tvCustomerContactNumber,
+      binding?.tvCustomerEmail
+    ) //binding?.btnPickUp,
   }
 
   private fun apiGetOrderDetails(orderId: String, message: String) {
@@ -94,20 +97,24 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     var count = 0
     if (orderItem?.Items.isNullOrEmpty().not()) {
       orderItem?.Items?.forEach {
-        viewModel?.getProductDetails(it.Product?._id)?.observeOnce(viewLifecycleOwner, Observer { it1 ->
-          count += 1
-          val product = it1 as? ProductResponse
-          if (count == orderItem?.Items?.size) {
-            product?.let { it2 -> productList?.add(it2) }
-            addProductToOrder()
-          } else product?.let { it2 -> productList?.add(it2) }
-        })
+        viewModel?.getProductDetails(it.Product?._id)
+          ?.observeOnce(viewLifecycleOwner, Observer { it1 ->
+            count += 1
+            val product = it1 as? ProductResponse
+            if (count == orderItem?.Items?.size) {
+              product?.let { it2 -> productList?.add(it2) }
+              addProductToOrder()
+            } else product?.let { it2 -> productList?.add(it2) }
+          })
       }
     } else addProductToOrder()
   }
 
   private fun addProductToOrder() {
-    productList?.forEach { orderItem?.Items?.firstOrNull { it1 -> it1.Product?._id?.trim() == it.Product?._id?.trim() }?.product_detail = it.Product }
+    productList?.forEach {
+      orderItem?.Items?.firstOrNull { it1 -> it1.Product?._id?.trim() == it.Product?._id?.trim() }?.product_detail =
+        it.Product
+    }
     hideProgress()
     binding?.mainView?.visible()
     binding?.error?.gone()
@@ -130,9 +137,11 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun checkStatusOrder(order: OrderItem) {
     val btnStatusMenu = order.orderBtnStatus()
-    val requestPayment = btnStatusMenu.firstOrNull { it == OrderMenuModel.MenuStatus.REQUEST_PAYMENT }
+    val requestPayment =
+      btnStatusMenu.firstOrNull { it == OrderMenuModel.MenuStatus.REQUEST_PAYMENT }
     val cancelOrder = btnStatusMenu.firstOrNull { it == OrderMenuModel.MenuStatus.CANCEL_ORDER }
-    bottomButtonStatus = btnStatusMenu.filter { (it == OrderMenuModel.MenuStatus.CANCEL_ORDER || it == OrderMenuModel.MenuStatus.REQUEST_PAYMENT).not() }
+    bottomButtonStatus =
+      btnStatusMenu.filter { (it == OrderMenuModel.MenuStatus.CANCEL_ORDER || it == OrderMenuModel.MenuStatus.REQUEST_PAYMENT).not() }
     if (cancelOrder != null) {
       binding?.tvCancelOrder?.visible()
       binding?.tvCancelOrder?.text = cancelOrder.title
@@ -167,10 +176,20 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    val item: MenuItem = menu.findItem(R.id.menu_item_invoice)
-    item.actionView.findViewById<CustomTextView>(R.id.tvInvoice).setOnClickListener {
-      startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
+    menu.findItem(R.id.menu_item_invoice)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.menu_item_invoice -> {
+        startFragmentOrderActivity(
+          FragmentType.ORDER_INVOICE_VIEW,
+          Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
     }
+
   }
 
   fun getBundleData(): Bundle {
@@ -179,35 +198,55 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun setOrderDetails(order: OrderItem) {
     binding?.orderType?.text = getStatusText(order)
-    OrderStatusValue.fromStatusOrder(order.status())?.icon?.let { binding?.statusIcon?.setImageResource(it) }
+    OrderStatusValue.fromStatusOrder(order.status())?.icon?.let {
+      binding?.statusIcon?.setImageResource(
+        it
+      )
+    }
     binding?.tvOrderStatus?.text = order.PaymentDetails?.statusValue()
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
     binding?.tvDeliveryType?.text = order.deliveryType()
-    binding?.tvItemCount?.visibility = if (order.Items.isNullOrEmpty().not()) View.VISIBLE else View.GONE
-    binding?.tvItemCount?.text = if (order.Items?.size ?: 0 > 1) "(${order.Items?.size} items)" else "(${order.Items?.size} item)"
+    binding?.tvItemCount?.visibility =
+      if (order.Items.isNullOrEmpty().not()) View.VISIBLE else View.GONE
+    binding?.tvItemCount?.text =
+      if (order.Items?.size ?: 0 > 1) "(${order.Items?.size} items)" else "(${order.Items?.size} item)"
 
     order.BillingDetails?.let { bill ->
-      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
-      binding?.tvOrderAmount?.text = "$currency ${DecimalFormat("##,##,##0").format(bill.AmountPayableByBuyer)}"
+      val currency =
+        takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() }
+          ?: "INR"
+      binding?.tvOrderAmount?.text =
+        "$currency ${DecimalFormat("##,##,##0").format(bill.AmountPayableByBuyer)}"
       //binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding?.orderDate?.text = DateUtils.parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
+    binding?.orderDate?.text = DateUtils.parseDate(
+      order.UpdatedOn,
+      FORMAT_SERVER_DATE,
+      FORMAT_SERVER_TO_LOCAL_2,
+      timeZone = TimeZone.getTimeZone("IST")
+    )
 
     // customer details
     binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
     binding?.tvCustomerDetail?.text = order.BuyerDetails?.getPhoneEmailFull()
-    binding?.userAddress?.tvShippingAddress?.text = order.BuyerDetails?.address()?.addressLine1()
-    binding?.userAddress?.tvBillingAddress?.text = order.BuyerDetails?.address()?.addressLine1()
+    binding?.userAddress?.tvShippingAddress?.text =
+      "${order.BuyerDetails?.address()?.addressLine1()} ${order.BuyerDetails?.address()?.Zipcode}"
+    binding?.userAddress?.tvBillingAddress?.text =
+      "${order.BuyerDetails?.address()?.addressLine1()} ${order.BuyerDetails?.address()?.Zipcode}"
 
 //        binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
 //        binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
 //        binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
 
-    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) } == true)
+    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
+        ?.let { !checkValidMobile(it) } == true
+    )
       binding?.tvCustomerContactNumber?.setTextColor(getColor(R.color.watermelon_light_10))
     if (order.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty().not()) {
       //binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
-      if (!checkValidEmail(order.BuyerDetails?.ContactDetails?.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
+      if (!checkValidEmail(order.BuyerDetails?.ContactDetails?.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(
+        getColor(R.color.watermelon_light_10)
+      )
     } else binding?.tvCustomerEmail?.isGone = true
 
 
@@ -219,10 +258,12 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       shippingCost += item.Product?.ShippingCost ?: 0.0
       salePrice += item.product().price() - item.product().discountAmount()
       if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
-          ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
+        ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     }
-    binding?.tvShippingCost?.text = "Shipping Cost: $currency ${DecimalFormat("##,##,##0").format(shippingCost)}"
-    binding?.tvTotalOrderAmount?.text = "Total Amount: $currency ${DecimalFormat("##,##,##0").format(salePrice + shippingCost)}"
+    binding?.tvShippingCost?.text =
+      "Shipping Cost: $currency ${DecimalFormat("##,##,##0").format(shippingCost)}"
+    binding?.tvTotalOrderAmount?.text =
+      "Total Amount: $currency ${DecimalFormat("##,##,##0").format(salePrice + shippingCost)}"
 //        binding?.tvShippingCost?.text = "Shipping Cost: $currency $shippingCost"
 //        binding?.tvTotalOrderAmount?.text = "Total Amount: $currency ${salePrice + shippingCost}"
 
@@ -230,7 +271,9 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun getStatusText(order: OrderItem): String? {
     val statusValue = OrderStatusValue.fromStatusOrder(order.status())?.value
-    return if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT)) {
+    return if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status()
+        .toUpperCase(Locale.ROOT)
+    ) {
       statusValue.plus(order.cancelledText())
     } else statusValue
   }
@@ -238,15 +281,31 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.buttonBottom -> if (bottomButtonStatus.isNullOrEmpty().not()) orderItem?.let { clickActionOrderButton(bottomButtonStatus!!.first(), it) }
-      binding?.btnSendPaymentLink -> orderItem?.let { clickActionOrderButton(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, it) }
-      binding?.tvCancelOrder -> orderItem?.let { clickActionOrderButton(OrderMenuModel.MenuStatus.CANCEL_ORDER, it) }
+      binding?.buttonBottom -> if (bottomButtonStatus.isNullOrEmpty()
+          .not()
+      ) orderItem?.let { clickActionOrderButton(bottomButtonStatus!!.first(), it) }
+      binding?.btnSendPaymentLink -> orderItem?.let {
+        clickActionOrderButton(
+          OrderMenuModel.MenuStatus.REQUEST_PAYMENT,
+          it
+        )
+      }
+      binding?.tvCancelOrder -> orderItem?.let {
+        clickActionOrderButton(
+          OrderMenuModel.MenuStatus.CANCEL_ORDER,
+          it
+        )
+      }
       binding?.tvCustomerContactNumber -> {
-        if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { checkValidMobile(it) }!!) openDialer()
+        if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
+            ?.let { checkValidMobile(it) }!!
+        ) openDialer()
         else showShortToast(getString(R.string.phone_invalid_format_error))
       }
       binding?.tvCustomerEmail -> {
-        if (orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()?.let { checkValidEmail(it) }!!) openEmailApp()
+        if (orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()
+            ?.let { checkValidEmail(it) }!!
+        ) openEmailApp()
         else showShortToast(getString(R.string.email_invalid_format_error))
       }
     }
@@ -267,7 +326,10 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
           showProgress()
           sendPaymentLinkOrder(getString(R.string.payment_request_send))
         }
-        sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentBottomSheetDialog::class.java.name)
+        sheetRequestPayment.show(
+          this.parentFragmentManager,
+          RequestPaymentBottomSheetDialog::class.java.name
+        )
       }
       OrderMenuModel.MenuStatus.CANCEL_ORDER -> {
         val sheetCancel = CancelBottomSheetDialog()
@@ -292,13 +354,20 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
         val sheetReBookingApt = SendReBookingOrderSheetDialog()
         sheetReBookingApt.setData(orderItem)
         sheetReBookingApt.onClicked = { sendReBookingRequestOrder() }
-        sheetReBookingApt.show(this.parentFragmentManager, SendReBookingAptSheetDialog::class.java.name)
+        sheetReBookingApt.show(
+          this.parentFragmentManager,
+          SendReBookingAptSheetDialog::class.java.name
+        )
       }
       OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
         val sheetFeedbackApt = SendFeedbackOrderSheetDialog()
         sheetFeedbackApt.setData(orderItem)
-        sheetFeedbackApt.onClicked = { sendFeedbackRequestOrder(it, getString(R.string.order_feedback_requested)) }
-        sheetFeedbackApt.show(this.parentFragmentManager, SendFeedbackAptSheetDialog::class.java.name)
+        sheetFeedbackApt.onClicked =
+          { sendFeedbackRequestOrder(it, getString(R.string.order_feedback_requested)) }
+        sheetFeedbackApt.show(
+          this.parentFragmentManager,
+          SendFeedbackAptSheetDialog::class.java.name
+        )
       }
       else -> {
       }
@@ -307,13 +376,17 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
 
   private fun openEmailApp() {
-    val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null))
+    val emailIntent = Intent(
+      Intent.ACTION_SENDTO,
+      Uri.fromParts("mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null)
+    )
     startActivity(emailIntent)
   }
 
   private fun openDialer() {
     val intent = Intent(Intent.ACTION_DIAL)
-    intent.data = (Uri.parse("tel:${orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()}"))
+    intent.data =
+      (Uri.parse("tel:${orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()}"))
     startActivity(intent)
   }
 
@@ -329,7 +402,12 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     showProgress()
     viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_shipped)) }
+        orderItem?._id?.let { it1 ->
+          apiGetOrderDetails(
+            it1,
+            resources.getString(R.string.order_shipped)
+          )
+        }
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -342,7 +420,12 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         if (feedback) sendFeedbackRequestOrder(FeedbackRequest(orderItem?._id, message))
-        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_delivery)) }
+        orderItem?._id?.let { it1 ->
+          apiGetOrderDetails(
+            it1,
+            resources.getString(R.string.order_delivery)
+          )
+        }
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -352,31 +435,56 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun apiCancelOrder(cancellingEntity: String, reasonText: String) {
     showProgress()
-    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        val data = it as? OrderConfirmStatus
-        if (reasonText.isNotEmpty()) {
-          updateReason(resources.getString(R.string.order_cancel), UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name, ExtraPropertiesOrder(cancellationRemark = reasonText))
-        } else orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_cancel)) }
-      } else {
-        showLongToast(it.message())
-        hideProgress()
-      }
-    })
+    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)
+      ?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) {
+          val data = it as? OrderConfirmStatus
+          if (reasonText.isNotEmpty()) {
+            updateReason(
+              resources.getString(R.string.order_cancel),
+              UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name,
+              ExtraPropertiesOrder(cancellationRemark = reasonText)
+            )
+          } else orderItem?._id?.let { it1 ->
+            apiGetOrderDetails(
+              it1,
+              resources.getString(R.string.order_cancel)
+            )
+          }
+        } else {
+          showLongToast(it.message())
+          hideProgress()
+        }
+      })
   }
 
-  private fun updateReason(message: String, type: String, extraPropertiesOrder: ExtraPropertiesOrder) {
-    val propertyRequest = UpdateOrderNPropertyRequest(updateExtraPropertyType = type, existingKeyName = "", orderId = this.orderItem?._id, extraPropertiesOrder = extraPropertiesOrder)
-    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)?.observeOnce(viewLifecycleOwner, {
-      orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, message) }
-    })
+  private fun updateReason(
+    message: String,
+    type: String,
+    extraPropertiesOrder: ExtraPropertiesOrder
+  ) {
+    val propertyRequest = UpdateOrderNPropertyRequest(
+      updateExtraPropertyType = type,
+      existingKeyName = "",
+      orderId = this.orderItem?._id,
+      extraPropertiesOrder = extraPropertiesOrder
+    )
+    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)
+      ?.observeOnce(viewLifecycleOwner, {
+        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, message) }
+      })
   }
 
   private fun markCodPaymentRequest() {
     showProgress()
     viewModel?.markCodPaymentDone(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, getString(R.string.payment_confirmed)) }
+        orderItem?._id?.let { it1 ->
+          apiGetOrderDetails(
+            it1,
+            getString(R.string.payment_confirmed)
+          )
+        }
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -389,7 +497,12 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     viewModel?.confirmOrder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         if (isSendPaymentLink) sendPaymentLinkOrder(getString(R.string.order_confirmed))
-        else orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, getString(R.string.order_confirmed)) }
+        else orderItem?._id?.let { it1 ->
+          apiGetOrderDetails(
+            it1,
+            getString(R.string.order_confirmed)
+          )
+        }
       } else {
         showLongToast(it.message())
         hideProgress()
@@ -411,14 +524,20 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun sendReBookingRequestOrder() {
     showProgress()
-    viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, getString(R.string.re_booking_reminder)) }
-      } else {
-        showLongToast(it.message())
-        hideProgress()
-      }
-    })
+    viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)
+      ?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) {
+          orderItem?._id?.let { it1 ->
+            apiGetOrderDetails(
+              it1,
+              getString(R.string.re_booking_reminder)
+            )
+          }
+        } else {
+          showLongToast(it.message())
+          hideProgress()
+        }
+      })
   }
 
   private fun sendPaymentLinkOrder(message: String) {

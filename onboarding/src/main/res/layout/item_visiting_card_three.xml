@@ -73,15 +73,17 @@
                   android:layout_height="match_parent"
                   android:layout_gravity="center"
                   android:background="@color/white"
-                  android:scaleType="centerCrop" />
+                  android:scaleType="fitCenter" />
               </com.framework.views.customViews.CustomCardView>
 
             </com.framework.views.customViews.CustomCardView>
+
             <View
               android:id="@+id/view_top"
               android:layout_width="wrap_content"
               android:layout_height="@dimen/size_40"
-              android:visibility="gone"/>
+              android:visibility="gone" />
+
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/business_name"
               android:layout_width="match_parent"
@@ -90,9 +92,9 @@
               android:layout_weight="1"
               android:ellipsize="end"
               android:gravity="center"
-              android:textAlignment="gravity"
               android:includeFontPadding="false"
               android:maxLines="2"
+              android:textAlignment="gravity"
               android:textColor="@color/blue_light"
               app:fontFamily="@font/patua_one_regular"
               app:textType="HEADING_6"
@@ -104,8 +106,8 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_2"
               android:ellipsize="end"
-              android:maxLines="1"
               android:gravity="center"
+              android:maxLines="1"
               android:textAlignment="gravity"
               android:textColor="@color/black_light"
               app:textType="CAPTION"
@@ -117,8 +119,8 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_4"
               android:ellipsize="end"
-              android:maxLines="1"
               android:gravity="center"
+              android:maxLines="1"
               android:textAlignment="gravity"
               android:textColor="@color/black_light"
               app:autoSizeMaxTextSize="12sp"
@@ -133,8 +135,8 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_4"
               android:ellipsize="end"
-              android:maxLines="1"
               android:gravity="center"
+              android:maxLines="1"
               android:textAlignment="gravity"
               android:textColor="@color/black_light"
               app:autoSizeMaxTextSize="11sp"
@@ -143,6 +145,7 @@
               app:autoSizeTextType="uniform"
               app:fontFamily="@font/semi_bold"
               tools:text="https://plastoindiaandpolymers.com" />
+
             <LinearLayout
               android:id="@+id/channels"
               android:layout_width="wrap_content"

@@ -1,80 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/root"
-        style="@style/wrap_wrap"
-        android:paddingTop="@dimen/size_15"
-        android:paddingEnd="@dimen/size_15"
-        android:paddingBottom="@dimen/size_5">
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/root"
+    style="@style/wrap_wrap"
+    android:paddingTop="@dimen/size_15"
+    android:paddingEnd="@dimen/size_15"
+    android:paddingBottom="@dimen/size_5">
 
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/group"
-            style="@style/wrap_wrap"
-            android:visibility="visible"
-            app:constraint_referenced_ids="image_staff_circle, image_done" />
+    <androidx.constraintlayout.widget.Group
+      android:id="@+id/group"
+      style="@style/wrap_wrap"
+      android:visibility="visible"
+      app:constraint_referenced_ids="image_staff_circle, image_done" />
 
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/image_staff_circle"
-            android:layout_width="@dimen/size_44"
-            android:layout_height="@dimen/size_44"
-            android:src="@drawable/ic_selected_circle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/image_staff_circle"
+      android:layout_width="@dimen/size_44"
+      android:layout_height="@dimen/size_44"
+      android:src="@drawable/ic_selected_circle"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card"
-            android:layout_width="@dimen/size_40"
-            android:layout_height="@dimen/size_40"
-            android:layout_marginTop="@dimen/size_2"
-            android:clipChildren="true"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="@dimen/size_0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <androidx.cardview.widget.CardView
+      android:id="@+id/card"
+      android:layout_width="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
+      android:layout_marginTop="@dimen/size_2"
+      android:clipChildren="true"
+      app:cardBackgroundColor="@color/white"
+      app:cardCornerRadius="20dp"
+      app:cardElevation="@dimen/size_0"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
 
-            <com.framework.views.customViews.CustomImageView
-                android:id="@+id/image_staff"
-                android:layout_width="@dimen/size_40"
-                android:layout_height="@dimen/size_40"
-                android:scaleType="centerCrop" />
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/image_staff"
+        android:layout_width="@dimen/size_40"
+        android:layout_height="@dimen/size_40"
+        android:scaleType="centerCrop" />
 
-            <com.framework.views.customViews.CustomImageView
-                android:id="@+id/image_anybody"
-                android:layout_width="@dimen/size_40"
-                android:layout_height="@dimen/size_40"
-                android:background="@color/transparent"
-                android:padding="@dimen/size_5"
-                android:src="@drawable/user"
-                android:visibility="gone" />
-        </androidx.cardview.widget.CardView>
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/image_anybody"
+        android:layout_width="@dimen/size_40"
+        android:layout_height="@dimen/size_40"
+        android:background="@color/transparent"
+        android:padding="@dimen/size_5"
+        android:src="@drawable/user"
+        android:visibility="gone" />
+    </androidx.cardview.widget.CardView>
 
-        <com.framework.views.roundedimageview.RoundedImageView
-            android:id="@+id/image_done"
-            android:layout_width="@dimen/size_20"
-            android:layout_height="@dimen/size_20"
-            android:background="@color/white"
-            app:riv_mutate_background="true"
-            android:layout_margin="@dimen/size_25"
-            app:riv_oval="true"
-            android:src="@drawable/ic_selected_tick"
-            app:layout_constraintStart_toStartOf="@id/card"
-            app:layout_constraintTop_toTopOf="@id/card" />
+    <com.framework.views.roundedimageview.RoundedImageView
+      android:id="@+id/image_done"
+      android:layout_width="@dimen/size_20"
+      android:layout_height="@dimen/size_20"
+      android:layout_margin="@dimen/size_25"
+      android:background="@color/white"
+      android:src="@drawable/ic_selected_tick"
+      app:layout_constraintStart_toStartOf="@id/card"
+      app:layout_constraintTop_toTopOf="@id/card"
+      app:riv_mutate_background="true"
+      app:riv_oval="true" />
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_staff_name"
-            style="@style/FormHeading"
-            android:layout_marginTop="@dimen/size_10"
-            android:gravity="center"
-            android:text="@string/service_info"
-            android:textSize="@dimen/size_12"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/text_staff_name"
+      style="@style/FormHeading"
+      android:layout_marginTop="@dimen/size_10"
+      android:gravity="center"
+      android:text="@string/service_info"
+      android:textSize="@dimen/size_12"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/card" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

@@ -17,6 +17,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
+import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignup.locale.LocaleManager;
 import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
@@ -106,10 +107,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     @Override
     public void onCreate() {
         super.onCreate();
-        BaseOrderApplication.instance = this;
-        SharedPreferences pref =  BaseOrderApplication.instance.getSharedPreferences(Constants.PREF_NAME_REFERRAL, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
 //        SmartLookController.initiateSmartLook(this.getString(R.string.samrt_look_api_key));
+        BaseOrderApplication.instance = this;
         BaseOrderApplication.initModule(this);
         BaseBoardingApplication.instance = this;
         BaseBoardingApplication.initModule(this);
@@ -117,10 +116,14 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         AppServiceApplication.initModule(this);
         AppDashboardApplication.instance = this;
         AppDashboardApplication.initModule(this);
+        AppPreSignInApplication.instance = this;
+        AppPreSignInApplication.initModule(this);
+        SharedPreferences pref = BaseOrderApplication.instance.getSharedPreferences(Constants.PREF_NAME_REFERRAL, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
         initWebEngage();
         //Invite Referral
         InviteReferralsApplication.register(this);
-        if (!pref.getBoolean(Constants.IS_INSTALL_APP,false)) {
+        if (!pref.getBoolean(Constants.IS_INSTALL_APP, false)) {
             InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
             InviteReferralsApi.getInstance(this).getReferrerCode(code -> {
                 editor.putBoolean(Constants.IS_INSTALL_APP, true);
@@ -137,8 +140,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 
         //AppsFlyerLib.setAppsFlyerKey("drr3ek3vNxVmxJZgtBpfnR");
 
-        /* Init AppsFlyer SDK */
-        AppsFlyerUtils.initAppsFlyer(this, APPSFLAYER_DEV_KEY);
+        appsFlyerEvent(this);
 
         try {
             //Fabric.with(this, new Crashlytics());
@@ -177,8 +179,12 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         }
 
 
-
         //TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "open_sans_hebrew_bold.ttf");
+    }
+
+    private void appsFlyerEvent(AppController appController) {
+        /* Init AppsFlyer SDK */
+        AppsFlyerUtils.initAppsFlyer(appController, APPSFLAYER_DEV_KEY);
     }
 
     void initWebEngage() {

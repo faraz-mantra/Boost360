@@ -1,18 +1,18 @@
 package com.onboarding.nowfloats.model.category
 
 enum class CategoryTypeNew(val iconType: String) {
-    DOCTORS("/icons/healthcare.svg"),
-    CLINICS_HOSPITALS("/icons/hospital.svg"),
-    EDUCATION_COACHING("/icons/edu.svg"),
-    HOTELS_MOTELS("/icons/hotels.svg"),
-    MANUFACTURING_EQUIPMENT("/icons/mfg.svg"),
-    SPAS_WELLNESS("/icons/spa.svg"),
-    SALON("/icons/salon.svg"),
-    RESTAURANT_CAFES("/icons/cafe.svg"),
-    RETAIL_BUSINESS("/icons/rtl.svg"),
-    SERVICES_BUSINESS("/icons/svc.svg");
+  DOCTORS("/icons/healthcare.svg"),
+  CLINICS_HOSPITALS("/icons/hospital.svg"),
+  EDUCATION_COACHING("/icons/edu.svg"),
+  HOTELS_MOTELS("/icons/hotels.svg"),
+  MANUFACTURING_EQUIPMENT("/icons/mfg.svg"),
+  SPAS_WELLNESS("/icons/spa.svg"),
+  SALON("/icons/salon.svg"),
+  RESTAURANT_CAFES("/icons/cafe.svg"),
+  RETAIL_BUSINESS("/icons/rtl.svg"),
+  SERVICES_BUSINESS("/icons/svc.svg");
 
-    companion object {
-        fun from(findValue: String): CategoryTypeNew = values().first { it.iconType == findValue }
-    }
+  companion object {
+    fun from(findValue: String): CategoryTypeNew = values().first { it.iconType == findValue }
+  }
 }

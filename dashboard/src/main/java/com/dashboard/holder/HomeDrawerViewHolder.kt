@@ -7,7 +7,8 @@ import com.dashboard.model.live.drawerData.DrawerHomeData
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 
-class HomeDrawerViewHolder(binding: ItemDrawerViewBinding) : AppBaseRecyclerViewHolder<ItemDrawerViewBinding>(binding) {
+class HomeDrawerViewHolder(binding: ItemDrawerViewBinding) :
+  AppBaseRecyclerViewHolder<ItemDrawerViewBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -20,6 +21,12 @@ class HomeDrawerViewHolder(binding: ItemDrawerViewBinding) : AppBaseRecyclerView
     binding.viewLock.visibility = if (data.isLockShow) View.VISIBLE else View.INVISIBLE
     binding.viewUp.visibility = if (data.isUpLineShow) View.VISIBLE else View.INVISIBLE
     binding.viewDown.visibility = if (data.isBottomLineShow) View.VISIBLE else View.INVISIBLE
-    binding.mainContent.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.NAV_CLICK_ITEM_CLICK.ordinal) }
+    binding.mainContent.setOnClickListener {
+      listener?.onItemClick(
+        position,
+        data,
+        RecyclerViewActionType.NAV_CLICK_ITEM_CLICK.ordinal
+      )
+    }
   }
 }

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +14,9 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.FragmentType
 import com.dashboard.controller.ui.allAddOns.AllBoostAddonsFragment
+import com.dashboard.controller.ui.business.BusinessProfileFragment
 import com.dashboard.controller.ui.drScore.DigitalReadinessScoreFragment
+import com.dashboard.controller.ui.website_theme.FragmentWebsiteTheme
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
@@ -22,12 +25,15 @@ import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
 
-open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+open class DashboardFragmentContainerActivity :
+  AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
 
   private var digitalReadinessScoreFragment: DigitalReadinessScoreFragment? = null
   private var allBoostAddonsFragment: AllBoostAddonsFragment? = null
+  private var websiteThemeFragment: FragmentWebsiteTheme? = null
+  private var businessProfileFragment: BusinessProfileFragment? = null
 
   override fun getLayout(): Int {
     return R.layout.activity_fragment_container
@@ -42,6 +48,13 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     super.onCreate(savedInstanceState)
   }
 
+  override fun getToolbarTitleGravity(): Int {
+    return when (type) {
+      FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_BUSINESS_PROFILE -> Gravity.START
+      else -> Gravity.CENTER
+    }
+  }
+
   override fun onCreateView() {
     super.onCreateView()
     setFragment()
@@ -51,6 +64,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     return binding?.appBarLayout?.toolbar
   }
 
+
   override fun getToolbarTitleSize(): Float? {
     return resources.getDimension(R.dimen.heading_7)
   }
@@ -58,6 +72,8 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNew
+      FragmentType.FRAGMENT_WEBSITE_THEME -> R.style.DashboardThemeNew
+      FragmentType.FRAGMENT_BUSINESS_PROFILE -> R.style.BusinessProfileTheme
       else -> super.customTheme()
     }
   }
@@ -65,6 +81,8 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.FRAGMENT_WEBSITE_THEME -> ContextCompat.getColor(this, R.color.gray_4e4e4e)
+      FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getColor(this, R.color.gray_4e4e4e)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -79,20 +97,25 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.ALL_BOOST_ADD_ONS -> resources.getString(R.string.all_boost_add_ons)
+      FragmentType.FRAGMENT_WEBSITE_THEME -> getString(R.string.website_style_customisation)
+      FragmentType.FRAGMENT_BUSINESS_PROFILE -> getString(R.string.business_profile_)
       else -> super.getToolbarTitle()
     }
   }
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_toolbar_d)
+      FragmentType.ALL_BOOST_ADD_ONS, FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getDrawable(
+        this,
+        R.drawable.ic_back_arrow_toolbar_d
+      )
       else -> super.getNavigationIcon()
     }
   }
 
   override fun isHideToolbar(): Boolean {
     return when (type) {
-      FragmentType.DIGITAL_READINESS_SCORE -> true
+      FragmentType.DIGITAL_READINESS_SCORE, FragmentType.FRAGMENT_WEBSITE_THEME -> true
       else -> super.isHideToolbar()
     }
   }
@@ -133,6 +156,14 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
         allBoostAddonsFragment = AllBoostAddonsFragment.newInstance()
         allBoostAddonsFragment
       }
+      FragmentType.FRAGMENT_WEBSITE_THEME -> {
+        websiteThemeFragment = FragmentWebsiteTheme.newInstance()
+        websiteThemeFragment
+      }
+      FragmentType.FRAGMENT_BUSINESS_PROFILE -> {
+        businessProfileFragment = BusinessProfileFragment.newInstance()
+        businessProfileFragment
+      }
       else -> throw IllegalFragmentTypeException()
     }
   }
@@ -141,6 +172,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     super.onActivityResult(requestCode, resultCode, data)
     digitalReadinessScoreFragment?.onActivityResult(requestCode, resultCode, data)
     allBoostAddonsFragment?.onActivityResult(requestCode, resultCode, data)
+    businessProfileFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -155,7 +187,13 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
 
 }
 
-fun Fragment.startFragmentDashboardActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false, requestCode: Int = 101) {
+fun Fragment.startFragmentDashboardActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false,
+  isResult: Boolean = false,
+  requestCode: Int = 101
+) {
   val intent = Intent(activity, DashboardFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -163,7 +201,12 @@ fun Fragment.startFragmentDashboardActivity(type: FragmentType, bundle: Bundle =
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, requestCode)
 }
 
-fun startFragmentAccountDashboardNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
+fun startFragmentAccountDashboardNew(
+  activity: Activity,
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean
+) {
   val intent = Intent(activity, DashboardFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -171,7 +214,11 @@ fun startFragmentAccountDashboardNew(activity: Activity, type: FragmentType, bun
   activity.startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentDashboardActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
+fun AppCompatActivity.startFragmentDashboardActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false
+) {
   val intent = Intent(this, DashboardFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

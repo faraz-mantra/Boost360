@@ -104,4 +104,27 @@
   <!--      </style>-->
    
 
+  <style name="CustomAlertDialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+    <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+    <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+  </style>
+  <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+    <item name="android:textColor">@color/colorAccentNegative</item>
+  </style>
+  <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+    <item name="android:textColor">@color/colorAccentPositive</item>
+  </style>
+
+  <style name="MaterialCustomDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+    <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyleMaterial</item>
+    <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyleMaterial</item>
+  </style>
+
+  <style name="NegativeButtonStyleMaterial" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <item name="android:textColor">@color/colorAccentNegative</item>
+  </style>
+
+  <style name="PositiveButtonStyleMaterial" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <item name="android:textColor">@color/colorAccentPositive</item>
+  </style>
 </resources>

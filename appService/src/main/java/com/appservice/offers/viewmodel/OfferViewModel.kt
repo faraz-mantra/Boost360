@@ -1,11 +1,11 @@
 package com.appservice.offers.viewmodel
 
 import androidx.lifecycle.LiveData
+import com.appservice.model.staffModel.ServiceListRequest
 import com.appservice.offers.models.*
 import com.appservice.rest.repository.NowfloatsApiRepository
 import com.appservice.rest.repository.OfferNowFloatsRepository
 import com.appservice.rest.repository.StaffNowFloatsRepository
-import com.appservice.staffs.model.ServiceListRequest
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData

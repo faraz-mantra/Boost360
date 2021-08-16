@@ -20,9 +20,9 @@ import com.onboarding.nowfloats.holders.visitingCard.*
 
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
-    activity: BaseActivity<*, *>,
-    list: ArrayList<T>,
-    itemClickListener: RecyclerItemClickListener? = null,
+  activity: BaseActivity<*, *>,
+  list: ArrayList<T>,
+  itemClickListener: RecyclerItemClickListener? = null,
 ) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
 
   override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*> {
@@ -56,7 +56,10 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     }
   }
 
-  fun runLayoutAnimation(recyclerView: RecyclerView?, anim: Int = R.anim.layout_animation_fall_down) = recyclerView?.apply {
+  fun runLayoutAnimation(
+    recyclerView: RecyclerView?,
+    anim: Int = R.anim.layout_animation_fall_down
+  ) = recyclerView?.apply {
     layoutAnimation = AnimationUtils.loadLayoutAnimation(context, anim)
     notifyDataSetChanged()
     scheduleLayoutAnimation()

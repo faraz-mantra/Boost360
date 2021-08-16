@@ -28,6 +28,11 @@ import android.view.animation.DecelerateInterpolator;
 import io.separ.neural.inputmethod.indic.R;
 
 public final class KeyPreviewDrawParams {
+    private static final float KEY_PREVIEW_SHOW_UP_END_SCALE = 1.0f;
+    private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR =
+            new AccelerateInterpolator();
+    private static final DecelerateInterpolator DECELERATE_INTERPOLATOR =
+            new DecelerateInterpolator();
     // XML attributes of {@link MainKeyboardView}.
     public final int mPreviewOffset;
     public final int mPreviewHeight;
@@ -43,7 +48,6 @@ public final class KeyPreviewDrawParams {
     private float mDismissEndYScale;
     private int mLingerTimeout;
     private boolean mShowPopup = true;
-
     // The graphical geometry of the key preview.
     // <-width->
     // +-------+   ^
@@ -84,12 +88,12 @@ public final class KeyPreviewDrawParams {
                 R.styleable.MainKeyboardView_keyPreviewDismissAnimator, 0);
     }
 
-    public void setVisibleOffset(final int previewVisibleOffset) {
-        mVisibleOffset = previewVisibleOffset;
-    }
-
     public int getVisibleOffset() {
         return mVisibleOffset;
+    }
+
+    public void setVisibleOffset(final int previewVisibleOffset) {
+        mVisibleOffset = previewVisibleOffset;
     }
 
     public void setGeometry(final View previewTextView) {
@@ -128,8 +132,8 @@ public final class KeyPreviewDrawParams {
     }
 
     public void setAnimationParams(final boolean hasCustomAnimationParams,
-            final float showUpStartXScale, final float showUpStartYScale, final int showUpDuration,
-            final float dismissEndXScale, final float dismissEndYScale, final int dismissDuration) {
+                                   final float showUpStartXScale, final float showUpStartYScale, final int showUpDuration,
+                                   final float dismissEndXScale, final float dismissEndYScale, final int dismissDuration) {
         mHasCustomAnimationParams = hasCustomAnimationParams;
         mShowUpStartXScale = showUpStartXScale;
         mShowUpStartYScale = showUpStartYScale;
@@ -138,12 +142,6 @@ public final class KeyPreviewDrawParams {
         mDismissEndYScale = dismissEndYScale;
         mDismissDuration = dismissDuration;
     }
-
-    private static final float KEY_PREVIEW_SHOW_UP_END_SCALE = 1.0f;
-    private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR =
-            new AccelerateInterpolator();
-    private static final DecelerateInterpolator DECELERATE_INTERPOLATOR =
-            new DecelerateInterpolator();
 
     public Animator createShowUpAnimator(final View target) {
         if (mHasCustomAnimationParams) {

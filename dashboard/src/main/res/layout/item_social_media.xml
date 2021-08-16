@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+
+  <FrameLayout
+    android:id="@+id/main_content"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/size_6"
+    tools:ignore="RtlSymmetry">
+
+    <com.framework.views.customViews.CustomCardView
+      android:id="@+id/card_view"
+      android:layout_width="@dimen/size_260"
+      android:layout_height="@dimen/size_120"
+      android:layout_marginStart="@dimen/size_8"
+      android:layout_marginTop="@dimen/size_8"
+      app:cardBackgroundColor="@color/dusky_blue_10"
+      app:cardCornerRadius="@dimen/size_12"
+      app:cardElevation="@dimen/size_0">
+
+      <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/connect_icon"
+          android:layout_width="@dimen/size_90"
+          android:layout_height="@dimen/size_90"
+          android:layout_gravity="end"
+          app:srcCompat="@drawable/ic_connect_social_media" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/in_active_view"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:orientation="vertical"
+          android:visibility="gone">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/txt_inactive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_20"
+            android:layout_marginEnd="@dimen/size_20"
+            android:gravity="center"
+            android:text="@string/fb_page_sync_not_activated_yet"
+            android:textColor="@color/black_50"
+            app:textType="HEADING_6" />
+
+          <com.framework.views.customViews.CustomButton
+            android:id="@+id/btn_activate"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_30"
+            android:layout_marginTop="@dimen/size_10"
+            android:background="@drawable/bg_rounded_accent_6"
+            android:gravity="center"
+            android:text="@string/activate_now"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            app:textType="BODY_1" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/active_view"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:gravity="center_vertical"
+          android:orientation="vertical"
+          android:paddingStart="@dimen/size_24"
+          android:paddingEnd="@dimen/size_10">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/total_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:textColor="@color/black_4a4a4a"
+            app:fontFamily="@font/barlow_light"
+            app:textType="HEADING_1"
+            tools:text="23" />
+
+          <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10">
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/txt_active"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_toStartOf="@+id/arrow_icon"
+              android:ellipsize="end"
+              android:includeFontPadding="false"
+              android:maxLines="2"
+              android:textColor="@color/black_4a4a4a"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1"
+              tools:text="@string/total_twitter_followers" />
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/arrow_icon"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:layout_centerInParent="true"
+              android:layout_marginStart="@dimen/size_4"
+              app:srcCompat="@drawable/ic_arrow_left_channel" />
+          </RelativeLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+      </FrameLayout>
+    </com.framework.views.customViews.CustomCardView>
+
+    <com.framework.views.customViews.CustomCardView
+      android:layout_width="@dimen/size_36"
+      android:layout_height="@dimen/size_36"
+      android:layout_margin="@dimen/size_1"
+      app:cardCornerRadius="@dimen/size_18"
+      app:cardElevation="@dimen/size_1">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/channel_icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/ic_twitter_n" />
+    </com.framework.views.customViews.CustomCardView>
+  </FrameLayout>
+</layout>

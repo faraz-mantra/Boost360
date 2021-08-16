@@ -14,7 +14,7 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentAddBankDetailsBinding
 import com.appservice.rest.TaskCode
-import com.appservice.staffs.ui.UserSession
+import com.appservice.ui.staffs.UserSession
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
@@ -44,6 +44,7 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
     }
 
     private fun getAccountDetails() {
+        showProgress()
         hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_bank_details))
     }
 
@@ -105,7 +106,8 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
 
 
     private fun addBankAccount() {
-        hitApi(viewModel?.addBankAccount(UserSession.fpId,UserSession.clientId,addBankAccountRequest!!), R.string.error_adding_bank_account)
+        showProgress()
+        hitApi(viewModel?.addBankAccount(UserSession.fpId, UserSession.clientId,addBankAccountRequest!!), R.string.error_adding_bank_account)
     }
 
     override fun onSuccess(it: BaseResponse) {
@@ -117,6 +119,7 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
     }
 
     private fun onReceivedBankDetails(it: BaseResponse) {
+        hideProgress()
         val paymentProfileResponse = it as PaymentProfileResponse
         binding?.edtBankName?.setText(paymentProfileResponse.result?.bankAccountDetails?.bankName)
         binding?.edtAccountName?.setText(paymentProfileResponse.result?.bankAccountDetails?.accountName)
@@ -134,6 +137,7 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
     }
 
     private fun onAddingBankAccount(it: BaseResponse) {
+        hideProgress()
         if (it.isSuccess()) {
             val bundle = Bundle()
             bundle.putBoolean(IntentConstant.IS_EDIT.name, false)

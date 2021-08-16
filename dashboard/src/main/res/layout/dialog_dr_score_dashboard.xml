@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+      android:id="@+id/view1"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_126"
+      android:background="@android:color/transparent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+      android:id="@+id/view2"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/ic_new_dr_dashboard"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/size_60"
+      android:gravity="center"
+      android:padding="@dimen/size_6"
+      android:text="Your new\ndashboard is\nready."
+      android:textColor="@color/white"
+      app:fontFamily="@font/bold"
+      app:layout_constraintBottom_toTopOf="@+id/btn_new_dashboard"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:textType="HEADING_4" />
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_new_dashboard"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_30"
+      android:layout_marginEnd="@dimen/size_30"
+      android:layout_marginBottom="@dimen/size_20"
+      android:background="@drawable/bg_rounded_10"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="center"
+      android:padding="@dimen/size_12"
+      android:stateListAnimator="@null"
+      android:text="Explore new dashboard"
+      android:textAllCaps="true"
+      android:textColor="@color/black_4a4a4a"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:textType="HEADING_6" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

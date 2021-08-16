@@ -1,7 +1,9 @@
 package com.android.inputmethod.keyboard.top.services;
 
 import android.content.Context;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -15,53 +17,6 @@ import io.separ.neural.inputmethod.slash.RCategory;
 public class CategoriesArrayAdapter extends ArrayAdapter<RCategory, CategoriesArrayAdapter.CategoryViewHolder> {
     private IOnClickListener mClickListener;
     private int mSelectedItem;
-
-    public class CategoryViewHolder extends RecyclerView.ViewHolder {
-        private IOnClickListener mClickListener;
-        private int mPosition;
-        private TextView name;
-
-        /* renamed from: co.touchlab.inputmethod.latin.monkey.ui.adapter.CategoriesArrayAdapter.CategoryViewHolder.1 */
-        class C04431 implements View.OnClickListener {
-            final /* synthetic */ CategoriesArrayAdapter val$this$0;
-
-            C04431(CategoriesArrayAdapter categoriesArrayAdapter) {
-                this.val$this$0 = categoriesArrayAdapter;
-            }
-
-            public void onClick(View v) {
-                if (CategoryViewHolder.this.mClickListener != null) {
-                    CategoriesArrayAdapter.this.mSelectedItem = CategoryViewHolder.this.mPosition;
-                    CategoriesArrayAdapter.this.notifyDataSetChanged();
-                    CategoryViewHolder.this.mClickListener.onClick(CategoryViewHolder.this.mPosition);
-                }
-            }
-        }
-
-        public CategoryViewHolder(View view, IOnClickListener clickListener) {
-            super(view);
-            this.mClickListener = clickListener;
-            this.name = (TextView) view.findViewById(R.id.category_name);
-            view.setOnClickListener(new C04431(CategoriesArrayAdapter.this));
-        }
-
-        public void update(RCategory item, int position) {
-            this.mPosition = position;
-            this.name.setText(item.getName());
-            //this.name.setTextColor(ColorManager.getLastProfile().getIcon());
-            this.name.setTextColor(2131689636);
-            if (CategoriesArrayAdapter.this.mSelectedItem == position) {
-                //this.name.setBackgroundColor(ColorManager.getLastProfile().getPrimary());
-                this.name.setBackgroundResource(R.drawable.m_dark_category_bg);
-            } else {
-                this.name.setBackgroundColor(0);
-            }
-        }
-    }
-
-    public interface IOnClickListener {
-        void onClick(int i);
-    }
 
     public CategoriesArrayAdapter(Context context) {
         super(context);
@@ -94,5 +49,52 @@ public class CategoriesArrayAdapter extends ArrayAdapter<RCategory, CategoriesAr
 
     public void onBindViewHolder(CategoryViewHolder vh, int pos) {
         vh.update(getItem(pos), pos);
+    }
+
+    public interface IOnClickListener {
+        void onClick(int i);
+    }
+
+    public class CategoryViewHolder extends RecyclerView.ViewHolder {
+        private IOnClickListener mClickListener;
+        private int mPosition;
+        private TextView name;
+
+        public CategoryViewHolder(View view, IOnClickListener clickListener) {
+            super(view);
+            this.mClickListener = clickListener;
+            this.name = (TextView) view.findViewById(R.id.category_name);
+            view.setOnClickListener(new C04431(CategoriesArrayAdapter.this));
+        }
+
+        public void update(RCategory item, int position) {
+            this.mPosition = position;
+            this.name.setText(item.getName());
+            //this.name.setTextColor(ColorManager.getLastProfile().getIcon());
+            this.name.setTextColor(2131689636);
+            if (CategoriesArrayAdapter.this.mSelectedItem == position) {
+                //this.name.setBackgroundColor(ColorManager.getLastProfile().getPrimary());
+                this.name.setBackgroundResource(R.drawable.m_dark_category_bg);
+            } else {
+                this.name.setBackgroundColor(0);
+            }
+        }
+
+        /* renamed from: co.touchlab.inputmethod.latin.monkey.ui.adapter.CategoriesArrayAdapter.CategoryViewHolder.1 */
+        class C04431 implements View.OnClickListener {
+            final /* synthetic */ CategoriesArrayAdapter val$this$0;
+
+            C04431(CategoriesArrayAdapter categoriesArrayAdapter) {
+                this.val$this$0 = categoriesArrayAdapter;
+            }
+
+            public void onClick(View v) {
+                if (CategoryViewHolder.this.mClickListener != null) {
+                    CategoriesArrayAdapter.this.mSelectedItem = CategoryViewHolder.this.mPosition;
+                    CategoriesArrayAdapter.this.notifyDataSetChanged();
+                    CategoryViewHolder.this.mClickListener.onClick(CategoryViewHolder.this.mPosition);
+                }
+            }
+        }
     }
 }

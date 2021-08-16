@@ -30,7 +30,7 @@ public class Tag {
 
     private void init(int id, String tagId, String text, int tagTextColor, float tagTextSize,
                       int layoutColor, int layoutColorPress, boolean isDeletable,
-                      int deleteIndicatorColor,float deleteIndicatorSize, float radius,
+                      int deleteIndicatorColor, float deleteIndicatorSize, float radius,
                       String deleteIcon, float layoutBorderSize, int layoutBorderColor) {
         this.id = id;
         this.tagId = tagId;

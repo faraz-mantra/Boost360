@@ -7,7 +7,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
 import androidx.fragment.app.Fragment;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -61,41 +63,36 @@ import retrofit.client.Response;
  */
 public class Product_Gallery_Fragment extends Fragment implements ProductDelete.DeleteProductGalleryInterface {
 
-    public static Bus bus;
-
-    public static LinearLayout empty_layout, progressLayout;
-
-    private GridView gridView;
-
-    public ProductGalleryAdapter productGalleryAdapter;
-
-    public static ArrayList<ProductListModel> productItemModelList;
-
-    private Activity activity;
-
-    private UserSessionManager session;
-
-    int visibilityFlag = 1;
-
-    private boolean userScrolled = false;
-
-    private ProductAPIService apiService;
-
-    private String currencyValue;
-
-    private FROM from = FROM.DEFAULT;
-
     public static final String KEY_FROM = "KEY_FROM";
-
+    private static final String PRODUCT_SEARCH = "PRODUCT_SEARCH";
+    public static Bus bus;
+    public static LinearLayout empty_layout, progressLayout;
+    public static ArrayList<ProductListModel> productItemModelList;
+    public ProductGalleryAdapter productGalleryAdapter;
+    int visibilityFlag = 1;
+    private GridView gridView;
+    private Activity activity;
+    private UserSessionManager session;
+    private boolean userScrolled = false;
+    private ProductAPIService apiService;
+    private String currencyValue;
+    private FROM from = FROM.DEFAULT;
     private boolean isAnyProductSelected = false, mIsApEnabled = false;
     private String deliveryMethod = Constants.DeliveryMethod.ASSURED_PURCHASE.getValue();
-
-    public enum FROM {
-        BUBBLE,
-        DEFAULT
-    }
-
     private ArrayList<Integer> arrSelectedProducts;
+
+    public static <T> Collection<T> filter(Collection<T> col, Predicate<T> predicate) {
+
+        Collection<T> result = new ArrayList<T>();
+        if (col != null) {
+            for (T element : col) {
+                if (predicate.apply(element)) {
+                    result.add(element);
+                }
+            }
+        }
+        return result;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -160,8 +157,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
                     }
                 });*/
 
-        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
-        {
+        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
             return;
         }
 
@@ -171,15 +167,15 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
                     public void success(WebResponseModel<SellerProfile> webResponseModel, Response response) {
                         progressLayout.setVisibility(View.GONE);
 
-                        if(webResponseModel != null && webResponseModel.getData() != null)
-                        {
+                        if (webResponseModel != null && webResponseModel.getData() != null) {
                             deliveryMethod = webResponseModel.getData().getDeliveryMethod();
                         }
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        progressLayout.setVisibility(View.GONE);                    }
+                        progressLayout.setVisibility(View.GONE);
+                    }
                 });
     }
 
@@ -189,7 +185,6 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
         getProducts("0");
         return inflater.inflate(R.layout.fragment_product__gallery, container, false);
     }
-
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -203,9 +198,9 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                     Methods.showFeatureNotAvailDialog(getContext());
-                }else {
+                } else {
                     MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_ADD, null);
                     Intent intent;
 
@@ -334,7 +329,6 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
         return Uri.parse(path);
     }
 
-
     public void setOverlay(View v, int opac, int width, int height) {
         int opacity = opac; // from 0 to 255
         v.setBackgroundColor(opacity * 0x1000000); // black with a variable alpha
@@ -370,13 +364,11 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
             e.printStackTrace();
             System.gc();
         }
-        if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount()){
+        if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount()) {
             session.setProductsCount(productItemModelList.size());
-            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("add_product:%s",productItemModelList.size()>0?"true":"false"));
+            OnBoardingApiCalls.updateData(session.getFpTag(), String.format("add_product:%s", productItemModelList.size() > 0 ? "true" : "false"));
         }
     }
-
-    private static final String PRODUCT_SEARCH = "PRODUCT_SEARCH";
 
     public void filterProducts(final String searchText) {
 
@@ -410,29 +402,10 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
 
     }
 
-    public interface Predicate<T> {
-        boolean apply(T type);
-    }
-
-    public static <T> Collection<T> filter(Collection<T> col, Predicate<T> predicate) {
-
-        Collection<T> result = new ArrayList<T>();
-        if (col != null) {
-            for (T element : col) {
-                if (predicate.apply(element)) {
-                    result.add(element);
-                }
-            }
-        }
-        return result;
-    }
-
-
     @Subscribe
     public void getProductList(ArrayList<ProductListModel> data) {
 
-        if (data != null)
-        {
+        if (data != null) {
             //Log.i("","PRoduct List Size--"+data.size());
             //Log.d("Product Id", data.get(0)._id);
             //checkIfAPEnabled();
@@ -443,59 +416,35 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
             gridView.invalidateViews();
             productGalleryAdapter.refreshDetails(productItemModelList);
 
-            if (productItemModelList.size() == 0)
-            {
+            if (productItemModelList.size() == 0) {
                 empty_layout.setVisibility(View.VISIBLE);
                 session.setBubbleShareProducts(false);
 
-                if (from == FROM.BUBBLE)
-                {
+                if (from == FROM.BUBBLE) {
                     getActivity().finish();
                     startActivity(new Intent(getActivity(), BubbleInAppDialog.class));
                 }
-            }
-
-            else
-            {
+            } else {
                 session.setBubbleShareProducts(true);
                 empty_layout.setVisibility(View.GONE);
             }
-        }
-
-        else
-        {
+        } else {
             progressLayout.setVisibility(View.GONE);
 
-            if (productItemModelList == null || productItemModelList.size() == 0)
-            {
+            if (productItemModelList == null || productItemModelList.size() == 0) {
                 Product_Gallery_Fragment.empty_layout.setVisibility(View.VISIBLE);
-            }
-
-            else
-            {
+            } else {
                 Product_Gallery_Fragment.empty_layout.setVisibility(View.GONE);
             }
 
             Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
         }
 
-        if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount())
-        {
+        if (productItemModelList != null && !session.getOnBoardingStatus() && productItemModelList.size() != session.getProductsCount()) {
             session.setProductsCount(productItemModelList.size());
-            OnBoardingApiCalls.updateData(session.getFpTag(),String.format("add_product:%s",productItemModelList.size()>0?"true":"false"));
+            OnBoardingApiCalls.updateData(session.getFpTag(), String.format("add_product:%s", productItemModelList.size() > 0 ? "true" : "false"));
         }
     }
-
-//    public ArrayList<Uri> getSelectedProducts() {
-//
-//        ArrayList<Uri> arrayList = new ArrayList<Uri>();
-//        for (ProductListModel productListModel : productItemModelList) {
-//            if (productListModel.isProductSelected && productListModel.picimageURI != null) {
-//                arrayList.add(productListModel.picimageURI);
-//            }
-//        }
-//        return arrayList;
-//    }
 
     public String getSelectedProducts() {
 
@@ -522,7 +471,6 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
         return selectedProducts;
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -544,6 +492,17 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
 //            HomeActivity.headerText.setText(getString(R.string.product_gallery));
     }
 
+//    public ArrayList<Uri> getSelectedProducts() {
+//
+//        ArrayList<Uri> arrayList = new ArrayList<Uri>();
+//        for (ProductListModel productListModel : productItemModelList) {
+//            if (productListModel.isProductSelected && productListModel.picimageURI != null) {
+//                arrayList.add(productListModel.picimageURI);
+//            }
+//        }
+//        return arrayList;
+//    }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -562,7 +521,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
 
     public void deleteSelectedProducts() {
         String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/Delete";
-        new ProductDelete(url, getActivity(), arrSelectedProducts,Product_Gallery_Fragment.this).execute();
+        new ProductDelete(url, getActivity(), arrSelectedProducts, Product_Gallery_Fragment.this).execute();
     }
 
     @Override
@@ -570,5 +529,14 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
         gridView.invalidate();
         arrSelectedProducts.clear();
         productGalleryAdapter.notifyDataSetChanged();
+    }
+
+    public enum FROM {
+        BUBBLE,
+        DEFAULT
+    }
+
+    public interface Predicate<T> {
+        boolean apply(T type);
     }
 }

@@ -32,10 +32,9 @@ import java.util.Locale;
 
 public class ShipOrderFragment extends DialogFragment {
 
+    String shippedOn = "";
     private TextInputEditText etShippedOn, etDeliveryProvider, etTrackingNumber, etTrackingURL, etDeliveryCharges;
-
     private Button btnConfirm;
-
     private ShipOrderFragment.OnResultReceive mResultListener;
 
     public static ShipOrderFragment newInstance() {
@@ -63,12 +62,6 @@ public class ShipOrderFragment extends DialogFragment {
 
     public void setResultListener(ShipOrderFragment.OnResultReceive onResultReceive) {
         mResultListener = onResultReceive;
-    }
-
-    public interface OnResultReceive {
-        void OnResult(String shippedOn, String deliveryProvider, String trackingNumber,
-                      String trackingURL, double deliveryCharges);
-
     }
 
     private boolean verifyData() {
@@ -140,8 +133,6 @@ public class ShipOrderFragment extends DialogFragment {
         return v;
     }
 
-    String shippedOn = "";
-
     public void pickDate(final EditText et) {
         Calendar calendar = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
@@ -155,6 +146,12 @@ public class ShipOrderFragment extends DialogFragment {
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
+    }
+
+    public interface OnResultReceive {
+        void OnResult(String shippedOn, String deliveryProvider, String trackingNumber,
+                      String trackingURL, double deliveryCharges);
+
     }
 
 

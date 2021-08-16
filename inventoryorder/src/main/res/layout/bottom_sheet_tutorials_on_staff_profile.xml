@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    style="@style/match_match"
+    android:keepScreenOn="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:background="@drawable/bg_bottom_sheet_tutorial_title"
+      app:layout_constraintBottom_toTopOf="@+id/nestedScrollView2"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHeight_default="percent"
+      app:layout_constraintHeight_percent="0.10"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="1">
+
+
+      <com.framework.views.roundedimageview.RoundedImageView
+        android:id="@+id/civ_back"
+        android:layout_width="@dimen/size_30"
+        android:layout_height="@dimen/size_30"
+        android:background="#585959"
+        android:foreground="?attr/selectableItemBackground"
+        android:padding="@dimen/size_8"
+        android:src="@drawable/ic_back_arrow_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="@dimen/size_8"
+        app:riv_mutate_background="true"
+        app:riv_oval="true"
+        tools:ignore="MissingClass" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/wrap_wrap"
+        android:layout_marginStart="@dimen/size_10"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/civ_back"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_fragment_title"
+          style="@style/wrap_wrap"
+          android:fontFamily="@font/lato"
+          android:text="@string/tutorials_on"
+          android:textColor="@color/white" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_fragment_subject"
+          style="@style/wrap_wrap"
+          android:fontFamily="@font/lato"
+          android:text="@string/staff_profile"
+          android:textColor="@color/white"
+          android:textSize="16sp" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <com.framework.views.customViews.CustomImageView
+        style="@style/wrap_wrap"
+        android:src="@drawable/ic_translation_orange"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/civ_close"
+        style="@style/wrap_wrap"
+        android:src="@drawable/ic_close_grey_bottom_sheet"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+      android:id="@+id/nestedScrollView2"
+      android:layout_width="match_parent"
+      android:layout_height="500dp"
+      android:background="@color/white"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHeight_percent="0.80"
+      app:layout_constraintStart_toStartOf="parent">
+
+      <LinearLayout
+        style="@style/match_match"
+        android:orientation="vertical"
+        android:paddingVertical="@dimen/size_20">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          style="@style/match_wrap"
+          android:layout_marginHorizontal="@dimen/size_20">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_how_it_works_heading"
+            style="@style/wrap_wrap"
+            android:text="@string/tutorial_videos"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:textAllCaps="false" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_playing_status"
+            style="@style/wrap_wrap"
+            android:text="@string/playing_1_of_4"
+            android:textColor="@color/black_4a4a4a"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.framework.views.customViews.CustomCardView
+          android:id="@+id/customCardView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_10"
+          app:cardCornerRadius="@dimen/size_8"
+          app:cardUseCompatPadding="true"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+          <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/playerView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_200"
+            app:buffered_color="@color/gray_light_3"
+            app:fastforward_increment="10000"
+            app:played_color="@color/red_F40000"
+            app:player_layout_id="@layout/exo_player_ui"
+            app:resize_mode="fill"
+            app:show_buffering="always"
+            app:use_artwork="true" />
+          <!--                    <com.google.android.exoplayer2.ui.PlayerView-->
+          <!--                        android:id="@+id/video_view"-->
+          <!--                        android:layout_width="match_parent"-->
+          <!--                        android:layout_height="match_parent"-->
+          <!--                        android:layout_gravity="center"-->
+          <!--                        app:auto_show="true"-->
+          <!--                        app:buffered_color="@color/gray_light_3"-->
+          <!--                        app:played_color="@color/red_F40000"-->
+          <!--                        app:show_buffering="always"-->
+          <!--                        app:use_artwork="true"-->
+          <!--                        app:fastforward_increment="10000"-->
+          <!--                        app:repeat_toggle_modes="none"-->
+          <!--                        app:rewind_increment="10000"-->
+          <!--                        app:surface_type="surface_view"-->
+          <!--                        app:resize_mode="fill"-->
+          <!--                        app:use_controller="true" />-->
+
+        </com.framework.views.customViews.CustomCardView>
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_video_title"
+          style="@style/wrap_wrap"
+          android:layout_marginHorizontal="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_5"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="16sp"
+          android:textStyle="bold"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.viewpager.widget.ViewPager
+          android:id="@+id/view_pager_tutorials"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_250"
+          android:layout_marginHorizontal="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_15">
+
+
+          <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_44"
+            android:background="@drawable/bg_rounded_grey_tab"
+            android:paddingHorizontal="@dimen/size_3"
+            app:tabIndicatorColor="@color/black"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorHeight="@dimen/size_3"
+            app:tabTextAppearance="@style/TabTextApperance"
+            app:tabTextColor="@color/black_4a4a4a" />
+
+
+        </androidx.viewpager.widget.ViewPager>
+
+      </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
   <item
     android:id="@+id/menu_edit_contact"
-    android:title="Edit contact details"/>
+    android:title="Edit contact details" />
 
   <item
     android:id="@+id/menu_digital_channel"
-    android:title="Manage digital channels"/>
+    android:title="Manage digital channels" />
 
 </menu>

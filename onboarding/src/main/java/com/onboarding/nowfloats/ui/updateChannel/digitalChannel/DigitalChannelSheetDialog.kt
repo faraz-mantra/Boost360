@@ -5,7 +5,8 @@ import com.framework.models.BaseViewModel
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.BottomSheetDigitalChannelBinding
 
-class DigitalChannelSheetDialog : BaseBottomSheetDialog<BottomSheetDigitalChannelBinding, BaseViewModel>() {
+class DigitalChannelSheetDialog :
+  BaseBottomSheetDialog<BottomSheetDigitalChannelBinding, BaseViewModel>() {
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_digital_channel

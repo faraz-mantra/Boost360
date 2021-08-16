@@ -21,7 +21,9 @@ import android.os.Build.VERSION;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.provider.Settings;
+
 import androidx.annotation.Nullable;
+
 import android.view.Display;
 import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
@@ -41,63 +43,6 @@ public class NavService extends Service implements ColorManager.OnColorChange, O
     private boolean screenOn;
     private boolean viewAdded;
     private WindowManager wm;
-
-    /* renamed from: com.android.inputmethodcommon.NavService.1 */
-    class C02911 implements Runnable {
-        C02911() {
-        }
-
-        @SuppressLint({"NewApi"})
-        public void run() {
-            if (NavService.this.barColor.isAttachedToWindow()) {
-                int cx;
-                int cy;
-                if (NavService.this.anim == null) {
-                    cx = NavService.this.barColor.getWidth() / 2;
-                    cy = NavService.this.barColor.getHeight() / 2;
-                    NavService.this.anim = ViewAnimationUtils.createCircularReveal(NavService.this.barColor, cx, cy, 0.0f, (float) Math.hypot((double) cx, (double) cy));
-                    NavService.this.anim.setDuration(300);
-                }
-                if (KeyboardSwitcher.getInstance().getmLatinIME().isInputViewShown()) {
-                    NavService.this.barColor.setVisibility(View.VISIBLE);
-                    if (NavService.this.anim.isStarted() || NavService.this.anim.isRunning()) {
-                        cx = NavService.this.barColor.getWidth() / 2;
-                        cy = NavService.this.barColor.getHeight() / 2;
-                        NavService.this.anim = ViewAnimationUtils.createCircularReveal(NavService.this.barColor, cx, cy, 0.0f, (float) Math.hypot((double) cx, (double) cy));
-                        NavService.this.anim.setDuration(300);
-                        NavService.this.anim.start();
-                        return;
-                    }
-                    NavService.this.anim.start();
-                }
-            }
-        }
-    }
-
-    public class NavBinder extends Binder {
-        public NavService getService() {
-            return NavService.this;
-        }
-    }
-
-    class ScreenReceiver extends BroadcastReceiver {
-        ScreenReceiver() {
-        }
-
-        public void onReceive(Context context, Intent intent) {
-            if (((KeyguardManager) context.getSystemService(KEYGUARD_SERVICE)).inKeyguardRestrictedInputMode()) {
-                NavService.this.hide();
-            } else if (intent.getAction().equals("android.intent.action.SCREEN_OFF")) {
-                NavService.this.screenOn = false;
-                NavService.this.hide();
-            } else if (intent.getAction().equals("android.intent.action.USER_PRESENT")) {
-                NavService.this.screenOn = true;
-                if (KeyboardSwitcher.getInstance().getmLatinIME().isInputViewShown()) {
-                    NavService.this.show(false);
-                }
-            }
-        }
-    }
 
     public NavService() {
         this.screenOn = true;
@@ -267,5 +212,62 @@ public class NavService extends Service implements ColorManager.OnColorChange, O
             }
         }
         return false;
+    }
+
+    /* renamed from: com.android.inputmethodcommon.NavService.1 */
+    class C02911 implements Runnable {
+        C02911() {
+        }
+
+        @SuppressLint({"NewApi"})
+        public void run() {
+            if (NavService.this.barColor.isAttachedToWindow()) {
+                int cx;
+                int cy;
+                if (NavService.this.anim == null) {
+                    cx = NavService.this.barColor.getWidth() / 2;
+                    cy = NavService.this.barColor.getHeight() / 2;
+                    NavService.this.anim = ViewAnimationUtils.createCircularReveal(NavService.this.barColor, cx, cy, 0.0f, (float) Math.hypot((double) cx, (double) cy));
+                    NavService.this.anim.setDuration(300);
+                }
+                if (KeyboardSwitcher.getInstance().getmLatinIME().isInputViewShown()) {
+                    NavService.this.barColor.setVisibility(View.VISIBLE);
+                    if (NavService.this.anim.isStarted() || NavService.this.anim.isRunning()) {
+                        cx = NavService.this.barColor.getWidth() / 2;
+                        cy = NavService.this.barColor.getHeight() / 2;
+                        NavService.this.anim = ViewAnimationUtils.createCircularReveal(NavService.this.barColor, cx, cy, 0.0f, (float) Math.hypot((double) cx, (double) cy));
+                        NavService.this.anim.setDuration(300);
+                        NavService.this.anim.start();
+                        return;
+                    }
+                    NavService.this.anim.start();
+                }
+            }
+        }
+    }
+
+    public class NavBinder extends Binder {
+        public NavService getService() {
+            return NavService.this;
+        }
+    }
+
+    class ScreenReceiver extends BroadcastReceiver {
+        ScreenReceiver() {
+        }
+
+        public void onReceive(Context context, Intent intent) {
+            if (((KeyguardManager) context.getSystemService(KEYGUARD_SERVICE)).inKeyguardRestrictedInputMode()) {
+                NavService.this.hide();
+            } else if (intent.getAction().equals("android.intent.action.SCREEN_OFF")) {
+                NavService.this.screenOn = false;
+                NavService.this.hide();
+            } else if (intent.getAction().equals("android.intent.action.USER_PRESENT")) {
+                NavService.this.screenOn = true;
+                if (KeyboardSwitcher.getInstance().getmLatinIME().isInputViewShown()) {
+                    NavService.this.show(false);
+                }
+            }
+        }
     }
 }

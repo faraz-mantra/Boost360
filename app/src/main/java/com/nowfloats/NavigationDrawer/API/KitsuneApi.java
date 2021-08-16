@@ -20,27 +20,28 @@ import java.io.UnsupportedEncodingException;
 public class KitsuneApi {
     private String mFptag;
     private ResultListener mListener;
-    public KitsuneApi(String fpTag){
+
+    public KitsuneApi(String fpTag) {
         this.mFptag = fpTag;
     }
 
-    public KitsuneApi setResultListener(ResultListener listener){
+    public KitsuneApi setResultListener(ResultListener listener) {
         mListener = listener;
         return this;
     }
 
-    public void enableKitsune(){
+    public void enableKitsune() {
         String url = Constants.NOW_FLOATS_API_URL + "/kitsune/v1/enableKitsune?clientId=" +
                 Constants.clientId + "&fpTag=" + mFptag;
         Request request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                mListener.onResult(response, false);
-                BoostLog.d("KitsuneApi", response);
-                BoostLog.d("KitsuneApi", mFptag);
-            }
-        }, new Response.ErrorListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        mListener.onResult(response, false);
+                        BoostLog.d("KitsuneApi", response);
+                        BoostLog.d("KitsuneApi", mFptag);
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 mListener.onResult("Error", true);
@@ -49,7 +50,7 @@ public class KitsuneApi {
         AppController.getInstance().getRequestQueue().add(request);
     }
 
-    public void disablekitsune(String body){
+    public void disablekitsune(String body) {
         String url = Constants.NOW_FLOATS_API_URL + "/kitsune/v1/disableKitsune?clientId=" +
                 Constants.clientId + "&fpTag=" + mFptag;
         /*Request request = new JsonArrayRequest(Request.Method.POST, url, jsonReuest, new Response.Listener<JSONArray>() {
@@ -96,8 +97,8 @@ public class KitsuneApi {
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
-                    return Response.success(new String(response.data, HttpHeaderParser.parseCharset(response.headers)),HttpHeaderParser.parseCacheHeaders(response));
-                }catch (UnsupportedEncodingException e){
+                    return Response.success(new String(response.data, HttpHeaderParser.parseCharset(response.headers)), HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
                     return Response.error(new ParseError(e));
                 }
             }
@@ -107,7 +108,7 @@ public class KitsuneApi {
 
     }
 
-    public interface ResultListener{
+    public interface ResultListener {
         void onResult(String response, boolean isError);
     }
 }

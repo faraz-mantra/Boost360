@@ -29,7 +29,11 @@ open class CustomCardView : CardView {
 //    setCustomAttrs(context, attrs)
   }
 
-  constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
+  constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
+    context,
+    attrs,
+    defStyle
+  ) {
 //    setCustomAttrs(context, attrs)
   }
 
@@ -46,7 +50,8 @@ open class CustomCardView : CardView {
   }
 
   private fun setCornerRadiusFromAttr(typedArray: TypedArray) {
-    val cornerRadius = CornerRadius.values().firstOrNull { it.radius == typedArray.getInt(R.styleable.CustomCardView_corner_radius, -1) }
+    val cornerRadius = CornerRadius.values()
+      .firstOrNull { it.radius == typedArray.getInt(R.styleable.CustomCardView_corner_radius, -1) }
 
     cornerRadius?.let {
       setCornerRadius(it)
@@ -58,7 +63,12 @@ open class CustomCardView : CardView {
 
   private fun setShadowFromAttr(typedArray: TypedArray) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      val shadow: Shadow? = Shadow.values().firstOrNull { it.shadow == typedArray.getInt(R.styleable.CustomCardView_shadow_radius, -1) }
+      val shadow: Shadow? = Shadow.values().firstOrNull {
+        it.shadow == typedArray.getInt(
+          R.styleable.CustomCardView_shadow_radius,
+          -1
+        )
+      }
       shadow?.let {
         setShadowRadius(it)
       } ?: kotlin.run {

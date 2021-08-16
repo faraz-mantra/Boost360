@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.intro.IntroActivity">
+
+    <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/bottom_guide_style" />
+
+    <androidx.viewpager2.widget.ViewPager2
+      android:id="@+id/intro_viewpager"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_marginBottom="16dp"
+      android:layoutDirection="inherit"
+      app:layout_constraintBottom_toTopOf="@id/intro_indicator"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.boost.presignin.views.IntroDotIndicator
+      android:id="@+id/intro_indicator"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/_14sdp"
+      app:dotsColor="@color/intro_indi_inactive"
+      app:dotsSize="@dimen/_5sdp"
+      app:dotsSpacing="@dimen/_5sdp"
+      app:dotsWidthFactor="1"
+      app:layout_constraintBottom_toTopOf="@id/btn_create"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:selectedDotColor="@color/colorAccent" />
+
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_create"
+      style="@style/started_button"
+      android:layout_marginHorizontal="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_10"
+      android:text="@string/psn_get_started"
+      app:layout_constraintBottom_toTopOf="@id/btn_login"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_login"
+      style="@style/started_button"
+      android:layout_marginHorizontal="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_10"
+      android:background="@drawable/signin_button_bac"
+      android:text="@string/login_to_existing_account"
+      android:textColor="@color/colorAccent"
+      android:visibility="gone"
+      app:layout_constraintBottom_toTopOf="@id/accept_tnc"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/accept_tnc"
+      style="@style/psn_subheading_style"
+      android:layout_marginHorizontal="@dimen/size_20"
+      android:gravity="center"
+      android:text="@string/ps_accept_tnc"
+      android:textColorHighlight="@color/greyish_brown"
+      android:textColorLink="@color/black"
+      android:textSize="12sp"
+      app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      tools:ignore="UnknownId" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

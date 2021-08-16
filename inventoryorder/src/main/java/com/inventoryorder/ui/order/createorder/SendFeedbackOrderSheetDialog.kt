@@ -8,7 +8,8 @@ import com.inventoryorder.databinding.BottomSheetSendFeedbackOrderBinding
 import com.inventoryorder.model.orderRequest.feedback.FeedbackRequest
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class SendFeedbackOrderSheetDialog : BaseBottomSheetDialog<BottomSheetSendFeedbackOrderBinding, BaseViewModel>() {
+class SendFeedbackOrderSheetDialog :
+  BaseBottomSheetDialog<BottomSheetSendFeedbackOrderBinding, BaseViewModel>() {
 
   private var orderItem: OrderItem? = null
   var onClicked: (request: FeedbackRequest) -> Unit = { }
@@ -34,7 +35,12 @@ class SendFeedbackOrderSheetDialog : BaseBottomSheetDialog<BottomSheetSendFeedba
     super.onClick(v)
     dismiss()
     when (v) {
-      binding?.buttonDone -> onClicked(FeedbackRequest(orderItem?._id,binding?.txtReason?.text?.toString() ?: ""))
+      binding?.buttonDone -> onClicked(
+        FeedbackRequest(
+          orderItem?._id,
+          binding?.txtReason?.text?.toString() ?: ""
+        )
+      )
     }
   }
 

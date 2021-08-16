@@ -26,15 +26,14 @@ import retrofit.http.POST;
 
 public class BusinessAddressUpdateApi {
 
-    private Activity appContext = null;
     ProgressDialog pd = null;
     UserSessionManager session;
     String city, pincode, address;
     double latitude, longitude;
     ListenerNew listenerNew;
-
     BusinessAddressUpdateModel addressModel = new BusinessAddressUpdateModel();
     List<BusinessAddressUpdateModel.Update> list = new ArrayList<>();
+    private Activity appContext = null;
 
     public BusinessAddressUpdateApi(double latitude, double longitude,
                                     Activity context, String city, String pincode,

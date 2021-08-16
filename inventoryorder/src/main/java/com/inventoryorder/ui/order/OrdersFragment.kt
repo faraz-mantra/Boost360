@@ -14,6 +14,9 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.ORDER_PAGE_LOAD
+import com.framework.webengageconstant.PAGE_VIEW
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -50,12 +53,14 @@ import com.inventoryorder.ui.order.createorder.SendFeedbackOrderSheetDialog
 import com.inventoryorder.ui.order.createorder.SendReBookingOrderSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.*
 import com.inventoryorder.ui.startFragmentOrderActivity
+import com.inventoryorder.ui.tutorials.LearnHowItWorkBottomSheet
 import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
-open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener {
+open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(),
+  RecyclerItemClickListener {
 
   lateinit var mPopupWindow: PopupWindow
   private lateinit var requestFilter: OrderFilterRequest
@@ -87,8 +92,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("Clicked on Orders", "ORDERS", it) }
-    setOnClickListener(binding?.btnAdd,binding?.buttonAddApt)
+    WebEngageController.trackEvent(ORDER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    setOnClickListener(binding?.btnAdd, binding?.buttonAddApt)
     apiSellerSummary()
     layoutManagerN = LinearLayoutManager(baseActivity)
     layoutManagerN?.let { scrollPagingListener(it) }
@@ -101,10 +106,14 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnAdd ,binding?.buttonAddApt-> {
+      binding?.btnAdd, binding?.buttonAddApt -> {
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
-        if (!PreferencesUtils.instance.getData(PreferenceConstant.SHOW_CREATE_ORDER_WELCOME, false)) {
+        if (!PreferencesUtils.instance.getData(
+            PreferenceConstant.SHOW_CREATE_ORDER_WELCOME,
+            false
+          )
+        ) {
           startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, bundle, isResult = true)
         } else {
           startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle, isResult = true)
@@ -140,9 +149,14 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     })
   }
 
-  private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
+  private fun getSellerOrdersFilterApi(
+    request: OrderFilterRequest,
+    isFirst: Boolean = false,
+    isRefresh: Boolean = false,
+    isSearch: Boolean = false
+  ) {
     if (isFirst || isSearch) showProgressLoad()
-    viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerOrdersFilter(request)?.observeOnce(viewLifecycleOwner, {
       hideProgressLoad()
       if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
@@ -234,7 +248,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.typeRecycler?.post {
       typeAdapter = AppBaseRecyclerViewAdapter(baseActivity, typeList, this)
-      binding?.typeRecycler?.layoutManager = LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL, false)
+      binding?.typeRecycler?.layoutManager =
+        LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL, false)
       binding?.typeRecycler?.adapter = typeAdapter
       binding?.typeRecycler?.let { typeAdapter?.runLayoutAnimation(it) }
     }
@@ -259,7 +274,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       RecyclerViewActionType.ORDER_BUTTON_CLICKED.ordinal -> {
         this.position = position
         this.orderItem = (item as? OrderItem)
-        this.orderItem?.orderBtnStatus()?.firstOrNull()?.let { clickActionOrderButton(it, this.orderItem!!) }
+        this.orderItem?.orderBtnStatus()?.firstOrNull()
+          ?.let { clickActionOrderButton(it, this.orderItem!!) }
       }
       RecyclerViewActionType.ORDER_DROPDOWN_CLICKED.ordinal -> {
         if (::mPopupWindow.isInitialized && mPopupWindow.isShowing) mPopupWindow.dismiss()
@@ -269,9 +285,18 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     }
   }
 
-  override fun onItemClickView(position: Int, view: View, item: BaseRecyclerViewItem?, actionType: Int) {
+  override fun onItemClickView(
+    position: Int,
+    view: View,
+    item: BaseRecyclerViewItem?,
+    actionType: Int
+  ) {
     when (actionType) {
-      RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal -> popUpMenuButton(position, view, (item as? OrderItem))
+      RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal -> popUpMenuButton(
+        position,
+        view,
+        (item as? OrderItem)
+      )
     }
   }
 
@@ -281,16 +306,30 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     this.position = position
     val list = OrderMenuModel().getOrderMenu(orderItem)
     if (list.isNotEmpty()) list.removeAt(0)
-    val orderMenuView: View = LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
+    val orderMenuView: View =
+      LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
     val rvOrderMenu: RecyclerView? = orderMenuView.findViewById(R.id.rv_menu_order)
     rvOrderMenu?.apply {
       val adapterMenu = AppBaseRecyclerViewAdapter(baseActivity, list, this@OrdersFragment)
       adapter = adapterMenu
     }
-    mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
+    mPopupWindow = PopupWindow(
+      orderMenuView,
+      WindowManager.LayoutParams.MATCH_PARENT,
+      WindowManager.LayoutParams.WRAP_CONTENT,
+      true
+    )
     if (orderAdapter != null && orderAdapter!!.list().size > 2 && orderAdapter!!.list().size - 1 == position) {
-      orderMenuView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
-      mPopupWindow.showAsDropDown(view, view.x.roundToInt(), view.y.roundToInt() - orderMenuView.measuredHeight, Gravity.NO_GRAVITY)
+      orderMenuView.measure(
+        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+      )
+      mPopupWindow.showAsDropDown(
+        view,
+        view.x.roundToInt(),
+        view.y.roundToInt() - orderMenuView.measuredHeight,
+        Gravity.NO_GRAVITY
+      )
     } else mPopupWindow.showAsDropDown(view, 0, 0)
   }
 
@@ -309,7 +348,10 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
           showProgress()
           sendPaymentLinkOrder(getString(R.string.payment_request_send))
         }
-        sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentBottomSheetDialog::class.java.name)
+        sheetRequestPayment.show(
+          this.parentFragmentManager,
+          RequestPaymentBottomSheetDialog::class.java.name
+        )
       }
       OrderMenuModel.MenuStatus.CANCEL_ORDER -> {
         val sheetCancel = CancelBottomSheetDialog()
@@ -334,13 +376,20 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
         val sheetReBookingApt = SendReBookingOrderSheetDialog()
         sheetReBookingApt.setData(orderItem)
         sheetReBookingApt.onClicked = { sendReBookingRequestOrder() }
-        sheetReBookingApt.show(this.parentFragmentManager, SendReBookingAptSheetDialog::class.java.name)
+        sheetReBookingApt.show(
+          this.parentFragmentManager,
+          SendReBookingAptSheetDialog::class.java.name
+        )
       }
       OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
         val sheetFeedbackApt = SendFeedbackOrderSheetDialog()
         sheetFeedbackApt.setData(orderItem)
-        sheetFeedbackApt.onClicked = { sendFeedbackRequestOrder(it, resources.getString(R.string.order_feedback_requested)) }
-        sheetFeedbackApt.show(this.parentFragmentManager, SendFeedbackAptSheetDialog::class.java.name)
+        sheetFeedbackApt.onClicked =
+          { sendFeedbackRequestOrder(it, resources.getString(R.string.order_feedback_requested)) }
+        sheetFeedbackApt.show(
+          this.parentFragmentManager,
+          SendFeedbackAptSheetDialog::class.java.name
+        )
       }
       else -> {
       }
@@ -376,29 +425,43 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun apiCancelOrder(cancellingEntity: String, reasonText: String) {
     showProgress()
-    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        val data = it as? OrderConfirmStatus
-        if (reasonText.isNotEmpty()) {
-          updateReason(resources.getString(R.string.order_cancel), UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name, ExtraPropertiesOrder(cancellationRemark = reasonText))
+    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)
+      ?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) {
+          val data = it as? OrderConfirmStatus
+          if (reasonText.isNotEmpty()) {
+            updateReason(
+              resources.getString(R.string.order_cancel),
+              UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name,
+              ExtraPropertiesOrder(cancellationRemark = reasonText)
+            )
+          } else {
+            apiGetOrderDetails()
+            showLongToast(resources.getString(R.string.order_cancel))
+          }
         } else {
-          apiGetOrderDetails()
-          showLongToast(resources.getString(R.string.order_cancel))
+          showLongToast(it.message())
+          hideProgress()
         }
-      } else {
-        showLongToast(it.message())
-        hideProgress()
-      }
-    })
+      })
   }
 
-  private fun updateReason(message: String, type: String, extraPropertiesOrder: ExtraPropertiesOrder) {
-    val propertyRequest = UpdateOrderNPropertyRequest(updateExtraPropertyType = type,
-        existingKeyName = "", orderId = this.orderItem?._id, extraPropertiesOrder = extraPropertiesOrder)
-    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) showLongToast(message)
-      apiGetOrderDetails()
-    })
+  private fun updateReason(
+    message: String,
+    type: String,
+    extraPropertiesOrder: ExtraPropertiesOrder
+  ) {
+    val propertyRequest = UpdateOrderNPropertyRequest(
+      updateExtraPropertyType = type,
+      existingKeyName = "",
+      orderId = this.orderItem?._id,
+      extraPropertiesOrder = extraPropertiesOrder
+    )
+    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)
+      ?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) showLongToast(message)
+        apiGetOrderDetails()
+      })
   }
 
   private fun apiConfirmOrder(isSendPaymentLink: Boolean) {
@@ -418,10 +481,11 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   }
 
   private fun sendPaymentLinkOrder(message: String) {
-    viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, { it1 ->
-      if (it1.isSuccess()) showLongToast(message)
-      apiGetOrderDetails()
-    })
+    viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)
+      ?.observeOnce(viewLifecycleOwner, { it1 ->
+        if (it1.isSuccess()) showLongToast(message)
+        apiGetOrderDetails()
+      })
   }
 
   private fun sendFeedbackRequestOrder(request: FeedbackRequest, message: String? = null) {
@@ -439,15 +503,16 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun sendReBookingRequestOrder() {
     showProgress()
-    viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        apiGetOrderDetails()
-        showLongToast(resources.getString(R.string.re_booking_reminder))
-      } else {
-        showLongToast(it.message())
-        hideProgress()
-      }
-    })
+    viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)
+      ?.observeOnce(viewLifecycleOwner, {
+        if (it.isSuccess()) {
+          apiGetOrderDetails()
+          showLongToast(resources.getString(R.string.re_booking_reminder))
+        } else {
+          showLongToast(it.message())
+          hideProgress()
+        }
+      })
   }
 
   private fun markCodPaymentRequest() {
@@ -469,7 +534,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       val response = (it as? OrderDetailResponse)?.Data
       if (it.isSuccess() && response != null) {
         if (position != null && orderList.size > position!!) {
-          orderListFinalList = orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
+          orderListFinalList =
+            orderListFinalList.map { item -> if (item._id.equals(response._id)) response else item } as ArrayList<OrderItem>
           orderAdapter?.setRefreshItem(position!!, response)
         } else loadNewData()
       } else loadNewData()
@@ -488,26 +554,36 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun apiOrderListCall() {
     when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {
       OrderSummaryModel.OrderSummaryType.RECEIVED -> {
-        val statusList = arrayListOf(OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name, OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name)
+        val statusList = arrayListOf(
+          OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name,
+          OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
+        )
         requestFilter = getRequestFilterData(statusList)
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       OrderSummaryModel.OrderSummaryType.SUCCESSFUL -> {
-        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+        requestFilter =
+          getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       OrderSummaryModel.OrderSummaryType.CANCELLED -> {
-        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
-            paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name, operatorType = QueryObject.Operator.NE.name)
+        requestFilter = getRequestFilterData(
+          arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
+          paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name,
+          operatorType = QueryObject.Operator.NE.name
+        )
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       OrderSummaryModel.OrderSummaryType.ABANDONED -> {
-        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
-            paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name)
+        requestFilter = getRequestFilterData(
+          arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
+          paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name
+        )
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       OrderSummaryModel.OrderSummaryType.ESCALATED -> {
-        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ESCALATED.name))
+        requestFilter =
+          getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ESCALATED.name))
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       else -> {
@@ -541,7 +617,10 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun startFilter(query: String) {
     if (query.isNotEmpty() && query.length > 2) {
       isSearchItem = true
-      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = isSearchItem)
+      getSellerOrdersFilterApi(
+        getRequestFilterData(arrayListOf(), searchTxt = query),
+        isSearch = isSearchItem
+      )
     } else {
       isSearchItem = false
       orderList.clear()
@@ -569,41 +648,102 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun emptyView() {
     binding?.orderRecycler?.gone()
     binding?.errorView?.visible()
+    binding?.btnActionTutorials?.setOnClickListener {
+      val sheet = LearnHowItWorkBottomSheet()
+      sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
+    }
   }
 
-  private fun getRequestFilterData(statusList: ArrayList<String>, paymentStatus: String? = null, operatorType: String = QueryObject.Operator.EQ.name, searchTxt: String = ""): OrderFilterRequest {
+  private fun getRequestFilterData(
+    statusList: ArrayList<String>,
+    paymentStatus: String? = null,
+    operatorType: String = QueryObject.Operator.EQ.name,
+    searchTxt: String = ""
+  ): OrderFilterRequest {
     val requestFil: OrderFilterRequest?
     if (searchTxt.isEmpty()) {
       currentPage = PAGE_START
       requestFil = OrderFilterRequest(clientId = clientId, skip = currentPage, limit = PAGE_SIZE)
     } else requestFil = OrderFilterRequest(clientId = clientId)
-    requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.AND.name, QueryObject = getQueryList(paymentStatus, operatorType)))
+    requestFil.filterBy.add(
+      OrderFilterRequestItem(
+        QueryConditionType = OrderFilterRequestItem.Condition.AND.name,
+        QueryObject = getQueryList(paymentStatus, operatorType)
+      )
+    )
     if (statusList.isNullOrEmpty().not()) {
-      requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryStatusList(statusList)))
+      requestFil.filterBy.add(
+        OrderFilterRequestItem(
+          QueryConditionType = OrderFilterRequestItem.Condition.OR.name,
+          QueryObject = getQueryStatusList(statusList)
+        )
+      )
     }
     if (searchTxt.isNotEmpty()) {
-      requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryFilter(searchTxt)))
+      requestFil.filterBy.add(
+        OrderFilterRequestItem(
+          QueryConditionType = OrderFilterRequestItem.Condition.OR.name,
+          QueryObject = getQueryFilter(searchTxt)
+        )
+      )
     }
     return requestFil
   }
 
-  private fun getQueryList(paymentStatus: String? = null, operatorType: String): ArrayList<QueryObject> {
+  private fun getQueryList(
+    paymentStatus: String? = null,
+    operatorType: String
+  ): ArrayList<QueryObject> {
     val queryList = ArrayList<QueryObject>()
-    queryList.add(QueryObject(QueryObject.QueryKey.Identifier.value, fpTag, QueryObject.Operator.EQ.name))
-    queryList.add(QueryObject(QueryObject.QueryKey.Mode.value, OrderSummaryRequest.OrderMode.DELIVERY.name, QueryObject.Operator.EQ.name))
-    paymentStatus?.let { queryList.add(QueryObject(QueryObject.QueryKey.PaymentStatus.value, paymentStatus, operatorType)) }
+    queryList.add(
+      QueryObject(
+        QueryObject.QueryKey.Identifier.value,
+        fpTag,
+        QueryObject.Operator.EQ.name
+      )
+    )
+    queryList.add(
+      QueryObject(
+        QueryObject.QueryKey.Mode.value,
+        OrderSummaryRequest.OrderMode.DELIVERY.name,
+        QueryObject.Operator.EQ.name
+      )
+    )
+    paymentStatus?.let {
+      queryList.add(
+        QueryObject(
+          QueryObject.QueryKey.PaymentStatus.value,
+          paymentStatus,
+          operatorType
+        )
+      )
+    }
     return queryList
   }
 
   private fun getQueryFilter(searchTxt: String): ArrayList<QueryObject> {
     val queryList = ArrayList<QueryObject>()
-    queryList.add(QueryObject(QueryObject.QueryKey.ReferenceNumber.value, searchTxt, QueryObject.Operator.EQ.name))
+    queryList.add(
+      QueryObject(
+        QueryObject.QueryKey.ReferenceNumber.value,
+        searchTxt,
+        QueryObject.Operator.EQ.name
+      )
+    )
     return queryList
   }
 
   private fun getQueryStatusList(statusList: ArrayList<String>): ArrayList<QueryObject> {
     val queryList = ArrayList<QueryObject>()
-    statusList.forEach { queryList.add(QueryObject(QueryObject.QueryKey.Status.value, it, QueryObject.Operator.EQ.name)) }
+    statusList.forEach {
+      queryList.add(
+        QueryObject(
+          QueryObject.QueryKey.Status.value,
+          it,
+          QueryObject.Operator.EQ.name
+        )
+      )
+    }
     return queryList
   }
 }

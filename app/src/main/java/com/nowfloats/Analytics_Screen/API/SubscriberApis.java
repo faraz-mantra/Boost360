@@ -19,15 +19,15 @@ import retrofit.http.Query;
  */
 
 public interface SubscriberApis {
-        @GET("/Discover/v1/FloatingPoint/{FPTAG}/subscribers/{CLIENTID}")
-        void getsubscribers(@Path("FPTAG") String fpTag, @Path("CLIENTID") String clientId, @Query("offset") String offset, Callback<List<SubscriberModel>> response);
+    @GET("/Discover/v1/FloatingPoint/{FPTAG}/subscribers/{CLIENTID}")
+    void getsubscribers(@Path("FPTAG") String fpTag, @Path("CLIENTID") String clientId, @Query("offset") String offset, Callback<List<SubscriberModel>> response);
 
-        @POST("/Discover/v1/FloatingPoint/subscribe")
-        void addSubscriber(@Body AddSubscriberModel model, Callback<String> response);
+    @POST("/Discover/v1/FloatingPoint/subscribe")
+    void addSubscriber(@Body AddSubscriberModel model, Callback<String> response);
 
-        @POST("/Search/v1/floatingPoint/Subscribers/Search")
-        void search(@Body String dummy, @Query("email") String key, @Query("clientId") String clientId, @Query("fpTag") String fpTag,Callback<ArrayList<SubscriberModel>> response);
+    @POST("/Search/v1/floatingPoint/Subscribers/Search")
+    void search(@Body String dummy, @Query("email") String key, @Query("clientId") String clientId, @Query("fpTag") String fpTag, Callback<ArrayList<SubscriberModel>> response);
 
-        @POST("/Discover/v1/FloatingPoint/unsubscribe")
-        void unsubscriber(@Body UnsubscriberModel model, Callback<Object> response);
+    @POST("/Discover/v1/FloatingPoint/unsubscribe")
+    void unsubscriber(@Body UnsubscriberModel model, Callback<Object> response);
 }

@@ -1,6 +1,7 @@
 package com.nowfloats.Store.Adapters;
 
 import android.os.Parcelable;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -37,7 +38,7 @@ public class PricingPlansPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return mBasePackages==null? 0 : mBasePackages.size();
+        return mBasePackages == null ? 0 : mBasePackages.size();
     }
 
 

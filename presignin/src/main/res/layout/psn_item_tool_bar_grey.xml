@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <ImageView
+    android:id="@+id/back_iv"
+    android:layout_width="@dimen/_32sdp"
+    android:layout_height="@dimen/_32sdp"
+    android:layout_gravity="center_vertical"
+    android:layout_marginStart="16dp"
+    android:background="@drawable/psn_back_shape_grey"
+    android:padding="@dimen/_8sdp"
+    android:src="@drawable/psn_back_icon" />
+
+
+  <ImageView
+    android:id="@+id/psn_right_icon"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/_55sdp"
+    android:layout_gravity="end"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:padding="@dimen/_8sdp"
+    app:tint="@color/back_button_color" />
+
+</merge>

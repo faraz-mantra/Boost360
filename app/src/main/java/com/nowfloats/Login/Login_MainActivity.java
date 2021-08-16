@@ -60,7 +60,6 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.DataBase;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
@@ -85,22 +84,24 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABLE_LOGIN;
-import static com.framework.webengageconstant.EventNameKt.LOGIN;
+import static com.framework.webengageconstant.EventNameKt.PS_LOGIN_USERNAME_PAGE_LOAD;
 
 public class Login_MainActivity extends AppCompatActivity implements API_Login.API_Login_Interface, View.OnClickListener {
+    /*private String[] permission = new String[]{Manifest.permission.READ_SMS,
+            Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_PHONE_STATE};*/
+    private final static int READ_MESSAGES_ID = 221;
+    public static ProgressDialog progressDialog;
     Bus bus;
     EditText userName, password;
     CardView loginButton;
     View line1, line2;
-
     UserSessionManager session;
     String userNameText, passwordText;
-    public static ProgressDialog progressDialog;
     String currentProvider = "";
-
+    boolean isUpdatedOnServer = true;
+    LinearLayout parent_layout;
     //private Toolbar toolbar;
     private TextView forgotPassword;
-    boolean isUpdatedOnServer = true;
     //private TextView headerText;
     private Intent dashboardIntent;
     private RichEditor mEditor;
@@ -109,10 +110,6 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
     private LoginButton loginFacebookButton;
     private CustomFirebaseAuthHelpers customFirebaseAuthHelpers;
     private CallbackManager callbackManager;
-    /*private String[] permission = new String[]{Manifest.permission.READ_SMS,
-            Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_PHONE_STATE};*/
-    private final static int READ_MESSAGES_ID = 221;
-    LinearLayout parent_layout;
 
     public static void registerChat(String userId) {
         BoostLog.d("HomeActivity", "This is getting Called");
@@ -263,7 +260,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         // setSupportActionBar(toolbar);
 //        getSupportActionBar().setHomeButtonEnabled(true);
         //      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        WebEngageController.trackEvent(LOGIN, EVENT_LABLE_LOGIN, session.getFpTag());
+        WebEngageController.trackEvent(PS_LOGIN_USERNAME_PAGE_LOAD, EVENT_LABLE_LOGIN, session.getFpTag());
         userName = findViewById(R.id.userNameEditText);
         password = findViewById(R.id.passwordEditText);
 
@@ -344,18 +341,21 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 
         CustomFirebaseAuthListeners customFirebaseAuthListeners = new CustomFirebaseAuthListeners() {
             @Override
+            public void onSuccess(@Nullable ConnectUserProfileResponse response) {
+
+            }
+
+            @Override
             public void onSuccess(@Nullable VerificationRequestResult response) {
                 if (progressDialog != null && progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
-                if (response != null && response.getLoginId() != null) processLoginSuccessRequest(response);
-                else Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.ensure_that_the_entered_username_password));
+                if (response != null && response.getLoginId() != null)
+                    processLoginSuccessRequest(response);
+                else
+                    Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.ensure_that_the_entered_username_password));
             }
 
-            @Override
-            public void onSuccess(@Nullable ConnectUserProfileResponse response) {
-
-            }
 
             @Override
             public void onSuccess(@Nullable UserProfileResponse response, String uniqueId) {
@@ -368,6 +368,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
                     Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.error_occured_while_processing_your_login));
                 }
             }
+
 
             @Override
             public void onFailure() {
@@ -433,8 +434,9 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 
     private void startDashboard() {
         if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
-        dashboardIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        dashboardIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(dashboardIntent);
+        overridePendingTransition(0, 0);
         finish();
     }
 
@@ -444,7 +446,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
             progressDialog.dismiss();
             progressDialog = null;
         }
-        Toast.makeText(Login_MainActivity.this,getString( R.string.sorry_no_boost_account_was_found_for_the_given), Toast.LENGTH_SHORT).show();
+        Toast.makeText(Login_MainActivity.this, getString(R.string.sorry_no_boost_account_was_found_for_the_given), Toast.LENGTH_SHORT).show();
     }
 
     protected void sendPasswordToEmail(String enteredText) {
@@ -638,18 +640,23 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         progressDialog = ProgressDialog.show(this, "", "Loading");
 
         customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(this, new CustomFirebaseAuthListeners() {
-            @Override
-            public void onSuccess(@Nullable VerificationRequestResult response) {
-                if (progressDialog != null && progressDialog.isShowing())
-                    progressDialog.dismiss();
-                if (response != null) processLoginSuccessRequest(response);
-                else Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.unable_to_validate_your_phone));
-            }
+
 
             @Override
             public void onSuccess(@Nullable ConnectUserProfileResponse response) {
 
             }
+
+
+            @Override
+            public void onSuccess(@Nullable VerificationRequestResult response) {
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                if (response != null) processLoginSuccessRequest(response);
+                else
+                    Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.unable_to_validate_your_phone));
+            }
+
 
             @Override
             public void onSuccess(@Nullable UserProfileResponse response, String uniqueId) {
@@ -741,8 +748,8 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
     }
 
     private void showBusinessProfileCreationStartScreen(String userProfileId) {
-        WebEngageController.initiateUserLogin(userProfileId);
-        WebEngageController.setUserContactInfoProperties(session);
+//    WebEngageController.initiateUserLogin(userProfileId);
+//    WebEngageController.setUserContactInfoProperties(session);
 
         Intent signupConfirmationPage = new Intent(Login_MainActivity.this, com.boost.presignup.SignUpConfirmation.class);
         signupConfirmationPage.putExtra("profileUrl", "");
@@ -767,9 +774,6 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
             response_Data.ValidFPIds = new ArrayList<>();
             session.storeFPID(result.getFpIds()[0]);
             response_Data.ValidFPIds.addAll(Arrays.asList(result.getFpIds()));
-            DataBase dataBase = new DataBase(this);
-            dataBase.insertLoginStatus(response_Data, session.getFPID());
-
             processUserProfile(userProfileResponse);
         }
     }
@@ -813,7 +817,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
             GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(Login_MainActivity.this, session);
             visit_subcribersCountAsyncTask.execute();
             startDashboard();
-        }),2000);
+        }), 2000);
     }
 
     @Subscribe
@@ -848,7 +852,8 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         boostKit.getSelfBrandedKyc(getQuery(), new Callback<PaymentKycDataResponse>() {
             @Override
             public void success(PaymentKycDataResponse data, Response response) {
-                if (data.getData() != null && !data.getData().isEmpty()) session.setSelfBrandedKycAdd(true);
+                if (data.getData() != null && !data.getData().isEmpty())
+                    session.setSelfBrandedKycAdd(true);
                 else session.setSelfBrandedKycAdd(false);
             }
 
@@ -874,7 +879,8 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         getAccountDetail.userAccountDetail(session.getFPID(), Constants.clientId, new Callback<AccountDetailsResponse>() {
             @Override
             public void success(AccountDetailsResponse data, Response response) {
-                if (!(data.getResult() != null && data.getResult().getBankAccountDetails() != null)) session.setAccountSave(false);
+                if (!(data.getResult() != null && data.getResult().getBankAccountDetails() != null))
+                    session.setAccountSave(false);
                 else session.setAccountSave(true);
             }
 

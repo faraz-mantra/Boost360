@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:gravity="center"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="@dimen/categories_container_height"
+  android:gravity="center"
+  android:orientation="vertical">
+
+  <TextView
+    android:id="@+id/category_name"
     android:layout_width="wrap_content"
-    android:layout_height="@dimen/categories_container_height"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView android:textSize="14sp" android:gravity="center" android:id="@+id/category_name" android:paddingStart="12dp" android:paddingRight="12dp"
-        android:layout_width="wrap_content" android:layout_height="@dimen/categories_text_height" android:text="@string/lol" android:fontFamily="sans-serif"/>
+    android:layout_height="@dimen/categories_text_height"
+    android:fontFamily="sans-serif"
+    android:gravity="center"
+    android:paddingStart="12dp"
+    android:paddingRight="12dp"
+    android:text="@string/lol"
+    android:textSize="14sp" />
 </LinearLayout>

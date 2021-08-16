@@ -11,12 +11,12 @@ public class LoginManager {
         return loginManager;
     }
 
-    public void setListener(AuthLoginInterface listene) {
-        this.listener = listene;
-    }
-
     public AuthLoginInterface getListener() {
         return listener;
+    }
+
+    public void setListener(AuthLoginInterface listene) {
+        this.listener = listene;
     }
 
 }

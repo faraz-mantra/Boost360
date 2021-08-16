@@ -32,7 +32,7 @@
       android:textColor="@color/black_4a4a4a"
       app:fontFamily="@font/regular"
       app:textType="CAPTION"
-      tools:text="24/10 City Center, B-Zone, Kolkata, West Bengal - 100023" />
+      tools:text="24/10 City Center, B-Zone, Kolkata, West Bengal - 100023 dsadasiusdjabsfhabfdajhfbaskjfbadsjkfdbasdjhfbadfhjbdajfhadbfjhabfhasjbfads" />
 
 
     <com.framework.views.customViews.CustomTextView
@@ -42,8 +42,8 @@
       android:drawablePadding="@dimen/size_16"
       android:includeFontPadding="false"
       android:text="@string/billing_address"
-      android:visibility="gone"
       android:textColor="@color/black_4a4a4a"
+      android:visibility="gone"
       app:textType="BODY_1" />
 
     <com.framework.views.customViews.CustomTextView
@@ -53,8 +53,8 @@
       android:layout_marginTop="@dimen/size_3"
       android:includeFontPadding="false"
       android:textColor="@color/black_4a4a4a"
-      app:fontFamily="@font/regular"
       android:visibility="gone"
+      app:fontFamily="@font/regular"
       app:textType="CAPTION"
       tools:text="24/10 City Center, B-Zone, Kolkata, West Bengal - 100023" />
 

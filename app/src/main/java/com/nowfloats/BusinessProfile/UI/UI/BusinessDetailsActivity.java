@@ -2,9 +2,11 @@ package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,10 +29,10 @@ public class BusinessDetailsActivity extends AppCompatActivity implements View.O
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.business_details_layout);
-        UserSessionManager session = new UserSessionManager(this,this);
-        Toolbar toolbar  = (Toolbar) findViewById(R.id.toolbar);
+        UserSessionManager session = new UserSessionManager(this, this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -43,26 +45,27 @@ public class BusinessDetailsActivity extends AppCompatActivity implements View.O
         updateTimings(session);
     }
 
-    private void updateAddress(UserSessionManager session){
+    private void updateAddress(UserSessionManager session) {
         TextView addressText = (TextView) findViewById(R.id.tv_address);
-        addressText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)+", "+
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)+", "+
+        addressText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) + ", " +
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY) + ", " +
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
 
-        String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" +getString(R.string.google_map_key); //AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg
+        String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + getString(R.string.google_map_key); //AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg
         try {
             Glide.with(this)
                     .load(url)
                     .apply(new RequestOptions()
-                    .placeholder(R.drawable.default_product_image)
-                    .centerCrop()
-                    .error(R.drawable.default_product_image))
+                            .placeholder(R.drawable.default_product_image)
+                            .centerCrop()
+                            .error(R.drawable.default_product_image))
                     .into((ImageView) findViewById(R.id.img_address));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    private void updateContactInformation( UserSessionManager session) {
+
+    private void updateContactInformation(UserSessionManager session) {
 
         TextView primaryNumber = (TextView) findViewById(R.id.tv_primary_number);
         TextView alternateNumbers = (TextView) findViewById(R.id.tv_other_numbers);
@@ -71,22 +74,22 @@ public class BusinessDetailsActivity extends AppCompatActivity implements View.O
         TextView facebookPage = (TextView) findViewById(R.id.tv_facebook_page);
 
         primaryNumber.setText(session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
-        alternateNumbers.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)+", "+
-        session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1)+", "+
+        alternateNumbers.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER) + ", " +
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1) + ", " +
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3));
         emailAddress.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
         String websiteAddr = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE);
         if (TextUtils.isEmpty(websiteAddr)) {
             if (websiteAddr.startsWith("https://") || websiteAddr.startsWith("http://")) {
                 websiteAddress.setText(websiteAddr);
-            }else{
-                websiteAddress.setText("http://"+websiteAddr);
+            } else {
+                websiteAddress.setText("http://" + websiteAddr);
             }
         }
         facebookPage.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME));
     }
 
-    private void updateTimings(UserSessionManager session){
+    private void updateTimings(UserSessionManager session) {
         TextView etSunOpen = (TextView) findViewById(R.id.et_sun_open);
         TextView etMonOpen = (TextView) findViewById(R.id.et_mon_open);
         TextView etTueOpen = (TextView) findViewById(R.id.et_tue_open);
@@ -98,80 +101,73 @@ public class BusinessDetailsActivity extends AppCompatActivity implements View.O
         TextView etMonClose = (TextView) findViewById(R.id.et_mon_close);
         TextView etTueClose = (TextView) findViewById(R.id.et_tue_close);
         TextView etWedClose = (TextView) findViewById(R.id.et_wed_close);
-        TextView  etThuClose = (TextView) findViewById(R.id.et_thu_close);
+        TextView etThuClose = (TextView) findViewById(R.id.et_thu_close);
         TextView etFriClose = (TextView) findViewById(R.id.et_fri_close);
         TextView etSatClose = (TextView) findViewById(R.id.et_sat_close);
 
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME).toLowerCase().endsWith("am")
-                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME).toLowerCase().endsWith("pm"))
-        {
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME).toLowerCase().endsWith("am")
+                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME).toLowerCase().endsWith("pm")) {
 
             etMonOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME));
             etMonClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME));
 
-        }else{
+        } else {
             etMonOpen.setText("closed");
             etMonClose.setVisibility(View.INVISIBLE);
         }
 
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME).toLowerCase().endsWith("am")
-                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME).toLowerCase().endsWith("pm"))
-        {
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME).toLowerCase().endsWith("am")
+                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME).toLowerCase().endsWith("pm")) {
             etTueOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME));
             etTueClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME));
-        }else{
+        } else {
             etTueOpen.setText("closed");
             etTueClose.setVisibility(View.INVISIBLE);
         }
 
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME).toLowerCase().endsWith("am")
-                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME).toLowerCase().endsWith("pm"))
-        {
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME).toLowerCase().endsWith("am")
+                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME).toLowerCase().endsWith("pm")) {
 
             etWedOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME));
             etWedClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME));
-        }else{
+        } else {
             etWedOpen.setText("closed");
             etWedClose.setVisibility(View.INVISIBLE);
         }
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME).toLowerCase().endsWith("am")
-                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME).toLowerCase().endsWith("pm"))
-        {
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME).toLowerCase().endsWith("am")
+                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME).toLowerCase().endsWith("pm")) {
             etThuOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME));
             etThuClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME));
-        }else{
+        } else {
             etThuOpen.setText("closed");
             etThuClose.setVisibility(View.INVISIBLE);
         }
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME).toLowerCase().endsWith("am")
-                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME).toLowerCase().endsWith("pm"))
-        {
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME).toLowerCase().endsWith("am")
+                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME).toLowerCase().endsWith("pm")) {
 
             etFriOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME));
             etFriClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME));
-        }else{
+        } else {
             etFriOpen.setText("closed");
             etFriClose.setVisibility(View.INVISIBLE);
         }
 
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME).toLowerCase().endsWith("am")
-                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME).toLowerCase().endsWith("pm"))
-        {
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME).toLowerCase().endsWith("am")
+                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME).toLowerCase().endsWith("pm")) {
 
             etSatOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME));
             etSatClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME));
-        }else{
+        } else {
             etSatOpen.setText("closed");
             etSatClose.setVisibility(View.INVISIBLE);
         }
 
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME).toLowerCase().endsWith("am")
-                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME).toLowerCase().endsWith("pm"))
-        {
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME).toLowerCase().endsWith("am")
+                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME).toLowerCase().endsWith("pm")) {
             etSunOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME));
             etSunClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME));
 
-        }else {
+        } else {
             etSunOpen.setText("closed");
             etSunClose.setVisibility(View.INVISIBLE);
         }
@@ -180,7 +176,7 @@ public class BusinessDetailsActivity extends AppCompatActivity implements View.O
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -198,18 +194,18 @@ public class BusinessDetailsActivity extends AppCompatActivity implements View.O
     @Override
     public void onClick(View v) {
         Intent intent = null;
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_address_edit:
-                intent = new Intent(BusinessDetailsActivity.this,Business_Address_Activity.class);
+                intent = new Intent(BusinessDetailsActivity.this, Business_Address_Activity.class);
                 break;
             case R.id.tv_hours_edit:
-                intent = new Intent(BusinessDetailsActivity.this,BusinessHoursActivity.class);
+                intent = new Intent(BusinessDetailsActivity.this, BusinessHoursActivity.class);
                 break;
             case R.id.tv_contact_edit:
-                intent = new Intent(BusinessDetailsActivity.this,ContactInformationActivity.class);
+                intent = new Intent(BusinessDetailsActivity.this, ContactInformationActivity.class);
                 break;
         }
-        if(intent != null){
+        if (intent != null) {
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }

@@ -13,16 +13,40 @@ const val DEVELOPER_ID = "591c0972ee786cbf48bd86cf"
 
 object DevBoostKitRepository : AppBaseRepository<DevBoostKitRemoteData, AppBaseLocalService>() {
 
-  fun getUpgradePremiumBanner(auth: String = DEVELOPER_ID, website_id: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getUpgradePremiumBanner(auth, website_id), TaskCode.GET_UPGRADE_PREMIUM_BANNER)
+  fun getUpgradePremiumBanner(
+    auth: String = DEVELOPER_ID,
+    website_id: String?
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getUpgradePremiumBanner(auth, website_id),
+      TaskCode.GET_UPGRADE_PREMIUM_BANNER
+    )
   }
 
-  fun getUpgradeDashboardBanner(auth: String = DEVELOPER_ID, website_id: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getUpgradeDashboardBanner(auth, website_id), TaskCode.GET_UPGRADE_DASHBOARD_BANNER)
+  fun getUpgradeDashboardBanner(
+    auth: String = DEVELOPER_ID,
+    website_id: String?
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getUpgradeDashboardBanner(auth, website_id),
+      TaskCode.GET_UPGRADE_DASHBOARD_BANNER
+    )
   }
 
-  fun getSearchAnalytics(website_id: String?, startDate: String?, endDate: String?,auth: String = DEVELOPER_ID): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getSearchAnalytics(auth,website_id, startDate, endDate), TaskCode.GET_SEARCH_ANALYTICS)
+  fun getSearchAnalytics(
+    website_id: String?,
+    startDate: String?,
+    endDate: String?,
+    auth: String = DEVELOPER_ID
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getSearchAnalytics(
+        auth,
+        website_id,
+        startDate,
+        endDate
+      ), TaskCode.GET_SEARCH_ANALYTICS
+    )
   }
 
 

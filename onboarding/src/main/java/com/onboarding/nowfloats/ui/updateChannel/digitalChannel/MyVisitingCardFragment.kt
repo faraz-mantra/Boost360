@@ -34,7 +34,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
+class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, ChannelPlanViewModel>(),
+  RecyclerItemClickListener {
 
   private var cardPosition = 0
   private var messageCard: String? = null
@@ -56,8 +57,10 @@ class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Chann
   override fun onCreateView() {
     super.onCreateView()
     val floatingPoint = arguments?.getString(PreferenceConstant.KEY_FP_ID)
-    var contactName: String? = arguments?.getString(PreferenceConstant.CONTACT_NAME)?.capitalizeWords()
-    val businessName: String? = arguments?.getString(PreferenceConstant.BUSINESS_NAME)?.capitalizeWords()
+    var contactName: String? =
+      arguments?.getString(PreferenceConstant.CONTACT_NAME)?.capitalizeWords()
+    val businessName: String? =
+      arguments?.getString(PreferenceConstant.BUSINESS_NAME)?.capitalizeWords()
     val businessImage: String? = arguments?.getString(PreferenceConstant.BUSINESS_IMAGE)
     val location = arguments?.getString(PreferenceConstant.LOCATION)
     val websiteUrl = arguments?.getString(PreferenceConstant.WEBSITE_URL)
@@ -68,50 +71,129 @@ class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Chann
     val fpTag = arguments?.getString(PreferenceConstant.GET_FP_DETAILS_TAG)
     showProgress()
     viewModel?.getMerchantProfile(floatingPoint)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        val response = it as? MerchantProfileResponse
-        val userDetail = response?.result?.getUserDetail()
-        contactName = when {
-          contactName.isNullOrEmpty().not() -> contactName
-          userDetail?.userName.isNullOrEmpty().not() -> userDetail?.userName
-          else -> fpTag
-        }
-        primaryNumber = if (primaryNumber.isNullOrEmpty().not()) primaryNumber else if (userDetail?.userMobile.isNullOrEmpty().not()) userDetail?.userMobile else ""
-        primaryEmail = if (primaryEmail.isNullOrEmpty().not()) primaryEmail else if (userDetail?.userEmail.isNullOrEmpty().not()) userDetail?.userEmail else ""
+//      if (it.isSuccess()) {
+      val response = it as? MerchantProfileResponse
+      val userDetail = response?.result?.getUserDetail()
+      contactName = when {
+        contactName.isNullOrEmpty().not() -> contactName
+        userDetail?.userName.isNullOrEmpty().not() -> userDetail?.userName
+        else -> fpTag
+      }
+      primaryNumber = when {
+        primaryNumber.isNullOrEmpty().not() -> primaryNumber
+        userDetail?.userMobile.isNullOrEmpty().not() -> userDetail?.userMobile
+        else -> ""
+      }
+      primaryEmail = when {
+        primaryEmail.isNullOrEmpty().not() -> primaryEmail
+        userDetail?.userEmail.isNullOrEmpty().not() -> userDetail?.userEmail
+        else -> ""
+      }
 
-        val userProfile = ProfileProperties(userName = contactName, userMobile = primaryNumber, userEmail = primaryEmail)
-        val cardList = ArrayList<DigitalCardData>()
-        val cardData = CardData(businessName, businessImage, location, userProfile.userName?.capitalizeWords(),
-            addPlus91(userProfile.userMobile), userProfile.userEmail, businessType, websiteUrl)
+      val userProfile = ProfileProperties(
+        userName = contactName,
+        userMobile = primaryNumber,
+        userEmail = primaryEmail
+      )
+      val cardList = ArrayList<DigitalCardData>()
+      val cardData = CardData(
+        businessName, businessImage, location, userProfile.userName?.capitalizeWords(),
+        addPlus91(userProfile.userMobile), userProfile.userEmail, businessType, websiteUrl
+      )
 
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_TWO_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_THREE_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FIVE_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_SIX_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_SEVEN_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_EIGHT_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_NINE_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_TEN_ITEM.getLayout()))
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_TWO_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_THREE_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_FIVE_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_SIX_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_SEVEN_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_EIGHT_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_NINE_ITEM.getLayout()
+        )
+      )
+      cardList.add(
+        DigitalCardData(
+          cardData = cardData,
+          recyclerViewType = RecyclerViewItemType.VISITING_CARD_TEN_ITEM.getLayout()
+        )
+      )
 
-        setAdapterCard(cardList)
-      } else showShortToast(it.message())
+      setAdapterCard(cardList)
+//      } else showShortToast(it.message())
       hideProgress()
     })
-    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp(getString(R.string.business_card), true) }
-    binding?.shareOther?.setOnClickListener { shareCardWhatsApp(getString(R.string.business_card), false) }
+    binding?.shareWhatsapp?.setOnClickListener {
+      shareCardWhatsApp(
+        getString(R.string.business_card),
+        true
+      )
+    }
+    binding?.shareOther?.setOnClickListener {
+      shareCardWhatsApp(
+        getString(R.string.business_card),
+        false
+      )
+    }
   }
 
   private fun shareCardWhatsApp(messageCard: String?, isWhatsApp: Boolean) {
-    if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+    if (ActivityCompat.checkSelfPermission(
+        baseActivity,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+      ) == PackageManager.PERMISSION_DENIED
+    ) {
       requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
       return
     }
     showProgress()
     val bitmap = binding?.pagerDigitalCard?.getChildAt(0)?.let { viewToBitmap(it) }
     try {
-      val cropBitmap = bitmap?.let { Bitmap.createBitmap(it, 33, 0, bitmap.width - 66, bitmap.height) }
+      val cropBitmap =
+        bitmap?.let { Bitmap.createBitmap(it, 33, 0, bitmap.width - 66, bitmap.height) }
       val path = insertImage(baseActivity.contentResolver, cropBitmap, "boost_${Date().time}", null)
       val imageUri: Uri = Uri.parse(path)
       val waIntent = Intent(Intent.ACTION_SEND)
@@ -119,7 +201,12 @@ class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Chann
       if (isWhatsApp) waIntent.setPackage(getString(R.string.whatsapp_package))
       waIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
       waIntent.putExtra(Intent.EXTRA_TEXT, messageCard ?: "")
-      baseActivity.startActivity(Intent.createChooser(waIntent, getString(R.string.share_your_business_card)))
+      baseActivity.startActivity(
+        Intent.createChooser(
+          waIntent,
+          getString(R.string.share_your_business_card)
+        )
+      )
       hideProgress()
       savePositionCard(cardPosition)
     } catch (e: Exception) {
@@ -128,7 +215,11 @@ class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Chann
     }
   }
 
-  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+  override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<out String>,
+    grantResults: IntArray
+  ) {
     when (requestCode) {
       100 -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -142,7 +233,8 @@ class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Chann
   private fun setAdapterCard(cardList: ArrayList<DigitalCardData>) {
     cardList.add(0, cardList.removeAt(getLastShareCard()))
     binding?.pagerDigitalCard?.apply {
-      val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, cardList, this@MyVisitingCardFragment)
+      val adapterPager3 =
+        AppBaseRecyclerViewAdapter(baseActivity, cardList, this@MyVisitingCardFragment)
       offscreenPageLimit = 3
       isUserInputEnabled = true
       adapter = adapterPager3

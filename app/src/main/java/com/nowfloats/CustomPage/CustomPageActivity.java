@@ -16,7 +16,7 @@ import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_CUSTOMPAGE;
-import static com.framework.webengageconstant.EventNameKt.CUSTOMPAGE;
+import static com.framework.webengageconstant.EventNameKt.CUSTOMPAGE_LOAD;
 import static com.framework.webengageconstant.EventValueKt.NULL;
 
 /**
@@ -34,7 +34,7 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_site_appearance);
 
-        WebEngageController.trackEvent(CUSTOMPAGE, EVENT_LABEL_CUSTOMPAGE, NULL);
+        WebEngageController.trackEvent(CUSTOMPAGE_LOAD, EVENT_LABEL_CUSTOMPAGE, NULL);
 
         toolbar = (Toolbar) findViewById(R.id.app_bar_site_appearance);
         setSupportActionBar(toolbar);

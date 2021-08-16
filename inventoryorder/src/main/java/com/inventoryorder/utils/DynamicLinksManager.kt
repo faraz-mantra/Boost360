@@ -28,10 +28,10 @@ class DynamicLinksManager {
       try {
         val key = DynamicLinkParams.valueOf(param)
         val value = deepLink.getQueryParameter(param)
-
         if (value != null) {
           if (key == DynamicLinkParams.referrer) {
-            for (keyValuePairString in deepLink.getQueryParameter(param)?.split("&") ?: ArrayList()) {
+            for (keyValuePairString in deepLink.getQueryParameter(param)?.split("&")
+              ?: ArrayList()) {
               val pair = keyValuePairString.split("=")
               map[DynamicLinkParams.valueOf(pair.first())] = pair.last()
             }

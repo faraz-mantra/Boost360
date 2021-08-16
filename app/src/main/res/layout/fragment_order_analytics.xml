@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#fff"
+  android:orientation="vertical"
+  android:paddingStart="@dimen/margin_10"
+  android:paddingTop="@dimen/margin_15"
+  android:paddingRight="@dimen/margin_10"
+  android:paddingBottom="@dimen/margin_10">
+
+  <TextView
+    android:id="@+id/tvTitle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_10"
+    android:gravity="center"
+    android:textColor="@color/primary"
+    android:textSize="@dimen/medium_text_size" />
+
+  <com.github.mikephil.charting.charts.PieChart
+    android:id="@+id/pieChart"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/margin_10"
-    android:paddingStart="@dimen/margin_10"
-    android:paddingRight="@dimen/margin_10"
-    android:paddingTop="@dimen/margin_15">
+    android:layout_weight="1"></com.github.mikephil.charting.charts.PieChart>
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_10"
-        android:gravity="center"
-        android:textColor="@color/primary"
-        android:textSize="@dimen/medium_text_size" />
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rvLegend"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="true"
+    android:nestedScrollingEnabled="false"
+    android:orientation="horizontal">
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pieChart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"></com.github.mikephil.charting.charts.PieChart>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvLegend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="true"
-        android:nestedScrollingEnabled="false"
-        android:orientation="horizontal">
-
-    </androidx.recyclerview.widget.RecyclerView>
+  </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

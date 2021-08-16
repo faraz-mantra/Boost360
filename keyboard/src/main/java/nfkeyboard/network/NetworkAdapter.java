@@ -53,23 +53,23 @@ public class NetworkAdapter {
         mCreateOfferApi = retrofit1.create(INowFloatsApi.class);
     }
 
-    public void getAllDetails(String fpTag , String clientId , final CallBack<CustomerDetails> callBack) {
-        Map<String,String> queries = new HashMap<>();
-        queries.put("clientId" , clientId);
-        mNfApi.getAllDetails(fpTag ,queries).subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<CustomerDetails>() {
-                            @Override
-                            public void accept(CustomerDetails customerDetails) throws Exception {
-                            callBack.onSuccess(customerDetails);
-                            }
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                callBack.onError(throwable);
-                                Log.d(NetworkAdapter.class.getSimpleName() , throwable.getMessage());
-                            }
-                        });
+    public void getAllDetails(String fpTag, String clientId, final CallBack<CustomerDetails> callBack) {
+        Map<String, String> queries = new HashMap<>();
+        queries.put("clientId", clientId);
+        mNfApi.getAllDetails(fpTag, queries).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<CustomerDetails>() {
+                    @Override
+                    public void accept(CustomerDetails customerDetails) throws Exception {
+                        callBack.onSuccess(customerDetails);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        callBack.onError(throwable);
+                        Log.d(NetworkAdapter.class.getSimpleName(), throwable.getMessage());
+                    }
+                });
     }
 
     public void getAllProducts(String fpTag, String clientId, int skipBy, String identifierType,

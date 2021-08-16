@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -37,15 +39,6 @@ public class BubbleDialog extends AppCompatActivity {
     private FrameLayout mainFrame;
     private Button btnShare;
     private MaterialSearchView searchView;
-
-    private class KillListener extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            finish();
-        }
-    }
-
     private KillListener killListener;
 
     @Override
@@ -138,17 +131,6 @@ public class BubbleDialog extends AppCompatActivity {
 
     }
 
-//    private void navigateToWhatsApp(ArrayList<Uri> localArrayList) {
-//        Intent sendIntent = new Intent();
-//        sendIntent.setAction(Intent.ACTION_SEND);
-//        sendIntent.setType("image/jpeg");
-//        sendIntent.setPackage(DataAccessibilityServiceV8.PK_NAME_WHATSAPP);
-//        sendIntent.putExtra(Intent.EXTRA_TEXT,"");
-//        sendIntent.putParcelableArrayListExtra("android.intent.extra.STREAM", localArrayList);
-//        sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//        startActivity(sendIntent);
-//    }
-
     private void navigateToWhatsApp(String message) {
         MixPanelController.track(MixPanelController.BUBBLE_DIALOG_SHARE, null);
         Intent sendIntent = new Intent();
@@ -159,6 +141,17 @@ public class BubbleDialog extends AppCompatActivity {
         sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(sendIntent);
     }
+
+//    private void navigateToWhatsApp(ArrayList<Uri> localArrayList) {
+//        Intent sendIntent = new Intent();
+//        sendIntent.setAction(Intent.ACTION_SEND);
+//        sendIntent.setType("image/jpeg");
+//        sendIntent.setPackage(DataAccessibilityServiceV8.PK_NAME_WHATSAPP);
+//        sendIntent.putExtra(Intent.EXTRA_TEXT,"");
+//        sendIntent.putParcelableArrayListExtra("android.intent.extra.STREAM", localArrayList);
+//        sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        startActivity(sendIntent);
+//    }
 
     private void copyToClipboard(String message) {
 
@@ -220,6 +213,14 @@ public class BubbleDialog extends AppCompatActivity {
     protected void onDestroy() {
         sendBroadcast(new Intent(BubblesService.ACTION_RESET_BUBBLE));
         super.onDestroy();
+    }
+
+    private class KillListener extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
     }
 
 

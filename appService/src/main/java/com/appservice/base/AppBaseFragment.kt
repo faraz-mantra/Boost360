@@ -17,25 +17,35 @@ import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
 
-abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseFragment<Binding, ViewModel>() {
+abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> :
+  BaseFragment<Binding, ViewModel>() {
 
   protected var appBaseActivity: AppBaseActivity<*, *>? = null
   private var progressView: ProgressDialog? = null
+  protected lateinit var sessionLocal: UserSessionManager
 
   protected val pref: SharedPreferences?
     get() {
-      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
+      return baseActivity.getSharedPreferences(
+        PreferenceConstant.NOW_FLOATS_PREFS,
+        Context.MODE_PRIVATE
+      )
     }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
     appBaseActivity = activity as? AppBaseActivity<*, *>
     progressView = ProgressDialog.newInstance()
     return super.onCreateView(inflater, container, savedInstanceState)
   }
 
   override fun onCreateView() {
-
+    sessionLocal = UserSessionManager(baseActivity)
   }
 
   protected fun getToolbarTitle(): String? {

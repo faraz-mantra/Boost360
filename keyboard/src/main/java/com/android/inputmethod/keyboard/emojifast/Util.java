@@ -21,6 +21,6 @@ public class Util {
 
     public static void runOnMain(Runnable runnable) {
         if (isMainThread()) runnable.run();
-        else                handler.post(runnable);
+        else handler.post(runnable);
     }
 }

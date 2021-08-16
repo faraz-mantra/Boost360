@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Created by NowFloatsDev on 25/05/2015.
  */
-public class Get_FP_Details_Model implements Serializable{
+public class Get_FP_Details_Model implements Serializable {
 
     public String AliasTag;
     public String City;
@@ -19,8 +19,8 @@ public class Get_FP_Details_Model implements Serializable{
     public String _id;
     public String Address;
 
-    public ArrayList<CategoryModel> Category ;
-//    public String Contact;
+    public ArrayList<CategoryModel> Category;
+    //    public String Contact;
     public String ContactName;
 
     public ArrayList<ContactDetailsModel> Contacts;
@@ -35,12 +35,12 @@ public class Get_FP_Details_Model implements Serializable{
     public String PanaromaId;
     public String ParentId;
     public String PrimaryNumber;
-    public String Pwd ;
+    public String Pwd;
     public String Ratings;
     public String SearchTags;
     public ArrayList<String> SecondaryImages;
     public ArrayList<String> SecondaryTileImages;
-    public ArrayList<TimingDetailsModel> Timings ;
+    public ArrayList<TimingDetailsModel> Timings;
     public String Uri;
     public String UriDescription;
     public String errorRadius;
@@ -48,7 +48,7 @@ public class Get_FP_Details_Model implements Serializable{
     public String lat;
     public String lng;
     public String EnterpriseEmailContact;
-    public ArrayList<FPLocal>  FPLocalWidgets;
+    public ArrayList<FPLocal> FPLocalWidgets;
     public ArrayList<String> FPWebWidgets;
 
     public String IsStoreFront;
@@ -65,10 +65,10 @@ public class Get_FP_Details_Model implements Serializable{
     public String GADomain;
     public String GAToken;
     public String IsBulkSubscription;
-    public String LanguageCode ;
+    public String LanguageCode;
     public ArrayList<NfxTokenModel> NFXAccessTokens;
-    public ArrayList<String> PackageIds ;
-    public String PaymentLevel ;
+    public ArrayList<String> PackageIds;
+    public String PaymentLevel;
     public String PaymentState;
     public String PinCode;
     public String SMSGatewayUri;

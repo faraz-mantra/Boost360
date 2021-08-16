@@ -30,10 +30,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:layout_margin="@dimen/size_4"
-        android:gravity="center_horizontal"
         android:background="@drawable/ic_card_polygon"
-        android:paddingTop="@dimen/size_20"
-        android:orientation="vertical">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/size_20">
 
         <com.framework.views.customViews.CustomCardView
           android:id="@+id/profile_view"
@@ -57,7 +57,7 @@
               android:layout_height="match_parent"
               android:layout_gravity="center"
               android:background="@color/white"
-              android:scaleType="centerCrop" />
+              android:scaleType="fitCenter" />
           </com.framework.views.customViews.CustomCardView>
 
         </com.framework.views.customViews.CustomCardView>
@@ -86,7 +86,9 @@
           android:layout_marginTop="@dimen/size_5"
           android:orientation="vertical">
 
-          <include layout="@layout/item_card_channel" />
+          <include
+            android:id="@+id/item_channels_group"
+            layout="@layout/item_card_channel" />
         </LinearLayout>
       </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -107,8 +109,8 @@
             android:id="@+id/img_logo"
             android:layout_width="@dimen/size_80"
             android:layout_height="@dimen/size_74"
-            android:layout_marginTop="@dimen/size_16"
             android:layout_marginStart="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_16"
             app:srcCompat="@drawable/ic_business_card_spa_n" />
 
         </LinearLayout>

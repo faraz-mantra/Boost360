@@ -21,8 +21,8 @@
       android:layout_marginEnd="@dimen/size_16"
       android:orientation="vertical">
 
-<!--      android:drawableEnd="@drawable/ic_summary_alert_d"-->
-<!--      android:drawablePadding="@dimen/size_8"-->
+      <!--      android:drawableEnd="@drawable/ic_summary_alert_d"-->
+      <!--      android:drawablePadding="@dimen/size_8"-->
 
       <com.framework.views.customViews.CustomTextView
         android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:text="@string/use_tools_improve_business"
-        android:textColor="@color/black_4a4a4a"
+        android:textColor="@color/warm_grey"
         app:textType="CAPTION" />
     </LinearLayout>
 

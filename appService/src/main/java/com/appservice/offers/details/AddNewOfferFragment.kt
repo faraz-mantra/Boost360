@@ -23,7 +23,7 @@ import com.appservice.offers.selectservices.OfferSelectServiceBottomSheet
 import com.appservice.offers.startOfferFragmentActivity
 import com.appservice.offers.viewmodel.OfferViewModel
 import com.appservice.rest.TaskCode
-import com.appservice.staffs.ui.UserSession
+import com.appservice.ui.staffs.UserSession
 import com.appservice.ui.catalog.catalogService.listing.TypeSuccess
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet

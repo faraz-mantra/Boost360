@@ -74,11 +74,11 @@
           app:clickPosition="3,4"
           app:indicatorEnabled="true"
           app:indicatorGravity="top"
-          tools:background="@color/white"
           app:indicatorInterpolator="anticipateOvershoot"
           app:itemFontActive="@font/regular"
           app:itemFontInActive="@font/regular"
-          app:menu="@menu/bottom_nav_menu" />
+          app:menu="@menu/bottom_nav_menu"
+          tools:background="@color/white" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

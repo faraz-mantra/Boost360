@@ -27,10 +27,12 @@ public class DownloadRecord {
     // keys as they do for all MetadataDbHelper functions. Since only word lists have
     // attributes, a null pointer here means this record represents metadata.
     public final ContentValues mAttributes;
+
     public DownloadRecord(final String clientId, final ContentValues attributes) {
         mClientId = clientId;
         mAttributes = attributes;
     }
+
     public boolean isMetadata() {
         return null == mAttributes;
     }

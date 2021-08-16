@@ -2,6 +2,7 @@
 <resources>
   <color name="colorAccent">#ffb900</color>
   <color name="colorPrimary">#ffb900</color>
+  <color name="colorAccent_jio">#ffb900</color>
   <color name="colorPrimaryDark">#d99d00</color>
   <color name="colorPrimaryVariant">#5092F5</color>
   <color name="statusBarColor">@color/colorPrimaryVariant</color>
@@ -20,6 +21,8 @@
   <color name="color_primary">@color/secondary_text</color>
   <color name="color_primary_dark">#61605F</color>
   <color name="light_grey_2">#ebebeb</color>
+  <color name="snackbar_positive_color">#5DAC01</color>
+  <color name="snackbar_negative_color">#E02200</color>
 
   <color name="white">#FFFFFF</color>
   <color name="white_70">#B3FFFFFF</color>
@@ -35,4 +38,5 @@
   <color name="colorFabIcon">#F5F5F5</color>
   <color name="colorShadowStart">#5e5e5e</color>
   <color name="colorShadowEnd">#c7c7c7</color>
+
 </resources>

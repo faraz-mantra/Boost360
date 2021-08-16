@@ -1,4 +1,6 @@
-include ':app', ':imagepicker', ':keyboard', ':presignup', ':framework', ':facebook', ':twitter', ':resources', ':onboarding',':inventoryorder', ':upgrades',':dashboard', ':appService', ':google'
+include ':razorpay-android-3.8.8'
+include ':presignin'
+include ':app', ':imagepicker', ':keyboard', ':presignup', ':framework', ':facebook', ':twitter', ':resources', ':onboarding', ':inventoryorder', ':upgrades', ':dashboard', ':appService', ':google'
 include ':messagelibrary'
 include ':app:libs:libraries:volley'
 include ':library'

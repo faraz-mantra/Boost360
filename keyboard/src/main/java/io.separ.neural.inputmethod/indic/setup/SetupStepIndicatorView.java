@@ -20,7 +20,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+
 import androidx.core.view.ViewCompat;
+
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -50,7 +52,7 @@ public final class SetupStepIndicatorView extends View {
     @Override
     protected void onDraw(final Canvas canvas) {
         super.onDraw(canvas);
-        final int xPos = (int)(getWidth() * mXRatio);
+        final int xPos = (int) (getWidth() * mXRatio);
         final int height = getHeight();
         mIndicatorPath.rewind();
         mIndicatorPath.moveTo(xPos, 0);

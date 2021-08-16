@@ -71,8 +71,7 @@ public class ContactInformationUpdateModel {
         @Expose
         private String value;
 
-        public Update(String key ,String value)
-        {
+        public Update(String key, String value) {
             this.key = key;
             this.value = value;
         }

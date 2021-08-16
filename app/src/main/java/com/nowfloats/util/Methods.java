@@ -86,8 +86,12 @@ import retrofit.http.QueryMap;
  * Created by Guru on 21-04-2015.
  */
 public class Methods {
-    public static SimpleDateFormat dateFormatDefault = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+    public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd'T'HH:mm:ss";
+    public static final String YYYY_MM_DD = "yyyy-MM-dd";
+    public static final String ISO_8601_24H_FULL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     private static final String HTML_PATTERN = "<(\"[^\"]*\"|'[^']*'|[^'\">])*>";
+    public static SimpleDateFormat dateFormatDefault = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+    public static TimeZone UTC;
     private static Pattern pattern = Pattern.compile(HTML_PATTERN);
 
     public static boolean isOnline(Activity context) {
@@ -116,7 +120,7 @@ public class Methods {
         return status;
     }
 
-    public static boolean hasHTMLTags(String text){
+    public static boolean hasHTMLTags(String text) {
         Matcher matcher = pattern.matcher(text);
         return matcher.find();
     }
@@ -150,7 +154,7 @@ public class Methods {
         try {
             context.startActivity(facebookIntent);
         } catch (Exception e) {
-            Toast.makeText(context,context.getString(R.string.unable_to_open_facebook), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getString(R.string.unable_to_open_facebook), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -241,7 +245,7 @@ public class Methods {
         builder.create().show();
     }
 
-    public static void showDialog(Context mContext, String title, String msg, DialogInterface.OnClickListener listener){
+    public static void showDialog(Context mContext, String title, String msg, DialogInterface.OnClickListener listener) {
 
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(mContext);
         builder.setTitle(title).setMessage(msg).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -279,18 +283,20 @@ public class Methods {
     }
 
     public static void showSnackBar(View view, String message, int color) {
-        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE);
         snackbar.getView().setBackgroundColor(color);
+        snackbar.setDuration(4000);
         snackbar.show();
     }
 
     public static boolean validPhoneNumber(String number) {
-       return number != null && number.length() == 10;
+        return number != null && number.length() == 10;
     }
 
     public static void showSnackBar(Activity context, String msg) {
-        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_INDEFINITE);
         snackBar.getView().setBackgroundColor(Color.GRAY);
+        snackBar.setDuration(4000);
         snackBar.show();
         /*SnackbarManager.show(
                 Snackbar.with(context) // context
@@ -301,8 +307,9 @@ public class Methods {
     }
 
     public static void showSnackBarPositive(Activity context, String msg) {
-        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_INDEFINITE);
         snackBar.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_positive_color));
+        snackBar.setDuration(4000);
         snackBar.show();
         /*SnackbarManager.show(
                 Snackbar.with(context) // context
@@ -323,8 +330,7 @@ public class Methods {
 
     }
 
-
-    public static String getRealPathFromURI(Uri contentUri , Context c) {
+    public static String getRealPathFromURI(Uri contentUri, Context c) {
 
         String val = null;
         String[] proj = {MediaStore.Images.Media.DATA};
@@ -336,7 +342,6 @@ public class Methods {
         }
         return val;
     }
-
 
     public static String getPath(Activity c, Uri uri) {
         try {
@@ -354,8 +359,9 @@ public class Methods {
     }
 
     public static void showSnackBarNegative(Activity context, String msg) {
-        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg, Snackbar.LENGTH_INDEFINITE);
         snackBar.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color));
+        snackBar.setDuration(4000);
         snackBar.show();
     }
 
@@ -383,14 +389,16 @@ public class Methods {
     }
 
     public static void showSnackBarNegative(View mView, String msg) {
-        Snackbar snackBar = Snackbar.make(mView, msg, Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(mView, msg, Snackbar.LENGTH_INDEFINITE);
         snackBar.getView().setBackgroundColor(ContextCompat.getColor(mView.getContext(), R.color.snackbar_negative_color));
+        snackBar.setDuration(4000);
         snackBar.show();
     }
 
     public static void snackbarNoInternet(Activity context) {
-        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), Snackbar.LENGTH_INDEFINITE);
         snackBar.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color));
+        snackBar.setDuration(4000);
         snackBar.show();
     }
 
@@ -452,7 +460,6 @@ public class Methods {
             e.printStackTrace();
         }
     }
-
 
     public static void materialDialog(Activity activity, String title, String msg) {
         try {
@@ -520,48 +527,6 @@ public class Methods {
         return value;
     }
 
-    public static class MyLeadingMarginSpan2 implements LeadingMarginSpan.LeadingMarginSpan2 {
-        private int margin;
-        private int lines;
-
-        public MyLeadingMarginSpan2(int lines, int margin) {
-            this.margin = margin;
-            this.lines = lines;
-        }
-
-        /* Возвращает значение, на которе должен быть добавлен отступ */
-        @Override
-        public int getLeadingMargin(boolean first) {
-            if (first) {
-                /*
-                 * Данный отступ будет применен к количеству строк
-                 * возвращаемых getLeadingMarginLineCount()
-                 */
-                return margin;
-            } else {
-                // Отступ для всех остальных строк
-                return 0;
-            }
-        }
-
-        @Override
-        public void drawLeadingMargin(Canvas c, Paint p, int x, int dir,
-                                      int top, int baseline, int bottom, CharSequence text,
-                                      int start, int end, boolean first, Layout layout) {
-        }
-
-        /*
-         * Возвращает количество строк, к которым должен быть
-         * применен отступ возвращаемый методом getLeadingMargin(true)
-         * Замечание:
-         * Отступ применяется только к N строкам первого параграфа.
-         */
-        @Override
-        public int getLeadingMarginLineCount() {
-            return lines;
-        }
-    }
-
     public static boolean compareDate(Date next, Date prev) {
         try {
 //            Date purchaseDate = dateFormatDefault.parse(one);
@@ -601,7 +566,6 @@ public class Methods {
         }
         return getFormattedDate(getDateMillSecond(date), format);
     }
-
 
     public static Long getDateMillSecond(String date) {
         String[] dateTime = null;
@@ -654,10 +618,6 @@ public class Methods {
                 .build().show();
     }
 
-    public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd'T'HH:mm:ss";
-    public static final String YYYY_MM_DD = "yyyy-MM-dd";
-
-
     public static String getParsedDate(String createdOn) {
         if (TextUtils.isEmpty(createdOn)) {
             return "N/A";
@@ -690,10 +650,6 @@ public class Methods {
         }
         return timeInMilliseconds;
     }
-
-
-    public static final String ISO_8601_24H_FULL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-    public static TimeZone UTC;
 
     public static String getFormattedDate(String Sdate) {
         String formatted = "", dateTime = "";
@@ -905,6 +861,11 @@ public class Methods {
         return false;
     }
 
+    public static int dpToPx(int dp, Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics);
+    }
+
     /*public static RestAdapter createAdapter(Context context, String url) throws IOException {
         try {
             OkHttpClient okHttpClient = new OkHttpClient();
@@ -953,49 +914,6 @@ public class Methods {
         }
         return null;
     }*/
-
-    public static int dpToPx(int dp, Context context) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics);
-    }
-
-    public interface SmsInterface
-    {
-        @GET("/discover/v1/floatingpoint/SendOTPIndia")
-        void sendSms(@QueryMap Map hashMap, Callback<Boolean> response);
-
-        @GET("/discover/v1/floatingpoint/VerifyOTP")
-        void verifySms(@QueryMap Map hashMap, Callback<Boolean> response);
-    }
-
-
-    public interface SmsApi {
-
-        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
-        @POST("/protected/json/phones/verification/start")
-        void sendSms(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
-
-        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
-        @GET("/protected/json/phones/verification/check")
-        void verifySmsCode(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
-
-        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
-        @GET("/plugin/api/Service/VerifyPhoneNumberAndSendOTP")
-        void verifyPhoneNumberAndSendOTP(@QueryMap Map hashMap, Callback<VerifyPhoneNumberAndSendOTP> response);
-
-
-        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
-        @GET("/plugin/api/Service/VerifyOTP")
-        void verifyOTPCode(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
-
-        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
-        @GET("/plugin/api/Service/ResendOTP")
-        void reSendOTP(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
-
-        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
-        @GET("/plugin/api/Service/ResendOTPOverCall")
-        void resendOTPOverCall(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
-    }
 
     public static void makeCall(Context mContext, String number) {
         try {
@@ -1137,8 +1055,45 @@ public class Methods {
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
-    public static Bitmap scaleBitmap(Bitmap oldBitmap , float ratio){
-        return Bitmap.createScaledBitmap(oldBitmap , (int)(oldBitmap.getWidth() * ratio) , (int)(oldBitmap.getHeight()*ratio) , false);
+    public static Bitmap scaleBitmap(Bitmap oldBitmap, float ratio) {
+        return Bitmap.createScaledBitmap(oldBitmap, (int) (oldBitmap.getWidth() * ratio), (int) (oldBitmap.getHeight() * ratio), false);
+    }
+
+    public static OkHttpClient getClient() {
+        //OkHttpClient client = new OkHttpClient();
+        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        client.readTimeout(1, TimeUnit.MINUTES);
+        client.readTimeout(1, TimeUnit.MINUTES);
+        return client.build();
+    }
+
+    public static String getISO8601FormattedDate(String datetime) {
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            Date date = df.parse(datetime);
+
+            df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+            df.setTimeZone(TimeZone.getDefault());
+            return df.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+    public static String getUTC_To_Local(long timestamp) {
+        try {
+            Date date = new Date(timestamp);
+
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE MMM dd, yyyy hh:mm a"); //this format changeable
+            dateFormatter.setTimeZone(/*TimeZone.getDefault()*/TimeZone.getTimeZone("UTC"));
+            return dateFormatter.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /*public static OkClient getHttpclient(int timeout) {
@@ -1150,51 +1105,81 @@ public class Methods {
         return new OkClient(okHttpClient);
     }*/
 
-    public static OkHttpClient getClient() {
-        //OkHttpClient client = new OkHttpClient();
-        OkHttpClient.Builder client = new OkHttpClient.Builder();
-        client.readTimeout(1, TimeUnit.MINUTES);
-        client.readTimeout(1, TimeUnit.MINUTES);
-        return client.build();
+    public interface SmsInterface {
+        @GET("/discover/v1/floatingpoint/SendOTPIndia")
+        void sendSms(@QueryMap Map hashMap, Callback<Boolean> response);
+
+        @GET("/discover/v1/floatingpoint/VerifyOTP")
+        void verifySms(@QueryMap Map hashMap, Callback<Boolean> response);
     }
 
-    public static String getISO8601FormattedDate(String datetime)
-    {
-        try
-        {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            Date date = df.parse(datetime);
+    public interface SmsApi {
 
-            df = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-            df.setTimeZone(TimeZone.getDefault());
-            return df.format(date);
-        }
+        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @POST("/protected/json/phones/verification/start")
+        void sendSms(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
 
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @GET("/protected/json/phones/verification/check")
+        void verifySmsCode(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
 
-        return "";
+        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @GET("/plugin/api/Service/VerifyPhoneNumberAndSendOTP")
+        void verifyPhoneNumberAndSendOTP(@QueryMap Map hashMap, Callback<VerifyPhoneNumberAndSendOTP> response);
+
+
+        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @GET("/plugin/api/Service/VerifyOTP")
+        void verifyOTPCode(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
+
+        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @GET("/plugin/api/Service/ResendOTP")
+        void reSendOTP(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
+
+        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @GET("/plugin/api/Service/ResendOTPOverCall")
+        void resendOTPOverCall(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
     }
 
+    public static class MyLeadingMarginSpan2 implements LeadingMarginSpan.LeadingMarginSpan2 {
+        private int margin;
+        private int lines;
 
-    public static String getUTC_To_Local(long timestamp)
-    {
-        try
-        {
-            Date date = new Date(timestamp);
-
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE MMM dd, yyyy hh:mm a"); //this format changeable
-            dateFormatter.setTimeZone(/*TimeZone.getDefault()*/TimeZone.getTimeZone("UTC"));
-            return dateFormatter.format(date);
+        public MyLeadingMarginSpan2(int lines, int margin) {
+            this.margin = margin;
+            this.lines = lines;
         }
 
-        catch (Exception e)
-        {
-            e.printStackTrace();
+        /* Возвращает значение, на которе должен быть добавлен отступ */
+        @Override
+        public int getLeadingMargin(boolean first) {
+            if (first) {
+                /*
+                 * Данный отступ будет применен к количеству строк
+                 * возвращаемых getLeadingMarginLineCount()
+                 */
+                return margin;
+            } else {
+                // Отступ для всех остальных строк
+                return 0;
+            }
         }
 
-        return null;
+        @Override
+        public void drawLeadingMargin(Canvas c, Paint p, int x, int dir,
+                                      int top, int baseline, int bottom, CharSequence text,
+                                      int start, int end, boolean first, Layout layout) {
+        }
+
+        /*
+         * Возвращает количество строк, к которым должен быть
+         * применен отступ возвращаемый методом getLeadingMargin(true)
+         * Замечание:
+         * Отступ применяется только к N строкам первого параграфа.
+         */
+        @Override
+        public int getLeadingMarginLineCount() {
+            return lines;
+        }
     }
 }

@@ -3,8 +3,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools">
 
-  <FrameLayout
-    style="@style/match_match">
+  <FrameLayout style="@style/match_match">
 
     <androidx.core.widget.NestedScrollView
       style="@style/match_match"
@@ -53,15 +52,13 @@
 
           <com.framework.views.customViews.CustomEditText
             android:id="@+id/edit_customer_name"
-            style="@style/match_wrap"
+            style="@style/EditTextStyle"
             android:layout_marginTop="@dimen/size_6"
-            android:background="@drawable/ic_rectangle_light_black_outline"
             android:fontFamily="@font/regular"
             android:gravity="center_vertical"
             android:hint="@string/type_customer_name"
             android:inputType="textCapWords"
-            android:paddingStart="@dimen/size_12"
-            android:paddingEnd="@dimen/size_12"
+            android:padding="@dimen/size_10"
             android:singleLine="true"
             android:textColorHint="@color/black_202A2A2A"
             android:textSize="14sp" />
@@ -74,20 +71,24 @@
             app:fontFamily="@font/regular"
             app:textType="BODY_1" />
 
-          <com.framework.views.customViews.CustomEditText
+          <com.framework.views.customViews.PrefixEditText
             android:id="@+id/edit_customer_phone"
-            style="@style/match_wrap"
+            style="@style/EditTextStyle"
             android:layout_marginTop="@dimen/size_6"
-            android:background="@drawable/ic_rectangle_light_black_outline"
+            android:digits="0123456789"
             android:fontFamily="@font/regular"
             android:gravity="center_vertical"
-            android:hint="+91 XXXXX XXXXX"
+            android:hint="@string/phone_hint_appointment"
+            android:imeOptions="actionNext"
             android:inputType="number"
             android:maxLength="10"
-            android:paddingStart="@dimen/size_12"
-            android:paddingEnd="@dimen/size_12"
+            android:padding="@dimen/size_10"
+            android:singleLine="true"
+            android:tag="+91"
             android:textColorHint="@color/black_202A2A2A"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:ignore="MissingClass" />
+
 
           <com.framework.views.customViews.CustomTextView
             style="@style/wrap_wrap"
@@ -99,15 +100,13 @@
 
           <com.framework.views.customViews.CustomEditText
             android:id="@+id/edit_customer_email"
-            style="@style/match_wrap"
+            style="@style/EditTextStyle"
             android:layout_marginTop="@dimen/size_6"
-            android:background="@drawable/ic_rectangle_light_black_outline"
             android:fontFamily="@font/regular"
             android:gravity="center_vertical"
             android:hint="@string/enter_customer_s_email_id"
             android:inputType="textEmailAddress"
-            android:paddingStart="@dimen/size_12"
-            android:paddingEnd="@dimen/size_12"
+            android:padding="@dimen/size_10"
             android:singleLine="true"
             android:textColorHint="@color/black_202A2A2A"
             android:textSize="14sp" />
@@ -132,8 +131,7 @@
             android:visibility="gone"
             tools:visibility="visible">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-              style="@style/match_wrap">
+            <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_wrap">
 
               <com.framework.views.customViews.CustomTextView
                 style="@style/wrap_wrap"
@@ -158,15 +156,13 @@
 
             <com.framework.views.customViews.CustomEditText
               android:id="@+id/edit_gstin"
-              style="@style/match_wrap"
+              style="@style/EditTextStyle"
               android:layout_marginTop="@dimen/size_6"
-              android:background="@drawable/ic_rectangle_light_black_outline"
               android:fontFamily="@font/regular"
               android:gravity="center_vertical"
               android:hint="@string/enter_customer_s_gstin"
               android:inputType="textCapCharacters"
-              android:paddingStart="@dimen/size_12"
-              android:paddingEnd="@dimen/size_12"
+              android:padding="@dimen/size_12"
               android:textColorHint="@color/black_202A2A2A"
               android:textSize="14sp" />
 

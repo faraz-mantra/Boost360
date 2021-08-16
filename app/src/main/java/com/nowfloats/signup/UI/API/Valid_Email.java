@@ -17,43 +17,32 @@ import org.json.JSONObject;
  */
 public class Valid_Email {
 
-    public interface Valid_Email_Interface {
-
-        public void emailValidated(String emailResult);
-    }
-
-    public static String validateEmail(Context context,String email)
-    {
+    public static String validateEmail(Context context, String email) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        final Valid_Email_Interface valid_email_interface = (Valid_Email_Interface) context ;
+        final Valid_Email_Interface valid_email_interface = (Valid_Email_Interface) context;
 
         String url = "https://bpi.briteverify.com/emails.json?" +
-                "address="+email+
+                "address=" + email +
                 "&" +
-                "apikey=e5f5fb5a-8e1f-422e-9d25-a67a16018d47"
-                 ;
+                "apikey=e5f5fb5a-8e1f-422e-9d25-a67a16018d47";
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,
                 url, null, new Response.Listener<JSONObject>() {
 
             @Override
-            public void onResponse(JSONObject response)
-            {
+            public void onResponse(JSONObject response) {
                 // TODO Auto-generated method stub
-                try
-                {
+                try {
                     valid_email_interface.emailValidated(response.getString("status"));
-                    Log.d("Email Valid : ","Email : "+response.getString("status"));
-                    Log.d("Email Valid : ","Email : "+response.getString("status"));
+                    Log.d("Email Valid : ", "Email : " + response.getString("status"));
+                    Log.d("Email Valid : ", "Email : " + response.getString("status"));
 
-                  //  Log.d("Valid Email","Valid Email Response: "+response);
-                  //  Log.d("Valid Email","Valid Email Response: "+response);
+                    //  Log.d("Valid Email","Valid Email Response: "+response);
+                    //  Log.d("Valid Email","Valid Email Response: "+response);
 
 
-                }
-                catch(Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -64,8 +53,8 @@ public class Valid_Email {
                 // TODO Auto-generated method stub
 
 
-                Log.d("Error","Error : "+error);
-                   // signUp.tagStatus("Success",tag);
+                Log.d("Error", "Error : " + error);
+                // signUp.tagStatus("Success",tag);
 
             }
         });
@@ -74,5 +63,10 @@ public class Valid_Email {
         return "";
 
 
+    }
+
+    public interface Valid_Email_Interface {
+
+        public void emailValidated(String emailResult);
     }
 }

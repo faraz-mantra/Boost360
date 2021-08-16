@@ -2,6 +2,12 @@ package com.nowfloats.Analytics_Screen;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,11 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
@@ -48,6 +49,7 @@ import retrofit.client.Response;
 
 import static com.framework.webengageconstant.EventLabelKt.ADDED;
 import static com.framework.webengageconstant.EventLabelKt.ERROR_SUBSCRIBER;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_ADD_SUBSCRIBER;
 import static com.framework.webengageconstant.EventLabelKt.NEWSLETTER_SUBSCRIPTIONS;
 import static com.framework.webengageconstant.EventNameKt.ADD_SUBSCRIBER;
 import static com.framework.webengageconstant.EventNameKt.ADD_SUBSCRIBER_FAILED;
@@ -59,19 +61,18 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
 
 
     private static final int SUBSCRIBER_REQUEST_CODE = 221;
+    ArrayList<SubscriberModel> mSubscriberList = new ArrayList<>();
+    SubscribersAdapter mSubscriberAdapter;
+    TextView titleTextView;
+    AutoCompleteTextView searchEditText;
+    ImageView deleteImage, searchImage;
+    LinearLayout emptyLayout;
     private UserSessionManager mSessionManager;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private Toolbar toolbar;
-    ArrayList<SubscriberModel> mSubscriberList = new ArrayList<>();
-    SubscribersAdapter mSubscriberAdapter;
     private LinearLayoutManager mLayoutManager;
     private boolean stop;
-    TextView titleTextView;
-    AutoCompleteTextView searchEditText;
-    ImageView deleteImage, searchImage;
-
-    LinearLayout emptyLayout;
     private int itemClicked = -1;
 
     @Override
@@ -81,11 +82,11 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         MixPanelController.track(EventKeysWL.SIDE_PANEL_SUBSCRIBERS, null);
         setContentView(R.layout.activity_subscribers);
 
-        toolbar = findViewById(R.id.app_bar);
-        titleTextView = toolbar.findViewById(R.id.titleTextView);
-        searchEditText = findViewById(R.id.search_edittext);
-        deleteImage = findViewById(R.id.img_delete);
-        searchImage = findViewById(R.id.search_image);
+        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
+        searchEditText = (AutoCompleteTextView) findViewById(R.id.search_edittext);
+        deleteImage = (ImageView) findViewById(R.id.img_delete);
+        searchImage = (ImageView) findViewById(R.id.search_image);
 
         //autoCompleteAdapter = new SpinnerAdapter(this,searchList);
         //searchEditText.setAdapter(autoCompleteAdapter);
@@ -116,15 +117,15 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         searchImage.setOnClickListener(this);
 
         titleTextView.setText(getResources().getString(R.string.subscriptions));
-        emptyLayout = findViewById(R.id.emplty_layout);
+        emptyLayout = (LinearLayout) findViewById(R.id.emplty_layout);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mProgressBar = findViewById(R.id.pb_subscriber);
-        mRecyclerView = findViewById(R.id.lv_subscribers);
+        mProgressBar = (ProgressBar) findViewById(R.id.pb_subscriber);
+        mRecyclerView = (RecyclerView) findViewById(R.id.lv_subscribers);
 
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -237,7 +238,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
             public void success(String s, Response response) {
                 mProgressBar.setVisibility(View.GONE);
                 if (response.getStatus() == 200 || response.getStatus() == 201 || response.getStatus() == 202) {
-                    WebEngageController.trackEvent(ADD_SUBSCRIBER,ADDED,TO_BE_ADDED);
+                    WebEngageController.trackEvent(ADD_SUBSCRIBER, ADDED, TO_BE_ADDED);
                     mSubscriberList.clear();
                     mSubscriberAdapter.notifyDataSetChanged();
                     getSubscribersList();
@@ -255,7 +256,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 Log.v("ggg", error.getMessage());
                 mProgressBar.setVisibility(View.GONE);
                 Methods.showSnackBarNegative(SubscribersActivity.this, getString(R.string.something_went_wrong_try_again));
-                WebEngageController.trackEvent(ADD_SUBSCRIBER_FAILED,ERROR_SUBSCRIBER,mSessionManager.getFpTag());
+                WebEngageController.trackEvent(ADD_SUBSCRIBER_FAILED, ERROR_SUBSCRIBER, mSessionManager.getFpTag());
             }
         });
     }
@@ -291,7 +292,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
 
     private void subscriberDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_subscriber, null);
-        final EditText email = view.findViewById(R.id.edittext);
+        final EditText email = (EditText) view.findViewById(R.id.edittext);
         new MaterialDialog.Builder(this)
                 .customView(view, false)
                 .positiveText("Add")

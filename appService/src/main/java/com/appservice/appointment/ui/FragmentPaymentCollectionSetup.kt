@@ -10,7 +10,7 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentPaymentCollectionSetupBinding
 import com.appservice.rest.TaskCode
-import com.appservice.staffs.ui.UserSession
+import com.appservice.ui.staffs.UserSession
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
@@ -53,14 +53,17 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
     }
 
     private fun getAccountDetails() {
+        showProgress()
         hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_bank_details))
     }
 
     private fun getDeliveryStatus() {
+        showProgress()
         hitApi(viewModel?.getDeliveryDetails(UserSession.fpId, UserSession.clientId), R.string.error_getting_delivery_details)
     }
 
     private fun updateDeliveryStatus(isOn: Boolean) {
+        showProgress()
         hitApi(liveData = viewModel?.setupDelivery(DeliverySetup(isPickupAllowed = false, isBusinessLocationPickupAllowed = isOn, isWarehousePickupAllowed = false, isHomeDeliveryAllowed = false, flatDeliveryCharge = "0", clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), errorStringId = R.string.error_getting_delivery_details)
     }
 
@@ -85,6 +88,7 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
     }
 
     private fun onReceivedBankDetails(it: BaseResponse) {
+        hideProgress()
         val paymentProfileResponse = it as PaymentProfileResponse
         isEdit = paymentProfileResponse.result?.bankAccountDetails != null
         if (isEdit) {
@@ -99,6 +103,19 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
             binding?.bankAddedStatus?.text = "Bank Account Added (${(paymentProfileResponse.result?.bankAccountDetails?.getVerifyText())})"
             binding?.bankNameAccountNumber?.text = "${paymentProfileResponse.result?.bankAccountDetails?.bankName} - ${paymentProfileResponse.result?.bankAccountDetails?.accountNumber}"
         } else {
+            setUpBankDetails()
+        }
+
+    }
+
+    override fun onSuccess(it: BaseResponse) {
+        super.onSuccess(it)
+        when (it.taskcode) {
+            TaskCode.SETUP_DELIVERY.ordinal->setupDeliveryResponse(it)
+            TaskCode.GET_DELIVERY_DETAILS.ordinal -> onDeliveryDetailsReceived(it)
+            TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> onReceivedBankDetails(it)
+
+        }
            setUpBankDetails()
 
         }
@@ -129,10 +146,19 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
         binding?.arrowRight?.gone()
     }
 
+    private fun setupDeliveryResponse(it: BaseResponse) {
+        hideProgress()
+    }
+
+    override fun onFailure(it: BaseResponse) {
+        super.onFailure(it)
+        hideProgress()
+    }
+
     private fun onDeliveryDetailsReceived(it: BaseResponse) {
-            val data = it as? DeliveryDetailsResponse
-            binding?.toggleCod?.isOn = data?.result?.isBusinessLocationPickupAllowed ?: false
-
-
+        hideProgress()
+        val data = it as DeliveryDetailsResponse
+        binding?.toggleCod?.isOn = data.result?.isBusinessLocationPickupAllowed ?: false
+        getAccountDetails()
     }
 }

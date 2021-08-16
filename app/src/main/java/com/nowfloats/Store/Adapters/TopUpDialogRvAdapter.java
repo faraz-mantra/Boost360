@@ -1,12 +1,13 @@
 package com.nowfloats.Store.Adapters;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowfloats.Store.Model.PackageDetails;
 import com.thinksity.R;
@@ -26,7 +27,7 @@ public class TopUpDialogRvAdapter extends RecyclerView.Adapter<TopUpDialogRvAdap
     private UpdateAmountListener mUpdateAmountListener;
     private List<String> mPackageIds = new ArrayList<>();
 
-    public TopUpDialogRvAdapter(List<PackageDetails> topUpPlans, UpdateAmountListener updateAmountListener){
+    public TopUpDialogRvAdapter(List<PackageDetails> topUpPlans, UpdateAmountListener updateAmountListener) {
         this.mTopUpPlans = topUpPlans;
         this.mUpdateAmountListener = updateAmountListener;
     }
@@ -44,7 +45,7 @@ public class TopUpDialogRvAdapter extends RecyclerView.Adapter<TopUpDialogRvAdap
         holder.cbTopUpPlan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     mTotalAmount += packageDetail.getPrice();
                     mPackageIds.add(packageDetail.getId());
                 } else {
@@ -62,6 +63,10 @@ public class TopUpDialogRvAdapter extends RecyclerView.Adapter<TopUpDialogRvAdap
         return mTopUpPlans.size();
     }
 
+    public interface UpdateAmountListener {
+        void onAmountUpdated(double amount, List<String> packageIds);
+    }
+
     class CheckBoxViewHolder extends RecyclerView.ViewHolder {
 
         CheckBox cbTopUpPlan;
@@ -73,9 +78,5 @@ public class TopUpDialogRvAdapter extends RecyclerView.Adapter<TopUpDialogRvAdap
             cbTopUpPlan = (CheckBox) itemView.findViewById(R.id.cb_top_up_name);
             tvPrice = (TextView) itemView.findViewById(R.id.tv_price);
         }
-    }
-
-    public interface UpdateAmountListener {
-        void onAmountUpdated(double amount, List<String> packageIds);
     }
 }

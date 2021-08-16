@@ -28,9 +28,9 @@
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
-        app:srcCompat="@drawable/placeholder_image_n"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/placeholder_image_n" />
     </com.framework.views.customViews.CustomCardView>
 
     <androidx.appcompat.widget.LinearLayoutCompat

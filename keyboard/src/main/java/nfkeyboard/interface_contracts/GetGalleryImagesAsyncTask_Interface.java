@@ -18,11 +18,6 @@ public class GetGalleryImagesAsyncTask_Interface extends AsyncTask<Void, String,
 
     String clientIdConcatedWithQoutes = "\"" + Constants.clientId + "\"";
     private String fpId;
-
-    public interface getGalleryImagesInterface {
-        void imagesReceived();
-    }
-
     private getGalleryImagesInterface galleryInterface;
 
     public GetGalleryImagesAsyncTask_Interface() {
@@ -81,6 +76,10 @@ public class GetGalleryImagesAsyncTask_Interface extends AsyncTask<Void, String,
             e.printStackTrace();
         }
         return response;
+    }
+
+    public interface getGalleryImagesInterface {
+        void imagesReceived();
     }
 
 }

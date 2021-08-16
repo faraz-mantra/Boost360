@@ -11,7 +11,7 @@ import com.framework.extensions.getDrawable
 import com.framework.extensions.observeOnce
 import com.framework.webengageconstant.BUTTON
 import com.framework.webengageconstant.CLICKED
-import com.framework.webengageconstant.CREATE_MY_BUSINESS_WEBSITE
+import com.framework.webengageconstant.PS_BUSINESS_WEBSITE_CLICK
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessWebsiteBinding
@@ -29,7 +29,8 @@ import com.onboarding.nowfloats.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
 
-class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWebsiteBinding>() {
+class RegistrationBusinessWebsiteFragment :
+  BaseRegistrationFragment<FragmentRegistrationBusinessWebsiteBinding>() {
 
   private var googleChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
   private var isDomain: Boolean = false
@@ -49,37 +50,43 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
     apiCheckDomainSuggest(getRequestData())
     binding?.googleChannels?.post {
       (binding?.googleChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn())
-          ?.doOnComplete { setSetSelectedGoogleChannels(channels) })
-          ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
-          ?.andThen(binding?.subdomain?.fadeIn(100L)?.mergeWith(binding?.inputType?.fadeIn(50L)))
-          ?.doOnComplete {
-            binding?.next?.visibility = View.VISIBLE
-            setDataView()
-          }?.subscribe()
+        ?.doOnComplete { setSetSelectedGoogleChannels(channels) })
+        ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
+        ?.andThen(binding?.subdomain?.fadeIn(100L)?.mergeWith(binding?.inputType?.fadeIn(50L)))
+        ?.doOnComplete {
+          binding?.next?.visibility = View.VISIBLE
+          setDataView()
+        }?.subscribe()
     }
     setOnClickListener(binding?.next)
     binding?.subdomain?.afterTextChanged { setSubDomain(binding?.subdomain?.text.toString()) }
   }
 
   private fun getRequestData(): BusinessDomainSuggestRequest {
-    return BusinessDomainSuggestRequest(clientId, requestFloatsModel?.contactInfo?.businessName, requestFloatsModel?.contactInfo?.addressCity, category = requestFloatsModel?.categoryDataModel?.category_key)
+    return BusinessDomainSuggestRequest(
+      clientId,
+      requestFloatsModel?.contactInfo?.businessName,
+      requestFloatsModel?.contactInfo?.addressCity,
+      category = requestFloatsModel?.categoryDataModel?.category_key
+    )
   }
 
   private fun apiCheckDomainSuggest(requestData: BusinessDomainSuggestRequest) {
-    viewModel?.postCheckBusinessDomainSuggest(requestData)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
-        errorSet()
-        return@Observer
-      }
-      if (it.stringResponse.isNullOrEmpty().not()) {
-        isDomain = true
-        binding?.next?.alpha = 1f
-        domainValue = it.stringResponse?.toLowerCase(Locale.ROOT)
-        binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
-        binding?.subdomain?.setText(domainValue)
-      } else errorSet()
-    })
+    viewModel?.postCheckBusinessDomainSuggest(requestData)
+      ?.observeOnce(viewLifecycleOwner, Observer {
+        if (it.error is NoNetworkException) {
+          InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
+          errorSet()
+          return@Observer
+        }
+        if (it.stringResponse.isNullOrEmpty().not()) {
+          isDomain = true
+          binding?.next?.alpha = 1f
+          domainValue = it.stringResponse?.toLowerCase(Locale.ROOT)
+          binding?.subdomain?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
+          binding?.subdomain?.setText(domainValue)
+        } else errorSet()
+      })
   }
 
   private fun setDataView() {
@@ -141,9 +148,9 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
     googleBusiness.recyclerViewType = RecyclerViewItemType.SELECTED_CHANNEL_ITEM.getLayout()
     selectedItems.add(googleBusiness)
     googleChannelsAdapter = binding?.googleChannels?.setGridRecyclerViewAdapter(
-        baseActivity,
-        selectedItems.size,
-        selectedItems
+      baseActivity,
+      selectedItems.size,
+      selectedItems
     )
     googleChannelsAdapter?.notifyDataSetChanged()
   }
@@ -156,7 +163,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
           if ((binding?.textBtn?.visibility == View.VISIBLE)) {
 
             //create my business website Event Tracker.
-            WebEngageController.trackEvent(CREATE_MY_BUSINESS_WEBSITE , BUTTON, CLICKED)
+            WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK, BUTTON, CLICKED)
 
             getDotProgress()?.let {
               binding?.textBtn?.visibility = View.GONE
@@ -164,6 +171,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
               it.startAnimation()
               Handler().postDelayed({
                 it.stopAnimation()
+                binding?.next?.removeView(it)
                 it.removeAllViews()
                 binding?.textBtn?.visibility = View.VISIBLE
                 when {

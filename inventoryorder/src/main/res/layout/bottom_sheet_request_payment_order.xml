@@ -69,15 +69,15 @@
           tools:visibility="visible">
 
           <com.framework.views.customViews.CustomCheckBox
-              android:id="@+id/checkbox_sms"
-              style="@style/CheckBoxStyle"
-              tools:text="@string/tools_text_sms_91" />
+            android:id="@+id/checkbox_sms"
+            style="@style/CheckBoxStyle"
+            tools:text="@string/tools_text_sms_91" />
 
           <com.framework.views.customViews.CustomCheckBox
-              android:id="@+id/checkbox_email"
-              style="@style/CheckBoxStyle"
-              android:layout_marginTop="@dimen/size_4"
-              tools:text="@string/tools_text_email_address" />
+            android:id="@+id/checkbox_email"
+            style="@style/CheckBoxStyle"
+            android:layout_marginTop="@dimen/size_4"
+            tools:text="@string/tools_text_email_address" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomTextView
@@ -115,17 +115,19 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent">
 
-      <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tvCancel"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:background="@color/white"
-          android:text="@string/go_back" />
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/tvCancel"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_marginEnd="@dimen/size_20"
+        android:text="@string/go_back"
+        android:textColor="@color/white" />
+
 
       <com.framework.views.customViews.CustomButton
-          android:id="@+id/buttonDone"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:text="@string/send_payment_link"
-          android:textColor="@color/white" />
+        android:id="@+id/buttonDone"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:text="@string/send_payment_link"
+        android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

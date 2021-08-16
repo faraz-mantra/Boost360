@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -58,27 +59,26 @@ import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_BUSINESS_PR
 import static com.framework.webengageconstant.EventNameKt.UPLOAD_LOGO;
 
 public class Business_Logo_Activity extends AppCompatActivity {
-    Button uploadButton ;
-    private Toolbar toolbar;
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_GALLERY = 2;
     private static final int ACTION_REQUEST_IMAGE_EDIT = 3;
-    private TextView titleTextView;
-    ContentValues values;
-    Uri imageUri ;
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
-    Bitmap CameraBitmap;
-    String path = null;
-    String imageUrl ="";
     public static ImageView logoimageView;
-    PorterDuffColorFilter whiteLabelFilter;
-    UserSessionManager session ;
-    ProgressDialog mProgressDialog;
     private final int gallery_req_id = 0;
     private final int media_req_id = 1;
-
+    Button uploadButton;
+    ContentValues values;
+    Uri imageUri;
+    Bitmap CameraBitmap;
+    String path = null;
+    String imageUrl = "";
+    PorterDuffColorFilter whiteLabelFilter;
+    UserSessionManager session;
+    ProgressDialog mProgressDialog;
     ActivityBusinessLogoBinding binding;
+    private Toolbar toolbar;
+    private TextView titleTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +89,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
         setSupportActionBar(binding.appBar.toolbar);
         Methods.isOnline(Business_Logo_Activity.this);
 
-        if (getSupportActionBar() != null)
-        {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -107,57 +106,54 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getResources().getString(R.string.business_logo));*/
-        session = new UserSessionManager(getApplicationContext(),Business_Logo_Activity.this);
-        WebEngageController.trackEvent(EVENT_NAME_BUSINESS_PROFILE,BUSINESS_PROFILE,session.getFpTag());
+        session = new UserSessionManager(getApplicationContext(), Business_Logo_Activity.this);
+        WebEngageController.trackEvent(EVENT_NAME_BUSINESS_PROFILE, BUSINESS_PROFILE, session.getFpTag());
         logoimageView = (ImageView) findViewById(R.id.logoimageView);
         uploadButton = (Button) findViewById(R.id.addLogoButton);
 
         try {
-                String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
-
-            if(iconUrl!=null && iconUrl.length()>0 && !iconUrl.contains("http")) {
-                uploadButton.setText("CHANGE");
-                //String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
+            uploadButton.setText(getResources().getString(R.string.change));
+            String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
+            if (iconUrl != null && iconUrl.length() > 0 && !iconUrl.contains("http")) {
                 BoostLog.d("Logo Url:", iconUrl);
                 Glide.with(this).asGif().load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
                 onBusinessLogoAddedOrUpdated(true);
-            }else{
-                if(iconUrl!=null && iconUrl.length()>0) {
-                    uploadButton.setText("CHANGE");
+            } else {
+                if (iconUrl != null && iconUrl.length() > 0) {
                     BoostLog.d("Logo Url:", iconUrl);
                     Glide.with(this).load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
                     onBusinessLogoAddedOrUpdated(true);
-                }else{
-                    uploadButton.setText("ADD");
+                } else {
                     Glide.with(this).asGif().load(R.drawable.logo_default_image).into(logoimageView);
                     onBusinessLogoAddedOrUpdated(false);
+                    uploadButton.setText(getResources().getString(R.string.add_logo));
                 }
             }
-        }catch(Exception e){e.printStackTrace();System.gc();}
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.gc();
+        }
         logoimageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ActivityCompat.checkSelfPermission(Business_Logo_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                        PackageManager.PERMISSION_GRANTED ) {
-                    ActivityCompat.requestPermissions(Business_Logo_Activity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            gallery_req_id);
+                if (ActivityCompat.checkSelfPermission(Business_Logo_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(Business_Logo_Activity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, gallery_req_id);
                     return;
                 }
-               if (TextUtils.isEmpty(path)){
-                   new DownloadImage().execute();
-               }else{
-                   editImage();
-               }
+                if (TextUtils.isEmpty(path)) {
+                    new DownloadImage().execute();
+                } else {
+                    editImage();
+                }
             }
         });
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-                    Methods.showFeatureNotAvailDialog(Business_Logo_Activity.this);
-                    return;
-                }
-
+//        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+//          Methods.showFeatureNotAvailDialog(Business_Logo_Activity.this);
+//          return;
+//        }
                 final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
                 imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
 
@@ -199,17 +195,16 @@ public class Business_Logo_Activity extends AppCompatActivity {
             }
 
             private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
-                if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
-                    MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
-                    WebEngageController.trackEvent(UPLOAD_LOGO,UPDATED_BUINSESS_LOGO,session.getFpTag());
+                if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
+                    MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA, null);
+                    WebEngageController.trackEvent(UPLOAD_LOGO, UPDATED_BUINSESS_LOGO, session.getFpTag());
                     cameraIntent();
-                }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
-                    MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
+                } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
+                    MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY, null);
                     galleryIntent();
                 }
             }
         });
-
 
 
 //        uploadButton.setOnTouchListener(new View.OnTouchListener() {
@@ -222,53 +217,12 @@ public class Business_Logo_Activity extends AppCompatActivity {
 //            }
 //        });
     }
-    private class DownloadImage extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Create a progressdialog
-            mProgressDialog = new ProgressDialog(Business_Logo_Activity.this);
-            // Set progressdialog title
-            // Set progressdialog message
-            mProgressDialog.setMessage(getString(R.string.please_wait));
-            mProgressDialog.setIndeterminate(false);
-            // Show progressdialog
-            mProgressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... URL) {
-
-            String imageURL = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
-
-            Bitmap bitmap = null;
-            try {
-                // Download Image from URL
-                InputStream input = new java.net.URL(imageURL).openStream();
-                // Decode Bitmap
-                bitmap = BitmapFactory.decodeStream(input);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            path = Util.saveCameraBitmap(bitmap,Business_Logo_Activity.this,"ImageFloat" + System.currentTimeMillis());
-            return path;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // Set the bitmap into ImageView
-            mProgressDialog.dismiss();
-            editImage();
-
-        }
-    }
 
     private void selectImage() {
-        final CharSequence[] items = { "Take Photo", "Choose from Library",
-                "Cancel" };
+        final CharSequence[] items = {"Take Photo", "Choose from Library",
+                "Cancel"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Business_Logo_Activity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper(this,R.style.AlertDialogCustom));
         builder.setTitle("Add Photo!");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
@@ -302,19 +256,15 @@ public class Business_Logo_Activity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
-    {
-        if(requestCode==media_req_id)
-        {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if (requestCode == media_req_id) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 cameraIntent();
 
             }
 
-        }
-        else if(requestCode==gallery_req_id)
-        {
+        } else if (requestCode == gallery_req_id) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 galleryIntent();
@@ -343,11 +293,11 @@ public class Business_Logo_Activity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void cameraIntent(){
+    public void cameraIntent() {
         try {
             // use standard intent to capture an image
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         media_req_id);
@@ -356,7 +306,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
             values = new ContentValues();
             values.put(MediaStore.Images.Media.TITLE, "New Picture");
             values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-            imageUri =getContentResolver().insert(
+            imageUri = getContentResolver().insert(
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             Intent captureIntent = new Intent(
                     MediaStore.ACTION_IMAGE_CAPTURE);
@@ -366,17 +316,16 @@ public class Business_Logo_Activity extends AppCompatActivity {
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
-            Methods.showSnackBarNegative(Business_Logo_Activity.this,errorMessage);
-        }
-        catch(Exception e){
+            Methods.showSnackBarNegative(Business_Logo_Activity.this, errorMessage);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void galleryIntent(){
+    public void galleryIntent() {
         try {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED ) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         gallery_req_id);
                 return;
@@ -389,18 +338,16 @@ public class Business_Logo_Activity extends AppCompatActivity {
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
-            Methods.showSnackBarNegative(Business_Logo_Activity.this,errorMessage);
+            Methods.showSnackBarNegative(Business_Logo_Activity.this, errorMessage);
         }
     }
 
-    private void onBusinessLogoAddedOrUpdated(Boolean isAdded){
+    private void onBusinessLogoAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if(instance.getDrScoreData().getMetricdetail()==null) return;
+        if (instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_add_clinic_logo(isAdded);
         instance.updateDocument();
     }
-
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -424,10 +371,9 @@ public class Business_Logo_Activity extends AppCompatActivity {
                 }
                 if (!Util.isNullOrEmpty(path)) {
                     editImage();
-                }  else
-                    Methods.showSnackBarNegative(Business_Logo_Activity.this,getResources().getString(R.string.select_image_upload));
-            }
-            else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
+                } else
+                    Methods.showSnackBarNegative(Business_Logo_Activity.this, getResources().getString(R.string.select_image_upload));
+            } else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
                 {
                     Uri picUri = data.getData();
                     if (picUri != null) {
@@ -436,10 +382,10 @@ public class Business_Logo_Activity extends AppCompatActivity {
                         if (!Util.isNullOrEmpty(path)) {
                             editImage();
                         } else
-                            Methods.showSnackBarNegative(Business_Logo_Activity.this,getResources().getString(R.string.select_image_upload));
+                            Methods.showSnackBarNegative(Business_Logo_Activity.this, getResources().getString(R.string.select_image_upload));
                     }
                 }
-            }else if(resultCode == RESULT_OK && requestCode == ACTION_REQUEST_IMAGE_EDIT){
+            } else if (resultCode == RESULT_OK && requestCode == ACTION_REQUEST_IMAGE_EDIT) {
                 String path = data.getStringExtra("edit_image");
                 if (!TextUtils.isEmpty(path)) {
                     this.path = path;
@@ -452,16 +398,16 @@ public class Business_Logo_Activity extends AppCompatActivity {
         }
     }
 
-    private void editImage(){
-        Intent in =new Intent(Business_Logo_Activity.this,EditImageActivity.class);
-        in.putExtra("image",path);
-        in.putExtra("isFixedAspectRatio",true);
+    private void editImage() {
+        Intent in = new Intent(Business_Logo_Activity.this, EditImageActivity.class);
+        in.putExtra("image", path);
+        in.putExtra("isFixedAspectRatio", true);
         startActivityForResult(in, ACTION_REQUEST_IMAGE_EDIT);
     }
 
-
     public void uploadPrimaryPicture(String path) {
-        new AlertArchive(Constants.alertInterface,"LOGO",session.getFPID());
+        uploadButton.setText(getResources().getString(R.string.change));
+        new AlertArchive(Constants.alertInterface, "LOGO", session.getFPID());
         Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this, path, session.getFPID(), session, this::imageUpload);
         upload_logo.execute();
 //        Constants.isImgUploaded = false;
@@ -470,9 +416,50 @@ public class Business_Logo_Activity extends AppCompatActivity {
     }
 
     private void imageUpload(Boolean isSuccess) {
-       if (isSuccess){
-           uploadButton.setText("CHANGE");
-           onBusinessLogoAddedOrUpdated(true);
-       }
+        if (isSuccess) {
+            onBusinessLogoAddedOrUpdated(true);
+        }
+    }
+
+    private class DownloadImage extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Create a progressdialog
+            mProgressDialog = new ProgressDialog(Business_Logo_Activity.this);
+            // Set progressdialog title
+            // Set progressdialog message
+            mProgressDialog.setMessage(getString(R.string.please_wait));
+            mProgressDialog.setIndeterminate(false);
+            // Show progressdialog
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... URL) {
+
+            String imageURL = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
+
+            Bitmap bitmap = null;
+            try {
+                // Download Image from URL
+                InputStream input = new java.net.URL(imageURL).openStream();
+                // Decode Bitmap
+                bitmap = BitmapFactory.decodeStream(input);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            path = Util.saveCameraBitmap(bitmap, Business_Logo_Activity.this, "ImageFloat" + System.currentTimeMillis());
+            return path;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // Set the bitmap into ImageView
+            mProgressDialog.dismiss();
+            editImage();
+
+        }
     }
 }

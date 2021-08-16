@@ -10,10 +10,10 @@ import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 import kotlinx.android.synthetic.main.activity_fragment_container.*
 
-
 const val FRAGMENT_TYPE = "FRAGMENT_TYPE"
 
-abstract class FragmentContainerActivity : BaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+abstract class FragmentContainerActivity :
+  BaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   protected var type: Int? = null
 
@@ -39,7 +39,10 @@ abstract class FragmentContainerActivity : BaseActivity<ActivityFragmentContaine
   }
 
   open fun matchLayoutToParents() {
-    container.layoutParams = ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+    container.layoutParams = ConstraintLayout.LayoutParams(
+      ViewGroup.LayoutParams.MATCH_PARENT,
+      ViewGroup.LayoutParams.MATCH_PARENT
+    )
     container.invalidate()
     container.requestLayout()
   }

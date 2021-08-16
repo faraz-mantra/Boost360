@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ic_bg_rounded_grey_bottom"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/size_36"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="@string/no_enquiry_yet"
+      android:textAlignment="gravity"
+      android:textColor="@color/black_4a4a4a"
+      app:fontFamily="@font/light"
+      app:textType="HEADING_4" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_10"
+      android:gravity="center"
+      android:paddingStart="@dimen/size_12"
+      android:paddingEnd="@dimen/size_16"
+      android:text="@string/promote_your_website_with_as_many_people_as_you_can"
+      android:textAlignment="gravity"
+      android:textColor="@color/black_4a4a4a"
+      app:textType="HEADING_6" />
+
+    <RelativeLayout
+      android:id="@+id/btn_whatsapp_enquiries"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_44"
+      android:layout_marginTop="@dimen/size_16"
+      android:background="@drawable/bg_button_rounded_green"
+      android:clickable="true"
+      android:focusable="true"
+      android:foreground="?attr/selectableItemBackground"
+      tools:ignore="UnusedAttribute">
+
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="@dimen/size_32"
+        android:layout_height="@dimen/size_32"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_whatsapp_enquiries" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/share_on_whatsapp"
+        android:textAlignment="gravity"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        app:fontFamily="@font/regular"
+        app:textType="HEADING_6" />
+    </RelativeLayout>
+
+    <RelativeLayout
+      android:id="@+id/btn_messanger_enquiries"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_44"
+      android:layout_marginTop="@dimen/size_10"
+      android:background="@drawable/bg_button_rounded_grey_strock"
+      android:clickable="true"
+      android:focusable="true"
+      android:foreground="?attr/selectableItemBackground"
+      tools:ignore="UnusedAttribute">
+
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="@dimen/size_32"
+        android:layout_height="@dimen/size_32"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_messanger_enquiries" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/share_on_messanger"
+        android:textAlignment="gravity"
+        android:textAllCaps="true"
+        android:textColor="@color/black_4a4a4a"
+        app:fontFamily="@font/regular"
+        app:textType="HEADING_6" />
+    </RelativeLayout>
+
+    <RelativeLayout
+      android:id="@+id/btn_instagram_enquiries"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_44"
+      android:layout_marginTop="@dimen/size_10"
+      android:background="@drawable/bg_button_rounded_grey_strock"
+      android:clickable="true"
+      android:focusable="true"
+      android:foreground="?attr/selectableItemBackground"
+      tools:ignore="UnusedAttribute">
+
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="@dimen/size_32"
+        android:layout_height="@dimen/size_32"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_instagram_enquiries" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/share_on_instagram"
+        android:textAlignment="gravity"
+        android:textAllCaps="true"
+        android:textColor="@color/black_4a4a4a"
+        app:fontFamily="@font/regular"
+        app:textType="HEADING_6" />
+    </RelativeLayout>
+
+    <RelativeLayout
+      android:id="@+id/btn_telegram_enquiries"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_44"
+      android:layout_marginTop="@dimen/size_10"
+      android:background="@drawable/bg_button_rounded_grey_strock"
+      android:clickable="true"
+      android:focusable="true"
+      android:foreground="?attr/selectableItemBackground"
+      tools:ignore="UnusedAttribute">
+
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="@dimen/size_32"
+        android:layout_height="@dimen/size_32"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_telegram_enquiries" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/share_on_telegram"
+        android:textAlignment="gravity"
+        android:textAllCaps="true"
+        android:textColor="@color/black_4a4a4a"
+        app:fontFamily="@font/regular"
+        app:textType="HEADING_6" />
+    </RelativeLayout>
+
+    <RelativeLayout
+      android:id="@+id/btn_email_enquiries"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_44"
+      android:layout_marginTop="@dimen/size_10"
+      android:background="@drawable/bg_button_rounded_grey_strock"
+      android:clickable="true"
+      android:focusable="true"
+      android:foreground="?attr/selectableItemBackground"
+      tools:ignore="UnusedAttribute">
+
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="@dimen/size_32"
+        android:layout_height="@dimen/size_32"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_email_enquiries" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/share_on_email"
+        android:textAlignment="gravity"
+        android:textAllCaps="true"
+        android:textColor="@color/black_4a4a4a"
+        app:fontFamily="@font/regular"
+        app:textType="HEADING_6" />
+    </RelativeLayout>
+
+    <RelativeLayout
+      android:id="@+id/btn_other_share_enquiries"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_44"
+      android:layout_marginTop="@dimen/size_10"
+      android:background="@drawable/bg_button_rounded_grey_strock"
+      android:clickable="true"
+      android:focusable="true"
+      android:foreground="?attr/selectableItemBackground"
+      tools:ignore="UnusedAttribute">
+
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="@dimen/size_32"
+        android:layout_height="@dimen/size_32"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_share_enquiries" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/share_on_others"
+        android:textAlignment="gravity"
+        android:textAllCaps="true"
+        android:textColor="@color/black_4a4a4a"
+        app:fontFamily="@font/regular"
+        app:textType="HEADING_6" />
+    </RelativeLayout>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

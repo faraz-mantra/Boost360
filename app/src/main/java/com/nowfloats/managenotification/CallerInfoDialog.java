@@ -9,10 +9,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -78,15 +80,6 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
     private DisplayMetrics metrics;
 
     private KillListener killListener;
-
-    private class KillListener extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            initStaticData();
-            bindValues();
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -401,7 +394,6 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
         super.onDestroy();
     }
 
-
     @Override
     public void onExpandChanged(int id, View v, boolean isExpanded) {
         switch (id) {
@@ -423,6 +415,15 @@ public class CallerInfoDialog extends AppCompatActivity implements ExpandableCar
                     ecvCalls.collapse();
                 }
                 break;
+        }
+    }
+
+    private class KillListener extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            initStaticData();
+            bindValues();
         }
     }
 }

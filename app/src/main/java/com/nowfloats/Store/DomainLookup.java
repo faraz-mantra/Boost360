@@ -2,8 +2,10 @@ package com.nowfloats.Store;
 
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,9 +37,9 @@ import retrofit.client.Response;
  * Created by guru on 05-05-2015.
  */
 public class DomainLookup extends AppCompatActivity {
-    String domainName = "",domainType = ".com";
-    private boolean domainPurchase = false;
+    String domainName = "", domainType = ".com";
     UserSessionManager session;
+    private boolean domainPurchase = false;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -48,8 +50,12 @@ public class DomainLookup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.domain_lookup);
-        session = new UserSessionManager(getApplicationContext(),DomainLookup.this);
-        if(getIntent().hasExtra("key")){domainPurchase =true;} else {domainPurchase = false;}
+        session = new UserSessionManager(getApplicationContext(), DomainLookup.this);
+        if (getIntent().hasExtra("key")) {
+            domainPurchase = true;
+        } else {
+            domainPurchase = false;
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.store_data_action_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
@@ -59,14 +65,14 @@ public class DomainLookup extends AppCompatActivity {
 
         //Title
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.store_title);
-        if (domainPurchase){
+        if (domainPurchase) {
             titleTextView.setText(getString(R.string.book_domain));
-        }else{
+        } else {
             titleTextView.setText(getString(R.string.domain_lookup));
         }
 
-        Button SearchBtn = (Button)findViewById(R.id.search_domain);
-        final EditText domainText = (EditText)findViewById(R.id.domainNameEditText);
+        Button SearchBtn = (Button) findViewById(R.id.search_domain);
+        final EditText domainText = (EditText) findViewById(R.id.domainNameEditText);
         MultiStateToggleButton domainSwitch = (MultiStateToggleButton) findViewById(R.id.domainTypeSwitchView);
 
         /*domainSwitch.setOncheckListener(new Switch.OnCheckListener() {
@@ -85,7 +91,7 @@ public class DomainLookup extends AppCompatActivity {
         domainSwitch.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
             @Override
             public void onValueChanged(int value) {
-                switch (value){
+                switch (value) {
                     case 0:
                         domainType = ".com";
                         break;
@@ -99,38 +105,37 @@ public class DomainLookup extends AppCompatActivity {
         SearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            domainName = domainText.getText().toString().trim();
-            int checkFlag = 0;
-            if (domainName.length() == 0) {
-                Methods.showSnackBarNegative(DomainLookup.this, getString(R.string.enter_domain_nmae_to_continue));
-                checkFlag = 1;
-            }
-            if (checkFlag == 0) {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("clientId", session.getSourceClientId());
-                params.put("domainType", domainType);
+                domainName = domainText.getText().toString().trim();
+                int checkFlag = 0;
+                if (domainName.length() == 0) {
+                    Methods.showSnackBarNegative(DomainLookup.this, getString(R.string.enter_domain_nmae_to_continue));
+                    checkFlag = 1;
+                }
+                if (checkFlag == 0) {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("clientId", session.getSourceClientId());
+                    params.put("domainType", domainType);
 
-                StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
-                storeInterface.checkDomain(domainName, params, new Callback<String>() {
-                    @Override
-                    public void success(String s, Response response) {
-                        if (s.equals("true")){
-                            Methods.showSnackBarPositive(DomainLookup.this, getString(R.string.domain_is_available));
-                            if(domainPurchase){
-                                PurchaseDomainDialog();
+                    StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
+                    storeInterface.checkDomain(domainName, params, new Callback<String>() {
+                        @Override
+                        public void success(String s, Response response) {
+                            if (s.equals("true")) {
+                                Methods.showSnackBarPositive(DomainLookup.this, getString(R.string.domain_is_available));
+                                if (domainPurchase) {
+                                    PurchaseDomainDialog();
+                                }
+                            } else {
+                                Methods.showSnackBarNegative(DomainLookup.this, getString(R.string.domain_not_available));
                             }
                         }
-                        else{
-                            Methods.showSnackBarNegative(DomainLookup.this, getString(R.string.domain_not_available));
-                        }
-                    }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Methods.showSnackBarNegative(DomainLookup.this, getString(R.string.something_went_wrong_try_again));
-                    }
-                });
-            }
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Methods.showSnackBarNegative(DomainLookup.this, getString(R.string.something_went_wrong_try_again));
+                        }
+                    });
+                }
             }
         });
     }
@@ -138,7 +143,7 @@ public class DomainLookup extends AppCompatActivity {
     private void PurchaseDomainDialog() {
         new MaterialDialog.Builder(DomainLookup.this)
                 .title(getString(R.string.domain_booking_confirmation))
-				.content(getString(R.string.hello_do_you_want_this)+domainName+domainType+getString(R.string.as_domain))
+                .content(getString(R.string.hello_do_you_want_this) + domainName + domainType + getString(R.string.as_domain))
                 .positiveText(getString(R.string.yes))
                 .negativeText(getString(R.string.no))
                 .positiveColorRes(R.color.primaryColor)
@@ -149,6 +154,7 @@ public class DomainLookup extends AppCompatActivity {
                         super.onPositive(dialog);
                         PurchaseDomainProcess(dialog);
                     }
+
                     @Override
                     public void onNegative(MaterialDialog dialog) {
                         super.onNegative(dialog);
@@ -166,15 +172,15 @@ public class DomainLookup extends AppCompatActivity {
         params.put("existingFPTag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase());
 
         StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
-        storeInterface.purchaseDomain(params,new Callback<String>() {
+        storeInterface.purchaseDomain(params, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                new AlertArchive(Constants.alertInterface,"DOTCOM",session.getFPID());
+                new AlertArchive(Constants.alertInterface, "DOTCOM", session.getFPID());
                 PrevDialog.dismiss();
                 //Show success dialog
                 new MaterialDialog.Builder(DomainLookup.this)
                         .title(getString(R.string.success))
-						.content(getString(R.string.thank_for_booking_domain)+domainName+domainType+getString(R.string.activate_in_24_hours))
+                        .content(getString(R.string.thank_for_booking_domain) + domainName + domainType + getString(R.string.activate_in_24_hours))
                         .positiveText(getString(R.string.okay))
                         .positiveColorRes(R.color.primaryColor)
                         .negativeColorRes(R.color.light_gray)
@@ -191,10 +197,10 @@ public class DomainLookup extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Methods.showSnackBarNegative(DomainLookup.this,getString(R.string.something_went_wrong_try_again));
+                Methods.showSnackBarNegative(DomainLookup.this, getString(R.string.something_went_wrong_try_again));
             }
         });
-        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -210,7 +216,7 @@ public class DomainLookup extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(id==android.R.id.home && !domainPurchase){
+        if (id == android.R.id.home && !domainPurchase) {
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
@@ -219,7 +225,7 @@ public class DomainLookup extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (!domainPurchase){
+        if (!domainPurchase) {
             super.onBackPressed();
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);

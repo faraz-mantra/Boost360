@@ -144,15 +144,15 @@
           tools:visibility="visible">
 
           <com.framework.views.customViews.CustomCheckBox
-              android:id="@+id/checkbox_sms"
-              style="@style/CheckBoxStyle"
-              tools:text="via SMS (+91-9876543243)" />
+            android:id="@+id/checkbox_sms"
+            style="@style/CheckBoxStyle"
+            tools:text="via SMS (+91-9876543243)" />
 
           <com.framework.views.customViews.CustomCheckBox
-              android:id="@+id/checkbox_email"
-              style="@style/CheckBoxStyle"
-              android:layout_marginTop="@dimen/size_4"
-              tools:text="via Email (brajmadhav@gmail.com)" />
+            android:id="@+id/checkbox_email"
+            style="@style/CheckBoxStyle"
+            android:layout_marginTop="@dimen/size_4"
+            tools:text="via Email (brajmadhav@gmail.com)" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <View
@@ -198,41 +198,41 @@
         android:visibility="gone">
 
         <com.framework.views.customViews.CustomButton
-            android:id="@+id/buttonDoneN"
-            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-            android:text="@string/confirm_and_send_payment_link"
-            android:textColor="@color/white" />
+          android:id="@+id/buttonDoneN"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:text="@string/confirm_and_send_payment_link"
+          android:textColor="@color/white" />
 
         <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tvCancelN"
-            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-            android:layout_marginTop="@dimen/size_10"
-            android:background="@color/white"
-            android:text="@string/go_back" />
+          android:id="@+id/tvCancelN"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:layout_marginTop="@dimen/size_10"
+          android:background="@color/white"
+          android:text="@string/go_back" />
 
 
       </androidx.appcompat.widget.LinearLayoutCompat>
 
       <androidx.appcompat.widget.LinearLayoutCompat
-          android:id="@+id/btn_horizontal"
-          style="@style/match_wrap"
-          android:background="@color/white"
-          android:gravity="end"
-          android:orientation="horizontal"
-          android:padding="@dimen/size_14">
+        android:id="@+id/btn_horizontal"
+        style="@style/match_wrap"
+        android:background="@color/white"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_14">
 
         <com.framework.views.customViews.CustomButton
-            android:id="@+id/tvCancel"
-            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-            android:layout_marginEnd="@dimen/size_10"
-            android:background="@color/white"
-            android:text="@string/cancel" />
+          android:id="@+id/tvCancel"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:layout_marginEnd="@dimen/size_10"
+          android:text="@string/cancel"
+          android:textColor="@color/white" />
 
         <com.framework.views.customViews.CustomButton
-            android:id="@+id/buttonDone"
-            style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-            android:text="@string/confirm"
-            android:textColor="@color/white" />
+          android:id="@+id/buttonDone"
+          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+          android:text="@string/confirm"
+          android:textColor="@color/white" />
       </androidx.appcompat.widget.LinearLayoutCompat>
     </FrameLayout>
   </androidx.constraintlayout.widget.ConstraintLayout>

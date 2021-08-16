@@ -49,6 +49,7 @@
             android:focusable="true"
             android:padding="@dimen/size_14"
             android:visibility="gone"
+            app:tint="@color/black_4a4a4a"
             app:srcCompat="@drawable/ic_close_round" />
 
           <LinearLayout
@@ -91,7 +92,7 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_20"
               android:text="@string/add_service_image"
-              android:textColor="@color/yellow_ffb900"
+              android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/semi_bold"
               app:textAllCaps="true"
               app:textType="BODY_1" />
@@ -200,6 +201,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_5"
           android:background="@drawable/bg_rect_edit_txt"
+          android:gravity="top|start"
           android:hint="@string/describe_this_service_in_around_2000_characters_at_max"
           android:inputType="textMultiLine"
           android:padding="@dimen/size_12"
