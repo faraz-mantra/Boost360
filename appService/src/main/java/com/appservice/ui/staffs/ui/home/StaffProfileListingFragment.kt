@@ -1,5 +1,4 @@
 package com.appservice.staffs.ui.home
-
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -16,18 +15,22 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentStaffListingBinding
 import com.appservice.model.StatusKyc
+import com.appservice.model.staffModel.DataItem
+import com.appservice.model.staffModel.FilterBy
+import com.appservice.model.staffModel.GetStaffListingRequest
+import com.appservice.model.staffModel.GetStaffListingResponse
+import com.appservice.model.staffModel.Result
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_SIZE
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.staffs.model.*
-import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
-import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.model.ServiceSearchListingResponse
+import com.appservice.ui.staffs.UserSession
+import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -85,7 +88,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       getListServiceFilterApi()
       layoutManagerN?.let { scrollPagingListener(it) }
       swipeRefreshListener()
-      setOnClickListener(binding?.staffEmpty?.btnAddStaff, binding?.serviceEmpty?.cbAddService, binding?.staffEmpty?.btnHowWork,binding?.doctorEmpty?.btnAddDoctor)
+      setOnClickListener(binding?.staffEmpty?.btnAddStaff, binding?.serviceEmpty?.cbAddService, binding?.staffEmpty?.btnHowWork, binding?.doctorEmpty?.btnAddDoctor)
     }
   }
 
@@ -106,7 +109,11 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     val b = arguments?.getBoolean(IntentConstant.IS_ADD_NEW.name) ?: false
     if (b) {
       WebEngageController.trackEvent(ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
-      startStaffFragmentActivity( if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
+      startStaffFragmentActivity(
+        if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT,
+        clearTop = false,
+        isResult = true
+      )
     }
   }
 
@@ -127,9 +134,9 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         isServiceEmpty = false
       } else {
         hideProgressN()
-        if (isDoctorProfile(sessionLocal.fP_AppExperienceCode!!)){
-          setEmptyDoctorView(false,true)
-        }else {
+        if (isDoctorProfile(sessionLocal.fP_AppExperienceCode!!)) {
+          setEmptyDoctorView(false, true)
+        } else {
           setEmptyView(isStaffEmpty = false, isServiceEmpty = true)
         }
         isServiceEmpty = true
@@ -185,9 +192,9 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       onStaffAddedOrUpdated(listStaff.isNullOrEmpty().not())
       if (listStaff.isNullOrEmpty().not()) {
         removeLoader()
-        if (isDoctorProfile(sessionLocal.fP_AppExperienceCode!!)){
+        if (isDoctorProfile(sessionLocal.fP_AppExperienceCode!!)) {
           setEmptyDoctorView(false)
-        }else {
+        } else {
           setEmptyView(isStaffEmpty = false)
         }
         TOTAL_ELEMENTS = resultStaff?.paging?.count ?: 0
@@ -196,7 +203,11 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         list.addAll(finalList)
         isLastPageD = (finalList.size == TOTAL_ELEMENTS)
         setAdapterNotify()
-      } else if (isFirstLoad) if (isDoctorProfile(sessionLocal.fP_AppExperienceCode!!)){ setEmptyDoctorView(true) }else { setEmptyView(isStaffEmpty = true) }
+      } else if (isFirstLoad) if (isDoctorProfile(sessionLocal.fP_AppExperienceCode!!)) {
+        setEmptyDoctorView(true)
+      } else {
+        setEmptyView(isStaffEmpty = true)
+      }
     } else {
       if (listStaff.isNullOrEmpty().not()) {
         list.clear()
@@ -228,6 +239,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     binding?.rvStaffList?.visibility = if (isStaffEmpty || isServiceEmpty) View.GONE else View.VISIBLE
     if (this::menuAdd.isInitialized) menuAdd.isVisible = isServiceEmpty.not()
   }
+
   private fun setEmptyDoctorView(isDoctorEmpty: Boolean, isServiceEmpty: Boolean = false) {
     binding?.serviceEmpty?.root?.visibility = if (isServiceEmpty) View.VISIBLE else View.GONE
     binding?.doctorEmpty?.root?.visibility = if (isDoctorEmpty && isServiceEmpty.not()) View.VISIBLE else View.GONE
@@ -272,7 +284,11 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     return when (item.itemId) {
       R.id.menu_add_staff -> {
         WebEngageController.trackEvent(ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
-        startStaffFragmentActivity(if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
+        startStaffFragmentActivity(
+          if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT,
+          clearTop = false,
+          isResult = true
+        )
         true
       }
       R.id.app_bar_search -> {
@@ -293,14 +309,20 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.staffEmpty?.btnAddStaff -> startStaffFragmentActivity( if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
+      binding?.staffEmpty?.btnAddStaff -> startStaffFragmentActivity(
+        if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT,
+        clearTop = false,
+        isResult = true
+      )
       binding?.serviceEmpty?.cbAddService -> {
         isServiceAdd = true
         startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle = sendBundleData(), isResult = true)
       }
       binding?.staffLock?.btnStaffAddOns -> startStorePage()
       binding?.staffEmpty?.btnHowWork -> openHelpBottomSheet()
-      binding?.doctorEmpty?.btnAddDoctor->{startStaffFragmentActivity(FragmentType.DOCTOR_ADD_EDIT_FRAGMENT)}
+      binding?.doctorEmpty?.btnAddDoctor -> {
+        startStaffFragmentActivity(FragmentType.DOCTOR_ADD_EDIT_FRAGMENT)
+      }
     }
   }
 

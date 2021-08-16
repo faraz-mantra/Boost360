@@ -1,12 +1,13 @@
-package com.appservice.staffs.doctors.bottomsheet
+package com.appservice.ui.staffs.doctors.bottomsheet
 
 import android.view.View
 import androidx.core.view.children
 import com.appservice.R
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomSheetAppointmentBookingBinding
-import com.appservice.staffs.model.StaffDetailsResult
-import com.appservice.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.model.staffModel.StaffDetailsResult
+import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
+
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.views.customViews.CustomRadioButton
 

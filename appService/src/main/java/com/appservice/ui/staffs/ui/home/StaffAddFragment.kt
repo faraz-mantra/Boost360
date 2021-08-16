@@ -8,9 +8,8 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentStaffAddBinding
+import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.staffs.ui.Constants
-import com.appservice.ui.staffs.ui.startStaffFragmentActivity
-import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
 
 class StaffAddFragment : AppBaseFragment<FragmentStaffAddBinding, BaseViewModel>() {

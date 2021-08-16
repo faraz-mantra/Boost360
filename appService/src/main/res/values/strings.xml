@@ -547,7 +547,6 @@
   <string name="upload_signature_to_print_on_invoice"><b>Upload Signature</b> (to print on invoice)</string>
   <string name="print_payment_info_on_post_paid_invoices"><b>Print payment info</b> (on post paid invoices)</string>
   <string name="save_changes">Save Changes</string>
-  <string name="upload_signature">upload signature</string>
   <string name="gst_details">GST Details</string>
   <string name="my_business_is_registered_with_gst">My business is registered with GST</string>
   <string name="not_registered_with_gst">Not registered with GST</string>
@@ -604,7 +603,6 @@
   <string name="your_offer_is_saved_successfully_and_published_live_on_your_website_click_on_below_button_to_see_it_live_or_share_with_in_your_connections">Your offer is saved successfully and published live on your website. Click on below button to see it live or share with in your connections.</string>
   <string name="ok">Ok</string>
   <string name="sharing">Sharing...</string>
-  <string name="additional_info">Additional info</string>
   <string name="add_a_new_offer">Add a new offer</string>
   <string name="offers">Offers</string>
   <string name="offer_description_optional">Offer description (optional)</string>
@@ -674,7 +672,6 @@
   <string name="business_license">Business License*</string>
   <string name="type_doctor_s_business_license">Type doctor’s business license</string>
     <string name="education_years_of_experience_mobile_number_etc">Education, years of experience, mobile number, etc.</string>
-  <string name="additional_information_">Additional Information</string>
   <string name="save_details">Save Details</string>
     <string name="consultation_hours">Consultation hours</string>
   <string name="select_doctor_s_consultation_hours">Select doctor’s consultation hours</string>
@@ -692,7 +689,6 @@
   <string name="mci">MCI</string>
     <string name="appointment_booking_window_for_patients">Appointment booking window for patients*</string>
   <string name="select_duration">Select duration</string>
-    <string name="save_changes">Save Changes</string>
     <string name="select_appointment_booking_window_duration">Select appointment booking window duration</string>
     <string name="_7_days">7 days</string>
   <string name="_14_days">14 days</string>
@@ -756,7 +752,6 @@
   <string name="send_your_clients_to_an_external_url_to_make_payment">Send your clients to an external URL to make payment</string>
   <string name="both_online_and_in_person">Both online and in-person</string>
   <string name="the_service_can_be_offered_both_ways_online_and_in_person">The service can be offered both ways (online and in person)</string>
-  <string name="cancel">Cancel</string>
   <string name="payment_configuration">Payment configuration</string>
   <string name="select_how_you_want_to_receive_money_for_your_bookings">Select, how you want to receive money for your bookings.</string>
   <string name="my_custom_payment_gateway">My custom payment gateway</string>

@@ -42,7 +42,7 @@
                 style="@style/wrap_wrap"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/size_4"
-                android:fontFamily="@font/open_sans"
+                android:fontFamily="@font/regular"
                 android:text="@string/offer_saved_successfully"
                 android:textAllCaps="true"
                 android:textColor="@color/yellow_ffb900"

@@ -1,4 +1,4 @@
-package com.appservice.staffs.doctors
+package com.appservice.ui.staffs.doctors
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,13 +8,12 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentAdditionalDoctorInfoBinding
-import com.appservice.staffs.doctors.bottomsheet.AppointmentTypeBottomSheet
-import com.appservice.staffs.model.AppointmentType
-import com.appservice.staffs.model.StaffDetailsResult
-import com.appservice.staffs.ui.Constants
-import com.appservice.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.model.staffModel.AppointmentType
+import com.appservice.model.staffModel.StaffDetailsResult
+import com.appservice.ui.staffs.doctors.bottomsheet.AppointmentTypeBottomSheet
+
+import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
 import com.framework.utils.ValidationUtils
-import kotlin.math.exp
 
 class AdditionalDoctorsInfoFragment :
   AppBaseFragment<FragmentAdditionalDoctorInfoBinding, StaffViewModel>() {
@@ -37,30 +36,31 @@ class AdditionalDoctorsInfoFragment :
 
   override fun onCreateView() {
     super.onCreateView()
-    setOnClickListener(binding?.confirmBtn,binding?.ctfConsultationType)
+    setOnClickListener(binding?.confirmBtn, binding?.ctfConsultationType)
     this.staffDetailsResult = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
     isEdit = (staffDetailsResult != null)
-    if (isEdit==true)
-    setView(staffDetailsResult)
+    if (isEdit == true)
+      setView(staffDetailsResult)
     else staffDetailsResult = StaffDetailsResult()
   }
 
   private fun setView(staffDetailsResult: StaffDetailsResult?) {
-    binding?.ctfEducation?.setText(staffDetailsResult?.education?:"")
-    binding?.ctfExperiencer?.setText(staffDetailsResult?.experience?:"")
-    binding?.ctfMembership?.setText(staffDetailsResult?.memberships?:"")
-    binding?.ctfMobileNumber?.setText(staffDetailsResult?.contactNumber?:"")
-    binding?.ctfRegistration?.setText(staffDetailsResult?.registration?:"")
+    binding?.ctfEducation?.setText(staffDetailsResult?.education ?: "")
+    binding?.ctfExperiencer?.setText(staffDetailsResult?.experience ?: "")
+    binding?.ctfMembership?.setText(staffDetailsResult?.memberships ?: "")
+    binding?.ctfMobileNumber?.setText(staffDetailsResult?.contactNumber ?: "")
+    binding?.ctfRegistration?.setText(staffDetailsResult?.registration ?: "")
     binding?.ctfConsultationType?.setText(AppointmentType.typeMap[staffDetailsResult?.appointmentType])
 
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
-    when(v){
-      binding?.confirmBtn->{
+    when (v) {
+      binding?.confirmBtn -> {
         updateReqeust()
-      }  binding?.ctfConsultationType->{
+      }
+      binding?.ctfConsultationType -> {
         openConsultationTypeBottomSheet()
       }
     }
@@ -68,11 +68,11 @@ class AdditionalDoctorsInfoFragment :
 
   private fun openConsultationTypeBottomSheet() {
     val appointmentTypeBottomSheet = AppointmentTypeBottomSheet()
-    appointmentTypeBottomSheet.onClicked = {staffDetailsResult?.appointmentType =it; binding?.ctfConsultationType?.setText(AppointmentType.typeMap[it])}
+    appointmentTypeBottomSheet.onClicked = { staffDetailsResult?.appointmentType = it; binding?.ctfConsultationType?.setText(AppointmentType.typeMap[it]) }
     val bundle = Bundle()
-    bundle.putSerializable(IntentConstant.STAFF_DATA.name,staffDetailsResult)
+    bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetailsResult)
     appointmentTypeBottomSheet.arguments = bundle
-    appointmentTypeBottomSheet.show(parentFragmentManager,AppointmentTypeBottomSheet::javaClass.name)
+    appointmentTypeBottomSheet.show(parentFragmentManager, AppointmentTypeBottomSheet::javaClass.name)
   }
 
   private fun updateReqeust() {
@@ -81,7 +81,13 @@ class AdditionalDoctorsInfoFragment :
     val membership = binding?.ctfMembership?.text.toString()
     val mobileNumber = binding?.ctfMobileNumber?.text.toString()
     val registration = binding?.ctfRegistration?.text.toString()
-    when {mobileNumber.isNotEmpty() -> {if (ValidationUtils.isMobileNumberValid(mobileNumber)) staffDetailsResult?.contactNumber = mobileNumber else {showShortToast(getString(R.string.please_enter_valid_mobile_number)); return } } }
+    when {
+      mobileNumber.isNotEmpty() -> {
+        if (ValidationUtils.isMobileNumberValid(mobileNumber)) staffDetailsResult?.contactNumber = mobileNumber else {
+          showShortToast(getString(R.string.please_enter_valid_mobile_number)); return
+        }
+      }
+    }
     staffDetailsResult?.education = education
     staffDetailsResult?.experience = experience
     staffDetailsResult?.memberships = membership

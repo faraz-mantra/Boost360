@@ -23,7 +23,7 @@
                 android:includeFontPadding="false"
                 android:text="@string/select_appointment_booking_window_duration"
                 android:textColor="@color/white"
-                app:fontFamily="@font/open_sans_semibold"
+                app:fontFamily="@font/semi_bold"
                 app:textType="HEADING_4"
                 tools:textColor="@color/black_4a4a4a" />
 
