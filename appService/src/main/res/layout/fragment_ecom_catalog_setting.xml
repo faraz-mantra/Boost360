@@ -28,7 +28,7 @@
 
                 <com.framework.views.customViews.CustomTextView
                     style="@style/wrap_wrap"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/regular"
                     android:includeFontPadding="true"
                     android:text="@string/decide_what_you_want_to_call_the_catalog_tab_on_your_website_and_the_default_tax_for_your_all_products"
                     android:textColor="@color/black_4a4a4a"

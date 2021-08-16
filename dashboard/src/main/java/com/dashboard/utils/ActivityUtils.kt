@@ -448,9 +448,11 @@ fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
       }
     } else {
       WebEngageController.trackEvent(PRODUCT_INVENTORY, CLICK, TO_BE_ADDED)
-      val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
-      startActivity(webIntent)
-      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+      session.let {
+        startFragmentActivity(com.appservice.constant.FragmentType.FRAGMENT_PRODUCT_HOME, bundle = getBundleData(it))
+
+      }
+
     }
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
