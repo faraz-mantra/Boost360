@@ -21,7 +21,6 @@ import com.framework.pref.UserSessionManager
 
 abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseFragment<Binding, ViewModel>() {
 
-  protected var appBaseActivity: AppBaseActivity<*, *>? = null
   private var progressView: ProgressDialog? = null
   protected lateinit var sessionLocal: UserSessionManager
 
@@ -33,22 +32,9 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
       )
     }
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    appBaseActivity = activity as? AppBaseActivity<*, *>
-    progressView = ProgressDialog.newInstance()
-    return super.onCreateView(inflater, container, savedInstanceState)
-  }
-
   override fun onCreateView() {
+    progressView = ProgressDialog.newInstance()
     sessionLocal = UserSessionManager(baseActivity)
-  }
-
-  protected fun getToolbarTitle(): String? {
-    return appBaseActivity?.getToolbar()?.getTitleTextView()?.text?.toString()
   }
 
   protected open fun hideProgress() {
