@@ -4,7 +4,7 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
+import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -14,7 +14,6 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
-import com.framework.utils.ConversionUtils
 import com.framework.views.customViews.CustomToolbar
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
@@ -25,7 +24,6 @@ import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyDigitalChannel
 class ContainerDigitalChannelActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var isStartActivity: Boolean? = null
-
   private var type: String? = null
   private var myDigitalChannelFragment: MyDigitalChannelFragment? = null
 

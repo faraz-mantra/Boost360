@@ -3,11 +3,13 @@ package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -21,6 +23,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.pref.Key_Preferences
 import com.framework.pref.clientId
 import com.framework.webengageconstant.MY_DIGITAL_CHANNEL
 import com.framework.webengageconstant.MY_DIGITAL_CHANNEL_LOAD
@@ -60,7 +63,8 @@ import kotlin.collections.ArrayList
 
 
 class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
-
+  private  val TAG = "MyDigitalChannel"
+  private var isFromOtherScreen: Boolean? = false
   private var connectedChannels: ArrayList<String> = arrayListOf()
 
   private val pref: SharedPreferences?
@@ -119,6 +123,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   private fun updateRequestGetChannelData() {
     val bundle = arguments
     val isUpdate = bundle?.getBoolean(PreferenceConstant.IS_UPDATE)
+    this. isFromOtherScreen = bundle?.getBoolean(Key_Preferences.IS_FROM_OTHER_SCREEN)
     websiteUrl = bundle?.getString(PreferenceConstant.WEBSITE_URL) ?: ""
     channelTypeClick = bundle?.getString(IntentConstant.CHANNEL_TYPE.name) ?: ""
     if (isUpdate != null && isUpdate) {
@@ -501,23 +506,28 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       when {
         channels.haveGoogleBusinessChannel() -> startFragmentActivity(
           FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE,
-          bundle
+          bundle,
+          isResult = isFromOtherScreen
         )
         channels.haveFacebookPage() -> startFragmentActivity(
           FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
-          bundle
+          bundle,
+          isResult = isFromOtherScreen
         )
         channels.haveFacebookShop() -> startFragmentActivity(
           FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
-          bundle
+          bundle,
+          isResult = isFromOtherScreen
         )
         channels.haveTwitterChannels() -> startFragmentActivity(
           FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS,
-          bundle
+          bundle,
+          isResult = isFromOtherScreen
         )
         channels.haveWhatsAppChannels() -> startFragmentActivity(
           FragmentType.REGISTRATION_BUSINESS_WHATSAPP,
-          bundle
+          bundle,
+          isResult = isFromOtherScreen
         )
       }
     } else showShortToast(resources.getString(R.string.at_least_one_channel_selected))
@@ -577,6 +587,14 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       )
       viewModel?.updateChannelAccessToken(request)
         ?.observeOnce(viewLifecycleOwner, { responseManage(it) })
+    }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    Log.i(TAG, "onActivityResult: channel")
+    if (isFromOtherScreen?:false){
+      baseActivity.finishAfterTransition()
     }
   }
 }

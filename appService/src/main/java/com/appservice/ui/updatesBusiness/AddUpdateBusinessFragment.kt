@@ -35,6 +35,8 @@ import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.onboarding.nowfloats.constant.FragmentType
+import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
+import com.onboarding.nowfloats.model.channel.statusResponse.ChannelsType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -226,7 +228,9 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
             )
           )
           showShortToast(getString(if (fbStatusEnabled) R.string.fb_enabled else R.string.fb_disabled))
-        } else baseActivity.startDigitalChannel(sessionLocal)
+        } else {
+          sessionLocal.let { baseActivity.startDigitalChannel(it, ChannelsType.AccountType.facebookpage.name) }
+        }
       }
       binding?.btnFpPageStatus -> {
         if (sessionLocal.facebookPage.isNullOrEmpty()
@@ -245,7 +249,8 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
             sessionLocal.fpTag
           )
           showShortToast(getString(if (fbPageStatusEnable) R.string.facebook_page_enabled else R.string.facebook_page_disabled))
-        } else baseActivity.startDigitalChannel(sessionLocal)
+        } else sessionLocal.let { baseActivity.startDigitalChannel(it, ChannelsType.AccountType.facebookshop.name) }
+
       }
       binding?.btnTwitter -> {
         if (mSharedPreferences?.getBoolean(PREF_KEY_TWITTER_LOGIN, false) == true) {
@@ -262,7 +267,8 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
             sessionLocal.fpTag
           )
           showShortToast(getString(if (twitterSharingEnabled) R.string.twitter_enabled else R.string.twitter_disabled))
-        } else baseActivity.startDigitalChannel(sessionLocal)
+        } else sessionLocal.let { baseActivity.startDigitalChannel(it, ChannelsType.AccountType.twitter.name) }
+
       }
     }
   }
@@ -437,6 +443,7 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelTy
     bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.fpTag)
     bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.fP_AppExperienceCode)
     bundle.putBoolean(Key_Preferences.IS_UPDATE, true)
+    bundle.putBoolean(Key_Preferences.IS_FROM_OTHER_SCREEN, true)
     bundle.putString(
       Key_Preferences.BUSINESS_NAME,
       session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)

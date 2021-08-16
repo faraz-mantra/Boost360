@@ -263,13 +263,16 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
 fun Fragment.startFragmentActivity(
   type: FragmentType,
   bundle: Bundle = Bundle(),
-  clearTop: Boolean = false
+  clearTop: Boolean = false,
+  isResult: Boolean? = false
 ) {
   val intent = Intent(activity, AppFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-  startActivity(intent)
+  if (isResult==true)
+  startActivityForResult(intent,9792)
+  else startActivity(intent)
 }
 
 fun AppCompatActivity.startFragmentActivity(
