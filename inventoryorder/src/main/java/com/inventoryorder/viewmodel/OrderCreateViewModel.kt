@@ -1,6 +1,9 @@
 package com.inventoryorder.viewmodel
 
 import androidx.lifecycle.LiveData
+import com.appservice.model.staffModel.GetStaffListingRequest
+import com.appservice.rest.repository.NowfloatsApiRepository
+import com.appservice.rest.repository.StaffNowFloatsRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -17,6 +20,7 @@ import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.rest.repositories.*
+import retrofit2.http.Body
 
 class OrderCreateViewModel : BaseViewModel() {
 
@@ -114,6 +118,19 @@ class OrderCreateViewModel : BaseViewModel() {
 
   fun getDoctorData(fpTag: String?): LiveData<BaseResponse> {
     return ProductOrderRepository.getDoctorData(fpTag).toLiveData()
+  }
+  fun getSearchListings(
+    fpTag: String?,
+    fpId: String?,
+    searchString: String? = "",
+    offset: Int? = 0,
+    limit: Int? = 0
+  ): LiveData<BaseResponse> {
+    return NowfloatsApiRepository.getServiceSearchListing(fpTag, fpId, searchString, offset, limit)
+      .toLiveData()
+  }
+  fun getStaffList(@Body request: GetStaffListingRequest?): LiveData<BaseResponse> {
+    return StaffNowFloatsRepository.getStaffListing(request = request).toLiveData()
   }
 
   fun postOrderInitiate(clientId: String?, request: OrderInitiateRequest?): LiveData<BaseResponse> {

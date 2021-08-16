@@ -10,6 +10,15 @@ import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.appservice.model.staffModel.GetStaffListingRequest
+import com.appservice.model.staffModel.GetStaffListingResponse
+import com.appservice.model.staffModel.Result
+import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
+import com.appservice.recyclerView.PaginationScrollListener
+import com.appservice.ui.model.ServiceSearchListingResponse
+import com.appservice.ui.staffs.ui.UserSession
+import com.appservice.ui.staffs.ui.home.getFilterRequest
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -72,7 +81,14 @@ import kotlin.collections.ArrayList
 
 class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBinding>(),
   PopupMenu.OnMenuItemClickListener {
-
+  private var adapterStaff: AppBaseRecyclerViewAdapter<com.appservice.model.staffModel.DataItem>? = null
+  private val list: java.util.ArrayList<com.appservice.model.staffModel.DataItem> = arrayListOf()
+  private val finalList: java.util.ArrayList<com.appservice.model.staffModel.DataItem> = arrayListOf()
+  /* Paging */
+  private var TOTAL_ELEMENTS = 0
+  private var offSet: Int = PaginationScrollListener.PAGE_START
+  private var limit: Int = PaginationScrollListener.PAGE_SIZE
+  private var isLastPageD = false
   //TODO update value
   private var orderItem: OrderItem? = null
   private val product: ProductN?
@@ -148,28 +164,93 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     getDoctorDetailApi()
   }
 
-  private fun getDoctorDetailApi() {
+  private fun getListServiceFilterApi() {
     showProgress()
-    viewModel?.getDoctorData(session?.fpTag)
-      ?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-        if (it.error is NoNetworkException) {
-          errorUi(resources.getString(R.string.internet_connection_not_available))
-          return@Observer
+    viewModel?.getSearchListings(UserSession.fpTag, UserSession.fpId, "", 0, 1)
+      ?.observeOnce(viewLifecycleOwner, {
+        if ((it as? ServiceSearchListingResponse)?.result?.data.isNullOrEmpty().not()) {
+          fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
+        } else {
+          hideProgress()
         }
-        if (it.status == 200 || it.status == 201 || it.status == 202) {
-          val response = it.anyResponse as? ArrayList<DoctorDataResponse>
-          if (response.isNullOrEmpty().not()) {
-            doctorDataList = response
-            doctorData =
-              if (isUpdate) response?.firstOrNull { data -> data.Id == extraItemConsult?.doctorId } else response?.get(
-                0
-              )
-            setDatDoctor()
-            getServiceList()
-          } else errorUi(getErrorMessage())
-        } else errorUi(getErrorMessage())
       })
   }
+  private fun fetchStaffListing(
+    isProgress: Boolean = true,
+    isFirst: Boolean = false,
+    searchString: String = "",
+    offSet: Int,
+    limit: Int
+  ) {
+    if ((isFirst || searchString.isNotEmpty()) && isProgress) showProgress()
+    viewModel?.getStaffList(getFilterRequest(offSet, limit))?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        setStaffDataItems(
+          (it as? GetStaffListingResponse)?.result,
+          searchString.isNotEmpty(),
+          isFirst
+        )
+      } else if (isFirst) showShortToast(it.errorMessage())
+      if (isFirst || searchString.isNotEmpty()) hideProgress()
+    })
+  }
+
+  private fun setStaffDataItems(
+    resultStaff: Result?,
+    isSearchString: Boolean,
+    isFirstLoad: Boolean
+  ) {
+    val listStaff = resultStaff?.data
+    if (isSearchString.not()) {
+      if (isFirstLoad) finalList.clear()
+      if (listStaff.isNullOrEmpty().not()) {
+        hideProgress()
+        TOTAL_ELEMENTS = resultStaff?.paging?.count ?: 0
+        finalList.addAll(listStaff!!)
+        list.clear()
+        list.addAll(finalList)
+        isLastPageD = (finalList.size == TOTAL_ELEMENTS)
+        setAdapterNotify()
+      }
+    } else {
+      if (listStaff.isNullOrEmpty().not()) {
+        list.clear()
+        list.addAll(listStaff!!)
+        setAdapterNotify()
+      }
+    }
+  }
+  private fun setAdapterNotify() {
+    if (adapterStaff == null) {
+      adapterStaff =
+        AppBaseRecyclerViewAdapter(baseActivity, list, this@CreateAppointmentFragment)
+      binding?.rvStaffList?.layoutManager = layoutManagerN
+      binding?.rvStaffList?.adapter = adapterStaff
+      adapterStaff?.runLayoutAnimation(binding?.rvStaffList)
+    } else adapterStaff?.notifyDataSetChanged()
+  }
+//  private fun getDoctorDetailApi() {
+//    showProgress()
+//    viewModel?.getStaffList(GetStaffListingRequest(sess))
+//      ?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+//        if (it.error is NoNetworkException) {
+//          errorUi(resources.getString(R.string.internet_connection_not_available))
+//          return@Observer
+//        }
+//        if (it.status == 200 || it.status == 201 || it.status == 202) {
+//          val response = it.anyResponse as? ArrayList<DoctorDataResponse>
+//          if (response.isNullOrEmpty().not()) {
+//            doctorDataList = response
+//            doctorData =
+//              if (isUpdate) response?.firstOrNull { data -> data.Id == extraItemConsult?.doctorId } else response?.get(
+//                0
+//              )
+//            setDatDoctor()
+//            getServiceList()
+//          } else errorUi(getErrorMessage())
+//        } else errorUi(getErrorMessage())
+//      })
+//  }
 
   private fun setDatDoctor() {
     val mobile = doctorData?.mobile?.replace("+91", "")?.trim()
