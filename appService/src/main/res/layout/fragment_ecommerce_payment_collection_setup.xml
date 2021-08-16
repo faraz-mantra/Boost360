@@ -128,6 +128,7 @@
                 <com.framework.views.customViews.CustomTextView
                     style="@style/AppointmentSetting_Text_Heading"
                     android:layout_marginTop="@dimen/size_16"
+                  android:layout_marginBottom="@dimen/size_10"
                     android:text="@string/accept_cod_payments" />
 
                 <LinearLayout
