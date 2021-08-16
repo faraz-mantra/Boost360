@@ -77,7 +77,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     if (ifsc.length == 11) {
       viewModel?.ifscDetail(ifsc)?.observeOnce(viewLifecycleOwner, Observer {
         val data = it as? RazorDataResponse
-        if ((it.status == 200 || it.status == 201 || it.status == 202) && data != null) {
+        if ((it.isSuccess()) && data != null) {
           isValidIfsc = true
           binding?.edtBankName?.setText(data.bANK ?: "")
           binding?.edtBankName?.isFocusable = false
@@ -140,17 +140,9 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       menuClose?.isVisible = true
       setEditTextAll(result.bankAccountDetails)
       if ((result.bankAccountDetails?.kYCDetails?.verificationStatus == KYCDetails.Status.PENDING.name).not()) {
-        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(
-          resources.getString(
-            R.string.link_bank_account
-          ), resources.getDimensionPixelSize(R.dimen.size_10)
-        )
+        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.link_bank_account), resources.getDimensionPixelSize(R.dimen.size_10))
         binding?.verificationBtn?.text = resources.getString(R.string.change_bank_detail)
-        var buttonDrawable: Drawable =
-          (binding?.verificationBtn?.background ?: ContextCompat.getDrawable(
-            baseActivity,
-            R.drawable.bg_button_rounded_orange
-          )) as Drawable
+        var buttonDrawable: Drawable = (binding?.verificationBtn?.background ?: ContextCompat.getDrawable(baseActivity, R.drawable.bg_button_rounded_orange)) as Drawable
         buttonDrawable = DrawableCompat.wrap(buttonDrawable)
         DrawableCompat.setTint(buttonDrawable, ContextCompat.getColor(baseActivity, R.color.pinkish_grey))
         binding?.verificationBtn?.background = buttonDrawable
@@ -159,11 +151,9 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimaryDark)
       } else {
         if (isPendingToastShow) showLongToast(resources.getString(R.string.account_verification_pending))
-        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(
-          resources.getString(
+        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(
             R.string.my_bank_account
-          ), resources.getDimensionPixelSize(R.dimen.size_10)
-        )
+          ), resources.getDimensionPixelSize(R.dimen.size_10))
       }
       onBankAccountAddedOrUpdated(true)
     } else {
