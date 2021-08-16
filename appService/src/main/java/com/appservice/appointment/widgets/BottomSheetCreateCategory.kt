@@ -1,14 +1,18 @@
-package com.appservice.appointment.widgets
+package com.appservice.staffs.ui.bottomsheets
 
 import android.view.View
 import com.appservice.R
-import com.appservice.databinding.BottomSheetCreateCategoryBinding
+import com.appservice.base.AppBaseActivity
+import com.appservice.constant.IntentConstant
+import com.appservice.databinding.BottomsheetRemoveStaffBottomSheetBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
-class BottomSheetCreateCategory : BaseBottomSheetDialog<BottomSheetCreateCategoryBinding, BaseViewModel>() {
+class RemoveStaffConfirmationBottomSheet : BaseBottomSheetDialog<BottomsheetRemoveStaffBottomSheetBinding, BaseViewModel>() {
+    private var value: Boolean = true
+    var onClicked: (value: Boolean) -> Unit = { }
     override fun getLayout(): Int {
-        return R.layout.bottom_sheet_create_category
+        return R.layout.bottomsheet_remove_staff_bottom_sheet
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {
@@ -16,18 +20,29 @@ class BottomSheetCreateCategory : BaseBottomSheetDialog<BottomSheetCreateCategor
     }
 
     override fun onCreateView() {
-        setOnClickListener(binding?.btnSave, binding?.btnCancel)
+        setOnClickListener(binding?.btnDone, binding?.btnCancel)
+        val isDoctor = arguments?.getBoolean(IntentConstant.STAFF_DATA.name, false) ?: false
+        if (isDoctor){
+            binding?.ctvHeadingRemoveStaff?.text = getString(R.string.delete_doctor)
+            binding?.ctvAboutStaff?.text = getString(R.string.remove_the_doctor_will_remove_all_the_present)
+            binding?.btnDone?.text = getString(R.string.btn_delete_text)
+        }
+
     }
+
 
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
-            binding?.btnCancel -> {
+            binding?.btnDone -> {
+                onClicked(value)
                 dismiss()
             }
-            binding?.btnSave -> {
+            binding?.btnCancel -> {
                 dismiss()
             }
         }
     }
+
+
 }
