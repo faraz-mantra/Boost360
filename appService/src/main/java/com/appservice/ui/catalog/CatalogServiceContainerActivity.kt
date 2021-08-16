@@ -35,7 +35,6 @@ import com.framework.views.customViews.CustomToolbar
 
 open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
-  private var fragment: AppBaseFragment<*, *>? = null
   private var serviceInformationFragment: ServiceInformationFragment? = null
   private var productDetailFragment: ProductDetailFragment? = null
   private var productInformationFragment: ProductInformationFragment? = null
@@ -88,14 +87,12 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     return when (type) {
       FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_LISTING -> R.style.CatalogTheme
       FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION -> R.style.AddCatalogTheme
-      FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
-      FragmentType.SERVICE_LISTING, FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
+       FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
       FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS,
       FragmentType.EDIT_ACCOUNT_DETAILS, FragmentType.FRAGMENT_PRODUCT_LISTING, FragmentType.FRAGMENT_PRODUCT_HOME, FragmentType.FRAGMENT_PRODUCT_CATEGORY,
       -> R.style.CatalogTheme
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> R.style.CatalogTheme_Information
       FragmentType.SERVICE_CATALOG_HOME_FRAGMENT -> R.style.OffersThemeBase
-      FragmentType.CREATE_CATEGORY,
       FragmentType.APPOINTMENT_SETTINGS,
       -> R.style.CatalogTheme_FragmentAppointment
       FragmentType.ECOMMERCE_SETTINGS,
@@ -122,7 +119,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY,
       -> ContextCompat.getColor(this, R.color.colorPrimary)
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> ContextCompat.getColor(this, R.color.color_primary)
-      FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_CATALOG_HOME_FRAGMENT,
+      FragmentType.SERVICE_CATALOG_HOME_FRAGMENT,
       FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE, FragmentType.FRAGMENT_PRODUCT_LISTING, FragmentType.FRAGMENT_PRODUCT_HOME, FragmentType.FRAGMENT_PRODUCT_CATEGORY,
       FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, FragmentType.EDIT_ACCOUNT_DETAILS,
       FragmentType.APPOINTMENT_SETTINGS, FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES,
