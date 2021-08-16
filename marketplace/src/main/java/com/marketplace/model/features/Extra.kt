@@ -2,6 +2,7 @@ package com.marketplace.model.features
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Extra(
   @SerializedName("CurrentIndex")
@@ -10,4 +11,4 @@ data class Extra(
   var pageSize: Int? = null,
   @SerializedName("TotalCount")
   var totalCount: Int? = null
-)
+): Serializable

@@ -5,6 +5,7 @@ import com.marketplace.rest.EndPoints.WITH_FLOATS_TWO_BASE
 import com.marketplace.rest.apiClients.WithFloatsTwoApiClient
 import com.framework.BaseApplication
 import com.framework.utils.PreferencesUtils
+import com.marketplace.rest.EndPoints.DEVELOPER_BOOST_KIT_BASE
 import com.marketplace.rest.apiClients.DeveloperBoostKitApiClient
 
 open class MarketPlaceApplication : BaseApplication() {
@@ -24,7 +25,7 @@ open class MarketPlaceApplication : BaseApplication() {
     @JvmStatic
     fun apiInitialize() {
       WithFloatsTwoApiClient.shared.init(WITH_FLOATS_TWO_BASE)
-      DeveloperBoostKitApiClient.shared.init(WITH_FLOATS_TWO_BASE)
+      DeveloperBoostKitApiClient.shared.init(DEVELOPER_BOOST_KIT_BASE)
 
     }
   }

@@ -2,6 +2,7 @@ package com.marketplace.model.features
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class PartnerZone(
   @SerializedName("createdon")
@@ -26,4 +27,4 @@ data class PartnerZone(
   var updatedon: String? = null,
   @SerializedName("websiteid")
   var websiteid: String? = null
-)
+): Serializable

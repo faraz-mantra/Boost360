@@ -2,6 +2,7 @@ package com.marketplace.model.features
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class VideoGallery(
   @SerializedName("createdon")
@@ -30,4 +31,4 @@ data class VideoGallery(
   var websiteid: String? = null,
   @SerializedName("youtube_link")
   var youtubeLink: String? = null
-)
+): Serializable

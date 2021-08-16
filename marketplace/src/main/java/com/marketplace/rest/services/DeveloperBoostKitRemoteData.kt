@@ -3,10 +3,10 @@ package com.marketplace.rest.services
 import com.marketplace.model.features.FeatureResponse
 import com.marketplace.rest.EndPoints
 import io.reactivex.Observable
-import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import retrofit2.Response
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Query
 
 interface DeveloperBoostKitRemoteData {
     @GET(EndPoints.GET_ALL_FEATURES)

@@ -2,6 +2,7 @@ package com.marketplace.model.features
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ExpertConnect(
   @SerializedName("contact_number")
@@ -30,4 +31,4 @@ data class ExpertConnect(
   var updatedon: String? = null,
   @SerializedName("websiteid")
   var websiteid: String? = null
-)
+): Serializable

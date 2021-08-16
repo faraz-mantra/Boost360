@@ -2,6 +2,7 @@ package com.marketplace.model.features
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class LearnMoreLink(
   @SerializedName("createdon")
@@ -24,4 +25,4 @@ data class LearnMoreLink(
   var updatedon: String? = null,
   @SerializedName("websiteid")
   var websiteid: String? = null
-)
+): Serializable

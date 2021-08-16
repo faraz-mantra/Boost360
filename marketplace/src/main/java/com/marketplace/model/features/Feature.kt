@@ -2,6 +2,7 @@ package com.marketplace.model.features
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Feature(
   @SerializedName("boost_widget_key")
@@ -58,4 +59,4 @@ data class Feature(
   var usecaseImportance: String? = null,
   @SerializedName("websiteid")
   var websiteid: String? = null
-)
+): Serializable

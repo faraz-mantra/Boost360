@@ -1,5 +1,6 @@
 package com.marketplace.ui.home
 
+import android.util.Log
 import com.framework.base.BaseResponse
 import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
@@ -10,7 +11,7 @@ import com.marketplace.model.features.FeatureResponse
 import com.marketplace.rest.TaskCode
 import com.marketplace.viewmodel.MarketPlaceHomeViewModel
 
-class MarketPlaceHomeFragment :AppBaseFragment<FragmentMarketplaceHomeBinding,MarketPlaceHomeViewModel>() {
+class MarketPlaceHomeFragment : AppBaseFragment<FragmentMarketplaceHomeBinding, MarketPlaceHomeViewModel>() {
     override fun getLayout(): Int {
         return R.layout.fragment_marketplace_home
     }
@@ -24,14 +25,15 @@ class MarketPlaceHomeFragment :AppBaseFragment<FragmentMarketplaceHomeBinding,Ma
 //        hitApi(
 //            viewModel?.getAllFeatures(),""
 //        )
-        viewModel?.getAllFeatures()?.observeOnce(viewLifecycleOwner,{
+        viewModel?.getAllFeatures()?.observeOnce(viewLifecycleOwner, {
             val response = it as? FeatureResponse
+            Log.v("Api", response.toString())
         })
     }
 
     override fun onSuccess(it: BaseResponse) {
         super.onSuccess(it)
-        when (it.taskcode){
+        when (it.taskcode) {
             TaskCode.GET_ALL_FEATURES.ordinal -> {
                 val response = it as? FeatureResponse
             }

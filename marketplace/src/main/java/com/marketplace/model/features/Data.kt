@@ -2,6 +2,7 @@ package com.marketplace.model.features
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Data(
   @SerializedName("bundles")
@@ -40,4 +41,4 @@ data class Data(
   var videoGallery: List<VideoGallery>? = null,
   @SerializedName("websiteid")
   var websiteid: String? = null
-)
+): Serializable

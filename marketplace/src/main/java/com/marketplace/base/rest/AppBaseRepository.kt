@@ -6,6 +6,7 @@ import com.marketplace.rest.TaskCode
 import com.marketplace.rest.apiClients.WithFloatsTwoApiClient
 import com.framework.base.BaseRepository
 import com.framework.base.BaseResponse
+import com.marketplace.rest.apiClients.DeveloperBoostKitApiClient
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -21,7 +22,7 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
   }
 
   override fun getApiClient(): Retrofit {
-    return WithFloatsTwoApiClient.shared.retrofit
+    return DeveloperBoostKitApiClient.shared.retrofit
   }
 
   fun makeLocalRequest(

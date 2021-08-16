@@ -2,6 +2,7 @@ package com.marketplace.model.features
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Image(
   @SerializedName("createdon")
@@ -22,4 +23,4 @@ data class Image(
   var url: String? = null,
   @SerializedName("websiteid")
   var websiteid: String? = null
-)
+): Serializable
