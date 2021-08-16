@@ -550,8 +550,8 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     hideProgress()
     val data = Intent()
     data.putExtra("LOAD", true)
-    appBaseActivity?.setResult(Activity.RESULT_OK, data)
-    appBaseActivity?.finish()
+    baseActivity?.setResult(Activity.RESULT_OK, data)
+    baseActivity?.finish()
   }
 
   private fun getResponse(responseBody: ResponseBody?): String? {

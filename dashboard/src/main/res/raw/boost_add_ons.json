@@ -860,18 +860,11 @@
           "isLastSeen": false,
           "manageBusinessList": [
             {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
-            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -1243,18 +1236,11 @@
           "isLastSeen": false,
           "manageBusinessList": [
             {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
-            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -1626,18 +1612,11 @@
           "isLastSeen": false,
           "manageBusinessList": [
             {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
-            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -2030,18 +2009,11 @@
           "isLastSeen": false,
           "manageBusinessList": [
             {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
-            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -2406,18 +2378,11 @@
           "isLastSeen": false,
           "manageBusinessList": [
             {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
-            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -2782,18 +2747,11 @@
           "isLastSeen": false,
           "manageBusinessList": [
             {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
-            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -3157,19 +3115,13 @@
           "isExpend": true,
           "isLastSeen": false,
           "manageBusinessList": [
-            {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
+            
             {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -3547,19 +3499,13 @@
           "isExpend": true,
           "isLastSeen": false,
           "manageBusinessList": [
-            {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
+            
             {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",

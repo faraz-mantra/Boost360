@@ -369,9 +369,10 @@ public class ContactInformationActivity extends BaseActivity {
 
     private void onContactInfoAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData()==null || instance.getDrScoreData().getMetricdetail() == null) return;
-        instance.getDrScoreData().getMetricdetail().setBoolean_add_contact_details(isAdded);
-        instance.updateDocument();
+        if (instance.getDrScoreData() != null && instance.getDrScoreData().getMetricdetail() != null) {
+            instance.getDrScoreData().getMetricdetail().setBoolean_add_contact_details(isAdded);
+            instance.updateDocument();
+        }
     }
 
 

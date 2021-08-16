@@ -57,8 +57,9 @@ import org.json.JSONObject;
 import java.util.Locale;
 
 import static android.view.View.NO_ID;
-import static com.framework.webengageconstant.EventLabelKt.BUSINESS_PROFILE;
+import static com.framework.webengageconstant.EventLabelKt.CLICK;
 import static com.framework.webengageconstant.EventLabelKt.CLICKING_USE_SAME_TIME_FOR_WHOLE_WEEK;
+import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
 import static com.framework.webengageconstant.EventLabelKt.TOGGLE_FRIDAY;
 import static com.framework.webengageconstant.EventLabelKt.TOGGLE_MONDAY;
 import static com.framework.webengageconstant.EventLabelKt.TOGGLE_SATURDAY;
@@ -125,7 +126,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
     saveButton.setOnClickListener(v -> {
       MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
       if (Methods.isOnline(BusinessHoursActivity.this)) {
-        WebEngageController.trackEvent(BUSINESS_HOURS_SAVED, BUSINESS_PROFILE, session.getFpTag());
+        WebEngageController.trackEvent(BUSINESS_HOURS_SAVED, CLICK, session.getFpTag());
         uploadbusinessTimingsInfo();
       } else {
         Methods.snackbarNoInternet(BusinessHoursActivity.this);
@@ -341,9 +342,10 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
   private void onBusinessHourAddedOrUpdated(Boolean isAdded) {
     FirestoreManager instance = FirestoreManager.INSTANCE;
-    if (instance.getDrScoreData() == null || instance.getDrScoreData().getMetricdetail() == null) return;
-    instance.getDrScoreData().getMetricdetail().setBoolean_add_business_hours(isAdded);
-    instance.updateDocument();
+    if (instance.getDrScoreData() != null && instance.getDrScoreData().getMetricdetail() != null) {
+      instance.getDrScoreData().getMetricdetail().setBoolean_add_business_hours(isAdded);
+      instance.updateDocument();
+    }
   }
 
   private void updateTimings() {
