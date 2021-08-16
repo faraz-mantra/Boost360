@@ -107,7 +107,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 //        binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
         binding?.txtReadinessScore?.text = "${drScoreData?.getDrsTotal() ?: 0}"
 //        binding?.progressBar?.progress = drScoreData?.getDrsTotal() ?: 0
-        val percentage = ((100 - drScoreData?.getDrsTotal()!!).toDouble() / 100).roundToFloat(2)
+        val percentage = ((100 - (drScoreData?.getDrsTotal()?:0)).toDouble() / 100).roundToFloat(2)
         (binding?.progressBar?.layoutParams as? ConstraintLayout.LayoutParams)?.matchConstraintPercentWidth = percentage
         binding?.progressBar?.requestLayout()
 //        binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)

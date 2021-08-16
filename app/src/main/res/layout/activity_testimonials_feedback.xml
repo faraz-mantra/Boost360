@@ -224,6 +224,8 @@
           android:layout_marginEnd="@dimen/_15sdp"
           android:text="@string/_200_characters"
           android:textColor="#D8D8D8"
+          android:gravity="top"
+          android:inputType="textCapWords|textMultiLine"
           android:textSize="@dimen/_10sdp" />
       </LinearLayout>
 
@@ -237,7 +239,7 @@
         android:gravity="top"
         android:hint="@string/enter_description"
         android:imeOptions="actionDone"
-        android:inputType="textCapWords"
+        android:inputType="textCapWords|textMultiLine"
         android:maxLength="200" />
 
 

@@ -968,7 +968,6 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
   private fun onInClinicAptConsultAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
-    if (instance.getDrScoreData()?.metricdetail == null) return
     if (isVideoConsult) instance.getDrScoreData()?.metricdetail?.boolean_create_sample_video_consultation =
       isAdded
     else instance.getDrScoreData()?.metricdetail?.boolean_create_sample_in_clinic_appointment =

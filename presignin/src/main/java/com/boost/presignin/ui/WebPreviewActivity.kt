@@ -59,8 +59,10 @@ class WebPreviewActivity : AppBaseActivity<ActivityWebPreviewBinding, BaseViewMo
         val result = view!!.hitTestResult
         val data = result.extra
         val context= view.context
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data))
-        context.startActivity(browserIntent)
+        if (data!=null){
+          val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data))
+          context.startActivity(browserIntent)
+        }
         return false
       }
     }
