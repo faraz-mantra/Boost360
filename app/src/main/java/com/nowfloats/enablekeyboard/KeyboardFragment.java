@@ -107,7 +107,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     secondaryLayout = view.findViewById(R.id.secondary_layout);
     buyItemButton = view.findViewById(R.id.buy_item);
     List<String> storeKeys = session.getStoreWidgets();
-    if ((storeKeys != null && !storeKeys.contains("BOOSTKEYBOARD")) || (Constants.currentActivePackageId != null &&
+    if ((storeKeys != null && storeKeys.contains("BOOSTKEYBOARD")) || (Constants.currentActivePackageId != null &&
         Constants.currentActivePackageId.contains("59ce2ae56431a80b009cb1fa"))) {
       mainLayout.setVisibility(View.VISIBLE);
       secondaryLayout.setVisibility(View.GONE);
