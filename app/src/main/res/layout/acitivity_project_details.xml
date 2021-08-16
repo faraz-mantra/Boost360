@@ -51,17 +51,15 @@
         android:layout_marginEnd="@dimen/_15sdp"
         android:text="@string/about_company" />
 
-
       <EditText
         android:id="@+id/company_description"
-        style="@style/EditTextColored"
+        style="@style/EditTextCustomeStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp"
         android:elevation="@dimen/_2sdp"
         android:gravity="top"
         android:hint="@string/enter_company_description_100_characters_max"
-        android:inputType="textMultiLine"
-        android:textSize="@dimen/_12sdp" />
+        android:inputType="textMultiLine" />
 
       <View
         android:id="@+id/dummy_view1"
@@ -232,10 +230,10 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_centerVertical="true"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:gravity="center"
-          android:text="Add Images"
-          android:textAllCaps="true"
+          android:text="Add images"
+          android:textAllCaps="false"
           android:textSize="@dimen/_13sdp" />
       </RelativeLayout>
 
@@ -250,7 +248,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_5sdp"
           android:layout_weight="1"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:text="@string/maximum_3"
           android:textColor="@color/grey_400" />
 
@@ -259,7 +257,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_5sdp"
           android:layout_weight="1"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:gravity="end"
           android:text="@string/jpg_png_800x800px"
           android:textColor="@color/grey_400" />
@@ -279,9 +277,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/status"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/common_text_color" />
 
       <LinearLayout
@@ -306,11 +304,11 @@
             android:id="@+id/completed_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/semi_bold"
             android:text="@string/completed"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="#9ABFFF"
-            android:textSize="@dimen/_8sdp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/_8sdp" />
         </LinearLayout>
 
         <LinearLayout
@@ -331,11 +329,11 @@
             android:id="@+id/inprogress_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/semi_bold"
             android:text="@string/in_progress"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="#9ABFFF"
-            android:textSize="@dimen/_8sdp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/_8sdp" />
         </LinearLayout>
 
         <LinearLayout
@@ -356,11 +354,11 @@
             android:id="@+id/withdraw_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/semi_bold"
             android:text="@string/withdraw"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="#9ABFFF"
-            android:textSize="@dimen/_8sdp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/_8sdp" />
         </LinearLayout>
       </LinearLayout>
 
@@ -374,12 +372,12 @@
         android:layout_marginBottom="@dimen/_20sdp"
         android:background="@drawable/orange_button_click_effect"
         android:elevation="@dimen/_2sdp"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:text="@string/save"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white" />
 
     </LinearLayout>

@@ -35,7 +35,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="0dp"
-      android:layout_height="@dimen/size_30"
+      android:layout_height="@dimen/size_26"
       android:layout_marginHorizontal="@dimen/size_6"
       android:background="@drawable/rounded_stroke_grey_service_information"
       android:orientation="horizontal"
@@ -53,8 +53,7 @@
         android:layout_weight="1"
         android:gravity="center|center_vertical"
         android:maxLines="1"
-          android:layout_marginHorizontal="4dp"
-          android:textColor="@color/warm_grey_two"
+        android:textColor="@color/warm_grey_two"
         app:autoSizeMaxTextSize="14sp"
         app:autoSizeMinTextSize="10sp"
         app:autoSizeStepGranularity="1sp"
@@ -62,42 +61,36 @@
         tools:text="Dr. John Doe.jpg (512kb)" />
 
       <com.framework.views.customViews.CustomCardView
-          android:id="@+id/crossIcon"
-          android:layout_width="@dimen/size_18"
-          android:layout_height="@dimen/size_18"
-          android:layout_gravity="center_vertical|end"
-          android:clickable="true"
-          android:focusable="true"
-          app:cardBackgroundColor="@color/white"
-          app:cardCornerRadius="@dimen/size_8">
+        android:id="@+id/crossIcon"
+        android:layout_width="@dimen/size_16"
+        android:layout_height="@dimen/size_16"
+        android:layout_gravity="center_vertical|end"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/size_8">
 
-        <com.framework.views.roundedimageview.RoundedImageView
-            android:layout_width="@dimen/size_6"
-            android:layout_height="@dimen/size_6"
-            android:layout_gravity="center"
-            android:elevation="@dimen/size_4"
-            android:src="@drawable/ic_cross_oragne"
-            app:riv_mutate_background="true" />
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/size_6"
+          android:layout_height="@dimen/size_6"
+          android:layout_gravity="center"
+          android:src="@drawable/ic_cross_grey" />
       </com.framework.views.customViews.CustomCardView>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    <com.framework.views.customViews.CustomTextView
+    <com.framework.views.customViews.CustomButton
       android:id="@+id/cb_change"
       android:layout_width="wrap_content"
-      android:layout_height="@dimen/size_30"
+      android:layout_height="@dimen/size_26"
       android:layout_marginEnd="@dimen/size_2"
       android:background="@drawable/rounded_stroke_grey_service_information"
       android:gravity="center_vertical|center"
       android:paddingHorizontal="@dimen/size_4"
-        android:stateListAnimator="@null"
-        android:text="@string/change"
-        android:fontFamily="@font/open_sans"
-        app:autoSizeMaxTextSize="12sp"
-        app:autoSizeMinTextSize="10sp"
-        app:autoSizeStepGranularity="1sp"
-        app:autoSizeTextType="uniform"
+      android:stateListAnimator="@null"
+      android:text="@string/change"
+      android:textAllCaps="false"
       android:textColor="@color/warm_grey_two"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"

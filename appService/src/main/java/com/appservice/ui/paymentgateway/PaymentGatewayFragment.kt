@@ -31,8 +31,7 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PaymentGatewayFragment :
-  AppBaseFragment<FragmentPaymentActiveBinding, WebBoostKitViewModel>() {
+class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, WebBoostKitViewModel>() {
 
   private var isInstaMojoAccount: Boolean = false
   private lateinit var session: SessionData
@@ -51,31 +50,17 @@ class PaymentGatewayFragment :
     super.onCreateView()
     session = arguments?.getSerializable(IntentConstant.SESSION_DATA.name) as? SessionData ?: return
     isInstaMojoAccount = arguments?.getBoolean("isInstaMojoAccount") ?: false
-    setOnClickListener(
-      binding?.paymentGatewayTermsToggle,
-      binding?.activePaymentBottomButton,
-      binding?.btnViewStore,
-      binding?.btnViewDetails
-    )
+    setOnClickListener(binding?.paymentGatewayTermsToggle, binding?.activePaymentBottomButton, binding?.btnViewStore, binding?.btnViewDetails)
     radioButtonToggle()
     checkData()
   }
 
   private fun checkData() {
     binding?.viewBac?.setBackgroundColor(
-      ContextCompat.getColor(
-        baseActivity,
-        if (session.isPaymentGateway) R.color.colorPrimary else R.color.color_primary
-      )
+      ContextCompat.getColor(baseActivity, if (session.isPaymentGateway) R.color.colorPrimary else R.color.color_primary)
     )
-    if (session.isPaymentGateway) (baseActivity as? PaymentGatewayContainerActivity)?.changeTheme(
-      R.color.colorPrimary,
-      R.color.colorPrimaryDark
-    )
-    else (baseActivity as? PaymentGatewayContainerActivity)?.changeTheme(
-      R.color.color_primary,
-      R.color.color_primary_dark
-    )
+    if (session.isPaymentGateway) (baseActivity as? PaymentGatewayContainerActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimaryDark)
+    else (baseActivity as? PaymentGatewayContainerActivity)?.changeTheme(R.color.color_primary, R.color.color_primary_dark)
 
     if (session.isPaymentGateway && session.isSelfBrandedAdd) {
       checkInstaMojo()
@@ -93,8 +78,7 @@ class PaymentGatewayFragment :
   }
 
   private fun changeUi(verified: String) {
-    if (verified.toUpperCase(Locale.ROOT) == DataKyc.Verify.YES.name) binding?.verifyTxt?.text =
-      resources.getString(R.string.business_kyc_verify)
+    if (verified.toUpperCase(Locale.ROOT) == DataKyc.Verify.YES.name) binding?.verifyTxt?.text = resources.getString(R.string.business_kyc_verify)
     binding?.selfBrandedKycAddView?.visible()
     binding?.paymentGatewayActivation?.gone()
     binding?.addOnNotActive?.gone()
@@ -103,12 +87,10 @@ class PaymentGatewayFragment :
 
   private fun checkInstaMojo() {
     showProgress()
-    viewModel?.getKycData(session?.auth_1, getQuery())?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getKycData(session.auth_1, getQuery())?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         val resp = it as? PaymentKycDataResponse
-        if ((it.status == 200 || it.status == 201 || it.status == 202) && resp?.data.isNullOrEmpty()
-            .not()
-        ) {
+        if (it.isSuccess() && resp?.data.isNullOrEmpty().not()) {
           dataKyc = resp?.data?.get(0)
           if ((dataKyc?.hasexisistinginstamojoaccount?.toUpperCase(Locale.ROOT) == DataKyc.HasInginstaMojo.YES.name ||
                 dataKyc?.hasexisistinginstamojoaccount?.toUpperCase(Locale.ROOT) == DataKyc.HasInginstaMojo.NO.name).not()
@@ -261,16 +243,10 @@ class PaymentGatewayFragment :
       intent.putExtra("fpName", session.fpTag)
       intent.putExtra("fpid", session.fpId)
       intent.putExtra("fpTag", session.fpTag)
-      intent.putExtra(
-        "accountType",
-        sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)
-      )
-      intent.putStringArrayListExtra(
-        "userPurchsedWidgets",
-        ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList())
-      )
-      intent.putExtra("email", session.fpEmail ?: "ria@nowfloats.com")
-      intent.putExtra("mobileNo", session.fpNumber ?: "9160004303")
+      intent.putExtra("accountType", sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
+      intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList()))
+      intent.putExtra("email", sessionLocal.userProfileEmail ?: "ria@nowfloats.com")
+      intent.putExtra("mobileNo", sessionLocal.userPrimaryMobile?: "9160004303")
       intent.putExtra("profileUrl", session.fpLogo)
       intent.putExtra("buyItemKey", StatusKyc.CUSTOM_PAYMENTGATEWAY.name)
       baseActivity.startActivity(intent)

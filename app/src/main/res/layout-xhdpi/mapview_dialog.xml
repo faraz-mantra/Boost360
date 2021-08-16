@@ -15,7 +15,7 @@
     android:text="@string/choose_your_location"
     android:textColor="#878787"
     android:textSize="20sp"
-    android:textStyle="bold" />
+     android:fontFamily="@font/semi_bold" />
 
   <FrameLayout
     android:layout_width="match_parent"

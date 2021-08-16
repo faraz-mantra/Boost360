@@ -28,6 +28,7 @@ import android.widget.RatingBar;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 //import com.nfx.leadmessages.ReadMessages;
+import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.customerassistant.adapters.ThirdPartyAdapter;
 import com.nowfloats.customerassistant.models.SMSSuggestions;
@@ -62,7 +63,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
     /*private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
             , Manifest.permission.READ_PHONE_STATE};*/
     private final static int READ_MESSAGES_ID = 221;
-    Toolbar toolbar;
+    CustomToolbar toolbar;
     RecyclerView rvList;
     ThirdPartyAdapter adapter;
     Bus mBus;
@@ -86,7 +87,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
     }
 
     private void init() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (CustomToolbar) findViewById(R.id.toolbar);
         rvList = (RecyclerView) findViewById(R.id.rv_list);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_layout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_color);

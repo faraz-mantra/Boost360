@@ -48,8 +48,7 @@ public class DomainEmailActivity extends AppCompatActivity {
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
-                Fragment currentFragment =
-                        getSupportFragmentManager().findFragmentById(R.id.mainFrame);
+                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.mainFrame);
                 if (currentFragment != null) {
                     String tag = currentFragment.getTag();
                     Log.e("tag", ">>>$tag");
@@ -171,9 +170,10 @@ public class DomainEmailActivity extends AppCompatActivity {
 
     private void onDomainAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData().getMetricdetail() == null) return;
-        instance.getDrScoreData().getMetricdetail().setBoolean_add_custom_domain_name_and_ssl(isAdded);
-        instance.updateDocument();
+        if (instance.getDrScoreData() != null && instance.getDrScoreData().getMetricdetail() != null) {
+            instance.getDrScoreData().getMetricdetail().setBoolean_add_custom_domain_name_and_ssl(isAdded);
+            instance.updateDocument();
+        }
     }
 
 }

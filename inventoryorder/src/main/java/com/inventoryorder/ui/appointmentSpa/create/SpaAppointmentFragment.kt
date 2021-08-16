@@ -39,8 +39,7 @@ import java.util.*
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
-class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBinding>(),
-  SelectDateTimeBottomSheetDialog.DateChangedListener {
+class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBinding>(), SelectDateTimeBottomSheetDialog.DateChangedListener {
 
   private var serviceList: ArrayList<ServiceItem>? = null
   private var serviceAdapter: ArrayAdapter<ServiceItem>? = null

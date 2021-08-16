@@ -4,16 +4,16 @@
   <style name="AppTheme.Pre.Signin" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorAccent">@color/black_4a4a4a</item>
     <item name="android:windowAnimationStyle">@null</item>
     <item name="android:windowDisablePreview">true</item>
     <item name="android:windowBackground">@color/white</item>
     <item name="android:statusBarColor">@color/white</item>
+    <item name="editTextStyle">@style/ComposeEditText</item>
     <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
   </style>
 
   <style name="AppTheme.WebView" parent="AppTheme.Pre.Signin">
-    <!-- Customize your theme here. -->
     <item name="colorPrimary">@color/primary_grey_dark</item>
     <item name="colorPrimaryDark">@color/primary_grey</item>
   </style>
@@ -28,8 +28,11 @@
   </style>
 
   <style name="MaterialThemeSignInFull" parent="MaterialDialogTheme">
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:padding">0dp</item>
     <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:windowCloseOnTouchOutside">false</item>
   </style>
 
   <style name="start_guide_style">
@@ -67,13 +70,13 @@
 
 
   <style name="tnc_textview_style">
-    <item name="fontFamily">@font/open_sans</item>
+    <item name="fontFamily">@font/regular</item>
     <item name="textColor">@color/tnc_color</item>
     <item name="textSize">@dimen/caption</item>
   </style>
 
   <style name="intro_title_text_style">
-    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:textAlignment">center</item>
     <item name="android:gravity">center</item>
     <item name="android:layout_gravity">center</item>
@@ -90,7 +93,7 @@
     <item name="android:layout_height">wrap_content</item>
     <item name="android:text">@color/black_4a4a4a</item>
     <item name="android:layout_marginStart">@dimen/_16sdp</item>
-    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="android:fontFamily">@font/bold</item>
     <item name="android:layout_marginEnd">@dimen/_16sdp</item>
     <item name="android:layout_marginTop">@dimen/_14sdp</item>
     <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
@@ -112,7 +115,7 @@
     <item name="android:layout_width">0dp</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="textColor">@color/psn_sub_heading_color</item>
-    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:fontFamily">@font/regular_medium</item>
     <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
     <item name="layout_constraintStart_toStartOf">@id/startGuide</item>
   </style>
@@ -129,7 +132,6 @@
   <style name="psn_signin_bt_style" parent="psn_button_base_style">
     <item name="android:textColor">@color/white</item>
     <item name="android:background">@drawable/signin_button_selector</item>
-    <item name="android:textAllCaps">true</item>
     <item name="android:drawableEnd">@null</item>
     <item name="android:paddingStart">@dimen/_24sdp</item>
     <item name="android:paddingEnd">@dimen/_24sdp</item>
@@ -152,8 +154,8 @@
     <item name="android:layout_height">@dimen/_36sdp</item>
     <item name="android:gravity">center</item>
     <item name="android:drawablePadding">@dimen/_4sdp</item>
-    <item name="android:fontFamily">@font/open_sans_bold</item>
-    <item name="fontFamily">@font/open_sans_bold</item>
+    <item name="android:fontFamily">@font/regular</item>
+    <item name="fontFamily">@font/regular</item>
     <item name="android:paddingStart">@dimen/_16sdp</item>
     <item name="android:paddingEnd">@dimen/_16sdp</item>
     <item name="android:drawableEnd">@drawable/ic_singin_next_icon</item>
@@ -177,13 +179,15 @@
 
   <style name="psn_login_edittext_style">
     <item name="android:singleLine">true</item>
-    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:textColor">@color/black_4a4a4a</item>
     <item name="drawableTint">@color/psn_edittext_color</item>
     <item name="backgroundTint">@color/psn_edittext_color</item>
     <item name="android:layout_width">0dp</item>
-    <item name="android:textCursorDrawable">@color/pinkish_grey</item>
+    <item name="colorAccent">@color/black_4a4a4a</item>
+    <item name="android:textCursorDrawable">@drawable/cursor_drawable</item>
     <item name="android:layout_height">wrap_content</item>
+    <item name="colorSecondary">@color/black_4a4a4a</item>
     <item name="android:drawablePadding">@dimen/_4sdp</item>
     <item name="android:paddingBottom">@dimen/_16sdp</item>
     <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
@@ -194,9 +198,8 @@
     <item name="android:textColor">@color/colorAccent</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:textAllCaps">true</item>
     <item name="android:textSize">@dimen/body_3</item>
-    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="layout_constraintEnd_toEndOf">@id/endGuide</item>
   </style>
 
@@ -238,6 +241,5 @@
     <item name="android:fontFamily">@font/semi_bold</item>
     <item name="android:gravity">center</item>
   </style>
-
 
 </resources>

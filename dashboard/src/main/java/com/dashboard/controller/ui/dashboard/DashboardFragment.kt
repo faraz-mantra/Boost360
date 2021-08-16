@@ -94,8 +94,7 @@ import kotlin.collections.ArrayList
 const val IS_FIRST_LOAD = "isFirsLoad"
 const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
 
-class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(),
-  RecyclerItemClickListener {
+class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var deepLinkUtil: DeepLinkUtil? = null
   private var connectedChannels: ArrayList<String> = arrayListOf()
@@ -154,8 +153,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.viewEmptyEnquiries?.btnEmailEnquiries,
       binding?.viewEmptyEnquiries?.btnOtherShareEnquiries
     )
-    val versionName: String =
-      baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
+    val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion1?.text = "Version $versionName"
     binding?.txtVersion2?.text = "Version $versionName"
     getAllDashboardSummary()
@@ -236,6 +234,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun setSummaryAndDrScore(isLoadingShimmerDr: Boolean) {
+    if (isLoadingShimmerDr) WebEngageController.trackEvent(DIGITAL_READINESS_SCORE_RETRY, NO_EVENT_LABLE, NO_EVENT_VALUE)
     (baseActivity as? DashboardActivity)?.setPercentageData(getDrScoreData()?.getDrsTotal() ?: 0)
     refreshAllDashboardSummary()
     setDrScoreData(isLoadingShimmerDr)
@@ -965,9 +964,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           )
         }
       } else {
-        if (isBusinessCardShare) visitingCard(getString(R.string.my_business_card)) else showShortToast(
-          "Business detail getting error!"
-        )
+        if (isBusinessCardShare) visitingCard(getString(R.string.my_business_card)) else showShortToast("Business detail getting error!")
       }
     })
   }
@@ -1343,9 +1340,7 @@ fun getLocalSession(session: UserSessionManager): LocalSessionModel {
     BASE_IMAGE_URL + imageUri
   val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
   val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
-  val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty()
-      .not()
-  ) "$city, $country" else "$city$country"
+  val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
   return LocalSessionModel(
     floatingPoint = session.fPID,
     contactName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME),

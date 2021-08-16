@@ -93,7 +93,7 @@
               android:gravity="center"
               android:stateListAnimator="@null"
               android:text="@string/make_a_sample_appointment"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/white"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_1" />
@@ -145,6 +145,7 @@
           android:layout_margin="16dp"
           android:clickable="true"
           android:focusable="true"
+          android:backgroundTint="@color/colorAccentLight"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:textColor="@color/white"

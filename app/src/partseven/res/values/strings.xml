@@ -549,9 +549,9 @@
     <item>FAQs</item>
     <item>Like us on Facebook</item>
     <item>Follow us on Twitter</item>
-    <item>Rate us on Play Store</item>
-    <item>Terms of Use</item>
-    <item>Privacy Policy</item>
+    <item>Rate us on play store</item>
+    <item>Terms of use</item>
+    <item>Privacy policy</item>
   </string-array>
 
   <string-array name="manage_content_tab_items">

@@ -63,6 +63,7 @@
           <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyt_shipping_address"
             style="@style/match_wrap"
+            android:layout_height="@dimen/size_38"
             android:background="@drawable/ic_rectangle_light_black_outline"
             android:orientation="horizontal">
 
@@ -83,6 +84,7 @@
             <com.framework.views.customViews.CustomEditText
               android:id="@+id/edit_delivery_fee"
               style="@style/match_wrap"
+              android:layout_height="match_parent"
               android:layout_gravity="center_vertical"
               android:background="@null"
               android:fontFamily="@font/regular"
@@ -118,7 +120,8 @@
         style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
         android:layout_marginEnd="@dimen/size_10"
         android:text="@string/cancel"
-        android:textColor="@color/white" />
+        android:background="@drawable/bg_rounded_yellow_light"
+        android:textColor="@color/colorAccentLight"/>
 
       <com.framework.views.customViews.CustomButton
         android:id="@+id/buttonDone"

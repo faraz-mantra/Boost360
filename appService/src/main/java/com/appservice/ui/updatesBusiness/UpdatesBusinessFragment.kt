@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,9 @@ import com.appservice.viewmodel.UpdatesViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.models.firestore.FirestoreManager
+import com.framework.models.firestore.FirestoreManager.getDrScoreData
+import com.framework.models.firestore.FirestoreManager.updateDocument
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing.Companion.shareUpdates
 import com.framework.utils.showKeyBoard
@@ -36,8 +40,7 @@ import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
-class UpdatesBusinessFragment :
-  AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
+open class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
 
   private val STORAGE_CODE = 120
 
@@ -108,10 +111,7 @@ class UpdatesBusinessFragment :
 
   private fun listUpdateApi(offSet: Int) {
     binding?.emptyView?.gone()
-    hitApi(
-      viewModel?.getMessageUpdates(getRequestUpdate(offSet)),
-      R.string.latest_update_data_not_found
-    )
+    hitApi(viewModel?.getMessageUpdates(getRequestUpdate(offSet)), R.string.latest_update_data_not_found)
   }
 
   override fun onSuccess(it: BaseResponse) {
@@ -123,13 +123,12 @@ class UpdatesBusinessFragment :
       isLastPageD = (listFloat.size == data.totalCount ?: 0)
       if (adapterUpdate == null) {
         binding?.rvUpdates?.apply {
-          adapterUpdate =
-            AppBaseRecyclerViewAdapter(baseActivity, listFloat, this@UpdatesBusinessFragment)
+          adapterUpdate = AppBaseRecyclerViewAdapter(baseActivity, listFloat, this@UpdatesBusinessFragment)
           this.adapter = adapterUpdate
         }
       } else adapterUpdate?.notifyDataSetChanged()
-
     } else if (listFloat.isEmpty()) binding?.emptyView?.visible()
+    onBusinessUpdateAddedOrUpdated((data?.floats?: arrayListOf()).size)
     hideProgress()
   }
 
@@ -194,8 +193,7 @@ class UpdatesBusinessFragment :
       }
       return
     }
-    val subDomain =
-      if (isService(sessionLocal.fP_AppExperienceCode)) "all-services" else "all-products"
+    val subDomain = if (isService(sessionLocal.fP_AppExperienceCode)) "all-services" else "all-products"
     when (actionType) {
       RecyclerViewActionType.UPDATE_WHATS_APP_SHARE.ordinal -> {
         shareUpdates(
@@ -248,15 +246,18 @@ class UpdatesBusinessFragment :
       }
     }
   }
+
+  open fun onBusinessUpdateAddedOrUpdated(count: Int) {
+    val instance = FirestoreManager
+    if (instance.getDrScoreData() != null && instance.getDrScoreData()!!.metricdetail != null) {
+      instance.getDrScoreData()!!.metricdetail!!.number_updates_posted = count
+      instance.updateDocument()
+    }
+  }
 }
 
-fun showDialog(
-  mContext: Context?,
-  title: String?,
-  msg: String?,
-  listener: DialogInterface.OnClickListener
-) {
-  val builder = AlertDialog.Builder(mContext!!)
+fun showDialog(mContext: Context?, title: String?, msg: String?, listener: DialogInterface.OnClickListener) {
+  val builder = AlertDialog.Builder(ContextThemeWrapper(mContext!!, R.style.CustomAlertDialogTheme))
   builder.setTitle(title).setMessage(msg).setPositiveButton("Ok") { dialog, which ->
     dialog.dismiss()
     listener.onClick(dialog, which)

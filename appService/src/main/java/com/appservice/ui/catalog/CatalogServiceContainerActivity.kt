@@ -33,8 +33,7 @@ import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
 
-open class CatalogServiceContainerActivity :
-  AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var fragment: AppBaseFragment<*, *>? = null
   private var serviceInformationFragment: ServiceInformationFragment? = null
@@ -87,6 +86,8 @@ open class CatalogServiceContainerActivity :
 
   override fun customTheme(): Int? {
     return when (type) {
+      FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_LISTING -> R.style.CatalogTheme
+      FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION -> R.style.AddCatalogTheme
       FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
       FragmentType.SERVICE_LISTING, FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
       FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS,
@@ -115,13 +116,12 @@ open class CatalogServiceContainerActivity :
     return binding?.appBarLayout?.toolbar
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.heading_7)
-  }
-
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
+      FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY,
+      -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> ContextCompat.getColor(this, R.color.color_primary)
       FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_CATALOG_HOME_FRAGMENT,
       FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE, FragmentType.FRAGMENT_PRODUCT_LISTING, FragmentType.FRAGMENT_PRODUCT_HOME, FragmentType.FRAGMENT_PRODUCT_CATEGORY,
       FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, FragmentType.EDIT_ACCOUNT_DETAILS,
@@ -165,15 +165,12 @@ open class CatalogServiceContainerActivity :
     }
   }
 
-  override fun getNavIconScale(): Float {
-    return 1.0f
-  }
 
   override fun getToolbarTitle(): String? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION -> resources.getString(R.string.other_information)
-      FragmentType.SERVICE_DETAIL_VIEW -> resources.getString(R.string.service_details)
-      FragmentType.PRODUCT_DETAIL_VIEW -> resources.getString(R.string.product_details)
+      FragmentType.SERVICE_INFORMATION -> resources.getString(R.string.other_information_n)
+      FragmentType.SERVICE_DETAIL_VIEW -> resources.getString(R.string.service_details_n)
+      FragmentType.PRODUCT_DETAIL_VIEW -> resources.getString(R.string.product_details_n)
       FragmentType.PRODUCT_INFORMATION -> resources.getString(R.string.additional_information)
       FragmentType.SERVICE_TIMING_FRAGMENT -> getString(R.string.weekly_appointment)
       FragmentType.CREATE_CATEGORY -> getString(R.string.categories)

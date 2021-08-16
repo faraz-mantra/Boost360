@@ -11,7 +11,7 @@
 
   <include
     android:id="@+id/toolbar"
-    layout="@layout/toolbar"
+    layout="@layout/toolbar_boost"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_constraintEnd_toEndOf="parent"
@@ -402,7 +402,7 @@
       <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tracked Calls" />
+        android:text="Tracked calls" />
 
       <View
         android:id="@+id/dotted_line2"
@@ -427,39 +427,36 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:text="All"
-        android:textColor="@color/primary_color"
-        android:textStyle="bold" />
+        android:textColor="@color/primary_color" />
 
       <TextView
         android:id="@+id/track_missed_call"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:text="Missed"
-        android:textColor="@color/common_text_color"
-        android:textStyle="bold" />
+        android:textColor="@color/common_text_color" />
 
       <TextView
         android:id="@+id/track_connected_call"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:text="Connected"
-        android:textColor="@color/common_text_color"
-        android:textStyle="bold" />
+        android:textColor="@color/common_text_color" />
 
       <TextView
         android:layout_width="0dp"
@@ -503,7 +500,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:text="No call recorded yet"
         android:textColor="#4A4A4A"
         android:textSize="15sp" />
@@ -512,7 +509,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:gravity="center"
         android:maxLines="2"
         android:text="Calls made to your virtual mobile number \n will be listed here."
@@ -575,7 +572,7 @@
           android:id="@+id/feature_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:text="Call tracker not enabled"
           android:textColor="@color/common_text_color"
           android:textSize="@dimen/_16sdp" />
@@ -584,7 +581,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_20sdp"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:text="Looks like this add-on is not added to your current plan. Add it now to start using it."
           android:textSize="@dimen/_11sdp" />
@@ -597,11 +594,12 @@
           android:layout_marginTop="@dimen/_20sdp"
           android:layout_marginEnd="@dimen/_10sdp"
           android:background="@drawable/orange_button_click_effect"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:gravity="center"
+          android:textAllCaps="false"
           android:paddingTop="@dimen/_10sdp"
           android:paddingBottom="@dimen/_10sdp"
-          android:text="VIEW IN ADD-ON STORE"
+          android:text="@string/view_in_add_on_store"
           android:textColor="@color/white" />
 
 

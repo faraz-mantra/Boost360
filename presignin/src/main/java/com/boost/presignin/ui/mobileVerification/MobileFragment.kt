@@ -1,8 +1,12 @@
 package com.boost.presignin.ui.mobileVerification
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.content.IntentSender.SendIntentException
 import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
@@ -22,11 +26,17 @@ import com.framework.pref.clientId
 import com.framework.utils.hideKeyBoard
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
+import com.google.android.gms.auth.api.credentials.Credential
+import com.google.android.gms.auth.api.credentials.Credentials
+import com.google.android.gms.auth.api.credentials.HintRequest
+
 
 //AppSignatureHash:- (Debug: m1jzE0DG9Z5) (Release: W5izmPg6WcR)
 
 class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewModel>() {
 
+  val NUMBER_PICKER_RC=100
+  private val TAG = "MobileFragment"
   companion object {
     private val PHONE_NUMBER = "phone_number"
 
@@ -55,6 +65,8 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
   }
 
   override fun onCreateView() {
+
+    requestPhonePicker()
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.helpTv)
     binding?.phoneEt?.onTextChanged { binding?.nextButton?.isEnabled = (it.isPhoneValid()) }
@@ -118,5 +130,39 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
       } else showShortToast(getString(R.string.otp_not_sent))
       hideProgress()
     })
+  }
+
+  private fun requestPhonePicker() {
+    val hintRequest = HintRequest.Builder()
+      .setPhoneNumberIdentifierSupported(true)
+      .build()
+    val credentialsClient = Credentials.getClient(requireActivity())
+
+    val intent = credentialsClient.getHintPickerIntent(hintRequest)
+    try {
+      startIntentSenderForResult(
+        intent.intentSender,
+        NUMBER_PICKER_RC, null, 0, 0, 0,null
+      )
+    } catch (e: SendIntentException) {
+      e.printStackTrace()
+    }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode === NUMBER_PICKER_RC) {
+      if (resultCode === RESULT_OK) {
+        val cred = data?.getParcelableExtra<Credential>(Credential.EXTRA_KEY)
+        Log.i(TAG, "onActivityResult: "+cred?.id)
+        binding?.phoneEt?.setText(cred?.id.toString().replace("+91",""))
+        val isPhoneValid = binding?.phoneEt?.text.toString().isPhoneValid()
+        binding?.nextButton?.isEnabled = isPhoneValid
+
+        if (isPhoneValid){
+          binding?.nextButton?.performClick()
+        }
+      }
+    }
   }
 }

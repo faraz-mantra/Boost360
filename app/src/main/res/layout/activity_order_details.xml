@@ -45,10 +45,10 @@
     android:background="#4BB543"
     android:gravity="center"
     android:padding="@dimen/margin_8"
-    android:textAllCaps="true"
+    android:textAllCaps="false"
     android:textColor="@color/white"
     android:textSize="15sp"
-    android:textStyle="bold"
+     android:fontFamily="@font/semi_bold"
     android:visibility="gone" />
 
   <TextView
@@ -62,10 +62,10 @@
     android:background="@drawable/order_cancel_btn_bg"
     android:gravity="center"
     android:padding="@dimen/margin_8"
-    android:textAllCaps="true"
+    android:textAllCaps="false"
     android:textColor="@color/white"
     android:textSize="15sp"
-    android:textStyle="bold"
+     android:fontFamily="@font/semi_bold"
     android:visibility="gone" />
 
 </LinearLayout>

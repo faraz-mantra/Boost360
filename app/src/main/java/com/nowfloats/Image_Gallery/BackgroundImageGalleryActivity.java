@@ -3,11 +3,13 @@ package com.nowfloats.Image_Gallery;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import androidx.databinding.DataBindingUtil;
 
+import android.graphics.Bitmap;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Build;
@@ -25,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,9 +43,11 @@ import com.nguyenhoanglam.imagepicker.model.Config;
 import com.nguyenhoanglam.imagepicker.model.Image;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
 import com.nowfloats.BusinessProfile.UI.API.UploadFaviconImage;
+import com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.NotificationCenter.AlertArchive;
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -54,6 +59,7 @@ import com.thinksity.R;
 import com.thinksity.databinding.ActivityBackgroundImageGalleryBinding;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -80,6 +86,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
     private PorterDuffColorFilter whiteLabelFilter;
     private Uri primaryUri;
     private ProgressDialog dialog;
+    private static final String TAG = "BackgroundImageGalleryA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +109,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
         initImageRecyclerView(binding.imageList);
         getBackgroundImages();
+        binding.btnAdd.setOnClickListener(view -> openImageChooser());
     }
 
 
@@ -148,7 +156,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add, menu);
+//        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 
@@ -170,10 +178,10 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
     }
 
     private void openImageChooser() {
-        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-            Methods.showFeatureNotAvailDialog(BackgroundImageGalleryActivity.this);
-            return;
-        }
+//        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+//            Methods.showFeatureNotAvailDialog(BackgroundImageGalleryActivity.this);
+//            return;
+//        }
 
         final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
         imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
@@ -257,14 +265,12 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
         /**
          * Check if we're running on Android 5.0 or higher
          */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            primaryUri = FileProvider.getUriForFile(this,
-                    Constants.PACKAGE_NAME + ".provider",
-                    new File(mediaStorageDir + "/" + System.currentTimeMillis() + ".jpg"));
-        } else {
-            primaryUri = Uri.fromFile(new File(mediaStorageDir + "/" + System.currentTimeMillis() + ".jpg"));
-        }
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
 
+        primaryUri = getContentResolver().insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         try {
             Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, primaryUri);
@@ -279,8 +285,17 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == CAMERA_IMAGE_REQUEST_CODE) {
-            uploadPrimaryPicture(primaryUri.getPath());
-            WebEngageController.trackEvent(UPLOAD_BACKGROUND_IMAGE, UPDATE_BACKGROUND_IMAGE, session.getFpTag());
+            try {
+                Bitmap CameraBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), primaryUri);
+                String imageUrl = Methods.getRealPathFromURI(this, primaryUri);
+                String path = Util.saveBitmap(imageUrl, this, "ImageFloat" + System.currentTimeMillis());
+                Log.i(TAG, "onActivityResult: "+path);
+                uploadPrimaryPicture(path);
+                WebEngageController.trackEvent(UPLOAD_BACKGROUND_IMAGE, UPDATE_BACKGROUND_IMAGE, session.getFpTag());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
         if (resultCode == RESULT_OK && requestCode == GALLERY_IMAGE_REQUEST_CODE && data != null) {

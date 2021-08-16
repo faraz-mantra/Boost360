@@ -108,12 +108,14 @@
         android:background="@drawable/bg_rounded_light_yellow"
         android:gravity="center"
         android:padding="@dimen/size_4"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@drawable/ic_add_n" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/layout_button_add"
       style="@style/wrap_wrap"
+      android:layout_height="@dimen/size_26"
+      android:layout_width="@dimen/size_80"
       android:layout_gravity="bottom"
       android:layout_marginStart="@dimen/size_10"
       android:layout_marginBottom="@dimen/size_2"
@@ -132,7 +134,7 @@
         android:paddingEnd="@dimen/size_24"
         android:paddingBottom="@dimen/size_6"
         android:text="@string/add"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/orange"
         android:textSize="@dimen/size_12"
         app:fontFamily="@font/semi_bold" />

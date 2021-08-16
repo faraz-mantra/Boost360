@@ -59,7 +59,7 @@ enum class OrderStatusValue(
   DELIVERY_DELAYED_1(
     OrderSummaryModel.OrderType.ORDER.name,
     OrderSummaryModel.OrderStatus.DELIVERY_DELAYED.name,
-    "Delivery Delayed",
+    "Delivery delayed",
     R.drawable.ic_order_canceled
   ),
   DELIVERY_FAILED_1(
@@ -83,7 +83,7 @@ enum class OrderStatusValue(
   ESCALATED_1(
     OrderSummaryModel.OrderType.ORDER.name,
     OrderSummaryModel.OrderStatus.ESCALATED.name,
-    "Order Escalated",
+    "Order escalated",
     R.drawable.ic_order_canceled
   ),
   ABANDONED_1(
@@ -120,25 +120,25 @@ enum class OrderStatusValue(
   DELIVERY_IN_PROGRESS_2(
     OrderSummaryModel.OrderType.APPOINTMENT.name,
     OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS.name,
-    "In Progress",
+    "In progress",
     R.drawable.ic_inprogress
   ),
   DELIVERY_COMPLETED_2(
     OrderSummaryModel.OrderType.APPOINTMENT.name,
     OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED.name,
-    "CUSTOMER SERVED",
+    "Customer served",
     R.drawable.ic_done
   ),
   FEEDBACK_PENDING_2(
     OrderSummaryModel.OrderType.APPOINTMENT.name,
     OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name,
-    "CUSTOMER SERVED",
+    "Customer served",
     R.drawable.ic_done
   ),
   FEEDBACK_RECEIVED_2(
     OrderSummaryModel.OrderType.APPOINTMENT.name,
     OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name,
-    "Feedback Received",
+    "Feedback received",
     R.drawable.ic_chat_bubble
   ),
   DELIVERY_DELAYED_2(
@@ -156,13 +156,13 @@ enum class OrderStatusValue(
   ORDER_COMPLETED_2(
     OrderSummaryModel.OrderType.APPOINTMENT.name,
     OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name,
-    "CUSTOMER SERVED",
+    "Customer served",
     R.drawable.ic_done
   ),
   ORDER_CANCELLED_2(
     OrderSummaryModel.OrderType.APPOINTMENT.name,
     OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name,
-    "Cancelled By",
+    "Cancelled by",
     R.drawable.ic_order_canceled
   ),
   ESCALATED_2(
@@ -196,7 +196,7 @@ enum class OrderStatusValue(
   DELIVERY_IN_PROGRESS_3(
     OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name,
     OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS.name,
-    "In Progress"
+    "In progress"
   ),
   DELIVERY_COMPLETED_3(
     OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name,
@@ -206,12 +206,12 @@ enum class OrderStatusValue(
   FEEDBACK_PENDING_3(
     OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name,
     OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name,
-    "CUSTOMER SERVED"
+    "Customer served"
   ),
   FEEDBACK_RECEIVED_3(
     OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name,
     OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name,
-    "CUSTOMER SERVED"
+    "Customer served"
   ),
   DELIVERY_DELAYED_3(
     OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name,
@@ -226,12 +226,12 @@ enum class OrderStatusValue(
   ORDER_COMPLETED_3(
     OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name,
     OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name,
-    "CUSTOMER SERVED"
+    "Customer served"
   ),
   ORDER_CANCELLED_3(
     OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name,
     OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name,
-    "Cancelled By"
+    "Cancelled by"
   ),
   ESCALATED_3(
     OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name,

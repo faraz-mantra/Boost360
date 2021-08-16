@@ -37,7 +37,7 @@
       android:layout_marginEnd="@dimen/_15sdp"
       android:background="@drawable/edit_text_bg_elevated_education"
       android:elevation="@dimen/_2sdp"
-      android:hint="Enter Course Name"
+      android:hint="Enter course name"
       android:text="@={batchedData.coursecategorytag}"
       android:textSize="@dimen/_12sdp" />
 
@@ -78,7 +78,7 @@
       android:layout_marginEnd="@dimen/_15sdp"
       android:background="@drawable/edit_text_bg_elevated_education"
       android:elevation="@dimen/_2sdp"
-      android:hint="Days/Months/Weekly"
+      android:hint="Days/ Months/ Weekly"
       android:text="@={batchedData.duration}"
       android:textSize="@dimen/_12sdp" />
 
@@ -114,12 +114,12 @@
       android:layout_marginEnd="@dimen/_10sdp"
       android:background="@drawable/orange_button_click_effect"
       android:elevation="@dimen/_2sdp"
-      android:fontFamily="@font/open_sans_semibold"
+      android:fontFamily="@font/semi_bold"
       android:gravity="center"
       android:paddingTop="@dimen/_10sdp"
       android:paddingBottom="@dimen/_10sdp"
-      android:text="save"
-      android:textAllCaps="true"
+      android:text="Save"
+      android:textAllCaps="false"
       android:textColor="@color/white" />
 
   </LinearLayout>

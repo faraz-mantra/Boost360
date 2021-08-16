@@ -29,7 +29,7 @@ data class BusinessSetupHighData(
     val list = ArrayList<BusinessSetupHighData>()
     list.add(
       BusinessSetupHighData(
-        title1 = "Business\nSummary",
+        title1 = "Business\nsummary",
         siteVisitor = Specification(
           "Unique visits",
           visitor,
@@ -42,7 +42,7 @@ data class BusinessSetupHighData(
     )
     list.add(
       BusinessSetupHighData(
-        title1 = "Website Readiness Score: ",
+        title1 = "Website readiness score: ",
         score = score,
         type = ActiveViewType.IS_PROGRESS.name
       )

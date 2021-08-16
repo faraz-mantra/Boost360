@@ -21,7 +21,7 @@
       android:text="@string/payment_page_title"
       android:textColor="#fff"
       android:textSize="35sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
 
     <androidx.cardview.widget.CardView xmlns:card="http://schemas.android.com/apk/res-auto"
@@ -56,7 +56,7 @@
               android:layout_height="wrap_content"
               android:text="@string/payer_username"
               android:textSize="17sp"
-              android:textStyle="bold" />
+               android:fontFamily="@font/semi_bold" />
 
             <TextView
               android:layout_width="wrap_content"
@@ -89,7 +89,7 @@
               android:layout_height="wrap_content"
               android:text="@string/payer_business_name"
               android:textSize="17sp"
-              android:textStyle="bold" />
+               android:fontFamily="@font/semi_bold" />
 
             <TextView
               android:layout_width="wrap_content"
@@ -122,7 +122,7 @@
               android:layout_height="wrap_content"
               android:text="@string/payer_email"
               android:textSize="17sp"
-              android:textStyle="bold" />
+               android:fontFamily="@font/semi_bold" />
 
             <TextView
               android:layout_width="wrap_content"
@@ -155,7 +155,7 @@
               android:layout_height="wrap_content"
               android:text="@string/package_price"
               android:textSize="17sp"
-              android:textStyle="bold" />
+               android:fontFamily="@font/semi_bold" />
 
             <TextView
               android:layout_width="wrap_content"
@@ -181,7 +181,7 @@
               android:layout_height="wrap_content"
               android:text="@string/package_expire"
               android:textSize="17sp"
-              android:textStyle="bold" />
+               android:fontFamily="@font/semi_bold" />
 
             <TextView
               android:layout_width="wrap_content"
@@ -214,7 +214,7 @@
               android:layout_height="wrap_content"
               android:text="@string/payer_phone_no"
               android:textSize="17sp"
-              android:textStyle="bold" />
+               android:fontFamily="@font/semi_bold" />
 
             <TextView
               android:layout_width="wrap_content"

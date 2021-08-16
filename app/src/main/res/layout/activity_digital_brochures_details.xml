@@ -184,12 +184,12 @@
         android:layout_marginBottom="@dimen/_30sdp"
         android:background="@drawable/orange_button_click_effect"
         android:elevation="@dimen/_2sdp"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:text="@string/save"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white" />
 
     </LinearLayout>

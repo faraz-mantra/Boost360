@@ -18,6 +18,7 @@ import static com.framework.utils.GsonUtilsKt.convertListObjToString;
  */
 public class ProcessFPDetails {
 
+    private static final String TAG = "ProcessFPDetails";
     private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
     static UserSessionManager session;
     private static String WIDGET_IMAGE_GALLERY = "IMAGEGALLERY";
@@ -148,6 +149,7 @@ public class ProcessFPDetails {
             Constants.StoreWidgets = get_fp_details_model.getFPWebWidgets();
             session.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(get_fp_details_model.getFPWebWidgets()));
             Log.d("Constants.storeWidgets", "widgets : " + Constants.StoreWidgets + " " + Constants.StorePackageIds);
+            Log.i(TAG, "storeFPDetails: store widgets"+get_fp_details_model.getFPWebWidgets().toString());
             Constants.storeSecondaryImages = get_fp_details_model.SecondaryTileImages;
 
 //        for(String widget : widgetsList)
@@ -243,6 +245,8 @@ public class ProcessFPDetails {
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME, "00");
                 for (int i = 0; i < get_fp_details_model.Timings.size(); i++) {
                     if (i == 0) {
+                        Log.i(TAG, "sunday timing: "+get_fp_details_model.Timings.get(0).To);
+
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME, get_fp_details_model.Timings.get(0).From);
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME, get_fp_details_model.Timings.get(0).To);
                         session.setBusinessHours(true);

@@ -253,8 +253,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
-                android:drawableStart="@drawable/ic_call_phone"
-                android:drawableTint="@color/colorAccent_jio"
+                android:drawableStart="@drawable/ic_phone"
                 android:drawablePadding="@dimen/size_4"
                 android:includeFontPadding="false"
                 android:textColor="@color/colorAccent_jio"
@@ -267,8 +266,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
-                android:drawableStart="@drawable/ic_inbox"
-                android:drawableTint="@color/colorAccent_jio"
+                android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="@dimen/size_4"
                 android:ellipsize="end"
                 android:includeFontPadding="false"
@@ -357,7 +355,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_shipping_cost"
                 app:textType="BODY_1"
-                tools:text="Total Amount: ₹976" />
+                tools:text="Total amount: ₹976" />
 
             </LinearLayout>
           </androidx.appcompat.widget.LinearLayoutCompat>

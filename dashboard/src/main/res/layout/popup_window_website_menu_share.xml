@@ -34,7 +34,7 @@
         android:layout_marginStart="@dimen/size_4"
         android:background="?android:selectableItemBackground"
         android:clickable="false"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:text="@string/share_on_more_website"
         android:textColor="@color/gray_4e4e4e"

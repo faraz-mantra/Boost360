@@ -22,9 +22,9 @@
       android:layout_marginTop="@dimen/size_12"
       android:layout_marginBottom="@dimen/size_12"
       android:textColor="@color/black_4a4a4a"
-      app:textAllCaps="true"
+      app:textAllCaps="false"
       app:textType="HEADING_6"
-      tools:text="REQUEST PAYMENT" />
+      tools:text="Request payment" />
 
     <View
       android:id="@+id/line1"

@@ -321,7 +321,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
     private void showAlertDialog() {
         String str = format(getResources().getString(R.string.error_right_fptag), deepLinkFpTag);
-        new AlertDialog.Builder(new ContextThemeWrapper(this,R.style.AlertDialogCustom)).setMessage(str)
+        new AlertDialog.Builder(new ContextThemeWrapper(this,R.style.CustomAlertDialogTheme)).setMessage(str)
                 .setCancelable(false)
                 .setPositiveButton(R.string.ok, (dialog, i) -> {
                     dialog.dismiss();
@@ -340,13 +340,13 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-        if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
+        if (session.getUserProfileEmail() != null) {
+            intent.putExtra("email", session.getUserProfileEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }

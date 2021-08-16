@@ -2,6 +2,7 @@ package com.boost.presignin.ui.mobileVerification
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
@@ -20,8 +21,7 @@ import com.framework.webengageconstant.PAGE_VIEW
 import com.framework.webengageconstant.PS_BUSINESS_ACCOUNT_PAGE_LOAD
 import kotlin.system.exitProcess
 
-class FloatingPointAuthFragment : AuthBaseFragment<FragmentFpListBinding>(),
-  RecyclerItemClickListener {
+class FloatingPointAuthFragment : AuthBaseFragment<FragmentFpListBinding>(), RecyclerItemClickListener {
 
   private var exitToast: Toast? = null
 
@@ -66,7 +66,7 @@ class FloatingPointAuthFragment : AuthBaseFragment<FragmentFpListBinding>(),
 
   override fun onCreateView() {
     super.onCreateView()
-    baseActivity.hideKeyBoard()
+    baseActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     WebEngageController.trackEvent(PS_BUSINESS_ACCOUNT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.btnGoToDashboard)
     setAdapterFPList()

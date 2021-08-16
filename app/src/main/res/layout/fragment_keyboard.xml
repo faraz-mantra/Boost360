@@ -42,7 +42,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Website\nInteractions"
+            android:text="Website\ninteractions"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="@+id/img_laptop"
             app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +89,7 @@
               android:layout_marginStart="32dp"
               android:layout_weight="1"
               android:text="Orders"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/gray"
               android:textSize="13sp" />
 
@@ -130,7 +130,7 @@
               android:layout_marginStart="32dp"
               android:layout_weight="1"
               android:text="Enquiries"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/gray"
               android:textSize="13sp" />
 
@@ -172,7 +172,7 @@
               android:layout_marginStart="32dp"
               android:layout_weight="1"
               android:text="Calls"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/gray"
               android:textSize="13sp" />
 
@@ -214,7 +214,7 @@
               android:layout_marginStart="32dp"
               android:layout_weight="1"
               android:text="Subscribers"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/gray"
               android:textSize="13sp" />
 
@@ -269,7 +269,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="@string/boost_keyboard"
+            android:text="@string/boost_keyboard_n"
             android:textColor="@color/gray"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView5"
@@ -318,7 +318,7 @@
               android:layout_marginStart="32dp"
               android:layout_weight="1"
               android:text="@string/enable_keyboard"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/gray"
               android:textSize="13sp" />
 
@@ -371,7 +371,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="Boost Keyboard Themes"
+            android:text="@string/boost_keyboard_themes_n"
             android:textColor="@color/gray"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -441,8 +441,8 @@
           android:id="@+id/feature_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_semibold"
-          android:text="Boost Keyboard"
+          android:fontFamily="@font/semi_bold"
+          android:text="@string/boost_keyboard_n"
           android:textColor="@color/common_text_color"
           android:textSize="@dimen/_16sdp" />
 
@@ -450,7 +450,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_20sdp"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:text="Looks like this add-on is not added to your current plan. Add it now to start using it."
           android:textSize="@dimen/_11sdp" />
@@ -463,11 +463,12 @@
           android:layout_marginTop="@dimen/_20sdp"
           android:layout_marginEnd="@dimen/_10sdp"
           android:background="@drawable/orange_button_click_effect"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:gravity="center"
+          android:textAllCaps="false"
           android:paddingTop="@dimen/_10sdp"
           android:paddingBottom="@dimen/_10sdp"
-          android:text="VIEW IN ADD-ON STORE"
+          android:text="@string/view_in_add_on_store"
           android:textColor="@color/white" />
 
 

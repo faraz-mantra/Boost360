@@ -76,7 +76,6 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
           isSkipCollapse()?.let { it1 -> skipCollapsed = it1 }
           this@BaseBottomSheetDialog.isDraggable()?.let { it1 -> isDraggable = it1 }
         }
-//        ScreenUtils.instance.setWhiteNavigationBar(dialog)
         bottomSheet.parent.requestLayout()
       } catch (e: Exception) {
         e.printStackTrace()

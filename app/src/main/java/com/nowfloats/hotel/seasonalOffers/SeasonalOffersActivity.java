@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.upgrades.UpgradeActivity;
+import com.framework.views.fabButton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
@@ -160,34 +161,27 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
 
 
     public void setHeader() {
-        LinearLayout rightButton, backButton;
+        LinearLayout  backButton;
         ImageView rightIcon;
         TextView title;
+        FloatingActionButton btnAdd;
 
         title = findViewById(R.id.title);
         backButton = findViewById(R.id.back_button);
-        rightButton = findViewById(R.id.right_icon_layout);
+        btnAdd = findViewById(R.id.btn_add);
         rightIcon = findViewById(R.id.right_icon);
-        title.setText("Seasonal Offers");
+        rightIcon.setVisibility(View.INVISIBLE);
+        title.setText(R.string.seasional_offer_n);
         //this feature is free to use
 //        if (Constants.StoreWidgets.contains("OFFERS")) {
-        rightIcon.setImageResource(R.drawable.ic_add_white);
-        rightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SeasonalOffersDetailsActivity.class);
-                intent.putExtra("ScreenState", "new");
-                startActivity(intent);
-            }
+        btnAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), SeasonalOffersDetailsActivity.class);
+            intent.putExtra("ScreenState", "new");
+            startActivity(intent);
         });
 //        }
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        backButton.setOnClickListener(v -> onBackPressed());
     }
 
 
@@ -262,13 +256,13 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-        if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
+        if (session.getUserProfileEmail() != null) {
+            intent.putExtra("email", session.getUserProfileEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }

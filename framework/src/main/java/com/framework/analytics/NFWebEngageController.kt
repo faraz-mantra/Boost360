@@ -15,23 +15,36 @@ object NFWebEngageController {
   private val TAG = "NFController"
 
 
+  fun trackAttribute(event_value: HashMap<String, Any>) {
+    if (event_value.isNullOrEmpty().not()) {
+      for ((key, value) in event_value.entries) {
+        weUser.setAttribute(key, value.toString())
+        FirebaseAnalyticsUtilsHelper.setUserProperty(key, value.toString())
+      }
+      AppsFlyerLib.getInstance().setAdditionalData(event_value)
+    }
+  }
+
   fun trackEvent(event_name: String, event_label: String, event_value: String? = NO_EVENT_VALUE) {
     val trackEvent: MutableMap<String, Any> = HashMap()
     trackEvent["event_name"] = event_name
-    trackEvent["fptag/event_value"] = event_value!!
+    trackEvent["fptag/event_value"] = event_value?:""
     trackEvent["event_label"] = event_label
-    if (event_label.equals("rev")) {
-      trackEvent["revenue"] = event_value
+    if (event_label == "rev") {
+      trackEvent["revenue"] = event_value?:""
     }
     weAnalytics.track(event_name, trackEvent)
     weAnalytics.screenNavigated(event_name)
     //Firebase Analytics Event...
-    FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value)
+    FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value?:"")
 
     //AppsFlyerEvent...
     try {
-      AppsFlyerLib.getInstance()
-        .logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
+      if (weAnalytics.activity!=null){
+        AppsFlyerLib.getInstance()
+          .logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
+      }
+
     } catch (e: Exception) {
       e.printStackTrace()
     }
@@ -48,7 +61,7 @@ object NFWebEngageController {
       //AppsFlyerEvent...
       try {
         AppsFlyerLib.getInstance().logEvent(
-          weAnalytics.activity.get()?.applicationContext,
+          weAnalytics.activity?.get()?.applicationContext,
           event_name, event_value.toMap()
         )
       } catch (e: Exception) {
@@ -78,7 +91,7 @@ object NFWebEngageController {
       //AppsFlyerEvent...
       try {
         AppsFlyerLib.getInstance().logEvent(
-          weAnalytics.activity.get()?.applicationContext,
+          weAnalytics.activity?.get()?.applicationContext,
           event_name, event_value.toMap()
         )
       } catch (e: Exception) {
@@ -90,12 +103,7 @@ object NFWebEngageController {
     }
   }
 
-  fun setUserContactAttributes(
-    email: String?,
-    mobile: String?,
-    name: String?,
-    clientId: String? = ""
-  ) {
+  fun setUserContactAttributes(email: String?, mobile: String?, name: String?, clientId: String? = "") {
     if (isUserLoggedIn) {
       if (!email.isNullOrEmpty()) {
         weUser.setEmail(email)
@@ -157,7 +165,7 @@ object NFWebEngageController {
   fun setCategory(userCategory: String?) {
     try {
       if (!userCategory.isNullOrEmpty()) {
-        val activity = weAnalytics.activity.get()
+        val activity = weAnalytics.activity?.get()
         val version = activity?.packageManager?.getPackageInfo(activity.packageName, 0)?.versionName
         weUser.setAttribute("Category", userCategory)
         weUser.setAttribute("Version", version ?: "")

@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.MenuItem;
 
+import com.framework.views.customViews.CustomToolbar;
 import com.thinksity.R;
 
 /**
@@ -20,7 +21,7 @@ public class FlavourFivePlansActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flavour_five_plans);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        CustomToolbar toolbar = (CustomToolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);

@@ -8,8 +8,7 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.framework.utils.fromHtml
 
-class BusinessFeaturedBottomSheet :
-  BaseBottomSheetDialog<BottomSheetFeaturedImageBinding, BaseViewModel>() {
+class BusinessFeaturedBottomSheet : BaseBottomSheetDialog<BottomSheetFeaturedImageBinding, BaseViewModel>() {
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_featured_image

@@ -107,7 +107,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 //        binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
         binding?.txtReadinessScore?.text = "${drScoreData?.getDrsTotal() ?: 0}"
 //        binding?.progressBar?.progress = drScoreData?.getDrsTotal() ?: 0
-        val percentage = ((100 - drScoreData?.getDrsTotal()!!).toDouble() / 100).roundToFloat(2)
+        val percentage = ((100 - (drScoreData?.getDrsTotal()?:0)).toDouble() / 100).roundToFloat(2)
         (binding?.progressBar?.layoutParams as? ConstraintLayout.LayoutParams)?.matchConstraintPercentWidth = percentage
         binding?.progressBar?.requestLayout()
 //        binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
@@ -278,7 +278,7 @@ fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?, baseActivity: App
 
 fun alertDialogBusinessHours(baseActivity: AppCompatActivity, session: UserSessionManager?) {
   AlertDialog.Builder(
-    ContextThemeWrapper(baseActivity,R.style.AlertDialogCustom))
+    ContextThemeWrapper(baseActivity,R.style.CustomAlertDialogTheme))
     .setTitle(baseActivity.getString(R.string.features_not_available))
     .setMessage(baseActivity.getString(R.string.check_store_for_upgrade_info))
     .setPositiveButton(baseActivity.getString(R.string.goto_store)) { dialogInterface, i ->

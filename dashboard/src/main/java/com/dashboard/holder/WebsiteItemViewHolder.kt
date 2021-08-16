@@ -8,8 +8,7 @@ import com.dashboard.model.live.websiteItem.WebsiteActionItem
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 
-class WebsiteItemViewHolder(binding: ItemWebsiteItemBinding) :
-  AppBaseRecyclerViewHolder<ItemWebsiteItemBinding>(binding) {
+class WebsiteItemViewHolder(binding: ItemWebsiteItemBinding) : AppBaseRecyclerViewHolder<ItemWebsiteItemBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)

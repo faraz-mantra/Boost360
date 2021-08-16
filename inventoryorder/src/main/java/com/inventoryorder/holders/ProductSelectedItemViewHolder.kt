@@ -16,8 +16,7 @@ import com.inventoryorder.model.orderRequest.ItemsItem
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 
-class ProductSelectedItemViewHolder(binding: ItemProductsAddedBinding) :
-  AppBaseRecyclerViewHolder<ItemProductsAddedBinding>(binding) {
+class ProductSelectedItemViewHolder(binding: ItemProductsAddedBinding) : AppBaseRecyclerViewHolder<ItemProductsAddedBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)

@@ -2,8 +2,10 @@ package com.inventoryorder.ui.appointmentSpa.list
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import android.widget.EditText
 import android.widget.PopupWindow
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
@@ -57,8 +59,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
-class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBinding>(),
-  RecyclerItemClickListener {
+class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBinding>(), RecyclerItemClickListener {
 
   private lateinit var requestFilter: OrderFilterRequest
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
@@ -160,8 +161,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
             orderList.clear()
             removeLoader()
             val list = response!!.Items?.map { item ->
-              item.recyclerViewType =
-                RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout();item
+              item.recyclerViewType = RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout();item
             } as ArrayList<OrderItem>
             TOTAL_ELEMENTS = response.total()
             orderListFinalList.addAll(list)
@@ -173,8 +173,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
             val list = response.Items?.map { item ->
-              item.recyclerViewType =
-                RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout();item
+              item.recyclerViewType = RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout();item
             } as ArrayList<OrderItem>
             orderList.clear()
             orderList.addAll(list)
@@ -200,7 +199,6 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
 
   private fun onInClinicAptAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
-    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_create_sample_in_clinic_appointment = isAdded
     instance.updateDocument()
   }
@@ -281,18 +279,15 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.CONFIRM -> {
-        requestFilter =
-          getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name))
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name))
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.DELIVERED -> {
-        requestFilter =
-          getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.CANCELLED -> {
-        requestFilter =
-          getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name))
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name))
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       else -> {
@@ -306,7 +301,10 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     super.onCreateOptionsMenu(menu, inflater)
     val searchItem = menu.findItem(R.id.menu_item_search)
     if (searchItem != null) {
-      searchView = searchItem.actionView as SearchView
+      searchView = searchItem.actionView as? SearchView
+      val searchEditText: EditText? = searchView?.findViewById(androidx.appcompat.R.id.search_src_text)
+      searchEditText?.setTextColor(Color.WHITE)
+      searchEditText?.setHintTextColor(getColor(R.color.white_50))
       searchView?.queryHint = resources.getString(R.string.queryHintAppointment)
       searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
@@ -367,18 +365,9 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     }
   }
 
-  override fun onItemClickView(
-    position: Int,
-    view: View,
-    item: BaseRecyclerViewItem?,
-    actionType: Int
-  ) {
+  override fun onItemClickView(position: Int, view: View, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
-      RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal -> popUpMenuButton(
-        position,
-        view,
-        (item as? OrderItem)
-      )
+      RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal -> popUpMenuButton(position, view, (item as? OrderItem))
     }
   }
 
@@ -388,30 +377,19 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
     this.position = position
     val list = OrderMenuModel().getAppointmentMenu(orderItem)
     if (list.isNotEmpty()) list.removeAt(0)
-    val orderMenuView: View =
-      LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
+    val orderMenuView: View = LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
     val rvOrderMenu: RecyclerView? = orderMenuView.findViewById(R.id.rv_menu_order)
     rvOrderMenu?.apply {
       val adapterMenu = AppBaseRecyclerViewAdapter(baseActivity, list, this@AppointmentSpaFragment)
       adapter = adapterMenu
     }
-    mPopupWindow = PopupWindow(
-      orderMenuView,
-      WindowManager.LayoutParams.MATCH_PARENT,
-      WindowManager.LayoutParams.WRAP_CONTENT,
-      true
-    )
+    mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
     if (orderAdapter != null && orderList.size > 2 && orderAdapter!!.list().size - 1 == position) {
       orderMenuView.measure(
         View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
         View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
       )
-      mPopupWindow.showAsDropDown(
-        view,
-        view.x.roundToInt(),
-        view.y.roundToInt() - orderMenuView.measuredHeight,
-        Gravity.NO_GRAVITY
-      )
+      mPopupWindow.showAsDropDown(view, view.x.roundToInt(), view.y.roundToInt() - orderMenuView.measuredHeight, Gravity.NO_GRAVITY)
     } else mPopupWindow.showAsDropDown(view, 0, 0)
   }
 

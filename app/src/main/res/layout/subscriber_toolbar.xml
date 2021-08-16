@@ -1,42 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<com.framework.views.customViews.CustomToolbar xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="?attr/actionBarSize"
   android:background="?attr/colorPrimary"
-  app:theme="@style/CustomToolbarTheme">
+  app:contentInsetEnd="0dp"
+  app:contentInsetLeft="0dp"
+  app:contentInsetRight="0dp"
+  app:contentInsetStart="0dp"
+  app:navigationIcon="@drawable/ic_back_arrow_new">
 
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:layout_marginEnd="15dp"
+    android:layout_marginEnd="10dp"
     android:gravity="center"
     android:orientation="horizontal">
 
-    <TextView
+    <com.framework.views.customViews.CustomTextView
       android:id="@+id/titleTextView"
-      fontPath="Roboto-Medium.ttf"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="5dp"
+      android:layout_marginEnd="4dp"
       android:layout_weight="1"
       android:ellipsize="marquee"
+      android:includeFontPadding="false"
       android:fadingEdge="horizontal"
+      android:fontFamily="@font/semi_bold"
       android:marqueeRepeatLimit="1"
       android:scrollHorizontally="true"
       android:singleLine="true"
       android:textColor="@color/white"
-      android:textSize="18sp"
-      android:textStyle="bold"
       android:visibility="visible"
+      app:textType="HEADING_6"
       tools:ignore="MissingPrefix" />
 
     <AutoCompleteTextView
       android:id="@+id/search_edittext"
       android:layout_width="0dp"
       android:layout_height="40dp"
-      android:layout_marginEnd="15dp"
+      android:layout_marginEnd="10dp"
       android:layout_weight="1"
       android:background="@android:color/transparent"
       android:ellipsize="end"
@@ -45,7 +49,7 @@
       android:maxLines="1"
       android:scrollHorizontally="true"
       android:textColor="@color/white"
-      android:textColorHint="@color/white"
+      android:textColorHint="@color/white_50"
       android:visibility="gone" />
 
     <ImageView
@@ -63,8 +67,8 @@
       android:layout_width="40dp"
       android:layout_height="match_parent"
       android:background="@drawable/button_click_effect"
-      android:src="@drawable/ic_add_white_24dp"
+      android:src="@drawable/ic_add_white"
       android:visibility="gone" />
 
   </LinearLayout>
-</androidx.appcompat.widget.Toolbar>
+</com.framework.views.customViews.CustomToolbar>

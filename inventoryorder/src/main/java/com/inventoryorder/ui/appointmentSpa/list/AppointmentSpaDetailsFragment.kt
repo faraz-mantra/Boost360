@@ -15,6 +15,8 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils
+import com.framework.utils.ValidationUtils.isEmailValid
+import com.framework.utils.ValidationUtils.isMobileNumberValid
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -65,21 +67,6 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
   override fun onCreateView() {
     super.onCreateView()
     arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
-    binding?.textPhone?.setOnClickListener {
-      if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber.isNullOrEmpty()) {
-        showShortToast(getString(R.string.contact_number_not_available))
-      } else {
-        callCustomer(orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber!!)
-      }
-    }
-
-    binding?.textEmail?.setOnClickListener {
-      if (orderItem?.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty()) {
-        showShortToast(getString(R.string.customer_email_not_available))
-      } else {
-        emailCustomer(orderItem?.BuyerDetails?.ContactDetails?.EmailId!!)
-      }
-    }
   }
 
   private fun callCustomer(phone: String) {
@@ -144,33 +131,37 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
 
 
   private fun setDetails(order: OrderItem?) {
+    val number = order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber
+    val email = order?.BuyerDetails?.ContactDetails?.EmailId
+    binding?.textPhone?.setOnClickListener {
+      if (isMobileNumberValid(number ?: "")) {
+        callCustomer(number!!)
+      } else {
+        showShortToast(getString(R.string.contact_number_not_available))
+      }
+    }
+    binding?.textEmail?.setOnClickListener {
+      if (isEmailValid(email ?: "")) {
+        emailCustomer(email!!)
+      } else {
+        showShortToast(getString(R.string.customer_email_not_available))
+      }
+    }
+
     val product = order?.firstItemForAptConsult()?.product()
     val extraDataSpa = order?.firstItemForAptConsult()?.getAptSpaExtraDetail()
     binding?.ctvAppointmentId?.text = "#${order?.ReferenceNumber}"
-    binding?.textDateTime?.text = DateUtils.parseDate(
-      order?.CreatedOn,
-      DateUtils.FORMAT_SERVER_DATE,
-      DateUtils.FORMAT_SERVER_TO_LOCAL_3,
-      timeZone = TimeZone.getTimeZone("IST")
-    )
+    binding?.textDateTime?.text = DateUtils.parseDate(order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST"))
 
-    binding?.textAmount?.text =
-      "${order?.BillingDetails?.CurrencyCode} ${order?.BillingDetails?.GrossAmount}"
+    binding?.textAmount?.text = "${order?.BillingDetails?.CurrencyCode} ${order?.BillingDetails?.GrossAmount}"
 
     binding?.textServiceName?.text = product?.Name
 
-    val appointmentDate = "${extraDataSpa?.startTime()} on ${
-      DateUtils.parseDate(
-        extraDataSpa?.scheduledDateTime ?: "",
-        DateUtils.FORMAT_YYYY_MM_DD,
-        DateUtils.FORMAT_SERVER_TO_LOCAL_5
-      )
-    }"
+    val appointmentDate = "${extraDataSpa?.startTime()} on ${DateUtils.parseDate(extraDataSpa?.scheduledDateTime ?: "", DateUtils.FORMAT_YYYY_MM_DD, DateUtils.FORMAT_SERVER_TO_LOCAL_5)}"
 
     binding?.textDate?.text = appointmentDate
 
-    binding?.textStaff?.text =
-      if (!extraDataSpa?.staffName.isNullOrBlank()) "Staff : ${extraDataSpa?.staffName}" else ""
+    binding?.textStaff?.text = if (!extraDataSpa?.staffName.isNullOrBlank()) "Staff : ${extraDataSpa?.staffName}" else ""
     binding?.textAppointmentAmount?.text = "${product?.getCurrencyCodeValue()} ${product?.price()}"
 
     if (product?.ImageUri.isNullOrEmpty().not()) {
@@ -178,19 +169,22 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     }
 
     binding?.textCustomerName?.text = order?.BuyerDetails?.ContactDetails?.FullName
-    if (order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber.isNullOrEmpty()) {
+    if (number.isNullOrEmpty()) {
       binding?.textCustomerPhone?.gone()
+      binding?.textPhone?.gone()
     } else {
       binding?.textCustomerPhone?.visible()
+      binding?.textPhone?.visible()
     }
-    binding?.textCustomerPhone?.text =
-      "Phone: ${order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber}"
-    if (order?.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty()) {
+    binding?.textCustomerPhone?.text = "Phone: $number"
+    if (email.isNullOrEmpty()) {
       binding?.textCustomerEmail?.gone()
+      binding?.textEmail?.gone()
     } else {
       binding?.textCustomerEmail?.visible()
+      binding?.textEmail?.visible()
     }
-    binding?.textCustomerEmail?.text = "Email: ${order?.BuyerDetails?.ContactDetails?.EmailId}"
+    binding?.textCustomerEmail?.text = "Email: $email"
     if (order?.BuyerDetails?.GSTIN == null || order.BuyerDetails.GSTIN == "") {
       binding?.ctvGstin?.gone()
     } else binding?.ctvGstin?.visible()
@@ -279,12 +273,12 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
           )
         }
         OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
-          colorCode = "#52AAC6"
+          colorCode = "#4A4A4A"
           changeButtonStatus(
             btnOrderMenu.title,
             R.drawable.ic_in_transit_order_btn_bkg,
-            R.color.blue_52AAC6,
-            R.drawable.ic_arrow_down_blue
+            R.color.black_4a4a4a,
+            R.drawable.ic_arrow_down_4a4a4a
           )
         }
         else -> binding?.lytStatusBtn?.gone()
