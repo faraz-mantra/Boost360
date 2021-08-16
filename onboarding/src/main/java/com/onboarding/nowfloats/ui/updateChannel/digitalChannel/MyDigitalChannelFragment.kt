@@ -385,7 +385,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   private fun onDigitalChannelAddedOrUpdated(isAdded: Boolean) {
     binding?.root?.post {
       val instance = FirestoreManager
-      if (instance.getDrScoreData()?.metricdetail == null) return@post
       instance.getDrScoreData()?.metricdetail?.boolean_social_channel_connected = isAdded
       instance.updateDocument()
     }

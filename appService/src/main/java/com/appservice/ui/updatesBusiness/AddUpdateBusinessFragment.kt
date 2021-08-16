@@ -89,20 +89,11 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
     isUpdate = updateFloat != null && updateFloat!!.id.isNullOrEmpty().not()
     WebEngageController.trackEvent(EVENT_NAME_UPDATE_CREATE, PAGE_VIEW, sessionLocal.fpTag)
     setOnClickListener(
-      binding?.btnCamera,
-      binding?.btnEditPhoto,
-      binding?.btnFpStatus,
-      binding?.btnFpPageStatus,
-      binding?.btnGoogleVoice,
-      binding?.btnRemovePhoto,
-      binding?.btnSubscription,
-      binding?.btnTwitter
+      binding?.btnCamera, binding?.btnEditPhoto, binding?.btnFpStatus, binding?.btnFpPageStatus,
+      binding?.btnGoogleVoice, binding?.btnRemovePhoto, binding?.btnSubscription, binding?.btnTwitter
     )
     binding?.edtDesc?.afterTextChanged { str ->
-      if (isUpdate.not()) sessionLocal.storeFPDetails(
-        msgPost,
-        str
-      )
+      if (isUpdate.not()) sessionLocal.storeFPDetails(msgPost, str)
     }
     localDataView()
     baseActivity.onBackPressedDispatcher.addCallback(
@@ -459,26 +450,15 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelTy
       imageUri = BASE_IMAGE_URL + imageUri
     }
     bundle.putString(Key_Preferences.BUSINESS_IMAGE, imageUri)
-    bundle.putString(
-      Key_Preferences.BUSINESS_TYPE,
-      session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)
-    )
+    bundle.putString(Key_Preferences.BUSINESS_TYPE, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
 
     val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
     val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
-    bundle.putString(
-      Key_Preferences.LOCATION,
-      if (city.isNullOrEmpty().not() && country.isNullOrEmpty()
-          .not()
-      ) "$city, $country" else "$city$country"
-    )
+    bundle.putString(Key_Preferences.LOCATION, if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country")
     bundle.putString(Key_Preferences.WEBSITE_URL, session.getDomainName(false))
     bundle.putString(Key_Preferences.PRIMARY_NUMBER, session.userPrimaryMobile)
     bundle.putString(Key_Preferences.PRIMARY_EMAIL, session.fPEmail)
-    bundle.putString(
-      com.onboarding.nowfloats.constant.IntentConstant.CHANNEL_TYPE.name,
-      channelType
-    )
+    bundle.putString(com.onboarding.nowfloats.constant.IntentConstant.CHANNEL_TYPE.name, channelType)
     startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()
