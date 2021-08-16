@@ -12,12 +12,12 @@ import com.dashboard.constant.FragmentType
 import com.dashboard.constant.FragmentType.*
 import com.dashboard.constant.IntentConstant
 import com.dashboard.controller.setFragmentType
-import com.dashboard.pref.UserSessionManager
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
 import com.framework.views.customViews.CustomToolbar
 
 class OwnersInfoContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {

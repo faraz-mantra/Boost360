@@ -120,16 +120,6 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
 
         }
 
-    }
-
-    override fun onSuccess(it: BaseResponse) {
-        super.onSuccess(it)
-        when (it.taskcode) {
-            TaskCode.GET_DELIVERY_DETAILS.ordinal -> onDeliveryDetailsReceived(it)
-            TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> onReceivedBankDetails(it)
-
-        }
-    }
 
     override fun onFailure(it: BaseResponse) {
         super.onFailure(it)
@@ -150,10 +140,6 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
         hideProgress()
     }
 
-    override fun onFailure(it: BaseResponse) {
-        super.onFailure(it)
-        hideProgress()
-    }
 
     private fun onDeliveryDetailsReceived(it: BaseResponse) {
         hideProgress()

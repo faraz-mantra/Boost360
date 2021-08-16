@@ -25,11 +25,6 @@ interface WithFloatTwoRemoteData {
     @HTTP(method = "DELETE", path = EndPoints.DELETE_SERVICE, hasBody = true)
     fun deleteService(@Body request: DeleteProductRequest?): Observable<Response<String>>
 
-  @GET(EndPoints.GET_TAGS)
-  fun getTags(
-    @Query("clientId") clientId: String?,
-    @Query("fpId") fpId: String?
-  ): Observable<Response<List<String>>>
     @GET(EndPoints.GET_TAGS)
     fun getTags(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?): Observable<Response<List<String>>>
 
@@ -46,18 +41,6 @@ interface WithFloatTwoRemoteData {
   ): Observable<Response<String>>
     @GET(EndPoints.GET_PRODUCT_LISTING)
     fun getProductListing(@Query("fpTag") fpTag: String?, @Query("clientId") clientId: String?, @Query("skipBy") skipBy: Int?): Observable<Response<List<CatalogProduct>>>
-
-    @Headers("Accept: application/json", "Content-Type: application/octet-stream")
-    @PUT(EndPoints.ADD_IMAGE)
-    fun addUpdateImageProductService(
-            @Query("clientId") clientId: String?,
-            @Query("requestType") requestType: String?,
-            @Query("requestId") requestId: String?,
-            @Query("totalChunks") totalChunks: Int?,
-            @Query("currentChunkNumber") currentChunkNumber: Int?,
-            @Query("productId") productId: String?,
-            @Body requestBody: RequestBody?,
-    ): Observable<Response<String>>
 
   @GET(EndPoints.GET_NOTIFICATION)
   fun getNotificationCount(

@@ -23,11 +23,11 @@ import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_SIZE
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.model.staffModel.*
-import com.appservice.ui.staffs.ui.UserSession
 import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.model.ServiceSearchListingResponse
+import com.appservice.ui.staffs.UserSession
 import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce

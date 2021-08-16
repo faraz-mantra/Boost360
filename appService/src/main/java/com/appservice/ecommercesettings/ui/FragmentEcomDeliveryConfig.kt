@@ -10,7 +10,7 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentDeliveryConfigurationBinding
 import com.appservice.ecommercesettings.ui.bottomsheets.BottomSheetAddCartSlab
 import com.appservice.ecommercesettings.ui.bottomsheets.BottomSheetAddWareHouse
-import com.appservice.staffs.ui.UserSession
+import com.appservice.ui.staffs.UserSession
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce

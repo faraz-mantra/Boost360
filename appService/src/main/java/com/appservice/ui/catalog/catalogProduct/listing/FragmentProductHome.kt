@@ -11,8 +11,8 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentServiceHomeContainerBinding
-import com.appservice.staffs.ui.UserSession
 import com.appservice.ui.catalog.startFragmentActivity
+import com.appservice.ui.staffs.UserSession
 import com.framework.models.BaseViewModel
 
 class FragmentProductHome : AppBaseFragment<FragmentServiceHomeContainerBinding, BaseViewModel>() {

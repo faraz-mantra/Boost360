@@ -21,6 +21,7 @@ import com.appservice.ui.staffs.ui.bottomsheets.InActiveStaffConfirmationBottomS
 import com.appservice.ui.staffs.ui.bottomsheets.RemoveStaffConfirmationBottomSheet
 import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.common.AppointmentModel
+import com.appservice.ui.staffs.UserSession
 import com.appservice.utils.WebEngageController
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad

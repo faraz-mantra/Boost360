@@ -12,7 +12,7 @@ import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.rest.TaskCode
-import com.appservice.staffs.ui.UserSession
+import com.appservice.ui.staffs.UserSession
 import com.appservice.viewmodel.ProductViewModel
 import com.framework.base.BaseResponse
 import kotlinx.android.synthetic.main.fragment_product_details.*

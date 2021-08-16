@@ -23,6 +23,7 @@ enum class RecyclerViewItemType {
   HOME_DRAWER_VIEW,
   WEBSITE_COLOR_VIEW,
   WEBSITE_FONT_VIEW,
+  CONSULTATION_VIEW,
   FILTER_DATE_VIEW;
 
   @LayoutRes
@@ -30,7 +31,6 @@ enum class RecyclerViewItemType {
     return when (this) {
       PAGINATION_LOADER -> R.layout.pagination_loader
       CHANNEL_ITEM_VIEW -> R.layout.item_channel_d
-      CHANNEL_STATUS_ITEM_VIEW -> R.layout.item_social_media
       BUSINESS_SETUP_ITEM_VIEW -> R.layout.item_business_management
       BUSINESS_SETUP_HIGH_ITEM_VIEW -> R.layout.item_business_setup_high
       MANAGE_BUSINESS_ITEM_VIEW -> R.layout.item_manage_business_d
@@ -46,8 +46,10 @@ enum class RecyclerViewItemType {
       ALL_BOOST_ADD_ONS_VIEW -> R.layout.item_boost_add_ons
       HOME_DRAWER_VIEW -> R.layout.item_drawer_view
       FILTER_DATE_VIEW -> R.layout.item_filter_date
+      CONSULTATION_VIEW -> R.layout.recycler_item_consultation
       WEBSITE_COLOR_VIEW -> R.layout.recycler_item_colors
       WEBSITE_FONT_VIEW -> R.layout.recycler_item_select_font
+      CHANNEL_STATUS_ITEM_VIEW -> R.layout.item_social_media
     }
-  }
+    }
 }
