@@ -41,7 +41,12 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
     return super.onOptionsItemSelected(item)
   }
 
-
+  fun getStaffType(category_code:String?):String{
+    return when(category_code){
+      "DOC", "HOS"->"DOCTORS"
+      else ->"STAFF"
+    }
+  }
   fun changeTheme(color: Int, taskBarColor: Int) {
     getToolbar()?.setBackgroundColor(ContextCompat.getColor(this, color))
     window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)

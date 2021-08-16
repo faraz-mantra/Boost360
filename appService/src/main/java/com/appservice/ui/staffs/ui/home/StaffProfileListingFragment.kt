@@ -1,4 +1,4 @@
-package com.appservice.ui.staffs.ui.home
+package com.appservice.staffs.ui.home
 
 import android.app.Activity
 import android.content.Intent
@@ -22,12 +22,12 @@ import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_SIZE
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.model.staffModel.*
-import com.appservice.ui.staffs.ui.startStaffFragmentActivity
-import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.staffs.model.*
+import com.appservice.staffs.ui.UserSession
+import com.appservice.staffs.ui.startStaffFragmentActivity
+import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.model.ServiceSearchListingResponse
-import com.appservice.ui.staffs.UserSession
 import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -40,8 +40,7 @@ import kotlinx.android.synthetic.main.fragment_staff_listing.*
 import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
 import java.util.*
 
-class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffViewModel>(),
-  RecyclerItemClickListener, SearchView.OnQueryTextListener {
+class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffViewModel>(), RecyclerItemClickListener, SearchView.OnQueryTextListener {
 
   private val list: ArrayList<DataItem> = arrayListOf()
   private val finalList: ArrayList<DataItem> = arrayListOf()
@@ -80,17 +79,13 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   override fun onCreateView() {
     super.onCreateView()
     getBundleData()
-    if (isLockStaff().not()) {
+    if (true) {
       layoutManagerN = LinearLayoutManager(baseActivity)
       WebEngageController.trackEvent(STAFF_PROFILE_LIST, PAGE_VIEW, NO_EVENT_VALUE)
       getListServiceFilterApi()
       layoutManagerN?.let { scrollPagingListener(it) }
       swipeRefreshListener()
-      setOnClickListener(
-        binding?.staffEmpty?.btnAddStaff,
-        binding?.serviceEmpty?.cbAddService,
-        binding?.staffEmpty?.btnHowWork
-      )
+      setOnClickListener(binding?.staffEmpty?.btnAddStaff, binding?.serviceEmpty?.cbAddService, binding?.staffEmpty?.btnHowWork,binding?.doctorEmpty?.btnAddDoctor)
     }
   }
 
@@ -111,11 +106,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     val b = arguments?.getBoolean(IntentConstant.IS_ADD_NEW.name) ?: false
     if (b) {
       WebEngageController.trackEvent(ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
-      startStaffFragmentActivity(
-        FragmentType.STAFF_DETAILS_FRAGMENT,
-        clearTop = false,
-        isResult = true
-      )
+      startStaffFragmentActivity( if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
     }
   }
 
@@ -129,18 +120,21 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   private fun getListServiceFilterApi() {
     showProgressN()
-    viewModel?.getSearchListings(UserSession.fpTag, UserSession.fpId, "", 0, 1)
-      ?.observeOnce(viewLifecycleOwner, {
-        if ((it as? ServiceSearchListingResponse)?.result?.data.isNullOrEmpty().not()) {
-          checkIsAddNewStaff()
-          fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
-          isServiceEmpty = false
-        } else {
-          hideProgressN()
+    viewModel?.getSearchListings(UserSession.fpTag, UserSession.fpId, "", 0, 1)?.observeOnce(viewLifecycleOwner, {
+      if ((it as? ServiceSearchListingResponse)?.result?.data.isNullOrEmpty().not()) {
+        checkIsAddNewStaff()
+        fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
+        isServiceEmpty = false
+      } else {
+        hideProgressN()
+        if (isDoctorProfile(sessionLocal.fP_AppExperienceCode!!)){
+          setEmptyDoctorView(false,true)
+        }else {
           setEmptyView(isStaffEmpty = false, isServiceEmpty = true)
-          isServiceEmpty = true
         }
-      })
+        isServiceEmpty = true
+      }
+    })
   }
 
   private fun swipeRefreshListener() {
@@ -174,45 +168,35 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     })
   }
 
-  private fun fetchStaffListing(
-    isProgress: Boolean = true,
-    isFirst: Boolean = false,
-    searchString: String = "",
-    offSet: Int,
-    limit: Int
-  ) {
+  private fun fetchStaffListing(isProgress: Boolean = true, isFirst: Boolean = false, searchString: String = "", offSet: Int, limit: Int) {
     if ((isFirst || searchString.isNotEmpty()) && isProgress) showProgressN()
     viewModel?.getStaffList(getFilterRequest(offSet, limit))?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        setStaffDataItems(
-          (it as? GetStaffListingResponse)?.result,
-          searchString.isNotEmpty(),
-          isFirst
-        )
+        setStaffDataItems((it as? GetStaffListingResponse)?.result, searchString.isNotEmpty(), isFirst)
       } else if (isFirst) showShortToast(it.errorMessage())
       if (isFirst || searchString.isNotEmpty()) hideProgressN()
     })
   }
 
-  private fun setStaffDataItems(
-    resultStaff: Result?,
-    isSearchString: Boolean,
-    isFirstLoad: Boolean
-  ) {
+  private fun setStaffDataItems(resultStaff: Result?, isSearchString: Boolean, isFirstLoad: Boolean) {
     val listStaff = resultStaff?.data
     if (isSearchString.not()) {
       if (isFirstLoad) finalList.clear()
       onStaffAddedOrUpdated(listStaff.isNullOrEmpty().not())
       if (listStaff.isNullOrEmpty().not()) {
         removeLoader()
-        setEmptyView(false)
+        if (isDoctorProfile(sessionLocal.fP_AppExperienceCode!!)){
+          setEmptyDoctorView(false)
+        }else {
+          setEmptyView(isStaffEmpty = false)
+        }
         TOTAL_ELEMENTS = resultStaff?.paging?.count ?: 0
         finalList.addAll(listStaff!!)
         list.clear()
         list.addAll(finalList)
         isLastPageD = (finalList.size == TOTAL_ELEMENTS)
         setAdapterNotify()
-      } else if (isFirstLoad) setEmptyView(true)
+      } else if (isFirstLoad) if (isDoctorProfile(sessionLocal.fP_AppExperienceCode!!)){ setEmptyDoctorView(true) }else { setEmptyView(isStaffEmpty = true) }
     } else {
       if (listStaff.isNullOrEmpty().not()) {
         list.clear()
@@ -224,14 +208,14 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   private fun onStaffAddedOrUpdated(b: Boolean) {
     val instance = FirestoreManager
+    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_create_staff = b
     instance.updateDocument()
   }
 
   private fun setAdapterNotify() {
     if (adapterStaff == null) {
-      adapterStaff =
-        AppBaseRecyclerViewAdapter(baseActivity, list, this@StaffProfileListingFragment)
+      adapterStaff = AppBaseRecyclerViewAdapter(baseActivity, list, this@StaffProfileListingFragment)
       binding?.rvStaffList?.layoutManager = layoutManagerN
       binding?.rvStaffList?.adapter = adapterStaff
       adapterStaff?.runLayoutAnimation(binding?.rvStaffList)
@@ -240,10 +224,14 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   private fun setEmptyView(isStaffEmpty: Boolean, isServiceEmpty: Boolean = false) {
     binding?.serviceEmpty?.root?.visibility = if (isServiceEmpty) View.VISIBLE else View.GONE
-    binding?.staffEmpty?.root?.visibility =
-      if (isStaffEmpty && isServiceEmpty.not()) View.VISIBLE else View.GONE
-    binding?.rvStaffList?.visibility =
-      if (isStaffEmpty || isServiceEmpty) View.GONE else View.VISIBLE
+    binding?.staffEmpty?.root?.visibility = if (isStaffEmpty && isServiceEmpty.not()) View.VISIBLE else View.GONE
+    binding?.rvStaffList?.visibility = if (isStaffEmpty || isServiceEmpty) View.GONE else View.VISIBLE
+    if (this::menuAdd.isInitialized) menuAdd.isVisible = isServiceEmpty.not()
+  }
+  private fun setEmptyDoctorView(isDoctorEmpty: Boolean, isServiceEmpty: Boolean = false) {
+    binding?.serviceEmpty?.root?.visibility = if (isServiceEmpty) View.VISIBLE else View.GONE
+    binding?.doctorEmpty?.root?.visibility = if (isDoctorEmpty && isServiceEmpty.not()) View.VISIBLE else View.GONE
+    binding?.rvStaffList?.visibility = if (isDoctorEmpty || isServiceEmpty) View.GONE else View.VISIBLE
     if (this::menuAdd.isInitialized) menuAdd.isVisible = isServiceEmpty.not()
   }
 
@@ -258,20 +246,14 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     val staff = item as DataItem
     val bundle = Bundle()
     bundle.putSerializable(IntentConstant.STAFF_DATA.name, staff)
-    startStaffFragmentActivity(
-      FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT,
-      bundle,
-      clearTop = false,
-      isResult = true
-    )
+    startStaffFragmentActivity(FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT, bundle, clearTop = false, isResult = true)
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_stafflisting, menu)
     val searchView = menu.findItem(R.id.app_bar_search).actionView as? SearchView
-    val searchAutoComplete =
-      searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
+    val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
     searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
     searchAutoComplete?.setTextColor(getColor(R.color.white))
     searchView?.queryHint = getString(R.string.search_staff)
@@ -290,11 +272,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     return when (item.itemId) {
       R.id.menu_add_staff -> {
         WebEngageController.trackEvent(ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
-        startStaffFragmentActivity(
-          FragmentType.STAFF_DETAILS_FRAGMENT,
-          clearTop = false,
-          isResult = true
-        )
+        startStaffFragmentActivity(if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
         true
       }
       R.id.app_bar_search -> {
@@ -315,21 +293,14 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.staffEmpty?.btnAddStaff -> startStaffFragmentActivity(
-        FragmentType.STAFF_DETAILS_FRAGMENT,
-        clearTop = false,
-        isResult = true
-      )
+      binding?.staffEmpty?.btnAddStaff -> startStaffFragmentActivity( if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = true)
       binding?.serviceEmpty?.cbAddService -> {
         isServiceAdd = true
-        startFragmentActivity(
-          FragmentType.SERVICE_DETAIL_VIEW,
-          bundle = sendBundleData(),
-          isResult = true
-        )
+        startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle = sendBundleData(), isResult = true)
       }
       binding?.staffLock?.btnStaffAddOns -> startStorePage()
       binding?.staffEmpty?.btnHowWork -> openHelpBottomSheet()
+      binding?.doctorEmpty?.btnAddDoctor->{startStaffFragmentActivity(FragmentType.DOCTOR_ADD_EDIT_FRAGMENT)}
     }
   }
 
@@ -389,16 +360,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       intent.putExtra("fpName", sessionLocal.fpTag)
       intent.putExtra("fpid", sessionLocal.fPID)
       intent.putExtra("fpTag", sessionLocal.fpTag)
-      intent.putExtra(
-        "accountType",
-        sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)
-      )
-      intent.putStringArrayListExtra(
-        "userPurchsedWidgets",
-        ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList())
-      )
-      intent.putExtra("email", sessionLocal.userProfileEmail ?: "ria@nowfloats.com")
-      intent.putExtra("mobileNo", sessionLocal.userPrimaryMobile ?: "9160004303")
+      intent.putExtra("accountType", sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
+      intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList()))
+      intent.putExtra("email", sessionLocal.fPEmail ?: "ria@nowfloats.com")
+      intent.putExtra("mobileNo", sessionLocal.fPPrimaryContactNumber ?: "9160004303")
       intent.putExtra("profileUrl", sessionLocal.fPLogo)
       intent.putExtra("buyItemKey", "${StatusKyc.STAFFPROFILE.name}15")// feature key
       baseActivity.startActivity(intent)

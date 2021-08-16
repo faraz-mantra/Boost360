@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/size_10">
+
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/select_appointment_booking_window_duration"
+                android:textColor="@color/white"
+                app:fontFamily="@font/open_sans_semibold"
+                app:textType="HEADING_4"
+                tools:textColor="@color/black_4a4a4a" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_top_white_2"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/rg_booking_window"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginBottom="@dimen/size_8"
+                android:paddingHorizontal="@dimen/size_8">
+
+                <com.framework.views.customViews.CustomRadioButton
+                    android:id="@+id/r_seven"
+                    style="@style/RadioWindow"
+                    android:text="@string/_7_days" />
+
+                <com.framework.views.customViews.CustomRadioButton
+                    android:id="@+id/r_fourteen"
+                    style="@style/RadioWindow"
+                    android:text="@string/_14_days" />
+
+                <com.framework.views.customViews.CustomRadioButton
+                    android:id="@+id/r_thirty"
+                    style="@style/RadioWindow"
+                    android:text="@string/_30_days" />
+
+                <com.framework.views.customViews.CustomRadioButton
+                    android:id="@+id/r_sixty"
+                    style="@style/RadioWindow"
+                    android:text="@string/_60_days" />
+
+                <com.framework.views.customViews.CustomRadioButton
+                    android:id="@+id/r_ninty"
+                    style="@style/RadioWindow"
+                    android:text="@string/_90_days" />
+            </RadioGroup>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20"
+                android:layout_marginBottom="@dimen/size_20"
+                android:paddingRight="@dimen/size_10">
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_save_changes"
+                    style="@style/ButtonStyle.Rounded.Solid"
+                    android:layout_height="@dimen/size_42"
+                    android:fontFamily="@font/semi_bold"
+                    android:gravity="center"
+                    android:text="@string/save_changes"
+                    android:textAllCaps="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:textType="HEADING_6" />
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_cancel"
+                    style="@style/ButtonStyle.Rounded.Solid"
+                    android:layout_height="@dimen/size_42"
+                    android:background="@null"
+                    android:fontFamily="@font/semi_bold"
+                    android:gravity="center"
+                    android:text="@string/cancel"
+                    android:textAllCaps="true"
+                    android:textColor="@color/pinkish_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_save_changes"
+                    app:layout_constraintHorizontal_bias="0.9"
+                    app:layout_constraintRight_toLeftOf="@id/btn_save_changes"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:textType="HEADING_6" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>
