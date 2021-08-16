@@ -24,11 +24,7 @@ abstract class BaseDialogFragment<T : ViewDataBinding, ViewModel : BaseViewModel
   protected abstract fun getViewModelClass(): Class<ViewModel>
   protected var navigator: Navigator? = null
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
     baseActivity = activity as BaseActivity<*, *>
     viewModel = ViewModelProviders.of(this).get(getViewModelClass())
