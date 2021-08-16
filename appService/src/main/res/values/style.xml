@@ -86,6 +86,7 @@
     <item name="android:windowDisablePreview">true</item>
     <item name="editTextStyle">@style/ComposeEditText</item>
     <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
+  </style>
   <style name="OffersThemeBase" parent="AppTheme.cataloge">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -122,26 +123,12 @@
     <!--        <item name="android:background">@drawable/rounded_stroke_grey_4</item>-->
 
   </style>
-
-  <style name="RadioService" parent="Widget.AppCompat.CompoundButton.RadioButton">
-    <item name="android:textColor">@color/black_4a4a4a</item>
-    <item name="android:layout_height">match_parent</item>
-    <item name="android:layout_width">match_parent</item>
-    <item name="android:fontFamily">@font/open_sans</item>
-    <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
-    <item name="android:buttonTint">@color/yellow_ffb900</item>
-    <item name="android:gravity">center_vertical</item>
-    <item name="android:layout_marginTop">@dimen/size_15</item>
-    <item name="android:layout_marginBottom">@dimen/size_15</item>
-    <item name="android:textSize">16sp</item>
-  </style>
-
   <style name="RadioAppointment" parent="Widget.AppCompat.CompoundButton.RadioButton">
     <item name="android:textColor">@color/black_4a4a4a</item>
     <item name="android:layout_height">match_parent</item>
     <item name="android:layout_width">match_parent</item>
     <item name="android:paddingStart">8dp</item>
-    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
     <item name="android:buttonTint">@color/yellow_ffb900</item>
     <item name="android:gravity">center_vertical</item>
@@ -154,7 +141,7 @@
     <item name="android:textColor">@color/black_4a4a4a</item>
     <item name="android:layout_height">match_parent</item>
     <item name="android:layout_width">match_parent</item>
-    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
     <item name="android:buttonTint">@color/yellow_ffb900</item>
     <item name="android:gravity">center_vertical</item>
@@ -289,14 +276,14 @@
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:includeFontPadding">true</item>
-      <item name="android:fontFamily">@font/open_sans_semibold</item>
+      <item name="android:fontFamily">@font/semi_bold</item>
   </style>
 
   <style name="AppointmentSetting_Text_Content" parent="AppointmentSetting_Text_Heading">
     <item name="android:textSize">11sp</item>
     <item name="android:includeFontPadding">true</item>
     <item name="android:textStyle">normal</item>
-    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:fontFamily">@font/regular</item>
   </style>
 
   <style name="Appointment.ButtonStyle" parent="ButtonStyle.Rounded">
@@ -394,7 +381,7 @@
     <item name="android:buttonTint">@color/green_27AE60</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:textFontWeight" tools:targetApi="p">700</item>
-    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:textSize">@dimen/size_10</item>
     <item name="android:textAllCaps">true</item>
@@ -681,7 +668,7 @@
     <item name="android:buttonTint">@color/green_27AE60</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:textFontWeight" tools:targetApi="p">700</item>
-    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:fontFamily">@font/regular</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:textSize">@dimen/size_10</item>
     <item name="android:textAllCaps">true</item>
