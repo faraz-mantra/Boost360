@@ -440,11 +440,11 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
     MaterialDialog dialog = new MaterialDialog.Builder(this)
         .customView(parentView, true)
         .autoDismiss(false)
-        .title("Select Time")
-        .positiveText("set")
-        .negativeText("cancel")
-        .positiveColorRes(R.color.primary_color)
-        .negativeColorRes(R.color.gray_transparent)
+        .title("Select time")
+        .positiveText("Set")
+        .negativeText("Cancel")
+        .positiveColorRes(R.color.colorAccentLight)
+        .negativeColorRes(R.color.black_4a4a4a)
         .onPositive(new MaterialDialog.SingleButtonCallback() {
           @Override
           public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
