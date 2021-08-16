@@ -41,7 +41,7 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
                 startFragmentActivity(FragmentType.ECOMMERCE_CATALOG_SETTINGS)
             }
             binding?.paymentCollectionSetup -> {
-                startFragmentActivity(FragmentType.APPOINTMENT_PAYMENT_SETTINGS)
+                startFragmentActivity(FragmentType.ECOMMERCE_PAYMENT_SETTINGS)
 
             }
             binding?.customerInvoiceSetup -> {
