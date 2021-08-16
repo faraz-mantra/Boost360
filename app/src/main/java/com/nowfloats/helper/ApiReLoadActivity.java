@@ -17,11 +17,15 @@ public class ApiReLoadActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BaseOrderApplication.apiInitialize();
-        BaseBoardingApplication.apiInitialize();
-        AppServiceApplication.apiInitialize();
-        AppDashboardApplication.apiInitialize();
-        AppPreSignInApplication.apiInitialize();
+        try {
+            BaseOrderApplication.apiInitialize();
+            BaseBoardingApplication.apiInitialize();
+            AppServiceApplication.apiInitialize();
+            AppDashboardApplication.apiInitialize();
+            AppPreSignInApplication.apiInitialize();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         onBackPressed();
     }
 

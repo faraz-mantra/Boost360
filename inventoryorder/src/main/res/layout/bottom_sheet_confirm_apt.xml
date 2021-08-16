@@ -224,9 +224,9 @@
         <com.framework.views.customViews.CustomButton
           android:id="@+id/tvCancel"
           style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:layout_marginEnd="@dimen/size_10"
-          android:text="@string/cancel"
+          android:layout_marginEnd="@dimen/size_20"
           android:background="@drawable/bg_rounded_yellow_light"
+          android:text="@string/cancel"
           android:textColor="@color/colorAccentLight" />
 
         <com.framework.views.customViews.CustomButton
@@ -234,6 +234,7 @@
           style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
           android:text="@string/confirm"
           android:textColor="@color/white" />
+
       </androidx.appcompat.widget.LinearLayoutCompat>
     </FrameLayout>
   </androidx.constraintlayout.widget.ConstraintLayout>

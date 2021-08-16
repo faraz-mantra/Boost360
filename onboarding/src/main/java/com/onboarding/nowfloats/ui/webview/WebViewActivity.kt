@@ -58,19 +58,21 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
     webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
     webSettings?.domStorageEnabled = true
 
-    binding?.webview?.webChromeClient = object :WebChromeClient(){
+    binding?.webview?.webChromeClient = object : WebChromeClient() {
       override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
         val result = view!!.hitTestResult
         val data = result.extra
-        val context= view.context
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data))
-        context.startActivity(browserIntent)
+        val context = view.context
+        if (data != null) {
+          val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data))
+          context.startActivity(browserIntent)
+        }
         return false
       }
     }
     binding?.webview?.webViewClient = object : WebViewClient() {
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-        Log.i(TAG, "shouldOverrideUrlLoading: "+url)
+        Log.i(TAG, "shouldOverrideUrlLoading: " + url)
         binding?.progressBar?.visible()
         return if (
           url.startsWith("mailto:") || url.startsWith("tel:") || url.startsWith("geo:")
@@ -132,7 +134,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
   }
 
   override fun getToolbarTitleColor(): Int? {
-    return ContextCompat.getColor(this,R.color.black_4a4a4a)
+    return ContextCompat.getColor(this, R.color.black_4a4a4a)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -4,11 +4,6 @@
 
   <corners android:radius="@dimen/size_10" />
 
-  <solid android:color="@color/ButtoncolorAccent" />
-
-  <!--    <padding-->
-  <!--        android:bottom="4dp"-->
-  <!--        android:left="16dp"-->
-  <!--        android:top="4dp" />-->
+  <solid android:color="@color/colorAccentLight" />
 
 </shape>

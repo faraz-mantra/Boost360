@@ -1026,6 +1026,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
             activity.overridePendingTransition(0, 0);
             activity.finish();
         } catch (Exception e) {
+            e.printStackTrace();
             Log.e("USER_LOGOUT", e.getLocalizedMessage());
         }
     }
