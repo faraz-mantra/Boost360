@@ -1,9 +1,8 @@
-package com.appservice.staffs.doctors
+package com.appservice.ui.staffs.doctors
 
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
@@ -17,19 +16,17 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentEditDoctorInfoBinding
-import com.appservice.staffs.doctors.bottomsheet.AppointmentBookingBottomSheet
-import com.appservice.staffs.model.*
-import com.appservice.staffs.ui.Constants
+import com.appservice.model.staffModel.*
+import com.appservice.ui.staffs.doctors.bottomsheet.AppointmentBookingBottomSheet
 import com.appservice.staffs.ui.StaffFragmentContainerActivity
-import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
-import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.common.AppointmentModel
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.appservice.ui.staffs.UserSession
+import com.appservice.ui.staffs.ui.Constants
+import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.utils.WebEngageController
-import com.appservice.utils.getBitmap
-import com.bumptech.glide.load.ImageHeaderParser
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible

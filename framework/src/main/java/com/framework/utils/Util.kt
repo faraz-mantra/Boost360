@@ -22,6 +22,7 @@ import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import com.framework.views.customViews.CustomTextView
+import java.io.File
 import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Matcher
@@ -139,3 +140,8 @@ fun LottieAnimationView.changeLayersColor(
   val callback: LottieValueCallback<ColorFilter> = LottieValueCallback(filter)
   addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
 }
+val File.size get() = if (!exists()) 0.0 else length().toDouble()
+val File.sizeInKb get() = size / 1024
+val File.sizeInMb get() = sizeInKb / 1024
+val File.sizeInGb get() = sizeInMb / 1024
+val File.sizeInTb get() = sizeInGb / 1024

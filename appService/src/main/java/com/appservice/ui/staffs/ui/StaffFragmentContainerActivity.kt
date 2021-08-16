@@ -14,18 +14,21 @@ import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
-import com.appservice.staffs.doctors.AdditionalDoctorsInfoFragment
-import com.appservice.staffs.doctors.EditDoctorsDetailsFragment
-import com.appservice.staffs.model.ExperienceModel
-import com.appservice.staffs.ui.breaks.ScheduledBreaksFragmnt
-import com.appservice.staffs.ui.breaks.StaffBreakConfirmFragment
+import com.appservice.ui.staffs.doctors.AdditionalDoctorsInfoFragment
+import com.appservice.ui.staffs.doctors.EditDoctorsDetailsFragment
+
 import com.appservice.staffs.ui.details.StaffDetailsFragment
-import com.appservice.staffs.ui.home.StaffAddFragment
-import com.appservice.staffs.ui.home.StaffHomeFragment
+
 import com.appservice.staffs.ui.home.StaffProfileListingFragment
 import com.appservice.staffs.ui.profile.StaffProfileDetailsFragment
-import com.appservice.staffs.ui.services.StaffServicesFragment
 import com.appservice.ui.catalog.common.WeeklyAppointmentFragment
+import com.appservice.ui.staffs.UserSession
+import com.appservice.ui.staffs.ui.Constants
+import com.appservice.ui.staffs.ui.breaks.ScheduledBreaksFragmnt
+import com.appservice.ui.staffs.ui.breaks.StaffBreakConfirmFragment
+import com.appservice.ui.staffs.ui.home.StaffAddFragment
+import com.appservice.ui.staffs.ui.home.StaffHomeFragment
+import com.appservice.ui.staffs.ui.services.StaffServicesFragment
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding

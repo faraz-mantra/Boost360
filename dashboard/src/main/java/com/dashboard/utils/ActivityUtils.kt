@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
-import com.appservice.ui.staffs.ui.startStaffFragmentActivity
+import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
