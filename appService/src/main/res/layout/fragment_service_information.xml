@@ -333,7 +333,6 @@
               android:includeFontPadding="false"
               android:text="@string/service_tags"
               android:textColor="@color/black_4a4a4a"
-              app:drawableEndCompat="@drawable/ic_question_circular_blue"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_3" />
 
@@ -401,7 +400,6 @@
             android:includeFontPadding="false"
             android:text="@string/key_specifications"
             android:textColor="@color/black_4a4a4a"
-            app:drawableEndCompat="@drawable/ic_question_circular_blue"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_3" />
 
@@ -468,7 +466,6 @@
             android:includeFontPadding="false"
             android:text="@string/service_specifications"
             android:textColor="@color/black_4a4a4a"
-            app:drawableEndCompat="@drawable/ic_question_circular_blue"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_3" />
 
@@ -514,7 +511,6 @@
             android:text="@string/external_url"
             android:textColor="@color/black_4a4a4a"
             android:visibility="visible"
-            app:drawableEndCompat="@drawable/ic_question_circular_blue"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_3" />
 
@@ -776,7 +772,6 @@
               android:text="@string/for_invoice"
               android:textColor="@color/warm_grey"
               android:textSize="12sp"
-              app:drawableEndCompat="@drawable/ic_question_circular_blue"
               app:fontFamily="@font/regular" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
