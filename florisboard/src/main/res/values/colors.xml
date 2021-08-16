@@ -35,5 +35,6 @@
     <color name="lightgray">#c8d1d9</color>
     <color name="whitesmoke">#f5f5f5</color>
 
+    <color name="btn_bg">#FFB900</color>
 
 </resources>

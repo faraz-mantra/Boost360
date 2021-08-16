@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.framework.utils.NetworkUtils
+import com.google.gson.Gson
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
 import com.onboarding.nowfloats.model.profile.MerchantProfileResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
@@ -20,14 +21,17 @@ import dev.patrickgold.florisboard.customization.model.response.staff.StaffResul
 import dev.patrickgold.florisboard.customization.network.GetGalleryImagesAsyncTask
 import dev.patrickgold.florisboard.customization.network.repository.*
 import dev.patrickgold.florisboard.customization.util.Constants
+import dev.patrickgold.florisboard.customization.util.PrefConstants
+import dev.patrickgold.florisboard.customization.util.SharedPrefUtil
 import kotlinx.coroutines.*
 import timber.log.Timber
 
 
-class BusinessFeaturesViewModel {
+class BusinessFeaturesViewModel(context: Context) {
 
   private  val TAG = "BusinessFeaturesViewMod"
   var job: Job? = null
+  val sharedPref = SharedPrefUtil.fromBoostPref().getsBoostPref(context)
 
   private val _error = MutableLiveData<String>()
   val error: LiveData<String>
@@ -38,11 +42,18 @@ class BusinessFeaturesViewModel {
     get() = _updates
 
   fun getUpdates(fpId: String?, clientId: String, skipBy: Int, limit: Int) {
+    val prefUpdates = sharedPref.updateList
+    if (prefUpdates!=null){
+      _updates.postValue(prefUpdates)
+    }
     job?.cancel()
     job = CoroutineScope(Dispatchers.IO).launch {
       val updates = BusinessFeatureRepository.getAllUpdates(fpId, clientId, skipBy, limit)
       withContext(Dispatchers.Main) {
-        if (updates.isSuccessful) _updates.value = updates.body()
+        if (updates.isSuccessful){
+          _updates.value = updates.body()
+          sharedPref.save(PrefConstants.PREF_UPDATES,Gson().toJson(updates.body()))
+        }
         else{
           if (updates.code()==Constants.UNAUTHORIZED_STATUS_CODE){
             _error.value = Constants.TOKEN_EXPIRED_MESSAGE
@@ -59,6 +70,10 @@ class BusinessFeaturesViewModel {
     get() = _products
 
   fun getProducts(fpTag: String?, clientId: String, skipBy: Int, identifierType: String) {
+    val prefProducts = sharedPref.productList
+    if (prefProducts!=null){
+      _products.postValue(prefProducts)
+    }
     job?.cancel()
     job = CoroutineScope(Dispatchers.IO).launch {
       val products = BusinessFeatureRepository.getAllProducts(fpTag, clientId, skipBy, identifierType)
@@ -67,6 +82,7 @@ class BusinessFeaturesViewModel {
 
         if (products.isSuccessful){
           _products.postValue(products.body() ?: arrayListOf())
+          sharedPref.save(PrefConstants.PREF_PRODUCTS,Gson().toJson(products.body()))
         }
         else {
           if (products.code()==Constants.UNAUTHORIZED_STATUS_CODE){
@@ -207,13 +223,19 @@ class BusinessFeaturesViewModel {
     get() = _photo
 
   fun getPhotos(fpId: String) {
+    val prefPhotos= sharedPref.photoList
+    if (prefPhotos!=null){
+      _photo.postValue(prefPhotos)
+    }
     job?.cancel()
     job = CoroutineScope(Dispatchers.IO).launch {
       BusinessFeatureRepository.getAllImageList(object : GetGalleryImagesAsyncTask.GetGalleryImagesInterface {
         override fun imagesReceived(listImage: ArrayList<String>) {
           Timber.i("Images Received")
           CoroutineScope(Dispatchers.Main).launch {
-            _photo.value = listImage.map { url -> Photo().apply { imageUri = url } }
+            val response = listImage.map { url -> Photo().apply { imageUri = url } }
+            _photo.value = response
+            sharedPref.save(PrefConstants.PREF_PHOTOS,Gson().toJson(response))
           }
         }
 
@@ -231,12 +253,18 @@ class BusinessFeaturesViewModel {
     get() = _staff
 
   fun getStaffList(request: GetStaffListingRequest?) {
+    val prefStaff= sharedPref.staffList
+    if (prefStaff!=null){
+      _staff.postValue(prefStaff)
+    }
     job?.cancel()
     job = CoroutineScope(Dispatchers.IO).launch {
       val staffResponse = NowFloatRepository.fetchStaffList(request)
       withContext(Dispatchers.Main) {
         if (staffResponse.isSuccessful) {
-          _staff.value = staffResponse.body()?.result?:StaffResult()
+          val result = staffResponse.body()?.result?:StaffResult()
+          _staff.value =result
+          sharedPref.save(PrefConstants.PREF_STAFF,Gson().toJson(result))
         } else {
           if (staffResponse.code()==Constants.UNAUTHORIZED_STATUS_CODE){
             _error.value = Constants.TOKEN_EXPIRED_MESSAGE

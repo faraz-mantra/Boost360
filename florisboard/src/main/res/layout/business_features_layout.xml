@@ -364,5 +364,65 @@
 
     </androidx.cardview.widget.CardView>
 
+    <ScrollView
+        android:fadeScrollbars="false"
+
+        android:id="@+id/feature_not_renewed"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+      <RelativeLayout
+          android:background="@color/grey_bg"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_margin="@dimen/size_16"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+          <com.framework.views.customViews.CustomImageView
+              android:src="@drawable/ic_keyboard_renew"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+
+
+          <com.framework.views.customViews.CustomTextView
+              android:gravity="center"
+              android:layout_marginTop="@dimen/size_8"
+              android:fontFamily="@font/semi_bold"
+              android:textSize="@dimen/size_18"
+              android:text="@string/feature_not_renewed"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"/>
+
+          <com.framework.views.customViews.CustomTextView
+              android:fontFamily="@font/regular"
+              android:layout_marginTop="@dimen/size_16"
+              android:gravity="center"
+              android:text="@string/keyboard_renew_desc"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"/>
+
+          <com.framework.views.customViews.CustomMaterialButton
+              android:text="@string/renew_feature"
+              android:textAllCaps="false"
+              android:id="@+id/btn_renew"
+              app:cornerRadius="@dimen/size_15"
+              app:iconGravity="textStart"
+              android:backgroundTint="@color/btn_bg"
+              app:icon="@drawable/ic_lockkey"
+              android:layout_marginTop="@dimen/size_16"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+      </RelativeLayout>
+
+    </ScrollView>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

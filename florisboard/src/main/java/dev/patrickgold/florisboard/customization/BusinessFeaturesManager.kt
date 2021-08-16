@@ -73,6 +73,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
   private val TAG = "BusinessFeaturesManager"
   private lateinit var binding: BusinessFeaturesLayoutBinding
+  private lateinit var sharedPref:SharedPrefUtil
   private lateinit var viewModel: BusinessFeaturesViewModel
   private var businessFeatureEnum:BusinessFeatureEnum?=null
   private val photosSet = mutableSetOf<Photo>()
@@ -115,9 +116,10 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
   private fun onRegisterInputView(inputView: InputView, florisBoard: FlorisBoard) {
     this.mContext = inputView.context
+    this.sharedPref = SharedPrefUtil.fromBoostPref().getsBoostPref(mContext)
     this.session = UserSessionManager(this.mContext)
     this.florisBoard = florisBoard
-    this.viewModel = BusinessFeaturesViewModel()
+    this.viewModel = BusinessFeaturesViewModel(mContext)
     this.gridType = Photo.ViewGridType.FOUR_GRID
     this.adapterProductService = SharedAdapter(arrayListOf(), this)
     this.adapterUpdates = SharedAdapter(arrayListOf(), this)
@@ -193,6 +195,8 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   fun showSelectedBusinessFeature(tagPosition: Int, businessFeatureEnum: BusinessFeatureEnum) {
+    this.session = UserSessionManager(this.mContext)
+
     this.businessFeatureEnum = businessFeatureEnum
     this.tagPosition = tagPosition
     this.currentSelectedFeature = businessFeatureEnum
@@ -202,7 +206,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       if (isStaffVisible(session?.fP_AppExperienceCode ?: "")) visible() else gone()
     }
     Log.i(TAG, "showSelectedBusinessFeature: ")
-    val lastSyncTime = SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).lastSyncTime
+    val lastSyncTime = sharedPref.lastSyncTime
     if (session?.isUserLoggedIn == false) {
         updateUiOnUserUnAuthorized()
     } else if (lastSyncTime==null||MethodUtils
@@ -215,7 +219,10 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   private fun loadDataBasesOnTab() {
+    resetAdapters()
     if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") == true) {
+      binding.featureNotRenewed.gone()
+
       if (MethodUtils.isOnline(mContext)) {
         binding.pleaseLoginCard.gone()
         binding.businessFeatureProgress.visible()
@@ -275,14 +282,20 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       }
     } else {
       Timber.i("Please add boost keyboard in your current plan.")
-      binding.textView.text = mContext.getString(R.string.keyboard_not_added_plan)
-      binding.pleaseLoginCard.visible()
-      binding.pleaseLoginCard.setOnClickListener {
-        if (binding.textView.text.equals(mContext.getString(R.string.keyboard_not_added_plan))) {
-          MethodUtils.startKeyboardActivity(mContext)
-        }
+     binding.featureNotRenewed.visible()
+      binding.btnRenew.setOnClickListener {
+        MethodUtils.startKeyboardActivity(mContext)
       }
+
     }
+  }
+
+  private fun resetAdapters() {
+    adapterBusinessCard.clearList()
+    adapterPhoto.clearList()
+    adapterProductService.clearList()
+    adapterStaff.clearList()
+    adapterUpdates.clearList()
   }
 
   private fun updateUiOnUserUnAuthorized() {
@@ -403,6 +416,9 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       session?.fPEmail, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY),
       session?.getDomainName(false), session?.getIconCard()
     )
+    if (sharedPref.businessCardList!=null){
+      this.adapterBusinessCard.notifyNewList(sharedPref.businessCardList)
+    }
     viewModel.getMerchantProfile(session?.fPID)
     viewModel.merchantProfileData.observeForever { it1 ->
       if (it1.result?.channelProfileProperties.isNullOrEmpty().not()) {
@@ -434,6 +450,8 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_SEVEN_ITEM.ordinal))
       cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_NINE_ITEM.ordinal))
       cardList.add(DigitalCardDataKeyboard(cardData = cardData, recyclerViewType = FeaturesEnum.VISITING_CARD_TEN_ITEM.ordinal))
+      sharedPref.save(PrefConstants.PREF_BUSINESS_CARD,Gson().toJson(cardList))
+
       this.adapterBusinessCard.notifyNewList(cardList)
       binding.businessFeatureProgress.gone()
       binding.btnShareImageBusiness.setOnClickListener { shareImageTextBusiness() }

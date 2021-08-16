@@ -186,4 +186,6 @@ data class Product(
     this.recyclerViewItem = FeaturesEnum.LOADER.ordinal
     return this
   }
+
+
 }

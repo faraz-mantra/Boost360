@@ -409,5 +409,8 @@
   <string name="change_layout">Change layout</string>
   <string name="keyboard_not_added_plan">Boost keyboard is not added in your current plan.</string>
   <string name="staff_not_added_plan">Staff is not added in your current plan.</string>
+    <string name="feature_not_renewed">Feature Not Renewed</string>
+  <string name="keyboard_renew_desc">With business keyboard, share deals, offers, product details quickly as you chat with potential customers on WhatsApp, Instagram, Telegram, Facebook Messenger, etc.</string>
+  <string name="renew_feature">Renew Feature</string>
 
 </resources>

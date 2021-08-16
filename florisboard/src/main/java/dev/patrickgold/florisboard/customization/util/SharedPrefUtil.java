@@ -3,6 +3,18 @@ package dev.patrickgold.florisboard.customization.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.onboarding.nowfloats.model.digitalCard.DigitalCardData;
+
+import java.util.List;
+
+import dev.patrickgold.florisboard.customization.model.response.DigitalCardDataKeyboard;
+import dev.patrickgold.florisboard.customization.model.response.Photo;
+import dev.patrickgold.florisboard.customization.model.response.Product;
+import dev.patrickgold.florisboard.customization.model.response.Updates;
+import dev.patrickgold.florisboard.customization.model.response.staff.StaffResult;
+
 /**
  * Created by NowFloats on 26-02-2018.
  */
@@ -189,6 +201,52 @@ public class SharedPrefUtil {
   public void setLastSyncTime(Long timeinmilis){
     if (sBoostPref != null) {
       sBoostPref.edit().putString(PrefConstants.INSTANCE.getLAST_SYNC_TIME(),timeinmilis.toString()).apply();
+    }
+  }
+
+  public void save(String key,String value){
+    if (sBoostPref != null) {
+      sBoostPref.edit().putString(key,value).apply();
+    }
+  }
+
+  public List<Product> getProductList(){
+    if (sBoostPref!=null){
+      return new Gson().fromJson(sBoostPref.getString(PrefConstants.INSTANCE.getPREF_PRODUCTS(),null),new TypeToken<List<Product>>(){}.getType());
+    }else {
+      return null;
+    }
+  }
+
+  public Updates getUpdateList(){
+    if (sBoostPref!=null){
+      return new Gson().fromJson(sBoostPref.getString(PrefConstants.INSTANCE.getPREF_UPDATES(),null),new TypeToken<Updates>(){}.getType());
+    }else {
+      return null;
+    }
+  }
+
+
+  public List<Photo> getPhotoList(){
+    if (sBoostPref!=null){
+      return new Gson().fromJson(sBoostPref.getString(PrefConstants.INSTANCE.getPREF_PHOTOS(),null),new TypeToken<List<Photo>>(){}.getType());
+    }else {
+      return null;
+    }
+  }
+
+  public List<DigitalCardDataKeyboard> getBusinessCardList(){
+    if (sBoostPref!=null){
+      return new Gson().fromJson(sBoostPref.getString(PrefConstants.INSTANCE.getPREF_BUSINESS_CARD(),null),new TypeToken<List<DigitalCardDataKeyboard>>(){}.getType());
+    }else {
+      return null;
+    }
+  }
+  public StaffResult getStaffList(){
+    if (sBoostPref!=null){
+      return new Gson().fromJson(sBoostPref.getString(PrefConstants.INSTANCE.getPREF_STAFF(),null),new TypeToken<StaffResult>(){}.getType());
+    }else {
+      return null;
     }
   }
 }
