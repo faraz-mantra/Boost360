@@ -89,8 +89,7 @@ class UpgradeActivity : AppCompatActivity() {
 
     isDeepLink = intent.getBooleanExtra("isDeepLink", false)
     deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
-    deepLinkDay = intent.getStringExtra("deepLinkDay").toIntOrNull() ?: 7
-
+    deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
     experienceCode = intent.getStringExtra("expCode")
     fpName = intent.getStringExtra("fpName")
     fpid = intent.getStringExtra("fpid")

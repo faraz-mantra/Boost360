@@ -26,13 +26,13 @@ import com.appservice.databinding.FragmentStaffDetailsBinding
 import com.appservice.model.staffModel.*
 import com.appservice.ui.staffs.ui.Constants
 import com.appservice.ui.staffs.ui.StaffFragmentContainerActivity
-import com.appservice.ui.staffs.ui.UserSession
 import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.staffs.widgets.ExperienceBottomSheet
 import com.appservice.ui.catalog.common.AppointmentModel
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.appservice.ui.staffs.UserSession
 import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce

@@ -61,10 +61,6 @@ object EndPoints {
   const val PUT_BIZ_IMAGE = "discover/v1/FloatingPoint/createBizImage"
   const val GET_BIZ_WEB_UPDATE_BY_ID = "discover/v1/bizFloatForWeb/{id}"
   const val DELETE_BIZ_MESSAGE_UPDATE = "discover/v1/floatingpoint/archiveMessage"
-    const val DELETE_SERVICE = "Product/v1/Delete"
-    const val ADD_IMAGE = "Product/v1/AddImage"
-    const val GET_TAGS = "Product/v1/tags"
-    const val GET_NOTIFICATION = "Discover/v1/floatingpoint/notificationscount"
 
     //TODO PRODUCT API 2 WITH FLOAT
     const val CREATE_PRODUCT = "Product/v1/Create"

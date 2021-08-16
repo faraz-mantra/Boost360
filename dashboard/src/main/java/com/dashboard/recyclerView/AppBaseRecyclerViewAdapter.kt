@@ -42,6 +42,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       FILTER_DATE_VIEW -> DateFilterViewHolder(binding as ItemFilterDateBinding)
       WEBSITE_COLOR_VIEW -> WebsiteColorViewHolder(binding as RecyclerItemColorsBinding)
       WEBSITE_FONT_VIEW -> WebSiteFontViewHolder(binding as RecyclerItemSelectFontBinding)
+      CONSULTATION_VIEW -> ConsultationViewHolder(binding as RecyclerItemConsultationBinding)
     }
   }
 

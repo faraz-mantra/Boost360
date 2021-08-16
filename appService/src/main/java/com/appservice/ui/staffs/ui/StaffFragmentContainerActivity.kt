@@ -23,6 +23,7 @@ import com.appservice.ui.staffs.ui.home.StaffProfileListingFragment
 import com.appservice.ui.staffs.ui.profile.StaffProfileDetailsFragment
 import com.appservice.ui.staffs.ui.services.StaffServicesFragment
 import com.appservice.ui.catalog.common.WeeklyAppointmentFragment
+import com.appservice.ui.staffs.UserSession
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding

@@ -71,7 +71,7 @@
   <string name="i_have_an_instamojo_account">I have an Instamojo account</string>
   <string name="start_with_pan_card">Start with PAN Card</string>
   <string name="get_started">get started</string>
-  <string name="take_photo_of_your_pan_card">Take Photo Of Your PAN Card</string>
+  <string name="take_photo_of_your_pan_card">Take photo of your PAN Card</string>
   <string name="submit_documents_for_kyc">Submit Documents for KYC</string>
   <string name="submit">Submit</string>
   <string name="pan_details">Pan Details</string>
@@ -266,10 +266,10 @@
   <!--  end of staff modules strings-->
   <string name="why_do_we_need_your_bank_account">Why do we need your bank account?</string>
   <string name="collect_boost_business_website_desc">This account is being used to send you money collected from your customers who are making payments on your Boost Business website.</string>
-  <string name="product_category">Product category*</string>
+  <string name="product_category">Product Category*</string>
   <string name="select_or_create_a_service_category">Select or create a service category</string>
   <string name="write_the_name_of_your_product">Write the name of your product</string>
-  <string name="product_name">Product name*</string>
+  <string name="product_name">Product Name*</string>
   <string name="this_information_is_required_if_you_select">This information is required if you select delivery service.</string>
   <string name="product_specifications">Product specifications</string>
   <string name="in_case_this_product_is_associated_with_certified_by_any_brand">In case this product is associated with/certified by any brand.</string>
@@ -284,7 +284,7 @@
   <string name="type_product_category">Type product category</string>
   <string name="brand_name">Brand Name</string>
   <string name="type_a_brand_name">Type a brand name</string>
-  <string name="stock_availability">Stock availability</string>
+  <string name="stock_availability">Stock Availability</string>
   <string name="add_change_warehouse"><u>ADD/CHANGE WAREHOUSE</u></string>
   <string name="service_delivery_configuration">Service Delivery Configuration*</string>
   <string name="u_add_session_u"><u>Add Session</u></string>
@@ -319,7 +319,7 @@
   <string name="this_will_help_you_group_multiple_services_under_this_category">This will help you group multiple services under this category</string>
   <string name="service_category">Service category*</string>
   <string name="write_the_name_of_your_service">Write the name of your service</string>
-  <string name="service_name">Service name*</string>
+  <string name="service_name">Service Name*</string>
   <string name="service_adding_error">Service adding error, please try again.</string>
   <string name="service_timing_adding_error">Service timing adding error, please try again.</string>
   <string name="service_updating_error">Service updating error, please try again.</string>
@@ -467,9 +467,6 @@
   <string name="service_categories_catalog_display_text_napplicable_tax_slabs">Service categories, Catalog display text,\napplicable tax slabs</string>
   <string name="decide_what_you_want_to_call_the_catalog_tab_on_your_website_and_the_default_tax_for_your_all_services">Decide what you want to call the catalog tab on your website and the default tax % for your all services.</string>
   <string name="current_display_name">Current display name</string>
-  <string name="it_is_not_advised_to_change_it_very_often_with_every_such_change_the_url_of_catalog_page_changes_which_may_cause_search_related_issues_and_a_drop_in_search_rank_leading_to_less_traffic">It is NOT ADVISED to change it very often. With every such change, the URL of catalog page changes, which may cause search related issues and a drop in search rank leading to less traffic.</string>
-  <string name="url_https_sravansclinics_com_services">URL: https://sravansclinics.com/services</string>
-  <string name="default_tax_rate_for_services">Default tax rate for services</string>
     <string name="it_is_not_advised_to_change_it_very_often_with_every_such_change_the_url_of_catalog_page_changes_which_may_cause_search_related_issues_and_a_drop_in_search_rank_leading_to_less_traffic">It is NOT ADVISED to change it very often. With every such change, the URL of catalog page changes, which may cause search related issues and a drop in search rank leading to less traffic.</string>
   <string name="url_https_sravansclinics_com_services">URL: <u>https://sravansclinics.com/<b>services</b></u></string>
   <string name="url_https_sravansclinics_com_products">URL: <u>https://sravansclinics.com/<b>products</b></u></string>
@@ -519,18 +516,12 @@
   <string name="preferred_payment_gateway_connected_bank_account">Preferred payment gateway,\nConnected bank account</string>
   <string name="gst_declearation_bank_upi_appointments">GST declaration, Bank UPI for offline appointments,\nSignature</string>
   <string name="refund_cancllation_privacy_policies">Refund, cancellation, privacy policies for your \ncustomers</string>
-  <string name="search_settings">search settings</string>
-  <string name="current_selection">Current selection</string>
-  <string name="rename">RENAME</string>
-  <string name="bank_ifsc_code">Bank IFSC Code*</string>
     <string name="search_settings">search settings</string><string name="current_selection">Current selection</string>
     <string name="rename">RENAME</string>
-    <string name="get_direct_payment_in_your_bank_account_instantly">Get direct payment in your bank account instantly</string>
-  <string name="my_custom_payment_gateway">My custom payment gateway</string>
-  <string name="payment_configuration">Payment Configuration</string>
     <string name="bank_ifsc_code">Bank IFSC Code*</string>
   <string name="bank_name">Bank name*</string>
   <string name="account_number_">Account Number*</string>
+  <string name="name_of_the_account_holder">Name of the account holder*</string>
   <string name="bank_branch_">Bank Branch*</string>
   <string name="why_verify_bank_account">Why verify bank account?</string>
   <string name="why_do_we_need_to_add_and_verify_your_bank_account">Why do we need to add and verify your bank account?</string>
@@ -728,7 +719,6 @@
   <string name="_5">5</string>
   <string name="paste_your_url_here_product">Paste your URL here…</string>
   <string name="type_a_tag_and_press_add_s_info">Type a tag and press \'ADD\'</string>
-  <string name="_4_products_under_this_category">4 products under this category</string>
   <string name="latest_update_data_not_found">Latest update data not found!</string>
   <string name="update_regularly_keep_customers_informed_brand">Update regularly to keep your customers informed about your brand</string>
   <string name="post_an_update_n">Post An Update</string>
@@ -818,15 +808,6 @@
   <string name="error_getting_bank_details">error getting bank details</string>
   <string name="my_bank_account_details">My bank account details</string>
   <string name="my_upi_id">My UPI ID</string>
-  <string name="only_one_file_is_allowed">only one file is allowed</string>
-  <string name="error_getting_payment_details">error getting payment details</string>
-  <string name="error_updating_gst_details">error updating gst details.</string>
-  <string name="gst_details_updated">GST details updated.</string>
-  <string name="invalid_gstin_number">Invalid GSTIN number</string>
-  <string name="please_enter_valid_upi_id">please enter valid UPI id.</string>
-  <string name="error_updating_upi_id">Error updating upi id</string>
-  <string name="signature_uploaded">Signature uploaded</string>
-  <string name="merchant_upi_added">Merchant UPI added.</string>
     <string name="only_one_file_is_allowed">only one file is allowed</string>
     <string name="error_getting_payment_details">error getting payment details</string>
     <string name="error_updating_gst_details">error updating gst details.</string>

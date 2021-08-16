@@ -19,9 +19,9 @@ import com.appservice.databinding.FragmentEcommerceCustomerInvoiceSetupBinding
 import com.appservice.ecommercesettings.ui.bottomsheets.BottomEcommerceTaxInvoices
 import com.appservice.model.FileModel
 import com.appservice.rest.TaskCode
-import com.appservice.staffs.ui.UserSession
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.appservice.ui.staffs.UserSession
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
