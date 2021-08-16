@@ -52,7 +52,8 @@ import com.thinksity.databinding.ActivityBusinessLogoBinding;
 import java.io.File;
 import java.io.InputStream;
 
-import static com.framework.webengageconstant.EventLabelKt.BUSINESS_PROFILE;
+import static com.framework.webengageconstant.EventLabelKt.ADDED;
+import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
 import static com.framework.webengageconstant.EventLabelKt.UPDATED_BUINSESS_LOGO;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_LOGO_ADDED;
 import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_BUSINESS_PROFILE;
@@ -107,7 +108,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getResources().getString(R.string.business_logo));*/
         session = new UserSessionManager(getApplicationContext(), Business_Logo_Activity.this);
-        WebEngageController.trackEvent(EVENT_NAME_BUSINESS_PROFILE, BUSINESS_PROFILE, session.getFpTag());
+        WebEngageController.trackEvent(EVENT_NAME_BUSINESS_PROFILE, PAGE_VIEW, session.getFpTag());
         logoimageView = (ImageView) findViewById(R.id.logoimageView);
         uploadButton = (Button) findViewById(R.id.addLogoButton);
 
@@ -219,27 +220,26 @@ public class Business_Logo_Activity extends AppCompatActivity {
     }
 
     private void selectImage() {
-        final CharSequence[] items = {"Take Photo", "Choose from Library",
-                "Cancel"};
+        final CharSequence[] items = {"Take photo", "Choose from library", "Cancel"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper(this,R.style.AlertDialogCustom));
-        builder.setTitle("Add Photo!");
+        AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper(this,R.style.CustomAlertDialogTheme));
+        builder.setTitle("Add photo!");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                if (items[item].equals("Take Photo")) {
+                if (items[item].equals("Take photo")) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     File f = new File(android.os.Environment
                             .getExternalStorageDirectory(), "temp.jpg");
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                     startActivityForResult(intent, PICK_FROM_CAMERA);
-                } else if (items[item].equals("Choose from Library")) {
+                } else if (items[item].equals("Choose from library")) {
                     Intent intent = new Intent(
                             Intent.ACTION_PICK,
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     //intent.setType("image/*");
                     startActivityForResult(
-                            Intent.createChooser(intent, "Select File"),
+                            Intent.createChooser(intent, "Select file"),
                             PICK_FROM_GALLERY);
                 } else if (items[item].equals("Cancel")) {
                     dialog.dismiss();
@@ -344,9 +344,10 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
     private void onBusinessLogoAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData().getMetricdetail() == null) return;
-        instance.getDrScoreData().getMetricdetail().setBoolean_add_clinic_logo(isAdded);
-        instance.updateDocument();
+        if (instance.getDrScoreData() != null && instance.getDrScoreData().getMetricdetail() != null) {
+            instance.getDrScoreData().getMetricdetail().setBoolean_add_clinic_logo(isAdded);
+            instance.updateDocument();
+        }
     }
 
     @Override
@@ -389,7 +390,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                 String path = data.getStringExtra("edit_image");
                 if (!TextUtils.isEmpty(path)) {
                     this.path = path;
-                    WebEngageController.trackEvent(BUSINESS_LOGO_ADDED, BUSINESS_PROFILE, session.getFpTag());
+                    WebEngageController.trackEvent(BUSINESS_LOGO_ADDED, ADDED, session.getFpTag());
                     uploadPrimaryPicture(path);
                 }
             }

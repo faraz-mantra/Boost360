@@ -16,6 +16,7 @@
     android:paddingStart="@dimen/size_12"
     android:paddingEnd="@dimen/size_12"
     android:text="@string/share"
+    android:textAllCaps="false"
     android:textColor="@color/white"
     app:textType="HEADING_6" />
 </LinearLayout>

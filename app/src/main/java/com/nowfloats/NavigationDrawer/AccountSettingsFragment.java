@@ -120,7 +120,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
             public void onItemClick(int pos) {
                 Intent intent = null;
                 switch (adapterTexts[pos]) {
-                    case "My Business Profile":
+                    case "My business profile":
 //                        intent = new Intent(mContext, FragmentsFactoryActivity.class);
 //                        intent.putExtra("fragmentName", "Business_Profile_Fragment_V2");
 //                        startActivity(intent);
@@ -128,7 +128,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                                 , com.dashboard.constant.FragmentType.FRAGMENT_BUSINESS_PROFILE, new Bundle(), false);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
-                    case "My Bank Account":
+                    case "My bank account":
                         Bundle bundle = new Bundle();
                         bundle.putString(IntentConstant.CLIENT_ID.name(), Constants.clientId);
                         bundle.putString(IntentConstant.USER_PROFILE_ID.name(), sessionManager.getUserProfileId());
@@ -140,18 +140,18 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         }
 //                        intent = new Intent(mContext, AccountInfoActivity.class);
                         break;
-                    case "Self Branded Payment Gateway":
+                    case "Self branded payment gateway":
                         Bundle b = getBundleDataKyc();
                         startFragmentPaymentActivityNew(getActivity(), com.appservice.constant.FragmentType.PAYMENT_GATEWAY, b, false);
                         break;
-                    case "My Business KYC":
+                    case "My business KYC":
                         Bundle b1 = getBundleDataKyc();
                         if (sessionManager.isSelfBrandedKycAdd()) {
                             startFragmentPaymentActivityNew(getActivity(), com.appservice.constant.FragmentType.KYC_STATUS, b1, false);
                         } else
                             startFragmentPaymentActivityNew(getActivity(), FragmentType.BUSINESS_KYC_VIEW, b1, false);
                         break;
-                    case "Boost Extensions":
+                    case "Boost extensions":
                         intent = new Intent(mContext, Boost360ExtensionsActivity.class);
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -172,12 +172,12 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                             Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                         }
                         return;
-                    case "Subscription History":
+                    case "Subscription history":
                         intent = new Intent(mContext, YourPurchasedPlansActivity.class);
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
-                    case "Change Password":
+                    case "Change password":
                         changePassword();
                         WebEngageController.trackEvent(EVENT_NAME_CHANGEPASSWORD, EVENT_LABEL_CHANGEPASSWORD, NULL);
                         return;
@@ -219,21 +219,11 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .positiveText(getString(R.string.setting_logout))
                 .negativeText(getString(R.string.cancel))
                 .negativeColorRes(R.color.black_4a4a4a)
-                .positiveColorRes(R.color.colorAccent_jio)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        sessionManager.logoutUser();
-//                        dialog.dismiss();
-//                        WebEngageController.logout();
-                    }
+                .positiveColorRes(R.color.colorAccentLight)
+                .onPositive((dialog, which) -> {
+                    sessionManager.logoutUser();
                 })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        dialog.dismiss();
-                    }
-                })
+                .onNegative((dialog, which) -> dialog.dismiss())
                 .show();
     }
 

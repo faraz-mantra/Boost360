@@ -81,7 +81,7 @@
       android:paddingRight="10dp"
       android:paddingBottom="5dp"
       android:text="@string/respond"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:textColor="@drawable/yellow_btn_text_color"
       android:textSize="12sp" />
   </LinearLayout>

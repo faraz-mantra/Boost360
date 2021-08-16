@@ -48,14 +48,13 @@
             app:shadowRadius="2dp"
             app:shadowShape="oval"
             app:shadowSide="all"
-            app:srcCompat="@drawable/ic_ria_circle"
             tools:alpha="1">
 
             <com.framework.views.customViews.CustomImageView
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:padding="@dimen/size_1"
-              app:srcCompat="@drawable/ic_ria_circle" />
+              app:srcCompat="@drawable/ic_ria_channel" />
           </com.framework.views.shadowview.ShadowLayout>
 
           <com.framework.views.customViews.CustomTextView
@@ -105,7 +104,7 @@
               android:layout_marginStart="@dimen/size_10"
               android:textColor="@color/white"
               app:textType="HEADING_6"
-              tools:text="Not Connected (2/6)" />
+              tools:text="Not connected (2/6)" />
           </LinearLayout>
 
           <com.framework.views.viewgroups.BaseRecyclerView
@@ -237,7 +236,7 @@
       android:layout_gravity="bottom"
       android:drawableEnd="@null"
       android:paddingBottom="@dimen/size_5"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:visibility="gone"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"

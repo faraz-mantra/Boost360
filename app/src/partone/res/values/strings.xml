@@ -19,7 +19,7 @@
   <string name="ps_sc2_lbl2">Creation</string>
   <string name="ps_sc3_lbl1">Connect to</string>
   <string name="ps_sc3_lbl2">Facebook</string>
-  <string name="ps_sc3_lbl3">Sign in with your Facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
+  <string name="ps_sc3_lbl3">Sign in with your facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
   <string name="ps_sc4_lbl1">Discoverable</string>
   <string name="ps_sc4_lbl2">On Search</string>
   <string name="ps_sc4_lbl3">With Location-Based-SEO<sup><small>TM</small></sup>, get \ndiscovered for relevant keywords and \nimprove your ranking on search engines</string>
@@ -350,14 +350,14 @@
   <string name="email_id_to_request_plans">lead@nowfloats.com</string>
 
   <string name="setting_faq_url">https://boost360.nowfloats.com/faqs/</string>
-  <string name="buy_in_capital">BUY</string>
-  <string name="later_in_capital">LATER</string>
+  <string name="buy_in_capital">Buy</string>
+  <string name="later_in_capital">Later</string>
   <string name="renew_light_house_plan">Renew Boost plan to get all the features</string>
   <string name="light_house_plan_expired_some_features_visible">Your Boost plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
   <string name="renew_wildfire_plan">Renew Wildfire plan</string>
   <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
-  <string name="renew_in_capital">RENEW</string>
-  <string name="ignore_in_capital">IGNORE</string>
+  <string name="renew_in_capital">Renew</string>
+  <string name="ignore_in_capital">Ignore</string>
   <string name="buy_light_house_plan">Buy Boost plan to get all the features</string>
   <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
   <string name="buy_light_house">Your current plan is demo which does not have all features, to get all features buy Boost plan.</string>

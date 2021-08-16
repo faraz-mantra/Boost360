@@ -1,5 +1,6 @@
 package com.inventoryorder.ui.appointmentSpa.create
 
+import android.annotation.SuppressLint
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.base.BaseBottomSheetDialog
@@ -13,11 +14,9 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 
-class CreateOrderBottomSheetDialog(val orderBottomSheet: OrderBottomSheet) :
-  BaseBottomSheetDialog<BottomSheetOrderBinding, BaseViewModel>(), RecyclerItemClickListener {
+class CreateOrderBottomSheetDialog(val orderBottomSheet: OrderBottomSheet) : BaseBottomSheetDialog<BottomSheetOrderBinding, BaseViewModel>(), RecyclerItemClickListener {
 
-  var onClicked: (bottomSheetOptionItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) -> Unit =
-    { bottomsheetOptionItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet -> }
+  var onClicked: (bottomSheetOptionItem: BottomSheetOptionsItem, orderBottomSheet: OrderBottomSheet) -> Unit = { _: BottomSheetOptionsItem, _: OrderBottomSheet -> }
   private var optionsAdapter: AppBaseRecyclerViewAdapter<BottomSheetOptionsItem>? = null
   private var layoutManagerN: LinearLayoutManager? = null
   private var currentOptionPosition = 0
@@ -65,6 +64,7 @@ class CreateOrderBottomSheetDialog(val orderBottomSheet: OrderBottomSheet) :
     }
   }
 
+  @SuppressLint("NotifyDataSetChanged")
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     if (actionType == RecyclerViewActionType.ORDER_OPTION_SELECTED.ordinal) {
       currentOptionPosition = position

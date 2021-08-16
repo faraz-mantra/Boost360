@@ -24,8 +24,10 @@ import com.onboarding.nowfloats.ui.category.CategorySelectorFragment
 import com.onboarding.nowfloats.ui.channel.ChannelPickerFragment
 import com.onboarding.nowfloats.ui.registration.*
 
-open class AppFragmentContainerActivity :
-  AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+
+  private var type: FragmentType? = null
+  private var exitToast: Toast? = null
 
   override fun onCreateView() {
     super.onCreateView()
@@ -34,22 +36,14 @@ open class AppFragmentContainerActivity :
     setFragment()
   }
 
-  private var type: FragmentType? = null
-  private var exitToast: Toast? = null
-
   private var categorySelectorFragment: CategorySelectorFragment? = null
   private var channelPickerFragment: ChannelPickerFragment? = null
-  private var registrationBusinessContactInfoFragment: RegistrationBusinessContactInfoFragment? =
-    null
+  private var registrationBusinessContactInfoFragment: RegistrationBusinessContactInfoFragment? = null
   private var registrationBusinessWebsiteFragment: RegistrationBusinessWebsiteFragment? = null
-  private var registrationBusinessGoogleBusinessFragment: RegistrationBusinessGoogleBusinessFragment? =
-    null
-  private var registrationBusinessFacebookPageFragment: RegistrationBusinessFacebookPageFragment? =
-    null
-  private var registrationBusinessFacebookShopFragment: RegistrationBusinessFacebookShopFragment? =
-    null
-  private var registrationBusinessTwitterDetailsFragment: RegistrationBusinessTwitterDetailsFragment? =
-    null
+  private var registrationBusinessGoogleBusinessFragment: RegistrationBusinessGoogleBusinessFragment? = null
+  private var registrationBusinessFacebookPageFragment: RegistrationBusinessFacebookPageFragment? = null
+  private var registrationBusinessFacebookShopFragment: RegistrationBusinessFacebookShopFragment? = null
+  private var registrationBusinessTwitterDetailsFragment: RegistrationBusinessTwitterDetailsFragment? = null
   private var registrationBusinessWhatsAppFragment: RegistrationBusinessWhatsAppFragment? = null
   private var registrationBusinessApiFragment: RegistrationBusinessApiFragment? = null
   private var registrationCompleteFragment: RegistrationCompleteFragment? = null
@@ -59,23 +53,14 @@ open class AppFragmentContainerActivity :
     return when (type) {
       FragmentType.CHANNEL_PICKER -> ContextCompat.getColor(this, R.color.white_two)
       FragmentType.CATEGORY_VIEW,
-      FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS -> ContextCompat.getColor(
-        this,
-        R.color.white
-      )
+      FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS -> ContextCompat.getColor(this, R.color.white)
       FragmentType.REGISTRATION_BUSINESS_WEBSITE,
       FragmentType.REGISTRATION_BUSINESS_WHATSAPP,
       FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE,
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
-      FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> ContextCompat.getColor(
-        this,
-        R.color.white_two
-      )
-      FragmentType.REGISTRATION_BUSINESS_API_CALL -> ContextCompat.getColor(
-        this,
-        R.color.white_four
-      )
+      FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> ContextCompat.getColor(this, R.color.white_two)
+      FragmentType.REGISTRATION_BUSINESS_API_CALL -> ContextCompat.getColor(this, R.color.white_four)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -88,18 +73,6 @@ open class AppFragmentContainerActivity :
     }
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return when (type) {
-      FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS,
-      FragmentType.REGISTRATION_BUSINESS_WEBSITE,
-      FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE,
-      FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
-      FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
-      FragmentType.REGISTRATION_BUSINESS_WHATSAPP,
-      FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> ConversionUtils.dp2px(16f).toFloat()
-      else -> return super.getToolbarTitleSize()
-    }
-  }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
@@ -280,13 +253,11 @@ open class AppFragmentContainerActivity :
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-//    registrationCompleteFragment?.onActivityResult(requestCode, resultCode, data)
     registrationCompleteFragment?.onActivityResult(requestCode, resultCode, data)
     registrationBusinessGoogleBusinessFragment?.onActivityResult(requestCode, resultCode, data)
     registrationBusinessTwitterDetailsFragment?.onActivityResult(requestCode, resultCode, data)
     registrationBusinessContactInfoFragment?.onActivityResult(requestCode, resultCode, data)
   }
-
 }
 
 fun Fragment.startFragmentActivity(

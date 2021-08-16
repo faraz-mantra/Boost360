@@ -197,7 +197,7 @@
               android:gravity="center"
               android:stateListAnimator="@null"
               android:text="@string/online"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/warm_grey_10"
               app:fontFamily="@font/semi_bold"
               tools:ignore="UnusedAttribute" />
@@ -211,7 +211,7 @@
               android:gravity="center"
               android:stateListAnimator="@null"
               android:text="@string/pay_at_clinic"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="@color/primary_grey"
               app:fontFamily="@font/semi_bold"
               tools:ignore="UnusedAttribute" />
@@ -279,7 +279,7 @@
           android:layout_weight="1"
           android:includeFontPadding="false"
           android:text="@string/back"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/orange"
           app:fontFamily="@font/bold"
           app:textType="CAPTION" />
@@ -295,7 +295,7 @@
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/create_booking"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           app:textType="CAPTION"
           tools:ignore="UnusedAttribute" />

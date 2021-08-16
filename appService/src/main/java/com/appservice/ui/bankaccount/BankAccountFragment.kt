@@ -152,17 +152,11 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
             R.drawable.bg_button_rounded_orange
           )) as Drawable
         buttonDrawable = DrawableCompat.wrap(buttonDrawable)
-        DrawableCompat.setTint(
-          buttonDrawable,
-          ContextCompat.getColor(baseActivity, R.color.pinkish_grey)
-        )
+        DrawableCompat.setTint(buttonDrawable, ContextCompat.getColor(baseActivity, R.color.pinkish_grey))
         binding?.verificationBtn?.background = buttonDrawable
         binding?.textVerification?.text = resources.getString(R.string.how_it_works)
         binding?.textDesc?.text = resources.getString(R.string.verify_desc_account)
-        (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(
-          R.color.colorPrimary,
-          R.color.colorPrimaryDark
-        )
+        (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimaryDark)
       } else {
         if (isPendingToastShow) showLongToast(resources.getString(R.string.account_verification_pending))
         (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(
@@ -173,10 +167,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       }
       onBankAccountAddedOrUpdated(true)
     } else {
-      (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(
-        resources.getString(R.string.adding_bank_account),
-        resources.getDimensionPixelSize(R.dimen.size_36)
-      )
+      (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.adding_bank_account), resources.getDimensionPixelSize(R.dimen.size_36))
       uiUpdate(true)
       isUpdated = false
       onBankAccountAddedOrUpdated(false)
@@ -185,7 +176,6 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   private fun onBankAccountAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
-    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_add_bank_account = isAdded
     instance.updateDocument()
   }
@@ -236,7 +226,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill
     )
 
-    binding?.verificationUi?.visibility = if (isEditable) View.GONE else View.VISIBLE
+//    binding?.verificationUi?.visibility = if (isEditable) View.GONE else View.VISIBLE
     binding?.createUi?.visibility = if (isEditable) View.VISIBLE else View.GONE
     binding?.edtConfirmNumber?.visibility = if (isEditable) View.VISIBLE else View.GONE
     binding?.titleConfirmAccount?.visibility = if (isEditable) View.VISIBLE else View.GONE
@@ -253,29 +243,15 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill
     )
 
-    binding?.edtAccountName?.hint =
-      if (isEditable) resources.getString(R.string.write_the_name_as_mentioned_in_bank_account) else ""
-    binding?.edtAccountNumber?.hint =
-      if (isEditable) resources.getString(R.string.xxxxxxxxxxxxxxxxxx) else ""
-    binding?.edtConfirmNumber?.hint =
-      if (isEditable) resources.getString(R.string.xxxxxxxxxxxxxxxxxx) else ""
-    binding?.edtBankName?.hint =
-      if (isEditable) resources.getString(R.string.write_the_name_of_your_bank) else ""
-    binding?.edtAlias?.hint =
-      if (isEditable) resources.getString(R.string.write_account_alias) else ""
+    binding?.edtAccountName?.hint = if (isEditable) resources.getString(R.string.write_the_name_as_mentioned_in_bank_account) else ""
+    binding?.edtAccountNumber?.hint = if (isEditable) resources.getString(R.string.xxxxxxxxxxxxxxxxxx) else ""
+    binding?.edtConfirmNumber?.hint = if (isEditable) resources.getString(R.string.xxxxxxxxxxxxxxxxxx) else ""
+    binding?.edtBankName?.hint = if (isEditable) resources.getString(R.string.write_the_name_of_your_bank) else ""
+    binding?.edtAlias?.hint = if (isEditable) resources.getString(R.string.write_account_alias) else ""
     binding?.edtIfsc?.hint = if (isEditable) resources.getString(R.string.type_ifsc_code) else ""
     if (isEditable) {
-      (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(
-        resources.getString(R.string.adding_bank_account),
-        resources.getDimensionPixelSize(R.dimen.size_36)
-      )
-      binding?.submitBtn?.apply {
-       backgroundTintList = ContextCompat.getColorStateList(baseActivity, R.color.colorAccent_jio)
-      }
-      (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(
-        R.color.color_primary,
-        R.color.color_primary_dark
-      )
+      (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.adding_bank_account), resources.getDimensionPixelSize(R.dimen.size_36))
+      (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.color_primary, R.color.color_primary_dark)
     }
   }
 

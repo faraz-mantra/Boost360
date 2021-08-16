@@ -22,6 +22,7 @@
       android:layout_marginBottom="@dimen/size_10"
       android:gravity="center_vertical"
       android:hint="@string/type_address"
+      android:textCursorDrawable="@drawable/cursor_drawable"
       android:inputType="textCapWords"
       android:maxLines="1"
       android:padding="@dimen/size_2"
@@ -43,6 +44,7 @@
       android:layout_marginBottom="@dimen/size_10"
       android:gravity="center_vertical"
       android:hint="@string/enter_customer_s_pincode"
+      android:textCursorDrawable="@drawable/cursor_drawable"
       android:imeOptions="actionDone"
       android:inputType="number"
       android:maxLength="6"
@@ -66,6 +68,7 @@
       android:focusable="false"
       android:gravity="center_vertical"
       android:hint="@string/type_the_plot_number_and_street_address"
+      android:textCursorDrawable="@drawable/cursor_drawable"
       android:inputType="none"
       android:singleLine="true" />
 
@@ -92,6 +95,7 @@
         android:focusable="false"
         android:gravity="center_vertical"
         android:hint="@string/select_customer_s_state"
+        android:textCursorDrawable="@drawable/cursor_drawable"
         android:inputType="none" />
     </LinearLayout>
 

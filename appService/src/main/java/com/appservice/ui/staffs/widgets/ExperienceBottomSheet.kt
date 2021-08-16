@@ -11,8 +11,7 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import java.util.*
 
-class ExperienceBottomSheet : BaseBottomSheetDialog<BottomSheetExperienceBinding, BaseViewModel>(),
-  RecyclerItemClickListener {
+class ExperienceBottomSheet : BaseBottomSheetDialog<BottomSheetExperienceBinding, BaseViewModel>(), RecyclerItemClickListener {
   private var value: Int = 0
   private lateinit var experienceData: ArrayList<ExperienceModel>
   private lateinit var adapterN: AppBaseRecyclerViewAdapter<ExperienceModel>

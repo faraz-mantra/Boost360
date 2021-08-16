@@ -133,9 +133,10 @@ public class Business_Enquiries_Fragment extends Fragment {
 
     private void onBusinessEnquiriesAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData().getMetricdetail() == null) return;
-        instance.getDrScoreData().getMetricdetail().setBoolean_respond_to_customer_enquiries(isAdded);
-        instance.updateDocument();
+        if (instance.getDrScoreData() != null && instance.getDrScoreData().getMetricdetail() != null) {
+            instance.getDrScoreData().getMetricdetail().setBoolean_respond_to_customer_enquiries(isAdded);
+            instance.updateDocument();
+        }
     }
 
     @Subscribe

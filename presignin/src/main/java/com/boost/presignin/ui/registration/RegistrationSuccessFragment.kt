@@ -44,8 +44,7 @@ private const val TIME_INTERVAL =
 
 private var mBackPressed: Long = 0
 
-class RegistrationSuccessFragment :
-  AppBaseFragment<FragmentRegistrationSuccessBinding, LoginSignUpViewModel>() {
+class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessBinding, LoginSignUpViewModel>() {
 
   private var floatsRequest: CategoryFloatsRequest? = null
   private var authToken: AuthTokenDataItem? = null
@@ -71,13 +70,14 @@ class RegistrationSuccessFragment :
     authToken = session?.getAuthTokenData()
     if (floatsRequest != null || authToken != null) {
       val businessName = floatsRequest?.businessName
+      val categoryName = floatsRequest?.categoryDataModel?.category_Name
       val name = floatsRequest?.requestProfile?.ProfileProperties?.userName
       val websiteUrl = floatsRequest?.webSiteUrl
 
       binding?.headingTv?.text = String.format(getString(R.string.congratulations_n_s), name)
       binding?.businessNameTv?.text = businessName;
 
-      val amountSpannableString = SpannableString(" $businessName ").apply {
+      val amountSpannableString = SpannableString(" $categoryName ").apply {
         setSpan(ForegroundColorSpan(Color.rgb(0, 0, 0)), 0, length, 0)
         setSpan(StyleSpan(Typeface.BOLD), 0, length, 0)
       }

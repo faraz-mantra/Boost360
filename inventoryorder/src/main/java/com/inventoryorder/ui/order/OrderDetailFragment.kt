@@ -189,7 +189,6 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       }
       else -> super.onOptionsItemSelected(item)
     }
-
   }
 
   fun getBundleData(): Bundle {
@@ -212,11 +211,8 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       if (order.Items?.size ?: 0 > 1) "(${order.Items?.size} items)" else "(${order.Items?.size} item)"
 
     order.BillingDetails?.let { bill ->
-      val currency =
-        takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() }
-          ?: "INR"
-      binding?.tvOrderAmount?.text =
-        "$currency ${DecimalFormat("##,##,##0").format(bill.AmountPayableByBuyer)}"
+      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
+      binding?.tvOrderAmount?.text = "$currency ${DecimalFormat("##,##,##0").format(bill.AmountPayableByBuyer)}"
       //binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
     binding?.orderDate?.text = DateUtils.parseDate(
@@ -229,24 +225,18 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     // customer details
     binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
     binding?.tvCustomerDetail?.text = order.BuyerDetails?.getPhoneEmailFull()
-    binding?.userAddress?.tvShippingAddress?.text =
-      "${order.BuyerDetails?.address()?.addressLine1()} ${order.BuyerDetails?.address()?.Zipcode}"
-    binding?.userAddress?.tvBillingAddress?.text =
-      "${order.BuyerDetails?.address()?.addressLine1()} ${order.BuyerDetails?.address()?.Zipcode}"
+    binding?.userAddress?.tvShippingAddress?.text = "${order.BuyerDetails?.address()?.addressLine1()} ${order.BuyerDetails?.address()?.Zipcode}"
+    binding?.userAddress?.tvBillingAddress?.text = "${order.BuyerDetails?.address()?.addressLine1()} ${order.BuyerDetails?.address()?.Zipcode}"
 
 //        binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
 //        binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
 //        binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
 
-    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
-        ?.let { !checkValidMobile(it) } == true
-    )
+    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) } == true)
       binding?.tvCustomerContactNumber?.setTextColor(getColor(R.color.watermelon_light_10))
     if (order.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty().not()) {
       //binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
-      if (!checkValidEmail(order.BuyerDetails?.ContactDetails?.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(
-        getColor(R.color.watermelon_light_10)
-      )
+      if (!checkValidEmail(order.BuyerDetails?.ContactDetails?.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
     } else binding?.tvCustomerEmail?.isGone = true
 
 
@@ -257,15 +247,12 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     order.Items?.forEachIndexed { index, item ->
       shippingCost += item.Product?.ShippingCost ?: 0.0
       salePrice += item.product().price() - item.product().discountAmount()
-      if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
-        ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
+      if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     }
-    binding?.tvShippingCost?.text =
-      "Shipping Cost: $currency ${DecimalFormat("##,##,##0").format(shippingCost)}"
-    binding?.tvTotalOrderAmount?.text =
-      "Total Amount: $currency ${DecimalFormat("##,##,##0").format(salePrice + shippingCost)}"
+    binding?.tvShippingCost?.text = "Shipping cost: $currency ${DecimalFormat("##,##,##0").format(shippingCost)}"
+    binding?.tvTotalOrderAmount?.text = "Total amount: $currency ${DecimalFormat("##,##,##0").format(salePrice + shippingCost)}"
 //        binding?.tvShippingCost?.text = "Shipping Cost: $currency $shippingCost"
-//        binding?.tvTotalOrderAmount?.text = "Total Amount: $currency ${salePrice + shippingCost}"
+//        binding?.tvTotalOrderAmount?.text = "Total amount: $currency ${salePrice + shippingCost}"
 
   }
 
@@ -326,10 +313,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
           showProgress()
           sendPaymentLinkOrder(getString(R.string.payment_request_send))
         }
-        sheetRequestPayment.show(
-          this.parentFragmentManager,
-          RequestPaymentBottomSheetDialog::class.java.name
-        )
+        sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentBottomSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.CANCEL_ORDER -> {
         val sheetCancel = CancelBottomSheetDialog()
@@ -354,20 +338,13 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
         val sheetReBookingApt = SendReBookingOrderSheetDialog()
         sheetReBookingApt.setData(orderItem)
         sheetReBookingApt.onClicked = { sendReBookingRequestOrder() }
-        sheetReBookingApt.show(
-          this.parentFragmentManager,
-          SendReBookingAptSheetDialog::class.java.name
-        )
+        sheetReBookingApt.show(this.parentFragmentManager, SendReBookingAptSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
         val sheetFeedbackApt = SendFeedbackOrderSheetDialog()
         sheetFeedbackApt.setData(orderItem)
-        sheetFeedbackApt.onClicked =
-          { sendFeedbackRequestOrder(it, getString(R.string.order_feedback_requested)) }
-        sheetFeedbackApt.show(
-          this.parentFragmentManager,
-          SendFeedbackAptSheetDialog::class.java.name
-        )
+        sheetFeedbackApt.onClicked = { sendFeedbackRequestOrder(it, getString(R.string.order_feedback_requested)) }
+        sheetFeedbackApt.show(this.parentFragmentManager, SendFeedbackAptSheetDialog::class.java.name)
       }
       else -> {
       }
@@ -528,10 +505,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       ?.observeOnce(viewLifecycleOwner, {
         if (it.isSuccess()) {
           orderItem?._id?.let { it1 ->
-            apiGetOrderDetails(
-              it1,
-              getString(R.string.re_booking_reminder)
-            )
+            apiGetOrderDetails(it1, getString(R.string.re_booking_reminder))
           }
         } else {
           showLongToast(it.message())

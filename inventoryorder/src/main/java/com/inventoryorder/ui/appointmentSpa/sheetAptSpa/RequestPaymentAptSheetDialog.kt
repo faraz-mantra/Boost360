@@ -14,8 +14,7 @@ import com.inventoryorder.model.ordersdetails.OrderItem
 import java.math.BigDecimal
 import java.text.DecimalFormat
 
-class RequestPaymentAptSheetDialog :
-  BaseBottomSheetDialog<BottomSheetRequestPaymentAptBinding, BaseViewModel>() {
+class RequestPaymentAptSheetDialog : BaseBottomSheetDialog<BottomSheetRequestPaymentAptBinding, BaseViewModel>() {
 
   private var orderItem: OrderItem? = null
   var onClicked: () -> Unit = {}

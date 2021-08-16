@@ -74,15 +74,14 @@
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="@string/tv_name"
+          android:text="@string/tv_name_n"
           android:textSize="@dimen/_11sdp" />
 
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_5sdp"
           android:text="@string/astreak"
-          android:textColor="@color/primary"
+          android:textColor="@color/greyish_brown"
           android:textSize="@dimen/_11sdp" />
 
       </LinearLayout>
@@ -117,16 +116,15 @@
             android:id="@+id/title_img_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tv_description"
+            android:text="@string/tv_description_n"
             android:textSize="@dimen/_11sdp" />
 
           <TextView
             android:id="@+id/is_fill_img_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
             android:text="@string/astreak"
-            android:textColor="@color/primary"
+            android:textColor="@color/greyish_brown"
             android:textSize="@dimen/_11sdp"
             android:visibility="gone" />
 
@@ -139,7 +137,7 @@
           android:layout_height="wrap_content"
           android:background="@drawable/edittext_bg_elevated"
           android:elevation="@dimen/_2sdp"
-          android:hint="@string/tv_description"
+          android:hint="@string/tv_description_n"
           android:imeOptions="actionNext"
           android:inputType="textCapWords"
           android:maxLines="1" />
@@ -163,15 +161,14 @@
             android:id="@+id/reviewTitleLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/review_title_testimonial"
+            android:text="@string/review_title"
             android:textSize="@dimen/_11sdp" />
 
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
             android:text="@string/astreak"
-            android:textColor="@color/primary"
+            android:textColor="@color/greyish_brown"
             android:textSize="@dimen/_11sdp" />
 
         </LinearLayout>
@@ -213,9 +210,8 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
             android:text="@string/astreak"
-            android:textColor="@color/primary"
+            android:textColor="@color/greyish_brown"
             android:textSize="@dimen/_11sdp" />
 
         </LinearLayout>
@@ -228,6 +224,8 @@
           android:layout_marginEnd="@dimen/_15sdp"
           android:text="@string/_200_characters"
           android:textColor="#D8D8D8"
+          android:gravity="top"
+          android:inputType="textCapWords|textMultiLine"
           android:textSize="@dimen/_10sdp" />
       </LinearLayout>
 
@@ -241,7 +239,7 @@
         android:gravity="top"
         android:hint="@string/enter_description"
         android:imeOptions="actionDone"
-        android:inputType="textCapWords"
+        android:inputType="textCapWords|textMultiLine"
         android:maxLength="200" />
 
 
@@ -255,12 +253,11 @@
         android:layout_marginBottom="@dimen/_15sdp"
         android:background="@drawable/orange_button_click_effect"
         android:elevation="@dimen/_2sdp"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:text="@string/save"
-        android:textAllCaps="true"
         android:textColor="@color/white" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -49,7 +49,7 @@
         android:gravity="center"
         android:stateListAnimator="@null"
         android:text="@string/add_a_staff"
-        android:textAllCaps="true" />
+        android:textAllCaps="false" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
   </androidx.appcompat.widget.LinearLayoutCompat>

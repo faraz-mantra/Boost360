@@ -23,16 +23,17 @@ import com.dashboard.viewmodel.WebsiteThemeViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.utils.fromHtml
 import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 import kotlinx.android.synthetic.main.activity_dashboard.view.*
 
-class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, WebsiteThemeViewModel>(),
-  RecyclerItemClickListener {
+class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, WebsiteThemeViewModel>(), RecyclerItemClickListener {
 
   private var popupWindow: PopupWindow? = null
+  private var session: UserSessionManager? = null
   private var sessionData: SessionData? = null
   private var primaryItem: PrimaryItem? = null
   private var secondaryItem: SecondaryItem? = null
@@ -64,15 +65,11 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
     super.onCreateView()
     WebEngageController.trackEvent(WEBSITE_STYLE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(
-      binding?.ctfPrimaryFont,
-      binding?.ctfSecondaryFont,
-      binding?.btnDone,
-      binding?.openWebsite,
-      binding?.more,
-      binding?.back
+      binding?.ctfPrimaryFont, binding?.ctfSecondaryFont,
+      binding?.btnDone, binding?.openWebsite, binding?.more, binding?.back
     )
-    this.sessionData =
-      arguments?.get(com.appservice.constant.IntentConstant.SESSION_DATA.name) as? SessionData
+    session = UserSessionManager(baseActivity)
+    this.sessionData = arguments?.get(com.appservice.constant.IntentConstant.SESSION_DATA.name) as? SessionData
     getWebsiteTheme(sessionData)
     setWebsiteData()
     hideActionButtons()
@@ -80,8 +77,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   }
 
   private fun setWebsiteData() {
-    binding?.ctvWebsite?.text =
-      fromHtml("<u>${UserSessionManager(baseActivity).getDomainName()}</u>")
+    binding?.ctvWebsite?.text = UserSessionManager(baseActivity).getDomainName()
   }
 
   private fun getWebsiteTheme(sessionData: SessionData?) {
@@ -103,8 +99,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   }
 
   private fun setColor() {
-    this.colorsItem = colors?.firstOrNull { it.isSelected == true }
-      ?: colors?.firstOrNull { it.defaultColor == true }
+    this.colorsItem = colors?.firstOrNull { it.isSelected == true } ?: colors?.firstOrNull { it.defaultColor == true }
     val defaultColorCode = colors?.firstOrNull { it.defaultColor == true }?.primary
     if (defaultColorCode != null) {
       binding?.rivDefaultColor?.setBackgroundColor(Color.parseColor(defaultColorCode))
@@ -215,7 +210,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
       }
       binding?.openWebsite -> {
         val website = binding?.ctvWebsite?.text.toString()
-        openWebViewDialog(url = website, sessionData?.fpTag!!)
+        openWebViewDialog(url = website, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "")
       }
       binding?.more -> {
         if (this.popupWindow?.isShowing == true) this.popupWindow?.dismiss()
@@ -286,7 +281,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
     websiteUpdateSheet.onClicked = {
       when (it) {
         TypeSuccess.VISIT_WEBSITE.name -> {
-          openWebViewDialog(binding?.ctvWebsite?.text.toString(), sessionData?.fpTag!!)
+          openWebViewDialog(binding?.ctvWebsite?.text.toString(), session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "")
         }
         TypeSuccess.CLOSE.name -> goBack()
       }
@@ -309,15 +304,9 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   private fun showPopupWindow(anchor: View) {
     val view =
       LayoutInflater.from(baseActivity).inflate(R.layout.popup_window_website_menu, null)
-    this.popupWindow = PopupWindow(
-      view,
-      WindowManager.LayoutParams.WRAP_CONTENT,
-      WindowManager.LayoutParams.WRAP_CONTENT,
-      true
-    )
+    this.popupWindow = PopupWindow(view, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
     val needHelp = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.need_help)
-    val resetDefault =
-      this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.reset_default)
+    val resetDefault = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.reset_default)
     needHelp?.setOnClickListener {
       this.popupWindow?.dismiss()
     }

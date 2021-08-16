@@ -44,7 +44,7 @@
           android:text="@string/search_queries"
           android:textColor="@color/white"
           android:textSize="16sp"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
         <TextView
           android:id="@+id/tv_search_type"
@@ -53,7 +53,7 @@
           android:gravity="end"
           android:text="@string/avg_position"
           android:textColor="@color/white"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
         <ImageView
           android:id="@+id/iv_sort"
@@ -135,7 +135,7 @@
         android:text="@string/keep_moving"
         android:textColor="@color/zeroth_grey_title"
         android:textSize="18sp"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
 
       <TextView
         android:layout_width="wrap_content"

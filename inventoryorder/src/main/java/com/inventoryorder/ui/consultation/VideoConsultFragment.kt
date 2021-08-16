@@ -2,11 +2,13 @@ package com.inventoryorder.ui.consultation
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,8 +50,7 @@ import com.inventoryorder.utils.openWebPage
 import java.util.*
 import kotlin.collections.ArrayList
 
-class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(),
-  RecyclerItemClickListener {
+class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(), RecyclerItemClickListener {
 
   private lateinit var requestFilter: OrderFilterRequest
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
@@ -87,12 +88,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
   }
 
-  private fun getSellerOrdersFilterApi(
-    request: OrderFilterRequest,
-    isFirst: Boolean = false,
-    isRefresh: Boolean = false,
-    isSearch: Boolean = false
-  ) {
+  private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
     if (isFirst || isSearch) binding?.progress?.visible()
     viewModel?.getSellerOrdersFilter(request)?.observeOnce(viewLifecycleOwner, Observer {
       binding?.progress?.gone()
@@ -140,7 +136,6 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   private fun onVideoConsultAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
-    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_create_sample_video_consultation = isAdded
     instance.updateDocument()
   }
@@ -199,7 +194,6 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     super.onClick(v)
     when (v) {
       binding?.btnAdd -> {
-//        showLongToast("Coming soon...")
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
         bundle.putBoolean(IntentConstant.IS_VIDEO.name, true)
@@ -279,8 +273,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       FilterModel.FilterType.CANCEL_CONSULTATIONS -> {
-        requestFilter =
-          getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name))
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name))
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
       else -> {
@@ -294,7 +287,10 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     super.onCreateOptionsMenu(menu, inflater)
     val searchItem = menu.findItem(R.id.menu_item_search)
     if (searchItem != null) {
-      searchView = searchItem.actionView as SearchView
+      searchView = searchItem.actionView as? SearchView
+      val searchEditText: EditText? = searchView?.findViewById(androidx.appcompat.R.id.search_src_text)
+      searchEditText?.setTextColor(Color.WHITE)
+      searchEditText?.setHintTextColor(getColor(R.color.white_50))
       searchView?.queryHint = resources.getString(R.string.queryHintVideoN)
       searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
@@ -340,9 +336,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   private fun videoConsultCall(order: OrderItem?) {
     order?.consultationWindowUrlForDoctor()?.let {
-      if (baseActivity.openWebPage(it)
-          .not()
-      ) showLongToast(resources.getString(R.string.error_opening_consultation_window))
+      if (baseActivity.openWebPage(it).not()) showLongToast(resources.getString(R.string.error_opening_consultation_window))
     }
   }
 
@@ -445,13 +439,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   private fun getQueryStatusList(statusList: ArrayList<String>): ArrayList<QueryObject> {
     val queryList = ArrayList<QueryObject>()
     statusList.forEach {
-      queryList.add(
-        QueryObject(
-          QueryObject.QueryKey.Status.value,
-          it,
-          QueryObject.Operator.EQ.name
-        )
-      )
+      queryList.add(QueryObject(QueryObject.QueryKey.Status.value, it, QueryObject.Operator.EQ.name))
     }
     return queryList
   }

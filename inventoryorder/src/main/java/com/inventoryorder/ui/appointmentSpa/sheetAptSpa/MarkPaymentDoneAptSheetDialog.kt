@@ -8,8 +8,7 @@ import com.inventoryorder.databinding.BottomSheetMarkPaymentDoneBinding
 import com.inventoryorder.model.orderRequest.paymentRequest.PaymentReceivedRequest
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class MarkPaymentDoneAptSheetDialog :
-  BaseBottomSheetDialog<BottomSheetMarkPaymentDoneBinding, BaseViewModel>() {
+class MarkPaymentDoneAptSheetDialog : BaseBottomSheetDialog<BottomSheetMarkPaymentDoneBinding, BaseViewModel>() {
 
   private var paymentProvider: String? = PaymentReceivedRequest.PaymentProvider.cash.name
   private var orderItem: OrderItem? = null

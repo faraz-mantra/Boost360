@@ -26,8 +26,7 @@ import com.inventoryorder.ui.order.OrdersFragment
 import com.inventoryorder.ui.order.createorder.*
 import com.inventoryorder.viewmodel.OrderCreateViewModel
 
-open class BaseInventoryFragment<binding : ViewDataBinding> :
-  AppBaseFragment<binding, OrderCreateViewModel>() {
+open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<binding, OrderCreateViewModel>() {
 
   protected val fpTag: String?
     get() {

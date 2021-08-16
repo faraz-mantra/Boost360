@@ -22,6 +22,7 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/size_10"
       android:padding="@dimen/size_12"
+      android:buttonTint="@color/colorAccent"
       android:textColor="@color/greyish_brown"
       app:fontFamily="@font/semi_bold"
       app:textType="HEADING_6"

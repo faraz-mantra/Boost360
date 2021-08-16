@@ -50,52 +50,49 @@
         android:layout_below="@id/ctv_about_heading"
         android:layout_marginHorizontal="@dimen/size_20"
         android:layout_marginTop="@dimen/size_20"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:text="@string/removing_the_staff_will_remove"
         android:textColor="@color/black_4a4a4a"
-        android:textSize="12sp" />
+        app:textType="BODY_1" />
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_20"
-        android:layout_marginBottom="@dimen/size_20"
-        android:paddingRight="@dimen/size_10">
+        android:layout_marginBottom="@dimen/size_20">
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/btn_done"
           android:layout_width="0dp"
-          android:layout_height="@dimen/size_36"
+          android:layout_height="@dimen/size_42"
           android:layout_gravity="center_horizontal"
           android:background="@drawable/bg_button_proceed_radius_4dp"
-          android:backgroundTint="#D03F3F"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:padding="12dp"
+          android:layout_marginEnd="@dimen/size_20"
           android:stateListAnimator="@null"
           android:text="@string/delete_staff"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
-          android:textSize="11sp"
           app:layout_constraintRight_toRightOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-          app:layout_constraintWidth_percent="0.50" />
+          app:layout_constraintWidth_percent="0.36" />
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/btn_cancel"
           android:layout_width="@dimen/size_110"
-          android:layout_height="36dp"
+          android:layout_height="@dimen/size_42"
           android:layout_gravity="center_horizontal"
-          android:layout_marginRight="@dimen/size_20"
-          android:background="@null"
+          android:layout_marginEnd="@dimen/size_20"
+          android:background="@drawable/bg_rounded_yellow_light"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
           android:padding="@dimen/size_12"
           android:stateListAnimator="@null"
           android:text="@string/cancel"
-          android:textAllCaps="true"
-          android:textColor="@color/grey_787878"
-          android:textSize="11sp"
+          android:textAllCaps="false"
+          android:textColor="@color/colorAccent"
           app:layout_constraintRight_toLeftOf="@id/btn_done"
           app:layout_constraintTop_toTopOf="parent" />
 

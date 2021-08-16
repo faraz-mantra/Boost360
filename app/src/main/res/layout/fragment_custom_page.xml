@@ -40,7 +40,7 @@
         android:text="@string/add_a_page"
         android:textColor="@color/zeroth_grey_title"
         android:textSize="@dimen/dgts__title_text_size"
-        android:textStyle="bold" />
+         android:fontFamily="@font/semi_bold" />
 
       <TextView
         android:layout_width="wrap_content"
@@ -73,6 +73,6 @@
       android:layout_margin="16dp"
       android:scaleType="fitCenter"
       app:backgroundTint="@color/primaryColorDark"
-      app:srcCompat="@drawable/ic_add_white_24dp" />
+      app:srcCompat="@drawable/ic_add_white" />
   </FrameLayout>
 </LinearLayout>

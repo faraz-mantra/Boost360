@@ -271,7 +271,7 @@
           android:text="@string/if_you_wish_to_change_email_address_please_contact_ria_nowfloats_com"
           android:textColor="#828282"
           android:textSize="12sp"
-          android:textStyle="italic" />
+          android:fontFamily="@font/italic" />
 
       </LinearLayout>
 

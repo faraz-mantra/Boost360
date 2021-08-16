@@ -38,8 +38,7 @@ import com.inventoryorder.utils.WebEngageController
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
-class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding>(),
-  RecyclerItemClickListener {
+class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding>(), RecyclerItemClickListener {
 
   private var itemsAdapter: AppBaseRecyclerViewAdapter<ItemsItem>? = null
   private var layoutManagerN: LinearLayoutManager? = null
@@ -81,9 +80,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       binding?.textAddDeliveryFeeEdit,
       binding?.tvAddMore
     )
-    createOrderRequest =
-      (arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as? OrderInitiateRequest)
-        ?: OrderInitiateRequest()
+    createOrderRequest = (arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as? OrderInitiateRequest) ?: OrderInitiateRequest()
     setUpData()
     getTotalPayableAmount()
     preparePaymentStatusOptions()

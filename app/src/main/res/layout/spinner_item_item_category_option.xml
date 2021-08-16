@@ -33,7 +33,7 @@
       android:text="@string/physical_product_"
       android:textColor="@color/primaryTextColor"
       android:textSize="16sp"
-      android:textStyle="bold" />
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
       android:id="@+id/label_item_description"

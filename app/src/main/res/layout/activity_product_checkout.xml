@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Username"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <TextView
             android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <TextView
             android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/phone_number_"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <TextView
             android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/identification_number"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <TextView
             android:layout_width="wrap_content"
@@ -134,7 +134,7 @@
           android:layout_gravity="center_vertical"
           android:layout_marginStart="10dp"
           android:text="@string/items"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
       </LinearLayout>
 
       <com.nowfloats.Store.MaxHeightRecyclerView
@@ -161,7 +161,7 @@
           android:layout_marginTop="10dp"
           android:text="@string/sales_assisted_purchase"
           android:textSize="@dimen/medium_text_size"
-          android:textStyle="bold" />
+           android:fontFamily="@font/semi_bold" />
 
         <RadioGroup
           android:id="@+id/rgSalesman"
@@ -261,7 +261,7 @@
             android:layout_height="wrap_content"
             android:text="@string/tds"
             android:textSize="@dimen/medium_text_size"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <CheckBox
             android:id="@+id/cvTwo"
@@ -299,7 +299,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/net_total"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <TextView
             android:layout_width="wrap_content"
@@ -321,7 +321,7 @@
             android:id="@+id/tv_discount_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <TextView
             android:layout_width="wrap_content"
@@ -344,7 +344,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="TDS"
-                  android:textStyle="bold" />
+                   android:fontFamily="@font/semi_bold" />
 
               <TextView
                   android:layout_width="wrap_content"
@@ -371,7 +371,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/taxes"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <TextView
             android:layout_width="wrap_content"
@@ -393,7 +393,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/deductions"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <TextView
             android:layout_width="wrap_content"
@@ -414,7 +414,7 @@
             android:layout_height="wrap_content"
             android:text="@string/amount_to_be_paid"
             android:textColor="@color/green"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
 
           <TextView
             android:layout_width="wrap_content"
@@ -428,7 +428,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textColor="@color/green"
-            android:textStyle="bold" />
+             android:fontFamily="@font/semi_bold" />
         </TableRow>
       </TableLayout>
 

@@ -219,8 +219,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     showLongToast(getString(R.string.service_removed_successfully))
     val data = Intent()
     data.putExtra(IntentConstant.IS_UPDATED.name, true)
-    appBaseActivity?.setResult(Activity.RESULT_OK, data)
-    appBaseActivity?.finish()
+    baseActivity?.setResult(Activity.RESULT_OK, data)
+    baseActivity?.finish()
   }
 
   private fun onServiceDetailResponseReceived(it: BaseResponse) {
@@ -419,8 +419,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       TypeSuccess.CLOSE.name -> {
         val data = Intent()
         data.putExtra(IntentConstant.IS_UPDATED.name, isRefresh)
-        appBaseActivity?.setResult(Activity.RESULT_OK, data)
-        appBaseActivity?.finish()
+        baseActivity?.setResult(Activity.RESULT_OK, data)
+        baseActivity?.finish()
       }
       TypeSuccess.VISIT_WEBSITE.name -> {
       }
@@ -478,9 +478,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.id_delete -> {
-        MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme).setTitle(
-          resources.getString(R.string.are_you_sure)
-        )
+        MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
+          .setTitle(resources.getString(R.string.are_you_sure))
           .setMessage(resources.getString(R.string.delete_record_not_undone))
           .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }
           .setPositiveButton(resources.getString(R.string.delete_)) { d, _ ->

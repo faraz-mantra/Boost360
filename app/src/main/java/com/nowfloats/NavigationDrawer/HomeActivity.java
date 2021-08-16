@@ -1599,13 +1599,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         intent.putExtra("screenType", screenType);
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-        if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
+        if (session.getUserProfileEmail() != null) {
+            intent.putExtra("email", session.getUserProfileEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }
@@ -1723,6 +1723,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     @Subscribe
     public void post_getFPDetails(Get_FP_Details_Event response) {
+        Log.i(TAG, "post_getFPDetails: ");
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null && bundle.containsKey("Username")) {

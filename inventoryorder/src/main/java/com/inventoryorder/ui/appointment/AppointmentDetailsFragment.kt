@@ -15,6 +15,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils
+import com.framework.utils.ValidationUtils
 import com.framework.views.customViews.CustomTextView
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
@@ -65,22 +66,6 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
   override fun onCreateView() {
     super.onCreateView()
     arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
-
-    binding?.textPhone?.setOnClickListener {
-      if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber.isNullOrEmpty()) {
-        showShortToast(getString(R.string.contact_number_not_available))
-      } else {
-        callCustomer(orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber!!)
-      }
-    }
-
-    binding?.textEmail?.setOnClickListener {
-      if (orderItem?.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty()) {
-        showShortToast(getString(R.string.customer_email_not_available))
-      } else {
-        emailCustomer(orderItem?.BuyerDetails?.ContactDetails?.EmailId!!)
-      }
-    }
   }
 
   private fun callCustomer(phone: String) {
@@ -146,49 +131,46 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
 
   private fun setDetails(order: OrderItem?) {
+    val number = order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber
+    val email = order?.BuyerDetails?.ContactDetails?.EmailId
+    binding?.textPhone?.setOnClickListener {
+      if (ValidationUtils.isMobileNumberValid(number ?: "")) {
+        callCustomer(number!!)
+      } else {
+        showShortToast(getString(R.string.contact_number_not_available))
+      }
+    }
+    binding?.textEmail?.setOnClickListener {
+      if (ValidationUtils.isEmailValid(email ?: "")) {
+        emailCustomer(email!!)
+      } else {
+        showShortToast(getString(R.string.customer_email_not_available))
+      }
+    }
+
     val product = order?.firstItemForAptConsult()?.product()
     val extraAptDetail = product?.extraItemProductConsultation()
     binding?.ctvAppointmentId?.text = "#${order?.ReferenceNumber}"
     binding?.textDateTime?.text = DateUtils.parseDate(
-      order?.CreatedOn,
-      DateUtils.FORMAT_SERVER_DATE,
-      DateUtils.FORMAT_SERVER_TO_LOCAL_3,
-      timeZone = TimeZone.getTimeZone("IST")
+      order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST")
     )
 
-    binding?.textAmount?.text =
-      "${order?.BillingDetails?.CurrencyCode} ${order?.BillingDetails?.GrossAmount}"
+    binding?.textAmount?.text = "${order?.BillingDetails?.CurrencyCode} ${order?.BillingDetails?.GrossAmount}"
 
     binding?.textServiceName?.text = product?.Name
 
-    val appointmentDate = java.lang.StringBuilder(
-      DateUtils.parseDate(
-        extraAptDetail?.startTime(),
-        DateUtils.FORMAT_HH_MM,
-        DateUtils.FORMAT_HH_MM_A
-      ) ?: ""
-    )
-    if (!DateUtils.parseDate(
-        extraAptDetail?.scheduledDateTime,
-        DateUtils.FORMAT_SERVER_DATE,
-        DateUtils.FORMAT_SERVER_TO_LOCAL_5,
-        timeZone = TimeZone.getTimeZone("IST")
-      ).isNullOrEmpty()
-    ) {
+    val appointmentDate = java.lang.StringBuilder(DateUtils.parseDate(extraAptDetail?.startTime(), DateUtils.FORMAT_HH_MM, DateUtils.FORMAT_HH_MM_A) ?: "")
+    if (!DateUtils.parseDate(extraAptDetail?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5, timeZone = TimeZone.getTimeZone("IST")).isNullOrEmpty()) {
       appointmentDate.append(
-        " on ${
-          DateUtils.parseDate(
-            extraAptDetail?.scheduledDateTime,
-            DateUtils.FORMAT_SERVER_DATE,
-            DateUtils.FORMAT_SERVER_TO_LOCAL_5
+        " on ${DateUtils.parseDate(
+            extraAptDetail?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5
           )
         }"
       )
     }
     binding?.textDate?.text = appointmentDate
 
-    binding?.textStaff?.text =
-      if (!extraAptDetail?.doctorName.isNullOrBlank()) "${extraAptDetail?.doctorName}" else ""
+    binding?.textStaff?.text = if (!extraAptDetail?.doctorName.isNullOrBlank()) "${extraAptDetail?.doctorName}" else ""
     binding?.textAppointmentAmount?.text = "${product?.getCurrencyCodeValue()} ${product?.price()}"
 
     if (product?.ImageUri.isNullOrEmpty().not()) {
@@ -196,8 +178,22 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     }
 
     binding?.textCustomerName?.text = order?.BuyerDetails?.ContactDetails?.FullName
-    binding?.textCustomerPhone?.text = order?.BuyerDetails?.ContactDetails?.PrimaryContactNumber
-    binding?.textCustomerEmail?.text = order?.BuyerDetails?.ContactDetails?.EmailId
+    if (number.isNullOrEmpty()) {
+      binding?.textCustomerPhone?.gone()
+      binding?.textPhone?.gone()
+    } else {
+      binding?.textCustomerPhone?.visible()
+      binding?.textPhone?.visible()
+    }
+    binding?.textCustomerPhone?.text = number
+    if (email.isNullOrEmpty()) {
+      binding?.textCustomerEmail?.gone()
+      binding?.textEmail?.gone()
+    } else {
+      binding?.textCustomerEmail?.visible()
+      binding?.textEmail?.visible()
+    }
+    binding?.textCustomerEmail?.text = email
 
     binding?.textPaymentStatusDropdown?.text = "${order?.PaymentDetails?.statusValue()}"
     binding?.textPaymentTypeDropdown?.text = "${order?.PaymentDetails?.methodValue()}"
@@ -284,12 +280,12 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
           )
         }
         OrderMenuModel.MenuStatus.REQUEST_FEEDBACK -> {
-          colorCode = "#52AAC6"
+          colorCode = "#4A4A4A"
           changeButtonStatus(
             btnOrderMenu.title,
             R.drawable.ic_in_transit_order_btn_bkg,
-            R.color.blue_52AAC6,
-            R.drawable.ic_arrow_down_blue
+            R.color.black_4a4a4a,
+            R.drawable.ic_arrow_down_4a4a4a
           )
         }
         else -> binding?.lytStatusBtn?.gone()

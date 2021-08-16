@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.framework.views.customViews.CustomToolbar;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +13,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.view.MenuItem;
 import android.view.View;
@@ -61,7 +61,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
     ViewPager pager;
     AnalyticsAdapter analyticsAdapter;
     ContentLoadingProgressBar progressBar;
-    Toolbar toolbar;
+    CustomToolbar toolbar;
     private String startDate = "01-01-2016", endDate;
     private int tableName;
     private UserSessionManager session;
@@ -86,9 +86,9 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         Intent intent = getIntent();
         tableName = intent.getIntExtra("table_name", -1);
         if (tableName == Constants.VISITORS_TABLE) {
-            setTitle(getString(R.string.unique_visitors));
+            setTitle(getString(R.string.unique_visitors_n));
         } else {
-            setTitle(getString(R.string.overall_visits));
+            setTitle(getString(R.string.overall_visits_n));
         }
         session = new UserSessionManager(getApplicationContext(), this);
 
@@ -198,7 +198,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
     }
 
     private void init() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (CustomToolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

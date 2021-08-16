@@ -41,13 +41,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_5"
-        android:fontFamily="sans-serif-light"
         android:gravity="bottom|right"
         android:lineSpacingExtra="5dp"
         android:text="@string/view_more"
         android:textColor="#80000000"
         android:textSize="12sp"
-        android:textStyle="italic"
+        android:fontFamily="@font/light"
         tools:ignore="MissingPrefix" />
 
 

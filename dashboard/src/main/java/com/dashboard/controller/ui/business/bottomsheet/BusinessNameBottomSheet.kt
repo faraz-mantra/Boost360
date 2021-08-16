@@ -10,8 +10,7 @@ import com.framework.extensions.afterTextChanged
 import com.framework.models.BaseViewModel
 import com.framework.utils.showKeyBoard
 
-class BusinessNameBottomSheet :
-  BaseBottomSheetDialog<BottomSheetBusinessNameBinding, BaseViewModel>() {
+class BusinessNameBottomSheet : BaseBottomSheetDialog<BottomSheetBusinessNameBinding, BaseViewModel>() {
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_business_name
@@ -27,14 +26,16 @@ class BusinessNameBottomSheet :
   override fun onCreateView() {
     dialog.behavior.isDraggable = false
     setOnClickListener(binding?.rivCloseBottomSheet, binding?.btnPublish)
-    this.businessProfileModel =
-      arguments?.get(IntentConstant.BUSINESS_DETAILS.name) as? BusinessProfileModel
-    binding?.cetBusinessName?.setText(businessProfileModel?.businessName)
-    binding?.cetBusinessName?.setSelection(businessProfileModel?.businessName?.length ?: 0)
+    this.businessProfileModel = arguments?.get(IntentConstant.BUSINESS_DETAILS.name) as? BusinessProfileModel
+    binding?.cetBusinessName?.post {
+      binding?.cetBusinessName?.setText(businessProfileModel?.businessName)
+      binding?.cetBusinessName?.setSelection(businessProfileModel?.businessName?.length ?: 0)
+    }
+    baseActivity.showKeyBoard(binding?.cetBusinessName)
     binding?.btnPublish?.isEnabled = false
     binding?.ctvBusinessNameCount?.text = "${binding?.cetBusinessName?.text?.length}/40"
     binding?.cetBusinessName?.afterTextChanged { updateText(it) }
-    baseActivity.showKeyBoard(binding?.cetBusinessName)
+ 
   }
 
   private fun updateText(s: String) {

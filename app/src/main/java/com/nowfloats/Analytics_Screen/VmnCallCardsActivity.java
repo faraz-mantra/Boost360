@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.upgrades.UpgradeActivity;
+import com.framework.views.customViews.CustomToolbar;
 import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
@@ -54,6 +55,7 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 public class VmnCallCardsActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = "VmnCallCardsActivity";
     UserSessionManager sessionManager;
     CardView viewCallLogCard;
     TextView missedCountText, receivedCountText, allCountText, virtualNumberText, buyItemButton, potentialCallsText, trackAllCall, trackMissedCall, trackConnectedCall, webCallCount, phoneCallCount;
@@ -83,7 +85,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vmn_call_cards);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        CustomToolbar toolbar = (CustomToolbar) findViewById(R.id.toolbar);
         MixPanelController.track(MixPanelController.VMN_CALL_TRACKER, null);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -216,6 +218,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
         buyItemButton = (TextView) findViewById(R.id.buy_item);
         List<String> keys = session.getStoreWidgets();
+        Log.i(TAG, "store widgets: "+keys.toString());
         if (keys != null && keys.contains("CALLTRACKER")) {
             //oldCode
 //            setVmnTotalCallCount();
@@ -307,6 +310,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
 
     private void getCalls() {
+        Log.i(TAG, "getCalls: function called");
         stopApiCall = true;
         showProgress();
         final String startOffset = String.valueOf(offset);
@@ -320,6 +324,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         trackerApis.trackerCalls(hashMap, new Callback<ArrayList<VmnCallModel>>() {
             @Override
             public void success(ArrayList<VmnCallModel> vmnCallModels, Response response) {
+                Log.i(TAG, "getCalls success: ");
                 hideProgress();
                 if (vmnCallModels == null || response.getStatus() != 200) {
                     Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
@@ -367,6 +372,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 //                vmnCallAdapter.notifyItemInserted(sizeOfList + i);
             }
         }
+        Log.i(TAG, "updateRecyclerData: header list size "+getSelectedTypeList(headerList).size());
         vmnCallAdapter.updateList(getSelectedTypeList(headerList));
         if (getSelectedTypeList(headerList).size() == 0) {
             noCallTrackLayout.setVisibility(View.VISIBLE);
@@ -606,13 +612,13 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-        if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
+        if (session.getUserProfileEmail() != null) {
+            intent.putExtra("email", session.getUserProfileEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }
@@ -621,7 +627,6 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         startActivity(intent);
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
-            finish();
         }, 1000);
     }
 }

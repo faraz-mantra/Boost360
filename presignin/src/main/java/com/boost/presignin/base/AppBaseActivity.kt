@@ -35,17 +35,6 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
   override fun onCreateView() {
   }
 
-  override fun getToolbarTitleTypeface(): Typeface? {
-    return ResourcesCompat.getFont(this, R.font.semi_bold)
-  }
-
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.heading_5)
-  }
-
-  override fun getNavIconScale(): Float {
-    return 0.75f
-  }
 
   override fun getToolbarBackgroundColor(): Int? {
     return Color.parseColor("#747474")
@@ -53,10 +42,6 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
 
   override fun getToolbarTitleColor(): Int? {
     return Color.parseColor("#FFFFFF")
-  }
-
-  override fun getToolbarTitleGravity(): Int {
-    return Gravity.CENTER
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -91,7 +76,7 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
   protected fun needHelp() {
     val s = SpannableString(resources.getString(R.string.need_help_desc))
     Linkify.addLinks(s, Linkify.ALL)
-    val alertDialog = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
+    val alertDialog = AlertDialog.Builder(ContextThemeWrapper(this, R.style.CustomAlertDialogTheme))
     alertDialog.setTitle(getString(R.string.need_help_title)).setMessage(s)
       .setPositiveButton(resources.getString(R.string.okay), null)
     val alert = alertDialog.create()

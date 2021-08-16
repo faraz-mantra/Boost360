@@ -94,7 +94,7 @@
               android:text="@string/add_service_image"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/semi_bold"
-              app:textAllCaps="true"
+              app:textAllCaps="false"
               app:textType="BODY_1" />
 
           </LinearLayout>
@@ -153,7 +153,6 @@
             android:includeFontPadding="false"
             android:text="@string/service_category"
             android:textColor="@color/black_4a4a4a"
-            app:drawableEndCompat="@drawable/ic_question_circular_blue"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_3" />
 
@@ -271,7 +270,6 @@
           android:includeFontPadding="false"
           android:text="@string/pricing_info"
           android:textColor="@color/black_4a4a4a"
-          app:drawableEndCompat="@drawable/ic_question_circular_blue"
           app:fontFamily="@font/semi_bold"
           app:textType="BODY_3" />
 
@@ -350,7 +348,7 @@
 
                 <com.framework.views.customViews.CustomTextField
                   android:id="@+id/amount_edt"
-                  android:layout_width="@dimen/size_110"
+                  android:layout_width="@dimen/size_100"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="@dimen/size_5"
                   android:background="@drawable/bg_rect_edit_txt"
@@ -386,7 +384,7 @@
 
                 <com.framework.views.customViews.CustomTextField
                   android:id="@+id/discount_edt"
-                  android:layout_width="@dimen/size_110"
+                  android:layout_width="@dimen/size_100"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="@dimen/size_5"
                   android:background="@drawable/bg_rect_edit_txt"
@@ -592,7 +590,7 @@
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/save_amp_publish"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"

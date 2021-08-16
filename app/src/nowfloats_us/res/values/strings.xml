@@ -460,9 +460,9 @@
     <item>Feedback</item>
     <item>Like us on Facebook</item>
     <item>Follow us on Twitter</item>
-    <item>Rate us on Play Store</item>
-    <item>Terms of Use</item>
-    <item>Privacy Policy</item>
+    <item>Rate us on play store</item>
+    <item>Terms of use</item>
+    <item>Privacy policy</item>
   </string-array>
   <string name="keyboard">Keyboard</string>
   <string-array name="on_boarding_description">

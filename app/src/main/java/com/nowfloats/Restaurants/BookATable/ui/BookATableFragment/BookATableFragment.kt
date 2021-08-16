@@ -93,11 +93,11 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
   fun setHeader() {
     title.text = "Book A Table"
     back_button.setOnClickListener {
-      (activity as BookATableActivity).onBackPressed()
+      (activity as? BookATableActivity)?.onBackPressed()
     }
     if (session?.storeWidgets?.contains("BOOKTABLE") == true) {
-      right_icon.setImageResource(R.drawable.ic_add_white)
-      right_icon_layout.setOnClickListener {
+      btn_add.visibility = View.VISIBLE
+      btn_add.setOnClickListener {
         val bookATableDetailsFragment = BookATableDetailsFragment.newInstance()
         val arg = Bundle()
         arg.putString("ScreenState", "new")
@@ -107,7 +107,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
           "BOOK_A_TABLE_DETAILS_FRAGMENT"
         )
       }
-    }
+    } else btn_add.visibility = View.GONE
 
   }
 
@@ -243,13 +243,13 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
     intent.putExtra("loginid", session!!.userProfileId)
     intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets)
     intent.putExtra("fpTag", session!!.fpTag)
-    if (session!!.fpEmail != null) {
-      intent.putExtra("email", session!!.fpEmail)
+    if (session!!.userProfileEmail != null) {
+      intent.putExtra("email", session!!.userProfileEmail)
     } else {
       intent.putExtra("email", "ria@nowfloats.com")
     }
-    if (session!!.fpPrimaryContactNumber != null) {
-      intent.putExtra("mobileNo", session!!.fpPrimaryContactNumber)
+    if (session!!.userPrimaryMobile != null) {
+      intent.putExtra("mobileNo", session!!.userPrimaryMobile)
     } else {
       intent.putExtra("mobileNo", "9160004303")
     }
