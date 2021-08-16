@@ -296,6 +296,7 @@
   <string name="business_hours_timing"><b>Note:</b> Since the clinic business hours are from 9:30am to 7:30 pm, all your sessions will be between same. </string>
   <string name="from">From</string>
   <string name="to">to</string>
+    <string name="edit_">EDIT</string>
   <string name="apply_same_on_all_days">Apply same on all days</string>
   <string name="dropdown_options_1_1_2_3_4_5_5"><![CDATA[Dropdown options: <1, 1, 2, 3, 4, 5, 5+]]></string>
   <string name="enter_age">Enter age</string>
@@ -462,6 +463,8 @@
   <string name="successfully_deleted">Successfully deleted</string>
   <string name="successfully_saved">Successfully saved</string>
   <string name="successfully_update">Successfully updated</string>
+  <string name="offer_saved_and_published_live_on_your_website_or_share">Your offer is successfully saved and published live on your website. Click on below button to see it live or share with in your connections.</string>
+  <string name="offer_update_and_published_live_on_your_website_or_share">Your offer is successfully updated and published live on your website. Click on below button to see it live or share with in your connections.</string>
 <!--  <string name="product_saved_and_published_live_on_your_website_or_share">Your product is successfully saved and published live on your website. Click on below button to see it live or share with in your connections.</string>-->
   <string name="product_saved_and_published_live_on_your_website_or_share">Your product is successfully saved and published\nlive on your website.</string>
 <!--  <string name="product_update_and_published_live_on_your_website_or_share">Your product is successfully updated and published live on your website. Click on below button to see it live or share with in your connections.</string>-->
@@ -684,7 +687,6 @@
   <string name="select_how_you_want_to_receive_money_for_your_bookings">Select, how you want to receive money for your bookings.</string>
   <string name="my_custom_payment_gateway">My custom payment gateway</string>
   <string name="get_direct_payment_in_your_bank_account_instantly">Get direct payment in your bank account instantly</string>
-  <string name="done">Done</string>
   <string name="done_caps">Done</string>
   <string name="create_a_product_category">Create a product category</string>
   <string name="product_description">Product description*</string>
@@ -724,10 +726,7 @@
   <string name="inch">INCH</string>
   <string name="_5">5</string>
   <string name="paste_your_url_here_product">Paste your URL here…</string>
-  <string name="type_a_tag_and_press_add_s_info">Type a tag and press \'ADD\'</string>
   <string name="type_a_tag_and_press_add_s_info">Type a tag and press \'Add\'</string>
-  <string name="current_selection">Current selection</string>
-  <string name="_4_products_under_this_category">4 products under this category</string>
   <string name="latest_update_data_not_found">Latest update data not found!</string>
   <string name="update_regularly_keep_customers_informed_brand">Update regularly to keep your customers informed about your brand</string>
   <string name="post_an_update_n">Post an Update</string>

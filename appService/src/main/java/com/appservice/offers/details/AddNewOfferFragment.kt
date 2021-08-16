@@ -152,8 +152,8 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
         showLongToast(getString(R.string.offer_removed_successfully))
         val data = Intent()
         data.putExtra(IntentConstant.IS_UPDATED.name, true)
-        appBaseActivity?.setResult(Activity.RESULT_OK, data)
-        appBaseActivity?.finish()
+        baseActivity?.setResult(Activity.RESULT_OK, data)
+        baseActivity?.finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -315,8 +315,8 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
             TypeSuccess.CLOSE.name -> {
                 val data = Intent()
                 data.putExtra(IntentConstant.IS_UPDATED.name, true)
-                appBaseActivity?.setResult(Activity.RESULT_OK, data)
-                appBaseActivity?.finish()
+                baseActivity?.setResult(Activity.RESULT_OK, data)
+                baseActivity?.finish()
             }
             TypeSuccess.VISIT_WEBSITE.name -> {
             }
