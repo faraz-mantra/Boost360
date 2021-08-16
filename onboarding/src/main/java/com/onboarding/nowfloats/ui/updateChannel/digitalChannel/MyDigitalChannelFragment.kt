@@ -593,7 +593,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     Log.i(TAG, "onActivityResult: channel")
-    if (isFromOtherScreen?:false){
+    if (isFromOtherScreen == true){
       baseActivity.finishAfterTransition()
     }
   }
