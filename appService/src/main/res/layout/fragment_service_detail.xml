@@ -153,7 +153,6 @@
             android:includeFontPadding="false"
             android:text="@string/service_category"
             android:textColor="@color/black_4a4a4a"
-            app:drawableEndCompat="@drawable/ic_question_circular_blue"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_3" />
 
@@ -271,7 +270,6 @@
           android:includeFontPadding="false"
           android:text="@string/pricing_info"
           android:textColor="@color/black_4a4a4a"
-          app:drawableEndCompat="@drawable/ic_question_circular_blue"
           app:fontFamily="@font/semi_bold"
           app:textType="BODY_3" />
 
