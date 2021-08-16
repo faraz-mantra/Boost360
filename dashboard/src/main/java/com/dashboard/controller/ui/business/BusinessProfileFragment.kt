@@ -443,14 +443,12 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
 
   private fun onBusinessDescAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
-    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_add_business_description = isAdded
     instance.updateDocument()
   }
 
   private fun onBusinessNameAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
-    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_add_business_name = isAdded
     instance.updateDocument()
   }

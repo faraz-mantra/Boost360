@@ -105,16 +105,15 @@
         style="@style/psn_subheading_style"
         android:layout_marginHorizontal="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_18sdp"
-        android:fontFamily="@font/semi_bold"
+        android:fontFamily="@font/regular"
         android:gravity="center"
         android:text="@string/try_a_different_number"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
-        android:textFontWeight="700"
+        app:textType="SUBTITLE_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/username_account_bt"
-        tools:targetApi="p" />
+        app:layout_constraintTop_toBottomOf="@id/username_account_bt" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/help_tv"

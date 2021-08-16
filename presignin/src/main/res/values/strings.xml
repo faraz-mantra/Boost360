@@ -71,7 +71,7 @@
   <string name="business_details_hint">This information will be used to onboard and sync across all marketing channels.</string>
   <string name="enter_your_name">Your name*</string>
   <string name="your_business_name_hint">Name of your business*</string>
-  <string name="your_business_email_optional">Your business email (optional)</string>
+  <string name="your_business_email_optional">Your business email</string>
   <string name="your_business_phone">Your your phone*</string>
   <string name="choose_website_address">Choose website address</string>
   <string name="use_this_as_my_whatsapp_contact_number">Use this as my WhatsApp contact number</string>

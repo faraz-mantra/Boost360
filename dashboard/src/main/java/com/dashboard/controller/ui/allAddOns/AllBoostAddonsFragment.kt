@@ -282,6 +282,7 @@ fun businessAddOnsClick(
       "TOTAL",
       WEBSITE_REPORT_ALL_VISITS_CLICK
     )
+    //remove after fixed with jio(business_name_d)
     ManageBusinessData.BusinessType.business_name_d,
     ManageBusinessData.BusinessType.clinic_basic_info,
     ManageBusinessData.BusinessType.business_description_d,

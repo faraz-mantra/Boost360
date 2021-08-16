@@ -2910,7 +2910,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="your_website_already_has_this_look">Your website already has this look</string>
   <string name="not_able_to_change_theme">Not able to change theme</string>
   <string name="changed_theme_to">\"Changed theme to \"</string>
-  <string name="create_my_business_profile">\"By clicking on \'CREATE MY BUSINESS PROFILE\' you agree to our \"</string>
+  <string name="create_my_business_profile">\"By clicking on \'Create my business profile\' you agree to our \"</string>
   <string name="invalid_email_please_enter_again">Invalid email, Please enter again.</string>
   <string name="one_time_password">One time password</string>
   <string name="you_will_receive_a_call_shortly">You will receive a call shortly</string>
@@ -3056,7 +3056,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="unable_to_open_facebook">unable to open facebook</string>
   <string name="enter_valid_open_close_timing"><![CDATA[Please enter valid open & close time!]]></string>
   <string name="choose_image">Choose image</string>
-  <string name="add_featured_image">Add Featured Image</string>
+  <string name="add_featured_image">Add featured image</string>
   <string name="logo_updated_successfully">Logo uploaded successfully.</string>
   <string name="make_above_domain_as_my_boost_website_s_web_address_url">Make above domain as my Boost website’s web address/URL.</string>
   <string name="make_boost_website_as_a_subdomain_of_this_domain_e_g_shop_yourdomain_com">Make Boost website as a subdomain of this domain.(e.g. shop.yourdomain.com)</string>

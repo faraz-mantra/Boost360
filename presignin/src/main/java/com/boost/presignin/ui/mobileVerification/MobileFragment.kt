@@ -65,6 +65,7 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
   }
 
   override fun onCreateView() {
+
     requestPhonePicker()
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.helpTv)
@@ -155,7 +156,12 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
         val cred = data?.getParcelableExtra<Credential>(Credential.EXTRA_KEY)
         Log.i(TAG, "onActivityResult: "+cred?.id)
         binding?.phoneEt?.setText(cred?.id.toString().replace("+91",""))
+        val isPhoneValid = binding?.phoneEt?.text.toString().isPhoneValid()
+        binding?.nextButton?.isEnabled = isPhoneValid
 
+        if (isPhoneValid){
+          binding?.nextButton?.performClick()
+        }
       }
     }
   }
