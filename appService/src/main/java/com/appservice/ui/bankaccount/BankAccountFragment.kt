@@ -176,7 +176,6 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   private fun onBankAccountAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
-    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_add_bank_account = isAdded
     instance.updateDocument()
   }
