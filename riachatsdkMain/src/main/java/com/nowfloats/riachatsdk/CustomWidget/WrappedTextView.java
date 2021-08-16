@@ -1,7 +1,9 @@
 package com.nowfloats.riachatsdk.CustomWidget;
 
 import android.content.Context;
+
 import androidx.appcompat.widget.AppCompatTextView;
+
 import android.text.Layout;
 import android.util.AttributeSet;
 

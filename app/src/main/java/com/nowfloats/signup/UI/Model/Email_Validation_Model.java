@@ -8,6 +8,4 @@ public class Email_Validation_Model {
     public String status;
 
 
-
-
 }

@@ -12,17 +12,18 @@ public enum WebActionVisibility {
     PRIVATE(1),
     NONE(-1);
 
-    private int value;
     private static SparseArray<WebActionVisibility> map = new SparseArray<>();
-
-    private WebActionVisibility(int value) {
-        this.value = value;
-    }
 
     static {
         for (WebActionVisibility visibility : WebActionVisibility.values()) {
             map.put(visibility.value, visibility);
         }
+    }
+
+    private int value;
+
+    private WebActionVisibility(int value) {
+        this.value = value;
     }
 
     public static WebActionVisibility valueOf(int pageType) {

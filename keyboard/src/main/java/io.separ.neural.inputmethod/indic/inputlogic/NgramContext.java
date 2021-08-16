@@ -25,61 +25,6 @@ public class NgramContext {
     public static final String BEGINNING_OF_SENTENCE_TAG = "<S>";
 
     public static final String CONTEXT_SEPARATOR = " ";
-
-    public static NgramContext getEmptyPrevWordsContext(int maxPrevWordCount) {
-        return new NgramContext(maxPrevWordCount, WordInfo.EMPTY_WORD_INFO);
-    }
-
-    /**
-     * Word information used to represent previous words information.
-     */
-    public static class WordInfo {
-        @Nonnull
-        public static final WordInfo EMPTY_WORD_INFO = new WordInfo(null);
-        @Nonnull
-        public static final WordInfo BEGINNING_OF_SENTENCE_WORD_INFO = new WordInfo();
-
-        // This is an empty char sequence when mIsBeginningOfSentence is true.
-        public final CharSequence mWord;
-        // TODO: Have sentence separator.
-        // Whether the current context is beginning of sentence or not. This is true when composing
-        // at the beginning of an input field or composing a word after a sentence separator.
-        public final boolean mIsBeginningOfSentence;
-
-        // Beginning of sentence.
-        private WordInfo() {
-            mWord = "";
-            mIsBeginningOfSentence = true;
-        }
-
-        public WordInfo(final CharSequence word) {
-            mWord = word;
-            mIsBeginningOfSentence = false;
-        }
-
-        public boolean isValid() {
-            return mWord != null;
-        }
-
-        @Override
-        public int hashCode() {
-            return Arrays.hashCode(new Object[] { mWord, mIsBeginningOfSentence } );
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof WordInfo)) return false;
-            final WordInfo wordInfo = (WordInfo)o;
-            if (mWord == null || wordInfo.mWord == null) {
-                return mWord == wordInfo.mWord
-                        && mIsBeginningOfSentence == wordInfo.mIsBeginningOfSentence;
-            }
-            return TextUtils.equals(mWord, wordInfo.mWord)
-                    && mIsBeginningOfSentence == wordInfo.mIsBeginningOfSentence;
-        }
-    }
-
     // The words immediately before the considered word. EMPTY_WORD_INFO element means we don't
     // have any context for that previous word including the "beginning of sentence context" - we
     // just don't know what to predict using the information. An example of that is after a comma.
@@ -88,9 +33,7 @@ public class NgramContext {
     // calling getSuggetions* in this situation.
     private final WordInfo[] mPrevWordsInfo;
     private final int mPrevWordsCount;
-
     private final int mMaxPrevWordCount;
-
     // Construct from the previous word information.
     public NgramContext(final WordInfo... prevWordsInfo) {
         this(MAX_PREV_WORD_COUNT_FOR_N_GRAM, prevWordsInfo);
@@ -100,6 +43,10 @@ public class NgramContext {
         mPrevWordsInfo = prevWordsInfo;
         mPrevWordsCount = prevWordsInfo.length;
         mMaxPrevWordCount = maxPrevWordCount;
+    }
+
+    public static NgramContext getEmptyPrevWordsContext(int maxPrevWordCount) {
+        return new NgramContext(maxPrevWordCount, WordInfo.EMPTY_WORD_INFO);
     }
 
     /**
@@ -113,7 +60,6 @@ public class NgramContext {
         System.arraycopy(mPrevWordsInfo, 0, prevWordsInfo, 1, nextPrevWordCount - 1);
         return new NgramContext(mMaxPrevWordCount, prevWordsInfo);
     }
-
 
     /**
      * Extracts the previous words context.
@@ -213,7 +159,7 @@ public class NgramContext {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof NgramContext)) return false;
-        final NgramContext prevWordsInfo = (NgramContext)o;
+        final NgramContext prevWordsInfo = (NgramContext) o;
 
         final int minLength = Math.min(mPrevWordsCount, prevWordsInfo.mPrevWordsCount);
         for (int i = 0; i < minLength; i++) {
@@ -261,5 +207,55 @@ public class NgramContext {
             builder.append(". ");
         }
         return builder.toString();
+    }
+
+    /**
+     * Word information used to represent previous words information.
+     */
+    public static class WordInfo {
+        @Nonnull
+        public static final WordInfo EMPTY_WORD_INFO = new WordInfo(null);
+        @Nonnull
+        public static final WordInfo BEGINNING_OF_SENTENCE_WORD_INFO = new WordInfo();
+
+        // This is an empty char sequence when mIsBeginningOfSentence is true.
+        public final CharSequence mWord;
+        // TODO: Have sentence separator.
+        // Whether the current context is beginning of sentence or not. This is true when composing
+        // at the beginning of an input field or composing a word after a sentence separator.
+        public final boolean mIsBeginningOfSentence;
+
+        // Beginning of sentence.
+        private WordInfo() {
+            mWord = "";
+            mIsBeginningOfSentence = true;
+        }
+
+        public WordInfo(final CharSequence word) {
+            mWord = word;
+            mIsBeginningOfSentence = false;
+        }
+
+        public boolean isValid() {
+            return mWord != null;
+        }
+
+        @Override
+        public int hashCode() {
+            return Arrays.hashCode(new Object[]{mWord, mIsBeginningOfSentence});
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof WordInfo)) return false;
+            final WordInfo wordInfo = (WordInfo) o;
+            if (mWord == null || wordInfo.mWord == null) {
+                return mWord == wordInfo.mWord
+                        && mIsBeginningOfSentence == wordInfo.mIsBeginningOfSentence;
+            }
+            return TextUtils.equals(mWord, wordInfo.mWord)
+                    && mIsBeginningOfSentence == wordInfo.mIsBeginningOfSentence;
+        }
     }
 }

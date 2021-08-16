@@ -1,0 +1,23 @@
+{
+  "Fragment Data": {
+    "title": "Learning about",
+    "subject": "Staff Profile"
+  },
+  "Contents": {
+    "Title": "HOW IT WORKS:",
+    "Description": "This feature allows you to add detailed staff profiles to your website. You can track your employee’s weekly availability, manage staff allocation, leaves, and stay organized. When making an appointment, clients can see all available staff’s calendars providing the service they are looking for.",
+    "VIDEOS": [
+      {
+        "video url": "https://cdn.nowfloats.com/manage/assets/Content/videos/MobileStaffWalkThrough.mp4",
+        "video title": "How to Setup an Staff Profile on Boost 360",
+        "video length": "4:17",
+        "video thumbnails": "https://firebasestorage.googleapis.com/v0/b/nowfloats-boost.appspot.com/o/staff%20walkthrough%2FStaff%20management%20thumbnail.webp?alt=media&token=3e5be371-eca7-42ae-b5de-4e241ccbd628"
+      }
+    ]
+  },
+  "Tips:": [
+    "Mentioning the staff’s professional experience, specializations, and awards will help in building and maintaining great relationships with your clients.",
+    "You can also assign a staff member at the time of appointment booking based on the slot availability in their calendar."
+  ],
+  "Menus": []
+}

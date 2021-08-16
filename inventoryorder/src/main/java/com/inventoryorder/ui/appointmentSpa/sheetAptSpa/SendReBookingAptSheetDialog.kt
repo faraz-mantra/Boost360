@@ -9,7 +9,8 @@ import com.inventoryorder.R
 import com.inventoryorder.databinding.BottomSheetSendReBookingAptBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class SendReBookingAptSheetDialog : BaseBottomSheetDialog<BottomSheetSendReBookingAptBinding, BaseViewModel>() {
+class SendReBookingAptSheetDialog :
+  BaseBottomSheetDialog<BottomSheetSendReBookingAptBinding, BaseViewModel>() {
 
   private var orderItem: OrderItem? = null
   var onClicked: () -> Unit = {}

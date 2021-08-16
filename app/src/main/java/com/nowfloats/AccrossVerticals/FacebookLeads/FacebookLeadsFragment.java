@@ -59,7 +59,7 @@ public class FacebookLeadsFragment extends Fragment {
         //show or hide if feature is available to user
         secondaryLayout = view.findViewById(R.id.secondary_layout);
         buyItemButton = view.findViewById(R.id.buy_item);
-        if (Constants.StoreWidgets.contains("WILDFIRE_FB_LEAD_ADS")) {
+        if (session.getStoreWidgets().contains("WILDFIRE_FB_LEAD_ADS")) {
             secondaryLayout.setVisibility(View.GONE);
         } else {
             secondaryLayout.setVisibility(View.VISIBLE);
@@ -108,6 +108,6 @@ public class FacebookLeadsFragment extends Fragment {
         startActivity(intent);
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
-        },1000);
+        }, 1000);
     }
 }

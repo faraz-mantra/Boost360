@@ -11,6 +11,7 @@
     <activity
       android:name=".controller.DashboardActivity"
       android:label="@string/dashboard"
+      android:launchMode="singleTask"
       android:screenOrientation="portrait"
       android:theme="@style/DashboardTheme"
       android:windowSoftInputMode="adjustPan">
@@ -27,17 +28,9 @@
           android:pathPrefix="/"
           android:scheme="http" />
       </intent-filter>
-
-      <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-
+      <intent-filter>
+        <action android:name="com.dashboard.controller.DashboardActivity"/>
         <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="nowfloat.onelink.me"
-          android:pathPrefix="/FX0L"
-          android:scheme="https" />
       </intent-filter>
     </activity>
 

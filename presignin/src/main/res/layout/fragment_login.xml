@@ -1,0 +1,98 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/bottom_guide_style" />
+
+    <com.boost.presignin.views.PsnCustomToolbar
+      android:id="@+id/toolbar"
+      style="@style/psn_toolbar_style"
+      app:rightIcon="@drawable/psn_login_toolbar_icon"
+      tools:ignore="MissingConstraints" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/heading_tv"
+      style="@style/psn_heading_style"
+      android:text="@string/psn_login_to_boost_360"
+      app:layout_constraintTop_toBottomOf="@id/toolbar"
+      tools:ignore="MissingConstraints" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/sub_heading_tv"
+      style="@style/psn_subheading_style"
+      android:text="@string/psn_username_or_email"
+      app:layout_constraintTop_toBottomOf="@id/heading_tv"
+      tools:ignore="MissingConstraints" />
+
+    <com.framework.views.customViews.CustomEditText
+      android:id="@+id/username_et"
+      style="@style/psn_login_edittext_style"
+      android:layout_marginTop="@dimen/_16sdp"
+      android:drawableStart="@drawable/ic_user_et_drawable"
+      android:hint="@string/login_et_hint"
+      app:layout_constraintTop_toBottomOf="@id/sub_heading_tv"
+      tools:ignore="MissingConstraints" />
+
+    <com.framework.views.customViews.CustomEditText
+      android:id="@+id/pass_et"
+      style="@style/psn_login_edittext_style"
+      android:layout_marginTop="@dimen/_16sdp"
+      android:drawableStart="@drawable/ic_pass_et_drawable"
+      android:hint="@string/password"
+      android:inputType="textPassword"
+      app:layout_constraintEnd_toEndOf="@id/endGuide"
+      app:layout_constraintTop_toBottomOf="@id/username_et"
+      tools:ignore="UnknownId" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/forgot_tv"
+      style="@style/forget_tv_style"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/forgot"
+      app:layout_constraintBottom_toBottomOf="@id/pass_et"
+      app:layout_constraintTop_toTopOf="@id/pass_et"
+      tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/login_bt"
+      style="@style/material_button_style"
+      android:layout_marginTop="28dp"
+      android:enabled="false"
+      android:text="@string/psn_login_to_boost_360"
+      android:textAllCaps="true"
+      app:layout_constraintTop_toBottomOf="@+id/pass_et"
+      tools:ignore="MissingConstraints" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/login_with_number_btn"
+      style="@style/psn_subheading_style"
+      android:layout_width="wrap_content"
+      android:layout_marginTop="@dimen/_20sdp"
+      android:fontFamily="@font/semi_bold"
+      android:text="@string/login_with_mobile_number"
+      android:textAllCaps="true"
+      android:textColor="@color/colorPrimary"
+      app:layout_constraintTop_toBottomOf="@id/login_bt"
+      app:textType="BODY_1"
+      tools:ignore="MissingConstraints" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/help_tv"
+      style="@style/psn_subheading_style"
+      android:layout_width="wrap_content"
+      android:layout_marginTop="@dimen/_20sdp"
+      android:fontFamily="@font/semi_bold"
+      android:text="@string/need_help"
+      app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
+      tools:ignore="MissingConstraints,UnknownId" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

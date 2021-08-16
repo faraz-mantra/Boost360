@@ -16,11 +16,14 @@ import java.util.Calendar;
 
 public class FirebaseLogger {
 
+    private static final String DB_SAM_CHILD_NAME = "SAM";
+    public static boolean lastEventStatus;
     private static FirebaseLogger mFirebaseLogger;
     private DatabaseReference mDatabase;
-    private static final String DB_SAM_CHILD_NAME = "SAM";
 
-    public static boolean lastEventStatus;
+    private FirebaseLogger() {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+    }
 
     public static FirebaseLogger getInstance() {
         if (mFirebaseLogger == null) {
@@ -28,21 +31,6 @@ public class FirebaseLogger {
         }
 
         return mFirebaseLogger;
-    }
-
-
-    public interface SAMSTATUS {
-        public int BUBBLE_CLICKED = 0;
-        public int HAS_DATA = 1;
-        public int HAS_NO_DATA = 2;
-        public int SERVER_ERROR = -100;
-        public int SELECTED_MESSAGES = 3;
-        public int ACTION_CALL = 4;
-        public int ACTION_SHARE = 5;
-    }
-
-    private FirebaseLogger() {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     public void logSAMEvent(String messageId, int status, String fpId, String appVersion) {
@@ -60,5 +48,15 @@ public class FirebaseLogger {
 
         mDatabase.child(DB_SAM_CHILD_NAME).push().setValue(messageDO);
 
+    }
+
+    public interface SAMSTATUS {
+        public int BUBBLE_CLICKED = 0;
+        public int HAS_DATA = 1;
+        public int HAS_NO_DATA = 2;
+        public int SERVER_ERROR = -100;
+        public int SELECTED_MESSAGES = 3;
+        public int ACTION_CALL = 4;
+        public int ACTION_SHARE = 5;
     }
 }

@@ -39,13 +39,13 @@
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:hint="@string/search_city_name"
-        android:textColorHint="@color/gray_light"
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:lines="1"
         android:paddingLeft="@dimen/size_16"
         android:paddingRight="@dimen/size_16"
         android:textColor="@color/black"
+        android:textColorHint="@color/gray_light"
         app:fontFamily="@font/regular"
         app:textType="HEADING_6" />
 

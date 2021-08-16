@@ -1,5 +1,6 @@
 package com.nowfloats.util;
 
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -14,8 +15,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-
-import androidx.appcompat.app.AppCompatActivity;
+import android.view.inputmethod.InputMethodManager;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,9 +28,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import jp.wasabeef.richeditor.RichEditor;
+
 import static com.framework.webengageconstant.EventLabelKt.BUSINESS_PROFILE_CREATION_SUCCESS;
-import static com.framework.webengageconstant.EventLabelKt.START_VIEW;
-import static com.framework.webengageconstant.EventNameKt.ADDON_MARKETPLACE_PAGE;
+import static com.framework.webengageconstant.EventLabelKt.CLICK;
+import static com.framework.webengageconstant.EventNameKt.ADDON_MARKETPLACE_PAGE_CLICK;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_PROFILE_CREATION_SUCCESSFUL;
 
 
@@ -187,7 +189,6 @@ public class Utils {
     }
 
 
-
     public static boolean isRoomBooking(String category_code) {
         return ("HOT".equals(category_code));
     }
@@ -273,7 +274,7 @@ public class Utils {
     public static String getPictureName() {
         SimpleDateFormat tst = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String timestamp = tst.format(new Date());
-        return "Camera_"+ timestamp + ".jpg";
+        return "Camera_" + timestamp + ".jpg";
     }
 
     /**
@@ -282,7 +283,7 @@ public class Utils {
      * other file-based ContentProviders.
      *
      * @param context The context.
-     * @param uri The Uri to query.
+     * @param uri     The Uri to query.
      * @author paulburke
      */
     public static String getAbsoluteFilePath(final Context context, final Uri uri) {
@@ -327,7 +328,7 @@ public class Utils {
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
+                final String[] selectionArgs = new String[]{
                         split[1]
                 };
 
@@ -350,9 +351,9 @@ public class Utils {
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.
      *
-     * @param context The context.
-     * @param uri The Uri to query.
-     * @param selection (Optional) Filter used in the query.
+     * @param context       The context.
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */
@@ -404,11 +405,10 @@ public class Utils {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
-    public static void initiateAddonMarketplace(Context context,
-    UserSessionManager session, boolean isOpenCardFragment,  String screenType, String buyItemKey ,Boolean isLoadingShow) {
+    public static void initiateAddonMarketplace(Context context, UserSessionManager session, boolean isOpenCardFragment, String screenType, String buyItemKey, Boolean isLoadingShow) {
         try {
 //            if (isLoadingShow) delayProgressShow()
-            WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE, START_VIEW, session.getFpTag());
+            WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE_CLICK, CLICK, session.getFpTag());
             Intent intent = new Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"));
             intent.putExtra("expCode", session.getFP_AppExperienceCode());
             intent.putExtra("fpName", session.getFPName());
@@ -428,12 +428,19 @@ public class Utils {
             } else {
                 intent.putExtra("mobileNo", "9160004303");
             }
-            if (buyItemKey != null /*&& buyItemKey.isNotEmpty()*/) intent.putExtra("buyItemKey", buyItemKey);
+            if (buyItemKey != null /*&& buyItemKey.isNotEmpty()*/)
+                intent.putExtra("buyItemKey", buyItemKey);
             intent.putExtra("profileUrl", session.getFPLogo());
             context.startActivity(intent);
 //            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void showKeyboard(Activity activity, RichEditor edit) {
+        edit.requestFocus();
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(edit, InputMethodManager.SHOW_IMPLICIT);
     }
 }

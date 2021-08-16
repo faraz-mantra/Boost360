@@ -4,12 +4,13 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.dashboard.pref.FACEBOOK_PAGE_WITH_ID
-import com.dashboard.pref.FACEBOOK_URL
-import com.dashboard.pref.Key_Preferences
-import com.dashboard.pref.UserSessionManager
+import com.framework.pref.FACEBOOK_PAGE_WITH_ID
+import com.framework.pref.FACEBOOK_URL
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
 import java.util.*
 
 const val facebook_chat_main = "facebookchatMain"
@@ -91,7 +92,13 @@ const val deeplink_recommended_add_ons = "recommended_add_ons"
 const val deeplink_item_on_market_place = "ITEM_ONS_MARKETPLACE"
 const val deeplink_REFER_EARN = "refer_and_earn"
 const val deeplink_compare_package = "compare_package_selection"
-
+const val deeplink_package_bundle = "package_bundle"
+const val deeplink_promo_banner = "promo_banner"
+const val deeplink_expert_contact = "expert_connect"
+const val deeplink_create_order = "create_order"
+const val deeplink_create_appointment = "create_appointment"
+const val deeplink_create_consultation = "create_consultation"
+const val deeplink_website_theme = "website_customization"
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
 
@@ -109,6 +116,12 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           //pending
         } else if (url.contains(third_party_queries)) {
           baseActivity.startThirdPartyQueries(session)
+        } else if (url.contains(deeplink_create_appointment)) {
+          baseActivity.startBookAppointmentConsult(session, false)
+        } else if (url.contains(deeplink_create_consultation)) {
+          baseActivity.startBookAppointmentConsult(session, true)
+        } else if (url.contains(deeplink_create_order)) {
+          baseActivity.startOrderCreate(session)
         } else if (url.contains(facebook_chat_main)) {
           //pending
         } else if (url.contains(deeplink_manage_customer)) {
@@ -129,22 +142,26 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startOrderAptConsultList(session, isOrder = true)
         } else if (url.contains(myorderdetail)) {
           if (session.fP_AppExperienceCode.equals("SVC") || session.fP_AppExperienceCode.equals("SPA") ||
-              session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")) {
+            session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")
+          ) {
             baseActivity.startOrderAptConsultList(session)
           } else baseActivity.startOrderAptConsultList(session, isOrder = true)
         } else if (url.contains(appointment_fragment)) {
           if (session.fP_AppExperienceCode.equals("SVC") || session.fP_AppExperienceCode.equals("SPA") ||
-              session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")) {
+            session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")
+          ) {
             baseActivity.startOrderAptConsultList(session)
           }
         } else if (url.contains(order_fragment)) {
           if ((session.fP_AppExperienceCode.equals("SVC") || session.fP_AppExperienceCode.equals("SPA") ||
-                  session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")).not()) {
+                session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")).not()
+          ) {
             baseActivity.startOrderAptConsultList(session, isOrder = true)
           }
         } else if (url.contains(consultation_fragment)) {
           if (session.fP_AppExperienceCode.equals("SVC") || session.fP_AppExperienceCode.equals("SPA") ||
-              session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")) {
+            session.fP_AppExperienceCode.equals("SAL") || session.fP_AppExperienceCode.equals("DOC")
+          ) {
             baseActivity.startOrderAptConsultList(session, isConsult = true)
           }
         } else if (url.contains(deeplink_upgrade)) {
@@ -156,12 +173,13 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deep_link_call_tracker)) {
           baseActivity.startVmnCallCard(session)
         } else if (url.contains(store_url) || url.contains(deeplink_store) ||
-            url.contains(deeplink_propack) || url.contains(deeplink_nfstoreseo) ||
-            url.contains(deeplink_nfstorettb) || url.contains(deeplink_nfstorebiztiming) ||
-            url.contains(deeplink_nfstoreimage) || url.contains(deeplink_nfstoreimage)) {
+          url.contains(deeplink_propack) || url.contains(deeplink_nfstoreseo) ||
+          url.contains(deeplink_nfstorettb) || url.contains(deeplink_nfstorebiztiming) ||
+          url.contains(deeplink_nfstoreimage) || url.contains(deeplink_nfstoreimage)
+        ) {
           baseActivity.startPricingPlan(session)
         } else if (url.contains(deeplink_searchqueries)) {
-          baseActivity.startSearchQuery(session)
+//          baseActivity.startSearchQuery(session)
         } else if (url.contains(blog)) {
           baseActivity.startBlog(url, session)
         } else if (url.contains(subscribers) || url.contains(new_subscribers)) {
@@ -177,7 +195,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_notification)) {
           baseActivity.startNotification(session)
         } else if (url.contains(deeplink_profile)) {
-          baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
+          baseActivity.startBusinessProfileDetailEdit(session)
         } else if (url.contains(deeplink_contact)) {
           baseActivity.startBusinessInfoEmail(session)
         } else if (url.contains(deeplink_bizaddress)) {
@@ -187,8 +205,11 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_bizlogo)) {
           baseActivity.startBusinessLogo(session)
         } else if (url.contains(deeplink_nfstoreDomainTTBCombo)) {
-          baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
-        } else if (url.contains(deeplink_sitemeter) || url.contains(deeplink_site_health) || url.contains(deeplink_DR_SCORE)) {
+          baseActivity.startBusinessProfileDetailEdit(session)
+        } else if (url.contains(deeplink_sitemeter) || url.contains(deeplink_site_health) || url.contains(
+            deeplink_DR_SCORE
+          )
+        ) {
           baseActivity.startReadinessScoreView(session, 0)
         } else if (url.contains(deeplink_imageGallery)) {
           baseActivity.startAddImageGallery(session, isCreate = false)
@@ -247,8 +268,21 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.initiateAddonMarketplace(session, false, "", buyItemKey)
         } else if (url.contains(deeplink_compare_package)) {
           baseActivity.initiateAddonMarketplace(session, false, "comparePackageSelection", "")
+        } else if (url.contains(deeplink_package_bundle)) {
+//          println("deeplink_package_bundle ${url}  ${buyItemKey}")
+          Log.v("deeplink_package_bundle", " " + url + " " + buyItemKey)
+//          baseActivity.initiateAddonMarketplace(session, false, "packageBundle", "")
+          baseActivity.initiateAddonMarketplace(session, false, "packageBundle", buyItemKey)
+
+        } else if (url.contains(deeplink_promo_banner)) {
+          baseActivity.initiateAddonMarketplace(session, false, "promoBanner", buyItemKey)
         } else if (url.contains(deeplink_REFER_EARN)) {
           baseActivity.startReferralView(session)
+        } else if (url.contains(deeplink_website_theme)) {
+          baseActivity.startWebsiteTheme(session)
+        } else if (url.contains(deeplink_expert_contact)) {
+          Log.v("deeplink_expert_contact", " " + url + " " + buyItemKey)
+          baseActivity.initiateAddonMarketplace(session, false, "expertContact", "")
         }
       }
     } catch (e: Exception) {
@@ -277,9 +311,19 @@ fun AppCompatActivity.upgradeApp() {
   try {
     val appPackageName: String = this.packageName
     try {
-      this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+      this.startActivity(
+        Intent(
+          Intent.ACTION_VIEW,
+          Uri.parse("market://details?id=$appPackageName")
+        )
+      )
     } catch (anfe: ActivityNotFoundException) {
-      this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+      this.startActivity(
+        Intent(
+          Intent.ACTION_VIEW,
+          Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+        )
+      )
     }
   } catch (e: Exception) {
     e.printStackTrace()
@@ -292,7 +336,8 @@ fun AppCompatActivity.startBlog(urlN: String, session: UserSessionManager) {
     url = if (url.isNotEmpty()) {
       "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)
     } else {
-      ("http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT) + tag_for_partners)
+      ("http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)
+        ?.toLowerCase(Locale.ROOT) + tag_for_partners)
     }
     val uri = Uri.parse(url)
     val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -310,7 +355,8 @@ fun AppCompatActivity.shareWebsite(session: UserSessionManager) {
       visit_to_new_website + eol + url!!.toLowerCase(Locale.ROOT)
     } else {
       val eol = System.getProperty("line.separator")
-      (visit_to_new_website + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT) + tag_for_partners)
+      (visit_to_new_website + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)
+        ?.toLowerCase(Locale.ROOT) + tag_for_partners)
     }
     val intent = Intent(Intent.ACTION_SEND)
     intent.type = "text/plain"

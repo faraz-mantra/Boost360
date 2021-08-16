@@ -1,319 +1,319 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@color/white"
+  android:orientation="vertical">
 
-    <include
-        android:id="@+id/tool_bar_product_detail"
-        layout="@layout/tool_bar_card" />
+  <include
+    android:id="@+id/tool_bar_product_detail"
+    layout="@layout/tool_bar_card" />
 
-    <ScrollView
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="300dp"
+        android:layout_marginBottom="10dp"
+        android:background="#ECECEC"
+        android:orientation="vertical"
+        app:cardBackgroundColor="#ECECEC"
+        app:cardElevation="5dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rv_product_img"
+          android:layout_width="match_parent"
+          android:layout_height="290dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+      </androidx.cardview.widget.CardView>
+
+      <Button
+        android:id="@+id/btn_choose"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/button_bg"
+        android:elevation="5dp"
+        android:padding="5dp"
+        android:text="@string/add_multiple_images"
+        android:textColor="@color/white" />
+
+
+      <LinearLayout
+        android:id="@+id/productLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:orientation="vertical">
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+          android:id="@+id/product_name"
+          fontPath="Roboto-Light.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="5dp"
+          android:layout_marginBottom="5dp"
+          android:background="@android:color/transparent"
+          android:hint="@string/product_detail_product_name"
+          android:inputType="textCapWords"
+          android:textColor="@color/main_text_color"
+          android:textColorHint="@color/primaryColor"
+          android:textSize="20sp"
+          app:met_floatingLabel="highlight"
+          app:met_primaryColor="@color/primaryColor"
+          app:met_singleLineEllipsis="true"
+          tools:ignore="MissingPrefix" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+          android:id="@+id/product_desc"
+          fontPath="Roboto-Light.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:hint="@string/product_detail_product_descr"
+          android:inputType="textCapSentences"
+          android:textColor="@color/main_text_color"
+          android:textColorHint="@color/primaryColor"
+          android:textSize="15sp"
+          app:met_floatingLabel="highlight"
+          app:met_primaryColor="@color/primaryColor"
+          tools:ignore="MissingPrefix" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+          android:id="@+id/product_currency"
+          fontPath="Roboto-Light.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          android:drawableRight="@drawable/dropselect"
+          android:focusable="false"
+          android:focusableInTouchMode="false"
+          android:hint="@string/product_detail_currency"
+          android:imeOptions="flagNoExtractUi"
+          android:text="INR"
+          android:textColor="@color/primaryColor"
+          android:textColorHint="@color/primaryColor"
+          android:textSize="15sp"
+          app:met_floatingLabel="highlight"
+          app:met_primaryColor="@color/primaryColor"
+          tools:ignore="MissingPrefix" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+          android:id="@+id/product_retail_price"
+          fontPath="Roboto-Light.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:hint="@string/product_detail_product_price"
+          android:inputType="number|numberDecimal"
+          android:textColor="@color/main_text_color"
+          android:textColorHint="@color/primaryColor"
+          android:textSize="15sp"
+          app:met_floatingLabel="highlight"
+          app:met_primaryColor="@color/primaryColor"
+          app:met_singleLineEllipsis="true"
+          tools:ignore="MissingPrefix" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+          android:id="@+id/product_disc_price"
+          fontPath="Roboto-Light.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:hint="@string/product_details_discount"
+          android:inputType="number|numberDecimal"
+          android:textColor="@color/main_text_color"
+          android:textColorHint="@color/primaryColor"
+          android:textSize="15sp"
+          app:met_floatingLabel="highlight"
+          app:met_primaryColor="@color/primaryColor"
+          app:met_singleLineEllipsis="true"
+          tools:ignore="MissingPrefix" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+          android:id="@+id/product_link"
+          fontPath="Roboto-Light.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:hint="@string/product_detail_online_link"
+          android:inputType="textUri"
+          android:textColor="@color/main_text_color"
+          android:textColorHint="@color/primaryColor"
+          android:textSize="15sp"
+          app:met_floatingLabel="highlight"
+          app:met_primaryColor="@color/primaryColor"
+          app:met_singleLineEllipsis="true"
+          tools:ignore="MissingPrefix" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+          android:id="@+id/product_priority"
+          fontPath="Roboto-Light.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          android:drawableRight="@drawable/dropselect"
+          android:focusable="false"
+
+          android:focusableInTouchMode="false"
+          android:hint="@string/product_detail_priority"
+          android:imeOptions="flagNoExtractUi"
+          android:textColor="@color/primaryColor"
+          android:textColorHint="@color/primaryColor"
+          android:textSize="15sp"
+          app:met_floatingLabel="highlight"
+          app:met_primaryColor="@color/primaryColor"
+          tools:ignore="MissingPrefix" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+          android:id="@+id/et_shipping_days"
+          fontPath="Roboto-Light.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:hint="@string/product_details_shipment_dur"
+          android:inputType="number|numberDecimal"
+          android:textColor="@color/main_text_color"
+          android:textColorHint="@color/primaryColor"
+          android:textSize="15sp"
+          app:met_floatingLabel="highlight"
+          app:met_primaryColor="@color/primaryColor"
+          app:met_singleLineEllipsis="true"
+          tools:ignore="MissingPrefix" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+          android:id="@+id/et_available_unit"
+          fontPath="Roboto-Light.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="5dp"
+          android:hint="@string/available_units"
+          android:inputType="number|numberDecimal"
+          android:textColor="@color/main_text_color"
+          android:textColorHint="@color/primaryColor"
+          android:textSize="15sp"
+          app:met_floatingLabel="highlight"
+          app:met_primaryColor="@color/primaryColor"
+          app:met_singleLineEllipsis="true"
+          tools:ignore="MissingPrefix" />
 
         <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:orientation="horizontal">
+
+          <TextView
+            fontPath="Roboto-Light.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="15dp"
+            android:singleLine="true"
+            android:text="@string/product_detail_availability"
+            android:textColor="@color/product_price"
+            android:textSize="14sp"
+            tools:ignore="MissingPrefix" />
+
+          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginEnd="5dp"
+            android:gravity="end">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginBottom="10dp"
-                android:background="#ECECEC"
-                android:orientation="vertical"
-                app:cardBackgroundColor="#ECECEC"
-                app:cardElevation="5dp">
+            <Switch
+              android:id="@+id/switchView"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="end"
+              android:checked="true"
+              android:textColorHighlight="@color/product_price" />
+          </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_product_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="290dp">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-            </androidx.cardview.widget.CardView>
-
-            <Button
-                android:id="@+id/btn_choose"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/button_bg"
-                android:elevation="5dp"
-                android:padding="5dp"
-                android:text="@string/add_multiple_images"
-                android:textColor="@color/white" />
-
-
-            <LinearLayout
-                android:id="@+id/productLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:orientation="vertical">
-
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/product_name"
-                    fontPath="Roboto-Light.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@android:color/transparent"
-                    android:hint="@string/product_detail_product_name"
-                    android:inputType="textCapWords"
-                    android:textColor="@color/main_text_color"
-                    android:textColorHint="@color/primaryColor"
-                    android:textSize="20sp"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/primaryColor"
-                    app:met_singleLineEllipsis="true"
-                    tools:ignore="MissingPrefix" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/product_desc"
-                    fontPath="Roboto-Light.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:hint="@string/product_detail_product_descr"
-                    android:inputType="textCapSentences"
-                    android:textColor="@color/main_text_color"
-                    android:textColorHint="@color/primaryColor"
-                    android:textSize="15sp"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/primaryColor"
-                    tools:ignore="MissingPrefix" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/product_currency"
-                    fontPath="Roboto-Light.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:drawableRight="@drawable/dropselect"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:hint="@string/product_detail_currency"
-                    android:imeOptions="flagNoExtractUi"
-                    android:text="INR"
-                    android:textColor="@color/primaryColor"
-                    android:textColorHint="@color/primaryColor"
-                    android:textSize="15sp"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/primaryColor"
-                    tools:ignore="MissingPrefix" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/product_retail_price"
-                    fontPath="Roboto-Light.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:hint="@string/product_detail_product_price"
-                    android:inputType="number|numberDecimal"
-                    android:textColor="@color/main_text_color"
-                    android:textColorHint="@color/primaryColor"
-                    android:textSize="15sp"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/primaryColor"
-                    app:met_singleLineEllipsis="true"
-                    tools:ignore="MissingPrefix" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/product_disc_price"
-                    fontPath="Roboto-Light.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:hint="@string/product_details_discount"
-                    android:inputType="number|numberDecimal"
-                    android:textColor="@color/main_text_color"
-                    android:textColorHint="@color/primaryColor"
-                    android:textSize="15sp"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/primaryColor"
-                    app:met_singleLineEllipsis="true"
-                    tools:ignore="MissingPrefix" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/product_link"
-                    fontPath="Roboto-Light.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:hint="@string/product_detail_online_link"
-                    android:inputType="textUri"
-                    android:textColor="@color/main_text_color"
-                    android:textColorHint="@color/primaryColor"
-                    android:textSize="15sp"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/primaryColor"
-                    app:met_singleLineEllipsis="true"
-                    tools:ignore="MissingPrefix" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/product_priority"
-                    fontPath="Roboto-Light.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:drawableRight="@drawable/dropselect"
-                    android:focusable="false"
-
-                    android:focusableInTouchMode="false"
-                    android:hint="@string/product_detail_priority"
-                    android:imeOptions="flagNoExtractUi"
-                    android:textColor="@color/primaryColor"
-                    android:textColorHint="@color/primaryColor"
-                    android:textSize="15sp"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/primaryColor"
-                    tools:ignore="MissingPrefix" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/et_shipping_days"
-                    fontPath="Roboto-Light.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:hint="@string/product_details_shipment_dur"
-                    android:inputType="number|numberDecimal"
-                    android:textColor="@color/main_text_color"
-                    android:textColorHint="@color/primaryColor"
-                    android:textSize="15sp"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/primaryColor"
-                    app:met_singleLineEllipsis="true"
-                    tools:ignore="MissingPrefix" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/et_available_unit"
-                    fontPath="Roboto-Light.ttf"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:hint="@string/available_units"
-                    android:inputType="number|numberDecimal"
-                    android:textColor="@color/main_text_color"
-                    android:textColorHint="@color/primaryColor"
-                    android:textSize="15sp"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/primaryColor"
-                    app:met_singleLineEllipsis="true"
-                    tools:ignore="MissingPrefix" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        fontPath="Roboto-Light.ttf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="15dp"
-                        android:singleLine="true"
-                        android:text="@string/product_detail_availability"
-                        android:textColor="@color/product_price"
-                        android:textSize="14sp"
-                        tools:ignore="MissingPrefix" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:gravity="end">
-
-                        <Switch
-                            android:id="@+id/switchView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:checked="true"
-                            android:textColorHighlight="@color/product_price" />
-                    </LinearLayout>
-
-                    <!--<Switch
-                        android:id="@+id/SwitchView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:switchTextAppearance="@color/primaryColor"
-                        android:showText="true"
-                        android:background="@color/primaryColor" />-->
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        fontPath="Roboto-Light.ttf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="15dp"
-                        android:singleLine="true"
-                        android:text="@string/product_detail_free_shipping"
-                        android:textColor="@color/product_price"
-                        android:textSize="14sp"
-                        tools:ignore="MissingPrefix" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:gravity="end">
-
-                        <Switch
-                            android:id="@+id/sv_free_shipping"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:checked="false"
-                            android:textColorHighlight="@color/product_price" />
-                    </LinearLayout>
-
-                    <!--<Switch
-                        android:id="@+id/SwitchView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:switchTextAppearance="@color/primaryColor"
-                        android:showText="true"
-                        android:background="@color/primaryColor" />-->
-                </LinearLayout>
-
-
-                <Button
-                    android:id="@+id/delete_product"
-                    fontPath="Roboto-Medium.ttf"
-                    android:layout_width="200dp"
-                    android:layout_height="55dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/red_btn_bg"
-                    android:elevation="5dp"
-                    android:text="@string/product_detail_delete_btn_text"
-                    android:textColor="@color/white"
-                    android:visibility="visible"
-                    tools:ignore="MissingPrefix" />
-
-            </LinearLayout>
-
-
+          <!--<Switch
+              android:id="@+id/SwitchView"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:switchTextAppearance="@color/primaryColor"
+              android:showText="true"
+              android:background="@color/primaryColor" />-->
         </LinearLayout>
-    </ScrollView>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:orientation="horizontal">
+
+          <TextView
+            fontPath="Roboto-Light.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="15dp"
+            android:singleLine="true"
+            android:text="@string/product_detail_free_shipping"
+            android:textColor="@color/product_price"
+            android:textSize="14sp"
+            tools:ignore="MissingPrefix" />
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:gravity="end">
+
+            <Switch
+              android:id="@+id/sv_free_shipping"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="end"
+              android:checked="false"
+              android:textColorHighlight="@color/product_price" />
+          </LinearLayout>
+
+          <!--<Switch
+              android:id="@+id/SwitchView"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:switchTextAppearance="@color/primaryColor"
+              android:showText="true"
+              android:background="@color/primaryColor" />-->
+        </LinearLayout>
+
+
+        <Button
+          android:id="@+id/delete_product"
+          fontPath="Roboto-Medium.ttf"
+          android:layout_width="200dp"
+          android:layout_height="55dp"
+          android:layout_gravity="center"
+          android:layout_margin="5dp"
+          android:background="@drawable/red_btn_bg"
+          android:elevation="5dp"
+          android:text="@string/product_detail_delete_btn_text"
+          android:textColor="@color/white"
+          android:visibility="visible"
+          tools:ignore="MissingPrefix" />
+
+      </LinearLayout>
+
+
+    </LinearLayout>
+  </ScrollView>
 </LinearLayout>

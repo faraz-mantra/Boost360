@@ -6,23 +6,27 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class AppointmentModel(
-    @field:SerializedName("day", alternate = ["Day"])
-    var day: String? = null,
-    var isViewEnabled: Boolean? = true,
-    @field:SerializedName("timing", alternate = ["Timing"])
-    var timeSlots: ArrayList<TimeSlot> = arrayListOf(),
+  @field:SerializedName("day", alternate = ["Day"])
+  var day: String? = null,
+  var isViewEnabled: Boolean? = true,
+  @field:SerializedName("timing", alternate = ["Timing"])
+  var timeSlots: ArrayList<TimeSlot> = arrayListOf(),
 
-    var isDataAppliedOnMyDay: Boolean? = false,
-    var isTurnedOn: Boolean? = false,
-    var isAppliedOnAllDays: Boolean? = false,
-    var isAppliedOnAllDaysViewVisible: Boolean? = false,
+  var isDataAppliedOnMyDay: Boolean? = false,
+  var isTurnedOn: Boolean? = false,
+  var isAppliedOnAllDays: Boolean? = false,
+  var isAppliedOnAllDaysViewVisible: Boolean? = false,
 ) : Serializable, AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
     return RecyclerViewItemType.SESSION_ITEM_VIEW.getLayout()
   }
 
-  fun getDefaultModel(day: String?, isAppliedOnAllDays: Boolean, isAppliedOnAllDaysVisible: Boolean): AppointmentModel {
+  fun getDefaultModel(
+    day: String?,
+    isAppliedOnAllDays: Boolean,
+    isAppliedOnAllDaysVisible: Boolean
+  ): AppointmentModel {
     val m = AppointmentModel()
     m.day = day
     m.isTurnedOn = false
@@ -87,7 +91,7 @@ data class AppointmentModel(
   fun getStringStaffActive(list: ArrayList<AppointmentModel>?): String {
     val selectedDays = StringBuilder()
     list?.forEach { item ->
-      if (item!=null && !item.day.isNullOrEmpty() && item.timeSlots.isNotEmpty()) {
+      if (item != null && !item.day.isNullOrEmpty() && item.timeSlots.isNotEmpty()) {
         val value = WeekdayStaffValue.fromFullName(item.day) ?: return@forEach
         if (selectedDays.isNotEmpty()) selectedDays.append(", ")
         selectedDays.append(value.sortName)
@@ -99,7 +103,7 @@ data class AppointmentModel(
   fun getStringStaffActiveN(list: ArrayList<AppointmentModel>?): String {
     val selectedDays = StringBuilder()
     list?.forEach { item ->
-      if (item!=null && item.isTurnedOn == true) {
+      if (item != null && item.isTurnedOn == true) {
         val value = WeekdayStaffValue.fromFullName(item.day) ?: return@forEach
         if (selectedDays.isNotEmpty()) selectedDays.append(", ")
         selectedDays.append(value.sortName)
@@ -108,23 +112,24 @@ data class AppointmentModel(
     return selectedDays.toString()
   }
 
-  enum class WeekdayStaffValue(var fullName: String, var sortName: String): Serializable {
+  enum class WeekdayStaffValue(var fullName: String, var sortName: String) : Serializable {
     MONDAY("Monday", "Mon"), TUESDAY("Tuesday", "Tue"), WEDNESDAY("Wednesday", "Wed"),
     THURSDAY("Thursday", "Thu"), FRIDAY("Friday", "Fri"), SATURDAY("Saturday", "Sat"),
     SUNDAY("Sunday", "Sun");
 
     companion object {
-      fun fromFullName(fullName: String?): WeekdayStaffValue? = values().firstOrNull { it.fullName.equals(fullName, false) }
+      fun fromFullName(fullName: String?): WeekdayStaffValue? =
+        values().firstOrNull { it.fullName.equals(fullName, false) }
     }
   }
 }
 
 
 data class TimeSlot(
-    @field:SerializedName("from", alternate = ["From"])
-    var from: String? = null,
-    @field:SerializedName("to", alternate = ["To"])
-    var to: String? = null,
+  @field:SerializedName("from", alternate = ["From"])
+  var from: String? = null,
+  @field:SerializedName("to", alternate = ["To"])
+  var to: String? = null,
 ) : Serializable {
 
   companion object {

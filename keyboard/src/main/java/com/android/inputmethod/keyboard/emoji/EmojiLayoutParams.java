@@ -30,11 +30,11 @@ final class EmojiLayoutParams {
     private static final int DEFAULT_KEYBOARD_ROWS = 4;
 
     public final int mEmojiPagerHeight;
-    private final int mEmojiPagerBottomMargin;
     public final int mEmojiKeyboardHeight;
-    private final int mEmojiCategoryPageIdViewHeight;
     public final int mEmojiActionBarHeight;
     public final int mKeyVerticalGap;
+    private final int mEmojiPagerBottomMargin;
+    private final int mEmojiCategoryPageIdViewHeight;
     private final int mKeyHorizontalGap;
     private final int mBottomPadding;
 

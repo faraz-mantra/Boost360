@@ -30,7 +30,7 @@ enum class RecyclerViewItemType {
   PRODUCT_ITEM,
   PRODUCT_ITEM_SELECTED,
   PRODUCT_BOTTOM_SHEET_OPTIONS,
-  STAFF_ITEM,
+  STAFF_ITEM, ITEM_FAQ, ITEM_VIDEO,
   SLOTS_ITEM;
 
   @LayoutRes
@@ -58,12 +58,14 @@ enum class RecyclerViewItemType {
       TIME_SLOT_ITEM -> R.layout.item_bottom_time_slot
       WEEK_TIMING_SELECTED -> R.layout.item_week_time_select
       SERVICES_DEPARTMENT -> R.layout.item_consultation_services
-      ORDER_MENU_ITEM-> R.layout.item_order_menu
+      ORDER_MENU_ITEM -> R.layout.item_order_menu
       PRODUCT_ITEM -> R.layout.item_product
       PRODUCT_ITEM_SELECTED -> R.layout.item_products_added
       PRODUCT_BOTTOM_SHEET_OPTIONS -> R.layout.bottom_sheet_order_option
       STAFF_ITEM -> R.layout.staff_item
       SLOTS_ITEM -> R.layout.item_time_slot_appointment
+      ITEM_FAQ -> R.layout.item_faq
+      ITEM_VIDEO -> R.layout.recycler_item_list_videos
     }
   }
 }

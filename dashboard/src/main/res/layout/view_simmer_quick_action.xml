@@ -26,7 +26,8 @@
         android:layout_height="@dimen/size_36"
         android:layout_marginTop="@dimen/size_6"
         android:background="@drawable/circle_bakground"
-        android:backgroundTint="@color/placeholder_bg"/>
+        android:backgroundTint="@color/placeholder_bg" />
+
       <View
         android:layout_width="@dimen/size_24"
         android:layout_height="@dimen/size_12"
@@ -42,6 +43,6 @@
       android:layout_gravity="center"
       android:layout_marginTop="@dimen/size_6"
       android:layout_marginEnd="@dimen/size_4"
-      android:background="@color/placeholder_bg"/>
+      android:background="@color/placeholder_bg" />
   </LinearLayout>
 </layout>

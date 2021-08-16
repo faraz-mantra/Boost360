@@ -26,7 +26,8 @@ import com.inventoryorder.ui.order.OrdersFragment
 import com.inventoryorder.ui.order.createorder.*
 import com.inventoryorder.viewmodel.OrderCreateViewModel
 
-open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<binding, OrderCreateViewModel>() {
+open class BaseInventoryFragment<binding : ViewDataBinding> :
+  AppBaseFragment<binding, OrderCreateViewModel>() {
 
   protected val fpTag: String?
     get() {
@@ -72,7 +73,8 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
 
   override fun onCreateView() {
     super.onCreateView()
-    preferenceData = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as? PreferenceData
+    preferenceData =
+      arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as? PreferenceData
   }
 
   override fun getViewModelClass(): Class<OrderCreateViewModel> {

@@ -7,8 +7,8 @@ data class FilterBy(
   var queryConditionType: String? = null,
   @SerializedName("QueryObject")
   var queryObject: ArrayList<QueryObject>? = null
-){
-  enum class ConditionType{
+) {
+  enum class ConditionType {
     AND, OR
   }
 }

@@ -7,7 +7,12 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 
-class SpinnerHintAdapter<T>(context: Context, resource: Int, private val objects: MutableList<T>, isSelectionMandatory: Boolean) : ArrayAdapter<T>(context, resource, objects) {
+class SpinnerHintAdapter<T>(
+  context: Context,
+  resource: Int,
+  private val objects: MutableList<T>,
+  isSelectionMandatory: Boolean
+) : ArrayAdapter<T>(context, resource, objects) {
 
   var hint: T? = null
     set(hint) {
@@ -49,8 +54,8 @@ class SpinnerHintAdapter<T>(context: Context, resource: Int, private val objects
   }
 
   override fun getDropDownView(
-          position: Int, convertView: View?,
-          parent: ViewGroup
+    position: Int, convertView: View?,
+    parent: ViewGroup
   ): View {
     val view = super.getDropDownView(position, convertView, parent)
     setHintColor(position, view)

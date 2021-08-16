@@ -11,7 +11,11 @@ import com.dashboard.holder.*
 import com.framework.base.BaseActivity
 import java.util.*
 
-open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
+open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
+  activity: BaseActivity<*, *>,
+  list: ArrayList<T>,
+  itemClickListener: RecyclerItemClickListener? = null
+) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
 
   override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*> {
     val inflater = LayoutInflater.from(parent.context)
@@ -20,6 +24,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
     return when (recyclerViewItemType) {
       PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
       CHANNEL_ITEM_VIEW -> ChannelViewHolder(binding as ItemChannelDBinding)
+      CHANNEL_STATUS_ITEM_VIEW -> ChannelSocialMediaViewHolder(binding as ItemSocialMediaBinding)
       BUSINESS_SETUP_ITEM_VIEW -> BusinessSetupViewHolder(binding as ItemBusinessManagementBinding)
       BUSINESS_SETUP_HIGH_ITEM_VIEW -> BusinessSetupHighViewHolder(binding as ItemBusinessSetupHighBinding)
       QUICK_ACTION_ITEM_VIEW -> QuickActionViewHolder(binding as ItemQuickActionBinding)
@@ -35,12 +40,15 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       BOOST_ENQUIRIES_ITEM_VIEW -> CustomerPatientItemViewHolder(binding as ItemCustomerPatientItemBinding)
       BOOST_WEBSITE_ITEM_VIEW -> WebsiteItemViewHolder(binding as ItemWebsiteItemBinding)
       FILTER_DATE_VIEW -> DateFilterViewHolder(binding as ItemFilterDateBinding)
-      CONSULTATION_VIEW -> ConsultationViewHolder(binding as RecyclerItemConsultationBinding)
-
+      WEBSITE_COLOR_VIEW -> WebsiteColorViewHolder(binding as RecyclerItemColorsBinding)
+      WEBSITE_FONT_VIEW -> WebSiteFontViewHolder(binding as RecyclerItemSelectFontBinding)
     }
   }
 
-  fun runLayoutAnimation(recyclerView: RecyclerView?, anim: Int = R.anim.layout_animation_fall_down) = recyclerView?.apply {
+  fun runLayoutAnimation(
+    recyclerView: RecyclerView?,
+    anim: Int = R.anim.layout_animation_fall_down
+  ) = recyclerView?.apply {
     layoutAnimation = AnimationUtils.loadLayoutAnimation(context, anim)
     notifyDataSetChanged()
     scheduleLayoutAnimation()
@@ -48,7 +56,9 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
 
   override fun getItemViewType(position: Int): Int {
     return if (isLoaderVisible) {
-      return if (position == list.size - 1) PAGINATION_LOADER.getLayout() else super.getItemViewType(position)
+      return if (position == list.size - 1) PAGINATION_LOADER.getLayout() else super.getItemViewType(
+        position
+      )
     } else super.getItemViewType(position)
   }
 

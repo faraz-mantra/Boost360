@@ -1,47 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="AppTheme.cataloge" parent="Theme.MaterialComponents.NoActionBar.Bridge">
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/colorAccent</item>
-        <item name="android:windowDisablePreview">true</item>
-        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
-        <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
-        <item name="searchViewStyle">@style/SearchView</item>
-    </style>
+  <style name="AppTheme.cataloge" parent="Theme.MaterialComponents.NoActionBar.Bridge">
+    <item name="colorPrimary">@color/color_primary</item>
+    <item name="colorPrimaryDark">@color/color_primary_dark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorControlNormal">@color/colorAccent</item>
+    <item name="android:windowDisablePreview">true</item>
+    <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+    <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
+    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
+    <item name="searchViewStyle">@style/SearchView</item>
+  </style>
 
-    <style name="CatalogTheme.FragmentAppointment">
-        <item name="searchViewStyle">@style/SearchView.WhiteBackground</item>
-        <item name="bottomSheetDialogTheme">@style/OfferBottomSheet</item>
-    </style>
+  <style name="CatalogTheme" parent="BaseTheme">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
+    <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
+    <item name="searchViewStyle">@style/ThemeOverlay.SearchView</item>
+    <item name="colorAccent">@color/colorAccent</item>
+  </style>
 
-    <style name="SearchView.WhiteBackground">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:iconifiedByDefault">false</item>
-        <item name="android:background">@drawable/search_background</item>
-        <item name="android:paddingStart">@dimen/size_5</item>
-        <item name="searchIcon">@drawable/ic_search_appointment_orange</item>
-        <item name="android:paddingEnd">@dimen/size_4</item>
-        <item name="android:layout_marginStart">@dimen/size_20</item>
-        <item name="closeIconTint">@color/yellow_ffb900</item>
-        <item name="editTextColor">@color/gray_828282</item>
-        <item name="android:layout_marginEnd">@dimen/size_20</item>
-        <item name="android:textColorHint">@color/gray_light_3</item>
-        <item name="android:layout_gravity">center</item>
-    </style>
+  <style name="CatalogTheme.FragmentAppointment">
+    <item name="android:searchViewStyle">@style/SearchView.WhiteBackground</item>
+      <item name="bottomSheetDialogTheme">@style/OfferBottomSheet</item>
 
-    <style name="CatalogTheme" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
-        <item name="searchViewStyle">@style/ThemeOverlay.SearchView</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
+  </style>
+
+  <style name="SearchView.WhiteBackground">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:iconifiedByDefault">true</item>
+    <item name="android:background">@drawable/search_background</item>
+    <item name="android:paddingStart">@dimen/size_5</item>
+    <item name="searchIcon">@drawable/ic_search_appointment_orange</item>
+    <item name="android:paddingEnd">@dimen/size_4</item>
+    <item name="android:layout_marginStart">@dimen/size_20</item>
+    <item name="closeIconTint">@color/yellow_ffb900</item>
+    <item name="textColor">@color/gray_828282</item>
+    <item name="android:layout_marginEnd">@dimen/size_20</item>
+      <item name="editTextColor">@color/gray_828282</item>
+      <item name="android:textColorHint">@color/gray_light_3</item>
+      <item name="android:layout_gravity">center</item>
+  </style>
 
   <style name="TestimonialTheme" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
@@ -49,550 +51,571 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
-    <style name="ThemeOverlay.SearchView" parent="Widget.AppCompat.SearchView.ActionBar">
-        <item name="android:submitBackground">@android:color/transparent</item>
-        <item name="searchHintIcon">@null</item>
-        <item name="closeIconTint">@color/white</item>
-    </style>
+  <style name="UpdateTheme" parent="BaseTheme">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+  </style>
 
-    <style name="OffersThemeBase" parent="AppTheme.cataloge">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:windowBackground">@color/white</item>
-        <item name="bottomSheetDialogTheme">@style/OfferBottomSheet</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
-        <item name="searchViewStyle">@style/OfferThemeOverlay.SearchView</item>
-        <item name="colorBackgroundFloating">@color/colorPrimary</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
+  <style name="ThemeOverlay.SearchView" parent="Widget.AppCompat.SearchView.ActionBar">
+    <item name="submitBackground">@android:color/transparent</item>
+    <item name="searchHintIcon">@null</item>
+    <item name="closeIconTint">@color/white</item>
+  </style>
+
+  <style name="OffersThemeBase" parent="AppTheme.cataloge">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="android:windowBackground">@color/white</item>
+    <item name="bottomSheetDialogTheme">@style/OfferBottomSheet</item>
+    <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
+    <item name="searchViewStyle">@style/OfferThemeOverlay.SearchView</item>
+    <item name="colorBackgroundFloating">@color/colorPrimary</item>
+    <item name="colorAccent">@color/colorAccent</item>
+  </style>
 
     <style name="EcommerceSettings" parent="CatalogTheme.FragmentAppointment">
         <item name="bottomSheetDialogTheme">@style/OfferBottomSheet</item>
     </style>
 
-    <style name="OffersThemeBase.AdditionalInfo" parent="OffersThemeBase">
-        <item name="android:windowSoftInputMode">adjustNothing|stateHidden</item>
-    </style>
+  <style name="OffersThemeBase.AdditionalInfo" parent="OffersThemeBase">
+    <item name="android:windowSoftInputMode">adjustNothing|stateHidden</item>
+  </style>
 
-    <style name="OfferBottomSheet" parent="BottomSheetTheme">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowSoftInputMode">adjustResize</item>
-        <item name="android:statusBarColor">@color/transparent</item>
-    </style>
+  <style name="OfferBottomSheet" parent="BottomSheetTheme">
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:windowSoftInputMode">adjustResize</item>
+    <item name="android:statusBarColor">@color/transparent</item>
+  </style>
 
-    <style name="OfferThemeOverlay.SearchView" parent="">
-        <!-- Text color -->
-        <item name="android:editTextColor">@color/gray_828282</item>
-        <!-- Hint text color -->
-        <item name="android:textColorHint">@color/gray_light_3</item>
-        <item name="android:iconifiedByDefault">false</item>
-        <item name="closeIcon">@drawable/ic_close_gray_light</item>
-        <item name="searchIcon">@drawable/ic_search_gray_24dp</item>
-        <item name="android:drawablePadding">0dp</item>
-        <!--        <item name="android:background">@drawable/rounded_stroke_grey_4</item>-->
+  <style name="OfferThemeOverlay.SearchView" parent="">
+    <!-- Text color -->
+    <item name="android:editTextColor">@color/gray_828282</item>
+    <!-- Hint text color -->
+    <item name="android:textColorHint">@color/gray_light_3</item>
+    <item name="android:iconifiedByDefault">true</item>
+    <item name="closeIcon">@drawable/ic_close_black</item>
+    <item name="searchIcon">@drawable/ic_search_black_24dp</item>
+    <!--        <item name="android:background">@drawable/rounded_stroke_grey_4</item>-->
 
-    </style>
+  </style>
 
-    <style name="RadioService" parent="Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="android:textColor">@color/black_4a4a4a</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:fontFamily">@font/open_sans</item>
-        <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
-        <item name="android:buttonTint">@color/yellow_ffb900</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_marginTop">@dimen/size_15</item>
-        <item name="android:layout_marginBottom">@dimen/size_15</item>
-        <item name="android:textSize">16sp</item>
-    </style>
+  <style name="RadioService" parent="Widget.AppCompat.CompoundButton.RadioButton">
+    <item name="android:textColor">@color/black_4a4a4a</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
+    <item name="android:buttonTint">@color/yellow_ffb900</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:layout_marginTop">@dimen/size_15</item>
+    <item name="android:layout_marginBottom">@dimen/size_15</item>
+    <item name="android:textSize">16sp</item>
+  </style>
 
-    <style name="RadioAppointment" parent="Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="android:textColor">@color/black_4a4a4a</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:paddingStart">8dp</item>
-        <item name="android:fontFamily">@font/open_sans</item>
-        <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
-        <item name="android:buttonTint">@color/yellow_ffb900</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_marginTop">@dimen/size_4</item>
-        <item name="android:layout_marginBottom">@dimen/size_4</item>
-        <item name="android:textSize">16sp</item>
-    </style>
+  <style name="RadioAppointment" parent="Widget.AppCompat.CompoundButton.RadioButton">
+    <item name="android:textColor">@color/black_4a4a4a</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:paddingStart">8dp</item>
+    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
+    <item name="android:buttonTint">@color/yellow_ffb900</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:layout_marginTop">@dimen/size_4</item>
+    <item name="android:layout_marginBottom">@dimen/size_4</item>
+    <item name="android:textSize">16sp</item>
+  </style>
 
-    <style name="RadioButtonOffers" parent="Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="android:textColor">@color/black_4a4a4a</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:fontFamily">@font/open_sans</item>
-        <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
-        <item name="android:buttonTint">@color/yellow_ffb900</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_marginTop">@dimen/size_12</item>
-        <item name="android:layout_marginBottom">@dimen/size_12</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-    <style name="CatalogTheme.Information" parent="CatalogTheme">
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
-    </style>
+  <style name="RadioButtonOffers" parent="Widget.AppCompat.CompoundButton.RadioButton">
+    <item name="android:textColor">@color/black_4a4a4a</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
+    <item name="android:buttonTint">@color/yellow_ffb900</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:layout_marginTop">@dimen/size_12</item>
+    <item name="android:layout_marginBottom">@dimen/size_12</item>
+    <item name="android:textSize">16sp</item>
+  </style>
 
-    <style name="AppTheme.account" parent="AppTheme.cataloge">
-        <item name="android:editTextColor">@color/black</item>
-        <item name="android:textColorHint">@color/light_grey_two</item>
-    </style>
+  <style name="CatalogTheme.Information" parent="CatalogTheme">
+    <item name="colorPrimary">@color/color_primary</item>
+    <item name="colorPrimaryDark">@color/color_primary_dark</item>
+    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
+  </style>
 
-    <style name="AppTheme_payment_dark" parent="AppTheme.cataloge">
-        <item name="android:editTextColor">@color/black</item>
-    </style>
+  <style name="AppTheme.account" parent="AppTheme.cataloge">
+    <item name="android:editTextColor">@color/black</item>
+    <item name="android:textColorHint">@color/light_grey_two</item>
+  </style>
 
-    <style name="AppTheme.payment" parent="AppTheme.cataloge">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:editTextColor">@color/black</item>
-    </style>
+  <style name="AppTheme_payment_dark" parent="AppTheme.cataloge">
+    <item name="android:editTextColor">@color/black</item>
+  </style>
 
-    <style name="SpinnerStyle" parent="@style/ThemeOverlay.AppCompat.Light">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/black_2A2A2A</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:spinnerMode">dropdown</item>
-    </style>
+  <style name="AppTheme.payment" parent="AppTheme.cataloge">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="android:editTextColor">@color/black</item>
+  </style>
 
-    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
-        <item name="android:popupBackground">@android:color/white</item>
-    </style>
+  <style name="SpinnerStyle" parent="@style/ThemeOverlay.AppCompat.Light">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:textColor">@color/black_2A2A2A</item>
+    <item name="android:maxLines">1</item>
+    <item name="android:spinnerMode">dropdown</item>
+  </style>
 
-    <style name="AppTheme_add_account" parent="AppTheme.account">
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/white</item>
-    </style>
+  <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+    <item name="android:popupBackground">@android:color/white</item>
+  </style>
 
-    <style name="AppTheme_payment_gateway" parent="AppTheme.account">
-        <item name="colorPrimary">@color/orange</item>
-        <item name="colorPrimaryDark">@color/orange</item>
-    </style>
+  <style name="AppTheme_add_account" parent="AppTheme.account">
+    <item name="colorPrimary">@color/white</item>
+    <item name="colorPrimaryDark">@color/white</item>
+  </style>
 
-    <style name="AppTheme_staff_home" parent="AppTheme.Base">
-        <item name="colorPrimary">@color/orange</item>
-        <item name="colorPrimaryDark">#F5B200</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
-        <item name="searchViewStyle">@style/SearchView</item>
-    </style>
+  <style name="AppTheme_payment_gateway" parent="AppTheme.account">
+    <item name="colorPrimary">@color/orange</item>
+    <item name="colorPrimaryDark">@color/orange</item>
+  </style>
 
-    <style name="AppTheme_staff_details" parent="AppTheme.Base">
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
-    </style>
+  <style name="AppTheme_staff_home" parent="AppTheme.Base">
+    <item name="colorPrimary">@color/orange</item>
+    <item name="colorPrimaryDark">#F5B200</item>
+    <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
+    <item name="searchViewStyle">@style/SearchView</item>
+  </style>
 
-    <style name="CustomBottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
+  <style name="AppTheme_staff_details" parent="AppTheme.Base">
+    <item name="colorPrimary">@color/color_primary</item>
+    <item name="colorPrimaryDark">@color/color_primary_dark</item>
+    <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
+  </style>
 
-    <style name="BottomSheetTheme" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
-    </style>
+  <style name="CustomBottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">
+    <item name="android:background">@android:color/transparent</item>
+  </style>
 
-    <style name="SearchView" parent="Widget.AppCompat.Light.SearchView">
-        <item name="submitBackground">@android:color/transparent</item>
-        <item name="queryBackground">@android:color/transparent</item>
-        <item name="searchHintIcon">@null</item>
-    </style>
+  <style name="BottomSheetTheme" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+    <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
+  </style>
 
-    <style name="ActiveTheme" parent="Base.Theme.AppCompat">
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/placeholder_bg</item>
-        <item name="colorControlActivated">@color/colorAccent</item>
-    </style>
+  <style name="SearchView" parent="Widget.AppCompat.Light.SearchView">
+    <item name="submitBackground">@android:color/transparent</item>
+    <item name="queryBackground">@android:color/transparent</item>
+    <item name="searchHintIcon">@null</item>
+  </style>
 
-    <style name="MyCheckBox" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">@color/colorAccent</item>
-        <item name="colorControlActivated">@color/colorAccent</item>
-    </style>
+  <style name="ActiveTheme" parent="Base.Theme.AppCompat">
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorControlNormal">@color/placeholder_bg</item>
+    <item name="colorControlActivated">@color/colorAccent</item>
+  </style>
 
-    <style name="TextFieldStyle">
-        <item name="fontFamily">@font/regular</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/greyish_brown</item>
-        <item name="android:layout_marginBottom">@dimen/size_16</item>
-        <item name="textType">HEADING_6</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:inputType">text</item>
-        <item name="android:drawablePadding">@dimen/size_8</item>
-    </style>
+  <style name="MyCheckBox" parent="Theme.AppCompat.Light">
+    <item name="colorControlNormal">@color/colorAccent</item>
+    <item name="colorControlActivated">@color/colorAccent</item>
+  </style>
 
-    <style name="AppointmentSettings_Image">
-        <item name="android:layout_width">@dimen/size_38</item>
-        <item name="layout_constraintBottom_toBottomOf">parent</item>
-        <item name="layout_constraintTop_toTopOf">parent</item>
-        <item name="layout_constraintStart_toStartOf">parent</item>
-        <item name="android:layout_height">@dimen/size_38</item>
-        <item name="android:layout_marginStart">@dimen/size_4</item>
-        <item name="layout_constraintVertical_bias">0.7</item>
-    </style>
+  <style name="AppointmentSettings_Image">
+    <item name="android:layout_width">@dimen/size_38</item>
+    <item name="layout_constraintBottom_toBottomOf">parent</item>
+    <item name="layout_constraintTop_toTopOf">parent</item>
+    <item name="layout_constraintStart_toStartOf">parent</item>
+    <item name="android:layout_height">@dimen/size_38</item>
+    <item name="android:layout_marginStart">@dimen/size_4</item>
+    <item name="layout_constraintVertical_bias">0.7</item>
+  </style>
     <style name="BottomSheetDialogThemeNoFloating" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowSoftInputMode">adjustResize|stateVisible</item>
     </style>
+  <style name="AppointmentSetting_Text_Heading">
+    <item name="android:textColor">@color/black_4a4a4a</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:includeFontPadding">true</item>
+    <item name="android:fontFamily">@font/open_sans</item>
+      <item name="android:fontFamily">@font/open_sans_semibold</item>
+  </style>
 
-    <style name="AppointmentSetting_Text_Heading">
-        <item name="android:textColor">@color/black_4a4a4a</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:includeFontPadding">true</item>
-        <item name="android:fontFamily">@font/open_sans_semibold</item>
-    </style>
+  <style name="AppointmentSetting_Text_Content" parent="AppointmentSetting_Text_Heading">
+    <item name="android:textSize">11sp</item>
+    <item name="android:includeFontPadding">true</item>
+    <item name="android:textStyle">normal</item>
+    <item name="android:fontFamily">@font/open_sans</item>
+  </style>
 
-    <style name="AppointmentSetting_Text_Content" parent="AppointmentSetting_Text_Heading">
-        <item name="android:textSize">11sp</item>
-        <item name="android:includeFontPadding">true</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:fontFamily">@font/open_sans</item>
-    </style>
+  <style name="Appointment.ButtonStyle" parent="ButtonStyle.Rounded">
+    <item name="android:background">@drawable/bg_button_proceed_4</item>
+    <item name="android:paddingStart">@dimen/size_60</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:gravity">center</item>
+    <item name="android:paddingTop">@dimen/size_8</item>
+    <item name="android:paddingBottom">@dimen/size_8</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">@dimen/size_36</item>
+    <item name="android:stateListAnimator">@null</item>
+    <item name="android:paddingEnd">@dimen/size_60</item>
+  </style>
 
-    <style name="Appointment.ButtonStyle" parent="ButtonStyle.Rounded">
-        <item name="android:background">@drawable/bg_button_proceed_4</item>
-        <item name="android:paddingStart">@dimen/size_60</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:gravity">center</item>
-        <item name="android:paddingTop">@dimen/size_8</item>
-        <item name="android:paddingBottom">@dimen/size_8</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/size_36</item>
-        <item name="android:stateListAnimator">@null</item>
-        <item name="android:paddingEnd">@dimen/size_60</item>
-    </style>
+  <style name="Appointment.ButtonStyle.Rounded.Solid.Stroke" parent="Appointment.ButtonStyle">
+    <item name="android:background">@drawable/appointment_button_stroke_orange</item>
+    <item name="android:paddingStart">@dimen/size_60</item>
+    <item name="android:paddingEnd">@dimen/size_60</item>
+    <item name="android:textColor">@color/yellow_ffb900</item>
+  </style>
 
-    <style name="Appointment.ButtonStyle.Rounded.Solid.Stroke" parent="Appointment.ButtonStyle">
-        <item name="android:background">@drawable/appointment_button_stroke_orange</item>
-        <item name="android:paddingStart">@dimen/size_60</item>
-        <item name="android:paddingEnd">@dimen/size_60</item>
-        <item name="android:textColor">@color/yellow_ffb900</item>
-    </style>
+  <style name="Appointment.ButtonStyle.Rounded.Solid.Stroke.Blue" parent="Appointment.ButtonStyle">
+    <item name="android:background">@drawable/blue_stroke</item>
+    <item name="android:textColor">@color/blue_4889f8</item>
+  </style>
 
-    <style name="Appointment.ButtonStyle.Rounded.Solid.Stroke.Blue" parent="Appointment.ButtonStyle">
-        <item name="android:background">@drawable/blue_stroke</item>
-        <item name="android:textColor">@color/blue_4889f8</item>
-    </style>
-    <style name="Appointment_Toggle">
-        <item name="android:layout_width">@dimen/size_54</item>
-        <item name="android:layout_height">@dimen/size_24</item>
-        <item name="colorBorder">@color/transparent</item>
-        <item name="colorOff">@color/gray_bbb</item>
-        <item name="colorOn">@color/light_green_1</item>
-        <item name="textOff">NO</item>
-        <item name="textOn">YES</item>
-        <item name="txtColorOff">@color/white</item>
-        <item name="txtColorOn">@color/white</item>
-    </style>
+  <style name="Appointment_Toggle">
+    <item name="android:layout_width">@dimen/size_54</item>
+    <item name="android:layout_height">@dimen/size_24</item>
+    <item name="colorBorder">@color/transparent</item>
+    <item name="colorOff">@color/gray_bbb</item>
+    <item name="colorOn">@color/light_green_1</item>
+    <item name="textOff">NO</item>
+    <item name="textOn">YES</item>
+    <item name="txtColorOff">@color/white</item>
+    <item name="txtColorOn">@color/white</item>
+  </style>
 
-    <style name="HorizontalDivider">
-        <item name="android:layout_height">@dimen/size_1</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:background">?android:attr/listDivider</item>
-    </style>
-    <style name="AppointmentHorizontalDivider">
+  <style name="HorizontalDivider">
+    <item name="android:layout_height">@dimen/size_1</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_marginTop">@dimen/size_20</item>
+    <item name="android:background">?android:attr/listDivider</item>
+  </style>
 
-        <item name="android:layout_height">0.5dp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:background">@color/gray_bbb</item>
-    </style>
-    <style name="Appointment_Text_Heading">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">@color/black_4a4a4a</item>
-        <item name="textType">HEADING_3</item>
-        <item name="android:fontFamily">@font/regular</item>
-    </style>
+  <style name="AppointmentHorizontalDivider">
 
-    <style name="Appointment_Text_Heading.Bottom_Sheet" parent="Appointment_Text_Heading">
-        <item name="textType">HEADING_5</item>
-        <item name="android:fontFamily">@font/semi_bold</item>
-        <item name="android:includeFontPadding">true</item>
-    </style>
+    <item name="android:layout_height">0.5dp</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_marginTop">@dimen/size_20</item>
+    <item name="android:layout_marginBottom">@dimen/size_20</item>
+    <item name="android:background">@color/gray_bbb</item>
+  </style>
 
-    <style name="Appointment_Text_Subheading" parent="Appointment_Text_Heading">
-        <item name="textType">SUBHEADING_2</item>
-        <item name="android:textColor">@color/warm_grey</item>
-        <item name="android:gravity">center</item>
-    </style>
+  <style name="Appointment_Text_Heading">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textColor">@color/black_4a4a4a</item>
+    <item name="textType">HEADING_3</item>
+    <item name="android:fontFamily">@font/regular</item>
+  </style>
 
-    <style name="Appointment_Text_Heading.RecyclerItem" parent="Appointment_Text_Heading">
-        <item name="textType">BODY_2</item>
-        <item name="android:textFontWeight" tools:targetApi="p">700</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/yellow_ffb900</item>
-    </style>
+  <style name="Appointment_Text_Heading.Bottom_Sheet" parent="Appointment_Text_Heading">
+    <item name="textType">HEADING_5</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="android:includeFontPadding">true</item>
+  </style>
 
-    <style name="Appointment_TextDescription">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textFontWeight" tools:targetApi="p">400</item>
-        <item name="android:textColor">@color/grey_dark_2</item>
-        <item name="android:textSize">@dimen/size_10</item>
-        <item name="android:textAlignment">viewStart</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
+  <style name="Appointment_Text_Subheading" parent="Appointment_Text_Heading">
+    <item name="textType">SUBHEADING_2</item>
+    <item name="android:textColor">@color/warm_grey</item>
+    <item name="android:gravity">center</item>
+  </style>
 
-    <style name="Appointment_Custom_Radio_Button" parent="Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="android:textColor">@color/green_27AE60</item>
-        <item name="android:buttonTint">@color/green_27AE60</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textFontWeight" tools:targetApi="p">700</item>
-        <item name="android:fontFamily">@font/open_sans</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textSize">@dimen/size_10</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
+  <style name="Appointment_Text_Heading.RecyclerItem" parent="Appointment_Text_Heading">
+    <item name="textType">BODY_2</item>
+    <item name="android:textFontWeight" tools:targetApi="p">700</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textColor">@color/yellow_ffb900</item>
+  </style>
 
-    <style name="Appointment_Text_Field">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/size_5</item>
-        <item name="android:padding">@dimen/size_12</item>
-        <item name="android:inputType">textCapWords</item>
-        <item name="singleLine">true</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:background">@drawable/bg_rect_edit_txt</item>
-        <item name="android:textCursorDrawable">@drawable/color_cursor</item>
-        <item name="android:textColor">@color/warm_grey_10</item>
-        <item name="android:textColorHint">@color/primary_grey</item>
-    </style>
+  <style name="Appointment_TextDescription">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textFontWeight" tools:targetApi="p">400</item>
+    <item name="android:textColor">@color/grey_dark_2</item>
+    <item name="android:textSize">@dimen/size_10</item>
+    <item name="android:textAlignment">viewStart</item>
+    <item name="android:layout_height">wrap_content</item>
+  </style>
 
-    <style name="Appointment_Text_Title">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textFontWeight" tools:targetApi="p">600</item>
-        <item name="android:textColor">@color/black_4a4a4a</item>
-        <item name="android:fontFamily">@font/semi_bold</item>
-        <item name="textType">BODY_3</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
+  <style name="Appointment_Custom_Radio_Button" parent="Widget.AppCompat.CompoundButton.RadioButton">
+    <item name="android:textColor">@color/green_27AE60</item>
+    <item name="android:buttonTint">@color/green_27AE60</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textFontWeight" tools:targetApi="p">700</item>
+    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textSize">@dimen/size_10</item>
+    <item name="android:textAllCaps">true</item>
+  </style>
 
-    <style name="Appointment_Text_Title.SubHeading" parent="Appointment_Text_Title">
-        <item name="textType">SUBHEADING_2</item>
-        <item name="android:textColor">@color/gray_828282</item>
-        <item name="android:fontFamily">@font/light</item>
-    </style>
+  <style name="Appointment_Text_Field">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginTop">@dimen/size_5</item>
+    <item name="android:padding">@dimen/size_12</item>
+    <item name="android:inputType">textCapWords</item>
+    <item name="singleLine">true</item>
+    <item name="android:textSize">12sp</item>
+    <item name="android:background">@drawable/bg_rect_edit_txt</item>
+    <item name="android:textColor">@color/warm_grey_10</item>
+    <item name="android:textColorHint">@color/primary_grey</item>
+  </style>
 
-    <style name="Appointment_Text_Catalog_Heading">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:drawableStart">@drawable/ic_info_circular_orange</item>
-        <item name="android:drawablePadding">@dimen/size_5</item>
-        <item name="android:textSize">11sp</item>
-        <item name="android:layout_marginTop">@dimen/size_20</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:fontFamily">@font/semi_bold</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
+  <style name="Appointment_Text_Title">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textFontWeight" tools:targetApi="p">600</item>
+    <item name="android:textColor">@color/black_4a4a4a</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="textType">BODY_3</item>
+    <item name="android:layout_height">wrap_content</item>
+  </style>
 
-    <style name="Appointment_Label_Switch">
-        <item name="android:layout_width">@dimen/size_54</item>
-        <item name="android:layout_height">@dimen/size_24</item>
-        <item name="colorBorder">@color/transparent</item>
-        <item name="colorOff">@color/gray_bbb</item>
-        <item name="colorOn">@color/light_green_1</item>
-        <item name="textOff">NO</item>
-        <item name="textOn">YES</item>
-        <item name="txtColorOff">@color/white</item>
-        <item name="txtColorOn">@color/white</item>
-    </style>
+  <style name="Appointment_Text_Title.SubHeading" parent="Appointment_Text_Title">
+    <item name="textType">SUBHEADING_2</item>
+    <item name="android:textColor">@color/gray_828282</item>
+    <item name="android:fontFamily">@font/light</item>
+  </style>
 
-    <style name="Appointment_Text_Header" parent="Appointment_Text_Title">
-        <item name="android:textColor">@color/warm_grey</item>
-        <item name="android:includeFontPadding">false</item>
-        <item name="fontFamily">@font/regular</item>
-        <item name="textType">BODY_1</item>
+  <style name="Appointment_Text_Catalog_Heading">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:drawableStart">@drawable/ic_info_circular_orange</item>
+    <item name="android:drawablePadding">@dimen/size_5</item>
+    <item name="android:textSize">11sp</item>
+    <item name="android:layout_marginTop">@dimen/size_20</item>
+    <item name="android:textAlignment">center</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="android:textColor">@color/black</item>
+  </style>
 
-    </style>
+  <style name="Appointment_Label_Switch">
+    <item name="android:layout_width">@dimen/size_54</item>
+    <item name="android:layout_height">@dimen/size_24</item>
+    <item name="colorBorder">@color/transparent</item>
+    <item name="colorOff">@color/gray_bbb</item>
+    <item name="colorOn">@color/light_green_1</item>
+    <item name="textOff">NO</item>
+    <item name="textOn">YES</item>
+    <item name="txtColorOff">@color/white</item>
+    <item name="txtColorOn">@color/white</item>
+  </style>
 
-    <style name="MaterialAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="android:colorPrimary">@color/white</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/colorAccent</item>
-        <item name="colorSurface">@color/white</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertTitleTextStyle</item>
-        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertBodyTextStyle</item>
-        <item name="buttonBarPositiveButtonStyle">@style/MaterialAlertPositiveButtonStyle</item>
-        <item name="buttonBarNegativeButtonStyle">@style/MaterialAlertNegativeButtonStyle</item>
-    </style>
+  <style name="Appointment_Text_Header" parent="Appointment_Text_Title">
+    <item name="android:textColor">@color/warm_grey</item>
+    <item name="android:includeFontPadding">false</item>
+    <item name="fontFamily">@font/regular</item>
+    <item name="textType">BODY_1</item>
 
-    <style name="MaterialAlertTitleTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
-        <item name="android:textColor">@color/black_2A2A2A</item>
-        <!--    <item name="android:textStyle">bold</item>-->
-        <item name="android:textSize">20sp</item>
-    </style>
+  </style>
 
-    <style name="MaterialAlertBodyTextStyle" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
-        <item name="android:textColor">@color/grey_text_color</item>
-        <item name="android:textSize">14sp</item>
-    </style>
+  <style name="TextFieldStyle">
+    <item name="fontFamily">@font/regular</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textColor">@color/greyish_brown</item>
+    <item name="android:layout_marginBottom">@dimen/size_16</item>
+    <item name="textType">HEADING_6</item>
+    <item name="android:maxLines">1</item>
+    <item name="android:inputType">text</item>
+    <item name="android:drawablePadding">@dimen/size_8</item>
+  </style>
 
-    <style name="MaterialAlertPositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/grey_text_color</item>
-    </style>
+  <style name="MaterialAlertDialogTheme" parent="MaterialCustomDialogTheme">
+    <item name="android:colorPrimary">@color/white</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorControlNormal">@color/colorAccent</item>
+    <item name="colorSurface">@color/white</item>
+    <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertTitleTextStyle</item>
+    <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertBodyTextStyle</item>
+    <item name="buttonBarPositiveButtonStyle">@style/MaterialAlertPositiveButtonStyle</item>
+    <item name="buttonBarNegativeButtonStyle">@style/MaterialAlertNegativeButtonStyle</item>
+  </style>
 
-    <style name="MaterialAlertNegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/colorAccent</item>
-    </style>
-    <!--staff module styles-->
-    <!-- customize the color palette -->
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorPrimary</item>
-        <item name="colorControlActivated">@color/colorAccent</item>
-        <item name="colorControlHighlight">@color/colorAccent</item>
-        <item name="colorControlNormal">#eeeeee</item>
-        <item name="android:windowDisablePreview">true</item>
-    </style>
+  <style name="MaterialAlertTitleTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+    <item name="android:textColor">@color/black_2A2A2A</item>
+    <!--    <item name="android:textStyle">bold</item>-->
+    <item name="android:textSize">20sp</item>
+  </style>
 
-    <style name="FooterButtonStyle">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:textAlignment">gravity</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_height">@dimen/footer_button_height</item>
-        <item name="android:fontFamily">@font/semi_bold</item>
-        <item name="fontFamily">@font/semi_bold</item>
-        <item name="android:background">@drawable/bg_button_orange</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:drawableEnd">@drawable/ic_right_arrow_white</item>
-        <item name="android:paddingRight">@dimen/size_32</item>
+  <style name="MaterialAlertBodyTextStyle" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+    <item name="android:textColor">@color/grey_text_color</item>
+    <item name="android:textSize">14sp</item>
+  </style>
+
+  <style name="MaterialAlertPositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <item name="android:textColor">@color/grey_text_color</item>
+  </style>
+
+  <style name="MaterialAlertNegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <item name="android:textColor">@color/colorAccent</item>
+  </style>
+  <!--staff module styles-->
+  <!-- customize the color palette -->
+  <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorPrimary</item>
+    <item name="colorControlActivated">@color/colorAccent</item>
+    <item name="colorControlHighlight">@color/colorAccent</item>
+    <item name="colorControlNormal">#eeeeee</item>
+    <item name="android:windowDisablePreview">true</item>
+  </style>
+
+  <style name="FooterButtonStyle">
+    <item name="android:layout_width">0dp</item>
+    <item name="android:textAlignment">gravity</item>
+    <item name="android:gravity">center</item>
+    <item name="android:layout_height">@dimen/footer_button_height</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="fontFamily">@font/semi_bold</item>
+    <item name="android:background">@drawable/bg_button_orange</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="android:drawableEnd">@drawable/ic_right_arrow_white</item>
+    <item name="android:paddingRight">@dimen/size_32</item>
     <item name="android:paddingStart">@dimen/size_32</item>
-        <item name="android:foreground">@null</item>
-        <item name="android:textAllCaps">false</item>
-    </style>
+    <item name="android:foreground">@null</item>
+    <item name="android:textAllCaps">false</item>
+  </style>
 
-    <style name="ButtonStyle">
-        <item name="android:fontFamily">@font/semi_bold</item>
-        <item name="fontFamily">@font/semi_bold</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:paddingRight">@dimen/size_6</item>
+  <style name="ButtonStyle">
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="fontFamily">@font/semi_bold</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="android:paddingRight">@dimen/size_6</item>
     <item name="android:paddingStart">@dimen/size_6</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:drawableEnd">@null</item>
-        <item name="android:layout_height">@dimen/size_46</item>
-        <item name="android:foreground">@null</item>
-    </style>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:drawableEnd">@null</item>
+    <item name="android:layout_height">@dimen/size_46</item>
+    <item name="android:foreground">@null</item>
+  </style>
 
-    <style name="match_wrap">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
+  <style name="match_wrap">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+  </style>
 
-    <style name="wrap_wrap">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
+  <style name="wrap_wrap">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+  </style>
 
-    <style name="wrap_match">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
+  <style name="wrap_match">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">match_parent</item>
+  </style>
 
-    <style name="match_match">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
+  <style name="match_match">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">match_parent</item>
+  </style>
 
 
-    <style name="ll_match_wrap_vertical" parent="match_wrap">
-        <item name="android:orientation">vertical</item>
-    </style>
+  <style name="ll_match_wrap_vertical" parent="match_wrap">
+    <item name="android:orientation">vertical</item>
+  </style>
 
-    <style name="ll_match_wrap_horizontal" parent="ll_match_wrap_vertical">
-        <item name="android:orientation">horizontal</item>
-    </style>
+  <style name="ll_match_wrap_horizontal" parent="ll_match_wrap_vertical">
+    <item name="android:orientation">horizontal</item>
+  </style>
 
-    <style name="GenderSpinnerStyle" parent="@style/ThemeOverlay.AppCompat.Light">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/black_2A2A2A</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:spinnerMode">dropdown</item>
-    </style>
+  <style name="GenderSpinnerStyle" parent="@style/ThemeOverlay.AppCompat.Light">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:textColor">@color/black_2A2A2A</item>
+    <item name="android:maxLines">1</item>
+    <item name="android:spinnerMode">dropdown</item>
+  </style>
 
-    <style name="SpinnerWithNoArrow" parent="@android:style/Widget.Spinner">
-        <item name="android:background">@drawable/input_background</item>
-    </style>
+  <style name="SpinnerWithNoArrow" parent="@android:style/Widget.Spinner">
+    <item name="android:background">@drawable/input_background</item>
+  </style>
 
-    <style name="ButtonStyle.Rounded" parent="ButtonStyle">
-        <item name="android:background">@drawable/bg_button_rounded_orange</item>
-    </style>
+  <style name="ButtonStyle.Rounded" parent="ButtonStyle">
+    <item name="android:background">@drawable/bg_button_rounded_orange</item>
+  </style>
 
-    <style name="ButtonStyle.Rounded.Solid" parent="ButtonStyle.Rounded">
-        <item name="android:background">@drawable/bg_button_proceed_4</item>
-        <item name="android:paddingStart">@dimen/size_30</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:paddingTop">@dimen/size_8</item>
-        <item name="android:paddingBottom">@dimen/size_8</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingEnd">@dimen/size_30</item>
-    </style>
-    <style name="AppointmentCatalogSettingText2">
-        <item name="android:textSize">11sp</item>
-        <item name="android:textColor">@color/gray_828282</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingStart">16dp</item>
-    </style>
+  <style name="ButtonStyle.Rounded.Solid" parent="ButtonStyle.Rounded">
+    <item name="android:background">@drawable/bg_button_proceed_4</item>
+    <item name="android:paddingStart">@dimen/size_30</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:paddingTop">@dimen/size_8</item>
+    <item name="android:paddingBottom">@dimen/size_8</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:paddingEnd">@dimen/size_30</item>
+  </style>
 
-    <style name="ButtonStyle.Rounded.Solid.BottomSheet">
-        <item name="android:background">@drawable/bg_button_proceed_4</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:stateListAnimator">@null</item>
-        <item name="android:gravity">center</item>
-        <item name="android:fontFamily">@font/semi_bold</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="paddingStart">@dimen/size_8</item>
-        <item name="paddingEnd">@dimen/size_8</item>
-        <item name="android:textColor">@color/pinkish_grey</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/size_36</item>
-    </style>
+  <style name="AppointmentCatalogSettingText2">
+    <item name="android:textSize">11sp</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:paddingStart">16dp</item>
+  </style>
 
-    <style name="Offers.ButtonStyle" parent="ButtonStyle.Rounded">
-        <item name="android:background">@drawable/bg_button_proceed_4</item>
-        <item name="android:paddingStart">@dimen/size_60</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:gravity">center</item>
-        <item name="android:paddingTop">@dimen/size_8</item>
-        <item name="android:paddingBottom">@dimen/size_8</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/size_36</item>
-        <item name="android:stateListAnimator">@null</item>
-        <item name="android:paddingEnd">@dimen/size_60</item>
-    </style>
+  <style name="ButtonStyle.Rounded.Solid.BottomSheet">
+    <item name="android:background">@drawable/bg_button_proceed_4</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:stateListAnimator">@null</item>
+    <item name="android:gravity">center</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:textColor">@color/pinkish_grey</item>
+    <item name="android:layout_width">@dimen/size_110</item>
+    <item name="android:layout_height">@dimen/size_36</item>
+  </style>
 
-    <style name="Offers.ButtonStyle.Rounded.Solid.Normal" parent="Offers.ButtonStyle">
-        <item name="android:textColor">@color/white</item>
-        <item name="textSize">16sp</item>
-        <item name="android:layout_width">match_parent</item>
-    </style>
-    <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowSoftInputMode">adjustPan</item>
-    </style>
+  <style name="Offers.ButtonStyle" parent="ButtonStyle.Rounded">
+    <item name="android:background">@drawable/bg_button_proceed_4</item>
+    <item name="android:paddingStart">@dimen/size_60</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:gravity">center</item>
+    <item name="android:paddingTop">@dimen/size_8</item>
+    <item name="android:paddingBottom">@dimen/size_8</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">@dimen/size_36</item>
+    <item name="android:stateListAnimator">@null</item>
+    <item name="android:paddingEnd">@dimen/size_60</item>
+  </style>
 
-    <style name="Offers.ButtonStyle.Rounded.Solid.Stroke" parent="Offers.ButtonStyle">
-        <item name="android:background">@drawable/offer_button_stroke_orange</item>
-        <item name="android:paddingStart">@dimen/size_60</item>
-        <item name="android:paddingEnd">@dimen/size_60</item>
-        <item name="android:textColor">@color/yellow_ffb900</item>
-    </style>
+  <style name="Offers.ButtonStyle.Rounded.Solid.Normal" parent="Offers.ButtonStyle">
+    <item name="android:textColor">@color/white</item>
+    <item name="textSize">16sp</item>
+    <item name="android:layout_width">match_parent</item>
+  </style>
 
+  <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:windowSoftInputMode">adjustResize</item>
+  </style>
+
+  <style name="Offers.ButtonStyle.Rounded.Solid.Stroke" parent="Offers.ButtonStyle">
+    <item name="android:background">@drawable/offer_button_stroke_orange</item>
+    <item name="android:paddingStart">@dimen/size_60</item>
+    <item name="android:paddingEnd">@dimen/size_60</item>
+    <item name="android:textColor">@color/yellow_ffb900</item>
+  </style>
+
+  <style name="Offers_Text_Heading">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textColor">@color/black_4a4a4a</item>
+    <item name="textType">HEADING_3</item>
+    <item name="android:fontFamily">@font/regular</item>
+  </style>
+
+  <style name="Offers_Text_Heading.Bottom_Sheet" parent="Offers_Text_Heading">
+    <item name="textType">HEADING_5</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="android:includeFontPadding">true</item>
+  </style>
     <style name="ButtonStyle.Rounded.Solid.Stroke.ChangeImage" parent="Offers.ButtonStyle.Rounded.Solid.Stroke">
         <item name="android:background">@drawable/offer_button_stroke_orange_radius_one</item>
         <item name="android:layout_width">match_parent</item>
@@ -618,49 +641,49 @@
         <item name="android:includeFontPadding">true</item>
     </style>
 
-    <style name="Offers_Text_Subheading" parent="Offers_Text_Heading">
-        <item name="textType">SUBHEADING_2</item>
-        <item name="android:gravity">center</item>
-    </style>
+  <style name="Offers_Text_Subheading" parent="Offers_Text_Heading">
+    <item name="textType">SUBHEADING_2</item>
+    <item name="android:gravity">center</item>
+  </style>
 
-    <style name="Offers_Text_Heading.RecyclerItem" parent="Offers_Text_Heading">
-        <item name="textType">BODY_2</item>
-        <item name="android:textFontWeight" tools:targetApi="p">700</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/yellow_ffb900</item>
-    </style>
+  <style name="Offers_Text_Heading.RecyclerItem" parent="Offers_Text_Heading">
+    <item name="textType">BODY_2</item>
+    <item name="android:textFontWeight" tools:targetApi="p">700</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textColor">@color/yellow_ffb900</item>
+  </style>
 
-    <style name="Offers_TextDescription">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textFontWeight" tools:targetApi="p">400</item>
-        <item name="android:textColor">@color/grey_dark_2</item>
-        <item name="android:textSize">@dimen/size_10</item>
-        <item name="android:textAlignment">viewStart</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
+  <style name="Offers_TextDescription">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textFontWeight" tools:targetApi="p">400</item>
+    <item name="android:textColor">@color/grey_dark_2</item>
+    <item name="android:textSize">@dimen/size_10</item>
+    <item name="android:textAlignment">viewStart</item>
+    <item name="android:layout_height">wrap_content</item>
+  </style>
 
-    <style name="Offers_Custom_Radio_Button" parent="Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="android:textColor">@color/green_27AE60</item>
-        <item name="android:buttonTint">@color/green_27AE60</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textFontWeight" tools:targetApi="p">700</item>
-        <item name="android:fontFamily">@font/open_sans</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textSize">@dimen/size_10</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
+  <style name="Offers_Custom_Radio_Button" parent="Widget.AppCompat.CompoundButton.RadioButton">
+    <item name="android:textColor">@color/green_27AE60</item>
+    <item name="android:buttonTint">@color/green_27AE60</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textFontWeight" tools:targetApi="p">700</item>
+    <item name="android:fontFamily">@font/open_sans</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textSize">@dimen/size_10</item>
+    <item name="android:textAllCaps">true</item>
+  </style>
 
-    <style name="Offers_Text_Field">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/size_5</item>
-        <item name="android:padding">@dimen/size_12</item>
-        <item name="android:inputType">textCapWords</item>
-        <item name="singleLine">true</item>
-        <item name="android:background">@drawable/bg_rect_edit_txt</item>
-        <item name="android:textColor">@color/warm_grey_10</item>
-        <item name="android:textColorHint">@color/primary_grey</item>
-    </style>
+  <style name="Offers_Text_Field">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginTop">@dimen/size_5</item>
+    <item name="android:padding">@dimen/size_12</item>
+    <item name="android:inputType">textCapWords</item>
+    <item name="singleLine">true</item>
+    <item name="android:background">@drawable/bg_rect_edit_txt</item>
+    <item name="android:textColor">@color/warm_grey_10</item>
+    <item name="android:textColorHint">@color/primary_grey</item>
+  </style>
     <style name="Offers_MultiLineEditText" parent="Widget.AppCompat.EditText">
         <item name="android:inputType">textMultiLine|textImeMultiLine</item>
         <item name="singleLine">false</item>
@@ -674,16 +697,15 @@
         <item name="android:textColor">@color/warm_grey_10</item>
         <item name="android:textColorHint">@color/primary_grey</item>
     </style>
+  <style name="Offers_Text_Title">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textFontWeight" tools:targetApi="p">600</item>
+    <item name="android:textColor">@color/black_4a4a4a</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="textType">BODY_3</item>
+    <item name="android:layout_height">wrap_content</item>
+  </style>
 
-
-    <style name="Offers_Text_Title">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textFontWeight" tools:targetApi="p">600</item>
-        <item name="android:textColor">@color/black_4a4a4a</item>
-        <item name="android:fontFamily">@font/semi_bold</item>
-        <item name="textType">BODY_3</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
   <style name="Offers_Text_Title.SubHeading" parent="Offers_Text_Title">
     <item name="textType">SUBHEADING_2</item>
     <item name="android:textColor">@color/gray_828282</item>
@@ -691,145 +713,176 @@
 
   </style>
 
-    <style name="Offer_Label_Switch">
-        <item name="android:layout_width">@dimen/size_54</item>
-        <item name="android:layout_height">@dimen/size_24</item>
-        <item name="colorBorder">@color/transparent</item>
-        <item name="colorOff">@color/gray_bbb</item>
-        <item name="colorOn">@color/light_green_1</item>
-        <item name="textOff">NO</item>
-        <item name="textOn">YES</item>
-        <item name="txtColorOff">@color/white</item>
-        <item name="txtColorOn">@color/white</item>
-    </style>
+  <style name="Offer_Label_Switch">
+    <item name="android:layout_width">@dimen/size_54</item>
+    <item name="android:layout_height">@dimen/size_24</item>
+    <item name="colorBorder">@color/transparent</item>
+    <item name="colorOff">@color/gray_bbb</item>
+    <item name="colorOn">@color/light_green_1</item>
+    <item name="textOff">NO</item>
+    <item name="textOn">YES</item>
+    <item name="txtColorOff">@color/white</item>
+    <item name="txtColorOn">@color/white</item>
+  </style>
 
-    <style name="Offers_Text_Header" parent="Offers_Text_Title">
-        <item name="android:textColor">@color/warm_grey</item>
-        <item name="android:includeFontPadding">false</item>
-        <item name="fontFamily">@font/regular</item>
-        <item name="textType">BODY_1</item>
+  <style name="Offers_Text_Header" parent="Offers_Text_Title">
+    <item name="android:textColor">@color/warm_grey</item>
+    <item name="android:includeFontPadding">false</item>
+    <item name="fontFamily">@font/regular</item>
+    <item name="textType">BODY_1</item>
 
-    </style>
+  </style>
 
-    <style name="Offers_Image_Rounded" />
+  <style name="Offers_Image_Rounded" />
 
-    <style name="TextDescription">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:paddingStart">30dp</item>
-        <item name="android:paddingEnd">30dp</item>
-        <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:textColor">@color/warm_light</item>
-        <item name="android:textSize">@dimen/size_12</item>
-        <item name="android:paddingBottom">8dp</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
 
-    <style name="TextStaffHeading">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textFontWeight" tools:ignore="NewApi">600</item>
-        <item name="android:textColor">@color/black_4f4f4f</item>
-        <item name="android:textStyle">normal</item>
-        <item name="textType">SUBHEADING_1</item>
-        <item name="fontFamily">@font/open_sans</item>
-        <item name="android:textSize">@dimen/size_12</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
+  <style name="TextDescription">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:paddingStart">30dp</item>
+    <item name="android:paddingEnd">30dp</item>
+    <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
+    <item name="android:paddingTop">8dp</item>
+    <item name="android:textColor">@color/warm_light</item>
+    <item name="android:textSize">@dimen/size_12</item>
+    <item name="android:paddingBottom">8dp</item>
+    <item name="android:textAlignment">center</item>
+    <item name="android:layout_height">wrap_content</item>
+  </style>
 
-    <style name="TextStaffProfileHeadings">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textFontWeight" tools:ignore="NewApi">600</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textStyle">bold</item>
-        <item name="fontFamily">@font/open_sans</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
+  <style name="TextStaffHeading">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textFontWeight" tools:ignore="NewApi">600</item>
+    <item name="android:textColor">@color/black_4f4f4f</item>
+    <item name="android:textStyle">normal</item>
+    <item name="textType">SUBHEADING_1</item>
+    <item name="fontFamily">@font/open_sans</item>
+    <item name="android:textSize">@dimen/size_12</item>
+    <item name="android:textAlignment">center</item>
+    <item name="android:layout_height">wrap_content</item>
+  </style>
 
-    <style name="StaffProfileTextContent" parent="TextStaffProfileHeadings">
-        <item name="android:textColor">@color/gray_4e4e4e</item>
-        <item name="android:textStyle">normal</item>
-        <!--    <item name="android:textFontWeight">0</item>-->
-        <item name="android:textAlignment">viewStart</item>
-    </style>
+  <style name="TextStaffProfileHeadings">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textFontWeight" tools:ignore="NewApi">600</item>
+    <item name="android:textColor">@color/black</item>
+    <item name="android:textStyle">bold</item>
+    <item name="fontFamily">@font/open_sans</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:textAlignment">center</item>
+    <item name="android:layout_height">wrap_content</item>
+  </style>
 
-    <style name="StaffProfileEditText">
-        <item name="android:text">@string/edit</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="textAllCaps">true</item>
-        <item name="android:layout_alignParentEnd">true</item>
-        <item name="android:textColor">@color/blue_4889f8</item>
-    </style>
+  <style name="StaffProfileTextContent" parent="TextStaffProfileHeadings">
+    <item name="android:textColor">@color/gray_4e4e4e</item>
+    <item name="android:textStyle">normal</item>
+    <!--    <item name="android:textFontWeight">0</item>-->
+    <item name="android:textAlignment">viewStart</item>
+  </style>
 
-    <style name="BottomDialog" parent="Theme.MaterialComponents.Light.Dialog">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="colorPrimaryDark">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/transparent</item>
-        <item name="bd_bg_color">@color/color_dialog_bg</item>
-        <item name="android:textColorPrimary">#212121</item>
-    </style>
+  <style name="StaffProfileEditText">
+    <item name="android:text">@string/edit</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="textAllCaps">true</item>
+    <item name="android:layout_alignParentEnd">true</item>
+    <item name="android:textColor">@color/blue_4889f8</item>
+  </style>
 
-    <style name="ButtonStyle.Rounded.Outlined">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginStart">@dimen/size_30</item>
-        <item name="android:layout_marginBottom">@dimen/size_30</item>
-        <item name="android:layout_marginEnd">@dimen/size_30</item>
-        <item name="android:fontFamily">@font/regular</item>
-        <item name="android:textColor">@color/greyish_brown</item>
-        <item name="android:background">@drawable/bg_button_rounded_greyish_brown_outlined</item>
-    </style>
+  <style name="BottomDialog" parent="Theme.MaterialComponents.Light.Dialog">
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowIsFloating">true</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="colorPrimaryDark">@color/colorAccent</item>
+    <item name="android:windowBackground">@color/transparent</item>
+    <item name="bd_bg_color">@color/color_dialog_bg</item>
+    <item name="android:textColorPrimary">#212121</item>
+  </style>
 
-    <style name="ButtonStyle.Rounded.StrokeWhite" parent="ButtonStyle.Rounded">
-        <item name="android:background">@drawable/stroke_white_4</item>
-        <item name="android:paddingStart">@dimen/size_30</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:paddingTop">@dimen/size_8</item>
-        <item name="android:paddingBottom">@dimen/size_8</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingEnd">@dimen/size_30</item>
-    </style>
+  <style name="ButtonStyle.Rounded.Outlined">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_marginStart">@dimen/size_30</item>
+    <item name="android:layout_marginBottom">@dimen/size_30</item>
+    <item name="android:layout_marginEnd">@dimen/size_30</item>
+    <item name="android:fontFamily">@font/regular</item>
+    <item name="android:textColor">@color/greyish_brown</item>
+    <item name="android:background">@drawable/bg_button_rounded_greyish_brown_outlined</item>
+  </style>
 
-    <!-- media picker -->
-    <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <!--        <item name="android:windowAnimationStyle">@android:style/Animation</item>-->
-    </style>
+  <style name="ButtonStyle.Rounded.StrokeWhite" parent="ButtonStyle.Rounded">
+    <item name="android:background">@drawable/stroke_white_4</item>
+    <item name="android:paddingStart">@dimen/size_30</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:paddingTop">@dimen/size_8</item>
+    <item name="android:paddingBottom">@dimen/size_8</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:paddingEnd">@dimen/size_30</item>
+  </style>
 
-    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:fontFamily">@font/bold</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/primary_text</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
+  <style name="ButtonStyle.Outlined.Green" parent="ButtonStyle.Rounded.Outlined">
+    <item name="height">@dimen/size_36</item>
+    <item name="textSize">14sp</item>
+    <item name="android:drawablePadding">8dp</item>
+    <item name="android:layout_marginStart">@dimen/size_16</item>
+    <item name="android:layout_marginBottom">@dimen/size_16</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:layout_gravity">center_horizontal</item>
+    <item name="android:textColor">@color/green_6bc95c</item>
+    <item name="android:background">@drawable/rounded_stroke_grey_4_solid_green</item>
+  </style>
 
-    <style name="DialogTheme" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/warm_grey</item>
-        <item name="colorControlActivated">@color/colorAccent</item>
-    </style>
+  <style name="ButtonStyle.Red">
+    <item name="android:textSize">14sp</item>
+    <item name="android:stateListAnimator">@null</item>
+    <item name="android:gravity">center</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="paddingStart">@dimen/size_28</item>
+    <item name="paddingEnd">@dimen/size_28</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">@dimen/size_38</item>
+    <item name="height">@dimen/size_36</item>
+    <item name="textSize">14sp</item>
+    <item name="android:drawablePadding">8dp</item>
+    <item name="android:layout_gravity">center_horizontal</item>
+    <item name="android:textColor">@color/error_red</item>
+    <item name="android:background">@drawable/rounded_stroke_grey_4_solid_error</item>
+  </style>
 
-    <style name="ProductSpinnerStyle" parent="@style/ThemeOverlay.AppCompat.Light">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/primary_text</item>
-        <item name="android:padding">5dp</item>
-        <item name="android:maxLines">1</item>
-        <item name="background">@color/gray_light_1</item>
-        <item name="android:spinnerMode">dropdown</item>
-    </style>
+  <!-- media picker -->
+  <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:colorBackgroundCacheHint">@null</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <!--        <item name="android:windowAnimationStyle">@android:style/Animation</item>-->
+  </style>
+
+  <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+    <item name="android:fontFamily">@font/bold</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:textColor">@color/primary_text</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:includeFontPadding">false</item>
+  </style>
+
+  <style name="DialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorControlNormal">@color/warm_grey</item>
+    <item name="colorControlActivated">@color/colorAccent</item>
+  </style>
+
+  <style name="ProductSpinnerStyle" parent="@style/ThemeOverlay.AppCompat.Light">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:textColor">@color/primary_text</item>
+    <item name="android:padding">5dp</item>
+    <item name="android:maxLines">1</item>
+    <item name="background">@color/gray_light_1</item>
+    <item name="android:spinnerMode">dropdown</item>
+  </style>
 
 </resources>

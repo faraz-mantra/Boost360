@@ -10,7 +10,9 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 
-class SelectGenderBottomSheetDialog : BaseBottomSheetDialog<BottomSheetSelectGenderBinding, BaseViewModel>(), RecyclerItemClickListener {
+class SelectGenderBottomSheetDialog :
+  BaseBottomSheetDialog<BottomSheetSelectGenderBinding, BaseViewModel>(),
+  RecyclerItemClickListener {
 
   private var list = ArrayList<GenderSelectionModel>()
   private var adapter: AppBaseRecyclerViewAdapter<GenderSelectionModel>? = null
@@ -32,7 +34,8 @@ class SelectGenderBottomSheetDialog : BaseBottomSheetDialog<BottomSheetSelectGen
   override fun onCreateView() {
     binding?.recyclerViewBottomSheetSelectGender?.post {
       adapter = AppBaseRecyclerViewAdapter(baseActivity, list, this)
-      binding?.recyclerViewBottomSheetSelectGender?.layoutManager = LinearLayoutManager(baseActivity)
+      binding?.recyclerViewBottomSheetSelectGender?.layoutManager =
+        LinearLayoutManager(baseActivity)
       binding?.recyclerViewBottomSheetSelectGender?.adapter = adapter
       binding?.recyclerViewBottomSheetSelectGender?.let { adapter?.runLayoutAnimation(it) }
     }

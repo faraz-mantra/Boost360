@@ -18,65 +18,70 @@ import com.framework.models.toLiveData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
-class ProductViewModel :BaseViewModel() {
-    fun createProduct(request: CatalogProduct?): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.createProduct(request).toLiveData()
-    }
+class ProductViewModel : BaseViewModel() {
+  fun createProduct(request: CatalogProduct?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.createProduct(request).toLiveData()
+  }
 
-    fun getProductListing(fpTag: String?, clientId: String?, skipBy: Int?): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.getProductListing(fpTag, clientId, skipBy).toLiveData()
+  fun updateProduct(request: ProductUpdate?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.updateProduct(request).toLiveData()
+  }
 
-    }
+  fun deleteService(request: DeleteProductRequest?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.deleteProduct(request).toLiveData()
+  }
 
-    fun updateProduct(request: ProductUpdate?): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.updateProduct(request).toLiveData()
-    }
+  fun addUpdateProductImage(
+    clientId: String?,
+    requestType: String?,
+    requestId: String?,
+    totalChunks: Int?,
+    currentChunkNumber: Int?,
+    productId: String?,
+    requestBody: RequestBody?,
+  ): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.addUpdateImageProduct(
+      clientId, requestType, requestId, totalChunks,
+      currentChunkNumber, productId, requestBody
+    ).toLiveData()
+  }
 
-    fun deleteService(request: DeleteProductRequest?): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.deleteProduct(request).toLiveData()
-    }
+  fun addProductGstDetail(request: ProductGstDetailRequest?): LiveData<BaseResponse> {
+    return KitWebActionRepository.addProductGstDetail(request).toLiveData()
+  }
 
-    fun addUpdateProductImage(
-            clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
-            productId: String?, requestBody: RequestBody?,
-    ): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.addUpdateImageProduct(clientId, requestType, requestId, totalChunks,
-                currentChunkNumber, productId, requestBody).toLiveData()
-    }
+  fun updateProductGstDetail(request: ProductUpdateRequest?): LiveData<BaseResponse> {
+    return KitWebActionRepository.updateProductGstDetail(request).toLiveData()
+  }
 
-    fun addProductGstDetail(auth: String?, request: ProductGstDetailRequest?): LiveData<BaseResponse> {
-        return KitWebActionRepository.addProductGstDetail(auth, request).toLiveData()
-    }
+  fun getProductGstDetail(query: String?): LiveData<BaseResponse> {
+    return KitWebActionRepository.getProductGstDetail(query).toLiveData()
+  }
 
-    fun updateProductGstDetail(auth: String?, request: ProductUpdateRequest?): LiveData<BaseResponse> {
-        return KitWebActionRepository.updateProductGstDetail(auth, request).toLiveData()
-    }
+  fun uploadImageProfile(
+    assetFileName: String?,
+    file: MultipartBody.Part?
+  ): LiveData<BaseResponse> {
+    return KitWebActionRepository.uploadImageProfile(assetFileName, file).toLiveData()
+  }
 
-    fun getProductGstDetail(auth: String?, query: String?): LiveData<BaseResponse> {
-        return KitWebActionRepository.getProductGstDetail(auth, query).toLiveData()
-    }
+  fun addProductImage(request: ProductImageRequest?): LiveData<BaseResponse> {
+    return KitWebActionRepository.addProductImage(request).toLiveData()
+  }
 
-    fun uploadImageProfile(auth: String?, assetFileName: String?, file: MultipartBody.Part?): LiveData<BaseResponse> {
-        return KitWebActionRepository.uploadImageProfile(auth, assetFileName, file).toLiveData()
-    }
+  fun deleteProductImage(request: ProductImageDeleteRequest?): LiveData<BaseResponse> {
+    return KitWebActionRepository.deleteProductImage(request).toLiveData()
+  }
 
-    fun addProductImage(auth: String?, request: ProductImageRequest?): LiveData<BaseResponse> {
-        return KitWebActionRepository.addProductImage(auth, request).toLiveData()
-    }
+  fun getProductImage(query: String?): LiveData<BaseResponse> {
+    return KitWebActionRepository.getProductImage(query).toLiveData()
+  }
 
-    fun deleteProductImage(auth: String?, request: ProductImageDeleteRequest?): LiveData<BaseResponse> {
-        return KitWebActionRepository.deleteProductImage(auth, request).toLiveData()
-    }
+  fun getPickUpAddress(fpId: String?): LiveData<BaseResponse> {
+    return AssuredWithFloatRepository.getPickUpAddress(fpId).toLiveData()
+  }
 
-    fun getProductImage(auth: String?, query: String?): LiveData<BaseResponse> {
-        return KitWebActionRepository.getProductImage(auth, query).toLiveData()
-    }
-
-    fun getPickUpAddress(fpId: String?): LiveData<BaseResponse> {
-        return AssuredWithFloatRepository.getPickUpAddress(fpId).toLiveData()
-    }
-
-    fun userAccountDetails(fpId: String?, clientId: String?): LiveData<BaseResponse> {
-        return WithFloatRepository.userAccountDetail(fpId, clientId).toLiveData()
-    }
+  fun userAccountDetails(fpId: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatRepository.userAccountDetail(fpId, clientId).toLiveData()
+  }
 }

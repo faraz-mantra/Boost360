@@ -2,7 +2,12 @@ package com.appservice.utils
 
 import android.app.Activity
 import android.content.ContentUris
+import android.content.Context
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -13,7 +18,9 @@ import android.text.TextUtils
 import android.util.Log
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.io.InputStream
+import kotlin.math.roundToInt
 
 
 class FileUtils(var context: Activity) {
@@ -42,10 +49,17 @@ class FileUtils(var context: Activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
           var cursor: Cursor? = null
           try {
-            cursor = context.contentResolver.query(uri, arrayOf(MediaStore.MediaColumns.DISPLAY_NAME), null, null, null)
+            cursor = context.contentResolver.query(
+              uri,
+              arrayOf(MediaStore.MediaColumns.DISPLAY_NAME),
+              null,
+              null,
+              null
+            )
             if (!(cursor == null || !cursor.moveToFirst())) {
               val fileName: String = cursor.getString(0)
-              val path: String = Environment.getExternalStorageDirectory().toString().toString() + "/Download/" + fileName
+              val path: String = Environment.getExternalStorageDirectory().toString()
+                .toString() + "/Download/" + fileName
               if (!TextUtils.isEmpty(path)) {
                 return path
               }
@@ -58,10 +72,14 @@ class FileUtils(var context: Activity) {
             if (id.startsWith("raw:")) {
               return id.replaceFirst("raw:".toRegex(), "")
             }
-            val contentUriPrefixesToTry = arrayOf("content://downloads/public_downloads", "content://downloads/my_downloads")
+            val contentUriPrefixesToTry =
+              arrayOf("content://downloads/public_downloads", "content://downloads/my_downloads")
             for (contentUriPrefix in contentUriPrefixesToTry) {
               return try {
-                val contentUri: Uri = ContentUris.withAppendedId(Uri.parse(contentUriPrefix), java.lang.Long.valueOf(id))
+                val contentUri: Uri = ContentUris.withAppendedId(
+                  Uri.parse(contentUriPrefix),
+                  java.lang.Long.valueOf(id)
+                )
                 getDataColumn(context, contentUri, null, null)
               } catch (e: NumberFormatException) {
                 //In Android 8 and Android P the id is not a number
@@ -76,7 +94,8 @@ class FileUtils(var context: Activity) {
           }
           try {
             contentUri = ContentUris.withAppendedId(
-                Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id))
+              Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id)
+            )
           } catch (e: NumberFormatException) {
             e.printStackTrace()
           }
@@ -98,8 +117,10 @@ class FileUtils(var context: Activity) {
         }
         selection = "_id=?"
         selectionArgs = arrayOf(split[1])
-        return getDataColumn(context, contentUri, selection,
-            selectionArgs)
+        return getDataColumn(
+          context, contentUri, selection,
+          selectionArgs
+        )
       }
       if (isGoogleDriveUri(uri)) {
         return getDriveFilePath(uri)
@@ -114,7 +135,10 @@ class FileUtils(var context: Activity) {
         if (isGoogleDriveUri(uri)) {
           return getDriveFilePath(uri)
         }
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) copyFileToInternalStorage(uri, "userfiles")
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) copyFileToInternalStorage(
+          uri,
+          "userfiles"
+        )
         else getDataColumn(context, uri, null, null)
 
       }
@@ -123,7 +147,7 @@ class FileUtils(var context: Activity) {
       if (isWhatsAppFile(uri)) return getFilePathForWhatsApp(uri)
       if ("content".equals(uri.scheme, ignoreCase = true)) {
         val projection = arrayOf(
-            MediaStore.Images.Media.DATA
+          MediaStore.Images.Media.DATA
         )
         var cursor: Cursor? = null
         try {
@@ -210,7 +234,7 @@ class FileUtils(var context: Activity) {
       Log.e("File Path", "Path " + file.path)
       Log.e("File Size", "Size " + file.length())
     } catch (e: Exception) {
-      Log.e("Exception", e.message)
+      Log.e("Exception", e.message ?: "")
     }
     return file.path
   }
@@ -223,7 +247,13 @@ class FileUtils(var context: Activity) {
    */
   private fun copyFileToInternalStorage(uri: Uri, newDirName: String): String {
     val returnUri: Uri = uri
-    val returnCursor: Cursor? = context.contentResolver.query(returnUri, arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE), null, null, null)
+    val returnCursor: Cursor? = context.contentResolver.query(
+      returnUri,
+      arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE),
+      null,
+      null,
+      null
+    )
 
     /*
          * Get the column indexes of the data in the Cursor,
@@ -257,7 +287,7 @@ class FileUtils(var context: Activity) {
       inputStream?.close()
       outputStream.close()
     } catch (e: Exception) {
-      Log.e("Exception", e.message)
+      Log.e("Exception", e.message ?: "")
     }
     return output.path
   }
@@ -266,13 +296,20 @@ class FileUtils(var context: Activity) {
     return copyFileToInternalStorage(uri, "whatsapp")
   }
 
-  private fun getDataColumn(context: Activity, uri: Uri?, selection: String?, selectionArgs: Array<String>?): String? {
+  private fun getDataColumn(
+    context: Activity,
+    uri: Uri?,
+    selection: String?,
+    selectionArgs: Array<String>?
+  ): String? {
     var cursor: Cursor? = null
     val column = "_data"
     val projection = arrayOf(column)
     try {
-      cursor = context.contentResolver.query(uri!!, projection,
-          selection, selectionArgs, null)
+      cursor = context.contentResolver.query(
+        uri!!, projection,
+        selection, selectionArgs, null
+      )
       if (cursor != null && cursor.moveToFirst()) {
         val index: Int = cursor.getColumnIndexOrThrow(column)
         return cursor.getString(index)
@@ -309,5 +346,76 @@ class FileUtils(var context: Activity) {
 
   companion object {
     private var contentUri: Uri? = null
+  }
+
+  fun getBitmap(path: String?, mWidth: Int): Bitmap? {
+    if (path == null) return null
+    val uri = Uri.fromFile(File(path))
+    val rotation: Float = rotationForImage(context, uri)
+    val matrix = Matrix()
+    val TAG = "GetBitmap"
+    var `in`: InputStream? = null
+    return try {
+      val IMAGE_MAX_WIDTH = mWidth
+      val mContentResolver = context.contentResolver
+      `in` = mContentResolver.openInputStream(uri)
+
+      // Decode image size
+      val o = BitmapFactory.Options()
+      o.inJustDecodeBounds = true
+      BitmapFactory.decodeStream(`in`, null, o)
+      `in`!!.close()
+      var scale = 1
+      if (o.outWidth > mWidth) scale = (o.outWidth.toFloat() / mWidth.toFloat()).roundToInt()
+      val optionsOut = BitmapFactory.Options()
+      optionsOut.inSampleSize = scale
+      optionsOut.inPurgeable = true
+      var b: Bitmap? = null
+      `in` = mContentResolver.openInputStream(uri)
+      b = BitmapFactory.decodeStream(`in`, null, optionsOut)
+      if (rotation != 0f) matrix.preRotate(rotation)
+      if (b != null) b = Bitmap.createBitmap(b, 0, 0, b.width, b.height, matrix, true)
+      System.gc()
+      `in`?.close()
+      b
+    } catch (e: IOException) {
+      null
+    } catch (e: OutOfMemoryError) {
+      e.printStackTrace()
+      null
+    }
+  }
+
+  fun rotationForImage(context: Context, uri: Uri): Float {
+    if (uri.scheme == "content") {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val projection = arrayOf(MediaStore.Images.ImageColumns.ORIENTATION)
+        val c = context.contentResolver.query(uri, projection, null, null, null)
+        if (c?.moveToFirst() == true) return c.getInt(0).toFloat()
+      } else return 0F
+    } else if (uri.scheme == "file") {
+      try {
+        val exif = ExifInterface(uri.path!!)
+        val rotation = exifOrientationToDegrees(
+          exif.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_NORMAL
+          )
+        ) as? Int
+        return rotation?.toFloat() ?: 0F
+      } catch (e: IOException) {
+        e.printStackTrace()
+      }
+    }
+    return 0f
+  }
+
+  private fun exifOrientationToDegrees(exifOrientation: Int): Float {
+    return when (exifOrientation) {
+      ExifInterface.ORIENTATION_ROTATE_90 -> 90F
+      ExifInterface.ORIENTATION_ROTATE_180 -> 180F
+      ExifInterface.ORIENTATION_ROTATE_270 -> 270F
+      else -> 0F
+    }
   }
 }

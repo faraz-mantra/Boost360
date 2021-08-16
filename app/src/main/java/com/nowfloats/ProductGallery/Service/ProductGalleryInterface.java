@@ -38,27 +38,27 @@ import retrofit.http.QueryMap;
  */
 public interface ProductGalleryInterface {
     @GET("/Product/v1/GetListings")
-    public void getProducts(@QueryMap Map<String,String> map, Callback<ArrayList<ProductListModel>> callback);
+    public void getProducts(@QueryMap Map<String, String> map, Callback<ArrayList<ProductListModel>> callback);
 
     @Headers({"Content-Type: application/json"})
     @POST("/Product/v1/Create")
-    public void addProduct(@Body HashMap<String,String> map, Callback<String> callback);
+    public void addProduct(@Body HashMap<String, String> map, Callback<String> callback);
 
     @Headers({"Content-Type: application/json"})
     @POST("/Product/v1/Create")
     public void addProduct(@Body Product product, Callback<String> callback);
 
     @PUT("/Product/v1/Update")
-    void put_UpdateGalleryUpdate(@Body Product_Gallery_Update_Model model,Callback<ArrayList<String>> callback);
+    void put_UpdateGalleryUpdate(@Body Product_Gallery_Update_Model model, Callback<ArrayList<String>> callback);
 
 
     @FormUrlEncoded
     @PUT("/Product/v1/AddImage")
-    public void uploadPic(@Body byte[] image,@QueryMap HashMap<String,String> map,Callback<String> cb);
+    public void uploadPic(@Body byte[] image, @QueryMap HashMap<String, String> map, Callback<String> cb);
 
     @Headers({"Content-Type: application/json"})
     @DELETE("/Product/v1/Delete")
-    void deleteProduct(@Body HashMap<String,String> map, Callback<String> callback);
+    void deleteProduct(@Body HashMap<String, String> map, Callback<String> callback);
 
     @Headers({"Content-Type: application/json"})
     @DELETE("/Product/v2/DeleteImage")
@@ -88,7 +88,7 @@ public interface ProductGalleryInterface {
     void getMerchantProfileData(@Query("query") String query, Callback<WebActionModel<MerchantProfileModel>> callback);
 
     @GET("/SellerInformationFetch")
-    //@Headers({"Authorization: " + Constants.WA_KEY})
+        //@Headers({"Authorization: " + Constants.WA_KEY})
     void getSellerProfileData(@Query("sellerId") String sellerId, Callback<WebResponseModel<SellerProfile>> callback);
 
 
@@ -98,6 +98,7 @@ public interface ProductGalleryInterface {
 
     /**
      * New
+     *
      * @param map
      * @param callback
      */
@@ -112,10 +113,10 @@ public interface ProductGalleryInterface {
 
     @Headers({"Content-Type: application/json"})
     @MOD_DELETE("/Product/v1/Delete")
-    void removeProduct(@Body HashMap<String,String> map, Callback<String> callback);
+    void removeProduct(@Body HashMap<String, String> map, Callback<String> callback);
 
     @PUT("/Product/v1/Update")
-    void updateProduct(@Body Product_Gallery_Update_Model model,Callback<ArrayList<String>> callback);
+    void updateProduct(@Body Product_Gallery_Update_Model model, Callback<ArrayList<String>> callback);
 
 
     @POST("/product_details/add-data")

@@ -1,78 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout
-      style="@style/match_wrap"
-      android:background="@android:color/transparent">
+    style="@style/match_wrap"
+    android:background="@android:color/transparent">
 
     <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tvPick"
-        style="@style/match_wrap"
-        android:layout_alignParentBottom="true"
-        android:paddingStart="@dimen/size_20"
-        android:paddingBottom="@dimen/size_8"
-        android:text="@string/pick_inventory_nature"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:textColor="#7E7E7E" />
+      android:id="@+id/tvPick"
+      style="@style/match_wrap"
+      android:layout_alignParentBottom="true"
+      android:paddingStart="@dimen/size_20"
+      android:paddingBottom="@dimen/size_8"
+      android:text="@string/pick_inventory_nature"
+      android:textAllCaps="false"
+      android:textColor="@color/white"
+      android:textSize="24sp"
+      android:visibility="visible"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:textColor="#7E7E7E" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/coordinatorLayoutBottomSheet"
-        style="@style/match_wrap"
-        android:background="@drawable/bg_rounded_top_white_2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/btn_bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPick">
+      android:id="@+id/coordinatorLayoutBottomSheet"
+      style="@style/match_wrap"
+      android:background="@drawable/bg_rounded_top_white_2"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/btn_bottom"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tvPick">
 
       <androidx.appcompat.widget.LinearLayoutCompat
-          style="@style/match_wrap"
-          android:orientation="vertical">
+        style="@style/match_wrap"
+        android:orientation="vertical">
 
         <com.framework.views.viewgroups.BaseRecyclerView
-            android:id="@+id/recyclerViewPickInventoryNature"
-            style="@style/match_wrap"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="4"
-            tools:listitem="@layout/item_bottom_sheet_pick_inventory_nature" />
+          android:id="@+id/recyclerViewPickInventoryNature"
+          style="@style/match_wrap"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          tools:itemCount="4"
+          tools:listitem="@layout/item_bottom_sheet_pick_inventory_nature" />
 
       </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/btn_bottom"
-        style="@style/match_wrap"
-        android:gravity="end"
-        android:orientation="horizontal"
-        android:padding="@dimen/size_14"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+      android:id="@+id/btn_bottom"
+      style="@style/match_wrap"
+      android:background="@color/white"
+      android:gravity="end"
+      android:orientation="horizontal"
+      android:padding="@dimen/size_14"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent">
 
       <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tvCancel"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:layout_marginEnd="@dimen/size_10"
-          android:text="@string/cancel"
-          android:background="@color/white"
-         />
+        android:id="@+id/tvCancel"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:layout_marginEnd="@dimen/size_10"
+        android:background="@color/white"
+        android:text="@string/cancel" />
 
       <com.framework.views.customViews.CustomButton
-          android:id="@+id/buttonDone"
-          style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
-          android:background="@drawable/button_proceed"
-          android:text="@string/done"
-          android:textColor="@color/white" />
+        android:id="@+id/buttonDone"
+        style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:background="@drawable/button_proceed"
+        android:text="@string/done"
+        android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

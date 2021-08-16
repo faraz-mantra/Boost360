@@ -21,30 +21,31 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
 
   protected abstract fun getApiClient(): Retrofit
 
-  fun <T> makeRemoteRequest(observable: Observable<Response<T>>, taskCode: Int): Observable<BaseResponse> {
+  fun <T> makeRemoteRequest(
+    observable: Observable<Response<T>>,
+    taskCode: Int
+  ): Observable<BaseResponse> {
     if (!NetworkUtils.isNetworkConnected()) {
-      val response = BaseResponse(error = NoNetworkException(), status = 400, message = "No internet connection.")
+      val response = BaseResponse(
+        error = NoNetworkException(),
+        status = 400,
+        message = "No internet connection."
+      )
       return Observable.just(response)
     }
 
     return observable.map {
       if (it.isSuccessful) {
-        val response = when (it.body()) {
-          is Array<*> -> BaseResponse(message = "Success", arrayResponse = it.body() as Array<*>)
-          is String -> BaseResponse(message = "Success", stringResponse = it.body() as String)
-          is BaseResponse -> (it.body() as T) as BaseResponse
-          is ResponseBody -> BaseResponse(responseBody = (it.body() as? ResponseBody), message = "Success")
-          else -> BaseResponse(anyResponse = it.body(), message = "Success")
-        }
+        val response = getResponseValue(it)
         response.status = it.code()
         response.taskcode = taskCode
         onSuccess(response, taskCode)
         return@map response
       } else {
-        val response = BaseResponse()
+        val response = getResponseValue(it, "Error")
         response.status = it.code()
         response.error = BaseException(it.errorBody()?.string() ?: "")
-        response.message = response.error?.localizedMessage
+        response.error?.localizedMessage?.let { it1 -> response.message = it1 }
         response.taskcode = taskCode
         onFailure(response, taskCode)
         return@map response
@@ -60,7 +61,23 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
     }
   }
 
-  fun makeLocalResponse(observable: Observable<BaseResponse>, taskcode: Int): Observable<BaseResponse> {
+  private fun <T> getResponseValue(it: Response<T>, message: String = "Success"): BaseResponse {
+    return when (it.body()) {
+      is Array<*> -> BaseResponse(message = message, arrayResponse = it.body() as Array<*>)
+      is String -> BaseResponse(message = message, stringResponse = it.body() as String)
+      is BaseResponse -> (it.body() as T) as BaseResponse
+      is ResponseBody -> BaseResponse(
+        responseBody = (it.body() as? ResponseBody),
+        message = message
+      )
+      else -> BaseResponse(anyResponse = it.body(), message = message)
+    }
+  }
+
+  fun makeLocalResponse(
+    observable: Observable<BaseResponse>,
+    taskcode: Int
+  ): Observable<BaseResponse> {
     return observable.map {
       if (it.error != null) {
         it.status = 400
@@ -76,11 +93,11 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
     }
   }
 
-  protected fun onFailure(response: BaseResponse, taskcode: Int) {
+  open fun onFailure(response: BaseResponse, taskCode: Int) {
     if (response.error == null) response.error = Exception()
   }
 
-  protected fun onSuccess(response: BaseResponse, taskcode: Int) {
+  open fun onSuccess(response: BaseResponse, taskCode: Int) {
 
   }
 }

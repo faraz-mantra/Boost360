@@ -9,7 +9,8 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
-class GstDetailsBottomSheet : BaseBottomSheetDialog<BottomSheetGstDetailBinding, BaseViewModel>(), RecyclerItemClickListener {
+class GstDetailsBottomSheet : BaseBottomSheetDialog<BottomSheetGstDetailBinding, BaseViewModel>(),
+  RecyclerItemClickListener {
 
   var onClicked: (value: String) -> Unit = { }
   override fun getLayout(): Int {
@@ -22,7 +23,11 @@ class GstDetailsBottomSheet : BaseBottomSheetDialog<BottomSheetGstDetailBinding,
 
   override fun onCreateView() {
     binding?.rvGstDetail?.apply {
-      val adapterN = AppBaseRecyclerViewAdapter(baseActivity, GstDetailModel().gstData(), this@GstDetailsBottomSheet)
+      val adapterN = AppBaseRecyclerViewAdapter(
+        baseActivity,
+        GstDetailModel().gstData(),
+        this@GstDetailsBottomSheet
+      )
       adapter = adapterN
     }
   }

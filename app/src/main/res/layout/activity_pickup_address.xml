@@ -1,136 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        style="@style/ParentLayoutStyle"
-        tools:context="com.nowfloats.ProductGallery.ManageProductActivity">
+  <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ParentLayoutStyle"
+    tools:context="com.nowfloats.ProductGallery.ManageProductActivity">
 
-        <include
-            android:id="@+id/layout_toolbar"
-            layout="@layout/appbar_layout_product" />
+    <include
+      android:id="@+id/layout_toolbar"
+      layout="@layout/appbar_layout_product" />
 
-        <FrameLayout
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      tools:context="com.nowfloats.ProductGallery.ProductCatalogActivity">
+
+      <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="@dimen/margin_50"
+        android:visibility="gone">
+
+        <RelativeLayout
+          android:id="@+id/layout_child"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true">
+
+          <FrameLayout
+            android:id="@+id/layout_image"
+            android:layout_width="200dp"
+            android:layout_height="190dp"
+            android:layout_centerHorizontal="true">
+
+            <View
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/primaryColor" />
+
+            <ImageView
+              android:id="@+id/iv_empty"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:scaleType="fitXY"
+              app:srcCompat="@drawable/no_pickup_address" />
+
+          </FrameLayout>
+
+          <TextView
+            android:id="@+id/tv_message"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="com.nowfloats.ProductGallery.ProductCatalogActivity">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_image"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="@string/you_have_not_configured_any_warehouse_as_package_pickup_addresses"
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="14sp" />
 
-            <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/layout_empty_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                android:background="@color/white"
-                android:padding="@dimen/margin_50">
+          <Button
+            android:id="@+id/btn_add_address"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_message"
+            android:layout_marginStart="@dimen/margin_30"
+            android:layout_marginTop="@dimen/margin_30"
+            android:layout_marginEnd="@dimen/margin_30"
+            android:background="@drawable/rounded_button_enabled"
+            android:onClick="onAddNewAddress"
+            android:text="ADD ADDRESS"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
 
-                <RelativeLayout
-                    android:id="@+id/layout_child"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true" >
+        </RelativeLayout>
 
-                    <FrameLayout
-                        android:id="@+id/layout_image"
-                        android:layout_width="200dp"
-                        android:layout_height="190dp"
-                        android:layout_centerHorizontal="true" >
+      </RelativeLayout>
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/primaryColor" />
+      <!--
+      <include
+          android:id="@+id/layout_empty"
+          layout="@layout/pickup_address_empty_view" />
+      -->
 
-                        <ImageView
-                            android:id="@+id/iv_empty"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/no_pickup_address" />
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        tools:context="com.nowfloats.ProductGallery.ProductCatalogActivity">
 
-                    </FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/pickup_address_list"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginBottom="@dimen/margin_70"
+          android:clipToPadding="false"
+          android:scrollbars="none"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-                    <TextView
-                        android:id="@+id/tv_message"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@color/secondaryTextColor"
-                        android:gravity="center"
-                        android:layout_below="@+id/layout_image"
-                        android:layout_marginTop="30dp"
-                        android:text="@string/you_have_not_configured_any_warehouse_as_package_pickup_addresses"/>
+      </LinearLayout>
 
-                    <Button
-                        android:id="@+id/btn_add_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_button_enabled"
-                        android:textColor="@android:color/white"
-                        android:layout_below="@+id/tv_message"
-                        style="?android:attr/borderlessButtonStyle"
-                        android:layout_marginTop="@dimen/margin_30"
-                        android:layout_marginEnd="@dimen/margin_30"
-                        android:layout_marginStart="@dimen/margin_30"
-                        android:visibility="gone"
-                        android:onClick="onAddNewAddress"
-                        android:text="ADD ADDRESS" />
+      <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
-                </RelativeLayout>
+      <Button
+        android:id="@+id/btn_save"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/margin_20"
+        android:layout_marginEnd="@dimen/margin_20"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:background="@drawable/rounded_button_enabled"
+        android:onClick="onSaveAddress"
+        android:text="SAVE ADDRESS"
+        android:textColor="@android:color/white"
+        android:visibility="gone" />
 
-            </RelativeLayout>
+    </FrameLayout>
 
-            <!--
-            <include
-                android:id="@+id/layout_empty"
-                layout="@layout/pickup_address_empty_view" />
-            -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:orientation="vertical"
-                tools:context="com.nowfloats.ProductGallery.ProductCatalogActivity">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/pickup_address_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:scrollbars="none"
-                    android:layout_marginBottom="@dimen/margin_70"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-            </LinearLayout>
-
-            <ProgressBar
-                android:id="@+id/pb_loading"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:visibility="gone"
-                android:layout_gravity="center" />
-
-            <Button
-                android:id="@+id/btn_save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_button_enabled"
-                style="?android:attr/borderlessButtonStyle"
-                android:textColor="@android:color/white"
-                android:layout_gravity="bottom"
-                android:visibility="gone"
-                android:layout_marginEnd="@dimen/margin_20"
-                android:layout_marginStart="@dimen/margin_20"
-                android:layout_marginBottom="@dimen/margin_10"
-                android:onClick="onSaveAddress"
-                android:text="SAVE ADDRESS" />
-
-        </FrameLayout>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

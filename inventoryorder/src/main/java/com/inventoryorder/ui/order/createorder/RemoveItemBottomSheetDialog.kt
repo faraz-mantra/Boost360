@@ -6,9 +6,10 @@ import com.framework.models.BaseViewModel
 import com.inventoryorder.R
 import com.inventoryorder.databinding.BottomSheetRemoveItemBinding
 
-class RemoveItemBottomSheetDialog : BaseBottomSheetDialog<BottomSheetRemoveItemBinding, BaseViewModel>() {
+class RemoveItemBottomSheetDialog :
+  BaseBottomSheetDialog<BottomSheetRemoveItemBinding, BaseViewModel>() {
 
-  var onClicked: (boolean : Boolean) -> Unit = { boolean : Boolean -> }
+  var onClicked: (boolean: Boolean) -> Unit = { boolean: Boolean -> }
   var removeItem = true
 
   override fun getLayout(): Int {

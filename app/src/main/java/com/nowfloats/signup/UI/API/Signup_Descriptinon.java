@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class Signup_Descriptinon extends AsyncTask<Void, String, String> {
 
     static Boolean success = false;
-//    {
+    //    {
 //        "clientId":"AC16E0892F2F45388F439BDE9F6F3FB5C31F0FAA628D40CD9814A79D8841397E",
 //            "fpTag":"DEVTEST",
 //            "updates":[
@@ -31,61 +31,15 @@ public class Signup_Descriptinon extends AsyncTask<Void, String, String> {
 //
 //        ]
 //    }
-    String fpTag, description,facebookID;
-    ArrayList<String> widgetsList ;
+    String fpTag, description, facebookID;
+    ArrayList<String> widgetsList;
 
-    public Signup_Descriptinon(String fpTag,String description,String facebookID,ArrayList<String> fpWidgetList)
-    {
-        this.fpTag = fpTag ;
-        this.description = description ;
-        this.facebookID = facebookID ;
+    public Signup_Descriptinon(String fpTag, String description, String facebookID, ArrayList<String> fpWidgetList) {
+        this.fpTag = fpTag;
+        this.description = description;
+        this.facebookID = facebookID;
         widgetsList = fpWidgetList;
     }
-
-    @Override
-    protected String doInBackground(Void... params) {
-        String response = "";
-        JSONObject offerObj = new JSONObject();
-        JSONArray ja = new JSONArray();
-        JSONObject descriptionObject = new JSONObject();
-        JSONObject facebookPageObject = new JSONObject();
-        JSONObject fblikeBox = new JSONObject() ;
-        String webWidgetsList = "" ;
-        try {
-            descriptionObject.put("key", "DESCRIPTION");
-            descriptionObject.put("value", description);
-
-            facebookPageObject.put("key", "FB");
-            facebookPageObject.put("value", facebookID);
-
-            for (int i = 0 ; i < widgetsList.size();i++)
-            {
-                webWidgetsList += widgetsList.get(i)+"#";
-            }
-
-            webWidgetsList = webWidgetsList+ "FBLIKEBOX";
-            Log.d("WebWidgetsList","List : "+webWidgetsList);
-
-            fblikeBox.put("key","WEBWIDGETS");
-            fblikeBox.put("value",webWidgetsList);
-
-            ja.put(descriptionObject);
-            ja.put(facebookPageObject);
-            ja.put(fblikeBox);
-            offerObj.put("clientId", Constants.clientId);
-            offerObj.put("fpTag", fpTag);
-           offerObj.put("updates", ja);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        String content= offerObj.toString();
-        response  = getDataFromServer(content,Constants.HTTP_POST,
-                Constants.FpsUpdate,Constants.BG_SERVICE_CONTENT_TYPE_JSON);
-
-        return response;
-    }
-
 
     public static String getDataFromServer(String content,
                                            String requestMethod, String serverUrl, String contentType) {
@@ -169,7 +123,48 @@ public class Signup_Descriptinon extends AsyncTask<Void, String, String> {
         return response;
     }
 
+    @Override
+    protected String doInBackground(Void... params) {
+        String response = "";
+        JSONObject offerObj = new JSONObject();
+        JSONArray ja = new JSONArray();
+        JSONObject descriptionObject = new JSONObject();
+        JSONObject facebookPageObject = new JSONObject();
+        JSONObject fblikeBox = new JSONObject();
+        String webWidgetsList = "";
+        try {
+            descriptionObject.put("key", "DESCRIPTION");
+            descriptionObject.put("value", description);
 
+            facebookPageObject.put("key", "FB");
+            facebookPageObject.put("value", facebookID);
+
+            for (int i = 0; i < widgetsList.size(); i++) {
+                webWidgetsList += widgetsList.get(i) + "#";
+            }
+
+            webWidgetsList = webWidgetsList + "FBLIKEBOX";
+            Log.d("WebWidgetsList", "List : " + webWidgetsList);
+
+            fblikeBox.put("key", "WEBWIDGETS");
+            fblikeBox.put("value", webWidgetsList);
+
+            ja.put(descriptionObject);
+            ja.put(facebookPageObject);
+            ja.put(fblikeBox);
+            offerObj.put("clientId", Constants.clientId);
+            offerObj.put("fpTag", fpTag);
+            offerObj.put("updates", ja);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String content = offerObj.toString();
+        response = getDataFromServer(content, Constants.HTTP_POST,
+                Constants.FpsUpdate, Constants.BG_SERVICE_CONTENT_TYPE_JSON);
+
+        return response;
+    }
 
 
 }

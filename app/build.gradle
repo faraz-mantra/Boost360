@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
+//        classpath 'io.fabric.tools:gradle:1.+'
     }
 }
 apply plugin: 'com.android.application'
@@ -47,9 +47,7 @@ allprojects {
         maven { url "https://maven.google.com" }
 
         google()
-        maven {
-            url "https://dl.bintray.com/notifyvisitors/invitereferrals"
-        }
+
     }
 }
 
@@ -73,7 +71,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020088
+        versionCode 2020020094
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -145,7 +143,7 @@ android {
             buildConfigField "String", "APXOR_BUNDLED_ID", '"0092e23d-20a6-49b9-82f9-afdc2d4872d3"'
         }
         partone {
-            versionName "5.3.66"
+            versionName "6.0.3"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
@@ -185,8 +183,10 @@ dependencies {
     implementation files('libs/libraries/signpost-core-1.2.1.2.jar')
     implementation files('libs/libraries/signpost-commonshttp4-1.2.1.2.jar')
     implementation project(':messagelibrary')
-    //presignup library
+    //presignup library old flow
     implementation project(path: ':presignup')
+    //presignup library new flow
+    implementation project(path: ':presignin')
     api project(path: ':dashboard')
 
     //upgrade library
@@ -224,6 +224,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-places:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.android.libraries.places:places:2.4.0'
 
 
 //    implementation 'uk.co.chrisjenx:calligraphy:2.2.0'
@@ -267,7 +268,7 @@ dependencies {
     implementation project(':imagepicker')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.github.angads25:toggle:1.1.0'
-    implementation 'com.nbsp:library:1.8'
+    implementation 'com.nbsp:materialfilepicker:1.9.1'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
     implementation 'com.github.florent37:viewtooltip:1.1.5'
 

@@ -9,9 +9,9 @@ import java.io.File
 import java.io.Serializable
 
 data class FileModel(
-    var path: String? = null,
-    var pathUrl: String? = null,
-    var recyclerViewItem: Int = RecyclerViewItemType.IMAGE_PREVIEW.getLayout()
+  var path: String? = null,
+  var pathUrl: String? = null,
+  var recyclerViewItem: Int = RecyclerViewItemType.IMAGE_PREVIEW.getLayout()
 ) : AppBaseRecyclerViewItem, Serializable {
 
   override fun getViewType(): Int {

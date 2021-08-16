@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="MyCustomToolBarTheme" parent="Base.ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <item name="android:textColorSecondary">#FFFFFF</item>
-        <item name="colorControlNormal">@color/white</item>
-        <item name="colorControlActivated">@color/primary</item>
-        <item name="colorControlHighlight">@color/primary</item>
-    </style>
+  <style name="MyCustomToolBarTheme" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+    <item name="android:textColorPrimary">#FFFFFF</item>
+    <item name="android:textColorSecondary">#FFFFFF</item>
+    <item name="colorControlNormal">@color/white</item>
+    <item name="colorControlActivated">@color/primary</item>
+    <item name="colorControlHighlight">@color/primary</item>
+  </style>
 
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+  <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
 
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
-    </style>
+    <!--
+        Theme customizations available in newer API levels can go in
+        res/values-vXX/styles.xml, while customizations related to
+        backward-compatibility can go here.
+    -->
+  </style>
 
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-    </style>
+  <style name="AppTheme" parent="AppBaseTheme">
+    <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+  </style>
 
-    <style name="noAnimTheme" parent="AppTheme">
-        <item name="android:windowAnimationStyle">@null</item>
-    </style>
+  <style name="noAnimTheme" parent="AppTheme">
+    <item name="android:windowAnimationStyle">@null</item>
+  </style>
 
-    <style name="AVLoadingIndicatorView">
-        <item name="minWidth">30dip</item>
-        <item name="maxWidth">30dip</item>
-        <item name="minHeight">30dip</item>
-        <item name="maxHeight">30dip</item>
-        <item name="indicatorName">BallPulseSyncIndicator</item>
-    </style>
+  <style name="AVLoadingIndicatorView">
+    <item name="minWidth">30dip</item>
+    <item name="maxWidth">30dip</item>
+    <item name="minHeight">30dip</item>
+    <item name="maxHeight">30dip</item>
+    <item name="indicatorName">BallPulseSyncIndicator</item>
+  </style>
 
-    <style name="DialogAnimation">
-        <item name="android:windowEnterAnimation">@anim/slide_from_up</item>
-        <item name="android:windowExitAnimation">@anim/slide_to_down</item>
-    </style>
+  <style name="DialogAnimation">
+    <item name="android:windowEnterAnimation">@anim/slide_from_up</item>
+    <item name="android:windowExitAnimation">@anim/slide_to_down</item>
+  </style>
 
-    <style name="error_appearance" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/purple</item>
-        <item name="android:textSize">12sp</item>
-    </style>
+  <style name="error_appearance" parent="@android:style/TextAppearance">
+    <item name="android:textColor">@color/purple</item>
+    <item name="android:textSize">12sp</item>
+  </style>
 </resources>

@@ -1,7 +1,6 @@
 package com.nowfloats.util;
 
 import android.app.Activity;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -135,9 +134,9 @@ public class MixPanelController {
             messageFloat = "MessageFloat", feedback = "SendEmailActivity",
             MessageDetailView = "MessageDetailView",
             FacebookActivity = "FacebookAnalytics";
-    private static String KEY = "";
     //    public static MixpanelAPI.People people = null;
     public static String TERM_AND_POLICY_CHECKBOX = "termAndPolicyUnCheck";
+    private static String KEY = "";
 
     public static void setMixPanel(Activity app, String key) {
         KEY = key;

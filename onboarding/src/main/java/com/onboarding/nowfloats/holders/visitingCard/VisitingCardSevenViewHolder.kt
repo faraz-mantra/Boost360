@@ -5,17 +5,20 @@ import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.utils.fromHtml
 import com.onboarding.nowfloats.databinding.ItemVisitingCardSevenBinding
+import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
 import com.onboarding.nowfloats.model.digitalCard.DigitalCardData
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
-class VisitingCardSevenViewHolder(binding: ItemVisitingCardSevenBinding) : AppBaseRecyclerViewHolder<ItemVisitingCardSevenBinding>(binding) {
+class VisitingCardSevenViewHolder(binding: ItemVisitingCardSevenBinding) :
+  AppBaseRecyclerViewHolder<ItemVisitingCardSevenBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = (item as? DigitalCardData)?.cardData ?: return
     binding.businessName.text = data.businessName
     binding.number.text = data.number
+    ChannelAccessStatusResponse.visibleChannels(binding.itemChannelsGroup.containerChannels)
     data.cardIcon?.let { binding.imgLogo.setImageResource(it) }
     if (data.businessLogo.isNullOrEmpty().not()) {
       binding.profileView.visible()

@@ -46,14 +46,14 @@ import java.util.List;
 
 public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int STORAGE_CODE = 120;
+    static ProgressDialog pd;
+    Target targetMap = null;
     private Context context;
     //    private ProductCatalogActivity appContext;
     private List<Product> productList;
     private OnItemClicked callback;
     private OnShareClicked shareCallback;
-    private static final int STORAGE_CODE = 120;
-    static ProgressDialog pd;
-    Target targetMap = null;
 
     public ProductCategoryRecyclerAdapter(Context context)//, ProductCatalogActivity appContext)
     {
@@ -135,49 +135,6 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
     @Override
     public int getItemCount() {
         return productList.size();
-    }
-
-
-    class ProductListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView thumbnail;
-        private TextView tvBrand;
-        private TextView tvName;
-        private TextView tvDescription;
-        private TextView tvPrice;
-        private TextView tvBasePrice;
-        private TextView tvMissingInfo;
-        private Button btnEdit;
-        private ImageView shareButton;
-        private ImageView whatsappShareButton;
-        private ImageView facebookShareButton;
-
-        private ProductListViewHolder(View itemView) {
-            super(itemView);
-            itemView.setOnClickListener(this);
-
-            thumbnail = itemView.findViewById(R.id.thumbnail);
-            tvBrand = itemView.findViewById(R.id.label_brand);
-            tvName = itemView.findViewById(R.id.label_name);
-            tvDescription = itemView.findViewById(R.id.label_description);
-            tvPrice = itemView.findViewById(R.id.label_price);
-            tvBasePrice = itemView.findViewById(R.id.label_base_price);
-            tvMissingInfo = itemView.findViewById(R.id.label_missing_info);
-            btnEdit = itemView.findViewById(R.id.button_edit);
-            shareButton = itemView.findViewById(R.id.shareData);
-            whatsappShareButton = itemView.findViewById(R.id.share_whatsapp);
-            facebookShareButton = itemView.findViewById(R.id.share_facebook);
-            btnEdit.setOnClickListener(v -> callback.onItemClick(productList.get(getAdapterPosition())));
-//            whatsappShareButton.setOnClickListener(v -> share(false, 1, productList.get(getAdapterPosition())));
-//            facebookShareButton.setOnClickListener(v -> share(false, 0, productList.get(getAdapterPosition())));
-            shareButton.setOnClickListener(v -> shareCallback.onShareClicked(true, 0, productList.get(getAdapterPosition())));
-            whatsappShareButton.setOnClickListener(v -> shareCallback.onShareClicked(false, 1, productList.get(getAdapterPosition())));
-            facebookShareButton.setOnClickListener(v -> shareCallback.onShareClicked(false, 0, productList.get(getAdapterPosition())));
-        }
-
-        @Override
-        public void onClick(View v) {
-            callback.onItemClick(productList.get(getAdapterPosition()));
-        }
     }
 
     public void share(boolean defaultShare, int type, String productUrl) {
@@ -293,19 +250,61 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         notifyDataSetChanged();
     }
 
-    public interface OnShareClicked {
-        void onShareClicked(boolean defaultShare, int type, Product product);
-    }
-
     public void onShareClickListener(final OnShareClicked shareCallback) {
         this.shareCallback = shareCallback;
+    }
+
+    public void SetOnItemClickListener(final OnItemClicked callback) {
+        this.callback = callback;
+    }
+
+    public interface OnShareClicked {
+        void onShareClicked(boolean defaultShare, int type, Product product);
     }
 
     public interface OnItemClicked {
         void onItemClick(Product product);
     }
 
-    public void SetOnItemClickListener(final OnItemClicked callback) {
-        this.callback = callback;
+    class ProductListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private ImageView thumbnail;
+        private TextView tvBrand;
+        private TextView tvName;
+        private TextView tvDescription;
+        private TextView tvPrice;
+        private TextView tvBasePrice;
+        private TextView tvMissingInfo;
+        private Button btnEdit;
+        private ImageView shareButton;
+        private ImageView whatsappShareButton;
+        private ImageView facebookShareButton;
+
+        private ProductListViewHolder(View itemView) {
+            super(itemView);
+            itemView.setOnClickListener(this);
+
+            thumbnail = itemView.findViewById(R.id.thumbnail);
+            tvBrand = itemView.findViewById(R.id.label_brand);
+            tvName = itemView.findViewById(R.id.label_name);
+            tvDescription = itemView.findViewById(R.id.label_description);
+            tvPrice = itemView.findViewById(R.id.label_price);
+            tvBasePrice = itemView.findViewById(R.id.label_base_price);
+            tvMissingInfo = itemView.findViewById(R.id.label_missing_info);
+            btnEdit = itemView.findViewById(R.id.button_edit);
+            shareButton = itemView.findViewById(R.id.shareData);
+            whatsappShareButton = itemView.findViewById(R.id.share_whatsapp);
+            facebookShareButton = itemView.findViewById(R.id.share_facebook);
+            btnEdit.setOnClickListener(v -> callback.onItemClick(productList.get(getAdapterPosition())));
+//            whatsappShareButton.setOnClickListener(v -> share(false, 1, productList.get(getAdapterPosition())));
+//            facebookShareButton.setOnClickListener(v -> share(false, 0, productList.get(getAdapterPosition())));
+            shareButton.setOnClickListener(v -> shareCallback.onShareClicked(true, 0, productList.get(getAdapterPosition())));
+            whatsappShareButton.setOnClickListener(v -> shareCallback.onShareClicked(false, 1, productList.get(getAdapterPosition())));
+            facebookShareButton.setOnClickListener(v -> shareCallback.onShareClicked(false, 0, productList.get(getAdapterPosition())));
+        }
+
+        @Override
+        public void onClick(View v) {
+            callback.onItemClick(productList.get(getAdapterPosition()));
+        }
     }
 }

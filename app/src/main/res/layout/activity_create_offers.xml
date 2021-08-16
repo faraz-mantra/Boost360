@@ -1,280 +1,287 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_create_offers"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/activity_create_offers"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context="com.nowfloats.NavigationDrawer.CreateOffersActivity">
+
+  <include
+    android:id="@+id/app_bar"
+    layout="@layout/tool_bar_business_profile" />
+
+  <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nowfloats.NavigationDrawer.CreateOffersActivity"
-    android:orientation="vertical">
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/tool_bar_business_profile" />
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/app_bar">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="vertical">
+    android:layout_below="@id/app_bar">
 
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/iv_offers"
-                android:src="@drawable/default_product_image"/>
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="10dp"
+      android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/offer_title"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:id="@+id/et_offer_title"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/offer_desc"
-                android:layout_marginTop="10dp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lines="3"
-                android:id="@+id/et_offer_desc"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/offer_start_date"
-                android:layout_marginTop="10dp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:id="@+id/et_offer_start_date"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/offer_end_date"
-                android:layout_marginTop="10dp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:id="@+id/et_offer_end_date"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/offer_discount"
-                android:layout_marginTop="10dp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:id="@+id/et_offer_discount"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/offer_uri"
-                android:layout_marginTop="10dp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:id="@+id/et_offer_uri"
-                />
+      <ImageView
+        android:id="@+id/iv_offers"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/default_product_image" />
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/iv_offer_main_image"
-                android:visibility="gone"
-                android:layout_height="100dp" />
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/offer_title" />
 
-        </LinearLayout>
-    </ScrollView>
-    <ScrollView
+      <EditText
+        android:id="@+id/et_offer_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/sv_social_connect"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true">
-        <RelativeLayout
+        android:inputType="text" />
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/offer_desc" />
+
+      <EditText
+        android:id="@+id/et_offer_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="3" />
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/offer_start_date" />
+
+      <EditText
+        android:id="@+id/et_offer_start_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date" />
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/offer_end_date" />
+
+      <EditText
+        android:id="@+id/et_offer_end_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date" />
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/offer_discount" />
+
+      <EditText
+        android:id="@+id/et_offer_discount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal" />
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/offer_uri" />
+
+      <EditText
+        android:id="@+id/et_offer_uri"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+
+      <ImageView
+        android:id="@+id/iv_offer_main_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone" />
+
+    </LinearLayout>
+  </ScrollView>
+
+  <ScrollView
+    android:id="@+id/sv_social_connect"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:visibility="gone">
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom">
+
+      <TableLayout
+        android:id="@+id/float_a_picture_share_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:stretchColumns="1,2,3">
+
+        <View
+          android:layout_width="wrap_content"
+          android:layout_height="2dp"
+          android:background="@color/grey" />
+
+        <View
+          android:layout_width="wrap_content"
+          android:layout_height="2dp"
+          android:background="@color/white" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/background_grey"
+          android:orientation="horizontal">
+
+          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom">
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="3dp">
 
-            <TableLayout
-                android:id="@+id/float_a_picture_share_container"
-                android:layout_width="match_parent"
+            <LinearLayout
+              android:id="@+id/addImageButton"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="horizontal">
+
+              <com.nowfloats.CustomWidget.roboto_md_24_a1a1a1
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@color/white"
-                android:stretchColumns="1,2,3" >
+                android:layout_marginStart="16dp"
+                android:text="@string/add_photo"
+                android:textColor="#A1A1A1"
+                android:textSize="18sp" />
 
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="2dp"
-                    android:background="@color/grey" />
+              <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1">
 
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="2dp"
-                    android:background="@color/white" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/background_grey"
-                    android:orientation="horizontal"
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:paddingBottom="3dp"
-                        android:orientation="horizontal"
-                        android:background="@color/white">
-
-                        <LinearLayout
-                            android:id="@+id/addImageButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center">
-
-                            <com.nowfloats.CustomWidget.roboto_md_24_a1a1a1
-                                android:layout_marginStart="16dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/add_photo"
-                                android:textSize="18sp"
-                                android:textColor="#A1A1A1"/>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginStart="10dp"
-                                >
-
-                                <ImageView
-                                    android:id="@+id/create_mee_activity_facebokhome_button"
-                                    android:layout_width="@dimen/content_creation_icon_sizes"
-                                    android:layout_height="@dimen/content_creation_icon_sizes"
-                                    android:src="@drawable/create_message_camera_inactive"
-                                    android:padding="5dp"
-                                    />
-                            </LinearLayout>
+                <ImageView
+                  android:id="@+id/create_mee_activity_facebokhome_button"
+                  android:layout_width="@dimen/content_creation_icon_sizes"
+                  android:layout_height="@dimen/content_creation_icon_sizes"
+                  android:padding="5dp"
+                  android:src="@drawable/create_message_camera_inactive" />
+              </LinearLayout>
 
 
-                        </LinearLayout>
+            </LinearLayout>
 
-                        <View
-                            android:layout_width="2dp"
-                            android:background="#ececec"
-                            android:layout_marginStart="10dp"
-                            android:layout_height="wrap_content"
-                            />
+            <View
+              android:layout_width="2dp"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="10dp"
+              android:background="#ececec" />
 
-                        <com.nowfloats.CustomWidget.roboto_md_24_a1a1a1
-                            android:id="@+id/shareTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/share"
-                            android:layout_marginStart="38dp"
-                            android:layout_gravity="center"
-                            android:textSize="18sp"
-                            android:textColor="#A1A1A1"/>
-
-
-                        <LinearLayout
-                            android:id="@+id/socialSharingIconLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_gravity="right|bottom"
-                            android:gravity="right|bottom"
-                            android:weightSum="4"
-                            android:paddingTop="1dp"
-                            android:orientation="horizontal" >
+            <com.nowfloats.CustomWidget.roboto_md_24_a1a1a1
+              android:id="@+id/shareTextView"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_marginStart="38dp"
+              android:text="@string/share"
+              android:textColor="#A1A1A1"
+              android:textSize="18sp" />
 
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="horizontal" >
-
-                                <ImageView
-                                    android:id="@+id/create_message_subscribe_button"
-                                    android:layout_width="@dimen/content_creation_icon_sizes"
-                                    android:layout_height="@dimen/content_creation_icon_sizes"
-                                    android:src="@drawable/subscribe_icon" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/float_a_picture_share_fb_parent"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="horizontal" >
-
-                                <ImageView
-                                    android:id="@+id/create_message_activity_facebokhome_button"
-                                    android:layout_width="@dimen/content_creation_icon_sizes"
-                                    android:layout_height="@dimen/content_creation_icon_sizes"
-                                    android:src="@drawable/facebook_icon_inactive" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/float_a_picture_share_fb_page_parent"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="horizontal" >
-
-                                <ImageView
-                                    android:id="@+id/create_message_activity_facebokpage_button"
-                                    android:layout_width="@dimen/content_creation_icon_sizes"
-                                    android:layout_height="@dimen/content_creation_icon_sizes"
-                                    android:src="@drawable/facebookpage_icon_inactive" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/float_a_picture_share_twitter_parent"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="horizontal" >
-
-                                <ImageView
-                                    android:id="@+id/create_message_activity_twitter_button"
-                                    android:layout_width="@dimen/content_creation_icon_sizes"
-                                    android:layout_height="@dimen/content_creation_icon_sizes"
-                                    android:src="@drawable/twitter_icon_inactive" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </TableLayout>
+            <LinearLayout
+              android:id="@+id/socialSharingIconLayout"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="right|bottom"
+              android:layout_marginStart="10dp"
+              android:gravity="right|bottom"
+              android:orientation="horizontal"
+              android:paddingTop="1dp"
+              android:weightSum="4">
 
 
-        </RelativeLayout>
-    </ScrollView>
+              <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                  android:id="@+id/create_message_subscribe_button"
+                  android:layout_width="@dimen/content_creation_icon_sizes"
+                  android:layout_height="@dimen/content_creation_icon_sizes"
+                  android:src="@drawable/subscribe_icon" />
+              </LinearLayout>
+
+              <LinearLayout
+                android:id="@+id/float_a_picture_share_fb_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                  android:id="@+id/create_message_activity_facebokhome_button"
+                  android:layout_width="@dimen/content_creation_icon_sizes"
+                  android:layout_height="@dimen/content_creation_icon_sizes"
+                  android:src="@drawable/facebook_icon_inactive" />
+              </LinearLayout>
+
+              <LinearLayout
+                android:id="@+id/float_a_picture_share_fb_page_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                  android:id="@+id/create_message_activity_facebokpage_button"
+                  android:layout_width="@dimen/content_creation_icon_sizes"
+                  android:layout_height="@dimen/content_creation_icon_sizes"
+                  android:src="@drawable/facebookpage_icon_inactive" />
+              </LinearLayout>
+
+              <LinearLayout
+                android:id="@+id/float_a_picture_share_twitter_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                  android:id="@+id/create_message_activity_twitter_button"
+                  android:layout_width="@dimen/content_creation_icon_sizes"
+                  android:layout_height="@dimen/content_creation_icon_sizes"
+                  android:src="@drawable/twitter_icon_inactive" />
+              </LinearLayout>
+            </LinearLayout>
+          </LinearLayout>
+        </LinearLayout>
+      </TableLayout>
+
+
+    </RelativeLayout>
+  </ScrollView>
 
 </RelativeLayout>

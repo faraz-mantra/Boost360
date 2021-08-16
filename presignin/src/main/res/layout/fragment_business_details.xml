@@ -1,0 +1,172 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
+
+    <androidx.constraintlayout.widget.Guideline style="@style/bottom_guide_style" />
+
+    <com.boost.presignin.views.PsnCustomToolbar
+      android:id="@+id/toolbar"
+      style="@style/psn_toolbar_style"
+      app:rightIcon="@drawable/ic_business_detail_toolbar_icon"
+      tools:ignore="MissingConstraints" />
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginBottom="@dimen/_16sdp"
+      app:layout_constraintBottom_toTopOf="@id/confirm_button"
+      app:layout_constraintEnd_toEndOf="@id/endGuide"
+      app:layout_constraintStart_toStartOf="@id/startGuide"
+      app:layout_constraintTop_toBottomOf="@id/toolbar"
+      tools:ignore="NotSibling,UnknownId">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/step_counter"
+          style="@style/step_counter_style"
+          android:layout_marginTop="0dp"
+          android:text="@string/step_1_2" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/heading_tv"
+          style="@style/psn_heading_style"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="0dp"
+          android:layout_marginTop="@dimen/_6sdp"
+          android:layout_marginEnd="0dp"
+          android:text="@string/creating_your_business_profile"
+          app:layout_constraintTop_toBottomOf="parent" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/sub_heading_tv"
+          style="@style/psn_subheading_style"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_10sdp"
+          android:text="@string/business_details_hint"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/heading_tv" />
+
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/namet_et"
+          style="@style/psn_login_edittext_style"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_18sdp"
+          android:drawableStart="@drawable/ic_business_detail_user"
+          android:hint="@string/enter_your_name"
+          android:inputType="textCapWords"
+          app:layout_constraintTop_toBottomOf="@id/sub_heading_tv" />
+
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/business_name_et"
+          style="@style/psn_login_edittext_style"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_16sdp"
+          android:drawableStart="@drawable/ic_business_detail_catelog"
+          android:hint="@string/your_business_name_hint"
+          android:inputType="textCapWords"
+          app:layout_constraintEnd_toEndOf="@id/endGuide"
+          app:layout_constraintTop_toBottomOf="@id/namet_et" />
+
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/email_et"
+          style="@style/psn_login_edittext_style"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_16sdp"
+          android:drawableStart="@drawable/ic_business_detail_email"
+          android:hint="@string/your_business_email_optional"
+          android:inputType="textEmailAddress"
+          app:layout_constraintEnd_toEndOf="@id/endGuide"
+          app:layout_constraintTop_toBottomOf="@id/business_name_et" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_constraintEnd_toEndOf="@id/endGuide"
+          app:layout_constraintTop_toBottomOf="@id/email_et">
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/civ_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_6dp"
+            android:paddingStart="5dp"
+            android:src="@drawable/ic_business_detail_phone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+          <com.framework.views.customViews.PrefixEditText
+            android:id="@+id/phone_et"
+            style="@style/psn_login_edittext_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:digits="0123456789"
+            android:enabled="false"
+            android:focusable="false"
+            android:hint="@string/your_business_phone"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:paddingStart="30dp"
+            android:tag="+91 "
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/civ_phone"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingClass,RtlSymmetry" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_marginTop="@dimen/_10sdp"
+          android:orientation="horizontal">
+
+          <com.framework.views.customViews.CustomCheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/use_this_as_my_whatsapp_contact_number"
+            android:textColor="@color/psn_sub_heading_color"
+            android:textSize="@dimen/body_1"
+            app:buttonTint="@color/checkbox_background"
+            app:layout_constraintTop_toBottomOf="@id/phone_et" />
+        </LinearLayout>
+
+      </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/confirm_button"
+      style="@style/psn_button_style"
+      android:enabled="true"
+      android:text="@string/choose_website_address"
+      android:visibility="visible"
+      app:layout_constraintBottom_toTopOf="@id/bottomGuide"
+      tools:ignore="MissingConstraints,UnknownId" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

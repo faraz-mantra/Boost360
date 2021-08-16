@@ -10,6 +10,8 @@
   <uses-permission android:name="android.permission.WAKE_LOCK" />
 
   <application>
+
+
     <activity android:name=".JioSignupActivity" />
     <activity
       android:name=".SignUpConfirmation"
@@ -18,19 +20,19 @@
       android:name=".SignUpActivity"
       android:screenOrientation="portrait" />
     <activity
-            android:name=".SplashActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashFullScreenStyle" />
-        <activity
-            android:name=".PreSignUpActivity"
-            android:configChanges="locale"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Pre.Signup" />
+      android:name=".SplashActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/SplashFullScreenStyle" />
+    <activity
+      android:name=".PreSignUpActivity"
+      android:configChanges="locale"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.Pre.Signup" />
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-    </application>
+    <meta-data
+      android:name="preloaded_fonts"
+      android:resource="@array/preloaded_fonts" />
+  </application>
 
 </manifest>

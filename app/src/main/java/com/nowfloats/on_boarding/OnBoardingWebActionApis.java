@@ -1,6 +1,6 @@
 package com.nowfloats.on_boarding;
 
-import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
+import com.boost.presignin.model.userprofile.ConnectUserProfileResponse;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.on_boarding.models.OnBoardingAddModel;
 import com.nowfloats.on_boarding.models.OnBoardingDataModel;
@@ -22,7 +22,7 @@ public interface OnBoardingWebActionApis {
 
     @GET("/fp_onboarding/get-data")
     @Headers({"Authorization: " + ON_BOARDING_KEY})
-    void getData(@Query("query") String query,Callback<WebActionModel<OnBoardingDataModel>> callback);
+    void getData(@Query("query") String query, Callback<WebActionModel<OnBoardingDataModel>> callback);
 
     @POST("/fp_onboarding/add-data")
     @Headers({"Authorization: " + ON_BOARDING_KEY})

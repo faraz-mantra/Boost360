@@ -8,8 +8,10 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -43,34 +45,17 @@ public class SuggestionsActivity extends AppCompatActivity {
 
 
     public SharedPreferences pref;
-
-    private CustomerAssistantApi suggestionsApi;
-
-    private Bus mBus;
-
-    private FragmentManager fragmentManager;
-
-    private UserSessionManager session;
-
-    private CallToActionFragment callToActionFragment;
-
     public SMSSuggestions smsSuggestions;
-
+    private CustomerAssistantApi suggestionsApi;
+    private Bus mBus;
+    private FragmentManager fragmentManager;
+    private UserSessionManager session;
+    private CallToActionFragment callToActionFragment;
     private ProgressBar pbView;
 
     private String appVersion = "";
 
     private DbController mDbController;
-
-
-    private class KillListener extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            finish();
-        }
-    }
-
     private KillListener killListener;
 
     @Override
@@ -133,7 +118,6 @@ public class SuggestionsActivity extends AppCompatActivity {
 //        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -150,16 +134,10 @@ public class SuggestionsActivity extends AppCompatActivity {
         super.onStop();
     }
 
-
     @Override
     protected void onDestroy() {
         sendBroadcast(new Intent(BubblesService.ACTION_RESET_BUBBLE));
         super.onDestroy();
-    }
-
-    public enum SwitchView {
-        ACTION_ITEMS,
-        CALL_TO_ACTION
     }
 
     public void switchView(SwitchView switchView) {
@@ -228,7 +206,6 @@ public class SuggestionsActivity extends AppCompatActivity {
         }
 
     }
-
 
     private void loadDataFromDb() {
 
@@ -300,5 +277,18 @@ public class SuggestionsActivity extends AppCompatActivity {
         offersParam.put("fpId", session.getFPID());
         offersParam.put("rating", rating + "");
         suggestionsApi.updateRating(offersParam);
+    }
+
+    public enum SwitchView {
+        ACTION_ITEMS,
+        CALL_TO_ACTION
+    }
+
+    private class KillListener extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
     }
 }

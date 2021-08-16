@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_match">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/constraintLayout"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_0"
+      android:background="@drawable/bg_bottom_sheet_tutorial_title"
+      app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
+      app:layout_constraintHeight_percent="0.10"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="1">
+
+      <com.framework.views.roundedimageview.RoundedImageView
+        android:id="@+id/civ_back"
+        android:layout_width="@dimen/size_30"
+        android:layout_height="@dimen/size_30"
+        android:background="#585959"
+        android:foreground="?attr/selectableItemBackground"
+        android:padding="@dimen/size_8"
+        android:src="@drawable/ic_back_arrow_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="@dimen/size_8"
+        app:riv_mutate_background="true"
+        app:riv_oval="true" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/wrap_wrap"
+        android:layout_marginStart="@dimen/size_10"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/civ_back"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_fragment_title"
+          style="@style/wrap_wrap"
+          android:fontFamily="@font/lato"
+          android:text="@string/learning_about"
+          android:textColor="@color/white" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_fragment_subject"
+          style="@style/wrap_wrap"
+          android:fontFamily="@font/lato"
+          android:text="@string/staff_profile"
+          android:textColor="@color/white"
+          android:textSize="16sp" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+      <com.framework.views.customViews.CustomImageView
+        style="@style/wrap_wrap"
+        android:src="@drawable/ic_search_inventory"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/civ_close"
+        style="@style/wrap_wrap"
+        android:src="@drawable/ic_close_grey_bottom_sheet"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/constraintLayout3"
+      android:layout_width="match_parent"
+      android:layout_height="500dp"
+      android:background="@color/white"
+      android:minHeight="@dimen/size_250"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintHeight_percent="0.80"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="1">
+
+
+      <com.framework.views.viewgroups.BaseRecyclerView
+        android:id="@+id/rv_faq"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_0"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:itemCount="4"
+        tools:listitem="@layout/item_faq" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

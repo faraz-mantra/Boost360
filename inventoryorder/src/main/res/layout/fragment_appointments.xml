@@ -24,8 +24,7 @@
         android:background="@drawable/down_shadow"
         android:visibility="gone" />
 
-      <androidx.coordinatorlayout.widget.CoordinatorLayout
-        style="@style/match_match">
+      <androidx.coordinatorlayout.widget.CoordinatorLayout style="@style/match_match">
 
         <com.framework.views.viewgroups.BaseRecyclerView
           android:id="@+id/booking_recycler"
@@ -103,15 +102,15 @@
           <LinearLayout
             style="@style/match_wrap"
             android:gravity="center"
-
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="MissingConstraints">
 
             <com.framework.views.customViews.CustomTextView
               style="@style/wrap_wrap"
               android:layout_marginTop="@dimen/size_6"
               android:gravity="center"
-              android:text="To learn more about how ‘bookings’ work,"
+              android:text="@string/to_learn_more_about_how_bookings_work"
               android:textAlignment="gravity"
               android:textColor="@color/grey_light_2"
               app:textType="BODY_1" />
@@ -124,14 +123,14 @@
 
               <com.framework.views.customViews.CustomTextView
                 style="@style/wrap_wrap"
-                android:text="click on the ‘"
+                android:text="@string/click_on_the"
                 android:textColor="@color/grey_light_2"
                 app:textType="BODY_1" />
 
               <com.framework.views.customViews.CustomTextView
                 style="@style/wrap_wrap"
                 android:drawableStart="@drawable/ic_about_apt_icon"
-                android:text="’ icon on top right."
+                android:text="@string/icon_on_top_right"
                 android:textColor="@color/warm_grey"
                 app:textType="BODY_1" />
             </LinearLayout>

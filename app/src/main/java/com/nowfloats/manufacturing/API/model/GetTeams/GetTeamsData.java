@@ -1,6 +1,7 @@
 package com.nowfloats.manufacturing.API.model.GetTeams;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

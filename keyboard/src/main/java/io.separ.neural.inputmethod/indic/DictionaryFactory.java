@@ -40,16 +40,17 @@ public final class DictionaryFactory {
 
     /**
      * Initializes a main dictionary collection from a dictionary pack, with explicit flags.
-     *
+     * <p>
      * This searches for a content provider providing a dictionary pack for the specified
      * locale. If none is found, it falls back to the built-in dictionary - if any.
-     * @param context application context for reading resources
-     * @param locale the locale for which to create the dictionary
+     *
+     * @param context             application context for reading resources
+     * @param locale              the locale for which to create the dictionary
      * @param useFullEditDistance whether to use the full edit distance in suggestions
      * @return an initialized instance of DictionaryCollection
      */
     public static DictionaryCollection createMainDictionaryFromManager(final Context context,
-            final Locale locale, final boolean useFullEditDistance) {
+                                                                       final Locale locale, final boolean useFullEditDistance) {
         if (null == locale) {
             Log.e(TAG, "No locale defined for dictionary");
             return new DictionaryCollection(Dictionary.TYPE_MAIN,
@@ -82,8 +83,9 @@ public final class DictionaryFactory {
 
     /**
      * Kills a dictionary so that it is never used again, if possible.
+     *
      * @param context The context to contact the dictionary provider, if possible.
-     * @param f A file address to the dictionary to kill.
+     * @param f       A file address to the dictionary to kill.
      */
     private static void killDictionary(final Context context, final AssetFileAddress f) {
         if (f.pointsToPhysicalFile()) {
@@ -127,26 +129,28 @@ public final class DictionaryFactory {
 
     /**
      * Initializes a main dictionary collection from a dictionary pack, with default flags.
-     *
+     * <p>
      * This searches for a content provider providing a dictionary pack for the specified
      * locale. If none is found, it falls back to the built-in dictionary, if any.
+     *
      * @param context application context for reading resources
-     * @param locale the locale for which to create the dictionary
+     * @param locale  the locale for which to create the dictionary
      * @return an initialized instance of DictionaryCollection
      */
     public static DictionaryCollection createMainDictionaryFromManager(final Context context,
-            final Locale locale) {
+                                                                       final Locale locale) {
         return createMainDictionaryFromManager(context, locale, false /* useFullEditDistance */);
     }
 
     /**
      * Initializes a read-only binary dictionary from a raw resource file
+     *
      * @param context application context for reading resources
-     * @param locale the locale to use for the resource
+     * @param locale  the locale to use for the resource
      * @return an initialized instance of ReadOnlyBinaryDictionary
      */
     protected static ReadOnlyBinaryDictionary createReadOnlyBinaryDictionary(final Context context,
-            final Locale locale) {
+                                                                             final Locale locale) {
         AssetFileDescriptor afd = null;
         try {
             final int resId = DictionaryInfoUtils.getMainDictionaryResourceIdIfAvailableForLocale(
@@ -182,13 +186,14 @@ public final class DictionaryFactory {
 
     /**
      * Create a dictionary from passed data. This is intended for unit tests only.
-     * @param dictionaryList the list of files to read, with their offsets and lengths
+     *
+     * @param dictionaryList      the list of files to read, with their offsets and lengths
      * @param useFullEditDistance whether to use the full edit distance in suggestions
      * @return the created dictionary, or null.
      */
     @UsedForTesting
     public static Dictionary createDictionaryForTest(final AssetFileAddress[] dictionaryList,
-            final boolean useFullEditDistance, Locale locale) {
+                                                     final boolean useFullEditDistance, Locale locale) {
         final DictionaryCollection dictionaryCollection =
                 new DictionaryCollection(Dictionary.TYPE_MAIN);
         for (final AssetFileAddress address : dictionaryList) {
@@ -202,8 +207,9 @@ public final class DictionaryFactory {
 
     /**
      * Find out whether a dictionary is available for this locale.
+     *
      * @param context the context on which to check resources.
-     * @param locale the locale to check for.
+     * @param locale  the locale to check for.
      * @return whether a (non-placeholder) dictionary is available or not.
      */
     public static boolean isDictionaryAvailable(Context context, Locale locale) {

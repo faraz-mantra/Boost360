@@ -1,64 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_marginTop="@dimen/margin_5"
+    android:orientation="horizontal">
+
+    <CheckBox
+      android:id="@+id/cbUpdate"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/margin_5"
+      android:button="@drawable/ca_checkbox_bg" />
 
     <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/margin_10"
+      android:layout_marginTop="@dimen/margin_3"
+      android:orientation="vertical">
+
+      <TextView
+        android:id="@+id/tvUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-light"
+        android:maxLines="3"
+        android:textColor="#80000000"
+        android:textSize="12sp"
+        tools:ignore="MissingPrefix" />
+
+      <TextView
+        android:id="@+id/tvViewMore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_5"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/cbUpdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_5"
-            android:button="@drawable/ca_checkbox_bg" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_10"
-            android:layout_marginTop="@dimen/margin_3"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvUpdate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="sans-serif-light"
-                android:maxLines="3"
-                android:textColor="#80000000"
-                android:textSize="12sp"
-                tools:ignore="MissingPrefix" />
-
-            <TextView
-                android:id="@+id/tvViewMore"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_5"
-                android:fontFamily="sans-serif-light"
-                android:gravity="bottom|right"
-                android:lineSpacingExtra="5dp"
-                android:text="@string/view_more"
-                android:textColor="#80000000"
-                android:textSize="12sp"
-                android:textStyle="italic"
-                tools:ignore="MissingPrefix" />
+        android:fontFamily="sans-serif-light"
+        android:gravity="bottom|right"
+        android:lineSpacingExtra="5dp"
+        android:text="@string/view_more"
+        android:textColor="#80000000"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        tools:ignore="MissingPrefix" />
 
 
-        </LinearLayout>
     </LinearLayout>
+  </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/margin_10"
-        android:background="#9E9E9E" />
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="0.5dp"
+    android:layout_gravity="center"
+    android:layout_marginTop="@dimen/margin_10"
+    android:background="#9E9E9E" />
 </LinearLayout>

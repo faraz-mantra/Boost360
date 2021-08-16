@@ -48,8 +48,9 @@ public class AccountUtils {
 
     /**
      * Get all device accounts having specified domain name.
+     *
      * @param context application context
-     * @param domain domain name used for filtering
+     * @param domain  domain name used for filtering
      * @return List of account names that contain the specified domain name
      */
     public static List<String> getDeviceAccountsWithDomain(

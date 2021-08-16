@@ -68,7 +68,9 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-              <include layout="@layout/item_card_channel" />
+              <include
+                android:id="@+id/item_channels_group"
+                layout="@layout/item_card_channel" />
             </LinearLayout>
           </LinearLayout>
 
@@ -120,7 +122,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:background="@color/white"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="fitCenter" />
                 </com.framework.views.customViews.CustomCardView>
 
               </com.framework.views.customViews.CustomCardView>
@@ -211,12 +213,12 @@
                   android:ellipsize="end"
                   android:gravity="center_vertical"
                   android:maxLines="1"
-                  app:fontFamily="@font/semi_bold"
                   android:textColor="@color/white"
                   app:autoSizeMaxTextSize="11sp"
                   app:autoSizeMinTextSize="6sp"
                   app:autoSizeStepGranularity="1sp"
                   app:autoSizeTextType="uniform"
+                  app:fontFamily="@font/semi_bold"
                   tools:text="https://plastoindiaandpolymers.com" />
               </LinearLayout>
             </LinearLayout>

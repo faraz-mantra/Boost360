@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <item name="startGuide" type="id" />
+  <item name="endGuide" type="id" />
+  <item name="bottomGuide" type="id" />
+</resources>

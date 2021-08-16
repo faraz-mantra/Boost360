@@ -50,6 +50,7 @@ public class ManageContentFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        WebEngageController.trackEvent(EVENT_NAME_MANAGE_CONTENT, PAGE_VIEW, EVENT_VALUE_MANAGE_CONTENT);
         return inflater.inflate(R.layout.fragment_upgrade, container, false);
     }
 
@@ -63,7 +64,7 @@ public class ManageContentFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded()) return;
-        WebEngageController.trackEvent(EVENT_NAME_MANAGE_CONTENT, PAGE_VIEW, EVENT_VALUE_MANAGE_CONTENT);
+
         UserSessionManager session = new UserSessionManager(getContext(), getActivity());
         String experience_code = session.getFP_AppExperienceCode();
 
@@ -103,11 +104,11 @@ public class ManageContentFragment extends Fragment {
             Intent intent = null;
             switch (pos) {
                 case 0:
-                    WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE , MANAGE_CONTENT, session.getFpTag());
+                    WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE, MANAGE_CONTENT, session.getFpTag());
                     intent = new Intent(mContext, ProductCatalogActivity.class);
                     break;
                 case 1:
-                    AppFragmentContainerActivity.startFragmentAppActivity(getActivity(), UPDATE_LATEST_STORY_VIEW, new Bundle(), false);
+//                    AppFragmentContainerActivity.startFragmentAppActivity(getActivity(), UPDATE_LATEST_STORY_VIEW, new Bundle(), false);
 //                        ((SidePanelFragment.OnItemClickListener) mContext).onClick(getString(R.string.update));
                     return;
                 case 2:

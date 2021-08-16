@@ -23,9 +23,9 @@ public class WebActionUpdateRequestModel {
 
     public WebActionUpdateRequestModel(IFilter filter, IUpdate update) {
         this.query = filter.toQuery().toString();
-        if(update == null){
+        if (update == null) {
             this.updateValue = null;
-        }else {
+        } else {
             this.updateValue = update.toUpdateString().toString();
         }
 

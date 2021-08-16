@@ -49,14 +49,14 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 public class DigitalBrochuresActivity extends AppCompatActivity implements DigitalBrochuresListener {
 
-    private ProgressDialog progressDialog;
-    public UserSessionManager session;
     public static TextView headerText;
+    public UserSessionManager session;
     RelativeLayout emptyLayout;
     RecyclerView recyclerView;
     List<Data> dataList;
     DigitalBrochuresAdapter adapter;
     TextView buyButton;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,7 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
         //setheader
         setHeader();
 
-        if (Constants.StoreWidgets.contains("BROCHURE")) {
+        if (session.getStoreWidgets().contains("BROCHURE")) {
             recyclerView.setVisibility(View.VISIBLE);
             emptyLayout.setVisibility(View.GONE);
         } else {
@@ -97,7 +97,7 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
     @Override
     protected void onResume() {
         super.onResume();
-        if (Constants.StoreWidgets.contains("BROCHURE")) {
+        if (session.getStoreWidgets().contains("BROCHURE")) {
             if (Utils.isNetworkConnected(DigitalBrochuresActivity.this)) {
                 loadData();
             } else {

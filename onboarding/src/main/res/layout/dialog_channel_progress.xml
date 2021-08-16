@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/size_100"
-      android:gravity="center"
-      android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_100"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <com.framework.views.customViews.CustomCardView
-        android:layout_width="@dimen/size_52"
-        android:layout_height="@dimen/size_52"
-        android:layout_margin="@dimen/size_4"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/size_26">
+      android:layout_width="@dimen/size_52"
+      android:layout_height="@dimen/size_52"
+      android:layout_margin="@dimen/size_4"
+      app:cardBackgroundColor="@color/white"
+      app:cardCornerRadius="@dimen/size_26">
 
       <com.framework.views.customViews.CustomImageView
-          android:layout_width="@dimen/size_28"
-          android:layout_height="@dimen/size_28"
-          android:layout_gravity="center"
-          app:srcCompat="@drawable/ic_social_sync" />
+        android:layout_width="@dimen/size_28"
+        android:layout_height="@dimen/size_28"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_social_sync" />
     </com.framework.views.customViews.CustomCardView>
 
     <com.framework.views.customViews.CustomTextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_2"
-        android:layout_marginTop="@dimen/size_8"
-        android:text="@string/refreshing_your_channels"
-        android:textColor="@color/white"
-        app:fontFamily="@font/regular"
-        app:textType="HEADING_6"
-        tools:textColor="@color/greyish_brown" />
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_2"
+      android:layout_marginTop="@dimen/size_8"
+      android:text="@string/refreshing_your_channels"
+      android:textColor="@color/white"
+      app:fontFamily="@font/regular"
+      app:textType="HEADING_6"
+      tools:textColor="@color/greyish_brown" />
 
 
   </androidx.appcompat.widget.LinearLayoutCompat>

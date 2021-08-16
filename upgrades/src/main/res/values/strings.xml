@@ -1,57 +1,62 @@
 <resources>
-    <string name="app_name">Upgrades</string>
+  <string name="app_name">Upgrades</string>
 
-    <string name="errorMessage">Check Internet Connection</string>
+  <string name="errorMessage">Check Internet Connection</string>
 
-    <!-- Common Error -->
-    <string name="no_internet">Internet is not available. Please check your data/wifi connection</string>
-    <string name="exception">Something went wrong. Please try again</string>
-    <string name="addons_description"><![CDATA[75 leads (Rs.266.67 effective lead cost) from the campaigns run by us. Lead ads are the best way to run lead generation campaigns on Facebook. Lead ads let people show their interest in a product or service by filling out a form in the ad with their details and allowing a business to follow up with them. Facebook lead ad is the expression of interest of user where they give consent to the advertiser to contact them for the particular product and service, it should not be taken as the sale of product or service, ultimate responsibility of selling and pitching the product & service is with Advertiser only.]]></string>
-    <string name="read_less">Read Less..</string>
-    <string name="read_more">Read More..</string>
-    <string name="information">Information ...</string>
-    <string name="the_luxury_of_traveling_with_yacht_charter_companies">The luxury of traveling with yacht charter companies.</string>
-    <string name="learn_why_running_a_facebook_ad_campaign_is_always_a_good_idea">Learn why running a facebook ad campaign is always a good idea.</string>
-    <string name="add_for_99_month">Add for ₹99/Month</string>
-    <string name="_90_off">90% OFF</string>
-    <string name="original_cost_799_month">Original cost ₹799/month</string>
-    <string name="add_now_for_99_month">₹99/month</string>
-    <string name="_262">262</string>
-    <string name="_262_businesses_have_added_this">40k+ businesses have added this</string>
-    <string name="facebook_lead_ads_upto_75_leads">Facebook Lead Ads (upto 75 leads)</string>
-    <string name="marketing">Marketing</string>
-    <string name="view_my_add_ons">View my add-ons</string>
-    <string name="added_to_cart">ADDED TO CART</string>
-    <string name="feature_coming_soon">Coming Soon: View all your previous orders. In case of a concern please write to ria@nowfloats.com</string>
-    <string name="referral_text_1">Hey, Check out Boost360. I have been using to run my business online. http://bit.ly/ApporWeb?ref=</string>
-    <string name="referral_text_2">Hey, Check out Boost360, I use it to run my business online. http://bit.ly/ApporWeb?ref=</string>
-    <string name="upgrade_boost_tnc_link">Read Boost360 TnC</string>
-    <string name="referral_card_explainer_text">and get a Premium Chatbot on your website for a month absolutely FREE</string>
-    <string name="failed_local_storage_message">Failed to download all premium add-ons to your local storage. We recommend you to un-install &amp; re-install the Boost App.\n\nIf the issue persists, please do write to ria@nowflaots.com</string>
-    <string name="whatsapp_package" translatable="false">com.whatsapp</string>
-    <string name="_10_digit_mobile_number">10 digit mobile number</string>
-    <string name="username">Registered Email or Username</string>
-    <string name="apply_coupon">Apply coupon</string>
-    <string name="discount_coupon">Discount coupon</string>
-    <string name="auto_renew_message"><b>Auto Renewal is ON </b></string>
-    <string name="auto_renewal_date">Your next auto-renewal date will be %1$s. You can disable auto renewal of any feature/package at anytime.</string>
-    <string name="auto_next_renewal_date">Your next auto-renewal date will be %1$s.</string>
-    <string name="radio_auto_renew"><b>Auto-renew (using credit card)</b>\n<font color='#747474'>Your next auto-renewal date will be %1$s. You can disable auto renewal of any feature/package at anytime. </font></string>
-    <string name="radio_remind_me">Your next auto-renewal date will be %1$s.</string>
+  <!-- Common Error -->
+  <string name="no_internet">Internet is not available. Please check your data/wifi connection</string>
+  <string name="exception">Something went wrong. Please try again</string>
+  <string name="addons_description"><![CDATA[75 leads (Rs.266.67 effective lead cost) from the campaigns run by us. Lead ads are the best way to run lead generation campaigns on Facebook. Lead ads let people show their interest in a product or service by filling out a form in the ad with their details and allowing a business to follow up with them. Facebook lead ad is the expression of interest of user where they give consent to the advertiser to contact them for the particular product and service, it should not be taken as the sale of product or service, ultimate responsibility of selling and pitching the product & service is with Advertiser only.]]></string>
+  <string name="read_less">Read Less..</string>
+  <string name="read_more">Read More..</string>
+  <string name="information">Information ...</string>
+  <string name="the_luxury_of_traveling_with_yacht_charter_companies">The luxury of traveling with yacht charter companies.</string>
+  <string name="learn_why_running_a_facebook_ad_campaign_is_always_a_good_idea">Learn why running a facebook ad campaign is always a good idea.</string>
+  <string name="add_for_99_month">Add for ₹99/Month</string>
+  <string name="_90_off">90% OFF</string>
+  <string name="original_cost_799_month">Original cost ₹799/month</string>
+  <string name="add_now_for_99_month">₹99/month</string>
+  <string name="_262">262</string>
+  <string name="_262_businesses_have_added_this">40k+ businesses have added this</string>
+  <string name="facebook_lead_ads_upto_75_leads">Facebook Lead Ads (upto 75 leads)</string>
+  <string name="marketing">Marketing</string>
+  <string name="view_my_add_ons">View my add-ons</string>
+  <string name="added_to_cart">ADDED TO CART</string>
+  <string name="feature_coming_soon">Coming Soon: View all your previous orders. In case of a concern please write to ria@nowfloats.com</string>
+  <string name="referral_text_1">Hey, Check out Boost360. I have been using to run my business online. http://bit.ly/ApporWeb?ref=</string>
+  <string name="referral_text_2">Hey, Check out Boost360, I use it to run my business online. http://bit.ly/ApporWeb?ref=</string>
+  <string name="upgrade_boost_tnc_link">Read Boost360 TnC</string>
+  <string name="referral_card_explainer_text">and get a Premium Chatbot on your website for a month absolutely FREE</string>
+  <string name="failed_local_storage_message">Failed to download all premium add-ons to your local storage. We recommend you to un-install &amp; re-install the Boost App.\n\nIf the issue persists, please do write to ria@nowflaots.com</string>
+  <string name="whatsapp_package" translatable="false">com.whatsapp</string>
+  <string name="_10_digit_mobile_number">10 digit mobile number</string>
+  <string name="username">Registered Email or Username</string>
+  <string name="apply_coupon">Apply coupon</string>
+  <string name="discount_coupon">Discount coupon</string>
+  <string name="auto_renew_message"><b>Auto Renewal is ON </b></string>
+  <string name="auto_renewal_date">Your next auto-renewal date will be %1$s. You can disable auto renewal of any feature/package at anytime.</string>
+  <string name="auto_next_renewal_date">Your next auto-renewal date will be %1$s.</string>
+  <string name="radio_auto_renew"><b>Auto-renew (using credit card)</b>\n<font color='#747474'>Your next auto-renewal date will be %1$s. You can disable auto renewal of any feature/package at anytime. </font></string>
+  <string name="radio_remind_me">Your next auto-renewal date will be %1$s.</string>
 
-    <string-array name="order_status">
-        <item>Cart</item>
-        <item>Payment</item>
-        <item>Done</item>
-    </string-array>
+  <string-array name="order_status">
+    <item>Cart</item>
+    <item>Payment</item>
+    <item>Done</item>
+  </string-array>
 
-    <string name="marketoffer_howtoOne">Open the boost app/website/mobile-web, search for packs and choose your preferred <b>packs/addon</b>.<br/></string>
-    <string name="marketoffer_howtoTwo">Apply coupon code: <b> %1$s </b> at the time of checkout your plans/packages.<br/></string>
-    <string name="marketoffer_howtoThree">You will get %1$s instant off on your purchase<br/></string>
-    <string name="marketoffer_termOne">You must apply coupon code: <b> %1$s </b> at the time of checkout to get 20 off instantly.<br/></string>
-    <string name="marketoffer_termTwo">This offer is valid only for your first ever transaction of the month on boost.<br/></string>
-    <string name="marketoffer_termThree">The instant discount will be applied before you proceed to pay.<br/></string>
-    <string name="marketoffer_termFour">This coupon code is valid for one-time use only.<br/></string>
-    <string name="marketoffer_termFive">There is no minimum cart amount to avail this offer.<br/></string>
-    <string name="marketoffer_termSix">Offer valid from %1$s - %2$s.For more information regarding money click here.<br/></string>
+  <string name="marketoffer_howtoOne">Open the boost app/website/mobile-web, search for packs and choose your preferred <b>packs/addon</b>.<br /></string>
+  <string name="marketoffer_howtoTwo">Apply coupon code: <b> %1$s </b> at the time of checkout your plans/packages.<br /></string>
+  <string name="marketoffer_howtoThree">You will get %1$s instant off on your purchase<br /></string>
+  <string name="marketoffer_termOne">You must apply coupon code: <b> %1$s </b> at the time of checkout to get 20 off instantly.<br /></string>
+  <string name="marketoffer_termTwo">This offer is valid only for your first ever transaction of the month on boost.<br /></string>
+  <string name="marketoffer_termThree">The instant discount will be applied before you proceed to pay.<br /></string>
+  <string name="marketoffer_termFour">This coupon code is valid for one-time use only.<br /></string>
+  <string name="marketoffer_termFive">There is no minimum cart amount to avail this offer.<br /></string>
+  <string name="marketoffer_termSix">Offer valid from %1$s - %2$s.For more information regarding money click here.<br /></string>
+
+  <string name="enter_gstin_number">Enter your GSTIN</string>
+  <string name="enter_business_name">Enter your Business name</string>
+  <string name="enter_email">Enter email address</string>
+  <string name="enter_business_address">Enter your business address</string>
 </resources>

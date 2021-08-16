@@ -12,9 +12,9 @@ import com.inventoryorder.holders.*
 
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
-    activity: BaseActivity<*, *>,
-    list: ArrayList<T>,
-    itemClickListener: RecyclerItemClickListener? = null,
+  activity: BaseActivity<*, *>,
+  list: ArrayList<T>,
+  itemClickListener: RecyclerItemClickListener? = null,
 ) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
 
   override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*> {
@@ -50,10 +50,15 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       ORDER_MENU_ITEM -> OrderMenuHolder(binding as ItemOrderMenuBinding)
       STAFF_ITEM -> StaffItemViewHolder(binding as StaffItemBinding)
       SLOTS_ITEM -> SlotsItemViewHolder(binding as ItemTimeSlotAppointmentBinding)
+      ITEM_FAQ -> FaqViewHolder(binding as ItemFaqBinding)
+      ITEM_VIDEO -> VideoListViewHolder(binding as RecyclerItemListVideosBinding)
     }
   }
 
-  fun runLayoutAnimation(recyclerView: RecyclerView?, anim: Int = R.anim.layout_animation_fall_down) = recyclerView?.apply {
+  fun runLayoutAnimation(
+    recyclerView: RecyclerView?,
+    anim: Int = R.anim.layout_animation_fall_down
+  ) = recyclerView?.apply {
     layoutAnimation = AnimationUtils.loadLayoutAnimation(context, anim)
     notifyDataSetChanged()
     scheduleLayoutAnimation()
@@ -61,7 +66,9 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
 
   override fun getItemViewType(position: Int): Int {
     return if (isLoaderVisible) {
-      return if (position == list.size - 1) PAGINATION_LOADER.getLayout() else super.getItemViewType(position)
+      return if (position == list.size - 1) PAGINATION_LOADER.getLayout() else super.getItemViewType(
+        position
+      )
     } else super.getItemViewType(position)
   }
 

@@ -1,13 +1,13 @@
 {
   "data": [
-//    {
-//      "isBottomLineShow": false,
-//      "isLockShow": false,
-//      "isNewBtnShow": false,
-//      "isUpLineShow": true,
-//      "navType": "NAV_HOME",
-//      "title": "Home"
-//    },
+    //    {
+    //      "isBottomLineShow": false,
+    //      "isLockShow": false,
+    //      "isNewBtnShow": false,
+    //      "isUpLineShow": true,
+    //      "navType": "NAV_HOME",
+    //      "title": "Home"
+    //    },
     {
       "isBottomLineShow": false,
       "isLockShow": false,
@@ -16,55 +16,55 @@
       "navType": "NAV_DIGITAL_CHANNEL",
       "title": "My Digital Channels"
     },
-//    {
-//      "isBottomLineShow": true,
-//      "isLockShow": false,
-//      "isNewBtnShow": false,
-//      "isUpLineShow": true,
-//      "navType": "NAV_MANAGE_CONTENT",
-//      "title": "Manage Content"
-//    },
-//    {
-//      "isBottomLineShow": false,
-//      "isLockShow": true,
-//      "isNewBtnShow": false,
-//      "isUpLineShow": false,
-//      "navType": "NAV_CALLS",
-//      "title": "Calls"
-//    },
-//    {
-//      "isBottomLineShow": false,
-//      "isLockShow": false,
-//      "isNewBtnShow": false,
-//      "isUpLineShow": false,
-//      "navType": "NAV_ENQUIRY",
-//      "title": "Enquiries"
-//    },
-//    {
-//      "isBottomLineShow": false,
-//      "isLockShow": false,
-//      "isNewBtnShow": false,
-//      "isUpLineShow": false,
-//      "navType": "NAV_ORDER_APT_BOOKING",
-//      "title": "Orders"
-//    },
-//    {
-//      "isBottomLineShow": false,
-//      "isLockShow": false,
-//      "isNewBtnShow": false,
-//      "isUpLineShow": false,
-//      "navType": "NAV_NEWS_LETTER_SUB",
-//      "title": "Newsletter Subscriptions"
-//    },
-//    {
-//      "isBottomLineShow": false,
-//      "isLockShow": false,
-//      "isNewBtnShow": true,
-//      "isUpLineShow": true,
-//      "navType": "NAV_ADD_ONS_MARKET",
-//      "newBtnText": "New",
-//      "title": "Add-Ons Marketplace"
-//    },
+    //    {
+    //      "isBottomLineShow": true,
+    //      "isLockShow": false,
+    //      "isNewBtnShow": false,
+    //      "isUpLineShow": true,
+    //      "navType": "NAV_MANAGE_CONTENT",
+    //      "title": "Manage Content"
+    //    },
+    //    {
+    //      "isBottomLineShow": false,
+    //      "isLockShow": true,
+    //      "isNewBtnShow": false,
+    //      "isUpLineShow": false,
+    //      "navType": "NAV_CALLS",
+    //      "title": "Calls"
+    //    },
+    //    {
+    //      "isBottomLineShow": false,
+    //      "isLockShow": false,
+    //      "isNewBtnShow": false,
+    //      "isUpLineShow": false,
+    //      "navType": "NAV_ENQUIRY",
+    //      "title": "Enquiries"
+    //    },
+    //    {
+    //      "isBottomLineShow": false,
+    //      "isLockShow": false,
+    //      "isNewBtnShow": false,
+    //      "isUpLineShow": false,
+    //      "navType": "NAV_ORDER_APT_BOOKING",
+    //      "title": "Orders"
+    //    },
+    //    {
+    //      "isBottomLineShow": false,
+    //      "isLockShow": false,
+    //      "isNewBtnShow": false,
+    //      "isUpLineShow": false,
+    //      "navType": "NAV_NEWS_LETTER_SUB",
+    //      "title": "Newsletter Subscriptions"
+    //    },
+    //    {
+    //      "isBottomLineShow": false,
+    //      "isLockShow": false,
+    //      "isNewBtnShow": true,
+    //      "isUpLineShow": true,
+    //      "navType": "NAV_ADD_ONS_MARKET",
+    //      "newBtnText": "New",
+    //      "title": "Add-Ons Marketplace"
+    //    },
     {
       "isBottomLineShow": true,
       "isLockShow": true,

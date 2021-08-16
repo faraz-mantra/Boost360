@@ -40,9 +40,9 @@ import io.codetail.widget.RevealFrameLayout;
  * A simple {@link Fragment} subclass.
  */
 public class ManageCustomerFragment extends Fragment implements View.OnClickListener {
-    private SharedPreferences pref = null;
     UserSessionManager session;
     SharedPreferences.Editor prefsEditor;
+    private SharedPreferences pref = null;
     private Activity activity;
     private RevealFrameLayout overLayout1, overLayout2;
     private Context mContext;

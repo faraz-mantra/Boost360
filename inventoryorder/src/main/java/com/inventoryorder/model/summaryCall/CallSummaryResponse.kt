@@ -12,12 +12,12 @@ const val CALL_BUSINESS_REPORT = "CALL_BUSINESS_REPORT"
 const val CALL_MY_ENQUIRIES = "CALL_MY_ENQUIRIES"
 
 data class CallSummaryResponse(
-    @SerializedName("MissedCalls")
-    var missedCalls: Int? = null,
-    @SerializedName("ReceivedCalls")
-    var receivedCalls: Int? = null,
-    @SerializedName("TotalCalls")
-    var totalCalls: Int? = null,
+  @SerializedName("MissedCalls")
+  var missedCalls: Int? = null,
+  @SerializedName("ReceivedCalls")
+  var receivedCalls: Int? = null,
+  @SerializedName("TotalCalls")
+  var totalCalls: Int? = null,
 ) : BaseResponse(), Serializable {
 
   fun getTotalCalls(): String {

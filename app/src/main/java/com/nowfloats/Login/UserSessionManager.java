@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
-import com.boost.presignup.PreSignUpActivity;
+import com.boost.presignin.ui.intro.IntroActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.Graph.database.SaveDataCounts;
@@ -27,8 +27,8 @@ import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
-import com.webengage.sdk.android.WebEngage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,45 +49,36 @@ import static com.nowfloats.util.Key_Preferences.MAIN_PRIMARY_CONTACT_NUM;
 public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Interface {
 
 
-    // Shared Preferences reference
-    SharedPreferences pref;
-
-    // Editor reference for Shared preferences
-    SharedPreferences.Editor editor;
-
-    //Search_Queries_Enterprise_API searchQueriesEnterpriseAPI ;
-
-    // Context
-    Context _context;
-
-    // Shared pref mode
-    int PRIVATE_MODE = 0;
-
-    // Sharedpref file name
-//    private static final String PREFER_NAME = "AndroidExamplePref";
-
-    // All Shared Preferences Keys
-    private static final String IS_USER_LOGIN = "IsUserLoggedIn";
-
     // User name (make variable public to access from outside)
     public static final String KEY_NAME = "name";
-
     // Email address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
 
+    //Search_Queries_Enterprise_API searchQueriesEnterpriseAPI ;
     public static final String KEY_FP_ID = "fpid";
+    public static final String KEY_FP_Details = "fpdetails";
 
+    // Sharedpref file name
+//    private static final String PREFER_NAME = "AndroidExamplePref";
+    // All Shared Preferences Keys
+    private static final String IS_USER_LOGIN = "IsUserLoggedIn";
+    private static final String KEY_FP_Messages = "fpmessages";
+    private static final String KEY_GALLLERY_IMAGES = "gallery";
     private final String PROFILE_ID = "user_profile_id";
     private final String PROFILE_EMAIL = "user_profile_email";
     private final String PROFILE_NUMBER = "user_profile_mobile";
     private final String PROFILE_NAME = "user_profile_name";
-
-    public static final String KEY_FP_Details = "fpdetails";
-    private Activity activity;
-    private static final String KEY_FP_Messages = "fpmessages";
-    private static final String KEY_GALLLERY_IMAGES = "gallery";
+    // Shared Preferences reference
+    SharedPreferences pref;
+    // Editor reference for Shared preferences
+    SharedPreferences.Editor editor;
+    // Context
+    Context _context;
+    // Shared pref mode
+    int PRIVATE_MODE = 0;
     Fetch_Home_Data fetch_home_data;
     ProgressDialog pd = null;
+    private Activity activity;
     private String KEY_FP_NAME = "fpname";
     private String KEY_sourceClientId = "source_clientid";
     private String KEY_Visit_Count = "visitCount";
@@ -171,17 +162,12 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.commit();
     }
 
-    public void setUserProfileId(String profileId) {
-        editor.putString(PROFILE_ID, profileId);
-        editor.commit();
-    }
-
     public String getUserProfileId() {
         return pref.getString(PROFILE_ID, null);
     }
 
-    public void setUserProfileEmail(String email) {
-        editor.putString(PROFILE_EMAIL, email);
+    public void setUserProfileId(String profileId) {
+        editor.putString(PROFILE_ID, profileId);
         editor.commit();
     }
 
@@ -189,8 +175,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(PROFILE_EMAIL, null);
     }
 
-    public void setUserProfileMobile(String mobile) {
-        editor.putString(PROFILE_NUMBER, mobile);
+    public void setUserProfileEmail(String email) {
+        editor.putString(PROFILE_EMAIL, email);
         editor.commit();
     }
 
@@ -198,18 +184,22 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(PROFILE_NUMBER, null);
     }
 
+    public void setUserProfileMobile(String mobile) {
+        editor.putString(PROFILE_NUMBER, mobile);
+        editor.commit();
+    }
+
     public String getUserPrimaryMobile() {
         return pref.getString(MAIN_PRIMARY_CONTACT_NUM, "");
     }
 
+    public String getUserProfileName() {
+        return pref.getString(PROFILE_NAME, null);
+    }
 
     public void setUserProfileName(String name) {
         editor.putString(PROFILE_NAME, name);
         editor.commit();
-    }
-
-    public String getUserProfileName() {
-        return pref.getString(PROFILE_NAME, null);
     }
 
     public void setUserLogin(boolean val) {
@@ -225,9 +215,17 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(KEY_WEB_TEMPLATE_TYPE, null);
     }
 
+    public String getVisitsCount() {
+        return pref.getString(KEY_Visit_Count, "");
+    }
+
     public void setVisitsCount(String cnt) {
         editor.putString(KEY_Visit_Count, cnt);
         editor.commit();
+    }
+
+    public String getVisitorsCount() {
+        return pref.getString(KEY_Visitors_Count, "");
     }
 
     public void setVisitorsCount(String cnt) {
@@ -235,12 +233,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.commit();
     }
 
-    public String getVisitsCount() {
-        return pref.getString(KEY_Visit_Count, "");
-    }
+    public String getSubcribersCount() {
 
-    public String getVisitorsCount() {
-        return pref.getString(KEY_Visitors_Count, "");
+        return pref.getString(KEY_Subcribers_Count, "");
     }
 
     public void setSubcribersCount(String cnt) {
@@ -248,10 +243,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.commit();
     }
 
-
-    public String getSubcribersCount() {
-
-        return pref.getString(KEY_Subcribers_Count, "");
+    public String getSearchCount() {
+        return pref.getString(KEY_Search_Count, "");
     }
 
     public void setSearchCount(String cnt) {
@@ -259,8 +252,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.apply();
     }
 
-    public String getSearchCount() {
-        return pref.getString(KEY_Search_Count, "");
+    public String getEnquiryCount() {
+        return pref.getString(KEY_Enq_Count, "");
     }
 
     public void setEnquiryCount(String count) {
@@ -268,8 +261,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.apply();
     }
 
-    public String getEnquiryCount() {
-        return pref.getString(KEY_Enq_Count, "");
+    public String getOrderCount() {
+        return pref.getString(KEY_Order_Count, "");
     }
 
     public void setOrderCount(String count) {
@@ -277,8 +270,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.apply();
     }
 
-    public String getOrderCount() {
-        return pref.getString(KEY_Order_Count, "");
+    public String getMapVisitsCount() {
+        return pref.getString(KEY_Map_Visits_Count, "");
     }
 
     public void setMapVisitsCount(String count) {
@@ -286,8 +279,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.apply();
     }
 
-    public String getMapVisitsCount() {
-        return pref.getString(KEY_Map_Visits_Count, "");
+    public String getVmnCallsCount() {
+        return pref.getString(KEY_Call_Count, "");
     }
 
     public void setVmnCallsCount(String count) {
@@ -295,22 +288,12 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.apply();
     }
 
-    public String getVmnCallsCount() {
-        return pref.getString(KEY_Call_Count, "");
-    }
-
-    public void setLatestEnqCount(String count) {
-        editor.putString(KEY_LATEST_ENQ_COUNT, count);
-        editor.apply();
-    }
-
     public String getLatestEnqCount() {
         return pref.getString(KEY_LATEST_ENQ_COUNT, "0");
     }
 
-
-    public void setLocalStorePurchase(String cnt) {
-        editor.putString(KEY_LS, cnt);
+    public void setLatestEnqCount(String count) {
+        editor.putString(KEY_LATEST_ENQ_COUNT, count);
         editor.apply();
     }
 
@@ -323,8 +306,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(KEY_LS, "");
     }
 
-    public void setWebsiteshare(boolean cnt) {
-        editor.putBoolean(Key_Preferences.WEBSITE_SHARE, cnt);
+    public void setLocalStorePurchase(String cnt) {
+        editor.putString(KEY_LS, cnt);
         editor.apply();
     }
 
@@ -332,13 +315,18 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getBoolean(Key_Preferences.WEBSITE_SHARE, false);
     }
 
-    public void setBusinessHours(boolean cnt) {
-        editor.putBoolean(KEY_BUSINESS_HOURS, cnt);
+    public void setWebsiteshare(boolean cnt) {
+        editor.putBoolean(Key_Preferences.WEBSITE_SHARE, cnt);
         editor.apply();
     }
 
     public Boolean getBusinessHours() {
         return pref.getBoolean(KEY_BUSINESS_HOURS, false);
+    }
+
+    public void setBusinessHours(boolean cnt) {
+        editor.putBoolean(KEY_BUSINESS_HOURS, cnt);
+        editor.apply();
     }
 
     public void setSignUpFromFacebook(String isSignUpFromFacebook) {
@@ -699,13 +687,13 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getBoolean(IS_SELF_BRANDED_KYC_ADD, false);
     }
 
+    public Boolean getAccountSave() {
+        return pref.getBoolean(IS_ACCOUNT_SAVE, false);
+    }
+
     public void setAccountSave(Boolean b) {
         editor.putBoolean(IS_ACCOUNT_SAVE, b);
         editor.apply();
-    }
-
-    public Boolean getAccountSave() {
-        return pref.getBoolean(IS_ACCOUNT_SAVE, false);
     }
 
     public void storeFacebookProfileDescription(String description) {
@@ -765,7 +753,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public List<String> getStoreWidgets() {
         String str = pref.getString(Key_Preferences.STORE_WIDGETS, "");
         if (TextUtils.isEmpty(str)) return new ArrayList();
-        return new Gson().fromJson(str, new TypeToken<List<String>>() {}.getType());
+        return new Gson().fromJson(str, new TypeToken<List<String>>() {
+        }.getType());
     }
 
     public boolean isBoostBubbleEnabled() {
@@ -792,16 +781,16 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         pref.edit().putBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, flag).apply();
     }
 
-    public void setBubbleTime(long time) {
-        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, time).apply();
-    }
-
     public void setBubbleShareProducts(boolean flag) {
         pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, flag).apply();
     }
 
     public Long getBubbleTime() {
         return pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, 0);
+    }
+
+    public void setBubbleTime(long time) {
+        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, time).apply();
     }
 
     public void storeGalleryImages(String imagePath) {
@@ -986,6 +975,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     private void processUserSessionDataClear() {
         try {
+            WebEngageController.logout();
+            AnaCore.logoutUser(activity);
             setUserLogin(false);
             DataBase db = new DataBase(activity);
             DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
@@ -994,8 +985,6 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
             activity.getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE).edit().clear().apply();
             activity.getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().clear().apply();
 
-            WebEngage.get().user().logout();
-            AnaCore.logoutUser(activity);
             AppController.getInstance().clearApplicationData();
             Date date = new Date(System.currentTimeMillis());
             String dateString = date.toString();
@@ -1028,13 +1017,13 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
                 _context.deleteDatabase("updates_db");  //DELETE MARKETPLACE DB
             }
-            Intent i = new Intent(activity, PreSignUpActivity.class);
+            Intent i = new Intent(activity, IntroActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
             activity.startActivity(i);
             activity.overridePendingTransition(0, 0);
             activity.finish();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("USER_LOGOUT", e.getLocalizedMessage());
         }
     }
 
@@ -1079,36 +1068,35 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void sendFetched(FloatsMessageModel jsonObject) {
     }
 
-
-    public void setSiteHealth(int siteMeterTotalWeight) {
-        editor.putInt(Key_Preferences.SITE_HEALTH, siteMeterTotalWeight).apply();
-    }
-
     public int getSiteHealth() {
         return pref.getInt(Key_Preferences.SITE_HEALTH, 0);
     }
 
-    public void setProductsCount(int size) {
-        editor.putInt(Key_Preferences.PRODUCTS_COUNT, size).apply();
+    public void setSiteHealth(int siteMeterTotalWeight) {
+        editor.putInt(Key_Preferences.SITE_HEALTH, siteMeterTotalWeight).apply();
     }
 
     public int getProductsCount() {
         return pref.getInt(Key_Preferences.PRODUCTS_COUNT, 0);
     }
 
-    public void setOnBoardingStatus(boolean flag) {
-        editor.putBoolean(Key_Preferences.ON_BOARDING_STATUS, flag).apply();
+    public void setProductsCount(int size) {
+        editor.putInt(Key_Preferences.PRODUCTS_COUNT, size).apply();
     }
 
     public boolean getOnBoardingStatus() {
         return pref.getBoolean(Key_Preferences.ON_BOARDING_STATUS, false);
     }
 
-    public void setCustomPageCount(int size) {
-        editor.putInt(Key_Preferences.CUSTOM_PAGE, size).apply();
+    public void setOnBoardingStatus(boolean flag) {
+        editor.putBoolean(Key_Preferences.ON_BOARDING_STATUS, flag).apply();
     }
 
     public int getCustomPageCount() {
         return pref.getInt(Key_Preferences.CUSTOM_PAGE, 0);
+    }
+
+    public void setCustomPageCount(int size) {
+        editor.putInt(Key_Preferences.CUSTOM_PAGE, size).apply();
     }
 }

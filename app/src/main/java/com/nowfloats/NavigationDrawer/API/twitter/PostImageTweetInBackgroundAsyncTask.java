@@ -35,21 +35,21 @@ import javax.net.ssl.HostnameVerifier;
 public final class PostImageTweetInBackgroundAsyncTask extends
         AsyncTask<Void, String, String> {
 
-    private Activity appContext = null;
     ProgressDialog pd = null;
     String Username = null, Password = null;
-    private SharedPreferences prefs = null;
     String responseMessage = "";
     Boolean success = false;
     String clientIdConcatedWithQoutes = "\"" + Constants.clientId + "\"";
     int size = 0;
     SharedPreferences.Editor prefsEditor;
-    private String token, secretToken;
     String shareText = "";
     String id = null;
     String mesgUrl = null;
     String mTweetImage = null;
     UserSessionManager session;
+    private Activity appContext = null;
+    private SharedPreferences prefs = null;
+    private String token, secretToken;
 
     public PostImageTweetInBackgroundAsyncTask(Activity context, String shareText, String id, String path, UserSessionManager session) {
         this.appContext = context;
@@ -90,11 +90,11 @@ public final class PostImageTweetInBackgroundAsyncTask extends
 
         String tag = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
         String rootAliasUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-        String siteUrl = (rootAliasUri!=null && rootAliasUri!="" && rootAliasUri.length()>0)?rootAliasUri:("http://"+tag+".nowfloats.com");
+        String siteUrl = (rootAliasUri != null && rootAliasUri != "" && rootAliasUri.length() > 0) ? rootAliasUri : ("http://" + tag + ".nowfloats.com");
         String messageUrl = siteUrl + "/bizFloat/" + id;
         String shortUrl = shortUrl(messageUrl);
 
-        if(shortUrl==null || shortUrl=="" || shortUrl.length()==0){
+        if (shortUrl == null || shortUrl == "" || shortUrl.length() == 0) {
             shortUrl = messageUrl;
         }
 

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="50dp"
-    android:gravity="center">
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="fill_parent"
+  android:layout_height="50dp"
+  android:gravity="center">
 
-    <TextView
-        android:id="@+id/tab_textview"
-        android:fontFamily="sans-serif"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/alerts_text"
-        android:textColor="@color/lt_black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:ignore="MissingPrefix" />
+  <TextView
+    android:id="@+id/tab_textview"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fontFamily="sans-serif"
+    android:text="@string/alerts_text"
+    android:textColor="@color/lt_black"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    tools:ignore="MissingPrefix" />
 </LinearLayout>
 

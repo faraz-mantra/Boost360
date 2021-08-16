@@ -8,6 +8,7 @@ import android.os.Parcelable
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import com.framework.base.BaseActivity
+import java.io.Serializable
 
 class Navigator(private val activity: BaseActivity<*, *>) {
 
@@ -38,25 +39,27 @@ class Navigator(private val activity: BaseActivity<*, *>) {
     activity.startActivity(intent)
   }
 
-  fun getExtrasBundle(intent: Intent): Bundle {
+
+  fun getExtrasBundle(intent: Intent): Bundle? {
     return if (intent.hasExtra(EXTRA_ARGS)) intent.getBundleExtra(EXTRA_ARGS) else Bundle()
   }
 
-  fun startActivityForResult(intent: Intent?, requestCode: Int) {
-    activity.startActivityForResult(intent, requestCode)
-  }
-
-  fun startActivityForResult(activityClass: Class<out Activity?>, requestCode: Int, flags: Int) {
+  fun startActivityForResult(
+    activityClass: Class<out Activity?>,
+    requestCode: Int,
+    flags: Int? = null
+  ) {
     val intent = Intent(activity, activityClass)
-    intent.flags = flags
-    startActivityForResult(intent, requestCode)
+    flags?.let { intent.flags = it }
+    activity.startActivityForResult(intent, requestCode)
   }
 
   fun replaceFragment(@IdRes containerId: Int, fragment: Fragment, args: Bundle?) {
     if (args != null) fragment.arguments = args
-    val ft = fragment.activity!!.supportFragmentManager.beginTransaction().replace(containerId, fragment, null)
+    val ft = fragment.requireActivity().supportFragmentManager.beginTransaction()
+      .replace(containerId, fragment, null)
     ft.commit()
-    fragment.fragmentManager!!.executePendingTransactions()
+    fragment.requireFragmentManager().executePendingTransactions()
   }
 
   fun replaceFragment(containerId: Int, fragment: android.app.Fragment, args: Bundle?) {
@@ -77,7 +80,10 @@ class Navigator(private val activity: BaseActivity<*, *>) {
   }
 
   @JvmOverloads
-  fun clearBackStackAndStartNextActivity(activityClass: Class<out Activity?>, args: Bundle? = null) {
+  fun clearBackStackAndStartNextActivity(
+    activityClass: Class<out Activity?>,
+    args: Bundle? = null
+  ) {
     val intent = Intent(activity, activityClass)
     if (args != null) intent.putExtras(args)
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

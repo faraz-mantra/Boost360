@@ -6,8 +6,12 @@ package com.android.inputmethod.keyboard.emojifast;
 
 public interface EmojiPageModel {
     int getIconAttr();
+
     String[] getEmoji();
+
     boolean hasSpriteMap();
+
     String getSprite();
+
     boolean isDynamic();
 }

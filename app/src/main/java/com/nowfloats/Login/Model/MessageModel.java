@@ -8,7 +8,17 @@ import java.util.ArrayList;
 /**
  * Created by guru on 26-05-2015.
  */
-public class MessageModel implements Parcelable{
+public class MessageModel implements Parcelable {
+    public static final Parcelable.Creator<MessageModel> CREATOR = new Parcelable.Creator<MessageModel>() {
+
+        public MessageModel createFromParcel(Parcel in) {
+            return new MessageModel(in);
+        }
+
+        public MessageModel[] newArray(int size) {
+            return new MessageModel[size];
+        }
+    };
     public ArrayList<FloatsMessageModel> floats;
     public boolean moreFloatsAvailable;
 
@@ -28,15 +38,4 @@ public class MessageModel implements Parcelable{
         parcel.writeTypedList(floats);
         parcel.writeInt(moreFloatsAvailable ? 1 : 0);
     }
-
-    public static final Parcelable.Creator<MessageModel> CREATOR = new Parcelable.Creator<MessageModel>() {
-
-       public MessageModel createFromParcel(Parcel in) {
-            return new MessageModel(in);
-        }
-
-       public MessageModel[] newArray(int size) {
-            return new MessageModel[size];
-        }
-    };
 }

@@ -33,8 +33,12 @@
       android:windowSoftInputMode="adjustPan" />
 
     <activity
-      android:name=".staffs.ui.StaffFragmentContainerActivity"
+      android:name="com.appservice.ui.staffs.ui.StaffFragmentContainerActivity"
+      android:configChanges="keyboardHidden|orientation|screenSize"
       android:screenOrientation="portrait"
+      android:theme="@style/AppTheme_staff_home"
+      android:windowSoftInputMode="adjustPan" />
+
       android:theme="@style/AppTheme_staff_home"
       android:windowSoftInputMode="adjustPan" />
       <activity android:name=".offers.FragmentOffersContainerActivity" />
@@ -43,6 +47,11 @@
       android:name=".ui.testimonial.TestimonialContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/TestimonialTheme"
+      android:windowSoftInputMode="adjustPan" />
+    <activity
+      android:name=".ui.updatesBusiness.UpdateBusinessContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/UpdateTheme"
       android:windowSoftInputMode="adjustPan" />
 
       <meta-data
@@ -54,4 +63,11 @@
       android:resource="@array/preloaded_fonts" />
 
   </application>
+
+  <!-- Android 11 changes -->
+  <queries>
+    <intent>
+      <action android:name="android.media.action.IMAGE_CAPTURE" />
+    </intent>
+  </queries>
 </manifest>

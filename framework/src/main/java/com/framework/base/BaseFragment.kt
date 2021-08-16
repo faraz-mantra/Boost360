@@ -1,5 +1,6 @@
 package com.framework.base
 
+import android.app.Activity
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,19 +10,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.FontRes
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProviders
+import com.framework.R
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
 import com.framework.utils.hideKeyBoard
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel?> : Fragment(), View.OnClickListener {
+abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel?> : Fragment(),
+  View.OnClickListener {
 
   protected lateinit var baseActivity: BaseActivity<*, *>
   protected lateinit var root: View
@@ -35,12 +40,13 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   protected abstract fun getViewModelClass(): Class<ViewModel>
   protected abstract fun onCreateView()
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setHasOptionsMenu(true)
-  }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    setHasOptionsMenu(true)
     baseActivity = activity as BaseActivity<*, *>
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
     binding?.lifecycleOwner = this
@@ -65,6 +71,33 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
     for (observable in observables) {
       observable?.let { compositeDisposable.add(it) }
     }
+  }
+
+  fun showSnackBarNegative(context: Activity, msg: String?) {
+    val snackBar =
+      Snackbar.make(context.findViewById(android.R.id.content), msg!!, Snackbar.LENGTH_INDEFINITE)
+    snackBar.view.setBackgroundColor(
+      ContextCompat.getColor(
+        context,
+        R.color.snackbar_negative_color
+      )
+    )
+    snackBar.duration = 4000
+    snackBar.show()
+  }
+
+
+  fun showSnackBarPositive(context: Activity, msg: String?) {
+    val snackBar =
+      Snackbar.make(context.findViewById(android.R.id.content), msg!!, Snackbar.LENGTH_INDEFINITE)
+    snackBar.view.setBackgroundColor(
+      ContextCompat.getColor(
+        context,
+        R.color.snackbar_positive_color
+      )
+    )
+    snackBar.duration = 4000
+    snackBar.show()
   }
 
   override fun onDestroy() {

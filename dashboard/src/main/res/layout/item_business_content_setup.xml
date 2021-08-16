@@ -10,8 +10,8 @@
   <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginEnd="@dimen/size_16"
     android:layout_marginStart="@dimen/size_16"
+    android:layout_marginEnd="@dimen/size_16"
     android:background="@android:color/transparent">
 
     <com.framework.views.customViews.CustomCardView
@@ -44,10 +44,10 @@
             android:id="@+id/rv_business_item_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="3"
             android:clipToPadding="false"
             android:paddingBottom="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="3"
             tools:listitem="@layout/item_content_setup_manage" />
         </androidx.appcompat.widget.LinearLayoutCompat>
       </androidx.core.widget.NestedScrollView>
@@ -87,10 +87,9 @@
               app:cpb_background_progressbar_color="@color/grey_light_1_d"
               app:cpb_background_progressbar_width="@dimen/size_9"
               app:cpb_progress_direction="to_right"
-              app:cpb_progressbar_color="@color/grey_light_2_d"
+              app:cpb_progressbar_color="@color/red_light_1"
               app:cpb_progressbar_width="@dimen/size_9"
-              app:cpb_round_border="false"
-              tools:srcCompat="@drawable/ic_add_home_circle_d" />
+              app:cpb_round_border="false" />
 
             <com.framework.views.customViews.CustomImageView
               android:id="@+id/img_icon"
@@ -107,9 +106,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/size_6"
             android:layout_marginBottom="@dimen/size_6"
-            android:visibility="gone"
             android:repeatCount="infinite"
             android:repeatMode="restart"
+            android:visibility="gone"
             app:lottie_autoPlay="false"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/completed_lottie_animation" />
@@ -126,17 +125,19 @@
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black_4f4f4f"
-            app:textType="HEADING_6"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/black_4f4f4f"
+            android:textFontWeight="600"
+            app:textType="HEADING_6"
             tools:text="Business profile setup" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/txt_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/light_grey_3"
+            android:textColor="@color/red_light_1"
+            android:textFontWeight="600"
             app:textType="BODY_1"
             tools:text="40% remaining" />
         </androidx.appcompat.widget.LinearLayoutCompat>

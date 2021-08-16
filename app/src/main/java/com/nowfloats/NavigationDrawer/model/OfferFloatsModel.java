@@ -9,7 +9,20 @@ import java.util.ArrayList;
  * Created by NowFloats on 04-11-2016.
  */
 
-public class OfferFloatsModel implements Parcelable{
+public class OfferFloatsModel implements Parcelable {
+    public static Creator<OfferFloatsModel> CREATOR = new Creator<OfferFloatsModel>() {
+
+        @Override
+        public OfferFloatsModel createFromParcel(Parcel source) {
+            return new OfferFloatsModel(source);
+        }
+
+        @Override
+        public OfferFloatsModel[] newArray(int size) {
+            return new OfferFloatsModel[size];
+        }
+
+    };
     public String _id;
     public String message;
     public String messageDescription;
@@ -23,7 +36,7 @@ public class OfferFloatsModel implements Parcelable{
     public String imageUri;
     public ArrayList<String> keywords;
 
-    public OfferFloatsModel(Parcel in){
+    public OfferFloatsModel(Parcel in) {
         _id = in.readString();
         message = in.readString();
         messageDescription = in.readString();
@@ -59,17 +72,4 @@ public class OfferFloatsModel implements Parcelable{
         dest.writeString(imageUri);
 
     }
-    public static Creator<OfferFloatsModel> CREATOR = new Creator<OfferFloatsModel>() {
-
-        @Override
-        public OfferFloatsModel createFromParcel(Parcel source) {
-            return new OfferFloatsModel(source);
-        }
-
-        @Override
-        public OfferFloatsModel[] newArray(int size) {
-            return new OfferFloatsModel[size];
-        }
-
-    };
 }

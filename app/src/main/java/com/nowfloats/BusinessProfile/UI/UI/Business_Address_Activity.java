@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -32,12 +33,13 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.AutocompletePredictionBuffer;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AddressComponents;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.nowfloats.BusinessProfile.UI.API.BusinessAddressUpdateApi;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.helper.locationAsync.GetAddressFromLatLng;
@@ -52,6 +54,7 @@ import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -70,27 +73,27 @@ import static com.framework.webengageconstant.EventValueKt.NULL;
 
 public class Business_Address_Activity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    private Toolbar toolbar;
+    public static final int PLACE_PICKER_REQUEST = 23;
     //public static GoogleMap googleMap;
     public static TextView saveTextView;
-    private TextView titleTextView;
-    String responseMessage = "", address_line, address_town, address_pin, latlongAddress;
-    private TextView addressText, cityText, provinceText, pincodeText, stateText, countryText;
     public static String adresslinetext, citytext, pincodetext, countrytext, statetext;
-    boolean streetaddressflag = false, cityflag = false, pincodeflag = false, geolocationflag = false, stateflag = false;
     public static EditText businessAddress, state, areaCode, country;
     public static AutoCompleteTextView cityAutoText;
     public static String text1, text2, text3, text4;
+    public static ImageView ivMap;
+    String responseMessage = "", address_line, address_town, address_pin, latlongAddress;
+    boolean streetaddressflag = false, cityflag = false, pincodeflag = false, geolocationflag = false, stateflag = false;
     String[] profilesattr = new String[20];
     UserSessionManager session;
-    public static ImageView ivMap;
-    public static final int PLACE_PICKER_REQUEST = 23;
-    private boolean mUpdatingPositionFromMap = false, saveAddressFlag = false;
     ArrayAdapter<String> adapter;
+    private Toolbar toolbar;
+    private TextView titleTextView;
+    private TextView addressText, cityText, provinceText, pincodeText, stateText, countryText;
+    private boolean mUpdatingPositionFromMap = false, saveAddressFlag = false;
     private List<String> citys = new ArrayList<>();
     private GoogleApiClient mGoogleApiClient;
-    AutocompleteFilter filter;
-
+    private com.google.android.gms.location.places.AutocompleteFilter filter;
+    private int PLACE_AUTOCOMPLETE_REQUEST_CODE = 203;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +103,8 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
         //loadData();
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
+                .addApi(com.google.android.gms.location.places.Places.GEO_DATA_API)
+                .addApi(com.google.android.gms.location.places.Places.PLACE_DETECTION_API)
                 .enableAutoManage(this, this)
                 .build();
 
@@ -116,7 +119,15 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
         ivMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mapViewDialog();
+//                mapViewDialog();
+                if (!Places.isInitialized())
+                    Places.initialize(getApplicationContext(), getResources().getString(R.string.google_map_key));
+                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.ADDRESS_COMPONENTS, Place.Field.LAT_LNG);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+                        .setTypeFilter(TypeFilter.REGIONS)
+                        .setCountry("IN")
+                        .build(getApplicationContext());
+                startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
             }
         });
 
@@ -271,14 +282,14 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
 
                     }
 
-                    final PendingResult<AutocompletePredictionBuffer> result =
-                            Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, cityAutoText.getText().toString().trim(),
+                    final PendingResult<com.google.android.gms.location.places.AutocompletePredictionBuffer> result =
+                            com.google.android.gms.location.places.Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, cityAutoText.getText().toString().trim(),
                                     null, filter);
 
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            AutocompletePredictionBuffer a = result.await();
+                            com.google.android.gms.location.places.AutocompletePredictionBuffer a = result.await();
                             //Log.v("ggg","ok");
                             citys.clear();
                             runOnUiThread(new Runnable() {
@@ -348,8 +359,8 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
     private void makeAutoCompleteFilter(String country_code) {
         //Log.v("filter",country_code);
         filter = null;
-        AutocompleteFilter.Builder builder = new AutocompleteFilter.Builder()
-                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES);
+        com.google.android.gms.location.places.AutocompleteFilter.Builder builder = new com.google.android.gms.location.places.AutocompleteFilter.Builder()
+                .setTypeFilter(com.google.android.gms.location.places.AutocompleteFilter.TYPE_FILTER_CITIES);
 
         if (country_code != null) {
             builder.setCountry(country_code.toUpperCase());
@@ -429,7 +440,8 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
 
     private void getLatLongUsingAddress() {
         String countryN = "India";
-        if (TextUtils.isEmpty(country.getText().toString())) countryN = country.getText().toString();
+        if (TextUtils.isEmpty(country.getText().toString()))
+            countryN = country.getText().toString();
         String fullAddress = businessAddress.getText().toString() + ", " + citytext + ", " + countryN + " " + areaCode.getText().toString();
         GetLatLngFromAddress getLatLngFromAddress = new GetLatLngFromAddress(this, latLng -> {
             if (latLng != null) {
@@ -511,7 +523,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
         /*Intent it = new Intent(this, NewMapViewDialogBusinessAddress.class);
         startActivity(it);*/
         try {
-            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+            com.google.android.gms.location.places.ui.PlacePicker.IntentBuilder builder = new com.google.android.gms.location.places.ui.PlacePicker.IntentBuilder();
 
             Intent placePickerIntent = builder.build(this);
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
@@ -533,7 +545,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == PLACE_PICKER_REQUEST) {
-            Place place = PlacePicker.getPlace(this, data);
+            com.google.android.gms.location.places.Place place = com.google.android.gms.location.places.ui.PlacePicker.getPlace(this, data);
             if (place != null) {
                 LatLng latLng = place.getLatLng();
                 Constants.latitude = latLng.latitude;
@@ -556,12 +568,31 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
                 });
                 getAddressFromLatLng.execute(Constants.latitude, Constants.longitude);
             }
+        } else if (resultCode == RESULT_OK && requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            Place place = Autocomplete.getPlaceFromIntent(data);
+            Constants.latitude = place.getLatLng().latitude;
+            Constants.longitude = place.getLatLng().longitude;
+            GetAddressFromLatLng getAddressFromLatLng = new GetAddressFromLatLng(this, bundle -> {
+                if (bundle != null) {
+                    saveAddressFlag = true;
+                    String address = bundle.getString("addressline1");
+                    String city = bundle.getString("city");
+                    String country = bundle.getString("country");
+                    String pincode = bundle.getString("postalcode");
+                    BusinessAddressUpdateApi Task = new BusinessAddressUpdateApi(Constants.latitude,
+                            Constants.longitude, Business_Address_Activity.this, city, pincode, address,
+                            saveAddressFlag, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), this::updateSuccess);
+                    Task.update();
+                }
+                saveTextView.setVisibility(View.GONE);
+                saveAddressFlag = false;
+            });
+            getAddressFromLatLng.execute(Constants.latitude, Constants.longitude);
         }
     }
 
     @Override
     public void onResume() {
-        // TODO Auto-generated method stub
         super.onResume();
         this.setTitle(getResources().getString(R.string.business__address));
 

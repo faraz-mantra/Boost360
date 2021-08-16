@@ -48,7 +48,7 @@ public final class AssetFileAddress {
     }
 
     public static AssetFileAddress makeFromFileNameAndOffset(final String filename,
-            final long offset, final long length) {
+                                                             final long offset, final long length) {
         if (null == filename) return null;
         final File f = new File(filename);
         if (!f.isFile()) return null;

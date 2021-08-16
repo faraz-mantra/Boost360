@@ -4,6 +4,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,12 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.mikephil.charting.charts.BarChart;
@@ -63,6 +64,15 @@ import retrofit.RetrofitError;
 
 public class RevenueSummaryActivity extends AppCompatActivity {
 
+    public static final String TODAY = "Today";
+    public static final String YESTERDAY = "Yesterday";
+    public static final String LAST_SEVEN_DAYS = "Last 7 Days";
+    public static final String LAST_30_DAYS = "Last 30 Days";
+    public static final String THIS_MONTH = "This Month";
+    public static final String LAST_MONTH = "Last Month";
+    public static final String LAST_SIX_MONTH = "Last 6 Month";
+    public static final String LAST_YEAR = "Last Year";
+    public static final String CUSTOM_RANGE = "Custom Range";
     private BarChart mChart;
     private MaterialDialog materialProgress;
     private UserSessionManager mSession;
@@ -71,6 +81,8 @@ public class RevenueSummaryActivity extends AppCompatActivity {
     private PopupWindow popup;
     private int count = 0;
     private RevenueSummary revenueSummary;
+    private HashMap<String, Float> hashRevenue;
+    private String startDate = "", endDate = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -176,7 +188,6 @@ public class RevenueSummaryActivity extends AppCompatActivity {
         }
     }
 
-
     private void initBarChart() {
 
         Paint p = mChart.getPaint(Chart.PAINT_INFO);
@@ -214,6 +225,20 @@ public class RevenueSummaryActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            BoostLog.d("Back", "Back Pressed");
+            finish();
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void syncRevenueSummary() {
         showDialog();
         WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
@@ -234,51 +259,6 @@ public class RevenueSummaryActivity extends AppCompatActivity {
                 hideDialog();
             }
         });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == android.R.id.home) {
-            BoostLog.d("Back", "Back Pressed");
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public class MyYAxisValueFormatter implements IValueFormatter {
-        private final DecimalFormat mFormat;
-
-        public MyYAxisValueFormatter() {
-            mFormat = new DecimalFormat("#########");
-        }
-
-        @Override
-        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-            return mFormat.format(value);
-        }
-    }
-
-    public class CustomXAxisRenderer extends XAxisRenderer {
-        public CustomXAxisRenderer(ViewPortHandler viewPortHandler, XAxis xAxis, Transformer trans) {
-            super(viewPortHandler, xAxis, trans);
-        }
-
-        @Override
-        protected void drawLabel(Canvas c, String formattedLabel, float x, float y, MPPointF anchor, float angleDegrees) {
-
-            if (formattedLabel.contains("-")) {
-                String[] line = formattedLabel.split("-");
-                Utils.drawXAxisValue(c, line[0], x, y, mAxisLabelPaint, anchor, angleDegrees);
-                Utils.drawXAxisValue(c, line[1], x + mAxisLabelPaint.getTextSize(), y + mAxisLabelPaint.getTextSize(), mAxisLabelPaint, anchor, angleDegrees);
-            } else {
-                Utils.drawXAxisValue(c, formattedLabel, x, y, mAxisLabelPaint, anchor, angleDegrees);
-            }
-        }
     }
 
     private void syncData() {
@@ -310,9 +290,6 @@ public class RevenueSummaryActivity extends AppCompatActivity {
 
 
     }
-
-    private HashMap<String, Float> hashRevenue;
-
 
     private void updateBarChart() {
         final ArrayList<String> labels = new ArrayList<>();
@@ -502,19 +479,6 @@ public class RevenueSummaryActivity extends AppCompatActivity {
         }
     }
 
-
-    public static final String TODAY = "Today";
-    public static final String YESTERDAY = "Yesterday";
-    public static final String LAST_SEVEN_DAYS = "Last 7 Days";
-    public static final String LAST_30_DAYS = "Last 30 Days";
-    public static final String THIS_MONTH = "This Month";
-    public static final String LAST_MONTH = "Last Month";
-    public static final String LAST_SIX_MONTH = "Last 6 Month";
-    public static final String LAST_YEAR = "Last Year";
-    public static final String CUSTOM_RANGE = "Custom Range";
-
-    private String startDate = "", endDate = "";
-
     private void getRevenueSummary(String choice) {
 
         startDate = "";
@@ -562,6 +526,37 @@ public class RevenueSummaryActivity extends AppCompatActivity {
         }
 
         syncData();
+    }
+
+    public class MyYAxisValueFormatter implements IValueFormatter {
+        private DecimalFormat mFormat;
+
+        public MyYAxisValueFormatter() {
+            mFormat = new DecimalFormat("#########");
+        }
+
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            return mFormat.format(value);
+        }
+    }
+
+    public class CustomXAxisRenderer extends XAxisRenderer {
+        public CustomXAxisRenderer(ViewPortHandler viewPortHandler, XAxis xAxis, Transformer trans) {
+            super(viewPortHandler, xAxis, trans);
+        }
+
+        @Override
+        protected void drawLabel(Canvas c, String formattedLabel, float x, float y, MPPointF anchor, float angleDegrees) {
+
+            if (formattedLabel.contains("-")) {
+                String line[] = formattedLabel.split("-");
+                Utils.drawXAxisValue(c, line[0], x, y, mAxisLabelPaint, anchor, angleDegrees);
+                Utils.drawXAxisValue(c, line[1], x + mAxisLabelPaint.getTextSize(), y + mAxisLabelPaint.getTextSize(), mAxisLabelPaint, anchor, angleDegrees);
+            } else {
+                Utils.drawXAxisValue(c, formattedLabel, x, y, mAxisLabelPaint, anchor, angleDegrees);
+            }
+        }
     }
 
 }

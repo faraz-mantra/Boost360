@@ -2,11 +2,12 @@ package com.dashboard.controller
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.StrictMode
 import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavArgument
@@ -27,7 +28,6 @@ import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.model.live.welcomeData.WelcomeDashboardResponse
 import com.dashboard.model.live.welcomeData.WelcomeData
 import com.dashboard.model.live.welcomeData.getIsShowWelcome
-import com.dashboard.pref.*
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -38,8 +38,10 @@ import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.firestore.FirestoreManager
 import com.framework.models.firestore.FirestoreManager.initData
+import com.framework.pref.*
 import com.framework.utils.AppsFlyerUtils
 import com.framework.utils.fromHtml
+import com.framework.utils.roundToFloat
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
 import com.framework.webengageconstant.*
@@ -51,24 +53,25 @@ import com.webengage.sdk.android.WebEngage
 import com.zopim.android.sdk.api.ZopimChat
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import zendesk.core.AnonymousIdentity
 import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
 import java.util.*
 
+
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
-  private var exitToast: Toast? = null
-  private var mDeepLinkUrl: String? = null
-    private var mPayload: String? = null
+  private var doubleBackToExitPressedOnce = false
+  private var mDeepLinkUrl: String? = null;
+  private var mPayload: String? = null
   private var deepLinkUtil: DeepLinkUtil? = null
   private lateinit var mNavController: NavController
   private var session: UserSessionManager? = null
   private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
   private var isSecondaryImage = false
   var isLoadShimmer = true
+  var count = 0
   private val navHostFragment: NavHostFragment?
     get() {
       return supportFragmentManager.fragments.first() as? NavHostFragment
@@ -89,41 +92,41 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onCreateView()
     session = UserSessionManager(this)
     session?.let { deepLinkUtil = DeepLinkUtil(this, it) }
-    mNavController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
+    mNavController =
+      (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
     val graph = mNavController.graph
     graph.addArgument("data", NavArgument.Builder().setDefaultValue("data").build())
     mNavController.graph = graph
     navControllerListener()
     binding?.navView?.setOnItemSelectedListener(this)
-    binding?.navView?.setActiveItem(0)
     toolbarPropertySet(0)
     setDrawerHome()
     val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
     binding?.drawerView?.txtVersion?.text = "Version $versionName"
     intentDataCheckAndDeepLink()
     getWelcomeData()
+    session?.initializeWebEngageLogin()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
+  }
 
+  private fun UserSessionManager.initializeWebEngageLogin() {
+    WebEngageController.setUserContactInfoProperties(this)
+    WebEngageController.setFPTag(this.fpTag)
   }
 
   private fun initialize() {
-    val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-    StrictMode.setThreadPolicy(policy)
-    WebEngageController.initiateUserLogin(session?.userProfileId)
-    WebEngageController.setUserContactAttributes(session?.userProfileEmail, session?.userPrimaryMobile, session?.userProfileName, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
-    WebEngageController.setFPTag(session?.fpTag)
-    WebEngageController.trackEvent(HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
+    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
     FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
       val token = instanceIdResult.token
-      WebEngage.get().setRegistrationID(token)
+      if (token.isNullOrEmpty().not()) {
+        WebEngage.get().setRegistrationID(token)
+        AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().token ?: "")
+        AnaCore.registerUser(this, session?.fpTag ?: "", ANA_BUSINESS_ID, ANA_CHAT_API_URL)
+      }
     }
     initialiseZendeskSupportSdk()
-    if (FirebaseInstanceId.getInstance().token != null) {
-      AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().token ?: "")
-      AnaCore.registerUser(this, session?.fpTag ?: "", ANA_BUSINESS_ID, ANA_CHAT_API_URL)
-    }
-    //checkCustomerAssistantService()
   }
 
   private fun intentDataCheckAndDeepLink() {
@@ -135,16 +138,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val action = intent.action
       val data = intent.dataString
       val uri = intent.data
-      Log.d("Data: ", "$data  $action")
+      Log.d("Data: ", "$data  $action $uri")
       if (session?.isLoginCheck == true) {
-        //Appsflyer Deep Link...
         if (uri != null && uri.toString().contains("onelink", true)) {
-          if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
-            val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
-            val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
-
-            if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
-          }
+          isAppFlyerLink()
         } else {
           //Default Deep Link..
           val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(uri)
@@ -154,17 +151,33 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
             if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
           } else deepLinkUtil?.deepLinkPage(data?.substring(data.lastIndexOf("/") + 1) ?: "", "", false)
         }
-      } else this.startPreSignUp(session)
+      } else {
+        this.startPreSignUp(session, true)
+        finish()
+      }
+    } else isAppFlyerLink()
+  }
+
+  private fun isAppFlyerLink() {
+    if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
+      val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
+      val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
+      if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
+      AppsFlyerUtils.sAttributionData = mapOf()
     } else {
       if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
     }
-
   }
 
   override fun onResume() {
     super.onResume()
     setUserData()
-    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage, binding?.drawerView?.txtDomainName)
+    setOnClickListener(
+      binding?.drawerView?.btnSiteMeter,
+      binding?.drawerView?.imgBusinessLogo,
+      binding?.drawerView?.backgroundImage,
+      binding?.drawerView?.txtDomainName
+    )
   }
 
   override fun getToolbar(): CustomToolbar? {
@@ -173,35 +186,52 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
 
   fun setPercentageData(score: Int) {
-    val isHigh = (score >= 80)
+    val isHigh = (score >= 85)
     binding?.drawerView?.txtPercentage?.text = "$score% "
-    binding?.drawerView?.progressBar?.progress = score
-    binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-    binding?.drawerView?.progressBar?.progressDrawable = ContextCompat.getDrawable(this, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+    val percentage = ((100 - score).toDouble() / 100).roundToFloat(2)
+    (binding?.drawerView?.progressBar?.layoutParams as? ConstraintLayout.LayoutParams)?.matchConstraintPercentWidth = percentage
+    binding?.drawerView?.progressBar?.requestLayout()
   }
 
   private fun setUserData() {
-    binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
+    binding?.drawerView?.txtBusinessName?.text =
+      session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
     setPercentageData(FirestoreManager.getDrScoreData()?.getDrsTotal() ?: 0)
     var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
     if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
     }
-    binding?.drawerView?.imgBusinessLogo?.let { glideLoad(it, imageUri ?: "", R.drawable.business_edit_profile_icon_d) }
+    binding?.drawerView?.imgBusinessLogo?.let {
+      glideLoad(
+        it,
+        imageUri ?: "",
+        R.drawable.business_edit_profile_icon_d
+      )
+    }
     var bgImageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)
     if (bgImageUri.isNullOrEmpty().not() && bgImageUri!!.contains("http").not()) {
       bgImageUri = BASE_IMAGE_URL + bgImageUri
     }
-    binding?.drawerView?.bgImage?.let { glideLoad(it, bgImageUri ?: "", R.drawable.general_services_background_img_d) }
+    binding?.drawerView?.bgImage?.let {
+      glideLoad(
+        it,
+        bgImageUri ?: "",
+        R.drawable.general_services_background_img_d
+      )
+    }
   }
 
   private fun setDrawerHome() {
-    viewModel.getNavDashboardData(this).observeOnce(this, androidx.lifecycle.Observer {
+    viewModel.getNavDashboardData(this).observeOnce(this, {
       val response = it as? DrawerHomeDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         binding?.drawerView?.rvLeftDrawer?.apply {
-          adapterDrawer = AppBaseRecyclerViewAdapter(this@DashboardActivity, checkLockData(response.data!!), this@DashboardActivity)
+          adapterDrawer = AppBaseRecyclerViewAdapter(
+            this@DashboardActivity,
+            checkLockData(response.data!!),
+            this@DashboardActivity
+          )
           adapter = adapterDrawer
         }
       } else showShortToast(this.getString(R.string.navigation_data_error))
@@ -215,10 +245,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           it1.title = getDefaultTrasactionsTaxonomyFromServiceCode(session?.fP_AppExperienceCode)
         }
         DrawerHomeData.NavType.NAV_CALLS.name -> {
-          it1.isLockShow = (session?.getStoreWidgets()?.firstOrNull { it == PremiumCode.CALLTRACKER.value } == null)
+          it1.isLockShow = (session?.getStoreWidgets()
+            ?.firstOrNull { it == PremiumCode.CALLTRACKER.value } == null)
         }
         DrawerHomeData.NavType.NAV_BOOST_KEYBOARD.name -> {
-          it1.isLockShow = (session?.getStoreWidgets()?.firstOrNull { it == PremiumCode.BOOSTKEYBOARD.value } == null)
+          it1.isLockShow = (session?.getStoreWidgets()
+            ?.firstOrNull { it == PremiumCode.BOOSTKEYBOARD.value } == null)
         }
       }
     }
@@ -235,10 +267,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onItemSelect(pos: Int) {
     when (pos) {
-      0 -> {
-        mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
-        toolbarPropertySet(pos)
-      }
+      0 -> openDashboard(false)
       1 -> checkWelcomeShowScreen(pos)
       2 -> checkWelcomeShowScreen(pos)
       else -> {
@@ -253,7 +282,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when (pos) {
       1 -> {
         val dataWebsite = welcomeData?.get(0)
-        if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let { showWelcomeDialog(it) }
+        if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let {
+          showWelcomeDialog(
+            it
+          )
+        }
         else {
           mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
           toolbarPropertySet(pos)
@@ -261,7 +294,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       }
       2 -> {
         val dataCustomer = welcomeData?.get(1)
-        if (dataCustomer?.welcomeType?.let { getIsShowWelcome(it) } != true) dataCustomer?.let { showWelcomeDialog(it) }
+        if (dataCustomer?.welcomeType?.let { getIsShowWelcome(it) } != true) dataCustomer?.let {
+          showWelcomeDialog(
+            it
+          )
+        }
         else {
           mNavController.navigate(R.id.navigation_enquiries, Bundle(), getNavOptions())
           toolbarPropertySet(pos)
@@ -269,7 +306,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       }
       3 -> {
         val dataAddOns = welcomeData?.get(2)
-        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
+        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let {
+          showWelcomeDialog(
+            it
+          )
+        }
         else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
 
       }
@@ -327,19 +368,22 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       3 -> checkWelcomeShowScreen(pos)
       4 -> {
         binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
-        WebEngageController.trackEvent(MORE, CLICK, TO_BE_ADDED)
+        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
       }
     }
   }
 
   private fun getNavOptions(): NavOptions {
-    return NavOptions.Builder().setExitAnim(R.anim.slide_out_left).setEnterAnim(R.anim.slide_in_right).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right).setLaunchSingleTop(true).build()
+    return NavOptions.Builder().setExitAnim(R.anim.slide_out_left)
+      .setEnterAnim(R.anim.slide_in_right).setPopEnterAnim(R.anim.slide_in_left)
+      .setPopExitAnim(R.anim.slide_out_right).setLaunchSingleTop(true).build()
   }
 
-  private fun openDashboard() {
+  private fun openDashboard(isSet: Boolean = true) {
     mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
-    binding?.navView?.setActiveItem(0)
+    if (isSet) binding?.navView?.setActiveItem(0)
     toolbarPropertySet(0)
+    WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -347,20 +391,24 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK && isSecondaryImage) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
       if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
-    } else childFragments?.forEach { fragment -> fragment.onActivityResult(requestCode, resultCode, data) }
+    } else childFragments?.forEach { fragment ->
+      fragment.onActivityResult(
+        requestCode,
+        resultCode,
+        data
+      )
+    }
   }
 
   override fun onBackPressed() {
     when {
       (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) -> binding?.drawerLayout?.closeDrawers()
       (mNavController.currentDestination?.id == R.id.navigation_dashboard) -> {
-        if (exitToast == null || exitToast?.view == null || exitToast?.view?.windowToken == null) {
-          exitToast = Toast.makeText(this, resources.getString(R.string.press_again_exit), Toast.LENGTH_SHORT)
-          exitToast?.show()
-        } else {
-          exitToast?.cancel()
-          this.finish()
-        }
+        if (!doubleBackToExitPressedOnce) {
+          this.doubleBackToExitPressedOnce = true
+          showShortToast(resources.getString(R.string.press_again_exit))
+          Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+        } else this.finish()
       }
       else -> openDashboard()
     }
@@ -373,11 +421,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         startReadinessScoreView(session, 0)
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
-      binding?.drawerView?.imgBusinessLogo ->{
-        this.startBusinessProfileDetailEdit(session)
+      binding?.drawerView?.imgBusinessLogo -> {
+        this.startFeatureLogo(session)
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
-      binding?.drawerView?.txtDomainName ->{
+      binding?.drawerView?.txtDomainName -> {
         this.startWebViewPageLoad(session, session!!.getDomainName(false))
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
@@ -401,7 +449,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       DrawerHomeData.NavType.NAV_MANAGE_CONTENT -> session?.let { this.startManageContentActivity(it) }
       DrawerHomeData.NavType.NAV_CALLS -> this.startVmnCallCard(session)
       DrawerHomeData.NavType.NAV_ENQUIRY -> this.startBusinessEnquiry(session)
-      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let { this.startManageInventoryActivity(it) }
+      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let {
+        this.startManageInventoryActivity(
+          it
+        )
+      }
       DrawerHomeData.NavType.NAV_NEWS_LETTER_SUB -> this.startSubscriber(session)
       DrawerHomeData.NavType.NAV_BOOST_KEYBOARD -> session?.let { this.startKeyboardActivity(it) }
       DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let {
@@ -426,43 +478,51 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun clickPickerType(it: ClickType) {
     val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
     ImagePicker.Builder(this)
-        .mode(type)
-        .compressLevel(ImagePicker.ComperesLevel.MEDIUM).directory(ImagePicker.Directory.DEFAULT)
-        .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
-        .scale(800, 800)
-        .enableDebuggingMode(true).build()
+      .mode(type)
+      .compressLevel(ImagePicker.ComperesLevel.MEDIUM).directory(ImagePicker.Directory.DEFAULT)
+      .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
+      .scale(800, 800)
+      .enableDebuggingMode(true).build()
   }
 
   private fun uploadSecondaryImage(path: String) {
     val imageFile = File(path)
     isSecondaryImage = false
     showProgress()
-    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this, androidx.lifecycle.Observer {
-      if (it.isSuccess()) {
-        if (it.stringResponse.isNullOrEmpty().not()) {
-          session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)
-          binding?.drawerView?.bgImage?.let { it1 -> glideLoad(it1, it.stringResponse ?: "", R.drawable.general_services_background_img_d) }
-        }
-      } else showLongToast(it.message())
-      hideProgress()
-    })
+    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile))
+      .observeOnce(this, androidx.lifecycle.Observer {
+        if (it.isSuccess()) {
+          if (it.stringResponse.isNullOrEmpty().not()) {
+            session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)
+            binding?.drawerView?.bgImage?.let { it1 ->
+              glideLoad(
+                it1,
+                it.stringResponse ?: "",
+                R.drawable.general_services_background_img_d
+              )
+            }
+          }
+        } else showLongToast(it.message())
+        hideProgress()
+      })
   }
 
   private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
     val responseBody = RequestBody.create("image/png".toMediaTypeOrNull(), businessImage.readBytes())
-    val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
-            ?: "bg_${UUID.randomUUID()}.png"
+    val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name } ?: "bg_${UUID.randomUUID()}.png"
     return UploadFileBusinessRequest(clientId, session?.fPID, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
   }
 
   private fun initialiseZendeskSupportSdk() {
     try {
-      Zendesk.INSTANCE.init(this, "https://boost360.zendesk.com",
-          "684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49", "mobile_sdk_client_6c56562cfec5c64c7857")
+      Zendesk.INSTANCE.init(
+        this, "https://boost360.zendesk.com",
+        "684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49", "mobile_sdk_client_6c56562cfec5c64c7857"
+      )
       val identity = AnonymousIdentity.Builder()
-          .withNameIdentifier(session?.fpTag)
-          .withEmailIdentifier(session?.fPEmail)
-          .build()
+        .withNameIdentifier(session?.fpTag)
+        .withEmailIdentifier(session?.fPEmail)
+        .build()
       Zendesk.INSTANCE.setIdentity(identity)
       Support.INSTANCE.init(Zendesk.INSTANCE)
       ZopimChat.init("MJwgUJn9SKy2m9ooxsQgJSeTSR5hU3A5")
@@ -473,7 +533,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun getWelcomeData() {
     viewModel.getWelcomeDashboardData(this).observeOnce(this, androidx.lifecycle.Observer {
       val response = it as? WelcomeDashboardResponse
-      val data = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.actionItem
+      val data = response?.data?.firstOrNull { it1 ->
+        it1.type.equals(
+          session?.fP_AppExperienceCode,
+          ignoreCase = true
+        )
+      }?.actionItem
       if (response?.isSuccess() == true && data.isNullOrEmpty().not()) {
         this.welcomeData = data
       }

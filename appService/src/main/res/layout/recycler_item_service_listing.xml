@@ -168,32 +168,19 @@
           android:layout_centerVertical="true"
           android:orientation="horizontal">
 
-          <ImageView
+          <com.framework.views.customViews.CustomImageView
             android:id="@+id/shareData"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/rounded_stroke_grey_4_solid_gray"
-            android:padding="@dimen/size_4"
-            android:src="@drawable/ic_share_normal"
-            app:iconPadding="@dimen/size_3" />
+            android:layout_width="@dimen/size_30"
+            android:layout_height="@dimen/size_30"
+            android:layout_marginEnd="@dimen/size_10"
+            app:srcCompat="@drawable/share_icon_normal" />
 
-
-          <com.framework.views.customViews.CustomButton
+          <com.framework.views.customViews.CustomImageView
             android:id="@+id/share_whatsapp"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_button_proceed_4"
-            android:backgroundTint="#6BC95C"
-            android:drawableStart="@drawable/ic_whatsapp_for_business_active"
-            android:drawablePadding="@dimen/size_2"
-            android:gravity="center"
-            android:paddingHorizontal="@dimen/size_16"
-            android:text="@string/share"
-            android:textColor="@color/white" />
+            android:layout_width="@dimen/size_74"
+            android:layout_height="@dimen/size_30"
+            app:srcCompat="@drawable/share_whatsapp" />
+
         </LinearLayout>
       </RelativeLayout>
     </RelativeLayout>

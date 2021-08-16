@@ -57,6 +57,10 @@ import java.util.List;
 
 
 public class BubblesService extends Service {
+    public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
+    public static final String ACTION_RESET_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_RESET_BUBBLE";
+    public static final String ACTION_GO_TO_RIGHT_WALL = "nowfloats.bubblebutton.bubble.ACTION_GO_TO_RIGHT_WALL";
+    public static final String ACTION_GO_TO_RIGHT_WALL_CARDS = "nowfloats.bubblebutton.bubble.ACTION_GO_TO_RIGHT_WALL_CARDS";
     private List<BubbleLayout> bubbles = new ArrayList<BubbleLayout>();
     private BubbleTrashLayout bubblesTrash;
     private WindowManager windowManager;
@@ -67,20 +71,7 @@ public class BubblesService extends Service {
     private IntentFilter moveRightIntentFilters = new IntentFilter(ACTION_GO_TO_RIGHT_WALL);
     private IntentFilter moveSpecificIntentFilters = new IntentFilter(ACTION_GO_TO_RIGHT_WALL_CARDS);
     private float initAplha = 0.5f;
-
-    public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
-    public static final String ACTION_RESET_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_RESET_BUBBLE";
-    public static final String ACTION_GO_TO_RIGHT_WALL = "nowfloats.bubblebutton.bubble.ACTION_GO_TO_RIGHT_WALL";
-    public static final String ACTION_GO_TO_RIGHT_WALL_CARDS = "nowfloats.bubblebutton.bubble.ACTION_GO_TO_RIGHT_WALL_CARDS";
-//test
-    public enum FROM {
-        HOME_ACTIVITY,
-        WHATSAPP,
-        WHATSAPP_DIALOG,
-        LAUNCHER_HOME_ACTIVITY,
-        CALLER_INFO_ACTIVITY
-    }
-
+    private BubbleLayout bubbleView;
     BroadcastReceiver resetReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -97,6 +88,8 @@ public class BubblesService extends Service {
         }
 
     };
+    private String BUBBLE_CLASS_NAME = "com.nowfloats.accessbility.BubbleDialog";
+    private String BUBBLE_V2_CLASS_NAME = "com.nowfloats.swipecard.SuggestionsActivity";
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -136,12 +129,10 @@ public class BubblesService extends Service {
         return windowManager;
     }
 
-    private BubbleLayout bubbleView;
-
     public void addBubble(final int x, final int y) {
 
         try {
-            bubbleView = new BubbleLayout(this,BubbleLayout.BUBBLE_TYPE.WHATSAPP_BUBBLE);
+            bubbleView = new BubbleLayout(this, BubbleLayout.BUBBLE_TYPE.WHATSAPP_BUBBLE);
             bubbleView.addView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.bubble_layout, null));
             bubbleView.initalizeBubbleView(initAplha);
             bubbleView.setOnBubbleRemoveListener(new BubbleLayout.OnBubbleRemoveListener() {
@@ -181,9 +172,6 @@ public class BubblesService extends Service {
         }
 
     }
-
-    private String BUBBLE_CLASS_NAME = "com.nowfloats.accessbility.BubbleDialog";
-    private String BUBBLE_V2_CLASS_NAME = "com.nowfloats.swipecard.SuggestionsActivity";
 
     private boolean isDialogShowing() {
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
@@ -256,7 +244,6 @@ public class BubblesService extends Service {
     private void killDialog() {
         sendBroadcast(new Intent(ACTION_KILL_DIALOG));
     }
-
 
     void addTrash(int trashLayoutResourceId) {
         if (trashLayoutResourceId != 0) {
@@ -336,5 +323,14 @@ public class BubblesService extends Service {
             startActivity(intent);
         }
         stopSelf();
+    }
+
+    //test
+    public enum FROM {
+        HOME_ACTIVITY,
+        WHATSAPP,
+        WHATSAPP_DIALOG,
+        LAUNCHER_HOME_ACTIVITY,
+        CALLER_INFO_ACTIVITY
     }
 }

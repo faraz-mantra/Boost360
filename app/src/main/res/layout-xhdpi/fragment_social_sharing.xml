@@ -1,908 +1,907 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/screen_bg">
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/screen_bg"
+    android:orientation="vertical">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/scrollView">
+    <ScrollView
+      android:id="@+id/scrollView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="10dp"
+          android:layout_marginTop="10dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginBottom="10dp"
+          android:background="@color/white"
+          app:cardCornerRadius="5dp"
+          app:cardElevation="3dp"
+          app:contentPaddingBottom="10dp">
+
+          <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#808080">
+
+              <TextView
+                android:id="@+id/topFeatureText"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="3dp"
-                    app:contentPaddingBottom="10dp">
-
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="#808080">
-
-                            <TextView
-                                android:id="@+id/topFeatureText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingBottom="8dp"
-                                android:paddingStart="10dp"
-                                android:paddingTop="8dp"
-                                android:text="@string/auto_share_to_social_networks"
-                                android:textColor="#ffffff"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:visibility="gone"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="10dp"
-                                android:text="@string/website_posts"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="20dp"
-                                android:background="@drawable/social_share_to_bg"
-                                android:gravity="center"
-                                android:text="@string/to"
-                                android:textSize="13sp"
-                                android:textStyle="italic" />
-
-                            <ImageView
-                                android:id="@+id/social_sharing_facebook_profile_image"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="20dp"
-                                android:src="@drawable/facebook_icon_inactive" />
-
-                            <LinearLayout
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/facebookProfile"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="5dp"
-                                    android:text="@string/facebook"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:id="@+id/social_sharing_facebook_profile_flag_text"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:maxLines="2"
-                                    android:text="@string/disconnected"
-                                    android:textSize="10sp"
-                                    android:visibility="gone" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
-                                android:gravity="end"
-                                android:orientation="vertical">
-
-                                <CheckBox
-                                    android:id="@+id/social_sharing_facebook_profile_checkbox"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="end"
-                                    android:buttonTint="@color/grey" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="10dp"
-                                android:text="@string/website_posts"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="20dp"
-                                android:background="@drawable/social_share_to_bg"
-                                android:gravity="center"
-                                android:text="@string/to"
-                                android:textSize="13sp"
-                                android:textStyle="italic" />
-
-                            <ImageView
-                                android:id="@+id/social_sharing_facebook_page_image"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="20dp"
-                                android:src="@drawable/facebookpage_icon_inactive" />
-
-                            <LinearLayout
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/facebookPage"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="5dp"
-                                    android:text="@string/facebook_page"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:id="@+id/social_sharing_facebook_page_flag_text"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:maxLines="2"
-                                    android:text="@string/disconnected"
-                                    android:textSize="10sp"
-                                    android:visibility="gone" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
-                                android:layout_weight="1"
-                                android:gravity="end"
-                                android:orientation="vertical">
-
-                                <CheckBox
-                                    android:id="@+id/social_sharing_facebook_page_checkbox"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="end"
-                                    android:buttonTint="@color/grey" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:visibility="gone"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="10dp"
-                                android:text="@string/website_posts"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="20dp"
-                                android:background="@drawable/social_share_to_bg"
-                                android:gravity="center"
-                                android:text="@string/to"
-                                android:textSize="13sp"
-                                android:textStyle="italic" />
-
-                            <ImageView
-                                android:id="@+id/social_sharing_facebook_shop"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="20dp"
-                                android:src="@drawable/facebookpage_icon_inactive" />
-
-                            <LinearLayout
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/facebookShop"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="5dp"
-                                    android:text="@string/facebook_shop"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:id="@+id/social_sharing_facebook_shop_flag_text"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:maxLines="2"
-                                    android:text="@string/disconnected"
-                                    android:textSize="10sp"
-                                    android:visibility="gone" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
-                                android:layout_weight="1"
-                                android:gravity="end"
-                                android:orientation="vertical">
-
-                                <CheckBox
-                                    android:id="@+id/social_sharing_facebook_shop_checkbox"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="end"
-                                    android:buttonTint="@color/grey" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="10dp"
-                                android:text="@string/website_posts"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="20dp"
-                                android:background="@drawable/social_share_to_bg"
-                                android:gravity="center"
-                                android:text="@string/to"
-                                android:textSize="13sp"
-                                android:textStyle="italic" />
-
-                            <ImageView
-                                android:id="@+id/social_sharing_twitter_image"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="20dp"
-                                android:src="@drawable/twitter_icon_inactive" />
-
-                            <LinearLayout
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/twitterProfile"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="5dp"
-                                    android:text="@string/twitter"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:id="@+id/social_sharing_twitter_flag_text"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:ellipsize="end"
-                                    android:text="@string/disconnected"
-                                    android:textSize="10sp"
-                                    android:visibility="gone" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
-                                android:gravity="end"
-                                android:orientation="vertical">
-
-                                <CheckBox
-                                    android:id="@+id/social_sharing_twitter_checkbox"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="end"
-                                    android:buttonTint="@color/grey" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@color/white"
-                    android:elevation="3dp"
-                    android:visibility="gone"
-                    app:cardCornerRadius="5dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="#808080">
-
-                            <TextView
-                                android:id="@+id/connectTextView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="start"
-                                android:paddingBottom="8dp"
-                                android:paddingStart="10dp"
-                                android:paddingTop="8dp"
-                                android:text="@string/auto_update_from_social_network"
-                                android:textColor="#ffffff"
-                                android:textSize="16sp" />
-
-                            <ImageView
-                                android:id="@+id/iv_help_tool"
-                                android:layout_width="wrap_content"
-                                android:layout_height="30dp"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginEnd="8dp"
-                                android:adjustViewBounds="true"
-                                android:padding="5dp"
-                                android:src="@drawable/ic_info_white_24dp" />
-
-                        </RelativeLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginTop="20dp"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:id="@+id/auto_pull_facebook_page_image"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="5dp"
-                                android:src="@drawable/facebookpage_icon_inactive" />
-
-                            <LinearLayout
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/auto_pull_facebookPage"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="5dp"
-                                    android:text="@string/facebook_page"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:id="@+id/tv_fb_page_name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:ellipsize="end"
-                                    android:text="@string/disconnected"
-                                    android:textSize="10sp"
-                                    android:visibility="gone" />
-
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="20dp"
-                                android:background="@drawable/social_share_to_bg"
-                                android:gravity="center"
-                                android:text="@string/to"
-                                android:textSize="13sp"
-                                android:textStyle="italic" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="20dp"
-                                android:text="@string/website"
-                                android:textSize="13sp" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
-                                android:gravity="end"
-                                android:orientation="vertical">
-
-                                <CheckBox
-                                    android:id="@+id/social_sharing_facebook_page_auto_post"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="end"
-                                    android:buttonTint="@color/grey" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/quikr_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:visibility="gone"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@color/white"
-                    android:elevation="3dp"
-                    app:cardCornerRadius="5dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#808080"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/textView"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="start"
-                                android:paddingBottom="8dp"
-                                android:paddingStart="10dp"
-                                android:paddingTop="8dp"
-                                android:text="@string/posting_nto_quikr"
-                                android:textColor="#ffffff"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:text="@string/quikr_tip_points_heading"/>
-
-                        <TextView
-                            android:id="@+id/guidelines_arrow_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:text="@string/guidelines"
-                            android:layout_marginBottom="5dp"
-                            android:background="#ddd"
-                            android:padding="10dp"
-                            android:layout_marginEnd="5dp"
-                            app:drawableEndCompat="@drawable/right_arrow"
-                            app:drawableRightCompat="@drawable/right_arrow" />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:id="@+id/gmbCardView"
-                    app:cardCornerRadius="5dp"
-                    android:elevation="3dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            android:padding="5dp"
-                            android:background="#808080"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/gmbTextHeader"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="start"
-                                android:paddingBottom="8dp"
-                                android:paddingStart="10dp"
-                                android:paddingTop="8dp"
-                                android:text="@string/auto_sync_nbusiness_profile"
-                                android:textColor="#ffffff"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:padding="6dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="5dp"
-                                android:text="Business\nProfile"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="20dp"
-                                android:background="@drawable/social_share_to_bg"
-                                android:gravity="center"
-                                android:text="@string/to"
-                                android:textSize="13sp"
-                                android:textStyle="italic" />
-
-                            <ImageView
-                                android:id="@+id/social_sharing_gmb_profile_image"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="20dp" />
-
-                            <LinearLayout
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/gmbProfile"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="5dp"
-                                    android:text="Google My Business"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:id="@+id/social_sharing_gmb_profile_flag_text"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:maxLines="2"
-                                    android:text="@string/disconnected"
-                                    android:textSize="10sp"
-                                    android:visibility="gone" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="0dp"
-                                android:gravity="end"
-                                android:orientation="vertical">
-
-                                <LinearLayout
-                                    android:layout_marginStart="15dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
-
-                                    <CheckBox
-                                        android:id="@+id/social_gmb_profile_checkbox"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="12dp"
-                                        android:buttonTint="@color/grey" />
-
-                                </LinearLayout>
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:id="@+id/whatsapp_card_view"
-                    app:cardCornerRadius="5dp"
-                    android:elevation="3dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            android:padding="5dp"
-                            android:background="#808080"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/whatsappTextHeader"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="start"
-                                android:paddingBottom="8dp"
-                                android:paddingStart="10dp"
-                                android:paddingTop="8dp"
-                                android:text="@string/customer_engagement_nvia_chat"
-                                android:textColor="#ffffff"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:padding="6dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                app:srcCompat="@drawable/ic_whatsapp_for_business"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="15dp" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:layout_marginStart="@dimen/margin_12"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="5dp"
-                                    android:text="@string/whatsapp_for_business"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:id="@+id/tv_whatsapp_number"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:maxLines="2"
-                                    android:text="@string/inactive"
-                                    android:textSize="10sp"
-                                    android:visibility="visible" />
-
-                            </LinearLayout>
-
-                            <CheckBox
-                                android:id="@+id/whatsapp_checkbox"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:buttonTint="@color/grey" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:id="@+id/product_catalog_card_view"
-                    app:cardCornerRadius="5dp"
-                    android:elevation="3dp"
-                    android:visibility="gone"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            android:padding="5dp"
-                            android:background="#808080"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/productCatalogTextHeader"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="start"
-                                android:paddingBottom="8dp"
-                                android:paddingStart="10dp"
-                                android:paddingTop="8dp"
-                                android:text="@string/auto_sync_nproduct_catalogue"
-                                android:textColor="#ffffff"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:padding="6dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="5dp"
-                                android:text="@string/product_ncatalogue"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="20dp"
-                                android:background="@drawable/social_share_to_bg"
-                                android:gravity="center"
-                                android:text="@string/to"
-                                android:textSize="13sp"
-                                android:textStyle="italic" />
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="center_vertical"
-                                app:srcCompat="@drawable/ic_fb_shop_inactive"
-                                android:layout_marginStart="20dp" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/fbShopProfile"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="5dp"
-                                    android:text="@string/facebook_shop"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:maxLines="2"
-                                    android:text="@string/disconnected"
-                                    android:textSize="10sp"
-                                    android:visibility="gone" />
-
-                            </LinearLayout>
-
-                            <CheckBox
-                                android:id="@+id/social_facebook_shop_profile_checkbox"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:buttonTint="@color/grey" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
+                android:paddingStart="10dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/auto_share_to_social_networks"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
 
             </LinearLayout>
 
-        </ScrollView>
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:orientation="horizontal"
+              android:visibility="gone">
 
-    </LinearLayout>
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:text="@string/website_posts"
+                android:textSize="13sp" />
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/social_share_to_bg"
+                android:gravity="center"
+                android:text="@string/to"
+                android:textSize="13sp"
+                android:textStyle="italic" />
+
+              <ImageView
+                android:id="@+id/social_sharing_facebook_profile_image"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/facebook_icon_inactive" />
+
+              <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                  android:id="@+id/facebookProfile"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_vertical"
+                  android:layout_marginStart="5dp"
+                  android:text="@string/facebook"
+                  android:textSize="13sp" />
+
+                <TextView
+                  android:id="@+id/social_sharing_facebook_profile_flag_text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="5dp"
+                  android:maxLines="2"
+                  android:text="@string/disconnected"
+                  android:textSize="10sp"
+                  android:visibility="gone" />
+
+              </LinearLayout>
+
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <CheckBox
+                  android:id="@+id/social_sharing_facebook_profile_checkbox"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="end"
+                  android:buttonTint="@color/grey" />
+
+              </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="20dp"
+              android:orientation="horizontal">
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:text="@string/website_posts"
+                android:textSize="13sp" />
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/social_share_to_bg"
+                android:gravity="center"
+                android:text="@string/to"
+                android:textSize="13sp"
+                android:textStyle="italic" />
+
+              <ImageView
+                android:id="@+id/social_sharing_facebook_page_image"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/facebookpage_icon_inactive" />
+
+              <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                  android:id="@+id/facebookPage"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_vertical"
+                  android:layout_marginStart="5dp"
+                  android:text="@string/facebook_page"
+                  android:textSize="13sp" />
+
+                <TextView
+                  android:id="@+id/social_sharing_facebook_page_flag_text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="5dp"
+                  android:maxLines="2"
+                  android:text="@string/disconnected"
+                  android:textSize="10sp"
+                  android:visibility="gone" />
+
+              </LinearLayout>
+
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <CheckBox
+                  android:id="@+id/social_sharing_facebook_page_checkbox"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="end"
+                  android:buttonTint="@color/grey" />
+
+              </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="20dp"
+              android:orientation="horizontal"
+              android:visibility="gone">
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:text="@string/website_posts"
+                android:textSize="13sp" />
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/social_share_to_bg"
+                android:gravity="center"
+                android:text="@string/to"
+                android:textSize="13sp"
+                android:textStyle="italic" />
+
+              <ImageView
+                android:id="@+id/social_sharing_facebook_shop"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/facebookpage_icon_inactive" />
+
+              <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                  android:id="@+id/facebookShop"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_vertical"
+                  android:layout_marginStart="5dp"
+                  android:text="@string/facebook_shop"
+                  android:textSize="13sp" />
+
+                <TextView
+                  android:id="@+id/social_sharing_facebook_shop_flag_text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="5dp"
+                  android:maxLines="2"
+                  android:text="@string/disconnected"
+                  android:textSize="10sp"
+                  android:visibility="gone" />
+
+              </LinearLayout>
+
+              <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <CheckBox
+                  android:id="@+id/social_sharing_facebook_shop_checkbox"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="end"
+                  android:buttonTint="@color/grey" />
+
+              </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="20dp"
+              android:layout_marginBottom="10dp"
+              android:orientation="horizontal">
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:text="@string/website_posts"
+                android:textSize="13sp" />
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/social_share_to_bg"
+                android:gravity="center"
+                android:text="@string/to"
+                android:textSize="13sp"
+                android:textStyle="italic" />
+
+              <ImageView
+                android:id="@+id/social_sharing_twitter_image"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/twitter_icon_inactive" />
+
+              <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                  android:id="@+id/twitterProfile"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_vertical"
+                  android:layout_marginStart="5dp"
+                  android:text="@string/twitter"
+                  android:textSize="13sp" />
+
+                <TextView
+                  android:id="@+id/social_sharing_twitter_flag_text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="5dp"
+                  android:ellipsize="end"
+                  android:text="@string/disconnected"
+                  android:textSize="10sp"
+                  android:visibility="gone" />
+
+              </LinearLayout>
+
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <CheckBox
+                  android:id="@+id/social_sharing_twitter_checkbox"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="end"
+                  android:buttonTint="@color/grey" />
+
+              </LinearLayout>
+
+            </LinearLayout>
+
+          </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="10dp"
+          android:layout_marginTop="20dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginBottom="10dp"
+          android:background="@color/white"
+          android:elevation="3dp"
+          android:visibility="gone"
+          app:cardCornerRadius="5dp">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#808080">
+
+              <TextView
+                android:id="@+id/connectTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingStart="10dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/auto_update_from_social_network"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+
+              <ImageView
+                android:id="@+id/iv_help_tool"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp"
+                android:adjustViewBounds="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_info_white_24dp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="20dp"
+              android:layout_marginBottom="20dp"
+              android:orientation="horizontal">
+
+              <ImageView
+                android:id="@+id/auto_pull_facebook_page_image"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/facebookpage_icon_inactive" />
+
+              <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                  android:id="@+id/auto_pull_facebookPage"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_vertical"
+                  android:layout_marginStart="5dp"
+                  android:text="@string/facebook_page"
+                  android:textSize="13sp" />
+
+                <TextView
+                  android:id="@+id/tv_fb_page_name"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="5dp"
+                  android:ellipsize="end"
+                  android:text="@string/disconnected"
+                  android:textSize="10sp"
+                  android:visibility="gone" />
+
+              </LinearLayout>
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/social_share_to_bg"
+                android:gravity="center"
+                android:text="@string/to"
+                android:textSize="13sp"
+                android:textStyle="italic" />
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:text="@string/website"
+                android:textSize="13sp" />
+
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <CheckBox
+                  android:id="@+id/social_sharing_facebook_page_auto_post"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="end"
+                  android:buttonTint="@color/grey" />
+
+              </LinearLayout>
+
+            </LinearLayout>
+
+          </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+          android:id="@+id/quikr_card"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="10dp"
+          android:layout_marginTop="20dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginBottom="10dp"
+          android:background="@color/white"
+          android:elevation="3dp"
+          android:visibility="gone"
+          app:cardCornerRadius="5dp">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#808080"
+              android:orientation="horizontal">
+
+              <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:paddingStart="10dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/posting_nto_quikr"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="10dp"
+              android:text="@string/quikr_tip_points_heading" />
+
+            <TextView
+              android:id="@+id/guidelines_arrow_text"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="end"
+              android:layout_marginEnd="5dp"
+              android:layout_marginBottom="5dp"
+              android:background="#ddd"
+              android:padding="10dp"
+              android:text="@string/guidelines"
+              app:drawableEndCompat="@drawable/right_arrow"
+              app:drawableRightCompat="@drawable/right_arrow" />
+
+          </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+          android:id="@+id/gmbCardView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="10dp"
+          android:layout_marginTop="20dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginBottom="10dp"
+          android:elevation="3dp"
+          app:cardCornerRadius="5dp">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#808080"
+              android:orientation="horizontal"
+              android:padding="5dp">
+
+              <TextView
+                android:id="@+id/gmbTextHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingStart="10dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/auto_sync_nbusiness_profile"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:layout_marginBottom="10dp"
+              android:orientation="horizontal"
+              android:padding="6dp">
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
+                android:text="Business\nProfile"
+                android:textSize="13sp" />
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/social_share_to_bg"
+                android:gravity="center"
+                android:text="@string/to"
+                android:textSize="13sp"
+                android:textStyle="italic" />
+
+              <ImageView
+                android:id="@+id/social_sharing_gmb_profile_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp" />
+
+              <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                  android:id="@+id/gmbProfile"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_vertical"
+                  android:layout_marginStart="5dp"
+                  android:text="Google My Business"
+                  android:textSize="13sp" />
+
+                <TextView
+                  android:id="@+id/social_sharing_gmb_profile_flag_text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="5dp"
+                  android:maxLines="2"
+                  android:text="@string/disconnected"
+                  android:textSize="10sp"
+                  android:visibility="gone" />
+
+              </LinearLayout>
+
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <LinearLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="15dp">
+
+                  <CheckBox
+                    android:id="@+id/social_gmb_profile_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:buttonTint="@color/grey" />
+
+                </LinearLayout>
+
+              </LinearLayout>
+
+            </LinearLayout>
+
+          </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+          android:id="@+id/whatsapp_card_view"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="10dp"
+          android:layout_marginTop="20dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginBottom="10dp"
+          android:elevation="3dp"
+          app:cardCornerRadius="5dp">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#808080"
+              android:orientation="horizontal"
+              android:padding="5dp">
+
+              <TextView
+                android:id="@+id/whatsappTextHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingStart="10dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/customer_engagement_nvia_chat"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:layout_marginBottom="10dp"
+              android:orientation="horizontal"
+              android:padding="6dp">
+
+              <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="15dp"
+                app:srcCompat="@drawable/ic_whatsapp_for_business" />
+
+              <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_12"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_vertical"
+                  android:layout_marginStart="5dp"
+                  android:text="@string/whatsapp_for_business"
+                  android:textSize="13sp" />
+
+                <TextView
+                  android:id="@+id/tv_whatsapp_number"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="5dp"
+                  android:maxLines="2"
+                  android:text="@string/inactive"
+                  android:textSize="10sp"
+                  android:visibility="visible" />
+
+              </LinearLayout>
+
+              <CheckBox
+                android:id="@+id/whatsapp_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/grey" />
+
+            </LinearLayout>
+
+          </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+          android:id="@+id/product_catalog_card_view"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="10dp"
+          android:layout_marginTop="20dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginBottom="10dp"
+          android:elevation="3dp"
+          android:visibility="gone"
+          app:cardCornerRadius="5dp">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#808080"
+              android:orientation="horizontal"
+              android:padding="5dp">
+
+              <TextView
+                android:id="@+id/productCatalogTextHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingStart="10dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/auto_sync_nproduct_catalogue"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:layout_marginBottom="10dp"
+              android:orientation="horizontal"
+              android:padding="6dp">
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
+                android:text="@string/product_ncatalogue"
+                android:textSize="13sp" />
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/social_share_to_bg"
+                android:gravity="center"
+                android:text="@string/to"
+                android:textSize="13sp"
+                android:textStyle="italic" />
+
+              <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                app:srcCompat="@drawable/ic_fb_shop_inactive" />
+
+              <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                  android:id="@+id/fbShopProfile"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_vertical"
+                  android:layout_marginStart="5dp"
+                  android:text="@string/facebook_shop"
+                  android:textSize="13sp" />
+
+                <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="5dp"
+                  android:maxLines="2"
+                  android:text="@string/disconnected"
+                  android:textSize="10sp"
+                  android:visibility="gone" />
+
+              </LinearLayout>
+
+              <CheckBox
+                android:id="@+id/social_facebook_shop_profile_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/grey" />
+
+            </LinearLayout>
+
+          </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+      </LinearLayout>
+
+    </ScrollView>
+
+  </LinearLayout>
 
 </layout>

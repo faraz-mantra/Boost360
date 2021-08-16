@@ -50,6 +50,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
+import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
@@ -78,29 +79,25 @@ import static com.framework.webengageconstant.EventNameKt.UPDATE_CUSTOMPAGE;
  * Created by guru on 09-06-2015.
  */
 public class CreateCustomPageActivity extends AppCompatActivity {
+    private final int gallery_req_id = 6;
+    private final int media_req_id = 5;
     public Toolbar toolbar;
     public ImageView save;
     public UserSessionManager session;
     Activity activity;
     EditText titleTxt;
     RichEditor richText;
+    String curName, curHtml, curPageid;
+    String imageTagName = "CustomePage";
+    boolean isNewDataAdded = false;
     private String mHtmlFormat = "";
     private Uri picUri;
     private HorizontalScrollView editor;
     private boolean editCheck = false;
-    String curName, curHtml, curPageid;
     private int curPos;
     private ImageView deletePage;
-
-    String imageTagName = "CustomePage";
-
     private int GALLERY_PHOTO = 5;
     private RiaNodeDataModel mRiaNodedata;
-
-    private final int gallery_req_id = 6;
-    private final int media_req_id = 5;
-
-    boolean isNewDataAdded = false;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -127,7 +124,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
         deletePage.setVisibility(View.GONE);
         final TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
         title.setVisibility(View.VISIBLE);
-        title.setText("New page");
+        title.setText("New Page");
         save.setImageResource(R.drawable.checkmark_icon);
         session = new UserSessionManager(getApplicationContext(), activity);
 
@@ -173,7 +170,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                             public void failure(RetrofitError error) {
                                 materialProgress.dismiss();
                                 Log.d("page detail error-", "" + error.getMessage());
-                                Methods.showSnackBarNegative(CreateCustomPageActivity.this,  getString(R.string.page_details_not_found));
+                                Methods.showSnackBarNegative(CreateCustomPageActivity.this, getString(R.string.page_details_not_found));
                             }
                         });
             } catch (Exception e) {
@@ -184,138 +181,123 @@ public class CreateCustomPageActivity extends AppCompatActivity {
         }
 
 
-        titleTxt.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                editor.setVisibility(View.GONE);
-                return false;
-            }
+        titleTxt.setOnTouchListener((v, event) -> {
+            titleTxt.post(() -> editor.setVisibility(View.GONE));
+            return false;
         });
-
-        richText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        richText.setOnTouchListener((v, event) -> {
+            richText.post(() -> {
                 editor.setVisibility(View.VISIBLE);
                 richText.focusEditor();
-                richText.requestFocus();
-            }
+                Utils.showKeyboard(activity, richText);
+            });
+            return false;
         });
 
-        richText.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
-            @Override
-            public void onTextChange(String text) {
-                mHtmlFormat = text;
-            }
+        richText.setOnTextChangeListener(text -> mHtmlFormat = text);
+
+        deletePage.setOnClickListener(v -> {
+            String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/custompage/delete";
+            new SinglePageDeleteAsyncTask(url, CreateCustomPageActivity.this, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
+                    CustomPageFragment.dataModel.get(curPos).PageId, curPos).execute();
         });
 
-        deletePage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/custompage/delete";
-                new SinglePageDeleteAsyncTask(url, CreateCustomPageActivity.this, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
-                        CustomPageFragment.dataModel.get(curPos).PageId, curPos).execute();
-            }
-        });
+        save.setOnClickListener(v -> {
+            if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                Methods.showFeatureNotAvailDialog(CreateCustomPageActivity.this);
+            } else {
+                if (mRiaNodedata != null) {
+                    RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                            mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
+                            mRiaNodedata.getButtonLabel(),
+                            RiaEventLogger.EventStatus.COMPLETED.getValue());
+                    mRiaNodedata = null;
+                }
+                boolean flag = true;
+                final String name = titleTxt.getText().toString(), html = mHtmlFormat;
+                if (!(titleTxt.getText().toString().trim().length() > 0)) {
+                    flag = false;
+                    Methods.showSnackBarNegative(activity, getString(R.string.enter_the_title));
+                } else if (!(html.trim().length() > 0)) {
+                    flag = false;
+                    Methods.showSnackBarNegative(activity, getString(R.string.enter_the_description));
+                }
+                CustomPageInterface anInterface = Constants.restAdapter.create(CustomPageInterface.class);
+                if (flag) {
+                    final MaterialDialog materialProgress = new MaterialDialog.Builder(activity)
+                            .widgetColorRes(R.color.accentColor)
+                            .content(getString(R.string.loading))
+                            .progress(true, 0)
+                            .show();
+                    materialProgress.setCancelable(false);
+                    try {
+                        if (!editCheck) {
+                            CreatePageModel pageModel = new CreatePageModel(name, html,
+                                    session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), Constants.clientId);
+                            anInterface.createPage(pageModel, new Callback<String>() {
+                                @Override
+                                public void success(String s, Response response) {
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-                    Methods.showFeatureNotAvailDialog(CreateCustomPageActivity.this);
-                } else {
-                    if (mRiaNodedata != null) {
-                        RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
-                                mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
-                                mRiaNodedata.getButtonLabel(),
-                                RiaEventLogger.EventStatus.COMPLETED.getValue());
-                        mRiaNodedata = null;
-                    }
-                    boolean flag = true;
-                    final String name = titleTxt.getText().toString(), html = mHtmlFormat;
-                    if (!(titleTxt.getText().toString().trim().length() > 0)) {
-                        flag = false;
-                        Methods.showSnackBarNegative(activity, getString(R.string.enter_the_title));
-                    } else if (!(html.trim().length() > 0)) {
-                        flag = false;
-                        Methods.showSnackBarNegative(activity, getString(R.string.enter_the_description));
-                    }
-                    CustomPageInterface anInterface = Constants.restAdapter.create(CustomPageInterface.class);
-                    if (flag) {
-                        final MaterialDialog materialProgress = new MaterialDialog.Builder(activity)
-                                .widgetColorRes(R.color.accentColor)
-                                .content(getString(R.string.loading))
-                                .progress(true, 0)
-                                .show();
-                        materialProgress.setCancelable(false);
-                        try {
-                            if (!editCheck) {
-                                CreatePageModel pageModel = new CreatePageModel(name, html,
-                                        session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), Constants.clientId);
-                                anInterface.createPage(pageModel, new Callback<String>() {
-                                    @Override
-                                    public void success(String s, Response response) {
+                                    Log.d("CUSTOM_PAGE_CHECK", "" + s);
 
-                                        Log.d("CUSTOM_PAGE_CHECK", "" + s);
-
-                                        materialProgress.dismiss();
-                                        if (s != null && s.toString().trim().length() > 0) {
-                                            //Log.d("Create page success", "");
-                                            MixPanelController.track("CreateCustomPage", null);
-                                            long time = System.currentTimeMillis();
-                                            CustomPageFragment.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
-                                            WebEngageController.trackEvent(POST_ACUSTOMPAGE, SUCCESSFULLY_ADDED_CUSTOMPAGE, session.getFpTag());
-                                            Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
-                                            isNewDataAdded = true;
-                                            onCustomPageAddedOrUpdated();
-                                            onBackPressed();
-                                        } else {
-                                            Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
-                                            WebEngageController.trackEvent(POST_ACUSTOMPAGE, ENTER_DIFFERENT_TITLE_AND_TRY_AGAIN, session.getFpTag());
-                                            //Log.d("Create page Fail", "");
-                                        }
-                                    }
-
-                                    @Override
-                                    public void failure(RetrofitError error) {
-                                        materialProgress.dismiss();
-                                        Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
-                                        WebEngageController.trackEvent(POST_ACUSTOMPAGE, SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN, session.getFpTag());
-                                        //Log.d("Create page Fail", "" + error.getMessage());
-                                    }
-                                });
-                            } else {
-                                HashMap<String, String> map = new HashMap<String, String>();
-                                map.put("DisplayName", name);
-                                map.put("HtmlCode", html);
-                                map.put("PageId", "" + curPageid);
-                                map.put("Tag", "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-                                map.put("clientId", Constants.clientId);
-                                anInterface.updatePage(map, new Callback<String>() {
-                                    @Override
-                                    public void success(String s, Response response) {
-                                        materialProgress.dismiss();
-                                        MixPanelController.track("UpdateCustomPage", null);
-                                        WebEngageController.trackEvent(UPDATE_CUSTOMPAGE, UPDATE_A_CUSTOMPAGE, session.getFpTag());
-                                        //Log.d("Update page success", "");
-                                        CustomPageFragment.dataModel.get(curPos).DisplayName = name;
-                                        Methods.showSnackBarPositive(activity, getString(R.string.page_updated));
+                                    materialProgress.dismiss();
+                                    if (s != null && s.toString().trim().length() > 0) {
+                                        //Log.d("Create page success", "");
+                                        MixPanelController.track("CreateCustomPage", null);
+                                        long time = System.currentTimeMillis();
+                                        CustomPageFragment.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
+                                        WebEngageController.trackEvent(POST_ACUSTOMPAGE, SUCCESSFULLY_ADDED_CUSTOMPAGE, session.getFpTag());
+                                        Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
+                                        isNewDataAdded = true;
+                                        onCustomPageAddedOrUpdated();
                                         onBackPressed();
+                                    } else {
+                                        Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
+                                        WebEngageController.trackEvent(POST_ACUSTOMPAGE, ENTER_DIFFERENT_TITLE_AND_TRY_AGAIN, session.getFpTag());
+                                        //Log.d("Create page Fail", "");
                                     }
+                                }
 
-                                    @Override
-                                    public void failure(RetrofitError error) {
-                                        materialProgress.dismiss();
-                                        Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
-                                        WebEngageController.trackEvent(UPDATE_CUSTOMPAGE, FAILED_TO_UPDATE_CUSTOMPAGE, session.getFpTag());
-                                        //Log.d("Update page Fail", "" + error.getMessage());
-                                    }
-                                });
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
-                            materialProgress.dismiss();
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    materialProgress.dismiss();
+                                    Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                                    WebEngageController.trackEvent(POST_ACUSTOMPAGE, SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN, session.getFpTag());
+                                    //Log.d("Create page Fail", "" + error.getMessage());
+                                }
+                            });
+                        } else {
+                            HashMap<String, String> map = new HashMap<String, String>();
+                            map.put("DisplayName", name);
+                            map.put("HtmlCode", html);
+                            map.put("PageId", "" + curPageid);
+                            map.put("Tag", "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+                            map.put("clientId", Constants.clientId);
+                            anInterface.updatePage(map, new Callback<String>() {
+                                @Override
+                                public void success(String s, Response response) {
+                                    materialProgress.dismiss();
+                                    MixPanelController.track("UpdateCustomPage", null);
+                                    WebEngageController.trackEvent(UPDATE_CUSTOMPAGE, UPDATE_A_CUSTOMPAGE, session.getFpTag());
+                                    //Log.d("Update page success", "");
+                                    CustomPageFragment.dataModel.get(curPos).DisplayName = name;
+                                    Methods.showSnackBarPositive(activity, getString(R.string.page_updated));
+                                    onBackPressed();
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    materialProgress.dismiss();
+                                    Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                                    WebEngageController.trackEvent(UPDATE_CUSTOMPAGE, FAILED_TO_UPDATE_CUSTOMPAGE, session.getFpTag());
+                                    //Log.d("Update page Fail", "" + error.getMessage());
+                                }
+                            });
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                        materialProgress.dismiss();
                     }
                 }
             }
@@ -506,7 +488,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
 
     private void onCustomPageAddedOrUpdated() {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if(instance.getDrScoreData().getMetricdetail()==null) return;
+        if (instance.getDrScoreData().getMetricdetail() == null) return;
         instance.getDrScoreData().getMetricdetail().setBoolean_create_custom_page(true);
         instance.updateDocument();
     }
@@ -530,7 +512,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent data = new Intent();
-        data.putExtra("IS_REFRESH", isNewDataAdded );
+        data.putExtra("IS_REFRESH", isNewDataAdded);
         setResult(RESULT_OK, data);
         super.onBackPressed();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);

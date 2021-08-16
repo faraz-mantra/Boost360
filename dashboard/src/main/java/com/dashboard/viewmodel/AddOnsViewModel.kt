@@ -13,7 +13,11 @@ class AddOnsViewModel : BaseViewModel() {
   fun getBoostAddOns(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getBoostAddOns(context).toLiveData()
   }
-  fun getDomainDetailsForFloatingPoint(fpTag: String?, map: Map<String, String>?): LiveData<BaseResponse> {
+
+  fun getDomainDetailsForFloatingPoint(
+    fpTag: String?,
+    map: Map<String, String>?
+  ): LiveData<BaseResponse> {
     return PluginFloatRepository.getDomainDetailsForFloatingPoint(fpTag, map).toLiveData()
   }
 }

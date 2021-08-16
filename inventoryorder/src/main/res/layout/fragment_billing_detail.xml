@@ -4,8 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   tools:context=".ui.order.createorder.BillingDetailFragment">
 
-  <androidx.core.widget.NestedScrollView
-    style="@style/match_match">
+  <androidx.core.widget.NestedScrollView style="@style/match_match">
 
     <androidx.appcompat.widget.LinearLayoutCompat
       style="@style/match_wrap"
@@ -40,8 +39,7 @@
           app:fontFamily="@font/semi_bold"
           app:textType="BODY_2" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-          style="@style/match_wrap">
+        <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_wrap">
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_name"
@@ -219,14 +217,14 @@
 
       <include
         android:id="@+id/layout_order_shipping_address"
-        layout="@layout/layout_order_address"
         style="@style/match_wrap"
+        layout="@layout/layout_order_address"
         android:layout_margin="@dimen/size_12" />
 
       <include
         android:id="@+id/layout_order_billing_address"
-        layout="@layout/layout_order_address"
         style="@style/match_wrap"
+        layout="@layout/layout_order_address"
         android:layout_margin="@dimen/size_12"
         android:visibility="gone" />
 
@@ -506,7 +504,7 @@
           android:textAllCaps="true"
           android:textColor="@color/white"
           app:fontFamily="@font/semi_bold"
-          app:textType="BODY_1"/>
+          app:textType="BODY_1" />
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/button_go_back"

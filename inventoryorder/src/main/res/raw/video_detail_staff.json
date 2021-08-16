@@ -1,0 +1,20 @@
+{
+  "Fragment Data": {
+    "title": "Learning about",
+    "subject": "Staff Profile"
+  },
+  "Content Video": {
+    "Heading": "Tutorial video",
+    "video thumbnails": "https://firebasestorage.googleapis.com/v0/b/nowfloats-boost.appspot.com/o/staff%20walkthrough%2FStaff%20management%20thumbnail.webp?alt=media&token=3e5be371-eca7-42ae-b5de-4e241ccbd628",
+    "video url": "https://cdn.nowfloats.com/manage/assets/Content/videos/MobileStaffWalkThrough.mp4",
+    "video title": "How to Setup an Staff Profile on Boost 360",
+    "Tutorial contents": [
+      "Step 1. Click on ‘Add A New Staff’.",
+      "Step 2. Fill in the staff details.",
+      "Step 3. Select services from your service list.",
+      "Step 4. Select schedule break time.",
+      "Step 5. Review your staff profile.",
+      "Step 5. Done."
+    ]
+  }
+}

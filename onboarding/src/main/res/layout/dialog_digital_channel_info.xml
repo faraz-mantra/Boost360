@@ -39,7 +39,7 @@
           android:clickable="true"
           android:focusable="true"
           android:padding="@dimen/size_4"
-          android:textColor="@color/light_blue_1"
+          android:textColor="@color/colorAccent_jio"
           app:fontFamily="@font/regular"
           app:textType="HEADING_4"
           tools:alpha="1"
@@ -103,13 +103,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:clickable="true"
-            android:visibility="gone"
             android:focusable="true"
             android:gravity="center_horizontal"
             android:padding="@dimen/size_8"
-            app:textAllCaps="true"
             android:text="@string/not_opted_for_boost_alerts"
             android:textColor="@color/scarlet"
+            android:visibility="gone"
+            app:textAllCaps="true"
             app:textType="SUBHEADING_1" />
 
           <com.framework.views.customViews.CustomTextView

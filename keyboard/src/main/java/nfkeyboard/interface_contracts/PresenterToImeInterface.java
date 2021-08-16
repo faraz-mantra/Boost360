@@ -11,8 +11,12 @@ import android.view.inputmethod.InputConnection;
 
 public interface PresenterToImeInterface {
     InputConnection getImeCurrentInputConnection();
+
     InputBinding getImeCurrentInputBinding();
+
     EditorInfo getImeCurrentEditorInfo();
+
     Dialog getWindow();
+
     void setCandidatesViewShown(boolean p);
 }

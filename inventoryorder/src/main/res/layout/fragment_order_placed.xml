@@ -18,8 +18,7 @@
         android:background="@color/white_smoke_1"
         android:orientation="vertical">
 
-        <RelativeLayout
-          style="@style/match_wrap">
+        <RelativeLayout style="@style/match_wrap">
 
           <com.framework.views.customViews.CustomImageView
             android:layout_width="match_parent"
@@ -34,18 +33,18 @@
         </RelativeLayout>
 
         <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tv_name"
-            style="@style/wrap_wrap"
-            android:layout_marginTop="@dimen/size_20"
-            android:layout_marginBottom="@dimen/size_12"
-            android:gravity="center"
-            android:paddingHorizontal="@dimen/size_30"
-            android:text="@string/order_placed_and_confirmed_successfully"
-            android:textColor="@color/black_4a4a4a"
-            android:textSize="24sp"
-            app:fontFamily="@font/regular"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+          android:id="@+id/tv_name"
+          style="@style/wrap_wrap"
+          android:layout_marginTop="@dimen/size_20"
+          android:layout_marginBottom="@dimen/size_12"
+          android:gravity="center"
+          android:paddingHorizontal="@dimen/size_30"
+          android:text="@string/order_placed_and_confirmed_successfully"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="24sp"
+          app:fontFamily="@font/regular"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
       </LinearLayout>
 
       <androidx.constraintlayout.widget.ConstraintLayout

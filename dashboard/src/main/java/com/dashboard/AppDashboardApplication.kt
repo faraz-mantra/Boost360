@@ -1,11 +1,11 @@
 package com.dashboard
 
 import androidx.multidex.MultiDexApplication
+import com.dashboard.rest.EndPoints
 import com.dashboard.rest.EndPoints.BOOST_KIT_NEW_BASE
 import com.dashboard.rest.EndPoints.DEV_BOOST_KIT_URL
+import com.dashboard.rest.EndPoints.NOW_FLOATS_BASE
 import com.dashboard.rest.EndPoints.PLUGIN_FLOATS_URL
-import com.dashboard.rest.EndPoints.WEB_ACTION_API_BASE
-import com.dashboard.rest.EndPoints.WEB_ACTION_KITSUNE_BASE
 import com.dashboard.rest.EndPoints.WITH_FLOATS_BASE
 import com.dashboard.rest.apiClients.*
 import com.framework.BaseApplication
@@ -17,16 +17,22 @@ open class AppDashboardApplication : BaseApplication() {
 
   companion object {
     lateinit var instance: MultiDexApplication
+
     @JvmStatic
     fun initModule(application: MultiDexApplication) {
+      BaseApplication.initModule(application)
       PreferencesUtils.initSharedPreferences(application)
-      BaseApplication.instance = application
+      apiInitialize()
+    }
+
+    @JvmStatic
+    fun apiInitialize() {
       DevBoostKitApiClient.shared.init(DEV_BOOST_KIT_URL)
       DevBoostKitNewApiClient.shared.init(BOOST_KIT_NEW_BASE)
       WithFloatsApiClient.shared.init(WITH_FLOATS_BASE)
+      WithFloatsTwoApiClient.shared.init(EndPoints.WITH_FLOATS_TWO_BASE)
       PluginFloatsApiClient.shared.init(PLUGIN_FLOATS_URL)
-      WebActionKitsuneClient.shared.init(WEB_ACTION_KITSUNE_BASE)
-      WebActionApiBoostkitClient.shared.init(WEB_ACTION_API_BASE)
+      NowFloatsApiClient.shared.init(NOW_FLOATS_BASE)
     }
   }
 }

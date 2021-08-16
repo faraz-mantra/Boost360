@@ -9,7 +9,8 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
-class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) : AppBaseRecyclerViewHolder<ItemBusinessManagementBinding>(binding) {
+class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) :
+  AppBaseRecyclerViewHolder<ItemBusinessManagementBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -25,7 +26,7 @@ class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) : AppBaseR
     } else {
       val subTitle = data.getPendingText()
       binding.btnTitle.text = if (subTitle.isNullOrEmpty()) data.type?.title else subTitle
-      getColor(R.color.light_grey_3)?.let { binding.txtDes.setTextColor(it) }
+      getColor(R.color.red_light_1)?.let { binding.txtDes.setTextColor(it) }
       binding.viewBtn.visible()
       binding.viewImage.visible()
       binding.lottySyncOk.gone()
@@ -34,7 +35,20 @@ class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) : AppBaseR
       binding.progressBar.setProgressWithAnimation((data.percentage ?: 0).toFloat(), 1000)
       data.type?.icon?.let { binding.imgIcon.setImageResource(it) }
     }
-    binding.mainContent.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal) }
+    binding.mainContent.setOnClickListener {
+      listener?.onItemClick(
+        position,
+        data,
+        RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal
+      )
+    }
+    binding.btnAddItemStart.setOnClickListener {
+      listener?.onItemClick(
+        position,
+        data,
+        RecyclerViewActionType.BUSINESS_SETUP_ADD_ITEM_START.ordinal
+      )
+    }
   }
 
   private fun startCheckAnimation(isAnimate: Boolean) {

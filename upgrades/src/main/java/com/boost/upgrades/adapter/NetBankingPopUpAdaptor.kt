@@ -10,48 +10,51 @@ import com.boost.upgrades.R
 import com.boost.upgrades.datamodule.SingleNetBankData
 import com.boost.upgrades.interfaces.NetBankingListener
 
-class NetBankingPopUpAdaptor(itemList: ArrayList<SingleNetBankData>,val listener: NetBankingListener) : RecyclerView.Adapter<NetBankingPopUpAdaptor.upgradeViewHolder>(), View.OnClickListener {
+class NetBankingPopUpAdaptor(
+  itemList: ArrayList<SingleNetBankData>,
+  val listener: NetBankingListener
+) : RecyclerView.Adapter<NetBankingPopUpAdaptor.upgradeViewHolder>(), View.OnClickListener {
 
-    private var list = ArrayList<SingleNetBankData>()
-    private lateinit var context: Context
+  private var list = ArrayList<SingleNetBankData>()
+  private lateinit var context: Context
 
-    init {
-        this.list = itemList
-    }
+  init {
+    this.list = itemList
+  }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
-        val itemView = LayoutInflater.from(parent?.context).inflate(
-            R.layout.netbanking_popup_item, parent, false
-        )
-        context = itemView.context
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
+    val itemView = LayoutInflater.from(parent?.context).inflate(
+      R.layout.netbanking_popup_item, parent, false
+    )
+    context = itemView.context
 
 
-        itemView.setOnClickListener(this)
-        return upgradeViewHolder(itemView)
-    }
+    itemView.setOnClickListener(this)
+    return upgradeViewHolder(itemView)
+  }
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+  override fun getItemCount(): Int {
+    return list.size
+  }
 
-    override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-        holder.bankName.setText(list.get(position).bankName)
-    }
+  override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
+    holder.bankName.setText(list.get(position).bankName)
+  }
 
-    override fun onClick(v: View?) {
-        listener.popupSelectedBank(v!!)
-    }
+  override fun onClick(v: View?) {
+    listener.popupSelectedBank(v!!)
+  }
 
-//    fun addupdates(itemlist: List<String>) {
-//        val initPosition = list.size
+  fun addupdates(itemlist: List<SingleNetBankData>) {
+    val initPosition = list.size
 //        list = hash
-//        list.addAll(itemlist)
-//        notifyItemRangeInserted(initPosition, list.size)
-//    }
+    list.addAll(itemlist)
+    notifyItemRangeInserted(initPosition, list.size)
+  }
 
-    class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+  class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var bankName = itemView.findViewById<TextView>(R.id.netbanking_bankname)!!
+    var bankName = itemView.findViewById<TextView>(R.id.netbanking_bankname)!!
 
-    }
+  }
 }

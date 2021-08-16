@@ -16,7 +16,8 @@ import com.framework.models.BaseViewModel
 import com.framework.views.blur.BlurView
 import com.framework.views.blur.RenderScriptBlur
 
-abstract class BaseDialogFragment<T : ViewDataBinding, ViewModel : BaseViewModel?> : DialogFragment(), View.OnClickListener {
+abstract class BaseDialogFragment<T : ViewDataBinding, ViewModel : BaseViewModel?> :
+  DialogFragment(), View.OnClickListener {
 
   protected var binding: T? = null
   protected var viewModel: ViewModel? = null
@@ -24,7 +25,11 @@ abstract class BaseDialogFragment<T : ViewDataBinding, ViewModel : BaseViewModel
   protected abstract fun getViewModelClass(): Class<ViewModel>
   protected var navigator: Navigator? = null
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
     baseActivity = activity as BaseActivity<*, *>
     viewModel = ViewModelProviders.of(this).get(getViewModelClass())
@@ -84,11 +89,13 @@ abstract class BaseDialogFragment<T : ViewDataBinding, ViewModel : BaseViewModel
     params.height = getHeight() ?: params.height
     window.attributes = params
   }
+
   fun BlurView.setBlur(value: Float) {
     val decorView: View? = activity?.window?.decorView
     val rootView: ViewGroup = decorView?.findViewById(android.R.id.content) as ViewGroup
     val windowBackground: Drawable = decorView.background
     this.setupWith(rootView)?.setFrameClearDrawable(windowBackground)
-        ?.setBlurAlgorithm(RenderScriptBlur(activity))?.setBlurRadius(value)?.setHasFixedTransformationMatrix(true)
+      ?.setBlurAlgorithm(RenderScriptBlur(activity))?.setBlurRadius(value)
+      ?.setHasFixedTransformationMatrix(true)
   }
 }

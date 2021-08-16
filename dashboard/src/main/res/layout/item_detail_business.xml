@@ -19,23 +19,23 @@
       android:orientation="vertical">
 
       <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Business"
         android:ellipsize="end"
         android:maxLines="1"
-        android:id="@+id/txt_title"
         android:textColor="@color/black_4f4f4f"
-        app:textType="CAPTION" />
+        app:textType="CAPTION"
+        tools:text="Business" />
 
       <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_1"
-        app:fontFamily="@font/barlow_medium"
-        android:id="@+id/txt_value"
-        app:textType="HEADING_7"
         android:textColor="@color/colorAccent"
+        app:fontFamily="@font/barlow_medium"
+        app:textType="HEADING_7"
         tools:text="3,45,890" />
     </LinearLayout>
 

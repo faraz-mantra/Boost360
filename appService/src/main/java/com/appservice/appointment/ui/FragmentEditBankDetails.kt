@@ -14,7 +14,7 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentEditBankDetailsBinding
 import com.appservice.rest.TaskCode
-import com.appservice.staffs.ui.UserSession
+import com.appservice.ui.staffs.UserSession
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
@@ -44,6 +44,7 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
     }
 
     private fun getAccountDetails() {
+        showProgress()
         hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_bank_details))
     }
 
@@ -80,18 +81,21 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
     }
 
     private fun addBankAccount() {
-        hitApi(viewModel?.addBankAccount(UserSession.clientId,UserSession.clientId,addBankAccountRequest!!), R.string.error_adding_bank_account)
+        showProgress()
+        hitApi(viewModel?.addBankAccount(UserSession.clientId, UserSession.clientId,addBankAccountRequest!!), R.string.error_adding_bank_account)
 
     }
 
     override fun onSuccess(it: BaseResponse) {
         super.onSuccess(it)
         when (it.taskcode) {
+            TaskCode.ADD_BANK_ACCOUNT.ordinal -> onAddingBankAccount(it)
             TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> onReceivedBankDetails(it)
         }
     }
 
     private fun onReceivedBankDetails(it: BaseResponse) {
+        hideProgress()
         val paymentProfileResponse = it as PaymentProfileResponse
         binding?.edtBankName?.setText(paymentProfileResponse.result?.bankAccountDetails?.bankName)
         binding?.edtAccountName?.setText(paymentProfileResponse.result?.bankAccountDetails?.accountName)
@@ -107,6 +111,14 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
         }
 
     }
-    
+
+    private fun onAddingBankAccount(it: BaseResponse) {
+        hideProgress()
+        if (it.isSuccess()) {
+            val bundle = Bundle()
+            bundle.putBoolean(IntentConstant.IS_EDIT.name, false)
+            startFragmentActivity(FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, bundle, false, isResult = false)
+        }
+    }
 
 }

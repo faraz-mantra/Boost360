@@ -29,7 +29,11 @@ class WebBoostKitViewModel : BaseViewModel() {
     return WebActionBoostKitRepository.updateKycData(auth, request).toLiveData()
   }
 
-  fun putUploadFile(auth: String?, file: MultipartBody.Part?, assetFileName: String?): LiveData<BaseResponse> {
+  fun putUploadFile(
+    auth: String?,
+    file: MultipartBody.Part?,
+    assetFileName: String?
+  ): LiveData<BaseResponse> {
     return WebActionBoostKitRepository.putUploadImageProfile(auth, file, assetFileName).toLiveData()
   }
 

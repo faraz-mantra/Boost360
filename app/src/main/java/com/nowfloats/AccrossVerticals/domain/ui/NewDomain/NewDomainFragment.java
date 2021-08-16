@@ -44,11 +44,11 @@ import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 
 public class NewDomainFragment extends Fragment {
 
+    ProgressDialog vmnProgressBar;
+    String[] domainSupportType = new String[]{};
     private NewDomainViewModel mViewModel;
     private Spinner domainSupportTypeSpinneer;
     private TextView confirm_btn;
-    ProgressDialog vmnProgressBar;
-    String[] domainSupportType = new String[]{};
 
     public static NewDomainFragment newInstance() {
         return new NewDomainFragment();
@@ -97,7 +97,7 @@ public class NewDomainFragment extends Fragment {
 //        });
     }
 
-    public void setHeader(View view){
+    public void setHeader(View view) {
         LinearLayout backButton;
         TextView title;
 
@@ -113,7 +113,7 @@ public class NewDomainFragment extends Fragment {
         });
     }
 
-    void loadData(){
+    void loadData() {
         try {
             showProgress();
             APIInterfaces APICalls = new RestAdapter.Builder()
@@ -128,19 +128,19 @@ public class NewDomainFragment extends Fragment {
                 public void success(String[] dataList, Response response) {
                     hideProgress();
 
-                    if(response.getStatus() == 200 && dataList != null && dataList.length > 0 ) {
+                    if (response.getStatus() == 200 && dataList != null && dataList.length > 0) {
                         domainSupportType = dataList;
-                        ArrayList<String> domainList = new ArrayList<String>(Arrays.asList(dataList) );
-                        if(domainList.contains(".COM")){
+                        ArrayList<String> domainList = new ArrayList<String>(Arrays.asList(dataList));
+                        if (domainList.contains(".COM")) {
 //                            Log.v("domainSupportType", "contains " +domainList.contains(".COM"));
                             domainList.remove(".COM");
-                            domainList.add(0,".COM");
+                            domainList.add(0, ".COM");
                         }
-                        if(domainList.contains(".CO.ZA")){
+                        if (domainList.contains(".CO.ZA")) {
                             domainList.remove(".CO.ZA");
                             domainList.add(".CO.ZA");
                         }
-                        if(domainList.contains(".CA")){
+                        if (domainList.contains(".CA")) {
                             domainList.remove(".CA");
                             domainList.add(".CA");
                         }
@@ -151,7 +151,7 @@ public class NewDomainFragment extends Fragment {
                         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         //Setting the ArrayAdapter data on the Spinner
                         domainSupportTypeSpinneer.setAdapter(aa);
-                    }else{
+                    } else {
                         Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
                     }
                 }
@@ -163,7 +163,7 @@ public class NewDomainFragment extends Fragment {
                 }
             });
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
