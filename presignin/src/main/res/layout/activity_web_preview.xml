@@ -93,7 +93,6 @@
       android:id="@+id/webview"
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:background="@color/green_27AE60"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"

@@ -93,6 +93,8 @@
       android:layout_marginTop="@dimen/_20sdp"
       android:fontFamily="@font/semi_bold"
       android:text="@string/need_help"
+      app:fontFamily="@font/bold"
+      android:textColor="@color/colorAccentLight"
       app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
       tools:ignore="MissingConstraints,UnknownId" />
   </androidx.constraintlayout.widget.ConstraintLayout>
