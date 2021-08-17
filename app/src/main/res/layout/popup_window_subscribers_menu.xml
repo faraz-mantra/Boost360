@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <com.framework.views.customViews.CustomCardView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/size_6"
+    app:cardBackgroundColor="@color/white"
+    app:cardUseCompatPadding="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/ll_subscribers"
+      android:layout_width="@dimen/size_140"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:paddingHorizontal="@dimen/size_4"
+      android:paddingVertical="@dimen/size_6">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/share_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:background="?android:selectableItemBackground"
+        android:clickable="false"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:text="Unsubscribe"
+        android:textColor="@color/gray_828282"
+        android:textSize="14sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </com.framework.views.customViews.CustomCardView>
+</layout>
