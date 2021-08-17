@@ -333,6 +333,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     serviceDetailFragment?.onActivityResult(requestCode, resultCode, data)
     serviceInformationFragment?.onActivityResult(requestCode, resultCode, data)
     productInformationFragment?.onActivityResult(requestCode, resultCode, data)
+    fragmentProductListing?.onActivityResult(requestCode, resultCode, data)
     productDetailFragment?.onActivityResult(requestCode, resultCode, data)
     weeklyAppointmentFragment?.onActivityResult(requestCode, resultCode, data)
     createCategoryFragment?.onActivityResult(requestCode, resultCode, data)
@@ -344,6 +345,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     serviceCatalogHomeFragment?.onActivityResult(requestCode, resultCode, data)
     fragmentEditAccountDetails?.onActivityResult(requestCode, resultCode, data)
     fragmentEcomDeliveryConfig?.onActivityResult(requestCode, resultCode, data)
+    fragmentEcommerceCustomerInvoiceSetup?.onActivityResult(requestCode, resultCode, data)
   }
 }
 

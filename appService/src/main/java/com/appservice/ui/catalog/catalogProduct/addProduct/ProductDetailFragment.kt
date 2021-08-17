@@ -53,6 +53,8 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.pref.clientId
+import com.framework.pref.clientId1
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
@@ -79,7 +81,6 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private var currencyType: String? = null
   private var fpId: String? = null
   private var fpTag: String? = null
-  private var clientId: String? = null
   private var externalSourceId: String? = null
   private var applicationId: String? = null
   private var userProfileId: String? = null
@@ -127,7 +128,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       binding?.btnOtherInfo,
       binding?.bankAccountView
     )
-    binding?.toggleProduct?.isOn = product?.isPriceToggleOn()!!
+    binding?.toggleProduct?.isOn = product?.isPriceToggleOn()?:false
     binding?.payProductView?.visibility = View.GONE
     binding?.toggleProduct?.setOnToggledListener { _, _ ->
       initProductToggleView()
@@ -166,7 +167,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       binding?.discountEdt?.setText("")
       return
     }
-//    val finalAmount = String.format("%.1f", (amountD - ((amountD * distD) / 100))).toFloatOrNull() ?: 0F
+//    val finalxAmount = String.format("%.1f", (amountD - ((amountD * distD) / 100))).toFloatOrNull() ?: 0F
     val finalAmount = String.format("%.1f", (amountD - distD)).toFloatOrNull() ?: 0F
     binding?.finalPriceTxt?.setText("$currencyType $finalAmount")
   }
@@ -241,7 +242,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
               if ((it1.error is NoNetworkException).not()) {
                 val response2 = it1 as? ProductGstResponse
                 if (response2?.status == 200 && response2.data.isNullOrEmpty().not()) {
-                  gstProductData = response2.data?.get(0)
+                  gstProductData = response2.data?.first()
                 }
               } else showError(resources.getString(R.string.internet_connection_not_available))
               hideProgress()
@@ -328,10 +329,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
-    currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name)
+    currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?:"₹"
     fpId = arguments?.getString(IntentConstant.FP_ID.name)
     fpTag = arguments?.getString(IntentConstant.FP_TAG.name)
-    clientId = arguments?.getString(IntentConstant.CLIENT_ID.name)
     externalSourceId = arguments?.getString(IntentConstant.EXTERNAL_SOURCE_ID.name)
     applicationId = arguments?.getString(IntentConstant.APPLICATION_ID.name)
     userProfileId = arguments?.getString(IntentConstant.USER_PROFILE_ID.name)
@@ -540,8 +540,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       showLongToast(
         if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
           R.string.product_saved_successfully
-        )
-      )
+        ))
       goBack()
     }
   }
@@ -549,7 +548,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private fun goBack() {
     hideProgress()
     val data = Intent()
-    data.putExtra("LOAD", true)
+    data.putExtra(IntentConstant.IS_UPDATED.name, true)
     baseActivity?.setResult(Activity.RESULT_OK, data)
     baseActivity?.finish()
   }
@@ -563,6 +562,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
 
   private fun isValid(): Boolean {
+    if (product==null) product = CatalogProduct()
     val productName = binding?.tvProductName?.text.toString()
     val productCategory = binding?.edtProductCategory?.text.toString()
     val productDesc = binding?.tvDesc?.text.toString()

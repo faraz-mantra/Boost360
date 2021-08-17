@@ -18,6 +18,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -40,6 +41,7 @@ import com.appservice.viewmodel.ProductViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.clientId
 import com.framework.utils.NetworkUtils
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
@@ -49,7 +51,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     override fun getLayout(): Int {
         return R.layout.fragment_product_listing
     }
-
+    private  val TAG = "FragmentProductListing"
     private val list: ArrayList<CatalogProduct> = arrayListOf()
     private val finalList: ArrayList<CatalogProduct> = arrayListOf()
     private var adapterProduct: AppBaseRecyclerViewAdapter<CatalogProduct>? = null
@@ -58,7 +60,6 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     private var currencyType: String? = "INR"
     private var fpId: String? = null
     private var fpTag: String? = null
-    private var clientId: String? = null
     private var externalSourceId: String? = null
     private var applicationId: String? = null
     private var userProfileId: String? = null
@@ -74,13 +75,12 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     }
 
     companion object {
-        fun newInstance(currencyType: String?, fpId: String?, fpTag: String?, clientId: String?, externalSourceId: String?, applicationId: String?, userProfileId: String?): FragmentProductListing {
+        fun newInstance( fpId: String?, fpTag: String?, externalSourceId: String?, applicationId: String?, userProfileId: String?): FragmentProductListing {
             val bundle = Bundle()
             bundle.putString(IntentConstant.CURRENCY_TYPE.name, "INR")
             bundle.putString(IntentConstant.FP_ID.name, fpId)
             bundle.putString(IntentConstant.FP_TAG.name, fpTag)
             bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
-            bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
             bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name, externalSourceId)
             bundle.putString(IntentConstant.APPLICATION_ID.name, applicationId)
             val productListingFragment = FragmentProductListing()
@@ -101,18 +101,17 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
         super.onCreateView()
         getBundleData()
         layoutManagerN = LinearLayoutManager(baseActivity)
-        getProductListing(isFirst = true, skipBy = limit)
         layoutManagerN?.let { scrollPagingListener(it) }
+        getProductListing(isFirst = true, skipBy = limit)
         setOnClickListener(binding?.cbAddService, binding?.productListingEmpty?.cbAddService)
     }
 
 
     private fun getBundleData() {
         isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
-        currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
+        currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "₹"
         fpId = arguments?.getString(IntentConstant.FP_ID.name)
         fpTag = arguments?.getString(IntentConstant.FP_TAG.name)
-        clientId = arguments?.getString(IntentConstant.CLIENT_ID.name)
         externalSourceId = arguments?.getString(IntentConstant.EXTERNAL_SOURCE_ID.name)
         applicationId = arguments?.getString(IntentConstant.APPLICATION_ID.name)
         userProfileId = arguments?.getString(IntentConstant.USER_PROFILE_ID.name)
@@ -124,7 +123,9 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
                 if (!isLastPageD) {
                     isLoadingD = true
                     adapterProduct?.addLoadingFooter(CatalogProduct().getLoaderItem())
-                    limit += limit
+                    Log.i(TAG, "scroll limit: "+limit)
+                    TOTAL_ELEMENTS=finalList.size
+                    Log.i(TAG, "scroll total elements: "+TOTAL_ELEMENTS)
                     getProductListing(skipBy = limit)
                 }
             }
@@ -154,20 +155,22 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
         if (listProduct.isNullOrEmpty().not()) {
             removeLoader()
             setEmptyView(View.GONE)
-            TOTAL_ELEMENTS = limit
+            Log.i(TAG, "response size: "+resultProduct?.size)
             finalList.addAll(listProduct!!)
+            limit =finalList.size
             list.clear()
             list.addAll(finalList)
             isLastPageD = (finalList.size == TOTAL_ELEMENTS)
+            Log.i(TAG, "islastpage: "+isLastPageD)
             setAdapterNotify()
-            (parentFragment as FragmentProductHome).setTabTitle("${getString(R.string.products)} (${TOTAL_ELEMENTS})", 0)
+            (parentFragment as FragmentProductHome).setTabTitle("${getString(R.string.products)} (${limit})", 0)
 
         } else if (isFirstLoad) setEmptyView(View.VISIBLE)
         else if (listProduct.isNullOrEmpty().not()) {
             list.clear()
             list.addAll(listProduct!!)
             setAdapterNotify()
-        }
+        }else removeLoader()
     }
 
 
@@ -339,7 +342,6 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
         if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
             val isRefresh = data?.getBooleanExtra(IntentConstant.IS_UPDATED.name, false) ?: false
             if (isRefresh) {
-                this.limit = PaginationScrollListener.PAGE_START
                 this.limit = PaginationScrollListener.PAGE_SIZE
                 getProductListing(isFirst = true, skipBy = limit)
             }

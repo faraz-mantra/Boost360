@@ -47,27 +47,6 @@
                     android:layout_marginStart="@dimen/size_20"
                     android:text="@string/upload_signature_to_print_on_invoice" />
 
-                <FrameLayout
-                    style="@style/match_wrap"
-                    android:layout_marginHorizontal="@dimen/size_20"
-                    android:layout_marginTop="@dimen/size_20"
-                    android:background="@drawable/blue_stroke"
-                    android:foreground="?android:selectableItemBackground"
-                    android:visibility="gone">
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/size_36"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="@dimen/size_20"
-                        android:drawableStart="@drawable/ic_upload_blue"
-                        android:drawablePadding="@dimen/size_10"
-                        android:gravity="center"
-                        android:text="@string/upload_signature"
-                        android:textAllCaps="true"
-                        android:textColor="@color/blue_4A90E2" />
-
-                </FrameLayout>
 
                 <include
                     android:id="@+id/layout_image_preview"
@@ -91,7 +70,7 @@
                         android:layout_gravity="center"
                         android:drawablePadding="@dimen/size_8"
                         android:gravity="center"
-                        android:text="Upload Signature"
+                        android:text="@string/upload_signature"
                         android:textColor="@color/blue_4A90E2"
                         app:drawableLeftCompat="@drawable/ic_upload_blue"
                         app:fontFamily="@font/semi_bold"
@@ -129,6 +108,7 @@
                         android:layout_marginTop="@dimen/size_4"
                         android:buttonTint="@color/gray_bbb"
                         android:checked="true"
+                      android:enabled="false"
                         android:text="@string/my_bank_account_details"
                         android:textColor="@color/black_4a4a4a"
                         app:textType="HEADING_6" />
@@ -139,6 +119,8 @@
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/gray_bbb"
                         android:text="@string/my_upi_id"
+                      android:checked="true"
+                      android:enabled="false"
                         app:buttonTint="@color/yellow_ffb900"
                         android:textColor="@color/black_4a4a4a"
                         app:textType="HEADING_6" />
