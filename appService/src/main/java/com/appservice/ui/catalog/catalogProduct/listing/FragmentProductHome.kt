@@ -75,7 +75,7 @@ class FragmentProductHome : AppBaseFragment<FragmentServiceHomeContainerBinding,
         override fun getItem(position: Int): Fragment {
 
             return when (position) {
-                0 -> FragmentProductListing.newInstance(currencyType, fpId, fpTag, clientId, externalSourceId, applicationId, userProfileId)
+                0 -> FragmentProductListing.newInstance( fpId, fpTag, externalSourceId, applicationId, userProfileId)
                 1 -> FragmentProductCategory.newInstance(fpTag)
                 else -> requireParentFragment()
             }

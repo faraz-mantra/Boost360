@@ -61,12 +61,15 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
     }
 
     private fun getprofileDetails() {
+        showProgress()
         hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_payment_details))
     }
 
     override fun onSuccess(it: BaseResponse) {
         super.onSuccess(it)
+        hideProgress()
         when (it.taskcode) {
+
             TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> {
                 if (data == null) data = PaymentProfileResponse()
                 this.data = it as PaymentProfileResponse
@@ -88,6 +91,11 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
                 showShortToast(getString(R.string.merchant_upi_added))
             }
         }
+    }
+
+    override fun onFailure(it: BaseResponse) {
+        super.onFailure(it)
+        hideProgress()
     }
 
     private fun updatePreviousData() {
@@ -152,6 +160,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
         bottomSheetTaxInvoicesForPurchases.upiId = { binding?.upiId?.text = it.toString() }
         bottomSheetTaxInvoicesForPurchases.clickType = {
             if (it == BottomEcommerceTaxInvoices.ClickType.SAVECHANGES) {
+                showProgress()
 //                hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), (R.string.error_updating_gst_details))
                 hitApi(viewModel?.addMerchantUPI(UpdateUPIRequest(UserSession.clientId, uPIId = binding?.upiId?.text.toString(), UserSession.fpId)), (R.string.error_updating_upi_id))
                 if (imageList.isNotEmpty())
@@ -203,6 +212,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
         bottomSheetConfirmGST.arguments = bundle
         bottomSheetConfirmGST.clickType = {
             if (it == BottomSheetConfirmGST.ClickType.SAVECHANGES) {
+                showProgress()
                 hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), (R.string.error_updating_gst_details))
             }
             if (it == BottomSheetConfirmGST.ClickType.CANCEL) {

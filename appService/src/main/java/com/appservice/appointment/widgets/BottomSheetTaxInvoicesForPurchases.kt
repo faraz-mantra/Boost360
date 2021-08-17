@@ -1,6 +1,7 @@
 package com.appservice.appointment.widgets
 
 import android.view.View
+import androidx.core.view.isVisible
 import com.appservice.R
 import com.appservice.appointment.model.PaymentResult
 import com.appservice.appointment.ui.FragmentCustomerInvoiceSetup
@@ -9,6 +10,7 @@ import com.appservice.databinding.BottomSheetSetupTaxInvoicesForCustomerPurchase
 import com.appservice.model.FileModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
+import com.framework.extensions.isVisible
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.models.BaseViewModel
@@ -60,7 +62,7 @@ class BottomSheetTaxInvoicesForPurchases : BaseBottomSheetDialog<BottomSheetSetu
     fun setImage(parent: FragmentCustomerInvoiceSetup) {
         binding?.btnClickPhoto?.gone()
         binding?.layoutImagePreview?.root?.visible()
-        binding?.layoutImagePreview?.ctvSize?.text = paymentProfileDetails?.taxDetails?.gSTDetails?.documentName
+        binding?.layoutImagePreview?.ctvSize?.text = if (paymentProfileDetails?.taxDetails?.gSTDetails?.documentName.isNullOrEmpty()) paymentProfileDetails?.merchantSignature?.split("/")?.last()  else paymentProfileDetails?.taxDetails?.gSTDetails?.documentName
         activity?.glideLoad(binding?.layoutImagePreview?.image, paymentProfileDetails?.merchantSignature)
         imageClickListners(parent)
 
@@ -94,12 +96,8 @@ class BottomSheetTaxInvoicesForPurchases : BaseBottomSheetDialog<BottomSheetSetu
                 clickType(ClickType.CANCEL)
             }
             binding?.btnSaveChanges -> {
-                if (validateUPI(binding?.cetUpiId?.text.toString())) {
+                if (isValid())
                     setDataAndGoBack()
-
-                } else {
-                    showLongToast(getString(R.string.please_enter_valid_upi_id))
-                }
             }
             binding?.btnClickPhoto -> {
                 (requireParentFragment() as FragmentCustomerInvoiceSetup).openImagePicker()
@@ -114,6 +112,16 @@ class BottomSheetTaxInvoicesForPurchases : BaseBottomSheetDialog<BottomSheetSetu
         clickType(ClickType.SAVECHANGES)
         dismiss()
     }
+     fun isValid(): Boolean {
+         if (binding?.btnClickPhoto?.isVisible()==true){
+             showLongToast(getString(R.string.please_choose_signature))
+             return false
+         }else if (validateUPI(binding?.cetUpiId?.text.toString()).not()){
+             showLongToast(getString(R.string.please_enter_valid_upi_id))
+             return false
+         }
+         return true
+     }
 
     companion object {
         fun validateUPI(upi: String?): Boolean {
