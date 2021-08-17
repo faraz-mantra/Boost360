@@ -15,10 +15,10 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/ll_subscribers"
-      android:layout_width="@dimen/size_120"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-      android:paddingVertical="@dimen/size_10">
+      android:padding="@dimen/size_16">
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/subscribers_text"
@@ -28,7 +28,6 @@
         android:background="?android:selectableItemBackground"
         android:clickable="false"
         android:fontFamily="@font/semi_bold"
-        android:layout_marginStart="@dimen/_10sdp"
         android:text="Unsubscribe"
         android:textColor="@color/gray_828282"
         app:textType="HEADING_6" />
