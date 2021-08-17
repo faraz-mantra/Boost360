@@ -13,8 +13,7 @@ import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 import com.framework.webengageconstant.*
 
-class DesiredLoginMethodActivity :
-  BaseActivity<ActivityDesiredLoginMethodBinding, BaseViewModel>() {
+class DesiredLoginMethodActivity : BaseActivity<ActivityDesiredLoginMethodBinding, BaseViewModel>() {
 
 
   override fun getLayout(): Int {
