@@ -198,13 +198,14 @@
             style="@style/match_wrap"
             android:layout_weight="1"
             android:drawableEnd="@drawable/ic_arrow_down_orange"
+            android:drawableTint="@color/colorAccentLight"
             android:drawablePadding="@dimen/size_8"
             android:ellipsize="end"
             android:gravity="right"
             android:includeFontPadding="false"
             android:maxLines="1"
             android:text="@string/collect_later"
-            android:textColor="@color/orange"
+            android:textColor="@color/colorAccentLight"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_1" />
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -252,7 +253,7 @@
           style="@style/wrap_wrap"
           android:text="@string/add_more"
           android:textAllCaps="false"
-          android:textColor="@color/orange"
+          android:textColor="@color/colorAccentLight"
           app:fontFamily="@font/semi_bold"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintRight_toRightOf="parent"
@@ -381,7 +382,7 @@
             android:paddingEnd="@dimen/size_10"
             android:text="@string/edit"
             android:textAllCaps="false"
-            android:textColor="@color/orange"
+            android:textColor="@color/colorAccentLight"
             android:visibility="gone"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_1" />
@@ -396,7 +397,7 @@
             android:maxLines="1"
             android:text="@string/add"
             android:textAllCaps="false"
-            android:textColor="@color/orange"
+            android:textColor="@color/colorAccentLight"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_1" />
 
