@@ -13,14 +13,11 @@
     android:background="@drawable/ic_gradient_dark_grey"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-      android:id="@+id/view_top"
+    <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:layout_weight="1"
       android:background="@drawable/rounded_bottom_white_d"
-      android:gravity="center"
-      android:orientation="vertical"
+      android:layout_weight="1"
       android:paddingStart="@dimen/size_20"
       android:paddingEnd="@dimen/size_20"
       app:layout_constraintEnd_toEndOf="parent"
@@ -28,31 +25,52 @@
       app:layout_constraintTop_toTopOf="parent">
 
       <com.framework.views.customViews.CustomImageView
-        android:id="@+id/image"
-        android:layout_width="@dimen/size_180"
-        android:layout_height="@dimen/size_180"
-        tools:srcCompat="@drawable/ic_website_content_d" />
-
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_26"
-        android:gravity="center"
-        android:textColor="@color/colorAccent"
-        android:textSize="24sp"
-        app:fontFamily="@font/bold"
-        tools:text="Add-ons to make your website more powerful" />
+        android:layout_gravity="end|top"
+        android:id="@+id/close_btn"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_marginTop="@dimen/size_20"
+        app:srcCompat="@drawable/ic_close_dashboard" />
 
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_26"
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/view_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
-        app:textType="HEADING_6"
-        tools:text="You can explore and purchase Add-ons for your website starting at ₹50/month." />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/image"
+          android:layout_width="@dimen/size_300"
+          android:layout_height="@dimen/size_200"
+          tools:srcCompat="@drawable/ic_website_content_d" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_26"
+          android:gravity="center"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="24sp"
+          app:fontFamily="@font/bold"
+          tools:text="Manage everything on your business website" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/desc"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_26"
+          android:gravity="center"
+          android:textColor="@color/black_4a4a4a"
+          app:textType="HEADING_6"
+          tools:text="Make content changes to all the pages of your website including business information, contact details, latest updates, products/services etc." />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </FrameLayout>
+
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
@@ -72,7 +90,7 @@
         android:gravity="center"
         android:textAllCaps="false"
         app:textType="HEADING_6"
-        tools:text="@string/get_started" />
+        tools:text="Manage my website" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
