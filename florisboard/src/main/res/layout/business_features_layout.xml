@@ -53,6 +53,7 @@
 
         <com.framework.views.roundedimageview.RoundedImageView
           android:id="@+id/btn_share"
+            android:visibility="gone"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:background="@color/white"
@@ -365,8 +366,8 @@
     </androidx.cardview.widget.CardView>
 
     <ScrollView
+        android:visibility="gone"
         android:fadeScrollbars="false"
-
         android:id="@+id/feature_not_renewed"
         android:fillViewport="true"
         android:layout_width="match_parent"

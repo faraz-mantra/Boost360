@@ -96,7 +96,7 @@
           android:textAllCaps="true"
           android:textColor="@color/accent_blue"
           android:textSize="12sp"
-          android:visibility="visible" />
+          android:visibility="gone" />
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/btn_share"

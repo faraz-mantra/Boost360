@@ -339,6 +339,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       Timber.e("photos - $it.")
       binding.businessFeatureProgress.gone()
       if (it.isNotEmpty()) {
+        this.photosSet.clear()
         this.photosSet.addAll(it)
         this.photosSet.map { it1 -> it1.gridType = this.gridType }
         binding.rvListPhotos.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
