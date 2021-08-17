@@ -260,6 +260,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             }
 
 
+
 //            }
 
 /*            renewPopUpFragment.show(
@@ -313,6 +314,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             } else {
                 Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
             }*/
+
+
         }
 
         back_button12.setOnClickListener {
@@ -803,18 +806,18 @@ Log.v("package_validity_months", " "+ package_validity_months)
 
                     var validity_days = 30
                     var net_quantity = 1
-                    if(outputExtendedProps.isNullOrEmpty().not()){
-                        val actualQuantity = outputExtendedProps.find { it.Key =="LIMIT" }?.Value
-                        if (actualQuantity.isNullOrEmpty().not()){
-                            net_quantity = actualQuantity?.toInt()!!
-                        }
-                        else{
-                            net_quantity = 1
-                        }
-                    }
-                    else{
-                        net_quantity = 1
-                    }
+//                    if(outputExtendedProps.isNullOrEmpty().not()){
+//                        val actualQuantity = outputExtendedProps.find { it.Key =="LIMIT" }?.Value
+//                        if (actualQuantity.isNullOrEmpty().not()){
+//                            net_quantity = actualQuantity?.toInt()!!
+//                        }
+//                        else{
+//                            net_quantity = 1
+//                        }
+//                    }
+//                    else{
+//                        net_quantity = 1
+//                    }
 
 
                     if (!bundles_in_cart && default_validity_months > 1) {
@@ -822,10 +825,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
                         totalValidityDays = validity_days
                         Log.v("totalValidityDays", " "+ totalValidityDays)
                         netPrice = netPrice * default_validity_months
-//                        net_quantity = default_validity_months
-//                        var actualQuantity = outputExtendedProps.find { it.Key =="LIMIT" }?.Value
-//                        net_quantity = actualQuantity?.toInt()!!
-//                        Log.v("default"," "+ actualQuantity)
+                        net_quantity = default_validity_months
                         mrp_price = mrp_price * default_validity_months
                     }
 
@@ -1070,18 +1070,18 @@ Log.v("package_validity_months", " "+ package_validity_months)
 
                     var validity_days = 30
                     var net_quantity = 1
-                    if(outputExtendedProps.isNullOrEmpty().not()){
-                        val actualQuantity = outputExtendedProps.find { it.Key =="LIMIT" }?.Value
-                        if (actualQuantity.isNullOrEmpty().not()){
-                            net_quantity = actualQuantity?.toInt()!!
-                        }
-                        else{
-                            net_quantity = 1
-                        }
-                    }
-                    else{
-                        net_quantity = 1
-                    }
+//                    if(outputExtendedProps.isNullOrEmpty().not()){
+//                        val actualQuantity = outputExtendedProps.find { it.Key =="LIMIT" }?.Value
+//                        if (actualQuantity.isNullOrEmpty().not()){
+//                            net_quantity = actualQuantity?.toInt()!!
+//                        }
+//                        else{
+//                            net_quantity = 1
+//                        }
+//                    }
+//                    else{
+//                        net_quantity = 1
+//                    }
 
                     totalValidityDays = 30 * default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)
@@ -1090,9 +1090,7 @@ Log.v("package_validity_months", " "+ package_validity_months)
                         totalValidityDays = validity_days
                         Log.v("totalValidityDays1", " "+ totalValidityDays)
                         netPrice = netPrice * default_validity_months
-//                        net_quantity = default_validity_months
-//                        val actualQuantity = outputExtendedProps.find { it.Key =="LIMIT" }?.Value
-//                        net_quantity = actualQuantity?.toInt()!!
+                        net_quantity = default_validity_months
                         mrp_price = mrp_price * default_validity_months
                     }
 
