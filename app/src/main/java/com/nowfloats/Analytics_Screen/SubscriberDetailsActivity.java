@@ -1,20 +1,15 @@
 package com.nowfloats.Analytics_Screen;
 
+import static com.nowfloats.helper.ValidationUtilsKt.isMobileNumberValid;
+import static com.nowfloats.helper.ValidationUtilsKt.isEmailValid;
+
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.Toolbar;
-
+import android.provider.Telephony;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,7 +20,15 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.appcompat.widget.Toolbar;
+
 import com.framework.views.customViews.CustomImageView;
+import com.framework.views.customViews.CustomTextView;
 import com.google.gson.Gson;
 import com.nowfloats.Analytics_Screen.API.SubscriberApis;
 import com.nowfloats.Analytics_Screen.model.AddSubscriberModel;
@@ -35,6 +38,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,15 +51,18 @@ import retrofit.client.Response;
  */
 
 public class SubscriberDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+
   static {
     AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
   }
 
-  AppCompatTextView subscriberEmailId, subscriberDate, subscriberCall, subscriberMessage, unSubscribe;
+  AppCompatTextView subscriberEmailId, subscriberDate;
+  LinearLayoutCompat btnEmailView, viewNumber, btnWhatsapp, btnMessage, btnCall;
   LinearLayout layout;
   String fpTag;
   ProgressDialog mProgressBar;
   private SubscriberModel mSubscriberData;
+  private String subActiveText = "Unsubscribe";
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,24 +88,24 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
     mProgressBar.setCanceledOnTouchOutside(false);
     subscriberEmailId = findViewById(R.id.subscriber_email);
     subscriberDate = findViewById(R.id.subcriber_date);
-    subscriberCall = findViewById(R.id.call_subscriber);
-    subscriberMessage = findViewById(R.id.message_subscriber);
-    unSubscribe = findViewById(R.id.unsubscribe);
-    layout = (LinearLayout) findViewById(R.id.parent_layout);
-    subscriberCall.setOnClickListener(this);
-    subscriberMessage.setOnClickListener(this);
-    unSubscribe.setOnClickListener(this);
-    unSubscribe.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(this, R.drawable.ic_delete_black_24dp), null, null, null);
-    subscriberMessage.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(this, R.drawable.ic_markunread_black_24dp), null, null, null);
-    subscriberCall.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(this, R.drawable.ic_phone_in_talk_black_24dp), null, null, null);
-    subscriberEmailId.setText(mSubscriberData.getUserMobile());
+    btnEmailView = findViewById(R.id.btn_email_view);
+    viewNumber = findViewById(R.id.view_number);
+    btnWhatsapp = findViewById(R.id.btn_whatsapp);
+    btnMessage = findViewById(R.id.btn_message);
+    btnCall = findViewById(R.id.btn_call);
+    layout = findViewById(R.id.parent_layout);
+    btnEmailView.setOnClickListener(this);
+    btnMessage.setOnClickListener(this);
+    btnWhatsapp.setOnClickListener(this);
+    btnCall.setOnClickListener(this);
     if (!mSubscriberData.getUserMobile().toLowerCase().contains("@")) {
-      subscriberEmailId.setText("+" + mSubscriberData.getUserCountryCode() + " -" + mSubscriberData.getUserMobile());
-      subscriberCall.setVisibility(View.VISIBLE);
-      findViewById(R.id.divider1).setVisibility(View.VISIBLE);
+      subscriberEmailId.setText(mSubscriberData.getUserMobileWithCountryCode());
+      btnEmailView.setVisibility(View.GONE);
+      viewNumber.setVisibility(View.VISIBLE);
     } else {
       subscriberEmailId.setText(mSubscriberData.getUserMobile());
-      subscriberMessage.setText("Send Email");
+      btnEmailView.setVisibility(View.VISIBLE);
+      viewNumber.setVisibility(View.GONE);
     }
     try {
       setSubscriberStatus(Integer.parseInt(mSubscriberData.getSubscriptionStatus()));
@@ -117,20 +124,17 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
   private void setSubscriberStatus(int status) {
     if (Constants.SubscriberStatus.SUBSCRIBED.value == status) {
       layout.setBackgroundResource(R.color.primary);
-      unSubscribe.setText("Unsubscribe");
+      subActiveText = "Unsubscribe";
       String sDate = mSubscriberData.getCreatedOn().replace("/Date(", "").replace(")/", "");
       String[] splitDate = sDate.split("\\+");
       subscriberDate.setText("Subscribed on " + Methods.getFormattedDate(splitDate[0]));
-      unSubscribe.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.ic_delete_black_24dp), null, null, null);
     } else if (Constants.SubscriberStatus.REQUESTED.value == status) {
-      unSubscribe.setText("Cancel initiated subscription");
+      subActiveText = "Cancel initiated subscription";
       layout.setBackgroundResource(R.color.gray_transparent);
       subscriberDate.setVisibility(View.GONE);
-      unSubscribe.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.ic_delete_black_24dp), null, null, null);
     } else if (Constants.SubscriberStatus.UNSUBSCRIBED.value == status) {
-      unSubscribe.setText("Subscribe");
+      subActiveText = "Subscribe";
       subscriberDate.setVisibility(View.GONE);
-      unSubscribe.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.ic_add_black_24dp), null, null, null);
       layout.setBackgroundResource(R.color.gray_transparent);
     }
   }
@@ -149,7 +153,7 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
       public void success(Object o, Response response) {
         hide();
         if (response.getStatus() == 200) {
-          Toast.makeText(SubscriberDetailsActivity.this, mSubscriberData.getUserMobile() + " Successfully Unsubscribed", Toast.LENGTH_SHORT).show();
+          Toast.makeText(SubscriberDetailsActivity.this, mSubscriberData.getUserMobile() + " Successfully unsubscribed", Toast.LENGTH_SHORT).show();
           mSubscriberData.setSubscriptionStatus(String.valueOf(Constants.SubscriberStatus.UNSUBSCRIBED.value));
           setSubscriberStatus(Constants.SubscriberStatus.UNSUBSCRIBED.value);
         } else {
@@ -219,25 +223,49 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
   }
 
   private void sendSms() {
-    Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-    sendIntent.putExtra("sms_body", "write here");
-    sendIntent.setType("vnd.android-dir/mms-sms");
-    sendIntent.putExtra("address", mSubscriberData.getUserMobile());
-    startActivity(Intent.createChooser(sendIntent, "Sms by:"));
+    String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(this);
+    Intent sendIntent;
+    sendIntent = new Intent(Intent.ACTION_SENDTO);
+    if (defaultSmsPackageName != null) {
+      sendIntent.putExtra(Intent.EXTRA_TEXT, "Write here");
+      sendIntent.setData(Uri.parse("sms:" + mSubscriberData.getUserMobile()));
+      sendIntent.setType("text/plain");
+      sendIntent.setPackage(defaultSmsPackageName);
+      startActivity(sendIntent);
+    } else {
+      sendIntent.setType("vnd.android-dir/mms-sms");
+      sendIntent.addCategory(Intent.CATEGORY_DEFAULT);
+      sendIntent.putExtra("sms_body", "Write here");
+      sendIntent.setData(Uri.parse("sms:" + mSubscriberData.getUserMobile()));
+      startActivity(Intent.createChooser(sendIntent, "Sms by:"));
+    }
   }
 
   private void makeCall() {
     Intent callIntent = new Intent(Intent.ACTION_DIAL);
-    callIntent.setData(Uri.parse("tel:" + "+" + mSubscriberData.getUserCountryCode() + mSubscriberData.getUserMobile()));
+    callIntent.addCategory(Intent.CATEGORY_DEFAULT);
+    callIntent.setData(Uri.parse("tel:" + mSubscriberData.getUserMobileWithCountryCode()));
     startActivity(Intent.createChooser(callIntent, "Call by:"));
   }
 
   private void sendMail() {
     Intent email = new Intent(Intent.ACTION_SEND);
+    email.addCategory(Intent.CATEGORY_DEFAULT);
     email.setData(Uri.parse("mailto:"));
     email.setType("message/rfc822");
     email.putExtra(Intent.EXTRA_EMAIL, new String[]{mSubscriberData.getUserMobile()});
     startActivity(Intent.createChooser(email, "Email by:"));
+  }
+
+  private void openWhatsApp(String countryCode, String mobile) {
+    try {
+      Uri uri = Uri.parse("whatsapp://send?phone=" + countryCode + mobile);
+      Intent i = new Intent(Intent.ACTION_VIEW, uri);
+      startActivity(i);
+    } catch (ActivityNotFoundException e) {
+      e.printStackTrace();
+      Toast.makeText(this, "WhatsApp not installed.", Toast.LENGTH_SHORT).show();
+    }
   }
 
   @Override
@@ -266,7 +294,13 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
     View view = LayoutInflater.from(this).inflate(R.layout.popup_window_subscribers_menu, null);
     PopupWindow popupWindow = new PopupWindow(view, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
     LinearLayoutCompat more = popupWindow.getContentView().findViewById(R.id.ll_subscribers);
+    CustomTextView txtSub = popupWindow.getContentView().findViewById(R.id.subscribers_text);
+    txtSub.setText(subActiveText);
     more.setOnClickListener(v -> {
+      if ((Integer.parseInt(mSubscriberData.getSubscriptionStatus().trim()) == Constants.SubscriberStatus.SUBSCRIBED.value) ||
+          (Integer.parseInt(mSubscriberData.getSubscriptionStatus().trim()) == Constants.SubscriberStatus.REQUESTED.value)) {
+        unSubscriber();
+      } else addSubscriber();
       popupWindow.dismiss();
     });
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupWindow.setElevation(5.0F);
@@ -282,27 +316,24 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
     return super.onOptionsItemSelected(item);
   }
 
-
   @Override
   public void onClick(View v) {
     switch (v.getId()) {
-      case R.id.call_subscriber:
-        makeCall();
+      case R.id.btn_whatsapp:
+        if (isMobileNumberValid(mSubscriberData.getUserMobile())) openWhatsApp(mSubscriberData.getUserCountryCode(), mSubscriberData.getUserMobile());
+        else Toast.makeText(this, "Mobile number not valid!", Toast.LENGTH_SHORT).show();
         break;
-      case R.id.message_subscriber:
-        if (mSubscriberData.getUserMobile().contains("@")) {
-          sendMail();
-        } else {
-          sendSms();
-        }
+      case R.id.btn_call:
+        if (isMobileNumberValid(mSubscriberData.getUserMobile())) makeCall();
+        else Toast.makeText(this, "Mobile number not valid!", Toast.LENGTH_SHORT).show();
         break;
-      case R.id.unsubscribe:
-        if ((Integer.parseInt(mSubscriberData.getSubscriptionStatus().trim()) == Constants.SubscriberStatus.SUBSCRIBED.value) ||
-            (Integer.parseInt(mSubscriberData.getSubscriptionStatus().trim()) == Constants.SubscriberStatus.REQUESTED.value)) {
-          unSubscriber();
-        } else {
-          addSubscriber();
-        }
+      case R.id.btn_email_view:
+        if (isEmailValid(mSubscriberData.getUserMobile())) sendMail();
+        else Toast.makeText(this, "Email not valid!", Toast.LENGTH_SHORT).show();
+        break;
+      case R.id.btn_message:
+        if (isMobileNumberValid(mSubscriberData.getUserMobile())) sendSms();
+        else Toast.makeText(this, "Mobile number not valid!", Toast.LENGTH_SHORT).show();
         break;
     }
   }
