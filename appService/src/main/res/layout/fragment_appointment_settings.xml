@@ -1,233 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_match">
+  <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_match">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_70"
-            android:background="@color/yellow_ffb900"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+      android:id="@+id/linearLayout"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_70"
+      android:background="@color/yellow_ffb900"
+      android:visibility="gone"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.SearchView
-                style="@style/SearchView.WhiteBackground"
-                app:iconifiedByDefault="false"
-                android:id="@+id/sv_settings"
-                android:layout_height="@dimen/size_40"
-                android:gravity="center_vertical"
-                app:queryHint="@string/search_in_the_appointment_settings" />
-        </LinearLayout>
+      <androidx.appcompat.widget.SearchView
+        android:id="@+id/sv_settings"
+        style="@style/SearchView.WhiteBackground"
+        android:layout_height="@dimen/size_40"
+        android:gravity="center_vertical"
+        app:iconifiedByDefault="false"
+        app:queryHint="@string/search_in_the_appointment_settings" />
+    </LinearLayout>
 
-        <LinearLayout
-            style="@style/match_match"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/size_8"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+    <LinearLayout
+      style="@style/match_match"
+      android:layout_height="0dp"
+      android:orientation="vertical"
+      android:paddingHorizontal="@dimen/size_8"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/match_wrap"
-                android:id="@+id/catalog_setup"
-                android:foreground="?attr/selectableItemBackground"
-                android:paddingBottom="@dimen/size_20"
-                android:focusable="true"
-                android:clickable="true">
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/catalog_setup"
+        style="@style/match_wrap"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:paddingBottom="@dimen/size_20">
 
-                <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/civ_catalog_setup"
-                    style="@style/AppointmentSettings_Image"
-                    android:src="@drawable/ic_business_services_pro" />
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/civ_catalog_setup"
+          style="@style/AppointmentSettings_Image"
+          android:src="@drawable/ic_business_services_pro" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/ctv_catalog_setup_heading"
-                    style="@style/AppointmentSetting_Text_Heading"
-                    android:text="@string/catalog_setup"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.073"
-                    app:layout_constraintStart_toEndOf="@+id/civ_catalog_setup"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.39" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_catalog_setup_heading"
+          style="@style/AppointmentSetting_Text_Heading"
+          android:text="@string/catalog_setup"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.073"
+          app:layout_constraintStart_toEndOf="@+id/civ_catalog_setup"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.39" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/ctv_catalog_setup_subheading"
-                    style="@style/AppointmentSetting_Text_Content"
-                    android:layout_marginTop="@dimen/size_5"
-                    android:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/ctv_catalog_setup_heading"
-                    app:layout_constraintTop_toBottomOf="@id/ctv_catalog_setup_heading" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_catalog_setup_subheading"
+          style="@style/AppointmentSetting_Text_Content"
+          android:layout_marginTop="@dimen/size_5"
+          android:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="@+id/ctv_catalog_setup_heading"
+          app:layout_constraintTop_toBottomOf="@id/ctv_catalog_setup_heading" />
 
-                <com.framework.views.customViews.CustomImageView
-                    style="@style/wrap_wrap"
-                    android:layout_marginEnd="@dimen/size_10"
-                    android:src="@drawable/ic_arrow_right_grey"
-                    android:tint="@color/yellow_ffb900"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1"
-                    app:layout_constraintStart_toEndOf="@+id/ctv_catalog_setup_subheading"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.7" />
+        <com.framework.views.customViews.CustomImageView
+          style="@style/wrap_wrap"
+          android:layout_marginEnd="@dimen/size_10"
+          android:src="@drawable/ic_arrow_right_grey"
+          android:tint="@color/yellow_ffb900"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="1"
+          app:layout_constraintStart_toEndOf="@+id/ctv_catalog_setup_subheading"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.7" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View style="@style/AppointmentHorizontalDivider" />
+      <View style="@style/AppointmentHorizontalDivider" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/match_wrap"
-                android:id="@+id/payment_collection_setup"
-                android:paddingBottom="@dimen/size_20"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true">
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/payment_collection_setup"
+        style="@style/match_wrap"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:paddingBottom="@dimen/size_20">
 
-                <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/civ_payment_collection"
-                    style="@style/AppointmentSettings_Image"
-                    android:src="@drawable/ic_payment_collection" />
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/civ_payment_collection"
+          style="@style/AppointmentSettings_Image"
+          android:src="@drawable/ic_payment_collection" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/ctv_payment_collection_heading"
-                    style="@style/AppointmentSetting_Text_Heading"
-                    android:text="@string/payment_collection_setup"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.073"
-                    app:layout_constraintStart_toEndOf="@+id/civ_payment_collection"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.39" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_payment_collection_heading"
+          style="@style/AppointmentSetting_Text_Heading"
+          android:text="@string/payment_collection_setup"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.073"
+          app:layout_constraintStart_toEndOf="@+id/civ_payment_collection"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.39" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/ctv_payment_collection_subheading"
-                    style="@style/AppointmentSetting_Text_Content"
-                    android:layout_marginTop="@dimen/size_5"
-                    android:text="@string/preferred_payment_gateway_connected_bank_account"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/ctv_payment_collection_heading"
-                    app:layout_constraintTop_toBottomOf="@id/ctv_payment_collection_heading" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_payment_collection_subheading"
+          style="@style/AppointmentSetting_Text_Content"
+          android:layout_marginTop="@dimen/size_5"
+          android:text="@string/preferred_payment_gateway_connected_bank_account"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="@+id/ctv_payment_collection_heading"
+          app:layout_constraintTop_toBottomOf="@id/ctv_payment_collection_heading" />
 
-                <com.framework.views.customViews.CustomImageView
-                    style="@style/wrap_wrap"
-                    android:layout_marginEnd="@dimen/size_10"
-                    android:src="@drawable/ic_arrow_right_grey"
-                    android:tint="@color/yellow_ffb900"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1"
-                    app:layout_constraintStart_toEndOf="@+id/ctv_payment_collection_subheading"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.7" />
+        <com.framework.views.customViews.CustomImageView
+          style="@style/wrap_wrap"
+          android:layout_marginEnd="@dimen/size_10"
+          android:src="@drawable/ic_arrow_right_grey"
+          android:tint="@color/yellow_ffb900"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="1"
+          app:layout_constraintStart_toEndOf="@+id/ctv_payment_collection_subheading"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.7" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View style="@style/AppointmentHorizontalDivider" />
+      <View style="@style/AppointmentHorizontalDivider" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/match_wrap"
-                android:id="@+id/customer_invoice_setup"
-                android:foreground="?attr/selectableItemBackground"
-                android:paddingBottom="@dimen/size_20"
-                android:focusable="true"
-                android:clickable="true">
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/customer_invoice_setup"
+        style="@style/match_wrap"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:paddingBottom="@dimen/size_20">
 
-                <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/civ_customer_invoice_setup"
-                    style="@style/AppointmentSettings_Image"
-                    android:src="@drawable/ic_customer_invoice"
-                    app:layout_constraintVertical_bias="0.7" />
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/civ_customer_invoice_setup"
+          style="@style/AppointmentSettings_Image"
+          android:src="@drawable/ic_customer_invoice"
+          app:layout_constraintVertical_bias="0.7" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/customer_invoice_heading"
-                    style="@style/AppointmentSetting_Text_Heading"
-                    android:text="@string/customer_invoice_setup"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.073"
-                    app:layout_constraintStart_toEndOf="@+id/civ_customer_invoice_setup"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.39" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/customer_invoice_heading"
+          style="@style/AppointmentSetting_Text_Heading"
+          android:text="@string/customer_invoice_setup"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.073"
+          app:layout_constraintStart_toEndOf="@+id/civ_customer_invoice_setup"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.39" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/customer_invoice_subheading"
-                    style="@style/AppointmentSetting_Text_Content"
-                    android:layout_marginTop="@dimen/size_5"
-                    android:text="@string/gst_declearation_bank_upi_appointments"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/customer_invoice_heading"
-                    app:layout_constraintTop_toBottomOf="@id/customer_invoice_heading" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/customer_invoice_subheading"
+          style="@style/AppointmentSetting_Text_Content"
+          android:layout_marginTop="@dimen/size_5"
+          android:text="@string/gst_declearation_bank_upi_appointments"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="@+id/customer_invoice_heading"
+          app:layout_constraintTop_toBottomOf="@id/customer_invoice_heading" />
 
-                <com.framework.views.customViews.CustomImageView
-                    style="@style/wrap_wrap"
+        <com.framework.views.customViews.CustomImageView
+          style="@style/wrap_wrap"
 
-                    android:layout_marginEnd="@dimen/size_10"
-                    android:src="@drawable/ic_arrow_right_grey"
-                    android:tint="@color/yellow_ffb900"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1"
-                    app:layout_constraintStart_toEndOf="@+id/customer_invoice_subheading"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.7" />
+          android:layout_marginEnd="@dimen/size_10"
+          android:src="@drawable/ic_arrow_right_grey"
+          android:tint="@color/yellow_ffb900"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="1"
+          app:layout_constraintStart_toEndOf="@+id/customer_invoice_subheading"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.7" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View style="@style/AppointmentHorizontalDivider" />
+      <View style="@style/AppointmentHorizontalDivider" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/policies_for_customer"
-                style="@style/match_wrap"
-                android:foreground="?attr/selectableItemBackground"
-                android:paddingBottom="@dimen/size_20"
-                android:focusable="true"
-                android:clickable="true">
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/policies_for_customer"
+        style="@style/match_wrap"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:paddingBottom="@dimen/size_20">
 
-                <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/civ_policies"
-                    style="@style/AppointmentSettings_Image"
-                    android:src="@drawable/ic_policies_for_customer" />
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/civ_policies"
+          style="@style/AppointmentSettings_Image"
+          android:src="@drawable/ic_policies_for_customer" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/ctv_policies_heading"
-                    style="@style/AppointmentSetting_Text_Heading"
-                    android:text="@string/policies_for_customer"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.073"
-                    app:layout_constraintStart_toEndOf="@+id/civ_policies"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.39" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_policies_heading"
+          style="@style/AppointmentSetting_Text_Heading"
+          android:text="@string/policies_for_customer"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.073"
+          app:layout_constraintStart_toEndOf="@+id/civ_policies"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.39" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/ctv_policies_subheading"
-                    style="@style/AppointmentSetting_Text_Content"
-                    android:layout_marginTop="@dimen/size_5"
-                    android:text="@string/refund_cancllation_privacy_policies"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/ctv_policies_heading"
-                    app:layout_constraintTop_toBottomOf="@id/ctv_policies_heading" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_policies_subheading"
+          style="@style/AppointmentSetting_Text_Content"
+          android:layout_marginTop="@dimen/size_5"
+          android:text="@string/refund_cancllation_privacy_policies"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="@+id/ctv_policies_heading"
+          app:layout_constraintTop_toBottomOf="@id/ctv_policies_heading" />
 
-                <com.framework.views.customViews.CustomImageView
-                    style="@style/wrap_wrap"
-                    android:layout_marginEnd="@dimen/size_10"
-                    android:src="@drawable/ic_arrow_right_grey"
-                    android:tint="@color/yellow_ffb900"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1"
-                    app:layout_constraintStart_toEndOf="@+id/ctv_policies_subheading"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.7" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.framework.views.customViews.CustomImageView
+          style="@style/wrap_wrap"
+          android:layout_marginEnd="@dimen/size_10"
+          android:src="@drawable/ic_arrow_right_grey"
+          android:tint="@color/yellow_ffb900"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="1"
+          app:layout_constraintStart_toEndOf="@+id/ctv_policies_subheading"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.7" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View style="@style/AppointmentHorizontalDivider" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+      <View style="@style/AppointmentHorizontalDivider" />
+    </LinearLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
