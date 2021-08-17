@@ -147,9 +147,9 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
 
     saveButton.setOnClickListener(v -> {
       if (path != null) {
-        new Handler().postDelayed(() -> uploadImageToServer(), 200);
-      } else {
         showLoader(getString(R.string.uploading_image_please_wait));
+        new Handler().postDelayed(() -> uploadImageToServer(), 100);
+      } else {
         uploadDataToServer();
       }
     });
@@ -449,7 +449,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
           }
         });
 
-      }
+      } else hideLoader();
     } catch (Exception e) {
       hideLoader();
       e.printStackTrace();
@@ -498,14 +498,14 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
       if (validateInput()) {
         String fname = "SeasonalOffers" + System.currentTimeMillis();
         if (!Util.isNullOrEmpty(path)) {
-          if (!TextUtils.isEmpty(path)) {
-            uploadedImageURL = new UploadOfferImage(SeasonalOffersDetailsActivity.this, this, path, fname).execute().get();
-          }
+          uploadedImageURL = new UploadOfferImage(SeasonalOffersDetailsActivity.this, this, path, fname).execute().get();
         } else {
+          hideLoader();
           Methods.showSnackBarNegative(SeasonalOffersDetailsActivity.this, getResources().getString(R.string.select_image_upload));
         }
-      }
+      } else hideLoader();
     } catch (Exception e) {
+      hideLoader();
       Log.e("uploadImageToServer ->", "Failed ->" + e.getMessage());
       e.printStackTrace();
     }
@@ -563,7 +563,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
             }
           }
         });
-      }
+      } else hideLoader();
     } catch (Exception e) {
       hideLoader();
       e.printStackTrace();
@@ -620,10 +620,13 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
 
   @Override
   public void uploadImageURL(String url) {
+    hideLoader();
     if (url != null && !url.isEmpty()) {
       uploadedImageURL = url;
       uploadDataToServer();
-    } else Toast.makeText(this, "Image uploading failed, please try again!", Toast.LENGTH_SHORT).show();
+    } else {
+      Toast.makeText(this, "Image uploading failed, please try again!", Toast.LENGTH_SHORT).show();
+    }
   }
 
   private void uploadDataToServer() {
