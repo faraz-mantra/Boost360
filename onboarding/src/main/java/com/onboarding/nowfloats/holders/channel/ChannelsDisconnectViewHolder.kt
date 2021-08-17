@@ -7,8 +7,10 @@ import com.framework.extensions.underlineText
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
 import com.onboarding.nowfloats.databinding.ItemChannelsDisconnectBinding
-import com.onboarding.nowfloats.model.channel.*
+import com.onboarding.nowfloats.model.channel.ChannelModel
+import com.onboarding.nowfloats.model.channel.getDrawable
 import com.onboarding.nowfloats.model.channel.getName
+import com.onboarding.nowfloats.model.channel.isGoogleBusinessChannel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
@@ -25,16 +27,8 @@ class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBi
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-      binding.card -> listener?.onItemClick(
-        adapterPosition,
-        model,
-        RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal
-      )
-      binding.whysync -> listener?.onItemClick(
-        adapterPosition,
-        model,
-        RecyclerViewActionType.CHANNEL_DISCONNECT_WHY_CLICKED.ordinal
-      )
+      binding.card -> listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal)
+      binding.whysync -> listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_DISCONNECT_WHY_CLICKED.ordinal)
     }
   }
 
@@ -42,7 +36,7 @@ class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBi
   private fun setViews(model: ChannelModel) {
     setClickListeners(binding.card, binding.whysync)
     binding.title.text = if (model.isGoogleBusinessChannel()) activity?.resources?.getString(R.string.google_maps) else model.getName()
-    binding.whysync.text = "Why sync on ${model.getName1()}"
+    binding.whysync.text = "Why Sync on ${if (model.isGoogleBusinessChannel()) activity?.resources?.getString(R.string.google_business_n) else model.getName()}"
     binding.whysync.underlineText(0, binding.whysync.text.length - 1)
     setSelection(model)
   }
@@ -59,13 +53,7 @@ class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBi
       binding.check.setImageResource(R.drawable.ic_selected_blue)
     }
     if (model.isSelectedClick) {
-      Handler().postDelayed({
-        listener?.onItemClick(
-          adapterPosition,
-          model,
-          RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal
-        )
-      }, 1000)
+      Handler().postDelayed({ listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal) }, 1000)
     }
   }
 }

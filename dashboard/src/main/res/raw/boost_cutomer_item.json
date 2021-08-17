@@ -22,7 +22,7 @@
           "premiumCode": "CALLTRACKER"
         },
         {
-          "title": "Patient messages",
+          "title": "Patient enquiries",
           "type": "patient_customer_messages",
           "isLock": false,
           "premiumCode": ""
@@ -57,7 +57,7 @@
           "premiumCode": "CALLTRACKER"
         },
         {
-          "title": "Patient messages",
+          "title": "Patient enquiries",
           "type": "patient_customer_messages",
           "isLock": false,
           "premiumCode": ""
@@ -86,7 +86,7 @@
           "premiumCode": "CALLTRACKER"
         },
         {
-          "title": "Customer messages",
+          "title": "Customer enquiries",
           "type": "patient_customer_messages",
           "isLock": false,
           "premiumCode": ""
@@ -115,7 +115,7 @@
           "premiumCode": "CALLTRACKER"
         },
         {
-          "title": "Student messages",
+          "title": "Student enquiries",
           "type": "patient_customer_messages",
           "isLock": false,
           "premiumCode": ""
@@ -144,7 +144,7 @@
           "premiumCode": "CALLTRACKER"
         },
         {
-          "title": "Customer messages",
+          "title": "Customer enquiries",
           "type": "patient_customer_messages",
           "isLock": false,
           "premiumCode": ""
@@ -173,7 +173,7 @@
           "premiumCode": "CALLTRACKER"
         },
         {
-          "title": "Customer messages",
+          "title": "Customer enquiries",
           "type": "patient_customer_messages",
           "isLock": false,
           "premiumCode": ""
@@ -202,7 +202,7 @@
           "premiumCode": "CALLTRACKER"
         },
         {
-          "title": "Customer messages",
+          "title": "Customer enquiries",
           "type": "patient_customer_messages",
           "isLock": false,
           "premiumCode": ""

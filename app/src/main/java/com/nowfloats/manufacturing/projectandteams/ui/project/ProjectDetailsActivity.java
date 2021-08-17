@@ -39,7 +39,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.manufacturing.API.ManufacturingAPIInterfaces;
 import com.nowfloats.manufacturing.API.UploadProjectImage;
 import com.nowfloats.manufacturing.API.UploadTeamsImage;
@@ -154,11 +153,14 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        addImageButton.setOnClickListener(v -> {
-            if (imageURLs.size() < 3) {
-                showDialogToGetImage();
-            } else {
-                Toast.makeText(ProjectDetailsActivity.this, getString(R.string.max_image_upload_is_three), Toast.LENGTH_LONG).show();
+        addImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imageURLs.size() < 3) {
+                    showDialogToGetImage();
+                } else {
+                    Toast.makeText(ProjectDetailsActivity.this, getString(R.string.max_image_upload_is_three), Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -633,51 +635,38 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     }
 
     public void showDialogToGetImage() {
-        final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
-        imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
-    }
+        final MaterialDialog dialog = new MaterialDialog.Builder(ProjectDetailsActivity.this)
+                .customView(R.layout.featuredimage_popup, true)
+                .show();
 
-    private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
-        if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
-            cameraIntent();
-        } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
-            galleryIntent();
-        }
-    }
+        PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
+        View view = dialog.getCustomView();
+        TextView title = (TextView) view.findViewById(R.id.textview_heading);
+        title.setText("Upload Image");
+        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+        cameraImg.setColorFilter(whiteLabelFilter);
+        galleryImg.setColorFilter(whiteLabelFilter);
 
-//    public void showDialogToGetImage() {
-//        final MaterialDialog dialog = new MaterialDialog.Builder(ProjectDetailsActivity.this)
-//                .customView(R.layout.featuredimage_popup, true)
-//                .show();
-//
-//        PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
-//        View view = dialog.getCustomView();
-//        TextView title = (TextView) view.findViewById(R.id.textview_heading);
-//        title.setText("Upload Image");
-//        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-//        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-//        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-//        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-//        cameraImg.setColorFilter(whiteLabelFilter);
-//        galleryImg.setColorFilter(whiteLabelFilter);
-//
-//        takeCamera.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                cameraIntent();
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        takeGallery.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                galleryIntent();
-//                dialog.dismiss();
-//
-//            }
-//        });
-//    }
+        takeCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cameraIntent();
+                dialog.dismiss();
+            }
+        });
+
+        takeGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                galleryIntent();
+                dialog.dismiss();
+
+            }
+        });
+    }
 
     public void cameraIntent() {
         try {

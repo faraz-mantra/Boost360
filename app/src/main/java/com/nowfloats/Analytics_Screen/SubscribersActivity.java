@@ -2,12 +2,10 @@ package com.nowfloats.Analytics_Screen;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,8 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.framework.views.customViews.CustomEditText;
-import com.framework.views.fabButton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.nowfloats.Analytics_Screen.API.SubscriberApis;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.SubscribersAdapter;
@@ -61,20 +57,21 @@ import static com.framework.webengageconstant.EventValueKt.TO_BE_ADDED;
 
 public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener, SubscribersAdapter.SubscriberInterfaceMethods {
 
+
     private static final int SUBSCRIBER_REQUEST_CODE = 221;
-    ArrayList<SubscriberModel> mSubscriberList = new ArrayList<>();
-    SubscribersAdapter mSubscriberAdapter;
-    TextView titleTextView;
-    AutoCompleteTextView searchEditText;
-    ImageView searchImage;
-    FloatingActionButton deleteImage;
-    LinearLayout emptyLayout;
     private UserSessionManager mSessionManager;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private Toolbar toolbar;
+    ArrayList<SubscriberModel> mSubscriberList = new ArrayList<>();
+    SubscribersAdapter mSubscriberAdapter;
     private LinearLayoutManager mLayoutManager;
     private boolean stop;
+    TextView titleTextView;
+    AutoCompleteTextView searchEditText;
+    ImageView deleteImage, searchImage;
+
+    LinearLayout emptyLayout;
     private int itemClicked = -1;
 
     @Override
@@ -87,7 +84,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         searchEditText = (AutoCompleteTextView) findViewById(R.id.search_edittext);
-        deleteImage = (FloatingActionButton) findViewById(R.id.btn_add);
+        deleteImage = (ImageView) findViewById(R.id.img_delete);
         searchImage = (ImageView) findViewById(R.id.search_image);
 
         //autoCompleteAdapter = new SpinnerAdapter(this,searchList);
@@ -114,6 +111,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         });
+        deleteImage.setVisibility(View.VISIBLE);
         deleteImage.setOnClickListener(this);
         searchImage.setOnClickListener(this);
 
@@ -239,7 +237,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
             public void success(String s, Response response) {
                 mProgressBar.setVisibility(View.GONE);
                 if (response.getStatus() == 200 || response.getStatus() == 201 || response.getStatus() == 202) {
-                    WebEngageController.trackEvent(ADD_SUBSCRIBER, ADDED, TO_BE_ADDED);
+                    WebEngageController.trackEvent(ADD_SUBSCRIBER,ADDED,TO_BE_ADDED);
                     mSubscriberList.clear();
                     mSubscriberAdapter.notifyDataSetChanged();
                     getSubscribersList();
@@ -257,7 +255,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 Log.v("ggg", error.getMessage());
                 mProgressBar.setVisibility(View.GONE);
                 Methods.showSnackBarNegative(SubscribersActivity.this, getString(R.string.something_went_wrong_try_again));
-                WebEngageController.trackEvent(ADD_SUBSCRIBER_FAILED, ERROR_SUBSCRIBER, mSessionManager.getFpTag());
+                WebEngageController.trackEvent(ADD_SUBSCRIBER_FAILED,ERROR_SUBSCRIBER,mSessionManager.getFpTag());
             }
         });
     }
@@ -266,12 +264,13 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.btn_add:
+            case R.id.img_delete:
                 subscriberDialog();
                 break;
             case R.id.search_image:
                 titleTextView.setVisibility(View.GONE);
                 searchImage.setVisibility(View.GONE);
+                deleteImage.setVisibility(View.GONE);
                 searchEditText.setVisibility(View.VISIBLE);
                 searchEditText.requestFocus();
                 break;
@@ -292,13 +291,13 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
 
     private void subscriberDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_subscriber, null);
-        final CustomEditText email = (CustomEditText) view.findViewById(R.id.edittext);
+        final EditText email = (EditText) view.findViewById(R.id.edittext);
         new MaterialDialog.Builder(this)
                 .customView(view, false)
                 .positiveText("Add")
                 .negativeText("Cancel")
                 .negativeColorRes(R.color.gray_transparent)
-                .positiveColorRes(R.color.colorAccentLight)
+                .positiveColorRes(R.color.primary_color)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
@@ -355,6 +354,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                     searchEditText.clearFocus();
                     searchEditText.setText("");
                     searchEditText.setVisibility(View.GONE);
+                    deleteImage.setVisibility(View.VISIBLE);
                     titleTextView.setVisibility(View.VISIBLE);
                     searchImage.setVisibility(View.VISIBLE);
                     InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);

@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
@@ -37,7 +36,7 @@ public class VmnNumberRequestActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_vmn);
-        CustomToolbar toolbar = (CustomToolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
 

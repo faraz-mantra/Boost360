@@ -24,7 +24,7 @@
         android:background="@color/colorAccent"
         app:layout_constraintTop_toTopOf="parent" />
 
-      <com.framework.views.customViews.CustomCardView
+      <androidx.cardview.widget.CardView
         android:id="@+id/aboutPaymentGatewayCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,9 +62,10 @@
             <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:fontFamily="@font/semi_bold"
+              android:fontFamily="@font/regular"
               android:text="@string/about_this_add_on"
               android:textColor="@color/black_4a4a4a"
+              android:textStyle="bold"
               app:textType="SUBHEADING_1" />
           </LinearLayout>
 
@@ -89,42 +90,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingHorizontal="@dimen/size_16"
+            android:paddingHorizontal="@dimen/size_20"
             android:paddingTop="@dimen/size_8"
             android:paddingBottom="@dimen/size_12">
 
             <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginEnd="@dimen/size_2"
-              android:fontFamily="@font/semi_bold"
+              android:layout_weight="0.35"
+              android:fontFamily="@font/regular"
               android:text="@string/important_colon"
               android:textAllCaps="true"
               android:textColor="@color/grey_text_color"
-              app:textType="BODY_1" />
+              android:textStyle="bold" />
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="0dp"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_weight="1"
+              android:layout_weight="0.35"
               android:fontFamily="@font/regular"
               android:text="@string/add_on_terms_and_conditions"
-              android:textColor="@color/grey_text_color"
-              app:textType="BODY_1" />
+              android:textColor="@color/grey_text_color" />
 
             <com.framework.views.customViews.CustomImageView
-              android:layout_width="@dimen/size_12"
-              android:layout_height="@dimen/size_12"
+              android:layout_width="@dimen/size_8"
+              android:layout_height="@dimen/size_8"
               android:layout_marginStart="@dimen/size_2"
               android:layout_marginTop="@dimen/size_2"
+              android:layout_weight="0.30"
               app:srcCompat="@drawable/ic_grey_drop_down" />
 
           </LinearLayout>
         </LinearLayout>
 
-      </com.framework.views.customViews.CustomCardView>
+      </androidx.cardview.widget.CardView>
 
-      <com.framework.views.customViews.CustomCardView
+      <androidx.cardview.widget.CardView
         android:id="@+id/paymentGatewayActivation"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -158,9 +159,10 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_4"
-              android:fontFamily="@font/semi_bold"
+              android:fontFamily="@font/regular"
               android:text="@string/kyc_not_done"
               android:textColor="@color/bg_dark_grey"
+              android:textStyle="bold"
               app:textType="HEADING_5" />
 
             <com.framework.views.customViews.CustomTextView
@@ -210,17 +212,17 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_44"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/size_8"
             android:layout_marginBottom="@dimen/size_12"
-            android:fontFamily="@font/semi_bold"
+            android:layout_marginTop="@dimen/size_8"
             android:gravity="center"
             android:paddingStart="@dimen/size_20"
             android:paddingEnd="@dimen/size_20"
             android:text="@string/start_your_kyc"
             android:textAllCaps="true"
+            android:textStyle="bold"
             app:textAllCaps="false" />
         </RelativeLayout>
-      </com.framework.views.customViews.CustomCardView>
+      </androidx.cardview.widget.CardView>
 
       <LinearLayout
         android:id="@+id/add_on_not_active"
@@ -259,9 +261,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_8"
-            android:fontFamily="@font/semi_bold"
+            android:fontFamily="@font/regular"
             android:text="@string/add_on_not_active"
             android:textColor="@color/black_4a4a4a"
+            android:textStyle="bold"
             app:textType="HEADING_5" />
 
           <com.framework.views.customViews.CustomTextView
@@ -286,7 +289,7 @@
           android:paddingStart="@dimen/size_40"
           android:paddingEnd="@dimen/size_40"
           android:text="@string/view_in_add_on_store"
-          android:textAllCaps="false" />
+          android:textAllCaps="true" />
       </LinearLayout>
 
       <RelativeLayout
@@ -346,11 +349,13 @@
             style="@style/ButtonStyle.Rounded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_refresh_btn"
             android:gravity="center"
             android:paddingVertical="@dimen/size_12"
             android:text="@string/view_details"
             android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold" />
         </LinearLayout>
       </RelativeLayout>
 

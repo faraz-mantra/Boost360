@@ -7,9 +7,8 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.util.*
 import kotlin.collections.ArrayList
 
-class FilterModel(
-  val type: String? = null,
-  var isSelected: Boolean = false
+class FilterModel(val type: String? = null,
+                  var isSelected: Boolean = false
 ) : AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
@@ -17,8 +16,7 @@ class FilterModel(
   }
 
   fun getIcon(): Int? {
-    return takeIf { isSelected }?.let { R.drawable.ic_option_selected }
-      ?: R.drawable.ic_option_unselected
+    return takeIf { isSelected }?.let { R.drawable.ic_option_selected } ?: R.drawable.ic_option_unselected
   }
 
   fun getColor(): Int {
@@ -56,37 +54,28 @@ class FilterModel(
 
   enum class FilterType(val type: String, val value: String) {
     //TODO for Appointment
-    ALL_APPOINTMENTS("All appointments", ""),
+    ALL_APPOINTMENTS("All Appointments", ""),
     CONFIRM("Confirmed", OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name),
     DELIVERED("Delivered", OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name),
     CANCELLED("Cancelled", OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
 
     //TODO for Consultation
-    ALL_CONSULTATIONS("All consultations", ""),
-    UPCOMING_CONSULT("Upcoming consultations", OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name),
-    COMPLETED_CONSULTATIONS(
-      "Completed consultations",
-      OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
-    ),
-    CANCEL_CONSULTATIONS(
-      "Cancel consultations",
-      OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name
-    ),
+    ALL_CONSULTATIONS("All Consultations", ""),
+    UPCOMING_CONSULT("Upcoming Consultations", OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name),
+    COMPLETED_CONSULTATIONS("Completed Consultations", OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name),
+    CANCEL_CONSULTATIONS("Cancel Consultations", OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
 
     //TODO for order
-    ALL_ORDERS("All orders", ""),
+    ALL_ORDERS("All Orders", ""),
     PLACED("Placed", OrderSummaryModel.OrderStatus.ORDER_INITIATED.name),
     CONFIRMED("Confirmed", OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name),
     SHIPPED("Shipped", OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS.name),
-    DELIVERED_ORDER("Delivered", OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED.name),
+    DELIVERED_ORDER("DELIVERED", OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED.name),
     CANCELLED_ORDER("Cancelled", OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name);
 
     companion object {
-      fun fromType(type: String): FilterType? =
-        values().firstOrNull { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
-
-      fun fromValue(value: String): FilterType? =
-        values().firstOrNull { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+      fun fromType(type: String): FilterType? = values().firstOrNull { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
+      fun fromValue(value: String): FilterType? = values().firstOrNull { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
     }
   }
 }

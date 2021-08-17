@@ -48,7 +48,8 @@
         android:layout_marginHorizontal="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_12sdp"
         android:drawableEnd="@null"
-        android:text="@string/i_agree_n" />
+        android:text="@string/i_agree_n"
+        android:textAllCaps="true" />
 
       <com.framework.views.customViews.CustomButton
         android:id="@+id/go_back_btn"
@@ -59,6 +60,7 @@
         android:layout_marginBottom="@dimen/_14sdp"
         android:drawableEnd="@null"
         android:text="@string/go_back"
+        android:textAllCaps="true"
         tools:ignore="UnknownId" />
     </androidx.appcompat.widget.LinearLayoutCompat>
   </FrameLayout>

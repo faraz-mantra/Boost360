@@ -16,264 +16,264 @@
 ** limitations under the License.
 */
 -->
-<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Title for Latin keyboard input options dialog [CHAR LIMIT=25] -->
-  <string name="english_ime_input_options" translatable="false">Input options</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Title for Latin keyboard input options dialog [CHAR LIMIT=25] -->
+    <string name="english_ime_input_options" translatable="false">Input options</string>
 
-  <!-- Title for the spell checker option to turn on/off contact names lookup [CHAR LIMIT=25] -->
-  <string name="use_contacts_for_spellchecking_option_title" translatable="false">Look up contact names</string>
+    <!-- Title for the spell checker option to turn on/off contact names lookup [CHAR LIMIT=25] -->
+    <string name="use_contacts_for_spellchecking_option_title" translatable="false">Look up contact names</string>
 
-  <!-- Description for the spell checker option to turn on/off contact names lookup. [CHAR LIMIT=65] -->
-  <string name="use_contacts_for_spellchecking_option_summary" translatable="false">Spell checker uses entries from your contact list</string>
+    <!-- Description for the spell checker option to turn on/off contact names lookup. [CHAR LIMIT=65] -->
+    <string name="use_contacts_for_spellchecking_option_summary" translatable="false">Spell checker uses entries from your contact list</string>
 
-  <!-- Option to provide vibrate/haptic feedback on keypress -->
-  <string name="vibrate_on_keypress" translatable="false">Vibrate on keypress</string>
+    <!-- Option to provide vibrate/haptic feedback on keypress -->
+    <string name="vibrate_on_keypress" translatable="false">Vibrate on keypress</string>
 
-  <!-- Option to play back sound on keypress in soft keyboard -->
-  <string name="sound_on_keypress">Sound on keypress</string>
-  <string name="client_id">2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21</string>
-  <!-- Option to control whether or not to show a popup with a larger font on each key press. -->
-  <string name="popup_on_keypress">Popup on keypress</string>
+    <!-- Option to play back sound on keypress in soft keyboard -->
+    <string name="sound_on_keypress">Sound on keypress</string>
+    <string name="client_id">2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21</string>
+    <!-- Option to control whether or not to show a popup with a larger font on each key press. -->
+    <string name="popup_on_keypress">Popup on keypress</string>
 
-  <!-- Settings screen title for preferences [CHAR LIMIT=33]-->
-  <string name="settings_screen_preferences">Preferences</string>
-  <!-- Settings screen title for accounts and privacy preferences [CHAR LIMIT=33]-->
-  <string name="settings_screen_accounts">Accounts &amp; Privacy</string>
-  <!-- Settings screen title for appearance & layouts preferences [CHAR LIMIT=33] -->
-  <string name="settings_screen_appearance">Appearance &amp; Layouts</string>
-  <!-- Settings screen title for multilingual options [CHAR_LIMIT=33] -->
-  <string name="settings_screen_multilingual">Multilingual options</string>
-  <!-- Settings screen title for gesture typing preferences [CHAR_LIMIT=33] -->
-  <string name="settings_screen_gesture">Gesture Typing</string>
-  <!-- Settings screen title for text correction options [CHAR_LIMIT=33] -->
-  <string name="settings_screen_correction">Text correction</string>
-  <!-- Settings screen title for advanced settings [CHAR LIMIT=33] -->
-  <string name="settings_screen_advanced">Advanced</string>
-  <!-- Settings screen title for keyboard theme settings [CHAR LIMIT=33] -->
-  <string name="settings_screen_theme">Theme</string>
+    <!-- Settings screen title for preferences [CHAR LIMIT=33]-->
+    <string name="settings_screen_preferences">Preferences</string>
+    <!-- Settings screen title for accounts and privacy preferences [CHAR LIMIT=33]-->
+    <string name="settings_screen_accounts">Accounts &amp; Privacy</string>
+    <!-- Settings screen title for appearance & layouts preferences [CHAR LIMIT=33] -->
+    <string name="settings_screen_appearance">Appearance &amp; Layouts</string>
+    <!-- Settings screen title for multilingual options [CHAR_LIMIT=33] -->
+    <string name="settings_screen_multilingual">Multilingual options</string>
+    <!-- Settings screen title for gesture typing preferences [CHAR_LIMIT=33] -->
+    <string name="settings_screen_gesture">Gesture Typing</string>
+    <!-- Settings screen title for text correction options [CHAR_LIMIT=33] -->
+    <string name="settings_screen_correction">Text correction</string>
+    <!-- Settings screen title for advanced settings [CHAR LIMIT=33] -->
+    <string name="settings_screen_advanced">Advanced</string>
+    <!-- Settings screen title for keyboard theme settings [CHAR LIMIT=33] -->
+    <string name="settings_screen_theme">Theme</string>
 
-  <!--  Option for enabling or disabling the split keyboard layout. [CHAR LIMIT=65]-->
-  <string name="enable_split_keyboard">Enable split keyboard</string>
+    <!--  Option for enabling or disabling the split keyboard layout. [CHAR LIMIT=65]-->
+    <string name="enable_split_keyboard">Enable split keyboard</string>
 
-  <!-- Option title for enabling cloud sync feature [CHAR LIMIT=33]-->
-  <string name="cloud_sync_title">Google Keyboard Sync</string>
-  <!-- Option summary when cloud sync feature is enabled  [CHAR LIMIT=65] -->
-  <string name="cloud_sync_summary">Sync is turned on</string>
-  <!-- Option summary when cloud sync feature is disabled  [CHAR LIMIT=65] -->
-  <string name="cloud_sync_summary_disabled">Sync your personal dictionary across devices</string>
-  <!-- Option title for starting the sync cycle now. [CHAR LIMIT=33]-->
-  <string name="sync_now_title">Sync now</string>
-  <!-- Option title for letting user delete synced google keyboard data from Google servers.  [CHAR LIMIT=35] -->
-  <string name="clear_sync_data_title">Delete cloud data</string>
-  <!-- Option summary for letting user delete synced google keyboard data from Google servers. [CHAR LIMIT=65] -->
-  <string name="clear_sync_data_summary">Deletes your synced data from Google</string>
-  <!-- Text for confirmation dialog box asking user to confirm deletion of cloud data. [CHAR LIMIT=65] -->
-  <string name="clear_sync_data_confirmation">Your synced data will be deleted from the cloud. Are you sure?</string>
-  <!-- Option to confirm deleting of user data from cloud [CHAR LIMIT=20] -->
-  <string name="clear_sync_data_ok">Delete</string>
-  <!-- Option to cancel the deletion of user data from cloud [CHAR LIMIT=20] -->
-  <string name="cloud_sync_cancel">Cancel</string>
-  <!-- Option to agree to terms and conditions for enabling cloud sync feature. -->
-  <string name="cloud_sync_opt_in_text">Your personal dictionary will be synced and backed up to
+    <!-- Option title for enabling cloud sync feature [CHAR LIMIT=33]-->
+    <string name="cloud_sync_title">Google Keyboard Sync</string>
+    <!-- Option summary when cloud sync feature is enabled  [CHAR LIMIT=65] -->
+    <string name="cloud_sync_summary">Sync is turned on</string>
+    <!-- Option summary when cloud sync feature is disabled  [CHAR LIMIT=65] -->
+    <string name="cloud_sync_summary_disabled">Sync your personal dictionary across devices</string>
+    <!-- Option title for starting the sync cycle now. [CHAR LIMIT=33]-->
+    <string name="sync_now_title">Sync now</string>
+    <!-- Option title for letting user delete synced google keyboard data from Google servers.  [CHAR LIMIT=35] -->
+    <string name="clear_sync_data_title">Delete cloud data</string>
+    <!-- Option summary for letting user delete synced google keyboard data from Google servers. [CHAR LIMIT=65] -->
+    <string name="clear_sync_data_summary">Deletes your synced data from Google</string>
+    <!-- Text for confirmation dialog box asking user to confirm deletion of cloud data. [CHAR LIMIT=65] -->
+    <string name="clear_sync_data_confirmation">Your synced data will be deleted from the cloud. Are you sure?</string>
+    <!-- Option to confirm deleting of user data from cloud [CHAR LIMIT=20] -->
+    <string name="clear_sync_data_ok">Delete</string>
+    <!-- Option to cancel the deletion of user data from cloud [CHAR LIMIT=20] -->
+    <string name="cloud_sync_cancel">Cancel</string>
+    <!-- Option to agree to terms and conditions for enabling cloud sync feature. -->
+    <string name="cloud_sync_opt_in_text">Your personal dictionary will be synced and backed up to
         Google servers. The statistical information of word frequency may be collected to help
         improve our products. The collection and usage of all the information will be compliant with
         <a href="https://www.google.com/policies/privacy">Google\'s Privacy Policy</a>.
     </string>
-  <!-- Text to tell the user to add a Google account to the device to enable the cloud sync feature. [CHAR LIMIT=65]-->
-  <string name="add_account_to_enable_sync">
+    <!-- Text to tell the user to add a Google account to the device to enable the cloud sync feature. [CHAR LIMIT=65]-->
+    <string name="add_account_to_enable_sync">
         Please add a Google account to this device to enable this feature
     </string>
-  <!-- Text to tell the user that sync feature is disabled because they have Google Apps for Business account(s) on their device. [CHAR LIMIT=80]-->
-  <string name="cloud_sync_summary_disabled_work_profile">
+    <!-- Text to tell the user that sync feature is disabled because they have Google Apps for Business account(s) on their device. [CHAR LIMIT=80]-->
+    <string name="cloud_sync_summary_disabled_work_profile">
         Sync is not available for devices with Google Apps for Business accounts
     </string>
 
-  <!-- Option name for including other IMEs in the language switch list [CHAR LIMIT=30] -->
-  <string name="include_other_imes_in_language_switch_list">Switch to other input methods</string>
-  <!-- Option summary for including other IMEs in the language switch list [CHAR LIMIT=65] -->
-  <string name="include_other_imes_in_language_switch_list_summary">Language switch key covers other input methods too</string>
-  <!-- Option to show language switch key [CHAR LIMIT=30] -->
-  <string name="show_language_switch_key">Language switch key</string>
-  <!-- Option summary for showing language switch key [CHAR LIMIT=65] -->
-  <string name="show_language_switch_key_summary">Show when multiple input languages are enabled</string>
+    <!-- Option name for including other IMEs in the language switch list [CHAR LIMIT=30] -->
+    <string name="include_other_imes_in_language_switch_list">Switch to other input methods</string>
+    <!-- Option summary for including other IMEs in the language switch list [CHAR LIMIT=65] -->
+    <string name="include_other_imes_in_language_switch_list_summary">Language switch key covers other input methods too</string>
+    <!-- Option to show language switch key [CHAR LIMIT=30] -->
+    <string name="show_language_switch_key">Language switch key</string>
+    <!-- Option summary for showing language switch key [CHAR LIMIT=65] -->
+    <string name="show_language_switch_key_summary">Show when multiple input languages are enabled</string>
 
-  <!-- Option for the dismiss delay of the key popup [CHAR LIMIT=25] -->
-  <string name="key_preview_popup_dismiss_delay">Key popup dismiss delay</string>
-  <!-- Description for delay for dismissing a popup on keypress: no delay [CHAR LIMIT=15] -->
-  <string name="key_preview_popup_dismiss_no_delay">No delay</string>
-  <!-- Description for delay for dismissing a popup on screen: default value of the delay [CHAR LIMIT=15] -->
-  <string name="key_preview_popup_dismiss_default_delay">Default</string>
+    <!-- Option for the dismiss delay of the key popup [CHAR LIMIT=25] -->
+    <string name="key_preview_popup_dismiss_delay">Key popup dismiss delay</string>
+    <!-- Description for delay for dismissing a popup on keypress: no delay [CHAR LIMIT=15] -->
+    <string name="key_preview_popup_dismiss_no_delay">No delay</string>
+    <!-- Description for delay for dismissing a popup on screen: default value of the delay [CHAR LIMIT=15] -->
+    <string name="key_preview_popup_dismiss_default_delay">Default</string>
 
-  <!-- Units abbreviation for the duration (milliseconds) [CHAR LIMIT=10] -->
-  <string name="abbreviation_unit_milliseconds"><xliff:g id="MILLISECONDS">%s</xliff:g>ms</string>
-  <!-- The text that represents the current settings value is the system default [CHAR LIMIT=25] -->
-  <string name="settings_system_default">System default</string>
+    <!-- Units abbreviation for the duration (milliseconds) [CHAR LIMIT=10] -->
+    <string name="abbreviation_unit_milliseconds"><xliff:g id="MILLISECONDS">%s</xliff:g>ms</string>
+    <!-- The text that represents the current settings value is the system default [CHAR LIMIT=25] -->
+    <string name="settings_system_default">System default</string>
 
-  <!-- Option name for enabling or disabling the use of names of people in Contacts for suggestion and correction [CHAR LIMIT=25] -->
-  <string name="use_contacts_dict">Suggest Contact names</string>
-  <!-- Description for option enabling or disabling the use of names of people in Contacts for suggestion and correction [CHAR LIMIT=65] -->
-  <string name="use_contacts_dict_summary">Use names from Contacts for suggestions and corrections</string>
+    <!-- Option name for enabling or disabling the use of names of people in Contacts for suggestion and correction [CHAR LIMIT=25] -->
+    <string name="use_contacts_dict">Suggest Contact names</string>
+    <!-- Description for option enabling or disabling the use of names of people in Contacts for suggestion and correction [CHAR LIMIT=65] -->
+    <string name="use_contacts_dict_summary">Use names from Contacts for suggestions and corrections</string>
 
-  <!-- Option name for enabling the use by the keyboards of sent/received messages, e-mail and typing history to improve suggestion accuracy [CHAR LIMIT=25] -->
-  <string name="use_personalized_dicts">Personalized suggestions</string>
+    <!-- Option name for enabling the use by the keyboards of sent/received messages, e-mail and typing history to improve suggestion accuracy [CHAR LIMIT=25] -->
+    <string name="use_personalized_dicts">Personalized suggestions</string>
 
-  <!-- Option to enable sending usage statistics -->
-  <string name="enable_metrics_logging">"Improve <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>"</string>
+    <!-- Option to enable sending usage statistics -->
+    <string name="enable_metrics_logging">"Improve <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>"</string>
 
-  <!-- Option name for enabling or disabling the double-space period feature that lets double tap on spacebar insert a period followed by a space [CHAR LIMIT=30] -->
-  <string name="use_double_space_period">Double-space period</string>
-  <!-- Description for option enabling or disabling the double-space period feature that lets double tap on spacebar insert a period followed by a space [CHAR LIMIT=65] -->
-  <string name="use_double_space_period_summary">Double tap on spacebar inserts a period followed by a space</string>
+    <!-- Option name for enabling or disabling the double-space period feature that lets double tap on spacebar insert a period followed by a space [CHAR LIMIT=30] -->
+    <string name="use_double_space_period">Double-space period</string>
+    <!-- Description for option enabling or disabling the double-space period feature that lets double tap on spacebar insert a period followed by a space [CHAR LIMIT=65] -->
+    <string name="use_double_space_period_summary">Double tap on spacebar inserts a period followed by a space</string>
 
-  <!-- Option to enable auto capitalization of sentences -->
-  <string name="auto_cap">Auto-capitalization</string>
-  <!-- Description for option to enable auto capitalization of sentences -->
-  <string name="auto_cap_summary">Capitalize the first word of each sentence</string>
+    <!-- Option to enable auto capitalization of sentences -->
+    <string name="auto_cap">Auto-capitalization</string>
+    <!-- Description for option to enable auto capitalization of sentences -->
+    <string name="auto_cap_summary">Capitalize the first word of each sentence</string>
 
-  <!-- Option to edit personal dictionary. [CHAR_LIMIT=30]-->
-  <string name="edit_personal_dictionary">Personal dictionary</string>
+    <!-- Option to edit personal dictionary. [CHAR_LIMIT=30]-->
+    <string name="edit_personal_dictionary">Personal dictionary</string>
 
-  <!-- Option to configure dictionaries -->
-  <string name="configure_dictionaries_title">Add-on dictionaries</string>
-  <!-- Name of the main dictionary, as opposed to auxiliary dictionaries (medical/entertainment/sports...) -->
-  <string name="main_dictionary">Main dictionary</string>
+    <!-- Option to configure dictionaries -->
+    <string name="configure_dictionaries_title">Add-on dictionaries</string>
+    <!-- Name of the main dictionary, as opposed to auxiliary dictionaries (medical/entertainment/sports...) -->
+    <string name="main_dictionary">Main dictionary</string>
 
-  <!-- Option to enable showing suggestions -->
-  <string name="prefs_show_suggestions">Show correction suggestions</string>
-  <!-- Description for show suggestions -->
-  <string name="prefs_show_suggestions_summary">Display suggested words while typing</string>
+    <!-- Option to enable showing suggestions -->
+    <string name="prefs_show_suggestions">Show correction suggestions</string>
+    <!-- Description for show suggestions -->
+    <string name="prefs_show_suggestions_summary">Display suggested words while typing</string>
 
-  <!-- Option to block potentially offensive words to be shown [CHAR_LIMIT=30] -->
-  <string name="prefs_block_potentially_offensive_title">Block offensive words</string>
-  <!-- Summary for option to block potentially offensive words to be shown [CHAR_LIMIT=80 (two lines) or 40 (fits on one line, preferable)] -->
-  <string name="prefs_block_potentially_offensive_summary">Do not suggest potentially offensive words</string>
+    <!-- Option to block potentially offensive words to be shown [CHAR_LIMIT=30] -->
+    <string name="prefs_block_potentially_offensive_title">Block offensive words</string>
+    <!-- Summary for option to block potentially offensive words to be shown [CHAR_LIMIT=80 (two lines) or 40 (fits on one line, preferable)] -->
+    <string name="prefs_block_potentially_offensive_summary">Do not suggest potentially offensive words</string>
 
-  <!-- Option to decide the auto correction threshold score -->
-  <!-- Option to enable auto correction [CHAR LIMIT=20]-->
-  <string name="auto_correction">Auto-correction</string>
-  <!-- Description for auto correction [CHAR LIMIT=65 (two lines) or 30 (fits on one line, preferable)] -->
-  <string name="auto_correction_summary">Spacebar and punctuation automatically correct mistyped words</string>
-  <!-- Option to disable auto correction. [CHAR LIMIT=20] -->
-  <string name="auto_correction_threshold_mode_off">Off</string>
-  <!-- Option to suggest auto correction suggestions modestly. Auto-corrects only to a word which has small edit distance from typed word. [CHAR LIMIT=20] -->
-  <string name="auto_correction_threshold_mode_modest">Modest</string>
-  <!-- Option to suggest auto correction suggestions aggressively. Auto-corrects to a word which has even large edit distance from typed word. [CHAR LIMIT=20] -->
-  <string name="auto_correction_threshold_mode_aggressive">Aggressive</string>
-  <!-- Option to suggest auto correction suggestions very aggressively. Auto-corrects to a word which has even large edit distance from typed word. [CHAR LIMIT=20] -->
-  <string name="auto_correction_threshold_mode_very_aggressive">Very aggressive</string>
+    <!-- Option to decide the auto correction threshold score -->
+    <!-- Option to enable auto correction [CHAR LIMIT=20]-->
+    <string name="auto_correction">Auto-correction</string>
+    <!-- Description for auto correction [CHAR LIMIT=65 (two lines) or 30 (fits on one line, preferable)] -->
+    <string name="auto_correction_summary">Spacebar and punctuation automatically correct mistyped words</string>
+    <!-- Option to disable auto correction. [CHAR LIMIT=20] -->
+    <string name="auto_correction_threshold_mode_off">Off</string>
+    <!-- Option to suggest auto correction suggestions modestly. Auto-corrects only to a word which has small edit distance from typed word. [CHAR LIMIT=20] -->
+    <string name="auto_correction_threshold_mode_modest">Modest</string>
+    <!-- Option to suggest auto correction suggestions aggressively. Auto-corrects to a word which has even large edit distance from typed word. [CHAR LIMIT=20] -->
+    <string name="auto_correction_threshold_mode_aggressive">Aggressive</string>
+    <!-- Option to suggest auto correction suggestions very aggressively. Auto-corrects to a word which has even large edit distance from typed word. [CHAR LIMIT=20] -->
+    <string name="auto_correction_threshold_mode_very_aggressive">Very aggressive</string>
 
-  <!-- Option to enable using next word suggestions. After the user types a space, with this option on, the keyboard will try to predict the next word. -->
-  <string name="bigram_prediction">Next-word suggestions</string>
-  <!-- Description for "next word suggestion" option. This displays suggestions even when there is no input, based on the previous word. -->
-  <string name="bigram_prediction_summary">Use the previous word in making suggestions</string>
+    <!-- Option to enable using next word suggestions. After the user types a space, with this option on, the keyboard will try to predict the next word. -->
+    <string name="bigram_prediction">Next-word suggestions</string>
+    <!-- Description for "next word suggestion" option. This displays suggestions even when there is no input, based on the previous word. -->
+    <string name="bigram_prediction_summary">Use the previous word in making suggestions</string>
 
-  <!-- Option to enable gesture input. The user can input a word by tracing the letters of a word without releasing the finger from the screen. [CHAR LIMIT=30]-->
-  <string name="gesture_input">Enable gesture typing</string>
-  <!-- Description for "gesture_input" option. The user can input a word by tracing the letters of a word without releasing the finger from the screen. [CHAR LIMIT=65]-->
-  <string name="gesture_input_summary">Input a word by sliding through the letters</string>
-  <!-- Option to enable gesture trail preview. The user can see a trail of the gesture during gesture input. [CHAR LIMIT=30]-->
-  <string name="gesture_preview_trail">Show gesture trail</string>
-  <!-- Option to enable gesture floating text preview. The user can see a suggested word floating under the moving finger during a gesture input. [CHAR LIMIT=30]-->
-  <string name="gesture_floating_preview_text">Dynamic floating preview</string>
-  <!-- Description for "gesture_floating_preview_text" option. The user can see a suggested word floating under the moving finger during a gesture input. [CHAR LIMIT=65]-->
-  <string name="gesture_floating_preview_text_summary">See the suggested word while gesturing</string>
-  <!-- Option to enable space aware gesture input. The user can input multiple words by gliding through the space key during a gesture input. [CHAR LIMIT=30]-->
-  <string name="gesture_space_aware">Phrase gesture</string>
-  <!-- Description for "gesture_space_aware" option. The user can input multiple words by gliding through the space key during a gesture input.[CHAR LIMIT=65]-->
-  <string name="gesture_space_aware_summary">Input spaces during gestures by gliding to the space key</string>
+    <!-- Option to enable gesture input. The user can input a word by tracing the letters of a word without releasing the finger from the screen. [CHAR LIMIT=30]-->
+    <string name="gesture_input">Enable gesture typing</string>
+    <!-- Description for "gesture_input" option. The user can input a word by tracing the letters of a word without releasing the finger from the screen. [CHAR LIMIT=65]-->
+    <string name="gesture_input_summary">Input a word by sliding through the letters</string>
+    <!-- Option to enable gesture trail preview. The user can see a trail of the gesture during gesture input. [CHAR LIMIT=30]-->
+    <string name="gesture_preview_trail">Show gesture trail</string>
+    <!-- Option to enable gesture floating text preview. The user can see a suggested word floating under the moving finger during a gesture input. [CHAR LIMIT=30]-->
+    <string name="gesture_floating_preview_text">Dynamic floating preview</string>
+    <!-- Description for "gesture_floating_preview_text" option. The user can see a suggested word floating under the moving finger during a gesture input. [CHAR LIMIT=65]-->
+    <string name="gesture_floating_preview_text_summary">See the suggested word while gesturing</string>
+    <!-- Option to enable space aware gesture input. The user can input multiple words by gliding through the space key during a gesture input. [CHAR LIMIT=30]-->
+    <string name="gesture_space_aware">Phrase gesture</string>
+    <!-- Description for "gesture_space_aware" option. The user can input multiple words by gliding through the space key during a gesture input.[CHAR LIMIT=65]-->
+    <string name="gesture_space_aware_summary">Input spaces during gestures by gliding to the space key</string>
 
-  <!-- Preferences item for enabling speech input -->
-  <string name="voice_input">Voice input key</string>
-  <!-- The summary text to describe the reason why the "Voice input key" option is disabled. [CHAR LIMIT=100] -->
-  <string name="voice_input_disabled_summary">No voice input methods enabled. Check Languages&#160;&amp; input settings.</string>
+    <!-- Preferences item for enabling speech input -->
+    <string name="voice_input">Voice input key</string>
+    <!-- The summary text to describe the reason why the "Voice input key" option is disabled. [CHAR LIMIT=100] -->
+    <string name="voice_input_disabled_summary">No voice input methods enabled. Check Languages&#160;&amp; input settings.</string>
 
-  <!-- Title for configuring input method settings [CHAR LIMIT=35] -->
-  <string name="configure_input_method">Configure input methods</string>
+    <!-- Title for configuring input method settings [CHAR LIMIT=35] -->
+    <string name="configure_input_method">Configure input methods</string>
 
-  <!-- Title for input language selection screen -->
-  <string name="language_selection_title">Languages</string>
+    <!-- Title for input language selection screen -->
+    <string name="language_selection_title">Languages</string>
 
-  <!-- Title for the 'Help & feedback' settings fragment which shows a help page and has a button
-       for submitting feedback. [CHAR LIMIT=35] -->
-  <string name="help_and_feedback">Help &amp; feedback</string>
+    <!-- Title for the 'Help & feedback' settings fragment which shows a help page and has a button
+         for submitting feedback. [CHAR LIMIT=35] -->
+    <string name="help_and_feedback">Help &amp; feedback</string>
 
-  <!-- Preference for input language selection -->
-  <string name="select_language">Languages</string>
+    <!-- Preference for input language selection -->
+    <string name="select_language">Languages</string>
 
-  <!-- Add to dictionary hint -->
-  <string name="hint_add_to_dictionary">Tap again to save</string>
-  <!-- Add to dictionary hint -->
-  <string name="hint_add_to_dictionary_without_word">Tap here to save</string>
+    <!-- Add to dictionary hint -->
+    <string name="hint_add_to_dictionary">Tap again to save</string>
+    <!-- Add to dictionary hint -->
+    <string name="hint_add_to_dictionary_without_word">Tap here to save</string>
 
-  <!-- Inform the user that a particular language has an available dictionary -->
-  <string name="has_dictionary">Dictionary available</string>
+    <!-- Inform the user that a particular language has an available dictionary -->
+    <string name="has_dictionary">Dictionary available</string>
 
-  <!-- Title of the item to change the keyboard theme [CHAR LIMIT=20]-->
-  <string name="keyboard_layout">Keyboard theme</string>
+    <!-- Title of the item to change the keyboard theme [CHAR LIMIT=20]-->
+    <string name="keyboard_layout">Keyboard theme</string>
 
-  <!-- Title of the preference item for switching accounts [CHAR LIMIT=30] -->
-  <string name="switch_accounts">Switch accounts</string>
-  <!-- Summary of the preference item for switching accounts when no accounts
-       are selected [CHAR LIMIT=65] -->
-  <string name="no_accounts_selected">No accounts selected</string>
-  <!-- Summary of the preference item for switching accounts when an account
-       is selected [CHAR LIMIT=65] -->
-  <string name="account_selected">Currently using <xliff:g example="someone@example.com" id="EMAIL_ADDRESS">%1$s</xliff:g></string>
-  <!-- Positive text for selecting an account -->
-  <string name="account_select_ok">OK</string>
-  <!-- Negative text for selecting an account -->
-  <string name="account_select_cancel">Cancel</string>
-  <!-- Text for signing out of an account -->
-  <string name="account_select_sign_out">Sign out</string>
-  <!-- Title of the account picker dialog for selecting an account [CHAR LIMIT=40] -->
-  <string name="account_select_title">Select an account to use</string>
+    <!-- Title of the preference item for switching accounts [CHAR LIMIT=30] -->
+    <string name="switch_accounts">Switch accounts</string>
+    <!-- Summary of the preference item for switching accounts when no accounts
+         are selected [CHAR LIMIT=65] -->
+    <string name="no_accounts_selected">No accounts selected</string>
+    <!-- Summary of the preference item for switching accounts when an account
+         is selected [CHAR LIMIT=65] -->
+    <string name="account_selected">Currently using <xliff:g example="someone@example.com" id="EMAIL_ADDRESS">%1$s</xliff:g></string>
+    <!-- Positive text for selecting an account -->
+    <string name="account_select_ok">OK</string>
+    <!-- Negative text for selecting an account -->
+    <string name="account_select_cancel">Cancel</string>
+    <!-- Text for signing out of an account -->
+    <string name="account_select_sign_out">Sign out</string>
+    <!-- Title of the account picker dialog for selecting an account [CHAR LIMIT=40] -->
+    <string name="account_select_title">Select an account to use</string>
 
-  <!-- Description for English (UK) keyboard subtype [CHAR LIMIT=25]
-       (UK) should be an abbreviation of United Kingdom to fit in the CHAR LIMIT. -->
-  <string name="subtype_en_GB">English (UK)</string>
-  <!-- Description for English (US) keyboard subtype [CHAR LIMIT=25]
-       (US) should be an abbreviation of United States to fit in the CHAR LIMIT. -->
-  <string name="subtype_en_US">English (US)</string>
-  <!-- Description for Spanish (US) keyboard subtype [CHAR LIMIT=25]
-       (US) should be an abbreviation of United States to fit in the CHAR LIMIT. -->
-  <string name="subtype_es_US">Spanish (US)</string>
-  <!-- Description for Hinglish (https://en.wikipedia.org/wiki/Hinglish) keyboard subtype [CHAR LIMIT=25] -->
-  <string name="subtype_hi_ZZ">Hinglish</string>
-  <!-- Description for Serbian (Latin) keyboard subtype [CHAR LIMIT=25]
-       (Latin) can be an abbreviation to fit in the CHAR LIMIT. -->
-  <string name="subtype_sr_ZZ">Serbian (Latin)</string>
-  <!-- Description for English (UK) keyboard subtype with explicit keyboard layout [CHAR LIMIT=25]
-       (UK) should be an abbreviation of United Kingdom to fit in the CHAR LIMIT.
-       This should be identical to subtype_en_GB aside from the trailing (%s). -->
-  <string name="subtype_with_layout_en_GB">English (UK) (<xliff:g example="QWERTY" id="KEYBOARD_LAYOUT">%s</xliff:g>)</string>
-  <!-- Description for English (US) keyboard subtype with explicit keyboard layout [CHAR LIMIT=25]
-       (US) should be an abbreviation of United States to fit in the CHAR LIMIT.
-       This should be identical to subtype_en_US aside from the trailing (%s). -->
-  <string name="subtype_with_layout_en_US">English (US) (<xliff:g example="QWERTY" id="KEYBOARD_LAYOUT">%s</xliff:g>)</string>
-  <!-- Description for Spanish (US) keyboard subtype with explicit keyboard layout [CHAR LIMIT=25]
-       (US) should be an abbreviation of United Statesn to fit in the CHAR LIMIT.
-       This should be identical to subtype_es_US aside from the trailing (%s). -->
-  <string name="subtype_with_layout_es_US">Spanish (US) (<xliff:g example="QWERTY" id="KEYBOARD_LAYOUT">%s</xliff:g>)</string>
-  <!-- Description for Hinglish (https://en.wikipedia.org/wiki/Hinglish) keyboard subtype with explicit keyboard layout [CHAR LIMIT=25]
-       This should be identical to subtype_hi_ZZ aside from the trailing (%s). -->
-  <string name="subtype_with_layout_hi_ZZ">Hinglish (<xliff:g example="QWERTY" id="KEYBOARD_LAYOUT">%s</xliff:g>)</string>
-  <!-- Description for Serbian (Latin) keyboard subtype with explicit keyboard layout [CHAR LIMIT=25]
-       This should be identical to subtype_sr_ZZ aside from the trailing (%s). -->
-  <string name="subtype_with_layout_sr_ZZ">Serbian (<xliff:g example="QWERTY" id="KEYBOARD_LAYOUT">%s</xliff:g>)</string>
-  <!-- Description for "LANGUAGE_NAME" (Traditional) keyboard subtype [CHAR LIMIT=25]
-       (Traditional) can be an abbreviation to fit in the CHAR LIMIT. -->
-  <string name="subtype_generic_traditional"><xliff:g example="Nepali" id="LANGUAGE_NAME">%s</xliff:g> (Traditional)</string>
-  <!-- Description for "LANGUAGE_NAME" (Compact) keyboard subtype [CHAR LIMIT=25]
-       (Compact) can be an abbreviation to fit in the CHAR LIMIT.
-       TODO: Remove translatable=false once we are settled down with the naming. -->
-  <string name="subtype_generic_compact" translatable="true"><xliff:g example="Hindi" id="LANGUAGE_NAME">%s</xliff:g> (Compact)</string>
-  <!-- Description for "LANGUAGE_NAME" (Cyrillic) keyboard subtype [CHAR LIMIT=25]
-       (Cyrillic) can be an abbreviation to fit in the CHAR LIMIT. -->
-  <string name="subtype_generic_cyrillic"><xliff:g example="Serbian" id="LANGUAGE_NAME">%s</xliff:g> (Cyrillic)</string>
-  <!-- Description for "LANGUAGE_NAME" (Latin) keyboard subtype [CHAR LIMIT=25]
-       (Latin) can be an abbreviation to fit in the CHAR LIMIT. -->
-  <string name="subtype_generic_latin"><xliff:g example="Serbian" id="LANGUAGE_NAME">%s</xliff:g> (Latin)</string>
-  <!-- This string is displayed in a language list that allows to choose a language for
+    <!-- Description for English (UK) keyboard subtype [CHAR LIMIT=25]
+         (UK) should be an abbreviation of United Kingdom to fit in the CHAR LIMIT. -->
+    <string name="subtype_en_GB">English (UK)</string>
+    <!-- Description for English (US) keyboard subtype [CHAR LIMIT=25]
+         (US) should be an abbreviation of United States to fit in the CHAR LIMIT. -->
+    <string name="subtype_en_US">English (US)</string>
+    <!-- Description for Spanish (US) keyboard subtype [CHAR LIMIT=25]
+         (US) should be an abbreviation of United States to fit in the CHAR LIMIT. -->
+    <string name="subtype_es_US">Spanish (US)</string>
+    <!-- Description for Hinglish (https://en.wikipedia.org/wiki/Hinglish) keyboard subtype [CHAR LIMIT=25] -->
+    <string name="subtype_hi_ZZ">Hinglish</string>
+    <!-- Description for Serbian (Latin) keyboard subtype [CHAR LIMIT=25]
+         (Latin) can be an abbreviation to fit in the CHAR LIMIT. -->
+    <string name="subtype_sr_ZZ">Serbian (Latin)</string>
+    <!-- Description for English (UK) keyboard subtype with explicit keyboard layout [CHAR LIMIT=25]
+         (UK) should be an abbreviation of United Kingdom to fit in the CHAR LIMIT.
+         This should be identical to subtype_en_GB aside from the trailing (%s). -->
+    <string name="subtype_with_layout_en_GB">English (UK) (<xliff:g example="QWERTY" id="KEYBOARD_LAYOUT">%s</xliff:g>)</string>
+    <!-- Description for English (US) keyboard subtype with explicit keyboard layout [CHAR LIMIT=25]
+         (US) should be an abbreviation of United States to fit in the CHAR LIMIT.
+         This should be identical to subtype_en_US aside from the trailing (%s). -->
+    <string name="subtype_with_layout_en_US">English (US) (<xliff:g example="QWERTY" id="KEYBOARD_LAYOUT">%s</xliff:g>)</string>
+    <!-- Description for Spanish (US) keyboard subtype with explicit keyboard layout [CHAR LIMIT=25]
+         (US) should be an abbreviation of United Statesn to fit in the CHAR LIMIT.
+         This should be identical to subtype_es_US aside from the trailing (%s). -->
+    <string name="subtype_with_layout_es_US">Spanish (US) (<xliff:g example="QWERTY" id="KEYBOARD_LAYOUT">%s</xliff:g>)</string>
+    <!-- Description for Hinglish (https://en.wikipedia.org/wiki/Hinglish) keyboard subtype with explicit keyboard layout [CHAR LIMIT=25]
+         This should be identical to subtype_hi_ZZ aside from the trailing (%s). -->
+    <string name="subtype_with_layout_hi_ZZ">Hinglish (<xliff:g example="QWERTY" id="KEYBOARD_LAYOUT">%s</xliff:g>)</string>
+    <!-- Description for Serbian (Latin) keyboard subtype with explicit keyboard layout [CHAR LIMIT=25]
+         This should be identical to subtype_sr_ZZ aside from the trailing (%s). -->
+    <string name="subtype_with_layout_sr_ZZ">Serbian (<xliff:g example="QWERTY" id="KEYBOARD_LAYOUT">%s</xliff:g>)</string>
+    <!-- Description for "LANGUAGE_NAME" (Traditional) keyboard subtype [CHAR LIMIT=25]
+         (Traditional) can be an abbreviation to fit in the CHAR LIMIT. -->
+    <string name="subtype_generic_traditional"><xliff:g example="Nepali" id="LANGUAGE_NAME">%s</xliff:g> (Traditional)</string>
+    <!-- Description for "LANGUAGE_NAME" (Compact) keyboard subtype [CHAR LIMIT=25]
+         (Compact) can be an abbreviation to fit in the CHAR LIMIT.
+         TODO: Remove translatable=false once we are settled down with the naming. -->
+    <string name="subtype_generic_compact" translatable="true"><xliff:g example="Hindi" id="LANGUAGE_NAME">%s</xliff:g> (Compact)</string>
+    <!-- Description for "LANGUAGE_NAME" (Cyrillic) keyboard subtype [CHAR LIMIT=25]
+         (Cyrillic) can be an abbreviation to fit in the CHAR LIMIT. -->
+    <string name="subtype_generic_cyrillic"><xliff:g example="Serbian" id="LANGUAGE_NAME">%s</xliff:g> (Cyrillic)</string>
+    <!-- Description for "LANGUAGE_NAME" (Latin) keyboard subtype [CHAR LIMIT=25]
+         (Latin) can be an abbreviation to fit in the CHAR LIMIT. -->
+    <string name="subtype_generic_latin"><xliff:g example="Serbian" id="LANGUAGE_NAME">%s</xliff:g> (Latin)</string>
+    <!-- This string is displayed in a language list that allows to choose a language for
 suggestions in a software keyboard. This setting won't give suggestions in any particular
 language, hence "No language".
 As for the "alphabet" mention, it refers specifically to the Latin alphabet, as opposed to
@@ -282,8 +282,8 @@ be a QWERTY, or AZERTY, or any other disposition that only offers Latin characte
 you wouldn't be able to type, say, Arabic on it. Please translate it in a way that "alphabet"
 would be understood to mean specifically the Latin alphabet, rather than any other
 alphabet. [CHAR LIMIT=29] -->
-  <string name="subtype_no_language">No language (Alphabet)</string>
-  <!-- This string is displayed in the description for a keyboard type. It refers specifically to
+    <string name="subtype_no_language">No language (Alphabet)</string>
+    <!-- This string is displayed in the description for a keyboard type. It refers specifically to
 the Latin alphabet, as opposed to Cyrillic, Arabic, Hebrew or other scripts.
 When the device is configured to use a language using a script other than the Latin alphabet, the
 user still needs a keyboard that can input Latin characters for passwords or login names for
@@ -293,8 +293,8 @@ keyboard that is meant for them to be able to enter Latin characters as opposed 
 are used to. This keyboard does not provide a dictionary, and it is not tied to any specific
 language among those that use the Latin alphabet. This keyboard is laid out in the QWERTY
 disposition rather than other common dispositions for Latin languages. [CHAR LIMIT=25] -->
-  <string name="subtype_no_language_qwerty">Alphabet (QWERTY)</string>
-  <!-- This string is displayed in the description for a keyboard type. It refers specifically to
+    <string name="subtype_no_language_qwerty">Alphabet (QWERTY)</string>
+    <!-- This string is displayed in the description for a keyboard type. It refers specifically to
 the Latin alphabet, as opposed to Cyrillic, Arabic, Hebrew or other scripts.
 When the device is configured to use a language using a script other than the Latin alphabet, the
 user still needs a keyboard that can input Latin characters for passwords or login names for
@@ -304,8 +304,8 @@ keyboard that is meant for them to be able to enter Latin characters as opposed 
 are used to. This keyboard does not provide a dictionary, and it is not tied to any specific
 language among those that use the Latin alphabet. This keyboard is laid out in the QWERTZ
 disposition rather than other common dispositions for Latin languages. [CHAR LIMIT=25] -->
-  <string name="subtype_no_language_qwertz">Alphabet (QWERTZ)</string>
-  <!-- This string is displayed in the description for a keyboard type. It refers specifically to
+    <string name="subtype_no_language_qwertz">Alphabet (QWERTZ)</string>
+    <!-- This string is displayed in the description for a keyboard type. It refers specifically to
 the Latin alphabet, as opposed to Cyrillic, Arabic, Hebrew or other scripts.
 When the device is configured to use a language using a script other than the Latin alphabet, the
 user still needs a keyboard that can input Latin characters for passwords or login names for
@@ -315,8 +315,8 @@ keyboard that is meant for them to be able to enter Latin characters as opposed 
 are used to. This keyboard does not provide a dictionary, and it is not tied to any specific
 language among those that use the Latin alphabet. This keyboard is laid out in the AZERTY
 disposition rather than other common dispositions for Latin languages. [CHAR LIMIT=25] -->
-  <string name="subtype_no_language_azerty">Alphabet (AZERTY)</string>
-  <!-- This string is displayed in the description for a keyboard type. It refers specifically to
+    <string name="subtype_no_language_azerty">Alphabet (AZERTY)</string>
+    <!-- This string is displayed in the description for a keyboard type. It refers specifically to
 the Latin alphabet, as opposed to Cyrillic, Arabic, Hebrew or other scripts.
 When the device is configured to use a language using a script other than the Latin alphabet, the
 user still needs a keyboard that can input Latin characters for passwords or login names for
@@ -326,8 +326,8 @@ keyboard that is meant for them to be able to enter Latin characters as opposed 
 are used to. This keyboard does not provide a dictionary, and it is not tied to any specific
 language among those that use the Latin alphabet. This keyboard is laid out in the Dvorak
 disposition rather than other common dispositions for Latin languages. [CHAR LIMIT=25] -->
-  <string name="subtype_no_language_dvorak">Alphabet (Dvorak)</string>
-  <!-- This string is displayed in the description for a keyboard type. It refers specifically to
+    <string name="subtype_no_language_dvorak">Alphabet (Dvorak)</string>
+    <!-- This string is displayed in the description for a keyboard type. It refers specifically to
 the Latin alphabet, as opposed to Cyrillic, Arabic, Hebrew or other scripts.
 When the device is configured to use a language using a script other than the Latin alphabet, the
 user still needs a keyboard that can input Latin characters for passwords or login names for
@@ -337,8 +337,8 @@ keyboard that is meant for them to be able to enter Latin characters as opposed 
 are used to. This keyboard does not provide a dictionary, and it is not tied to any specific
 language among those that use the Latin alphabet. This keyboard is laid out in the Colemak
 disposition rather than other common dispositions for Latin languages. [CHAR LIMIT=25] -->
-  <string name="subtype_no_language_colemak">Alphabet (Colemak)</string>
-  <!-- This string is displayed in the description for a keyboard type. It refers specifically to
+    <string name="subtype_no_language_colemak">Alphabet (Colemak)</string>
+    <!-- This string is displayed in the description for a keyboard type. It refers specifically to
 the Latin alphabet, as opposed to Cyrillic, Arabic, Hebrew or other scripts.
 When the device is configured to use a language using a script other than the Latin alphabet, the
 user still needs a keyboard that can input Latin characters for passwords or login names for
@@ -349,570 +349,568 @@ are used to. This keyboard does not provide a dictionary, and it is not tied to 
 language among those that use the Latin alphabet. This keyboard is laid out in the QWERTY PC
 disposition that offers additional keys, but smaller keys compared to other common dispositions for
 mobile devices. [CHAR LIMIT=25] -->
-  <string name="subtype_no_language_pcqwerty">Alphabet (PC)</string>
-  <!-- Description for Emoji keyboard subtype [CHAR LIMIT=25] -->
-  <string name="subtype_emoji">Emoji</string>
+    <string name="subtype_no_language_pcqwerty">Alphabet (PC)</string>
+    <!-- Description for Emoji keyboard subtype [CHAR LIMIT=25] -->
+    <string name="subtype_emoji">Emoji</string>
 
-  <!-- Title of the preference settings for switching keyboard theme [CHAR LIMIT=35] -->
-  <string name="keyboard_theme">Keyboard theme</string>
-  <!-- The keyboard theme name, Holo White. This is marked as translatable="false" because this is a proper name of system-wide UI Theme. -->
-  <string name="keyboard_theme_holo_white" translatable="false">Holo White</string>
-  <!-- The keyboard theme name, Holo Blue. This is marked as translatable="false" because this is a proper name of system-wide UI Theme.  -->
-  <string name="keyboard_theme_holo_blue" translatable="false">Holo Blue</string>
-  <!-- The keyboard theme name, Material Dark. This is marked as translatable="false" because this is a proper name of system-wide UI Theme.  -->
-  <string name="keyboard_theme_material_dark" translatable="false">Material Dark</string>
-  <!-- The keyboard theme name, Material Light. This is marked as translatable="false" because this is a proper name of system-wide UI Theme.  -->
-  <string name="keyboard_theme_material_light" translatable="false">Material Light</string>
+    <!-- Title of the preference settings for switching keyboard theme [CHAR LIMIT=35] -->
+    <string name="keyboard_theme">Keyboard theme</string>
+    <!-- The keyboard theme name, Holo White. This is marked as translatable="false" because this is a proper name of system-wide UI Theme. -->
+    <string name="keyboard_theme_holo_white" translatable="false">Holo White</string>
+    <!-- The keyboard theme name, Holo Blue. This is marked as translatable="false" because this is a proper name of system-wide UI Theme.  -->
+    <string name="keyboard_theme_holo_blue" translatable="false">Holo Blue</string>
+    <!-- The keyboard theme name, Material Dark. This is marked as translatable="false" because this is a proper name of system-wide UI Theme.  -->
+    <string name="keyboard_theme_material_dark" translatable="false">Material Dark</string>
+    <!-- The keyboard theme name, Material Light. This is marked as translatable="false" because this is a proper name of system-wide UI Theme.  -->
+    <string name="keyboard_theme_material_light" translatable="false">Material Light</string>
 
-  <!-- Title of the preference settings for custom input styles (language and keyboard layout pairs) [CHAR LIMIT=35]-->
-  <string name="custom_input_styles_title">Custom input styles</string>
-  <!-- Title of the option menu to add a new style entry in the preference settings [CHAR LIMIT=16] -->
-  <string name="add_style">Add style</string>
-  <!-- Title of the button to add custom style entry in the settings dialog [CHAR LIMIT=15] -->
-  <string name="add">Add</string>
-  <!-- Title of the button to remove a custom style entry in the settings dialog [CHAR LIMIT=15] -->
-  <string name="remove">Remove</string>
-  <!-- Title of the button to save a custom style entry in the settings dialog [CHAR LIMIT=15] -->
-  <string name="save">Save</string>
-  <!-- Title of the spinner for choosing a language of custom style in the settings dialog [CHAR LIMIT=15] -->
-  <string name="subtype_locale">Language</string>
-  <!-- Title of the spinner for choosing a keyboard layout of custom style in the settings dialog [CHAR LIMIT=15] -->
-  <string name="keyboard_layout_set">Layout</string>
-  <!-- The message of the dialog to note that a custom input style needs to be enabled. [CHAR LIMIT=130] -->
-  <string name="custom_input_style_note_message">"Your custom input style needs to be enabled before you start using it. Do you want to enable it now?"</string>
-  <!-- Title of the button to enable a custom input style entry in the settings dialog [CHAR LIMIT=15] -->
-  <string name="enable">Enable</string>
-  <!-- Title of the button to postpone enabling a custom input style entry in the settings dialog [CHAR LIMIT=15] -->
-  <string name="not_now">Not now</string>
-  <!-- Toast text to describe the same input style already exists [CHAR LIMIT=64]-->
-  <string name="custom_input_style_already_exists">"The same input style already exists: <xliff:g example="English (Dvorak)" id="INPUT_STYLE_NAME">%s</xliff:g>"</string>
+    <!-- Title of the preference settings for custom input styles (language and keyboard layout pairs) [CHAR LIMIT=35]-->
+    <string name="custom_input_styles_title">Custom input styles</string>
+    <!-- Title of the option menu to add a new style entry in the preference settings [CHAR LIMIT=16] -->
+    <string name="add_style">Add style</string>
+    <!-- Title of the button to add custom style entry in the settings dialog [CHAR LIMIT=15] -->
+    <string name="add">Add</string>
+    <!-- Title of the button to remove a custom style entry in the settings dialog [CHAR LIMIT=15] -->
+    <string name="remove">Remove</string>
+    <!-- Title of the button to save a custom style entry in the settings dialog [CHAR LIMIT=15] -->
+    <string name="save">Save</string>
+    <!-- Title of the spinner for choosing a language of custom style in the settings dialog [CHAR LIMIT=15] -->
+    <string name="subtype_locale">Language</string>
+    <!-- Title of the spinner for choosing a keyboard layout of custom style in the settings dialog [CHAR LIMIT=15] -->
+    <string name="keyboard_layout_set">Layout</string>
+    <!-- The message of the dialog to note that a custom input style needs to be enabled. [CHAR LIMIT=130] -->
+    <string name="custom_input_style_note_message">"Your custom input style needs to be enabled before you start using it. Do you want to enable it now?"</string>
+    <!-- Title of the button to enable a custom input style entry in the settings dialog [CHAR LIMIT=15] -->
+    <string name="enable">Enable</string>
+    <!-- Title of the button to postpone enabling a custom input style entry in the settings dialog [CHAR LIMIT=15] -->
+    <string name="not_now">Not now</string>
+    <!-- Toast text to describe the same input style already exists [CHAR LIMIT=64]-->
+    <string name="custom_input_style_already_exists">"The same input style already exists: <xliff:g example="English (Dvorak)" id="INPUT_STYLE_NAME">%s</xliff:g>"</string>
 
-  <!-- Title of the settings for keypress vibration duration [CHAR LIMIT=35] -->
-  <string name="prefs_keypress_vibration_duration_settings">Keypress vibration duration</string>
-  <!-- Title of the settings for keypress sound volume [CHAR LIMIT=35] -->
-  <string name="prefs_keypress_sound_volume_settings">Keypress sound volume</string>
-  <!-- Title of the settings for key long press delay [CHAR LIMIT=35] -->
-  <string name="prefs_key_longpress_timeout_settings">Key long press delay</string>
-  <!-- Title of the settings for enabling Emoji palette triggered by the Alt key on physical keyboards [CHAR LIMIT=35] -->
-  <string name="prefs_enable_emoji_alt_physical_key">Emoji for physical keyboard</string>
-  <!-- Description of the settings for enabling Emoji palette triggered by the Alt key on physical keyboards [CHAR LIMIT=64] -->
-  <string name="prefs_enable_emoji_alt_physical_key_summary">Physical Alt key shows the emoji palette</string>
+    <!-- Title of the settings for keypress vibration duration [CHAR LIMIT=35] -->
+    <string name="prefs_keypress_vibration_duration_settings">Keypress vibration duration</string>
+    <!-- Title of the settings for keypress sound volume [CHAR LIMIT=35] -->
+    <string name="prefs_keypress_sound_volume_settings">Keypress sound volume</string>
+    <!-- Title of the settings for key long press delay [CHAR LIMIT=35] -->
+    <string name="prefs_key_longpress_timeout_settings">Key long press delay</string>
+    <!-- Title of the settings for enabling Emoji palette triggered by the Alt key on physical keyboards [CHAR LIMIT=35] -->
+    <string name="prefs_enable_emoji_alt_physical_key">Emoji for physical keyboard</string>
+    <!-- Description of the settings for enabling Emoji palette triggered by the Alt key on physical keyboards [CHAR LIMIT=64] -->
+    <string name="prefs_enable_emoji_alt_physical_key_summary">Physical Alt key shows the emoji palette</string>
 
-  <!-- Title of the button to revert to the default value of the device in the settings dialog [CHAR LIMIT=15] -->
-  <string name="button_default">Default</string>
+    <!-- Title of the button to revert to the default value of the device in the settings dialog [CHAR LIMIT=15] -->
+    <string name="button_default">Default</string>
 
-  <!-- Title of the setup wizard welcome screen. [CHAR LIMT=40] -->
-  <string name="setup_welcome_title">"Welcome to NeuralKey"</string>
-  <!-- Additional title of the setup wizard welcome screen, just below the setup_welcome_title. [CHAR_LIMIT=64] -->
-  <string name="setup_welcome_additional_description">with Gesture Typing</string>
-  <!-- The label of the button that starts the setup wizard. [CHAR_LIMIT=64] -->
-  <string name="setup_start_action">Get started</string>
-  <!-- The label of the button that navigates the user to the next step of the setup wizard. [CHAR_LIMIT=64] -->
-  <string name="setup_next_action">Next step</string>
-  <!-- Title of the setup wizard. [CHAR LIMT=40] -->
-  <string name="setup_steps_title">"Setting up <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>"</string>
-  <!-- Ordinal number of the 1st step in the setup wizard. [CHAR LIMIT=5] -->
-  <string name="setup_step1_bullet" translatable="false">1</string>
-  <!-- Title of the 1st step in the setup wizard. [CHAR LIMIT=64] -->
-  <string name="setup_step1_title">"Enable <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>"</string>
-  <!-- Detailed instruction of the 1st step in the setup wizard. [CHAR LIMIT=120] -->
-  <string name="setup_step1_instruction">"Please check \"<xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>\" in your Languages&#160;&amp; input settings. This will authorize it to run on your device."</string>
-  <!-- Detailed instruction of the already finished 1st step in the setup wizard. [CHAR LIMIT=120] -->
-  <string name="setup_step1_finished_instruction">"<xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g> is already enabled in your Languages&#160;&amp; input settings, so this step is done. On to the next one!"</string>
-  <!-- The label of the button that triggers the Languages & input settings in order to enable the keyboard. [CHAR_LIMIT=64] -->
-  <string name="setup_step1_action">Enable in Settings</string>
-  <!-- Ordinal number of the 2nd step in the setup wizard. [CHAR LIMIT=5] -->
-  <string name="setup_step2_bullet" translatable="false">2</string>
-  <!-- Title of the 2nd step in the setup wizard. [CHAR LIMIT=64] -->
-  <string name="setup_step2_title">"Switch to <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>"</string>
-  <!-- Detailed instruction of the 2nd step in the setup wizard. [CHAR LIMIT=120] -->
-  <string name="setup_step2_instruction">"Next, select \"<xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>\" as your active text-input method."</string>
-  <!-- The label of the button that triggers the choose input method dialog in order to select the keyboard. [CHAR_LIMIT=64] -->
-  <string name="setup_step2_action">Switch input methods</string>
-  <!-- Ordinal number of the 3rd step in the setup wizard. [CHAR LIMIT=5] -->
-  <string name="setup_step3_bullet" translatable="false">3</string>
-  <!-- Title of the 3rd step in the setup wizard. [CHAR LIMIT=64] -->
-  <string name="setup_step3_title">"Select languages"</string>
-  <string name="setup_step3_instruction">Select the languages and layouts you want to use.</string>
-  <string name="setup_step3_action">Configure languages</string>
-  <!-- The label of the button that triggers the screen for configuaring additional languages of the keyboard. [CHAR_LIMIT=64] -->
-  <string name="setup_step4_bullet" translatable="false">4</string>
-  <string name="setup_step4_title">"Congratulations, you're all set!"</string>
-  <!-- Detailed instruction of the 3rd step in the setup wizard. [CHAR LIMIT=120] -->
-  <string name="setup_step4_instruction">Now you can type in all your favorite apps with <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>.</string>
-  <!-- The label of the button that finishes the setup wizard. [CHAR_LIMIT=64] -->
-  <string name="setup_finish_action">Finished</string>
-  <!-- Option to show setup wizard icon. [CHAR LIMIT=30]-->
-  <string name="show_setup_wizard_icon">Show app icon</string>
-  <!-- Description for the option to show setup wizard application icon of this IME in the laucher. [CHAR_LIMIT=65] -->
-  <string name="show_setup_wizard_icon_summary">Display application icon in the launcher</string>
+    <!-- Title of the setup wizard welcome screen. [CHAR LIMT=40] -->
+    <string name="setup_welcome_title">"Welcome to NeuralKey"</string>
+    <!-- Additional title of the setup wizard welcome screen, just below the setup_welcome_title. [CHAR_LIMIT=64] -->
+    <string name="setup_welcome_additional_description">with Gesture Typing</string>
+    <!-- The label of the button that starts the setup wizard. [CHAR_LIMIT=64] -->
+    <string name="setup_start_action">Get started</string>
+    <!-- The label of the button that navigates the user to the next step of the setup wizard. [CHAR_LIMIT=64] -->
+    <string name="setup_next_action">Next step</string>
+    <!-- Title of the setup wizard. [CHAR LIMT=40] -->
+    <string name="setup_steps_title">"Setting up <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>"</string>
+    <!-- Ordinal number of the 1st step in the setup wizard. [CHAR LIMIT=5] -->
+    <string name="setup_step1_bullet" translatable="false">1</string>
+    <!-- Title of the 1st step in the setup wizard. [CHAR LIMIT=64] -->
+    <string name="setup_step1_title">"Enable <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>"</string>
+    <!-- Detailed instruction of the 1st step in the setup wizard. [CHAR LIMIT=120] -->
+    <string name="setup_step1_instruction">"Please check \"<xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>\" in your Languages&#160;&amp; input settings. This will authorize it to run on your device."</string>
+    <!-- Detailed instruction of the already finished 1st step in the setup wizard. [CHAR LIMIT=120] -->
+    <string name="setup_step1_finished_instruction">"<xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g> is already enabled in your Languages&#160;&amp; input settings, so this step is done. On to the next one!"</string>
+    <!-- The label of the button that triggers the Languages & input settings in order to enable the keyboard. [CHAR_LIMIT=64] -->
+    <string name="setup_step1_action">Enable in Settings</string>
+    <!-- Ordinal number of the 2nd step in the setup wizard. [CHAR LIMIT=5] -->
+    <string name="setup_step2_bullet" translatable="false">2</string>
+    <!-- Title of the 2nd step in the setup wizard. [CHAR LIMIT=64] -->
+    <string name="setup_step2_title">"Switch to <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>"</string>
+    <!-- Detailed instruction of the 2nd step in the setup wizard. [CHAR LIMIT=120] -->
+    <string name="setup_step2_instruction">"Next, select \"<xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>\" as your active text-input method."</string>
+    <!-- The label of the button that triggers the choose input method dialog in order to select the keyboard. [CHAR_LIMIT=64] -->
+    <string name="setup_step2_action">Switch input methods</string>
+    <!-- Ordinal number of the 3rd step in the setup wizard. [CHAR LIMIT=5] -->
+    <string name="setup_step3_bullet" translatable="false">3</string>
+    <!-- Title of the 3rd step in the setup wizard. [CHAR LIMIT=64] -->
+    <string name="setup_step3_title">"Select languages"</string>
+    <string name="setup_step3_instruction">Select the languages and layouts you want to use.</string>
+    <string name="setup_step3_action">Configure languages</string>
+    <!-- The label of the button that triggers the screen for configuaring additional languages of the keyboard. [CHAR_LIMIT=64] -->
+    <string name="setup_step4_bullet" translatable="false">4</string>
+    <string name="setup_step4_title">"Congratulations, you're all set!"</string>
+    <!-- Detailed instruction of the 3rd step in the setup wizard. [CHAR LIMIT=120] -->
+    <string name="setup_step4_instruction">Now you can type in all your favorite apps with <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>.</string>
+    <!-- The label of the button that finishes the setup wizard. [CHAR_LIMIT=64] -->
+    <string name="setup_finish_action">Finished</string>
+    <!-- Option to show setup wizard icon. [CHAR LIMIT=30]-->
+    <string name="show_setup_wizard_icon">Show app icon</string>
+    <!-- Description for the option to show setup wizard application icon of this IME in the laucher. [CHAR_LIMIT=65] -->
+    <string name="show_setup_wizard_icon_summary">Display application icon in the launcher</string>
 
-  <!-- The dictionary provider application name. Visible in Settings/Applications/Manage applications. -->
-  <string name="app_name">Agah Keyboard</string>
-  <!-- The dictionary provider ContentProvider name. Visible in Settings/Applications/Running services. -->
-  <string name="dictionary_provider_name">Dictionary Provider</string>
-  <!-- The dictionary provider Service name. Visible in Settings/Applications/Running services. -->
-  <string name="dictionary_service_name">Dictionary Service</string>
+    <!-- The dictionary provider application name. Visible in Settings/Applications/Manage applications. -->
+    <string name="app_name">Agah Keyboard</string>
+    <!-- The dictionary provider ContentProvider name. Visible in Settings/Applications/Running services. -->
+    <string name="dictionary_provider_name">Dictionary Provider</string>
+    <!-- The dictionary provider Service name. Visible in Settings/Applications/Running services. -->
+    <string name="dictionary_service_name">Dictionary Service</string>
 
-  <!-- Downloadable dictionaries will get update information through the network. This describes the associated download. -->
-  <string name="download_description">Dictionary update information</string>
+    <!-- Downloadable dictionaries will get update information through the network. This describes the associated download. -->
+    <string name="download_description">Dictionary update information</string>
 
-  <!-- Title and summary of the dictionary settings screen -->
-  <string name="dictionary_settings_title">Add-on dictionaries</string>
-  <!-- Title for the prompt dialog which informs the user that a dictionary is available for the current language and asks to decide whether to download it over 3g -->
-  <string name="dictionary_install_over_metered_network_prompt">Dictionary available</string>
-  <string name="dictionary_settings_summary">Settings for dictionaries</string>
-  <!-- Name of the user dictionaries settings category -->
-  <string name="user_dictionaries">User dictionaries</string>
-  <!-- Name for the "user dictionary" preference item when there is only one -->
-  <string name="default_user_dict_pref_name">User dictionary</string>
-  <!-- Message about some dictionary indicating it can be downloaded, but hasn't been yet -->
-  <string name="dictionary_available">Dictionary available</string>
-  <!-- Message about some dictionary indicating it is downloading and should be available soon -->
-  <string name="dictionary_downloading">Currently downloading</string>
-  <!-- Message about some dictionary indicating it is already installed -->
-  <string name="dictionary_installed">Installed</string>
-  <!-- Message about some dictionary indicating the file is installed, but the dictionary is disabled -->
-  <string name="dictionary_disabled">Installed, disabled</string>
+    <!-- Title and summary of the dictionary settings screen -->
+    <string name="dictionary_settings_title">Add-on dictionaries</string>
+    <!-- Title for the prompt dialog which informs the user that a dictionary is available for the current language and asks to decide whether to download it over 3g -->
+    <string name="dictionary_install_over_metered_network_prompt">Dictionary available</string>
+    <string name="dictionary_settings_summary">Settings for dictionaries</string>
+    <!-- Name of the user dictionaries settings category -->
+    <string name="user_dictionaries">User dictionaries</string>
+    <!-- Name for the "user dictionary" preference item when there is only one -->
+    <string name="default_user_dict_pref_name">User dictionary</string>
+    <!-- Message about some dictionary indicating it can be downloaded, but hasn't been yet -->
+    <string name="dictionary_available">Dictionary available</string>
+    <!-- Message about some dictionary indicating it is downloading and should be available soon -->
+    <string name="dictionary_downloading">Currently downloading</string>
+    <!-- Message about some dictionary indicating it is already installed -->
+    <string name="dictionary_installed">Installed</string>
+    <!-- Message about some dictionary indicating the file is installed, but the dictionary is disabled -->
+    <string name="dictionary_disabled">Installed, disabled</string>
 
-  <!-- Message to display in the dictionaries setting screen when some error prevented us to list installed dictionaries [CHAR LIMIT=20] -->
-  <string name="cannot_connect_to_dict_service">Problem connecting to dictionary service</string>
-  <!-- Message to display in the dictionaries setting screen when we found that no dictionaries are available [CHAR LIMIT=20]-->
-  <string name="no_dictionaries_available">No dictionaries available</string>
+    <!-- Message to display in the dictionaries setting screen when some error prevented us to list installed dictionaries [CHAR LIMIT=20] -->
+    <string name="cannot_connect_to_dict_service">Problem connecting to dictionary service</string>
+    <!-- Message to display in the dictionaries setting screen when we found that no dictionaries are available [CHAR LIMIT=20]-->
+    <string name="no_dictionaries_available">No dictionaries available</string>
 
-  <!-- Title of the options to press to refresh the list (as in, check for updates now) [CHAR_LIMIT=50] -->
-  <string name="check_for_updates_now">Refresh</string>
-  <!-- Hint to tell when the data was last updated. Usage : "Last updated [date]", may contain a : or so. [CHAR LIMIT=45] -->
-  <string name="last_update">Last updated</string>
+    <!-- Title of the options to press to refresh the list (as in, check for updates now) [CHAR_LIMIT=50] -->
+    <string name="check_for_updates_now">Refresh</string>
+    <!-- Hint to tell when the data was last updated. Usage : "Last updated [date]", may contain a : or so. [CHAR LIMIT=45] -->
+    <string name="last_update">Last updated</string>
 
-  <!-- Message to display in a dialog box while we are actively updating the word list [CHAR LIMIT=60] -->
-  <string name="message_updating">Checking for updates</string>
-  <!-- Message to display while the add-on dictionary list is updating [no space constraints on this, there is plenty of space but shorter is better because it's only on the screen for a second] -->
-  <string name="message_loading">Loading&#x2026;</string>
+    <!-- Message to display in a dialog box while we are actively updating the word list [CHAR LIMIT=60] -->
+    <string name="message_updating">Checking for updates</string>
+    <!-- Message to display while the add-on dictionary list is updating [no space constraints on this, there is plenty of space but shorter is better because it's only on the screen for a second] -->
+    <string name="message_loading">Loading&#x2026;</string>
 
-  <!-- String to explain this dictionary is the main dictionary for this language [CHAR_LIMIT=30] -->
-  <string name="main_dict_description">Main dictionary</string>
+    <!-- String to explain this dictionary is the main dictionary for this language [CHAR_LIMIT=30] -->
+    <string name="main_dict_description">Main dictionary</string>
 
-  <!-- Standard message to dismiss a dialog box -->
-  <string name="cancel">Cancel</string>
-  <!-- Title of the button in a dialog box. The button takes the user to the keyboard settings. [CHAR LIMIT=15] -->
-  <string name="go_to_settings">Settings</string>
+    <!-- Standard message to dismiss a dialog box -->
+    <string name="cancel">Cancel</string>
+    <!-- Title of the button in a dialog box. The button takes the user to the keyboard settings. [CHAR LIMIT=15] -->
+    <string name="go_to_settings">Settings</string>
 
-  <!-- Action to download and install a dictionary [CHAR_LIMIT=15] -->
-  <string name="install_dict">Install</string>
-  <!-- Action to cancel the ongoing download of a dictionary file [CHAR_LIMIT=25] -->
-  <string name="cancel_download_dict">Cancel</string>
-  <!-- Action to delete a dictionary file [CHAR_LIMIT=15] -->
-  <string name="delete_dict">Delete</string>
+    <!-- Action to download and install a dictionary [CHAR_LIMIT=15] -->
+    <string name="install_dict">Install</string>
+    <!-- Action to cancel the ongoing download of a dictionary file [CHAR_LIMIT=25] -->
+    <string name="cancel_download_dict">Cancel</string>
+    <!-- Action to delete a dictionary file [CHAR_LIMIT=15] -->
+    <string name="delete_dict">Delete</string>
 
-  <!-- Message in the popup informing the user a dictionary is available for their language, and asking for a decision to download over their mobile data plan or not. The reason we ask for this is, the data is large and may be downloaded over a paid-per-megabyte connection but a dictionary is also essential to type comfortably, so we ask the user. This only pops in selected cases, when there is no dictionary at all currently, and the only available network seems to be metered. The "Languages & input" part should be set to the actual name of the option (message ID 5292716747264442359 in the translation console). [CHAR_LIMIT=700] -->
-  <string name="should_download_over_metered_prompt">The selected language on your mobile device has an available dictionary.&lt;br/>
+    <!-- Message in the popup informing the user a dictionary is available for their language, and asking for a decision to download over their mobile data plan or not. The reason we ask for this is, the data is large and may be downloaded over a paid-per-megabyte connection but a dictionary is also essential to type comfortably, so we ask the user. This only pops in selected cases, when there is no dictionary at all currently, and the only available network seems to be metered. The "Languages & input" part should be set to the actual name of the option (message ID 5292716747264442359 in the translation console). [CHAR_LIMIT=700] -->
+    <string name="should_download_over_metered_prompt">The selected language on your mobile device has an available dictionary.&lt;br/>
 We recommend &lt;b>downloading&lt;/b> the <xliff:g example="English" id="LANGUAGE_NAME">%1$s</xliff:g> dictionary to improve your typing experience.&lt;br/>
 &lt;br/>
 The download could take a minute or two over 3G. Charges may apply if you don\'t have an &lt;b>unlimited data plan&lt;/b>.&lt;br/>
 If you are not sure which data plan you have, we recommend finding a Wi-Fi connection to start the download automatically.&lt;br/>
 &lt;br/>
 Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&amp; input&lt;/b> in the &lt;b>Settings&lt;/b> menu of your mobile device.</string>
-  <string name="download_over_metered">Download now (<xliff:g example="0.7" id="SIZE_IN_MEGABYTES">%1$.1f</xliff:g>MB)</string>
-  <string name="do_not_download_over_metered">Download over Wi-Fi</string>
-  <!-- The text of the "dictionary available" notification. -->
-  <string name="dict_available_notification_title">A dictionary is available for <xliff:g example="English" id="LANGUAGE_NAME">%1$s</xliff:g></string>
-  <!-- The small subtext in the "dictionary available" notification. -->
-  <string name="dict_available_notification_description">Press to review and download</string>
+    <string name="download_over_metered">Download now (<xliff:g example="0.7" id="SIZE_IN_MEGABYTES">%1$.1f</xliff:g>MB)</string>
+    <string name="do_not_download_over_metered">Download over Wi-Fi</string>
+    <!-- The text of the "dictionary available" notification. -->
+    <string name="dict_available_notification_title">A dictionary is available for <xliff:g example="English" id="LANGUAGE_NAME">%1$s</xliff:g></string>
+    <!-- The small subtext in the "dictionary available" notification. -->
+    <string name="dict_available_notification_description">Press to review and download</string>
 
-  <!-- The text of the toast warning a download is starting automatically to enable suggestions for the selected language [CHAR LIMIT=100] -->
-  <string name="toast_downloading_suggestions">Downloading: suggestions for <xliff:g example="English" id="LANGUAGE_NAME">%1$s</xliff:g> will be ready soon.</string>
+    <!-- The text of the toast warning a download is starting automatically to enable suggestions for the selected language [CHAR LIMIT=100] -->
+    <string name="toast_downloading_suggestions">Downloading: suggestions for <xliff:g example="English" id="LANGUAGE_NAME">%1$s</xliff:g> will be ready soon.</string>
 
-  <!-- Version text [CHAR LIMIT=30]-->
-  <string name="version_text">Version <xliff:g example="1.0.1864.643521" id="VERSION_NUMBER">%1$s</xliff:g></string>
+    <!-- Version text [CHAR LIMIT=30]-->
+    <string name="version_text">Version <xliff:g example="1.0.1864.643521" id="VERSION_NUMBER">%1$s</xliff:g></string>
 
-  <!-- User dictionary settings -->
-  <!-- User dictionary settings.  The summary of the listem item to go into the User dictionary settings screen. -->
-  <string name="user_dict_settings_summary" translatable="false">""</string>
-  <!-- User dictionary settings. The title of the menu item to add a new word to the user dictionary. -->
-  <!-- This resource is corresponding to  msgid="4056762757149923551" -->
-  <string name="user_dict_settings_add_menu_title">Add</string>
-  <!-- User dictionary settings. The title of the dialog to add a new word to the user dictionary. [CHAR LIMIT=25] -->
-  <!-- This resource is corresponding to msgid="4702613990174126482" -->
-  <string name="user_dict_settings_add_dialog_title">Add to dictionary</string>
-  <!-- User dictionary settings. The title of the screen to add/edit a new word to the user dictionary; it describes the phrase that will be added to the user dictionary. [CHAR LIMIT=25] -->
-  <!-- This resource is corresponding to msgid="742580720124344291" -->
-  <string name="user_dict_settings_add_screen_title">Phrase</string>
-  <!-- User dictionary settings. Text on the dialog button to pop more options for adding a word. [CHAR LIMIT=16] -->
-  <!-- This resource is corresponding to msgid="8848798370746019825" -->
-  <string name="user_dict_settings_add_dialog_more_options">More options</string>
-  <!-- User dictionary settings. Text on the dialog button mask advanced options. [CHAR LIMIT=15] -->
-  <!-- This resource is corresponding to msgid="2441785268726036101" -->
-  <string name="user_dict_settings_add_dialog_less_options">Less options</string>
-  <!-- User dictionary settings. Text on the dialog button to confirm adding a word. [CHAR LIMIT=15] -->
-  <!-- This resource is corresponding to msgid="6225823625332416144" -->
-  <string name="user_dict_settings_add_dialog_confirm">OK</string>
-  <!-- User dictionary settings. Label to put before the word field (that's the word that will actually be added to the user dictionary when OK is pressed). [CHAR LIMIT=20] -->
-  <!-- This resource is corresponding to msgid="7868879174905963135" -->
-  <string name="user_dict_settings_add_word_option_name">Word:</string>
-  <!-- User dictionary settings. Label to put before the shortcut field (once a shortcut is registered, the user can type the shortcut and get the word it points to in the suggestions). [CHAR LIMIT=20] -->
-  <!-- This resource is corresponding to msgid="660089258866063925" -->
-  <string name="user_dict_settings_add_shortcut_option_name">Shortcut:</string>
-  <!-- User dictionary settings. Label to put before the language field. [CHAR LIMIT=20] -->
-  <!-- This resource is corresponding to msgid="5696358317061318532" -->
-  <string name="user_dict_settings_add_locale_option_name">Language:</string>
-  <!-- User dictionary settings. Hint for the text field to type the word to add to the user dictionary. [CHAR LIMIT=35] -->
-  <!-- This resource is corresponding to msgid="5725254076556821247" -->
-  <string name="user_dict_settings_add_word_hint">Type a word</string>
-  <!-- User dictionary settings. Hint for the text field to type the optional shortcut to add to the user dictionary. [CHAR LIMIT=35] -->
-  <!-- This resource is corresponding to msgid="7333763456561873445" -->
-  <string name="user_dict_settings_add_shortcut_hint">Optional shortcut</string>
-  <!-- User dictionary settings. The title of the dialog to edit an existing word in the user dictionary. -->
-  <!-- This resource is corresponding to msgid="8967476444840548674" -->
-  <string name="user_dict_settings_edit_dialog_title">Edit word</string>
-  <!-- User dictionary settings. The title of the context menu item to edit the current word -->
-  <!-- This resource is corresponding to msgid="2210564879320004837" -->
-  <string name="user_dict_settings_context_menu_edit_title">Edit</string>
-  <!-- User dictionary settings. The title of the context menu item to delete the current word -->
-  <!-- This resource is corresponding to msgid="9140703913776549054" -->
-  <string name="user_dict_settings_context_menu_delete_title">Delete</string>
-  <!-- User dictionary settings. The text to show when there are no user-defined words in the dictionary  [CHAR LIMIT=200] -->
-  <!-- This resource is corresponding to msgid="8165273379942105271" -->
-  <string name="user_dict_settings_empty_text">You don\'t have any words in the user dictionary. To add a word, tap the Add (+) button.</string>
-  <!-- User dictionary settings. The list item to choose to insert a word into the user dictionary for all languages -->
-  <!-- This resource is corresponding to msgid="6742000040975959247" -->
-  <string name="user_dict_settings_all_languages">For all languages</string>
-  <!-- User dictionary settings. The text to show for the option that shows the entire list of supported locales to choose one [CHAR LIMIT=30] -->
-  <!-- This resource is corresponding to msgid="7316375944684977910" -->
-  <string name="user_dict_settings_more_languages">More languages…</string>
-  <!-- User dictionary settings. Label to delete an entry in the user dictionary [CHAR LIMIT=30]
-       This resource is copied from packages/apps/Settings/res/values/strings.xml -->
-  <!-- This resource is corresponding to msgid="4219243412325163003" -->
-  <string name="user_dict_settings_delete">Delete</string>
-  <!-- User dictionary settings. Index of the user dictionary [CHAR LIMIT=30]
-       This resource is copied from packages/apps/Settings/res/values/strings.xml -->
-  <!-- This resource is corresponding to msgid="5433275485499039199" -->
-  <string name="user_dict_fast_scroll_alphabet">\u0020ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <!-- User dictionary settings -->
+    <!-- User dictionary settings.  The summary of the listem item to go into the User dictionary settings screen. -->
+    <string name="user_dict_settings_summary" translatable="false">""</string>
+    <!-- User dictionary settings. The title of the menu item to add a new word to the user dictionary. -->
+    <!-- This resource is corresponding to  msgid="4056762757149923551" -->
+    <string name="user_dict_settings_add_menu_title">Add</string>
+    <!-- User dictionary settings. The title of the dialog to add a new word to the user dictionary. [CHAR LIMIT=25] -->
+    <!-- This resource is corresponding to msgid="4702613990174126482" -->
+    <string name="user_dict_settings_add_dialog_title">Add to dictionary</string>
+    <!-- User dictionary settings. The title of the screen to add/edit a new word to the user dictionary; it describes the phrase that will be added to the user dictionary. [CHAR LIMIT=25] -->
+    <!-- This resource is corresponding to msgid="742580720124344291" -->
+    <string name="user_dict_settings_add_screen_title">Phrase</string>
+    <!-- User dictionary settings. Text on the dialog button to pop more options for adding a word. [CHAR LIMIT=16] -->
+    <!-- This resource is corresponding to msgid="8848798370746019825" -->
+    <string name="user_dict_settings_add_dialog_more_options">More options</string>
+    <!-- User dictionary settings. Text on the dialog button mask advanced options. [CHAR LIMIT=15] -->
+    <!-- This resource is corresponding to msgid="2441785268726036101" -->
+    <string name="user_dict_settings_add_dialog_less_options">Less options</string>
+    <!-- User dictionary settings. Text on the dialog button to confirm adding a word. [CHAR LIMIT=15] -->
+    <!-- This resource is corresponding to msgid="6225823625332416144" -->
+    <string name="user_dict_settings_add_dialog_confirm">OK</string>
+    <!-- User dictionary settings. Label to put before the word field (that's the word that will actually be added to the user dictionary when OK is pressed). [CHAR LIMIT=20] -->
+    <!-- This resource is corresponding to msgid="7868879174905963135" -->
+    <string name="user_dict_settings_add_word_option_name">Word:</string>
+    <!-- User dictionary settings. Label to put before the shortcut field (once a shortcut is registered, the user can type the shortcut and get the word it points to in the suggestions). [CHAR LIMIT=20] -->
+    <!-- This resource is corresponding to msgid="660089258866063925" -->
+    <string name="user_dict_settings_add_shortcut_option_name">Shortcut:</string>
+    <!-- User dictionary settings. Label to put before the language field. [CHAR LIMIT=20] -->
+    <!-- This resource is corresponding to msgid="5696358317061318532" -->
+    <string name="user_dict_settings_add_locale_option_name">Language:</string>
+    <!-- User dictionary settings. Hint for the text field to type the word to add to the user dictionary. [CHAR LIMIT=35] -->
+    <!-- This resource is corresponding to msgid="5725254076556821247" -->
+    <string name="user_dict_settings_add_word_hint">Type a word</string>
+    <!-- User dictionary settings. Hint for the text field to type the optional shortcut to add to the user dictionary. [CHAR LIMIT=35] -->
+    <!-- This resource is corresponding to msgid="7333763456561873445" -->
+    <string name="user_dict_settings_add_shortcut_hint">Optional shortcut</string>
+    <!-- User dictionary settings. The title of the dialog to edit an existing word in the user dictionary. -->
+    <!-- This resource is corresponding to msgid="8967476444840548674" -->
+    <string name="user_dict_settings_edit_dialog_title">Edit word</string>
+    <!-- User dictionary settings. The title of the context menu item to edit the current word -->
+    <!-- This resource is corresponding to msgid="2210564879320004837" -->
+    <string name="user_dict_settings_context_menu_edit_title">Edit</string>
+    <!-- User dictionary settings. The title of the context menu item to delete the current word -->
+    <!-- This resource is corresponding to msgid="9140703913776549054" -->
+    <string name="user_dict_settings_context_menu_delete_title">Delete</string>
+    <!-- User dictionary settings. The text to show when there are no user-defined words in the dictionary  [CHAR LIMIT=200] -->
+    <!-- This resource is corresponding to msgid="8165273379942105271" -->
+    <string name="user_dict_settings_empty_text">You don\'t have any words in the user dictionary. To add a word, tap the Add (+) button.</string>
+    <!-- User dictionary settings. The list item to choose to insert a word into the user dictionary for all languages -->
+    <!-- This resource is corresponding to msgid="6742000040975959247" -->
+    <string name="user_dict_settings_all_languages">For all languages</string>
+    <!-- User dictionary settings. The text to show for the option that shows the entire list of supported locales to choose one [CHAR LIMIT=30] -->
+    <!-- This resource is corresponding to msgid="7316375944684977910" -->
+    <string name="user_dict_settings_more_languages">More languages…</string>
+    <!-- User dictionary settings. Label to delete an entry in the user dictionary [CHAR LIMIT=30]
+         This resource is copied from packages/apps/Settings/res/values/strings.xml -->
+    <!-- This resource is corresponding to msgid="4219243412325163003" -->
+    <string name="user_dict_settings_delete">Delete</string>
+    <!-- User dictionary settings. Index of the user dictionary [CHAR LIMIT=30]
+         This resource is copied from packages/apps/Settings/res/values/strings.xml -->
+    <!-- This resource is corresponding to msgid="5433275485499039199" -->
+    <string name="user_dict_fast_scroll_alphabet">\u0020ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
 
-  <string name="pemission_message">Some functions may not work without those permissions</string>
-  <string name="select_your_languages">Select your languages</string>
-  <string name="languages">Languages</string>
-  <string name="authorization" translatable="false">Authorization</string>
-  <string name="select">Select</string>
-  <string name="service_result_empty">No results found!</string>
-  <string name="service_result_network_problem">\"Cannot connect to the internet! You must be connected to access results. Tap here to try again!\"</string>
-  <string name="service_result_problem">\"We ran into a problem! Tap here to try again!\"</string>
-  <string name="default_coloring">default theme</string>
-  <string name="result_preview_description">go to the service result</string>
-  <string name="contacts_permission">Agah needs access to your Contacts to share contact info</string>
-  <string name="allow_permission">Allow</string>
-  <string name="connect_slash">Connect</string>
-  <string name="label_slash_splash">Search anything, Share anywhere</string>
-  <string name="enable_slash">ENABLE AGAH</string>
-  <string name="enable_slash_info">In <font color="black">Language &amp; Input</font> settings, tap the toggle next to <font color="black">“Agah Keyboard”</font>. This will authorize the keyboard to run on your device.</string>
-  <string name="switch_to_slash">SWITCH TO AGAH</string>
-  <string name="switch_to_slash_info">In the <font color="black">Change Keyboard</font> dialog, select <font color="black">“Agah Keyboard”</font> as your active keyboard</string>
-  <string name="use_slash">USE AGAH</string>
-  <string name="use_slash_info">You’re all set! You can now use the keyboard to search within your favorite services with adaptive coloring.</string>
-  <string name="share_app">Share app</string>
-  <string name="rate_app">Rate us</string>
-  <string name="set_as_default_theme">set as default theme</string>
-  <string name="prefs_enable_data_collection">enable data collection</string>
-  <string name="enable_layout">Enable the keyboard</string>
-  <string name="link_copied">"Link has been copied to clipboard!"</string>
-  <string name="invalid">"Oops! Something went wrong, try again"</string>
-  <string name="something_went_wrong_" translatable="false">Something went wrong</string>
-  <string name="share">share</string>
-  <string name="share_link">share Link</string>
-  <string name="enter_offer_price">Enter Offer Price</string>
-  <string name="_1">1</string>
-  <string name="_2">2</string>
-  <string name="_3">3</string>
-  <string name="_4">4</string>
-  <string name="_5">5</string>
-  <string name="_6">6</string>
-  <string name="_7">7</string>
-  <string name="_8">8</string>
-  <string name="_9">9</string>
-  <string name="_0">0</string>
-  <string name="decimal">.</string>
-  <string name="product_name">Product Name</string>
-  <string name="price">Price</string>
-  <string name="offer_price">Offer Price:</string>
-  <string name="currency">INR</string>
-  <string name="quantity">Quantity:</string>
-  <string name="validity">Validity:</string>
-  <string name="back">BACK</string>
-  <string name="create_offer">Create Offer</string>
-  <string name="image_not_supported">Image sharing not supported by this app.</string>
-  <string name="keyboard_layout_one">Keyboard layout one</string>
-  <string name="keyboard_layout_two">Keyboard layout two</string>
-  <string name="keyboard_layout_three">Keyboard layout three</string>
-  <string name="keyboard_layout_four">Keyboard layout four</string>
-  <string name="tv_updates">Updates</string>
-  <string name="tv_products">Products</string>
-  <string name="tv_photos">Photos</string>
-  <string name="tv_details">Details</string>
-  <string name="tv_share_link">Share Link</string>
-  <string name="tv_share">Share</string>
-  <string name="tv_name">Name:</string>
-  <string name="tv_name_n">Name</string>
-  <string name="tv_price">Price:</string>
-  <string name="tv_discount">Discount:</string>
-  <string name="tv_description">Description:</string>
-  <string name="tv_description_n" tools:ignore="ExtraTranslation">Description</string>
-  <string name="deselect_all">Deselect all</string>
-  <string name="tv_done">Done</string>
-  <string name="separator">". "</string>
-  <string name="text_space">"SPACE"</string>
-  <string name="go">go</string>
-  <string name="name">Name</string>
-  <string name="business_name">Business Name</string>
-  <string name="website_url">Website URL</string>
-  <string name="please_wait">Please wait...</string>
-  <string name="creating_new_offer_for">Creating new offer for</string>
-  <string name="price_colon">Price:</string>
-  <string name="offer_price_heading">OFFER PRICE</string>
-  <string name="validity_heading">VALIDITY</string>
-  <string name="_24_hrs">24 Hrs</string>
-  <string name="qty">QTY.</string>
-  <string name="_0_0">0.0</string>
-  <string name="this_is_product_description">This is product description</string>
-  <string name="share_now">SHARE NOW</string>
-  <string name="updates">UPDATES</string>
-  <string name="inventory">INVENTORY</string>
-  <string name="photos">PHOTOS</string>
-  <string name="details">DETAILS</string>
-  <string name="neural_network_technology">Neural network technology</string>
-  <string name="get_ready_for_your_first_truly_machine_learning_powered_keyboard">Get ready for your first truly machine learning powered keyboard.</string>
-  <string name="help_us_improving_your_typing_experience_collecting_anonymous_data">Help us improving your typing experience collecting anonymous data.</string>
-  <string name="lol">LoL</string>
-  <string name="h">h</string>
-  <string name="listening">Listening...</string>
-  <string name="in_the_language_and_input_settings_tap_the_toggle_next_to_agah_keyboard_this_will_authorize_the_keyboard_to_run_on_your_device">In the Language and Input settings, tap the toggle next to Agah Keyboard. This will authorize the keyboard to run on your device.</string>
-  <string name="can_not_select_more_than_5_images">Cannot select more than 5 images for WhatsApp</string>
-  <string name="please_reopen_the_keyboard">Please reopen this keyboard</string>
-  <string name="no_updates_available">No updates available.</string>
-  <string name="no_product_available">No products available.</string>
-  <string name="no_details_available">No details available.</string>
-  <string name="whatsapp_package" translatable="false">com.whatsapp</string>
+    <string name="pemission_message">Some functions may not work without those permissions</string>
+    <string name="select_your_languages">Select your languages</string>
+    <string name="languages">Languages</string>
+    <string name="authorization" translatable="false">Authorization</string>
+    <string name="select">Select</string>
+    <string name="service_result_empty">No results found!</string>
+    <string name="service_result_network_problem">\"Cannot connect to the internet! You must be connected to access results. Tap here to try again!\"</string>
+    <string name="service_result_problem">\"We ran into a problem! Tap here to try again!\"</string>
+    <string name="default_coloring">default theme</string>
+    <string name="result_preview_description">go to the service result</string>
+    <string name="contacts_permission">Agah needs access to your Contacts to share contact info</string>
+    <string name="allow_permission">Allow</string>
+    <string name="connect_slash">Connect</string>
+    <string name="label_slash_splash">Search anything, Share anywhere</string>
+    <string name="enable_slash">ENABLE AGAH</string>
+    <string name="enable_slash_info">In <font color="black">Language &amp; Input</font> settings, tap the toggle next to <font color="black">“Agah Keyboard”</font>. This will authorize the keyboard to run on your device.</string>
+    <string name="switch_to_slash">SWITCH TO AGAH</string>
+    <string name="switch_to_slash_info">In the <font color="black">Change Keyboard</font> dialog, select <font color="black">“Agah Keyboard”</font> as your active keyboard</string>
+    <string name="use_slash">USE AGAH</string>
+    <string name="use_slash_info">You’re all set! You can now use the keyboard to search within your favorite services with adaptive coloring.</string>
+    <string name="share_app">Share app</string>
+    <string name="rate_app">Rate us</string>
+    <string name="set_as_default_theme">set as default theme</string>
+    <string name="prefs_enable_data_collection">enable data collection</string>
+    <string name="enable_layout">Enable the keyboard</string>
+    <string name="link_copied">"Link has been copied to clipboard!"</string>
+    <string name="invalid">"Oops! Something went wrong, try again"</string>
+    <string name="something_went_wrong_" translatable="false">Something went wrong</string>
+    <string name="share">share</string>
+    <string name="share_link">share Link</string>
+    <string name="enter_offer_price">Enter Offer Price</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="_6">6</string>
+    <string name="_7">7</string>
+    <string name="_8">8</string>
+    <string name="_9">9</string>
+    <string name="_0">0</string>
+    <string name="decimal">.</string>
+    <string name="product_name">Product Name</string>
+    <string name="price">Price</string>
+    <string name="offer_price">Offer Price:</string>
+    <string name="currency">INR</string>
+    <string name="quantity">Quantity:</string>
+    <string name="validity">Validity:</string>
+    <string name="back">BACK</string>
+    <string name="create_offer">Create Offer</string>
+    <string name="image_not_supported">Image sharing not supported by this app.</string>
+    <string name="keyboard_layout_one">Keyboard layout one</string>
+    <string name="keyboard_layout_two">Keyboard layout two</string>
+    <string name="keyboard_layout_three">Keyboard layout three</string>
+    <string name="keyboard_layout_four">Keyboard layout four</string>
+    <string name="tv_updates">Updates</string>
+    <string name="tv_products">Products</string>
+    <string name="tv_photos">Photos</string>
+    <string name="tv_details">Details</string>
+    <string name="tv_share_link">Share Link</string>
+    <string name="tv_share">Share</string>
+    <string name="tv_name">Name:</string>
+    <string name="tv_price">Price:</string>
+    <string name="tv_discount">Discount:</string>
+    <string name="tv_description">Description:</string>
+    <string name="deselect_all">Deselect all</string>
+    <string name="tv_done">Done</string>
+    <string name="separator">". "</string>
+    <string name="text_space">"SPACE"</string>
+    <string name="go">go</string>
+    <string name="name">Name</string>
+    <string name="business_name">Business Name</string>
+    <string name="website_url">Website URL</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="creating_new_offer_for">Creating new offer for</string>
+    <string name="price_colon">Price:</string>
+    <string name="offer_price_heading">OFFER PRICE</string>
+    <string name="validity_heading">VALIDITY</string>
+    <string name="_24_hrs">24 Hrs</string>
+    <string name="qty">QTY.</string>
+    <string name="_0_0">0.0</string>
+    <string name="this_is_product_description">This is product description</string>
+    <string name="share_now">SHARE NOW</string>
+    <string name="updates">UPDATES</string>
+    <string name="inventory">INVENTORY</string>
+    <string name="photos">PHOTOS</string>
+    <string name="details">DETAILS</string>
+    <string name="neural_network_technology">Neural network technology</string>
+    <string name="get_ready_for_your_first_truly_machine_learning_powered_keyboard">Get ready for your first truly machine learning powered keyboard.</string>
+    <string name="help_us_improving_your_typing_experience_collecting_anonymous_data">Help us improving your typing experience collecting anonymous data.</string>
+    <string name="lol">LoL</string>
+    <string name="h">h</string>
+    <string name="listening">Listening...</string>
+    <string name="in_the_language_and_input_settings_tap_the_toggle_next_to_agah_keyboard_this_will_authorize_the_keyboard_to_run_on_your_device">In the Language and Input settings, tap the toggle next to Agah Keyboard. This will authorize the keyboard to run on your device.</string>
+    <string name="can_not_select_more_than_5_images">Cannot select more than 5 images for WhatsApp</string>
+    <string name="please_reopen_the_keyboard">Please reopen this keyboard</string>
+    <string name="no_updates_available">No updates available.</string>
+    <string name="no_product_available">No products available.</string>
+    <string name="no_details_available">No details available.</string>
+    <string name="whatsapp_package" translatable="false">com.whatsapp</string>
 
 
-  <string-array name="validity_items">
-    <item>"24 Hrs"</item>
-    <item>"36 Hrs"</item>
-    <item>"48 Hrs"</item>
-    <item>"96 Hrs"</item>
-  </string-array>
+    <string-array name="validity_items">
+        <item>"24 Hrs"</item>
+        <item>"36 Hrs"</item>
+        <item>"48 Hrs"</item>
+        <item>"96 Hrs"</item>
+    </string-array>
 
-  <string-array name="normal_key"></string-array>
+    <string-array name="normal_key"></string-array>
 
-  <string-array name="header_key"></string-array>
+    <string-array name="header_key"></string-array>
 
-  <string-array name="screen_change_key"></string-array>
-  <string-array name="CountryCodes">
-    <item>93,AF</item>
-    <item>355,AL</item>
-    <item>213,DZ</item>
-    <item>376,AD</item>
-    <item>244,AO</item>
-    <item>672,AQ</item>
-    <item>54,AR</item>
-    <item>374,AM</item>
-    <item>297,AW</item>
-    <item>61,AU</item>
-    <item>43,AT</item>
-    <item>994,AZ</item>
-    <item>973,BH</item>
-    <item>880,BD</item>
-    <item>375,BY</item>
-    <item>32,BE</item>
-    <item>501,BZ</item>
-    <item>229,BJ</item>
-    <item>975,BT</item>
-    <item>591,BO</item>
-    <item>387,BA</item>
-    <item>267,BW</item>
-    <item>55,BR</item>
-    <item>673,BN</item>
-    <item>359,BG</item>
-    <item>226,BF</item>
-    <item>95,MM</item>
-    <item>257,BI</item>
-    <item>855,KH</item>
-    <item>237,CM</item>
-    <item>1,CA</item>
-    <item>238,CV</item>
-    <item>236,CF</item>
-    <item>235,TD</item>
-    <item>56,CL</item>
-    <item>86,CN</item>
-    <item>61,CX</item>
-    <item>61,CC</item>
-    <item>57,CO</item>
-    <item>269,KM</item>
-    <item>242,CG</item>
-    <item>243,CD</item>
-    <item>682,CK</item>
-    <item>506,CR</item>
-    <item>385,HR</item>
-    <item>53,CU</item>
-    <item>357,CY</item>
-    <item>420,CZ</item>
-    <item>45,DK</item>
-    <item>253,DJ</item>
-    <item>670,TL</item>
-    <item>593,EC</item>
-    <item>20,EG</item>
-    <item>503,SV</item>
-    <item>240,GQ</item>
-    <item>291,ER</item>
-    <item>372,EE</item>
-    <item>251,ET</item>
-    <item>500,FK</item>
-    <item>298,FO</item>
-    <item>679,FJ</item>
-    <item>358,FI</item>
-    <item>33,FR</item>
-    <item>689,PF</item>
-    <item>241,GA</item>
-    <item>220,GM</item>
-    <item>995,GE</item>
-    <item>49,DE</item>
-    <item>233,GH</item>
-    <item>350,GI</item>
-    <item>30,GR</item>
-    <item>299,GL</item>
-    <item>502,GT</item>
-    <item>224,GN</item>
-    <item>245,GW</item>
-    <item>592,GY</item>
-    <item>509,HT</item>
-    <item>504,HN</item>
-    <item>852,HK</item>
-    <item>36,HU</item>
-    <item>91,IN</item>
-    <item>62,ID</item>
-    <item>98,IR</item>
-    <item>964,IQ</item>
-    <item>353,IE</item>
-    <item>44,IM</item>
-    <item>972,IL</item>
-    <item>39,IT</item>
-    <item>225,CI</item>
-    <item>81,JP</item>
-    <item>962,JO</item>
-    <item>7,KZ</item>
-    <item>254,KE</item>
-    <item>686,KI</item>
-    <item>965,KW</item>
-    <item>996,KG</item>
-    <item>856,LA</item>
-    <item>371,LV</item>
-    <item>961,LB</item>
-    <item>266,LS</item>
-    <item>231,LR</item>
-    <item>218,LY</item>
-    <item>423,LI</item>
-    <item>370,LT</item>
-    <item>352,LU</item>
-    <item>853,MO</item>
-    <item>389,MK</item>
-    <item>261,MG</item>
-    <item>265,MW</item>
-    <item>60,MY</item>
-    <item>960,MV</item>
-    <item>223,ML</item>
-    <item>356,MT</item>
-    <item>692,MH</item>
-    <item>222,MR</item>
-    <item>230,MU</item>
-    <item>262,YT</item>
-    <item>52,MX</item>
-    <item>691,FM</item>
-    <item>373,MD</item>
-    <item>377,MC</item>
-    <item>976,MN</item>
-    <item>382,ME</item>
-    <item>212,MA</item>
-    <item>258,MZ</item>
-    <item>264,NA</item>
-    <item>674,NR</item>
-    <item>977,NP</item>
-    <item>31,NL</item>
-    <item>599,AN</item>
-    <item>687,NC</item>
-    <item>64,NZ</item>
-    <item>505,NI</item>
-    <item>227,NE</item>
-    <item>234,NG</item>
-    <item>683,NU</item>
-    <item>850,KP</item>
-    <item>47,NO</item>
-    <item>968,OM</item>
-    <item>92,PK</item>
-    <item>680,PW</item>
-    <item>507,PA</item>
-    <item>675,PG</item>
-    <item>595,PY</item>
-    <item>51,PE</item>
-    <item>63,PH</item>
-    <item>870,PN</item>
-    <item>48,PL</item>
-    <item>351,PT</item>
-    <item>1,PR</item>
-    <item>974,QA</item>
-    <item>40,RO</item>
-    <item>7,RU</item>
-    <item>250,RW</item>
-    <item>590,BL</item>
-    <item>685,WS</item>
-    <item>378,SM</item>
-    <item>239,ST</item>
-    <item>966,SA</item>
-    <item>221,SN</item>
-    <item>381,RS</item>
-    <item>248,SC</item>
-    <item>232,SL</item>
-    <item>65,SG</item>
-    <item>421,SK</item>
-    <item>386,SI</item>
-    <item>677,SB</item>
-    <item>252,SO</item>
-    <item>27,ZA</item>
-    <item>82,KR</item>
-    <item>34,ES</item>
-    <item>94,LK</item>
-    <item>290,SH</item>
-    <item>508,PM</item>
-    <item>249,SD</item>
-    <item>597,SR</item>
-    <item>268,SZ</item>
-    <item>46,SE</item>
-    <item>41,CH</item>
-    <item>963,SY</item>
-    <item>886,TW</item>
-    <item>992,TJ</item>
-    <item>255,TZ</item>
-    <item>66,TH</item>
-    <item>228,TG</item>
-    <item>690,TK</item>
-    <item>676,TO</item>
-    <item>216,TN</item>
-    <item>90,TR</item>
-    <item>993,TM</item>
-    <item>688,TV</item>
-    <item>971,AE</item>
-    <item>256,UG</item>
-    <item>44,GB</item>
-    <item>380,UA</item>
-    <item>598,UY</item>
-    <item>1,US</item>
-    <item>998,UZ</item>
-    <item>678,VU</item>
-    <item>39,VA</item>
-    <item>58,VE</item>
-    <item>84,VN</item>
-    <item>681,WF</item>
-    <item>967,YE</item>
-    <item>260,ZM</item>
-    <item>263,ZW</item>
-    <item>1,AG</item>
-    <item>684,AS</item>
-  </string-array>
+    <string-array name="screen_change_key"></string-array>
+    <string-array name="CountryCodes">
+        <item>93,AF</item>
+        <item>355,AL</item>
+        <item>213,DZ</item>
+        <item>376,AD</item>
+        <item>244,AO</item>
+        <item>672,AQ</item>
+        <item>54,AR</item>
+        <item>374,AM</item>
+        <item>297,AW</item>
+        <item>61,AU</item>
+        <item>43,AT</item>
+        <item>994,AZ</item>
+        <item>973,BH</item>
+        <item>880,BD</item>
+        <item>375,BY</item>
+        <item>32,BE</item>
+        <item>501,BZ</item>
+        <item>229,BJ</item>
+        <item>975,BT</item>
+        <item>591,BO</item>
+        <item>387,BA</item>
+        <item>267,BW</item>
+        <item>55,BR</item>
+        <item>673,BN</item>
+        <item>359,BG</item>
+        <item>226,BF</item>
+        <item>95,MM</item>
+        <item>257,BI</item>
+        <item>855,KH</item>
+        <item>237,CM</item>
+        <item>1,CA</item>
+        <item>238,CV</item>
+        <item>236,CF</item>
+        <item>235,TD</item>
+        <item>56,CL</item>
+        <item>86,CN</item>
+        <item>61,CX</item>
+        <item>61,CC</item>
+        <item>57,CO</item>
+        <item>269,KM</item>
+        <item>242,CG</item>
+        <item>243,CD</item>
+        <item>682,CK</item>
+        <item>506,CR</item>
+        <item>385,HR</item>
+        <item>53,CU</item>
+        <item>357,CY</item>
+        <item>420,CZ</item>
+        <item>45,DK</item>
+        <item>253,DJ</item>
+        <item>670,TL</item>
+        <item>593,EC</item>
+        <item>20,EG</item>
+        <item>503,SV</item>
+        <item>240,GQ</item>
+        <item>291,ER</item>
+        <item>372,EE</item>
+        <item>251,ET</item>
+        <item>500,FK</item>
+        <item>298,FO</item>
+        <item>679,FJ</item>
+        <item>358,FI</item>
+        <item>33,FR</item>
+        <item>689,PF</item>
+        <item>241,GA</item>
+        <item>220,GM</item>
+        <item>995,GE</item>
+        <item>49,DE</item>
+        <item>233,GH</item>
+        <item>350,GI</item>
+        <item>30,GR</item>
+        <item>299,GL</item>
+        <item>502,GT</item>
+        <item>224,GN</item>
+        <item>245,GW</item>
+        <item>592,GY</item>
+        <item>509,HT</item>
+        <item>504,HN</item>
+        <item>852,HK</item>
+        <item>36,HU</item>
+        <item>91,IN</item>
+        <item>62,ID</item>
+        <item>98,IR</item>
+        <item>964,IQ</item>
+        <item>353,IE</item>
+        <item>44,IM</item>
+        <item>972,IL</item>
+        <item>39,IT</item>
+        <item>225,CI</item>
+        <item>81,JP</item>
+        <item>962,JO</item>
+        <item>7,KZ</item>
+        <item>254,KE</item>
+        <item>686,KI</item>
+        <item>965,KW</item>
+        <item>996,KG</item>
+        <item>856,LA</item>
+        <item>371,LV</item>
+        <item>961,LB</item>
+        <item>266,LS</item>
+        <item>231,LR</item>
+        <item>218,LY</item>
+        <item>423,LI</item>
+        <item>370,LT</item>
+        <item>352,LU</item>
+        <item>853,MO</item>
+        <item>389,MK</item>
+        <item>261,MG</item>
+        <item>265,MW</item>
+        <item>60,MY</item>
+        <item>960,MV</item>
+        <item>223,ML</item>
+        <item>356,MT</item>
+        <item>692,MH</item>
+        <item>222,MR</item>
+        <item>230,MU</item>
+        <item>262,YT</item>
+        <item>52,MX</item>
+        <item>691,FM</item>
+        <item>373,MD</item>
+        <item>377,MC</item>
+        <item>976,MN</item>
+        <item>382,ME</item>
+        <item>212,MA</item>
+        <item>258,MZ</item>
+        <item>264,NA</item>
+        <item>674,NR</item>
+        <item>977,NP</item>
+        <item>31,NL</item>
+        <item>599,AN</item>
+        <item>687,NC</item>
+        <item>64,NZ</item>
+        <item>505,NI</item>
+        <item>227,NE</item>
+        <item>234,NG</item>
+        <item>683,NU</item>
+        <item>850,KP</item>
+        <item>47,NO</item>
+        <item>968,OM</item>
+        <item>92,PK</item>
+        <item>680,PW</item>
+        <item>507,PA</item>
+        <item>675,PG</item>
+        <item>595,PY</item>
+        <item>51,PE</item>
+        <item>63,PH</item>
+        <item>870,PN</item>
+        <item>48,PL</item>
+        <item>351,PT</item>
+        <item>1,PR</item>
+        <item>974,QA</item>
+        <item>40,RO</item>
+        <item>7,RU</item>
+        <item>250,RW</item>
+        <item>590,BL</item>
+        <item>685,WS</item>
+        <item>378,SM</item>
+        <item>239,ST</item>
+        <item>966,SA</item>
+        <item>221,SN</item>
+        <item>381,RS</item>
+        <item>248,SC</item>
+        <item>232,SL</item>
+        <item>65,SG</item>
+        <item>421,SK</item>
+        <item>386,SI</item>
+        <item>677,SB</item>
+        <item>252,SO</item>
+        <item>27,ZA</item>
+        <item>82,KR</item>
+        <item>34,ES</item>
+        <item>94,LK</item>
+        <item>290,SH</item>
+        <item>508,PM</item>
+        <item>249,SD</item>
+        <item>597,SR</item>
+        <item>268,SZ</item>
+        <item>46,SE</item>
+        <item>41,CH</item>
+        <item>963,SY</item>
+        <item>886,TW</item>
+        <item>992,TJ</item>
+        <item>255,TZ</item>
+        <item>66,TH</item>
+        <item>228,TG</item>
+        <item>690,TK</item>
+        <item>676,TO</item>
+        <item>216,TN</item>
+        <item>90,TR</item>
+        <item>993,TM</item>
+        <item>688,TV</item>
+        <item>971,AE</item>
+        <item>256,UG</item>
+        <item>44,GB</item>
+        <item>380,UA</item>
+        <item>598,UY</item>
+        <item>1,US</item>
+        <item>998,UZ</item>
+        <item>678,VU</item>
+        <item>39,VA</item>
+        <item>58,VE</item>
+        <item>84,VN</item>
+        <item>681,WF</item>
+        <item>967,YE</item>
+        <item>260,ZM</item>
+        <item>263,ZW</item>
+        <item>1,AG</item>
+        <item>684,AS</item>
+    </string-array>
 </resources>

@@ -1,7 +1,6 @@
 package com.boost.presignin.ui
 
 import android.content.Intent
-import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import com.boost.presignin.R
@@ -49,7 +48,6 @@ class AccountNotFoundActivity : AppBaseActivity<ActivityAccountNotFoundBinding, 
       bundle.putSerializable(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
       navigator?.startActivity(RegistrationActivity::class.java, bundle)
     }
-    binding?.helpTv?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
   }
 
   override fun onClick(v: View?) {

@@ -49,6 +49,9 @@ open class TestimonialContainerActivity : AppBaseActivity<ActivityFragmentContai
     return binding?.appBarLayout?.toolbar
   }
 
+  override fun getToolbarTitleSize(): Float? {
+    return resources.getDimension(R.dimen.body_2)
+  }
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
@@ -79,6 +82,9 @@ open class TestimonialContainerActivity : AppBaseActivity<ActivityFragmentContai
     }
   }
 
+  override fun getToolbarTitleGravity(): Int {
+    return Gravity.CENTER
+  }
 
   private fun shouldAddToBackStack(): Boolean {
     return when (type) {

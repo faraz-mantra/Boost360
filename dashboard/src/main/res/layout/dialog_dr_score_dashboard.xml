@@ -57,7 +57,7 @@
       android:padding="@dimen/size_12"
       android:stateListAnimator="@null"
       android:text="Explore new dashboard"
-      android:textAllCaps="false"
+      android:textAllCaps="true"
       android:textColor="@color/black_4a4a4a"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"

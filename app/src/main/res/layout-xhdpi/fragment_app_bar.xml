@@ -1,74 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.framework.views.customViews.CustomToolbar xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="?attr/actionBarSize"
-  android:background="?attr/colorPrimary"
-  app:navigationIcon="@drawable/ic_back_arrow_new"
-  app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-  app:theme="@style/CustomToolbarTheme">
-
-  <LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="horizontal">
-
-    <com.framework.views.customViews.CustomTextView
-      android:id="@+id/titleTextView"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="5dp"
-      android:layout_weight="1"
-      android:ellipsize="marquee"
-      android:fadingEdge="horizontal"
-      android:fontFamily="@font/semi_bold"
-      android:marqueeRepeatLimit="1"
-      android:scrollHorizontally="true"
-      app:fontFamily="@font/semi_bold"
-      android:singleLine="true"
-      android:textColor="@color/white"
-      app:textType="HEADING_6"
-      tools:ignore="MissingPrefix" />
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    app:theme="@style/CustomToolbarTheme">
 
     <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="50dp"
-      android:gravity="right|center_vertical">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-      <ImageView
-        android:id="@+id/image_gallery_add_image_button"
-        android:layout_width="50dp"
-        android:layout_height="fill_parent"
-        android:layout_gravity="end"
-        android:background="@drawable/button_click_effect"
-        android:padding="10dp"
-        android:src="@drawable/fab_add"
-        android:visibility="gone" />
+        <TextView
+            android:id="@+id/titleTextView"
+            fontPath="Roboto-Medium.ttf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:marqueeRepeatLimit="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:ignore="MissingPrefix" />
 
-      <ImageView
-        android:id="@+id/business_profile_share_button"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:background="@drawable/button_click_effect"
-        android:padding="10dp"
-        android:src="@drawable/share_with_apps"
-        android:visibility="gone"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="right|center_vertical">
 
-        />
+            <ImageView
+                android:id="@+id/image_gallery_add_image_button"
+                android:layout_width="50dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="end"
+                android:background="@drawable/button_click_effect"
+                android:padding="10dp"
+                android:src="@drawable/fab_add"
+                android:visibility="gone" />
 
-      <ImageView
-        android:id="@+id/ivDelete"
-        android:layout_width="50dp"
-        android:layout_height="fill_parent"
-        android:layout_gravity="end"
-        android:background="@drawable/button_click_effect"
-        android:padding="10dp"
-        android:src="@drawable/ic_menu_delete"
-        android:visibility="gone" />
+            <ImageView
+                android:id="@+id/business_profile_share_button"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="@drawable/button_click_effect"
+                android:padding="10dp"
+                android:src="@drawable/share_with_apps"
+                android:visibility="gone"
+
+                />
+            <ImageView
+                android:id="@+id/ivDelete"
+                android:layout_width="50dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="end"
+                android:background="@drawable/button_click_effect"
+                android:padding="10dp"
+                android:src="@drawable/ic_menu_delete"
+                android:visibility="gone" />
+        </LinearLayout>
+
     </LinearLayout>
-
-  </LinearLayout>
-</com.framework.views.customViews.CustomToolbar>
+</androidx.appcompat.widget.Toolbar>
 

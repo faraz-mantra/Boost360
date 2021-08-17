@@ -24,9 +24,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:fontFamily="@font/regular"
+        android:fontFamily="@font/open_sans"
         android:padding="15sp"
         android:textFontWeight="600"
+        android:textStyle="normal"
         tools:text="4/8 services selected" />
     </com.framework.views.customViews.CustomCardView>
 
@@ -81,7 +82,7 @@
         android:gravity="center"
         android:paddingTop="@dimen/size_4"
         android:paddingBottom="@dimen/size_4"
-        android:textAllCaps="false"
+        android:textAllCaps="true"
         android:textColor="@color/white"
         app:textType="HEADING_6"
         tools:text="Confirm 4 services" />

@@ -1,123 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="160dp"
-  android:layout_marginStart="10dp"
-  android:layout_marginTop="10dp"
-  android:layout_marginEnd="10dp"
-  android:layout_marginBottom="10dp"
-  android:background="@color/white">
-
-  <com.nowfloats.CustomWidget.VerticalTextView
-    android:id="@+id/tv_order_status_tag"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:background="@drawable/returned_order_status_bg"
-    android:gravity="center"
-    android:paddingTop="2dp"
-    android:paddingBottom="2dp"
-    android:rotation="180"
-    android:text="RETURNED"
-    android:textColor="@color/white"
-    android:textSize="14sp"
-     android:fontFamily="@font/semi_bold" />
-
-  <TableLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_centerVertical="true"
-    android:layout_marginStart="40dp">
+    android:layout_height="160dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="10dp"
+    android:background="@color/white">
 
-    <TableRow
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
-      <TextView
+    <com.nowfloats.CustomWidget.VerticalTextView
+        android:id="@+id/tv_order_status_tag"
         android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/returned_order_status_bg"
+        android:gravity="center"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp"
+        android:rotation="180"
+        android:text="RETURNED"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Customer Name:" />
+        android:layout_centerVertical="true"
+        android:layout_marginStart="40dp">
 
-      <TextView
-        android:id="@+id/tv_customer_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_weight="1"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textSize="12sp"
-         android:fontFamily="@font/semi_bold"
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        />
-    </TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Customer Name:" />
 
-    <TableRow
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_customer_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="12sp"
+                android:textStyle="bold"
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email:" />
+                />
+        </TableRow>
 
-      <TextView
-        android:id="@+id/tv_customer_email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_weight="1"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textSize="12sp"
-         android:fontFamily="@font/semi_bold"
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        />
-    </TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email:" />
 
-    <TableRow
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_customer_email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="12sp"
+                android:textStyle="bold"
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Address:" />
+                />
+        </TableRow>
 
-      <TextView
-        android:id="@+id/tv_customer_address"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_weight="1"
-        android:ellipsize="end"
-        android:lines="3"
-        android:maxLines="4"
-        android:textSize="12sp"
-         android:fontFamily="@font/semi_bold" />
-    </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TableRow
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address:" />
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Phone Number:" />
+            <TextView
+                android:id="@+id/tv_customer_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:lines="3"
+                android:maxLines="4"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </TableRow>
 
-      <TextView
-        android:id="@+id/tv_customer_phone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_weight="1"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textSize="12sp"
-         android:fontFamily="@font/semi_bold" />
-    </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-  </TableLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone Number:" />
+
+            <TextView
+                android:id="@+id/tv_customer_phone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+    </TableLayout>
 
 </RelativeLayout>
 

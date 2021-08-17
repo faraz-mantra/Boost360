@@ -62,7 +62,7 @@
       android:paddingRight="4dp"
       android:textColor="#FFBEBEBE"
       android:textSize="14sp"
-       android:fontFamily="@font/semi_bold" />
+      android:textStyle="bold" />
 
     <View
       android:id="@id/exo_progress_placeholder"
@@ -79,7 +79,7 @@
       android:paddingRight="4dp"
       android:textColor="#FFBEBEBE"
       android:textSize="14sp"
-       android:fontFamily="@font/semi_bold" />
+      android:textStyle="bold" />
 
     <FrameLayout
       android:id="@+id/exo_fullscreen_button"

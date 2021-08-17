@@ -2,10 +2,8 @@ package com.inventoryorder.ui.order
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
-import android.widget.EditText
 import android.widget.PopupWindow
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
@@ -528,12 +526,9 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     super.onCreateOptionsMenu(menu, inflater)
     val searchItem = menu.findItem(R.id.menu_item_search)
     if (searchItem != null) {
-      val searchView = searchItem.actionView as? SearchView
-      val searchEditText: EditText? = searchView?.findViewById(androidx.appcompat.R.id.search_src_text)
-      searchEditText?.setTextColor(Color.WHITE)
-      searchEditText?.setHintTextColor(getColor(R.color.white_50))
-      searchView?.queryHint = resources.getString(R.string.queryHintOrder)
-      searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+      val searchView = searchItem.actionView as SearchView
+      searchView.queryHint = resources.getString(R.string.queryHintOrder)
+      searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(newText: String?): Boolean {
           newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }
           return false

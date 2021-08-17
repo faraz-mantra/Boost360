@@ -104,7 +104,7 @@
           android:padding="@dimen/size_12"
           android:stateListAnimator="@null"
           android:text="@string/understood"
-          android:textAllCaps="false"
+          android:textAllCaps="true"
           android:textColor="@color/white"
           android:visibility="gone"
           app:textType="HEADING_6"

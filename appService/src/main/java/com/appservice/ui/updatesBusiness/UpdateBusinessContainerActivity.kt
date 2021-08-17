@@ -45,40 +45,35 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
     setFragment()
   }
 
-  override fun customTheme(): Int? {
-    return when(type){
-      FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT-> R.style.AddUpdateTheme
-      else->return super.customTheme()
-    }
+  override fun getToolbarTitleGravity(): Int {
+    return Gravity.START
   }
 
   override fun getToolbar(): CustomToolbar? {
     return binding?.appBarLayout?.toolbar
   }
 
+  override fun getToolbarTitleSize(): Float? {
+    return resources.getDimension(R.dimen.body_2)
+  }
+
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
-      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getColor(
-        this,
-        R.color.colorPrimary
-      )
+      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT,FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getColor(this, R.color.colorPrimary)
       else -> super.getToolbarBackgroundColor()
     }
   }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
-      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getColor(
-        this,
-        R.color.white
-      )
+      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT,FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
   }
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
+      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT ,FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT-> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
       else -> super.getNavigationIcon()
     }
   }
@@ -123,12 +118,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
 
 }
 
-fun Fragment.startUpdateFragmentActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false,
-  isResult: Boolean = false
-) {
+fun Fragment.startUpdateFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
   val intent = Intent(activity, UpdateBusinessContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -136,28 +126,15 @@ fun Fragment.startUpdateFragmentActivity(
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startUpdateFragmentActivityNew(
-  activity: Activity,
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean,
-  isResult: Boolean = false
-) {
+fun startUpdateFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false) {
   val intent = Intent(activity, UpdateBusinessContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-  if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(
-    intent,
-    101
-  )
+  if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(intent, 101)
 }
 
-fun AppCompatActivity.startUpdateFragmentActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false
-) {
+fun AppCompatActivity.startUpdateFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(this, UpdateBusinessContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -171,19 +148,11 @@ fun Intent.setFragmentType(type: FragmentType): Intent {
 
 
 fun UserSessionManager.getDomainName(isRemoveHttp: Boolean = false): String? {
-  val rootAliasUri =
-    getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
-  val normalUri =
-    "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+  val rootAliasUri = getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
+  val normalUri = "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
   return if (rootAliasUri.isNullOrEmpty().not() && rootAliasUri != "null") {
-    return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace(
-      "http://",
-      ""
-    )
-    else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace(
-      "https://",
-      ""
-    ) else rootAliasUri
+    return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace("http://", "")
+    else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace("https://", "") else rootAliasUri
   } else normalUri
 }
 

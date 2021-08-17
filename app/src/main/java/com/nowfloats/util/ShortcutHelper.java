@@ -55,7 +55,7 @@ public class ShortcutHelper {
         i.setAction(Create_Message_Activity.SHORTCUT_ID);
         ShortcutInfo shortcut = new ShortcutInfo.Builder(mContext, "create_update")
                 .setShortLabel("Add Update")
-                .setLongLabel("Post an Update")
+                .setLongLabel("Post An Update")
                 .setIcon(Icon.createWithResource(mContext, R.drawable.ria))
                 .setIntent(i)
                 .build();

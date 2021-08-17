@@ -28,7 +28,7 @@
           android:gravity="center"
           android:maxEms="5"
           android:text="Currently playing"
-          android:textAllCaps="false"
+          android:textAllCaps="true"
           android:textColor="@color/white" />
 
         <com.framework.views.customViews.CustomImageView

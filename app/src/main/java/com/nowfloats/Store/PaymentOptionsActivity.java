@@ -27,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.NavigationDrawer.EditImageActivity;
 import com.nowfloats.Store.Model.SalesmanModel;
 import com.nowfloats.Store.Service.OnPaymentOptionClick;
@@ -88,7 +87,7 @@ public class PaymentOptionsActivity extends AppCompatActivity implements OnPayme
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_options);
-        CustomToolbar toolbar = (CustomToolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

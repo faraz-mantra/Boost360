@@ -62,14 +62,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   override fun onCreateView() {
     super.onCreateView()
     arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
-    setOnClickListener(
-      binding?.btnPaymentReminder,
-      binding?.tvReSchedule,
-      binding?.btnCopyLink,
-      binding?.btnOpenConsult,
-      binding?.tvCustomerContactNumber,
-      binding?.tvCustomerEmail
-    )
+    setOnClickListener(binding?.btnPaymentReminder, binding?.tvReSchedule, binding?.btnCopyLink, binding?.btnOpenConsult, binding?.tvCustomerContactNumber, binding?.tvCustomerEmail)
   }
 
   private fun apiGetOrderDetails(orderId: String) {
@@ -98,25 +91,15 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun startCountDown(order: OrderItem) {
     countDownTimer?.cancel()
-    val startTime =
-      order.firstItemForAptConsult()?.scheduledEndDate()?.parseDate(DateUtils.FORMAT_SERVER_DATE)
+    val startTime = order.firstItemForAptConsult()?.scheduledEndDate()?.parseDate(DateUtils.FORMAT_SERVER_DATE)
     val currentTime = Calendar.getInstance().time
     val difference = startTime?.time?.minus(currentTime.time)
     countDownTimer = object : CountDownTimer(difference!!, 1000) {
       override fun onTick(millisUntilFinished: Long) {
         val daysRemaining = TimeUnit.MILLISECONDS.toDays(millisUntilFinished).toString()
-        val hoursRemaining =
-          (TimeUnit.MILLISECONDS.toHours(millisUntilFinished) - TimeUnit.DAYS.toHours(
-            TimeUnit.MILLISECONDS.toDays(millisUntilFinished)
-          )).toString()
-        val minutesRemaining =
-          (TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
-            TimeUnit.MILLISECONDS.toHours(millisUntilFinished)
-          )).toString()
-        val secondsRemaining =
-          (TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
-            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
-          )).toString()
+        val hoursRemaining = (TimeUnit.MILLISECONDS.toHours(millisUntilFinished) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millisUntilFinished))).toString()
+        val minutesRemaining = (TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))).toString()
+        val secondsRemaining = (TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))).toString()
 
         val daysString: String
         daysString = if (daysRemaining.toInt() > 1) {
@@ -174,8 +157,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun isOpenForConsultation(order: OrderItem) {
     val isOpen = order.isConfirmConsultBtn()
-    binding?.bookingDate?.setTextColor(takeIf { isOpen }?.let { getColor(R.color.light_green) }
-      ?: getColor(R.color.primary_grey))
+    binding?.bookingDate?.setTextColor(takeIf { isOpen }?.let { getColor(R.color.light_green) } ?: getColor(R.color.primary_grey))
     if (isOpen) isVisible(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.bottomView)
     else isGone(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.bottomView)
   }
@@ -202,53 +184,34 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   private fun setOrderDetails(order: OrderItem) {
     binding?.orderType?.text = getStatusText(order)
     binding?.tvStatus?.text = order.PaymentDetails?.statusValue()
-    val b = (PaymentDetailsN.STATUS.from(
-      order.PaymentDetails?.Status ?: ""
-    ) == PaymentDetailsN.STATUS.PENDING)
+    val b = (PaymentDetailsN.STATUS.from(order.PaymentDetails?.Status ?: "") == PaymentDetailsN.STATUS.PENDING)
     if (b) binding?.tvStatus?.setTextColor(getColor(R.color.watermelon_light_10))
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
     order.BillingDetails?.let { bill ->
-      val currency =
-        takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "₹"
+      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "₹"
       binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
     val scheduleDate = order.firstItemForAptConsult()?.scheduledStartDate()
-    val dateApt = parseDate(
-      scheduleDate,
-      DateUtils.FORMAT_SERVER_DATE,
-      DateUtils.FORMAT_SERVER_TO_LOCAL_2
-    )
+    val dateApt = DateUtils.parseDate(scheduleDate, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)
     binding?.bookingDate?.text = if (dateApt.isNullOrEmpty().not()) {
       dateApt
     } else {
-      parseDate(
-        order.CreatedOn,
-        DateUtils.FORMAT_SERVER_DATE,
-        DateUtils.FORMAT_SERVER_TO_LOCAL_2,
-        timeZone = TimeZone.getTimeZone("IST")
-      )
+      DateUtils.parseDate(order.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
     }
 
     // customer details
     binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
     binding?.tvCustomerAddress?.text = order.BuyerDetails?.getAddressFull()
 
-    binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)
-      ?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
-    binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)
-      ?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
-    binding?.tvCustomerContactNumber?.text =
-      order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
+    binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
+    binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
+    binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
 
-    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
-        ?.let { !checkValidMobile(it) }!!
-    )
+    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) }!!)
       binding?.tvCustomerContactNumber?.setTextColor(getColor(R.color.watermelon_light_10))
     if (order.BuyerDetails.ContactDetails.EmailId.isNullOrEmpty().not()) {
       binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
-      if (!checkValidEmail(order.BuyerDetails.ContactDetails.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(
-        getColor(R.color.watermelon_light_10)
-      )
+      if (!checkValidEmail(order.BuyerDetails.ContactDetails.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
     } else binding?.tvCustomerEmail?.isGone = true
 
 
@@ -260,9 +223,9 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
       shippingCost += item.Product?.ShippingCost ?: 0.0
       salePrice += item.product().price() - item.product().discountAmount()
       if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
-        ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
+          ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     }
-    binding?.tvTotalOrderAmount?.text = "Total amount: $currency $salePrice"
+    binding?.tvTotalOrderAmount?.text = "Total Amount: $currency $salePrice"
 
   }
 
@@ -276,18 +239,14 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
       binding?.tvCancelOrder -> cancelOrderDialog()
       binding?.btnCopyLink -> videoConsultCopy()
       binding?.tvCustomerContactNumber -> {
-        if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
-            ?.let { checkValidMobile(it) }!!
-        )
+        if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { checkValidMobile(it) }!!)
           openDialer()
         else
           showShortToast(getString(R.string.phone_invalid_format_error))
 
       }
       binding?.tvCustomerEmail -> {
-        if (orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()
-            ?.let { checkValidEmail(it) }!!
-        ) {
+        if (orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()?.let { checkValidEmail(it) }!!) {
           openEmailApp()
         } else {
           showShortToast(getString(R.string.email_invalid_format_error))
@@ -297,18 +256,14 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   }
 
   private fun openEmailApp() {
-    val emailIntent = Intent(
-      Intent.ACTION_SENDTO, Uri.fromParts(
-        "mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null
-      )
-    )
+    val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+        "mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null))
     startActivity(emailIntent)
   }
 
   private fun openDialer() {
     val intent = Intent(Intent.ACTION_DIAL)
-    intent.data =
-      (Uri.parse("tel:${orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()}"))
+    intent.data = (Uri.parse("tel:${orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()}"))
     startActivity(intent)
   }
 
@@ -322,15 +277,15 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun cancelOrderDialog() {
     MaterialAlertDialogBuilder(baseActivity)
-      .setTitle(getString(R.string.cancel_consultation_confirmation_message))
-      .setNeutralButton(getString(R.string.no)) { dialog, _ ->
-        dialog.dismiss()
-      }
-      .setPositiveButton(getString(R.string.yes)) { dialog, which ->
-        apiCancelOrder()
-        dialog.dismiss()
-      }
-      .show()
+        .setTitle(getString(R.string.cancel_consultation_confirmation_message))
+        .setNeutralButton(getString(R.string.no)) { dialog, _ ->
+          dialog.dismiss()
+        }
+        .setPositiveButton(getString(R.string.yes)) { dialog, which ->
+          apiCancelOrder()
+          dialog.dismiss()
+        }
+        .show()
   }
 
   private fun videoConsultCopy() {
@@ -342,27 +297,24 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun apiOpenConsultationWindow() {
     orderItem?.consultationWindowUrlForDoctor()?.let {
-      if (baseActivity.openWebPage(it)
-          .not()
-      ) showLongToast(resources.getString(R.string.error_opening_consultation_window))
+      if (baseActivity.openWebPage(it).not()) showLongToast(resources.getString(R.string.error_opening_consultation_window))
     }
   }
 
   private fun apiCancelOrder() {
     showProgress()
-    viewModel?.cancelOrder(clientId, orderItem?._id, OrderItem.CancellingEntity.SELLER.name)
-      ?.observeOnce(viewLifecycleOwner, Observer { cancelRes ->
-        hideProgress()
-        if (cancelRes.error is NoNetworkException) {
-          showShortToast(resources.getString(R.string.internet_connection_not_available))
-          return@Observer
-        }
-        if (cancelRes.status == 200 || cancelRes.status == 201 || cancelRes.status == 202) {
-          val data = cancelRes as? OrderConfirmStatus
-          data?.let { d -> showLongToast(getString(R.string.the_video_consultation_has_been_cancelled)) }
-          refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CANCELLED)
-        } else showLongToast(cancelRes.message())
-      })
+    viewModel?.cancelOrder(clientId, orderItem?._id, OrderItem.CancellingEntity.SELLER.name)?.observeOnce(viewLifecycleOwner, Observer { cancelRes ->
+      hideProgress()
+      if (cancelRes.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
+      if (cancelRes.status == 200 || cancelRes.status == 201 || cancelRes.status == 202) {
+        val data = cancelRes as? OrderConfirmStatus
+        data?.let { d -> showLongToast(getString(R.string.the_video_consultation_has_been_cancelled)) }
+        refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CANCELLED)
+      } else showLongToast(cancelRes.message())
+    })
   }
 
 
@@ -376,11 +328,8 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   private fun getStatusText(order: OrderItem): String? {
     val statusValue = OrderStatusValue.fromStatusConsultation(order.status())?.value
     return when {
-      OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status()
-        .toUpperCase(Locale.ROOT) -> {
-        return if (order.PaymentDetails?.status()
-            ?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name
-        ) {
+      OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT) -> {
+        return if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
           OrderStatusValue.ESCALATED_3.value
         } else statusValue.plus(order.cancelledTextVideo())
       }
@@ -417,9 +366,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   }
 
   private fun clickDeliveryItem(list: LocationsModel?) {
-    serviceLocationsList.forEach {
-      it.isSelected = (it.serviceOptionSelectedName == list?.serviceOptionSelectedName)
-    }
+    serviceLocationsList.forEach { it.isSelected = (it.serviceOptionSelectedName == list?.serviceOptionSelectedName) }
   }
 
   override fun onPause() {

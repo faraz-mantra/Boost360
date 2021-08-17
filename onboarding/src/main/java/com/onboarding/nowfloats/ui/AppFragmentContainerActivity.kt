@@ -26,15 +26,15 @@ import com.onboarding.nowfloats.ui.registration.*
 
 open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
-  private var type: FragmentType? = null
-  private var exitToast: Toast? = null
-
   override fun onCreateView() {
     super.onCreateView()
     intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
     exitToast = makeText(this, R.string.press_again_exit, Toast.LENGTH_SHORT)
     setFragment()
   }
+
+  private var type: FragmentType? = null
+  private var exitToast: Toast? = null
 
   private var categorySelectorFragment: CategorySelectorFragment? = null
   private var channelPickerFragment: ChannelPickerFragment? = null
@@ -73,6 +73,18 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
     }
   }
 
+  override fun getToolbarTitleSize(): Float? {
+    return when (type) {
+      FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS,
+      FragmentType.REGISTRATION_BUSINESS_WEBSITE,
+      FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE,
+      FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
+      FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
+      FragmentType.REGISTRATION_BUSINESS_WHATSAPP,
+      FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> ConversionUtils.dp2px(16f).toFloat()
+      else -> return super.getToolbarTitleSize()
+    }
+  }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
@@ -146,8 +158,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
         channelPickerFragment
       }
       FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS -> {
-        registrationBusinessContactInfoFragment =
-          RegistrationBusinessContactInfoFragment.newInstance()
+        registrationBusinessContactInfoFragment = RegistrationBusinessContactInfoFragment.newInstance()
         registrationBusinessContactInfoFragment
       }
       FragmentType.REGISTRATION_BUSINESS_WEBSITE -> {
@@ -155,23 +166,19 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
         registrationBusinessWebsiteFragment
       }
       FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE -> {
-        registrationBusinessGoogleBusinessFragment =
-          RegistrationBusinessGoogleBusinessFragment.newInstance()
+        registrationBusinessGoogleBusinessFragment = RegistrationBusinessGoogleBusinessFragment.newInstance()
         registrationBusinessGoogleBusinessFragment
       }
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE -> {
-        registrationBusinessFacebookPageFragment =
-          RegistrationBusinessFacebookPageFragment.newInstance()
+        registrationBusinessFacebookPageFragment = RegistrationBusinessFacebookPageFragment.newInstance()
         registrationBusinessFacebookPageFragment
       }
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP -> {
-        registrationBusinessFacebookShopFragment =
-          RegistrationBusinessFacebookShopFragment.newInstance()
+        registrationBusinessFacebookShopFragment = RegistrationBusinessFacebookShopFragment.newInstance()
         registrationBusinessFacebookShopFragment
       }
       FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> {
-        registrationBusinessTwitterDetailsFragment =
-          RegistrationBusinessTwitterDetailsFragment.newInstance()
+        registrationBusinessTwitterDetailsFragment = RegistrationBusinessTwitterDetailsFragment.newInstance()
         registrationBusinessTwitterDetailsFragment
       }
       FragmentType.REGISTRATION_BUSINESS_WHATSAPP -> {
@@ -253,18 +260,16 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
+//    registrationCompleteFragment?.onActivityResult(requestCode, resultCode, data)
     registrationCompleteFragment?.onActivityResult(requestCode, resultCode, data)
     registrationBusinessGoogleBusinessFragment?.onActivityResult(requestCode, resultCode, data)
     registrationBusinessTwitterDetailsFragment?.onActivityResult(requestCode, resultCode, data)
     registrationBusinessContactInfoFragment?.onActivityResult(requestCode, resultCode, data)
   }
+
 }
 
-fun Fragment.startFragmentActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false
-) {
+fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(activity, AppFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -272,11 +277,7 @@ fun Fragment.startFragmentActivity(
   startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false
-) {
+fun AppCompatActivity.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(this, AppFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

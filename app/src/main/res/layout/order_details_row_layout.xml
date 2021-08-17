@@ -1,150 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:layout_margin="10dp"
-  android:background="@color/white"
-  android:padding="15dp">
-
-  <TableRow
+    android:layout_margin="10dp"
+    android:padding="15dp"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/order_date" />
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/order_date"
+            />
+        <TextView
+            android:id="@+id/tv_order_date"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginStart="5dp"
+            android:textSize="12sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/_07_september_2017"
+            />
+    </TableRow>
 
-    <TextView
-      android:id="@+id/tv_order_date"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="5dp"
-      android:layout_weight="1"
-      android:ellipsize="end"
-      android:maxLines="1"
-      android:text="@string/_07_september_2017"
-      android:textSize="12sp"
-       android:fontFamily="@font/semi_bold" />
-  </TableRow>
+    <TableRow
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delivery_date"
+            />
+        <TextView
+            android:id="@+id/tv_delivery_date"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginStart="5dp"
+            android:textSize="12sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/_12_september_2017"
+            />
+    </TableRow>
 
-  <TableRow
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="5dp">
+    <TableRow
+        android:visibility="gone"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/net_amount"
+            />
+        <TextView
+            android:id="@+id/tv_net_amount"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginStart="5dp"
+            android:textSize="12sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/inr_600"
+            />
+    </TableRow>
 
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/delivery_date" />
+    <TableRow
+        android:visibility="gone"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shipping_charge"
+            />
+        <TextView
+            android:id="@+id/tv_shipping_charge"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginStart="5dp"
+            android:textSize="12sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/inr_125"
+            />
+    </TableRow>
 
-    <TextView
-      android:id="@+id/tv_delivery_date"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="5dp"
-      android:layout_weight="1"
-      android:ellipsize="end"
-      android:maxLines="1"
-      android:text="@string/_12_september_2017"
-      android:textSize="12sp"
-       android:fontFamily="@font/semi_bold" />
-  </TableRow>
+    <TableRow
+        android:visibility="gone"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/assured_purchase_charge"
+            />
+        <TextView
+            android:id="@+id/tv_assured_purchase_charge"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginStart="5dp"
+            android:textSize="12sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/inr_80"
+            />
+    </TableRow>
 
-  <TableRow
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:visibility="gone">
+    <TableRow
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cart_total"
+            />
+        <TextView
+            android:id="@+id/tv_total_price"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginStart="5dp"
+            android:textSize="12sp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/inr_805"
+            />
+    </TableRow>
 
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/net_amount" />
-
-    <TextView
-      android:id="@+id/tv_net_amount"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="5dp"
-      android:layout_weight="1"
-      android:ellipsize="end"
-      android:maxLines="1"
-      android:text="@string/inr_600"
-      android:textSize="12sp"
-       android:fontFamily="@font/semi_bold" />
-  </TableRow>
-
-  <TableRow
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:visibility="gone">
-
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/shipping_charge" />
-
-    <TextView
-      android:id="@+id/tv_shipping_charge"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="5dp"
-      android:layout_weight="1"
-      android:ellipsize="end"
-      android:maxLines="1"
-      android:text="@string/inr_125"
-      android:textSize="12sp"
-       android:fontFamily="@font/semi_bold" />
-  </TableRow>
-
-  <TableRow
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:visibility="gone">
-
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/assured_purchase_charge" />
-
-    <TextView
-      android:id="@+id/tv_assured_purchase_charge"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="5dp"
-      android:layout_weight="1"
-      android:ellipsize="end"
-      android:maxLines="1"
-      android:text="@string/inr_80"
-      android:textSize="12sp"
-       android:fontFamily="@font/semi_bold" />
-  </TableRow>
-
-  <TableRow
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="5dp">
-
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/cart_total" />
-
-    <TextView
-      android:id="@+id/tv_total_price"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="5dp"
-      android:layout_weight="1"
-      android:ellipsize="end"
-      android:maxLines="1"
-      android:text="@string/inr_805"
-      android:textSize="12sp"
-       android:fontFamily="@font/semi_bold" />
-  </TableRow>
 
 
 </TableLayout>

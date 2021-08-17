@@ -90,7 +90,6 @@
       android:paddingHorizontal="@dimen/size_4"
       android:stateListAnimator="@null"
       android:text="@string/change"
-      android:textAllCaps="false"
       android:textColor="@color/warm_grey_two"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"

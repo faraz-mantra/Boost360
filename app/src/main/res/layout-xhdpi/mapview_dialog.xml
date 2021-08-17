@@ -1,89 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:background="#ffffff"
-  android:orientation="vertical">
-
-  <TextView
-    android:id="@+id/mapview_dialog_title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
-    android:gravity="center_horizontal"
-    android:text="@string/choose_your_location"
-    android:textColor="#878787"
-    android:textSize="20sp"
-     android:fontFamily="@font/semi_bold" />
-
-  <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="300dp">
-
-    <fragment
-      android:id="@+id/dialog_map"
-      class="com.google.android.gms.maps.SupportMapFragment"
-      android:layout_width="300dp"
-      android:layout_height="300dp"
-      android:layout_gravity="center_horizontal"
-      android:layout_margin="5dp" />
-
-    <ImageView
-      android:id="@+id/map_marker"
-      android:layout_width="35dp"
-      android:layout_height="35dp"
-      android:layout_gravity="center_vertical|center_horizontal"
-      android:src="@drawable/map_marker" />
-  </FrameLayout>
-
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="5dp"
-    android:layout_marginTop="15dp"
-    android:layout_marginEnd="5dp"
-    android:layout_marginBottom="5dp"
-    android:orientation="vertical">
+    android:background="#ffffff"
+    android:orientation="vertical" >
 
     <TextView
-      android:id="@+id/hintTextView"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_horizontal"
-      android:gravity="center"
-      android:text="@string/drag_to_map_your_location"
-      android:textColor="#878787"
-      android:textSize="14sp" />
+        android:id="@+id/mapview_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:text="@string/choose_your_location"
+        android:textColor="#878787"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <fragment
+            android:id="@+id/dialog_map"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            class="com.google.android.gms.maps.SupportMapFragment" />
+
+        <ImageView
+            android:id="@+id/map_marker"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:src="@drawable/map_marker" />
+    </FrameLayout>
 
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="20dp"
-      android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical" >
 
-      <Button
-        android:id="@+id/mapview_cancel"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:background="#ffb900"
-        android:text="@string/cancel_in_capital"
-        android:textSize="12sp" />
+        <TextView
+            android:id="@+id/hintTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="@string/drag_to_map_your_location"
+            android:textColor="#878787"
+            android:textSize="14sp" />
 
-      <View
-        android:layout_width="3dip"
-        android:layout_height="1dip"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal" >
 
-      <Button
-        android:id="@+id/mapview_confirm"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:background="#ffb900"
-        android:text="@string/confirm_in_capital"
-        android:textSize="12sp" />
+            <Button
+                android:id="@+id/mapview_cancel"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="#ffb900"
+                android:text="@string/cancel_in_capital"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="3dip"
+                android:layout_height="1dip" >
+            </View>
+
+            <Button
+                android:id="@+id/mapview_confirm"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="#ffb900"
+                android:text="@string/confirm_in_capital"
+                android:textSize="12sp" />
+        </LinearLayout>
     </LinearLayout>
-  </LinearLayout>
 
 </LinearLayout>

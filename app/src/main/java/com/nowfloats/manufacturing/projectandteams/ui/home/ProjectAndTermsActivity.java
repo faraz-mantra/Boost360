@@ -153,7 +153,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
                         return;
                     }
 
-                    projectTitle.setText("Projects listing (" + getProjectsData.getData().size() + ")");
+                    projectTitle.setText("Projects Listing (" + getProjectsData.getData().size() + ")");
                 }
 
                 @Override
@@ -187,7 +187,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
                         return;
                     }
 
-                    teamTitle.setText("Team listing (" + getTeamsData.getData().size() + ")");
+                    teamTitle.setText("Team Listing (" + getTeamsData.getData().size() + ")");
                 }
 
                 @Override
@@ -215,8 +215,8 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-        if (session.getUserProfileEmail() != null) {
-            intent.putExtra("email", session.getUserProfileEmail());
+        if (session.getFPEmail() != null) {
+            intent.putExtra("email", session.getFPEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }

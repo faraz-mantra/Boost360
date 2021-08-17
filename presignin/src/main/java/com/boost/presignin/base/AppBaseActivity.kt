@@ -21,8 +21,7 @@ import com.boost.presignin.R
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 
-abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> :
-  BaseActivity<Binding, ViewModel>() {
+abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseActivity<Binding, ViewModel>() {
 
   private var progressView: ProgressDialog? = null
 
@@ -35,6 +34,17 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
   override fun onCreateView() {
   }
 
+  override fun getToolbarTitleTypeface(): Typeface? {
+    return ResourcesCompat.getFont(this, R.font.semi_bold)
+  }
+
+  override fun getToolbarTitleSize(): Float? {
+    return resources.getDimension(R.dimen.heading_5)
+  }
+
+  override fun getNavIconScale(): Float {
+    return 0.75f
+  }
 
   override fun getToolbarBackgroundColor(): Int? {
     return Color.parseColor("#747474")
@@ -42,6 +52,10 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
 
   override fun getToolbarTitleColor(): Int? {
     return Color.parseColor("#FFFFFF")
+  }
+
+  override fun getToolbarTitleGravity(): Int {
+    return Gravity.CENTER
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -72,18 +86,13 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
       window?.statusBarColor = ContextCompat.getColor(this, taskBarColor)
     }
   }
-
   protected fun needHelp() {
     val s = SpannableString(resources.getString(R.string.need_help_desc))
     Linkify.addLinks(s, Linkify.ALL)
-    val alertDialog = AlertDialog.Builder(ContextThemeWrapper(this, R.style.CustomAlertDialogTheme))
-    alertDialog.setTitle(getString(R.string.need_help_title)).setMessage(s)
-      .setPositiveButton(resources.getString(R.string.okay), null)
+    val alertDialog = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
+    alertDialog.setTitle(getString(R.string.need_help_title)).setMessage(s).setPositiveButton(resources.getString(R.string.okay), null)
     val alert = alertDialog.create()
     alert.show()
-    alert.findViewById<TextView>(android.R.id.message)?.movementMethod =
-      LinkMovementMethod.getInstance()
-    alert.getButton(DialogInterface.BUTTON_POSITIVE)
-      .setTextColor(ContextCompat.getColor(this, R.color.colorAccent))
-  }
-}
+    alert.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
+    alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this,R.color.colorAccent))
+  }}

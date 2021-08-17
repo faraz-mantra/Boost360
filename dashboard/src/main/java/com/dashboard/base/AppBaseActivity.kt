@@ -1,11 +1,14 @@
 package com.dashboard.base
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.ViewDataBinding
 import com.dashboard.R
 import com.framework.base.BaseActivity
@@ -24,15 +27,29 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
   override fun onCreateView() {
   }
 
+  override fun getToolbarTitleTypeface(): Typeface? {
+    return ResourcesCompat.getFont(this, R.font.semi_bold)
+  }
+
+  override fun getToolbarTitleSize(): Float? {
+    return resources.getDimension(R.dimen.heading_5)
+  }
+
+  override fun getNavIconScale(): Float {
+    return 0.75f
+  }
 
   override fun getToolbarBackgroundColor(): Int? {
-    return ContextCompat.getColor(this, R.color.colorPrimary)
+    return Color.parseColor("#747474")
   }
 
   override fun getToolbarTitleColor(): Int? {
-    return ContextCompat.getColor(this, R.color.white)
+    return Color.parseColor("#FFFFFF")
   }
 
+  override fun getToolbarTitleGravity(): Int {
+    return Gravity.CENTER
+  }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {

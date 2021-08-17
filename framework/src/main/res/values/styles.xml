@@ -2,27 +2,34 @@
 <resources>
 
   <!-- Base application theme. -->
-  <style name="BaseTheme" parent="@style/Theme.MaterialComponents.Light.DarkActionBar">
-    <item name="dialogCornerRadius">10dp</item>
+  <style name="BaseTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <!--    <item name="colorPrimary">@color/primaryColorVariant</item>-->
+    <!--    <item name="colorPrimaryDark">@color/primaryColorAccent</item>-->
+    <item name="dialogCornerRadius">8dp</item>
+    <!--    <item name="android:windowBackground">@drawable/bg_splash_screen</item>-->
+    <!--  <item name="actionOverflowButtonStyle">@style/ActionButtonOverflow</item>-->
+    <!--  <item name="actionMenuTextColor">@color/cerulean_blue</item>-->
+    <!--  <item name="android:actionMenuTextColor">@color/cerulean_blue</item>-->
     <item name="dialogTheme">@style/MaterialDialogTheme</item>
     <item name="materialAlertDialogTheme">@style/MaterialDialogTheme</item>
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
-    <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
-    <item name="colorSecondary">@color/black_4a4a4a</item>
+    <!--  <item name="toolbarStyle">@style/ToolbarStyle</item>-->
+    <!--  <item name="android:toolbarStyle" tools:ignore="NewApi">@style/ToolbarStyle</item>-->
+    <!--  <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>-->
+    <!--  <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>-->
+    <!--    <item name="colorControlActivated">@color/primaryColorVariant</item>-->
+    <!--    <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>-->
+    <!--    <item name="appBarLayoutStyle">@style/AppbarLayoutStyle</item>-->
   </style>
+
 
   <style name="CustomBottomSheet" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
     <item name="android:background">@android:color/transparent</item>
   </style>
 
   <style name="BottomSheetTheme" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
-    <item name="colorSecondary">@color/black_4a4a4a</item>
-    <item name="android:windowIsTranslucent">true</item>
-    <item name="android:windowIsFloating">false</item>
-    <item name="android:windowNoTitle">true</item>
-    <item name="android:statusBarColor">@android:color/transparent</item>
     <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
   </style>
 
@@ -36,10 +43,6 @@
     <item name="android:windowIsFloating">false</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:windowCloseOnTouchOutside">false</item>
-  </style>
-
-  <style name="CityDialogThemeFull" parent="MaterialDialogThemeFull">
-    <item name="colorAccent">@color/black_4a4a4a</item>
   </style>
 
   <style name="MaterialDialogThemeFullN" parent="MaterialDialogThemeFull">
@@ -110,21 +113,4 @@
   </style>
 
   <style name="Widget.GifView" parent="@android:style/Widget" />
-
-  <style name="TextViewDefaultFont" parent="android:Widget.TextView">
-    <item name="android:fontFamily">@font/regular</item>
-    <item name="android:textAllCaps">false</item>
-  </style>
-
-  <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-    <item name="android:fontFamily">@font/semi_bold</item>
-    <item name="android:textSize">16sp</item>
-    <item name="android:textColor">@color/white</item>
-  </style>
-
-  <style name="ComposeEditText" parent="Widget.AppCompat.EditText">
-    <item name="colorAccent">@color/black_4a4a4a</item>
-    <item name="fontFamily">@font/regular</item>
-    <item name="editTextColor">@color/black_4a4a4a</item>
-  </style>
 </resources>

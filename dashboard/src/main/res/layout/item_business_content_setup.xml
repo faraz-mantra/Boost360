@@ -64,8 +64,8 @@
       <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_82"
-        android:layout_marginStart="@dimen/size_10"
-        android:layout_marginEnd="@dimen/size_10"
+        android:layout_marginStart="@dimen/size_12"
+        android:layout_marginEnd="@dimen/size_16"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -101,7 +101,7 @@
 
           <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lotty_sync_ok"
-            android:layout_width="@dimen/size_70"
+            android:layout_width="@dimen/size_94"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/size_6"
@@ -117,7 +117,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/size_8"
+          android:layout_marginStart="@dimen/size_12"
           android:layout_weight="1"
           android:orientation="vertical">
 

@@ -98,11 +98,7 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.confirmBtn -> {
-        if (ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString()?:"")){
-          gotoBusinessApiCallDetails()
-        }else showShortToast(getString(R.string.phone_number_invalid))
-      }
+      binding?.confirmBtn -> if (binding?.number?.length() == 10) gotoBusinessApiCallDetails()
       binding?.skip -> {
         updateInfo()
         gotoBusinessApiCallDetails()

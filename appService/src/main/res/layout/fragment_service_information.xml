@@ -261,7 +261,7 @@
               app:layout_constraintLeft_toLeftOf="parent"
               app:layout_constraintRight_toRightOf="parent"
               app:layout_constraintTop_toTopOf="parent"
-              app:textAllCaps="false"
+              app:textAllCaps="true"
               app:textType="BODY_1" />
 
 
@@ -333,6 +333,7 @@
               android:includeFontPadding="false"
               android:text="@string/service_tags"
               android:textColor="@color/black_4a4a4a"
+              app:drawableEndCompat="@drawable/ic_question_circular_blue"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_3" />
 
@@ -386,7 +387,7 @@
               app:layout_constraintBottom_toBottomOf="@id/edt_service_tag"
               app:layout_constraintRight_toRightOf="parent"
               app:layout_constraintTop_toTopOf="@id/edt_service_tag"
-              app:textAllCaps="false"
+              app:textAllCaps="true"
               app:textType="BODY_1" />
 
           </androidx.constraintlayout.widget.ConstraintLayout>
@@ -400,6 +401,7 @@
             android:includeFontPadding="false"
             android:text="@string/key_specifications"
             android:textColor="@color/black_4a4a4a"
+            app:drawableEndCompat="@drawable/ic_question_circular_blue"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_3" />
 
@@ -466,6 +468,7 @@
             android:includeFontPadding="false"
             android:text="@string/service_specifications"
             android:textColor="@color/black_4a4a4a"
+            app:drawableEndCompat="@drawable/ic_question_circular_blue"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_3" />
 
@@ -498,7 +501,7 @@
             app:layout_constraintBottom_toBottomOf="@id/edt_service_tag"
             app:layout_constraintRight_toRightOf="@id/edt_service_tag"
             app:layout_constraintTop_toTopOf="@id/edt_service_tag"
-            app:textAllCaps="false"
+            app:textAllCaps="true"
             app:textType="BODY_1" />
 
           <com.framework.views.customViews.CustomTextView
@@ -511,6 +514,7 @@
             android:text="@string/external_url"
             android:textColor="@color/black_4a4a4a"
             android:visibility="visible"
+            app:drawableEndCompat="@drawable/ic_question_circular_blue"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_3" />
 
@@ -772,6 +776,7 @@
               android:text="@string/for_invoice"
               android:textColor="@color/warm_grey"
               android:textSize="12sp"
+              app:drawableEndCompat="@drawable/ic_question_circular_blue"
               app:fontFamily="@font/regular" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
@@ -862,7 +867,7 @@
               android:padding="@dimen/size_12"
               android:stateListAnimator="@null"
               android:text="@string/confirm"
-              android:textAllCaps="false"
+              android:textAllCaps="true"
               android:textColor="@color/white"
               app:textType="HEADING_6" />
           </androidx.appcompat.widget.LinearLayoutCompat>

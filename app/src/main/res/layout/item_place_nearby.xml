@@ -1,173 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:elevation="@dimen/_2sdp"
-  android:paddingStart="@dimen/_15sdp"
-  android:paddingTop="@dimen/_15sdp"
-  android:paddingEnd="@dimen/_15sdp">
-
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_5sdp"
-    android:background="@drawable/all_side_curve_bg"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingStart="@dimen/_15sdp"
+    android:paddingEnd="@dimen/_15sdp"
+    android:paddingTop="@dimen/_15sdp"
     android:elevation="@dimen/_2sdp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.ConstraintLayout
-      android:id="@+id/top_layout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
-
-      <ImageView
-        android:id="@+id/place_profile_image"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_margin="@dimen/_10sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_facebook_menu" />
-
-      <LinearLayout
-        android:layout_width="0dp"
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/single_item_menu_button"
-        app:layout_constraintStart_toEndOf="@id/place_profile_image"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/all_side_curve_bg"
+        android:layout_margin="@dimen/_5sdp"
+        android:elevation="@dimen/_2sdp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/place_profile_image"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_facebook_menu" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/_10sdp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toEndOf="@id/place_profile_image"
+        app:layout_constraintEnd_toStartOf="@id/single_item_menu_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
         <TextView
-          android:id="@+id/place_name"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:fontFamily="@font/regular"
-          android:text="@string/qutub_minar"
-          android:textColor="#4A4A4A"
-          android:textSize="@dimen/_15sdp" />
-
+            android:id="@+id/place_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/qutub_minar"
+            android:fontFamily="@font/open_sans"
+            android:textColor="#4A4A4A"
+            android:textSize="@dimen/_15sdp"/>
         <TextView
-          android:id="@+id/place_address"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:fontFamily="@font/regular"
-          android:text="@string/mehrauli_new_delhi_delhi_110030"
-          android:textColor="#4A4A4A"
-          android:textSize="@dimen/_10sdp" />
-      </LinearLayout>
+            android:id="@+id/place_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/mehrauli_new_delhi_delhi_110030"
+            android:fontFamily="@font/open_sans"
+            android:textColor="#4A4A4A"
+            android:textSize="@dimen/_10sdp"/>
+    </LinearLayout>
 
-      <ImageView
+    <ImageView
         android:id="@+id/single_item_menu_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/ic_dot_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_dot_menu" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="@dimen/_10sdp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
     <View
-      android:id="@+id/dummy_view"
-      android:layout_width="wrap_content"
-      android:layout_height="@dimen/_3sdp"
-      android:layout_marginTop="@dimen/_5sdp"
-      android:background="@drawable/dotted_line"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/top_layout" />
-
+        android:id="@+id/dummy_view"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_3sdp"
+        android:background="@drawable/dotted_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_5sdp"
+        app:layout_constraintTop_toBottomOf="@id/top_layout"/>
     <LinearLayout
-      android:id="@+id/info_layout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:padding="@dimen/_10sdp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/dummy_view">
-
-      <TextView
-        android:id="@+id/place_description"
+        android:id="@+id/info_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:fontFamily="@font/regular"
-        android:text="@string/at_a_height_of_234_feet_this_minaret_is_the_tallest_individual_tower_in_the_world_and_is_a_perfect_display_of_mughal_architectural_brilliance"
-        android:textColor="#747474"
-        android:textSize="@dimen/_9sdp" />
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dummy_view"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/place_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="@string/at_a_height_of_234_feet_this_minaret_is_the_tallest_individual_tower_in_the_world_and_is_a_perfect_display_of_mughal_architectural_brilliance"
+            android:fontFamily="@font/open_sans"
+            android:textColor="#747474"
+            android:textSize="@dimen/_9sdp"/>
 
     </LinearLayout>
 
-    <View
-      android:id="@+id/dummy_view1"
-      android:layout_width="wrap_content"
-      android:layout_height="@dimen/_3sdp"
-      android:layout_marginTop="@dimen/_5sdp"
-      android:background="@drawable/dotted_line"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/info_layout" />
+        <View
+            android:id="@+id/dummy_view1"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_3sdp"
+            android:background="@drawable/dotted_line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@id/info_layout"/>
 
-    <TextView
-      android:id="@+id/distance"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:padding="@dimen/_10sdp"
-      android:text="@string/_120_mt_from_your_place"
-      android:textColor="#4A4A4A"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/dummy_view1" />
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_120_mt_from_your_place"
+            android:textColor="#4A4A4A"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dummy_view1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="@dimen/_10sdp"/>
 
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/menu_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/all_side_curve_bg"
+        android:padding="@dimen/_10sdp"
+        android:layout_margin="@dimen/_15sdp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:elevation="@dimen/_4sdp">
+        <TextView
+            android:id="@+id/edit_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:text="@string/edit"
+            android:textColor="#979797"
+            android:textSize="@dimen/_12sdp"/>
 
-  <LinearLayout
-    android:id="@+id/menu_options"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_15sdp"
-    android:background="@drawable/all_side_curve_bg"
-    android:elevation="@dimen/_4sdp"
-    android:orientation="vertical"
-    android:padding="@dimen/_10sdp"
-    android:visibility="gone"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:visibility="visible">
+        <TextView
+            android:id="@+id/delete_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_"
+            android:padding="@dimen/_10sdp"
+            android:textAllCaps="true"
+            android:textColor="@color/red"
+            android:textSize="@dimen/_12sdp"/>
 
-    <TextView
-      android:id="@+id/edit_option"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:padding="@dimen/_10sdp"
-      android:text="@string/edit"
-      android:textColor="#979797"
-      android:textSize="@dimen/_12sdp" />
-
-    <TextView
-      android:id="@+id/delete_option"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:padding="@dimen/_10sdp"
-      android:text="@string/delete_"
-      android:textAllCaps="false"
-      android:textColor="@color/red"
-      android:textSize="@dimen/_12sdp" />
-
-  </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

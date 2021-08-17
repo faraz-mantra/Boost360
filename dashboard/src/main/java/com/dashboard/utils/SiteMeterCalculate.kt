@@ -51,50 +51,29 @@ fun UserSessionManager.siteMeterCalculation(): Int {
   if (getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI).isNullOrEmpty().not()) {
     siteMeterTotalWeight += 10
   }
-  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER).isNullOrEmpty()
-      .not() && res.getString(R.string.phoneNumber_percentage) != "0"
-  ) {
+  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER).isNullOrEmpty().not() && res.getString(R.string.phoneNumber_percentage) != "0") {
     siteMeterTotalWeight += phoneWeight
   }
-  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).isNullOrEmpty()
-      .not() && res.getString(R.string.businessCategory_percentage) != "0"
-  ) {
+  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).isNullOrEmpty().not() && res.getString(R.string.businessCategory_percentage) != "0") {
     siteMeterTotalWeight += businessCategoryWeight
   }
-  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI).isNullOrEmpty().not() && res.getString(
-      R.string.featuredImage_percentage
-    ) != "0"
-  ) {
+  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI).isNullOrEmpty().not() && res.getString(R.string.featuredImage_percentage) != "0") {
     siteMeterTotalWeight += featuredImageWeight
   }
-  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty()
-      .not() && res.getString(R.string.businessName_percentage) != "0"
-  ) {
+  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty().not() && res.getString(R.string.businessName_percentage) != "0") {
     siteMeterTotalWeight += businessNameWeight
   }
-  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty()
-      .not() && res.getString(R.string.businessdescription_percentage) != "0"
-  ) {
+  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty().not() && res.getString(R.string.businessdescription_percentage) != "0") {
     siteMeterTotalWeight += businessDescriptionWeight
   }
-  if (prefTwitter.getBoolean(
-      PREF_KEY_TWITTER_LOGIN,
-      false
-    ) && fbShareEnabled && fbPageShareEnabled
-  ) {
+  if (prefTwitter.getBoolean(PREF_KEY_TWITTER_LOGIN, false) && fbShareEnabled && fbPageShareEnabled) {
     siteMeterTotalWeight += twitterWeight
   }
-  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS).isNullOrEmpty().not() && getFPDetails(
-      Key_Preferences.LATITUDE
-    ).isNullOrEmpty().not() &&
-    getFPDetails(Key_Preferences.LONGITUDE).isNullOrEmpty()
-      .not() && res.getString(R.string.address_percentage) != "0"
-  ) {
+  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS).isNullOrEmpty().not() && getFPDetails(Key_Preferences.LATITUDE).isNullOrEmpty().not() &&
+      getFPDetails(Key_Preferences.LONGITUDE).isNullOrEmpty().not() && res.getString(R.string.address_percentage) != "0") {
     siteMeterTotalWeight += businessAddressWeight
   }
-  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL).isNullOrEmpty()
-      .not() && res.getString(R.string.email_percentage) != "0"
-  ) {
+  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL).isNullOrEmpty().not() && res.getString(R.string.email_percentage) != "0") {
     siteMeterTotalWeight += emailWeight
   }
   if (MessageModel().getStoreBizFloatSize() < 5) {
@@ -102,9 +81,7 @@ fun UserSessionManager.siteMeterCalculation(): Int {
   } else {
     siteMeterTotalWeight += 20
   }
-  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl).isNullOrEmpty()
-      .not() && res.getString(R.string.Logo_percentage) != "0"
-  ) {
+  if (getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl).isNullOrEmpty().not() && res.getString(R.string.Logo_percentage) != "0") {
     siteMeterTotalWeight += logoWeight
   }
   if (businessHours) {
@@ -117,133 +94,33 @@ fun UserSessionManager.siteMeterCalculation(): Int {
 private fun loadData(res: Resources): ArrayList<SiteMeterModel> {
   val siteData = ArrayList<SiteMeterModel>()
 
-  if (res.getString(R.string.buydomain_percentage) != "0") siteData.add(
-    SiteMeterModel(
-      domain,
-      "Buy/Link a Domain",
-      "Give your business an identity",
-      "+10%",
-      false,
-      12
-    )
-  )
+  if (res.getString(R.string.buydomain_percentage) != "0") siteData.add(SiteMeterModel(domain, "Buy/Link a Domain", "Give your business an identity", "+10%", false, 12))
   //1
-  if (res.getString(R.string.phoneNumber_percentage) != "0") siteData.add(
-    SiteMeterModel(
-      phone,
-      "Phone Number",
-      "Help customers to reach you instantly",
-      "+5%",
-      false,
-      5
-    )
-  )
+  if (res.getString(R.string.phoneNumber_percentage) != "0") siteData.add(SiteMeterModel(phone, "Phone Number", "Help customers to reach you instantly", "+5%", false, 5))
   //2
-  if (res.getString(R.string.businessCategory_percentage) != "0") siteData.add(
-    SiteMeterModel(
-      category,
-      "Business Category",
-      "Choose a business category",
-      "+5%",
-      false,
-      3
-    )
-  )
+  if (res.getString(R.string.businessCategory_percentage) != "0") siteData.add(SiteMeterModel(category, "Business Category", "Choose a business category", "+5%", false, 3))
   //3
-  if (res.getString(R.string.featuredImage_percentage) != "0") siteData.add(
-    SiteMeterModel(
-      image,
-      "Featured Image",
-      "Add a relevant image",
-      "+10%",
-      false,
-      8
-    )
-  )
+  if (res.getString(R.string.featuredImage_percentage) != "0") siteData.add(SiteMeterModel(image, "Featured Image", "Add a relevant image", "+10%", false, 8))
   //4
-  if (res.getString(R.string.businessName_percentage) != "0") siteData.add(
-    SiteMeterModel(
-      businessName,
-      "Business Name",
-      "Add business name",
-      "+5%",
-      false,
-      1
-    )
-  )
+  if (res.getString(R.string.businessName_percentage) != "0") siteData.add(SiteMeterModel(businessName, "Business Name", "Add business name", "+5%", false, 1))
   //5
-  if (res.getString(R.string.businessdescription_percentage) != "0") siteData.add(
-    SiteMeterModel(
-      description,
-      "Business Description",
-      "Describe your business",
-      "+10%",
-      false,
-      2
-    )
-  )
+  if (res.getString(R.string.businessdescription_percentage) != "0") siteData.add(SiteMeterModel(description, "Business Description", "Describe your business", "+10%", false, 2))
   //6
-  if (res.getString(R.string.social_percentage) != "0") siteData.add(
-    SiteMeterModel(
-      social,
-      "Social Share",
-      "Connect to Facebook and Twitter",
-      "+10%",
-      false,
-      11
-    )
-  )
+  if (res.getString(R.string.social_percentage) != "0") siteData.add(SiteMeterModel(social, "Social Share", "Connect to Facebook and Twitter", "+10%", false, 11))
   //7
-  siteData.add(
-    SiteMeterModel(
-      address,
-      "Business Address",
-      "Help your customers find you",
-      "+10%",
-      false,
-      6
-    )
-  )
+  siteData.add(SiteMeterModel(address, "Business Address", "Help your customers find you", "+10%", false, 6))
   //8
-  if (res.getString(R.string.email_percentage) != "0") siteData.add(
-    SiteMeterModel(
-      email,
-      "Email",
-      "Add your email",
-      "+5%",
-      false,
-      4
-    )
-  )
+  if (res.getString(R.string.email_percentage) != "0") siteData.add(SiteMeterModel(email, "Email", "Add your email", "+5%", false, 4))
   //9
   if (res.getString(R.string.postUpdate_percentage) != "0") {
-    val `val` =
-      if (MessageModel().getStoreBizFloatSize() < 5) 20 - MessageModel().getStoreBizFloatSize() * onUpdate else 20
-    siteData.add(
-      SiteMeterModel(
-        post,
-        "Post 5 Updates",
-        "Message regularly and relevantly",
-        "+$`val`%",
-        false,
-        10
-      )
-    )
+    val `val` = if (MessageModel().getStoreBizFloatSize() < 5) 20 - MessageModel().getStoreBizFloatSize() * onUpdate else 20
+    siteData.add(SiteMeterModel(post, "Post 5 Updates", "Message regularly and relevantly", "+$`val`%", false, 10))
   }
   //10
   if (res.getString(R.string.share_percentage) != "0") {
     siteData.add(SiteMeterModel(logo, "Business Logo", "Add a business logo", "+5%", false, 9))
   }
-  if (res.getString(R.string.business_hours) != "0") siteData.add(
-    SiteMeterModel(
-      businessHoursV,
-      "Business Hours",
-      "Display business hours",
-      "+5%",
-      false,
-      7
-    )
-  )
+  if (res.getString(R.string.business_hours) != "0") siteData.add(SiteMeterModel(businessHoursV, "Business Hours", "Display business timings", "+5%", false, 7))
   Collections.sort(siteData, Collections.reverseOrder())
   return siteData
 }
@@ -271,9 +148,7 @@ fun UserSessionManager.siteMeterData(callback: (data: SiteMeterScoreDetails?) ->
         siteMeterScoreDetails.contentManagement.add(it)
       }
       phone -> {
-        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER).isNullOrEmpty()
-            .not() && res.getString(R.string.phoneNumber_percentage) != "0"
-        ) {
+        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER).isNullOrEmpty().not() && res.getString(R.string.phoneNumber_percentage) != "0") {
           siteMeterTotalWeight += phoneWeight
           it.status = true
           it.sortChar = 1
@@ -285,9 +160,7 @@ fun UserSessionManager.siteMeterData(callback: (data: SiteMeterScoreDetails?) ->
         siteMeterScoreDetails.businessProfile.add(it)
       }
       category -> {
-        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).isNullOrEmpty()
-            .not() && res.getString(R.string.businessCategory_percentage) != "0"
-        ) {
+        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).isNullOrEmpty().not() && res.getString(R.string.businessCategory_percentage) != "0") {
           siteMeterTotalWeight += businessCategoryWeight
           it.status = true
           it.sortChar = 1
@@ -299,9 +172,7 @@ fun UserSessionManager.siteMeterData(callback: (data: SiteMeterScoreDetails?) ->
         siteMeterScoreDetails.contentManagement.add(it)
       }
       image -> {
-        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI).isNullOrEmpty()
-            .not() && res.getString(R.string.featuredImage_percentage) != "0"
-        ) {
+        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI).isNullOrEmpty().not() && res.getString(R.string.featuredImage_percentage) != "0") {
           siteMeterTotalWeight += featuredImageWeight
           it.status = true
           it.sortChar = 1
@@ -313,9 +184,7 @@ fun UserSessionManager.siteMeterData(callback: (data: SiteMeterScoreDetails?) ->
         siteMeterScoreDetails.businessProfile.add(it)
       }
       businessName -> {
-        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty()
-            .not() && res.getString(R.string.businessName_percentage) != "0"
-        ) {
+        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty().not() && res.getString(R.string.businessName_percentage) != "0") {
           siteMeterTotalWeight += businessNameWeight
           it.status = true
           it.sortChar = 1
@@ -327,9 +196,7 @@ fun UserSessionManager.siteMeterData(callback: (data: SiteMeterScoreDetails?) ->
         siteMeterScoreDetails.businessProfile.add(it)
       }
       description -> {
-        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty()
-            .not() && res.getString(R.string.businessdescription_percentage) != "0"
-        ) {
+        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty().not() && res.getString(R.string.businessdescription_percentage) != "0") {
           siteMeterTotalWeight += businessDescriptionWeight
           it.status = true
           it.sortChar = 1
@@ -341,11 +208,7 @@ fun UserSessionManager.siteMeterData(callback: (data: SiteMeterScoreDetails?) ->
         siteMeterScoreDetails.businessProfile.add(it)
       }
       social -> {
-        if (prefTwitter.getBoolean(
-            PREF_KEY_TWITTER_LOGIN,
-            false
-          ) && fbShareEnabled && fbPageShareEnabled
-        ) {
+        if (prefTwitter.getBoolean(PREF_KEY_TWITTER_LOGIN, false) && fbShareEnabled && fbPageShareEnabled) {
           siteMeterTotalWeight += twitterWeight
           it.status = true
           it.sortChar = 1
@@ -357,11 +220,8 @@ fun UserSessionManager.siteMeterData(callback: (data: SiteMeterScoreDetails?) ->
         siteMeterScoreDetails.contentManagement.add(it)
       }
       address -> {
-        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS).isNullOrEmpty()
-            .not() && getFPDetails(Key_Preferences.LATITUDE).isNullOrEmpty().not() &&
-          getFPDetails(Key_Preferences.LONGITUDE).isNullOrEmpty()
-            .not() && res.getString(R.string.address_percentage) != "0"
-        ) {
+        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS).isNullOrEmpty().not() && getFPDetails(Key_Preferences.LATITUDE).isNullOrEmpty().not() &&
+            getFPDetails(Key_Preferences.LONGITUDE).isNullOrEmpty().not() && res.getString(R.string.address_percentage) != "0") {
           siteMeterTotalWeight += businessAddressWeight
           it.status = true
           it.sortChar = 1
@@ -373,9 +233,7 @@ fun UserSessionManager.siteMeterData(callback: (data: SiteMeterScoreDetails?) ->
         siteMeterScoreDetails.businessProfile.add(it)
       }
       email -> {
-        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL).isNullOrEmpty()
-            .not() && res.getString(R.string.email_percentage) != "0"
-        ) {
+        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL).isNullOrEmpty().not() && res.getString(R.string.email_percentage) != "0") {
           siteMeterTotalWeight += emailWeight
           it.status = true
           it.sortChar = 1
@@ -406,9 +264,7 @@ fun UserSessionManager.siteMeterData(callback: (data: SiteMeterScoreDetails?) ->
         siteMeterScoreDetails.channelSync.add(data)
       }
       logo -> {
-        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl).isNullOrEmpty()
-            .not() && res.getString(R.string.Logo_percentage) != "0"
-        ) {
+        if (getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl).isNullOrEmpty().not() && res.getString(R.string.Logo_percentage) != "0") {
           siteMeterTotalWeight += logoWeight
           it.status = true
           it.sortChar = 1

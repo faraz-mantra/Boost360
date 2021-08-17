@@ -36,7 +36,7 @@ class CitySearchDialog : BaseDialogFragment<DialogCitySearchBinding, CityViewMod
   }
 
   override fun getTheme(): Int {
-    return R.style.CityDialogThemeFull
+    return R.style.MaterialDialogThemeFull
   }
 
   override fun onCreateView() {

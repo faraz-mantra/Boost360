@@ -24,7 +24,7 @@ public class BoostKeyboardActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.app_bar_enable_keyboard);
         setSupportActionBar(toolbar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText(getResources().getString(R.string.enable_keyboard_n));
+        headerText.setText(getResources().getString(R.string.enable_keyboard));
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

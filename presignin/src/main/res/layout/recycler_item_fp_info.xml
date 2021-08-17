@@ -52,20 +52,20 @@
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_web_link"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
         android:drawableStart="@drawable/ic_business_card_selection"
         android:drawablePadding="@dimen/_4sdp"
         android:gravity="center_vertical"
         android:includeFontPadding="false"
+        tools:text="www.google.com"
         android:textColor="@color/blue_4A90E2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_icon"
         app:layout_constraintTop_toBottomOf="@+id/ctv_business_name"
-        app:textType="BODY_1"
-        tools:text="www.google.com" />
+        app:layout_constraintVertical_bias="0.1"
+        app:textType="BODY_1" />
 
 
       <com.framework.views.customViews.CustomRadioButton

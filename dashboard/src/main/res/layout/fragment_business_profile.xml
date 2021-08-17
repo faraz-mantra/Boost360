@@ -63,9 +63,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_20"
                 android:text="@string/add_business_image"
-                android:textColor="@color/black_4a4a4a"
+                android:textColor="@color/yellow_ffb900"
                 app:fontFamily="@font/semi_bold"
-                app:textAllCaps="false"
+                app:textAllCaps="true"
                 app:textType="BODY_1" />
 
             </LinearLayout>
@@ -101,7 +101,7 @@
           android:enabled="true"
           android:gravity="center"
           android:text="@string/update_business_image"
-          android:textColor="@color/black_4a4a4a"
+          android:textColor="@color/colorAccent"
           android:visibility="gone" />
 
         <View
@@ -148,7 +148,11 @@
           style="@style/BusinessProfileTextField"
           android:background="@drawable/bg_rect_edit_txt_gray_business"
           android:singleLine="true"
-          android:textColor="@color/black_4a4a4a"
+          tools:ignore="UnusedAttribute"
+          app:textType="BODY_2"
+          android:includeFontPadding="false"
+          android:textColor="@color/black_2A2A2A"
+          android:textFontWeight="500"
           tools:text="@string/services_business" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -167,9 +171,9 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_business_category"
           style="@style/BusinessProfileTextField"
+          android:textColor="@color/primary_grey_light"
           android:background="@drawable/bg_rect_edit_txt_gray_business"
           android:drawableEnd="@drawable/ic_lock_business"
-          android:textColor="@color/primary_grey_light"
           tools:text="@string/services_business" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -192,7 +196,7 @@
               android:drawableStart="@drawable/ic_globehemispherewest"
               android:drawableEnd="@drawable/ic_arrow_right_accent"
               android:drawablePadding="@dimen/size_8"
-              android:fontFamily="@font/semi_bold"
+              android:fontFamily="@font/open_sans_semibold"
               android:paddingVertical="@dimen/size_4"
               android:text="@string/website_address"
               android:textColor="@color/black_4f4f4f"
@@ -235,7 +239,7 @@
               android:drawableStart="@drawable/ic_article"
               android:drawableEnd="@drawable/ic_edit_business"
               android:drawablePadding="@dimen/size_8"
-              android:fontFamily="@font/semi_bold"
+              android:fontFamily="@font/open_sans_semibold"
               android:paddingVertical="@dimen/size_4"
               android:text="@string/business_description"
               android:textColor="@color/black_4f4f4f"
@@ -276,7 +280,7 @@
               android:drawableStart="@drawable/ic_phoneincoming"
               android:drawableEnd="@drawable/ic_arrow_right_accent"
               android:drawablePadding="@dimen/size_8"
-              android:fontFamily="@font/semi_bold"
+              android:fontFamily="@font/open_sans_semibold"
               android:paddingVertical="@dimen/size_4"
               android:text="@string/contact_details"
               android:textColor="@color/black_4f4f4f"
@@ -308,7 +312,7 @@
               android:layout_gravity="end"
               android:padding="@dimen/size_10"
               android:text="@string/active"
-              android:textAllCaps="false"
+              android:textAllCaps="true"
               android:textColor="@color/green_27AE60" />
           </FrameLayout>
 
@@ -335,7 +339,7 @@
               android:drawableStart="@drawable/ic_mappin"
               android:drawableEnd="@drawable/ic_arrow_right_accent"
               android:drawablePadding="@dimen/size_8"
-              android:fontFamily="@font/semi_bold"
+              android:fontFamily="@font/open_sans_semibold"
               android:paddingVertical="@dimen/size_4"
               android:text="@string/business_address"
               android:textColor="@color/black_4f4f4f"
@@ -399,7 +403,7 @@
               android:drawableStart="@drawable/ic_circlesthree"
               android:drawableEnd="@drawable/ic_arrow_right_accent"
               android:drawablePadding="@dimen/size_8"
-              android:fontFamily="@font/semi_bold"
+              android:fontFamily="@font/open_sans_semibold"
               android:paddingVertical="@dimen/size_4"
               android:text="@string/digital_channels"
               android:textColor="@color/black_4f4f4f"
@@ -554,7 +558,7 @@
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/save_amp_publish"
-          android:textAllCaps="false"
+          android:textAllCaps="true"
           android:textColor="@color/white"
           android:visibility="gone"
           app:layout_constraintEnd_toEndOf="parent"

@@ -24,9 +24,12 @@ import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
-open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+
+open class DashboardFragmentContainerActivity :
+  AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
+
   private var digitalReadinessScoreFragment: DigitalReadinessScoreFragment? = null
   private var allBoostAddonsFragment: AllBoostAddonsFragment? = null
   private var websiteThemeFragment: FragmentWebsiteTheme? = null
@@ -45,6 +48,12 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     super.onCreate(savedInstanceState)
   }
 
+  override fun getToolbarTitleGravity(): Int {
+    return when (type) {
+      FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_BUSINESS_PROFILE -> Gravity.START
+      else -> Gravity.CENTER
+    }
+  }
 
   override fun onCreateView() {
     super.onCreateView()
@@ -55,6 +64,10 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     return binding?.appBarLayout?.toolbar
   }
 
+
+  override fun getToolbarTitleSize(): Float? {
+    return resources.getDimension(R.dimen.heading_7)
+  }
 
   override fun customTheme(): Int? {
     return when (type) {
@@ -92,7 +105,10 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.ALL_BOOST_ADD_ONS, FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_toolbar_d)
+      FragmentType.ALL_BOOST_ADD_ONS, FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getDrawable(
+        this,
+        R.drawable.ic_back_arrow_toolbar_d
+      )
       else -> super.getNavigationIcon()
     }
   }

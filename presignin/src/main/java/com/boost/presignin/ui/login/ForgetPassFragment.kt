@@ -13,7 +13,6 @@ import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
 import com.framework.pref.clientId
-import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 
 class ForgetPassFragment : AppBaseFragment<FragmentForgetPassBinding, LoginSignUpViewModel>() {
@@ -50,10 +49,5 @@ class ForgetPassFragment : AppBaseFragment<FragmentForgetPassBinding, LoginSignU
     }
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener { baseActivity.finish() }
-  }
-
-  override fun onResume() {
-    super.onResume()
-    binding?.emailEt?.post{ baseActivity.showKeyBoard(binding?.emailEt) }
   }
 }

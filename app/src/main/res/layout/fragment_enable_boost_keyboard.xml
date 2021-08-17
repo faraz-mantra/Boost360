@@ -1,243 +1,235 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="@color/screen_bg">
-
-  <androidx.cardview.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="15dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="10dp"
-    android:background="@color/white"
-    app:cardElevation="2dp"
-    app:contentPaddingBottom="10dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_height="match_parent"
+    android:background="@color/screen_bg">
 
-    <androidx.core.widget.NestedScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:fillViewport="true">
-
-      <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        app:cardElevation="2dp"
+        app:contentPaddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-          android:id="@+id/ll_keyboard_setting_switch"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/margin_10"
-          android:paddingStart="15dp"
-          android:paddingTop="15dp"
-          android:paddingRight="15dp"
-          android:paddingBottom="15dp"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent">
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-          <TextView
-            android:id="@+id/call_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/social_share_to_bg"
-            android:elevation="1dp"
-            android:gravity="center"
-            android:text="1"
-            android:textColor="@color/gray"
-            app:layout_constraintEnd_toStartOf="@+id/keyboard_setting_switch"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-          <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/keyboard_setting_switch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_20"
-            android:gravity="center_vertical"
-            android:textAllCaps="false"
-            android:src="@drawable/right_arrow"
-            android:text="Enable boost keyboard "
-            android:textColor="@color/gray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toEndOf="@+id/call_icon"
-            app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ll_keyboard_setting_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-        <View
-          android:id="@+id/divider1"
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:layout_marginTop="@dimen/margin_10"
-          android:background="@color/divider"
-          app:layout_constraintLeft_toLeftOf="parent"
-          app:layout_constraintRight_toRightOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/ll_keyboard_setting_switch" />
+                    <TextView
+                        android:id="@+id/call_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/social_share_to_bg"
+                        android:elevation="1dp"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="@color/gray"
+                        app:layout_constraintEnd_toStartOf="@+id/keyboard_setting_switch"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-          android:id="@+id/ll_keyboard_switch"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/margin_10"
-          android:paddingStart="15dp"
-          android:paddingTop="15dp"
-          android:paddingRight="15dp"
-          android:paddingBottom="15dp"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/divider1">
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/keyboard_setting_switch"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_20"
+                        android:gravity="center_vertical"
+                        android:src="@drawable/right_arrow"
+                        android:text="Enable Boost Keyboard "
+                        android:textColor="@color/gray"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/call_icon"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-          <TextView
-            android:id="@+id/textview2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_10"
-            android:background="@drawable/social_share_to_bg"
-            android:elevation="1dp"
-            android:gravity="center"
-            android:text="2"
-            android:textColor="@color/gray"
-            app:layout_constraintEnd_toStartOf="@+id/keyboard_switch"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/divider"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_keyboard_setting_switch" />
 
-          <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/keyboard_switch"
-            android:layout_width="0dp"
-            android:textAllCaps="false"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_20"
-            android:gravity="center_vertical"
-            android:src="@drawable/right_arrow"
-            android:text="Select boost keyboard"
-            android:textColor="@color/gray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toEndOf="@+id/textview2"
-            app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ll_keyboard_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider1">
 
-        <View
-          android:id="@+id/divider2"
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:layout_marginTop="@dimen/margin_10"
-          android:background="@color/divider"
-          android:textColor="@color/gray"
-          app:layout_constraintLeft_toLeftOf="parent"
-          app:layout_constraintRight_toRightOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/ll_keyboard_switch" />
+                    <TextView
+                        android:id="@+id/textview2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:background="@drawable/social_share_to_bg"
+                        android:elevation="1dp"
+                        android:gravity="center"
+                        android:text="2"
+                        android:textColor="@color/gray"
+                        app:layout_constraintEnd_toStartOf="@+id/keyboard_switch"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-          android:id="@+id/ll_storage_switch"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/margin_10"
-          android:paddingStart="15dp"
-          android:paddingTop="15dp"
-          android:paddingRight="15dp"
-          android:paddingBottom="15dp"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/divider2">
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/keyboard_switch"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_20"
+                        android:gravity="center_vertical"
+                        android:src="@drawable/right_arrow"
+                        android:text="Select Boost Keyboard"
+                        android:textColor="@color/gray"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/textview2"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/divider"
+                    android:textColor="@color/gray"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_keyboard_switch" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ll_storage_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider2">
 
 
-          <TextView
-            android:id="@+id/textview3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/social_share_to_bg"
-            android:elevation="1dp"
-            android:gravity="center"
-            android:text="3"
-            app:layout_constraintEnd_toStartOf="@+id/storage_switch"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:id="@+id/textview3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/social_share_to_bg"
+                        android:elevation="1dp"
+                        android:gravity="center"
+                        android:text="3"
+                        app:layout_constraintEnd_toStartOf="@+id/storage_switch"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-          <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/storage_switch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_20"
-            android:gravity="center_vertical"
-            android:textAllCaps="false"
-            android:src="@drawable/right_arrow"
-            android:text="Allow access"
-            android:textColor="@color/gray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toEndOf="@+id/textview3"
-            tools:ignore="MissingConstraints" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/storage_switch"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_20"
+                        android:gravity="center_vertical"
+                        android:src="@drawable/right_arrow"
+                        android:text="Allow Access"
+                        android:textColor="@color/gray"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/textview3" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <View
-          android:id="@+id/divider3"
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:layout_marginTop="@dimen/margin_10"
-          android:background="@color/divider"
-          android:visibility="gone"
-          app:layout_constraintLeft_toLeftOf="parent"
-          app:layout_constraintRight_toRightOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/ll_storage_switch" />
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@color/divider"
+                    android:visibility="gone"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_storage_switch" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-          android:id="@+id/ll_microphone_switch"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/margin_10"
-          android:paddingStart="15dp"
-          android:paddingTop="15dp"
-          android:paddingRight="15dp"
-          android:paddingBottom="15dp"
-          android:visibility="gone"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/divider3">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ll_microphone_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider3">
 
-          <TextView
-            android:id="@+id/textview4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/social_share_to_bg"
-            android:elevation="1dp"
-            android:gravity="center"
-            android:text="4"
-            app:layout_constraintEnd_toStartOf="@+id/microphone_switch"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints" />
+                    <TextView
+                        android:id="@+id/textview4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/social_share_to_bg"
+                        android:elevation="1dp"
+                        android:gravity="center"
+                        android:text="4"
+                        app:layout_constraintEnd_toStartOf="@+id/microphone_switch"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-          <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/microphone_switch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_20"
-            android:gravity="center_vertical"
-            android:src="@drawable/right_arrow"
-            android:text="Microphone permission"
-            android:textAllCaps="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toEndOf="@+id/textview4"
-            tools:ignore="MissingConstraints" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/microphone_switch"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_20"
+                        android:gravity="center_vertical"
+                        android:src="@drawable/right_arrow"
+                        android:text="Microphone Permission"
+                        android:textAllCaps="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/textview4" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-      </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-  </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,418 +1,418 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical"
-  tools:context="com.nowfloats.manageinventory.SellerAnalyticsActivity">
-
-  <androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbar"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="@color/primary"
-    app:theme="@style/CustomToolbarTheme">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.nowfloats.manageinventory.SellerAnalyticsActivity">
 
-  </androidx.appcompat.widget.Toolbar>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        app:theme="@style/CustomToolbarTheme">
 
-  <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:background="@color/primary">
+    </androidx.appcompat.widget.Toolbar>
 
-    <ProgressBar
-      android:id="@+id/pb_total_revenue"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      android:indeterminateTint="@color/white" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/primary">
 
-    <LinearLayout
-      android:id="@+id/ll_revenue_container"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true">
+        <ProgressBar
+            android:id="@+id/pb_total_revenue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/white" />
 
-      <TextView
-        android:id="@+id/tv_currency_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:text="INR"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:visibility="invisible" />
+        <LinearLayout
+            android:id="@+id/ll_revenue_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
 
-      <TextView
-        android:id="@+id/tv_total_revenue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="12.99"
-        android:textColor="@color/white"
-        android:textSize="50sp"
-        android:visibility="invisible" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_currency_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="INR"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:visibility="invisible" />
 
-    <TextView
-      android:id="@+id/tv_revenue_text"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/ll_revenue_container"
-      android:layout_centerHorizontal="true"
-      android:text="Total Revenue from all orders"
-      android:textSize="17sp" />
+            <TextView
+                android:id="@+id/tv_total_revenue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="12.99"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:visibility="invisible" />
+        </LinearLayout>
 
-  </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_revenue_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_revenue_container"
+            android:layout_centerHorizontal="true"
+            android:text="Total Revenue from all orders"
+            android:textSize="17sp" />
 
-  <androidx.gridlayout.widget.GridLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_margin="15dp"
-    android:layout_weight="3">
+    </RelativeLayout>
 
-    <androidx.cardview.widget.CardView
-      android:id="@+id/cv_total_orders"
-      android:layout_marginStart="1dp"
-      android:layout_marginTop="1dp"
-      android:layout_marginEnd="8dp"
-      android:layout_marginBottom="8dp"
-      android:background="?android:attr/selectableItemBackground"
-      android:onClick="onOrderTypeClicked"
-      app:layout_column="0"
-      app:layout_columnWeight="1"
-      app:layout_row="0"
-      app:layout_rowWeight="1">
+    <androidx.gridlayout.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="15dp"
+        android:layout_weight="3">
 
-      <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="-10dp"
-        android:alpha="0.08"
-        android:src="@drawable/ic_total_orders" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_total_orders"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="1dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="onOrderTypeClicked"
+            app:layout_column="0"
+            app:layout_columnWeight="1"
+            app:layout_row="0"
+            app:layout_rowWeight="1">
 
-      <TextView
-        android:id="@+id/tv_total_orders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="5"
-        android:textColor="@color/primary"
-        android:textSize="25sp"
-         android:fontFamily="@font/semi_bold"
-        android:visibility="invisible" />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="-10dp"
+                android:alpha="0.08"
+                android:src="@drawable/ic_total_orders" />
 
-      <ProgressBar
-        android:id="@+id/pg_total_orders"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center"
-        android:indeterminateTint="@color/primary" />
+            <TextView
+                android:id="@+id/tv_total_orders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="5"
+                android:textColor="@color/primary"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
-      <TextView
-        android:layout_width="115dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:text="@string/total_orders" />
+            <ProgressBar
+                android:id="@+id/pg_total_orders"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/primary" />
 
-    </androidx.cardview.widget.CardView>
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="@string/total_orders" />
 
-    <androidx.cardview.widget.CardView
-      android:id="@+id/cv_successful_orders"
-      android:layout_marginStart="8dp"
-      android:layout_marginTop="1dp"
-      android:layout_marginEnd="1dp"
-      android:layout_marginBottom="8dp"
-      android:background="?android:attr/selectableItemBackground"
-      android:onClick="onOrderTypeClicked"
-      app:layout_column="1"
-      app:layout_columnWeight="1"
-      app:layout_row="0"
-      app:layout_rowWeight="1">
+        </androidx.cardview.widget.CardView>
 
-      <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="-10dp"
-        android:alpha="0.08"
-        android:src="@drawable/ic_successful_orders" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_successful_orders"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginTop="1dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="onOrderTypeClicked"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            app:layout_row="0"
+            app:layout_rowWeight="1">
 
-      <TextView
-        android:id="@+id/tv_successful_orders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="3"
-        android:textColor="@color/primary"
-        android:textSize="25sp"
-         android:fontFamily="@font/semi_bold"
-        android:visibility="invisible" />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="-10dp"
+                android:alpha="0.08"
+                android:src="@drawable/ic_successful_orders" />
 
-      <ProgressBar
-        android:id="@+id/pg_successful_orders"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center"
-        android:indeterminateTint="@color/primary" />
+            <TextView
+                android:id="@+id/tv_successful_orders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="3"
+                android:textColor="@color/primary"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
-      <TextView
-        android:layout_width="115dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:text="@string/received_successful_orders" />
+            <ProgressBar
+                android:id="@+id/pg_successful_orders"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/primary" />
 
-    </androidx.cardview.widget.CardView>
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:text="@string/received_successful_orders" />
 
-    <androidx.cardview.widget.CardView
-      android:id="@+id/cv_received_orders"
-      android:layout_marginStart="1dp"
-      android:layout_marginTop="8dp"
-      android:layout_marginEnd="8dp"
-      android:background="?android:attr/selectableItemBackground"
-      android:onClick="onOrderTypeClicked"
-      android:visibility="visible"
-      app:layout_column="0"
-      app:layout_columnWeight="1"
-      app:layout_row="1"
-      app:layout_rowWeight="1">
+        </androidx.cardview.widget.CardView>
 
-      <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="-10dp"
-        android:alpha="0.08"
-        android:src="@drawable/ic_received_orders" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_received_orders"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="onOrderTypeClicked"
+            android:visibility="visible"
+            app:layout_column="0"
+            app:layout_columnWeight="1"
+            app:layout_row="1"
+            app:layout_rowWeight="1">
 
-      <TextView
-        android:id="@+id/tv_received_orders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="4444"
-        android:textColor="@color/primary"
-        android:textSize="25sp"
-         android:fontFamily="@font/semi_bold"
-        android:visibility="invisible" />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="-10dp"
+                android:alpha="0.08"
+                android:src="@drawable/ic_received_orders" />
 
-      <ProgressBar
-        android:id="@+id/pg_received_orders"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center"
-        android:indeterminateTint="@color/primary" />
+            <TextView
+                android:id="@+id/tv_received_orders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="4444"
+                android:textColor="@color/primary"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:text="@string/received_orders" />
+            <ProgressBar
+                android:id="@+id/pg_received_orders"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/primary" />
 
-    </androidx.cardview.widget.CardView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:text="@string/received_orders" />
+
+        </androidx.cardview.widget.CardView>
 
 
-    <androidx.cardview.widget.CardView
-      android:id="@+id/cv_cancelled_orders"
-      android:layout_marginStart="8dp"
-      android:layout_marginTop="8dp"
-      android:layout_marginEnd="1dp"
-      android:background="?android:attr/selectableItemBackground"
-      android:onClick="onOrderTypeClicked"
-      app:layout_column="1"
-      app:layout_columnWeight="1"
-      app:layout_row="1"
-      app:layout_rowWeight="1">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_cancelled_orders"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="onOrderTypeClicked"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            app:layout_row="1"
+            app:layout_rowWeight="1">
 
-      <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="-10dp"
-        android:alpha="0.08"
-        android:src="@drawable/ic_cancelled_orders" />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="-10dp"
+                android:alpha="0.08"
+                android:src="@drawable/ic_cancelled_orders" />
 
-      <TextView
-        android:id="@+id/tv_cancelled_orders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="5"
-        android:textColor="@color/primary"
-        android:textSize="25sp"
-         android:fontFamily="@font/semi_bold"
-        android:visibility="invisible" />
+            <TextView
+                android:id="@+id/tv_cancelled_orders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="5"
+                android:textColor="@color/primary"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
-      <ProgressBar
-        android:id="@+id/pg_cancelled_orders"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center"
-        android:indeterminateTint="@color/primary" />
+            <ProgressBar
+                android:id="@+id/pg_cancelled_orders"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/primary" />
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:text="@string/cancelled_orders" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:text="@string/cancelled_orders" />
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-      android:id="@+id/cv_returned_orders"
-      android:layout_marginStart="1dp"
-      android:layout_marginTop="16dp"
-      android:layout_marginEnd="8dp"
-      android:layout_marginBottom="1dp"
-      android:background="?android:attr/selectableItemBackground"
-      android:onClick="onOrderTypeClicked"
-      android:visibility="gone"
-      app:layout_column="0"
-      app:layout_columnWeight="1"
-      app:layout_row="2"
-      app:layout_rowWeight="1">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_returned_orders"
+            android:layout_marginBottom="1dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="onOrderTypeClicked"
+            android:visibility="gone"
+            app:layout_column="0"
+            app:layout_columnWeight="1"
+            app:layout_row="2"
+            app:layout_rowWeight="1">
 
-      <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="-10dp"
-        android:alpha="0.08"
-        android:src="@drawable/ic_returned_orders" />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="-10dp"
+                android:alpha="0.08"
+                android:src="@drawable/ic_returned_orders" />
 
-      <TextView
-        android:id="@+id/tv_returned_orders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="5"
-        android:textColor="@color/primary"
-        android:textSize="25sp"
-         android:fontFamily="@font/semi_bold"
-        android:visibility="invisible" />
+            <TextView
+                android:id="@+id/tv_returned_orders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="5"
+                android:textColor="@color/primary"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
-      <ProgressBar
-        android:id="@+id/pg_refunded_orders"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center"
-        android:indeterminateTint="@color/primary" />
+            <ProgressBar
+                android:id="@+id/pg_refunded_orders"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/primary" />
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:text="@string/returned_orders" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:text="@string/returned_orders" />
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-      android:id="@+id/cv_disputed_orders"
-      android:layout_marginStart="1dp"
-      android:layout_marginTop="16dp"
-      android:layout_marginEnd="8dp"
-      android:layout_marginBottom="1dp"
-      android:background="?android:attr/selectableItemBackground"
-      android:onClick="onOrderTypeClicked"
-      android:visibility="visible"
-      app:layout_column="0"
-      app:layout_columnWeight="1"
-      app:layout_row="2"
-      app:layout_rowWeight="1">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_disputed_orders"
+            android:layout_marginBottom="1dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="onOrderTypeClicked"
+            android:visibility="visible"
+            app:layout_column="0"
+            app:layout_columnWeight="1"
+            app:layout_row="2"
+            app:layout_rowWeight="1">
 
-      <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="-10dp"
-        android:alpha="0.08"
-        android:src="@drawable/ic_received_orders" />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="-10dp"
+                android:alpha="0.08"
+                android:src="@drawable/ic_received_orders" />
 
-      <TextView
-        android:id="@+id/tv_disputed_orders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="4444"
-        android:textColor="@color/primary"
-        android:textSize="25sp"
-         android:fontFamily="@font/semi_bold"
-        android:visibility="invisible" />
+            <TextView
+                android:id="@+id/tv_disputed_orders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="4444"
+                android:textColor="@color/primary"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
-      <ProgressBar
-        android:id="@+id/pg_disputed_orders"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center"
-        android:indeterminateTint="@color/primary" />
+            <ProgressBar
+                android:id="@+id/pg_disputed_orders"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/primary" />
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:text="@string/disputed_orders" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:text="@string/disputed_orders" />
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-      android:id="@+id/cv_abandoned_orders"
-      android:layout_marginStart="8dp"
-      android:layout_marginTop="16dp"
-      android:layout_marginEnd="1dp"
-      android:layout_marginBottom="1dp"
-      android:background="?android:attr/selectableItemBackground"
-      android:onClick="onOrderTypeClicked"
-      app:layout_column="1"
-      app:layout_columnWeight="1"
-      app:layout_row="2"
-      app:layout_rowWeight="1">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_abandoned_orders"
+            android:layout_marginBottom="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginTop="16dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="onOrderTypeClicked"
+            app:layout_column="1"
+            app:layout_columnWeight="1"
+            app:layout_row="2"
+            app:layout_rowWeight="1">
 
-      <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="-10dp"
-        android:alpha="0.08"
-        android:src="@drawable/ic_abandoned_orders" />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="-10dp"
+                android:alpha="0.08"
+                android:src="@drawable/ic_abandoned_orders" />
 
-      <TextView
-        android:id="@+id/tv_abandoned_orders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="5"
-        android:textColor="@color/primary"
-        android:textSize="25sp"
-         android:fontFamily="@font/semi_bold"
-        android:visibility="invisible" />
+            <TextView
+                android:id="@+id/tv_abandoned_orders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="5"
+                android:textColor="@color/primary"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
-      <ProgressBar
-        android:id="@+id/pg_abandoned_orders"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center"
-        android:indeterminateTint="@color/primary" />
+            <ProgressBar
+                android:id="@+id/pg_abandoned_orders"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/primary" />
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:text="@string/abandoned_orders" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:text="@string/abandoned_orders" />
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-  </androidx.gridlayout.widget.GridLayout>
+    </androidx.gridlayout.widget.GridLayout>
 
 
 </LinearLayout>

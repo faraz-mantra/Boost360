@@ -93,10 +93,10 @@
           android:gravity="center"
           android:includeFontPadding="false"
           android:text="@string/show_all"
-          app:fontFamily="@font/semi_bold"
-          app:textType="BODY_1"
-          android:textAllCaps="false"
+          android:textAllCaps="true"
           android:textColor="@color/greyish_brown"
+          app:fontFamily="@font/semi_bold"
+          app:textType="CAPTION"
           tools:ignore="RtlSymmetry" />
 
         <com.framework.views.customViews.CustomImageView

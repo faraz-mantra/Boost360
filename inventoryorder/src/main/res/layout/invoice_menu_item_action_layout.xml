@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  style="@style/wrap_wrap"
-  android:paddingEnd="@dimen/size_10"
-  tools:ignore="RtlSymmetry">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/wrap_wrap"
+    android:paddingEnd="@dimen/size_10"
+    tools:ignore="RtlSymmetry">
 
   <com.framework.views.customViews.CustomTextView
-    android:id="@+id/tvInvoice"
-    style="@style/wrap_wrap"
-    android:gravity="center"
-    android:text="@string/invoice"
-    android:textAllCaps="false"
-    android:textColor="@color/white"
-    app:fontFamily="@font/semi_bold"
-    app:textType="BODY_1" />
+      android:id="@+id/tvInvoice"
+      style="@style/wrap_wrap"
+      android:gravity="center"
+      android:text="@string/invoice"
+      app:fontFamily="@font/semi_bold"
+      android:textAllCaps="true"
+      android:textColor="@color/white"
+      app:textType="BODY_1" />
 </LinearLayout>

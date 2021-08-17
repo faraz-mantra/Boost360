@@ -1,187 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <!-- Base application theme. -->
-  <style name="AppTheme.Pre.Signup" parent="Theme.AppCompat.Light.NoActionBar">
-    <!-- Customize your theme here. -->
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="android:windowAnimationStyle">@null</item>
-    <item name="android:windowDisablePreview">true</item>
-  </style>
+    <!-- Base application theme. -->
+    <style name="AppTheme.Pre.Signup" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
 
-  <style name="SplashFullScreenStyle" parent="AppTheme.Pre.Signup">
-    <item name="windowActionBar">false</item>
-    <item name="windowNoTitle">true</item>
-    <item name="android:windowFullscreen">true</item>
-  </style>
+    <style name="SplashFullScreenStyle" parent="AppTheme.Pre.Signup">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
 
-  <style name="CreateAccountButtonStyle">
-    <item name="android:paddingTop">@dimen/_8sdp</item>
-    <item name="android:paddingBottom">@dimen/_8sdp</item>
-    <item name="android:textColor">@color/white</item>
-    <item name="android:textSize">@dimen/_12ssp</item>
-    <item name="android:textAllCaps">false</item>
-    <item name="android:gravity">center</item>
-    <item name="android:background">@drawable/create_account_style</item>
-    <!--        <item name="android:fontFamily"></item>-->
-  </style>
+    <style name="CreateAccountButtonStyle">
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/create_account_style</item>
+        <!--        <item name="android:fontFamily"></item>-->
+    </style>
 
-  <style name="ConfirmationScreen">
-    <item name="android:paddingTop">@dimen/_8sdp</item>
-    <item name="android:paddingBottom">@dimen/_8sdp</item>
-    <item name="android:gravity">center</item>
-    <item name="android:background">@drawable/create_account_style</item>
-    <!--        <item name="android:fontFamily"></item>-->
-  </style>
+    <style name="ConfirmationScreen">
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/create_account_style</item>
+        <!--        <item name="android:fontFamily"></item>-->
+    </style>
 
-  <style name="LoginButtonStyle">
-    <item name="android:paddingTop">@dimen/_8sdp</item>
-    <item name="android:paddingBottom">@dimen/_8sdp</item>
-    <item name="android:textColor">@color/login_text_color</item>
-    <item name="android:textSize">@dimen/_12ssp</item>
-    <item name="android:textAllCaps">false</item>
-    <item name="android:gravity">center</item>
-    <item name="android:background">@drawable/login_style</item>
-    <!--        <item name="android:fontFamily"></item>-->
-  </style>
+    <style name="LoginButtonStyle">
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:textColor">@color/login_text_color</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/login_style</item>
+        <!--        <item name="android:fontFamily"></item>-->
+    </style>
 
-  <style name="UnSelectedLanguageButtonStyle">
-    <item name="android:padding">@dimen/_2sdp</item>
-    <item name="android:textColor">@color/common_text_color</item>
-    <item name="android:textSize">@dimen/_8ssp</item>
-    <item name="android:textAllCaps">false</item>
-    <item name="android:gravity">center</item>
-    <item name="android:fontFamily">"@font/open_sans"</item>
-    <item name="android:background">@drawable/un_selected_language_button_style</item>
-    <!--        <item name="android:fontFamily">@font/quicksand_bold</item>-->
-  </style>
+    <style name="UnSelectedLanguageButtonStyle">
+        <item name="android:padding">@dimen/_2sdp</item>
+        <item name="android:textColor">@color/common_text_color</item>
+        <item name="android:textSize">@dimen/_8ssp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">"@font/open_sans"</item>
+        <item name="android:background">@drawable/un_selected_language_button_style</item>
+        <!--        <item name="android:fontFamily">@font/quicksand_bold</item>-->
+    </style>
 
-  <style name="SelectedLanguageButtonStyle">
-    <item name="android:padding">@dimen/_2sdp</item>
-    <item name="android:textColor">@color/red_color</item>
-    <item name="android:textSize">@dimen/_8ssp</item>
-    <item name="android:textAllCaps">false</item>
-    <item name="android:gravity">center</item>
-    <item name="android:fontFamily">"@font/open_sans"</item>
-    <item name="android:background">@drawable/selected_language_button_style</item>
-    <!--        <item name="android:fontFamily">@font/quicksand_bold</item>-->
-  </style>
+    <style name="SelectedLanguageButtonStyle">
+        <item name="android:padding">@dimen/_2sdp</item>
+        <item name="android:textColor">@color/red_color</item>
+        <item name="android:textSize">@dimen/_8ssp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">"@font/open_sans"</item>
+        <item name="android:background">@drawable/selected_language_button_style</item>
+        <!--        <item name="android:fontFamily">@font/quicksand_bold</item>-->
+    </style>
 
-  <style name="SingleLanguageSelectStyle">
-    <item name="android:textColor">@color/red_color</item>
-    <item name="android:textSize">@dimen/_8ssp</item>
-    <item name="android:textAllCaps">false</item>
-    <item name="android:gravity">center</item>
-    <item name="android:background">@drawable/un_selected_language_button_style</item>
-    <!--        <item name="android:fontFamily">@font/quicksand_bold</item>-->
-  </style>
+    <style name="SingleLanguageSelectStyle">
+        <item name="android:textColor">@color/red_color</item>
+        <item name="android:textSize">@dimen/_8ssp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/un_selected_language_button_style</item>
+        <!--        <item name="android:fontFamily">@font/quicksand_bold</item>-->
+    </style>
 
-  <style name="JioButtonStyle">
-    <item name="android:paddingTop">@dimen/_8sdp</item>
-    <item name="android:paddingBottom">@dimen/_8sdp</item>
-    <item name="android:textColor">@color/white</item>
-    <item name="android:textSize">@dimen/_12ssp</item>
-    <item name="android:textAllCaps">false</item>
-    <item name="android:gravity">center</item>
-    <item name="android:background">@drawable/jio_id_button_style</item>
-    <!--        <item name="android:fontFamily"></item>-->
-  </style>
+    <style name="JioButtonStyle">
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/jio_id_button_style</item>
+        <!--        <item name="android:fontFamily"></item>-->
+    </style>
 
-  <style name="FacebookButtonStyle">
-    <item name="android:paddingTop">@dimen/_8sdp</item>
-    <item name="android:paddingBottom">@dimen/_8sdp</item>
-    <item name="android:textColor">@color/white</item>
-    <item name="android:textSize">@dimen/_12ssp</item>
-    <item name="android:textAllCaps">false</item>
-    <item name="android:gravity">center</item>
-    <item name="android:background">@drawable/facebook_button_style</item>
-    <!--        <item name="android:fontFamily"></item>-->
-  </style>
+    <style name="FacebookButtonStyle">
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/facebook_button_style</item>
+        <!--        <item name="android:fontFamily"></item>-->
+    </style>
 
-  <style name="GoogleButtonStyle">
-    <item name="android:paddingTop">@dimen/_8sdp</item>
-    <item name="android:paddingBottom">@dimen/_8sdp</item>
-    <item name="android:textColor">@color/white</item>
-    <item name="android:textSize">@dimen/_12ssp</item>
-    <item name="android:textAllCaps">false</item>
-    <item name="android:gravity">center</item>
-    <item name="android:background">@drawable/google_button_style</item>
-    <!--        <item name="android:fontFamily"></item>-->
-  </style>
+    <style name="GoogleButtonStyle">
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/google_button_style</item>
+        <!--        <item name="android:fontFamily"></item>-->
+    </style>
 
-  <style name="SignUpLoginFacebookButtonStyle">
-    <item name="android:paddingTop">@dimen/_8sdp</item>
-    <item name="android:paddingBottom">@dimen/_8sdp</item>
-    <item name="android:textColor">@color/white</item>
-    <item name="android:textSize">@dimen/_10ssp</item>
-    <item name="android:textAllCaps">false</item>
-    <item name="android:gravity">center</item>
-    <item name="android:background">@drawable/facebook_button_style</item>
-    <!--        <item name="android:fontFamily"></item>-->
-  </style>
+    <style name="SignUpLoginFacebookButtonStyle">
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_10ssp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/facebook_button_style</item>
+        <!--        <item name="android:fontFamily"></item>-->
+    </style>
 
-  <style name="LoginOTPButtonStyle">
-    <item name="android:paddingTop">@dimen/_8sdp</item>
-    <item name="android:paddingBottom">@dimen/_8sdp</item>
-    <item name="android:textColor">@color/white</item>
-    <item name="android:textSize">@dimen/_10ssp</item>
-    <item name="android:textAllCaps">false</item>
-    <item name="android:gravity">center</item>
-    <item name="android:background">@color/white</item>
-    <!--        <item name="android:fontFamily"></item>-->
-  </style>
+    <style name="LoginOTPButtonStyle">
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_10ssp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/white</item>
+        <!--        <item name="android:fontFamily"></item>-->
+    </style>
 
-  <style name="SignUpLoginGoogleButtonStyle">
-    <item name="android:paddingTop">@dimen/_8sdp</item>
-    <item name="android:paddingBottom">@dimen/_8sdp</item>
-    <item name="android:textColor">@color/white</item>
-    <item name="android:textSize">@dimen/_10ssp</item>
-    <item name="android:textAllCaps">false</item>
-    <item name="android:gravity">center</item>
-    <item name="android:background">@drawable/google_button_style</item>
-    <!--        <item name="android:fontFamily"></item>-->
-  </style>
+    <style name="SignUpLoginGoogleButtonStyle">
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/_10ssp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/google_button_style</item>
+        <!--        <item name="android:fontFamily"></item>-->
+    </style>
 
-  <style name="EmailButtonStyle">
-    <item name="android:paddingTop">@dimen/_8sdp</item>
-    <item name="android:paddingBottom">@dimen/_8sdp</item>
-    <item name="android:textColor">@color/email_text_color</item>
-    <item name="android:textSize">@dimen/_12ssp</item>
-    <item name="android:textAllCaps">false</item>
-    <item name="android:gravity">center</item>
-    <item name="android:background">@drawable/email_button_style</item>
-    <!--        <item name="android:fontFamily"></item>-->
-  </style>
+    <style name="EmailButtonStyle">
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:textColor">@color/email_text_color</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/email_button_style</item>
+        <!--        <item name="android:fontFamily"></item>-->
+    </style>
 
-  <style name="ThemeDialogZoomAnimation" parent="android:Theme.Holo.Dialog">
-    <item name="android:windowMinWidthMajor">100%</item>
-    <item name="android:windowMinWidthMinor">100%</item>
-    <item name="android:windowEnterAnimation">@anim/dialog_slide_down</item>
-    <item name="android:windowExitAnimation">@anim/dialog_slide_up</item>
-  </style>
+    <style name="ThemeDialogZoomAnimation" parent="android:Theme.Holo.Dialog">
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+        <item name="android:windowEnterAnimation">@anim/dialog_slide_down</item>
+        <item name="android:windowExitAnimation">@anim/dialog_slide_up</item>
+    </style>
 
-  <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog">
-    <item name="android:windowNoTitle">true</item>
+    <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
 
-    <!-- Set this to true if you want Full Screen without status bar -->
-    <item name="android:windowFullscreen">false</item>
+        <!-- Set this to true if you want Full Screen without status bar -->
+        <item name="android:windowFullscreen">false</item>
 
-    <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsFloating">false</item>
 
-    <!-- This is important! Don't forget to set window background -->
-    <item name="android:windowBackground">@color/fullscreen_color</item>
+        <!-- This is important! Don't forget to set window background -->
+        <item name="android:windowBackground">@color/fullscreen_color</item>
 
-    <!-- Additionally if you want animations when dialog opening -->
-    <item name="android:windowEnterAnimation">@anim/dialog_slide_up</item>
-    <item name="android:windowExitAnimation">@anim/dialog_slide_down</item>
-  </style>
+        <!-- Additionally if you want animations when dialog opening -->
+        <item name="android:windowEnterAnimation">@anim/dialog_slide_up</item>
+        <item name="android:windowExitAnimation">@anim/dialog_slide_down</item>
+    </style>
 
-  <style name="EditTextColored">
-    <item name="colorAccent">@color/colorAccent</item>
-    <item name="colorControlNormal">#9d9d9c</item>
-    <item name="colorControlActivated">@color/colorAccent</item>
-    <item name="colorControlHighlight">@color/colorAccent</item>
-  </style>
+    <style name="EditTextColored">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">#9d9d9c</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+    </style>
 
 </resources>

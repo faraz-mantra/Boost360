@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:layout_gravity="center"
-  android:orientation="vertical">
-
-  <TextView
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="24dp"
-    android:layout_marginTop="24dp"
-    android:layout_marginEnd="24dp"
-    android:text="@string/boost_bubble"
-    android:textSize="18sp"
-     android:fontFamily="@font/semi_bold" />
-
-  <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="24dp"
-    android:text="@string/whatsapp_bubble_close"
-    android:textSize="15sp" />
-
-  <TextView
-    android:id="@+id/boost_button"
-    android:layout_width="wrap_content"
-    android:layout_height="36dp"
-    android:layout_gravity="end"
-    android:layout_marginEnd="24dp"
-    android:layout_marginBottom="8dp"
-    android:gravity="center"
-    android:text="@string/open_boost"
-    android:textColor="@color/primaryColor" />
+    android:layout_gravity="center"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="@string/boost_bubble"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_margin="24dp"
+        android:text="@string/whatsapp_bubble_close"/>
+    <TextView
+        android:id="@+id/boost_button"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:textColor="@color/primaryColor"
+        android:text="@string/open_boost"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="24dp" />
 </LinearLayout>

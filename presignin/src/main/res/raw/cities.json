@@ -12,7 +12,7 @@
     },
     {
       "id": "3",
-      "name": "bengaluru",
+      "name": "Bengaluru",
       "state": "Karnataka"
     },
     {
@@ -28,12 +28,12 @@
     {
       "id": "6",
       "name": "Chennai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "7",
       "name": "Kolkata",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "8",
@@ -53,12 +53,12 @@
     {
       "id": "11",
       "name": "Lucknow",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "12",
       "name": "Kanpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "13",
@@ -73,7 +73,7 @@
     {
       "id": "15",
       "name": "Indore",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "16",
@@ -83,12 +83,12 @@
     {
       "id": "17",
       "name": "Bhopal",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "18",
       "name": "Visakhapatnam",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "19",
@@ -98,7 +98,7 @@
     {
       "id": "20",
       "name": "Firozabad",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "21",
@@ -113,12 +113,12 @@
     {
       "id": "23",
       "name": "Agra",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "24",
       "name": "Siliguri",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "25",
@@ -138,7 +138,7 @@
     {
       "id": "28",
       "name": "Meerut",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "29",
@@ -153,7 +153,7 @@
     {
       "id": "31",
       "name": "Varanasi (Benaras)",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "32",
@@ -183,32 +183,32 @@
     {
       "id": "37",
       "name": "Prayagraj (Allahabad)",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "38",
       "name": "Coimbatore",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "39",
       "name": "Jabalpur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "40",
       "name": "Gwalior",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "41",
       "name": "Vijayawada",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "42",
       "name": "Madurai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "43",
@@ -228,12 +228,12 @@
     {
       "id": "46",
       "name": "Amroha",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "47",
       "name": "Moradabad",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "48",
@@ -243,7 +243,7 @@
     {
       "id": "49",
       "name": "Aligarh",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "50",
@@ -263,7 +263,7 @@
     {
       "id": "53",
       "name": "Tiruchirappalli",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "54",
@@ -273,7 +273,7 @@
     {
       "id": "55",
       "name": "Salem",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "56",
@@ -298,12 +298,12 @@
     {
       "id": "60",
       "name": "Saharanpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "61",
       "name": "Guntur",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "62",
@@ -318,7 +318,7 @@
     {
       "id": "64",
       "name": "Noida",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "65",
@@ -327,7 +327,7 @@
     },
     {
       "id": "66",
-      "name": "Bhilai nagar",
+      "name": "Bhilai Nagar",
       "state": "Chhattisgarh"
     },
     {
@@ -358,7 +358,7 @@
     {
       "id": "72",
       "name": "Asansol",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "73",
@@ -378,7 +378,7 @@
     {
       "id": "76",
       "name": "Ujjain",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "77",
@@ -388,12 +388,12 @@
     {
       "id": "78",
       "name": "Loni",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "79",
       "name": "Jhansi",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "80",
@@ -403,7 +403,7 @@
     {
       "id": "81",
       "name": "Nellore",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "82",
@@ -428,7 +428,7 @@
     {
       "id": "86",
       "name": "Tirunelveli",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "87",
@@ -443,7 +443,7 @@
     {
       "id": "89",
       "name": "Tiruppur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "90",
@@ -463,17 +463,17 @@
     {
       "id": "93",
       "name": "Kurnool",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "94",
-      "name": "Bokaro steel city",
+      "name": "Bokaro Steel City",
       "state": "Jharkhand"
     },
     {
       "id": "95",
       "name": "Rajahmundry",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "96",
@@ -538,7 +538,7 @@
     {
       "id": "108",
       "name": "Raghunathganj",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "109",
@@ -548,7 +548,7 @@
     {
       "id": "110",
       "name": "Shahjahanpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "111",
@@ -563,7 +563,7 @@
     {
       "id": "113",
       "name": "Kakinada",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "114",
@@ -573,7 +573,7 @@
     {
       "id": "115",
       "name": "Sagar",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "116",
@@ -603,7 +603,7 @@
     {
       "id": "121",
       "name": "Kharagpur",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "122",
@@ -618,7 +618,7 @@
     {
       "id": "124",
       "name": "Tirupati",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "125",
@@ -633,7 +633,7 @@
     {
       "id": "127",
       "name": "Rampur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "128",
@@ -643,12 +643,12 @@
     {
       "id": "129",
       "name": "Ratlam",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "130",
       "name": "Modinagar",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "131",
@@ -668,17 +668,17 @@
     {
       "id": "134",
       "name": "Hapur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "135",
       "name": "Ranipet",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "136",
       "name": "Anantapur",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "137",
@@ -698,7 +698,7 @@
     {
       "id": "140",
       "name": "Etawah",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "141",
@@ -712,7 +712,7 @@
     },
     {
       "id": "143",
-      "name": "New delhi",
+      "name": "New Delhi",
       "state": "Delhi"
     },
     {
@@ -723,7 +723,7 @@
     {
       "id": "145",
       "name": "Kadapa",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "146",
@@ -738,12 +738,12 @@
     {
       "id": "148",
       "name": "Satna",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "149",
       "name": "Vizianagaram",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "150",
@@ -763,27 +763,27 @@
     {
       "id": "153",
       "name": "Nagercoil",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "154",
       "name": "Thanjavur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "155",
       "name": "Murwara (Katni)",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "156",
       "name": "Naihati",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "157",
       "name": "Sambhal",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "158",
@@ -797,13 +797,13 @@
     },
     {
       "id": "160",
-      "name": "English bazar",
-      "state": "West bengal"
+      "name": "English Bazar",
+      "state": "West Bengal"
     },
     {
       "id": "161",
       "name": "Eluru",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "162",
@@ -833,17 +833,17 @@
     {
       "id": "167",
       "name": "Ongole",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "168",
       "name": "Nandyal",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "169",
       "name": "Morena",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "170",
@@ -873,7 +873,7 @@
     {
       "id": "175",
       "name": "Baharampur",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "176",
@@ -888,12 +888,12 @@
     {
       "id": "178",
       "name": "Orai",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "179",
       "name": "Bahraich",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "180",
@@ -903,12 +903,12 @@
     {
       "id": "181",
       "name": "Vellore",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "182",
       "name": "Singrauli",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "183",
@@ -933,22 +933,22 @@
     {
       "id": "187",
       "name": "Rewa",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "188",
       "name": "Unnao",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "189",
       "name": "Hugli-Chinsurah",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "190",
       "name": "Raiganj",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "191",
@@ -973,17 +973,17 @@
     {
       "id": "195",
       "name": "Machilipatnam",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "196",
-      "name": "Rae bareli",
-      "state": "Uttar pradesh"
+      "name": "Rae Bareli",
+      "state": "Uttar Pradesh"
     },
     {
       "id": "197",
       "name": "Jalpaiguri",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "198",
@@ -1008,7 +1008,7 @@
     {
       "id": "202",
       "name": "Adoni",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "203",
@@ -1023,12 +1023,12 @@
     {
       "id": "205",
       "name": "Tenali",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "206",
       "name": "Kancheepuram",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "207",
@@ -1057,13 +1057,13 @@
     },
     {
       "id": "212",
-      "name": "Robertson pet",
+      "name": "Robertson Pet",
       "state": "Karnataka"
     },
     {
       "id": "213",
       "name": "Erode",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "214",
@@ -1078,7 +1078,7 @@
     {
       "id": "216",
       "name": "Vidisha",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "217",
@@ -1093,7 +1093,7 @@
     {
       "id": "219",
       "name": "Chittoor",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "220",
@@ -1103,32 +1103,32 @@
     {
       "id": "221",
       "name": "Lakhimpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "222",
       "name": "Sitapur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "223",
       "name": "Hindupur",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "224",
       "name": "Santipur",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "225",
       "name": "Balurghat",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "226",
       "name": "Ganjbasoda",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "227",
@@ -1138,7 +1138,7 @@
     {
       "id": "228",
       "name": "Proddatur",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "229",
@@ -1148,12 +1148,12 @@
     {
       "id": "230",
       "name": "Medinipur",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "231",
       "name": "Habra",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "232",
@@ -1173,22 +1173,22 @@
     {
       "id": "235",
       "name": "Shivpuri",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "236",
       "name": "Ranaghat",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "237",
       "name": "Shimla",
-      "state": "Himachal pradesh"
+      "state": "Himachal Pradesh"
     },
     {
       "id": "238",
       "name": "Tiruvannamalai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "239",
@@ -1213,12 +1213,12 @@
     {
       "id": "243",
       "name": "Bhimavaram",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "244",
       "name": "Mandsaur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "245",
@@ -1233,7 +1233,7 @@
     {
       "id": "247",
       "name": "Bankura",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "248",
@@ -1248,7 +1248,7 @@
     {
       "id": "250",
       "name": "Madanapalle",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "251",
@@ -1258,7 +1258,7 @@
     {
       "id": "252",
       "name": "Lalitpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "253",
@@ -1268,7 +1268,7 @@
     {
       "id": "254",
       "name": "Pollachi",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "255",
@@ -1278,7 +1278,7 @@
     {
       "id": "256",
       "name": "Neemuch",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "257",
@@ -1293,12 +1293,12 @@
     {
       "id": "259",
       "name": "Guntakal",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "260",
       "name": "Nabadwip - Navadwip",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "261",
@@ -1318,7 +1318,7 @@
     {
       "id": "264",
       "name": "Pilibhit",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "265",
@@ -1338,12 +1338,12 @@
     {
       "id": "268",
       "name": "Rajapalayam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "269",
       "name": "Dharmavaram",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "270",
@@ -1353,12 +1353,12 @@
     {
       "id": "271",
       "name": "Sivakasi",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "272",
       "name": "Darjiling",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "273",
@@ -1368,7 +1368,7 @@
     {
       "id": "274",
       "name": "Gudivada",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "275",
@@ -1383,7 +1383,7 @@
     {
       "id": "277",
       "name": "Srikakulam",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "278",
@@ -1408,7 +1408,7 @@
     {
       "id": "282",
       "name": "Narasaraopet",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "283",
@@ -1438,12 +1438,12 @@
     {
       "id": "288",
       "name": "Chandausi",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "289",
       "name": "Purulia",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "290",
@@ -1458,7 +1458,7 @@
     {
       "id": "292",
       "name": "Hardoi ",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "293",
@@ -1483,7 +1483,7 @@
     {
       "id": "297",
       "name": "Azamgarh",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "298",
@@ -1497,7 +1497,7 @@
     },
     {
       "id": "300",
-      "name": "Baripada town",
+      "name": "Baripada Town",
       "state": "Odisha"
     },
     {
@@ -1513,12 +1513,12 @@
     {
       "id": "303",
       "name": "Rajampet",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "304",
       "name": "Pudukkottai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "305",
@@ -1528,7 +1528,7 @@
     {
       "id": "306",
       "name": "Tadpatri",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "307",
@@ -1568,7 +1568,7 @@
     {
       "id": "314",
       "name": "Neyveli (TS)",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "315",
@@ -1588,12 +1588,12 @@
     {
       "id": "318",
       "name": "Tadepalligudem",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "319",
       "name": "Nagapattinam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "320",
@@ -1618,11 +1618,11 @@
     {
       "id": "324",
       "name": "Khair",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "325",
-      "name": "Sawai madhopur",
+      "name": "Sawai Madhopur",
       "state": "Rajasthan"
     },
     {
@@ -1633,7 +1633,7 @@
     {
       "id": "327",
       "name": "Chilakaluripet",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "328",
@@ -1658,16 +1658,16 @@
     {
       "id": "332",
       "name": "Sultanpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "333",
       "name": "Nagda",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "334",
-      "name": "Port blair",
+      "name": "Port Blair",
       "state": "Andaman and Nicobar Islands"
     },
     {
@@ -1688,7 +1688,7 @@
     {
       "id": "338",
       "name": "Itarsi",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "339",
@@ -1718,7 +1718,7 @@
     {
       "id": "344",
       "name": "Viluppuram",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "345",
@@ -1733,37 +1733,37 @@
     {
       "id": "347",
       "name": "Tanda",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "348",
       "name": "Tiruchengode",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "349",
       "name": "Nagina",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "350",
       "name": "Yemmiganur",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "351",
       "name": "Vaniyambadi",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "352",
       "name": "Sarni",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "353",
-      "name": "Theni allinagaram",
-      "state": "Tamil nadu"
+      "name": "Theni Allinagaram",
+      "state": "Tamil Nadu"
     },
     {
       "id": "354",
@@ -1778,16 +1778,16 @@
     {
       "id": "356",
       "name": "Sehore",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "357",
-      "name": "Mhow cantonment",
-      "state": "Madhya pradesh"
+      "name": "Mhow Cantonment",
+      "state": "Madhya Pradesh"
     },
     {
       "id": "358",
-      "name": "Kot kapura",
+      "name": "Kot Kapura",
       "state": "Punjab"
     },
     {
@@ -1808,12 +1808,12 @@
     {
       "id": "362",
       "name": "Shamli",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "363",
       "name": "Seoni",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "364",
@@ -1823,7 +1823,7 @@
     {
       "id": "365",
       "name": "Kadiri",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "366",
@@ -1843,7 +1843,7 @@
     {
       "id": "369",
       "name": "Najibabad",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "370",
@@ -1853,22 +1853,22 @@
     {
       "id": "371",
       "name": "Udhagamandalam (Ooty)",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "372",
       "name": "Shikohabad",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "373",
-      "name": "Jhumri tilaiya",
+      "name": "Jhumri Tilaiya",
       "state": "Jharkhand"
     },
     {
       "id": "374",
       "name": "Aruppukkottai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "375",
@@ -1888,7 +1888,7 @@
     {
       "id": "378",
       "name": "Chirala",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "379",
@@ -1908,7 +1908,7 @@
     {
       "id": "382",
       "name": "Anakapalle",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "383",
@@ -1933,12 +1933,12 @@
     {
       "id": "387",
       "name": "Paramakudi",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "388",
       "name": "Balaghat",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "389",
@@ -1963,7 +1963,7 @@
     {
       "id": "393",
       "name": "Kavali",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "394",
@@ -1972,8 +1972,8 @@
     },
     {
       "id": "395",
-      "name": "Ashok nagar",
-      "state": "Madhya pradesh"
+      "name": "Ashok Nagar",
+      "state": "Madhya Pradesh"
     },
     {
       "id": "396",
@@ -2018,7 +2018,7 @@
     {
       "id": "404",
       "name": "Tikamgarh",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "405",
@@ -2033,7 +2033,7 @@
     {
       "id": "407",
       "name": "Shahdol",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "408",
@@ -2043,7 +2043,7 @@
     {
       "id": "409",
       "name": "Arakkonam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "410",
@@ -2068,7 +2068,7 @@
     {
       "id": "414",
       "name": "Palacole",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "415",
@@ -2078,7 +2078,7 @@
     {
       "id": "416",
       "name": "Sullurpeta",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "417",
@@ -2138,7 +2138,7 @@
     {
       "id": "428",
       "name": "Virudhachalam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "429",
@@ -2153,7 +2153,7 @@
     {
       "id": "431",
       "name": "Srivilliputhur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "432",
@@ -2163,7 +2163,7 @@
     {
       "id": "433",
       "name": "Tindivanam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "434",
@@ -2183,17 +2183,17 @@
     {
       "id": "437",
       "name": "Tanuku",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "438",
       "name": "Rayachoti",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "439",
       "name": "Virudhunagar",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "440",
@@ -2208,17 +2208,17 @@
     {
       "id": "442",
       "name": "Karur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "443",
       "name": "Valparai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "444",
       "name": "Srikalahasti",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "445",
@@ -2228,7 +2228,7 @@
     {
       "id": "446",
       "name": "Bapatla",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "447",
@@ -2243,12 +2243,12 @@
     {
       "id": "449",
       "name": "Sankarankovil",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "450",
       "name": "Tenkasi",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "451",
@@ -2257,13 +2257,13 @@
     },
     {
       "id": "452",
-      "name": "Rabkavi banhatti",
+      "name": "Rabkavi Banhatti",
       "state": "Karnataka"
     },
     {
       "id": "453",
       "name": "Sikandrabad",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "454",
@@ -2293,7 +2293,7 @@
     {
       "id": "459",
       "name": "Pithampur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "460",
@@ -2303,7 +2303,7 @@
     {
       "id": "461",
       "name": "Shahabad, Hardoi",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "462",
@@ -2322,13 +2322,13 @@
     },
     {
       "id": "465",
-      "name": "Bongaigaon city",
+      "name": "Bongaigaon City",
       "state": "Assam"
     },
     {
       "id": "466",
       "name": "Palani",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "467",
@@ -2343,7 +2343,7 @@
     {
       "id": "469",
       "name": "Pilkhuwa",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "470",
@@ -2353,7 +2353,7 @@
     {
       "id": "471",
       "name": "Renukoot",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "472",
@@ -2383,7 +2383,7 @@
     {
       "id": "477",
       "name": "Arambagh",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "478",
@@ -2398,7 +2398,7 @@
     {
       "id": "480",
       "name": "Pattukkottai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "481",
@@ -2413,7 +2413,7 @@
     {
       "id": "483",
       "name": "Tamluk",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "484",
@@ -2422,13 +2422,13 @@
     },
     {
       "id": "485",
-      "name": "AlipurdUrban agglomerationr",
-      "state": "West bengal"
+      "name": "AlipurdUrban Agglomerationr",
+      "state": "West Bengal"
     },
     {
       "id": "486",
       "name": "Alirajpur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "487",
@@ -2438,12 +2438,12 @@
     {
       "id": "488",
       "name": "Naidupet",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "489",
       "name": "Tirupathur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "490",
@@ -2473,7 +2473,7 @@
     {
       "id": "495",
       "name": "Vrindavan",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "496",
@@ -2483,7 +2483,7 @@
     {
       "id": "497",
       "name": "Nagari",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "498",
@@ -2493,12 +2493,12 @@
     {
       "id": "499",
       "name": "Ramanathapuram",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "500",
       "name": "Ujhani",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "501",
@@ -2508,7 +2508,7 @@
     {
       "id": "502",
       "name": "Laharpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "503",
@@ -2528,7 +2528,7 @@
     {
       "id": "506",
       "name": "Suri",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "507",
@@ -2538,7 +2538,7 @@
     {
       "id": "508",
       "name": "Jhargram",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "509",
@@ -2548,7 +2548,7 @@
     {
       "id": "510",
       "name": "Tilhar",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "511",
@@ -2558,7 +2558,7 @@
     {
       "id": "512",
       "name": "Udumalaipettai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "513",
@@ -2573,7 +2573,7 @@
     {
       "id": "515",
       "name": "Gudur",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "516",
@@ -2583,12 +2583,12 @@
     {
       "id": "517",
       "name": "Mandla",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "518",
       "name": "Mandi",
-      "state": "Himachal pradesh"
+      "state": "Himachal Pradesh"
     },
     {
       "id": "519",
@@ -2597,13 +2597,13 @@
     },
     {
       "id": "520",
-      "name": "North lakhimpur",
+      "name": "North Lakhimpur",
       "state": "Assam"
     },
     {
       "id": "521",
       "name": "Vinukonda",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "522",
@@ -2613,7 +2613,7 @@
     {
       "id": "523",
       "name": "Gobichettipalayam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "524",
@@ -2633,12 +2633,12 @@
     {
       "id": "527",
       "name": "Narasapuram",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "528",
       "name": "Nuzvid",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "529",
@@ -2653,17 +2653,17 @@
     {
       "id": "531",
       "name": "Markapur",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "532",
       "name": "Sheopur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "533",
       "name": "Thiruvarur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "534",
@@ -2673,7 +2673,7 @@
     {
       "id": "535",
       "name": "Sahaswan",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "536",
@@ -2683,7 +2683,7 @@
     {
       "id": "537",
       "name": "Shajapur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "538",
@@ -2698,7 +2698,7 @@
     {
       "id": "540",
       "name": "Ponnur",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "541",
@@ -2718,7 +2718,7 @@
     {
       "id": "544",
       "name": "Kandukur",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "545",
@@ -2748,7 +2748,7 @@
     {
       "id": "550",
       "name": "Bobbili",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "551",
@@ -2757,7 +2757,7 @@
     },
     {
       "id": "552",
-      "name": "Talegaon dabhade",
+      "name": "Talegaon Dabhade",
       "state": "Maharashtra"
     },
     {
@@ -2778,12 +2778,12 @@
     {
       "id": "556",
       "name": "Gangarampur",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "557",
       "name": "Thiruvallur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "558",
@@ -2793,7 +2793,7 @@
     {
       "id": "559",
       "name": "Rath",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "560",
@@ -2823,7 +2823,7 @@
     {
       "id": "565",
       "name": "Panruti",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "566",
@@ -2833,7 +2833,7 @@
     {
       "id": "567",
       "name": "Namakkal",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "568",
@@ -2848,7 +2848,7 @@
     {
       "id": "570",
       "name": "Rayadurg",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "571",
@@ -2877,7 +2877,7 @@
     },
     {
       "id": "576",
-      "name": "Mandi dabwali",
+      "name": "Mandi Dabwali",
       "state": "Haryana"
     },
     {
@@ -2893,12 +2893,12 @@
     {
       "id": "579",
       "name": "Samalkot",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "580",
       "name": "Jaggaiahpet",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "581",
@@ -2908,7 +2908,7 @@
     {
       "id": "582",
       "name": "Tuni",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "583",
@@ -2923,11 +2923,11 @@
     {
       "id": "585",
       "name": "Amalapuram",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "586",
-      "name": "Firozpur cantt.",
+      "name": "Firozpur Cantt.",
       "state": "Punjab"
     },
     {
@@ -2943,7 +2943,7 @@
     {
       "id": "589",
       "name": "Sherkot",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "590",
@@ -2963,12 +2963,12 @@
     {
       "id": "593",
       "name": "Bheemunipatnam",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "594",
       "name": "Panna",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "595",
@@ -2977,7 +2977,7 @@
     },
     {
       "id": "596",
-      "name": "KathUrban agglomeration",
+      "name": "KathUrban Agglomeration",
       "state": "Jammu and Kashmir"
     },
     {
@@ -2993,12 +2993,12 @@
     {
       "id": "599",
       "name": "Venkatagiri",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "600",
       "name": "Kalpi",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "601",
@@ -3008,7 +3008,7 @@
     {
       "id": "602",
       "name": "Sattenapalle",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "603",
@@ -3023,7 +3023,7 @@
     {
       "id": "605",
       "name": "Thirumangalam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "606",
@@ -3043,7 +3043,7 @@
     {
       "id": "609",
       "name": "Rampurhat",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "610",
@@ -3058,11 +3058,11 @@
     {
       "id": "612",
       "name": "Tundla",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "613",
-      "name": "BhabUrban agglomeration",
+      "name": "BhabUrban Agglomeration",
       "state": "Bihar"
     },
     {
@@ -3073,7 +3073,7 @@
     {
       "id": "615",
       "name": "Pithapuram",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "616",
@@ -3087,7 +3087,7 @@
     },
     {
       "id": "618",
-      "name": "Charkhi dadri",
+      "name": "Charkhi Dadri",
       "state": "Haryana"
     },
     {
@@ -3097,8 +3097,8 @@
     },
     {
       "id": "620",
-      "name": "Palasa kasibugga",
-      "state": "Andhra pradesh"
+      "name": "Palasa Kasibugga",
+      "state": "Andhra Pradesh"
     },
     {
       "id": "621",
@@ -3112,7 +3112,7 @@
     },
     {
       "id": "623",
-      "name": "Sirhind fatehgarh sahib",
+      "name": "Sirhind Fatehgarh Sahib",
       "state": "Punjab"
     },
     {
@@ -3123,7 +3123,7 @@
     {
       "id": "625",
       "name": "Parvathipuram",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "626",
@@ -3148,12 +3148,12 @@
     {
       "id": "630",
       "name": "Macherla",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "631",
       "name": "Raghogarh-Vijaypur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "632",
@@ -3168,7 +3168,7 @@
     {
       "id": "634",
       "name": "Sendhwa",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "635",
@@ -3178,27 +3178,27 @@
     {
       "id": "636",
       "name": "Sandila",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "637",
       "name": "Gooty",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "638",
       "name": "Salur",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "639",
       "name": "Nanpara",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "640",
       "name": "Sardhana",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "641",
@@ -3217,13 +3217,13 @@
     },
     {
       "id": "644",
-      "name": "Jalandhar cantt.",
+      "name": "Jalandhar Cantt.",
       "state": "Punjab"
     },
     {
       "id": "645",
       "name": "Nehtaur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "646",
@@ -3233,7 +3233,7 @@
     {
       "id": "647",
       "name": "Mandapeta",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "648",
@@ -3243,7 +3243,7 @@
     {
       "id": "649",
       "name": "Seohara",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "650",
@@ -3258,7 +3258,7 @@
     {
       "id": "652",
       "name": "Vikramasingapuram",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "653",
@@ -3278,7 +3278,7 @@
     {
       "id": "656",
       "name": "Nellikuppam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "657",
@@ -3298,7 +3298,7 @@
     {
       "id": "660",
       "name": "Rasipuram",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "661",
@@ -3308,7 +3308,7 @@
     {
       "id": "662",
       "name": "Jammalamadugu",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "663",
@@ -3333,7 +3333,7 @@
     {
       "id": "667",
       "name": "Sidhi",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "668",
@@ -3343,7 +3343,7 @@
     {
       "id": "669",
       "name": "Peddapuram",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "670",
@@ -3378,11 +3378,11 @@
     {
       "id": "676",
       "name": "Tiruttani",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "677",
-      "name": "Rampura phul",
+      "name": "Rampura Phul",
       "state": "Punjab"
     },
     {
@@ -3393,12 +3393,12 @@
     {
       "id": "679",
       "name": "Padrauna",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "680",
       "name": "Pipariya",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "681",
@@ -3408,7 +3408,7 @@
     {
       "id": "682",
       "name": "Punganur",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "683",
@@ -3418,17 +3418,17 @@
     {
       "id": "684",
       "name": "Mathura",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "685",
       "name": "Thakurdwara",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "686",
       "name": "Nandivaram-Guduvancheri",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "687",
@@ -3453,7 +3453,7 @@
     {
       "id": "691",
       "name": "Nidadavole",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "692",
@@ -3478,7 +3478,7 @@
     {
       "id": "696",
       "name": "Kalimpong",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "697",
@@ -3508,7 +3508,7 @@
     {
       "id": "702",
       "name": "Repalle",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "703",
@@ -3518,7 +3518,7 @@
     {
       "id": "704",
       "name": "Shujalpur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "705",
@@ -3533,7 +3533,7 @@
     {
       "id": "707",
       "name": "Sironj",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "708",
@@ -3553,7 +3553,7 @@
     {
       "id": "711",
       "name": "Periyakulam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "712",
@@ -3572,7 +3572,7 @@
     },
     {
       "id": "715",
-      "name": "Raxaul bazar",
+      "name": "Raxaul Bazar",
       "state": "Bihar"
     },
     {
@@ -3583,7 +3583,7 @@
     {
       "id": "717",
       "name": "Pernampattu",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "718",
@@ -3593,7 +3593,7 @@
     {
       "id": "719",
       "name": "Ramachandrapuram",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "720",
@@ -3618,11 +3618,11 @@
     {
       "id": "724",
       "name": "Pandhurna",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "725",
-      "name": "Wadgaon road",
+      "name": "Wadgaon Road",
       "state": "Maharashtra"
     },
     {
@@ -3643,11 +3643,11 @@
     {
       "id": "729",
       "name": "Nowgong",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "730",
-      "name": "Naila janjgir",
+      "name": "Naila Janjgir",
       "state": "Chhattisgarh"
     },
     {
@@ -3658,22 +3658,22 @@
     {
       "id": "732",
       "name": "Vellakoil",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "733",
-      "name": "Merta city",
+      "name": "Merta City",
       "state": "Rajasthan"
     },
     {
       "id": "734",
       "name": "Sivaganga",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "735",
       "name": "Mandideep",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "736",
@@ -3688,17 +3688,17 @@
     {
       "id": "738",
       "name": "Kovvur",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "739",
       "name": "Vadalur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "740",
       "name": "Nawabganj",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "741",
@@ -3708,12 +3708,12 @@
     {
       "id": "742",
       "name": "Sainthia",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "743",
       "name": "Siana",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "744",
@@ -3728,7 +3728,7 @@
     {
       "id": "746",
       "name": "Noorpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "747",
@@ -3753,7 +3753,7 @@
     {
       "id": "751",
       "name": "Taki",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "752",
@@ -3773,7 +3773,7 @@
     {
       "id": "755",
       "name": "Rameshwaram",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "756",
@@ -3782,23 +3782,23 @@
     },
     {
       "id": "757",
-      "name": "Sikandra rao",
-      "state": "Uttar pradesh"
+      "name": "Sikandra Rao",
+      "state": "Uttar Pradesh"
     },
     {
       "id": "758",
       "name": "Sihora",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "759",
       "name": "Tiruvethipuram",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "760",
       "name": "Tiruvuru",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "761",
@@ -3813,7 +3813,7 @@
     {
       "id": "763",
       "name": "Perambalur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "764",
@@ -3827,7 +3827,7 @@
     },
     {
       "id": "766",
-      "name": "Mahnar bazar",
+      "name": "Mahnar Bazar",
       "state": "Bihar"
     },
     {
@@ -3843,7 +3843,7 @@
     {
       "id": "769",
       "name": "Puranpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "770",
@@ -3863,7 +3863,7 @@
     {
       "id": "773",
       "name": "Murshidabad",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "774",
@@ -3878,7 +3878,7 @@
     {
       "id": "776",
       "name": "Rudauli",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "777",
@@ -3902,8 +3902,8 @@
     },
     {
       "id": "781",
-      "name": "Thana bhawan",
-      "state": "Uttar pradesh"
+      "name": "Thana Bhawan",
+      "state": "Uttar Pradesh"
     },
     {
       "id": "782",
@@ -3933,7 +3933,7 @@
     {
       "id": "787",
       "name": "Memari",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "788",
@@ -3943,7 +3943,7 @@
     {
       "id": "789",
       "name": "Naharlagun",
-      "state": "Arunachal pradesh"
+      "state": "Arunachal Pradesh"
     },
     {
       "id": "790",
@@ -3968,17 +3968,17 @@
     {
       "id": "794",
       "name": "Raisen",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "795",
       "name": "Lahar",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "796",
       "name": "Uravakonda",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "797",
@@ -4013,12 +4013,12 @@
     {
       "id": "803",
       "name": "Usilampatti",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "804",
-      "name": "Palia kalan",
-      "state": "Uttar pradesh"
+      "name": "Palia Kalan",
+      "state": "Uttar Pradesh"
     },
     {
       "id": "805",
@@ -4063,7 +4063,7 @@
     {
       "id": "813",
       "name": "Zaidpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "814",
@@ -4073,12 +4073,12 @@
     {
       "id": "815",
       "name": "Maihar",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "816",
       "name": "Vedaranyam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "817",
@@ -4088,7 +4088,7 @@
     {
       "id": "818",
       "name": "Solan",
-      "state": "Himachal pradesh"
+      "state": "Himachal Pradesh"
     },
     {
       "id": "819",
@@ -4098,7 +4098,7 @@
     {
       "id": "820",
       "name": "Sanawad",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "821",
@@ -4113,7 +4113,7 @@
     {
       "id": "823",
       "name": "Sabalgarh",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "824",
@@ -4148,12 +4148,12 @@
     {
       "id": "830",
       "name": "Narsipatnam",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "831",
       "name": "Nautanwa",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "832",
@@ -4168,7 +4168,7 @@
     {
       "id": "834",
       "name": "Sathyamangalam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "835",
@@ -4198,7 +4198,7 @@
     {
       "id": "840",
       "name": "Zamania",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "841",
@@ -4213,32 +4213,32 @@
     {
       "id": "843",
       "name": "Puliyankudi",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "844",
       "name": "Shikarpur, Bulandshahr",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "845",
       "name": "Umaria",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "846",
       "name": "Porsa",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "847",
-      "name": "Naugawan sadat",
-      "state": "Uttar pradesh"
+      "name": "Naugawan Sadat",
+      "state": "Uttar Pradesh"
     },
     {
       "id": "848",
-      "name": "Fatehpur sikri",
-      "state": "Uttar pradesh"
+      "name": "Fatehpur Sikri",
+      "state": "Uttar Pradesh"
     },
     {
       "id": "849",
@@ -4252,7 +4252,7 @@
     },
     {
       "id": "851",
-      "name": "Pipar city",
+      "name": "Pipar City",
       "state": "Rajasthan"
     },
     {
@@ -4263,7 +4263,7 @@
     {
       "id": "853",
       "name": "Nanjikottai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "854",
@@ -4273,7 +4273,7 @@
     {
       "id": "855",
       "name": "Yerraguntla",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "856",
@@ -4298,7 +4298,7 @@
     {
       "id": "860",
       "name": "Thuraiyur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "861",
@@ -4318,7 +4318,7 @@
     {
       "id": "864",
       "name": "Shahabad, Rampur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "865",
@@ -4328,7 +4328,7 @@
     {
       "id": "866",
       "name": "Narsinghgarh",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "867",
@@ -4338,22 +4338,22 @@
     {
       "id": "868",
       "name": "Malaj Khand",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "869",
       "name": "Sarangpur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "870",
       "name": "Robertsganj",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "871",
       "name": "Sirkali",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "872",
@@ -4363,12 +4363,12 @@
     {
       "id": "873",
       "name": "Tiruchendur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "874",
       "name": "Utraula",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "875",
@@ -4383,7 +4383,7 @@
     {
       "id": "877",
       "name": "Periyasemur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "878",
@@ -4393,7 +4393,7 @@
     {
       "id": "879",
       "name": "Sadabad",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "880",
@@ -4428,7 +4428,7 @@
     {
       "id": "886",
       "name": "Sattur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "887",
@@ -4443,7 +4443,7 @@
     {
       "id": "889",
       "name": "Vandavasi",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "890",
@@ -4462,8 +4462,8 @@
     },
     {
       "id": "893",
-      "name": "Paschim punropara",
-      "state": "West bengal"
+      "name": "Paschim Punropara",
+      "state": "West Bengal"
     },
     {
       "id": "894",
@@ -4472,13 +4472,13 @@
     },
     {
       "id": "895",
-      "name": "Ramganj mandi",
+      "name": "Ramganj Mandi",
       "state": "Rajasthan"
     },
     {
       "id": "896",
       "name": "Tarakeswar",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "897",
@@ -4508,12 +4508,12 @@
     {
       "id": "902",
       "name": "Tharamangalam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "903",
       "name": "Tirukkoyilur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "904",
@@ -4533,17 +4533,17 @@
     {
       "id": "907",
       "name": "Oddanchatram",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "908",
       "name": "Palladam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "909",
       "name": "Mundi",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "910",
@@ -4563,7 +4563,7 @@
     {
       "id": "913",
       "name": "Nepanagar",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "914",
@@ -4578,7 +4578,7 @@
     {
       "id": "916",
       "name": "Pedana",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "917",
@@ -4593,27 +4593,27 @@
     {
       "id": "919",
       "name": "Pasan",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "920",
       "name": "Puttur",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "921",
       "name": "Vadakkuvalliyur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "922",
       "name": "Tirukalukundram",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "923",
       "name": "Mahidpur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "924",
@@ -4628,7 +4628,7 @@
     {
       "id": "926",
       "name": "Rasra",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "927",
@@ -4648,7 +4648,7 @@
     {
       "id": "930",
       "name": "Uthamapalayam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "931",
@@ -4658,7 +4658,7 @@
     {
       "id": "932",
       "name": "Nahan",
-      "state": "Himachal pradesh"
+      "state": "Himachal Pradesh"
     },
     {
       "id": "933",
@@ -4708,12 +4708,12 @@
     {
       "id": "942",
       "name": "Lar",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "943",
-      "name": "Lal gopalganj nindaura",
-      "state": "Uttar pradesh"
+      "name": "Lal Gopalganj Nindaura",
+      "state": "Uttar Pradesh"
     },
     {
       "id": "944",
@@ -4723,7 +4723,7 @@
     {
       "id": "945",
       "name": "Sirsaganj",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "946",
@@ -4733,7 +4733,7 @@
     {
       "id": "947",
       "name": "Surandai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "948",
@@ -4828,7 +4828,7 @@
     {
       "id": "966",
       "name": "Pihani",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "967",
@@ -4848,7 +4848,7 @@
     {
       "id": "970",
       "name": "Sankari",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "971",
@@ -4858,12 +4858,12 @@
     {
       "id": "972",
       "name": "Sonamukhi",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "973",
       "name": "Shamsabad, Agra",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "974",
@@ -4872,13 +4872,13 @@
     },
     {
       "id": "975",
-      "name": "PandUrban agglomeration",
-      "state": "West bengal"
+      "name": "PandUrban Agglomeration",
+      "state": "West Bengal"
     },
     {
       "id": "976",
       "name": "Mainaguri",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "977",
@@ -4898,7 +4898,7 @@
     {
       "id": "980",
       "name": "Shenkottai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "981",
@@ -4908,7 +4908,7 @@
     {
       "id": "982",
       "name": "Vadipatti",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "983",
@@ -4928,17 +4928,17 @@
     {
       "id": "986",
       "name": "Rudrapur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "987",
       "name": "Soron",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "988",
       "name": "Sholingur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "989",
@@ -4983,7 +4983,7 @@
     {
       "id": "997",
       "name": "Seoni-Malwa",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "998",
@@ -4992,8 +4992,8 @@
     },
     {
       "id": "999",
-      "name": "SUrban agglomerationr",
-      "state": "Uttar pradesh"
+      "name": "SUrban Agglomerationr",
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1000",
@@ -5008,7 +5008,7 @@
     {
       "id": "1002",
       "name": "Tirupathur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1003",
@@ -5023,12 +5023,12 @@
     {
       "id": "1005",
       "name": "Manachanallur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1006",
       "name": "Rehli",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1007",
@@ -5052,7 +5052,7 @@
     },
     {
       "id": "1011",
-      "name": "Vadgaon kasba",
+      "name": "Vadgaon Kasba",
       "state": "Maharashtra"
     },
     {
@@ -5068,22 +5068,22 @@
     {
       "id": "1014",
       "name": "Viswanatham",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1015",
       "name": "Polur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1016",
       "name": "Panagudi",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1017",
       "name": "Manawar",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1018",
@@ -5093,7 +5093,7 @@
     {
       "id": "1019",
       "name": "Samdhan",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1020",
@@ -5103,17 +5103,17 @@
     {
       "id": "1021",
       "name": "Rahatgarh",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1022",
       "name": "Panagar",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1023",
       "name": "Uthiramerur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1024",
@@ -5128,12 +5128,12 @@
     {
       "id": "1026",
       "name": "Sahjanwa",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1027",
-      "name": "Wara seoni",
-      "state": "Madhya pradesh"
+      "name": "Wara Seoni",
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1028",
@@ -5153,12 +5153,12 @@
     {
       "id": "1031",
       "name": "Tarana",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1032",
-      "name": "Rampur maniharan",
-      "state": "Uttar pradesh"
+      "name": "Rampur Maniharan",
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1033",
@@ -5178,7 +5178,7 @@
     {
       "id": "1036",
       "name": "Sumerpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1037",
@@ -5188,7 +5188,7 @@
     {
       "id": "1038",
       "name": "Shahganj",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1039",
@@ -5198,7 +5198,7 @@
     {
       "id": "1040",
       "name": "Tulsipur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1041",
@@ -5208,7 +5208,7 @@
     {
       "id": "1042",
       "name": "Thiruthuraipoondi",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1043",
@@ -5218,7 +5218,7 @@
     {
       "id": "1044",
       "name": "Pallapatti",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1045",
@@ -5228,12 +5228,12 @@
     {
       "id": "1046",
       "name": "Sausar",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1047",
       "name": "Ponneri",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1048",
@@ -5248,7 +5248,7 @@
     {
       "id": "1050",
       "name": "Tirwaganj",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1051",
@@ -5258,12 +5258,12 @@
     {
       "id": "1052",
       "name": "Sundarnagar",
-      "state": "Himachal pradesh"
+      "state": "Himachal Pradesh"
     },
     {
       "id": "1053",
       "name": "Rajgarh",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1054",
@@ -5273,7 +5273,7 @@
     {
       "id": "1055",
       "name": "Renigunta",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "1056",
@@ -5288,7 +5288,7 @@
     {
       "id": "1058",
       "name": "Lalgudi",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1059",
@@ -5298,27 +5298,27 @@
     {
       "id": "1060",
       "name": "Niwari",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1061",
       "name": "Natham",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1062",
       "name": "Unnamalaikadai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1063",
-      "name": "PurqUrban agglomerationzi",
-      "state": "Uttar pradesh"
+      "name": "PurqUrban Agglomerationzi",
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1064",
       "name": "Shamsabad, Farrukhabad",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1065",
@@ -5333,16 +5333,16 @@
     {
       "id": "1067",
       "name": "Warhapur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1068",
       "name": "Rajam",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "1069",
-      "name": "Urmar tanda",
+      "name": "Urmar Tanda",
       "state": "Punjab"
     },
     {
@@ -5353,22 +5353,22 @@
     {
       "id": "1071",
       "name": "Powayan",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1072",
       "name": "P.N.Patti",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1073",
       "name": "Palampur",
-      "state": "Himachal pradesh"
+      "state": "Himachal Pradesh"
     },
     {
       "id": "1074",
-      "name": "Srisailam project (Right flank colony) township",
-      "state": "Andhra pradesh"
+      "name": "Srisailam Project (Right Flank Colony) Township",
+      "state": "Andhra Pradesh"
     },
     {
       "id": "1075",
@@ -5378,7 +5378,7 @@
     {
       "id": "1076",
       "name": "Sandi",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1077",
@@ -5387,13 +5387,13 @@
     },
     {
       "id": "1078",
-      "name": "Malda - Ingraj bazar",
-      "state": "West bengal"
+      "name": "Malda - Ingraj Bazar",
+      "state": "West Bengal"
     },
     {
       "id": "1079",
       "name": "Tharangambadi",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1080",
@@ -5418,7 +5418,7 @@
     {
       "id": "1084",
       "name": "Mauganj",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1085",
@@ -5448,7 +5448,7 @@
     {
       "id": "1090",
       "name": "Tittakudi",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1091",
@@ -5468,22 +5468,22 @@
     {
       "id": "1094",
       "name": "Achhnera",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1095",
       "name": "Pacode",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1096",
       "name": "Naraura",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1097",
       "name": "Nakur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1098",
@@ -5498,17 +5498,17 @@
     {
       "id": "1100",
       "name": "Manasa",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1101",
       "name": "Nainpur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1102",
       "name": "Sahaspur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1103",
@@ -5518,7 +5518,7 @@
     {
       "id": "1104",
       "name": "Prithvipur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1105",
@@ -5538,12 +5538,12 @@
     {
       "id": "1108",
       "name": "Safipur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1109",
       "name": "Sohagpur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1110",
@@ -5582,13 +5582,13 @@
     },
     {
       "id": "1117",
-      "name": "Mount abu",
+      "name": "Mount Abu",
       "state": "Rajasthan"
     },
     {
       "id": "1118",
       "name": "Reoti",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1119",
@@ -5598,7 +5598,7 @@
     {
       "id": "1120",
       "name": "Panchla",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "1121",
@@ -5608,7 +5608,7 @@
     {
       "id": "1122",
       "name": "Pasighat",
-      "state": "Arunachal pradesh"
+      "state": "Arunachal Pradesh"
     },
     {
       "id": "1123",
@@ -5618,17 +5618,17 @@
     {
       "id": "1124",
       "name": "O' Valley",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1125",
       "name": "Raghunathpur",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "1126",
       "name": "Suriyampalayam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1127",
@@ -5643,12 +5643,12 @@
     {
       "id": "1129",
       "name": "Silvassa",
-      "state": "Dadra and Nagar haveli"
+      "state": "Dadra and Nagar Haveli"
     },
     {
       "id": "1130",
       "name": "Nowrozabad (Khodargama)",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1131",
@@ -5673,7 +5673,7 @@
     {
       "id": "1135",
       "name": "Sikanderpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1136",
@@ -5693,32 +5693,32 @@
     {
       "id": "1139",
       "name": "Sholavandan",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1140",
       "name": "Saidpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1141",
       "name": "Shamgarh",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1142",
       "name": "Thammampatti",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1143",
       "name": "Maharajpur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1144",
       "name": "Multai",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1145",
@@ -5728,12 +5728,12 @@
     {
       "id": "1146",
       "name": "Sirsi",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1147",
       "name": "Purwa",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1148",
@@ -5743,12 +5743,12 @@
     {
       "id": "1149",
       "name": "Namagiripettai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1150",
       "name": "Parasi",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1151",
@@ -5758,7 +5758,7 @@
     {
       "id": "1152",
       "name": "Lalganj",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1153",
@@ -5768,7 +5768,7 @@
     {
       "id": "1154",
       "name": "Mathabhanga",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "1155",
@@ -5778,7 +5778,7 @@
     {
       "id": "1156",
       "name": "Peravurani",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1157",
@@ -5788,7 +5788,7 @@
     {
       "id": "1158",
       "name": "Phulpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1159",
@@ -5798,22 +5798,22 @@
     {
       "id": "1160",
       "name": "Pali",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1161",
       "name": "Pachore",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1162",
       "name": "Parangipettai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1163",
       "name": "Pudupattinam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1164",
@@ -5828,12 +5828,12 @@
     {
       "id": "1166",
       "name": "Rau",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1167",
       "name": "Monoharpur",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "1168",
@@ -5848,7 +5848,7 @@
     {
       "id": "1170",
       "name": "Pallikonda",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1171",
@@ -5858,7 +5858,7 @@
     {
       "id": "1172",
       "name": "Shishgarh",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1173",
@@ -5867,13 +5867,13 @@
     },
     {
       "id": "1174",
-      "name": "Mayang imphal",
+      "name": "Mayang Imphal",
       "state": "Manipur"
     },
     {
       "id": "1175",
       "name": "Mhowgaon",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1176",
@@ -5888,12 +5888,12 @@
     {
       "id": "1178",
       "name": "Sahawar",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1179",
       "name": "Sivagiri",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1180",
@@ -5903,7 +5903,7 @@
     {
       "id": "1181",
       "name": "Punjaipugalur",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1182",
@@ -5913,7 +5913,7 @@
     {
       "id": "1183",
       "name": "Samthar",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1184",
@@ -5943,12 +5943,12 @@
     {
       "id": "1189",
       "name": "Pukhrayan",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1190",
       "name": "Padmanabhapuram",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1191",
@@ -5963,7 +5963,7 @@
     {
       "id": "1193",
       "name": "Srirampore",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "1194",
@@ -5983,7 +5983,7 @@
     {
       "id": "1197",
       "name": "Vijaypur",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1198",
@@ -5993,12 +5993,12 @@
     {
       "id": "1199",
       "name": "Thirupuvanam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1200",
       "name": "Adra",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "1201",
@@ -6008,7 +6008,7 @@
     {
       "id": "1202",
       "name": "Obra",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1203",
@@ -6038,7 +6038,7 @@
     {
       "id": "1208",
       "name": "Niwai",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1209",
@@ -6058,7 +6058,7 @@
     {
       "id": "1212",
       "name": "Narsinghgarh",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1213",
@@ -6083,17 +6083,17 @@
     {
       "id": "1217",
       "name": "Kullu",
-      "state": "Himachal pradesh"
+      "state": "Himachal Pradesh"
     },
     {
       "id": "1218",
       "name": "Manali",
-      "state": "Himachal pradesh"
+      "state": "Himachal Pradesh"
     },
     {
       "id": "1219",
       "name": "Mirzapur - Vindhyachal",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1220",
@@ -6108,12 +6108,12 @@
     {
       "id": "1222",
       "name": "Hoshangabad",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1223",
       "name": "Khargon (Khargone)",
-      "state": "Madhya pradesh"
+      "state": "Madhya Pradesh"
     },
     {
       "id": "1224",
@@ -6182,7 +6182,7 @@
     },
     {
       "id": "1237",
-      "name": "Firozpur jhirka",
+      "name": "Firozpur Jhirka",
       "state": "Haryana"
     },
     {
@@ -6193,47 +6193,47 @@
     {
       "id": "1239",
       "name": "Dhuburi",
-      "state": "Arunachal pradesh"
+      "state": "Arunachal Pradesh"
     },
     {
       "id": "1240",
       "name": "Chandragiri",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "1241",
       "name": "Dowlaiswaram",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "1242",
       "name": "Nagarjunakoṇḍa",
-      "state": "Andhra pradesh"
+      "state": "Andhra Pradesh"
     },
     {
       "id": "1243",
       "name": "Alipurduar",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "1244",
       "name": "Alipurduar",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "1245",
       "name": "Bardhaman (Burdwan)",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "1246",
       "name": "Howrah",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "1247",
       "name": "Howrah",
-      "state": "West bengal"
+      "state": "West Bengal"
     },
     {
       "id": "1248",
@@ -6258,67 +6258,67 @@
     {
       "id": "1252",
       "name": "Arcot",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1253",
       "name": "Chengalpattu",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1254",
       "name": "Chidambaram",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1255",
       "name": "Cuddalore",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1256",
       "name": "Dharmapuri",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1257",
       "name": "Dindigul",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1258",
       "name": "Kanchipuram",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1259",
       "name": "Kanyakumari",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1260",
       "name": "Kodaikanal",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1261",
       "name": "Kumbakonam",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1262",
       "name": "Mamallapuram",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1263",
       "name": "Palayamkottai",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1264",
       "name": "Tuticorin (Thoothukudi)",
-      "state": "Tamil nadu"
+      "state": "Tamil Nadu"
     },
     {
       "id": "1265",
@@ -6338,147 +6338,147 @@
     {
       "id": "1268",
       "name": "Hamirpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1269",
       "name": "Gonda",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1270",
       "name": "Kannauj",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1271",
       "name": "Mainpuri",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1272",
       "name": "Muzaffarnagar",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1273",
       "name": "Pratapgarh",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1274",
       "name": "Rampur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1275",
       "name": "Ayodhya Ji",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1276",
       "name": "Ayodhya Ji",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1277",
       "name": "Ballia",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1278",
       "name": "Bara",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1279",
       "name": "Banki",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1280",
       "name": "Bareilly",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1281",
       "name": "Basti",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1282",
       "name": "Bijnor",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1283",
       "name": "Bithur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1284",
       "name": "Budaun",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1285",
       "name": "Bulandshahr",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1286",
       "name": "Deoria",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1287",
       "name": "Etah",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1288",
       "name": "Faizabad",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1289",
       "name": "Fatehpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1290",
       "name": "Ghaziabad",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1291",
       "name": "Ghazipur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1292",
       "name": "Gorakhpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1293",
       "name": "Hathras",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1294",
       "name": "Jalaun",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1295",
       "name": "Jaunpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     },
     {
       "id": "1295",
       "name": "Jaunpur",
-      "state": "Uttar pradesh"
+      "state": "Uttar Pradesh"
     }
   ]
 }

@@ -1,310 +1,311 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:elevation="@dimen/_2sdp"
-  android:paddingStart="@dimen/_10sdp"
-  android:paddingTop="@dimen/_10sdp"
-  android:paddingEnd="@dimen/_10sdp">
-
-  <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_5sdp"
-    android:background="@drawable/all_side_curve_bg"
     android:elevation="@dimen/_2sdp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:paddingStart="@dimen/_10sdp"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingEnd="@dimen/_10sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-      android:id="@+id/top_layout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@drawable/curve_top_grey_bg"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
-
-      <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:orientation="vertical"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@drawable/all_side_curve_bg"
+        android:elevation="@dimen/_2sdp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/single_item_menu_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-          android:id="@+id/client_name"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:fontFamily="@font/regular"
-          android:text="@string/robert"
-          android:textColor="#747474"
-          android:textSize="@dimen/_15sdp" />
-
-        <TextView
-          android:id="@+id/client_category"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="@string/cfo"
-          android:textColor="#747474"
-          android:textSize="@dimen/_10sdp" />
-
-      </LinearLayout>
-
-      <ImageView
-        android:id="@+id/single_item_menu_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_dot_menu" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/_10sdp"
-      android:gravity="center_vertical"
-      android:orientation="vertical"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/top_layout">
-
-      <TextView
-        android:id="@+id/project_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:fontFamily="@font/regular"
-        android:text="@string/commercial_kitchen_equipment"
-        android:textColor="#4A4A4A"
-        android:textSize="@dimen/_15sdp" />
-
-      <TextView
-        android:id="@+id/project_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:text="@string/we_are_designing_commercial_kitchen_equipments_for_council_stainless"
-        android:textColor="#747474"
-        android:textSize="@dimen/_10sdp" />
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
         <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:layout_marginBottom="@dimen/_5sdp"
-          android:paddingStart="@dimen/_10sdp"
-          android:paddingTop="@dimen/_2sdp"
-          android:paddingEnd="@dimen/_5sdp"
-          android:paddingBottom="@dimen/_2sdp">
-
-          <LinearLayout
-            android:id="@+id/project_result_layout"
-            android:layout_width="wrap_content"
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primary_color"
-            android:paddingStart="@dimen/_5sdp"
-            android:paddingTop="@dimen/_2sdp"
-            android:paddingEnd="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_2sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/curve_top_grey_bg"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-              android:id="@+id/project_result"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:fontFamily="@font/semi_bold"
-              android:text="@string/in_progress"
-              android:textAllCaps="false"
-              android:textColor="@color/white" />
-          </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/single_item_menu_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-          <ImageView
-            android:id="@+id/see_more_less"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/down_arrow"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/client_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/robert"
+                    android:textColor="#747474"
+                    android:textSize="@dimen/_15sdp" />
 
+                <TextView
+                    android:id="@+id/client_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cfo"
+                    android:textColor="#747474"
+                    android:textSize="@dimen/_10sdp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/single_item_menu_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_dot_menu" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         <LinearLayout
-          android:id="@+id/info_layout"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:visibility="gone"
-          tools:visibility="visible">
-
-          <View
-            android:id="@+id/dummy_view2"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_3sdp"
-            android:background="@drawable/dotted_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top_layout" />
+            app:layout_constraintTop_toBottomOf="@id/top_layout">
 
-          <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:fontFamily="@font/regular"
-            android:text="@string/budget"
-            android:textAllCaps="false"
-            android:textColor="#C4C4C4" />
+            <TextView
+                android:id="@+id/project_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/commercial_kitchen_equipment"
+                android:textColor="#4A4A4A"
+                android:textSize="@dimen/_15sdp" />
 
-          <TextView
-            android:id="@+id/budget_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:text="@string/_1_00_000" />
+            <TextView
+                android:id="@+id/project_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:text="@string/we_are_designing_commercial_kitchen_equipments_for_council_stainless"
+                android:textColor="#747474"
+                android:textSize="@dimen/_10sdp" />
 
-          <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:fontFamily="@font/regular"
-            android:text="@string/completion_date"
-            android:textAllCaps="false"
-            android:textColor="#C4C4C4" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-          <TextView
-            android:id="@+id/completion_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            tools:text="03.06.2017" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_2sdp">
 
-          <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:fontFamily="@font/regular"
-            android:text="@string/client_requirement"
-            android:textAllCaps="false"
-            android:textColor="#C4C4C4" />
+                    <LinearLayout
+                        android:id="@+id/project_result_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/primary_color"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_2sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
 
-          <TextView
-            android:id="@+id/project_client_requirement"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:text="@string/to_produce_custom_itvgems_for_commercial_kitchen_equipment_fadvnasdkvsd_nds_dv" />
+                        <TextView
+                            android:id="@+id/project_result"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans"
+                            android:text="@string/in_progress"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
-          <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:fontFamily="@font/regular"
-            android:text="@string/our_approach"
-            android:textAllCaps="false"
-            android:textColor="#C4C4C4" />
+                    <ImageView
+                        android:id="@+id/see_more_less"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:src="@drawable/down_arrow"/>
 
-          <TextView
-            android:id="@+id/our_approach"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:text="@string/we_designed_kitchen_equipment_using_our_sheet_metal_technology_gdbsfbs_adgsdbvs" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/info_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <View
+                        android:id="@+id/dummy_view2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_3sdp"
+                        android:background="@drawable/dotted_line"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/top_layout" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/budget"
+                        android:textAllCaps="true"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="#C4C4C4"/>
+
+                    <TextView
+                        android:id="@+id/budget_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_1_00_000"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/completion_date"
+                        android:textAllCaps="true"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="#C4C4C4"/>
+
+                    <TextView
+                        android:id="@+id/completion_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="03.06.2017"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/client_requirement"
+                        android:textAllCaps="true"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="#C4C4C4"/>
+
+                    <TextView
+                        android:id="@+id/project_client_requirement"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/to_produce_custom_itvgems_for_commercial_kitchen_equipment_fadvnasdkvsd_nds_dv"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/our_approach"
+                        android:textAllCaps="true"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="#C4C4C4"/>
+
+                    <TextView
+                        android:id="@+id/our_approach"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/we_designed_kitchen_equipment_using_our_sheet_metal_technology_gdbsfbs_adgsdbvs"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"/>
 
 
-          <View
-            android:id="@+id/dummy_view3"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_3sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginBottom="@dimen/_15sdp"
-            android:background="@drawable/dotted_line"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top_layout" />
+                    <View
+                        android:id="@+id/dummy_view3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:background="@drawable/dotted_line"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/top_layout" />
 
-          <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/image_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_15sdp"
-            tools:listitem="@layout/item_project_image" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/image_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        tools:listitem="@layout/item_project_image"/>
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
-      </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/menu_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/all_side_curve_bg"
+        android:elevation="@dimen/_4sdp"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_6sdp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone">
+
+        <TextView
+            android:id="@+id/edit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:text="@string/edit"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/delete_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:text="@string/delete_"
+            android:textAllCaps="true"
+            android:textColor="@color/red"
+            android:textSize="@dimen/_12sdp" />
 
     </LinearLayout>
-
-  </androidx.constraintlayout.widget.ConstraintLayout>
-
-  <LinearLayout
-    android:id="@+id/menu_options"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_10sdp"
-    android:background="@drawable/all_side_curve_bg"
-    android:elevation="@dimen/_4sdp"
-    android:orientation="vertical"
-    android:paddingStart="@dimen/_10sdp"
-    android:paddingTop="@dimen/_6sdp"
-    android:paddingEnd="@dimen/_10sdp"
-    android:paddingBottom="@dimen/_6sdp"
-    android:visibility="gone"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:visibility="gone">
-
-    <TextView
-      android:id="@+id/edit_button"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:padding="@dimen/_10sdp"
-      android:text="@string/edit"
-      android:textSize="@dimen/_12sdp" />
-
-    <TextView
-      android:id="@+id/delete_button"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:padding="@dimen/_10sdp"
-      android:text="@string/delete_"
-      android:textAllCaps="false"
-      android:textColor="@color/red"
-      android:textSize="@dimen/_12sdp" />
-
-  </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

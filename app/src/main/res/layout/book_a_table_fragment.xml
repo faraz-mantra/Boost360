@@ -1,119 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="#FAFAFA"
-  android:clickable="true"
-  android:focusable="true"
-  android:gravity="center">
-
-  <include
-    android:id="@+id/app_bar"
-    layout="@layout/new_custome_app_bar" />
-
-  <RelativeLayout
-    android:id="@+id/empty_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/_20sdp"
-    android:visibility="gone"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/app_bar"
-    tools:visibility="visible">
-
-    <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentTop="true"
-      android:layout_centerHorizontal="true"
-      android:background="@drawable/circle_feature_bg"
-      android:elevation="@dimen/_2sdp"
-      android:gravity="center">
-
-      <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:srcCompat="@drawable/ic_expiry_lock" />
-    </LinearLayout>
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="50dp"
-      android:gravity="center"
-      android:orientation="vertical"
-      android:paddingStart="@dimen/_10sdp"
-      android:paddingTop="70dp"
-      android:paddingRight="@dimen/_10sdp"
-      android:paddingBottom="@dimen/_20sdp">
-
-      <TextView
-        android:id="@+id/feature_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/semi_bold"
-        android:text="Table booking"
-        android:textColor="@color/common_text_color"
-        android:textSize="@dimen/_16sdp" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:fontFamily="@font/semi_bold"
-        android:gravity="center"
-        android:text="Looks like this add-on is not added to your current plan. Add it now to start using it and help your customers book the tables smooth &amp; easy."
-        android:textSize="@dimen/_11sdp" />
-
-      <TextView
-        android:id="@+id/buy_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:background="@drawable/orange_button_click_effect"
-        android:fontFamily="@font/semi_bold"
-        android:gravity="center"
-        android:paddingTop="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:text="@string/view_in_add_on_store"
-        android:textAllCaps="false"
-        android:textColor="@color/white" />
-
-
-    </LinearLayout>
-
-  </RelativeLayout>
-
-
-  <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/book_table_recycler"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:visibility="gone"
-    android:clipToPadding="false"
-    android:paddingBottom="@dimen/_50sdp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/app_bar"
-    tools:listitem="@layout/item_digital_brochures"
-    tools:visibility="gone" />
-
-  <com.framework.views.fabButton.FloatingActionButton
-    android:id="@+id/btn_add"
-    style="@style/wrap_wrap"
-    android:layout_margin="16dp"
-    android:backgroundTint="@color/colorAccentLight"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA"
     android:clickable="true"
     android:focusable="true"
-    app:fabIcon="@drawable/ic_add_white"
-    app:fabSize="normal"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintRight_toRightOf="parent" />
+    android:gravity="center">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/new_custome_app_bar" />
+
+    <RelativeLayout
+        android:id="@+id/empty_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_20sdp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/circle_feature_bg"
+            android:elevation="@dimen/_2sdp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_expiry_lock" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="70dp"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_20sdp">
+
+            <TextView
+                android:id="@+id/feature_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="Table Booking"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/_16sdp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="center"
+                android:text="Looks like this add-on is not added to your current plan. Add it now to start using it and help your customers book the tables smooth &amp; easy."
+                android:textSize="@dimen/_11sdp" />
+
+            <TextView
+                android:id="@+id/buy_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/orange_button_click_effect"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="center"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:text="VIEW IN ADD-ON STORE"
+                android:textColor="@color/white" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/book_table_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar"
+        tools:listitem="@layout/item_digital_brochures"
+        tools:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

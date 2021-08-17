@@ -69,7 +69,6 @@
             android:id="@+id/radio_store"
             style="@style/RadioButtonStyle"
             android:checked="true"
-            android:buttonTint="@color/colorAccent"
             android:text="@string/your_store"
             app:textType="HEADING_6" />
 
@@ -87,7 +86,6 @@
             android:id="@+id/radio_customer"
             style="@style/RadioButtonStyle"
             android:text="@string/customer"
-            android:buttonTint="@color/colorAccent"
             app:textType="HEADING_6" />
 
         </RadioGroup>
@@ -155,8 +153,7 @@
         style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
         android:layout_marginEnd="@dimen/size_20"
         android:text="@string/go_back"
-        android:background="@drawable/bg_rounded_yellow_light"
-        android:textColor="@color/colorAccentLight" />
+        android:textColor="@color/white" />
 
 
       <com.framework.views.customViews.CustomButton

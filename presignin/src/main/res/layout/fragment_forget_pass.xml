@@ -31,7 +31,6 @@
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/sub_heading_tv"
       style="@style/psn_subheading_style"
-      android:layout_marginTop="@dimen/size_4"
       android:text="@string/psn_forget_pass_hint"
       app:layout_constraintTop_toBottomOf="@id/heading_tv"
       tools:ignore="MissingConstraints" />
@@ -51,7 +50,7 @@
       android:enabled="false"
       android:text="@string/psn_get_password_reset_link"
       app:layout_constraintBottom_toTopOf="@id/bottomGuide"
-      tools:ignore="MissingConstraints,UnknownId" />
+      tools:ignore="MissingConstraints" />
 
 
   </androidx.constraintlayout.widget.ConstraintLayout>

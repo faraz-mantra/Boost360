@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.upgrades.UpgradeActivity;
-import com.framework.views.customViews.CustomToolbar;
 import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
@@ -84,7 +83,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vmn_call_cards);
-        CustomToolbar toolbar = (CustomToolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         MixPanelController.track(MixPanelController.VMN_CALL_TRACKER, null);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -609,8 +608,8 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-        if (session.getUserProfileEmail() != null) {
-            intent.putExtra("email", session.getUserProfileEmail());
+        if (session.getFPEmail() != null) {
+            intent.putExtra("email", session.getFPEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
@@ -624,6 +623,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         startActivity(intent);
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
+            finish();
         }, 1000);
     }
 }

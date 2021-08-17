@@ -60,9 +60,9 @@
                 style="@style/wrap_wrap"
                 android:layout_marginStart="@dimen/size_4"
                 android:textAlignment="center"
-                android:textAllCaps="false"
+                android:textAllCaps="true"
                 android:textColor="@color/white"
-                app:textAllCaps="false"
+                app:textAllCaps="true"
                 app:textType="BODY_1"
                 tools:drawableStart=""
                 tools:text="New Order" />
@@ -218,12 +218,11 @@
           style="@style/match_match"
           android:layout_gravity="center"
           android:layout_weight="1"
-          android:fontFamily="@font/semi_bold"
           android:gravity="center"
-          android:textAllCaps="false"
+          android:textAllCaps="true"
           android:textColor="@color/white"
           app:textType="HEADING_6"
-          tools:text="@string/confirm_order" />
+          tools:text="CONFIRM ORDER" />
 
 
         <View

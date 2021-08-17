@@ -1,108 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-  android:layout_marginStart="6dp"
-  android:layout_marginTop="6dp"
-  android:layout_marginEnd="6dp"
-  android:background="@color/screen_bg"
-  android:orientation="horizontal">
-
-  <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    card_view:cardBackgroundColor="@color/white"
-    card_view:cardCornerRadius="3dp"
-    card_view:cardElevation="3dp"
-    card_view:cardUseCompatPadding="true">
+    android:layout_marginTop="6dp"
+    android:layout_marginStart="6dp"
+    android:layout_marginEnd="6dp"
+    android:background="@color/screen_bg">
 
-    <LinearLayout
-      android:id="@+id/full_layout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:paddingStart="11dp"
-      android:paddingTop="14dp"
-      android:paddingRight="14dp"
-      android:paddingBottom="14dp">
-
-      <LinearLayout
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:orientation="vertical">
-
-        <ImageView
-          android:id="@+id/storeDataIcon"
-          android:layout_width="40dp"
-          android:layout_height="wrap_content"
-          android:src="@drawable/app_launcher" />
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-        <TextView
-          android:id="@+id/titleText"
-          fontPath="Roboto-Medium.ttf"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="@string/share_website"
-          android:textColor="@color/primaryColor"
-          android:textSize="16sp"
-          tools:ignore="MissingPrefix" />
-
-        <TextView
-          android:id="@+id/descText"
-          fontPath="Roboto-Light.ttf"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="10dp"
-          android:layout_marginBottom="16dp"
-          android:text="@string/tell_world_about_your_business_on_facebook_twitter"
-          android:textColor="@color/main_text_color"
-          android:textSize="13sp"
-          tools:ignore="MissingPrefix" />
+        card_view:cardUseCompatPadding="true"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardElevation="3dp"
+        card_view:cardCornerRadius="3dp">
 
         <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal">
-
-          <Button
-            android:id="@+id/alert_btn"
-            fontPath="Roboto-Medium.ttf"
-            android:layout_width="130dp"
-            android:layout_height="34dp"
-            android:background="@drawable/selector"
-            android:singleLine="true"
-            android:text="@string/search"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            tools:ignore="MissingPrefix" />
-
-          <TextView
-            android:id="@+id/created_date"
-            fontPath="Roboto-Light.ttf"
+            android:id="@+id/full_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:gravity="bottom|right"
-            android:text="@string/know_more"
-            android:textColor="@color/main_text_color"
-            android:textSize="9sp"
-            tools:ignore="MissingPrefix" />
-        </LinearLayout>
-      </LinearLayout>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:paddingRight="14dp"
+            android:paddingStart="11dp">
 
-  </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp">
+
+                <ImageView
+                    android:id="@+id/storeDataIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/app_launcher" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    fontPath="Roboto-Medium.ttf"
+                    android:textColor="@color/primaryColor"
+                    android:text="@string/share_website"
+                    android:textSize="16sp"
+                    android:id="@+id/titleText"
+                    tools:ignore="MissingPrefix" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tell_world_about_your_business_on_facebook_twitter"
+                    android:textColor="@color/main_text_color"
+                    fontPath="Roboto-Light.ttf"
+                    android:textSize="13sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="16dp"
+                    android:id="@+id/descText"
+                    tools:ignore="MissingPrefix" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/alert_btn"
+                        android:layout_width="130dp"
+                        android:layout_height="34dp"
+                        fontPath="Roboto-Medium.ttf"
+                        android:singleLine="true"
+                        android:text="@string/search"
+                        android:textSize="14sp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/selector"
+                        tools:ignore="MissingPrefix" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="bottom|right"
+                        android:textColor="@color/main_text_color"
+                        fontPath="Roboto-Light.ttf"
+                        android:textSize="9sp"
+                        android:text="@string/know_more"
+                        android:layout_gravity="end"
+                        android:id="@+id/created_date"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

@@ -19,7 +19,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-import com.framework.views.customViews.CustomToolbar;
 import com.google.gson.JsonObject;
 import com.thinksity.R;
 
@@ -56,7 +55,7 @@ public class LinkedinWebView extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_linkedin_view);
-        CustomToolbar  toolbar = (CustomToolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         text = (TextView) findViewById(R.id.text);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

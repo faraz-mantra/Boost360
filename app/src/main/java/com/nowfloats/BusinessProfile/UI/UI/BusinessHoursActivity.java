@@ -1,9 +1,6 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,22 +27,12 @@ import com.framework.models.firestore.FirestoreManager;
 import com.framework.views.customViews.CustomButton;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
-import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.signup.UI.API.Download_Facebook_Image;
-import com.nowfloats.signup.UI.API.Signup_Descriptinon;
-import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
-import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
-import com.nowfloats.signup.UI.UI.WebSiteAddressActivity;
-import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
-import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -57,9 +44,8 @@ import org.json.JSONObject;
 import java.util.Locale;
 
 import static android.view.View.NO_ID;
-import static com.framework.webengageconstant.EventLabelKt.CLICK;
+import static com.framework.webengageconstant.EventLabelKt.BUSINESS_PROFILE;
 import static com.framework.webengageconstant.EventLabelKt.CLICKING_USE_SAME_TIME_FOR_WHOLE_WEEK;
-import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
 import static com.framework.webengageconstant.EventLabelKt.TOGGLE_FRIDAY;
 import static com.framework.webengageconstant.EventLabelKt.TOGGLE_MONDAY;
 import static com.framework.webengageconstant.EventLabelKt.TOGGLE_SATURDAY;
@@ -96,12 +82,9 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
   TextView titleTextView;
   CustomButton saveButton;
   LinearLayout linearLayoutAllTime;
-  CheckBox checkBoxAllTime;
   private UserSessionManager session;
+  CheckBox checkBoxAllTime;
   private SwitchCompat switchSun, switchMon, switchTue, switchWed, switchThu, switchFri, switchSat;
-  Bus bus;
-  ProgressDialog pd;
-  private static final String TAG = "BusinessHoursActivity";
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,12 +92,10 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
     setContentView(R.layout.activity_business_hours_v2);
     Methods.isOnline(BusinessHoursActivity.this);
     session = new UserSessionManager(getApplicationContext(), BusinessHoursActivity.this);
-    bus = BusProvider.getInstance().getBus();
-    pd = ProgressDialog.show(this, "", getString(R.string.loading));
-    pd.setCancelable(false);
+
     toolbar = (Toolbar) findViewById(R.id.app_bar);
     titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-    titleTextView.setText(R.string.business_timings_n);
+    titleTextView.setText(R.string.business_timings);
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -126,7 +107,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
     saveButton.setOnClickListener(v -> {
       MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
       if (Methods.isOnline(BusinessHoursActivity.this)) {
-        WebEngageController.trackEvent(BUSINESS_HOURS_SAVED, CLICK, session.getFpTag());
+        WebEngageController.trackEvent(BUSINESS_HOURS_SAVED, BUSINESS_PROFILE, session.getFpTag());
         uploadbusinessTimingsInfo();
       } else {
         Methods.snackbarNoInternet(BusinessHoursActivity.this);
@@ -181,8 +162,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
     etThuClose.setOnTouchListener(this);
     etFriClose.setOnTouchListener(this);
     etSatClose.setOnTouchListener(this);
-    getFPDetails(session.getFPID(), Constants.clientId, bus);
-
+    updateTimings();
   }
 
   private void uploadbusinessTimingsInfo() {
@@ -342,10 +322,9 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
   private void onBusinessHourAddedOrUpdated(Boolean isAdded) {
     FirestoreManager instance = FirestoreManager.INSTANCE;
-    if (instance.getDrScoreData() != null && instance.getDrScoreData().getMetricdetail() != null) {
-      instance.getDrScoreData().getMetricdetail().setBoolean_add_business_hours(isAdded);
-      instance.updateDocument();
-    }
+    if (instance.getDrScoreData().getMetricdetail() == null) return;
+    instance.getDrScoreData().getMetricdetail().setBoolean_add_business_hours(isAdded);
+    instance.updateDocument();
   }
 
   private void updateTimings() {
@@ -422,7 +401,6 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
   }
 
   private void timePicker() {
-
        /* TimePickerDialog dialog = TimePickerDialog.newInstance(this,0,0,false);
         dialog.setThemeDark(false);
         dialog.show(getFragmentManager(), "Timepickerdialog");*/
@@ -451,8 +429,6 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             setSelectedTime(checkBox.isChecked(), openSpinner.getSelectedItem().toString(), closeSpinner.getSelectedItem().toString());
             dialog.dismiss();
             currentId = NO_ID;
-            saveButton.setVisibility(View.VISIBLE);
-
           }
         })
         .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -693,58 +669,5 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
   @Override
   public void onNothingSelected(AdapterView<?> parent) {
 
-  }
-
-  private void getFPDetails(String fpId, String clientId, Bus bus) {
-    pd.show();
-    new Get_FP_Details_Service(this, fpId, clientId, bus);
-  }
-
-  @Subscribe
-  public void post_getFPDetails(Get_FP_Details_Event response) {
-    Log.i(TAG, "post_getFPDetails: ");
-    runOnUiThread(() -> {
-      if (pd != null) pd.dismiss();
-    });
-    updateTimings();
-  }
-
-  @Subscribe
-  public void post_Error(String message) {
-    runOnUiThread(() -> {
-      if (pd != null) pd.dismiss();
-      Toast.makeText(this, "Business hour loading error!", Toast.LENGTH_SHORT).show();
-    });
-
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
-    try{
-      bus.register(this);
-    }catch (Exception e){
-      e.printStackTrace();
-    }
-  }
-
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    try{
-      bus.unregister(this);
-    }catch (Exception e){
-      e.printStackTrace();
-    }
-  }
-
-  @Override
-  protected void onStop() {
-    super.onStop();
-    try{
-      bus.unregister(this);
-    }catch (Exception e){
-      e.printStackTrace();
-    }
   }
 }

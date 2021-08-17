@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.ProductGallery.ProductGalleryActivity;
 import com.nowfloats.util.MixPanelController;
@@ -24,14 +23,14 @@ import com.thinksity.R;
 public class ManageInventoryActivity extends AppCompatActivity {
 
     TextView tvPaymentSetting, tvProductGallery, tvTotalNoOfOrders, tvTotalRevenue;
-    CustomToolbar toolbar;
+    Toolbar toolbar;
     String category_code = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_inventory);
-         toolbar = (CustomToolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         MixPanelController.track(MixPanelController.MANAGE_INVENTORY, null);
         setSupportActionBar(toolbar);
         UserSessionManager session = new UserSessionManager(getApplicationContext(), this);

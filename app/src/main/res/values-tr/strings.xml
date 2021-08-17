@@ -1,911 +1,912 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <string name="app_name">Thinksity</string>
-  <string name="action_settings">Ayarlar</string>
-  <string name="title_activity_web_site_address">İnternet adresi</string>
-  <string name="title_activity_business_profile">İşProfiliEtkinliği</string>
-  <string name="title_activity_home">EvEtkinlik</string>
-  <string name="business__address">İş adresi</string>
-  <string name="contact__info">İletişim bilgileri</string>
-  <string name="title_activity_business__hours_">İş saatleri</string>
-  <string name="title_activity_business__logo_">İş Logo</string>
-  <string name="title_activity_social__sharing_">sosyal Paylaşım</string>
-  <string name="title_activity_login__main">Tekrar hoşgeldiniz</string>
-  <string name="title_activity_pre_sign_up__main">ÖnÜYE_AnaFaaliyet</string>
-  <string name="ps_sc2_lbl1">Anında Web Sitesi</string>
-  <string name="ps_sc2_lbl2">Yaratılış</string>
-  <string name="ps_sc3_lbl1">Bağlanmak</string>
-  <string name="ps_sc3_lbl2">Facebook</string>
-  <string name="ps_sc4_lbl1">keşfedilebilir</string>
-  <string name="ps_sc4_lbl2">Arama sonucu</string>
-  <string name="ps_sc5_lbl1">Kendi alın</string>
-  <string name="ps_sc5_lbl2">Domain</string>
-  <string name="ps_sc5_lbl3">kişisel çevrimiçi kimlik büyüyen bir sonraki adımı atın.</string>
-  <string name="ps_sc6_lbl1">İstihdam oluşturmak</string>
-  <string name="ps_sc6_lbl2">Fırsatlar</string>
-  <string name="ps_sc8_lbl1">Premium özellikleri</string>
-  <string name="ps_sc8_lbl2">NOWFLOATS</string>
-  <string name="ps_sc8_lbl4">mağaza</string>
-  <string name="business_logo_info_text">JPEG, .PNG and .GIF file formats are supported. For best experience, square images are recommended. Keep the size below 400KB and dimensions should not be more than 400px (width) and 400px (height).</string>
-  <string name="offer_title">Title:</string>
-  <string name="offer_desc">Description:</string>
-  <string name="offer_start_date">Start Date:</string>
-  <string name="offer_end_date">End Date:</string>
-  <string name="offer_discount">Discount Percentage:</string>
-  <string name="createOffersTitle">Post an Offer</string>
-  <string name="offers_title_error">Please enter the title</string>
-  <string name="offers_desc_error">Please enter description for the offer</string>
-  <string name="offers_start_date_error">Please choose start date for the offer</string>
-  <string name="offers_end_date_error">Please choose end date for the offer</string>
-  <string name="offers_image_error">Choose an image for the offer</string>
-  <string name="offer_uri">Offer Url:</string>
-  <string name="offer_upload_failure">Error while posting your offer</string>
-  <string name="offer_image_upload_dialog_text">Uploading image for the offer...</string>
-  <string name="suucessfull_offer_post">Your offer is successfully posted</string>
-  <string name="error_offer_post">Error while uploading image for your offer</string>
-  <string name="offers_image_size_error">Image Size is more than 4MB. Please choose an image of size less than 4MB</string>
-  <string name="offers_empty">There are no offers on your website\nClick on the + button below\nto create offers</string>
-  <string name="offers_soon">Create Offers, Now!</string>
-  <string name="failed_to_share">Error while sharing offers</string>
-  <string name="offer_getting_error">Error while retrieving offers</string>
-  <string name="proceed">Proceed</string>
-  <string name="pay_now">Pay Now</string>
+    <string name="app_name">Thinksity</string>
+    <string name="action_settings">Ayarlar</string>
+    <string name="title_activity_web_site_address">İnternet adresi</string>
+    <string name="title_activity_business_profile">İşProfiliEtkinliği</string>
+    <string name="title_activity_home">EvEtkinlik</string>
+    <string name="business__address">İş adresi</string>
+    <string name="contact__info">İletişim bilgileri</string>
+    <string name="title_activity_business__hours_">İş saatleri</string>
+    <string name="title_activity_business__logo_">İş Logo</string>
+    <string name="title_activity_social__sharing_">sosyal Paylaşım</string>
+    <string name="title_activity_login__main">Tekrar hoşgeldiniz</string>
+    <string name="title_activity_pre_sign_up__main">ÖnÜYE_AnaFaaliyet</string>
+    <string name="ps_sc2_lbl1">Anında Web Sitesi</string>
+    <string name="ps_sc2_lbl2">Yaratılış</string>
+    <string name="ps_sc3_lbl1">Bağlanmak</string>
+    <string name="ps_sc3_lbl2">Facebook</string>
+    <string name="ps_sc4_lbl1">keşfedilebilir</string>
+    <string name="ps_sc4_lbl2">Arama sonucu</string>
+    <string name="ps_sc5_lbl1">Kendi alın</string>
+    <string name="ps_sc5_lbl2">Domain</string>
+    <string name="ps_sc5_lbl3">kişisel çevrimiçi kimlik büyüyen bir sonraki adımı atın.</string>
+    <string name="ps_sc6_lbl1">İstihdam oluşturmak</string>
+    <string name="ps_sc6_lbl2">Fırsatlar</string>
+    <string name="ps_sc8_lbl1">Premium özellikleri</string>
+    <string name="ps_sc8_lbl2">NOWFLOATS</string>
+    <string name="ps_sc8_lbl4">mağaza</string>
+    <string name="business_logo_info_text">JPEG, .PNG and .GIF file formats are supported. For best experience, square images are recommended. Keep the size below 400KB and dimensions should not be more than 400px (width) and 400px (height).</string>
+    <string name="offer_title">Title:</string>
+    <string name="offer_desc">Description:</string>
+    <string name="offer_start_date">Start Date:</string>
+    <string name="offer_end_date">End Date:</string>
+    <string name="offer_discount">Discount Percentage:</string>
+    <string name="createOffersTitle">Post An Offer</string>
+    <string name="offers_title_error">Please enter the title</string>
+    <string name="offers_desc_error">Please enter description for the offer</string>
+    <string name="offers_start_date_error">Please choose start date for the offer</string>
+    <string name="offers_end_date_error">Please choose end date for the offer</string>
+    <string name="offers_image_error">Choose an image for the offer</string>
+    <string name="offer_uri">Offer Url:</string>
+    <string name="offer_upload_failure">Error while posting your offer</string>
+    <string name="offer_image_upload_dialog_text">Uploading image for the offer...</string>
+    <string name="suucessfull_offer_post">Your offer is successfully posted</string>
+    <string name="error_offer_post">Error while uploading image for your offer</string>
+    <string name="offers_image_size_error">Image Size is more than 4MB. Please choose an image of size less than 4MB</string>
+    <string name="offers_empty">There are no offers on your website\nClick on the + button below\nto create offers</string>
+    <string name="offers_soon">Create Offers, Now!</string>
+    <string name="failed_to_share">Error while sharing offers</string>
+    <string name="offer_getting_error">Error while retrieving offers</string>
+    <string name="proceed">Proceed</string>
+    <string name="pay_now">Pay Now</string>
 
-  <string name="facebook_app_id">539836972828386</string>
-
-
-  <string name="title_activity_card__full__view__main">Home</string>
-  <string name="home">Ev</string>
-  <string name="title_activity_create__message_">Bir Güncelleştirme yayınla</string>
-  <string name="side_panel_row_one">gösterge paneli</string>
-  <string name="side_panel_row_two">Profil</string>
-  <string name="side_panel_site_appearance">Site Görünümü</string>
-  <string name="side_panel_row_csp">özel Sayfalar</string>
-  <string name="side_panel_row_four">Fotoğraf Galerisi</string>
-  <string name="side_panel_row_five">Ayarlar</string>
-  <string name="side_panel_row_six">Ria yazın</string>
-  <string name="side_panel_row_eight">hisse</string>
-  <string name="setting_logout">Çıkış Yap</string>
-  <string name="signup_subd">^[a&#8211;zA&#8211;Z0&#8211;9][a&#8211;zA&#8211;Z0&#8211;9&#8211;]{1,61}[a&#8211;zA&#8211;Z0&#8211;9]$</string>
-
-  <!-- Deep Linking URLs  -->
-
-  <string name="deeplink_update">update</string>
-  <string name="deeplink_upgrade">upgrade</string>
-  <string name="deeplink_featuredimage">featuredimage</string>
-  <string name="deeplink_analytics">analytics</string>
-  <string name="deeplink_bizenquiry">ttb</string>
-  <string name="deeplink_store">nfstore</string>
-  <string name="deeplink_searchqueries">searchqueries</string>
-  <string name="deeplink_socailsharing">social</string>
-  <string name="deeplink_profile">profile</string>
-  <string name="deeplink_contact">contact</string>
-  <string name="deeplink_bizaddress">bizAddress</string>
-  <string name="deeplink_bizhours">bizhours</string>
-  <string name="deeplink_bizlogo">bizlogo</string>
-  <string name="deeplink_nfstoreDomainTTBCombo">ttbDomainCombo</string>
-  <string name="deeplink_imageGallery">gallery</string>
-  <string name="deeplink_propack">proPack</string>
-  <string name="deeplink_nfstoreseo">nfstoreseo</string>
-  <string name="deeplink_nfstorettb">nfstorettb</string>
-  <string name="deeplink_nfstoreimage">nfstoreimage</string>
-  <string name="deeplink_gplaces">gplaces</string>
-  <string name="deeplink_nfstorebiztiming">nfstorebiztiming</string>
-  <string name="deeplink_ProductGallery">ProductGallery</string>
-
-  <!-- Deep Linking URLs  -->
-
-  <!-- SITE-Meter Percentage  -->
-
-  <string name="buydomain_percentage">10</string>
-  <string name="phoneNumber_percentage">5</string>
-  <string name="businessCategory_percentage">5</string>
-  <string name="featuredImage_percentage">10</string>
-  <string name="businessName_percentage">5</string>
-  <string name="businessdescription_percentage">10</string>
-  <string name="social_percentage">10</string>
-  <string name="address_percentage">10</string>
-  <string name="email_percentage">5</string>
-  <string name="postUpdate_percentage">20</string>
-  <string name="share_percentage">5</string>
-
-  <string name="buydomain_text2">satın almak bir .com</string>
+    <string name="facebook_app_id">539836972828386</string>
 
 
-  <string-array name="CountryCodes">
-    <item>93,AF</item>
-    <item>355,AL</item>
-    <item>213,DZ</item>
-    <item>376,AD</item>
-    <item>244,AO</item>
-    <item>672,AQ</item>
-    <item>54,AR</item>
-    <item>374,AM</item>
-    <item>297,AW</item>
-    <item>61,AU</item>
-    <item>43,AT</item>
-    <item>994,AZ</item>
-    <item>973,BH</item>
-    <item>880,BD</item>
-    <item>375,BY</item>
-    <item>32,BE</item>
-    <item>501,BZ</item>
-    <item>229,BJ</item>
-    <item>975,BT</item>
-    <item>591,BO</item>
-    <item>387,BA</item>
-    <item>267,BW</item>
-    <item>55,BR</item>
-    <item>673,BN</item>
-    <item>359,BG</item>
-    <item>226,BF</item>
-    <item>95,MM</item>
-    <item>257,BI</item>
-    <item>855,KH</item>
-    <item>237,CM</item>
-    <item>1,CA</item>
-    <item>238,CV</item>
-    <item>236,CF</item>
-    <item>235,TD</item>
-    <item>56,CL</item>
-    <item>86,CN</item>
-    <item>61,CX</item>
-    <item>61,CC</item>
-    <item>57,CO</item>
-    <item>269,KM</item>
-    <item>242,CG</item>
-    <item>243,CD</item>
-    <item>682,CK</item>
-    <item>506,CR</item>
-    <item>385,HR</item>
-    <item>53,CU</item>
-    <item>357,CY</item>
-    <item>420,CZ</item>
-    <item>45,DK</item>
-    <item>253,DJ</item>
-    <item>670,TL</item>
-    <item>593,EC</item>
-    <item>20,EG</item>
-    <item>503,SV</item>
-    <item>240,GQ</item>
-    <item>291,ER</item>
-    <item>372,EE</item>
-    <item>251,ET</item>
-    <item>500,FK</item>
-    <item>298,FO</item>
-    <item>679,FJ</item>
-    <item>358,FI</item>
-    <item>33,FR</item>
-    <item>689,PF</item>
-    <item>241,GA</item>
-    <item>220,GM</item>
-    <item>995,GE</item>
-    <item>49,DE</item>
-    <item>233,GH</item>
-    <item>350,GI</item>
-    <item>30,GR</item>
-    <item>299,GL</item>
-    <item>502,GT</item>
-    <item>224,GN</item>
-    <item>245,GW</item>
-    <item>592,GY</item>
-    <item>509,HT</item>
-    <item>504,HN</item>
-    <item>852,HK</item>
-    <item>36,HU</item>
-    <item>91,IN</item>
-    <item>62,ID</item>
-    <item>98,IR</item>
-    <item>964,IQ</item>
-    <item>353,IE</item>
-    <item>44,IM</item>
-    <item>972,IL</item>
-    <item>39,IT</item>
-    <item>225,CI</item>
-    <item>81,JP</item>
-    <item>962,JO</item>
-    <item>7,KZ</item>
-    <item>254,KE</item>
-    <item>686,KI</item>
-    <item>965,KW</item>
-    <item>996,KG</item>
-    <item>856,LA</item>
-    <item>371,LV</item>
-    <item>961,LB</item>
-    <item>266,LS</item>
-    <item>231,LR</item>
-    <item>218,LY</item>
-    <item>423,LI</item>
-    <item>370,LT</item>
-    <item>352,LU</item>
-    <item>853,MO</item>
-    <item>389,MK</item>
-    <item>261,MG</item>
-    <item>265,MW</item>
-    <item>60,MY</item>
-    <item>960,MV</item>
-    <item>223,ML</item>
-    <item>356,MT</item>
-    <item>692,MH</item>
-    <item>222,MR</item>
-    <item>230,MU</item>
-    <item>262,YT</item>
-    <item>52,MX</item>
-    <item>691,FM</item>
-    <item>373,MD</item>
-    <item>377,MC</item>
-    <item>976,MN</item>
-    <item>382,ME</item>
-    <item>212,MA</item>
-    <item>258,MZ</item>
-    <item>264,NA</item>
-    <item>674,NR</item>
-    <item>977,NP</item>
-    <item>31,NL</item>
-    <item>599,AN</item>
-    <item>687,NC</item>
-    <item>64,NZ</item>
-    <item>505,NI</item>
-    <item>227,NE</item>
-    <item>234,NG</item>
-    <item>683,NU</item>
-    <item>850,KP</item>
-    <item>47,NO</item>
-    <item>968,OM</item>
-    <item>92,PK</item>
-    <item>680,PW</item>
-    <item>507,PA</item>
-    <item>675,PG</item>
-    <item>595,PY</item>
-    <item>51,PE</item>
-    <item>63,PH</item>
-    <item>870,PN</item>
-    <item>48,PL</item>
-    <item>351,PT</item>
-    <item>1,PR</item>
-    <item>974,QA</item>
-    <item>40,RO</item>
-    <item>7,RU</item>
-    <item>250,RW</item>
-    <item>590,BL</item>
-    <item>685,WS</item>
-    <item>378,SM</item>
-    <item>239,ST</item>
-    <item>966,SA</item>
-    <item>221,SN</item>
-    <item>381,RS</item>
-    <item>248,SC</item>
-    <item>232,SL</item>
-    <item>65,SG</item>
-    <item>421,SK</item>
-    <item>386,SI</item>
-    <item>677,SB</item>
-    <item>252,SO</item>
-    <item>27,ZA</item>
-    <item>82,KR</item>
-    <item>34,ES</item>
-    <item>94,LK</item>
-    <item>290,SH</item>
-    <item>508,PM</item>
-    <item>249,SD</item>
-    <item>597,SR</item>
-    <item>268,SZ</item>
-    <item>46,SE</item>
-    <item>41,CH</item>
-    <item>963,SY</item>
-    <item>886,TW</item>
-    <item>992,TJ</item>
-    <item>255,TZ</item>
-    <item>66,TH</item>
-    <item>228,TG</item>
-    <item>690,TK</item>
-    <item>676,TO</item>
-    <item>216,TN</item>
-    <item>90,TR</item>
-    <item>993,TM</item>
-    <item>688,TV</item>
-    <item>971,AE</item>
-    <item>256,UG</item>
-    <item>44,GB</item>
-    <item>380,UA</item>
-    <item>598,UY</item>
-    <item>1,US</item>
-    <item>998,UZ</item>
-    <item>678,VU</item>
-    <item>39,VA</item>
-    <item>58,VE</item>
-    <item>84,VN</item>
-    <item>681,WF</item>
-    <item>967,YE</item>
-    <item>260,ZM</item>
-    <item>263,ZW</item>
-  </string-array>
-  <string-array name="dashboard_tabs">
-    <item>GÜNCELLEME</item>
-    <item>ANALİZİ</item>
-    <item>UYARILAR</item>
-  </string-array>
+    <string name="title_activity_card__full__view__main">Home</string>
+    <string name="home">Ev</string>
+    <string name="title_activity_create__message_">Bir Güncelleştirme yayınla</string>
+    <string name="side_panel_row_one">gösterge paneli</string>
+    <string name="side_panel_row_two">Profil</string>
+    <string name="side_panel_site_appearance">Site Görünümü</string>
+    <string name="side_panel_row_csp">özel Sayfalar</string>
+    <string name="side_panel_row_four">Fotoğraf Galerisi</string>
+    <string name="side_panel_row_five">Ayarlar</string>
+    <string name="side_panel_row_six">Ria yazın</string>
+    <string name="side_panel_row_eight">hisse</string>
+    <string name="setting_logout">Çıkış Yap</string>
+    <string name="signup_subd">^[a&#8211;zA&#8211;Z0&#8211;9][a&#8211;zA&#8211;Z0&#8211;9&#8211;]{1,61}[a&#8211;zA&#8211;Z0&#8211;9]$</string>
 
-  <string name="business_enquiries_title">İş Sorular</string>
-  <string name="tag_for_partners">.nowfloats.com</string>
-  <string name="title_activity_splash_screen_">Thinksity</string>
-  <string name="title_activity_edit__profile_">Profil Düzenle Etkinlik</string>
+    <!-- Deep Linking URLs  -->
 
-  <string name="pre_signup_screen_six_text">senin doğrudan bağlantı kurmak için başlangıç, girişimciler ve işverenleri alın</string>
-  <string name="pre_signup_screen_seven_text">Özel öğrenci Thinksity deposunda sunar - günlükleri www.thinksity sitesi üzerine.</string>
-  <string name="title_activity_mobile__site_">Mobil Site Etkinliği</string>
-  <string name="onboarding_screen_1_title">Tebrik ederiz!</string>
-  <string name="onboarding_screen_1_desc">Biz yol boyunca size yardımcı olmak için buradayız. İşte bilmeniz gereken iki en temel henüz önemli şeyler</string>
-  <string name="onboarding_screen_3_title">Keşif fırsatlara yol açar</string>
-  <string name="onboarding_screen_2_title">içerik kral olduğu</string>
-  <string name="feedback">Yardıma mı ihtiyacınız var? Bizimle temasa geçin.</string>
-  <string name="noInternet">İnternet bağlantısı yok</string>
-  <string name="inbox_empty">Gelen boş!</string>
-  <string name="keep_move">Devam et!</string>
-  <string name="dont_shy">Utangaç olmayın!</string>
-  <string name="tell_world">Dünyaya anlat!</string>
-  <string name="Message_empty">Web sitenizde hiçbir mesaj aşağıda web sitenizi güncellemek için + düğmesine tıklayın vardır</string>
-  <string name="pre_signup_screen_one_text">Şimdi oluşturun yönetin ve daha Müşteriler çizer Bir İş web sitesi güncelleme</string>
-  <string name="pre_signup_screen_two_text">sürekli bu uygulamayı kullanarak oluşturulan ve kolayca yönetilen bir internet sitesini almak</string>
-  <string name="presignup_login_text">Zaten NowFloats hesabınız var mı?</string>
-  <string name="settings_feedback_link">ria@nowfloats.com</string>
-  <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.nowfloats</string>
-  <string name="interest">Ben ilgileniyorum</string>
-  <string name="contact_us_number">18601231233</string>
-  <string name="message_soon">Şimdi, güncelleme başlayın!</string>
-  <string name="store">mağaza</string>
-  <string name="empty_alert">Eğer yeni bir uyarı var en kısa sürede biz sizi bilgilendireceğiz</string>
-  <string name="settings_tou_url">https://www.getboost360.com/tnc/</string>
-  <string name="drop_us_on_email_or_call">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature.</string>
-  <string name="primary_contact_number_message">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to change this number.</string>
+    <string name="deeplink_update">update</string>
+    <string name="deeplink_upgrade">upgrade</string>
+    <string name="deeplink_featuredimage">featuredimage</string>
+    <string name="deeplink_analytics">analytics</string>
+    <string name="deeplink_bizenquiry">ttb</string>
+    <string name="deeplink_store">nfstore</string>
+    <string name="deeplink_searchqueries">searchqueries</string>
+    <string name="deeplink_socailsharing">social</string>
+    <string name="deeplink_profile">profile</string>
+    <string name="deeplink_contact">contact</string>
+    <string name="deeplink_bizaddress">bizAddress</string>
+    <string name="deeplink_bizhours">bizhours</string>
+    <string name="deeplink_bizlogo">bizlogo</string>
+    <string name="deeplink_nfstoreDomainTTBCombo">ttbDomainCombo</string>
+    <string name="deeplink_imageGallery">gallery</string>
+    <string name="deeplink_propack">proPack</string>
+    <string name="deeplink_nfstoreseo">nfstoreseo</string>
+    <string name="deeplink_nfstorettb">nfstorettb</string>
+    <string name="deeplink_nfstoreimage">nfstoreimage</string>
+    <string name="deeplink_gplaces">gplaces</string>
+    <string name="deeplink_nfstorebiztiming">nfstorebiztiming</string>
+    <string name="deeplink_ProductGallery">ProductGallery</string>
 
-  <string-array name="domain_array">
-    <item>.com</item>
-    <item>.net</item>
-  </string-array>
-  <string-array name="post_updates">
-    <item>Mesaj 5 Güncellemeler></item>
-    <item>Mesaj 10 Güncellemeler</item>
-  </string-array>
-  <string name="site_appearance_title">İşletme sitesi yeni bir görünüm bekliyor.</string>
-  <string name="site_appearance_text">Şimdi, müşterileriniz sitenizde daha fazla zaman harcamak yardımcı olmak ve onları iş aslında neye ihtiyacı olduğunu daha yapalım olacak you.It için ücretsiz özel, siteniz için yeni bir dinamik arayüz için kaydolarak deneyimini gezen müşterilerinizi geliştirmek.</string>
-  <string name="site_appearance_warn">Eğer yeni bir görünüm beğenmezseniz istediğiniz zaman, geri orijinal görünüme dönebilirsiniz.</string>
+    <!-- Deep Linking URLs  -->
 
-  <string-array name="kitsune_feedback">
-    <item>Eski tema tercih ederim.</item>
-    <item>Müşterilerim eski tema tercih ediyor.</item>
-    <item>Eski tema vardı widget bazı göremiyorum.</item>
-    <item>Bu ne için ödeme değildir.</item>
-  </string-array>
-  <string name="conv_sa_title">Eğer yeni bir görünüm tadını çıkarıyor umut</string>
-  <string name="conv_sa_body">Işinizi web popüler arama motorları için optimize edilmiş ve çarpar ki coğrafi ilgili marka veya ürün mesajlaşma ile web sitenizin güncellenmesi üzerinde business.Keep yeri ve web sitenizin sihirli arama sıralamasında yükselen ve daha fazla ziyaretçi almak bkz ile.</string>
-  <string name="demo_plan">Bir demo planı şu anda. Web sitenizin daha iyi faydalanmak için, bizim ücretli planları birine yükseltin.</string>
-  <string name="free_plan">Sen özgür bir plan üzerinde şu anda. Web sitenizin daha iyi faydalanmak için, bizim ücretli planları birine yükseltin.</string>
-  <string name="account_detail">hesap detayları</string>
-  <string name="active">AKTİF</string>
-  <string name="expired">SÜRESİ DOLDU</string>
-  <string name="feching_search_detail">Arama ayrıntıları getiriliyor&#8230;</string>
-  <string name="week">hafta</string>
-  <string name="visit_this_month">ziyaret Bu ay</string>
-  <string name="search_queries">Arama Sorguları</string>
-  <string name="check_internet_connection">Ağ Bağlantısını Kontrol Edin</string>
-  <string name="email">E-POSTA</string>
-  <string name="call">ÇAĞRI</string>
-  <string name="send_email">Eposta gönder&#8230;</string>
-  <string name="faqs">SSS</string>
-  <string name="answer">Cevap</string>
-  <string name="ok">tamam</string>
-  <string name="logo">Logo</string>
-  <string name="upload_logo_image">Yükle Logo Resmi</string>
-  <string name="device_does_not_support_capturing_image">Hata - Cihazınız görüntüleri yakalamak desteklemiyor!</string>
-  <string name="select_image_upload">yüklemek için bir resim seçin</string>
-  <string name="visit_to_new_website">Yaşasın! Biz yeni bir web sitesi var. at ziyaret</string>
-  <string name="features_not_available">mevcut değil özellik</string>
-  <string name="check_store_for_upgrade_info">Yükseltme planları hakkında daha fazla bilgi için mağaza kontrol</string>
-  <string name="goto_store">Mağazaya Git</string>
-  <string name="cancel">İptal etmek</string>
-  <string name="password_updated">Parolanız güncellendi.</string>
-  <string name="entered_password_incorrect">Girdiğiniz şifre yanlış.</string>
-  <string name="please_wait">Lütfen bekle</string>
-  <string name="enter_valid_website">Geçerli Web Sitesi girin</string>
-  <string name="enter_valid_email">Geçerli e-posta girin</string>
-  <string name="primary_num_can_not_empty">Birincil numara boş olamaz</string>
-  <string name="enter_password_6to12_char">Telefon numarası 6 &#8211; 12 karakter arasında olmalıdır</string>
-  <string name="basic_info">temel Bilgiler</string>
-  <string name="business_name_more_than_3char">İşletme Adı en fazla 3 harf olmalıdır</string>
-  <string name="try_again">Tekrar dene&#8230;</string>
-  <string name="wait_while_loading_category">Kategoriler yükleme sırasında bekleyin&#8230;</string>
-  <string name="select_category">Bir kategori seç</string>
-  <string name="both_password_not_matched">Her iki şifre eşleşmiyor.</string>
-  <string name="min_6char_required">En az 6 karakter gereklidir.</string>
-  <string name="wait_while_unsubscribing">Aboneliğinizi iptal ederken bekleyin&#8230;</string>
-  <string name="select_page">satın almak bir Sayfa Seç</string>
-  <string name="look_like_no_facebook_page">Bu hesapla bağlantılı herhangi bir Facebook sayfası var gibi görünüyor.</string>
-  <string name="wait_while_subscribing">abone bekleyin&#8230;</string>
-  <string name="facebook_page"> Facebook Sayfası</string>
-  <string name="disconnected">Bağlantı kesildi</string>
-  <string name="success">başarı</string>
-  <string name="failed">Başarısız oldu</string>
-  <string name="alert">uyarı</string>
-  <string name="no_network">Ağ yok</string>
-  <string name="enable">etkinleştirme</string>
-  <string name="loading">Yükleniyor&#8230;</string>
-  <string name="updating_password">Parolanız güncelleniyor&#8230;</string>
-  <string name="custom_page_details">ayrıntılı olarak açıklayınız. girintiler, madde işaretleri ve metni biçimlendirmek için başlık stilleri gibi özel düzen özellikleri kullanın. içerik geliştirmek için görüntü ve bağlantılar ekleyin.</string>
-  <string name="enter_the_title">başlık girin</string>
-  <string name="enter_the_description">açıklamasını girin</string>
-  <string name="page_successfully_created">Sayfa Başarıyla oluşturulan</string>
-  <string name="enter_different_title_try_again">Farklı Başlık girin ve tekrar deneyin</string>
-  <string name="something_went_wrong_try_again">Bir şeyler ters gitti, tekrar deneyin</string>
-  <string name="page_updated">Sayfa güncellendi</string>
-  <string name="enter_image_url">Görüntü URL girin</string>
-  <string name="enter_hyperlink_url">Köprü URL girin</string>
-  <string name="no_image">resim yok</string>
-  <string name="custom_pages">özel Sayfalar</string>
-  <string name="page_selected">SAYFA SEÇİLMİŞ</string>
-  <string name="are_you_sure_want_to_delete">Emin misiniz?</string>
-  <string name="page_will_deleted">Sayfa silinecek</string>
-  <string name="deleted_in_capital">SİL</string>
-  <string name="cancel_in_capital">İPTAL ETMEK</string>
-  <string name="deleting">silme&#8230;</string>
-  <string name="page_removed">Sayfalar kaldırıldı&#8230;</string>
-  <string name="updating_image">güncelleniyor görüntü&#8230;</string>
-  <string name="add_photo">Fotoğraf ekle</string>
-  <string name="select_file">Dosya Seç</string>
-  <string name="image_successfully_apdated">Görüntü başarıyla yüklendi</string>
-  <string name="can_not_upload_image">Resim Yükle olamaz</string>
-  <string name="check_your_crediential">Kimlik bilgilerinizi kontrol edin</string>
-  <string name="something_went_wrong">bir şeyler yanlış gitti!!</string>
-  <string name="enter_correct_user_name">Doğru kullanıcı adı girin.</string>
-  <string name="check_your_email">E-postanı kontrol et</string>
-  <string name="enter_valid_username_or_password">geçerli bir kullanıcı adı / şifre girin</string>
-  <string name="forgot_password">Parolanızı mı unuttunuz</string>
-  <string name="enter_user_name">Kullanıcı adı girin</string>
-  <string name="we_sent_email_with_password">Biz şifre ayrıntıları içeren bir e-posta gönderdik</string>
-  <string name="logging_out">çıkış işlemi&#8230;</string>
-  <string name="unable_to_logout">Oturumu mümkün değil</string>
-  <string name="percent_site_completed"> Sitesi tamamlandı</string>
-  <string name="choose_app_to_share">paylaşmak için uygulamayı seçin</string>
-  <string name="share_message">Mesajınızı paylaş</string>
-  <string name="no_app_available_for_action">eylem için hazır uygulama yok</string>
-  <string name="failed_to_download_image">Image indirmek için Başarısız</string>
-  <string name="can_not_share_image_offline_mode">Çevrimdışı modunda görüntü içeriği paylaş olamaz</string>
-  <string name="no_app_to_share">Hiçbir uygulama paylaşmak için</string>
-  <string name="share">hisse</string>
+    <!-- SITE-Meter Percentage  -->
 
-  <string name="ps_sc3_lbl3">oluşturmak ve anında web sitenizi \ngüncellemek için Facebook sayfası ile giriş yapın. \nŞiddetle tavsiye!</string>
-  <string name="ps_sc4_lbl3">Yer-SEO Tabanlı ile <sup> <small> TM </small> </sup>, ilgili \nanahtar kelimeler için keşfedilen ve arama \nmotorlarında sıralamanızı artırmak olsun</string>
-  <string name="ps_sc8_lbl3">in-app Store\'dan iş web sitesi için \nek özellikler olsun.</string>
-  <string name="business_enquiry_empty">Biz en kısa sürede bir \nsorgu olsun size bir bildirim \ngönderecektir.</string>
-  <string name="searchquery_empty">Hiçbir şey şu anda burada görmek. \nMesajı iyi ve gelişmek</string>
-  <string name="empty_image_gallery">ürün ve \nhizmetlerin resim eklemek \niçin + düğmesine çarptı. </string>
-  <string name="empty_product_gallery">En çok satan ürünler \nbasın + keşfetti alır emin olun ve onları \nburada listelemek için.</string>
-  <string name="auto_update_from_social_network">Sosyal Ağlar \nOtomatik Güncelleme</string>
-  <string name="auto_share_to_social_networks">Sosyal Ağlar \niçin Otomatik Paylaş</string>
+    <string name="buydomain_percentage">10</string>
+    <string name="phoneNumber_percentage">5</string>
+    <string name="businessCategory_percentage">5</string>
+    <string name="featuredImage_percentage">10</string>
+    <string name="businessName_percentage">5</string>
+    <string name="businessdescription_percentage">10</string>
+    <string name="social_percentage">10</string>
+    <string name="address_percentage">10</string>
+    <string name="email_percentage">5</string>
+    <string name="postUpdate_percentage">20</string>
+    <string name="share_percentage">5</string>
 
-  <string name="post_update">Mesaj Bir Güncelleme</string>
-  <string name="post_in_capital">posta</string>
-  <string name="enter_message">Lütfen bir mesaj giriniz</string>
-  <string name="send_to_subscribers">Aboneler gönder</string>
-  <string name="unable_to_send_website_updates_to_subscribers">E-posta yoluyla abonelere web güncellemeleri göndermek için bu özelliği etkinleştirin.</string>
-  <string name="add_context_to_picture">resme bağlam vermek için bazı metin ekleyin.</string>
-  <string name="select_offline_image">Çevrimdışı Görüntüler Sadece Seçiniz</string>
-  <string name="update_not_done">Güncelleştirme tam bitmiş değil !!!</string>
-  <string name="do_you_want_to_cancel">Eğer iptal etmek istiyor musunuz?</string>
-  <string name="yes">Evet</string>
-  <string name="no">Yok hayır</string>
-  <string name="retry_create_new_post">Zaman aşımı Retry yeni yazı oluşturun</string>
-  <string name="click_again_to_exit">Çıkmak için tekrar tıklayınız&#8230;</string>
-  <string name="app_update_available">Mevcut uygulama güncellemesi</string>
-  <string name="update_nowfloats_app">Sen NowFloats Boost eski bir sürümünü kullanıyorsunuz. Yeni özellikler ve geliştirmeler almak için uygulamayı güncelleyin</string>
-  <string name="update">Güncelleştirme</string>
-  <string name="update_website_twice_week"><![CDATA[<font>Update your website </font>\" + \"<font color=\'#FFB900\'>twice a week. </font>\"+\"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>]]></string>
-  <string name="people_are_searching_keep_your_updates"><![CDATA[<font>People around your business are searching for stuff you sell, so keep your updates </font>\" + \"<font color=\'#FFB900\'>relevant and fresh.</font>\" + \"<font>This will you lead to attract more customers and generate more revenue.</font>]]></string>
-  <string name="got_it_next">Anladım, Sonraki</string>
-  <string name="greate_thanks">Çok teşekkürler</string>
-  <string name="get_free_com">ücretsiz olsun .com!</string>
-  <string name="you_are_eligible_to_free_domain">Işte! Sen özgür bir etki elde etmek uygun değildir. Seçtiğiniz satın almak bir .com / .net talep ve biz 24 saat içinde web sitenize entegre olacak.</string>
-  <string name="request_now">Şimdi talep</string>
-  <string name="wait_for_new_look">Yeni görünüm için beklemek&#8230;</string>
-  <string name="your_website_appearance_changed">Sitenizin Görünüm değiştirilir</string>
-  <string name="can_not_change_appearance">Web Görünüm değiştirmek olamazdı</string>
-  <string name="buy_in_capital">satın almak</string>
-  <string name="later_in_capital">SONRA</string>
-  <string name="buy_light_house_plan">Satın Feneri tüm özellikleri almak için plan</string>
-  <string name="demo_plan_expired">Sizin demo planı süresi doldu ve müşterilerinizin web sitenizi görmek mümkün olacak olsa da, bazı temel özellikleri devre dışı bırakıldı. Bu ürün katalog, iş sorular, ve diğerleri arasında, siteyi güncellemek için yeteneği vardır.</string>
-  <string name="renew_in_capital">YENİLEME</string>
-  <string name="ignore_in_capital">ALDIRMAMAK</string>
-  <string name="renew_wildfire_plan">Wildfire planı yenilemek</string>
-  <string name="continue_auto_promoting_on_google">-Auto tanıtmaya devam Google gibi dijital pazarlama kanallarını kullanarak web sitenize. iş mesajları orman yangını gibi yayıldı emin olmak için planı yenilemek edin.</string>
-  <string name="renew_light_house_plan">tüm özellikleri elde etmek Feneri planını yenilemek</string>
-  <string name="light_house_plan_expired_some_features_visible">Sizin Feneri planın süresi doldu ve müşterilerinizin web sitenizi görmek mümkün olacak olsa da, bazı temel özellikleri devre dışı bırakıldı. Bu ürün katalog, iş sorular, ve diğerleri arasında, sitenizi güncellemek için yeteneği dahil</string>
-  <string name="share_with">İle paylaş:</string>
-  <string name="chat">Sohbet</string>
-  <string name="site__meter">yer metre</string>
-  <string name="product_gallery">Ürün Galerisi</string>
-  <string name="image_gallery">Resim Galerisi</string>
-  <string name="business_profile">İş Profili</string>
-  <string name="upload_background_image">Arkaplan Resim Yükle</string>
-  <string name="image_uploading_failed_try_again">Görüntü yükleme başarısız oldu. Lütfen tekrar deneyin</string>
-  <string name="deleting_image">silme görüntü&#8230;.</string>
-  <string name="uploading">Yükleme</string>
-  <string name="upload_successful">Başarılı yükle</string>
-  <string name="upload_failed">Yükleme başarısız</string>
-  <string name="error_in_uploading">Yüklemeyi hata</string>
-  <string name="uploaded_and">Yüklenen ve</string>
-  <string name="uploading_image">Yükleme Görüntü</string>
-  <string name="product_removed">Ürün kaldırılır&#8230;</string>
-  <string name="replacing_image">değiştirilmesi görüntü&#8230;.</string>
-  <string name="product_image_replaced_successfully">Ürün resmi başarıyla yerine</string>
-  <string name="new_product_added">Yeni ürün eklendi</string>
-  <string name="add_product">Ürün ekle</string>
-  <string name="can_not_select_more_than_5images">Birden fazla 5 fotoğraf seçemezsiniz</string>
-  <string name="edit_product">Düzenleme Ürün</string>
-  <string name="updating">Güncelleniyor&#8230;</string>
-  <string name="product_successfully_updated">Ürün başarıyla güncellendi</string>
-  <string name="delete_">silmek</string>
-  <string name="upload_product_image">Ürün resmi yükleyin</string>
-  <string name="select_action">senin eylemi seçmek</string>
-  <string name="wait_while_deleting_image">Görüntü silme bekleyin&#8230;</string>
-  <string name="successfully_deleted">başarıyla silindi</string>
-  <string name="can_not_delete_image">Görüntü sil Could not</string>
-  <string name="select_priority">seçin Öncelik</string>
-  <string name="enter_product_name">Ürün adını girin</string>
-  <string name="enter_product_price">Ürün fiyatını girin</string>
-  <string name="discount_amount_can_not_more_than_price">İndirim tutarı ürün fiyatından daha fazla olamaz</string>
-  <string name="select_currency">seçin Döviz</string>
-  <string name="replace_photo">Fotoğraf değiştirin</string>
-  <string name="upload_photo">Fotoğraf yükle</string>
-  <string name="inr">INR</string>
-  <string name="email_validation__failed">E-posta doğrulama başarısız</string>
-  <string name="suggest_tag_failed_try_again">Tekrar Etiket Başarısız deneyin öneririz</string>
-  <string name="number_already_registered">Numara zaten kayıtlı</string>
-  <string name="number_already_registered_enter_different">Girilen numara zaten bizimle kayıtlı. farklı bir girin.</string>
-  <string name="enter_mobile_number">cep telefonu numarasını girin</string>
-  <string name="enter_business_name">iş adını girin</string>
-  <string name="select_business_category">Seç iş kategorisi</string>
-  <string name="enter_city">şehir girin</string>
-  <string name="select_country">ülke seçin</string>
-  <string name="checking_contact_number">Denetleme iletişim numarası &#8230;</string>
-  <string name="creating_website">web sitesi oluşturma &#8230;</string>
-  <string name="enter_valid_website_name">Geçerli bir web sitesi adı girin</string>
-  <string name="chosen_website_available">Seçilen web sitesi adresi mevcuttur!</string>
-  <string name="chosen_website_not_available">Seçilen web sitesi adresi mevcut değildir!</string>
-  <string name="error">hata!</string>
-  <string name="learn_more_about_version">Yeni sürüm hakkında daha fazla bilgi</string>
-  <string name="fill_reasons">nedenlerini doldurunuz</string>
-  <string name="check_any_checkbox">CheckBox herhangi kontrol edin</string>
-  <string name="wait_while_reverting">geri alma sırasında bekleyin&#8230;</string>
-  <string name="upgrade_now">Şimdi Yükselt</string>
-  <string name="successfully_revert">başarıyla geri alındı</string>
-  <string name="failed_to_revert">Geri döndür için Başarısız</string>
-  <string name="know_more">BİLİYOR DAHA</string>
-  <string name="book_domain">Kitap Alan</string>
-  <string name="domain_lookup">Domain LookUp</string>
-  <string name="enter_domain_nmae_to_continue">Devam etmek için etki alanı adını girin</string>
-  <string name="domain_is_available">Alan kullanılabilir &#8230;</string>
-  <string name="domain_not_available">Alan mevcut değil &#8230;</string>
-  <string name="domain_booking_confirmation">Alan Rezervasyon Onay</string>
-  <string name="hello_do_you_want_this">Merhaba Eğer bu ayarlamak ister misiniz</string>
-  <string name="as_domain">Alan adınız olarak</string>
-  <string name="thank_for_booking_domain">sizin etki Rezervasyon için teşekkür ederiz</string>
-  <string name="activate_in_24_hours">24 saat içinde aktif hale gelecektir.</string>
-  <string name="okay">Tamam</string>
-  <string name="thank_you_for_your_interest">İlginiz için teşekkürler!</string>
-  <string name="processing_request">İsteğiniz işlenirken</string>
-  <string name="username">kullanıcı adı</string>
-  <string name="plans_in_use">KULLANIM PLANLARI</string>
-  <string name="buy">satın almak</string>
-  <string name="plan_name">Plan Adı</string>
-  <string name="purchase_date">Satınalma tarihi</string>
-  <string name="expiry_date">Son kullanma tarihi</string>
-  <string name="status">durum</string>
-  <string name="renew">yenilemek</string>
-  <string name="monday">Pazartesi</string>
-  <string name="tuesday">Salı</string>
-  <string name="wednesday">Çarşamba</string>
-  <string name="thursday">Perşembe</string>
-  <string name="friday">Cuma</string>
-  <string name="saturday">Cumartesi</string>
-  <string name="sunday">Pazar</string>
-  <string name="your_name">Adınız</string>
-  <string name="business_name">iş adı</string>
-  <string name="post_on_website">Web sitenize göndermek</string>
-  <string name="business_category">İş Kategorisi</string>
-  <string name="business_description">iş tanımı</string>
-  <string name="login">Oturum aç</string>
-  <string name="tweet">Cıvıldamak</string>
-  <string name="logout">Çıkış Yap</string>
-  <string name="create_website_using">kullanarak web sitesi oluşturmak</string>
-  <string name="email_address">E-posta Adres</string>
-  <string name="log_in">&#160;oturum aç</string>
-  <string name="phone_number">Telefon numarası</string>
-  <string name="share_website">Share web sitesi</string>
-  <string name="tell_world_about_your_business_on_facebook_twitter">Facebook ve TwitterTell Facebook ve TwitterTell Facebook ve TwitterTell Facebook ve TwitterTell işinizle ilgili dünyanın üzerinde iş paylaşımına onu hakkında Dünya üzerinde iş paylaşımına onu hakkında Dünya üzerinde iş payı bu konuda dünyanın üzerinde iş payı bu konuda dünyaya anlatmak Facebook paylaşmak ve Facebook ve Twitter üzerinden iş payı hakkında bu dünyayı TwitterTell</string>
-  <string name="search">Arama</string>
-  <string name="write_page_title">(Neden Biz Hakkımızda örneğin? Vs.) sayfa başlığını yazın</string>
-  <string name="describe_in_detail">ayrıntılı bir şekilde açıklayın</string>
-  <string name="about_us">Hakkımızda</string>
-  <string name="enter_hyperlink_tag">Köprü Etiketini girin</string>
-  <string name="enter_domain_name">etki alanı adını girin</string>
-  <string name="crop">ekin</string>
-  <string name="rotate">döndürmek</string>
-  <string name="done">tamam</string>
-  <string name="hello">Merhaba</string>
-  <string name="thats_ok_it_happens_tell_us_why">Sorun değil. Olur. Ama neden bize söyleyebilir misin?</string>
-  <string name="prefered_old_theme">Eski tema tercih ederim.</string>
-  <string name="my_customer_prefer_old_theme">Müşterilerim eski tema tercih ediyor.</string>
-  <string name="some_widget_i_donot_know_in_old_theme">Eski tema vardı widget bazı göremiyorum.</string>
-  <string name="its_not_what_i_paid_for">Bu ne için ödeme değil.</string>
-  <string name="other_reasons">Diğer nedenler (yazın lütfen)&#8230;</string>
-  <string name="enter_the_reason">diğer nedeni girin</string>
-  <string name="submit">GÖNDER</string>
-  <string name="no_alerts">Hiçbir uyarı!</string>
-  <string name="overall_visits_n">Genel Ziyaretler</string>
-  <string name="unique_visitors_n">Genel Ziyaretler</string>
-  <string name="address_line">Adres satırı</string>
-  <string name="town_city">İlçe / Şehir</string>
-  <string name="pin_area_code">Pim / Alan Kodu</string>
-  <string name="state_province">Eyalet / İl</string>
-  <string name="country">ülke</string>
-  <string name="nowfloats.com">.nowfloats.com</string>
-  <string name="add_a_page">Bir Sayfa Ekle</string>
-  <string name="use_custom_pages_to_describe_business">detaylı iş teklifleri tanımlamak için özel sayfalar kullanın. Ekleyebilir ve metin, bağlantılar ve resimler biçimi paragraflar olabilir!</string>
-  <string name="retry">Tekrar dene</string>
-  <string name="new_in_capital">YENİ</string>
-  <string name="facebook_analytics">Facebook Analytics</string>
-  <string name="facebook_response_error">Error while receiving data from Facebook</string>
-  <string name="powered_by">Tarafından desteklenmektedir </string>
-  <string name="nowfloats"> NowFloats</string>
-  <string name="version">versiyon</string>
-  <string name="float_point_name">Nokta Adını Float</string>
-  <string name="your_site_health">Ne kayıp?</string>
-  <string name="primary_number">Birincil Numara</string>
-  <string name="alternate_number1">Alternatif Sayı 1</string>
-  <string name="alternate_number2">Alternatif Sayı 2</string>
-  <string name="facebook_page_name">Facebook Sayfa Adı</string>
-  <string name="update_your_website_to_increase_discoverability">keşfedilebilirliğini artırmak için web sitenizi güncellemek</string>
-  <string name="update_logo">güncelleme Logo</string>
-  <string name="of">of</string>
-  <string name="password">parola</string>
-  <string name="forgot_your_password">Şifrenizi mi unuttunuz</string>
-  <string name="open_in_browser">TARAYICIDA AÇ</string>
-  <string name="website_posts">Web Sitesi \n Mesajlar</string>
-  <string name="to">to</string>
-  <string name="facebook">Facebook</string>
-  <string name="twitter">Twitter</string>
-  <string name="website">Web sitesi</string>
-  <string name="donot_like_it_tap_on_card">beğenmedim? değiştirmek için kart üzerine dokunun</string>
-  <string name="create_website">CORANI MY WEB SİTESİ</string>
-  <string name="by_pressing_above_button_to_agree">düğmesinin üzerinde basarak, Sen kabul eden</string>
-  <string name="number_tocall_says">+919535576625 diyor &#8230;</string>
-  <string name="sent_on">gönderilen</string>
-  <string name="wow_this_is_amazing_offer_is_it_avail_trip">Vay bu inanılmaz bir tekliftir. Ocak ayında mevcut bu gezi mı?</string>
-  <string name="customer_replied_to_your_post">Müşteri sizin göndermenizi cevaplamış:</string>
-  <string name="congratulations">Tebrik ederiz!</string>
-  <string name="choose_country">Bir ülke seç</string>
-  <string name="you_website">Senin internet siten</string>
-  <string name="your_website_ready">Web siteniz hazır</string>
-  <string name="your_website_created_desktop_version">Yakındaki herhangi bir PC / Mac üzerinde yeni oluşturulan web siteleri, masaüstü sürümünü görüntüleyebilirsiniz</string>
-  <string name="show_mobile_site">Mobil Sitesi göster</string>
-  <string name="large_text">büyük Metin</string>
-  <string name="medium_text">orta Yazı</string>
-  <string name="current_password">Şimdiki Şifre</string>
-  <string name="change_password">Şifre değiştir</string>
-  <string name="new_password">Yeni Şifre</string>
-  <string name="confirmed_password">Şifreyi Onayla</string>
-  <string name="search_here">Burada ara</string>
-  <string name="enter_your_user_name">Kullanıcı adınızı giriniz</string>
-  <string name="upload_featured_image">Sunulan Resim Yükle</string>
-  <string name="using_camera">kamerayı kullanma</string>
-  <string name="from_gallery">galeriden</string>
-  <string name="values">değerler</string>
-  <string name="date">tarih</string>
-  <string name="choose_your_location">Bulunduğunuz yeri seçin</string>
-  <string name="drag_to_map_your_location">senin Store konumuna haritayı sürükleyin.</string>
-  <string name="confirm_in_capital">ONAYLAMAK</string>
-  <string name="show_me">Göster bana!</string>
-  <string name="whats_new_default">Varsayılan</string>
-  <string name="whats_new">ne var ne yok</string>
-  <string name="app_version">versiyon 4.4.6</string>
-  <string name="whats_new_done">TAMAMLANDI</string>
-  <string name="website_name">Sitenizin Adı</string>
-  <string name="alerts_text">Uyarılar</string>
-  <string name="select_action_dialog_title">Sunulan Resim Yükle</string>
-  <string name="text_replace_image">Resmi Değiştir</string>
-  <string name="text_delete_image">Görüntü silme</string>
-  <string name="product_detail_product_name">Ürün adı</string>
-  <string name="product_detail_product_descr">Ürün Açıklaması</string>
-  <string name="product_detail_currency">seçin Döviz</string>
-  <string name="product_detail_product_price">Ürün Fiyatı</string>
-  <string name="product_details_discount">İndirim (Varsa)</string>
-  <string name="product_detail_online_link">Çevrim içi satın al Bağlantısı (Varsa)</string>
-  <string name="product_detail_priority">seçin Öncelik</string>
-  <string name="product_details_shipment_dur">Gün Sevk Süresi</string>
-  <string name="product_detail_availability">Ürün bulunabilirliği</string>
-  <string name="product_detail_free_shipping">Ücretsiz kargo</string>
-  <string name="product_detail_delete_btn_text">ürünü sil</string>
-  <string name="site_appearance_revert_to_old">Eski sürüme geri dön</string>
-  <string name="site_appearance_upgrade_text">Şimdi Yükselt</string>
-  <string name="site_meter_body_text">Siteniz sağlığını artırmak için aşağıdaki görevi tamamlamak. Yüksek oranda sitenize daha fazla trafik çevirir.</string>
-  <string name="site_meter_more_traffic_text">Yüksek puanlar sitenize daha fazla trafik çevirir.</string>
-  <string name="tool_bar_save_text">KAYIT ETMEK</string>
-  <string name="single_row_card_upgrade_text">YÜKSELTME</string>
-  <string name="Setting_terms_of_use">Kullanım Şartları</string>
-  <string name="welcome_back">Tekrar hoşgeldiniz</string>
+    <string name="buydomain_text2">satın almak bir .com</string>
 
 
-  <string-array name="tabs">
-    <item>Week</item>
-    <item>Month
+    <string-array name="CountryCodes">
+        <item>93,AF</item>
+        <item>355,AL</item>
+        <item>213,DZ</item>
+        <item>376,AD</item>
+        <item>244,AO</item>
+        <item>672,AQ</item>
+        <item>54,AR</item>
+        <item>374,AM</item>
+        <item>297,AW</item>
+        <item>61,AU</item>
+        <item>43,AT</item>
+        <item>994,AZ</item>
+        <item>973,BH</item>
+        <item>880,BD</item>
+        <item>375,BY</item>
+        <item>32,BE</item>
+        <item>501,BZ</item>
+        <item>229,BJ</item>
+        <item>975,BT</item>
+        <item>591,BO</item>
+        <item>387,BA</item>
+        <item>267,BW</item>
+        <item>55,BR</item>
+        <item>673,BN</item>
+        <item>359,BG</item>
+        <item>226,BF</item>
+        <item>95,MM</item>
+        <item>257,BI</item>
+        <item>855,KH</item>
+        <item>237,CM</item>
+        <item>1,CA</item>
+        <item>238,CV</item>
+        <item>236,CF</item>
+        <item>235,TD</item>
+        <item>56,CL</item>
+        <item>86,CN</item>
+        <item>61,CX</item>
+        <item>61,CC</item>
+        <item>57,CO</item>
+        <item>269,KM</item>
+        <item>242,CG</item>
+        <item>243,CD</item>
+        <item>682,CK</item>
+        <item>506,CR</item>
+        <item>385,HR</item>
+        <item>53,CU</item>
+        <item>357,CY</item>
+        <item>420,CZ</item>
+        <item>45,DK</item>
+        <item>253,DJ</item>
+        <item>670,TL</item>
+        <item>593,EC</item>
+        <item>20,EG</item>
+        <item>503,SV</item>
+        <item>240,GQ</item>
+        <item>291,ER</item>
+        <item>372,EE</item>
+        <item>251,ET</item>
+        <item>500,FK</item>
+        <item>298,FO</item>
+        <item>679,FJ</item>
+        <item>358,FI</item>
+        <item>33,FR</item>
+        <item>689,PF</item>
+        <item>241,GA</item>
+        <item>220,GM</item>
+        <item>995,GE</item>
+        <item>49,DE</item>
+        <item>233,GH</item>
+        <item>350,GI</item>
+        <item>30,GR</item>
+        <item>299,GL</item>
+        <item>502,GT</item>
+        <item>224,GN</item>
+        <item>245,GW</item>
+        <item>592,GY</item>
+        <item>509,HT</item>
+        <item>504,HN</item>
+        <item>852,HK</item>
+        <item>36,HU</item>
+        <item>91,IN</item>
+        <item>62,ID</item>
+        <item>98,IR</item>
+        <item>964,IQ</item>
+        <item>353,IE</item>
+        <item>44,IM</item>
+        <item>972,IL</item>
+        <item>39,IT</item>
+        <item>225,CI</item>
+        <item>81,JP</item>
+        <item>962,JO</item>
+        <item>7,KZ</item>
+        <item>254,KE</item>
+        <item>686,KI</item>
+        <item>965,KW</item>
+        <item>996,KG</item>
+        <item>856,LA</item>
+        <item>371,LV</item>
+        <item>961,LB</item>
+        <item>266,LS</item>
+        <item>231,LR</item>
+        <item>218,LY</item>
+        <item>423,LI</item>
+        <item>370,LT</item>
+        <item>352,LU</item>
+        <item>853,MO</item>
+        <item>389,MK</item>
+        <item>261,MG</item>
+        <item>265,MW</item>
+        <item>60,MY</item>
+        <item>960,MV</item>
+        <item>223,ML</item>
+        <item>356,MT</item>
+        <item>692,MH</item>
+        <item>222,MR</item>
+        <item>230,MU</item>
+        <item>262,YT</item>
+        <item>52,MX</item>
+        <item>691,FM</item>
+        <item>373,MD</item>
+        <item>377,MC</item>
+        <item>976,MN</item>
+        <item>382,ME</item>
+        <item>212,MA</item>
+        <item>258,MZ</item>
+        <item>264,NA</item>
+        <item>674,NR</item>
+        <item>977,NP</item>
+        <item>31,NL</item>
+        <item>599,AN</item>
+        <item>687,NC</item>
+        <item>64,NZ</item>
+        <item>505,NI</item>
+        <item>227,NE</item>
+        <item>234,NG</item>
+        <item>683,NU</item>
+        <item>850,KP</item>
+        <item>47,NO</item>
+        <item>968,OM</item>
+        <item>92,PK</item>
+        <item>680,PW</item>
+        <item>507,PA</item>
+        <item>675,PG</item>
+        <item>595,PY</item>
+        <item>51,PE</item>
+        <item>63,PH</item>
+        <item>870,PN</item>
+        <item>48,PL</item>
+        <item>351,PT</item>
+        <item>1,PR</item>
+        <item>974,QA</item>
+        <item>40,RO</item>
+        <item>7,RU</item>
+        <item>250,RW</item>
+        <item>590,BL</item>
+        <item>685,WS</item>
+        <item>378,SM</item>
+        <item>239,ST</item>
+        <item>966,SA</item>
+        <item>221,SN</item>
+        <item>381,RS</item>
+        <item>248,SC</item>
+        <item>232,SL</item>
+        <item>65,SG</item>
+        <item>421,SK</item>
+        <item>386,SI</item>
+        <item>677,SB</item>
+        <item>252,SO</item>
+        <item>27,ZA</item>
+        <item>82,KR</item>
+        <item>34,ES</item>
+        <item>94,LK</item>
+        <item>290,SH</item>
+        <item>508,PM</item>
+        <item>249,SD</item>
+        <item>597,SR</item>
+        <item>268,SZ</item>
+        <item>46,SE</item>
+        <item>41,CH</item>
+        <item>963,SY</item>
+        <item>886,TW</item>
+        <item>992,TJ</item>
+        <item>255,TZ</item>
+        <item>66,TH</item>
+        <item>228,TG</item>
+        <item>690,TK</item>
+        <item>676,TO</item>
+        <item>216,TN</item>
+        <item>90,TR</item>
+        <item>993,TM</item>
+        <item>688,TV</item>
+        <item>971,AE</item>
+        <item>256,UG</item>
+        <item>44,GB</item>
+        <item>380,UA</item>
+        <item>598,UY</item>
+        <item>1,US</item>
+        <item>998,UZ</item>
+        <item>678,VU</item>
+        <item>39,VA</item>
+        <item>58,VE</item>
+        <item>84,VN</item>
+        <item>681,WF</item>
+        <item>967,YE</item>
+        <item>260,ZM</item>
+        <item>263,ZW</item>
+    </string-array>
+    <string-array name="dashboard_tabs">
+        <item>GÜNCELLEME</item>
+        <item>ANALİZİ</item>
+        <item>UYARILAR</item>
+    </string-array>
+
+    <string name="business_enquiries_title">İş Sorular</string>
+    <string name="tag_for_partners">.nowfloats.com</string>
+    <string name="title_activity_splash_screen_">Thinksity</string>
+    <string name="title_activity_edit__profile_">Profil Düzenle Etkinlik</string>
+
+    <string name="pre_signup_screen_six_text">senin doğrudan bağlantı kurmak için başlangıç, girişimciler ve işverenleri alın</string>
+    <string name="pre_signup_screen_seven_text">Özel öğrenci Thinksity deposunda sunar - günlükleri www.thinksity sitesi üzerine.</string>
+    <string name="title_activity_mobile__site_">Mobil Site Etkinliği</string>
+    <string name="onboarding_screen_1_title">Tebrik ederiz!</string>
+    <string name="onboarding_screen_1_desc">Biz yol boyunca size yardımcı olmak için buradayız. İşte bilmeniz gereken iki en temel henüz önemli şeyler</string>
+    <string name="onboarding_screen_3_title">Keşif fırsatlara yol açar</string>
+    <string name="onboarding_screen_2_title">içerik kral olduğu</string>
+    <string name="feedback">Yardıma mı ihtiyacınız var? Bizimle temasa geçin.</string>
+    <string name="noInternet">İnternet bağlantısı yok</string>
+    <string name="inbox_empty">Gelen boş!</string>
+   <string name="keep_move">Devam et!</string>
+    <string name="dont_shy">Utangaç olmayın!</string>
+    <string name="tell_world">Dünyaya anlat!</string>
+    <string name="Message_empty">Web sitenizde hiçbir mesaj aşağıda web sitenizi güncellemek için + düğmesine tıklayın vardır</string>
+    <string name="pre_signup_screen_one_text">Şimdi oluşturun yönetin ve daha Müşteriler çizer Bir İş web sitesi güncelleme</string>
+    <string name="pre_signup_screen_two_text">sürekli bu uygulamayı kullanarak oluşturulan ve kolayca yönetilen bir internet sitesini almak</string>
+    <string name="presignup_login_text">Zaten NowFloats hesabınız var mı?</string>
+    <string name="settings_feedback_link">ria@nowfloats.com</string>
+    <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.nowfloats</string>
+    <string name="interest">Ben ilgileniyorum</string>
+    <string name="contact_us_number">18601231233</string>
+    <string name="message_soon">Şimdi, güncelleme başlayın!</string>
+    <string name="store">mağaza</string>
+    <string name="empty_alert">Eğer yeni bir uyarı var en kısa sürede biz sizi bilgilendireceğiz</string>
+    <string name="settings_tou_url">https://www.getboost360.com/tnc/</string>
+    <string name="drop_us_on_email_or_call">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature.</string>
+    <string name="primary_contact_number_message">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to change this number.</string>
+
+    <string-array name="domain_array">
+        <item>.com</item>
+        <item>.net</item>
+    </string-array>
+    <string-array name="post_updates">
+        <item>Mesaj 5 Güncellemeler></item>
+        <item>Mesaj 10 Güncellemeler</item>
+    </string-array>
+    <string name="site_appearance_title">İşletme sitesi yeni bir görünüm bekliyor.</string>
+    <string name="site_appearance_text">Şimdi, müşterileriniz sitenizde daha fazla zaman harcamak yardımcı olmak ve onları iş aslında neye ihtiyacı olduğunu daha yapalım olacak you.It için ücretsiz özel, siteniz için yeni bir dinamik arayüz için kaydolarak deneyimini gezen müşterilerinizi geliştirmek.</string>
+    <string name="site_appearance_warn">Eğer yeni bir görünüm beğenmezseniz istediğiniz zaman, geri orijinal görünüme dönebilirsiniz.</string>
+
+    <string-array name="kitsune_feedback">
+        <item>Eski tema tercih ederim.</item>
+        <item>Müşterilerim eski tema tercih ediyor.</item>
+        <item>Eski tema vardı widget bazı göremiyorum.</item>
+        <item>Bu ne için ödeme değildir.</item>
+    </string-array>
+    <string name="conv_sa_title">Eğer yeni bir görünüm tadını çıkarıyor umut</string>
+    <string name="conv_sa_body">Işinizi web popüler arama motorları için optimize edilmiş ve çarpar ki coğrafi ilgili marka veya ürün mesajlaşma ile web sitenizin güncellenmesi üzerinde business.Keep yeri ve web sitenizin sihirli arama sıralamasında yükselen ve daha fazla ziyaretçi almak bkz ile.</string>
+    <string name="demo_plan">Bir demo planı şu anda. Web sitenizin daha iyi faydalanmak için, bizim ücretli planları birine yükseltin.</string>
+    <string name="free_plan">Sen özgür bir plan üzerinde şu anda. Web sitenizin daha iyi faydalanmak için, bizim ücretli planları birine yükseltin.</string>
+    <string name="account_detail">hesap detayları</string>
+    <string name="active">AKTİF</string>
+    <string name="expired">SÜRESİ DOLDU</string>
+    <string name="feching_search_detail">Arama ayrıntıları getiriliyor&#8230;</string>
+    <string name="week">hafta</string>
+    <string name="visit_this_month">ziyaret Bu ay</string>
+    <string name="search_queries">Arama Sorguları</string>
+    <string name="check_internet_connection">Ağ Bağlantısını Kontrol Edin</string>
+    <string name="email">E-POSTA</string>
+    <string name="call">ÇAĞRI</string>
+    <string name="send_email">Eposta gönder&#8230;</string>
+    <string name="faqs">SSS</string>
+    <string name="answer">Cevap</string>
+    <string name="ok">tamam</string>
+    <string name="logo">Logo</string>
+    <string name="upload_logo_image">Yükle Logo Resmi</string>
+    <string name="device_does_not_support_capturing_image">Hata - Cihazınız görüntüleri yakalamak desteklemiyor!</string>
+    <string name="select_image_upload">yüklemek için bir resim seçin</string>
+    <string name="visit_to_new_website">Yaşasın! Biz yeni bir web sitesi var. at ziyaret</string>
+    <string name="features_not_available">mevcut değil özellik</string>
+    <string name="check_store_for_upgrade_info">Yükseltme planları hakkında daha fazla bilgi için mağaza kontrol</string>
+    <string name="goto_store">Mağazaya Git</string>
+    <string name="cancel">İptal etmek</string>
+    <string name="password_updated">Parolanız güncellendi.</string>
+    <string name="entered_password_incorrect">Girdiğiniz şifre yanlış.</string>
+    <string name="please_wait">Lütfen bekle</string>
+    <string name="enter_valid_website">Geçerli Web Sitesi girin</string>
+    <string name="enter_valid_email">Geçerli e-posta girin</string>
+    <string name="primary_num_can_not_empty">Birincil numara boş olamaz</string>
+    <string name="enter_password_6to12_char">Telefon numarası 6 &#8211; 12 karakter arasında olmalıdır</string>
+    <string name="basic_info">temel Bilgiler</string>
+    <string name="business_name_more_than_3char">İşletme Adı en fazla 3 harf olmalıdır</string>
+    <string name="try_again">Tekrar dene&#8230;</string>
+    <string name="wait_while_loading_category">Kategoriler yükleme sırasında bekleyin&#8230;</string>
+    <string name="select_category">Bir kategori seç</string>
+    <string name="both_password_not_matched">Her iki şifre eşleşmiyor.</string>
+    <string name="min_6char_required">En az 6 karakter gereklidir.</string>
+    <string name="wait_while_unsubscribing">Aboneliğinizi iptal ederken bekleyin&#8230;</string>
+    <string name="select_page">satın almak bir Sayfa Seç</string>
+    <string name="look_like_no_facebook_page">Bu hesapla bağlantılı herhangi bir Facebook sayfası var gibi görünüyor.</string>
+    <string name="wait_while_subscribing">abone bekleyin&#8230;</string>
+    <string name="facebook_page"> Facebook Sayfası</string>
+    <string name="disconnected">Bağlantı kesildi</string>
+    <string name="success">başarı</string>
+    <string name="failed">Başarısız oldu</string>
+    <string name="alert">uyarı</string>
+    <string name="no_network">Ağ yok</string>
+    <string name="enable">etkinleştirme</string>
+    <string name="loading">Yükleniyor&#8230;</string>
+    <string name="updating_password">Parolanız güncelleniyor&#8230;</string>
+    <string name="custom_page_details">ayrıntılı olarak açıklayınız. girintiler, madde işaretleri ve metni biçimlendirmek için başlık stilleri gibi özel düzen özellikleri kullanın. içerik geliştirmek için görüntü ve bağlantılar ekleyin.</string>
+    <string name="enter_the_title">başlık girin</string>
+    <string name="enter_the_description">açıklamasını girin</string>
+    <string name="page_successfully_created">Sayfa Başarıyla oluşturulan</string>
+    <string name="enter_different_title_try_again">Farklı Başlık girin ve tekrar deneyin</string>
+    <string name="something_went_wrong_try_again">Bir şeyler ters gitti, tekrar deneyin</string>
+    <string name="page_updated">Sayfa güncellendi</string>
+    <string name="enter_image_url">Görüntü URL girin</string>
+    <string name="enter_hyperlink_url">Köprü URL girin</string>
+    <string name="no_image">resim yok</string>
+    <string name="custom_pages">özel Sayfalar</string>
+    <string name="page_selected">SAYFA SEÇİLMİŞ</string>
+    <string name="are_you_sure_want_to_delete">Emin misiniz?</string>
+    <string name="page_will_deleted">Sayfa silinecek</string>
+    <string name="deleted_in_capital">SİL</string>
+    <string name="cancel_in_capital">İPTAL ETMEK</string>
+    <string name="deleting">silme&#8230;</string>
+    <string name="page_removed">Sayfalar kaldırıldı&#8230;</string>
+    <string name="updating_image">güncelleniyor görüntü&#8230;</string>
+    <string name="add_photo">Fotoğraf ekle</string>
+    <string name="select_file">Dosya Seç</string>
+    <string name="image_successfully_apdated">Görüntü başarıyla yüklendi</string>
+    <string name="can_not_upload_image">Resim Yükle olamaz</string>
+    <string name="check_your_crediential">Kimlik bilgilerinizi kontrol edin</string>
+    <string name="something_went_wrong">bir şeyler yanlış gitti!!</string>
+    <string name="enter_correct_user_name">Doğru kullanıcı adı girin.</string>
+    <string name="check_your_email">E-postanı kontrol et</string>
+    <string name="enter_valid_username_or_password">geçerli bir kullanıcı adı / şifre girin</string>
+    <string name="forgot_password">Parolanızı mı unuttunuz</string>
+    <string name="enter_user_name">Kullanıcı adı girin</string>
+    <string name="we_sent_email_with_password">Biz şifre ayrıntıları içeren bir e-posta gönderdik</string>
+    <string name="logging_out">çıkış işlemi&#8230;</string>
+    <string name="unable_to_logout">Oturumu mümkün değil</string>
+    <string name="percent_site_completed"> Sitesi tamamlandı</string>
+    <string name="choose_app_to_share">paylaşmak için uygulamayı seçin</string>
+    <string name="share_message">Mesajınızı paylaş</string>
+    <string name="no_app_available_for_action">eylem için hazır uygulama yok</string>
+    <string name="failed_to_download_image">Image indirmek için Başarısız</string>
+    <string name="can_not_share_image_offline_mode">Çevrimdışı modunda görüntü içeriği paylaş olamaz</string>
+    <string name="no_app_to_share">Hiçbir uygulama paylaşmak için</string>
+    <string name="share">hisse</string>
+
+    <string name="ps_sc3_lbl3">oluşturmak ve anında web sitenizi \ngüncellemek için Facebook sayfası ile giriş yapın. \nŞiddetle tavsiye!</string>
+    <string name="ps_sc4_lbl3">Yer-SEO Tabanlı ile <sup> <small> TM </small> </sup>, ilgili \nanahtar kelimeler için keşfedilen ve arama \nmotorlarında sıralamanızı artırmak olsun</string>
+    <string name="ps_sc8_lbl3">in-app Store\'dan iş web sitesi için \nek özellikler olsun.</string>
+    <string name="business_enquiry_empty">Biz en kısa sürede bir \nsorgu olsun size bir bildirim \ngönderecektir.</string>
+    <string name="searchquery_empty">Hiçbir şey şu anda burada görmek. \nMesajı iyi ve gelişmek</string>
+    <string name="empty_image_gallery">ürün ve \nhizmetlerin resim eklemek \niçin + düğmesine çarptı. </string>
+    <string name="empty_product_gallery">En çok satan ürünler \nbasın + keşfetti alır emin olun ve onları \nburada listelemek için.</string>
+    <string name="auto_update_from_social_network">Sosyal Ağlar \nOtomatik Güncelleme</string>
+    <string name="auto_share_to_social_networks">Sosyal Ağlar \niçin Otomatik Paylaş</string>
+
+    <string name="post_update">Mesaj Bir Güncelleme</string>
+    <string name="post_in_capital">posta</string>
+    <string name="enter_message">Lütfen bir mesaj giriniz</string>
+    <string name="send_to_subscribers">Aboneler gönder</string>
+    <string name="unable_to_send_website_updates_to_subscribers">E-posta yoluyla abonelere web güncellemeleri göndermek için bu özelliği etkinleştirin.</string>
+    <string name="add_context_to_picture">resme bağlam vermek için bazı metin ekleyin.</string>
+    <string name="select_offline_image">Çevrimdışı Görüntüler Sadece Seçiniz</string>
+    <string name="update_not_done">Güncelleştirme tam bitmiş değil !!!</string>
+    <string name="do_you_want_to_cancel">Eğer iptal etmek istiyor musunuz?</string>
+    <string name="yes">Evet</string>
+    <string name="no">Yok hayır</string>
+    <string name="retry_create_new_post">Zaman aşımı Retry yeni yazı oluşturun</string>
+    <string name="click_again_to_exit">Çıkmak için tekrar tıklayınız&#8230;</string>
+    <string name="app_update_available">Mevcut uygulama güncellemesi</string>
+    <string name="update_nowfloats_app">Sen NowFloats Boost eski bir sürümünü kullanıyorsunuz. Yeni özellikler ve geliştirmeler almak için uygulamayı güncelleyin</string>
+    <string name="update">Güncelleştirme</string>
+    <string name="update_website_twice_week"><![CDATA[<font>Update your website </font>\" + \"<font color=\'#FFB900\'>twice a week. </font>\"+\"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>]]></string>
+    <string name="people_are_searching_keep_your_updates"><![CDATA[<font>People around your business are searching for stuff you sell, so keep your updates </font>\" + \"<font color=\'#FFB900\'>relevant and fresh.</font>\" + \"<font>This will you lead to attract more customers and generate more revenue.</font>]]></string>
+    <string name="got_it_next">Anladım, Sonraki</string>
+    <string name="greate_thanks">Çok teşekkürler</string>
+    <string name="get_free_com">ücretsiz olsun .com!</string>
+    <string name="you_are_eligible_to_free_domain">Işte! Sen özgür bir etki elde etmek uygun değildir. Seçtiğiniz satın almak bir .com / .net talep ve biz 24 saat içinde web sitenize entegre olacak.</string>
+    <string name="request_now">Şimdi talep</string>
+    <string name="wait_for_new_look">Yeni görünüm için beklemek&#8230;</string>
+    <string name="your_website_appearance_changed">Sitenizin Görünüm değiştirilir</string>
+    <string name="can_not_change_appearance">Web Görünüm değiştirmek olamazdı</string>
+    <string name="buy_in_capital">satın almak</string>
+    <string name="later_in_capital">SONRA</string>
+    <string name="buy_light_house_plan">Satın Feneri tüm özellikleri almak için plan</string>
+    <string name="demo_plan_expired">Sizin demo planı süresi doldu ve müşterilerinizin web sitenizi görmek mümkün olacak olsa da, bazı temel özellikleri devre dışı bırakıldı. Bu ürün katalog, iş sorular, ve diğerleri arasında, siteyi güncellemek için yeteneği vardır.</string>
+    <string name="renew_in_capital">YENİLEME</string>
+    <string name="ignore_in_capital">ALDIRMAMAK</string>
+    <string name="renew_wildfire_plan">Wildfire planı yenilemek</string>
+    <string name="continue_auto_promoting_on_google">-Auto tanıtmaya devam Google gibi dijital pazarlama kanallarını kullanarak web sitenize. iş mesajları orman yangını gibi yayıldı emin olmak için planı yenilemek edin.</string>
+    <string name="renew_light_house_plan">tüm özellikleri elde etmek Feneri planını yenilemek</string>
+    <string name="light_house_plan_expired_some_features_visible">Sizin Feneri planın süresi doldu ve müşterilerinizin web sitenizi görmek mümkün olacak olsa da, bazı temel özellikleri devre dışı bırakıldı. Bu ürün katalog, iş sorular, ve diğerleri arasında, sitenizi güncellemek için yeteneği dahil</string>
+    <string name="share_with">İle paylaş:</string>
+    <string name="chat">Sohbet</string>
+    <string name="site__meter">yer metre</string>
+    <string name="product_gallery">Ürün Galerisi</string>
+    <string name="image_gallery">Resim Galerisi</string>
+    <string name="business_profile">İş Profili</string>
+    <string name="upload_background_image">Arkaplan Resim Yükle</string>
+    <string name="image_uploading_failed_try_again">Görüntü yükleme başarısız oldu. Lütfen tekrar deneyin</string>
+    <string name="deleting_image">silme görüntü&#8230;.</string>
+    <string name="uploading">Yükleme</string>
+    <string name="upload_successful">Başarılı yükle</string>
+    <string name="upload_failed">Yükleme başarısız</string>
+    <string name="error_in_uploading">Yüklemeyi hata</string>
+    <string name="uploaded_and">Yüklenen ve</string>
+    <string name="uploading_image">Yükleme Görüntü</string>
+    <string name="product_removed">Ürün kaldırılır&#8230;</string>
+    <string name="replacing_image">değiştirilmesi görüntü&#8230;.</string>
+    <string name="product_image_replaced_successfully">Ürün resmi başarıyla yerine</string>
+    <string name="new_product_added">Yeni ürün eklendi</string>
+    <string name="add_product">Ürün ekle</string>
+    <string name="can_not_select_more_than_5images">Birden fazla 5 fotoğraf seçemezsiniz</string>
+    <string name="edit_product">Düzenleme Ürün</string>
+    <string name="updating">Güncelleniyor&#8230;</string>
+    <string name="product_successfully_updated">Ürün başarıyla güncellendi</string>
+    <string name="delete_">silmek</string>
+    <string name="upload_product_image">Ürün resmi yükleyin</string>
+    <string name="select_action">senin eylemi seçmek</string>
+    <string name="wait_while_deleting_image">Görüntü silme bekleyin&#8230;</string>
+    <string name="successfully_deleted">başarıyla silindi</string>
+    <string name="can_not_delete_image">Görüntü sil Could not</string>
+    <string name="select_priority">seçin Öncelik</string>
+    <string name="enter_product_name">Ürün adını girin</string>
+    <string name="enter_product_price">Ürün fiyatını girin</string>
+    <string name="discount_amount_can_not_more_than_price">İndirim tutarı ürün fiyatından daha fazla olamaz</string>
+    <string name="select_currency">seçin Döviz</string>
+    <string name="replace_photo">Fotoğraf değiştirin</string>
+    <string name="upload_photo">Fotoğraf yükle</string>
+    <string name="inr">INR</string>
+    <string name="email_validation__failed">E-posta doğrulama başarısız</string>
+    <string name="suggest_tag_failed_try_again">Tekrar Etiket Başarısız deneyin öneririz</string>
+    <string name="number_already_registered">Numara zaten kayıtlı</string>
+    <string name="number_already_registered_enter_different">Girilen numara zaten bizimle kayıtlı. farklı bir girin.</string>
+    <string name="enter_mobile_number">cep telefonu numarasını girin</string>
+    <string name="enter_business_name">iş adını girin</string>
+    <string name="select_business_category">Seç iş kategorisi</string>
+    <string name="enter_city">şehir girin</string>
+    <string name="select_country">ülke seçin</string>
+    <string name="checking_contact_number">Denetleme iletişim numarası &#8230;</string>
+    <string name="creating_website">web sitesi oluşturma &#8230;</string>
+    <string name="enter_valid_website_name">Geçerli bir web sitesi adı girin</string>
+    <string name="chosen_website_available">Seçilen web sitesi adresi mevcuttur!</string>
+    <string name="chosen_website_not_available">Seçilen web sitesi adresi mevcut değildir!</string>
+    <string name="error">hata!</string>
+    <string name="learn_more_about_version">Yeni sürüm hakkında daha fazla bilgi</string>
+    <string name="fill_reasons">nedenlerini doldurunuz</string>
+    <string name="check_any_checkbox">CheckBox herhangi kontrol edin</string>
+    <string name="wait_while_reverting">geri alma sırasında bekleyin&#8230;</string>
+    <string name="upgrade_now">Şimdi Yükselt</string>
+    <string name="successfully_revert">başarıyla geri alındı</string>
+    <string name="failed_to_revert">Geri döndür için Başarısız</string>
+    <string name="know_more">BİLİYOR DAHA</string>
+    <string name="book_domain">Kitap Alan</string>
+    <string name="domain_lookup">Domain LookUp</string>
+    <string name="enter_domain_nmae_to_continue">Devam etmek için etki alanı adını girin</string>
+    <string name="domain_is_available">Alan kullanılabilir &#8230;</string>
+    <string name="domain_not_available">Alan mevcut değil &#8230;</string>
+    <string name="domain_booking_confirmation">Alan Rezervasyon Onay</string>
+    <string name="hello_do_you_want_this">Merhaba Eğer bu ayarlamak ister misiniz</string>
+    <string name="as_domain">Alan adınız olarak</string>
+    <string name="thank_for_booking_domain">sizin etki Rezervasyon için teşekkür ederiz</string>
+    <string name="activate_in_24_hours">24 saat içinde aktif hale gelecektir.</string>
+    <string name="okay">Tamam</string>
+    <string name="thank_you_for_your_interest">İlginiz için teşekkürler!</string>
+    <string name="processing_request">İsteğiniz işlenirken</string>
+    <string name="username">kullanıcı adı</string>
+    <string name="plans_in_use">KULLANIM PLANLARI</string>
+    <string name="buy">satın almak</string>
+    <string name="plan_name">Plan Adı</string>
+    <string name="purchase_date">Satınalma tarihi</string>
+    <string name="expiry_date">Son kullanma tarihi</string>
+    <string name="status">durum</string>
+    <string name="renew">yenilemek</string>
+    <string name="monday">Pazartesi</string>
+    <string name="tuesday">Salı</string>
+    <string name="wednesday">Çarşamba</string>
+    <string name="thursday">Perşembe</string>
+    <string name="friday">Cuma</string>
+    <string name="saturday">Cumartesi</string>
+    <string name="sunday">Pazar</string>
+    <string name="your_name">Adınız</string>
+    <string name="business_name">iş adı</string>
+    <string name="post_on_website">Web sitenize göndermek</string>
+    <string name="business_category">İş Kategorisi</string>
+    <string name="business_description">iş tanımı</string>
+    <string name="login">Oturum aç</string>
+    <string name="tweet">Cıvıldamak</string>
+    <string name="logout">Çıkış Yap</string>
+    <string name="create_website_using">kullanarak web sitesi oluşturmak</string>
+    <string name="email_address">E-posta Adres</string>
+    <string name="log_in">&#160;oturum aç</string>
+    <string name="phone_number">Telefon numarası</string>
+    <string name="share_website">Share web sitesi</string>
+    <string name="tell_world_about_your_business_on_facebook_twitter">facebook ve twitterTell facebook ve twitterTell facebook ve twitterTell facebook ve twitterTell işinizle ilgili dünyanın üzerinde iş paylaşımına onu hakkında Dünya üzerinde iş paylaşımına onu hakkında Dünya üzerinde iş payı bu konuda dünyanın üzerinde iş payı bu konuda dünyaya anlatmak facebook paylaşmak ve facebook ve twitter üzerinden iş payı hakkında bu dünyayı twitterTell</string>
+    <string name="search">Arama</string>
+    <string name="write_page_title">(Neden Biz Hakkımızda örneğin? Vs.) sayfa başlığını yazın</string>
+    <string name="describe_in_detail">ayrıntılı bir şekilde açıklayın</string>
+    <string name="about_us">Hakkımızda</string>
+    <string name="enter_hyperlink_tag">Köprü Etiketini girin</string>
+    <string name="enter_domain_name">etki alanı adını girin</string>
+    <string name="crop">ekin</string>
+    <string name="rotate">döndürmek</string>
+    <string name="done">tamam</string>
+    <string name="hello">Merhaba</string>
+    <string name="thats_ok_it_happens_tell_us_why">Sorun değil. Olur. Ama neden bize söyleyebilir misin?</string>
+    <string name="prefered_old_theme">Eski tema tercih ederim.</string>
+    <string name="my_customer_prefer_old_theme">Müşterilerim eski tema tercih ediyor.</string>
+    <string name="some_widget_i_donot_know_in_old_theme">Eski tema vardı widget bazı göremiyorum.</string>
+    <string name="its_not_what_i_paid_for">Bu ne için ödeme değil.</string>
+    <string name="other_reasons">Diğer nedenler (yazın lütfen)&#8230;</string>
+    <string name="enter_the_reason">diğer nedeni girin</string>
+    <string name="submit">GÖNDER</string>
+    <string name="no_alerts">Hiçbir uyarı!</string>
+    <string name="overall_visits">Genel Ziyaretler</string>
+    <string name="unique_visitors">Genel Ziyaretler</string>
+    <string name="address_line">Adres satırı</string>
+    <string name="town_city">İlçe / Şehir</string>
+    <string name="pin_area_code">Pim / Alan Kodu</string>
+    <string name="state_province">Eyalet / İl</string>
+    <string name="country">ülke</string>
+    <string name="nowfloats.com">.nowfloats.com</string>
+    <string name="add_a_page">Bir Sayfa Ekle</string>
+    <string name="use_custom_pages_to_describe_business">detaylı iş teklifleri tanımlamak için özel sayfalar kullanın. Ekleyebilir ve metin, bağlantılar ve resimler biçimi paragraflar olabilir!</string>
+    <string name="retry">Tekrar dene</string>
+    <string name="new_in_capital">YENİ</string>
+    <string name="facebook_analytics">Facebook Analytics</string>
+    <string name="facebook_response_error">Error while receiving data from Facebook</string>
+    <string name="powered_by">Tarafından desteklenmektedir </string>
+    <string name="nowfloats"> NowFloats</string>
+    <string name="version">versiyon</string>
+    <string name="float_point_name">Nokta Adını Float</string>
+    <string name="your_site_health">Ne kayıp?</string>
+    <string name="primary_number">Birincil Numara</string>
+    <string name="alternate_number1">Alternatif Sayı 1</string>
+    <string name="alternate_number2">Alternatif Sayı 2</string>
+    <string name="facebook_page_name">Facebook Sayfa Adı</string>
+    <string name="update_your_website_to_increase_discoverability">keşfedilebilirliğini artırmak için web sitenizi güncellemek</string>
+    <string name="update_logo">güncelleme Logo</string>
+    <string name="of">of</string>
+    <string name="password">parola</string>
+    <string name="forgot_your_password">Şifrenizi mi unuttunuz</string>
+    <string name="open_in_browser">TARAYICIDA AÇ</string>
+    <string name="website_posts">Web Sitesi \n Mesajlar</string>
+    <string name="to">to</string>
+    <string name="facebook">Facebook</string>
+    <string name="twitter">Twitter</string>
+    <string name="website">Web sitesi</string>
+    <string name="donot_like_it_tap_on_card">beğenmedim? değiştirmek için kart üzerine dokunun</string>
+    <string name="create_website">CORANI MY WEB SİTESİ</string>
+    <string name="by_pressing_above_button_to_agree">düğmesinin üzerinde basarak, Sen kabul eden</string>
+    <string name="number_tocall_says">+919535576625 diyor &#8230;</string>
+    <string name="sent_on">gönderilen</string>
+    <string name="wow_this_is_amazing_offer_is_it_avail_trip">Vay bu inanılmaz bir tekliftir. Ocak ayında mevcut bu gezi mı?</string>
+    <string name="customer_replied_to_your_post">Müşteri sizin göndermenizi cevaplamış:</string>
+    <string name="congratulations">Tebrik ederiz!</string>
+    <string name="choose_country">Bir ülke seç</string>
+    <string name="you_website">Senin internet siten</string>
+    <string name="your_website_ready">Web siteniz hazır</string>
+    <string name="your_website_created_desktop_version">Yakındaki herhangi bir PC / Mac üzerinde yeni oluşturulan web siteleri, masaüstü sürümünü görüntüleyebilirsiniz</string>
+    <string name="show_mobile_site">Mobil Sitesi göster</string>
+    <string name="large_text">büyük Metin</string>
+    <string name="medium_text">orta Yazı</string>
+    <string name="current_password">Şimdiki Şifre</string>
+    <string name="change_password">Şifre değiştir</string>
+    <string name="new_password">Yeni Şifre</string>
+    <string name="confirmed_password">Şifreyi Onayla</string>
+    <string name="search_here">Burada ara</string>
+    <string name="enter_your_user_name">Kullanıcı adınızı giriniz</string>
+    <string name="upload_featured_image">Sunulan Resim Yükle</string>
+    <string name="using_camera">kamerayı kullanma</string>
+    <string name="from_gallery">galeriden</string>
+    <string name="values">değerler</string>
+    <string name="date">tarih</string>
+    <string name="choose_your_location">Bulunduğunuz yeri seçin</string>
+    <string name="drag_to_map_your_location">senin Store konumuna haritayı sürükleyin.</string>
+    <string name="confirm_in_capital">ONAYLAMAK</string>
+    <string name="show_me">Göster bana!</string>
+    <string name="whats_new_default">Varsayılan</string>
+    <string name="whats_new">ne var ne yok</string>
+    <string name="app_version">versiyon 4.4.6</string>
+    <string name="whats_new_done">TAMAMLANDI</string>
+    <string name="website_name">Sitenizin Adı</string>
+    <string name="alerts_text">Uyarılar</string>
+    <string name="select_action_dialog_title">Sunulan Resim Yükle</string>
+    <string name="text_replace_image">Resmi Değiştir</string>
+    <string name="text_delete_image">Görüntü silme</string>
+    <string name="product_detail_product_name">Ürün adı</string>
+    <string name="product_detail_product_descr">Ürün Açıklaması</string>
+    <string name="product_detail_currency">seçin Döviz</string>
+    <string name="product_detail_product_price">Ürün Fiyatı</string>
+    <string name="product_details_discount">İndirim (Varsa)</string>
+    <string name="product_detail_online_link">Çevrim içi satın al Bağlantısı (Varsa)</string>
+    <string name="product_detail_priority">seçin Öncelik</string>
+    <string name="product_details_shipment_dur">Gün Sevk Süresi</string>
+    <string name="product_detail_availability">Ürün bulunabilirliği</string>
+    <string name="product_detail_free_shipping">Ücretsiz kargo</string>
+    <string name="product_detail_delete_btn_text">ürünü sil</string>
+    <string name="site_appearance_revert_to_old">Eski sürüme geri dön</string>
+    <string name="site_appearance_upgrade_text">Şimdi Yükselt</string>
+    <string name="site_meter_body_text">Siteniz sağlığını artırmak için aşağıdaki görevi tamamlamak. Yüksek oranda sitenize daha fazla trafik çevirir.</string>
+    <string name="site_meter_more_traffic_text">Yüksek puanlar sitenize daha fazla trafik çevirir.</string>
+    <string name="tool_bar_save_text">KAYIT ETMEK</string>
+    <string name="single_row_card_upgrade_text">YÜKSELTME</string>
+    <string name="Setting_terms_of_use">Kullanım Şartları</string>
+    <string name="welcome_back">Tekrar hoşgeldiniz</string>
+
+
+    <string-array name="tabs">
+        <item>Week</item>
+        <item>Month
         </item>
-    <item>Year</item>
-  </string-array>
-  <string name="visits_this_week">visits this week</string>
-  <string name="visits_this_year">visits this year</string>
-  <string name="Month">Month</string>
-  <string name="day">Day</string>
+        <item>Year</item>
+    </string-array>
+    <string name="visits_this_week">visits this week</string>
+    <string name="visits_this_year">visits this year</string>
+    <string name="Month">Month</string>
+    <string name="day">Day</string>
 
-  <string-array name="priority_list">
-    <item>VARSAYILAN</item>
-    <item>YÜKSEK</item>
-    <item>ORTA</item>
-    <item>DÜŞÜK</item>
-  </string-array>
-  <string-array name="weeks">
-    <item>Week 1</item>
-    <item>Week 2</item>
-    <item>Week 3</item>
-    <item>Week 4</item>
-    <item>Week 5</item>
-    <item>Week 6</item>
-  </string-array>
-  <string-array name="months">
-    <item>ocak</item>
-    <item>şubat</item>
-    <item>mart</item>
-    <item>nisan</item>
-    <item>mayıs</item>
-    <item>haziran</item>
-    <item>temmuz</item>
-    <item>ağustos</item>
-    <item>eylül</item>
-    <item>ekim</item>
-    <item>kasım</item>
-    <item>aralık</item>
-  </string-array>
-  <string-array name="quikr_tip_points">
+    <string-array name="priority_list">
+        <item>VARSAYILAN</item>
+        <item>YÜKSEK</item>
+        <item>ORTA</item>
+        <item>DÜŞÜK</item>
+    </string-array>
+    <string-array name="weeks">
+        <item>Week 1</item>
+        <item>Week 2</item>
+        <item>Week 3</item>
+        <item>Week 4</item>
+        <item>Week 5</item>
+        <item>Week 6</item>
+    </string-array>
+    <string-array name="months">
+        <item>ocak</item>
+        <item>şubat</item>
+        <item>mart</item>
+        <item>nisan</item>
+        <item>mayıs</item>
+        <item>haziran</item>
+        <item>temmuz</item>
+        <item>ağustos</item>
+        <item>eylül</item>
+        <item>ekim</item>
+        <item>kasım</item>
+        <item>aralık</item>
+    </string-array>
+    <string-array name="quikr_tip_points">
         <item>Please be as detailed as possible in the description of the update. For example, if
             you are posting an update about a car, mention the make, model, year and kms driven.
             If you are posting an update about an apartment, mention whether it\'s for rent or sale,
             area and number of rooms (1 BHK, 2BHK etc)</item>
-    <item>We recommend that you post the update with a clear image of the product</item>
-    <item>Each ad you post is live on Quikr for 30 days</item>
-    <item>Your primary email Id is shared with Quikr and you would receive any leads for the ads on this email id </item>
-    <item>The details of all ads posted can be viewed in <b>Analytics -> Off-page analytics -> Quikr</b></item>
-    <item>To ensure optimal experience for all users, you can post only 1 update to Quikr per day</item>
-  </string-array>
-  <string name="title_activity_business__address_">Business Address</string>
-  <string name="title_activity_contact__info_">Contact Information</string>
+        <item>We recommend that you post the update with a clear image of the product</item>
+        <item>Each ad you post is live on Quikr for 30 days</item>
+        <item>Your primary email Id is shared with Quikr and you would receive any leads for the ads on this email id </item>
+        <item>The details of all ads posted can be viewed in <b>Analytics -> Off-page analytics -> Quikr</b></item>
+        <item>To ensure optimal experience for all users, you can post only 1 update to Quikr per day</item>
+    </string-array>
+    <string name="title_activity_business__address_">Business Address</string>
+    <string name="title_activity_contact__info_">Contact Information</string>
 
 
-  <!--this part is for FAQ harcoded strings -->
-  <string-array name="faqmain">
-    <item>WELCOME TO THE ONLINE WORLD</item>
-    <item>WHAT\'S NOWFLOATS</item>
-    <item>UPDATING CONTENT</item>
-    <item>ENGAGING CUSTOMERS</item>
-    <item>NOWFLOATS APPS, WEB, SMS</item>
-    <item>NOWFLOATS DISCOVERY METHOD</item>
-    <item>GROWING YOUR BUSINESS WITH NOWFLOATS</item>
-    <item>NOT A FIRST TIME WEBSITE CREATOR?</item>
-    <item>PLANS</item>
-    <item>OTHER INFO</item>
-  </string-array>
-  <string name="allow_boost_to_read_your">Please allow Boost to read your Facebook page insights</string>
-  <string name="gathering_fcebook_analytics">Gathering Facebook Page analytics</string>
-  <string name="please_wait_while_collecting_facebook_data">Please wait, as we are collecting statistics from your Facebook Page. It usually takes upto 24 hours to fetch data.</string>
-  <string name="updates_not_found">Updates not found!</string>
-  <string name="Logo_percentage">5</string>
-  <string name="business_hours">5</string>
 
 
-  <string name="kitsune_pre_signup_text1">Manage and update your</string>
-  <string name="kitsune_pre_signup_text2">Kitsune powered website</string>
-  <string name="error_invoice">Error while creating invoice</string>
-  <string name="help_and_support">Help and Support</string>
-  <string name="product_checkout">Product Checkout</string>
-  <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
-
-  <string name="getlink">Next</string>
-
-  <string name="business_apps">Business Apps</string>
-
-  <string name="Madman_design_studio">Madman\'s Design Studio</string>
-
-  <string name="congratulation_android_business_app_development">Congrats! Your free Android app is under development. Congrats! Your free Android app is under development. You will be able to download and share this app once it is published to the Play Store. This will take between 2&#8211;3 days</string>
-
-  <string name="congratulation_ios_business_app_development">Congrats! Your iOS app is under development. You will be able to download and share this app once it is published to the App Store.</string>
-
-  <string name="android_app_preview">PREVIEW YOUR\nANDROID APP</string>
-
-  <string name="ios_app_preview">PREVIEW YOUR\niOS APP</string>
-
-  <string name="get_ios_app">GET YOUR iOS APP\nFOR INR 6000/-</string>
-
-  <string name="android_app"> Android App</string>
-
-  <string name="ios_app"> iOS App</string>
-
-  <string name="increase_our_site_health">increase your site health score</string>
-
-  <array name="businessboldtext">
-    <item>A mobile app\nfor your customers</item>
-    <item>Make your brand famous</item>
-    <item>Notify your customers\nwherever they are</item>
-    <item>Offline access to your\nbusiness details</item>
-  </array>
+    <!--this part is for FAQ harcoded strings -->
+    <string-array name="faqmain">
+        <item>WELCOME TO THE ONLINE WORLD</item>
+        <item>WHAT\'S NOWFLOATS</item>
+        <item>UPDATING CONTENT</item>
+        <item>ENGAGING CUSTOMERS</item>
+        <item>NOWFLOATS APPS, WEB, SMS</item>
+        <item>NOWFLOATS DISCOVERY METHOD</item>
+        <item>GROWING YOUR BUSINESS WITH NOWFLOATS</item>
+        <item>NOT A FIRST TIME WEBSITE CREATOR?</item>
+        <item>PLANS</item>
+        <item>OTHER INFO</item>
+    </string-array>
+    <string name="allow_boost_to_read_your">Please allow Boost to read your Facebook page insights</string>
+    <string name="gathering_fcebook_analytics">Gathering Facebook Page analytics</string>
+    <string name="please_wait_while_collecting_facebook_data">Please wait, as we are collecting statistics from your Facebook Page. It usually takes upto 24 hours to fetch data.</string>
+    <string name="updates_not_found">Updates not found!</string>
+    <string name="Logo_percentage">5</string>
+    <string name="business_hours">5</string>
 
 
-  <array name="businesssmalltext">
-    <item>Your way to a permanent place in your\ncustomer\'s phone.</item>
-    <item>Beat your competition and be the first ones\nto get your own Mobile App.</item>
-    <item>Send personalized notifications to your\ncustomers about your products and offerings.
-    </item>
-    <item>Now your customers can reach your store\neven without an internet connection.</item>
-  </array>
-  <string name="alternate_number3">Alternate Number 3</string>
-  <string name="subscriber_second_text">Subscription is a great way to engage with your existing customers and tell them about latest offers or new product launches</string>
-  <string name="find_your_subscribers">Find your subscribers</string>
-  <string name="title_for_quikrr">Write message title(Quikrr only)</string>
-  <string name="guidlines">Guidelines for posting to Quikr</string>
-  <string name="quikr_message">Good news! You can now publish your updates as product ads to Quikr. Please follow the guidelines mentioned below to ensure that your ad is successfully posted.</string>
-  <string name="search_ranking">Search Ranking</string>
-  <string name="spinner_title">Filter</string>
-  <string name="bubble_in_app_message">This will help you to sell products through WhatsApp</string>
-  <string name="boost_bubble">Boost Bubble</string>
-  <string name="accessibility_message">go ahead &amp; start sharing on WhatsApp</string>
-  <string name="bubble_in_app_second_message">You just have to grant us \"Accessibility\" permission and start sharing!</string>
-  <string name="open_setting">Open Settings</string>
-  <string name="take_me_there">Take me there</string>
-  <string name="screen_overlay_permission">Screen overlay permission</string>
-  <string name="required_overlay_permission">Checkout new feature \"Boost Bubble\", easy to share products</string>
-  <string name="call_tracker">Call Tracker</string>
-  <string name="successfully_downloaded">Successfully Downloaded</string>
-  <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
-  <string name="website_domain_name">.nowfloats.com</string>
-  <string name="downloading">File downloading&#8230;</string>
-  <string name="play_with_underline"><u>PLAY</u></string>
-  <!--    <string name="vmn_message_text">This is displayed on your website and you can track all customer calls &amp; logs here.</string>-->
-  <string name="resend"><![CDATA[<b>Resend</b>]]></string>
+    <string name="kitsune_pre_signup_text1">Manage and update your</string>
+    <string name="kitsune_pre_signup_text2">Kitsune powered website</string>
+    <string name="error_invoice">Error while creating invoice</string>
+    <string name="help_and_support">Help and Support</string>
+    <string name="product_checkout">Product Checkout</string>
+    <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
+
+    <string name="getlink">Next</string>
+
+    <string name="business_apps">Business Apps</string>
+
+    <string name="Madman_design_studio">Madman\'s Design Studio</string>
+
+    <string name="congratulation_android_business_app_development">Congrats! Your free Android app is under development. Congrats! Your free Android app is under development. You will be able to download and share this app once it is published to the Play Store. This will take between 2&#8211;3 days</string>
+
+    <string name="congratulation_ios_business_app_development">Congrats! Your iOS app is under development. You will be able to download and share this app once it is published to the App Store.</string>
+
+    <string name="android_app_preview">PREVIEW YOUR\nANDROID APP</string>
+
+    <string name="ios_app_preview">PREVIEW YOUR\niOS APP</string>
+
+    <string name="get_ios_app">GET YOUR iOS APP\nFOR INR 6000/-</string>
+
+    <string name="android_app"> Android App</string>
+
+    <string name="ios_app"> iOS App</string>
+
+    <string name="increase_our_site_health">increase your site health score</string>
+
+    <array name="businessboldtext">
+        <item>A mobile app\nfor your customers</item>
+        <item>Make your brand famous</item>
+        <item>Notify your customers\nwherever they are</item>
+        <item>Offline access to your\nbusiness details</item>
+    </array>
 
 
-  <string-array name="spinner_list_item_array">
-    <item>Rank Increased</item>
-    <item>Rank Maintained</item>
-    <item>Rank Decreased</item>
-    <item>New</item>
-    <item>Lost</item>
-  </string-array>
+    <array name="businesssmalltext">
+        <item>Your way to a permanent place in your\ncustomer\'s phone.</item>
+        <item>Beat your competition and be the first ones\nto get your own Mobile App.</item>
+        <item>Send personalized notifications to your\ncustomers about your products and offerings.</item>
+        <item>Now your customers can reach your store\neven without an internet connection.</item>
+    </array>
+    <string name="alternate_number3">Alternate Number 3</string>
+    <string name="subscriber_second_text">Subscription is a great way to engage with your existing customers and tell them about latest offers or new product launches</string>
+    <string name="find_your_subscribers">Find your subscribers</string>
+    <string name="title_for_quikrr">Write message title(Quikrr only)</string>
+    <string name="guidlines">Guidelines for posting to Quikr</string>
+    <string name="quikr_message">Good news! You can now publish your updates as product ads to Quikr. Please follow the guidelines mentioned below to ensure that your ad is successfully posted.</string>
+    <string name="search_ranking">Search Ranking</string>
+    <string name="spinner_title">Filter</string>
+    <string name="bubble_in_app_message">This will help you to sell products through WhatsApp</string>
+    <string name="boost_bubble">Boost Bubble</string>
+    <string name="accessibility_message">go ahead &amp; start sharing on WhatsApp</string>
+    <string name="bubble_in_app_second_message">You just have to grant us \"Accessibility\" permission and start sharing!</string>
+    <string name="open_setting">Open Settings</string>
+    <string name="take_me_there">Take me there</string>
+    <string name="screen_overlay_permission">Screen overlay permission</string>
+    <string name="required_overlay_permission">Checkout new feature \"Boost Bubble\", easy to share products</string>
+    <string name="call_tracker">Call Tracker</string>
+    <string name="successfully_downloaded">Successfully Downloaded</string>
+    <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
+    <string name="website_domain_name">.nowfloats.com</string>
+    <string name="downloading">File downloading&#8230;</string>
+    <string name="play_with_underline"><u>PLAY</u></string>
+<!--    <string name="vmn_message_text">This is displayed on your website and you can track all customer calls &amp; logs here.</string>-->
+    <string name="resend"><![CDATA[<b>Resend</b>]]></string>
 
-  <string name="add_logo_message">Please add a logo for your business before proceeding.</string>
-  <string name="push_notif">Send notification</string>
-  <string name="app_preview">App preview</string>
-  <string name="deeplink_business_app">businessapp</string>
-  <string name="fb_page_creation_message">gather more leads and drive more traffic to your website through Facebook</string>
-  <string name="get_facebook_page">Get a Facebook page</string>
-  <string name="fb_page_creation_title">Looks like you don’t have a Facebook page</string>
-  <string name="more_details">More details</string>
-  <string name="fb_page_unavailable">A Facebook page with your business name is unavailable.</string>
-  <string name="suggestions_for_page_name">Here\'s a suggestion for an available Page name</string>
-  <string name="your_facebook_page_is_created">Your Facebook Page is created</string>
-  <string name="connect_page_to_nowfloats">Connect this page to the NowFloats Boost app to automatically share all updates to your page.\\nYou can see all your Facebook Page analytics in</string>
-  <string name="control">Connect</string>
-  <string name="domain_characters">-0123456789abcdefghijklmnopqrstuvwxyz</string>
-  <string name="fb_page_default_logo_message">We uploaded a default profile image for you as your business logo is too small.</string>
-  <string name="business_profile_incomplete">Please complete all the steps in site health and reconnect your Facebook account to create your Facebook page</string>
-  <string name="deeplink_manage_customer">managecustomer</string>
-  <string name="contact_us_message">If your query is still unanswered, please contact us at ria@nowfloats.com or call our toll number 1860-123-1233.</string>
+
+    <string-array name="spinner_list_item_array">
+        <item>Rank Increased</item>
+        <item>Rank Maintained</item>
+        <item>Rank Decreased</item>
+        <item>New</item>
+        <item>Lost</item>
+    </string-array>
+
+    <string name="add_logo_message">Please add a logo for your business before proceeding.</string>
+    <string name="push_notif">Send notification</string>
+    <string name="app_preview">App preview</string>
+    <string name="deeplink_business_app">businessapp</string>
+    <string name="fb_page_creation_message">gather more leads and drive more traffic to your website through Facebook</string>
+    <string name="get_facebook_page">Get a Facebook page</string>
+    <string name="fb_page_creation_title">Looks like you don’t have a Facebook page</string>
+    <string name="more_details">More details</string>
+    <string name="fb_page_unavailable">A Facebook page with your business name is unavailable.</string>
+    <string name="suggestions_for_page_name">Here\'s a suggestion for an available Page name</string>
+    <string name="your_facebook_page_is_created">Your Facebook Page is created</string>
+    <string name="connect_page_to_nowfloats">Connect this page to the NowFloats Boost app to automatically share all updates to your page.\\nYou can see all your Facebook Page analytics in</string>
+    <string name="control">Connect</string>
+    <string name="domain_characters">-0123456789abcdefghijklmnopqrstuvwxyz</string>
+    <string name="fb_page_default_logo_message">We uploaded a default profile image for you as your business logo is too small.</string>
+    <string name="business_profile_incomplete">Please complete all the steps in site health and reconnect your Facebook account to create your Facebook page</string>
+    <string name="deeplink_manage_customer">managecustomer</string>
+    <string name="contact_us_message">If your query is still unanswered, please contact us at ria@nowfloats.com or call our toll number 1860-123-1233.</string>
 
 </resources>

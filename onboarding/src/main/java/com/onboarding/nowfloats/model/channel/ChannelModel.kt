@@ -130,19 +130,6 @@ fun ChannelModel.getName(): String {
   }
 }
 
-fun ChannelModel.getName1(): String {
-  return when (getType()) {
-    ChannelType.G_SEARCH -> instance.resources.getString(R.string.website1)
-    ChannelType.FB_PAGE -> instance.resources.getString(R.string.fb_page1)
-    ChannelType.G_MAPS -> instance.resources.getString(R.string.google_maps1)
-    ChannelType.FB_SHOP -> instance.resources.getString(R.string.fb_shop1)
-    ChannelType.WAB -> instance.resources.getString(R.string.whatsapp_business1)
-    ChannelType.T_FEED -> instance.resources.getString(R.string.twitter_profile1)
-    ChannelType.G_BUSINESS -> instance.resources.getString(R.string.google_business_n1)
-    null -> ""
-  }
-}
-
 fun ChannelModel.getNameAlternate(): String {
   return when (getType()) {
     ChannelType.G_SEARCH -> "Website"

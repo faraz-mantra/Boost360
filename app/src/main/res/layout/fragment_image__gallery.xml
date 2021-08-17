@@ -1,72 +1,70 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="@color/white">
-
-  <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
-    <GridView
-      android:id="@+id/grid"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:nestedScrollingEnabled="true"
-      android:numColumns="4"
-      android:padding="24dp"
-      android:stretchMode="columnWidth" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout
-      android:id="@+id/layout_empty"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:gravity="center"
-      android:orientation="vertical"
-      android:visibility="gone">
+        <GridView
+            android:id="@+id/grid"
+            android:padding="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numColumns="4"
+            android:nestedScrollingEnabled="true"
+            android:stretchMode="columnWidth" />
 
-      <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/imagegallery_icon" />
+        <LinearLayout
+            android:id="@+id/layout_empty"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="gone"
+            android:gravity="center">
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dgts__padding_title"
-        android:layout_marginBottom="@dimen/dgts__padding_title"
-        android:text="@string/dont_shy"
-        android:textColor="@color/zeroth_grey_title"
-        android:textSize="@dimen/dgts__title_text_size"
-         android:fontFamily="@font/semi_bold" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/imagegallery_icon" />
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="4dp"
-        android:text="@string/empty_image_gallery"
-        android:textColor="@color/zeroth_grey"
-        android:textSize="15sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dgts__title_text_size"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/dgts__padding_title"
+                android:layout_marginBottom="@dimen/dgts__padding_title"
+                android:textColor="@color/zeroth_grey_title"
+                android:text="@string/dont_shy"/>
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/zeroth_grey"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/empty_image_gallery"/>
 
-    <LinearLayout
-      android:id="@+id/layout_progress"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:gravity="center"
-      android:orientation="vertical"
-      android:visibility="gone">
+        </LinearLayout>
 
-      <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/colorAccent_jio"/>
+        <LinearLayout
+            android:id="@+id/layout_progress"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="gone"
+            android:gravity="center">
 
-    </LinearLayout>
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress" />
 
-  </FrameLayout>
+        </LinearLayout>
+
+    </FrameLayout>
 
 </FrameLayout>

@@ -107,8 +107,9 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     secondaryLayout = view.findViewById(R.id.secondary_layout);
     buyItemButton = view.findViewById(R.id.buy_item);
     List<String> storeKeys = session.getStoreWidgets();
-    if ((storeKeys != null && storeKeys.contains("BOOSTKEYBOARD")) || (Constants.currentActivePackageId != null &&
-        Constants.currentActivePackageId.contains("59ce2ae56431a80b009cb1fa"))) {
+    if ((storeKeys != null && storeKeys.contains("BOOSTKEYBOARD")) ||
+        (Constants.currentActivePackageId != null &&
+            Constants.currentActivePackageId.contains("59ce2ae56431a80b009cb1fa"))) {
       mainLayout.setVisibility(View.VISIBLE);
       secondaryLayout.setVisibility(View.GONE);
     } else {
@@ -130,7 +131,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
       if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
         tvBoostThemes.setText("RedTim Keyboard Themes");
       } else {
-        tvBoostThemes.setText(getResources().getString(R.string.boost_keyboard_themes_n));
+        tvBoostThemes.setText("Boost Keyboard Themes");
       }
       rvKeyboardThemes = view.findViewById(R.id.rv_keyboard_themes);
       rvKeyboardThemes.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
@@ -324,7 +325,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     switch (v.getId()) {
       case R.id.keyboard_info:
         MixPanelController.track(EventKeysWL.MERCHANT_EDUCATION_BOOST_KEYBOARD, null);
-        showOverlay(overLayout1, getString(R.string.boost_keyboard_n), getString(R.string.keyboard_message));
+        showOverlay(overLayout1, getString(R.string.boost_keyboard), getString(R.string.keyboard_message));
         break;
       case R.id.ll_enable_keyboard:
         startActivity(new Intent(getActivity(), BoostKeyboardActivity.class));
@@ -412,13 +413,13 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     intent.putExtra("fpTag", session.getFpTag());
     intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
     intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-    if (session.getUserProfileEmail() != null) {
-      intent.putExtra("email", session.getUserProfileEmail());
+    if (session.getFPEmail() != null) {
+      intent.putExtra("email", session.getFPEmail());
     } else {
       intent.putExtra("email", "ria@nowfloats.com");
     }
-    if (session.getUserPrimaryMobile() != null) {
-      intent.putExtra("mobileNo", session.getUserPrimaryMobile());
+    if (session.getFPPrimaryContactNumber() != null) {
+      intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
     } else {
       intent.putExtra("mobileNo", "9160004303");
     }

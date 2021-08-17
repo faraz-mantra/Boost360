@@ -34,16 +34,14 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent">
 
-          <com.framework.views.customViews.CustomToolbar
+          <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:elevation="0dp"
             android:hapticFeedbackEnabled="true"
             app:elevation="0dp"
-            app:navigationIcon="@drawable/ic_back_arrow_new"
-            app:titleTextAppearance="@style/Toolbar.TitleText"
-            tools:targetApi="honeycomb"
+            app:navigationIcon="@drawable/ic_toolbar_back"
             tools:title="Home" />
 
         </com.google.android.material.appbar.AppBarLayout>

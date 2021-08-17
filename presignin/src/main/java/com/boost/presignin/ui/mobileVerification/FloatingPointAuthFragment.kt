@@ -2,7 +2,6 @@ package com.boost.presignin.ui.mobileVerification
 
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
@@ -66,7 +65,7 @@ class FloatingPointAuthFragment : AuthBaseFragment<FragmentFpListBinding>(), Rec
 
   override fun onCreateView() {
     super.onCreateView()
-    baseActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    baseActivity.hideKeyBoard()
     WebEngageController.trackEvent(PS_BUSINESS_ACCOUNT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.btnGoToDashboard)
     setAdapterFPList()

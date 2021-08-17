@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +26,6 @@ import android.widget.RatingBar;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 //import com.nfx.leadmessages.ReadMessages;
-import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.customerassistant.adapters.ThirdPartyAdapter;
 import com.nowfloats.customerassistant.models.SMSSuggestions;
@@ -60,24 +57,30 @@ import java.util.List;
 public class ThirdPartyQueriesActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int MAX_RESPONDED = 3;
-    /*private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
-            , Manifest.permission.READ_PHONE_STATE};*/
-    private final static int READ_MESSAGES_ID = 221;
-    CustomToolbar toolbar;
+    Toolbar toolbar;
     RecyclerView rvList;
     ThirdPartyAdapter adapter;
     Bus mBus;
     UserSessionManager sessionManager;
-    ProgressDialog progressBar;
-    SwipeRefreshLayout mSwipeRefreshLayout;
     private List<SuggestionsDO> queriesList = new ArrayList<>();
     private String appVersion = "";
+    ProgressDialog progressBar;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     private CustomerAssistantApi customerApis;
     private SharedPreferences pref;
     private int noOfTimesResponded = 0;
     private SortType currentSortType = SortType.EXPIRE;
     private int noOfStars;
+    /*private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
+            , Manifest.permission.READ_PHONE_STATE};*/
+    private final static int READ_MESSAGES_ID = 221;
     private PopupWindow popup;
+
+
+
+    private enum SortType{
+        DATE,CHANNEL,EXPIRE
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,19 +89,19 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
         init();
     }
 
-    private void init() {
-        toolbar = (CustomToolbar) findViewById(R.id.toolbar);
+    private void init(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         rvList = (RecyclerView) findViewById(R.id.rv_list);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_layout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_color);
         setSupportActionBar(toolbar);
         setTitle("Third Party Queries");
-        if (getSupportActionBar() != null) {
+        if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        sessionManager = new UserSessionManager(this, this);
+        sessionManager = new UserSessionManager(this,this);
         mBus = BusProvider.getInstance().getBus();
         customerApis = new CustomerAssistantApi(mBus);
 
@@ -109,9 +112,9 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
 
         rvList.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this);
-        adapter = new ThirdPartyAdapter(this, queriesList);
+        adapter= new ThirdPartyAdapter(this,queriesList);
         rvList.setLayoutManager(manager);
-        rvList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        rvList.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         rvList.setAdapter(adapter);
 
         try {
@@ -137,6 +140,22 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
         }
     }
 
+   /* private void getPermissions() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(this, ReadMessages.class);
+            startService(intent);
+            // start the service to send data to firebase
+        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            requestPermissions(permission, READ_MESSAGES_ID);
+
+
+        }
+    }*/
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == READ_MESSAGES_ID) {
@@ -158,22 +177,6 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
-   /* private void getPermissions() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(this, ReadMessages.class);
-            startService(intent);
-            // start the service to send data to firebase
-        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-            requestPermissions(permission, READ_MESSAGES_ID);
-
-
-        }
-    }*/
 
     private void showRating() {
 
@@ -232,11 +235,11 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
         HashMap<String, String> offersParam = new HashMap<>();
         offersParam.put("fpId", sessionManager.getFPID());
         offersParam.put("rating", rating + "");
-        MixPanelController.track(MixPanelController.THIRD_PARTY_RATING, null);
+        MixPanelController.track(MixPanelController.THIRD_PARTY_RATING,null);
         customerApis.updateRating(offersParam);
     }
 
-    //    private void loadDataFromDb() {
+//    private void loadDataFromDb() {
 //
 //        String payloadStr = mDbController.getSamData();
 //        SMSSuggestions suggestions = new Gson().fromJson(payloadStr, SMSSuggestions.class);
@@ -250,7 +253,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
     @Override
     protected void onResume() {
         super.onResume();
-        if (adapter != null && adapter.isCounterStopped) {
+        if(adapter != null && adapter.isCounterStopped) {
             rvList.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -261,37 +264,36 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
 
     }
 
-    private void getNewMessages() {
+    private void getNewMessages(){
         showProgress();
         HashMap<String, String> offersParam = new HashMap<>();
         offersParam.put("fpId", sessionManager.getFPID());
-        customerApis.getMessages(offersParam, sessionManager.getFPID(), appVersion);
+        customerApis.getMessages(offersParam,sessionManager.getFPID(),appVersion);
     }
 
     private void showProgress() {
-        if (!mSwipeRefreshLayout.isRefreshing() && !progressBar.isShowing() && !isFinishing()) {
+        if(!mSwipeRefreshLayout.isRefreshing()&&!progressBar.isShowing() && !isFinishing()){
             progressBar.show();
         }
     }
 
-    private void hideProgress() {
-        if (progressBar.isShowing()) {
+    private void hideProgress(){
+        if(progressBar.isShowing()){
             progressBar.dismiss();
         }
-        if (mSwipeRefreshLayout.isRefreshing()) {
+        if(mSwipeRefreshLayout.isRefreshing()){
             mSwipeRefreshLayout.setRefreshing(false);
         }
     }
-
     @Subscribe
-    public void onMessagesReceived(SMSSuggestions smsSuggestions) {
+    public void onMessagesReceived(SMSSuggestions smsSuggestions){
         JSONObject json = new JSONObject();
-        if (smsSuggestions.getSuggestionList() != null) {
-            if (smsSuggestions.getSuggestionList().size() > 0) {
+        if(smsSuggestions.getSuggestionList() !=null) {
+            if (smsSuggestions.getSuggestionList().size()>0) {
 
                 sort(smsSuggestions.getSuggestionList(), SortType.EXPIRE);
                 adapter.refreshListData(smsSuggestions.getSuggestionList());
-            } else {
+            }else{
                 List<SuggestionsDO> list = new ArrayList<>(1);
                 SuggestionsDO suggestionsDO = new SuggestionsDO();
                 suggestionsDO.setEmptyLayout(true);
@@ -300,20 +302,20 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
             }
 
             try {
-                json.put("value", smsSuggestions.getSuggestionList().size());
+                json.put("value",smsSuggestions.getSuggestionList().size());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             /*String payloadStr = new Gson().toJson(smsSuggestions);
             mDbController.postSamData(payloadStr);*/
-        } else {
+        }else{
             try {
-                json.put("value", -1);
+                json.put("value",-1);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (!Methods.isOnline(this)) {
+            if(!Methods.isOnline(this)) {
                 Methods.snackbarNoInternet(this);
             }
             List<SuggestionsDO> list = new ArrayList<>(1);
@@ -323,31 +325,31 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
             adapter.refreshListData(list);
         }
         hideProgress();
-        MixPanelController.track(MixPanelController.THIRD_PARTY_DATA, json);
+        MixPanelController.track(MixPanelController.THIRD_PARTY_DATA,json);
     }
 
-    private void sort(List<SuggestionsDO> smsSuggestionsList, final SortType sortType) {
+    private void sort(List<SuggestionsDO> smsSuggestionsList, final SortType sortType){
         Collections.sort(smsSuggestionsList, new Comparator<SuggestionsDO>() {
             @Override
             public int compare(SuggestionsDO o1, SuggestionsDO o2) {
-                switch (sortType) {
+                switch(sortType){
                     case CHANNEL:
                         return o1.getSource().compareToIgnoreCase(o2.getSource());
                     case DATE:
-                        if (o1.getDate() < o2.getDate()) {
+                        if(o1.getDate()<o2.getDate()){
                             return 1;
-                        } else if (o1.getDate() == o2.getDate()) {
+                        }else if (o1.getDate() == o2.getDate()){
                             return 0;
-                        } else {
+                        }else{
                             return -1;
                         }
                     case EXPIRE:
                     default:
-                        if (o1.getExpiryDate() < o2.getExpiryDate()) {
+                        if(o1.getExpiryDate()<o2.getExpiryDate()){
                             return -1;
-                        } else if (o1.getExpiryDate() == o2.getExpiryDate()) {
+                        }else if (o1.getExpiryDate() == o2.getExpiryDate()){
                             return 0;
-                        } else {
+                        }else{
                             return 1;
                         }
 
@@ -358,9 +360,9 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
 
     @Override
     public void onBackPressed() {
-        if (popup != null && popup.isShowing()) {
+        if (popup != null && popup.isShowing()){
             popup.dismiss();
-        } else {
+        }else {
             super.onBackPressed();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
@@ -368,7 +370,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch (item.getItemId()){
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -384,7 +386,6 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
         }
 
     }
-
     private void initiatePopupWindow(View image) {
 
         if (popup == null) {
@@ -410,7 +411,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
                 animator.start();*/
                 popup.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
                 popup.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-                popup.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.white_round_corner));
+                popup.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.white_round_corner));
                 popup.setOutsideTouchable(true);
                 //popup.setAnimationStyle(R.anim.slide_out_up1);
                 popup.setFocusable(true);
@@ -422,29 +423,30 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (popup.isShowing()) {
-            popup.dismiss();
-        } else {
-            popup.showAsDropDown(image, 0, 10);
+        }else if (popup.isShowing()){
+                popup.dismiss();
+        }else
+        {
+                popup.showAsDropDown(image,0,10);
         }
     }
 
     @Override
     public void onClick(View v) {
-        if (popup != null && popup.isShowing()) {
+        if (popup != null && popup.isShowing()){
             popup.dismiss();
         }
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.tvSource:
-                sort(queriesList, SortType.CHANNEL);
+                sort(queriesList,SortType.CHANNEL);
                 currentSortType = SortType.CHANNEL;
                 break;
             case R.id.tvDate:
-                sort(queriesList, SortType.DATE);
+                sort(queriesList,SortType.DATE);
                 currentSortType = SortType.DATE;
                 break;
             case R.id.tvExpire:
-                sort(queriesList, SortType.EXPIRE);
+                sort(queriesList,SortType.EXPIRE);
                 currentSortType = SortType.EXPIRE;
                 break;
         }
@@ -466,12 +468,8 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_third_party_query, menu);
+        getMenuInflater().inflate(R.menu.menu_third_party_query,menu);
         return true;
-    }
-
-    private enum SortType {
-        DATE, CHANNEL, EXPIRE
     }
 
 }

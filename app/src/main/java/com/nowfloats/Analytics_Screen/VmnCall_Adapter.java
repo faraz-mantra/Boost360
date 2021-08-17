@@ -120,7 +120,7 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
         } else {
             holder.playerLayout.setVisibility(View.VISIBLE);
             holder.divider.setVisibility(View.VISIBLE);
-            holder.callType.setText("Connected call");
+            holder.callType.setText("Connected Call");
             holder.playPauseButton.setOnClickListener(v -> {
                 if (!holder.mediaPlayer.isPlaying()) {
                     // This block is triggered if media is not playing.

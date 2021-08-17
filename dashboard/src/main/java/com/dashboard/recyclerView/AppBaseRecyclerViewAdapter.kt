@@ -33,7 +33,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       ITEMS_CONTENT_SETUP_ITEM_VIEW -> ItemContentSetupHolder(binding as ItemContentSetupManageBinding)
       ALL_BOOST_ADD_ONS_VIEW -> BoostAddOnsViewHolder(binding as ItemBoostAddOnsBinding)
       HOME_DRAWER_VIEW -> HomeDrawerViewHolder(binding as ItemDrawerViewBinding)
-      BOOST_ENQUIRIES_ITEM_VIEW -> EnquiriesItemViewHolder(binding as ItemCustomerPatientItemBinding)
+      BOOST_ENQUIRIES_ITEM_VIEW -> CustomerPatientItemViewHolder(binding as ItemCustomerPatientItemBinding)
       BOOST_WEBSITE_ITEM_VIEW -> WebsiteItemViewHolder(binding as ItemWebsiteItemBinding)
       FILTER_DATE_VIEW -> DateFilterViewHolder(binding as ItemFilterDateBinding)
       WEBSITE_COLOR_VIEW -> WebsiteColorViewHolder(binding as RecyclerItemColorsBinding)

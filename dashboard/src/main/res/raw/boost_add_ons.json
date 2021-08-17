@@ -19,25 +19,25 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "In-clinic\nappointments"
+              "title": "In-clinic\nAppointments"
             },
             {
               "businessType": "ic_customer_call_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Patient\ncalls"
+              "title": "Patient\nCalls"
             },
             {
               "businessType": "ic_customer_enquiries_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Patient\nmessages"
+              "title": "Patient\nEnquiries"
             }
           ],
           "subTitle": "One place to manage all your patient interactions.",
-          "title": "Patient appointments & enquiries"
+          "title": "Patient Appointments & Enquiries"
         },
         {
           "isExpend": true,
@@ -48,42 +48,42 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Service\ncatalogue"
+              "title": "Service\nCatalogue"
             },
             {
               "businessType": "doctor_profile",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Doctor\ne-profile"
+              "title": "Doctor\ne-Profile"
             },
             {
               "businessType": "appointment_settings",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Appointment\nsettings"
+              "title": "Appointment\nSettings"
             },
             {
               "businessType": "ic_daily_business_update_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nupdates"
+              "title": "Business\nUpdates"
             },
             {
               "businessType": "picture_gallery",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Picture\ngallery"
+              "title": "Pictures\nGallery"
             },
             {
               "businessType": "ic_custom_page_add",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Custom\npages"
+              "title": "Custom\nPages"
             },
             {
               "businessType": "ic_customer_testimonial_d",
@@ -97,7 +97,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited\ncontent updates"
+              "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
@@ -118,11 +118,11 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited website bandwidth"
+              "title": "Unlimited Website Bandwidth"
             }
           ],
           "subTitle": "Engage with your existing and potential customer with these tools.",
-          "title": "Website content"
+          "title": "Website Content"
         },
         {
           "isExpend": true,
@@ -133,67 +133,67 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Clinic\nbasic info"
+              "title": "Clinic\nBasic info"
             },
             {
               "businessType": "clinic_logo",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Clinic\nlogo"
+              "title": "Clinic\nLogo"
             },
             {
               "businessType": "featured_image_video",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Featured\nimage/video"
+              "title": "Featured\nImage/video"
             },
             {
               "businessType": "business_hours",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nhours"
+              "title": "Business\nHours"
             },
             {
               "businessType": "contact_details",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Contact\ndetails"
+              "title": "Contact\nDetails"
             },
             {
               "businessType": "business_kyc_verification",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nKYC/verification"
+              "title": "Business\nKYC/Verification"
             },
             {
               "businessType": "domain_name_ssl",
               "isLock": false,
               "isHide": false,
               "premiumCode": "DOMAINPURCHASE",
-              "title": "Custom domain name & SSL"
+              "title": "Custom Domain Name & SSL"
             },
             {
               "businessType": "my_email_accounts",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "My email\naccounts"
+              "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost data\nsecurity"
+              "title": "Boost Data\nSecurity"
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business info"
+          "title": "Business Profile"
         },
         {
           "isExpend": true,
@@ -204,14 +204,14 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost payment gateway"
+              "title": "Boost Payment Gateway"
             },
             {
               "businessType": "my_bank_account",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My bank\naccount"
+              "title": "My Bank\nAccount"
             },
             {
               "businessType": "custom_payment_gateway",
@@ -229,7 +229,7 @@
             }
           ],
           "subTitle": "Configure how and where you collect your customer payments.",
-          "title": "Enable appointments"
+          "title": "Enable Appointments"
         },
         {
           "isExpend": true,
@@ -240,74 +240,74 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My digital\nchannels"
+              "title": "My Digital\nChannels"
             },
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook likebox plugin"
+              "title": "Facebook Likebox Plugin"
             },
             {
               "businessType": "ic_customer_call_tracker_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer call\ntracker"
+              "title": "Customer Call\nTracker"
             },
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "IVR\nfacility"
+              "title": "IVR\nFacility"
             },
             {
               "businessType": "ic_business_keyboard_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "BOOSTKEYBOARD",
-              "title": "Boost\nkeyboard"
+              "title": "Boost\nKeyboard"
             },
             {
               "businessType": "newsletter_subscription",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Newsletter subscription"
+              "title": "Newsletter Subscription"
             },
             {
               "businessType": "website_chatbot",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nchatboat"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Dictate: assisted content creation"
+              "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Wildfire (Google & Facebook advertising)"
+              "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook\nlead Ads"
+              "title": "Facebook\nLead Ads"
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and engagement"
+          "title": "Marketing and Engagement"
         },
         {
           "isExpend": true,
@@ -325,32 +325,32 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Social sharing analytics"
+              "title": "Social Sharing Analytics"
             },
             {
               "businessType": "sales_analytics",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Sales\nanalytics"
+              "title": "Sales\nAnalytics"
             },
             {
               "businessType": "search_analytics",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Search\nanalytics"
+              "title": "Search\nAnalytics"
             },
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Chatbot\nanalytics"
+              "title": "Chatbot\nAnalytics"
             }
           ],
           "subTitle": "Live analytics to help you know how your business is doing.",
-          "title": "Business reports"
+          "title": "Business Reports"
         },
         {
           "isExpend": true,
@@ -368,11 +368,11 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Premium\nsupport"
+              "title": "Premium\nSupport"
             }
           ],
           "subTitle": "We’re always there to help you, just tap and reach out to us.",
-          "title": "Business support"
+          "title": "Business Support"
         }
       ]
     },
@@ -395,25 +395,25 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "In-clinic\nappointments"
+              "title": "In-clinic\nAppointments"
             },
             {
               "businessType": "ic_customer_call_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Patient\ncalls"
+              "title": "Patient\nCalls"
             },
             {
               "businessType": "ic_customer_enquiries_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Patient\nmessages"
+              "title": "Patient\nEnquiries"
             }
           ],
           "subTitle": "One place to manage all your patient interactions.",
-          "title": "Patient appointments & enquiries"
+          "title": "Patient Appointments & Enquiries"
         },
         {
           "isExpend": true,
@@ -424,42 +424,42 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Service\ncatalogue"
+              "title": "Service\nCatalogue"
             },
             {
               "businessType": "doctor_profile",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Doctor\ne-profile"
+              "title": "Doctor\ne-Profile"
             },
             {
               "businessType": "appointment_settings",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Appointment\nsettings"
+              "title": "Appointment\nSettings"
             },
             {
               "businessType": "ic_daily_business_update_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nupdates"
+              "title": "Business\nUpdates"
             },
             {
               "businessType": "picture_gallery",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Picture\ngallery"
+              "title": "Pictures\nGallery"
             },
             {
               "businessType": "ic_custom_page_add",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Custom\npages"
+              "title": "Custom\nPages"
             },
             {
               "businessType": "ic_customer_testimonial_d",
@@ -473,7 +473,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited\ncontent updates"
+              "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
@@ -494,11 +494,11 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited website bandwidth"
+              "title": "Unlimited Website Bandwidth"
             }
           ],
           "subTitle": "Engage with your existing and potential customer with these tools.",
-          "title": "Website content"
+          "title": "Website Content"
         },
         {
           "isExpend": true,
@@ -509,67 +509,67 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Clinic\nbasic info"
+              "title": "Clinic\nBasic info"
             },
             {
               "businessType": "clinic_logo",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Clinic\nlogo"
+              "title": "Clinic\nLogo"
             },
             {
               "businessType": "featured_image_video",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Featured\nimage/video"
+              "title": "Featured\nImage/video"
             },
             {
               "businessType": "business_hours",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nhours"
+              "title": "Business\nHours"
             },
             {
               "businessType": "contact_details",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Contact\ndetails"
+              "title": "Contact\nDetails"
             },
             {
               "businessType": "business_kyc_verification",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nKYC/verification"
+              "title": "Business\nKYC/Verification"
             },
             {
               "businessType": "domain_name_ssl",
               "isLock": false,
               "isHide": false,
               "premiumCode": "DOMAINPURCHASE",
-              "title": "Custom domain name & SSL"
+              "title": "Custom Domain Name & SSL"
             },
             {
               "businessType": "my_email_accounts",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "My email\naccounts"
+              "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost data\nsecurity"
+              "title": "Boost Data\nSecurity"
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business profile"
+          "title": "Business Profile"
         },
         {
           "isExpend": true,
@@ -580,14 +580,14 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost payment gateway"
+              "title": "Boost Payment Gateway"
             },
             {
               "businessType": "my_bank_account",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My bank\naccount"
+              "title": "My Bank\nAccount"
             },
             {
               "businessType": "custom_payment_gateway",
@@ -605,7 +605,7 @@
             }
           ],
           "subTitle": "Configure how and where you collect your customer payments.",
-          "title": "Enable appointments"
+          "title": "Enable Appointments"
         },
         {
           "isExpend": true,
@@ -616,74 +616,74 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My digital\nchannels"
+              "title": "My Digital\nChannels"
             },
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook likebox plugin"
+              "title": "Facebook Likebox Plugin"
             },
             {
               "businessType": "ic_customer_call_tracker_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer call\ntracker"
+              "title": "Customer Call\nTracker"
             },
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "IVR\nfacility"
+              "title": "IVR\nFacility"
             },
             {
               "businessType": "ic_business_keyboard_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "BOOSTKEYBOARD",
-              "title": "Boost\nkeyboard"
+              "title": "Boost\nKeyboard"
             },
             {
               "businessType": "newsletter_subscription",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Newsletter subscription"
+              "title": "Newsletter Subscription"
             },
             {
               "businessType": "website_chatbot",
               "isLock": false,
-              "isHide": true,
+              "isHide": false,
               "premiumCode": "",
-              "title": "Website\ncatboat"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Dictate: assisted content creation"
+              "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Wildfire (Google & Facebook advertising)"
+              "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook\nlead Ads"
+              "title": "Facebook\nLead Ads"
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and engagement"
+          "title": "Marketing and Engagement"
         },
         {
           "isExpend": true,
@@ -701,32 +701,32 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Social sharing analytics"
+              "title": "Social Sharing Analytics"
             },
             {
               "businessType": "sales_analytics",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Sales\nanalytics"
+              "title": "Sales\nAnalytics"
             },
             {
               "businessType": "search_analytics",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Search\nanalytics"
+              "title": "Search\nAnalytics"
             },
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Chatbot\nanalytics"
+              "title": "Chatbot\nAnalytics"
             }
           ],
           "subTitle": "Live analytics to help you know how your business is doing.",
-          "title": "Business reports"
+          "title": "Business Reports"
         },
         {
           "isExpend": true,
@@ -744,11 +744,11 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Premium\nsupport"
+              "title": "Premium\nSupport"
             }
           ],
           "subTitle": "We’re always there to help you, just tap and reach out to us.",
-          "title": "Business support"
+          "title": "Business Support"
         }
       ]
     },
@@ -764,25 +764,25 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\norders"
+              "title": "Customer\nOrders"
             },
             {
               "businessType": "ic_customer_call_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer\ncalls"
+              "title": "Customer\nCalls"
             },
             {
               "businessType": "ic_customer_enquiries_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\nmessages"
+              "title": "Customer\nEnquiries"
             }
           ],
           "subTitle": "One place to manage all your customer interactions.",
-          "title": "Customer orders & enquiries"
+          "title": "Customer Orders & Enquiries"
         },
         {
           "isExpend": true,
@@ -793,28 +793,28 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Product\ncatalogue"
+              "title": "Product\nCatalogue"
             },
             {
               "businessType": "ic_daily_business_update_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nupdates"
+              "title": "Business\nUpdates"
             },
             {
               "businessType": "picture_gallery",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Picture\ngallery"
+              "title": "Pictures\nGallery"
             },
             {
               "businessType": "ic_custom_page_add",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Custom\npages"
+              "title": "Custom\nPages"
             },
             {
               "businessType": "ic_customer_testimonial_d",
@@ -828,7 +828,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited\ncontent updates"
+              "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
@@ -849,82 +849,89 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited website bandwidth"
+              "title": "Unlimited Website Bandwidth"
             }
           ],
           "subTitle": "Engage with your existing and potential customer with these tools.",
-          "title": "Website content"
+          "title": "Website Content"
         },
         {
           "isExpend": true,
           "isLastSeen": false,
           "manageBusinessList": [
             {
+              "businessType": "business_name_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nName"
+            },
+            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ninfo"
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nlogo"
+              "title": "Business\nLogo"
             },
             {
               "businessType": "featured_image_video",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Featured\nimage/video"
+              "title": "Featured\nImage/video"
             },
             {
               "businessType": "business_hours",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nhours"
+              "title": "Business\nHours"
             },
             {
               "businessType": "contact_details",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Contact\ndetails"
+              "title": "Contact\nDetails"
             },
             {
               "businessType": "business_kyc_verification",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nKYC/verification"
+              "title": "Business\nKYC/Verification"
             },
             {
               "businessType": "domain_name_ssl",
               "isLock": false,
               "isHide": false,
               "premiumCode": "DOMAINPURCHASE",
-              "title": "Custom domain name & SSL"
+              "title": "Custom Domain Name & SSL"
             },
             {
               "businessType": "my_email_accounts",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "My email\naccounts"
+              "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost data\nsecurity"
+              "title": "Boost Data\nSecurity"
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business profile"
+          "title": "Business Profile"
         },
         {
           "isExpend": true,
@@ -935,14 +942,14 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost payment gateway"
+              "title": "Boost Payment Gateway"
             },
             {
               "businessType": "my_bank_account",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My bank\naccount"
+              "title": "My Bank\nAccount"
             },
             {
               "businessType": "custom_payment_gateway",
@@ -953,7 +960,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -971,74 +978,74 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My digital\nchannels"
+              "title": "My Digital\nChannels"
             },
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook likebox plugin"
+              "title": "Facebook Likebox Plugin"
             },
             {
               "businessType": "ic_customer_call_tracker_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer call\ntracker"
+              "title": "Customer Call\nTracker"
             },
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "IVR\nfacility"
+              "title": "IVR\nFacility"
             },
             {
               "businessType": "ic_business_keyboard_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "BOOSTKEYBOARD",
-              "title": "Boost\nkeyboard"
+              "title": "Boost\nKeyboard"
             },
             {
               "businessType": "newsletter_subscription",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Newsletter subscription"
+              "title": "Newsletter Subscription"
             },
             {
               "businessType": "website_chatbot",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nchatboat"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Dictate: assisted content creation"
+              "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Wildfire (Google & Facebook advertising)"
+              "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook\nlead Ads"
+              "title": "Facebook\nLead Ads"
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and engagement"
+          "title": "Marketing and Engagement"
         },
         {
           "isExpend": true,
@@ -1056,32 +1063,32 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Social sharing analytics"
+              "title": "Social Sharing Analytics"
             },
             {
               "businessType": "sales_analytics",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Sales\nanalytics"
+              "title": "Sales\nAnalytics"
             },
             {
               "businessType": "search_analytics",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Search\nanalytics"
+              "title": "Search\nAnalytics"
             },
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Chatbot\nanalytics"
+              "title": "Chatbot\nAnalytics"
             }
           ],
           "subTitle": "Live analytics to help you know how your business is doing.",
-          "title": "Business reports"
+          "title": "Business Reports"
         },
         {
           "isExpend": true,
@@ -1099,11 +1106,11 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Premium\nsupport"
+              "title": "Premium\nSupport"
             }
           ],
           "subTitle": "We’re always there to help you, just tap and reach out to us.",
-          "title": "Business support"
+          "title": "Business Support"
         }
       ]
     },
@@ -1119,25 +1126,25 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Admission\nrequests"
+              "title": "Admission\nRequests"
             },
             {
               "businessType": "ic_customer_call_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Student\ncalls"
+              "title": "Student\nCalls"
             },
             {
               "businessType": "ic_customer_enquiries_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Student\nmessages"
+              "title": "Student\nEnquiries"
             }
           ],
           "subTitle": "One place to manage all your student interactions.",
-          "title": "Student bookings & enquiries"
+          "title": "Student Bookings & Enquiries"
         },
         {
           "isExpend": true,
@@ -1148,49 +1155,49 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Product\ncatalogue"
+              "title": "Product\nCatalogue"
             },
             {
               "businessType": "upcoming_batches_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Upcoming\nbatches"
+              "title": "Upcoming\nBatches"
             },
             {
               "businessType": "toppers_institute_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "OUR-TOPPERS",
-              "title": "Toppers of\ninstitute"
+              "title": "Toppers of\nInstitute"
             },
             {
               "businessType": "faculty_profiles_d",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Faculty\nprofiles"
+              "title": "Faculty\nProfiles"
             },
             {
               "businessType": "ic_daily_business_update_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nupdates"
+              "title": "Business\nUpdates"
             },
             {
               "businessType": "picture_gallery",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Picture\ngallery"
+              "title": "Pictures\nGallery"
             },
             {
               "businessType": "ic_custom_page_add",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Custom\npages"
+              "title": "Custom\nPages"
             },
             {
               "businessType": "ic_customer_testimonial_d",
@@ -1204,7 +1211,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited\ncontent updates"
+              "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
@@ -1225,82 +1232,89 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited website bandwidth"
+              "title": "Unlimited Website Bandwidth"
             }
           ],
           "subTitle": "Engage with your existing and potential customer with these tools.",
-          "title": "Website content"
+          "title": "Website Content"
         },
         {
           "isExpend": true,
           "isLastSeen": false,
           "manageBusinessList": [
             {
+              "businessType": "business_name_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nName"
+            },
+            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ninfo"
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nlogo"
+              "title": "Business\nLogo"
             },
             {
               "businessType": "featured_image_video",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Featured\nimage/video"
+              "title": "Featured\nImage/video"
             },
             {
               "businessType": "business_hours",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nhours"
+              "title": "Business\nHours"
             },
             {
               "businessType": "contact_details",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Contact\ndetails"
+              "title": "Contact\nDetails"
             },
             {
               "businessType": "business_kyc_verification",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nKYC/verification"
+              "title": "Business\nKYC/Verification"
             },
             {
               "businessType": "domain_name_ssl",
               "isLock": false,
               "isHide": false,
               "premiumCode": "DOMAINPURCHASE",
-              "title": "Custom domain name & SSL"
+              "title": "Custom Domain Name & SSL"
             },
             {
               "businessType": "my_email_accounts",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "My email\naccounts"
+              "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost data\nsecurity"
+              "title": "Boost Data\nSecurity"
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business profile"
+          "title": "Business Profile"
         },
         {
           "isExpend": true,
@@ -1311,14 +1325,14 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost payment gateway"
+              "title": "Boost Payment Gateway"
             },
             {
               "businessType": "my_bank_account",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My bank\naccount"
+              "title": "My Bank\nAccount"
             },
             {
               "businessType": "custom_payment_gateway",
@@ -1336,7 +1350,7 @@
             }
           ],
           "subTitle": "Configure how and where you collect your student payments.",
-          "title": "Enable online admissions"
+          "title": "Enable Online Admissions"
         },
         {
           "isExpend": true,
@@ -1347,74 +1361,74 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My digital\nchannels"
+              "title": "My Digital\nChannels"
             },
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook likebox plugin"
+              "title": "Facebook Likebox Plugin"
             },
             {
               "businessType": "ic_customer_call_tracker_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer call\ntracker"
+              "title": "Customer Call\nTracker"
             },
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "IVR\nfacility"
+              "title": "IVR\nFacility"
             },
             {
               "businessType": "ic_business_keyboard_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "BOOSTKEYBOARD",
-              "title": "Boost\nkeyboard"
+              "title": "Boost\nKeyboard"
             },
             {
               "businessType": "newsletter_subscription",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Newsletter subscription"
+              "title": "Newsletter Subscription"
             },
             {
               "businessType": "website_chatbot",
               "isLock": false,
-              "isHide": true,
+              "isHide": false,
               "premiumCode": "",
-              "title": "Website\nchatboat"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Dictate: assisted content creation"
+              "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Wildfire (Google & Facebook advertising)"
+              "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook\nlead Ads"
+              "title": "Facebook\nLead Ads"
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and engagement"
+          "title": "Marketing and Engagement"
         },
         {
           "isExpend": true,
@@ -1432,32 +1446,32 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Social sharing analytics"
+              "title": "Social Sharing Analytics"
             },
             {
               "businessType": "sales_analytics",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Sales\nanalytics"
+              "title": "Sales\nAnalytics"
             },
             {
               "businessType": "search_analytics",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Search\nanalytics"
+              "title": "Search\nAnalytics"
             },
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Chatbot\nanalytics"
+              "title": "Chatbot\nAnalytics"
             }
           ],
           "subTitle": "Live analytics to help you know how your business is doing.",
-          "title": "Business reports"
+          "title": "Business Reports"
         },
         {
           "isExpend": true,
@@ -1475,11 +1489,11 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Premium\nsupport"
+              "title": "Premium\nSupport"
             }
           ],
           "subTitle": "We’re always there to help you, just tap and reach out to us.",
-          "title": "Business support"
+          "title": "Business Support"
         }
       ]
     },
@@ -1495,25 +1509,25 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Room\nbookings"
+              "title": "Room\nBookings"
             },
             {
               "businessType": "ic_customer_call_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer\ncalls"
+              "title": "Customer\nCalls"
             },
             {
               "businessType": "ic_customer_enquiries_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\nmessages"
+              "title": "Customer\nEnquiries"
             }
           ],
           "subTitle": "One place to manage all your customer interactions.",
-          "title": "Customer bookings & enquiries"
+          "title": "Customer Bookings & Enquiries"
         },
         {
           "isExpend": true,
@@ -1524,49 +1538,49 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Room\nlisting"
+              "title": "Room\nListing"
             },
             {
               "businessType": "sync_otas_channel_manager_d",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Sync with OTAs using channel manager"
+              "title": "Sync with OTAs Using Channel Manager"
             },
             {
               "businessType": "places_look_around_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "PLACES-TO-LOOK-AROUND",
-              "title": "Places to look around"
+              "title": "Places to Look Around"
             },
             {
               "businessType": "trip_advisor_reviews_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "TRIPADVISOR-REVIEWS",
-              "title": "Display tripAdvisor reviews"
+              "title": "Display TripAdvisor Reviews"
             },
             {
               "businessType": "ic_daily_business_update_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nupdates"
+              "title": "Business\nUpdates"
             },
             {
               "businessType": "picture_gallery",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Picture\ngallery"
+              "title": "Pictures\nGallery"
             },
             {
               "businessType": "ic_custom_page_add",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Custom\npages"
+              "title": "Custom\nPages"
             },
             {
               "businessType": "ic_customer_testimonial_d",
@@ -1580,7 +1594,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited\ncontent updates"
+              "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
@@ -1601,22 +1615,29 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited website bandwidth"
+              "title": "Unlimited Website Bandwidth"
             }
           ],
           "subTitle": "Engage with your existing and potential customer with these tools.",
-          "title": "Website content"
+          "title": "Website Content"
         },
         {
           "isExpend": true,
           "isLastSeen": false,
           "manageBusinessList": [
             {
+              "businessType": "business_name_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nName"
+            },
+            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ninfo"
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
@@ -1630,53 +1651,53 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Featured\nimage/video"
+              "title": "Featured\nImage/video"
             },
             {
               "businessType": "business_hours",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nhours"
+              "title": "Business\nHours"
             },
             {
               "businessType": "contact_details",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Contact\ndetails"
+              "title": "Contact\nDetails"
             },
             {
               "businessType": "business_kyc_verification",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nKYC/verification"
+              "title": "Business\nKYC/Verification"
             },
             {
               "businessType": "domain_name_ssl",
               "isLock": false,
               "isHide": false,
               "premiumCode": "DOMAINPURCHASE",
-              "title": "Custom domain name & SSL"
+              "title": "Custom Domain Name & SSL"
             },
             {
               "businessType": "my_email_accounts",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "My email\naccounts"
+              "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost data\nsecurity"
+              "title": "Boost Data\nSecurity"
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business profile"
+          "title": "Business Profile"
         },
         {
           "isExpend": true,
@@ -1687,21 +1708,21 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Room booking engine"
+              "title": "Room Booking Engine"
             },
             {
               "businessType": "boost_payment_gateway",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost payment gateway"
+              "title": "Boost Payment Gateway"
             },
             {
               "businessType": "my_bank_account",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My bank\naccount"
+              "title": "My Bank\nAccount"
             },
             {
               "businessType": "custom_payment_gateway",
@@ -1712,14 +1733,14 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
             }
           ],
           "subTitle": "Configure how and where you collect your customer payments.",
-          "title": "Enable online reservations"
+          "title": "Enable Online Reservations"
         },
         {
           "isExpend": true,
@@ -1730,74 +1751,74 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My digital\nchannels"
+              "title": "My Digital\nChannels"
             },
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook likebox plugin"
+              "title": "Facebook Likebox Plugin"
             },
             {
               "businessType": "ic_customer_call_tracker_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer call\ntracker"
+              "title": "Customer Call\nTracker"
             },
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "IVR\nfacility"
+              "title": "IVR\nFacility"
             },
             {
               "businessType": "ic_business_keyboard_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "BOOSTKEYBOARD",
-              "title": "Boost\nkeyboard"
+              "title": "Boost\nKeyboard"
             },
             {
               "businessType": "newsletter_subscription",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Newsletter subscription"
+              "title": "Newsletter Subscription"
             },
             {
               "businessType": "website_chatbot",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nchatboat"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Dictate: assisted content creation"
+              "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Wildfire (Google & Facebook advertising)"
+              "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook\nlead Ads"
+              "title": "Facebook\nLead Ads"
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and engagement"
+          "title": "Marketing and Engagement"
         },
         {
           "isExpend": true,
@@ -1815,32 +1836,32 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Social sharing analytics"
+              "title": "Social Sharing Analytics"
             },
             {
               "businessType": "sales_analytics",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Sales\nanalytics"
+              "title": "Sales\nAnalytics"
             },
             {
               "businessType": "search_analytics",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Search\nanalytics"
+              "title": "Search\nAnalytics"
             },
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Chatbot\nanalytics"
+              "title": "Chatbot\nAnalytics"
             }
           ],
           "subTitle": "Live analytics to help you know how your business is doing.",
-          "title": "Business reports"
+          "title": "Business Reports"
         },
         {
           "isExpend": true,
@@ -1858,11 +1879,11 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Premium\nsupport"
+              "title": "Premium\nSupport"
             }
           ],
           "subTitle": "We’re always there to help you, just tap and reach out to us.",
-          "title": "Business support"
+          "title": "Business Support"
         }
       ]
     },
@@ -1878,25 +1899,25 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\norders"
+              "title": "Customer\nOrders"
             },
             {
               "businessType": "ic_customer_call_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer\ncalls"
+              "title": "Customer\nCalls"
             },
             {
               "businessType": "ic_customer_enquiries_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\nmessages"
+              "title": "Customer\nEnquiries"
             }
           ],
           "subTitle": "One place to manage all your customer interactions.",
-          "title": "Customer orders & enquiries"
+          "title": "Customer Orders & Enquiries"
         },
         {
           "isExpend": true,
@@ -1907,35 +1928,35 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Product catalogue"
+              "title": "Product Catalogue"
             },
             {
               "businessType": "project_portfolio_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "PROJECTTEAM",
-              "title": "Project\nportfolio"
+              "title": "Project\nPortfolio"
             },
             {
               "businessType": "team_page_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "PROJECTTEAM",
-              "title": "Team\npage"
+              "title": "Team\nPage"
             },
             {
               "businessType": "ic_digital_brochures",
               "isLock": false,
               "isHide": false,
               "premiumCode": "BROCHURE",
-              "title": "E-Brochures for your business"
+              "title": "E-Brochures For Your Business"
             },
             {
               "businessType": "client_logos_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Client logos"
+              "title": "Client Logos"
             },
             {
               "businessType": "ic_my_business_faqs",
@@ -1949,21 +1970,21 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nupdates"
+              "title": "Business\nUpdates"
             },
             {
               "businessType": "picture_gallery",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Picture\ngallery"
+              "title": "Pictures\nGallery"
             },
             {
               "businessType": "ic_custom_page_add",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Custom\npages"
+              "title": "Custom\nPages"
             },
             {
               "businessType": "ic_customer_testimonial_d",
@@ -1977,7 +1998,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited\ncontent updates"
+              "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
@@ -1998,82 +2019,89 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited website bandwidth"
+              "title": "Unlimited Website Bandwidth"
             }
           ],
           "subTitle": "Engage with your existing and potential customer with these tools.",
-          "title": "Website content"
+          "title": "Website Content"
         },
         {
           "isExpend": true,
           "isLastSeen": false,
           "manageBusinessList": [
             {
+              "businessType": "business_name_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nName"
+            },
+            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ninfo"
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nlogo"
+              "title": "Business\nLogo"
             },
             {
               "businessType": "featured_image_video",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Featured\nimage/video"
+              "title": "Featured\nImage/video"
             },
             {
               "businessType": "business_hours",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nhours"
+              "title": "Business\nHours"
             },
             {
               "businessType": "contact_details",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Contact\ndetails"
+              "title": "Contact\nDetails"
             },
             {
               "businessType": "business_kyc_verification",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nKYC/verification"
+              "title": "Business\nKYC/Verification"
             },
             {
               "businessType": "domain_name_ssl",
               "isLock": false,
               "isHide": false,
               "premiumCode": "DOMAINPURCHASE",
-              "title": "Custom domain name & SSL"
+              "title": "Custom Domain Name & SSL"
             },
             {
               "businessType": "my_email_accounts",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "My email\naccounts"
+              "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost data\nsecurity"
+              "title": "Boost Data\nSecurity"
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business profile"
+          "title": "Business Profile"
         },
         {
           "isExpend": true,
@@ -2084,14 +2112,14 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost payment gateway"
+              "title": "Boost Payment Gateway"
             },
             {
               "businessType": "my_bank_account",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My bank\naccount"
+              "title": "My Bank\nAccount"
             },
             {
               "businessType": "custom_payment_gateway",
@@ -2120,74 +2148,74 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My digital\nchannels"
+              "title": "My Digital\nChannels"
             },
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook likebox plugin"
+              "title": "Facebook Likebox Plugin"
             },
             {
               "businessType": "ic_customer_call_tracker_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer call\ntracker"
+              "title": "Customer Call\nTracker"
             },
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "IVR\nfacility"
+              "title": "IVR\nFacility"
             },
             {
               "businessType": "ic_business_keyboard_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "BOOSTKEYBOARD",
-              "title": "Boost\nkeyboard"
+              "title": "Boost\nKeyboard"
             },
             {
               "businessType": "newsletter_subscription",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Newsletter subscription"
+              "title": "Newsletter Subscription"
             },
             {
               "businessType": "website_chatbot",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nchatboat"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Dictate: assisted content creation"
+              "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Wildfire (Google & Facebook advertising)"
+              "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook\nlead Ads"
+              "title": "Facebook\nLead Ads"
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and engagement"
+          "title": "Marketing and Engagement"
         },
         {
           "isExpend": true,
@@ -2205,32 +2233,32 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Social sharing analytics"
+              "title": "Social Sharing Analytics"
             },
             {
               "businessType": "sales_analytics",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Sales\nanalytics"
+              "title": "Sales\nAnalytics"
             },
             {
               "businessType": "search_analytics",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Search\nanalytics"
+              "title": "Search\nAnalytics"
             },
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Chatbot\nanalytics"
+              "title": "Chatbot\nAnalytics"
             }
           ],
           "subTitle": "Live analytics to help you know how your business is doing.",
-          "title": "Business reports"
+          "title": "Business Reports"
         },
         {
           "isExpend": true,
@@ -2248,11 +2276,11 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Premium\nsupport"
+              "title": "Premium\nSupport"
             }
           ],
           "subTitle": "We’re always there to help you, just tap and reach out to us.",
-          "title": "Business support"
+          "title": "Business Support"
         }
       ]
     },
@@ -2268,25 +2296,25 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\norders"
+              "title": "Customer\nOrders"
             },
             {
               "businessType": "ic_customer_call_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer\ncalls"
+              "title": "Customer\nCalls"
             },
             {
               "businessType": "ic_customer_enquiries_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\nmessages"
+              "title": "Customer\nEnquiries"
             }
           ],
           "subTitle": "One place to manage all your customer interactions.",
-          "title": "Customer orders & enquiries"
+          "title": "Customer Orders & Enquiries"
         },
         {
           "isExpend": true,
@@ -2297,42 +2325,42 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Digital\nmenu"
+              "title": "Digital\nMenu"
             },
             {
               "businessType": "table_reservations_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "BOOKTABLE",
-              "title": "Online table reservations"
+              "title": "Online Table Reservations"
             },
             {
               "businessType": "restaurant_story_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Restaurant\nstory"
+              "title": "Restaurant\nStory"
             },
             {
               "businessType": "ic_daily_business_update_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nupdates"
+              "title": "Business\nUpdates"
             },
             {
               "businessType": "picture_gallery",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Picture\ngallery"
+              "title": "Pictures\nGallery"
             },
             {
               "businessType": "ic_custom_page_add",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Custom\npages"
+              "title": "Custom\nPages"
             },
             {
               "businessType": "ic_customer_testimonial_d",
@@ -2346,7 +2374,7 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited\ncontent updates"
+              "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
@@ -2367,82 +2395,89 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited website bandwidth"
+              "title": "Unlimited Website Bandwidth"
             }
           ],
           "subTitle": "Engage with your existing and potential customer with these tools.",
-          "title": "Website content"
+          "title": "Website Content"
         },
         {
           "isExpend": true,
           "isLastSeen": false,
           "manageBusinessList": [
             {
+              "businessType": "business_name_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nName"
+            },
+            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ninfo"
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nlogo"
+              "title": "Business\nLogo"
             },
             {
               "businessType": "featured_image_video",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Featured\nimage/video"
+              "title": "Featured\nImage/video"
             },
             {
               "businessType": "business_hours",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nhours"
+              "title": "Business\nHours"
             },
             {
               "businessType": "contact_details",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Contact\ndetails"
+              "title": "Contact\nDetails"
             },
             {
               "businessType": "business_kyc_verification",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nKYC/verification"
+              "title": "Business\nKYC/Verification"
             },
             {
               "businessType": "domain_name_ssl",
               "isLock": false,
               "isHide": false,
               "premiumCode": "DOMAINPURCHASE",
-              "title": "Custom domain name & SSL"
+              "title": "Custom Domain Name & SSL"
             },
             {
               "businessType": "my_email_accounts",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "My email\naccounts"
+              "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost data\nsecurity"
+              "title": "Boost Data\nSecurity"
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business profile"
+          "title": "Business Profile"
         },
         {
           "isExpend": true,
@@ -2453,14 +2488,14 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost payment gateway"
+              "title": "Boost Payment Gateway"
             },
             {
               "businessType": "my_bank_account",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My bank\naccount"
+              "title": "My Bank\nAccount"
             },
             {
               "businessType": "custom_payment_gateway",
@@ -2471,14 +2506,14 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
             }
           ],
           "subTitle": "Configure how and where you collect your customer payments.",
-          "title": "Enable online orders"
+          "title": "Enable Online Orders"
         },
         {
           "isExpend": true,
@@ -2489,74 +2524,74 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My digital\nchannels"
+              "title": "My Digital\nChannels"
             },
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook likebox plugin"
+              "title": "Facebook Likebox Plugin"
             },
             {
               "businessType": "ic_customer_call_tracker_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer call\ntracker"
+              "title": "Customer Call\nTracker"
             },
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "IVR\nfacility"
+              "title": "IVR\nFacility"
             },
             {
               "businessType": "ic_business_keyboard_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "BOOSTKEYBOARD",
-              "title": "Boost\nkeyboard"
+              "title": "Boost\nKeyboard"
             },
             {
               "businessType": "newsletter_subscription",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Newsletter subscription"
+              "title": "Newsletter Subscription"
             },
             {
               "businessType": "website_chatbot",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nchatboat"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Dictate: assisted content creation"
+              "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Wildfire (Google & Facebook advertising)"
+              "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook\nlead Ads"
+              "title": "Facebook\nLead Ads"
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and engagement"
+          "title": "Marketing and Engagement"
         },
         {
           "isExpend": true,
@@ -2574,32 +2609,32 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Social sharing analytics"
+              "title": "Social Sharing Analytics"
             },
             {
               "businessType": "sales_analytics",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Sales\nanalytics"
+              "title": "Sales\nAnalytics"
             },
             {
               "businessType": "search_analytics",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Search\nanalytics"
+              "title": "Search\nAnalytics"
             },
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Chatbot\nanalytics"
+              "title": "Chatbot\nAnalytics"
             }
           ],
           "subTitle": "Live analytics to help you know how your business is doing.",
-          "title": "Business reports"
+          "title": "Business Reports"
         },
         {
           "isExpend": true,
@@ -2617,11 +2652,11 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Premium\nsupport"
+              "title": "Premium\nSupport"
             }
           ],
           "subTitle": "We’re always there to help you, just tap and reach out to us.",
-          "title": "Business support"
+          "title": "Business Support"
         }
       ]
     },
@@ -2644,18 +2679,18 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer\ncalls"
+              "title": "Customer\nCalls"
             },
             {
               "businessType": "ic_customer_enquiries_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\nmessages"
+              "title": "Customer\nEnquiries"
             }
           ],
           "subTitle": "One place to manage all your customer interactions.",
-          "title": "Customer appointments & enquiries"
+          "title": "Customer Appointments & Enquiries"
         },
         {
           "isExpend": true,
@@ -2666,35 +2701,35 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Service\ncatalogue"
+              "title": "Service\nCatalogue"
             },
             {
               "businessType": "appointment_settings",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Appointment\nsettings"
+              "title": "Appointment\nSettings"
             },
             {
               "businessType": "ic_daily_business_update_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nupdates"
+              "title": "Business\nUpdates"
             },
             {
               "businessType": "picture_gallery",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Picture\ngallery"
+              "title": "Pictures\nGallery"
             },
             {
               "businessType": "ic_custom_page_add",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Custom\npages"
+              "title": "Custom\nPages"
             },
             {
               "businessType": "ic_customer_testimonial_d",
@@ -2708,14 +2743,14 @@
               "isLock": true,
               "isHide": false,
               "premiumCode": "STAFFPROFILE",
-              "title": "Staff\nprofile"
+              "title": "Staff\nProfile"
             },
             {
               "businessType": "unlimited_content_updates",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited\ncontent updates"
+              "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
@@ -2736,82 +2771,89 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited website bandwidth"
+              "title": "Unlimited Website Bandwidth"
             }
           ],
           "subTitle": "Engage with your existing and potential customer with these tools.",
-          "title": "Website content"
+          "title": "Website Content"
         },
         {
           "isExpend": true,
           "isLastSeen": false,
           "manageBusinessList": [
             {
+              "businessType": "business_name_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nName"
+            },
+            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ninfo"
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nlogo"
+              "title": "Business\nLogo"
             },
             {
               "businessType": "featured_image_video",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Featured\nimage/video"
+              "title": "Featured\nImage/video"
             },
             {
               "businessType": "business_hours",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nhours"
+              "title": "Business\nHours"
             },
             {
               "businessType": "contact_details",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Contact\ndetails"
+              "title": "Contact\nDetails"
             },
             {
               "businessType": "business_kyc_verification",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nKYC/verification"
+              "title": "Business\nKYC/Verification"
             },
             {
               "businessType": "domain_name_ssl",
               "isLock": false,
               "isHide": false,
               "premiumCode": "DOMAINPURCHASE",
-              "title": "Custom domain name & SSL"
+              "title": "Custom Domain Name & SSL"
             },
             {
               "businessType": "my_email_accounts",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "My email\naccounts"
+              "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost data\nsecurity"
+              "title": "Boost Data\nSecurity"
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business profile"
+          "title": "Business Profile"
         },
         {
           "isExpend": true,
@@ -2822,14 +2864,14 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost payment gateway"
+              "title": "Boost Payment Gateway"
             },
             {
               "businessType": "my_bank_account",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My bank\naccount"
+              "title": "My Bank\nAccount"
             },
             {
               "businessType": "custom_payment_gateway",
@@ -2840,7 +2882,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -2858,74 +2900,74 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My digital\nchannels"
+              "title": "My Digital\nChannels"
             },
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook likebox plugin"
+              "title": "Facebook Likebox Plugin"
             },
             {
               "businessType": "ic_customer_call_tracker_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer call\ntracker"
+              "title": "Customer Call\nTracker"
             },
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "IVR\nfacility"
+              "title": "IVR\nFacility"
             },
             {
               "businessType": "ic_business_keyboard_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "BOOSTKEYBOARD",
-              "title": "Boost\nkeyboard"
+              "title": "Boost\nKeyboard"
             },
             {
               "businessType": "newsletter_subscription",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Newsletter subscription"
+              "title": "Newsletter Subscription"
             },
             {
               "businessType": "website_chatbot",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nchatboat"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Dictate: assisted content creation"
+              "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Wildfire (Google & Facebook advertising)"
+              "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook\nlead Ads"
+              "title": "Facebook\nLead Ads"
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and engagement"
+          "title": "Marketing and Engagement"
         },
         {
           "isExpend": true,
@@ -2943,32 +2985,32 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Social sharing analytics"
+              "title": "Social Sharing Analytics"
             },
             {
               "businessType": "sales_analytics",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Sales\nanalytics"
+              "title": "Sales\nAnalytics"
             },
             {
               "businessType": "search_analytics",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Search\nanalytics"
+              "title": "Search\nAnalytics"
             },
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Chatbot\nanalytics"
+              "title": "Chatbot\nAnalytics"
             }
           ],
           "subTitle": "Live analytics to help you know how your business is doing.",
-          "title": "Business reports"
+          "title": "Business Reports"
         },
         {
           "isExpend": true,
@@ -2986,11 +3028,11 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Premium\nsupport"
+              "title": "Premium\nSupport"
             }
           ],
           "subTitle": "We’re always there to help you, just tap and reach out to us.",
-          "title": "Business support"
+          "title": "Business Support"
         }
       ]
     },
@@ -3013,18 +3055,18 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer\ncalls"
+              "title": "Customer\nCalls"
             },
             {
               "businessType": "ic_customer_enquiries_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\nmessages"
+              "title": "Customer\nEnquiries"
             }
           ],
           "subTitle": "One place to manage all your customer interactions.",
-          "title": "Customer appointments & enquiries"
+          "title": "Customer Appointments & Enquiries"
         },
         {
           "isExpend": true,
@@ -3035,35 +3077,35 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Service\ncatalogue"
+              "title": "Service\nCatalogue"
             },
             {
               "businessType": "appointment_settings",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Appointment\nsettings"
+              "title": "Appointment\nSettings"
             },
             {
               "businessType": "ic_daily_business_update_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nupdates"
+              "title": "Business\nUpdates"
             },
             {
               "businessType": "picture_gallery",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Picture\ngallery"
+              "title": "Pictures\nGallery"
             },
             {
               "businessType": "ic_custom_page_add",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Custom\npages"
+              "title": "Custom\nPages"
             },
             {
               "businessType": "ic_customer_testimonial_d",
@@ -3077,14 +3119,14 @@
               "isLock": true,
               "isHide": false,
               "premiumCode": "STAFFPROFILE",
-              "title": "Staff\nprofile"
+              "title": "Staff\nProfile"
             },
             {
               "businessType": "unlimited_content_updates",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited\ncontent updates"
+              "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
@@ -3105,83 +3147,89 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited website bandwidth"
+              "title": "Unlimited Website Bandwidth"
             }
           ],
           "subTitle": "Engage with your existing and potential customer with these tools.",
-          "title": "Website content"
+          "title": "Website Content"
         },
         {
           "isExpend": true,
           "isLastSeen": false,
           "manageBusinessList": [
-            
+            {
+              "businessType": "business_name_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nName"
+            },
             {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ninfo"
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nlogo"
+              "title": "Business\nLogo"
             },
             {
               "businessType": "featured_image_video",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Featured\nimage/video"
+              "title": "Featured\nImage/video"
             },
             {
               "businessType": "business_hours",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nhours"
+              "title": "Business\nHours"
             },
             {
               "businessType": "contact_details",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Contact\ndetails"
+              "title": "Contact\nDetails"
             },
             {
               "businessType": "business_kyc_verification",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nKYC/verification"
+              "title": "Business\nKYC/Verification"
             },
             {
               "businessType": "domain_name_ssl",
               "isLock": false,
               "isHide": false,
               "premiumCode": "DOMAINPURCHASE",
-              "title": "Custom domain name & SSL"
+              "title": "Custom Domain Name & SSL"
             },
             {
               "businessType": "my_email_accounts",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "My email\naccounts"
+              "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost data\nsecurity"
+              "title": "Boost Data\nSecurity"
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business profile"
+          "title": "Business Profile"
         },
         {
           "isExpend": true,
@@ -3192,14 +3240,14 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost payment gateway"
+              "title": "Boost Payment Gateway"
             },
             {
               "businessType": "my_bank_account",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My bank\naccount"
+              "title": "My Bank\nAccount"
             },
             {
               "businessType": "custom_payment_gateway",
@@ -3210,7 +3258,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -3228,74 +3276,74 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My digital\nchannels"
+              "title": "My Digital\nChannels"
             },
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook likebox plugin"
+              "title": "Facebook Likebox Plugin"
             },
             {
               "businessType": "ic_customer_call_tracker_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer call\ntracker"
+              "title": "Customer Call\nTracker"
             },
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "IVR\nfacility"
+              "title": "IVR\nFacility"
             },
             {
               "businessType": "ic_business_keyboard_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "BOOSTKEYBOARD",
-              "title": "Boost\nkeyboard"
+              "title": "Boost\nKeyboard"
             },
             {
               "businessType": "newsletter_subscription",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Newsletter subscription"
+              "title": "Newsletter Subscription"
             },
             {
               "businessType": "website_chatbot",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nchatboat"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Dictate: assisted content creation"
+              "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Wildfire (Google & Facebook advertising)"
+              "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook\nlead Ads"
+              "title": "Facebook\nLead Ads"
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and engagement"
+          "title": "Marketing and Engagement"
         },
         {
           "isExpend": true,
@@ -3313,32 +3361,32 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Social sharing analytics"
+              "title": "Social Sharing Analytics"
             },
             {
               "businessType": "sales_analytics",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Sales\nanalytics"
+              "title": "Sales\nAnalytics"
             },
             {
               "businessType": "search_analytics",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Search\nanalytics"
+              "title": "Search\nAnalytics"
             },
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Chatbot\nanalytics"
+              "title": "Chatbot\nAnalytics"
             }
           ],
           "subTitle": "Live analytics to help you know how your business is doing.",
-          "title": "Business reports"
+          "title": "Business Reports"
         },
         {
           "isExpend": true,
@@ -3356,11 +3404,11 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Premium\nsupport"
+              "title": "Premium\nSupport"
             }
           ],
           "subTitle": "We’re always there to help you, just tap and reach out to us.",
-          "title": "Business support"
+          "title": "Business Support"
         }
       ]
     },
@@ -3383,18 +3431,18 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer\ncalls"
+              "title": "Customer\nCalls"
             },
             {
               "businessType": "ic_customer_enquiries_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Customer\nmessages"
+              "title": "Customer\nEnquiries"
             }
           ],
           "subTitle": "One place to manage all your customer interactions.",
-          "title": "Customer appointments & enquiries"
+          "title": "Customer Appointments & Enquiries"
         },
         {
           "isExpend": true,
@@ -3405,49 +3453,49 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Service\ncatalogue"
+              "title": "Service\nCatalogue"
             },
             {
               "businessType": "appointment_settings",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Appointment\nsettings"
+              "title": "Appointment\nSettings"
             },
-            //            {
-            //              "businessType": "doctor_profile",
-            //              "isLock": false,
-            //              "isHide": false,
-            //              "premiumCode": "",
-            //              "title": "Staff\ne-Profiles"
-            //            },
+//            {
+//              "businessType": "doctor_profile",
+//              "isLock": false,
+//              "isHide": false,
+//              "premiumCode": "",
+//              "title": "Staff\ne-Profiles"
+//            },
             {
               "businessType": "membership_plans",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Membership\nplans"
+              "title": "Membership\nPlans"
             },
             {
               "businessType": "ic_daily_business_update_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nupdates"
+              "title": "Business\nUpdates"
             },
             {
               "businessType": "picture_gallery",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Picture\ngallery"
+              "title": "Pictures\nGallery"
             },
             {
               "businessType": "ic_custom_page_add",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Custom\npages"
+              "title": "Custom\nPages"
             },
             {
               "businessType": "ic_customer_testimonial_d",
@@ -3461,14 +3509,14 @@
               "isLock": true,
               "isHide": false,
               "premiumCode": "STAFFPROFILE",
-              "title": "Staff\nprofile"
+              "title": "Staff\nProfile"
             },
             {
               "businessType": "unlimited_content_updates",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited\ncontent updates"
+              "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
@@ -3489,83 +3537,89 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Unlimited website bandwidth"
+              "title": "Unlimited Website Bandwidth"
             }
           ],
           "subTitle": "Engage with your existing and potential customer with these tools.",
-          "title": "Website content"
+          "title": "Website Content"
         },
         {
           "isExpend": true,
           "isLastSeen": false,
           "manageBusinessList": [
-            
+            {
+              "businessType": "business_name_d",
+              "isLock": false,
+              "isHide": false,
+              "premiumCode": "",
+              "title": "Business\nName"
+            },
             {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ninfo"
+              "title": "Business\nDescription"
             },
             {
               "businessType": "clinic_logo",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nlogo"
+              "title": "Business\nLogo"
             },
             {
               "businessType": "featured_image_video",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Featured\nimage/video"
+              "title": "Featured\nImage/video"
             },
             {
               "businessType": "business_hours",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nhours"
+              "title": "Business\nHours"
             },
             {
               "businessType": "contact_details",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Contact\ndetails"
+              "title": "Contact\nDetails"
             },
             {
               "businessType": "business_kyc_verification",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\nKYC/verification"
+              "title": "Business\nKYC/Verification"
             },
             {
               "businessType": "domain_name_ssl",
               "isLock": false,
               "isHide": false,
               "premiumCode": "DOMAINPURCHASE",
-              "title": "Custom domain name & SSL"
+              "title": "Custom Domain Name & SSL"
             },
             {
               "businessType": "my_email_accounts",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "My email\naccounts"
+              "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost data\nsecurity"
+              "title": "Boost Data\nSecurity"
             }
           ],
           "subTitle": "Manage your services and business profile.",
-          "title": "Business profile"
+          "title": "Business Profile"
         },
         {
           "isExpend": true,
@@ -3576,14 +3630,14 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Boost payment gateway"
+              "title": "Boost Payment Gateway"
             },
             {
               "businessType": "my_bank_account",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My bank\naccount"
+              "title": "My Bank\nAccount"
             },
             {
               "businessType": "custom_payment_gateway",
@@ -3594,7 +3648,7 @@
             },
             {
               "businessType": "e_commerce_website",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
@@ -3612,74 +3666,74 @@
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "My digital\nchannels"
+              "title": "My Digital\nChannels"
             },
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook likebox plugin"
+              "title": "Facebook Likebox Plugin"
             },
             {
               "businessType": "ic_customer_call_tracker_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "CALLTRACKER",
-              "title": "Customer call\ntracker"
+              "title": "Customer Call\nTracker"
             },
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "IVR\nfacility"
+              "title": "IVR\nFacility"
             },
             {
               "businessType": "ic_business_keyboard_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "BOOSTKEYBOARD",
-              "title": "Boost\nkeyboard"
+              "title": "Boost\nKeyboard"
             },
             {
               "businessType": "newsletter_subscription",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Newsletter subscription"
+              "title": "Newsletter Subscription"
             },
             {
               "businessType": "website_chatbot",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Website\nchatboat"
+              "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Dictate: assisted content creation"
+              "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Wildfire (Google & Facebook advertising)"
+              "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Facebook\nlead Ads"
+              "title": "Facebook\nLead Ads"
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and engagement"
+          "title": "Marketing and Engagement"
         },
         {
           "isExpend": true,
@@ -3697,32 +3751,32 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Social sharing analytics"
+              "title": "Social Sharing Analytics"
             },
             {
               "businessType": "sales_analytics",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Sales\nanalytics"
+              "title": "Sales\nAnalytics"
             },
             {
               "businessType": "search_analytics",
-              "isLock": true,
+              "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Search\nanalytics"
+              "title": "Search\nAnalytics"
             },
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Chatbot\nanalytics"
+              "title": "Chatbot\nAnalytics"
             }
           ],
           "subTitle": "Live analytics to help you know how your business is doing.",
-          "title": "Business reports"
+          "title": "Business Reports"
         },
         {
           "isExpend": true,
@@ -3740,11 +3794,11 @@
               "isLock": false,
               "isHide": true,
               "premiumCode": "",
-              "title": "Premium\nsupport"
+              "title": "Premium\nSupport"
             }
           ],
           "subTitle": "We’re always there to help you, just tap and reach out to us.",
-          "title": "Business support"
+          "title": "Business Support"
         }
       ]
     }

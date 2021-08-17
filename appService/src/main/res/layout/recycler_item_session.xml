@@ -3,97 +3,98 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools">
 
-  <data>
+    <data>
 
-  </data>
-
-  <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/size_10"
-    android:background="@drawable/rounded_stroke_grey"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-      android:id="@+id/ccv_day"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/size_40"
-      android:background="@drawable/rounded_light_blue"
-      android:orientation="horizontal">
-
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/ctv_title_day"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/size_8"
-        android:layout_weight="1"
-        android:fontFamily="@font/regular"
-        android:textColor="@color/black_4f4f4f"
-        app:textType="CAPTION"
-        tools:text="Monday" />
-
-      <com.appservice.views.toggle.widget.LabeledSwitch
-        android:id="@+id/toggle_on_off"
-        android:layout_width="@dimen/size_54"
-        android:layout_height="@dimen/size_24"
-        android:layout_gravity="end|center_vertical"
-        android:layout_marginEnd="@dimen/size_8"
-        app:colorBorder="@android:color/transparent"
-        app:colorOff="@color/light_lemon"
-        app:colorOn="@color/light_green_1"
-        app:on="false"
-        app:textOff="NO"
-        app:textOn="YES"
-        app:txtColorOff="@color/white"
-        app:txtColorOn="@color/white" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </data>
 
     <RelativeLayout
-      android:id="@+id/layout_session_create"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/ccv_day"
-      android:layout_marginTop="-2dp">
-
-      <LinearLayout
-        android:id="@+id/ll_time_slot"
-        style="@style/ll_match_wrap_vertical">
-
-      </LinearLayout>
-
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/ctv_add_session"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll_time_slot"
-        android:layout_marginStart="@dimen/size_18"
-        android:layout_marginTop="@dimen/size_8"
-        android:layout_marginBottom="@dimen/size_8"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/u_add_session_u"
-        android:textColor="#4889F8" />
+        android:layout_marginTop="@dimen/size_10"
+        android:background="@drawable/rounded_stroke_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-      <com.framework.views.customViews.CustomCheckBox
-        android:id="@+id/ccb_all_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ctv_add_session"
-        android:layout_alignStart="@id/ctv_add_session"
-        android:layout_marginBottom="@dimen/size_8"
-        android:alpha="0.8"
-        android:fontFamily="@font/regular"
-        android:text="@string/apply_same_on_all_days"
-        android:textAlignment="center"
-        android:textColor="@color/black_4a4a4a"
-        android:textFontWeight="600"
-        android:textSize="13sp"
-        android:theme="@style/ActiveTheme" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/ccv_day"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_40"
+          android:background="@drawable/rounded_light_blue"
+          android:orientation="horizontal">
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_title_day"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:layout_marginStart="@dimen/size_8"
+              android:layout_weight="1"
+              android:textColor="@color/black_4f4f4f"
+              android:fontFamily="@font/open_sans"
+              app:textType="CAPTION"
+              tools:text="Monday" />
+
+            <com.appservice.views.toggle.widget.LabeledSwitch
+              android:id="@+id/toggle_on_off"
+              android:layout_width="@dimen/size_54"
+              android:layout_height="@dimen/size_24"
+              android:layout_gravity="end|center_vertical"
+              android:layout_marginEnd="@dimen/size_8"
+              app:colorBorder="@android:color/transparent"
+              app:colorOff="@color/light_lemon"
+              app:colorOn="@color/light_green_1"
+              app:on="false"
+              app:textOff="NO"
+              app:textOn="YES"
+              app:txtColorOff="@color/white"
+              app:txtColorOn="@color/white" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="-2dp"
+            android:id="@+id/layout_session_create"
+            android:layout_below="@id/ccv_day"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                style="@style/ll_match_wrap_vertical"
+                android:id="@+id/ll_time_slot">
+
+            </LinearLayout>
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_add_session"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_below="@id/ll_time_slot"
+                android:layout_marginStart="@dimen/size_18"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginBottom="@dimen/size_8"
+                android:text="@string/u_add_session_u"
+                android:textColor="#4889F8"
+                android:focusable="true" />
+
+            <com.framework.views.customViews.CustomCheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ccb_all_day"
+                android:layout_below="@id/ctv_add_session"
+                android:layout_alignStart="@id/ctv_add_session"
+                android:layout_marginBottom="@dimen/size_8"
+                android:theme="@style/ActiveTheme"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/apply_same_on_all_days"
+                android:textAlignment="center"
+                android:alpha="0.8"
+                android:textColor="@color/black_4a4a4a"
+                android:textFontWeight="600"
+                android:textSize="13sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+
     </RelativeLayout>
-
-  </RelativeLayout>
 
 </layout>

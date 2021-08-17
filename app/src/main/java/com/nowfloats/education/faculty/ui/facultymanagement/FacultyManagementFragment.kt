@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.framework.views.fabButton.FloatingActionButton
 import com.nowfloats.education.faculty.FacultyActivity
 import com.nowfloats.education.faculty.adapter.FacultyManagementAdapter
 import com.nowfloats.education.faculty.model.Data
@@ -27,117 +26,106 @@ import org.koin.android.ext.android.inject
 
 class FacultyManagementFragment : BaseFragment(), ItemClickEventListener {
 
-  private val viewModel by inject<FacultyManagementViewModel>()
-  private val facultyManagementAdapter: FacultyManagementAdapter by lazy {
-    FacultyManagementAdapter(
-      this
-    )
-  }
+    private val viewModel by inject<FacultyManagementViewModel>()
+    private val facultyManagementAdapter: FacultyManagementAdapter by lazy { FacultyManagementAdapter(this) }
 
-  override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.faculty_management_fragment, container, false)
-  }
-
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-
-    setHeader(view)
-    initLiveDataObservers()
-    initBatchesRecyclerview(view)
-  }
-
-  private fun initBatchesRecyclerview(view: View) {
-    val recyclerview = view.findViewById<RecyclerView>(R.id.faculty_recycler)
-    val gridLayoutManager = GridLayoutManager(requireContext(), 1)
-    gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-    recyclerview.apply {
-      layoutManager = gridLayoutManager
-      adapter = facultyManagementAdapter
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.faculty_management_fragment, container, false)
     }
 
-    if (Utils.isNetworkConnected(requireContext())) {
-      showLoader("Loading Faculty Management")
-      viewModel.getOurFaculty()
-    } else {
-      showToast("No Internet!")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setHeader(view)
+        initLiveDataObservers()
+        initBatchesRecyclerview(view)
     }
-  }
 
-  private fun initLiveDataObservers() {
-    viewModel.apply {
-      ourFacultyResponse.observe(viewLifecycleOwner, Observer {
-        if (!it.Data.isNullOrEmpty()) {
-          setRecyclerviewAdapter(it.Data)
-        } else showToast("Faculty data not found!")
-        hideLoader()
-      })
-
-      errorMessage.observe(viewLifecycleOwner, Observer {
-        hideLoader()
-        Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
-      })
-
-      deleteFacultyResponse.observe(viewLifecycleOwner, Observer {
-        if (!it.isNullOrBlank()) {
-          hideLoader()
-          if (it == SUCCESS) {
-            Toast.makeText(requireContext(), getString(R.string.faculty_deleted_successfully), Toast.LENGTH_SHORT).show()
-            showLoader("Loading Faculty")
-            setDeleteFacultyLiveDataValue("")
-            viewModel.getOurFaculty()
-          }
+    private fun initBatchesRecyclerview(view: View) {
+        val recyclerview = view.findViewById<RecyclerView>(R.id.faculty_recycler)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerview.apply {
+            layoutManager = gridLayoutManager
+            adapter = facultyManagementAdapter
         }
-      })
+
+        if (Utils.isNetworkConnected(requireContext())) {
+            showLoader("Loading Faculty Management")
+            viewModel.getOurFaculty()
+        } else {
+            showToast("No Internet!")
+        }
     }
-  }
 
-  private fun setRecyclerviewAdapter(batchesResponseData: List<Data>) {
-    facultyManagementAdapter.items = batchesResponseData
-    facultyManagementAdapter.notifyDataSetChanged()
-  }
+    private fun initLiveDataObservers() {
+        viewModel.apply {
+            ourFacultyResponse.observe(viewLifecycleOwner, Observer {
+                if (!it.Data.isNullOrEmpty()) {
+                    hideLoader()
+                    setRecyclerviewAdapter(it.Data)
+                }
+            })
 
-  private fun setHeader(view: View) {
-    val backButton: LinearLayout = view.findViewById(R.id.back_button)
-    (view.findViewById(R.id.right_icon) as? ImageView)?.visibility = View.INVISIBLE
-    val btnAdd: FloatingActionButton = view.findViewById(R.id.btn_add)
-    val title: TextView = view.findViewById(R.id.title)
-    title.text = getString(R.string.faculty_management)
-    btnAdd.setOnClickListener {
-      (activity as FacultyActivity).addFragment(
-        FacultyDetailsFragment.newInstance(),
-        FACULTY_DETAILS_FRAGMENT
-      )
+            errorMessage.observe(viewLifecycleOwner, Observer {
+                hideLoader()
+                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+            })
+
+            deleteFacultyResponse.observe(viewLifecycleOwner, Observer {
+                if (!it.isNullOrBlank()) {
+                    if (it == SUCCESS) {
+                        hideLoader()
+                        Toast.makeText(requireContext(), getString(R.string.faculty_deleted_successfully), Toast.LENGTH_SHORT).show()
+                        showLoader("Loading Faculty")
+                        setDeleteFacultyLiveDataValue("")
+                        viewModel.getOurFaculty()
+                    }
+                }
+            })
+        }
     }
-    backButton.setOnClickListener { requireActivity().onBackPressed() }
-  }
 
-  override fun itemMenuOptionStatus(pos: Int, status: Boolean) {
-    updateItemMenuOptionStatus(pos, status)
-  }
+    private fun setRecyclerviewAdapter(batchesResponseData: List<Data>) {
+        facultyManagementAdapter.items = batchesResponseData
+        facultyManagementAdapter.notifyDataSetChanged()
+    }
 
-  override fun onEditClick(data: Any, position: Int) {
-    facultyManagementAdapter.menuOption(position, false)
-    (activity as FacultyActivity).addFragment(
-      FacultyDetailsFragment.newInstance(data as Data),
-      FACULTY_DETAILS_FRAGMENT
-    )
-  }
+    private fun setHeader(view: View) {
+        val rightButton: LinearLayout = view.findViewById(R.id.right_icon_layout)
+        val backButton: LinearLayout = view.findViewById(R.id.back_button)
+        val rightIcon: ImageView = view.findViewById(R.id.right_icon)
+        val title: TextView = view.findViewById(R.id.title)
+        title.text = getString(R.string.faculty_management)
+        rightIcon.setImageResource(R.drawable.ic_add_white)
+        rightButton.setOnClickListener {
+            (activity as FacultyActivity).addFragment(FacultyDetailsFragment.newInstance(), FACULTY_DETAILS_FRAGMENT)
+        }
+        backButton.setOnClickListener { requireActivity().onBackPressed() }
+    }
 
-  override fun onDeleteClick(data: Any, position: Int) {
-    facultyManagementAdapter.menuOption(position, false)
-    showLoader(getString(R.string.deleting_faculty))
-    viewModel.deleteOurFaculty(data as Data)
-  }
+    override fun itemMenuOptionStatus(pos: Int, status: Boolean) {
+        updateItemMenuOptionStatus(pos, status)
+    }
 
-  private fun updateItemMenuOptionStatus(position: Int, status: Boolean) {
-    facultyManagementAdapter.menuOption(position, status)
-    facultyManagementAdapter.notifyDataSetChanged()
-  }
+    override fun onEditClick(data: Any, position: Int) {
+        facultyManagementAdapter.menuOption(position, false)
+        (activity as FacultyActivity).addFragment(FacultyDetailsFragment.newInstance(data as Data), FACULTY_DETAILS_FRAGMENT)
+    }
 
-  companion object {
-    fun newInstance(): FacultyManagementFragment = FacultyManagementFragment()
-  }
+    override fun onDeleteClick(data: Any, position: Int) {
+        facultyManagementAdapter.menuOption(position, false)
+        showLoader(getString(R.string.deleting_faculty))
+        viewModel.deleteOurFaculty(data as Data)
+    }
+
+    private fun updateItemMenuOptionStatus(position: Int, status: Boolean) {
+        facultyManagementAdapter.menuOption(position, status)
+        facultyManagementAdapter.notifyDataSetChanged()
+    }
+
+    companion object {
+        fun newInstance(): FacultyManagementFragment = FacultyManagementFragment()
+    }
 }

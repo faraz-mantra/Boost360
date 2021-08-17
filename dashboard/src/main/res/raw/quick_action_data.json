@@ -244,12 +244,12 @@
         },
         {
           "quickActionType": "ADD_UPCOMING_BATCH",
-          "title": "Add an upcoming\nbatch",
+          "title": "Add an\nupcoming batch",
           "isNew": true
         },
         {
           "quickActionType": "ADD_FACULTY_MEMBER",
-          "title": "List a faculty\nmember"
+          "title": "List a\nfaculty member"
         },
         {
           "quickActionType": "ADD_SLIDER_BANNER",

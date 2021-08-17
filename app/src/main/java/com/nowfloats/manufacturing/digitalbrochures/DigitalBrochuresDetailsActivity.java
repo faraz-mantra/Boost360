@@ -94,38 +94,47 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
 
-        removePdfButton.setOnClickListener(v -> {
-            attachBrochureEmptyLayout.setVisibility(View.VISIBLE);
-            fileSelectedLayout.setVisibility(View.GONE);
-            documentPdfUrl = "";
-            attachedURLText.setText("");
-        });
-
-        saveButton.setOnClickListener(v -> {
-            if (path != null) {
-                showLoader("Uploading document.Please Wait...");
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        uploadPdfFileToServer();
-                    }
-                }, 200);
-            } else {
-                uploadDataToServer();
+        removePdfButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                attachBrochureEmptyLayout.setVisibility(View.VISIBLE);
+                fileSelectedLayout.setVisibility(View.GONE);
+                documentPdfUrl = "";
+                attachedURLText.setText("");
             }
         });
 
-        uploadImageButton.setOnClickListener(v -> {
-            if (ActivityCompat.checkSelfPermission(DigitalBrochuresDetailsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                    PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(DigitalBrochuresDetailsActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        gallery_req_id);
-                return;
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (path != null) {
+                    showLoader("Uploading document.Please Wait...");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            uploadPdfFileToServer();
+                        }
+                    }, 200);
+                } else {
+                    uploadDataToServer();
+                }
             }
-            Intent intent = new Intent();
-            intent.setType("application/pdf");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, getString(R.string.select_a_pdf)), SELECT_PDF);
+        });
+
+        uploadImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(DigitalBrochuresDetailsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(DigitalBrochuresDetailsActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            gallery_req_id);
+                    return;
+                }
+                Intent intent = new Intent();
+                intent.setType("application/pdf");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, getString(R.string.select_a_pdf)), SELECT_PDF);
+            }
         });
 
         attachedURLText.addTextChangedListener(new TextWatcher() {
@@ -369,15 +378,23 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         rightIcon = findViewById(R.id.right_icon);
         title.setText("Brochure Details");
         rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
-        rightButton.setOnClickListener(v -> {
-            if (ScreenType != null && ScreenType.equals("edit")) {
-                deleteRecord(itemId);
-                return;
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ScreenType != null && ScreenType.equals("edit")) {
+                    deleteRecord(itemId);
+                    return;
+                }
+                finish();
             }
-            finish();
         });
 
-        backButton.setOnClickListener(v -> onBackPressed());
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -398,8 +415,11 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
     private void uploadDataToServer() {
         if (ScreenType.equals("edit")) {
             updateExistingTeamsAPI();
-        } else createNewTeamsAPI();
-        Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
+            Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
+        } else {
+            createNewTeamsAPI();
+            Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
+        }
     }
 
     private void uploadPdfFileToServer() {
@@ -424,21 +444,28 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
 
 
     private void showLoader(final String message) {
-        runOnUiThread(() -> {
-            if (progressDialog == null) {
-                progressDialog = new ProgressDialog(getApplicationContext());
-                progressDialog.setCanceledOnTouchOutside(false);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog == null) {
+                    progressDialog = new ProgressDialog(getApplicationContext());
+                    progressDialog.setCanceledOnTouchOutside(false);
+                }
+                progressDialog.setMessage(message);
+                progressDialog.show();
             }
-            progressDialog.setMessage(message);
-            progressDialog.show();
         });
     }
 
     private void hideLoader() {
 
-        runOnUiThread(() -> {
-            if (progressDialog != null && progressDialog.isShowing()) {
-                progressDialog.dismiss();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
             }
         });
     }

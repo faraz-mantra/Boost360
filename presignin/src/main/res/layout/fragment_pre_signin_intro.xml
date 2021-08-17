@@ -39,7 +39,7 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/presigin_intro_sub_title"
           style="@style/intro_title_text_style"
-          android:fontFamily="@font/bold"
+          android:fontFamily="@font/open_sans_bold"
           android:text="@{introItem.subTitle}"
           android:textColor="@color/black_4a4a4a" />
       </LinearLayout>
@@ -92,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
-            android:fontFamily="@font/regular"
+            android:fontFamily="@font/open_sans"
             android:text="@string/mute"
             android:textColor="@color/black_4a4a4a" />
         </LinearLayout>
@@ -102,7 +102,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_centerInParent="true"
-          android:fontFamily="@font/regular"
+          android:fontFamily="@font/open_sans"
           android:padding="@dimen/_10sdp"
           android:text="@string/intro_video_time"
           android:textColor="@color/black_4a4a4a" />
@@ -118,7 +118,7 @@
           <com.framework.views.customViews.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
+            android:fontFamily="@font/open_sans"
             android:paddingStart="@dimen/_10sdp"
             android:paddingTop="@dimen/_10sdp"
             android:paddingEnd="@dimen/_5sdp"

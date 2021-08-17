@@ -30,8 +30,7 @@
         android:clickable="true"
         android:focusable="true"
         android:padding="@dimen/size_6"
-        app:tint="@color/black_4a4a4a"
-        app:srcCompat="@drawable/ic_arrow_left_30" />
+        app:srcCompat="@drawable/ic_toolbar_back" />
 
       <com.framework.views.customViews.CustomTextField
         android:id="@+id/edt_search_text"
@@ -40,13 +39,13 @@
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:hint="@string/search_city_name"
+        android:textColorHint="@color/gray_light"
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:lines="1"
         android:paddingLeft="@dimen/size_16"
         android:paddingRight="@dimen/size_16"
-        android:textColor="@color/black_4a4a4a"
-        android:textColorHint="@color/greyish_brown_light"
+        android:textColor="@color/black"
         app:fontFamily="@font/regular"
         app:textType="HEADING_6" />
 
@@ -58,9 +57,9 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
+        android:visibility="gone"
         android:padding="@dimen/size_4"
         android:tint="@color/greyish_brown"
-        android:visibility="gone"
         app:srcCompat="@drawable/ic_close_grey" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

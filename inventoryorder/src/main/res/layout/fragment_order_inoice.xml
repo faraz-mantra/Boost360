@@ -36,7 +36,7 @@
       android:layout_margin="16dp"
       android:clickable="true"
       android:focusable="true"
-      android:backgroundTint="@color/colorAccentLight"
+      app:fabBackground="@drawable/bg_button_rounded_orange"
       app:fabIcon="@drawable/ic_share_order"
       app:fabSize="normal" />
   </androidx.coordinatorlayout.widget.CoordinatorLayout>

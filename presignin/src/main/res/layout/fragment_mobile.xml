@@ -34,7 +34,6 @@
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/subheading"
       style="@style/psn_subheading_style"
-      android:layout_marginTop="@dimen/size_4"
       android:text="@string/enter_your_number_hint"
       app:layout_constraintTop_toBottomOf="@id/title"
       tools:ignore="MissingConstraints" />
@@ -60,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_4sdp"
-        android:fontFamily="@font/regular"
+        android:fontFamily="@font/open_sans"
         android:text="+91"
         android:textColor="@color/black"
         android:textSize="@dimen/heading_4" />
@@ -72,12 +71,11 @@
         android:layout_marginStart="@dimen/_4sdp"
         android:background="@null"
         android:digits="0123456789"
-        android:fontFamily="@font/regular"
+        android:fontFamily="@font/open_sans"
         android:hint="XXXXX XXXXXX"
         android:inputType="phone"
         android:letterSpacing="0.05"
         android:maxLength="10"
-        android:textCursorDrawable="@drawable/cursor_drawable"
         android:textSize="@dimen/heading_4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,10 +106,10 @@
       android:layout_marginStart="@dimen/_16sdp"
       android:layout_marginTop="@dimen/_24sdp"
       android:layout_marginEnd="@dimen/_16sdp"
-      android:drawableEnd="@null"
       android:enabled="false"
+        android:textAllCaps="false"
+      android:drawableEnd="@null"
       android:text="@string/request_otp"
-      android:textAllCaps="false"
       app:layout_constraintTop_toBottomOf="@id/divider"
       tools:ignore="MissingConstraints" />
 
@@ -119,9 +117,10 @@
       android:id="@+id/login_username"
       style="@style/psn_subheading_style"
       android:layout_marginTop="@dimen/_16sdp"
-      android:fontFamily="@font/semi_bold"
       android:gravity="center"
       android:text="@string/login_with_username_or_email"
+      android:textAllCaps="true"
+      android:fontFamily="@font/semi_bold"
       android:textColor="@color/colorPrimary"
       app:layout_constraintTop_toBottomOf="@id/next_button"
       app:textType="BODY_1"
@@ -129,14 +128,15 @@
       tools:targetApi="p" />
 
     <com.framework.views.customViews.CustomTextView
-      android:id="@+id/help_tv"
-      style="@style/psn_subheading_style"
-      android:layout_width="wrap_content"
-      android:fontFamily="@font/semi_bold"
-      android:text="@string/need_help"
-      app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
-      app:layout_constraintTop_toBottomOf="@+id/login_username"
-      app:layout_constraintVertical_bias="1"
-      tools:ignore="MissingConstraints,UnknownId" />
+        android:id="@+id/help_tv"
+        style="@style/psn_subheading_style"
+        android:layout_width="wrap_content"
+        android:fontFamily="@font/semi_bold"
+        app:layout_constraintVertical_bias="1"
+        android:text="@string/need_help"
+        app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
+        app:layout_constraintTop_toBottomOf="@+id/login_username"
+        tools:ignore="MissingConstraints,UnknownId"
+         />
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

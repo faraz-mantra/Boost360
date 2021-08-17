@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.framework.views.fabButton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
@@ -191,18 +190,17 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
     }
 
     public void setHeader() {
-        LinearLayout  backButton;
+        LinearLayout rightButton, backButton;
         ImageView rightIcon;
         TextView title;
-        FloatingActionButton btnAdd;
 
         title = findViewById(R.id.title);
         backButton = findViewById(R.id.back_button);
-        btnAdd = findViewById(R.id.btn_add);
+        rightButton = findViewById(R.id.right_icon_layout);
         rightIcon = findViewById(R.id.right_icon);
         title.setText("Projects");
-        rightIcon.setVisibility(View.INVISIBLE);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        rightIcon.setImageResource(R.drawable.ic_add_white);
+        rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent projectIntent = new Intent(ProjectActivity.this, ProjectDetailsActivity.class);

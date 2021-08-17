@@ -75,7 +75,7 @@
           android:text="@string/not_opted_for_boost_alerts"
           android:textColor="@color/warm_grey_two"
           app:fontFamily="@font/regular"
-          app:textAllCaps="false"
+          app:textAllCaps="true"
           app:textType="OVERLINE" />
 
       </androidx.appcompat.widget.LinearLayoutCompat>

@@ -112,7 +112,7 @@
               android:gravity="center"
               android:stateListAnimator="@null"
               android:text="@string/make_a_sample_order"
-              android:textAllCaps="false"
+              android:textAllCaps="true"
               android:textColor="@color/white"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_1" />
@@ -227,7 +227,6 @@
           android:layout_margin="16dp"
           android:clickable="true"
           android:focusable="true"
-          android:backgroundTint="@color/colorAccentLight"
           app:fabIcon="@drawable/ic_add_white"
           app:fabSize="normal" />
       </androidx.coordinatorlayout.widget.CoordinatorLayout>

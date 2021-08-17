@@ -1,74 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.framework.views.customViews.CustomToolbar xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="?attr/actionBarSize"
-  android:background="?attr/colorPrimary"
-  app:contentInsetEnd="0dp"
-  app:contentInsetLeft="0dp"
-  app:contentInsetRight="0dp"
-  app:contentInsetStart="0dp"
-  app:navigationIcon="@drawable/ic_back_arrow_new">
-
-  <LinearLayout
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_marginEnd="10dp"
-    android:gravity="center"
-    android:orientation="horizontal">
+    android:layout_height="?attr/actionBarSize"
+    app:theme="@style/CustomToolbarTheme"
+    android:background="?attr/colorPrimary">
 
-    <com.framework.views.customViews.CustomTextView
-      android:id="@+id/titleTextView"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="4dp"
-      android:layout_weight="1"
-      android:ellipsize="marquee"
-      android:includeFontPadding="false"
-      android:fadingEdge="horizontal"
-      android:fontFamily="@font/semi_bold"
-      android:marqueeRepeatLimit="1"
-      android:scrollHorizontally="true"
-      android:singleLine="true"
-      android:textColor="@color/white"
-      android:visibility="visible"
-      app:textType="HEADING_6"
-      tools:ignore="MissingPrefix" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginEnd="15dp">
 
-    <AutoCompleteTextView
-      android:id="@+id/search_edittext"
-      android:layout_width="0dp"
-      android:layout_height="40dp"
-      android:layout_marginEnd="10dp"
-      android:layout_weight="1"
-      android:background="@android:color/transparent"
-      android:ellipsize="end"
-      android:hint="@string/find_your_subscribers"
-      android:inputType="text"
-      android:maxLines="1"
-      android:scrollHorizontally="true"
-      android:textColor="@color/white"
-      android:textColorHint="@color/white_50"
-      android:visibility="gone" />
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            fontPath="Roboto-Medium.ttf"
+            android:fadingEdge="horizontal"
+            android:visibility="visible"
+            android:marqueeRepeatLimit="1"
+            android:scrollHorizontally="true"
+            tools:ignore="MissingPrefix"
+            android:layout_marginEnd="5dp" />
 
-    <ImageView
-      android:id="@+id/search_image"
-      android:layout_width="36dp"
-      android:layout_height="match_parent"
-      android:layout_gravity="end"
-      android:background="@drawable/button_click_effect"
-      android:padding="8dp"
-      android:visibility="visible"
-      app:srcCompat="@drawable/ic_search_white" />
+        <AutoCompleteTextView
+            android:id="@+id/search_edittext"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:ellipsize="end"
+            android:inputType="text"
+            android:textColorHint="@color/white"
+            android:hint="@string/find_your_subscribers"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:background="@android:color/transparent"
+            android:layout_marginEnd="15dp" />
+        <ImageView
+            android:id="@+id/search_image"
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:background="@drawable/button_click_effect"
+            app:srcCompat="@drawable/ic_search_white"
+            android:layout_gravity="end"
+            android:visibility="visible"/>
 
-    <ImageView
-      android:id="@+id/img_delete"
-      android:layout_width="40dp"
-      android:layout_height="match_parent"
-      android:background="@drawable/button_click_effect"
-      android:src="@drawable/ic_add_white"
-      android:visibility="gone" />
+        <ImageView
+            android:id="@+id/img_delete"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_add_white_24dp"
+            android:visibility="gone"
+            android:background="@drawable/button_click_effect"/>
 
-  </LinearLayout>
-</com.framework.views.customViews.CustomToolbar>
+    </LinearLayout>
+</androidx.appcompat.widget.Toolbar>

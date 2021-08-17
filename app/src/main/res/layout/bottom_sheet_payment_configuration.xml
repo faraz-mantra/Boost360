@@ -1,470 +1,471 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#8f8f8f"
-    android:orientation="vertical"
-    app:behavior_hideable="false"
-    app:behavior_peekHeight="0dp"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-    <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingStart="@dimen/margin_20"
-      android:paddingTop="@dimen/margin_10"
-      android:paddingRight="@dimen/margin_20"
-      android:paddingBottom="@dimen/margin_10">
-
-      <TextView
-        android:id="@+id/label_payment_configuration"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/payment_configuration"
-        android:textColor="@android:color/white"
-        android:textSize="18sp" />
-
-      <TextView
-        android:id="@+id/label_variants"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/label_payment_configuration"
-        android:paddingRight="5dp"
-        android:text="@string/for_variant_1"
-        android:textColor="@android:color/white"
-        android:textSize="12sp"
-         android:fontFamily="@font/semi_bold"
-        android:visibility="gone" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/label_payment_configuration"
-        android:layout_toEndOf="@+id/label_variants"
-        android:text="@string/of_fastrack_bare_basic_watch"
-        android:textColor="#c9c9c9"
-        android:textSize="12sp"
-        android:visibility="gone" />
-
-    </RelativeLayout>
-
-    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@android:color/white"
-      app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
-        android:paddingStart="@dimen/margin_20"
-        android:paddingTop="@dimen/margin_10"
-        android:paddingRight="@dimen/margin_20"
-        android:paddingBottom="@dimen/margin_20">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="0dp"
+        android:background="#8f8f8f"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1"
-          android:orientation="horizontal">
-
-          <TextView
-            style="@style/ProductLabelTextStyle"
-            android:text="@string/payment_and_delivery_mode" />
-
-          <ImageButton
-            style="@style/ProductHelpButtonStyle"
-            android:visibility="invisible" />
-
-        </LinearLayout>
-
-        <!--
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_5"
-            android:background="@drawable/grey_rounded_background"
-            android:orientation="vertical">
+            android:paddingStart="@dimen/margin_20"
+            android:paddingRight="@dimen/margin_20"
+            android:paddingTop="@dimen/margin_10"
+            android:paddingBottom="@dimen/margin_10" >
 
             <TextView
-                android:id="@+id/label_payment_type"
+                android:id="@+id/label_payment_configuration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Assured Purchase"
-                android:textSize="20sp"
-                 android:fontFamily="@font/semi_bold"
-                android:textColor="@color/primaryTextColor" />
+                android:text="@string/payment_configuration"
+                android:textSize="18sp"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/label_variants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/for_variant_1"
+                android:textSize="12sp"
+                android:paddingRight="5dp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:layout_below="@+id/label_payment_configuration"
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="A Boost service which ensures a secure payment and safe delivery of this product"
-                android:textSize="14sp"
-                android:textColor="@color/secondaryTextColor" />
+                android:text="@string/of_fastrack_bare_basic_watch"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:layout_below="@+id/label_payment_configuration"
+                android:layout_toEndOf="@+id/label_variants"
+                android:textColor="#c9c9c9" />
 
-        </LinearLayout>
-        -->
+        </RelativeLayout>
 
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/margin_5"
-          android:background="@drawable/white_rounded_spinner_background"
-          android:orientation="horizontal">
-
-          <Spinner
-            android:id="@+id/spinner_payment_option"
+        <androidx.core.widget.NestedScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:spinnerMode="dropdown" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-          android:id="@+id/layout_assured_purchase"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical">
-
-          <LinearLayout
-            android:id="@+id/layout_pickup_address_info"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/margin_10"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-              style="@style/ProductLabelTextStyle"
-              android:text="@string/package_pickup_address" />
-
-            <ImageButton
-              style="@style/ProductHelpButtonStyle"
-              android:visibility="invisible" />
-
-          </LinearLayout>
-
-          <RelativeLayout
-            android:id="@+id/layout_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/white_rectangle_background"
-            android:orientation="vertical">
-
-            <RelativeLayout
-              android:id="@+id/layout_address_title"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/grey_rounded_background"
-              android:paddingStart="10dp"
-              android:paddingTop="5dp"
-              android:paddingRight="10dp"
-              android:paddingBottom="5dp">
-
-              <TextView
-                android:id="@+id/tv_address_type"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_toLeftOf="@+id/btn_change"
-                android:gravity="center_vertical"
-                android:paddingStart="12dp"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="14sp" />
-
-              <Button
-                android:id="@+id/btn_change"
-                android:layout_width="70dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:background="@android:color/transparent"
-                android:text="@string/button_change"
-                android:textColor="@color/secondaryTextColor"
-                android:textSize="14sp" />
-
-            </RelativeLayout>
-
-            <TextView
-              android:id="@+id/tv_pick_address"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_below="@+id/layout_address_title"
-              android:layout_marginTop="@dimen/margin_5"
-              android:paddingStart="22dp"
-              android:paddingTop="10dp"
-              android:paddingRight="20dp"
-              android:paddingBottom="10dp"
-              android:textColor="@color/secondaryTextColor"
-              android:textSize="14sp"
-              android:visibility="gone" />
-
-            <TextView
-              android:id="@+id/tv_mobile_number"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_below="@+id/tv_pick_address"
-              android:layout_marginBottom="@dimen/margin_5"
-              android:paddingStart="22dp"
-              android:paddingRight="20dp"
-              android:paddingBottom="10dp"
-              android:textColor="@color/secondaryLightTextColor"
-              android:textSize="14sp"
-              android:visibility="gone" />
-
-          </RelativeLayout>
-
-          <!--
-          <Spinner
-              android:id="@+id/spinner_pickup_address"
-              style="@style/ProductSpinnerStyle"
-              android:layout_marginTop="@dimen/margin_5"
-              android:background="@drawable/input_background"
-              android:entries="@array/stock_options" />
-          -->
-
-          <!--
-          <TextView
-              android:id="@+id/tv_pick_address"
-              style="@style/ProductEditTextStyle"
-              android:drawableRight="@drawable/ic_pencil"
-              android:drawablePadding="@dimen/margin_15"
-              android:layout_width="match_parent"
-              android:layout_marginTop="@dimen/margin_5"
-              android:padding="8dp"
-              android:ellipsize="end"
-              android:onClick="onPickAddressClick"
-              android:clickable="true" />
-          -->
-
-
-          <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10"
-            android:orientation="horizontal">
-
-            <TextView
-              style="@style/ProductLabelTextStyle"
-              android:text="Bank account number to receipt payment" />
-
-            <ImageButton
-              style="@style/ProductHelpButtonStyle"
-              android:visibility="invisible" />
-
-          </LinearLayout>
-
-          <EditText
-            android:id="@+id/edit_bank_account"
-            style="@style/ProductEditTextStyle"
-            android:layout_marginTop="@dimen/margin_5"
-            android:digits="1234567890"
-            android:gravity="top"
-            android:hint="XXXXXXXXXX"
-            android:inputType="number" />
-
-          <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10"
-            android:orientation="horizontal">
-
-            <TextView
-              style="@style/ProductLabelTextStyle"
-              android:text="Branch Code (IFSC)" />
-
-            <ImageButton
-              style="@style/ProductHelpButtonStyle"
-              android:visibility="invisible" />
-
-          </LinearLayout>
-
-          <EditText
-            android:id="@+id/edit_ifsc_code"
-            style="@style/ProductEditTextStyle"
-            android:layout_marginTop="@dimen/margin_5"
-            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-            android:gravity="top"
-            android:hint="XXXXXXXXXX"
-            android:inputType="textCapCharacters" />
-
-          <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10"
-            android:orientation="horizontal">
-
-            <TextView
-              style="@style/ProductLabelTextStyle"
-              android:text="Your tax ID/Number (GST)" />
-
-            <ImageButton
-              style="@style/ProductHelpButtonStyle"
-              android:visibility="invisible" />
-
-          </LinearLayout>
-
-          <EditText
-            android:id="@+id/edit_gst"
-            style="@style/ProductEditTextStyle"
-            android:layout_marginTop="@dimen/margin_5"
-            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-            android:gravity="top"
-            android:hint="XXXXXXXXXX"
-            android:inputType="textCapCharacters" />
-
-          <TextView
-            android:id="@+id/tv_assured_purchase_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15"
-            android:text="*Assured Purchase can only have a single account number/branch code and tax number as part of periodic payment config. Make sure that above account details are correct."
-            android:textSize="12sp" />
-
-          <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="@dimen/margin_15"
-            android:layout_marginBottom="@dimen/margin_10"
-            android:background="@drawable/dotted_line"
-            android:layerType="software" />
-
-          <RelativeLayout
-            android:id="@+id/layout_payment_method_acceptance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <CheckBox
-              android:id="@+id/check_payment_configuration"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_gravity="center_vertical" />
-
-            <TextView
-              android:id="@+id/tv_payment_configuration_acceptance_message"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_toRightOf="@id/check_payment_configuration"
-              android:text="I agree that boost will charge %0 of the total cart value as convenience fee(as part of your current boost plan)"
-              android:textSize="12sp" />
-
-            <View
-              android:id="@+id/dotted_line_accept"
-              android:layout_width="match_parent"
-              android:layout_height="2dp"
-              android:layout_below="@id/check_payment_configuration"
-              android:layout_marginTop="@dimen/margin_15"
-              android:background="@drawable/dotted_line"
-              android:layerType="software" />
-
-          </RelativeLayout>
-
-        </LinearLayout>
-
-        <!--
-        <LinearLayout
-            android:id="@+id/layout_my_payment_gateway"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_10"
-            android:orientation="vertical" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="@dimen/margin_10"
-                android:orientation="horizontal" >
-
-                <TextView
-                    style="@style/ProductLabelTextStyle"
-                    android:text="Your payment gateway name"/>
-
-                <ImageButton
-                    style="@style/ProductHelpButtonStyle"/>
-
-            </LinearLayout>
-
-            <Spinner
-                android:id="@+id/spinner_payment_mode"
-                style="@style/ProductSpinnerStyle"
-                android:layout_marginTop="@dimen/margin_5"
-                android:background="@drawable/input_background"
-                android:entries="@array/payment_options_v1" />
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10"
-                android:orientation="horizontal" >
+                android:orientation="vertical"
+                android:paddingStart="@dimen/margin_20"
+                android:paddingRight="@dimen/margin_20"
+                android:paddingTop="@dimen/margin_10"
+                android:paddingBottom="@dimen/margin_20"
+                android:background="@android:color/white" >
 
-                <TextView
-                    style="@style/ProductLabelTextStyle"
-                    android:text="Salt and Key ID for identification" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
 
-                <ImageButton
-                    android:id="@+id/ib_info_salt"
-                    style="@style/ProductHelpButtonStyle" />
+                    <TextView
+                        style="@style/ProductLabelTextStyle"
+                        android:text="@string/payment_and_delivery_mode"/>
+
+                    <ImageButton
+                        android:visibility="invisible"
+                        style="@style/ProductHelpButtonStyle"/>
+
+                </LinearLayout>
+
+                <!--
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:background="@drawable/grey_rounded_background"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/label_payment_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Assured Purchase"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primaryTextColor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="A Boost service which ensures a secure payment and safe delivery of this product"
+                        android:textSize="14sp"
+                        android:textColor="@color/secondaryTextColor" />
+
+                </LinearLayout>
+                -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:background = "@drawable/white_rounded_spinner_background" >
+
+                    <Spinner
+                        android:id="@+id/spinner_payment_option"
+                        android:spinnerMode="dropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/layout_assured_purchase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:id="@+id/layout_pickup_address_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="@string/package_pickup_address"/>
+
+                        <ImageButton
+                            android:visibility="invisible"
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/white_rectangle_background">
+
+                        <RelativeLayout
+                            android:id="@+id/layout_address_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/grey_rounded_background"
+                            android:paddingStart="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp">
+
+                            <TextView
+                                android:id="@+id/tv_address_type"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:paddingStart="12dp"
+                                android:gravity="center_vertical"
+                                android:textSize="14sp"
+                                android:textColor="@color/primaryTextColor"
+                                android:layout_toLeftOf="@+id/btn_change" />
+
+                            <Button
+                                android:id="@+id/btn_change"
+                                android:layout_width="70dp"
+                                android:layout_height="30dp"
+                                android:background="@android:color/transparent"
+                                android:textColor="@color/secondaryTextColor"
+                                android:layout_alignParentEnd="true"
+                                android:textSize="14sp"
+                                android:text="@string/button_change" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/tv_pick_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="20dp"
+                            android:paddingStart="22dp"
+                            android:visibility="gone"
+                            android:layout_below="@+id/layout_address_title"
+                            android:layout_marginTop="@dimen/margin_5"
+                            android:textColor="@color/secondaryTextColor" />
+
+                        <TextView
+                            android:id="@+id/tv_mobile_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="20dp"
+                            android:paddingStart="22dp"
+                            android:visibility="gone"
+                            android:layout_below="@+id/tv_pick_address"
+                            android:layout_marginBottom="@dimen/margin_5"
+                            android:textColor="@color/secondaryLightTextColor" />
+
+                    </RelativeLayout>
+
+                    <!--
+                    <Spinner
+                        android:id="@+id/spinner_pickup_address"
+                        style="@style/ProductSpinnerStyle"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:background="@drawable/input_background"
+                        android:entries="@array/stock_options" />
+                    -->
+
+                    <!--
+                    <TextView
+                        android:id="@+id/tv_pick_address"
+                        style="@style/ProductEditTextStyle"
+                        android:drawableRight="@drawable/ic_pencil"
+                        android:drawablePadding="@dimen/margin_15"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:padding="8dp"
+                        android:ellipsize="end"
+                        android:onClick="onPickAddressClick"
+                        android:clickable="true" />
+                    -->
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Bank account number to receipt payment" />
+
+                        <ImageButton
+                            android:visibility="invisible"
+                            style="@style/ProductHelpButtonStyle" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edit_bank_account"
+                        android:gravity="top"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:hint="XXXXXXXXXX"
+                        android:inputType="number"
+                        android:digits="1234567890"
+                        style="@style/ProductEditTextStyle" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Branch Code (IFSC)" />
+
+                        <ImageButton
+                            android:visibility="invisible"
+                            style="@style/ProductHelpButtonStyle" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edit_ifsc_code"
+                        android:gravity="top"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:hint="XXXXXXXXXX"
+                        android:inputType="textCapCharacters"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                        style="@style/ProductEditTextStyle" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Your tax ID/Number (GST)" />
+
+                        <ImageButton
+                            android:visibility="invisible"
+                            style="@style/ProductHelpButtonStyle" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edit_gst"
+                        android:gravity="top"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:hint="XXXXXXXXXX"
+                        android:inputType="textCapCharacters"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                        style="@style/ProductEditTextStyle" />
+
+                    <TextView
+                        android:id="@+id/tv_assured_purchase_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:text="*Assured Purchase can only have a single account number/branch code and tax number as part of periodic payment config. Make sure that above account details are correct."/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:layout_marginBottom="@dimen/margin_10"
+                        android:layerType="software"
+                        android:background="@drawable/dotted_line"/>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_payment_method_acceptance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <CheckBox
+                            android:id="@+id/check_payment_configuration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"/>
+
+                        <TextView
+                            android:id="@+id/tv_payment_configuration_acceptance_message"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:layout_toRightOf="@id/check_payment_configuration"
+                            android:text="I agree that boost will charge %0 of the total cart value as convenience fee(as part of your current boost plan)"/>
+
+                        <View
+                            android:id="@+id/dotted_line_accept"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:layerType="software"
+                            android:layout_below="@id/check_payment_configuration"
+                            android:background="@drawable/dotted_line"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <!--
+                <LinearLayout
+                    android:id="@+id/layout_my_payment_gateway"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Your payment gateway name"/>
+
+                        <ImageButton
+                            style="@style/ProductHelpButtonStyle"/>
+
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/spinner_payment_mode"
+                        style="@style/ProductSpinnerStyle"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:background="@drawable/input_background"
+                        android:entries="@array/payment_options_v1" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/ProductLabelTextStyle"
+                            android:text="Salt and Key ID for identification" />
+
+                        <ImageButton
+                            android:id="@+id/ib_info_salt"
+                            style="@style/ProductHelpButtonStyle" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edit_salt_and_key"
+                        android:gravity="top"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:hint="XXXXXXXXXXXXXXXXXXXXXXX"
+                        style="@style/ProductEditTextStyle" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="@dimen/margin_20"
+                        android:layerType="software"
+                        android:background="@drawable/dotted_line"/>
+
+                </LinearLayout>
+                -->
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15">
+
+                    <Button
+                        android:id="@+id/btn_cancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:minWidth="100dp"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/secondaryTextColor"
+                        android:layout_toLeftOf="@+id/btn_save_info"
+                        android:textSize="14sp"
+                        android:text="CANCEL" />
+
+                    <Button
+                        android:id="@+id/btn_save_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:minWidth="130dp"
+                        android:background="@drawable/rounded_button_enabled"
+                        android:textColor="@android:color/white"
+                        android:layout_alignParentEnd="true"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:textSize="14sp"
+                        android:text="SAVE INFO" />
+
+                </RelativeLayout>
 
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/edit_salt_and_key"
-                android:gravity="top"
-                android:layout_marginTop="@dimen/margin_5"
-                android:hint="XXXXXXXXXXXXXXXXXXXXXXX"
-                style="@style/ProductEditTextStyle" />
+        </androidx.core.widget.NestedScrollView>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="@dimen/margin_20"
-                android:layerType="software"
-                android:background="@drawable/dotted_line"/>
-
-        </LinearLayout>
-        -->
-
-        <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/margin_15">
-
-          <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_toLeftOf="@+id/btn_save_info"
-            android:background="@android:color/transparent"
-            android:minWidth="100dp"
-            android:text="CANCEL"
-            android:textColor="@color/secondaryTextColor"
-            android:textSize="14sp" />
-
-          <Button
-            android:id="@+id/btn_save_info"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/rounded_button_enabled"
-            android:minWidth="130dp"
-            android:text="Save info"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
-
-        </RelativeLayout>
-
-      </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-  </LinearLayout>
+    </LinearLayout>
 
 </layout>

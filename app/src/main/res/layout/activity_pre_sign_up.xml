@@ -1,281 +1,281 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="#fafafa"
-  android:orientation="vertical">
-
-
-  <FrameLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="#fafafa"
+    android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-      android:id="@+id/toolbar"
-      android:layout_width="match_parent"
-      android:layout_height="?android:attr/actionBarSize"
-      android:background="@color/primary"
-      app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-      app:theme="@style/CustomToolbarTheme">
 
-      <ImageView
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/margin_10"
-        android:src="@drawable/ria"
-        android:visibility="visible" />
-
-      <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/primary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/CustomToolbarTheme">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_10"
+                android:src="@drawable/ria"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="15dp"
+                    android:gravity="center"
+                    android:text="Let's get started!"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+<!--            <include-->
+<!--                android:id="@+id/layout_ria"-->
+<!--                layout="@layout/toolbar_website_create_form"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent" />-->
+        </androidx.appcompat.widget.Toolbar>
+
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1">
 
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_gravity="bottom"
-          android:layout_marginStart="15dp"
-          android:gravity="center"
-          android:text="Let's get started!"
-          android:textColor="@color/white"
-          android:textSize="16sp"
-           android:fontFamily="@font/semi_bold" />
-      </LinearLayout>
-
-      <!--            <include-->
-      <!--                android:id="@+id/layout_ria"-->
-      <!--                layout="@layout/toolbar_website_create_form"-->
-      <!--                android:layout_width="match_parent"-->
-      <!--                android:layout_height="match_parent" />-->
-    </androidx.appcompat.widget.Toolbar>
-
-  </FrameLayout>
-
-  <ScrollView
-    android:id="@+id/scrollview"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1">
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/margin_10"
-      android:layout_marginTop="@dimen/margin_20"
-      android:layout_marginEnd="@dimen/margin_20"
-      android:focusable="true"
-      android:focusableInTouchMode="true"
-      android:orientation="vertical">
-
-
-      <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/business_name_ria">
-
-        <com.google.android.material.textfield.TextInputEditText
-          android:id="@+id/editText_businessName"
-          style="@style/SignUp_EditText_Style_Ria"
-          fontPath="Roboto-Regular.ttf"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:ellipsize="end"
-          android:inputType="textCapWords|textNoSuggestions"
-          android:scrollHorizontally="true"
-          android:singleLine="true"
-          android:textSize="15sp" />
-
-      </com.google.android.material.textfield.TextInputLayout>
-
-      <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5"
-        android:hint="@string/plot_number_and_street_address">
-
-        <com.google.android.material.textfield.TextInputEditText
-          android:id="@+id/et_street_address"
-          style="@style/SignUp_EditText_Style_Ria"
-          fontPath="Roboto-Regular.ttf"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:inputType="textNoSuggestions"
-          android:textSize="15sp" />
-
-      </com.google.android.material.textfield.TextInputLayout>
-
-      <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5"
-        android:hint="@string/locality"
-        android:visibility="gone">
-
-        <com.google.android.material.textfield.TextInputEditText
-          android:id="@+id/etLocality"
-          style="@style/SignUp_EditText_Style_Ria"
-          fontPath="Roboto-Regular.ttf"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:ellipsize="end"
-          android:scrollHorizontally="true"
-          android:singleLine="true"
-          android:textSize="14sp" />
-
-      </com.google.android.material.textfield.TextInputLayout>
-
-
-      <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5"
-        android:layout_weight="1"
-        android:hint="@string/country_ria">
-
-        <EditText
-          android:id="@+id/editText_Country"
-          style="@style/SignUp_EditText_Style_Ria"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:editable="false"
-          android:ellipsize="end"
-          android:inputType="none"
-          android:scrollHorizontally="true"
-          android:singleLine="true"
-          android:text="@string/india"
-          android:textSize="15sp" />
-
-      </com.google.android.material.textfield.TextInputLayout>
-
-      <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5"
-        android:hint="@string/email_address_ria">
-
-        <com.google.android.material.textfield.TextInputEditText
-          android:id="@+id/editText_Email"
-          style="@style/SignUp_EditText_Style_Ria"
-          fontPath="Roboto-Regular.ttf"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:ellipsize="end"
-          android:inputType="textNoSuggestions"
-          android:scrollHorizontally="true"
-          android:singleLine="true"
-          android:textSize="15sp" />
-
-      </com.google.android.material.textfield.TextInputLayout>
-
-      <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_5"
-        android:hint="@string/otp_sent_on_mobile"
-        android:visibility="gone">
-
-        <com.google.android.material.textfield.TextInputEditText
-          android:id="@+id/etOTP"
-          style="@style/SignUp_EditText_Style_Ria"
-          fontPath="Roboto-Regular.ttf"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-
-        </com.google.android.material.textfield.TextInputEditText>
-
-
-      </com.google.android.material.textfield.TextInputLayout>
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <com.google.android.material.textfield.TextInputLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/margin_5"
-          android:layout_weight="1"
-          android:hint="@string/mobile_number">
-
-          <TextView
-            android:id="@+id/countrycode_signupscreen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:text="@string/_91"
-            android:textColor="#B6B6B6"
-            android:textSize="15sp"
-            android:visibility="gone"
-            tools:ignore="MissingPrefix" />
-
-          <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText_Phone"
-            style="@style/SignUp_EditText_Style_Ria"
-            fontPath="Roboto-Regular.ttf"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:inputType="phone"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textSize="15sp" />
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_20"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
 
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
-          android:id="@+id/ivPhoneStatus"
-          android:layout_width="25dp"
-          android:layout_height="25dp"
-          android:layout_gravity="bottom"
-          android:layout_marginStart="@dimen/margin_5"
-          android:layout_marginBottom="@dimen/margin_10"
-          android:padding="4dp"
-          android:src="@drawable/icon_info" />
-      </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/business_name_ria">
 
-      <TextView
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_businessName"
+                    style="@style/SignUp_EditText_Style_Ria"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:inputType="textCapWords|textNoSuggestions"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textSize="15sp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_5"
+                android:hint="@string/plot_number_and_street_address">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_street_address"
+                    style="@style/SignUp_EditText_Style_Ria"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textNoSuggestions"
+                    android:textSize="15sp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_5"
+                android:hint="@string/locality"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLocality"
+                    style="@style/SignUp_EditText_Style_Ria"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textSize="14sp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_5"
+                android:layout_weight="1"
+                android:hint="@string/country_ria">
+
+                <EditText
+                    android:id="@+id/editText_Country"
+                    style="@style/SignUp_EditText_Style_Ria"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:inputType="none"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:text="@string/india"
+                    android:editable="false"
+                    android:textSize="15sp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_5"
+                android:hint="@string/email_address_ria">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_Email"
+                    style="@style/SignUp_EditText_Style_Ria"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:inputType="textNoSuggestions"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textSize="15sp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_5"
+                android:hint="@string/otp_sent_on_mobile"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etOTP"
+                    style="@style/SignUp_EditText_Style_Ria"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:hint="@string/mobile_number">
+
+                    <TextView
+                        android:id="@+id/countrycode_signupscreen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:text="@string/_91"
+                        android:textColor="#B6B6B6"
+                        android:textSize="15sp"
+                        android:visibility="gone"
+                        tools:ignore="MissingPrefix" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editText_Phone"
+                        style="@style/SignUp_EditText_Style_Ria"
+                        fontPath="Roboto-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:textSize="15sp"
+                        android:inputType="phone"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/ivPhoneStatus"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:padding="4dp"
+                    android:src="@drawable/icon_info" />
+            </LinearLayout>
+            <TextView
+                fontPath="Roboto-Regular.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_100"
+                android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_marginBottom="@dimen/margin_20"
+                android:autoLink="all"
+                android:text="@string/note_boost_will_automatically_create_a_commerce_enabled_website_e_g_cairo_nowfloats_com_for_your_business_as_you_start_adding_content_on_boost_the_website_gets_updated_instantly_helping_your_business_get_visibility_across_all_search_engines"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/primary"
+                android:textSize="@dimen/small_text_size"
+                android:textStyle="italic" />
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/verify_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_100"
-        android:layout_marginEnd="@dimen/margin_10"
-        android:layout_marginBottom="@dimen/margin_20"
-        android:autoLink="all"
-        android:text="@string/note_boost_will_automatically_create_a_commerce_enabled_website_e_g_cairo_nowfloats_com_for_your_business_as_you_start_adding_content_on_boost_the_website_gets_updated_instantly_helping_your_business_get_visibility_across_all_search_engines"
-        android:textColor="@color/gray"
-        android:textColorHint="@color/primary"
-        android:textSize="@dimen/small_text_size"
-        android:fontFamily="@font/regular" />
+        android:layout_height="48dp"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginStart="@dimen/margin_20"
+        android:layout_marginEnd="@dimen/margin_20"
+        android:background="@drawable/rounded_corner_pre_signup"
+        android:gravity="bottom"
+        android:isScrollContainer="false">
+
+
+        <TextView
+            fontPath="Roboto-Regular.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/confirm"
+            android:textColor="@color/white"
+            android:textSize="@dimen/medium_text_size"
+            tools:ignore="MissingPrefix" />
+
     </LinearLayout>
-  </ScrollView>
-
-
-  <LinearLayout
-    android:id="@+id/verify_button"
-    android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:layout_marginStart="@dimen/margin_20"
-    android:layout_marginEnd="@dimen/margin_20"
-    android:layout_marginBottom="@dimen/margin_10"
-    android:background="@drawable/rounded_corner_pre_signup"
-    android:gravity="bottom"
-    android:isScrollContainer="false">
-
-
-    <TextView
-      fontPath="Roboto-Regular.ttf"
-      android:layout_width="match_parent"
-      android:layout_height="fill_parent"
-      android:layout_centerVertical="true"
-      android:gravity="center"
-      android:text="@string/confirm"
-      android:textColor="@color/white"
-      android:textSize="@dimen/medium_text_size"
-      tools:ignore="MissingPrefix" />
-
-  </LinearLayout>
 </LinearLayout>

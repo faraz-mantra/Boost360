@@ -87,8 +87,8 @@ public class DomainNotPurchaseFragment extends Fragment {
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-        if (session.getUserProfileEmail() != null) {
-            intent.putExtra("email", session.getUserProfileEmail());
+        if (session.getFPEmail() != null) {
+            intent.putExtra("email", session.getFPEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }

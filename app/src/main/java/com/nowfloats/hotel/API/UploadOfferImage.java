@@ -39,18 +39,28 @@ public class UploadOfferImage extends AsyncTask<Void, String, String> {
 
     @Override
     protected void onPreExecute() {
-        appContext.runOnUiThread(() -> {
-            pd = ProgressDialog.show(appContext, "", "Uploading Logo...");
-            pd.setCancelable(false);
+        appContext.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                pd = ProgressDialog.show(appContext, "", "Uploading Logo...");
+                pd.setCancelable(false);
+            }
         });
     }
 
 
     @Override
     protected void onPostExecute(String result) {
-        appContext.runOnUiThread(() -> {
-            pd.dismiss();
-            listener.uploadImageURL(result);
+        appContext.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                pd.dismiss();
+                try {
+                    listener.uploadImageURL(result);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         });
 
     }

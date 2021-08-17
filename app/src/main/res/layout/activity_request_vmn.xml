@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
-
-  <include
-    android:id="@+id/toolbar"
-    layout="@layout/toolbar_boost"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-
-  <include
-    layout="@layout/layout_empty_img_text_button_screen"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/toolbar"/>
+    <include
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        layout="@layout/layout_empty_img_text_button_screen"/>
 
 </LinearLayout>

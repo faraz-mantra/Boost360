@@ -183,11 +183,13 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/size_20"
-      android:fontFamily="@font/semi_bold"
+      android:background="@drawable/rounded_refresh_btn"
       android:gravity="center"
       android:paddingVertical="@dimen/size_14"
       android:text="@string/contact_support"
       android:textAllCaps="false"
+      android:textColor="@color/colorAccent"
+      android:textStyle="bold"
       app:layout_constraintBottom_toBottomOf="parent" />
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

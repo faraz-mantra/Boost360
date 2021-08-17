@@ -260,7 +260,7 @@
           android:paddingEnd="@dimen/size_28"
           android:paddingBottom="@dimen/size_10"
           android:text="@string/next"
-          android:textAllCaps="false"
+          android:textAllCaps="true"
           android:textColor="@color/white"
           android:textSize="14sp"
           app:drawableEndCompat="@drawable/ic_arrow_right_small_white"

@@ -1,138 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:orientation="vertical">
-
-  <View
-    android:id="@+id/view_divider"
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
-    android:alpha=".6"
-    android:background="@color/light_gray"
-    android:visibility="gone" />
-
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="5dp">
-
-    <ImageView
-      android:id="@+id/img_email"
-      android:layout_width="85dp"
-      android:layout_height="85dp"
-      android:paddingStart="15dp"
-      android:paddingRight="15dp"
-      android:src="@drawable/domain_email" />
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:padding="10dp">
-
-      <TextView
-        android:id="@+id/tv_domain_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:text="@string/your_business_emails_"
-        android:textColor="@color/gray"
-        android:textSize="15sp" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/light_gray"
-        android:paddingStart="10dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp"
-        android:text="@string/coming_soon_"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        android:visibility="gone" />
-
-      <TextView
-        android:id="@+id/tv_domain_created_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/choose_your_email_address_through_which_your_customers_can_contact_you_you_can_select_upto_3_email_address_with_your_domain"
-        android:textSize="12sp" />
-
-      <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_email_expired"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
-
-    </LinearLayout>
-  </LinearLayout>
-
-  <TextView
-    android:id="@+id/tv_email_booked"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
-    android:paddingStart="20dp"
-    android:paddingRight="15dp"
-     android:fontFamily="@font/semi_bold"
-    android:visibility="gone" />
-
-  <LinearLayout
-    android:id="@+id/ll_email_active"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingStart="20dp"
-    android:paddingRight="15dp"
-    android:paddingBottom="10dp"
-    android:visibility="gone">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <View
+        android:id="@+id/view_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="5dp"
+        android:visibility="gone"
+        android:alpha=".6"
+        android:layout_marginEnd="5dp"
+        android:background="@color/light_gray"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+        <ImageView
+            android:id="@+id/img_email"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:paddingStart="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/domain_email"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/rv_email_running"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:overScrollMode="never" />
+            <TextView
+                android:id="@+id/tv_domain_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/your_business_emails_"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/coming_soon_"
+                android:textAllCaps="true"
+                android:paddingStart="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:paddingBottom="5dp"
+                android:background="@color/light_gray"
+                android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/tv_domain_created_date"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_your_email_address_through_which_your_customers_can_contact_you_you_can_select_upto_3_email_address_with_your_domain"
+                android:textSize="12sp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_email_expired"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
+        </LinearLayout>
+    </LinearLayout>
     <TextView
-      android:id="@+id/tv_add_email"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:background="?android:selectableItemBackground"
-      android:paddingTop="7dp"
-      android:paddingBottom="7dp"
-      android:text="@string/add_email" />
-
-    <TextView
-      android:id="@+id/tv_confirm_request"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="15dp"
-      android:background="@drawable/ria_positive_btn"
-      android:paddingStart="10dp"
-      android:paddingTop="7dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="7dp"
-      android:text="@string/confirm_request"
-      android:textColor="@drawable/yellow_btn_hover_text_color"
-      android:textSize="13sp"
-      android:visibility="gone" />
-
-    <TextView
-      android:id="@+id/tv_note_message"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="10dp"
-      android:layout_marginBottom="10dp"
-      android:autoLink="all"
-      android:text="@string/email_180_message"
-      android:textSize="12sp" />
-  </LinearLayout>
+        android:id="@+id/tv_email_booked"
+        android:layout_width="match_parent"
+        android:textStyle="bold"
+        android:paddingStart="20dp"
+        android:paddingRight="15dp"
+        android:visibility="gone"
+        android:layout_marginBottom="5dp"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/ll_email_active"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingRight="15dp"
+        android:visibility="gone"
+        android:paddingBottom="10dp"
+        android:orientation="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_email_running"
+            android:layout_width="match_parent"
+            android:overScrollMode="never"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_add_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:background="?android:selectableItemBackground"
+            android:text="@string/add_email"/>
+        <TextView
+            android:id="@+id/tv_confirm_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:textSize="13sp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/confirm_request"
+            android:visibility="gone"
+            android:textColor="@drawable/yellow_btn_hover_text_color"
+            android:background="@drawable/ria_positive_btn"/>
+        <TextView
+            android:id="@+id/tv_note_message"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="12sp"
+            android:autoLink="all"
+            android:layout_height="wrap_content"
+            android:text="@string/email_180_message"/>
+    </LinearLayout>
 
 </LinearLayout>

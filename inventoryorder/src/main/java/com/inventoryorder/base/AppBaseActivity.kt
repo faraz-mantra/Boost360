@@ -23,6 +23,21 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
 
   }
 
+  override fun getToolbarTitleTypeface(): Typeface? {
+    return ResourcesCompat.getFont(this, R.font.semi_bold)
+  }
+
+  override fun getToolbarTitleSize(): Float? {
+    return resources.getDimension(R.dimen.heading_5)
+  }
+
+  override fun getNavIconScale(): Float {
+    return 0.75f
+  }
+
+  override fun getToolbarTitleGravity(): Int {
+    return Gravity.NO_GRAVITY
+  }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {

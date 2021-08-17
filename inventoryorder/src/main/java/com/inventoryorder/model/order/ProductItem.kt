@@ -82,8 +82,4 @@ data class ProductItem(
   fun getPayablePrice(): Double {
     return if (getActualPrice() >= getDiscountAmount()) getActualPrice() - getDiscountAmount() else getActualPrice()
   }
-
-  fun getPayablePWithCount():Double{
-    return getPayablePrice() * productQuantityAdded
-  }
 }

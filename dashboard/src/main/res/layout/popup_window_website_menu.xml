@@ -1,60 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <data>
+    <data>
 
-  </data>
+    </data>
 
-  <com.framework.views.customViews.CustomCardView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/size_10"
-    app:cardUseCompatPadding="true">
-
-    <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:orientation="vertical">
-
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/need_help"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/semi_bold"
-        android:gravity="start"
-        android:padding="@dimen/size_16"
-        android:text="@string/need_help"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:visibility="gone" />
-
-      <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_1"
-        android:layout_marginHorizontal="@dimen/size_8"
-        android:background="@color/gray_light_3"
-        android:visibility="gone" />
-
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/reset_default"
+    <com.framework.views.customViews.CustomCardView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="?android:selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/semi_bold"
-        android:gravity="center"
-        android:padding="@dimen/size_16"
-        android:text="@string/reset_to_default"
-        android:textColor="@color/black_4a4a4a"
-        android:textSize="12sp" />
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/size_6"
+        app:cardUseCompatPadding="true">
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
 
-  </com.framework.views.customViews.CustomCardView>
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/need_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="start"
+                android:padding="@dimen/size_16"
+                android:text="@string/need_help"
+                android:textColor="@color/black"
+                android:textAllCaps="true"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:visibility="gone"
+                android:layout_marginHorizontal="@dimen/size_8"
+                android:background="@color/gray_light_3" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/reset_default"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="center"
+                android:padding="@dimen/size_16"
+                android:text="@string/reset_to_default"
+                android:textAllCaps="true"
+                android:textColor="@color/red_F40000"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </com.framework.views.customViews.CustomCardView>
 </layout>

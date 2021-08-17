@@ -1,40 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.framework.views.customViews.CustomToolbar xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="?attr/actionBarSize"
-  android:background="?attr/colorPrimary"
-  app:navigationIcon="@drawable/ic_back_arrow_new"
-  app:theme="@style/CustomToolbarTheme">
-
-  <com.framework.views.customViews.CustomTextView
-    android:id="@+id/titleTextView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:textColor="@color/white"
-    app:fontFamily="@font/semi_bold"
-    app:textType="HEADING_6"
-    tools:text="@string/text" />
-
-  <LinearLayout
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:gravity="end"
-    android:orientation="horizontal">
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    app:theme="@style/CustomToolbarTheme">
 
-    <com.nowfloats.CustomWidget.roboto_md_size_a1a1a1
-      android:id="@+id/saveTextView"
-      android:layout_width="50dp"
-      android:layout_height="fill_parent"
-      android:layout_gravity="end"
-      android:background="@drawable/button_click_effect"
-      android:gravity="center_vertical|center"
-      android:text="@string/tool_bar_save_text"
-      android:fontFamily="@font/semi_bold"
-      android:textColor="@color/white" />
-  </LinearLayout>
+    <com.nowfloats.CustomWidget.roboto_md_48_white
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/text"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
-</com.framework.views.customViews.CustomToolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <com.nowfloats.CustomWidget.roboto_md_size_a1a1a1
+            android:id="@+id/saveTextView"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="end"
+            android:background="@drawable/button_click_effect"
+            android:gravity="center_vertical|center"
+            android:text="@string/tool_bar_save_text"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</androidx.appcompat.widget.Toolbar>
 

@@ -18,7 +18,8 @@
       android:visibility="gone"
       tools:visibility="visible">
 
-      <androidx.core.widget.NestedScrollView style="@style/match_match">
+      <androidx.core.widget.NestedScrollView
+        style="@style/match_match">
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/content"
@@ -49,9 +50,9 @@
                 style="@style/wrap_wrap"
                 android:layout_marginStart="@dimen/size_4"
                 android:textAlignment="center"
-                android:textAllCaps="false"
+                android:textAllCaps="true"
                 android:textColor="@color/white"
-                app:textAllCaps="false"
+                app:textAllCaps="true"
                 app:textType="BODY_1"
                 tools:drawableStart=""
                 tools:text="New Order" />
@@ -255,12 +256,11 @@
               android:background="@null"
               android:gravity="center"
               android:paddingTop="@dimen/size_14"
-              android:fontFamily="@font/semi_bold"
               android:paddingBottom="@dimen/size_14"
               android:text="@string/send_payment_link"
               android:textAlignment="gravity"
-              android:textAllCaps="false"
-              android:textColor="@color/colorAccentLight"
+              android:textAllCaps="true"
+              android:textColor="@color/orange"
               android:visibility="gone"
               tools:visibility="visible" />
 
@@ -280,11 +280,10 @@
               android:background="@null"
               android:gravity="center"
               android:paddingTop="@dimen/size_14"
-              android:fontFamily="@font/semi_bold"
               android:paddingBottom="@dimen/size_14"
               android:text="@string/cancel_order_normal"
               android:textAlignment="gravity"
-              android:textAllCaps="false"
+              android:textAllCaps="true"
               android:textColor="@color/watermelon_light_10"
               android:visibility="gone"
               tools:visibility="visible" />
@@ -322,10 +321,10 @@
                 style="@style/wrap_wrap"
                 android:gravity="end"
                 android:text="@string/change"
-                android:textAllCaps="false"
+                android:textAllCaps="true"
                 android:textColor="@color/orange"
                 android:visibility="invisible"
-                app:textAllCaps="false"
+                app:textAllCaps="true"
                 app:textType="BODY_1" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -360,26 +359,24 @@
                 style="@style/wrap_wrap"
                 android:drawableStart="@drawable/ic_inbox_orange"
                 android:drawablePadding="@dimen/size_8"
-                android:drawableTint="@color/colorAccentLight"
                 android:includeFontPadding="false"
                 android:text="@string/email"
-                android:layout_marginEnd="@dimen/size_30"
-                android:textAllCaps="false"
-                android:textColor="@color/colorAccentLight"
-                app:textAllCaps="false"
+                android:textAllCaps="true"
+                android:textColor="@color/orange"
+                app:textAllCaps="true"
                 app:textType="BODY_1" />
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvCustomerContactNumber"
                 style="@style/wrap_wrap"
+                android:layout_marginStart="@dimen/size_30"
                 android:drawableStart="@drawable/ic_call_phone_orange"
                 android:drawablePadding="@dimen/size_8"
-                android:drawableTint="@color/colorAccentLight"
                 android:includeFontPadding="false"
                 android:text="@string/call_buyer"
-                android:textAllCaps="false"
-                android:textColor="@color/colorAccentLight"
-                app:textAllCaps="false"
+                android:textAllCaps="true"
+                android:textColor="@color/orange"
+                app:textAllCaps="true"
                 app:textType="BODY_1" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -391,10 +388,9 @@
 
             <include
               android:id="@+id/user_address"
-              style="@style/match_wrap"
               layout="@layout/layout_shipping_billing_address"
-              android:layout_marginTop="@dimen/size_20"
-              tools:ignore="IncludeLayoutParam" />
+              style="@style/match_wrap"
+              android:layout_marginTop="@dimen/size_20" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -430,10 +426,10 @@
                 style="@style/wrap_wrap"
                 android:gravity="end"
                 android:text="@string/change"
-                android:textAllCaps="false"
-                android:textColor="@color/colorAccent_jio"
+                android:textAllCaps="true"
+                android:textColor="@color/orange"
                 android:visibility="invisible"
-                app:textAllCaps="false"
+                app:textAllCaps="true"
                 app:textType="BODY_1" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -479,7 +475,7 @@
               android:layout_marginTop="@dimen/size_2"
               android:textColor="@color/black_4a4a4a"
               app:textType="HEADING_6"
-              tools:text="Total amount: ₹976" />
+              tools:text="Total Amount: ₹976" />
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <View
@@ -502,7 +498,6 @@
         android:padding="@dimen/size_12"
         android:stateListAnimator="@null"
         android:text="@string/confirm_order_n"
-        android:textAllCaps="false"
         android:textColor="@color/white"
         android:visibility="gone"
         app:textType="HEADING_6"
@@ -516,10 +511,10 @@
       android:gravity="center"
       android:textColor="@color/scarlet_40"
       android:visibility="visible"
+      tools:visibility="gone"
       app:fontFamily="@font/bold"
       app:textType="BODY_1"
-      tools:text="Error"
-      tools:visibility="gone" />
+      tools:text="Error" />
 
   </androidx.appcompat.widget.LinearLayoutCompat>
 

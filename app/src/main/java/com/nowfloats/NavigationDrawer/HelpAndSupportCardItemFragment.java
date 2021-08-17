@@ -171,8 +171,8 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                         intent.putExtra("fpTag", session.getFpTag());
                         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
                         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-                        if (session.getUserProfileEmail() != null) {
-                            intent.putExtra("email", session.getUserProfileEmail());
+                        if (session.getFPEmail() != null) {
+                            intent.putExtra("email", session.getFPEmail());
                         } else {
                             intent.putExtra("email", "ria@nowfloats.com");
                         }
@@ -237,11 +237,13 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                 break;
             case R.id.btn_my_tickets:
                 WebEngageController.trackEvent(SUPPORT_VIEW_TICKETS, VIEW_MY_SUPPORT_TICKETS, NULL);
-                RequestListActivity.builder().show(mContext);
+                RequestListActivity.builder()
+                        .show(mContext);
                 break;
             case R.id.btn_faqs:
                 WebEngageController.trackEvent(SUPPORT_LEARN, LEARN_HOW_TO_USE, NULL);
-                HelpCenterActivity.builder().show(mContext);
+                HelpCenterActivity.builder()
+                        .show(mContext);
                 break;
         }
     }

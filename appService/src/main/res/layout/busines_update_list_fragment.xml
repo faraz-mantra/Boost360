@@ -28,7 +28,6 @@
       android:layout_gravity="bottom|right"
       android:layout_margin="16dp"
       android:clickable="true"
-      android:backgroundTint="@color/colorAccentLight"
       android:focusable="true"
       app:fabIcon="@drawable/ic_add_white"
       app:fabSize="normal" />

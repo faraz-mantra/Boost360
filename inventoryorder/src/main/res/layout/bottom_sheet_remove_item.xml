@@ -131,13 +131,13 @@
         style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
         android:layout_marginEnd="@dimen/size_20"
         android:text="@string/go_back"
-        android:background="@drawable/bg_rounded_yellow_light"
-        android:textColor="@color/colorAccentLight"/>
+        android:textColor="@color/white" />
 
 
       <com.framework.views.customViews.CustomButton
         android:id="@+id/buttonDone"
         style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+        android:background="@drawable/bg_rounded_red"
         android:text="@string/yes_remove"
         android:textColor="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
