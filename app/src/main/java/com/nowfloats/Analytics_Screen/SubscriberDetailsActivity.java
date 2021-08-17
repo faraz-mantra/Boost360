@@ -235,7 +235,6 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
   private void sendMail() {
     Intent email = new Intent(Intent.ACTION_SEND);
     email.setData(Uri.parse("mailto:"));
-//        email.setType("text/plain");
     email.setType("message/rfc822");
     email.putExtra(Intent.EXTRA_EMAIL, new String[]{mSubscriberData.getUserMobile()});
     startActivity(Intent.createChooser(email, "Email by:"));
@@ -298,18 +297,12 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
         }
         break;
       case R.id.unsubscribe:
-
-        if ((Integer.parseInt(mSubscriberData.getSubscriptionStatus().trim()) ==
-            Constants.SubscriberStatus.SUBSCRIBED.value) ||
-            (Integer.parseInt(mSubscriberData.getSubscriptionStatus().trim()) ==
-                Constants.SubscriberStatus.REQUESTED.value)) {
-
+        if ((Integer.parseInt(mSubscriberData.getSubscriptionStatus().trim()) == Constants.SubscriberStatus.SUBSCRIBED.value) ||
+            (Integer.parseInt(mSubscriberData.getSubscriptionStatus().trim()) == Constants.SubscriberStatus.REQUESTED.value)) {
           unSubscriber();
         } else {
           addSubscriber();
         }
-
-
         break;
     }
   }
