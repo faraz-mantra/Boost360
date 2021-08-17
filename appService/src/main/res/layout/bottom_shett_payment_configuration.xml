@@ -241,6 +241,7 @@
           android:layout_marginEnd="@dimen/size_20"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
+          android:background="@null"
           android:stateListAnimator="@null"
           android:text="@string/cancel"
           android:textAllCaps="false"
