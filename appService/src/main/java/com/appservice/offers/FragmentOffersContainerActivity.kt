@@ -21,6 +21,7 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
 import com.framework.views.customViews.CustomToolbar
 
 class FragmentOffersContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
@@ -74,12 +75,13 @@ class FragmentOffersContainerActivity : AppBaseActivity<ActivityFragmentContaine
     }
 
     private fun getBundle() {
+        val userSessionManager = UserSessionManager(this)
         intent.getStringExtra(IntentConstant.FP_TAG.name)?.let {
             UserSession.apply {
-                fpTag = intent.getStringExtra(IntentConstant.FP_TAG.name)
-                fpId = intent.getStringExtra(IntentConstant.FP_ID.name)
-                customerID = intent.getStringExtra(IntentConstant.CLIENT_ID.name)
-                clientId = intent.getStringExtra(IntentConstant.CLIENT_ID.name)
+                fpTag = userSessionManager.fpTag
+                fpId = userSessionManager.fPID
+                customerID = clientId
+                clientId = customerID
             }
         }
     }

@@ -16,6 +16,8 @@ import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 
 class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollectionSetupBinding, AppointmentSettingsViewModel>() {
     var isEdit: Boolean = false
@@ -42,6 +44,7 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
         binding?.toggleCod?.setOnToggledListener { toggleableView, isOn ->
             updateDeliveryStatus(isOn)
         }
+        sessionLocal = UserSessionManager(requireActivity())
     }
 
     private fun grayScaleImage() {
@@ -53,17 +56,17 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
 
     private fun getAccountDetails() {
         showProgress()
-        hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_bank_details))
+        hitApi(viewModel?.getPaymentProfileDetails(sessionLocal.fPID, clientId), (R.string.error_getting_bank_details))
     }
 
     private fun getDeliveryStatus() {
         showProgress()
-        hitApi(viewModel?.getDeliveryDetails(UserSession.fpId, UserSession.clientId), R.string.error_getting_delivery_details)
+        hitApi(viewModel?.getDeliveryDetails(sessionLocal.fPID, clientId), R.string.error_getting_delivery_details)
     }
 
     private fun updateDeliveryStatus(isOn: Boolean) {
         showProgress()
-        hitApi(liveData = viewModel?.setupDelivery(DeliverySetup(isPickupAllowed = false, isBusinessLocationPickupAllowed = isOn, isWarehousePickupAllowed = false, isHomeDeliveryAllowed = false, flatDeliveryCharge = "0", clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), errorStringId = R.string.error_getting_delivery_details)
+        hitApi(liveData = viewModel?.setupDelivery(DeliverySetup(isPickupAllowed = false, isBusinessLocationPickupAllowed = isOn, isWarehousePickupAllowed = false, isHomeDeliveryAllowed = false, flatDeliveryCharge = "0", clientId = clientId, sessionLocal.fPID)), errorStringId = R.string.error_getting_delivery_details)
     }
 
     override fun onClick(v: View) {
@@ -95,9 +98,7 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
             binding?.llBankStatus?.visible()
             binding?.ctvAccountText?.gone()
             binding?.arrowRight?.visible()
-            binding?.edtBankAccount?.setOnClickListener {
-                startFragmentActivity(FragmentType.EDIT_ACCOUNT_DETAILS)
-            }
+            binding?.edtBankAccount?.setOnClickListener { startFragmentActivity(FragmentType.EDIT_ACCOUNT_DETAILS) }
             binding?.llDisclaimer?.visible()
             binding?.bankAddedStatus?.text = "Bank Account Added (${(paymentProfileResponse.result?.bankAccountDetails?.getVerifyText())})"
             binding?.bankNameAccountNumber?.text = "${paymentProfileResponse.result?.bankAccountDetails?.bankName} - ${paymentProfileResponse.result?.bankAccountDetails?.accountNumber}"
@@ -110,12 +111,10 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
     override fun onSuccess(it: BaseResponse) {
         super.onSuccess(it)
         when (it.taskcode) {
-            TaskCode.SETUP_DELIVERY.ordinal->setupDeliveryResponse(it)
+            TaskCode.SETUP_DELIVERY.ordinal -> setupDeliveryResponse(it)
             TaskCode.GET_DELIVERY_DETAILS.ordinal -> onDeliveryDetailsReceived(it)
             TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> onReceivedBankDetails(it)
-
         }
-           setUpBankDetails()
 
         }
 

@@ -20,6 +20,8 @@ import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 
 class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, AppointmentSettingsViewModel>() {
     var addBankAccountRequest: AddBankAccountRequest? = null
@@ -41,11 +43,12 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
         super.onCreateView()
         setOnClickListener(binding?.submitBtn)
         getAccountDetails()
+        sessionLocal = UserSessionManager(requireActivity())
     }
 
     private fun getAccountDetails() {
         showProgress()
-        hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_bank_details))
+        hitApi(viewModel?.getPaymentProfileDetails(sessionLocal.fPID,clientId = clientId), (R.string.error_getting_bank_details))
     }
 
 
@@ -82,7 +85,7 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
 
     private fun addBankAccount() {
         showProgress()
-        hitApi(viewModel?.addBankAccount(UserSession.clientId, UserSession.clientId,addBankAccountRequest!!), R.string.error_adding_bank_account)
+        hitApi(viewModel?.addBankAccount(sessionLocal.fPID,clientId = clientId,addBankAccountRequest!!), R.string.error_adding_bank_account)
 
     }
 
