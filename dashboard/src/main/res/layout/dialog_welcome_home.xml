@@ -54,7 +54,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_26"
           android:gravity="center"
-          android:textColor="@color/black_4a4a4a"
+          android:textColor="@color/primary_4a4a4a_jio"
           android:textSize="24sp"
           app:fontFamily="@font/bold"
           tools:text="Manage everything on your business website" />
