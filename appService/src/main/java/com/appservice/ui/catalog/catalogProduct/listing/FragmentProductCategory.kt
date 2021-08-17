@@ -12,9 +12,10 @@ import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.rest.TaskCode
-import com.appservice.ui.staffs.UserSession
 import com.appservice.viewmodel.ProductViewModel
 import com.framework.base.BaseResponse
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import kotlinx.android.synthetic.main.fragment_product_details.*
 import java.io.Serializable
 import java.util.*
@@ -24,7 +25,6 @@ class FragmentProductCategory : AppBaseFragment<FragmentProductCategoryListingBi
         return R.layout.fragment_product_category_listing
     }
 
-    private var fpTag: String? = null
     private var categoryList: ArrayList<CategoryProduct> = arrayListOf()
     private var adapterN: AppBaseRecyclerViewAdapter<CategoryProduct>? = null
     override fun getViewModelClass(): Class<ProductViewModel> {
@@ -45,17 +45,15 @@ class FragmentProductCategory : AppBaseFragment<FragmentProductCategoryListingBi
         }
     }
 
-    private fun getBundleData() {
-        fpTag = arguments?.getString(IntentConstant.FP_TAG.name)
-    }
+
 
     override fun onCreateView() {
-        getBundleData()
+        sessionLocal = UserSessionManager(requireActivity())
         getProductListing()
     }
 
     private fun getProductListing() {
-        hitApi(viewModel?.getProductListing(fpTag, clientId = UserSession.clientId, 0), R.string.error_getting_a_product_list)
+        hitApi(viewModel?.getProductListing(sessionLocal.fpTag, clientId = clientId, 0), R.string.error_getting_a_product_list)
     }
 
     override fun onSuccess(it: BaseResponse) {

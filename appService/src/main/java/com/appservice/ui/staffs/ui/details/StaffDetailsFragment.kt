@@ -29,7 +29,6 @@ import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.catalog.common.AppointmentModel
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
-import com.appservice.ui.staffs.UserSession
 import com.appservice.ui.staffs.ui.Constants
 import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.staffs.widgets.ExperienceBottomSheet
@@ -39,6 +38,7 @@ import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.firestore.FirestoreManager
+import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import java.io.ByteArrayOutputStream
 
@@ -79,6 +79,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
   override fun onCreateView() {
     setOnClickListener(binding?.flAddStaffImg, binding?.rlStaffTiming, binding?.rlServiceProvided, binding?.rlScheduledBreaks, binding?.btnSave, binding?.edtExperience)
+    sessionLocal = UserSessionManager(requireActivity())
     initViews()
     getBundleData()
   }
@@ -189,7 +190,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
   private fun updateStaffProfile() {
     val staffGender = binding?.spinnerGender?.selectedItem.toString()
-    val request = StaffProfileUpdateRequest(isAvailable, staffDetails?.serviceIds, staffGender, UserSession.fpTag,
+    val request = StaffProfileUpdateRequest(isAvailable, staffDetails?.serviceIds, staffGender, sessionLocal.fpTag,
         name = staffName, staffDescription, experience = yearOfExperience.toInt(), staffDetails?.id, staffAge, specializationList)
     viewModel?.updateStaffProfile(request)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.isSuccess()) {
@@ -254,7 +255,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
       staffProfile?.description = staffDescription
       staffProfile?.gender = binding?.spinnerGender?.selectedItem.toString()
       staffProfile?.experience = yearOfExperience.toIntOrNull() ?: 0
-      staffProfile?.floatingPointTag = UserSession.fpTag
+      staffProfile?.floatingPointTag = sessionLocal.fpTag
       staffProfile?.name = staffName
       staffProfile?.serviceIds = serviceListId
       staffProfile?.image = staffImage
@@ -381,7 +382,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
   private fun setServicesList() {
     if (isEdit == true) {
-      viewModel?.getServiceListing(ServiceListRequest(floatingPointTag = UserSession.fpTag))?.observeOnce(viewLifecycleOwner, Observer {
+      viewModel?.getServiceListing(ServiceListRequest(floatingPointTag = sessionLocal.fpTag))?.observeOnce(viewLifecycleOwner, Observer {
         if (it?.isSuccess() == true) {
           val data = (it as ServiceListResponse).result?.data
           if (staffDetails?.serviceIds.isNullOrEmpty().not()) {

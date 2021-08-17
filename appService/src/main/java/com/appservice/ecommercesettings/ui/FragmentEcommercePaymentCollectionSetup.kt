@@ -11,11 +11,12 @@ import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentEcommercePaymentCollectionSetupBinding
 import com.appservice.rest.TaskCode
 import com.appservice.ui.catalog.startFragmentActivity
-import com.appservice.ui.staffs.UserSession
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 
 class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommercePaymentCollectionSetupBinding, AppointmentSettingsViewModel>() {
     var isEdit: Boolean = false
@@ -36,6 +37,7 @@ class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommerc
 
     override fun onCreateView() {
         super.onCreateView()
+        sessionLocal= UserSessionManager(requireActivity())
         setOnClickListener(binding?.boostPaymentGateway, binding?.btnAddAccount)
         getDeliveryStatus()
         getAccountDetails()
@@ -53,15 +55,15 @@ class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommerc
     }
 
     private fun getAccountDetails() {
-        hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_bank_details))
+        hitApi(viewModel?.getPaymentProfileDetails(sessionLocal.fPID,clientId), (R.string.error_getting_bank_details))
     }
 
     private fun getDeliveryStatus() {
-        hitApi(viewModel?.getDeliveryDetails(UserSession.fpId, UserSession.clientId), R.string.error_getting_delivery_details)
+        hitApi(viewModel?.getDeliveryDetails(sessionLocal.fPID,clientId), R.string.error_getting_delivery_details)
     }
 
     private fun updateDeliveryStatus(isOn: Boolean) {
-        hitApi(liveData = viewModel?.setupDelivery(DeliverySetup(isPickupAllowed = false, isBusinessLocationPickupAllowed = isOn, isWarehousePickupAllowed = false, isHomeDeliveryAllowed = false, flatDeliveryCharge = "0", clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), errorStringId = R.string.error_getting_delivery_details)
+        hitApi(liveData = viewModel?.setupDelivery(DeliverySetup(isPickupAllowed = false, isBusinessLocationPickupAllowed = isOn, isWarehousePickupAllowed = false, isHomeDeliveryAllowed = false, flatDeliveryCharge = "0", clientId = clientId, floatingPointId = sessionLocal.fPID)), errorStringId = R.string.error_getting_delivery_details)
     }
 
     override fun onClick(v: View) {

@@ -21,12 +21,13 @@ import com.appservice.model.FileModel
 import com.appservice.rest.TaskCode
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
-import com.appservice.ui.staffs.UserSession
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.imagepicker.ImagePicker
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 
 class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceCustomerInvoiceSetupBinding, AppointmentSettingsViewModel>() {
     override fun getLayout(): Int {
@@ -54,6 +55,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
 
     override fun onCreateView() {
         super.onCreateView()
+        sessionLocal = UserSessionManager(requireActivity())
         binding?.editPurchases?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         binding?.editPurchases?.text = getString(R.string.edit_)
         setOnClickListener(binding?.gstinContainer, binding?.invoiceSetupContainer)
@@ -62,7 +64,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
 
     private fun getprofileDetails() {
         showProgress()
-        hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_payment_details))
+        hitApi(viewModel?.getPaymentProfileDetails(sessionLocal.fPID, clientId), (R.string.error_getting_payment_details))
     }
 
     override fun onSuccess(it: BaseResponse) {
@@ -162,10 +164,10 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
             if (it == BottomEcommerceTaxInvoices.ClickType.SAVECHANGES) {
                 showProgress()
 //                hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), (R.string.error_updating_gst_details))
-                hitApi(viewModel?.addMerchantUPI(UpdateUPIRequest(UserSession.clientId, uPIId = binding?.upiId?.text.toString(), UserSession.fpId)), (R.string.error_updating_upi_id))
+                hitApi(viewModel?.addMerchantUPI(UpdateUPIRequest(clientId, uPIId = binding?.upiId?.text.toString(), sessionLocal.fPID)), (R.string.error_updating_upi_id))
                 if (imageList.isNotEmpty())
-                    hitApi(liveData = viewModel?.uploadSignature(UploadMerchantSignature("png", Base64.encodeToString(imageList[0].getFile()?.readBytes(), Base64.DEFAULT), UserSession.clientId,
-                            floatingPointId = UserSession.fpId, imageList[0].getFileName())), errorStringId = (R.string.error_updating_upi_id))
+                    hitApi(liveData = viewModel?.uploadSignature(UploadMerchantSignature("png", Base64.encodeToString(imageList[0].getFile()?.readBytes(), Base64.DEFAULT), clientId,
+                            floatingPointId = sessionLocal.fPID, imageList[0].getFileName())), errorStringId = (R.string.error_updating_upi_id))
 
             }
             if (it == BottomEcommerceTaxInvoices.ClickType.CANCEL) {
@@ -213,7 +215,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
         bottomSheetConfirmGST.clickType = {
             if (it == BottomSheetConfirmGST.ClickType.SAVECHANGES) {
                 showProgress()
-                hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), (R.string.error_updating_gst_details))
+                hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = clientId, floatingPointId = sessionLocal.fPID)), (R.string.error_updating_gst_details))
             }
             if (it == BottomSheetConfirmGST.ClickType.CANCEL) {
 //                data?.result?.taxDetails?.gSTDetails?.gSTIN = ""

@@ -23,7 +23,6 @@ import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.catalog.common.AppointmentModel
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
-import com.appservice.ui.staffs.UserSession
 import com.appservice.ui.staffs.ui.Constants
 import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.utils.WebEngageController
@@ -33,6 +32,7 @@ import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.firestore.FirestoreManager
+import com.framework.pref.UserSessionManager
 import com.framework.utils.size
 import com.framework.utils.sizeInKb
 import com.framework.webengageconstant.ADDED
@@ -107,6 +107,7 @@ class EditDoctorsDetailsFragment :
   }
 
   private fun getBundleData() {
+    sessionLocal= UserSessionManager(requireActivity())
     staffDetails = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
     isEdit = (staffDetails != null && staffDetails?.id.isNullOrEmpty().not())
     if (isEdit == true) {
@@ -254,7 +255,7 @@ class EditDoctorsDetailsFragment :
     val request = StaffProfileUpdateRequest(
       isAvailable = isAvailable,
       serviceIds = staffDetails?.serviceIds,
-      floatingPointTag = UserSession.fpTag,
+      floatingPointTag = sessionLocal.fpTag,
       name = staffName,
       description = staffDescription,
       experience = yearOfExperience.toIntOrNull(),
@@ -314,7 +315,7 @@ class EditDoctorsDetailsFragment :
 
     if (isEdit == null || isEdit == false) {
       staffProfile?.description = staffDescription
-      staffProfile?.floatingPointTag = UserSession.fpTag
+      staffProfile?.floatingPointTag = sessionLocal.fpTag
       staffProfile?.name = staffName
       staffProfile?.serviceIds = serviceListId
       staffProfile?.image = staffImage
@@ -484,7 +485,7 @@ class EditDoctorsDetailsFragment :
 
   private fun setServicesList() {
     if (isEdit == true) {
-      viewModel?.getServiceListing(ServiceListRequest(floatingPointTag = UserSession.fpTag))
+      viewModel?.getServiceListing(ServiceListRequest(floatingPointTag = sessionLocal.fpTag))
         ?.observeOnce(viewLifecycleOwner, Observer {
           if (it?.isSuccess() == true) {
             val data = (it as ServiceListResponse).result?.data

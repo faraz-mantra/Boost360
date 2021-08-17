@@ -19,7 +19,6 @@ import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentCustomerInvoiceSetupBinding
 import com.appservice.model.FileModel
 import com.appservice.rest.TaskCode
-import com.appservice.ui.staffs.UserSession
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.viewmodel.AppointmentSettingsViewModel

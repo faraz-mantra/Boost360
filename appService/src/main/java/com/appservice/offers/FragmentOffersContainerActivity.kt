@@ -15,7 +15,6 @@ import com.appservice.offers.additionalinfo.AdditionalInfoFragment
 import com.appservice.offers.details.AddNewOfferFragment
 import com.appservice.offers.offerlisting.OfferListingFragment
 import com.appservice.staffs.ui.setFragmentType
-import com.appservice.ui.staffs.UserSession
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
@@ -77,12 +76,12 @@ class FragmentOffersContainerActivity : AppBaseActivity<ActivityFragmentContaine
     private fun getBundle() {
         val userSessionManager = UserSessionManager(this)
         intent.getStringExtra(IntentConstant.FP_TAG.name)?.let {
-            UserSession.apply {
-                fpTag = userSessionManager.fpTag
-                fpId = userSessionManager.fPID
-                customerID = clientId
-                clientId = customerID
-            }
+//            UserSession.apply {
+//                fpTag = userSessionManager.fpTag
+//                fpId = userSessionManager.fPID
+//                customerID = clientId
+//                clientId = customerID
+//            }
         }
     }
 

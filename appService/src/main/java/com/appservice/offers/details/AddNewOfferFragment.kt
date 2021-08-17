@@ -23,7 +23,6 @@ import com.appservice.offers.selectservices.OfferSelectServiceBottomSheet
 import com.appservice.offers.startOfferFragmentActivity
 import com.appservice.offers.viewmodel.OfferViewModel
 import com.appservice.rest.TaskCode
-import com.appservice.ui.staffs.UserSession
 import com.appservice.ui.catalog.catalogService.listing.TypeSuccess
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
@@ -36,6 +35,8 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
 
@@ -45,10 +46,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
     private var offerImage: File? = null
     private var offerModel: OfferModel? = null
     private var currencyType: String? = "INR"
-    private var fpId: String? = null
-    private var fpTag: String? = null
     private var serviceDetails: ServiceModelV1? = null
-    private var clientId: String? = null
     private var applicationId: String? = null
     private var isEdit: Boolean = false
     private var offerIdCreate: String? = null
@@ -64,6 +62,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
 
     override fun onCreateView() {
         super.onCreateView()
+        sessionLocal = UserSessionManager(requireActivity())
         setOnClickListener(binding?.btnOtherInfo, binding?.clearImage, binding?.imageAddBtn, binding?.ctvChange, binding?.btnChangePicture, binding?.cbAddOffer, binding?.btnSelectServices)
         getBundleData()
         binding?.toggleServiceApplicableTo?.isOn = true
@@ -79,9 +78,6 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
     private fun getBundleData() {
         initOfferFromBundle(arguments)
         currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
-        fpId = arguments?.getString(IntentConstant.FP_ID.name) ?: UserSession.fpId
-        fpTag = arguments?.getString(IntentConstant.FP_TAG.name) ?: UserSession.fpTag
-        clientId = arguments?.getString(IntentConstant.CLIENT_ID.name) ?: UserSession.clientId
         applicationId = arguments?.getString(IntentConstant.APPLICATION_ID.name)
         if (isEdit) menuDelete?.isVisible = true
     }
@@ -203,7 +199,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
             return false
         }
         offerModel?.ClientId = clientId
-        offerModel?.FPTag = fpTag
+        offerModel?.FPTag = sessionLocal.fpTag
         offerModel?.currencyCode = currencyType
         offerModel?.name = offerTitle
         offerModel?.description = offerDescription

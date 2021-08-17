@@ -18,7 +18,6 @@ import com.appservice.model.staffModel.*
 import com.appservice.staffs.ui.StaffFragmentContainerActivity
 import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.catalog.common.AppointmentModel
-import com.appservice.ui.staffs.UserSession
 import com.appservice.ui.staffs.ui.Constants
 import com.appservice.ui.staffs.ui.bottomsheets.InActiveBottomSheet
 import com.appservice.ui.staffs.ui.bottomsheets.InActiveStaffConfirmationBottomSheet
@@ -29,6 +28,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.pref.UserSessionManager
 import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 
@@ -55,6 +55,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
 
   override fun onCreateView() {
     super.onCreateView()
+    sessionLocal = UserSessionManager(requireActivity())
     WebEngageController.trackEvent(STAFF_PROFILE_DETAIL, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.civMenu, binding?.ctvEdit, binding?.ctvEditLeaves, binding?.ctvEditServices, binding?.ctvEditTiming)
     getStaffDetail()
@@ -63,7 +64,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
   private fun updateStaffProfile() {
     val request = StaffProfileUpdateRequest(
         isAvailable = staffDetails?.isAvailable, serviceIds = staffDetails?.serviceIds, gender = staffDetails?.gender,
-        floatingPointTag = UserSession.fpTag, name = staffDetails?.name, description = staffDetails?.description,
+        floatingPointTag = sessionLocal.fpTag, name = staffDetails?.name, description = staffDetails?.description,
         experience = staffDetails?.experience?.toIntOrNull(), staffId = staffDetails?.id, age = staffDetails?.age,
         specialisations = staffDetails?.specialisations)
     viewModel?.updateStaffProfile(request)?.observeOnce(viewLifecycleOwner, {
@@ -217,7 +218,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
 
   private fun fetchServices() {
     var servicesProvided: ArrayList<DataItemService>? = null
-    val request = ServiceListRequest(filterBy = FilterBy("ALL", 0, 0), category = "", floatingPointTag = UserSession.fpTag)
+    val request = ServiceListRequest(filterBy = FilterBy("ALL", 0, 0), category = "", floatingPointTag = sessionLocal.fpTag)
     viewModel?.getServiceListing(request)?.observeOnce(viewLifecycleOwner, { res ->
       if (res?.isSuccess() == true) {
         val data = (res as? ServiceListResponse)?.result?.data
@@ -336,7 +337,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
 
   private fun removeStaffProfile() {
     showProgress()
-    viewModel?.deleteStaffProfile(StaffDeleteImageProfileRequest(staffDetails?.id, UserSession.fpTag))?.observe(viewLifecycleOwner, { res ->
+    viewModel?.deleteStaffProfile(StaffDeleteImageProfileRequest(staffDetails?.id, sessionLocal.fpTag))?.observe(viewLifecycleOwner, { res ->
       if (res.isSuccess()) {
         isUpdate = true
         onBackPresDetail()
