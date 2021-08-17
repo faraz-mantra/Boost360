@@ -3,7 +3,7 @@
     <color name="colorPrimary">#EC008C</color>
     <color name="colorAccent">#EC008C</color>
     <color name="colorPrimaryDark">#EC008C</color>
-    <color name="colorPrimaryDarkBlue">#03007F</color>
+    <color name="colorPrimaryDarkBlue">#0400A6</color>
     <color name="accent_dark">@color/colorPrimaryDarkBlue</color>
     <color name="login_button_start_color">@color/colorPrimaryDarkBlue</color>
     <color name="login_text_color">@color/colorPrimary</color>
