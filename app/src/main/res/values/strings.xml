@@ -2106,7 +2106,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="rs_0">Rs.0</string>
   <string name="offer_description">Offer description</string>
   <string name="describe_your_offer">Describe your offer...</string>
-  <string name="uh_oh_you_have_no_subscribers">Uh oh! You have no subscribers.</string>
+  <string name="uh_oh_you_have_no_subscribers">Uh oh, you have no subscribers</string>
   <string name="add_image">Add image</string>
   <string name="designation" translatable="false">Designation</string>
   <string name="company_title" translatable="false">Company title</string>
@@ -2546,7 +2546,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="you_have_new_notifications">You have new notifications</string>
   <string name="updating_your_address" translatable="false">Updating your address</string>
   <string name="your_business_has_been_updated_successfully">Your business address has been updated successfully</string>
-  <string name="uh_oh_somthing_went_wrong_please_try_again" translatable="false">Uh oh. Something went wrong. Please try again</string>
+  <string name="uh_oh_somthing_went_wrong_please_try_again" translatable="false">Uh oh, something went wrong, please try again</string>
   <string name="changes_are_successfully_updated" translatable="false">Changes are successfully updated</string>
   <string name="please_enter_valid_mobile_number">Please enter valid mobile number</string>
   <string name="change_primary_number">Change primary number</string>
