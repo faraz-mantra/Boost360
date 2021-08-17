@@ -27,6 +27,8 @@ import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.imagepicker.ImagePicker
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 
 class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetupBinding, AppointmentSettingsViewModel>() {
     override fun getLayout(): Int {
@@ -54,6 +56,7 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
 
     override fun onCreateView() {
         super.onCreateView()
+        sessionLocal = UserSessionManager(requireActivity())
         binding?.editPurchases?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         binding?.editPurchases?.text = getString(R.string.edit_)
         setOnClickListener(binding?.gstinContainer, binding?.invoiceSetupContainer)
@@ -62,7 +65,7 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
 
     private fun getprofileDetails() {
         showProgress()
-        hitApi(viewModel?.getPaymentProfileDetails(UserSession.fpId, UserSession.clientId), (R.string.error_getting_payment_details))
+        hitApi(viewModel?.getPaymentProfileDetails(sessionLocal.fPID,clientId = clientId), (R.string.error_getting_payment_details))
     }
     override fun onSuccess(it: BaseResponse) {
         super.onSuccess(it)
@@ -163,11 +166,10 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
             if (it == BottomSheetTaxInvoicesForPurchases.ClickType.SAVECHANGES) {
                 showProgress()
 //                hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), (R.string.error_updating_gst_details))
-                hitApi(viewModel?.addMerchantUPI(UpdateUPIRequest(UserSession.clientId, uPIId = binding?.upiId?.text.toString(), UserSession.fpId)), (R.string.error_updating_upi_id))
+                hitApi(viewModel?.addMerchantUPI(UpdateUPIRequest(clientId, uPIId = binding?.upiId?.text.toString(), sessionLocal.fPID)), (R.string.error_updating_upi_id))
                 if (imageList.isNotEmpty()){
                     showProgress()
-                hitApi(liveData = viewModel?.uploadSignature(UploadMerchantSignature("png", Base64.encodeToString(imageList[0].getFile()?.readBytes(), Base64.DEFAULT), UserSession.clientId,
-                        floatingPointId = UserSession.fpId, imageList[0].getFileName())), errorStringId = (R.string.error_updating_upi_id))
+                hitApi(liveData = viewModel?.uploadSignature(UploadMerchantSignature("png", Base64.encodeToString(imageList[0].getFile()?.readBytes(), Base64.DEFAULT),clientId = clientId,sessionLocal.fPID, imageList[0].getFileName())), errorStringId = (R.string.error_updating_upi_id))
 
             }}
             if (it == BottomSheetTaxInvoicesForPurchases.ClickType.CANCEL) {
@@ -215,7 +217,7 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
         bottomSheetConfirmGST.clickType = {
             if (it == BottomSheetConfirmGST.ClickType.SAVECHANGES) {
                 showProgress()
-                hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), (R.string.error_updating_gst_details))
+                hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = clientId, floatingPointId = sessionLocal.fPID)), (R.string.error_updating_gst_details))
             }
             if (it == BottomSheetConfirmGST.ClickType.CANCEL) {
 //                data?.result?.taxDetails?.gSTDetails?.gSTIN = ""

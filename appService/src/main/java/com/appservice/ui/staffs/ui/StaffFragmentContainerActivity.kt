@@ -79,11 +79,13 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
 
   private fun getBundle() {
+    val userSessionManager = UserSessionManager(this)
     intent.getStringExtra(IntentConstant.FP_TAG.name)?.let {
       UserSession.apply {
-        fpTag = intent.getStringExtra(IntentConstant.FP_TAG.name)
-        fpId = intent.getStringExtra(IntentConstant.FP_ID.name)
-        clientId = intent.getStringExtra(IntentConstant.CLIENT_ID.name)
+        fpTag = userSessionManager.fpTag
+        fpId = userSessionManager.fPID
+        customerID = clientId
+        clientId = customerID
       }
     }
   }
