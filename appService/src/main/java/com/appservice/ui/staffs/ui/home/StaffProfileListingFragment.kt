@@ -29,7 +29,6 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.model.ServiceSearchListingResponse
-import com.appservice.ui.staffs.UserSession
 import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
@@ -37,6 +36,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences
+import com.framework.pref.clientId
 import com.framework.webengageconstant.*
 import com.inventoryorder.ui.tutorials.LearnHowItWorkBottomSheet
 import kotlinx.android.synthetic.main.fragment_staff_listing.*
@@ -127,7 +127,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   private fun getListServiceFilterApi() {
     showProgressN()
-    viewModel?.getSearchListings(UserSession.fpTag, UserSession.fpId, "", 0, 1)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSearchListings(sessionLocal.fpTag, sessionLocal.fPID, "", 0, 1)?.observeOnce(viewLifecycleOwner, {
       if ((it as? ServiceSearchListingResponse)?.result?.data.isNullOrEmpty().not()) {
         checkIsAddNewStaff()
         fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
@@ -330,10 +330,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     val bundle = Bundle()
     bundle.putBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name, isNonPhysicalExperience ?: false)
     bundle.putString(IntentConstant.CURRENCY_TYPE.name, currencyType)
-    bundle.putString(IntentConstant.FP_ID.name, UserSession.fpId)
-    bundle.putString(IntentConstant.FP_TAG.name, UserSession.fpTag)
+    bundle.putString(IntentConstant.FP_ID.name, sessionLocal.fPID)
+    bundle.putString(IntentConstant.FP_TAG.name, sessionLocal.fpTag)
     bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
-    bundle.putString(IntentConstant.CLIENT_ID.name, UserSession.clientId)
+    bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
     bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name, externalSourceId)
     bundle.putString(IntentConstant.APPLICATION_ID.name, applicationId)
     return bundle
@@ -394,9 +394,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       showLongToast("Unable to start upgrade activity.")
     }
   }
-
+  fun getFilterRequest(offSet: Int, limit: Int): GetStaffListingRequest {
+    return GetStaffListingRequest(FilterBy(offset = offSet, limit = limit), sessionLocal.fpTag, "")
+  }
 }
 
-fun getFilterRequest(offSet: Int, limit: Int): GetStaffListingRequest {
-  return GetStaffListingRequest(FilterBy(offset = offSet, limit = limit), UserSession.fpTag, "")
-}

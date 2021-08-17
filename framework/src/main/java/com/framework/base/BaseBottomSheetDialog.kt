@@ -15,6 +15,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProviders
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -37,7 +38,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
   protected var viewModel: ViewModel? = null
   protected var binding: Binding? = null
   protected var navigator: Navigator? = null
-
+  protected var sessionManager: UserSessionManager? = null
   protected abstract fun getLayout(): Int
   protected abstract fun getViewModelClass(): Class<ViewModel>
   protected abstract fun onCreateView()
@@ -54,6 +55,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
     binding?.lifecycleOwner = this
     navigator = Navigator(baseActivity)
+    sessionManager = UserSessionManager(baseActivity)
     viewModel = ViewModelProviders.of(this).get(getViewModelClass())
     return binding?.root
   }

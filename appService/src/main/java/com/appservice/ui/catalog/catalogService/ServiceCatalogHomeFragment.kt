@@ -10,8 +10,8 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentServiceHomeContainerBinding
 import com.appservice.ui.catalog.catalogService.listing.ServiceListingFragment
-import com.appservice.ui.staffs.UserSession
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
 
 class ServiceCatalogHomeFragment : AppBaseFragment<FragmentServiceHomeContainerBinding, BaseViewModel>() {
     private val NUM_PAGES = 2
@@ -19,7 +19,6 @@ class ServiceCatalogHomeFragment : AppBaseFragment<FragmentServiceHomeContainerB
     private var currencyType: String? = "INR"
     private var fpId: String? = null
     private var fpTag: String? = null
-    private var clientId: String? = null
     private var externalSourceId: String? = null
     private var applicationId: String? = null
     private var userProfileId: String? = null
@@ -41,6 +40,7 @@ class ServiceCatalogHomeFragment : AppBaseFragment<FragmentServiceHomeContainerB
     override fun onCreateView() {
         super.onCreateView()
         // The pager adapter, which provides the pages to the view pager widget.
+        sessionLocal = UserSessionManager(requireActivity())
         getBundleData()
         val pagerAdapter = ScreenSlidePagerAdapter(childFragmentManager)
         binding?.pager?.adapter = pagerAdapter
@@ -56,15 +56,12 @@ class ServiceCatalogHomeFragment : AppBaseFragment<FragmentServiceHomeContainerB
     private fun getBundleData() {
         isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
         currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
-        fpId = arguments?.getString(IntentConstant.FP_ID.name)
-        fpTag = arguments?.getString(IntentConstant.FP_TAG.name)
-        clientId = arguments?.getString(IntentConstant.CLIENT_ID.name)
+        fpId = sessionLocal.fPID
+        fpTag = sessionLocal.fpTag
         externalSourceId = arguments?.getString(IntentConstant.EXTERNAL_SOURCE_ID.name)
         applicationId = arguments?.getString(IntentConstant.APPLICATION_ID.name)
         userProfileId = arguments?.getString(IntentConstant.USER_PROFILE_ID.name)
-        UserSession.fpTag = fpTag
-        UserSession.clientId = clientId
-        UserSession.fpId = fpId
+
     }
 
     @SuppressLint("WrongConstant")

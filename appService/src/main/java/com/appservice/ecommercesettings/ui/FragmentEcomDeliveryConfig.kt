@@ -10,11 +10,12 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentDeliveryConfigurationBinding
 import com.appservice.ecommercesettings.ui.bottomsheets.BottomSheetAddCartSlab
 import com.appservice.ecommercesettings.ui.bottomsheets.BottomSheetAddWareHouse
-import com.appservice.ui.staffs.UserSession
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.utils.fromHtml
 import com.framework.views.customViews.CustomTextView
 
@@ -37,6 +38,7 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
 
     override fun onCreateView() {
         super.onCreateView()
+        sessionLocal = UserSessionManager(requireActivity())
         setupView()
         getWareHouseAddress()
 
@@ -45,7 +47,7 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
 
     private fun getDeliveryDetails() {
         showProgress("loading...")
-        viewModel?.getDeliveryDetails(UserSession.fpId, UserSession.clientId)?.observeOnce(viewLifecycleOwner, {
+        viewModel?.getDeliveryDetails(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, {
             hideProgress()
             if (it.isSuccess()) {
                 val data = it as? DeliveryDetailsResponse
@@ -59,7 +61,7 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
 
     private fun getWareHouseAddress() {
         showProgress("loading...")
-        viewModel?.getWareHouseAddress(UserSession.fpId, UserSession.clientId)?.observeOnce(viewLifecycleOwner, { baseResponse ->
+        viewModel?.getWareHouseAddress(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, { baseResponse ->
             hideProgress()
             getDeliveryDetails()
             if (baseResponse.isSuccess()) {
@@ -137,8 +139,8 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
         val bottomSheetAddWareHouse = BottomSheetAddWareHouse()
         bottomSheetAddWareHouse.onClicked = { requestAddWareHouseAddress ->
             showProgress(getString(R.string.updating))
-            requestAddWareHouseAddress.floatingPointId = UserSession.fpId
-            requestAddWareHouseAddress.clientId = UserSession.clientId
+            requestAddWareHouseAddress.floatingPointId = sessionLocal.fPID
+            requestAddWareHouseAddress.clientId = clientId
             viewModel?.addWareHouseAddress(requestAddWareHouseAddress)?.observeOnce(viewLifecycleOwner, {
                 hideProgress()
                 if (it.isSuccess()) {
@@ -179,7 +181,7 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
     }
 
     private fun updateDeliveryStatus(isPickup: Boolean, isHomePickup: Boolean, flatDeliverCharge: String) {
-        viewModel?.setupDelivery(DeliverySetup(isPickupAllowed = isPickup, isBusinessLocationPickupAllowed = false, isWarehousePickupAllowed = false, isHomeDeliveryAllowed = isHomePickup, flatDeliveryCharge = flatDeliverCharge, clientId = UserSession.clientId, floatingPointId = UserSession.fpId))?.observeOnce(viewLifecycleOwner, {
+        viewModel?.setupDelivery(DeliverySetup(isPickupAllowed = isPickup, isBusinessLocationPickupAllowed = false, isWarehousePickupAllowed = false, isHomeDeliveryAllowed = isHomePickup, flatDeliveryCharge = flatDeliverCharge, clientId = clientId, floatingPointId = sessionLocal.fPID))?.observeOnce(viewLifecycleOwner, {
             if (it.isSuccess()) {
                 showShortToast(getString(R.string.updated))
             }

@@ -32,10 +32,10 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.staffs.UserSession
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.UserSessionManager
 import com.framework.utils.NetworkUtils
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
@@ -75,6 +75,7 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
 
     override fun onCreateView() {
         super.onCreateView()
+        sessionLocal = UserSessionManager(requireActivity())
         layoutManagerN = LinearLayoutManager(baseActivity)
         fetchOfferListing(isFirst = true, offSet = offSet, limit = limit)
         layoutManagerN?.let { scrollPagingListener(it) }
@@ -118,7 +119,7 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
 
     private fun fetchOfferListing(isProgress: Boolean = true, isFirst: Boolean = false, filter: Filter? = null, sortBy: SortBy? = null, offSet: Int, limit: Int) {
         if (isFirst && isProgress) showProgress()
-        viewModel?.getOfferListing(OfferListingRequest(floatingPointTag = UserSession.fpTag, filter = filter, sortBy = sortBy, limit = limit, offset = offSet))?.observeOnce(viewLifecycleOwner, {
+        viewModel?.getOfferListing(OfferListingRequest(floatingPointTag = sessionLocal.fpTag, filter = filter, sortBy = sortBy, limit = limit, offset = offSet))?.observeOnce(viewLifecycleOwner, {
             if (it.isSuccess()) {
                 setOffersDataItem((it as? OfferListingResponse)?.result, isFirst)
             } else if (isFirst) showShortToast(it.errorMessage())

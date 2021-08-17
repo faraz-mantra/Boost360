@@ -14,7 +14,6 @@ import com.appservice.offers.viewmodel.OfferViewModel
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.staffs.UserSession
 import com.framework.base.BaseBottomSheetDialog
 import java.util.*
 import kotlin.collections.ArrayList
@@ -30,6 +29,7 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
     private var copylist: ArrayList<DataItemOfferService>? = null
     private var serviceIds: ArrayList<String>? = null
     override fun onCreateView() {
+
         init()
     }
 
@@ -42,7 +42,7 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
 
     private fun fetchServices() {
         viewModel!!.getServiceListing(ServiceListRequest(
-                FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpTag)
+                FilterBy("ALL", 0, 0), "", floatingPointTag = sessionManager?.fpTag)
         ).observe(viewLifecycleOwner, {
             listServices = ArrayList()
             data = (it as ServiceListResponse).result!!.data!!
@@ -55,6 +55,7 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
     }
 
     private fun init() {
+
         getBundleData()
         fetchServices()
         setOnClickListener(binding?.btnApply, binding?.btnCancel)

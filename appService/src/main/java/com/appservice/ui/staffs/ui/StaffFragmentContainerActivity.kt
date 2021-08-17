@@ -22,7 +22,6 @@ import com.appservice.staffs.ui.details.StaffDetailsFragment
 import com.appservice.staffs.ui.home.StaffProfileListingFragment
 import com.appservice.staffs.ui.profile.StaffProfileDetailsFragment
 import com.appservice.ui.catalog.common.WeeklyAppointmentFragment
-import com.appservice.ui.staffs.UserSession
 import com.appservice.ui.staffs.ui.Constants
 import com.appservice.ui.staffs.ui.breaks.ScheduledBreaksFragmnt
 import com.appservice.ui.staffs.ui.breaks.StaffBreakConfirmFragment
@@ -81,12 +80,13 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
   private fun getBundle() {
     val userSessionManager = UserSessionManager(this)
     intent.getStringExtra(IntentConstant.FP_TAG.name)?.let {
-      UserSession.apply {
-        fpTag = userSessionManager.fpTag
-        fpId = userSessionManager.fPID
-        customerID = clientId
-        clientId = customerID
-      }
+//      UserSession.apply {
+//        fpTag = userSessionManager.fpTag
+//        fpId = userSessionManager.fPID
+//        customerID = clientId
+//        clientId = customerID
+//      }
+//    }
     }
   }
 
