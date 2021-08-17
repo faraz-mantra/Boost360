@@ -610,4 +610,8 @@
   <string name="please_make_sure_above_details_are_correct_delivery_person_details">Please make sure above details are correct. JioOnline will send an email and an SMS to the customer on your behalf, informing them of the order being ‘out for delivery’ along with delivery person details.</string>
   <string name="all_payment_on_your_boost_website_are_processed_through_this_payment_gateway_instead_of_default_boost_payment_gateway_when_you_add_a_new_product_service_on_your_business_website_please_make_sure_to_select_this_payment_gateway">All payment on your JioOnline website are processed through this payment gateway instead of default Boost Payment Gateway. When you add a new product service on your business website please make sure to select this payment gateway.</string>
 
+
+  <string name="collect_boost_business_website_desc">This account is being used to send you money collected from your customers who are making payments on your JioOnline Business website.</string>
+  <string name="a_premium_service_by_boost_for_secure_payment_collection_learn_more_here">A premium service by JioOnline for secure payment collection (Learn more here)</string>
+
 </resources>
