@@ -38,7 +38,6 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
         super.onCreateView()
         setOnClickListener(binding?.boostPaymentGateway, binding?.btnAddAccount)
         getDeliveryStatus()
-        getAccountDetails()
          grayScaleImage()
         binding?.toggleCod?.setOnToggledListener { toggleableView, isOn ->
             updateDeliveryStatus(isOn)
