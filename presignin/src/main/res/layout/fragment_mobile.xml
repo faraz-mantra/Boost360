@@ -133,7 +133,7 @@
       style="@style/psn_subheading_style"
       android:layout_width="wrap_content"
       android:fontFamily="@font/semi_bold"
-      android:text="@string/need_help"
+      android:text="@string/need_help_u"
       app:fontFamily="@font/bold"
       android:textColor="@color/colorAccentLight"
       app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
