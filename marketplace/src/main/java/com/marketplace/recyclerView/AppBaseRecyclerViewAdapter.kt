@@ -8,7 +8,9 @@ import com.marketplace.R
 import com.marketplace.constant.RecyclerViewItemType.*
 import com.marketplace.holder.PagingViewHolderMp
 import com.framework.base.BaseActivity
+import com.marketplace.databinding.MpPromoBannerItemBinding
 import com.marketplace.databinding.PaginationLoaderMpBinding
+import com.marketplace.holder.MarketPlacePromoBannerViewHolder
 import java.util.*
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
@@ -23,6 +25,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
         val binding = getViewDataBinding(inflater, recyclerViewItemType, parent)
         return when (recyclerViewItemType) {
             PAGINATION_LOADER -> PagingViewHolderMp(binding as PaginationLoaderMpBinding)
+            PROMO_BANNER_ITEM_VIEW ->MarketPlacePromoBannerViewHolder(binding as MpPromoBannerItemBinding)
 
         }
     }

@@ -2,6 +2,8 @@ package com.marketplace.model.features
 
 
 import com.google.gson.annotations.SerializedName
+import com.marketplace.constant.RecyclerViewItemType
+import com.marketplace.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
 data class PromoBanner(
@@ -41,4 +43,13 @@ data class PromoBanner(
   var updatedon: String? = null,
   @SerializedName("websiteid")
   var websiteid: String? = null
-): Serializable
+): Serializable,AppBaseRecyclerViewItem {
+
+  var recyclerViewItemType: Int = RecyclerViewItemType.PROMO_BANNER_ITEM_VIEW.getLayout()
+
+
+  override fun getViewType(): Int {
+    return recyclerViewItemType
+  }
+
+}
