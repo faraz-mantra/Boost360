@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.framework.views.customViews.CustomToolbar;
 import com.thinksity.R;
 
 /**
@@ -17,7 +18,8 @@ public class BusinessEnquiryActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_enquiry);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        CustomToolbar toolbar = (CustomToolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null)
         {

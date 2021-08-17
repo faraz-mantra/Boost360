@@ -34,6 +34,7 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import dev.patrickgold.florisboard.ime.core.FlorisBoard;
 
@@ -65,8 +66,8 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
         microphoneSwitchTv.setOnTouchListener(this);
 
 
-        keyboardSettingSwitchTv.setText(String.format("Enable %s Keyboard", AppController.getApplicationName(getActivity())));
-        keyboardSwitchTv.setText(String.format("Select %s Keyboard", AppController.getApplicationName(getActivity())));
+        keyboardSettingSwitchTv.setText(String.format("Enable %s keyboard", AppController.getApplicationName(getActivity()).toLowerCase(Locale.ROOT)));
+        keyboardSwitchTv.setText(String.format("Select %s keyboard", AppController.getApplicationName(getActivity()).toLowerCase(Locale.ROOT)));
 
         return view;
     }

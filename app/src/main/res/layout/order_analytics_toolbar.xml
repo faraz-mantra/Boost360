@@ -1,47 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="?attr/actionBarSize"
+  android:background="?attr/colorPrimary"
+  android:orientation="vertical"
+  app:navigationIcon="@drawable/ic_back_arrow_new"
+  app:titleTextAppearance="@style/Toolbar.TitleText">
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    android:orientation="vertical"
-    app:theme="@style/CustomToolbarTheme">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:gravity="center_vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:gravity="center_vertical">
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/title"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_gravity="start"
+      android:layout_weight="1"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="center_vertical"
+      android:text="@string/order_analytics"
+      app:fontFamily="@font/semi_bold"
+      app:textType="HEADING_6"
+      android:textColor="@color/white" />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="@string/order_analytics"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    <ImageView
+      android:id="@+id/social_img"
+      android:layout_width="30dp"
+      android:layout_height="30dp"
+      android:padding="5dp"
+      android:src="@drawable/ic_total_orders"
+      android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/social_img"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:padding="5dp"
-            android:src="@drawable/ic_total_orders"
-            android:visibility="gone" />
+    <ImageView
+      android:id="@+id/toolbar_spinner"
+      android:layout_width="35dp"
+      android:layout_height="35dp"
+      android:padding="10dp"
+      android:visibility="gone"
+      app:srcCompat="@drawable/drop_down" />
 
-        <ImageView
-            android:id="@+id/toolbar_spinner"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:padding="10dp"
-            android:visibility="gone"
-            app:srcCompat="@drawable/drop_down" />
-
-    </LinearLayout>
+  </LinearLayout>
 
 </androidx.appcompat.widget.Toolbar>

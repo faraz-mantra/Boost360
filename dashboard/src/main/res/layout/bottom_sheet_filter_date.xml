@@ -46,8 +46,8 @@
         android:includeFontPadding="false"
         android:padding="@dimen/size_2"
         android:text="@string/reset"
-        android:textColor="@color/colorAccent"
-        app:textAllCaps="true"
+        android:textColor="@color/colorAccentLight"
+        app:textAllCaps="false"
         app:textType="BODY_1" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -80,7 +80,7 @@
       android:visibility="gone"
       android:stateListAnimator="@null"
       android:text="@string/done"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:textColor="@color/white"
       app:textType="HEADING_6" />
 

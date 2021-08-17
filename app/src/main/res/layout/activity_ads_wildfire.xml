@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <include
+    android:id="@+id/toolbar"
+    layout="@layout/toolbar_boost"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rv_wildfire_channels"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:visibility="gone" />
 
-    <include
-        layout="@layout/toolbar"
-        android:id="@+id/toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
+  <!--
+  <include
+      layout="@layout/layout_empty_img_text_button_screen"
+      android:id="@+id/empty_screen"
+      android:visibility="gone"
+      android:layout_height="match_parent"
+      android:layout_width="match_parent"/>
+  -->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_wildfire_channels"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
-
-    <!--
-    <include
-        layout="@layout/layout_empty_img_text_button_screen"
-        android:id="@+id/empty_screen"
-        android:visibility="gone"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"/>
-    -->
-
-    <include
-        layout="@layout/layout_empty_wildfire_screen"
-        android:id="@+id/empty_screen"
-        android:visibility="gone"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"/>
+  <include
+    android:id="@+id/empty_screen"
+    layout="@layout/layout_empty_wildfire_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone" />
 
 </LinearLayout>

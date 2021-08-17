@@ -1,6 +1,6 @@
 {
   "data": {
-    "planName": "Boost360 Trial Plan",
+    "planName": "Boost360 trial plan",
     "widgetKeys": [
       "PRODUCTCATALOGUE",
       "SOCIALSHARE",
@@ -18,11 +18,6 @@
       "CUSTOMPAGES"
     ],
     "extraProperties": [
-      {
-        "widget": "EMAILACCOUNTS3",
-        "key": "LIMIT",
-        "value": 3
-      },
       {
         "widget": "PRODUCTCATALOGUE",
         "key": "LIMIT",

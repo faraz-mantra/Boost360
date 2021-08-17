@@ -62,9 +62,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun customTheme(): Int? {
     return when (type) {
-      FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
-      FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_LISTING,
-      -> R.style.CatalogTheme
+      FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_LISTING -> R.style.CatalogTheme
+      FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION -> R.style.AddCatalogTheme
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> R.style.CatalogTheme_Information
       else -> super.customTheme()
     }
@@ -74,15 +73,12 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     return binding?.appBarLayout?.toolbar
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.heading_7)
-  }
-
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
       FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY,
-      -> ContextCompat.getColor(this, R.color.orange)
+      -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> ContextCompat.getColor(this, R.color.color_primary)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -106,27 +102,17 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     }
   }
 
-  override fun getNavIconScale(): Float {
-    return 1.0f
-  }
 
   override fun getToolbarTitle(): String? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION -> resources.getString(R.string.other_information)
-      FragmentType.SERVICE_DETAIL_VIEW -> resources.getString(R.string.service_details)
-      FragmentType.PRODUCT_DETAIL_VIEW -> resources.getString(R.string.product_details)
+      FragmentType.SERVICE_INFORMATION -> resources.getString(R.string.other_information_n)
+      FragmentType.SERVICE_DETAIL_VIEW -> resources.getString(R.string.service_details_n)
+      FragmentType.PRODUCT_DETAIL_VIEW -> resources.getString(R.string.product_details_n)
       FragmentType.PRODUCT_INFORMATION -> resources.getString(R.string.additional_information)
       FragmentType.SERVICE_TIMING_FRAGMENT -> getString(R.string.weekly_appointment)
       FragmentType.CREATE_CATEGORY -> getString(R.string.categories)
       FragmentType.SERVICE_LISTING -> getString(R.string.services)
       else -> super.getToolbarTitle()
-    }
-  }
-
-  override fun getToolbarTitleGravity(): Int {
-    return when (type) {
-      FragmentType.SERVICE_TIMING_FRAGMENT, FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> Gravity.CENTER
-      else -> Gravity.START
     }
   }
 

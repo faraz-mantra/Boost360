@@ -67,5 +67,4 @@ class PaymentConfigBottomSheet : BaseBottomSheetDialog<BottomShettPaymentConfigu
       binding?.btnCancel -> dismiss()
     }
   }
-
 }

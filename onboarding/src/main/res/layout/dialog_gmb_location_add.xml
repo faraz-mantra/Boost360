@@ -92,7 +92,7 @@
         android:alpha="0"
         android:gravity="center"
         android:text="@string/create_gmb_profile"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         app:textType="HEADING_6"
         tools:alpha="1" />
 
@@ -105,7 +105,7 @@
         android:paddingTop="@dimen/size_4"
         android:paddingBottom="@dimen/size_4"
         android:text="@string/i_ll_do_it_later"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/warm_light"
         app:fontFamily="@font/regular"
         app:textType="BODY_2"

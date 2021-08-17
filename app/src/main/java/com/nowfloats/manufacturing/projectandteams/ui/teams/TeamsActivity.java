@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.framework.views.fabButton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
@@ -45,10 +46,10 @@ import retrofit.converter.GsonConverter;
 
 public class TeamsActivity extends AppCompatActivity implements TeamsActivityListener {
 
-    private RecyclerView recyclerView;
-    private TeamAdapter adapter;
     UserSessionManager session;
     List<Data> dataList;
+    private RecyclerView recyclerView;
+    private TeamAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,9 +74,9 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
         //setheaders
         setHeader();
 
-        if(Utils.isNetworkConnected(this)) {
+        if (Utils.isNetworkConnected(this)) {
             loadData();
-        }else{
+        } else {
             Methods.showSnackBarNegative(TeamsActivity.this, getString(R.string.no_internet_connection));
         }
     }
@@ -124,9 +125,9 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
     @Override
     public void onResume() {
         super.onResume();
-        if(Utils.isNetworkConnected(this)) {
+        if (Utils.isNetworkConnected(this)) {
             loadData();
-        }else{
+        } else {
             Methods.showSnackBarNegative(TeamsActivity.this, getString(R.string.no_internet_connection));
         }
     }
@@ -176,7 +177,7 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
                 public void success(String data, Response response) {
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(TeamsActivity.this,  getString(R.string.successfully_deleted_));
+                        Methods.showSnackBarPositive(TeamsActivity.this, getString(R.string.successfully_deleted_));
                         loadData();
                     } else {
                         Methods.showSnackBarNegative(TeamsActivity.this, getString(R.string.something_went_wrong));
@@ -185,10 +186,10 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if(error.getResponse().getStatus() == 200){
-                        Methods.showSnackBarPositive(TeamsActivity.this,  getString(R.string.successfully_deleted_));
+                    if (error.getResponse().getStatus() == 200) {
+                        Methods.showSnackBarPositive(TeamsActivity.this, getString(R.string.successfully_deleted_));
                         loadData();
-                    }else {
+                    } else {
                         Methods.showSnackBarNegative(TeamsActivity.this, getString(R.string.something_went_wrong));
                     }
                 }
@@ -201,30 +202,23 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
     }
 
     public void setHeader() {
-        LinearLayout rightButton, backButton;
+        LinearLayout backButton;
         ImageView rightIcon;
         TextView title;
+        FloatingActionButton btnAdd;
 
         title = findViewById(R.id.title);
         backButton = findViewById(R.id.back_button);
-        rightButton = findViewById(R.id.right_icon_layout);
+        btnAdd = findViewById(R.id.btn_add);
         rightIcon = findViewById(R.id.right_icon);
         title.setText("Teams");
-        rightIcon.setImageResource(R.drawable.ic_add_white);
-        rightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent teamIntent = new Intent(TeamsActivity.this, TeamsDetailsActivity.class);
-                    teamIntent.putExtra("ScreenState", "new");
-                    startActivity(teamIntent);
-            }
+        rightIcon.setVisibility(View.INVISIBLE);
+        btnAdd.setOnClickListener(v -> {
+            Intent teamIntent = new Intent(TeamsActivity.this, TeamsDetailsActivity.class);
+            teamIntent.putExtra("ScreenState", "new");
+            startActivity(teamIntent);
         });
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        backButton.setOnClickListener(v -> onBackPressed());
     }
 }

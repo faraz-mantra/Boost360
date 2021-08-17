@@ -17,6 +17,7 @@ import com.framework.base.BaseResponse
 import com.framework.extensions.observeOnce
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
+import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 import okio.Buffer
 import okio.BufferedSource
@@ -49,7 +50,7 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
 
   override fun onCreateView() {
     WebEngageController.trackEvent(PS_BUSINESS_PROFILE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    baseActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+    binding?.nametEt?.post{ baseActivity.showKeyBoard(binding?.nametEt) }
     floatsRequest = requireArguments().getSerializable("request") as? CategoryFloatsRequest
     binding?.phoneEt?.setText(floatsRequest?.userBusinessMobile)
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)

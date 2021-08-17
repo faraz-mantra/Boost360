@@ -60,7 +60,6 @@
         android:padding="@dimen/size_10"
         android:scrollbars="vertical"
         android:singleLine="true"
-        android:textCursorDrawable="@drawable/color_cursor"
         android:textSize="14sp"
         tools:ignore="UnusedAttribute" />
 

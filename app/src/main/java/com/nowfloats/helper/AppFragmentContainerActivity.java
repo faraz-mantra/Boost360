@@ -2,11 +2,14 @@ package com.nowfloats.helper;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +20,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.framework.utils.ConversionUtils;
+import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.AboutFragment;
 import com.nowfloats.NavigationDrawer.AccountSettingsFragment;
@@ -39,6 +44,21 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
   private UserSessionManager session;
 
   private ActivityFragmentContainerAppBinding binding;
+
+  public static void startFragmentAppActivity(Activity activity, FragmentType type, Bundle bundle, Boolean clearTop) {
+    Intent intent = new Intent(activity, AppFragmentContainerActivity.class);
+    intent.putExtras(bundle);
+    setFragmentType(intent, type);
+    if (clearTop) {
+      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    }
+    activity.startActivity(intent);
+  }
+
+  private static void setFragmentType(Intent intent, FragmentType type) {
+    intent.putExtra(FRAGMENT_TYPE, type.name());
+  }
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,21 +86,6 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
     return true;
   }
 
-  public static void startFragmentAppActivity(Activity activity, FragmentType type, Bundle bundle, Boolean clearTop) {
-    Intent intent = new Intent(activity, AppFragmentContainerActivity.class);
-    intent.putExtras(bundle);
-    setFragmentType(intent, type);
-    if (clearTop) {
-      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-    }
-    activity.startActivity(intent);
-  }
-
-  private static void setFragmentType(Intent intent, FragmentType type) {
-    intent.putExtra(FRAGMENT_TYPE, type.name());
-  }
-
   private Boolean isHideToolbar() {
     return false;
   }
@@ -100,7 +105,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
       case ABOUT_BOOST:
         return getString(R.string.about);
       case NOTIFICATION_VIEW:
-        return getString(R.string.notification);
+        return getString(R.string.notification_n);
       case UPDATE_LATEST_STORY_VIEW:
         return Utils.getLatestUpdatesTaxonomyFromServiceCode(session.getFP_AppExperienceCode());
       case MANAGE_CUSTOMER_VIEW:
@@ -142,7 +147,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
       case MANAGE_CUSTOMER_VIEW:
       case SITE_METER_OLD_VIEW:
       default:
-        return ContextCompat.getDrawable(this, R.drawable.ic_arrow_back);
+        return ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new);
     }
   }
 
@@ -150,7 +155,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
     return false;
   }
 
-  private Toolbar getToolbar() {
+  private CustomToolbar getToolbar() {
     return binding.toolbar;
   }
 
@@ -207,13 +212,22 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
       getToolbar().setNavigationIcon(getNavigationIcon());
       getToolbar().setBackgroundColor(getToolbarBackgroundColor());
       setSupportActionBar(getToolbar());
-      if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(isVisibleBackButton());
+
+      if (getSupportActionBar() != null)
+        getSupportActionBar().setDisplayHomeAsUpEnabled(isVisibleBackButton());
     } else getToolbar().setVisibility(View.GONE);
+  }
+
+  private void setToolbarTitleSize() {
+
   }
 
   private void setToolbarTitle(String title) {
     getToolbar().setTitle(title);
     getToolbar().setTitleTextColor(ContextCompat.getColor(this, getToolbarTitleColor()));
+    float scale = Resources.getSystem().getDisplayMetrics().density;
+    TextView txtView = getToolbar().getTitleTextView();
+    if (txtView != null) txtView.setTextSize(TypedValue.COMPLEX_UNIT_PX, (17F * scale + 0.5f));
   }
 
   @Override

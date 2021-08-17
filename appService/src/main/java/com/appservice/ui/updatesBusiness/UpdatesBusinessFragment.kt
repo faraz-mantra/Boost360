@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,9 @@ import com.appservice.viewmodel.UpdatesViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.models.firestore.FirestoreManager
+import com.framework.models.firestore.FirestoreManager.getDrScoreData
+import com.framework.models.firestore.FirestoreManager.updateDocument
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing.Companion.shareUpdates
 import com.framework.utils.showKeyBoard
@@ -36,7 +40,7 @@ import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
-class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
+open class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
 
   private val STORAGE_CODE = 120
 
@@ -123,8 +127,8 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
           this.adapter = adapterUpdate
         }
       } else adapterUpdate?.notifyDataSetChanged()
-
     } else if (listFloat.isEmpty()) binding?.emptyView?.visible()
+    onBusinessUpdateAddedOrUpdated((data?.floats?: arrayListOf()).size)
     hideProgress()
   }
 
@@ -164,15 +168,27 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
       RecyclerViewActionType.UPDATE_FP_APP_SHARE.ordinal -> shareUpdate(item, actionType)
       RecyclerViewActionType.UPDATE_BUSINESS_CLICK.ordinal -> {
         val float = item as? UpdateFloat ?: return
-        startUpdateFragmentActivity(FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT, Bundle().apply { putSerializable(IntentConstant.OBJECT_DATA.name, float) }, isResult = true)
+        startUpdateFragmentActivity(
+          FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT,
+          Bundle().apply { putSerializable(IntentConstant.OBJECT_DATA.name, float) },
+          isResult = true
+        )
       }
     }
   }
 
   private fun shareUpdate(item: BaseRecyclerViewItem?, actionType: Int) {
     val float = item as? UpdateFloat ?: return
-    if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-      showDialog(baseActivity, "Storage Permission", "To share service image, we need storage permission.") { _: DialogInterface?, _: Int ->
+    if (ActivityCompat.checkSelfPermission(
+        baseActivity,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+      ) == PackageManager.PERMISSION_DENIED
+    ) {
+      showDialog(
+        baseActivity,
+        "Storage Permission",
+        "To share service image, we need storage permission."
+      ) { _: DialogInterface?, _: Int ->
         requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_CODE)
       }
       return
@@ -180,13 +196,40 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
     val subDomain = if (isService(sessionLocal.fP_AppExperienceCode)) "all-services" else "all-products"
     when (actionType) {
       RecyclerViewActionType.UPDATE_WHATS_APP_SHARE.ordinal -> {
-        shareUpdates(baseActivity, float.message ?: "", float.url, sessionLocal.getDomainName() + "/" + subDomain, sessionLocal.userPrimaryMobile ?: "", true, false, float.imageUri)
+        shareUpdates(
+          baseActivity,
+          float.message ?: "",
+          float.url,
+          sessionLocal.getDomainName() + "/" + subDomain,
+          sessionLocal.userPrimaryMobile ?: "",
+          true,
+          false,
+          float.imageUri
+        )
       }
       RecyclerViewActionType.UPDATE_OTHER_SHARE.ordinal -> {
-        shareUpdates(baseActivity, float.message ?: "", float.url, sessionLocal.getDomainName() + "/" + subDomain, sessionLocal.userPrimaryMobile ?: "", false, false, float.imageUri)
+        shareUpdates(
+          baseActivity,
+          float.message ?: "",
+          float.url,
+          sessionLocal.getDomainName() + "/" + subDomain,
+          sessionLocal.userPrimaryMobile ?: "",
+          false,
+          false,
+          float.imageUri
+        )
       }
       RecyclerViewActionType.UPDATE_FP_APP_SHARE.ordinal -> {
-        shareUpdates(baseActivity, float.message ?: "", float.url, sessionLocal.getDomainName() + "/" + subDomain, sessionLocal.userPrimaryMobile ?: "", false, true, float.imageUri)
+        shareUpdates(
+          baseActivity,
+          float.message ?: "",
+          float.url,
+          sessionLocal.getDomainName() + "/" + subDomain,
+          sessionLocal.userPrimaryMobile ?: "",
+          false,
+          true,
+          float.imageUri
+        )
       }
     }
   }
@@ -203,10 +246,18 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
       }
     }
   }
+
+  open fun onBusinessUpdateAddedOrUpdated(count: Int) {
+    val instance = FirestoreManager
+    if (instance.getDrScoreData() != null && instance.getDrScoreData()!!.metricdetail != null) {
+      instance.getDrScoreData()!!.metricdetail!!.number_updates_posted = count
+      instance.updateDocument()
+    }
+  }
 }
 
 fun showDialog(mContext: Context?, title: String?, msg: String?, listener: DialogInterface.OnClickListener) {
-  val builder = AlertDialog.Builder(mContext!!)
+  val builder = AlertDialog.Builder(ContextThemeWrapper(mContext!!, R.style.CustomAlertDialogTheme))
   builder.setTitle(title).setMessage(msg).setPositiveButton("Ok") { dialog, which ->
     dialog.dismiss()
     listener.onClick(dialog, which)

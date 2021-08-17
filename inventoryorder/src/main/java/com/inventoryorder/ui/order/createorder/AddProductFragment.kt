@@ -67,7 +67,9 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         val query = str!!.trim().toLowerCase(Locale.ROOT)
         productList.clear()
         productList.addAll(finalProductList)
-        productList = productList.filter { it.getNameValue().startsWith(query) || it.getNameValue().contains(query) } as ArrayList<ProductItem>
+        productList = productList.filter {
+          it.getNameValue().startsWith(query) || it.getNameValue().contains(query)
+        } as ArrayList<ProductItem>
         setAdapterOrderList()
       }
       finalProductList.isNullOrEmpty().not() -> {
@@ -111,7 +113,10 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
     createOrderRequest.items = itemList
     val bundle = Bundle()
     bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
-    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name))
+    bundle.putSerializable(
+      IntentConstant.PREFERENCE_DATA.name,
+      arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name)
+    )
     startFragmentOrderActivity(FragmentType.ADD_CUSTOMER, bundle, isResult = true)
   }
 
@@ -121,7 +126,8 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
       hideProgress()
       if (it.isSuccess()) {
         val resp = (it.arrayResponse as? Array<ProductItem>)
-        finalProductList = if (resp.isNullOrEmpty().not()) resp!!.toCollection(ArrayList()) else ArrayList()
+        finalProductList =
+          if (resp.isNullOrEmpty().not()) resp!!.toCollection(ArrayList()) else ArrayList()
         if (finalProductList.isNotEmpty()) {
           productList.clear()
           productList.addAll(finalProductList)
@@ -137,7 +143,9 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
   }
 
   fun getBundleData(): Bundle {
-    return Bundle().apply { putBoolean(IntentConstant.IS_REFRESH.name, (shouldReInitiate || shouldFinish)) }
+    return Bundle().apply {
+      putBoolean(IntentConstant.IS_REFRESH.name, (shouldReInitiate || shouldFinish))
+    }
   }
 
   private fun setAdapterOrderList() {
@@ -147,19 +155,18 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         adapter = itemsAdapter
         itemsAdapter?.runLayoutAnimation(this)
       }
-    } else itemsAdapter?.notifyDataSetChanged()
+    } else itemsAdapter?.notify(productList)
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.PRODUCT_ITEM_ADD.ordinal -> {
-        val product = item as? ProductItem
-        val productItem = productList[position]
+        val productItem = item as? ProductItem ?: return
         productItem.productQuantityAdded = productItem.productQuantityAdded + 1
-        finalProductList.firstOrNull { product?._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
+        finalProductList.firstOrNull { productItem._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
         itemsAdapter?.notifyDataSetChanged()
-        totalPrice = totalPrice.plus(product?.getPayablePrice() ?: 0.0)
-        binding?.tvItemTotalPrice?.text = "${product?.getCurrencyCodeValue() ?: "INR"} $totalPrice"
+        totalPrice = totalPrice.plus(productItem.getPayablePrice())
+        binding?.tvItemTotalPrice?.text = "${productItem.getCurrencyCodeValue()} $totalPrice"
         if (binding?.layoutTotalPricePanel?.visibility == View.GONE) {
           binding?.layoutTotalPricePanel?.visibility = View.VISIBLE
         }
@@ -167,25 +174,22 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
       }
 
       RecyclerViewActionType.PRODUCT_ITEM_INCREASE_COUNT.ordinal -> {
-        val product = item as? ProductItem
-        val productItem = productList[position]
+        val productItem = item as? ProductItem ?: return
         productItem.productQuantityAdded = productItem.productQuantityAdded + 1
-        finalProductList.firstOrNull { product?._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
-
+        finalProductList.firstOrNull { productItem._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
         itemsAdapter?.notifyDataSetChanged()
-        totalPrice = totalPrice.plus(product?.getPayablePrice() ?: 0.0)
-        binding?.tvItemTotalPrice?.text = "${product?.getCurrencyCodeValue() ?: "INR"} $totalPrice"
+        totalPrice = finalProductList.map { it.getPayablePWithCount() }.sum()
+        binding?.tvItemTotalPrice?.text = "${productItem.getCurrencyCodeValue()} $totalPrice"
         totalCartItems += 1
       }
 
       RecyclerViewActionType.PRODUCT_ITEM_DECREASE_COUNT.ordinal -> {
-        val product = item as? ProductItem
-        val productItem = productList[position]
+        val productItem = item as? ProductItem ?: return
         productItem.productQuantityAdded = productItem.productQuantityAdded - 1
-        finalProductList.firstOrNull { product?._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
+        finalProductList.firstOrNull { productItem._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
         itemsAdapter?.notifyDataSetChanged()
-        totalPrice = totalPrice.minus(product?.getPayablePrice() ?: 0.0)
-        binding?.tvItemTotalPrice?.text = "${product?.getCurrencyCodeValue() ?: "INR"} $totalPrice"
+        totalPrice = finalProductList.map { it.getPayablePWithCount() }.sum()
+        binding?.tvItemTotalPrice?.text = "${productItem.getCurrencyCodeValue()} $totalPrice"
         totalCartItems -= 1
         if (totalCartItems == 0) binding?.layoutTotalPricePanel?.visibility = View.GONE
       }
@@ -200,8 +204,6 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
       shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_RE_INITIATE.name) ?: false
       shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name) ?: false
       val addMore = bundle?.getBoolean(IntentConstant.ADD_MORE_ITEM.name) ?: false
-      totalPrice = 0.0
-      totalCartItems = 0
       if (shouldFinish) {
         (context as? FragmentContainerOrderActivity)?.onBackPressed()
       } else if (addMore && req != null) {
@@ -223,10 +225,13 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
           binding?.layoutTotalPricePanel?.visible()
         } else binding?.layoutTotalPricePanel?.gone()
       } else if (shouldReInitiate) {
+        totalPrice = 0.0
+        totalCartItems = 0
         createOrderRequest = OrderInitiateRequest()
         binding?.layoutTotalPricePanel?.gone()
         getItemList(fpTag, CLIENT_ID_1)
       }
     }
   }
+
 }

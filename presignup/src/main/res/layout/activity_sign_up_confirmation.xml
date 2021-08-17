@@ -1,167 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".SignUpConfirmation">
+
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/startGuideline"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SignUpConfirmation">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_begin="@dimen/_16sdp" />
 
   <androidx.constraintlayout.widget.Guideline
-      android:id="@+id/startGuideline"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      app:layout_constraintGuide_begin="@dimen/_16sdp" />
+    android:id="@+id/endGuideline"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_end="@dimen/_16sdp" />
 
   <androidx.constraintlayout.widget.Guideline
-      android:id="@+id/endGuideline"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      app:layout_constraintGuide_end="@dimen/_16sdp" />
-
-  <androidx.constraintlayout.widget.Guideline
-      android:id="@+id/topGuideline"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      app:layout_constraintGuide_begin="@dimen/_16sdp" />
+    android:id="@+id/topGuideline"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_begin="@dimen/_16sdp" />
 
   <ImageView
-      android:id="@+id/success"
-      android:layout_width="@dimen/_55sdp"
-      android:layout_height="@dimen/_55sdp"
-      android:layout_marginEnd="@dimen/_4sdp"
-      android:src="@drawable/ic_tick_done"
-      app:layout_constraintEnd_toStartOf="@+id/endGuideline"
-      app:layout_constraintStart_toStartOf="@+id/startGuideline"
-      app:layout_constraintTop_toTopOf="@+id/topGuideline" />
+    android:id="@+id/success"
+    android:layout_width="@dimen/_55sdp"
+    android:layout_height="@dimen/_55sdp"
+    android:layout_marginEnd="@dimen/_4sdp"
+    android:src="@drawable/ic_tick_done"
+    app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+    app:layout_constraintStart_toStartOf="@+id/startGuideline"
+    app:layout_constraintTop_toTopOf="@+id/topGuideline" />
 
   <RelativeLayout
-      android:id="@+id/profile_image"
-      android:layout_width="@dimen/_65sdp"
-      android:layout_height="@dimen/_65sdp"
-      android:background="@drawable/circular_bg"
-      android:elevation="@dimen/cardview_default_elevation"
-      android:visibility="gone"
-      app:layout_constraintEnd_toStartOf="@+id/endGuideline"
-      app:layout_constraintStart_toStartOf="@+id/startGuideline"
-      app:layout_constraintTop_toTopOf="@+id/topGuideline">
+    android:id="@+id/profile_image"
+    android:layout_width="@dimen/_65sdp"
+    android:layout_height="@dimen/_65sdp"
+    android:background="@drawable/circular_bg"
+    android:elevation="@dimen/cardview_default_elevation"
+    android:visibility="gone"
+    app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+    app:layout_constraintStart_toStartOf="@+id/startGuideline"
+    app:layout_constraintTop_toTopOf="@+id/topGuideline">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/userProfileImage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_margin="@dimen/_5sdp"
-        android:src="@drawable/profile_icon" />
+      android:id="@+id/userProfileImage"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_centerInParent="true"
+      android:layout_margin="@dimen/_5sdp"
+      android:src="@drawable/profile_icon" />
 
     <ImageView
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/ic_tick_done" />
+      android:layout_width="@dimen/_40sdp"
+      android:layout_height="@dimen/_40sdp"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentBottom="true"
+      android:src="@drawable/ic_tick_done" />
   </RelativeLayout>
 
   <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/welcome_user"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/_8sdp"
-      android:fontFamily="@font/open_sans_semibold"
-      android:gravity="center"
-      android:text="@string/welcome"
-      android:textColor="@color/common_text_color"
-      android:textSize="@dimen/_16ssp"
-      app:layout_constraintEnd_toStartOf="@+id/endGuideline"
-      app:layout_constraintStart_toStartOf="@+id/startGuideline"
-      app:layout_constraintTop_toBottomOf="@+id/success" />
+    android:id="@+id/welcome_user"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_8sdp"
+    android:fontFamily="@font/semi_bold"
+    android:gravity="center"
+    android:text="@string/welcome"
+    android:textColor="@color/common_text_color"
+    android:textSize="@dimen/_16ssp"
+    app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+    app:layout_constraintStart_toStartOf="@+id/startGuideline"
+    app:layout_constraintTop_toBottomOf="@+id/success" />
 
   <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/appCompatTextView2"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:fontFamily="@font/open_sans"
-      android:gravity="center"
-      android:text="@string/your_boost_profile_is_successfully_created"
-      android:textColor="@color/common_text_color"
-      app:layout_constraintEnd_toStartOf="@+id/endGuideline"
-      app:layout_constraintStart_toStartOf="@+id/startGuideline"
-      app:layout_constraintTop_toBottomOf="@+id/welcome_user" />
+    android:id="@+id/appCompatTextView2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fontFamily="@font/regular"
+    android:gravity="center"
+    android:text="@string/your_boost_profile_is_successfully_created"
+    android:textColor="@color/common_text_color"
+    app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+    app:layout_constraintStart_toStartOf="@+id/startGuideline"
+    app:layout_constraintTop_toBottomOf="@+id/welcome_user" />
 
   <View
-      android:id="@+id/view3"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      android:layout_marginTop="@dimen/_26sdp"
-      android:background="@drawable/signup_confirm_bg"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toStartOf="@+id/endGuideline"
-      app:layout_constraintStart_toStartOf="@+id/startGuideline"
-      app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2" />
+    android:id="@+id/view3"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginTop="@dimen/_26sdp"
+    android:background="@drawable/signup_confirm_bg"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+    app:layout_constraintStart_toStartOf="@+id/startGuideline"
+    app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2" />
 
   <ImageView
-      android:id="@+id/imageView"
-      android:layout_width="@dimen/_80sdp"
-      android:layout_height="@dimen/_80sdp"
-      android:layout_marginTop="@dimen/_28sdp"
-      android:layout_marginEnd="@dimen/_2sdp"
-      android:src="@drawable/ria"
-      app:layout_constraintEnd_toStartOf="@+id/endGuideline"
-      app:layout_constraintStart_toStartOf="@+id/startGuideline"
-      app:layout_constraintTop_toTopOf="@+id/view3" />
+    android:id="@+id/imageView"
+    android:layout_width="@dimen/_80sdp"
+    android:layout_height="@dimen/_80sdp"
+    android:layout_marginTop="@dimen/_28sdp"
+    android:layout_marginEnd="@dimen/_2sdp"
+    android:src="@drawable/ria"
+    app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+    app:layout_constraintStart_toStartOf="@+id/startGuideline"
+    app:layout_constraintTop_toTopOf="@+id/view3" />
 
   <TextView
-      android:id="@+id/textView"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/hi_i_am_ria"
-      android:textSize="@dimen/_25sdp"
-      app:layout_constraintEnd_toStartOf="@+id/endGuideline"
-      app:layout_constraintStart_toStartOf="@+id/startGuideline"
-      app:layout_constraintTop_toBottomOf="@+id/imageView" />
+    android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/hi_i_am_ria"
+    android:textSize="@dimen/_25sdp"
+    app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+    app:layout_constraintStart_toStartOf="@+id/startGuideline"
+    app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
   <TextView
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/_20sdp"
-      android:layout_marginTop="@dimen/_10sdp"
-      android:layout_marginEnd="@dimen/_20sdp"
-      android:gravity="center"
-      android:text="@string/i_will_help_you_setup_and_manage_your_digital_business_on_boost_let_s_get_start_by_selecting_the_category_of_your_business"
-      android:textSize="@dimen/_15sdp"
-      app:layout_constraintEnd_toStartOf="@+id/endGuideline"
-      app:layout_constraintStart_toStartOf="@+id/startGuideline"
-      app:layout_constraintTop_toBottomOf="@id/textView" />
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_20sdp"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_20sdp"
+    android:gravity="center"
+    android:text="@string/i_will_help_you_setup_and_manage_your_digital_business_on_boost_let_s_get_start_by_selecting_the_category_of_your_business"
+    android:textSize="@dimen/_15sdp"
+    app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+    app:layout_constraintStart_toStartOf="@+id/startGuideline"
+    app:layout_constraintTop_toBottomOf="@id/textView" />
 
   <LinearLayout
-      android:id="@+id/set_up_business_profile"
-      style="@style/ConfirmationScreen"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/_16sdp"
-      android:paddingStart="@dimen/_20sdp"
-      android:paddingEnd="@dimen/_20sdp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="@id/endGuideline"
-      app:layout_constraintStart_toStartOf="@id/startGuideline">
+    android:id="@+id/set_up_business_profile"
+    style="@style/ConfirmationScreen"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_16sdp"
+    android:paddingStart="@dimen/_20sdp"
+    android:paddingEnd="@dimen/_20sdp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="@id/endGuideline"
+    app:layout_constraintStart_toStartOf="@id/startGuideline">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/create_account_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_5sdp"
-        android:fontFamily="@font/open_sans_bold"
-        android:text="@string/setup_business_profile"
-        android:textColor="@color/white"
-        app:textAllCaps="false" />
+      android:id="@+id/create_account_button"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/_5sdp"
+      android:fontFamily="@font/bold"
+      android:text="@string/setup_business_profile"
+      android:textColor="@color/white"
+      app:textAllCaps="false" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_arrow_white" />
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_arrow_white" />
   </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

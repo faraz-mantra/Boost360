@@ -4,21 +4,21 @@
       "type": "DOC",
       "action_item": [
         {
-          "title": "Service Catalogue",
+          "title": "Service catalogue",
           "desc": "Add and manage services you will be providing to your patients & customers. This will make it easier for patients to schedule an appointment.",
           "type": "service_product_catalogue",
           "isLock": false,
           "premiumCode": ""
         },
         {
-          "title": "Updates & Health Tips",
+          "title": "Updates & Health tips",
           "desc": "Add updates like health tips, procedure details, offers, news etc. This is the information patients search online.",
           "type": "latest_update_tips",
           "isLock": false,
           "premiumCode": ""
         },
         {
-          "title": "All Images",
+          "title": "All images",
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
@@ -39,7 +39,7 @@
 //          "premiumCode": ""
 //        },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
           "isLock": false,
@@ -51,7 +51,7 @@
       "type": "HOS",
       "action_item": [
         {
-          "title": "Service Catalogue",
+          "title": "Service catalogue",
           "desc": "Add and manage services you will be providing to your patients & customers. This will make it easier for patients to schedule an appointment.",
           "type": "service_product_catalogue",
           "isLock": false,
@@ -65,14 +65,14 @@
 //          "premiumCode": ""
 //        },
         {
-          "title": "Updates & Health Tips",
+          "title": "Updates & Health tips",
           "desc": "Add updates like health tips, procedure details, offers, news etc. This is the information patients search online.",
           "type": "latest_update_tips",
           "isLock": false,
           "premiumCode": ""
         },
         {
-          "title": "All Images",
+          "title": "All images",
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
@@ -86,7 +86,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
           "isLock": false,
@@ -98,7 +98,7 @@
       "type": "RTL",
       "action_item": [
         {
-          "title": "Product Catalogue",
+          "title": "Product catalogue",
           "desc": "Add and manage products on your website catalogue. This will make it easier for customers to browse and order online.",
           "type": "service_product_catalogue",
           "isLock": false,
@@ -119,7 +119,7 @@
           "premiumCode": ""
         },
         {
-          "title": "All Images",
+          "title": "All images",
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
@@ -133,7 +133,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
           "isLock": false,
@@ -145,7 +145,7 @@
       "type": "EDU",
       "action_item": [
         {
-          "title": "Course Catalogue",
+          "title": "Course catalogue",
           "desc": "Add and manage courses on your website catalogue. This will make it easier for students to browse and request admission online.",
           "type": "service_product_catalogue",
           "isLock": false,
@@ -166,7 +166,7 @@
           "premiumCode": ""
         },
         {
-          "title": "All Images",
+          "title": "All images",
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
@@ -180,14 +180,14 @@
           "premiumCode": ""
         },
         {
-          "title": "Toppers of Institute",
+          "title": "Toppers of institute",
           "desc": "Showcase your top students with their testimonials on your website.",
           "type": "toppers_institute",
           "isLock": false,
           "premiumCode": "OUR-TOPPERS"
         },
         {
-          "title": "Upcoming Batches",
+          "title": "Upcoming batches",
           "desc": "Add all upcoming courses and classes in advance. This will help get admissions in advance.",
           "type": "upcoming_batches",
           "isLock": false,
@@ -201,7 +201,7 @@
           "premiumCode": "FACULTY"
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
           "isLock": false,
@@ -213,7 +213,7 @@
       "type": "HOT",
       "action_item": [
         {
-          "title": "Room Catalogue",
+          "title": "Room catalogue",
           "desc": "Add your different room types to enable customers to book online.",
           "type": "service_product_catalogue",
           "isLock": false,
@@ -234,7 +234,7 @@
           "premiumCode": ""
         },
         {
-          "title": "All Images",
+          "title": "All images",
           "desc": "Upload and manage all your website images in one place. Improve engagement on your website by adding images regularly.",
           "type": "all_images",
           "isLock": false,
@@ -248,7 +248,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Page",
+          "title": "Custom page",
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
           "isLock": false,
@@ -262,14 +262,14 @@
           "premiumCode": "PLACES-TO-LOOK-AROUND"
         },
         {
-          "title": "Tripadviser Ratings",
+          "title": "Tripadviser ratings",
           "desc": "Add your Tripadvisor reviews on your website to improve trust.",
           "type": "trip_adviser_ratings",
           "isLock": false,
           "premiumCode": "TRIPADVISOR-REVIEWS"
         },
         {
-          "title": "Seasonal Offers",
+          "title": "Seasonal offers",
           "desc": "Add seasonal offers to increase your room booking rates.",
           "type": "seasonal_offers",
           "isLock": false,
@@ -281,7 +281,7 @@
       "type": "MFG",
       "action_item": [
         {
-          "title": "Product Catalogue",
+          "title": "Product catalogue",
           "desc": "Add and manage products on your website catalogue. This will make it easier for customers to browse and order online.",
           "type": "service_product_catalogue",
           "isLock": false,
@@ -302,7 +302,7 @@
           "premiumCode": ""
         },
         {
-          "title": "All Images",
+          "title": "All images",
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
@@ -323,14 +323,14 @@
           "premiumCode": ""
         },
         {
-          "title": "Unlimited Digital Brochures",
+          "title": "Unlimited digital brochures",
           "desc": "Upload and share brochures, product specifications or other downloadable documents with your customers.",
           "type": "unlimited_digital_brochures",
           "isLock": false,
           "premiumCode": "BROCHURE"
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
           "isLock": false,
@@ -342,7 +342,7 @@
       "type": "CAF",
       "action_item": [
         {
-          "title": "Food & Beverages Menu",
+          "title": "Food & Beverages menu",
           "desc": "Add and manage items on your digital menu. This will allow customers to browse and order online.",
           "type": "service_product_catalogue",
           "isLock": false,
@@ -363,7 +363,7 @@
           "premiumCode": ""
         },
         {
-          "title": "All Images",
+          "title": "All images",
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
@@ -377,7 +377,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
           "isLock": false,
@@ -389,7 +389,7 @@
       "type": "SVC",
       "action_item": [
         {
-          "title": "Service Catalogue",
+          "title": "Service catalogue",
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
           "type": "service_product_catalogue",
           "isLock": false,
@@ -410,7 +410,7 @@
           "premiumCode": ""
         },
         {
-          "title": "All Images",
+          "title": "All images",
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
@@ -424,7 +424,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
           "isLock": false,
@@ -436,7 +436,7 @@
       "type": "SAL",
       "action_item": [
         {
-          "title": "Service Catalogue",
+          "title": "Service catalogue",
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
           "type": "service_product_catalogue",
           "isLock": false,
@@ -457,7 +457,7 @@
           "premiumCode": ""
         },
         {
-          "title": "All Images",
+          "title": "All images",
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
@@ -471,7 +471,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
           "isLock": false,
@@ -483,7 +483,7 @@
       "type": "SPA",
       "action_item": [
         {
-          "title": "Service Catalogue",
+          "title": "Service catalogue",
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
           "type": "service_product_catalogue",
           "isLock": false,
@@ -497,14 +497,14 @@
 //          "premiumCode": ""
 //        },
         {
-          "title": "Latest Updates & Offers",
+          "title": "Latest updates & offers",
           "desc": "Add updates like new services, health & beauty tips, offers, events etc. This is the information customers search online.",
           "type": "latest_update_tips",
           "isLock": false,
           "premiumCode": ""
         },
         {
-          "title": "All Images",
+          "title": "All images",
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
           "isLock": false,
@@ -518,7 +518,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
           "isLock": false,

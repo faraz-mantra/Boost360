@@ -3,6 +3,7 @@ package com.boost.presignin.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -24,9 +25,13 @@ import com.framework.pref.clientId
 import com.framework.utils.ValidationUtils
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
+import android.widget.Toast
+
+import android.view.View.OnFocusChangeListener
 
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
+  private val TAG = "LoginFragment"
   private var resultLogin: VerificationRequestResult? = null
 
   companion object {
@@ -47,22 +52,32 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
   }
 
   override fun authTokenData(): AuthTokenDataItem? {
-    return if (resultLogin()?.authTokens.isNullOrEmpty().not()) resultLogin()?.authTokens!![0] else null
+    return if (resultLogin()?.authTokens.isNullOrEmpty().not()
+    ) resultLogin()?.authTokens!![0] else null
   }
 
   override fun onResume() {
     super.onResume()
-    Handler().postDelayed({ baseActivity.showKeyBoard(binding?.usernameEt) }, 300)
+    binding?.usernameEt?.post { baseActivity.showKeyBoard(binding?.usernameEt) }
   }
 
   override fun onCreateView() {
     super.onCreateView()
+    Log.i(TAG, "onCreateView: ")
     WebEngageController.trackEvent(PS_LOGIN_USERNAME_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.usernameEt?.onTextChanged { onDataChanged() }
     binding?.passEt?.onTextChanged { onDataChanged() }
-    setOnClickListener(binding?.forgotTv, binding?.loginBt, binding?.loginWithNumberBtn, binding?.helpTv)
+    setOnClickListener(
+      binding?.forgotTv,
+      binding?.loginBt,
+      binding?.loginWithNumberBtn,
+      binding?.helpTv
+    )
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener { goBack() }
+    binding?.passEt?.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
+      binding?.forgotTv?.setTextColor(if (hasFocus) getColor(R.color.colorAccentLight) else getColor(R.color.black_4a4a4a))
+    }
   }
 
   private fun goBack() {
@@ -74,11 +89,16 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
     when (v) {
       binding?.forgotTv -> {
         WebEngageController.trackEvent(PS_LOGIN_FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
-        navigator?.startActivity(LoginActivity::class.java, Bundle().apply { putInt(FRAGMENT_TYPE, FORGOT_FRAGMENT) })
+        navigator?.startActivity(
+          LoginActivity::class.java,
+          Bundle().apply { putInt(FRAGMENT_TYPE, FORGOT_FRAGMENT) })
       }
       binding?.loginBt -> {
         WebEngageController.trackEvent(PS_LOGIN_FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
-        loginApiVerify(binding?.usernameEt?.text?.toString()?.trim(), binding?.passEt?.text?.toString()?.trim())
+        loginApiVerify(
+          binding?.usernameEt?.text?.toString()?.trim(),
+          binding?.passEt?.text?.toString()?.trim()
+        )
       }
       binding?.loginWithNumberBtn -> {
         baseActivity.setResult(AppCompatActivity.RESULT_OK, Intent())
@@ -92,7 +112,8 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
   private fun loginApiVerify(userName: String?, password: String?) {
     showProgress()
-    viewModel?.verifyUserProfile(UserProfileVerificationRequest(loginKey = userName, loginSecret = password, clientId = clientId))?.observeOnce(viewLifecycleOwner, {
+    viewModel?.verifyUserProfile(
+      UserProfileVerificationRequest(loginKey = userName, loginSecret = password, clientId = clientId))?.observeOnce(viewLifecycleOwner, {
       val response = it as? VerificationRequestResult
       if (response?.isSuccess() == true && response.loginId.isNullOrEmpty().not() && response.authTokens.isNullOrEmpty().not()) {
         storeUserDetail(response)

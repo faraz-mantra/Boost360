@@ -51,7 +51,7 @@
       android:name=".ui.updatesBusiness.UpdateBusinessContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/UpdateTheme"
-      android:windowSoftInputMode="adjustPan" />
+      android:windowSoftInputMode="adjustResize" />
 
     <meta-data
       android:name="preloaded_fonts"

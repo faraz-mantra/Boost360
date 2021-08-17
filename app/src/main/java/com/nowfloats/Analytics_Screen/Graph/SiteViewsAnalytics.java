@@ -16,11 +16,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Key_Preferences;
@@ -54,7 +54,7 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analytics);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        CustomToolbar toolbar = (CustomToolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null){
 
@@ -70,13 +70,13 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
 
         switch (mVisitsType){
             case UNIQUE:
-                setTitle(getString(R.string.unique_visitors));
+                setTitle(getString(R.string.unique_visitors_n));
                 break;
             case TOTAL:
-                setTitle(getString(R.string.overall_visits));
+                setTitle(getString(R.string.overall_visits_n));
                 break;
             case MAP_VISITS:
-                setTitle(getString(R.string.map_visits));
+                setTitle(getString(R.string.map_visits_n));
                 break;
             default:
                 finish();

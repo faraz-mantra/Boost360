@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.WildFireApis;
 import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
@@ -48,7 +49,7 @@ public class WildFireAdsActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ads_wildfire);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        CustomToolbar toolbar = (CustomToolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null){
             setTitle("Inorganic");

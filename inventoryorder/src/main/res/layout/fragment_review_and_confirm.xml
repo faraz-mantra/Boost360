@@ -4,8 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   tools:context=".ui.appointmentSpa.create.ReviewAndConfirmFragment">
 
-  <androidx.core.widget.NestedScrollView
-    style="@style/match_match">
+  <androidx.core.widget.NestedScrollView style="@style/match_match">
 
     <androidx.appcompat.widget.LinearLayoutCompat
       style="@style/match_wrap"
@@ -109,8 +108,7 @@
               app:layout_constraintStart_toStartOf="@id/linear_service"
               app:layout_constraintTop_toBottomOf="@id/linear_service" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-              style="@style/wrap_wrap">
+            <androidx.constraintlayout.widget.ConstraintLayout style="@style/wrap_wrap">
 
               <View
                 android:layout_width="0dp"
@@ -190,15 +188,15 @@
               app:layout_constraintTop_toBottomOf="@id/linear_service" />
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/text_add"
-                style="@style/EditTextLabelStyle"
-                android:fontFamily="@font/semi_bold"
-                android:text="@string/add"
-                android:textColor="@color/orange"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/linear_service"
-                app:layout_constraintTop_toBottomOf="@id/linear_service"
-                app:textAllCaps="true" />
+              android:id="@+id/text_add"
+              style="@style/EditTextLabelStyle"
+              android:fontFamily="@font/semi_bold"
+              android:text="@string/add"
+              android:textColor="@color/colorAccentLight"
+              android:textSize="16sp"
+              app:layout_constraintStart_toStartOf="@id/linear_service"
+              app:layout_constraintTop_toBottomOf="@id/linear_service"
+              app:textAllCaps="false" />
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <androidx.appcompat.widget.LinearLayoutCompat
@@ -302,7 +300,7 @@
               android:includeFontPadding="false"
               android:maxLines="1"
               android:text="@string/collect_later"
-              android:textColor="@color/orange"
+              android:textColor="@color/colorAccentLight"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_1" />
           </androidx.appcompat.widget.LinearLayoutCompat>
@@ -331,8 +329,7 @@
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_2" />
 
-          <androidx.constraintlayout.widget.ConstraintLayout
-            style="@style/match_wrap">
+          <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_wrap">
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tv_name"
@@ -410,14 +407,14 @@
             android:textSize="12sp" />
 
           <com.framework.views.customViews.CustomButton
-              android:id="@+id/button_review_details"
-              style="@style/ButtonStyle.Rounded.Solid"
-              android:layout_width="match_parent"
-              android:layout_marginStart="@dimen/size_8"
-              android:layout_marginTop="@dimen/size_15"
-              android:layout_marginEnd="@dimen/size_5"
-              android:layout_marginBottom="@dimen/size_20"
-              android:text="@string/confirm_appointment"/>
+            android:id="@+id/button_review_details"
+            style="@style/ButtonStyle.Rounded.Solid"
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/size_8"
+            android:layout_marginTop="@dimen/size_15"
+            android:layout_marginEnd="@dimen/size_5"
+            android:layout_marginBottom="@dimen/size_20"
+            android:text="@string/confirm_appointment" />
         </androidx.appcompat.widget.LinearLayoutCompat>
       </androidx.cardview.widget.CardView>
     </androidx.appcompat.widget.LinearLayoutCompat>

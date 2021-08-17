@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:clickable="true"
-    android:focusable="true">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/white"
+  android:clickable="true"
+  android:focusable="true"
+  android:orientation="vertical">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/new_custome_app_bar" />
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+  <include
+    android:id="@+id/app_bar"
+    layout="@layout/new_custome_app_bar" />
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
 
-    <View
+      <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_150sdp"
         android:background="?attr/colorPrimary"
@@ -27,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+      <LinearLayout
         android:id="@+id/secondary_layout_one"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,32 +43,32 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            app:srcCompat="@drawable/ic_custome_domain" />
+          android:layout_width="@dimen/_40sdp"
+          android:layout_height="@dimen/_40sdp"
+          app:srcCompat="@drawable/ic_custome_domain" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:gravity="center"
-            android:text="Domain is a great first step towards building your brand on web."
-            android:textSize="@dimen/_15sdp" />
-    </LinearLayout>
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/_10sdp"
+          android:gravity="center"
+          android:text="@string/domain_is_a_great_first_step_towards_building_your_brand_on_web_n"
+          android:textSize="@dimen/_15sdp" />
+      </LinearLayout>
 
-    <TextView
+      <TextView
         android:id="@+id/dummy_inst"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_30sdp"
+        android:gravity="center"
         android:text="@string/custome_domain_instruction"
         android:textSize="@dimen/_12sdp"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/secondary_layout_one" />
 
-    <TextView
+      <TextView
         android:id="@+id/existdomain_btn_proceed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,15 +79,15 @@
         android:background="@drawable/rounded_corner_button"
         android:gravity="center"
         android:padding="8dp"
-        android:text="have an existing domain"
-        android:textAllCaps="true"
-        android:textColor="@drawable/yellow_btn_hover_text_color"
+        android:text="@string/have_an_existing_domain_n"
+        android:textAllCaps="false"
         android:textSize="18sp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dummy_inst" />
 
-    <LinearLayout
+      <LinearLayout
         android:id="@+id/or_dummy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -97,30 +98,30 @@
         app:layout_constraintTop_toBottomOf="@id/existdomain_btn_proceed">
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_3sdp"
-            android:layout_marginTop="@dimen/_1sdp"
-            android:layout_marginEnd="@dimen/_1sdp"
-            android:layout_weight="1"
-            android:background="@drawable/dotted_line" />
+          android:layout_width="0dp"
+          android:layout_height="@dimen/_3sdp"
+          android:layout_marginTop="@dimen/_1sdp"
+          android:layout_marginEnd="@dimen/_1sdp"
+          android:layout_weight="1"
+          android:background="@drawable/dotted_line" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="--- or ---"
-            android:textSize="@dimen/_15sdp" />
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/or_n"
+          android:textSize="@dimen/_15sdp" />
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_3sdp"
-            android:layout_marginStart="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_1sdp"
-            android:layout_weight="1"
-            android:background="@drawable/dotted_line" />
-    </LinearLayout>
+          android:layout_width="0dp"
+          android:layout_height="@dimen/_3sdp"
+          android:layout_marginStart="@dimen/_1sdp"
+          android:layout_marginTop="@dimen/_1sdp"
+          android:layout_weight="1"
+          android:background="@drawable/dotted_line" />
+      </LinearLayout>
 
 
-    <TextView
+      <TextView
         android:id="@+id/newdomain_btn_proceed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -129,18 +130,18 @@
         android:layout_marginEnd="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_15sdp"
         android:background="@drawable/feature_deals_click_effect"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
-        android:text="book a new domain"
-        android:textAllCaps="true"
-        android:textColor="@color/app_text_yellow"
+        android:text="@string/book_a_new_domain_n"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccentLight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/or_dummy" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+  </ScrollView>
 
 </LinearLayout>

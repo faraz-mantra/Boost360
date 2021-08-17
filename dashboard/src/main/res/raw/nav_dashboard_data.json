@@ -14,7 +14,7 @@
       "isNewBtnShow": false,
       "isUpLineShow": true,
       "navType": "NAV_DIGITAL_CHANNEL",
-      "title": "My Digital Channels"
+      "title": "My digital channels"
     },
 //    {
 //      "isBottomLineShow": true,
@@ -71,7 +71,7 @@
       "isNewBtnShow": false,
       "isUpLineShow": false,
       "navType": "NAV_BOOST_KEYBOARD",
-      "title": "Boost Keyboard"
+      "title": "Boost keyboard"
     },
     {
       "isBottomLineShow": false,
@@ -95,7 +95,7 @@
       "isNewBtnShow": false,
       "isUpLineShow": false,
       "navType": "NAV_ABOUT_BOOST",
-      "title": "About Boost"
+      "title": "About boost"
     },
     {
       "isBottomLineShow": false,

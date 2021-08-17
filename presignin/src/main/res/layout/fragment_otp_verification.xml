@@ -35,6 +35,7 @@
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/subheading"
       style="@style/psn_subheading_style"
+      android:layout_marginTop="@dimen/size_4"
       android:text="@string/code_sent_hint"
       app:layout_constraintTop_toBottomOf="@id/title"
       tools:ignore="MissingConstraints" />

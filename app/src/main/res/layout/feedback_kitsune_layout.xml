@@ -1,149 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/primaryColor">
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical"
+      android:gravity="center_horizontal"
+      android:text="@string/feedback"
+      android:textColor="@color/white"
+      android:textSize="20sp"
+       android:fontFamily="@font/semi_bold" />
+  </LinearLayout>
+
+  <com.nowfloats.CustomWidget.roboto_lt_24_212121
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:text="@string/thats_ok_it_happens_tell_us_why" />
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:orientation="vertical">
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:background="@color/primaryColor"
-        android:layout_height="40dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/feedback"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:gravity="center_horizontal"
-            android:layout_gravity="center_vertical"
-            android:textStyle="bold"/>
-    </LinearLayout>
-    <com.nowfloats.CustomWidget.roboto_lt_24_212121
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp">
+
+      <CheckBox
+        android:id="@+id/cb_old_theme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:theme="@style/MyCheckBox" />
+
+      <com.nowfloats.CustomWidget.roboto_lt_24_212121
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginStart="10dp"
-        android:text="@string/thats_ok_it_happens_tell_us_why"/>
+        android:text="@string/prefered_old_theme" />
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="5dp">
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <CheckBox
-                android:id="@+id/cb_old_theme"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:theme="@style/MyCheckBox"/>
-            <com.nowfloats.CustomWidget.roboto_lt_24_212121
-                android:layout_marginStart="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/prefered_old_theme"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <CheckBox
-                android:id="@+id/cb_customer_old_theme"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:theme="@style/MyCheckBox"/>
-            <com.nowfloats.CustomWidget.roboto_lt_24_212121
-                android:layout_marginStart="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/my_customer_prefer_old_theme"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <CheckBox
-                android:id="@+id/cb_widgets_old_theme"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:theme="@style/MyCheckBox"/>
-            <com.nowfloats.CustomWidget.roboto_lt_24_212121
-                android:layout_marginStart="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/some_widget_i_donot_know_in_old_theme"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <CheckBox
-                android:id="@+id/cb_not_paid_for"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:theme="@style/MyCheckBox"/>
-            <com.nowfloats.CustomWidget.roboto_lt_24_212121
-                android:layout_marginStart="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/its_not_what_i_paid_for"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <CheckBox
-                android:id="@+id/cb_other_reasons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:theme="@style/MyCheckBox"/>
-            <com.nowfloats.CustomWidget.roboto_lt_24_212121
-                android:layout_marginStart="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/other_reasons"/>
-        </LinearLayout>
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp">
 
-    </LinearLayout>
-    <EditText
-        android:id="@+id/et_other_reason"
-        android:layout_marginStart="5dp"
-        android:visibility="gone"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/enter_the_reason"
-        android:background="@drawable/edit_text_style"
-        android:layout_width="match_parent"
+      <CheckBox
+        android:id="@+id/cb_customer_old_theme"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:lines="3"/>
+        android:theme="@style/MyCheckBox" />
+
+      <com.nowfloats.CustomWidget.roboto_lt_24_212121
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="10dp"
+        android:text="@string/my_customer_prefer_old_theme" />
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <Button
-            android:id="@+id/btn_submit"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:background="@color/primaryColor"
-            android:text="@string/submit"
-            android:textColor="@color/white"
-            android:layout_weight="1"/>
-        <LinearLayout
-            android:layout_width="2dp"
-            android:layout_height="50dp" />
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:background="@color/primaryColor"
-            android:text="@string/cancel_in_capital"
-            android:textColor="@color/white"
-            android:layout_weight="1"/>
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp">
+
+      <CheckBox
+        android:id="@+id/cb_widgets_old_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/MyCheckBox" />
+
+      <com.nowfloats.CustomWidget.roboto_lt_24_212121
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="10dp"
+        android:text="@string/some_widget_i_donot_know_in_old_theme" />
     </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp">
+
+      <CheckBox
+        android:id="@+id/cb_not_paid_for"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/MyCheckBox" />
+
+      <com.nowfloats.CustomWidget.roboto_lt_24_212121
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="10dp"
+        android:text="@string/its_not_what_i_paid_for" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp">
+
+      <CheckBox
+        android:id="@+id/cb_other_reasons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/MyCheckBox" />
+
+      <com.nowfloats.CustomWidget.roboto_lt_24_212121
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="10dp"
+        android:text="@string/other_reasons" />
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <EditText
+    android:id="@+id/et_other_reason"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="5dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="5dp"
+    android:background="@drawable/edit_text_style"
+    android:hint="@string/enter_the_reason"
+    android:lines="3"
+    android:visibility="gone" />
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginTop="15dp">
+
+    <Button
+      android:id="@+id/btn_submit"
+      android:layout_width="0dp"
+      android:layout_height="50dp"
+      android:layout_weight="1"
+      android:background="@color/primaryColor"
+      android:text="@string/submit"
+      android:textColor="@color/white" />
+
+    <LinearLayout
+      android:layout_width="2dp"
+      android:layout_height="50dp" />
+
+    <Button
+      android:id="@+id/btn_cancel"
+      android:layout_width="0dp"
+      android:layout_height="50dp"
+      android:layout_weight="1"
+      android:background="@color/primaryColor"
+      android:text="@string/cancel_in_capital"
+      android:textColor="@color/white" />
+  </LinearLayout>
 
 </LinearLayout>

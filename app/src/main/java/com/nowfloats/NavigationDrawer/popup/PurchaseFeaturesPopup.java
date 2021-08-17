@@ -93,7 +93,7 @@ public class PurchaseFeaturesPopup extends DialogFragment {
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
+            intent.putExtra("email", session.getUserProfileEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }

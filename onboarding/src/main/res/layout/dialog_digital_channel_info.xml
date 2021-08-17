@@ -103,13 +103,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:clickable="true"
-            android:visibility="gone"
             android:focusable="true"
             android:gravity="center_horizontal"
             android:padding="@dimen/size_8"
-            app:textAllCaps="true"
             android:text="@string/not_opted_for_boost_alerts"
             android:textColor="@color/scarlet"
+            android:visibility="gone"
+            app:textAllCaps="false"
             app:textType="SUBHEADING_1" />
 
           <com.framework.views.customViews.CustomTextView

@@ -32,7 +32,7 @@
           android:paddingEnd="@dimen/size_28"
           android:paddingBottom="@dimen/size_14"
           android:text="@string/str_remove_item"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/red_F40000" />
       </LinearLayout>
     </androidx.cardview.widget.CardView>

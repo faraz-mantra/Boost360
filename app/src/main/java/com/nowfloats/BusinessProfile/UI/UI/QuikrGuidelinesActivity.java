@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.NavigationDrawer.Adapter.QuikrAdapter;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
@@ -25,7 +26,7 @@ public class QuikrGuidelinesActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guidelines);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        CustomToolbar  toolbar = (CustomToolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         MixPanelController.track(Key_Preferences.QUIKR_GUIDELINES_ACTIVITY,null);
         if(getSupportActionBar()!= null ){

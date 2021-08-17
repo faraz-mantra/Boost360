@@ -36,9 +36,9 @@
         android:layout_margin="@dimen/_10sdp"
         android:scaleType="centerCrop"
         app:cornerRadius="@dimen/_4sdp"
-        app:roundedCorners="all"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:roundedCorners="all"
         app:srcCompat="@drawable/ic_facebook_menu" />
 
       <LinearLayout
@@ -55,7 +55,7 @@
           android:id="@+id/username"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:textColor="#4A4A4A"
           android:textSize="@dimen/_15sdp"
           tools:text="Suchi" />
@@ -103,7 +103,7 @@
         android:id="@+id/review_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:textColor="#4A4A4A"
         android:textSize="@dimen/_15sdp"
         tools:text="Best Product ever!" />
@@ -140,25 +140,26 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:padding="@dimen/_10sdp"
-        android:text="@string/edit"
+      android:text="@string/edit"
       android:textSize="@dimen/_12sdp" />
+
     <TextView
       android:id="@+id/share_option"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:padding="@dimen/_10sdp"
-        android:text="@string/share"
+      android:text="@string/share"
       android:textSize="@dimen/_12sdp" />
 
-        <TextView
-            android:id="@+id/delete_option"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/delete_"
-            android:padding="@dimen/_10sdp"
-            android:textAllCaps="true"
-            android:textColor="@color/red"
-            android:textSize="@dimen/_12sdp"/>
+    <TextView
+      android:id="@+id/delete_option"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="@dimen/_10sdp"
+      android:text="@string/delete_"
+      android:textAllCaps="false"
+      android:textColor="@color/red"
+      android:textSize="@dimen/_12sdp" />
 
-    </LinearLayout>
+  </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

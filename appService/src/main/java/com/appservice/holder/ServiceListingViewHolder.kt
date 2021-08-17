@@ -12,6 +12,7 @@ import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 
 class ServiceListingViewHolder(binding: RecyclerItemServiceListingBinding) : AppBaseRecyclerViewHolder<RecyclerItemServiceListingBinding>(binding) {
+
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = (item as? ItemsItem) ?: return
@@ -26,10 +27,18 @@ class ServiceListingViewHolder(binding: RecyclerItemServiceListingBinding) : App
     binding.labelBasePrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     binding.labelBasePrice.text = "${data.currency ?: "INR"} ${data.price}"
 
-    apply { activity?.glideLoad(binding.cardThumbnail, data.tileImage, R.drawable.placeholder_image_n) }
-    binding.root.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.SERVICE_ITEM_CLICK.ordinal) }
-    binding.shareData.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.SERVICE_DATA_SHARE_CLICK.ordinal) }
-    binding.shareWhatsapp.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.SERVICE_WHATS_APP_SHARE.ordinal) }
+    apply {
+      activity?.glideLoad(binding.cardThumbnail, data.tileImage, R.drawable.placeholder_image_n)
+    }
+    binding.root.setOnClickListener {
+      listener?.onItemClick(position, data, RecyclerViewActionType.SERVICE_ITEM_CLICK.ordinal)
+    }
+    binding.shareData.setOnClickListener {
+      listener?.onItemClick(position, data, RecyclerViewActionType.SERVICE_DATA_SHARE_CLICK.ordinal)
+    }
+    binding.shareWhatsapp.setOnClickListener {
+      listener?.onItemClick(position, data, RecyclerViewActionType.SERVICE_WHATS_APP_SHARE.ordinal)
+    }
   }
 
 }

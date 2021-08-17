@@ -1,137 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#EFEFEF"
+  android:clickable="true"
+  android:focusable="true"
+  android:orientation="vertical">
+
+  <include
+    android:id="@+id/app_bar"
+    layout="@layout/new_custome_app_bar" />
+
+  <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#EFEFEF"
-    android:clickable="true"
-    android:focusable="true"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/new_custome_app_bar" />
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="@dimen/_20sdp">
 
-    <ScrollView
+      <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/_20sdp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Enter the domain you own and select an option to let us know how you want you your domain to be mapped to this Boost website." />
+        android:layout_height="wrap_content"
+        android:text="Enter the domain you own and select an option to let us know how you want you your domain to be mapped to this Boost website." />
 
 
-            <EditText
-                android:id="@+id/domain_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/EditTextCustomeStyle"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:background="@drawable/edittext_bg_elevated"
-                android:elevation="@dimen/_2sdp"
-                android:inputType="textEmailAddress"
-                android:hint="Write your domain name..."
-                android:textSize="@dimen/_12sdp" />
+      <EditText
+        android:id="@+id/domain_name"
+        style="@style/EditTextCustomeStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="0dp"
+        android:background="@drawable/edittext_bg_elevated"
+        android:elevation="@dimen/_2sdp"
+        android:hint="Write your domain name..."
+        android:inputType="textEmailAddress"
+        android:textSize="@dimen/_12sdp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:background="@drawable/edittext_bg_elevated"
-                android:gravity="center_vertical"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_10sdp">
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/edittext_bg_elevated"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/_5sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_10sdp">
 
-                <RadioButton
-                    android:id="@+id/radio_button1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_5sdp" />
+        <RadioButton
+          android:id="@+id/radio_button1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/_5sdp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Make above domain as my Boost website’s web address/URL." />
-            </LinearLayout>
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Make above domain as my Boost website’s web address/URL." />
+      </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:background="@drawable/edittext_bg_elevated"
-                android:gravity="center_vertical"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_10sdp">
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/edittext_bg_elevated"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/_5sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_10sdp">
 
-                <RadioButton
-                    android:id="@+id/radio_button2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_5sdp" />
+        <RadioButton
+          android:id="@+id/radio_button2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/_5sdp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Make Boost website as a subdomain of this domain.(e.g. shop.yourdomain.com)" />
-            </LinearLayout>
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Make Boost website as a subdomain of this domain.(e.g. shop.yourdomain.com)" />
+      </LinearLayout>
 
-            <EditText
-                android:id="@+id/subdomain_description"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:background="@drawable/edittext_bg_elevated"
-                android:gravity="top"
-                android:hint="Write your domain name..."
-                android:padding="@dimen/_10sdp"
-                android:text="I would like to map my existing domain to my Boost website TANZO.GETBOOST360.COM Please reach out to me to discuss this in detail."
-                android:textSize="@dimen/_12sdp" />
+      <EditText
+        android:id="@+id/subdomain_description"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/edittext_bg_elevated"
+        android:gravity="top"
+        android:hint="Write your domain name..."
+        android:padding="@dimen/_10sdp"
+        android:text="I would like to map my existing domain to my Boost website TANZO.GETBOOST360.COM Please reach out to me to discuss this in detail."
+        android:textSize="@dimen/_12sdp" />
 
-            <TextView
-                android:id="@+id/confirm_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:background="@drawable/orange_button_click_effect"
-                android:elevation="@dimen/_2sdp"
-                android:fontFamily="@font/open_sans_semibold"
-                android:gravity="center"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_10sdp"
-                android:text="Confirm"
-                android:textAllCaps="true"
-                android:textColor="@color/white" />
+      <TextView
+        android:id="@+id/confirm_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@drawable/orange_button_click_effect"
+        android:elevation="@dimen/_2sdp"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:text="Confirm"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
 
 
-            <TextView
-                android:id="@+id/cancel_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp"
-                android:background="@drawable/order_grey_button_click_effect"
-                android:elevation="@dimen/_2sdp"
-                android:fontFamily="@font/open_sans_semibold"
-                android:gravity="center"
-                android:padding="@dimen/_10sdp"
-                android:text="back"
-                android:textAllCaps="true"
-                android:textColor="@color/common_text_color" />
-        </LinearLayout>
-    </ScrollView>
+      <TextView
+        android:id="@+id/cancel_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/order_grey_button_click_effect"
+        android:elevation="@dimen/_2sdp"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="Back"
+        android:textAllCaps="false"
+        android:textColor="@color/common_text_color" />
+    </LinearLayout>
+  </ScrollView>
 
 </LinearLayout>

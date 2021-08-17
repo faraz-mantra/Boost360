@@ -1,699 +1,704 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fillViewport="true">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:fillViewport="true">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/screen_bg"
+    android:orientation="vertical">
+
+    <FrameLayout
+      android:id="@+id/flPricingPlans"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_cell_height"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+          android:layout_width="@dimen/icon_size"
+          android:layout_height="@dimen/textview_height_business_profile"
+          android:layout_marginStart="@dimen/icon_left_margin"
+          android:layout_marginEnd="@dimen/icon_right_margin"
+          android:padding="5dp"
+          android:scaleType="fitCenter"
+          android:src="@drawable/sidepanel_store" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/store"
+          android:textColor="@color/cell_text_color"
+          android:textSize="@dimen/cell_text_size" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:gravity="end"
+          android:visibility="gone">
+
+          <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="2dp"
+            app:cardBackgroundColor="@color/primaryColor"
+            app:cardCornerRadius="2dp"
+            app:contentPaddingBottom="2dp"
+            app:contentPaddingLeft="10dp"
+            app:contentPaddingRight="10dp"
+            app:contentPaddingTop="2dp">
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/single_row_card_upgrade_text"
+              android:textColor="#ffffff"
+              android:textSize="15sp"
+               android:fontFamily="@font/semi_bold" />
+          </android.support.v7.widget.CardView>
+        </LinearLayout>
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal">
+
+      </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+      android:id="@+id/account_info_Layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_cell_height"
+        android:layout_marginTop="1dp"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+          android:layout_width="@dimen/icon_size"
+          android:layout_height="@dimen/textview_height_business_profile"
+          android:layout_marginStart="@dimen/icon_left_margin"
+          android:layout_marginEnd="@dimen/icon_right_margin"
+          android:padding="5dp"
+          android:scaleType="fitCenter"
+          android:src="@drawable/account_info_icon" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/account_detail"
+          android:textColor="@color/cell_text_color"
+          android:textSize="@dimen/cell_text_size" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal">
+
+      </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+      android:id="@+id/fl_site_appearance"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="1dp"
+      android:visibility="gone">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_cell_height"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+          android:layout_width="@dimen/icon_size"
+          android:layout_height="@dimen/textview_height_business_profile"
+          android:layout_marginStart="@dimen/icon_left_margin"
+          android:layout_marginEnd="@dimen/icon_right_margin"
+          android:padding="5dp"
+          android:scaleType="fitCenter"
+          android:src="@drawable/site_appearance"
+          android:tint="#6f6f6f" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/side_panel_site_appearance"
+          android:textColor="@color/cell_text_color"
+          android:textSize="@dimen/cell_text_size" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:gravity="end">
+
+          <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="2dp"
+            app:cardBackgroundColor="@color/primaryColor"
+            app:cardCornerRadius="2dp"
+            app:contentPaddingBottom="2dp"
+            app:contentPaddingLeft="10dp"
+            app:contentPaddingRight="10dp"
+            app:contentPaddingTop="2dp">
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/new_in_capital"
+              android:textColor="#ffffff"
+              android:textSize="15sp"
+               android:fontFamily="@font/semi_bold" />
+          </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal">
+
+      </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+      android:id="@+id/about_us_Layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_cell_height"
+        android:layout_marginTop="1dp"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:id="@+id/fifthRow_ImageView"
+          android:layout_width="@dimen/icon_size"
+          android:layout_height="@dimen/icon_size"
+          android:layout_marginStart="@dimen/icon_left_margin"
+          android:layout_marginEnd="@dimen/icon_right_margin"
+          android:padding="5dp"
+          android:scaleType="fitXY"
+          android:src="@drawable/icon_info" />
+
+        <TextView
+          android:id="@+id/fifthRow_TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/setting_about_us"
+          android:textColor="@color/cell_text_color"
+          android:textSize="@dimen/cell_text_size" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal" />
+    </FrameLayout>
+
+    <FrameLayout
+      android:id="@+id/faq_Layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="visible">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_cell_height"
+        android:layout_marginTop="1dp"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:id="@+id/faq_ImageView"
+          android:layout_width="@dimen/icon_size"
+          android:layout_height="@dimen/icon_size"
+          android:layout_marginStart="@dimen/icon_left_margin"
+          android:layout_marginEnd="@dimen/icon_right_margin"
+          android:padding="5dp"
+          android:scaleType="fitXY"
+          android:src="@drawable/faq" />
+
+        <TextView
+          android:id="@+id/faq_TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/faqs"
+          android:textColor="@color/cell_text_color"
+          android:textSize="@dimen/cell_text_size" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal" />
+    </FrameLayout>
+
+    <FrameLayout
+      android:id="@+id/chatfeedback_Layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_cell_height"
+        android:layout_marginTop="1dp"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:id="@+id/chatfeedback_ImageView"
+          android:layout_width="@dimen/icon_size"
+          android:layout_height="@dimen/icon_size"
+          android:layout_marginStart="@dimen/icon_left_margin"
+          android:layout_marginEnd="@dimen/icon_right_margin"
+          android:padding="5dp"
+          android:scaleType="fitXY"
+          android:src="@drawable/ic_feedback_chat" />
+
+
+        <TextView
+          android:id="@+id/chatsecondRow_TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Feedback"
+          android:textColor="@color/cell_text_color"
+          android:textSize="@dimen/cell_text_size" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal" />
+    </FrameLayout>
+
+    <FrameLayout
+      android:id="@+id/feedback_Layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_cell_height"
+        android:layout_marginTop="1dp"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:id="@+id/feedback_ImageView"
+          android:layout_width="@dimen/icon_size"
+          android:layout_height="@dimen/icon_size"
+          android:layout_marginStart="@dimen/icon_left_margin"
+          android:layout_marginEnd="@dimen/icon_right_margin"
+          android:padding="5dp"
+          android:scaleType="fitXY"
+          android:src="@drawable/icon_feedback" />
+
+
+        <TextView
+          android:id="@+id/secondRow_TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/feedback"
+          android:textColor="@color/cell_text_color"
+          android:textSize="@dimen/cell_text_size" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal" />
+    </FrameLayout>
+
+
+    <FrameLayout
+      android:id="@+id/like_us_Layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_cell_height"
+        android:layout_marginTop="1dp"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:id="@+id/like_us_ImageView"
+          android:layout_width="@dimen/icon_size"
+          android:layout_height="@dimen/icon_size"
+          android:layout_marginStart="@dimen/icon_left_margin"
+          android:layout_marginEnd="@dimen/icon_right_margin"
+          android:padding="5dp"
+          android:scaleType="fitXY"
+          android:src="@drawable/icon_fb" />
+
+        <TextView
+          android:id="@+id/like_us_TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/Setting_like_us_on_facebook"
+          android:textColor="@color/cell_text_color"
+          android:textSize="@dimen/cell_text_size" />
+
+      </LinearLayout>
+
+      <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal" />
+    </FrameLayout>
+
+    <FrameLayout
+      android:id="@+id/follow_us_twitter_Layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_cell_height"
+        android:layout_marginTop="1dp"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:id="@+id/like_us_twitter_ImageView"
+          android:layout_width="@dimen/icon_size"
+          android:layout_height="@dimen/icon_size"
+          android:layout_marginStart="@dimen/icon_left_margin"
+          android:layout_marginEnd="@dimen/icon_right_margin"
+          android:padding="5dp"
+          android:scaleType="fitXY"
+          android:src="@drawable/icon_tweet" />
+
+        <TextView
+          android:id="@+id/like_us_twitter_TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/Setting_follow_us_on_twitter"
+          android:textColor="@color/cell_text_color"
+          android:textSize="@dimen/cell_text_size" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal" />
+    </FrameLayout>
+
+    <FrameLayout
+      android:id="@+id/rate_us_Layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_cell_height"
+        android:layout_marginTop="1dp"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:id="@+id/rate_us_ImageView"
+          android:layout_width="@dimen/icon_size"
+          android:layout_height="@dimen/icon_size"
+          android:layout_marginStart="@dimen/icon_left_margin"
+          android:layout_marginEnd="@dimen/icon_right_margin"
+          android:padding="5dp"
+          android:scaleType="fitXY"
+          android:src="@drawable/icon_rateus" />
+
+        <TextView
+          android:id="@+id/rate_us_TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/setting_rate_us_on_play_store"
+          android:textColor="@color/cell_text_color"
+          android:textSize="@dimen/cell_text_size" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal" />
+    </FrameLayout>
+
+    <FrameLayout
+      android:id="@+id/terms_of_use_Layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_cell_height"
+        android:layout_marginTop="1dp"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:id="@+id/terms_of_use_ImageView"
+          android:layout_width="@dimen/icon_size"
+          android:layout_height="@dimen/icon_size"
+          android:layout_marginStart="@dimen/icon_left_margin"
+          android:layout_marginEnd="@dimen/icon_right_margin"
+          android:padding="5dp"
+          android:scaleType="fitXY"
+          android:src="@drawable/terms_of_use" />
+
+        <TextView
+          android:id="@+id/terms_of_use_TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/Setting_terms_of_use"
+          android:textColor="@color/cell_text_color"
+          android:textSize="@dimen/cell_text_size" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal" />
+    </FrameLayout>
+
+    <FrameLayout
+      android:id="@+id/privacy_policy_Layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_cell_height"
+        android:layout_marginTop="1dp"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:id="@+id/privacy_policy_ImageView"
+          android:layout_width="@dimen/icon_size"
+          android:layout_height="@dimen/icon_size"
+          android:layout_marginStart="@dimen/icon_left_margin"
+          android:layout_marginEnd="@dimen/icon_right_margin"
+          android:padding="5dp"
+          android:scaleType="fitXY"
+          android:src="@drawable/privacy_policy" />
+
+        <TextView
+          android:id="@+id/privacy_policy_TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/Setting_privacy_policy"
+          android:textColor="@color/cell_text_color"
+          android:textSize="@dimen/cell_text_size" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal" />
+    </FrameLayout>
+
+    <FrameLayout
+      android:id="@+id/change_password_Layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_cell_height"
+        android:layout_marginTop="1dp"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:id="@+id/firstrow_ImageView_ProfileV2"
+          android:layout_width="@dimen/icon_size"
+          android:layout_height="@dimen/textview_height_business_profile"
+          android:layout_marginStart="@dimen/icon_left_margin"
+          android:layout_marginEnd="@dimen/icon_right_margin"
+          android:padding="5dp"
+          android:scaleType="fitCenter"
+          android:src="@drawable/icon_change_password" />
+
+        <TextView
+          android:id="@+id/firstrow_TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/setting_change_pwd"
+          android:textColor="@color/cell_text_color"
+          android:textSize="@dimen/cell_text_size" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal">
+
+      </LinearLayout>
+    </FrameLayout>
+
+
+    <FrameLayout
+      android:id="@+id/logout_Layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settings_screen_cell_height"
+        android:layout_marginTop="1dp"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:id="@+id/logout_ImageView"
+          android:layout_width="@dimen/icon_size"
+          android:layout_height="@dimen/icon_size"
+          android:layout_marginStart="@dimen/icon_left_margin"
+          android:layout_marginEnd="@dimen/icon_right_margin"
+          android:padding="5dp"
+          android:scaleType="fitXY"
+          android:src="@drawable/icon_logout" />
+
+        <TextView
+          android:id="@+id/logout_TextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/setting_logout"
+          android:textColor="@color/cell_text_color"
+          android:textSize="@dimen/cell_text_size" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:orientation="horizontal" />
+    </FrameLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+      android:id="@+id/versionCodeName"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="40dp"
+      android:layout_marginBottom="15dp"
+      android:gravity="center_horizontal"
+      android:orientation="horizontal">
+
+      <com.nowfloats.CustomWidget.roboto_lt_36_565656
+
+        android:id="@+id/version_text"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="@string/version" />
+
+      <com.nowfloats.CustomWidget.roboto_lt_36_565656
+
+        android:id="@+id/version_name_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/screen_bg"
-        android:orientation="vertical" >
-        <FrameLayout
-            android:id="@+id/flPricingPlans"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_screen_cell_height"
-                android:background="@color/cell_background_color"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/textview_height_business_profile"
-                    android:layout_marginStart="@dimen/icon_left_margin"
-                    android:layout_marginEnd="@dimen/icon_right_margin"
-                    android:padding="5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/sidepanel_store" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/store"
-                    android:textColor="@color/cell_text_color"
-                    android:textSize="@dimen/cell_text_size" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="end">
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginEnd="10dp"
-                        app:cardBackgroundColor="@color/primaryColor"
-                        app:cardCornerRadius="2dp"
-                        app:contentPaddingBottom="2dp"
-                        app:contentPaddingLeft="10dp"
-                        app:contentPaddingRight="10dp"
-                        app:contentPaddingTop="2dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/single_row_card_upgrade_text"
-                            android:textColor="#ffffff"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-                    </android.support.v7.widget.CardView>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal">
-
-            </LinearLayout>
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/account_info_Layout"
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_screen_cell_height"
-                android:background="@color/cell_background_color"
-                android:orientation="horizontal"
-                android:visibility="visible"
-                android:layout_marginTop="1dp"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitCenter"
-                    android:layout_height="@dimen/textview_height_business_profile"
-                    android:src="@drawable/account_info_icon"
-                    android:layout_marginStart="@dimen/icon_left_margin"
-                    android:layout_marginEnd="@dimen/icon_right_margin"
-                    android:padding="5dp"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/cell_text_size"
-                    android:textColor="@color/cell_text_color"
-                    android:text="@string/account_detail" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal">
-
-            </LinearLayout>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/fl_site_appearance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="1dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_screen_cell_height"
-                android:background="@color/cell_background_color"
-                android:orientation="horizontal"
-                android:visibility="visible"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitCenter"
-                    android:tint="#6f6f6f"
-                    android:layout_height="@dimen/textview_height_business_profile"
-                    android:src="@drawable/site_appearance"
-                    android:layout_marginStart="@dimen/icon_left_margin"
-                    android:layout_marginEnd="@dimen/icon_right_margin"
-                    android:padding="5dp"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/cell_text_size"
-                    android:textColor="@color/cell_text_color"
-                    android:text="@string/side_panel_site_appearance" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="end">
-                    <android.support.v7.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardBackgroundColor="@color/primaryColor"
-                        app:contentPaddingTop="2dp"
-                        app:contentPaddingBottom="2dp"
-                        app:contentPaddingLeft="10dp"
-                        app:contentPaddingRight="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="2dp"
-                        app:cardCornerRadius="2dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="#ffffff"
-                            android:text="@string/new_in_capital"
-                            android:textStyle="bold"
-                            android:textSize="15sp" />
-                    </android.support.v7.widget.CardView>
-                </LinearLayout>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal">
-
-            </LinearLayout>
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/about_us_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_screen_cell_height"
-                android:background="@color/cell_background_color"
-                android:orientation="horizontal"
-                android:layout_marginTop="1dp"
-                android:gravity="center_vertical"
-                >
-
-                <ImageView
-                    android:id="@+id/fifthRow_ImageView"
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitXY"
-                    android:padding="5dp"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/icon_info"
-                    android:layout_marginStart="@dimen/icon_left_margin"
-                    android:layout_marginEnd="@dimen/icon_right_margin"
-                    />
-
-                <TextView
-                    android:id="@+id/fifthRow_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/cell_text_size"
-                    android:textColor="@color/cell_text_color"
-                    android:text="@string/setting_about_us" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal" />
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/faq_Layout"
-            android:layout_width="match_parent"
-            android:visibility="visible"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_screen_cell_height"
-                android:background="@color/cell_background_color"
-                android:orientation="horizontal"
-                android:layout_marginTop="1dp"
-                android:gravity="center_vertical"
-                >
-
-                <ImageView
-                    android:id="@+id/faq_ImageView"
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitXY"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/faq"
-                    android:padding="5dp"
-                    android:layout_marginStart="@dimen/icon_left_margin"
-                    android:layout_marginEnd="@dimen/icon_right_margin"
-                    />
-
-                <TextView
-                    android:id="@+id/faq_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/cell_text_size"
-                    android:textColor="@color/cell_text_color"
-                    android:text="@string/faqs" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:visibility="gone"
-            android:id="@+id/chatfeedback_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_screen_cell_height"
-                android:layout_marginTop="1dp"
-                android:background="@color/cell_background_color"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/chatfeedback_ImageView"
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/icon_size"
-                    android:layout_marginStart="@dimen/icon_left_margin"
-                    android:layout_marginEnd="@dimen/icon_right_margin"
-                    android:padding="5dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_feedback_chat" />
-
-
-                <TextView
-                    android:id="@+id/chatsecondRow_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Feedback"
-                    android:textColor="@color/cell_text_color"
-                    android:textSize="@dimen/cell_text_size" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal" />
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/feedback_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/settings_screen_cell_height"
-            android:background="@color/cell_background_color"
-            android:orientation="horizontal"
-            android:layout_marginTop="1dp"
-            android:gravity="center_vertical"
-            >
-
-            <ImageView
-                android:id="@+id/feedback_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/icon_feedback"
-                android:padding="5dp"
-                android:layout_marginStart="@dimen/icon_left_margin"
-                android:layout_marginEnd="@dimen/icon_right_margin"
-                />
-
-
-
-            <TextView
-                android:id="@+id/secondRow_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/feedback" />
-
-        </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal" />
-        </FrameLayout>
-
-
-        <FrameLayout
-            android:id="@+id/like_us_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/settings_screen_cell_height"
-            android:background="@color/cell_background_color"
-            android:orientation="horizontal"
-            android:layout_marginTop="1dp"
-            android:gravity="center_vertical"
-            >
-
-            <ImageView
-                android:id="@+id/like_us_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:padding="5dp"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/icon_fb"
-                android:layout_marginStart="@dimen/icon_left_margin"
-                android:layout_marginEnd="@dimen/icon_right_margin"
-                />
-
-            <TextView
-                android:id="@+id/like_us_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/Setting_like_us_on_facebook" />
-
-        </LinearLayout>
-
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal" />
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/follow_us_twitter_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_screen_cell_height"
-                android:background="@color/cell_background_color"
-                android:orientation="horizontal"
-                android:layout_marginTop="1dp"
-                android:gravity="center_vertical"
-                >
-
-                <ImageView
-                    android:id="@+id/like_us_twitter_ImageView"
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitXY"
-                    android:padding="5dp"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/icon_tweet"
-                    android:layout_marginStart="@dimen/icon_left_margin"
-                    android:layout_marginEnd="@dimen/icon_right_margin"
-                    />
-
-                <TextView
-                    android:id="@+id/like_us_twitter_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/cell_text_size"
-                    android:textColor="@color/cell_text_color"
-                    android:text="@string/Setting_follow_us_on_twitter" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal" />
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/rate_us_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_screen_cell_height"
-                android:background="@color/cell_background_color"
-                android:orientation="horizontal"
-                android:layout_marginTop="1dp"
-                android:gravity="center_vertical"
-                >
-
-                <ImageView
-                    android:id="@+id/rate_us_ImageView"
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitXY"
-                    android:padding="5dp"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/icon_rateus"
-                    android:layout_marginStart="@dimen/icon_left_margin"
-                    android:layout_marginEnd="@dimen/icon_right_margin"
-                    />
-
-                <TextView
-                    android:id="@+id/rate_us_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/cell_text_size"
-                    android:textColor="@color/cell_text_color"
-                    android:text="@string/setting_rate_us_on_play_store" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal" />
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/terms_of_use_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_screen_cell_height"
-                android:background="@color/cell_background_color"
-                android:orientation="horizontal"
-                android:layout_marginTop="1dp"
-                android:gravity="center_vertical"
-                >
-
-                <ImageView
-                    android:id="@+id/terms_of_use_ImageView"
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitXY"
-                    android:padding="5dp"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/terms_of_use"
-                    android:layout_marginStart="@dimen/icon_left_margin"
-                    android:layout_marginEnd="@dimen/icon_right_margin"
-                    />
-
-                <TextView
-                    android:id="@+id/terms_of_use_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/cell_text_size"
-                    android:textColor="@color/cell_text_color"
-                    android:text="@string/Setting_terms_of_use" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal" />
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/privacy_policy_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_screen_cell_height"
-                android:background="@color/cell_background_color"
-                android:orientation="horizontal"
-                android:layout_marginTop="1dp"
-                android:gravity="center_vertical"
-                >
-
-                <ImageView
-                    android:id="@+id/privacy_policy_ImageView"
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitXY"
-                    android:padding="5dp"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/privacy_policy"
-                    android:layout_marginStart="@dimen/icon_left_margin"
-                    android:layout_marginEnd="@dimen/icon_right_margin"
-                    />
-
-                <TextView
-                    android:id="@+id/privacy_policy_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/cell_text_size"
-                    android:textColor="@color/cell_text_color"
-                    android:text="@string/Setting_privacy_policy" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal" />
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/change_password_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_screen_cell_height"
-                android:background="@color/cell_background_color"
-                android:orientation="horizontal"
-                android:layout_marginTop="1dp"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/firstrow_ImageView_ProfileV2"
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitCenter"
-                    android:layout_height="@dimen/textview_height_business_profile"
-                    android:src="@drawable/icon_change_password"
-                    android:layout_marginStart="@dimen/icon_left_margin"
-                    android:layout_marginEnd="@dimen/icon_right_margin"
-                    android:padding="5dp"
-                    />
-
-                <TextView
-                    android:id="@+id/firstrow_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/cell_text_size"
-                    android:textColor="@color/cell_text_color"
-                    android:text="@string/setting_change_pwd" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal">
-
-            </LinearLayout>
-        </FrameLayout>
-
-
-        <FrameLayout
-            android:id="@+id/logout_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/settings_screen_cell_height"
-            android:background="@color/cell_background_color"
-            android:orientation="horizontal"
-            android:layout_marginTop="1dp"
-            android:gravity="center_vertical"
-            >
-
-            <ImageView
-                android:id="@+id/logout_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:padding="5dp"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/icon_logout"
-                android:layout_marginStart="@dimen/icon_left_margin"
-                android:layout_marginEnd="@dimen/icon_right_margin"
-                />
-
-            <TextView
-                android:id="@+id/logout_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/setting_logout" />
-
-        </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal" />
-        </FrameLayout>
-
-        <LinearLayout
-            android:id="@+id/versionCodeName"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="40dp">
-
-            <com.nowfloats.CustomWidget.roboto_lt_36_565656
-
-                android:id="@+id/version_text"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:text="@string/version"/>
-
-            <com.nowfloats.CustomWidget.roboto_lt_36_565656
-
-                android:id="@+id/version_name_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text=""
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:visibility="gone"
-            android:layout_marginBottom="40dp"
-            android:orientation="horizontal">
-            <com.nowfloats.CustomWidget.roboto_lt_36_565656
-                android:id="@+id/poweredBy"
-                android:layout_below="@+id/versionCodeName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/powered_by"/>
-
-            <com.nowfloats.CustomWidget.roboto_md_36__565656
-                android:layout_width="wrap_content"
-                android:layout_below="@+id/versionCodeName"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/poweredBy"
-                android:layout_marginStart="5dp"
-                android:text="@string/nowfloats"
-                />
-        </LinearLayout>
+        android:layout_marginStart="5dp"
+        android:text="" />
 
     </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="40dp"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:visibility="gone">
+
+      <com.nowfloats.CustomWidget.roboto_lt_36_565656
+        android:id="@+id/poweredBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/versionCodeName"
+        android:text="@string/powered_by" />
+
+      <com.nowfloats.CustomWidget.roboto_md_36__565656
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/versionCodeName"
+        android:layout_marginStart="5dp"
+        android:layout_toRightOf="@id/poweredBy"
+        android:text="@string/nowfloats" />
+    </LinearLayout>
+
+  </LinearLayout>
 </ScrollView>

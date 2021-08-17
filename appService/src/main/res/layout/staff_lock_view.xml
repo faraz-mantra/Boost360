@@ -31,7 +31,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/size_30"
-      android:fontFamily="@font/open_sans"
+      android:fontFamily="@font/regular"
       android:text="@string/staff_profile"
       android:textColor="@color/black_4a4a4a"
       app:fontFamily="@font/semi_bold"
@@ -57,7 +57,7 @@
       android:gravity="center"
       android:stateListAnimator="@null"
       android:text="@string/view_in_add_on_store"
-      android:textAllCaps="true"
+      android:textAllCaps="false"
       android:textSize="14sp" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

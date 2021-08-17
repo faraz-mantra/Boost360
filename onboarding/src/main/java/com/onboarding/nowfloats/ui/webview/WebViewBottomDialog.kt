@@ -3,6 +3,8 @@ package com.onboarding.nowfloats.ui.webview
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Message
 import android.view.View
 import android.webkit.*
 import com.framework.base.BaseBottomSheetDialog
@@ -52,7 +54,12 @@ class WebViewBottomDialog : BaseBottomSheetDialog<WebViewBottomsheetBinding, Bas
       shareIntent.type = "text/plain"
       shareIntent.putExtra(Intent.EXTRA_SUBJECT, title)
       shareIntent.putExtra(Intent.EXTRA_TEXT, "$title\n\n$domainUrl")
-      baseActivity.startActivity(Intent.createChooser(shareIntent, getString(R.string.share_connected_channel)))
+      baseActivity.startActivity(
+        Intent.createChooser(
+          shareIntent,
+          getString(R.string.share_connected_channel)
+        )
+      )
     } catch (e: Exception) {
       e.printStackTrace()
     }
@@ -66,11 +73,44 @@ class WebViewBottomDialog : BaseBottomSheetDialog<WebViewBottomsheetBinding, Bas
     binding?.webview?.settings?.allowFileAccess = true
     binding?.webview?.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
     binding?.webview?.webChromeClient = WebChromeClient()
+    val webSettings = binding?.webview?.settings
+    webSettings?.javaScriptCanOpenWindowsAutomatically = true
+    webSettings?.setSupportMultipleWindows(true)
+    webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
+    webSettings?.domStorageEnabled = true
+
+    binding?.webview?.webChromeClient = object : WebChromeClient() {
+      override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
+        val result = view!!.hitTestResult
+        val data = result.extra
+        val context = view.context
+        if (data != null) {
+          val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data))
+          context.startActivity(browserIntent)
+        }
+        return false
+      }
+    }
     binding?.webview?.webViewClient = object : WebViewClient() {
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         binding?.progressBar?.visible()
-        view.loadUrl(url)
-        return false
+        return if (
+          url.startsWith("mailto:") || url.startsWith("tel:") || url.startsWith("geo:")
+          || url.startsWith("whatsapp:") || url.startsWith("spotify:")
+        ) {
+          try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+          } catch (e: Exception) {
+            e.printStackTrace()
+            view.loadUrl(url)
+            false
+          }
+          true
+        } else {
+          view.loadUrl(url)
+          false
+        }
       }
 
       override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -84,7 +124,11 @@ class WebViewBottomDialog : BaseBottomSheetDialog<WebViewBottomsheetBinding, Bas
         binding?.progressBar?.gone()
       }
 
-      override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+      override fun onReceivedError(
+        view: WebView?,
+        request: WebResourceRequest?,
+        error: WebResourceError?
+      ) {
         super.onReceivedError(view, request, error)
         binding?.progressBar?.gone()
       }

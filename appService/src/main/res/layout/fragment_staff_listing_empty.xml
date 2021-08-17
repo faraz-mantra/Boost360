@@ -57,8 +57,8 @@
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/add_a_staff"
-          android:textAllCaps="true"
-          android:textColor="@color/colorAccent" />
+          android:textAllCaps="false"
+          android:textColor="@color/colorAccentLight" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -88,7 +88,7 @@
         android:layout_marginEnd="@dimen/size_42"
         android:clickable="true"
         android:focusable="true"
-        app:cardBackgroundColor="@color/colorAccent"
+        app:cardBackgroundColor="@color/colorAccentLight"
         app:cardCornerRadius="@dimen/size_24"
         app:cardElevation="0dp">
 
@@ -102,7 +102,7 @@
             android:layout_width="@dimen/size_34"
             android:layout_height="@dimen/size_34"
             android:layout_marginStart="@dimen/size_8"
-            app:srcCompat="@drawable/ria_inventory" />
+            app:srcCompat="@drawable/ic_ria_circle" />
 
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"

@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="gray_828282">#828282</color>
-
-
-    <color name="white_20">#33FFFFFF</color>
-
-    <color name="black">#000000</color>
-    <color name="black_20">#33000000</color>
-
-    <color name="transparent">#00000000</color>
-
-    <color name="black_50">#80000000</color>
-
-    <color name="live_red">#FF3144</color>
+  <color name="gray_828282">#828282</color>
+  <color name="white_20">#33FFFFFF</color>
+  <color name="black">#000000</color>
+  <color name="black_20">#33000000</color>
+  <color name="transparent">#00000000</color>
+  <color name="black_50">#80000000</color>
+  <color name="live_red">#FF3144</color>
 </resources>

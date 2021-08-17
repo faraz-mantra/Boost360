@@ -80,29 +80,31 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
 
   override fun customTheme(): Int? {
     return when (type) {
-      FragmentType.REVIEW_SPA_DETAILS-> R.style.AppThemeReviewAndConfirm
-      FragmentType.CREATE_NEW_BOOKING,
-      FragmentType.CREATE_NEW_BOOKING_PAGE_2,
-      -> R.style.AppTheme_Order_create
-      FragmentType.CREATE_APPOINTMENT_VIEW,
-      FragmentType.APPOINTMENT_DETAIL_VIEW,
+      FragmentType.REVIEW_SPA_DETAILS -> R.style.AppThemeReviewAndConfirm
+
       FragmentType.CREATE_NEW_ORDER,
-      FragmentType.ADD_CUSTOMER,
-      FragmentType.ADD_PRODUCT,
-      FragmentType.BILLING_DETAIL,
+      FragmentType.APPOINTMENT_DETAIL_VIEW,
       FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
       FragmentType.ORDER_DETAIL_VIEW,
       -> R.style.AppTheme_Order_create_appointment
+
+      FragmentType.CREATE_NEW_BOOKING,
+      FragmentType.CREATE_NEW_BOOKING_PAGE_2,
+      -> R.style.AppTheme_Order_create
+
+      FragmentType.CREATE_APPOINTMENT_VIEW,
+      FragmentType.CREATE_SPA_APPOINTMENT,
+      FragmentType.ADD_PRODUCT,
+      FragmentType.ADD_CUSTOMER,
+      FragmentType.BILLING_DETAIL
+      -> R.style.Add_Order_create_appointment
+
       else -> super.customTheme()
     }
   }
 
   override fun getToolbar(): CustomToolbar? {
     return binding?.appBarLayout?.toolbar
-  }
-
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.body_2)
   }
 
   override fun getToolbarBackgroundColor(): Int? {
@@ -174,14 +176,14 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ALL_VIDEO_CONSULT_VIEW -> resources.getString(R.string.video_consultation)
       FragmentType.APPOINTMENT_SPA_DETAIL_VIEW,
       FragmentType.APPOINTMENT_DETAIL_VIEW,
-      -> getString(R.string.appointment_details)
+      -> getString(R.string.appointment_details_n)
       FragmentType.ORDER_DETAIL_VIEW,
       FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
       -> getString(R.string.hash_xxxxxxxx)
-      FragmentType.CREATE_NEW_BOOKING -> resources.getString(R.string.new_booking)
-      FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> resources.getString(R.string.new_booking)
-      FragmentType.CREATE_APPOINTMENT_VIEW -> getString(R.string.new_apppointment_camel_case)
-      FragmentType.ADD_CUSTOMER -> getString(R.string.add_a_customer)
+      FragmentType.CREATE_NEW_BOOKING -> resources.getString(R.string.new_booking_n)
+      FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> resources.getString(R.string.new_booking_n)
+      FragmentType.CREATE_APPOINTMENT_VIEW -> getString(R.string.new_appointment_n)
+      FragmentType.ADD_CUSTOMER -> getString(R.string.add_a_customer_n)
       FragmentType.ADD_PRODUCT -> getString(R.string.add_product)
       FragmentType.BILLING_DETAIL -> getString(R.string.review_confirm)
       FragmentType.ORDER_INVOICE_VIEW -> getString(R.string.invoice_preview)
@@ -197,9 +199,9 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
 
   override fun getToolbarSubTitle(): String? {
     return when (type) {
-      FragmentType.ADD_PRODUCT -> "STEP 1/3"
-      FragmentType.ADD_CUSTOMER -> "STEP 2/3"
-      FragmentType.BILLING_DETAIL -> "STEP 3/3"
+      FragmentType.ADD_PRODUCT -> "Step 1/3"
+      FragmentType.ADD_CUSTOMER -> "Step 2/3"
+      FragmentType.BILLING_DETAIL -> "Step 3/3"
       else -> super.getToolbarSubTitle()
     }
   }
@@ -365,9 +367,12 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   }
 
   override fun onBackPressed() {
-    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?: videoConsultDetailsFragment?.getBundleData()
-    ?: bookingSuccessfulFragment?.getBundleData() ?: billingDetailFragment?.getBundleData() ?: addCustomerFragment?.getBundleData()
-    ?: orderPlacedFragment?.getBundleData() ?: reviewAndConfirmFragment?.getBundleData() ?: spaAppointmentFragment?.getBundleData()
+    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData()
+    ?: videoConsultDetailsFragment?.getBundleData()
+    ?: bookingSuccessfulFragment?.getBundleData() ?: billingDetailFragment?.getBundleData()
+    ?: addCustomerFragment?.getBundleData()
+    ?: orderPlacedFragment?.getBundleData() ?: reviewAndConfirmFragment?.getBundleData()
+    ?: spaAppointmentFragment?.getBundleData()
     ?: appointmentSpaDetailsFragment?.getBundleData() ?: addProductFragment?.getBundleData()
     bundle?.let {
       val intent = Intent()
@@ -378,7 +383,12 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   }
 }
 
-fun Fragment.startFragmentOrderActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+fun Fragment.startFragmentOrderActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false,
+  isResult: Boolean = false
+) {
   val intent = Intent(activity, FragmentContainerOrderActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -386,7 +396,12 @@ fun Fragment.startFragmentOrderActivity(type: FragmentType, bundle: Bundle = Bun
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
+fun startFragmentActivityNew(
+  activity: Activity,
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean
+) {
   val intent = Intent(activity, FragmentContainerOrderActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -394,7 +409,12 @@ fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bun
   activity.startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentOrderActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+fun AppCompatActivity.startFragmentOrderActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false,
+  isResult: Boolean = false
+) {
   val intent = Intent(this, FragmentContainerOrderActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

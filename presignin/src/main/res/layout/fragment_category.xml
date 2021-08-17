@@ -39,6 +39,7 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/sub_heading_tv"
           style="@style/psn_subheading_style"
+          android:layout_marginTop="@dimen/size_4"
           android:text="@string/let_me_know_which_of_the_following_describes_the_business_you_are_running"
           app:layout_constraintTop_toBottomOf="@id/title"
           tools:ignore="MissingConstraints" />

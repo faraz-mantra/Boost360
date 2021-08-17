@@ -1,44 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:gravity="center"
+  android:orientation="vertical">
+
+  <TextView
+    android:id="@+id/textView3"
     android:layout_width="match_parent"
-    android:gravity="center"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="24dp"
+    android:text="@string/accessibility_permission"
+    android:textSize="18sp"
+     android:fontFamily="@font/semi_bold" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        android:text="@string/accessibility_permission"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginBottom="10dp"
+    android:text="@string/bubble_in_app_message"
+    android:textSize="15sp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:textSize="15sp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/bubble_in_app_message"
-        android:layout_marginStart="24dp" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/bubble_in_app_second_message"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:textColor="@color/white"
-        android:background="@color/primaryColor"
-        android:textSize="15sp"
-        android:padding="8dp"
-        android:layout_margin="24dp"
-        android:layout_gravity="end"
-        android:id="@+id/permission_btn"
-        android:text="@string/take_me_there"/>
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:text="@string/bubble_in_app_second_message"
+    android:textSize="15sp" />
+
+  <Button
+    android:id="@+id/permission_btn"
+    android:layout_width="wrap_content"
+    android:layout_height="36dp"
+    android:layout_gravity="end"
+    android:layout_margin="24dp"
+    android:background="@color/primaryColor"
+    android:padding="8dp"
+    android:text="@string/take_me_there"
+    android:textColor="@color/white"
+    android:textSize="15sp" />
 
 </LinearLayout>

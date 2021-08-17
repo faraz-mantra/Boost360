@@ -1,114 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:gravity="center"
+  android:orientation="vertical">
+
+  <com.nowfloats.managenotification.ExpandableCardView
+    android:id="@+id/ecvOrders"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_10"
+    android:layout_marginEnd="@dimen/margin_10"
+    app:expandOnClick="true"
+    app:icon="@drawable/app_launcher"
+    app:inner_view="@layout/list_caller_info"
+    app:message="@string/noti_msg_orders"
+    app:title="Orders (2)" />
 
-    <com.nowfloats.managenotification.ExpandableCardView
-        android:id="@+id/ecvOrders"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginEnd="@dimen/margin_10"
-        app:expandOnClick="true"
-        app:icon="@drawable/app_launcher"
-        app:inner_view="@layout/list_caller_info"
-        app:message="@string/noti_msg_orders"
-        app:title="Orders (2)" />
-
-    <LinearLayout
-        android:id="@+id/llOrders"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginTop="-4dip"
-        android:background="#EEEEEE"
-        android:elevation="@dimen/margin_15"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvDismissOrders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/margin_10"
-            android:text="@string/dismiss"
-            android:textColor="@color/primaryColor"
-            android:textSize="@dimen/medium_text_size"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvViewOrders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="#EEEEEE"
-            android:padding="@dimen/margin_10"
-            android:text="@string/view_orders"
-            android:textAllCaps="true"
-            android:textColor="@color/primaryColor"
-            android:textSize="@dimen/medium_text_size"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <com.nowfloats.managenotification.ExpandableCardView
-        android:id="@+id/ecvCalls"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginEnd="@dimen/margin_10"
-        app:expandOnClick="true"
-        app:icon="@drawable/app_launcher"
-        app:inner_view="@layout/list_caller_info"
-        app:message="@string/noti_msg_calls"
-        app:title="Calls (2)" />
+  <LinearLayout
+    android:id="@+id/llOrders"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="13dp"
+    android:layout_marginTop="-4dip"
+    android:layout_marginEnd="13dp"
+    android:background="#EEEEEE"
+    android:elevation="@dimen/margin_15"
+    android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/tvDismissCalls"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginTop="-4dip"
-        android:background="#EEEEEE"
-        android:elevation="@dimen/margin_15"
-        android:gravity="start"
-        android:padding="@dimen/margin_10"
-        android:text="@string/dismiss"
-        android:textColor="@color/primaryColor"
-        android:textSize="@dimen/medium_text_size"
-        android:textStyle="bold" />
-
-    <com.nowfloats.managenotification.ExpandableCardView
-        android:id="@+id/ecvEnquiries"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginEnd="@dimen/margin_10"
-        app:expandOnClick="true"
-        app:icon="@drawable/app_launcher"
-        app:inner_view="@layout/list_caller_info"
-        app:message="@string/noti_msg_enquires"
-        app:title="Enquiries (2)" />
+      android:id="@+id/tvDismissOrders"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:padding="@dimen/margin_10"
+      android:text="@string/dismiss"
+      android:textColor="@color/primaryColor"
+      android:textSize="@dimen/medium_text_size"
+       android:fontFamily="@font/semi_bold" />
 
     <TextView
-        android:id="@+id/tvDismissEnquiries"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginTop="-4dip"
-        android:background="#EEEEEE"
-        android:elevation="@dimen/margin_15"
-        android:gravity="start"
-        android:padding="@dimen/margin_10"
-        android:text="@string/dismiss"
-        android:textColor="@color/primaryColor"
-        android:textSize="@dimen/medium_text_size"
-        android:textStyle="bold" />
+      android:id="@+id/tvViewOrders"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:background="#EEEEEE"
+      android:padding="@dimen/margin_10"
+      android:text="@string/view_orders"
+      android:textAllCaps="false"
+      android:textColor="@color/primaryColor"
+      android:textSize="@dimen/medium_text_size"
+       android:fontFamily="@font/semi_bold" />
+
+  </LinearLayout>
+
+  <com.nowfloats.managenotification.ExpandableCardView
+    android:id="@+id/ecvCalls"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_10"
+    android:layout_marginEnd="@dimen/margin_10"
+    app:expandOnClick="true"
+    app:icon="@drawable/app_launcher"
+    app:inner_view="@layout/list_caller_info"
+    app:message="@string/noti_msg_calls"
+    app:title="Calls (2)" />
+
+  <TextView
+    android:id="@+id/tvDismissCalls"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="13dp"
+    android:layout_marginTop="-4dip"
+    android:layout_marginEnd="13dp"
+    android:background="#EEEEEE"
+    android:elevation="@dimen/margin_15"
+    android:gravity="start"
+    android:padding="@dimen/margin_10"
+    android:text="@string/dismiss"
+    android:textColor="@color/primaryColor"
+    android:textSize="@dimen/medium_text_size"
+     android:fontFamily="@font/semi_bold" />
+
+  <com.nowfloats.managenotification.ExpandableCardView
+    android:id="@+id/ecvEnquiries"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_10"
+    android:layout_marginEnd="@dimen/margin_10"
+    app:expandOnClick="true"
+    app:icon="@drawable/app_launcher"
+    app:inner_view="@layout/list_caller_info"
+    app:message="@string/noti_msg_enquires"
+    app:title="Enquiries (2)" />
+
+  <TextView
+    android:id="@+id/tvDismissEnquiries"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="13dp"
+    android:layout_marginTop="-4dip"
+    android:layout_marginEnd="13dp"
+    android:background="#EEEEEE"
+    android:elevation="@dimen/margin_15"
+    android:gravity="start"
+    android:padding="@dimen/margin_10"
+    android:text="@string/dismiss"
+    android:textColor="@color/primaryColor"
+    android:textSize="@dimen/medium_text_size"
+     android:fontFamily="@font/semi_bold" />
 
 </LinearLayout>

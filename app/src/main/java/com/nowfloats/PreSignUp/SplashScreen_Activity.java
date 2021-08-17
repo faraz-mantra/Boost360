@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.view.ContextThemeWrapper;
+
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.appservice.model.accountDetails.AccountDetailsResponse;
@@ -64,10 +66,10 @@ import static java.lang.String.format;
 
 public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface, PresignupManager.SignUpLoginHandler {
     public static ProgressDialog pd;
-    private UserSessionManager session;
-    private com.framework.pref.UserSessionManager sessionMain;
     Bus bus;
     LottieAnimationView animationView;
+    private UserSessionManager session;
+    private com.framework.pref.UserSessionManager sessionMain;
     private String loginCheck = null, deepLink;
     private String deepLinkViewType = "", deepLinkFpId = "", deepLinkDay = "", deepLinkFpTag = "";
     private Thread mThread;
@@ -206,7 +208,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
             public void success(AccessTokenResponse data, Response response) {
                 if ((response.getStatus() == 200 || response.getStatus() == 201 || response.getStatus() == 202) && data != null && data.getResult() != null) {
                     TokenResult res = data.getResult();
-                    if(res != null && (res.getRefreshToken() == null || res.getRefreshToken().isEmpty())){
+                    if (res != null && (res.getRefreshToken() == null || res.getRefreshToken().isEmpty())) {
                         res.setRefreshToken(refreshToken);
                     }
                     saveAccessTokenAuth1(sessionMain, res);
@@ -319,7 +321,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
     private void showAlertDialog() {
         String str = format(getResources().getString(R.string.error_right_fptag), deepLinkFpTag);
-        new AlertDialog.Builder(this).setMessage(str)
+        new AlertDialog.Builder(new ContextThemeWrapper(this,R.style.CustomAlertDialogTheme)).setMessage(str)
                 .setCancelable(false)
                 .setPositiveButton(R.string.ok, (dialog, i) -> {
                     dialog.dismiss();
@@ -338,13 +340,13 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
-        if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
+        if (session.getUserProfileEmail() != null) {
+            intent.putExtra("email", session.getUserProfileEmail());
         } else {
             intent.putExtra("email", "ria@nowfloats.com");
         }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }

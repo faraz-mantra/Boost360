@@ -38,7 +38,6 @@ class CustomButton : AppCompatButton {
     val textType = TextType.values().firstOrNull {
       it.type == typedArray?.getInt(R.styleable.CustomTextView_textType, -1)
     }
-
     this.setTextStyle(textType)
   }
 

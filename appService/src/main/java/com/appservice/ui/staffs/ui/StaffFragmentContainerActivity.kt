@@ -47,12 +47,6 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     return R.layout.activity_fragment_container
   }
 
-  override fun getToolbarTitleGravity(): Int {
-    return when (fragmentType) {
-      FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT, FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> Gravity.START
-      else -> super.getToolbarTitleGravity()
-    }
-  }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
     return BaseViewModel::class.java
@@ -95,9 +89,6 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     return binding?.appBarLayout?.toolbar
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.heading_7)
-  }
 
 
   override fun customTheme(): Int? {

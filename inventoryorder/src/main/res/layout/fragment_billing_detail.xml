@@ -253,13 +253,13 @@
           android:id="@+id/tv_add_more"
           style="@style/wrap_wrap"
           android:text="@string/add_more"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/orange"
           app:fontFamily="@font/semi_bold"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintRight_toRightOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-          app:textAllCaps="true"
+          app:textAllCaps="false"
           app:textType="BODY_1" />
 
       </androidx.constraintlayout.widget.ConstraintLayout>
@@ -350,7 +350,7 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:text="-₹1,000.00"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/green_light_1"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_1" />
@@ -383,7 +383,7 @@
             android:paddingStart="@dimen/size_10"
             android:paddingEnd="@dimen/size_10"
             android:text="@string/edit"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/orange"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_1" />
@@ -397,7 +397,7 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:text="@string/add"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/orange"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_1" />
@@ -410,7 +410,7 @@
             android:gravity="right"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/orange"
             android:visibility="gone"
             app:fontFamily="@font/semi_bold"
@@ -475,7 +475,7 @@
             android:gravity="right"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/black_2A2A2A"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_1"
@@ -503,7 +503,7 @@
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/confirm_order"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/white"
           app:fontFamily="@font/semi_bold"
           app:textType="BODY_1"/>
@@ -518,7 +518,7 @@
           android:gravity="center"
           android:stateListAnimator="@null"
           android:text="@string/go_back"
-          android:textAllCaps="true"
+          android:textAllCaps="false"
           android:textColor="@color/orange"
           app:fontFamily="@font/semi_bold"
           app:textType="BODY_1" />

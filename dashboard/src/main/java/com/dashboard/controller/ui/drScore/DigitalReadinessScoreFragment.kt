@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ContextThemeWrapper
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.IntentConstant
@@ -29,6 +31,7 @@ import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
+import com.framework.utils.roundToFloat
 import com.framework.utils.saveData
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.DIGITAL_READINESS_PAGE
@@ -102,12 +105,14 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
         } else Snackbar.make(binding?.root!!, getString(R.string.digital_readiness_score_failed_to_load), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
         binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "85%")
 //        binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-        binding?.txtReadinessScore?.text = "${drScoreData?.getDrsTotal()}"
-        binding?.progressBar?.progress = drScoreData?.getDrsTotal() ?: 0
+        binding?.txtReadinessScore?.text = "${drScoreData?.getDrsTotal() ?: 0}"
+//        binding?.progressBar?.progress = drScoreData?.getDrsTotal() ?: 0
+        val percentage = ((100 - (drScoreData?.getDrsTotal()?:0)).toDouble() / 100).roundToFloat(2)
+        (binding?.progressBar?.layoutParams as? ConstraintLayout.LayoutParams)?.matchConstraintPercentWidth = percentage
+        binding?.progressBar?.requestLayout()
 //        binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
 
       } else Snackbar.make(binding?.root!!, getString(R.string.digital_readiness_score_failed_to_load), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
-
     })
 
   }
@@ -272,11 +277,12 @@ fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?, baseActivity: App
 }
 
 fun alertDialogBusinessHours(baseActivity: AppCompatActivity, session: UserSessionManager?) {
-  AlertDialog.Builder(baseActivity)
-      .setTitle(baseActivity.getString(R.string.features_not_available))
-      .setMessage(baseActivity.getString(R.string.check_store_for_upgrade_info))
-      .setPositiveButton(baseActivity.getString(R.string.goto_store)) { dialogInterface, i ->
-        baseActivity.startPricingPlan(session)
-        dialogInterface.dismiss()
-      }.setNegativeButton(baseActivity.getString(R.string.cancel)) { dialogInterface, _ -> dialogInterface.dismiss() }.show()
+  AlertDialog.Builder(
+    ContextThemeWrapper(baseActivity,R.style.CustomAlertDialogTheme))
+    .setTitle(baseActivity.getString(R.string.features_not_available))
+    .setMessage(baseActivity.getString(R.string.check_store_for_upgrade_info))
+    .setPositiveButton(baseActivity.getString(R.string.goto_store)) { dialogInterface, i ->
+      baseActivity.startPricingPlan(session)
+      dialogInterface.dismiss()
+    }.setNegativeButton(baseActivity.getString(R.string.cancel)) { dialogInterface, _ -> dialogInterface.dismiss() }.show()
 }

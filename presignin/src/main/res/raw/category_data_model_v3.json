@@ -3,8 +3,8 @@
     {
       "category_key": "HEALTHCARE - GENERAL",
       "experience_code": "DOC",
-      "webTemplateId" : "59d74e153872831a6483491e",
-      "category_Name": "Doctors &\nHealth Specialists",
+      "webTemplateId": "59d74e153872831a6483491e",
+      "category_Name": "Doctors &\nHealth specialists",
       "category_descriptor": "your healthcare business",
       "icon": "/icons/healthcare.svg",
       "channels": [
@@ -125,7 +125,7 @@
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -187,7 +187,7 @@
     {
       "category_key": "EDUCATION",
       "experience_code": "EDU",
-      "webTemplateId" : "5a952f3dac626704fc9b6d86",
+      "webTemplateId": "5a952f3dac626704fc9b6d86",
       "category_Name": "Education\n& e-Coaching",
       "category_descriptor": "your education institute",
       "icon": "/icons/edu.svg",
@@ -231,7 +231,7 @@
       ],
       "sections": [
         {
-          "title": "Website Customised for Educational Insitutes",
+          "title": "Website customised for educational institutes",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
           "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
@@ -289,7 +289,7 @@
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -367,7 +367,7 @@
     {
       "category_key": "HEALTHCARE - CLINICS",
       "experience_code": "HOS",
-      "webTemplateId" : "597f48fd38728384d4b85cdd",
+      "webTemplateId": "597f48fd38728384d4b85cdd",
       "category_Name": "Clinics &\nHospitals",
       "category_descriptor": "your healthcare business",
       "icon": "/icons/hospital.svg",
@@ -488,7 +488,7 @@
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -550,7 +550,7 @@
     {
       "category_key": "SPA",
       "experience_code": "SPA",
-      "webTemplateId" : "5b34bd254030c804fbbd8414",
+      "webTemplateId": "5b34bd254030c804fbbd8414",
       "category_Name": "Spas\n& Wellness",
       "category_descriptor": "your spa",
       "icon": "/icons/spa.svg",
@@ -594,7 +594,7 @@
       ],
       "sections": [
         {
-          "title": "Website Customised for Spa",
+          "title": "Website customised for spa",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
           "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
@@ -656,7 +656,7 @@
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -670,7 +670,7 @@
           ]
         },
         {
-          "title": "Manage Your Digital Content",
+          "title": "Manage your digital content",
           "desc": "",
           "icon": "/icons/digital_content.svg",
           "boost_widget_key": "LATESTUPDATES,FEATUREDIMAGE,CUSTOMPAGES,IMAGEGALLERY,TIMINGS,PRODUCTCATALOGUE,SOCIALMEDIA,CONTACTDETAILS",
@@ -718,7 +718,7 @@
     {
       "category_key": "HOTEL & MOTELS",
       "experience_code": "HOT",
-      "webTemplateId" : "5b3b2b6aec3c7704fee7ae93",
+      "webTemplateId": "5b3b2b6aec3c7704fee7ae93",
       "category_Name": "Hotels\n& Motels",
       "category_descriptor": "your hotel",
       "icon": "/icons/hotels.svg",
@@ -762,7 +762,7 @@
       ],
       "sections": [
         {
-          "title": "Website Customised for Hotels",
+          "title": "Website customised for hotels",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
           "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
@@ -824,7 +824,7 @@
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -886,7 +886,7 @@
     {
       "category_key": "FOOD & BEVERAGES",
       "experience_code": "CAF",
-      "webTemplateId" : "5ad9c409889084051f87a4b6",
+      "webTemplateId": "5ad9c409889084051f87a4b6",
       "category_Name": "Restaurants\n& Cafes",
       "category_descriptor": "your F&B business",
       "icon": "/icons/cafe.svg",
@@ -930,7 +930,7 @@
       ],
       "sections": [
         {
-          "title": "Website Customised for Restaurants",
+          "title": "Website customised for restaurants",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
           "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
@@ -984,7 +984,7 @@
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -1046,7 +1046,7 @@
     {
       "category_key": "SALON",
       "experience_code": "SAL",
-      "webTemplateId" : "5b34bd254030c804fbbd8414",
+      "webTemplateId": "5b34bd254030c804fbbd8414",
       "category_Name": "Beauty\n& Salons",
       "category_descriptor": "your salon",
       "icon": "/icons/salon.svg",
@@ -1090,7 +1090,7 @@
       ],
       "sections": [
         {
-          "title": "Website Customised for Salon",
+          "title": "Website customised for salon",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
           "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
@@ -1148,7 +1148,7 @@
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -1210,7 +1210,7 @@
     {
       "category_key": "MANUFACTURERS",
       "experience_code": "MFG",
-      "webTemplateId" : "590b3f09ee786c1d88879129",
+      "webTemplateId": "590b3f09ee786c1d88879129",
       "category_Name": "Manufacturing\n& Equipment",
       "category_descriptor": "your manufacturing business",
       "icon": "/icons/mfg.svg",
@@ -1254,7 +1254,7 @@
       ],
       "sections": [
         {
-          "title": "Website Customised for Manufacturers",
+          "title": "Website customised for manufacturers",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
           "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
@@ -1312,7 +1312,7 @@
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -1373,8 +1373,8 @@
     {
       "category_key": "OTHER RETAIL",
       "experience_code": "RTL",
-      "webTemplateId" : "5b864dd931bfd4054774ec1b",
-      "category_Name": "Other\n& Retail Business",
+      "webTemplateId": "5b864dd931bfd4054774ec1b",
+      "category_Name": "Other\n& Retail business",
       "category_descriptor": "your retail business",
       "icon": "/icons/rtl.svg",
       "channels": [
@@ -1441,7 +1441,7 @@
           ]
         },
         {
-          "title": "Manage your Digital content",
+          "title": "Manage your digital content",
           "desc": "",
           "icon": "/icons/digital_content.svg",
           "boost_widget_key": "LATESTUPDATES,FEATUREDIMAGE,CUSTOMPAGES,IMAGEGALLERY,TIMINGS,PRODUCTCATALOGUE,SOCIALMEDIA,CONTACTDETAILS",
@@ -1475,7 +1475,7 @@
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {
@@ -1513,8 +1513,8 @@
     {
       "category_key": "OTHER SERVICES",
       "experience_code": "SVC",
-      "webTemplateId" : "5eda2675d0c6770001f67d91",
-      "category_Name": "Other\n& Service Business",
+      "webTemplateId": "5eda2675d0c6770001f67d91",
+      "category_Name": "Other\n& Service business",
       "category_descriptor": "your services business",
       "icon": "/icons/svc.svg",
       "channels": [
@@ -1557,7 +1557,7 @@
       ],
       "sections": [
         {
-          "title": "Website Customised for Service Business",
+          "title": "Website customised for service business",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
           "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
@@ -1615,7 +1615,7 @@
               "desc": "Collecting payments has never been easier! Boost comes with a pre-installed payments system which allows you to receive money for online appointment bookings. Enjoy using a fast, simple, secure and error-free payments system marketed under our own brand name to receive money safely from your consumers."
             },
             {
-              "title": "Supports All payment modes",
+              "title": "Supports all payment modes",
               "desc": "Our payment system supports all types of transactions. We accept and validate internet payments via credit card, debit card, netbanking, and all popular UPIs. Whatever methods your customers choose, we are well-equipped to handle it."
             },
             {

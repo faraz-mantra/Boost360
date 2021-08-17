@@ -1,138 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
-    android:layout_marginTop="1dp"
-    android:padding="10dp"
-    android:background="@color/white"
-    android:layout_height="wrap_content">
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_marginStart="10dp"
+  android:layout_marginTop="1dp"
+  android:layout_marginEnd="10dp"
+  android:background="@color/white"
+  android:orientation="horizontal"
+  android:padding="10dp">
 
-    <ImageView
-        android:id="@+id/iv_product_img"
-        android:layout_gravity="center"
-        android:layout_width="90dp"
-        android:layout_height="90dp" />
+  <ImageView
+    android:id="@+id/iv_product_img"
+    android:layout_width="90dp"
+    android:layout_height="90dp"
+    android:layout_gravity="center" />
 
-    <TableLayout
-        android:layout_marginStart="10dp"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/product_name"
-                />
-            <TextView
-                android:id="@+id/tv_product_name"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:textSize="12sp"
-                android:ellipsize="end"
-                android:layout_marginStart="5dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/one_piece_anime_full"
-                />
-        </TableRow>
+  <TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginStart="10dp">
 
-        <TableRow
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/quantity"
-                />
-            <TextView
-                android:id="@+id/tv_product_quantity"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:layout_marginStart="5dp"
-                android:textSize="12sp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/_3"
-                />
-        </TableRow>
+    <TableRow
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
 
-        <TableRow
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/unit_price"
-                />
-            <TextView
-                android:id="@+id/tv_product_price"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:layout_marginStart="5dp"
-                android:textSize="12sp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/inr_200"
-                />
-        </TableRow>
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/product_name" />
 
-        <TableRow
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/discount_"
-                />
-            <TextView
-                android:id="@+id/tv_product_discount"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:layout_marginStart="5dp"
-                android:textSize="12sp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/inr_0"
-                />
-        </TableRow>
+      <TextView
+        android:id="@+id/tv_product_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/one_piece_anime_full"
+        android:textSize="12sp"
+         android:fontFamily="@font/semi_bold" />
+    </TableRow>
 
-        <TableRow
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/final_price"
-                />
-            <TextView
-                android:id="@+id/tv_final_price"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:layout_marginStart="5dp"
-                android:textSize="12sp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/inr_200"
-                />
-        </TableRow>
-    </TableLayout>
+    <TableRow
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="5dp">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/quantity" />
+
+      <TextView
+        android:id="@+id/tv_product_quantity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/_3"
+        android:textSize="12sp"
+         android:fontFamily="@font/semi_bold" />
+    </TableRow>
+
+    <TableRow
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="5dp">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/unit_price" />
+
+      <TextView
+        android:id="@+id/tv_product_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/inr_200"
+        android:textSize="12sp"
+         android:fontFamily="@font/semi_bold" />
+    </TableRow>
+
+    <TableRow
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="5dp">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/discount_" />
+
+      <TextView
+        android:id="@+id/tv_product_discount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/inr_0"
+        android:textSize="12sp"
+         android:fontFamily="@font/semi_bold" />
+    </TableRow>
+
+    <TableRow
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="5dp">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/final_price" />
+
+      <TextView
+        android:id="@+id/tv_final_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/inr_200"
+        android:textSize="12sp"
+         android:fontFamily="@font/semi_bold" />
+    </TableRow>
+  </TableLayout>
 
 
 </LinearLayout>

@@ -1,56 +1,61 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@color/screen_bg"
+  android:orientation="horizontal"
+  tools:context="com.nowfloats.NavigationDrawer.Analytics_Fragment">
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/alert_recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical" />
+
+  <LinearLayout
+    android:id="@+id/progress_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="horizontal"
-    android:background="@color/screen_bg"
-    tools:context="com.nowfloats.NavigationDrawer.Analytics_Fragment">
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="gone">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/alert_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical" />
-    <LinearLayout
-        android:id="@+id/progress_layout"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="gone"
-        android:gravity="center">
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/visits_progressBar" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/emptyalertlayout"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="gone"
-        android:gravity="center">
+    <ProgressBar
+      android:id="@+id/visits_progressBar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+  </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/alert_zerothicon" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="5dp"
-            android:textColor="@color/zeroth_grey_title"
-            android:text="@string/no_alerts"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@color/zeroth_grey"
-            android:gravity="center"
-            android:padding="4dp"
-            android:text="@string/empty_alert"/>
-    </LinearLayout>
+  <LinearLayout
+    android:id="@+id/emptyalertlayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/alert_zerothicon" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="15dp"
+      android:layout_marginBottom="5dp"
+      android:text="@string/no_alerts"
+      android:textColor="@color/zeroth_grey_title"
+      android:textSize="18sp"
+       android:fontFamily="@font/semi_bold" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:padding="4dp"
+      android:text="@string/empty_alert"
+      android:textColor="@color/zeroth_grey"
+      android:textSize="15sp" />
+  </LinearLayout>
 </FrameLayout>

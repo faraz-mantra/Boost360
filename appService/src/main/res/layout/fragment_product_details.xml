@@ -115,7 +115,7 @@
                   android:text="ADD PRODUCT IMAGE"
                   android:textColor="@color/dodger_blue_two"
                   app:fontFamily="@font/semi_bold"
-                  app:textAllCaps="true"
+                  app:textAllCaps="false"
                   app:textType="BODY_1" />
               </LinearLayout>
 
@@ -139,7 +139,6 @@
               android:drawableTint="@color/orange"
               android:text="@string/product_name"
               android:textColor="@color/black_4a4a4a"
-              app:drawableEndCompat="@drawable/ic_question_circular_blue"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_3" />
 
@@ -171,7 +170,6 @@
                 android:includeFontPadding="false"
                 android:text="@string/product_category"
                 android:textColor="@color/black_4a4a4a"
-                app:drawableEndCompat="@drawable/ic_question_circular_blue"
                 app:fontFamily="@font/semi_bold"
                 app:textType="BODY_3" />
 
@@ -290,11 +288,10 @@
                   android:id="@+id/cb_price_include"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:fontFamily="@font/open_sans"
+                  android:fontFamily="@font/regular"
                   android:text="@string/price_includes_taxes"
                   android:textColor="@color/primary_text"
                   android:textFontWeight="400"
-                  android:textStyle="normal"
                   android:theme="@style/ActiveTheme"
                   android:visibility="gone"
                   app:layout_constraintBottom_toBottomOf="parent"
@@ -433,6 +430,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="@dimen/size_10"
                   android:layout_marginRight="@dimen/size_10"
+                  android:layout_marginTop="@dimen/size_2"
                   android:layout_marginBottom="@dimen/size_10"
                   android:background="@drawable/shape_grey_stroke_rect_bkg"
                   android:orientation="vertical">
@@ -466,7 +464,7 @@
                       app:layout_constraintBottom_toBottomOf="parent"
                       app:layout_constraintRight_toRightOf="parent"
                       app:layout_constraintTop_toTopOf="parent"
-                      app:textAllCaps="true" />
+                      app:textAllCaps="false" />
 
                   </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -498,7 +496,6 @@
                           android:text="@string/bank_account_not_added"
                           android:textColor="@color/warm_grey"
                           android:textSize="12sp"
-                          app:drawableStartCompat="@drawable/ic_info_circular_orange"
                           app:fontFamily="@font/regular" />
 
                         <com.framework.views.customViews.CustomTextView
@@ -666,7 +663,7 @@
                   app:layout_constraintBottom_toBottomOf="parent"
                   app:layout_constraintRight_toRightOf="parent"
                   app:layout_constraintTop_toTopOf="parent"
-                  app:textAllCaps="true" />
+                  app:textAllCaps="false" />
 
               </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -902,7 +899,7 @@
                 android:gravity="center"
                 android:stateListAnimator="@null"
                 android:text="@string/save_amp_publish"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:background="@color/app_background_dark_color"
+  tools:context="com.nowfloats.education.faculty.ui.facultymanagement.FacultyManagementFragment">
+
+  <include
+    android:id="@+id/app_bar"
+    layout="@layout/new_custome_app_bar" />
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/faculty_recycler"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/app_background_dark_color"
-    tools:context="com.nowfloats.education.faculty.ui.facultymanagement.FacultyManagementFragment">
+    android:layout_below="@+id/app_bar"
+    android:clipToPadding="false"
+    android:paddingBottom="@dimen/_50sdp"
+    tools:listitem="@layout/item_faculty_management" />
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/new_custome_app_bar" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/faculty_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_faculty_management" />
-
-
-</LinearLayout>
+  <com.framework.views.fabButton.FloatingActionButton
+    android:id="@+id/btn_add"
+    style="@style/wrap_wrap"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentEnd="true"
+    android:layout_margin="16dp"
+    android:clickable="true"
+    android:backgroundTint="@color/colorAccentLight"
+    android:focusable="true"
+    app:fabIcon="@drawable/ic_add_white"
+    app:fabSize="normal" />
+</RelativeLayout>
