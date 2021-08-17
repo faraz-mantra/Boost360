@@ -110,7 +110,7 @@
             app:dotsSpacing="@dimen/size_2"
             app:dotsWidthFactor="2.5"
             app:progressMode="false"
-            app:selectedDotColor="@color/colorAccent" />
+            app:selectedDotColor="@color/colorAccentLight" />
 
           <LinearLayout
             android:id="@+id/btn_main_view"

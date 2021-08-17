@@ -142,10 +142,10 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       if ((result.bankAccountDetails?.kYCDetails?.verificationStatus == KYCDetails.Status.PENDING.name).not()) {
         (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.link_bank_account), resources.getDimensionPixelSize(R.dimen.size_10))
         binding?.verificationBtn?.text = resources.getString(R.string.change_bank_detail)
-        var buttonDrawable: Drawable = (binding?.verificationBtn?.background ?: ContextCompat.getDrawable(baseActivity, R.drawable.bg_button_rounded_orange)) as Drawable
-        buttonDrawable = DrawableCompat.wrap(buttonDrawable)
-        DrawableCompat.setTint(buttonDrawable, ContextCompat.getColor(baseActivity, R.color.pinkish_grey))
-        binding?.verificationBtn?.background = buttonDrawable
+//        var buttonDrawable: Drawable = (binding?.verificationBtn?.background ?: ContextCompat.getDrawable(baseActivity, R.drawable.bg_button_rounded_orange)) as Drawable
+//        buttonDrawable = DrawableCompat.wrap(buttonDrawable)
+//        DrawableCompat.setTint(buttonDrawable, ContextCompat.getColor(baseActivity, R.color.pinkish_grey))
+//        binding?.verificationBtn?.background = buttonDrawable
         binding?.textVerification?.text = resources.getString(R.string.how_it_works)
         binding?.textDesc?.text = resources.getString(R.string.verify_desc_account)
         (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimaryDark)
@@ -204,17 +204,9 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
 
   private fun uiUpdate(isEditable: Boolean) {
-    val views = arrayListOf(
-      binding?.edtAccountName,
-      binding?.edtAccountNumber,
-      binding?.edtAlias,
-      binding?.edtIfsc
-    )
+    val views = arrayListOf(binding?.edtAccountName, binding?.edtAccountNumber, binding?.edtAlias, binding?.edtIfsc)
     if (!isValidIfsc) views.add(binding?.edtBankName)
-    else binding?.edtBankName?.background = ContextCompat.getDrawable(
-      baseActivity,
-      if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill
-    )
+    else binding?.edtBankName?.background = ContextCompat.getDrawable(baseActivity, if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill)
 
 //    binding?.verificationUi?.visibility = if (isEditable) View.GONE else View.VISIBLE
     binding?.createUi?.visibility = if (isEditable) View.VISIBLE else View.GONE

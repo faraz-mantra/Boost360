@@ -32,8 +32,7 @@ import com.invitereferrals.invitereferrals.InviteReferralsApi
 import com.onboarding.nowfloats.constant.PreferenceConstant
 import java.util.*
 
-open class BusinessWebsiteFragment :
-  AppBaseFragment<FragmentBusinessWebsiteBinding, LoginSignUpViewModel>() {
+open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBinding, LoginSignUpViewModel>() {
 
   private lateinit var session: UserSessionManager
   private lateinit var fullScreenProgress: FullScreenProgressDialog
