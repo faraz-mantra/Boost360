@@ -74,7 +74,17 @@
 
 
   </androidx.appcompat.widget.Toolbar>
-
+  <ProgressBar
+      android:id="@+id/progress_bar"
+      style="?android:attr/progressBarStyleHorizontal"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_3"
+      android:indeterminate="true"
+      android:scaleY="4"
+      android:theme="@style/ActiveTheme"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/web_toolbar" />
   <WebView
     android:id="@+id/webview"
     android:layout_width="0dp"
@@ -82,6 +92,6 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/web_toolbar" />
+    app:layout_constraintTop_toBottomOf="@id/progress_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
