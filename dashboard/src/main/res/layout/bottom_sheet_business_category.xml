@@ -72,7 +72,7 @@
         android:layout_marginHorizontal="@dimen/size_16"
         android:layout_marginTop="@dimen/size_12"
         android:layout_marginBottom="@dimen/size_16"
-        android:background="@null"
+        android:background="@drawable/bg_rounded_yellow_light"
         android:enabled="true"
         android:textAllCaps="false"
         android:gravity="center"

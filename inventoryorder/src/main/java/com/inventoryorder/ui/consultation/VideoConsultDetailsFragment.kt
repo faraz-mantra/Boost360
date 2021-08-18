@@ -213,7 +213,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
       binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
     val scheduleDate = order.firstItemForAptConsult()?.scheduledStartDate()
-    val dateApt = DateUtils.parseDate(
+    val dateApt = parseDate(
       scheduleDate,
       DateUtils.FORMAT_SERVER_DATE,
       DateUtils.FORMAT_SERVER_TO_LOCAL_2
@@ -221,7 +221,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     binding?.bookingDate?.text = if (dateApt.isNullOrEmpty().not()) {
       dateApt
     } else {
-      DateUtils.parseDate(
+      parseDate(
         order.CreatedOn,
         DateUtils.FORMAT_SERVER_DATE,
         DateUtils.FORMAT_SERVER_TO_LOCAL_2,
@@ -262,7 +262,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
       if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
         ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     }
-    binding?.tvTotalOrderAmount?.text = "Total Amount: $currency $salePrice"
+    binding?.tvTotalOrderAmount?.text = "Total amount: $currency $salePrice"
 
   }
 

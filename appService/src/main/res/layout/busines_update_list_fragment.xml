@@ -11,36 +11,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.framework.views.viewgroups.BaseRecyclerView
-      android:id="@+id/rv_updates"
+    <FrameLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:clipToPadding="false"
-      android:orientation="vertical"
-      android:paddingBottom="@dimen/size_40"
-      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-      tools:itemCount="6"
-      tools:listitem="@layout/item_updates_list" />
+      android:layout_height="wrap_content">
+
+      <com.framework.views.viewgroups.BaseRecyclerView
+        android:id="@+id/rv_updates"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/size_40"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="6"
+        tools:listitem="@layout/item_updates_list" />
+
+      <include
+        android:id="@+id/progress_simmer"
+        layout="@layout/view_update_simmer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+    </FrameLayout>
 
     <com.framework.views.fabButton.FloatingActionButton
       android:id="@+id/btn_add"
       style="@style/wrap_wrap"
       android:layout_gravity="bottom|right"
       android:layout_margin="16dp"
-      android:clickable="true"
       android:backgroundTint="@color/colorAccentLight"
+      android:clickable="true"
       android:focusable="true"
       app:fabIcon="@drawable/ic_add_white"
       app:fabSize="normal" />
-
-    <ProgressBar
-      android:id="@+id/progress"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:indeterminate="true"
-      android:theme="@style/progressBar"
-      android:visibility="gone" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/empty_view"

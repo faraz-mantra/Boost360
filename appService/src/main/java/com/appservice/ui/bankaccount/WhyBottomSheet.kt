@@ -30,11 +30,11 @@ class WhyBottomSheet : BaseBottomSheetDialog<BottomSheetWhyAccountBinding, BaseV
   }
 
   override fun getMarginStart(): Int {
-    return resources.getDimensionPixelSize(R.dimen.size_20)
+    return resources.getDimensionPixelSize(R.dimen.size_10)
   }
 
   override fun getMarginEnd(): Int {
-    return resources.getDimensionPixelSize(R.dimen.size_20)
+    return resources.getDimensionPixelSize(R.dimen.size_10)
   }
 
 }

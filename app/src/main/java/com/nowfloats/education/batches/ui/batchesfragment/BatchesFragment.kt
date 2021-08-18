@@ -67,9 +67,9 @@ class BatchesFragment : BaseFragment(), ItemClickEventListener {
     viewModel.apply {
       upcomingBatchResponse.observe(viewLifecycleOwner, Observer {
         if (!it.Data.isNullOrEmpty()) {
-          hideLoader()
           setRecyclerviewAdapter(it.Data)
-        }
+        }else showToast("Batches not found!")
+        hideLoader()
       })
 
       errorResponse.observe(viewLifecycleOwner, Observer {
@@ -79,13 +79,9 @@ class BatchesFragment : BaseFragment(), ItemClickEventListener {
 
       deleteBatchResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
         if (!it.isNullOrBlank()) {
+          hideLoader()
           if (it == SUCCESS) {
-            hideLoader()
-            Toast.makeText(
-              requireContext(),
-              getString(R.string.batch_deleted_successfully),
-              Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(requireContext(), getString(R.string.batch_deleted_successfully), Toast.LENGTH_SHORT).show()
             showLoader(getString(R.string.loading_batches))
             setDeleteBatchesLiveDataValue("")
             getUpcomingBatches()

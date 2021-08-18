@@ -192,13 +192,6 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(),
           showLoader(getString(R.string.deleting_faculty))
           viewModel.deleteOurFaculty(facultyData as Data)
         }
-        else -> {
-          Toast.makeText(
-            requireContext(),
-            getString(R.string.no_faculty_data_found),
-            Toast.LENGTH_SHORT
-          ).show()
-        }
       }
     }
     backButton.setOnClickListener { requireActivity().onBackPressed() }

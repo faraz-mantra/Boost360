@@ -47,7 +47,7 @@ data class DrScoreSetupData(
     ),
     MARKETING_ENGAGEMENT(
       "marketing_enagement",
-      "Marketing & Engagement",
+      "Marketing & engagement",
       R.drawable.ic_marketing_engage_dr
     );
     //Testing Data

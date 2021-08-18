@@ -30,6 +30,9 @@ import com.appservice.viewmodel.UpdatesViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.models.firestore.FirestoreManager
+import com.framework.models.firestore.FirestoreManager.getDrScoreData
+import com.framework.models.firestore.FirestoreManager.updateDocument
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing.Companion.shareUpdates
 import com.framework.utils.showKeyBoard
@@ -37,7 +40,7 @@ import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
-class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
+open class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener {
 
   private val STORAGE_CODE = 120
 
@@ -108,10 +111,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
 
   private fun listUpdateApi(offSet: Int) {
     binding?.emptyView?.gone()
-    hitApi(
-      viewModel?.getMessageUpdates(getRequestUpdate(offSet)),
-      R.string.latest_update_data_not_found
-    )
+    hitApi(viewModel?.getMessageUpdates(getRequestUpdate(offSet)), R.string.latest_update_data_not_found)
   }
 
   override fun onSuccess(it: BaseResponse) {
@@ -123,13 +123,12 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
       isLastPageD = (listFloat.size == data.totalCount ?: 0)
       if (adapterUpdate == null) {
         binding?.rvUpdates?.apply {
-          adapterUpdate =
-            AppBaseRecyclerViewAdapter(baseActivity, listFloat, this@UpdatesBusinessFragment)
+          adapterUpdate = AppBaseRecyclerViewAdapter(baseActivity, listFloat, this@UpdatesBusinessFragment)
           this.adapter = adapterUpdate
         }
       } else adapterUpdate?.notifyDataSetChanged()
-
     } else if (listFloat.isEmpty()) binding?.emptyView?.visible()
+    onBusinessUpdateAddedOrUpdated((data?.floats?: arrayListOf()).size)
     hideProgress()
   }
 
@@ -156,11 +155,11 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   }
 
   override fun showProgress(title: String?, cancelable: Boolean?) {
-    binding?.progress?.visible()
+    showSimmer(true)
   }
 
   override fun hideProgress() {
-    binding?.progress?.gone()
+    showSimmer(false)
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -244,6 +243,28 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
         listFloat.clear()
         offSet = PaginationScrollListener.PAGE_START
         listUpdateApi(offSet = offSet)
+      }
+    }
+  }
+
+  open fun onBusinessUpdateAddedOrUpdated(count: Int) {
+    val instance = FirestoreManager
+    if (instance.getDrScoreData() != null && instance.getDrScoreData()!!.metricdetail != null) {
+      instance.getDrScoreData()!!.metricdetail!!.number_updates_posted = count
+      instance.updateDocument()
+    }
+  }
+
+  private fun showSimmer(isSimmer: Boolean) {
+    binding?.root?.apply {
+      if (isSimmer) {
+        binding?.progressSimmer?.parentShimmerLayout?.visible()
+        binding?.progressSimmer?.parentShimmerLayout?.startShimmer()
+        binding?.rvUpdates?.gone()
+      } else {
+        binding?.rvUpdates?.visible()
+        binding?.progressSimmer?.parentShimmerLayout?.gone()
+        binding?.progressSimmer?.parentShimmerLayout?.stopShimmer()
       }
     }
   }

@@ -442,7 +442,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:fontFamily="@font/semi_bold"
-          android:text="@string/boost_keyboard"
+          android:text="@string/boost_keyboard_n"
           android:textColor="@color/common_text_color"
           android:textSize="@dimen/_16sdp" />
 

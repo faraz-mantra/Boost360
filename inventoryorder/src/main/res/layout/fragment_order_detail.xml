@@ -363,6 +363,7 @@
                 android:drawableTint="@color/colorAccentLight"
                 android:includeFontPadding="false"
                 android:text="@string/email"
+                android:layout_marginEnd="@dimen/size_30"
                 android:textAllCaps="false"
                 android:textColor="@color/colorAccentLight"
                 app:textAllCaps="false"
@@ -371,7 +372,6 @@
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvCustomerContactNumber"
                 style="@style/wrap_wrap"
-                android:layout_marginStart="@dimen/size_30"
                 android:drawableStart="@drawable/ic_call_phone_orange"
                 android:drawablePadding="@dimen/size_8"
                 android:drawableTint="@color/colorAccentLight"
@@ -479,7 +479,7 @@
               android:layout_marginTop="@dimen/size_2"
               android:textColor="@color/black_4a4a4a"
               app:textType="HEADING_6"
-              tools:text="Total Amount: ₹976" />
+              tools:text="Total amount: ₹976" />
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <View

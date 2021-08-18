@@ -33,7 +33,7 @@ class OrderMenuModel(
 
   enum class MenuStatus(var title: String, var color: Int) {
     CONFIRM_ORDER("Confirm order", R.color.black_4a4a4a),
-    CANCEL_ORDER("Cancel order", R.color.watermelon_light_10),
+    CANCEL_ORDER("Cancel order", R.color.watermelon_light),
     MARK_AS_DELIVERED("Mark as delivered", R.color.black_4a4a4a),
     MARK_AS_SHIPPED("Mark as shipped", R.color.black_4a4a4a),
 
@@ -43,7 +43,7 @@ class OrderMenuModel(
     SEND_RE_BOOKING("Re-Booking reminder", R.color.black_4a4a4a),
 
     CONFIRM_APPOINTMENT("Confirm appointment", R.color.black_4a4a4a),
-    CANCEL_APPOINTMENT("Cancel appointment", R.color.watermelon_light_10),
+    CANCEL_APPOINTMENT("Cancel appointment", R.color.watermelon_light),
     MARK_AS_SERVED("Mark as served", R.color.black_4a4a4a),
     START_APPOINTMENT("Start appointment", R.color.black_4a4a4a);
 

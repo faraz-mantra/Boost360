@@ -82,7 +82,7 @@
   <string name="video_consultation_camel_case">Video Consultation</string>
   <string name="please_select_time_slot">Please select time slot</string>
   <string name="confirm_appointment">Confirm appointment</string>
-  <string name="cancel_video_consultation">Cancel Video Consultation</string>
+  <string name="cancel_video_consultation">Cancel video consultation</string>
   <string name="call_details">Call details</string>
   <string name="cancel_appointment"><u>Cancel appointment</u></string>
   <string name="cancel_appointment_n">Cancel appointment</string>
@@ -173,7 +173,7 @@
   <string name="your_store">Your store</string>
   <string name="customer">Customer</string>
   <string name="cancellation_requested_by">Cancelling requested by</string>
-  <string name="reason_for_cancellation_optional">Reason for Cancellation (optional)</string>
+  <string name="reason_for_cancellation_optional">Reason for cancellation (optional)</string>
   <string name="type_if_there_are_any_known_reason">Type, if there are any known reason...</string>
   <string name="type_if_there_are_any_feedback">Type, if there are any feedback...</string>
   <string name="boost_send_reason_for_cancellation_desc">Boost will send an email and an SMS to the customer on your behalf, informing them of the cancellation of this order and the reason for cancellation, if any.</string>
@@ -483,6 +483,7 @@
   <string name="appointment_details_empty">Appointment detail empty.</string>
   <string name="appointment_send_email">Send email</string>
   <string name="call">call</string>
+  <string name="call_n">Call</string>
   <string name="customer_info">Customer info</string>
   <string name="payment_status">Payment status</string>
   <string name="customer_address">Customer address</string>

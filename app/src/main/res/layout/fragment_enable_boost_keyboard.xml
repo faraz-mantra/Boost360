@@ -1,5 +1,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:background="@color/screen_bg">
@@ -61,8 +62,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_20"
             android:gravity="center_vertical"
+            android:textAllCaps="false"
             android:src="@drawable/right_arrow"
-            android:text="Enable Boost Keyboard "
+            android:text="Enable boost keyboard "
             android:textColor="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread"
@@ -111,11 +113,12 @@
           <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/keyboard_switch"
             android:layout_width="0dp"
+            android:textAllCaps="false"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_20"
             android:gravity="center_vertical"
             android:src="@drawable/right_arrow"
-            android:text="Select Boost Keyboard"
+            android:text="Select boost keyboard"
             android:textColor="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread"
@@ -159,7 +162,8 @@
             android:text="3"
             app:layout_constraintEnd_toStartOf="@+id/storage_switch"
             app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
 
           <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/storage_switch"
@@ -167,12 +171,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_20"
             android:gravity="center_vertical"
+            android:textAllCaps="false"
             android:src="@drawable/right_arrow"
-            android:text="Allow Access"
+            android:text="Allow access"
             android:textColor="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toEndOf="@+id/textview3" />
+            app:layout_constraintStart_toEndOf="@+id/textview3"
+            tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
@@ -211,7 +217,8 @@
             android:text="4"
             app:layout_constraintEnd_toStartOf="@+id/microphone_switch"
             app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
 
           <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/microphone_switch"
@@ -220,11 +227,12 @@
             android:layout_marginStart="@dimen/margin_20"
             android:gravity="center_vertical"
             android:src="@drawable/right_arrow"
-            android:text="Microphone Permission"
+            android:text="Microphone permission"
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toEndOf="@+id/textview4" />
+            app:layout_constraintStart_toEndOf="@+id/textview4"
+            tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
       </androidx.constraintlayout.widget.ConstraintLayout>

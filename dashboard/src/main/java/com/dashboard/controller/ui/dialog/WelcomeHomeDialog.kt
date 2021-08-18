@@ -52,6 +52,7 @@ class WelcomeHomeDialog : BaseDialogFragment<DialogWelcomeHomeBinding, BaseViewM
       }
       welcomeData!!.welcomeType?.let { saveWelcomeData(it, true) }
     } else hideProgress()
+    binding?.closeBtn?.setOnClickListener { dismiss() }
   }
 
   fun showProgress(manager: FragmentManager) {
