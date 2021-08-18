@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,11 +18,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.upgrades.UpgradeActivity;
 import com.framework.views.customViews.CustomToolbar;
+import com.framework.views.zero.old.AppFragmentZeroCase;
+import com.framework.views.zero.old.AppOnZeroCaseClicked;
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
+import com.framework.views.zero.old.AppZeroCases;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
@@ -32,6 +39,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
+import com.thinksity.databinding.ActivityVmnCallCardsBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,17 +61,17 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
  * Created by Admin on 27-04-2017.
  */
 
-public class VmnCallCardsActivity extends AppCompatActivity implements View.OnClickListener {
+public class VmnCallCardsActivity extends AppCompatActivity implements View.OnClickListener, AppOnZeroCaseClicked {
 
     private static final String TAG = "VmnCallCardsActivity";
     UserSessionManager sessionManager;
     CardView viewCallLogCard;
-    TextView missedCountText, receivedCountText, allCountText, virtualNumberText, buyItemButton, potentialCallsText, trackAllCall, trackMissedCall, trackConnectedCall, webCallCount, phoneCallCount;
+    TextView missedCountText, receivedCountText, allCountText, potentialCallsText, webCallCount, phoneCallCount;
     Toolbar toolbar;
     ProgressDialog vmnProgressBar;
     ImageView seeMoreLessImage;
     ConstraintLayout parentLayout, helpWebPhoneLayout, primaryLayout;
-    View backgroundLayout, dottedLine1, dottedLine2;
+    View backgroundLayout;
     boolean seeMoreLessStatus = false;
     int totalCallCount = 0;
     int totalPotentialCallCount = 0;
@@ -73,18 +81,23 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     VmnCall_Adapter vmnCallAdapter;
     RecyclerView mRecyclerView;
     String selectedViewType = "ALL";
-    LinearLayout noCallTrackLayout;
     LinearLayout secondLayout;
     LinearLayout firstLayout;
-    TextView tvNoCallRecorded;
-    private LinearLayout seeMoreLess, mainLayout, userInfoLayout, secondaryLayout, websiteHelper, phoneHelper, websiteHelperInfo, phoneHelperInfo;
+    private LinearLayout  mainLayout, secondaryLayout, websiteHelper, phoneHelper, websiteHelperInfo, phoneHelperInfo;
     private UserSessionManager session;
     private int offset = 0;
+    private RelativeLayout seeMoreLess;
+    private ActivityVmnCallCardsBinding binding;
+    private AppFragmentZeroCase appFragmentZeroCase;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vmn_call_cards);
+        session = new UserSessionManager(getApplicationContext(), this);
+
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_vmn_call_cards);
+        appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.BUSINESS_CALLS,this,this,isPremium()).getRequest().build();
+        getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(),appFragmentZeroCase).commit();
         CustomToolbar toolbar = (CustomToolbar) findViewById(R.id.toolbar);
         MixPanelController.track(MixPanelController.VMN_CALL_TRACKER, null);
         setSupportActionBar(toolbar);
@@ -102,9 +115,8 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         missedCountText = (TextView) findViewById(R.id.missed_count);
         receivedCountText = (TextView) findViewById(R.id.received_count);
         allCountText = (TextView) findViewById(R.id.total_count);
-        virtualNumberText = (TextView) findViewById(R.id.tv_virtual_number);
         viewCallLogCard = (CardView) findViewById(R.id.card_view_view_calllog);
-        virtualNumberText.setText(sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
+        binding.tvTrackedCall.setText(getString(R.string.tracked_calls)+" "+sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
         seeMoreLess = findViewById(R.id.see_more_less);
         seeMoreLessImage = findViewById(R.id.see_more_less_image);
         helpWebPhoneLayout = findViewById(R.id.help_web_phone_layout);
@@ -113,23 +125,16 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         websiteHelperInfo = findViewById(R.id.help_website_info);
         phoneHelperInfo = findViewById(R.id.help_phone_info);
         parentLayout = findViewById(R.id.parent_layout);
-        userInfoLayout = findViewById(R.id.user_info_layout);
         backgroundLayout = findViewById(R.id.background_layout);
         potentialCallsText = findViewById(R.id.total_number_of_calls);
-        dottedLine1 = findViewById(R.id.dotted_line1);
-        dottedLine2 = findViewById(R.id.dotted_line2);
-        dottedLine1.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        dottedLine2.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         webCallCount = findViewById(R.id.web_call_count);
         phoneCallCount = findViewById(R.id.phone_call_count);
-        tvNoCallRecorded = findViewById(R.id.tv_no_call_recorded);
         allowCallPlayFlag = true;
 
         //tracking calls
         showTrackedCalls();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.call_recycler);
-        noCallTrackLayout = findViewById(R.id.ll_no_call_tracker);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
@@ -147,7 +152,6 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
-        getCalls();
 
 
         seeMoreLess.setOnClickListener(new View.OnClickListener() {
@@ -209,46 +213,22 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         });
 
         //show or hide if feature is available to user
-        session = new UserSessionManager(getApplicationContext(), this);
         mainLayout = (LinearLayout) findViewById(R.id.main_layout);
         primaryLayout = findViewById(R.id.primary_layout);
         secondLayout = findViewById(R.id.second_layout);
         firstLayout = findViewById(R.id.first_layout);
 
         secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
-        buyItemButton = (TextView) findViewById(R.id.buy_item);
-        List<String> keys = session.getStoreWidgets();
-        Log.i(TAG, "store widgets: "+keys.toString());
-        if (keys != null && keys.contains("CALLTRACKER")) {
-            //oldCode
-//            setVmnTotalCallCount();
-            //newCode
-            getWebsiteCallCount();
-            //old design
-//            mainLayout.setVisibility(View.VISIBLE);
-            //new design
-            primaryLayout.setVisibility(View.VISIBLE);
+        getWebsiteCallCount();
 
-            secondaryLayout.setVisibility(View.GONE);
-            userInfoLayout.setVisibility(View.GONE);
-            backgroundLayout.setVisibility(View.GONE);
+        if (isPremium()) {
+            nonEmptyView();
+            getCalls();
         } else {
-            //old design
-//            mainLayout.setVisibility(View.GONE);
-            //new design
-            primaryLayout.setVisibility(View.GONE);
-
-            secondaryLayout.setVisibility(View.VISIBLE);
-            userInfoLayout.setVisibility(View.VISIBLE);
-            backgroundLayout.setVisibility(View.VISIBLE);
+            emptyView();
         }
 
-        buyItemButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initiateBuyFromMarketplace();
-            }
-        });
+
 
         vmnCallAdapter.setAllowAudioPlay(new AllowAudioPlay() {
             @Override
@@ -264,48 +244,51 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
     }
 
+    private boolean isPremium(){
+        List<String> keys = session.getStoreWidgets();
+
+        if (keys != null && keys.contains("CALLTRACKER")){
+            return true;
+        }
+
+        return false;
+    }
+
     private void showTrackedCalls() {
-        trackAllCall = findViewById(R.id.track_all_call);
-        trackMissedCall = findViewById(R.id.track_missed_call);
-        trackConnectedCall = findViewById(R.id.track_connected_call);
 
-        trackAllCall.setOnClickListener(new View.OnClickListener() {
+        binding.tableLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View v) {
-                trackAllCall.setTextColor(getResources().getColor(R.color.primaryColor));
-                trackMissedCall.setTextColor(getResources().getColor(R.color.common_text_color));
-                trackConnectedCall.setTextColor(getResources().getColor(R.color.common_text_color));
-                if (!selectedViewType.equals("ALL")) {
-                    selectedViewType = "ALL";
-                    updateRecyclerData(null);
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition()==0){
+                    if (!selectedViewType.equals("ALL")) {
+                        selectedViewType = "ALL";
+                        updateRecyclerData(null);
+                    }
+                }else if (tab.getPosition()==1){
+                    if (!selectedViewType.equals("MISSED")) {
+                        selectedViewType = "MISSED";
+                        updateRecyclerData(null);
+                    }
+                }else if (tab.getPosition()==2){
+                    if (!selectedViewType.equals("CONNECTED")) {
+                        selectedViewType = "CONNECTED";
+                        updateRecyclerData(null);
+                    }
                 }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
 
-        trackMissedCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                trackAllCall.setTextColor(getResources().getColor(R.color.common_text_color));
-                trackMissedCall.setTextColor(getResources().getColor(R.color.primaryColor));
-                trackConnectedCall.setTextColor(getResources().getColor(R.color.common_text_color));
-                if (!selectedViewType.equals("MISSED")) {
-                    selectedViewType = "MISSED";
-                    updateRecyclerData(null);
-                }
-            }
-        });
-        trackConnectedCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                trackAllCall.setTextColor(getResources().getColor(R.color.common_text_color));
-                trackMissedCall.setTextColor(getResources().getColor(R.color.common_text_color));
-                trackConnectedCall.setTextColor(getResources().getColor(R.color.primaryColor));
-                if (!selectedViewType.equals("CONNECTED")) {
-                    selectedViewType = "CONNECTED";
-                    updateRecyclerData(null);
-                }
-            }
-        });
+
     }
 
 
@@ -339,15 +322,9 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
                     offset += 100;
                 }
                 if (size < 1) {
-                    mRecyclerView.setVisibility(View.GONE);
-                    firstLayout.setVisibility(View.GONE);
-                    secondLayout.setVisibility(View.GONE);
-                    noCallTrackLayout.setVisibility(View.VISIBLE);
+                    emptyView();
                 } else {
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    firstLayout.setVisibility(View.VISIBLE);
-                    secondLayout.setVisibility(View.VISIBLE);
-                    noCallTrackLayout.setVisibility(View.GONE);
+                    nonEmptyView();
                 }
             }
 
@@ -374,17 +351,6 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         }
         Log.i(TAG, "updateRecyclerData: header list size "+getSelectedTypeList(headerList).size());
         vmnCallAdapter.updateList(getSelectedTypeList(headerList));
-        if (getSelectedTypeList(headerList).size() == 0) {
-            noCallTrackLayout.setVisibility(View.VISIBLE);
-            if (selectedViewType.equals("CONNECTED")) {
-                tvNoCallRecorded.setText("No calls connected yet");
-            } else if (selectedViewType.equals("MISSED")) {
-                tvNoCallRecorded.setText("No missed calls yet");
-            }
-
-        } else {
-            noCallTrackLayout.setVisibility(View.GONE);
-        }
 
     }
 
@@ -628,5 +594,37 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
         }, 1000);
+    }
+
+    private void nonEmptyView() {
+        binding.primaryLayout.setVisibility(View.VISIBLE);
+        binding.childContainer.setVisibility(View.GONE);
+    }
+
+
+    private void emptyView() {
+        binding.primaryLayout.setVisibility(View.GONE);
+        binding.childContainer.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void primaryButtonClicked() {
+        initiateBuyFromMarketplace();
+    }
+
+    @Override
+    public void secondaryButtonClicked() {
+
+    }
+
+    @Override
+    public void ternaryButtonClicked() {
+
+    }
+
+    @Override
+    public void appOnBackPressed() {
+
     }
 }

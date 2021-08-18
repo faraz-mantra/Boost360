@@ -2131,7 +2131,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="load_more_calls">Load more calls</string>
   <string name="your_number">Your number</string>
   <string name="_040969578" translatable="false">040969578</string>
-  <string name="view_potential_calls_0">View potential calls (0)</string>
+  <string name="view_potential_calls_0">Potential calls (0)</string>
   <string name="zero">0</string>
   <string name="title">title</string>
   <string name="clicks">Clicks</string>
@@ -3068,6 +3068,11 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="domain_is_a_great_first_step_towards_building_your_brand_on_web_n">Domain is a great first step towards building your brand on web.</string>
   <string name="boost_keyboard_themes_n">Boost keyboard themes</string>
   <string name="seasional_offer_n">Seasonal Offers</string>
+  <string name="mobile">Mobile</string>
+  <string name="desktop">Desktop</string>
+  <string name="missed">Missed</string>
+  <string name="connected">Connected</string>
+  <string name="tracked_calls">Tracked calls on</string>
 
   <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
   <!--    <string name="ir_statusBarColor">#ffb900</string>-->

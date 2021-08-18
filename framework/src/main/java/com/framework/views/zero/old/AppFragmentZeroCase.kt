@@ -465,22 +465,38 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           )
       }
       BUSINESS_CALLS -> {
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.this_is_premium_feature))
+        var zeroCaseButton:ZeroCaseButton?=null
+        if (isPremium){
+          title = context.getString(R.string.no_call_tracked_yet)
+          zeroCaseButton = ZeroCaseButton(
+            secondaryButtonIconLeft = R.drawable.exo_icon_play,
+            secondaryButtonTitle = context.getString(
+              R.string.watch_how_it_works
+            )
+          )
+        }else{
+          title = context.getString(R.string.this_is_premium_feature)
+          primaryButtonTitle = context.getString(R.string.activate_this_feature)
+          primaryButtonIconLeft = R.drawable.ic_lockkey
+          zeroCaseButton = ZeroCaseButton(
+            primaryButtonIconLeft =primaryButtonIconLeft,
+            primaryButtonTitle =primaryButtonTitle,
+            primaryButtonBackground = R.color.colorAccent,
+            secondaryButtonIconLeft = R.drawable.exo_icon_play,
+            secondaryButtonTitle = context.getString(
+              R.string.watch_how_it_works
+            )
+          )
+        }
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(
+          title)
           .setDescription(context.getString(R.string.business_calls_description))
           .setIcon(R.drawable.ic_phoneincoming)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
           .setListener(onZeroCaseClicked)
           .isPremium(isPremium)
           .setButton(
-            ZeroCaseButton(
-              primaryButtonIconLeft = R.drawable.ic_lockkey,
-              primaryButtonTitle = context.getString(R.string.activate_this_feature),
-              primaryButtonBackground = R.color.colorAccent,
-              secondaryButtonIconLeft = R.drawable.exo_icon_play,
-              secondaryButtonTitle = context.getString(
-                R.string.watch_how_it_works
-              )
-            )
+            zeroCaseButton
           )
       }
 

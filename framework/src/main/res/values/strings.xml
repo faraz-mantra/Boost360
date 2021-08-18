@@ -124,5 +124,6 @@
   <string name="spa_zero_case_desc">You can easily add detailed information about your services and their prices to enable online appointments.</string>
   <string name="no_service_created_yet">No service added yet</string>
   <string name="lets_add_food_item_to_this_menu">Let\'s add food items to your menu</string>
+    <string name="no_call_tracked_yet">No call tracked yet!</string>
 
 </resources>
