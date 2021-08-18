@@ -33,7 +33,7 @@
   <string name="offer_start_date">Start Date:</string>
   <string name="offer_end_date">End Date:</string>
   <string name="offer_discount">Discount Percentage:</string>
-  <string name="createOffersTitle">Post An Offer</string>
+  <string name="createOffersTitle">Post an Offer</string>
   <string name="offers_title_error">Please enter the title</string>
   <string name="offers_desc_error">Please enter description for the offer</string>
   <string name="offers_start_date_error">Please choose start date for the offer</string>
@@ -622,7 +622,7 @@
   <string name="log_in">&#160;oturum aç</string>
   <string name="phone_number">Telefon numarası</string>
   <string name="share_website">Share web sitesi</string>
-  <string name="tell_world_about_your_business_on_facebook_twitter">facebook ve twitterTell facebook ve twitterTell facebook ve twitterTell facebook ve twitterTell işinizle ilgili dünyanın üzerinde iş paylaşımına onu hakkında Dünya üzerinde iş paylaşımına onu hakkında Dünya üzerinde iş payı bu konuda dünyanın üzerinde iş payı bu konuda dünyaya anlatmak facebook paylaşmak ve facebook ve twitter üzerinden iş payı hakkında bu dünyayı twitterTell</string>
+  <string name="tell_world_about_your_business_on_facebook_twitter">Facebook ve TwitterTell Facebook ve TwitterTell Facebook ve TwitterTell Facebook ve TwitterTell işinizle ilgili dünyanın üzerinde iş paylaşımına onu hakkında Dünya üzerinde iş paylaşımına onu hakkında Dünya üzerinde iş payı bu konuda dünyanın üzerinde iş payı bu konuda dünyaya anlatmak Facebook paylaşmak ve Facebook ve Twitter üzerinden iş payı hakkında bu dünyayı TwitterTell</string>
   <string name="search">Arama</string>
   <string name="write_page_title">(Neden Biz Hakkımızda örneğin? Vs.) sayfa başlığını yazın</string>
   <string name="describe_in_detail">ayrıntılı bir şekilde açıklayın</string>
@@ -856,7 +856,7 @@
     <item>Now your customers can reach your store\neven without an internet connection.</item>
   </array>
   <string name="alternate_number3">Alternate Number 3</string>
-  <string name="subscriber_second_text">Subscription is a great way to engage with your existing customers and tell them about latest offers or new product launches</string>
+  <string name="subscriber_second_text">Subscription is a great way to engage with your existing customers and tell them about latest offers or new product launches.</string>
   <string name="find_your_subscribers">Find your subscribers</string>
   <string name="title_for_quikrr">Write message title(Quikrr only)</string>
   <string name="guidlines">Guidelines for posting to Quikr</string>

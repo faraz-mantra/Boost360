@@ -183,7 +183,7 @@ public class ContactInformationActivity extends BaseActivity {
                 .autoDismiss(false)
                 .canceledOnTouchOutside(false)
                 .negativeColorRes(R.color.gray_transparent)
-                .positiveColorRes(R.color.primary_color)
+                .positiveColorRes(R.color.colorAccentLight)
                 .onPositive((dialog, which) -> {
 
                     String numText = number.getText().toString().trim();
@@ -218,7 +218,7 @@ public class ContactInformationActivity extends BaseActivity {
                 .positiveText("VERIFY")
                 .canceledOnTouchOutside(false)
                 .negativeColorRes(R.color.gray_transparent)
-                .positiveColorRes(R.color.primary_color)
+                .positiveColorRes(R.color.colorAccentLight)
                 .onPositive((dialog, which) -> {
 
                     String numText = otp.getText().toString().trim();
@@ -245,10 +245,10 @@ public class ContactInformationActivity extends BaseActivity {
         }
 
         return new MaterialDialog.Builder(ContactInformationActivity.this)
-                .title("Call Tracker is enabled")
+                .title("Call tracker is enabled")
                 .customView(dialogView, false)
                 .positiveText(getString(R.string.ok))
-                .positiveColorRes(R.color.primary_color)
+                .positiveColorRes(R.color.colorAccentLight)
                 .callback(new MaterialDialog.ButtonCallback() {
 
                     @Override
@@ -369,9 +369,10 @@ public class ContactInformationActivity extends BaseActivity {
 
     private void onContactInfoAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData()==null || instance.getDrScoreData().getMetricdetail() == null) return;
-        instance.getDrScoreData().getMetricdetail().setBoolean_add_contact_details(isAdded);
-        instance.updateDocument();
+        if (instance.getDrScoreData() != null && instance.getDrScoreData().getMetricdetail() != null) {
+            instance.getDrScoreData().getMetricdetail().setBoolean_add_contact_details(isAdded);
+            instance.updateDocument();
+        }
     }
 
 
@@ -433,7 +434,7 @@ public class ContactInformationActivity extends BaseActivity {
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, binding.editDisplayContactNumber2.getText().toString());
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3, binding.editDisplayContactNumber3.getText().toString());
 
-                Methods.showSnackBarPositive(ContactInformationActivity.this, "Information Updated Successfully");
+                Methods.showSnackBarPositive(ContactInformationActivity.this, "Information updated successfully");
                 WebEngageController.trackEvent(BUSINESS_CONTACT_ADDED, BUSINESS_DESCRIPTION, session.getFpTag());
                 onContactInfoAddedOrUpdated(true);
             }

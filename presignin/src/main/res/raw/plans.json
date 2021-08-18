@@ -19,11 +19,6 @@
     ],
     "extraProperties": [
       {
-        "widget": "EMAILACCOUNTS3",
-        "key": "LIMIT",
-        "value": 3
-      },
-      {
         "widget": "PRODUCTCATALOGUE",
         "key": "LIMIT",
         "value": 10

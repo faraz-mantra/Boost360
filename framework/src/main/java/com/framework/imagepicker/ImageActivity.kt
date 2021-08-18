@@ -308,21 +308,18 @@ open class ImageActivity : AppCompatActivity() {
 
     override fun doInBackground(vararg params: Void?): Void? {
       for (mPath in listOfImgs) {
-        val file = File(mPath)
-        var destinationFile: File? = null
-        destinationFile = if (mImgConfig!!.isImgFromCamera) {
-          file
-        } else {
-          File(mImgConfig.directory, Utility.randomString + mImgConfig.extension.value)
-        }
-        destinationPaths.add(destinationFile.absolutePath)
         try {
+          val file = File(mPath)
+          var destinationFile: File? = null
+          destinationFile = if (mImgConfig!!.isImgFromCamera) {
+            file
+          } else {
+            File(mImgConfig.directory, Utility.randomString + mImgConfig.extension.value)
+          }
+          destinationPaths.add(destinationFile.absolutePath)
+
           Utility.compressAndRotateIfNeeded(
-            file,
-            destinationFile,
-            mImgConfig.compressLevel.value,
-            mImgConfig.reqWidth,
-            mImgConfig.reqHeight
+            file, destinationFile, mImgConfig.compressLevel.value, mImgConfig.reqWidth, mImgConfig.reqHeight
           )
         } catch (e: IOException) {
           e.printStackTrace()

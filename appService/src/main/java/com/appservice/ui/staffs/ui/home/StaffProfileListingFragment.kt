@@ -224,7 +224,6 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   private fun onStaffAddedOrUpdated(b: Boolean) {
     val instance = FirestoreManager
-    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_create_staff = b
     instance.updateDocument()
   }
@@ -398,8 +397,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         "userPurchsedWidgets",
         ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList())
       )
-      intent.putExtra("email", sessionLocal.fPEmail ?: "ria@nowfloats.com")
-      intent.putExtra("mobileNo", sessionLocal.fPPrimaryContactNumber ?: "9160004303")
+      intent.putExtra("email", sessionLocal.userProfileEmail ?: "ria@nowfloats.com")
+      intent.putExtra("mobileNo", sessionLocal.userPrimaryMobile ?: "9160004303")
       intent.putExtra("profileUrl", sessionLocal.fPLogo)
       intent.putExtra("buyItemKey", "${StatusKyc.STAFFPROFILE.name}15")// feature key
       baseActivity.startActivity(intent)

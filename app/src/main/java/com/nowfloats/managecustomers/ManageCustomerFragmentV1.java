@@ -302,7 +302,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                                 startActivity(launchIntent);
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Toast.makeText(getActivity(), "Problem to open whatsApp", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Problem to open WhatsApp", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

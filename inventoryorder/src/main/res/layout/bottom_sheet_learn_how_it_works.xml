@@ -64,8 +64,10 @@
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/civ_close"
-        style="@style/wrap_wrap"
+        android:layout_width="@dimen/size_30"
+        android:layout_height="@dimen/size_30"
         android:src="@drawable/ic_close_grey_bottom_sheet"
+        android:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.93"

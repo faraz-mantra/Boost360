@@ -53,7 +53,7 @@
           style="@style/Onboarding.Registration.FormTitleStyle"
           android:alpha="0"
           tools:alpha="1"
-          tools:text="Do you already have a twitter account for" />
+          tools:text="Do you already have a Twitter account for" />
 
 
         <com.framework.views.customViews.CustomTextView

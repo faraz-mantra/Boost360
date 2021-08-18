@@ -71,7 +71,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020095
+        versionCode 2020020096
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -143,7 +143,7 @@ android {
             buildConfigField "String", "APXOR_BUNDLED_ID", '"0092e23d-20a6-49b9-82f9-afdc2d4872d3"'
         }
         partone {
-            versionName "6.0.4"
+            versionName "6.0.5"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'

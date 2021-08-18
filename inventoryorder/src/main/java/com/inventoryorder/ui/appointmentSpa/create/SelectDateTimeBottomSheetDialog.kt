@@ -27,8 +27,7 @@ class SelectDateTimeBottomSheetDialog(
   private var selectedService: ServiceItem,
   private var dateCounter: Int,
   private var dateChange: DateChangedListener,
-) : BaseBottomSheetDialog<BottomSheetSelectDateTimeBinding, BaseViewModel>(),
-  RecyclerItemClickListener {
+) : BaseBottomSheetDialog<BottomSheetSelectDateTimeBinding, BaseViewModel>(), RecyclerItemClickListener {
 
   private var staffAdapter: AppBaseRecyclerViewAdapter<Staff>? = null
   private var timeSlotsAdapter: AppBaseRecyclerViewAdapter<Slots>? = null
@@ -36,8 +35,7 @@ class SelectDateTimeBottomSheetDialog(
   private var dateChangedListener: DateChangedListener? = null
   private var selectedTimeSlot: Slots? = null
 
-  var onClicked: (appointmentRequestModel: AppointmentRequestModel, dateCounter: Int) -> Unit =
-    { _: AppointmentRequestModel, _: Int -> }
+  var onClicked: (appointmentRequestModel: AppointmentRequestModel, dateCounter: Int) -> Unit = { _: AppointmentRequestModel, _: Int -> }
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_select_date_time
@@ -50,16 +48,12 @@ class SelectDateTimeBottomSheetDialog(
 
   override fun onCreateView() {
     setOnClickListener(
-      binding?.buttonDone,
-      binding?.tvCancel,
-      binding?.imageNext,
-      binding?.imagePrev
+      binding?.buttonDone, binding?.tvCancel, binding?.imageNext, binding?.imagePrev
     )
     binding?.textServiceName?.text = selectedService.Name
     binding?.textDuration?.text = "${selectedService.Duration} min"
     binding?.textSelectedDate?.text = getDisplayDate(getDateTime())
     dateChangedListener = dateChange
-
     setStaffAdapter()
   }
 

@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Message
+import android.util.Log
+import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.webkit.*
@@ -34,6 +37,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
   override fun onCreateView() {
     super.onCreateView()
     domainUrl = intent?.extras?.getString(IntentConstant.DOMAIN_URL.name) ?: ""
+    Log.i(TAG, "domainUrl: "+domainUrl)
     if (domainUrl.isEmpty()) {
       showShortToast(getString(R.string.invalid_url))
       return
@@ -54,9 +58,22 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
     webSettings?.setSupportMultipleWindows(true)
     webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
     webSettings?.domStorageEnabled = true
-    
+
+    binding?.webview?.webChromeClient = object : WebChromeClient() {
+      override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
+        val result = view!!.hitTestResult
+        val data = result.extra
+        val context = view.context
+        if (data != null) {
+          val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data))
+          context.startActivity(browserIntent)
+        }
+        return false
+      }
+    }
     binding?.webview?.webViewClient = object : WebViewClient() {
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+        Log.i(TAG, "shouldOverrideUrlLoading: " + url)
         binding?.progressBar?.visible()
         return if (
           url.startsWith("mailto:") || url.startsWith("tel:") || url.startsWith("geo:")
@@ -118,7 +135,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
   }
 
   override fun getToolbarTitleColor(): Int? {
-    return ContextCompat.getColor(this,R.color.black_4a4a4a)
+    return ContextCompat.getColor(this, R.color.black_4a4a4a)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
