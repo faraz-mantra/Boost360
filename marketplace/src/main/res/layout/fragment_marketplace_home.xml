@@ -268,7 +268,7 @@
                   app:layout_constraintEnd_toEndOf="parent"
                   app:layout_constraintStart_toStartOf="parent"
                   app:layout_constraintTop_toTopOf="parent"
-                  tools:listitem="@layout/marketplace_snippet_item" />
+                  tools:listitem="@layout/mp_promo_banner_item" />
 
                 <com.framework.views.dotsindicator.DotsIndicator
                   android:id="@+id/mp_banner_dot_indicator"
