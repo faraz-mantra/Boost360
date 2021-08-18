@@ -1,22 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="app_name">framwork</string>
-  <string name="loading">Loading...</string>
-  <string name="empty" />
-  <string name="ellipsis">&#8230;</string>
+    <string name="app_name">framwork</string>
+    <string name="loading">Loading...</string>
+    <string name="empty" />
+    <string name="ellipsis">&#8230;</string>
 
-  <!--media picker-->
-  <string name="media_picker_select_from">Choose an action</string>
-  <string name="media_picker_camera">Camera</string>
-  <string name="media_picker_gallery">Gallery</string>
-  <string name="media_picker_ok" tools:ignore="Typos">Ok</string>
-  <string name="media_picker_cancel">Cancel</string>
-  <string name="media_picker_some_permission_is_denied">Some Permission is Denied</string>
-  <string name="media_picker_you_need_to_grant_access_to">You need to grant access to</string>
-  <string name="media_picker_read_Write_external_storage"><![CDATA[Read & Write External Storage.]]></string>
-  <string name="whatsapp_package">com.whatsapp</string>
-  <string name="facebook_package">com.facebook.katana</string>
-  <string name="twitter_package">com.twitter.android</string>
+    <!--media picker-->
+    <string name="media_picker_select_from">Choose an action</string>
+    <string name="media_picker_camera">Camera</string>
+    <string name="media_picker_gallery">Gallery</string>
+    <string name="media_picker_ok" tools:ignore="Typos">Ok</string>
+    <string name="media_picker_cancel">Cancel</string>
+    <string name="media_picker_some_permission_is_denied">Some Permission is Denied</string>
+    <string name="media_picker_you_need_to_grant_access_to">You need to grant access to</string>
+    <string name="media_picker_read_Write_external_storage"><![CDATA[Read & Write External Storage.]]></string>
+    <string name="whatsapp_package">com.whatsapp</string>
+    <string name="facebook_package">com.facebook.katana</string>
+    <string name="twitter_package">com.twitter.android</string>
 
-  <string name="read_more_n">…View more</string>
+    <string name="read_more_n">…View more</string>
 
 </resources>

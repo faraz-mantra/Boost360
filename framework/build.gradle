@@ -136,4 +136,8 @@ dependencies {
     // sms receiver apis
     api 'com.google.android.gms:play-services-auth:19.2.0'
     api 'com.google.android.gms:play-services-auth-api-phone:17.5.1'
+
+    //svg renderer in imageview
+    api 'com.caverock:androidsvg-aar:1.4'
+
 }

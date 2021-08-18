@@ -43,6 +43,7 @@ import com.framework.utils.AppsFlyerUtils
 import com.framework.utils.ConversionUtils
 import com.framework.utils.fromHtml
 import com.framework.utils.roundToFloat
+import com.framework.views.PocTestingActivity
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
 import com.framework.webengageconstant.*
@@ -92,6 +93,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onCreateView() {
     super.onCreateView()
+    startActivity(Intent(this,PocTestingActivity::class.java))
     session = UserSessionManager(this)
     session?.let { deepLinkUtil = DeepLinkUtil(this, it) }
     mNavController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
