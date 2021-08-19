@@ -3,7 +3,9 @@ package com.inventoryorder.ui.order.createorder
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.utils.NumbersToWords
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
@@ -38,11 +40,7 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
     type = arguments?.getString(IntentConstant.TYPE_APPOINTMENT.name)
     orderId = arguments?.getString(IntentConstant.ORDER_ID.name)
     getOrderDetails()
-    setOnClickListener(
-      binding?.buttonInitiateNewOrder,
-      binding?.textInvoice,
-      binding?.buttonConfirmOrder
-    )
+    setOnClickListener(binding?.buttonInitiateNewOrder, binding?.textInvoice, binding?.buttonConfirmOrder)
   }
 
   private fun setData(orderItem: OrderItem) {
@@ -53,8 +51,7 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
       binding?.textPaymentStatus?.text = orderItem.PaymentDetails?.statusValue() ?: ""
       binding?.textOrderIdValue?.text = "#${orderItem.ReferenceNumber}"
       binding?.textName?.text = orderItem.BuyerDetails?.ContactDetails?.FullName ?: ""
-      binding?.textTotalAmount?.text =
-        "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem.BillingDetails?.GrossAmount ?: 0.0}"
+      binding?.textTotalAmount?.text = "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem.BillingDetails?.GrossAmount ?: 0.0}"
 
       binding?.linearItemQty?.visibility = View.GONE
       binding?.linearPaymentMode?.visibility = View.GONE
@@ -66,15 +63,14 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
     } else {
       binding?.textOrderIdValue?.text = "#${orderItem.ReferenceNumber}"
       binding?.textName?.text = orderItem.BuyerDetails?.ContactDetails?.FullName ?: ""
-      binding?.textCount?.text =
-        "${NumbersToWords.solution(orderItem.Items?.size ?: 0)} (${orderItem.Items?.size})"
+      binding?.textCount?.text = "${NumbersToWords.solution(orderItem.Items?.size ?: 0)} (${orderItem.Items?.size})"
       binding?.textPaymentLink?.text = orderItem.PaymentDetails?.methodValue() ?: ""
       binding?.textPaymentStatus?.text = orderItem.PaymentDetails?.statusValue() ?: ""
       binding?.textDeliveryType?.text = orderItem.LogisticsDetails?.DeliveryMode ?: ""
-      binding?.textTotalAmount?.text =
-        "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem?.BillingDetails?.GrossAmount ?: 0.0}"
+      binding?.textTotalAmount?.text = "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem?.BillingDetails?.GrossAmount ?: 0.0}"
     }
-
+    if (orderItem.BillingDetails?.InvoiceUrl.isNullOrEmpty().not()) binding?.invoiceView?.visible()
+    else binding?.invoiceView?.invisible()
   }
 
   fun getBundleData(): Bundle {
@@ -91,18 +87,13 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
 
   private fun getOrderDetails() {
     showProgress()
-    viewModel?.assuredPurchaseGetOrderDetails(preferenceData?.clientId, orderId)
-      ?.observeOnce(viewLifecycleOwner, {
-        hideProgress()
-        if (it.isSuccess()) {
-          orderResponse = (it as? OrderDetailResponse)?.Data
-          orderResponse?.let { it1 -> setData(it1) }
-        } else showLongToast(
-          if (it.message()
-              .isNotEmpty()
-          ) it.message() else getString(R.string.unable_to_create_order)
-        )
-      })
+    viewModel?.assuredPurchaseGetOrderDetails(preferenceData?.clientId, orderId)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        orderResponse = (it as? OrderDetailResponse)?.Data
+        orderResponse?.let { it1 -> setData(it1) }
+      } else showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
+      hideProgress()
+    })
   }
 
   override fun onClick(v: View) {

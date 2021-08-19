@@ -307,7 +307,7 @@
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and Engagement"
+          "title": "Marketing and engagement"
         },
         {
           "isExpend": true,
@@ -336,8 +336,8 @@
             },
             {
               "businessType": "search_analytics",
-              "isLock": false,
-              "isHide": true,
+              "isLock": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Search\nanalytics"
             },
@@ -683,7 +683,7 @@
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and Engagement"
+          "title": "Marketing and engagement"
         },
         {
           "isExpend": true,
@@ -712,8 +712,8 @@
             },
             {
               "businessType": "search_analytics",
-              "isLock": false,
-              "isHide": true,
+              "isLock": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Search\nanalytics"
             },
@@ -860,18 +860,11 @@
           "isLastSeen": false,
           "manageBusinessList": [
             {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
-            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -1045,7 +1038,7 @@
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and Engagement"
+          "title": "Marketing and engagement"
         },
         {
           "isExpend": true,
@@ -1074,8 +1067,8 @@
             },
             {
               "businessType": "search_analytics",
-              "isLock": false,
-              "isHide": true,
+              "isLock": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Search\nanalytics"
             },
@@ -1243,18 +1236,11 @@
           "isLastSeen": false,
           "manageBusinessList": [
             {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
-            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -1428,7 +1414,7 @@
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and Engagement"
+          "title": "Marketing and engagement"
         },
         {
           "isExpend": true,
@@ -1457,8 +1443,8 @@
             },
             {
               "businessType": "search_analytics",
-              "isLock": false,
-              "isHide": true,
+              "isLock": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Search\nanalytics"
             },
@@ -1626,18 +1612,11 @@
           "isLastSeen": false,
           "manageBusinessList": [
             {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
-            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -1818,7 +1797,7 @@
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and Engagement"
+          "title": "Marketing and engagement"
         },
         {
           "isExpend": true,
@@ -1847,8 +1826,8 @@
             },
             {
               "businessType": "search_analytics",
-              "isLock": false,
-              "isHide": true,
+              "isLock": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Search\nanalytics"
             },
@@ -2030,18 +2009,11 @@
           "isLastSeen": false,
           "manageBusinessList": [
             {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
-            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -2215,7 +2187,7 @@
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and Engagement"
+          "title": "Marketing and engagement"
         },
         {
           "isExpend": true,
@@ -2244,8 +2216,8 @@
             },
             {
               "businessType": "search_analytics",
-              "isLock": false,
-              "isHide": true,
+              "isLock": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Search\nanalytics"
             },
@@ -2406,18 +2378,11 @@
           "isLastSeen": false,
           "manageBusinessList": [
             {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
-            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -2591,7 +2556,7 @@
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and Engagement"
+          "title": "Marketing and engagement"
         },
         {
           "isExpend": true,
@@ -2620,8 +2585,8 @@
             },
             {
               "businessType": "search_analytics",
-              "isLock": false,
-              "isHide": true,
+              "isLock": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Search\nanalytics"
             },
@@ -2782,18 +2747,11 @@
           "isLastSeen": false,
           "manageBusinessList": [
             {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
-            {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -2967,7 +2925,7 @@
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and Engagement"
+          "title": "Marketing and engagement"
         },
         {
           "isExpend": true,
@@ -2996,8 +2954,8 @@
             },
             {
               "businessType": "search_analytics",
-              "isLock": false,
-              "isHide": true,
+              "isLock": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Search\nanalytics"
             },
@@ -3157,19 +3115,13 @@
           "isExpend": true,
           "isLastSeen": false,
           "manageBusinessList": [
-            {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
+            
             {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -3343,7 +3295,7 @@
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and Engagement"
+          "title": "Marketing and engagement"
         },
         {
           "isExpend": true,
@@ -3372,8 +3324,8 @@
             },
             {
               "businessType": "search_analytics",
-              "isLock": false,
-              "isHide": true,
+              "isLock": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Search\nanalytics"
             },
@@ -3547,19 +3499,13 @@
           "isExpend": true,
           "isLastSeen": false,
           "manageBusinessList": [
-            {
-              "businessType": "business_name_d",
-              "isLock": false,
-              "isHide": false,
-              "premiumCode": "",
-              "title": "Business\nname"
-            },
+            
             {
               "businessType": "business_description_d",
               "isLock": false,
               "isHide": false,
               "premiumCode": "",
-              "title": "Business\ndescription"
+              "title": "Business\ninfo"
             },
             {
               "businessType": "clinic_logo",
@@ -3733,7 +3679,7 @@
             }
           ],
           "subTitle": "Tools to help you increase your brand awareness and reach.",
-          "title": "Marketing and Engagement"
+          "title": "Marketing and engagement"
         },
         {
           "isExpend": true,
@@ -3762,8 +3708,8 @@
             },
             {
               "businessType": "search_analytics",
-              "isLock": false,
-              "isHide": true,
+              "isLock": true,
+              "isHide": false,
               "premiumCode": "",
               "title": "Search\nanalytics"
             },

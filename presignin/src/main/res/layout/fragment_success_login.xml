@@ -64,6 +64,7 @@
       android:fontFamily="@font/semi_bold"
       android:text="@string/change_number"
       android:textAllCaps="false"
+      app:fontFamily="@font/semi_bold"
       android:textColor="@color/colorPrimary"
       app:layout_constraintTop_toBottomOf="@id/go_dashboard_bt"
       app:textType="BODY_1"

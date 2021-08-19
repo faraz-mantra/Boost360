@@ -46,8 +46,8 @@ data class PaymentDetailsN(
   }
 
   enum class STATUS(var title: String) {
-    PENDING("Pending"), INITIATED("Initiated"), SUCCESS("Received"), INPROCESS("In-Progress"),
-    SUBMITTEDFORREFUND("Submit for refund"), REFUNDED("Refunded"), REFUNDDENIED("Refund-Denied"),
+    PENDING("Pending"), INITIATED("Initiated"), SUCCESS("Success"), INPROCESS("In progress"),
+    SUBMITTEDFORREFUND("Submit for refund"), REFUNDED("Refunded"), REFUNDDENIED("Refund denied"),
     FAILED("Failed"), CANCELLED("Cancelled");
 
     companion object {

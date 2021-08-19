@@ -135,7 +135,7 @@
                       android:maxLines="2"
                       android:fontFamily="@font/regular"
                       android:text="@string/improve_your_score_to_90"
-                      android:textColor="@color/gray_text_hint"
+                      android:textColor="@color/white"
                       app:textType="OVERLINE" />
                   </androidx.appcompat.widget.LinearLayoutCompat>
 

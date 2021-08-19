@@ -52,8 +52,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class CreateOffersActivity extends AppCompatActivity implements
-        OfferImageUploadService.OfferImageUploadComplete {
+public class CreateOffersActivity extends AppCompatActivity implements OfferImageUploadService.OfferImageUploadComplete {
 
     private final int gallery_req_id = 6;
     private final int media_req_id = 5;

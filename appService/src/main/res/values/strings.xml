@@ -141,7 +141,7 @@
   <string name="update_your_kyc">Update your KYC</string>
   <string name="start_branded_payment_desc">To start using your \'Branded custom payment gateway\' on your boost website, we\'ll need to verify your business details along with a bank account (if not provided already) using your business PAN card and 1-month bank statement respectively.</string>
   <string name="view_details">View details</string>
-  <string name="business_kyc_verification_underway">Business KYC\nVerification Underway...</string>
+  <string name="business_kyc_verification_underway">Business KYC\nverification underway...</string>
   <string name="business_kyc_verify">Business KYC verify</string>
   <string name="submit_verification">Submit for verification</string>
   <string name="business_kyc_verification_underway_n">Business KYC verification underway</string>
@@ -309,7 +309,7 @@
   <string name="error_upload_secondary_images">Error while uploading secondary product images, please try again.</string>
   <string name="error_upload_product_image">Product image uploading error, please try again.</string>
   <string name="error_unknown">Oops some unknown error occurred, please try again.</string>
-  <string name="clients_can_book_this_service_for_free">Clients can book this service for FREE.</string>
+  <string name="clients_can_book_this_service_for_free">Clients can book this service for FREE</string>
   <string name="select_service_delivery_config">Select service delivery config</string>
   <string name="channels_service_specifications_service_category_etc">Channels, Service specifications, Weekly schedule, etc.</string>
   <string name="paste_your_url_here">Paste your URL here...</string>
@@ -538,11 +538,11 @@
   <string name="want_to_sell_this_product_online">Want to sell this product online?</string>
   <string name="price_includes_taxes">Price includes taxes</string>
   <string name="price_without_tax_inr">Price without tax (INR)</string>
-  <string name="xx_xxx">XX,XXX</string>
+  <string name="xx_xxx">XXXX</string>
   <string name="discount_amt_inr">Discount amt. (INR)</string>
   <string name="xxx">XXX</string>
   <string name="final_price">Final price</string>
-  <string name="inr_xx_xxx">INR XX,XXX</string>
+  <string name="inr_xx_xxx">INR XXXX</string>
   <string name="select_how_you_want_to_receive_money">Select, how you want to receive money.</string>
   <string name="kotak_mahindra_bnak_345547684878">Kotak Mahindra Bnak - 345547684878</string>
   <string name="add_external_url">Add external URL</string>
@@ -556,7 +556,7 @@
   <string name="_244_5_sector_5_sukhdev_vihar_new_delhi_100065">• 244/5, Sector -5, Sukhdev Vihar, New Delhi - 100065</string>
   <string name="product_delivery_at">product delivery at:</string>
   <string name="my_business_location_">My business Location</string>
-  <string name="channels_product_specifications_product_category_etc">Channels, Product Specifications, Product category, etc.</string>
+  <string name="channels_product_specifications_product_category_etc">Channels, Product specifications, Product category, etc.</string>
   <string name="e_g_served_by">e.g. Served by</string>
   <string name="ms_shruti">Ms. Shruti</string>
   <string name="package_weight">Package weight</string>
@@ -596,6 +596,12 @@
   <string name="add_product_image_n">Add product image</string>
   <string name="post_n">Post</string>
   <string name="refreshing_status">Refreshing status...</string>
+  <string name="total_money_collected_till_date">Total money collected till date</string>
+  <string name="your_self_branded_npayment_gateway_is_live">Your Self Branded\nPayment gateway is LIVE!</string>
+  <string name="all_payment_on_your_boost_website_are_processed_through_this_payment_gateway_instead_of_default_boost_payment_gateway_when_you_add_a_new_product_service_on_your_business_website_please_make_sure_to_select_this_payment_gateway">All payment on your Boost website are processed through this payment gateway instead of default Boost Payment Gateway. When you add a new product service on your business website please make sure to select this payment gateway.</string>
+  <string name="money_refund_till_date">Money refund till date</string>
+  <string name="years_of_experience_n">Years of experience</string>
+  <string name="select_years_of_experience_this_staff_member_has">Select, years of experience this staff member has.</string>
 
 
   <array name="stock_availbility">
