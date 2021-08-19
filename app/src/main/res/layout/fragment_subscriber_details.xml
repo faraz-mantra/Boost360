@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical">
 
-  <include
-    android:id="@+id/toolbar"
-    layout="@layout/toolbar_boost"
+  <com.google.android.material.appbar.AppBarLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:theme="@style/AppTheme.AppBarOverlay">
+
+    <include
+      android:id="@+id/toolbar"
+      layout="@layout/toolbar_boost"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+  </com.google.android.material.appbar.AppBarLayout>
 
   <LinearLayout
     android:id="@+id/parent_layout"
@@ -19,73 +26,194 @@
     android:background="@color/primary_color"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="@dimen/_10sdp">
 
     <androidx.appcompat.widget.AppCompatTextView
       android:id="@+id/subscriber_email"
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      android:layout_height="0dp"
+      android:layout_weight="1"
       android:fontFamily="@font/semi_bold"
       android:gravity="center"
       android:text="@string/email"
       android:textColor="@color/white"
       android:textSize="22sp"
-      app:textAllCaps="false" />
+      app:textAllCaps="false"
+      tools:ignore="NestedWeights" />
 
     <androidx.appcompat.widget.AppCompatTextView
       android:id="@+id/subcriber_date"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="5dp"
-      android:fontFamily="@font/italic"
+      android:layout_marginBottom="@dimen/_10sdp"
+      android:fontFamily="@font/regular"
       android:text="@string/date"
       android:textColor="@color/white" />
   </LinearLayout>
 
-  <androidx.appcompat.widget.AppCompatTextView
-    android:id="@+id/call_subscriber"
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/btn_email_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:drawablePadding="20dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
     android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:padding="20dp"
-    android:text="@string/call_subscriber"
-    android:textSize="18sp"
-    android:visibility="gone" />
+    tools:targetApi="m">
 
-  <View
-    android:id="@+id/divider1"
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="#80000000"
-    android:visibility="gone" />
+    <androidx.appcompat.widget.AppCompatTextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:drawableStart="@drawable/ic_subscriber_email"
+      android:drawablePadding="20dp"
+      android:text="Send Email"
+      android:textColor="@color/primary_4a4a4a_jio"
+      android:textSize="18sp"
+      app:fontFamily="@font/semi_bold" />
 
-  <androidx.appcompat.widget.AppCompatTextView
-    android:id="@+id/message_subscriber"
+    <com.framework.views.customViews.CustomImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:srcCompat="@drawable/ic_subscribe_arrow" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/view_number"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:drawablePadding="20dp"
-    android:gravity="center_vertical"
-    android:padding="20dp"
-    android:text="@string/send_message"
-    android:textSize="18sp" />
+    android:orientation="vertical">
 
-  <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="#80000000" />
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/btn_whatsapp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:clickable="true"
+      android:focusable="true"
+      android:foreground="?attr/selectableItemBackground"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:padding="20dp"
+      tools:targetApi="m">
 
-  <androidx.appcompat.widget.AppCompatTextView
-    android:id="@+id/unsubscribe"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:drawablePadding="20dp"
-    android:gravity="center_vertical"
-    android:padding="20dp"
-    android:text="@string/unsubscribe"
-    android:textSize="18sp"
-    android:visibility="visible" />
+      <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableStart="@drawable/ic_subscriber_whatsapp"
+        android:drawablePadding="20dp"
+        android:text="Chat on WhatsApp"
+        android:textColor="@color/primary_4a4a4a_jio"
+        android:textSize="18sp"
+        app:fontFamily="@font/semi_bold" />
+
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_subscribe_arrow" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="#E2E2E2" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/btn_message"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:clickable="true"
+      android:focusable="true"
+      android:foreground="?attr/selectableItemBackground"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:padding="20dp"
+      tools:targetApi="m">
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableStart="@drawable/ic_subscriber_message"
+        android:drawablePadding="20dp"
+        android:text="Send SMS"
+        android:textColor="@color/primary_4a4a4a_jio"
+        android:textSize="18sp"
+        app:fontFamily="@font/semi_bold" />
+
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_subscribe_arrow" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="#E2E2E2" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/btn_call"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:clickable="true"
+      android:focusable="true"
+      android:foreground="?attr/selectableItemBackground"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:padding="20dp"
+      tools:targetApi="m">
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/mail_subscriber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableStart="@drawable/ic_subscriber_call"
+        android:drawablePadding="20dp"
+        android:text="Call now"
+        android:textColor="@color/primary_4a4a4a_jio"
+        android:textSize="18sp"
+        app:fontFamily="@font/semi_bold" />
+
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_subscribe_arrow" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.appcompat.widget.LinearLayoutCompat>
+  <!--  <androidx.appcompat.widget.AppCompatTextView-->
+  <!--    android:id="@+id/call_subscriber"-->
+  <!--    android:layout_width="match_parent"-->
+  <!--    android:layout_height="wrap_content"-->
+  <!--    android:background="@color/white"-->
+  <!--    android:drawablePadding="20dp"-->
+  <!--    android:gravity="center_vertical"-->
+  <!--    android:padding="20dp"-->
+  <!--    android:text="@string/call_subscriber"-->
+  <!--    android:textSize="18sp"-->
+  <!--    android:visibility="gone" />-->
+
+  <!--  <View-->
+  <!--    android:layout_width="match_parent"-->
+  <!--    android:layout_height="1dp"-->
+  <!--    android:background="#E2E2E2" />-->
+
+  <!--  <androidx.appcompat.widget.AppCompatTextView-->
+  <!--    android:id="@+id/message_subscriber"-->
+  <!--    android:layout_width="match_parent"-->
+  <!--    android:layout_height="wrap_content"-->
+  <!--    android:background="@color/white"-->
+  <!--    android:drawablePadding="20dp"-->
+  <!--    android:gravity="center_vertical"-->
+  <!--    android:padding="20dp"-->
+  <!--    android:text="@string/send_message"-->
+  <!--    android:textSize="18sp" />-->
+
 </LinearLayout>

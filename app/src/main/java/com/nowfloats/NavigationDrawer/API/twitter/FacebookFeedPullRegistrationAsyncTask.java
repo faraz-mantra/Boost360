@@ -86,7 +86,7 @@ public class FacebookFeedPullRegistrationAsyncTask {
                 }
                 checkBox.setChecked(false);
                 pref.edit().putBoolean("FBFeedPullAutoPublish", false).apply();
-                Util.toast("Uh oh. Something went wrong. Please try again", appContext);
+                Util.toast("Uh oh, something went wrong, please try again", appContext);
             }
         });
     }
@@ -141,7 +141,7 @@ public class FacebookFeedPullRegistrationAsyncTask {
                 }
                 checkBox.setChecked(!obj.getAutoPublish());
                 pref.edit().putBoolean("FBFeedPullAutoPublish", !obj.getAutoPublish()).apply();
-                Util.toast("Uh oh. Something went wrong. Please try again", appContext);
+                Util.toast("Uh oh, something went wrong, please try again", appContext);
             }
         });
 

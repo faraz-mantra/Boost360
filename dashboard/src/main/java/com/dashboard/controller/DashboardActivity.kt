@@ -74,6 +74,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private var isSecondaryImage = false
   var isLoadShimmer = true
   var count = 0
+  var activePreviousItem = 0
   private val navHostFragment: NavHostFragment?
     get() {
       return supportFragmentManager.fragments.first() as? NavHostFragment
@@ -388,9 +389,18 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun getNavOptions(): NavOptions {
-    return NavOptions.Builder().setExitAnim(R.anim.slide_out_left)
-      .setEnterAnim(R.anim.slide_in_right).setPopEnterAnim(R.anim.slide_in_left)
-      .setPopExitAnim(R.anim.slide_out_right).setLaunchSingleTop(true).build()
+    val activeItem = binding?.navView?.getActiveItem() ?: 0
+    return if (activePreviousItem > activeItem) {
+      activePreviousItem = activeItem
+      NavOptions.Builder().setExitAnim(R.anim.slide_out_right)
+        .setEnterAnim(R.anim.slide_in_left).setPopEnterAnim(R.anim.slide_in_right)
+        .setPopExitAnim(R.anim.slide_out_left).setLaunchSingleTop(true).build()
+    } else {
+      activePreviousItem = activeItem
+      NavOptions.Builder().setExitAnim(R.anim.slide_out_left)
+        .setEnterAnim(R.anim.slide_in_right).setPopEnterAnim(R.anim.slide_in_left)
+        .setPopExitAnim(R.anim.slide_out_right).setLaunchSingleTop(true).build()
+    }
   }
 
   private fun openDashboard(isSet: Boolean = true) {
@@ -480,6 +490,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     }
     if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
   }
+
 
   private fun openImagePicker(isSecondaryImage: Boolean) {
     this.isSecondaryImage = isSecondaryImage
