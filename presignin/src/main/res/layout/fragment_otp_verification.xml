@@ -70,6 +70,7 @@
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/resend_tv"
       style="@style/psn_subheading_style"
+      app:fontFamily="@font/semi_bold"
       android:text="@string/psn_resend_hint"
       app:layout_constraintBottom_toBottomOf="@+id/verifyButton"
       app:layout_constraintTop_toTopOf="@+id/verifyButton"

@@ -155,11 +155,11 @@ open class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBi
   }
 
   override fun showProgress(title: String?, cancelable: Boolean?) {
-    binding?.progress?.visible()
+    showSimmer(true)
   }
 
   override fun hideProgress() {
-    binding?.progress?.gone()
+    showSimmer(false)
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -252,6 +252,20 @@ open class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBi
     if (instance.getDrScoreData() != null && instance.getDrScoreData()!!.metricdetail != null) {
       instance.getDrScoreData()!!.metricdetail!!.number_updates_posted = count
       instance.updateDocument()
+    }
+  }
+
+  private fun showSimmer(isSimmer: Boolean) {
+    binding?.root?.apply {
+      if (isSimmer) {
+        binding?.progressSimmer?.parentShimmerLayout?.visible()
+        binding?.progressSimmer?.parentShimmerLayout?.startShimmer()
+        binding?.rvUpdates?.gone()
+      } else {
+        binding?.rvUpdates?.visible()
+        binding?.progressSimmer?.parentShimmerLayout?.gone()
+        binding?.progressSimmer?.parentShimmerLayout?.stopShimmer()
+      }
     }
   }
 }

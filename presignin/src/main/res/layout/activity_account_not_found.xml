@@ -109,6 +109,7 @@
         android:gravity="center"
         android:text="@string/try_a_different_number"
         android:textAllCaps="false"
+        app:fontFamily="@font/semi_bold"
         android:textColor="@color/colorAccent"
         app:textType="SUBTITLE_1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,7 +122,9 @@
         android:layout_width="wrap_content"
         android:layout_marginTop="@dimen/_20sdp"
         android:fontFamily="@font/semi_bold"
-        android:text="@string/need_help"
+        android:text="@string/need_help_u"
+        app:fontFamily="@font/bold"
+        android:textColor="@color/primary_4a4a4a_jio"
         app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
         tools:ignore="MissingConstraints,UnknownId" />
     </androidx.constraintlayout.widget.ConstraintLayout>
