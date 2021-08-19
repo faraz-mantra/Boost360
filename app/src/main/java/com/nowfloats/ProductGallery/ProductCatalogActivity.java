@@ -1,24 +1,30 @@
 package com.nowfloats.ProductGallery;
 
+import static com.appservice.ui.catalog.CatalogServiceContainerActivityKt.startFragmentActivityNew;
+import static com.framework.webengageconstant.EventLabelKt.CLICK;
+import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ITEM;
+import static com.framework.webengageconstant.EventNameKt.PRODUCT_CATALOGUE_LIST;
+import static com.framework.webengageconstant.EventValueKt.EVENT_VALUE_MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
+
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,14 +39,12 @@ import com.nowfloats.ProductGallery.Adapter.ProductCategoryRecyclerAdapter;
 import com.nowfloats.ProductGallery.Model.ImageListModel;
 import com.nowfloats.ProductGallery.Model.Product;
 import com.nowfloats.ProductGallery.Service.ProductGalleryInterface;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.nowfloats.widget.WidgetKey;
-import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityProductCatalogBinding;
@@ -48,23 +52,14 @@ import com.thinksity.databinding.ActivityProductCatalogBinding;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import static com.appservice.ui.catalog.CatalogServiceContainerActivityKt.startFragmentActivityNew;
-import static com.framework.webengageconstant.EventLabelKt.CLICK;
-import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
-import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW;
-import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ITEM;
-import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_MANAGE_CONTENT;
-import static com.framework.webengageconstant.EventNameKt.PRODUCT_CATALOGUE_LIST;
-import static com.framework.webengageconstant.EventValueKt.EVENT_VALUE_MANAGE_CONTENT;
-import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
-
 public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener {
-
+    public static final String TAG = "ProductCatalogActivity";
     // For sharing
     private static final int STORAGE_CODE = 120;
     static ProgressDialog pd;
@@ -79,10 +74,14 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     private boolean stop = false;
     private boolean isLoading = false;
     private int limit = WidgetKey.WidgetLimit.FEATURE_NOT_AVAILABLE.getValue();
+    private List<Product> productList;
+    private List<Product> copyProductList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        productList = new ArrayList<>();
+        copyProductList = new ArrayList<>();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_catalog);
         WebEngageController.trackEvent(PRODUCT_CATALOGUE_LIST, PAGE_VIEW, EVENT_VALUE_MANAGE_CONTENT);
         setSupportActionBar(binding.layoutToolbar.toolbar);
@@ -146,6 +145,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
         galleryInterface.getAllProducts(values, new Callback<List<Product>>() {
 
+
             @Override
             public void success(List<Product> data, Response response) {
 
@@ -155,6 +155,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
                 if (data != null && response.getStatus() == 200) {
                     if (data.size() > 0) {
+                        productList = data;
                         if (itemToAdd != null) itemToAdd.setVisible(true);
                         binding.layoutEmptyView.setVisibility(View.GONE);
                         adapter.setData(data, flag);
@@ -239,12 +240,57 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
+    //    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_add, menu);
+//        itemToAdd = menu.findItem(R.id.menu_add);
+//        itemToAdd.setVisible(true);
+//        return true;
+//    }
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add, menu);
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        getMenuInflater().inflate(R.menu.ic_menu_catalog, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
         itemToAdd = menu.findItem(R.id.menu_add);
         itemToAdd.setVisible(true);
+        androidx.appcompat.widget.SearchView searchView = (((androidx.appcompat.widget.SearchView) searchItem.getActionView()));
+        androidx.appcompat.widget.SearchView.SearchAutoComplete searchAutoComplete = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        ImageView searchCloseIcon = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
+        searchCloseIcon.setColorFilter(getResources().getColor(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+        searchAutoComplete.setHintTextColor(getResources().getColor(R.color.white_70));
+        searchAutoComplete.setTextColor(getResources().getColor(R.color.white));
+        searchView.setIconifiedByDefault(true);
+        searchView.setQueryHint(getString(R.string.search_services));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                startFilter(newText);
+                return false;
+            }
+        });
         return true;
+    }
+
+    private void startFilter(String newText) {
+        copyProductList.clear();
+        if (!newText.equals("")) {
+            Log.d(TAG, "startFilter if "+newText);
+            for (Product productListModel : productList) {
+                if (productListModel.Name.toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT))) {
+                    copyProductList.add(productListModel);
+                }
+            }
+            Log.d(TAG, "startFilter copylist: "+copyProductList);
+            adapter.setData(copyProductList, true);
+        } else {
+            Log.d(TAG, "startFilter else: "+newText);
+            adapter.setData(productList, true);
+        }
     }
 
     @Override
