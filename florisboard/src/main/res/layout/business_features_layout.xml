@@ -341,34 +341,12 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-      android:id="@+id/please_login_card"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:visibility="gone"
-      app:contentPadding="@dimen/size_12">
 
-      <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="@drawable/yellow_button_bg"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="10"
-        android:paddingHorizontal="@dimen/size_20"
-        android:text="@string/please_login"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
-
-    </androidx.cardview.widget.CardView>
 
     <ScrollView
         android:visibility="gone"
         android:fadeScrollbars="false"
-        android:id="@+id/feature_not_renewed"
+        android:id="@+id/msg_layout"
         android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -386,7 +364,7 @@
             android:layout_height="wrap_content">
 
           <com.framework.views.customViews.CustomImageView
-              android:src="@drawable/ic_keyboard_renew"
+              android:id="@+id/msg_icon"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"/>
 
@@ -396,22 +374,21 @@
               android:layout_marginTop="@dimen/size_8"
               android:fontFamily="@font/semi_bold"
               android:textSize="@dimen/size_18"
-              android:text="@string/feature_not_renewed"
+              android:id="@+id/msg_title"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"/>
 
           <com.framework.views.customViews.CustomTextView
+              android:id="@+id/msg_desc"
               android:fontFamily="@font/regular"
               android:layout_marginTop="@dimen/size_16"
               android:gravity="center"
-              android:text="@string/keyboard_renew_desc"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"/>
 
           <com.framework.views.customViews.CustomMaterialButton
-              android:text="@string/renew_feature"
               android:textAllCaps="false"
-              android:id="@+id/btn_renew"
+              android:id="@+id/msg_btn"
               app:cornerRadius="@dimen/size_15"
               app:iconGravity="textStart"
               android:backgroundTint="@color/btn_bg"

@@ -1,5 +1,8 @@
 package dev.patrickgold.florisboard.customization.util
 
+import android.content.Context
+import android.content.ContextWrapper
+import androidx.lifecycle.LifecycleOwner
 import com.framework.pref.UserSessionManager
 import java.util.*
 
@@ -31,5 +34,13 @@ fun UserSessionManager.getIconCard(): Int {
     "SPA" -> com.onboarding.nowfloats.R.drawable.ic_business_card_spa_n
     "SAL" -> com.onboarding.nowfloats.R.drawable.ic_business_card_spa_n
     else -> com.onboarding.nowfloats.R.drawable.ic_business_card_spa_n
+  }
+}
+
+fun Context.getLifecycleOwner(): LifecycleOwner {
+  return try {
+    this as LifecycleOwner
+  } catch (exception: ClassCastException) {
+    (this as ContextWrapper).baseContext as LifecycleOwner
   }
 }

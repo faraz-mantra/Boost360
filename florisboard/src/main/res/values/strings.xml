@@ -409,8 +409,19 @@
   <string name="change_layout">Change layout</string>
   <string name="keyboard_not_added_plan">Boost keyboard is not added in your current plan.</string>
   <string name="staff_not_added_plan">Staff is not added in your current plan.</string>
-    <string name="feature_not_renewed">Feature Not Renewed</string>
+    <string name="feature_not_renewed">Feature not renewed</string>
   <string name="keyboard_renew_desc">With business keyboard, share deals, offers, product details quickly as you chat with potential customers on WhatsApp, Instagram, Telegram, Facebook Messenger, etc.</string>
   <string name="renew_feature">Renew Feature</string>
-
+  <string name="error_while_fetching_your_business">Error while fetching your business information.</string>
+  <string name="please_click_on_retry_btn_below">Please click on ‘Retry’ button below. If the issue still persists, please try again after sometime.</string>
+  <string name="retry">Retry</string>
+  <string name="a_wifi_or_cellular">A WIFI or cellular network is required. Please go to settings and check your internet conenction.</string>
+  <string name="internet_not_available">Internet not available.</string>
+  <string name="open_settings">Open settings</string>
+  <string name="login_to_start_sharing">Login to start sharing.</string>
+  <string name="with_business_keyboard">With business keyboard, share deals, offers, product details quickly as you chat with potential customers on WhatsApp, Instagram, Telegram, Facebook Messenger, etc.</string>
+  <string name="login_to_boost">Login to Boost 360</string>
+  <string name="photos_cap">PHOTOS</string>
+  <string name="staff_cap">STAFF</string>
+  <string name="updates_cap">UPDATES</string>
 </resources>

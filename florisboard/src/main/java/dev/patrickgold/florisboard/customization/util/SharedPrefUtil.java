@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.onboarding.nowfloats.model.digitalCard.DigitalCardData;
+import com.onboarding.nowfloats.model.profile.MerchantProfileResponse;
 
 import java.util.List;
 
@@ -235,9 +236,9 @@ public class SharedPrefUtil {
     }
   }
 
-  public List<DigitalCardDataKeyboard> getBusinessCardList(){
+  public MerchantProfileResponse getBusinessCardList(){
     if (sBoostPref!=null){
-      return new Gson().fromJson(sBoostPref.getString(PrefConstants.INSTANCE.getPREF_BUSINESS_CARD(),null),new TypeToken<List<DigitalCardDataKeyboard>>(){}.getType());
+      return new Gson().fromJson(sBoostPref.getString(PrefConstants.INSTANCE.getPREF_BUSINESS_CARD(),null),new TypeToken<MerchantProfileResponse>(){}.getType());
     }else {
       return null;
     }

@@ -46,22 +46,31 @@ class BusinessFeaturesViewModel(context: Context) {
     if (prefUpdates!=null){
       _updates.postValue(prefUpdates)
     }
-    job?.cancel()
+
     job = CoroutineScope(Dispatchers.IO).launch {
-      val updates = BusinessFeatureRepository.getAllUpdates(fpId, clientId, skipBy, limit)
-      withContext(Dispatchers.Main) {
-        if (updates.isSuccessful){
-          _updates.value = updates.body()
-          sharedPref.save(PrefConstants.PREF_UPDATES,Gson().toJson(updates.body()))
-        }
-        else{
-          if (updates.code()==Constants.UNAUTHORIZED_STATUS_CODE){
-            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
-          }else{
-            _error.value = "Business Update getting error!"
+      try {
+        val updates = BusinessFeatureRepository.getAllUpdates(fpId, clientId, skipBy, limit)
+        withContext(Dispatchers.Main) {
+          if (updates.isSuccessful){
+            _updates.value = updates.body()
+            sharedPref.save(PrefConstants.PREF_UPDATES,Gson().toJson(updates.body()))
+          }
+          else{
+            if (updates.code()==Constants.UNAUTHORIZED_STATUS_CODE){
+              _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+            }else{
+              _error.value = "Business Update getting error!"
+            }
           }
         }
       }
+      catch (e:Exception){
+        Log.e(TAG, "getUpdates: "+e.localizedMessage )
+        if (prefUpdates==null){
+          _error.postValue(e.localizedMessage)
+        }
+      }
+
     }
   }
 
@@ -74,24 +83,31 @@ class BusinessFeaturesViewModel(context: Context) {
     if (prefProducts!=null){
       _products.postValue(prefProducts)
     }
-    job?.cancel()
     job = CoroutineScope(Dispatchers.IO).launch {
-      val products = BusinessFeatureRepository.getAllProducts(fpTag, clientId, skipBy, identifierType)
-      withContext(Dispatchers.Main) {
-        Log.i(TAG, "getProducts: "+products.code())
+      try {
+        val products = BusinessFeatureRepository.getAllProducts(fpTag, clientId, skipBy, identifierType)
+        withContext(Dispatchers.Main) {
+          Log.i(TAG, "getProducts: "+products.code())
 
-        if (products.isSuccessful){
-          _products.postValue(products.body() ?: arrayListOf())
-          sharedPref.save(PrefConstants.PREF_PRODUCTS,Gson().toJson(products.body()))
-        }
-        else {
-          if (products.code()==Constants.UNAUTHORIZED_STATUS_CODE){
-            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
-          }else{
-            _error.value = "Inventory getting error!"
+          if (products.isSuccessful){
+            _products.postValue(products.body() ?: arrayListOf())
+            sharedPref.save(PrefConstants.PREF_PRODUCTS,Gson().toJson(products.body()))
+          }
+          else {
+            if (products.code()==Constants.UNAUTHORIZED_STATUS_CODE){
+              _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+            }else{
+              _error.value = "Inventory getting error!"
+            }
           }
         }
       }
+      catch (e:Exception){
+        if (prefProducts==null){
+          _error.postValue(e.localizedMessage)
+        }
+      }
+
     }
   }
 
@@ -121,10 +137,9 @@ class BusinessFeaturesViewModel(context: Context) {
             }
           }
         }
-      }catch (e:Exception){
-        Log.e(TAG, "getDetails: "+e.localizedMessage)
-
-        //_error.value = e.localizedMessage
+      }
+      catch (e:Exception){
+        _error.postValue(e.localizedMessage)
       }
 
     }
@@ -138,7 +153,6 @@ class BusinessFeaturesViewModel(context: Context) {
     Log.i(TAG, "getChannelAccessTokenStatus: called")
 
     if (NetworkUtils.isNetworkConnected()){
-      job?.cancel()
       job = CoroutineScope(Dispatchers.IO).launch {
         try {
           val channelStatus = NfxFloatRepository.getChannelsStatus(fpId)
@@ -154,8 +168,9 @@ class BusinessFeaturesViewModel(context: Context) {
               _channelStatus.value = ChannelAccessStatusResponse(success = false)
             }
           }
-        }catch (e:Exception){
-          Log.i(TAG, "getChannelsAccessTokenStatus: "+e.message)
+        }
+        catch (e:Exception){
+          _error.postValue(e.localizedMessage)
         }
 
       }
@@ -170,13 +185,18 @@ class BusinessFeaturesViewModel(context: Context) {
     get() = _channelWhatsApp
 
   fun getWhatsAppBusiness(auth: String, request: String?) {
-    job?.cancel()
     job = CoroutineScope(Dispatchers.IO).launch {
-      val channelWhatsApp = WebActionBoostRepository.getWhatsAppBusiness(auth, request)
-      withContext(Dispatchers.Main) {
-        if (channelWhatsApp.isSuccessful) _channelWhatsApp.value = channelWhatsApp.body()
-        else _channelWhatsApp.value = ChannelWhatsappResponse()
+      try {
+        val channelWhatsApp = WebActionBoostRepository.getWhatsAppBusiness(auth, request)
+        withContext(Dispatchers.Main) {
+          if (channelWhatsApp.isSuccessful) _channelWhatsApp.value = channelWhatsApp.body()
+          else _channelWhatsApp.value = ChannelWhatsappResponse()
+        }
       }
+      catch (e:Exception){
+        _error.postValue(e.localizedMessage)
+      }
+
     }
   }
 
@@ -185,12 +205,15 @@ class BusinessFeaturesViewModel(context: Context) {
     get() = _shareUserDetail
 
   fun getBoostVisitingMessage(context: Context) {
-    job?.cancel()
     job = CoroutineScope(Dispatchers.IO).launch {
-      val shareUserDetail = WebActionBoostRepository.getBoostVisitingMessage(context) as? ShareUserDetailResponse
-      withContext(Dispatchers.Main) {
-        if (shareUserDetail != null && shareUserDetail.status == 200) _shareUserDetail.value = shareUserDetail!!
-        else _shareUserDetail.value = ShareUserDetailResponse()
+      try {
+        val shareUserDetail = WebActionBoostRepository.getBoostVisitingMessage(context) as? ShareUserDetailResponse
+        withContext(Dispatchers.Main) {
+          if (shareUserDetail != null && shareUserDetail.status == 200) _shareUserDetail.value = shareUserDetail!!
+          else _shareUserDetail.value = ShareUserDetailResponse()
+        }
+      } catch (e:Exception){
+        _error.postValue(e.localizedMessage)
       }
     }
   }
@@ -200,20 +223,32 @@ class BusinessFeaturesViewModel(context: Context) {
     get() = _merchantProfile
 
   fun getMerchantProfile(floatingId: String?) {
-    job?.cancel()
+    val prefBCards= sharedPref.businessCardList
+    if (prefBCards!=null){
+      _merchantProfile.postValue(prefBCards)
+    }
     job = CoroutineScope(Dispatchers.IO).launch {
-      val merchantProfile = BoostFloatRepository.getMerchantProfile(floatingId)
-      withContext(Dispatchers.Main) {
-        if (merchantProfile.isSuccessful) _merchantProfile.value = merchantProfile.body()
-        else {
-          if (merchantProfile.code()==Constants.UNAUTHORIZED_STATUS_CODE){
-            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
-          }else{
-            _error.value = "Inventory getting error!"
+      try {
+        val merchantProfile = BoostFloatRepository.getMerchantProfile(floatingId)
+        withContext(Dispatchers.Main) {
+          if (merchantProfile.isSuccessful) {
+            _merchantProfile.value = merchantProfile.body()
+            sharedPref.save(PrefConstants.PREF_BUSINESS_CARD,Gson().toJson(merchantProfile.body()))
           }
-          _merchantProfile.value = MerchantProfileResponse()
-        }
+          else {
+            if (merchantProfile.code()==Constants.UNAUTHORIZED_STATUS_CODE){
+              _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+            }else{
+              _error.value = "Inventory getting error!"
+            }
+            _merchantProfile.value = MerchantProfileResponse()
+          }
 
+        }
+      } catch (e:Exception){
+        if (prefBCards==null){
+          _error.postValue(e.localizedMessage)
+        }
       }
     }
   }
@@ -225,26 +260,37 @@ class BusinessFeaturesViewModel(context: Context) {
   fun getPhotos(fpId: String) {
     val prefPhotos= sharedPref.photoList
     if (prefPhotos!=null){
+      Log.i(TAG, "getPhotos: "+"pref found")
       _photo.postValue(prefPhotos)
     }
-    job?.cancel()
     job = CoroutineScope(Dispatchers.IO).launch {
-      BusinessFeatureRepository.getAllImageList(object : GetGalleryImagesAsyncTask.GetGalleryImagesInterface {
-        override fun imagesReceived(listImage: ArrayList<String>) {
-          Timber.i("Images Received")
-          CoroutineScope(Dispatchers.Main).launch {
-            val response = listImage.map { url -> Photo().apply { imageUri = url } }
-            _photo.value = response
-            sharedPref.save(PrefConstants.PREF_PHOTOS,Gson().toJson(response))
+      try {
+        BusinessFeatureRepository.getAllImageList(object : GetGalleryImagesAsyncTask.GetGalleryImagesInterface {
+          override fun imagesReceived(listImage: ArrayList<String>) {
+            Timber.i("Images Received")
+            CoroutineScope(Dispatchers.Main).launch {
+              val response = listImage.map { url -> Photo().apply { imageUri = url } }
+              _photo.value = response
+              sharedPref.save(PrefConstants.PREF_PHOTOS,Gson().toJson(response))
+            }
           }
-        }
 
-        override fun onFailed(code: Int?) {
-          if (code==Constants.UNAUTHORIZED_STATUS_CODE){
-            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+          override fun onFailed(code: Int?) {
+            if (code==Constants.UNAUTHORIZED_STATUS_CODE){
+              _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+            }else{
+              _error.value = "Getting photo error"
+
+            }
           }
+        }, fpId)
+      }
+      catch (e:Exception){
+        if (prefPhotos==null){
+          _error.postValue(e.localizedMessage)
         }
-      }, fpId)
+      }
+
     }
   }
 
@@ -257,22 +303,29 @@ class BusinessFeaturesViewModel(context: Context) {
     if (prefStaff!=null){
       _staff.postValue(prefStaff)
     }
-    job?.cancel()
     job = CoroutineScope(Dispatchers.IO).launch {
-      val staffResponse = NowFloatRepository.fetchStaffList(request)
-      withContext(Dispatchers.Main) {
-        if (staffResponse.isSuccessful) {
-          val result = staffResponse.body()?.result?:StaffResult()
-          _staff.value =result
-          sharedPref.save(PrefConstants.PREF_STAFF,Gson().toJson(result))
-        } else {
-          if (staffResponse.code()==Constants.UNAUTHORIZED_STATUS_CODE){
-            _error.value = Constants.TOKEN_EXPIRED_MESSAGE
-          }else{
-            _error.value = "Staff getting error!"
+      try {
+        val staffResponse = NowFloatRepository.fetchStaffList(request)
+        withContext(Dispatchers.Main) {
+          if (staffResponse.isSuccessful) {
+            val result = staffResponse.body()?.result?:StaffResult()
+            _staff.value =result
+            sharedPref.save(PrefConstants.PREF_STAFF,Gson().toJson(result))
+          } else {
+            if (staffResponse.code()==Constants.UNAUTHORIZED_STATUS_CODE){
+              _error.value = Constants.TOKEN_EXPIRED_MESSAGE
+            }else{
+              _error.value = "Staff getting error!"
+            }
           }
         }
       }
+      catch (e:Exception){
+        if (prefStaff==null){
+          _error.postValue(e.localizedMessage)
+        }
+      }
+
     }
   }
 }
