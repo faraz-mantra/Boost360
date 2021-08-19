@@ -152,7 +152,6 @@
         style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/size_38"
-        android:backgroundTint="@color/lemon_light"
         android:text="@string/cancel_appointment_n"
         android:textColor="@color/white" />
 
@@ -161,7 +160,8 @@
         style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
         android:layout_marginTop="@dimen/size_10"
         android:text="@string/don_t_cancel"
-        android:textColor="@color/white" />
+        android:background="@drawable/bg_rounded_yellow_light"
+        android:textColor="@color/colorAccentLight" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
   </androidx.constraintlayout.widget.ConstraintLayout>

@@ -138,6 +138,7 @@
                 android:layout_height="@dimen/size_18"
                 android:padding="@dimen/size_1"
                 android:src="@drawable/ic_edit_yellow"
+                android:tint="@color/colorAccentLight"
                 app:layout_constraintBottom_toBottomOf="@id/text_service_name"
                 app:layout_constraintStart_toEndOf="@id/text_service_name"
                 app:layout_constraintTop_toTopOf="@id/text_service_name" />

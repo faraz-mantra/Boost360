@@ -1971,13 +1971,13 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="samrt_look_api_key" translatable="false">2976fda0fc620d3186eca19884bd55ac125b56e4</string>
   <string name="contact_number_not_valid" translatable="false">Please enter valid contact number</string>
   <string name="email_not_Empty" translatable="false">Email can\'t be empty.</string>
-  <string name="enter_company_description_100_characters_max" translatable="false">Enter company description <br /> (100 Characters max)</string>
+  <string name="enter_company_description_100_characters_max" translatable="false">Enter company description <br /> (100 characters max)</string>
   <string name="client_name" translatable="false">Client name</string>
   <string name="enter_client_name" translatable="false">Enter client name</string>
   <string name="client_category" translatable="false">Client category</string>
   <string name="enter_client_category" translatable="false">Enter client category</string>
   <string name="project_client_requirement" translatable="false">Project client requirement</string>
-  <string name="enter_description_200_characters_max" translatable="false">Enter description <br /> (200 Characters max)</string>
+  <string name="enter_description_200_characters_max" translatable="false">Enter description <br /> (200 characters max)</string>
   <string name="our_approach" translatable="false">Our approach</string>
   <string name="budget" translatable="false">Budget</string>
   <string name="date_of_completion" translatable="false">Date of completion</string>
@@ -2104,7 +2104,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="rs_0">Rs.0</string>
   <string name="offer_description">Offer description</string>
   <string name="describe_your_offer">Describe your offer...</string>
-  <string name="uh_oh_you_have_no_subscribers">Uh oh! You have no subscribers.</string>
+  <string name="uh_oh_you_have_no_subscribers">Uh oh, you have no subscribers</string>
   <string name="add_image">Add image</string>
   <string name="designation" translatable="false">Designation</string>
   <string name="company_title" translatable="false">Company title</string>
@@ -2544,7 +2544,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="you_have_new_notifications">You have new notifications</string>
   <string name="updating_your_address" translatable="false">Updating your address</string>
   <string name="your_business_has_been_updated_successfully">Your business address has been updated successfully</string>
-  <string name="uh_oh_somthing_went_wrong_please_try_again" translatable="false">Uh oh. Something went wrong. Please try again</string>
+  <string name="uh_oh_somthing_went_wrong_please_try_again" translatable="false">Uh oh, something went wrong, please try again</string>
   <string name="changes_are_successfully_updated" translatable="false">Changes are successfully updated</string>
   <string name="please_enter_valid_mobile_number">Please enter valid mobile number</string>
   <string name="change_primary_number">Change primary number</string>
@@ -2908,7 +2908,7 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="your_website_already_has_this_look">Your website already has this look</string>
   <string name="not_able_to_change_theme">Not able to change theme</string>
   <string name="changed_theme_to">\"Changed theme to \"</string>
-  <string name="create_my_business_profile">\"By clicking on \'CREATE MY BUSINESS PROFILE\' you agree to our \"</string>
+  <string name="create_my_business_profile">\"By clicking on \'Create my business profile\' you agree to our \"</string>
   <string name="invalid_email_please_enter_again">Invalid email, Please enter again.</string>
   <string name="one_time_password">One time password</string>
   <string name="you_will_receive_a_call_shortly">You will receive a call shortly</string>
@@ -3054,11 +3054,11 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="unable_to_open_facebook">unable to open facebook</string>
   <string name="enter_valid_open_close_timing"><![CDATA[Please enter valid open & close time!]]></string>
   <string name="choose_image">Choose image</string>
-  <string name="add_featured_image">Add Featured Image</string>
+  <string name="add_featured_image">Add featured image</string>
   <string name="logo_updated_successfully">Logo uploaded successfully.</string>
   <string name="add_logo">Add logo</string>
-  <string name="business_timings">Business timings</string>
-  <string name="business_timings_n">Business Timings</string>
+  <string name="business_timings">Business hours</string>
+  <string name="business_timings_n">Business Hours</string>
   <string name="review_title_testimonial">Review title</string>
   <string name="review_description_testimonial">Review description</string>
   <string name="our_topper_data_empty">Our toppers data empty!</string>

@@ -71,7 +71,7 @@
   <string name="business_details_hint">This information will be used to onboard and sync across all marketing channels.</string>
   <string name="enter_your_name">Your name*</string>
   <string name="your_business_name_hint">Name of your business*</string>
-  <string name="your_business_email_optional">Your business email (optional)</string>
+  <string name="your_business_email_optional">Your business email</string>
   <string name="your_business_phone">Your your phone*</string>
   <string name="choose_website_address">Choose website address</string>
   <string name="use_this_as_my_whatsapp_contact_number">Use this as my WhatsApp contact number</string>
@@ -127,7 +127,7 @@
   <string name="step_2_2">Step 2/2</string>
   <string name="signin_nowfloats_com">.nowfloats.com</string>
   <string name="login_with_username_or_email">Login with username or email</string>
-  <string name="need_help"><u>Need help?</u></string>
+  <string name="need_help_u"><u>Need help?</u></string>
   <string name="try_a_different_number">Try a different number</string>
   <string name="no_business_account_available_with">No business account available with</string>
   <string name="step_1_2">Step 1/2</string>

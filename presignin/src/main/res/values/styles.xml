@@ -32,8 +32,11 @@
   </style>
 
   <style name="MaterialThemeSignInFull" parent="MaterialDialogTheme">
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:padding">0dp</item>
     <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:windowCloseOnTouchOutside">false</item>
   </style>
 
   <style name="start_guide_style">
@@ -155,8 +158,8 @@
     <item name="android:layout_height">@dimen/_36sdp</item>
     <item name="android:gravity">center</item>
     <item name="android:drawablePadding">@dimen/_4sdp</item>
-    <item name="android:fontFamily">@font/bold</item>
-    <item name="fontFamily">@font/bold</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="fontFamily">@font/semi_bold</item>
     <item name="android:paddingStart">@dimen/_16sdp</item>
     <item name="android:paddingEnd">@dimen/_16sdp</item>
     <item name="android:drawableEnd">@drawable/ic_singin_next_icon</item>

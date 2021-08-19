@@ -806,7 +806,7 @@
     ],
     "RequiredVariables": [],
     "FlowId": "OnboardingTemplate_v1",
-    "CardHeader": "⚠ Uh oh! This phone number already exists in our database.",
+    "CardHeader": "⚠ Uh oh, this phone number already exists in our database.",
     "Placement": "Center"
   },
   {
