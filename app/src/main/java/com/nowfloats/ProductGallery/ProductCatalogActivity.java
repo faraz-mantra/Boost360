@@ -285,8 +285,13 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                     copyProductList.add(productListModel);
                 }
             }
-            Log.d(TAG, "startFilter copylist: "+copyProductList);
-            adapter.setData(copyProductList, true);
+            if (copyProductList.isEmpty()){
+                adapter.setData(new ArrayList<>(),false);
+                adapter.notifyDataSetChanged();
+            }else {
+                Log.d(TAG, "startFilter copylist: " + copyProductList);
+                adapter.setData(copyProductList, true);
+            }
         } else {
             Log.d(TAG, "startFilter else: "+newText);
             adapter.setData(productList, true);
