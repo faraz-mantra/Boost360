@@ -1,6 +1,8 @@
 package com.boost.presignin.ui.mobileVerification
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
@@ -23,7 +25,7 @@ import kotlin.system.exitProcess
 
 class FloatingPointAuthFragment : AuthBaseFragment<FragmentFpListBinding>(), RecyclerItemClickListener {
 
-  private var exitToast: Toast? = null
+  private var doubleBackToExitPressedOnce = false
 
   override fun getLayout(): Int {
     return R.layout.fragment_fp_list
@@ -71,13 +73,11 @@ class FloatingPointAuthFragment : AuthBaseFragment<FragmentFpListBinding>(), Rec
     setOnClickListener(binding?.btnGoToDashboard)
     setAdapterFPList()
     binding?.backIv?.setOnClickListener { goBack() }
-    activity?.onBackPressedDispatcher?.addCallback(
-      viewLifecycleOwner,
-      object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-          goBack()
-        }
-      })
+    activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+      override fun handleOnBackPressed() {
+        goBack()
+      }
+    })
   }
 
   private fun setAdapterFPList() {
@@ -94,17 +94,11 @@ class FloatingPointAuthFragment : AuthBaseFragment<FragmentFpListBinding>(), Rec
   }
 
   private fun goBack() {
-    if (exitToast == null || exitToast?.view == null || exitToast?.view?.windowToken == null) {
-      exitToast = Toast.makeText(
-        baseActivity,
-        resources.getString(R.string.press_again_exit),
-        Toast.LENGTH_SHORT
-      )
-      exitToast?.show()
-    } else {
-      exitToast?.cancel()
-      baseActivity.finish()
-    }
+    if (!doubleBackToExitPressedOnce) {
+      this.doubleBackToExitPressedOnce = true
+      showShortToast(resources.getString(R.string.press_again_exit))
+      Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+    } else  baseActivity.finish()
   }
 
   override fun onClick(v: View) {
