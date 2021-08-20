@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_match">
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+      style="@style/match_match_root">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/gstin_container"
@@ -217,6 +219,7 @@
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/size_20"
             android:text="@string/view_sample_invoice"
+          android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

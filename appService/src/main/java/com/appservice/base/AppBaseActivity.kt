@@ -1,14 +1,21 @@
 package com.appservice.base
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import com.appservice.R
+import com.appservice.utils.WebEngageController
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
+import com.framework.webengageconstant.CLICK
+import com.framework.webengageconstant.WEB_VIEW_PAGE
+import com.onboarding.nowfloats.ui.webview.WebViewActivity
 
 abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseActivity<Binding, ViewModel>() {
 
@@ -54,5 +61,15 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
       window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
       window?.statusBarColor = ContextCompat.getColor(this, taskBarColor)
     }
+  }
+}
+fun AppCompatActivity.startWebViewPageLoad(session: UserSessionManager?, url: String?) {
+  try {
+    WebEngageController.trackEvent(WEB_VIEW_PAGE, CLICK, url)
+    val intent = Intent(this, WebViewActivity::class.java)
+    intent.putExtra(com.onboarding.nowfloats.constant.IntentConstant.DOMAIN_URL.name, url)
+    startActivity(intent)
+  } catch (e: Exception) {
+    e.printStackTrace()
   }
 }

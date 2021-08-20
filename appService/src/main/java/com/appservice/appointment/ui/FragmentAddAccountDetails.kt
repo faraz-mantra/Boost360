@@ -49,37 +49,6 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
     hitApi(viewModel?.getPaymentProfileDetails(sessionLocal.fPID, clientId = clientId), (R.string.error_getting_bank_details))
   }
 
-
-//    private fun setEditable() {
-//        binding?.edtBankName?.background = resources.getDrawable(R.drawable.bg_rect_edit_txt)
-//        binding?.edtAccountName?.background = resources.getDrawable(R.drawable.bg_rect_edit_txt)
-//        binding?.edtAlias?.background = resources.getDrawable(R.drawable.bg_rect_edit_txt)
-//        binding?.edtAccountNumber?.background = resources.getDrawable(R.drawable.bg_rect_edit_txt)
-//        binding?.edtIfsc?.background = resources.getDrawable(R.drawable.bg_rect_edit_txt)
-//        binding?.edtConfirmNumber?.visible()
-//        binding?.edtAccountName?.isEnabled = true
-//        binding?.edtAlias?.isEnabled = true
-//        binding?.edtAccountNumber?.isEnabled = true
-//        binding?.edtIfsc?.isEnabled = true
-//        binding?.edtBankName?.isEnabled = true
-//        binding?.titleConfirmAccount?.visible()
-//    }
-//
-//    private fun setNonEditable() {
-//        binding?.edtBankName?.background = resources.getDrawable(R.drawable.rounded_stroke_grey_4_solid_gray)
-//        binding?.edtAccountName?.background = resources.getDrawable(R.drawable.rounded_stroke_grey_4_solid_gray)
-//        binding?.edtAlias?.background = resources.getDrawable(R.drawable.rounded_stroke_grey_4_solid_gray)
-//        binding?.edtAccountNumber?.background = resources.getDrawable(R.drawable.rounded_stroke_grey_4_solid_gray)
-//        binding?.edtIfsc?.background = resources.getDrawable(R.drawable.rounded_stroke_grey_4_solid_gray)
-//        binding?.edtConfirmNumber?.gone()
-//        binding?.edtAccountName?.isEnabled = false
-//        binding?.edtAlias?.isEnabled = false
-//        binding?.edtAccountNumber?.isEnabled = false
-//        binding?.edtIfsc?.isEnabled = false
-//        binding?.edtBankName?.isEnabled = false
-//        binding?.titleConfirmAccount?.gone()
-//    }
-
   private fun showAccountVerificationStatus() {
     val bottomSheetVerificationUnderProcess = BottomSheetVerificationUnderProcess()
     bottomSheetVerificationUnderProcess.show(parentFragmentManager, BottomSheetVerificationUnderProcess::javaClass.name)
@@ -126,14 +95,8 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
     binding?.edtAccountName?.setText(paymentProfileResponse.result?.bankAccountDetails?.accountName)
     binding?.edtAlias?.setText(paymentProfileResponse.result?.bankAccountDetails?.accountAlias)
     binding?.edtAccountNumber?.setText(paymentProfileResponse.result?.bankAccountDetails?.accountNumber)
-    binding?.edtConfirmNumber?.setText(paymentProfileResponse.result?.bankAccountDetails?.accountNumber)
+    binding?.edtConfirmNumber?.setText("")
     binding?.edtIfsc?.setText(paymentProfileResponse.result?.bankAccountDetails?.iFSC)
-//        val verifyText = it.result?.bankAccountDetails?.getVerifyText()
-//        if (verifyText == "unverified") {
-//            showAccountVerificationStatus()
-//        } else {
-//            showSuccessVerificationStatus()
-//        }
 
   }
 
@@ -167,6 +130,10 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
     }
     if (accountNumberConfirm != accountNumber) {
       showLongToast(getString(R.string.account_number_is_not_same))
+      return false
+    }
+    if (accountNumberConfirm.contains("*")) {
+      showLongToast(getString(R.string.please_enter_valid_account_number))
       return false
     }
     if (bankName.isEmpty()) {

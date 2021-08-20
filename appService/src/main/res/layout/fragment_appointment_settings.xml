@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_match">
+  <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_match_root">
 
     <LinearLayout
       android:id="@+id/linearLayout"
@@ -37,6 +37,7 @@
         android:id="@+id/catalog_setup"
         style="@style/match_wrap"
         android:clickable="true"
+        android:visibility="gone"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
         android:paddingBottom="@dimen/size_20">

@@ -3,6 +3,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import com.appservice.R
 import com.appservice.appointment.model.AddBankAccountRequest
 import com.appservice.appointment.model.PaymentProfileResponse
@@ -37,7 +38,7 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
 
     override fun onCreateView() {
         super.onCreateView()
-        setOnClickListener(binding?.submitBtn)
+        setOnClickListener(binding?.submitBtn,binding?.layoutAccountUnderProcess?.verificationBtn)
         getAccountDetails()
         sessionLocal = UserSessionManager(requireActivity())
     }
@@ -64,6 +65,15 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
         inflater.inflate(R.menu.ic_menu_appointment_edit, menu)
         super.onCreateOptionsMenu(menu, inflater)
 
+    }
+
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when(v){
+            binding?.layoutAccountUnderProcess?.verificationBtn->{
+                baseActivity.onNavPressed()
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

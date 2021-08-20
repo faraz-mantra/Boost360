@@ -3,7 +3,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        style="@style/match_match">
+        style="@style/match_match_root">
 
         <com.framework.views.customViews.CustomCardView
             android:id="@+id/customCardView3"
@@ -48,6 +48,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     style="@style/match_wrap"
+                  android:visibility="gone"
                     android:layout_marginTop="@dimen/size_20"
                     android:background="@drawable/bg_rect_white_rounded_4"
                     android:clickable="true"
@@ -87,6 +88,7 @@
                     android:id="@+id/btn_other_info"
                   style="@style/match_wrap"
                     android:clickable="true"
+                  android:visibility="gone"
                     android:focusable="true"
                     android:layout_marginTop="@dimen/size_20"
                     android:background="@drawable/bg_rect_white_rounded_4"
@@ -124,6 +126,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     style="@style/match_wrap"
+                  android:id="@+id/privacy_policy"
                     android:layout_marginTop="@dimen/size_20"
                     android:background="@drawable/bg_rect_white_rounded_4"
                     android:clickable="true"
@@ -164,6 +167,7 @@
                     android:layout_marginTop="@dimen/size_20"
                     android:background="@drawable/bg_rect_white_rounded_4"
                     android:clickable="true"
+                  android:visibility="gone"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
                     android:padding="@dimen/size_20">
