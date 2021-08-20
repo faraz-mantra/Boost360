@@ -55,7 +55,7 @@
                         android:layout_gravity="center"
                         android:drawableEnd="@drawable/ic_arrow_right_grey_staff"
                         android:drawablePadding="@dimen/size_8"
-                        android:fontFamily="@font/regular"
+                        android:fontFamily="@font/semi_bold"
                         android:singleLine="true"
                         android:textAllCaps="true"
                         android:textColor="@color/green_27AE60"

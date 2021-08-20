@@ -80,6 +80,7 @@
                 android:layout_height="@dimen/size_40"
                 android:layout_marginTop="@dimen/size_16"
                 android:backgroundTint="@color/white"
+              android:textAllCaps="false"
                 android:text="@string/add_bank_account"
                 android:textColor="@color/gray_828282" />
 
@@ -90,6 +91,7 @@
                 android:layout_height="@dimen/size_40"
                 android:layout_marginTop="@dimen/size_16"
                 android:layout_marginBottom="@dimen/size_20"
+              android:textAllCaps="false"
                 android:text="@string/why_verify_bank_account" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

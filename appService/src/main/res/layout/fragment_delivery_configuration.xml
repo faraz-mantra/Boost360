@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView style="@style/match_match">
+    <ScrollView style="@style/match_match_root">
 
         <LinearLayout
             style="@style/match_wrap"
@@ -42,7 +42,6 @@
                         <com.appservice.views.toggle.widget.LabeledSwitch
                             style="@style/Appointment_Label_Switch"
                             android:id="@+id/toggle_allow_pickup"
-
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
