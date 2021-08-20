@@ -1,5 +1,6 @@
 package com.nowfloats.NavigationDrawer.API;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -11,8 +12,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Utils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by NowFloats on 12-09-2016.
@@ -46,7 +50,18 @@ public class KitsuneApi {
             public void onErrorResponse(VolleyError error) {
                 mListener.onResult("Error", true);
             }
-        });
+
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // Basic Authentication
+                //String auth = "Basic " + Base64.encodeToString(CONSUMER_KEY_AND_SECRET.getBytes(), Base64.NO_WRAP);
+
+                headers.put("Authorization", Utils.getAuthToken());
+                return headers;
+            }
+        };
         AppController.getInstance().getRequestQueue().add(request);
     }
 
@@ -103,6 +118,15 @@ public class KitsuneApi {
                 }
             }
 
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // Basic Authentication
+                //String auth = "Basic " + Base64.encodeToString(CONSUMER_KEY_AND_SECRET.getBytes(), Base64.NO_WRAP);
+
+                headers.put("Authorization", Utils.getAuthToken());
+                return headers;
+            }
         };
         AppController.getInstance().getRequestQueue().add(request);
 

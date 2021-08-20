@@ -10,6 +10,7 @@ import com.nowfloats.ProductGallery.Model.ProductListModel;
 import com.nowfloats.ProductGallery.Product_Gallery_Fragment;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import org.apache.http.HttpResponse;
@@ -121,6 +122,7 @@ public class ProductDelete extends AsyncTask<String, String, String> {
     private void deleteProduct(String values) {
         HttpClient httpclient = new DefaultHttpClient();
         HttpDeleteWithBody del = new HttpDeleteWithBody(url);
+        del.setHeader("Authorization", Utils.getAuthToken());
         StringEntity se;
         try {
             se = new StringEntity(values, HTTP.UTF_8);

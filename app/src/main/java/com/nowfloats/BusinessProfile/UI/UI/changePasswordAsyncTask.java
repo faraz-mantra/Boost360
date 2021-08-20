@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
@@ -76,6 +77,7 @@ public class changePasswordAsyncTask extends AsyncTask<Void, Void, Void> {
             connection.setRequestProperty("Content-Type",
                     Constants.BG_SERVICE_CONTENT_TYPE_JSON);
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
             outputStream = new DataOutputStream(connection.getOutputStream());
             byte[] BytesToBeSent = content.getBytes();
             if (BytesToBeSent != null) {

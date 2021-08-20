@@ -9,8 +9,13 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.boost.upgrades.data.api_model.GetAllWidgets.GetAllWidgets
 import com.boost.upgrades.utils.Constants.Companion.BASE_URL
+import com.dashboard.AppDashboardApplication
+import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
+import com.framework.rest.ServiceInterceptor
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,6 +34,11 @@ object Utils {
   fun getRetrofit(): Retrofit {
     return Retrofit.Builder()
       .baseUrl(BASE_URL)
+      .client(
+        OkHttpClient.Builder().addInterceptor(
+        ServiceInterceptor(false, UserSessionManager(AppDashboardApplication.instance)
+          .getAccessTokenAuth()?.token)
+        ).build())
       .addConverterFactory(ScalarsConverterFactory.create())
       .addConverterFactory(GsonConverterFactory.create())
       .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

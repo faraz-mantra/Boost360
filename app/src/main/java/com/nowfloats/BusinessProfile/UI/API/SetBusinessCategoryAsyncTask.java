@@ -10,6 +10,7 @@ import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Utils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -104,6 +105,8 @@ public class SetBusinessCategoryAsyncTask extends AsyncTask<Void, String, String
             try {
                 httppost.setEntity(new StringEntity(Constants.clientId));
                 httppost.addHeader("Content-Type", "application/json");
+                httppost.addHeader("Authorization", Utils.getAuthToken());
+
                 HttpResponse response = httpclient.execute(httppost);
                 requestCode = response.getStatusLine().getStatusCode();
                 responseMessage = EntityUtils.toString(response.getEntity());
