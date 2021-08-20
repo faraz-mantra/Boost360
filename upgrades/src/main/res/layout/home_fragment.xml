@@ -83,7 +83,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato"
-            android:text="Add-Ons Store"
+            android:text="Add-ons Store"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textFontWeight="700"
@@ -776,7 +776,7 @@
           android:paddingTop="@dimen/_5sdp"
           android:paddingEnd="@dimen/_10sdp"
           android:paddingBottom="@dimen/_5sdp"
-          android:text="Expert Guidance"
+          android:text="Expert guidance"
           android:textColor="@color/white"
           android:textFontWeight="600"
           android:textSize="@dimen/txt_10sp" />
