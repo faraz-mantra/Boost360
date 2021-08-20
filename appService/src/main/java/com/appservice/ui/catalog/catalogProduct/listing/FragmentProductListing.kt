@@ -6,12 +6,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.SpannableString
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
@@ -41,9 +36,10 @@ import com.appservice.viewmodel.ProductViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
-import com.framework.utils.NetworkUtils
-import com.squareup.picasso.Picasso
+import com.framework.utils.ContentSharing
+import com.framework.utils.ContentSharing.Companion.shareProduct
 import com.squareup.picasso.Target
 import java.util.*
 
@@ -51,7 +47,9 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     override fun getLayout(): Int {
         return R.layout.fragment_product_listing
     }
-    private  val TAG = "FragmentProductListing"
+
+    private var product: CatalogProduct? = null
+    private val TAG = "FragmentProductListing"
     private val list: ArrayList<CatalogProduct> = arrayListOf()
     private val finalList: ArrayList<CatalogProduct> = arrayListOf()
     private var adapterProduct: AppBaseRecyclerViewAdapter<CatalogProduct>? = null
@@ -75,7 +73,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     }
 
     companion object {
-        fun newInstance( fpId: String?, fpTag: String?, externalSourceId: String?, applicationId: String?, userProfileId: String?): FragmentProductListing {
+        fun newInstance(fpId: String?, fpTag: String?, externalSourceId: String?, applicationId: String?, userProfileId: String?): FragmentProductListing {
             val bundle = Bundle()
             bundle.putString(IntentConstant.CURRENCY_TYPE.name, "INR")
             bundle.putString(IntentConstant.FP_ID.name, fpId)
@@ -100,6 +98,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     override fun onCreateView() {
         super.onCreateView()
         getBundleData()
+        sessionLocal = UserSessionManager(requireActivity())
         layoutManagerN = LinearLayoutManager(baseActivity)
         layoutManagerN?.let { scrollPagingListener(it) }
         getProductListing(isFirst = true, skipBy = limit)
@@ -123,9 +122,9 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
                 if (!isLastPageD) {
                     isLoadingD = true
                     adapterProduct?.addLoadingFooter(CatalogProduct().getLoaderItem())
-                    Log.i(TAG, "scroll limit: "+limit)
-                    TOTAL_ELEMENTS=finalList.size
-                    Log.i(TAG, "scroll total elements: "+TOTAL_ELEMENTS)
+                    Log.i(TAG, "scroll limit: " + limit)
+                    TOTAL_ELEMENTS = finalList.size
+                    Log.i(TAG, "scroll total elements: " + TOTAL_ELEMENTS)
                     getProductListing(skipBy = limit)
                 }
             }
@@ -155,13 +154,13 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
         if (listProduct.isNullOrEmpty().not()) {
             removeLoader()
             setEmptyView(View.GONE)
-            Log.i(TAG, "response size: "+resultProduct?.size)
+            Log.i(TAG, "response size: " + resultProduct?.size)
             finalList.addAll(listProduct!!)
-            limit =finalList.size
+            limit = finalList.size
             list.clear()
             list.addAll(finalList)
             isLastPageD = (finalList.size == TOTAL_ELEMENTS)
-            Log.i(TAG, "islastpage: "+isLastPageD)
+            Log.i(TAG, "islastpage: " + isLastPageD)
             setAdapterNotify()
             (parentFragment as FragmentProductHome).setTabTitle("${getString(R.string.products)} (${limit})", 0)
 
@@ -170,7 +169,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
             list.clear()
             list.addAll(listProduct!!)
             setAdapterNotify()
-        }else removeLoader()
+        } else removeLoader()
     }
 
 
@@ -225,8 +224,10 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     private fun sendBundleData(itemsItem: CatalogProduct?): Bundle {
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, itemsItem)
-        bundle.putBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name, isNonPhysicalExperience
-                ?: false)
+        bundle.putBoolean(
+            IntentConstant.NON_PHYSICAL_EXP_CODE.name, isNonPhysicalExperience
+                ?: false
+        )
         bundle.putString(IntentConstant.CURRENCY_TYPE.name, currencyType)
         bundle.putString(IntentConstant.FP_ID.name, fpId)
         bundle.putString(IntentConstant.FP_TAG.name, fpTag)
@@ -239,7 +240,8 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
 
     private fun checkStoragePermission(): Boolean {
         if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            showDialog(requireActivity(), getString(R.string.storage_permission), getString(R.string.to_share_the_image_we_need_storage_permission)
+            showDialog(
+                requireActivity(), getString(R.string.storage_permission), getString(R.string.to_share_the_image_we_need_storage_permission)
             ) { _: DialogInterface?, _: Int -> ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_CODE) }
             return false
         }
@@ -249,57 +251,11 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == STORAGE_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (!defaultShareGlobal && shareType != 2 && shareProduct != null) {
-                share(defaultShareGlobal, shareType, shareProduct)
-            }
+            shareProduct(product?.Name, product?.Price.toString(), product?.ProductUrl, sessionLocal.userPrimaryMobile, product?.ImageUri,
+            isWhatsApp = false, isService = false, isFb = false, activity = requireActivity())
         }
     }
 
-    fun share(defaultShare: Boolean, type: Int, product: ItemsItem?) {
-        showProgress("Sharing...")
-        if (NetworkUtils.isNetworkConnected()) {
-            val shareText = String.format("*%s* %s\n*%s* %s\n\n-------------\n%s\n\nfor more details visit: %s",
-                    product?.name?.trim { it <= ' ' }, product?.description, "${product?.currency}${product?.discountedPrice}",
-                    "${product?.currency}${product?.price}", product?.description?.trim { it <= ' ' }, product?.category?.trim { it <= ' ' })
-            val target: Target = object : Target {
-                override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-                    targetMap = null
-                    try {
-                        val mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
-                        val view = View(activity)
-                        view.draw(Canvas(mutableBitmap))
-                        val path = MediaStore.Images.Media.insertImage(requireActivity().contentResolver, mutableBitmap, "boost_360", "")
-                        val uri = Uri.parse(path)
-                        shareTextService(defaultShare, type, uri, shareText)
-                    } catch (e: OutOfMemoryError) {
-                        showShortToast(getString(R.string.image_size_is_large))
-                    } catch (e: Exception) {
-                        showShortToast(getString(R.string.image_not_able_to_share))
-                    }
-                    hideProgress()
-                }
-
-                override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
-                    hideProgress()
-                    targetMap = null
-                    showShortToast(getString(R.string.failed_to_download_image))
-                }
-
-                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-                }
-            }
-            if (product?.image.isNullOrEmpty().not()) {
-                targetMap = target
-                Picasso.get().load(product?.image ?: "").into(target)
-            } else {
-                shareTextService(defaultShare, type, null, shareText)
-                hideProgress()
-            }
-        } else {
-            hideProgress()
-            showShortToast(getString(R.string.can_not_share_image_offline))
-        }
-    }
 
     fun showDialog(mContext: Context?, title: String?, msg: String?, listener: DialogInterface.OnClickListener) {
         val builder = AlertDialog.Builder(mContext!!)
@@ -309,25 +265,6 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
         }
         builder.create().show()
     }
-
-    private fun shareTextService(defaultShare: Boolean, type: Int, uri: Uri?, shareText: String) {
-        val share = Intent(Intent.ACTION_SEND)
-        share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        share.putExtra(Intent.EXTRA_TEXT, shareText)
-        uri?.let { share.putExtra(Intent.EXTRA_STREAM, uri) }
-        share.type = if (uri != null) "image/*" else "text/plain"
-        if (share.resolveActivity(requireActivity().packageManager) != null) {
-            if (!defaultShare) {
-                if (type == 0) {
-                    share.setPackage(getString(R.string.facebook_package))
-                } else if (type == 1) {
-                    share.setPackage(getString(R.string.whats_app_package))
-                }
-            }
-            startActivityForResult(Intent.createChooser(share, resources.getString(R.string.share_updates)), 1)
-        }
-    }
-
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
@@ -357,19 +294,25 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        val data = item as? CatalogProduct
+        this. product = item as? CatalogProduct
 
         when (actionType) {
             RecyclerViewActionType.PRODUCT_ITEM_CLICK.ordinal -> {
                 val bundle = Bundle()
-                bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, data)
+                bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, product)
                 startFragmentActivity(FragmentType.PRODUCT_DETAIL_VIEW, bundle, clearTop = false, isResult = true)
             }
             RecyclerViewActionType.PRODUCT_DATA_SHARE_CLICK.ordinal -> {
 
+                //fb
+                shareProduct(product?.Name, product?.Price.toString(), product?.ProductUrl, sessionLocal.userPrimaryMobile, product?.ImageUri,
+                    isWhatsApp = false, isService = false, isFb = false, activity = requireActivity())
+
+
             }
             RecyclerViewActionType.PRODUCT_WHATS_APP_SHARE.ordinal -> {
-
+                shareProduct(product?.Name, product?.Price.toString(), product?.ProductUrl, sessionLocal.userPrimaryMobile, product?.ImageUri,
+                    isWhatsApp = true, isService = false, isFb = true, activity = requireActivity())
             }
 
         }

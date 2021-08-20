@@ -472,7 +472,7 @@
   <string name="product_update_and_published_live_on_your_website_or_share">Your product is successfully updated and published\nlive on your website.</string>
   <string name="image_uploading">Uploading image, please wait...</string>
   <string name="error_select_service">Please select at least one service provided by this staff</string>
-  <string name="catalog_setup">Catalog setup</string>
+  <string name="catalog_setup">Catalog Setup</string>
   <string name="service_categories_catalog_display_text_napplicable_tax_slabs">Service categories, Catalog display text,\napplicable tax slabs</string>
   <string name="decide_what_you_want_to_call_the_catalog_tab_on_your_website_and_the_default_tax_for_your_all_services">Decide what you want to call the catalog tab on your website and the default tax % for your all services.</string>
   <string name="current_display_name">Current display name</string>
@@ -518,10 +518,10 @@
   <string name="new_page_url_https_sravansclinics_com_packages"><b>New page URL:</b><br />https://sravansclinics.com/packages</string>
   <string name="i_understand_that_url_change_may_have_a_negative_impact_on_the_search">I understand that URL change may have a negative impact on the search ranking of my website since few previously indexed pages may sometime show a 404 error.</string>
   <string name="boost_auto_generates_the_customer_policies_using_policy_generator_you_can_still_customise_few_of_these">Boost auto-generates the customer policies using policy generator. You can still customise few of these.</string>
-  <string name="appointment_settings">Appointment settings</string>
-  <string name="payment_collection_setup">Payment collection setup</string>
-  <string name="policies_for_customer">Policies for customers</string>
-  <string name="customer_invoice_setup">Customer invoice setup</string>
+  <string name="appointment_settings">Appointment Settings</string>
+  <string name="payment_collection_setup">Payment Collection Setup</string>
+  <string name="policies_for_customer">Policies For Customers</string>
+  <string name="customer_invoice_setup">Customer Invoice Setup</string>
   <string name="preferred_payment_gateway_connected_bank_account">Preferred payment gateway,\nConnected bank account</string>
   <string name="gst_declearation_bank_upi_appointments">GST declaration, Bank UPI for offline appointments,\nSignature</string>
   <string name="refund_cancllation_privacy_policies">Refund, cancellation, privacy policies for your \ncustomers</string>
@@ -906,7 +906,7 @@
     <string name="search">Search</string>
     <string name="catalog">Catalog</string>
   <string name="select_how_you_want_to_recieve_money_for_all_your_online_appointments">Select how you want to receive money for all your online appointments.</string>
-  <string name="i_understood">i understood</string>
+  <string name="i_understood">I understood</string>
   <string name="search_in_the_appointment_settings">Search in appointment settings</string>
   <string name="gstin_">GSTIN</string>
   <string name="storage_permission">Storage Permission</string>
@@ -918,12 +918,12 @@
   <string name="products">PRODUCTS</string>
   <string name="error_getting_a_product_list">error getting a product listing</string>
   <string name="e_commerce_settings">e-commerce settings</string>
-  <string name="ecommerce_settings">E-commerce settings</string>
+  <string name="ecommerce_settings">E-commerce Settings</string>
   <string name="decide_what_you_want_to_call_the_catalog_tab_on_your_website_and_the_default_tax_for_your_all_products">Decide what you want to call the catalog tab on your website and the default tax % for your all products.</string>
   <string name="tax_slabs_are_a_rate_at_which_any_product_is_taxable_determined_by_gst_council_of_india_this_is_used_to_back_calculate_the_final_paybale_amount_while_placing_an_order_at_the_checkout_page_on_your_website">Tax slabs are a rate at which any product is taxable (determined by GST council of India). This is used to back calculate the final paybale amount while placing an order at the checkout page on your website.</string>
   <string name="this_will_be_used_as_default_tax_rate_for_any_product_in_your_catalog_in_case_you_ve_not_entered_any_specific_tax_for_that_product">This will be used as default tax rate for any product in your catalog in case you’ve not entered any specific tax% for that product.</string>
   <string name="search_in_order_settings">Search in order settings</string>
-  <string name="delivery_setup">Delivery setup</string>
+  <string name="delivery_setup">Delivery Setup</string>
   <string name="default_delivery_charges_warehouse_addresses">Default delivery charges, Warehouse \naddresses</string>
   <string name="warehouse_address">Warehouse address*</string>
     <string name="contact_number">Contact number*</string>
@@ -961,6 +961,7 @@
     <string name="for_home_delivery">for home delivery</string>
     <string name="for_store_pickup">for store pickup</string>
     <string name="return_policy">Return policy</string>
+  <string name="please_enter_valid_account_number">please enter valid account number</string>
 
 
 </resources>

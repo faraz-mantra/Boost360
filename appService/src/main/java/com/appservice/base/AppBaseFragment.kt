@@ -18,6 +18,7 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
+import com.onboarding.nowfloats.ui.webview.WebViewTNCDialog
 
 abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseFragment<Binding, ViewModel>() {
 
@@ -96,4 +97,5 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
       else ->false
     }
   }
+
 }

@@ -1,143 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+  <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_match_root">
+
+    <androidx.core.widget.NestedScrollView
+      android:id="@+id/nestedScrollView2"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:fillViewport="true"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
         style="@style/match_match"
-        android:background="@color/white">
+        android:gravity="start"
+        android:orientation="vertical"
+        android:padding="@dimen/size_18">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedScrollView2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:fillViewport="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <com.framework.views.customViews.CustomTextView
+          style="@style/AppointmentSetting_Text_Heading"
+          android:layout_marginStart="@dimen/size_1"
+          android:text="@string/name_of_the_account_holder" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                style="@style/match_match"
-                android:gravity="start"
-                android:orientation="vertical"
-                android:padding="@dimen/size_18">
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/edt_account_name"
+          style="@style/Appointment_Text_Field"
+          android:layout_marginTop="@dimen/size_2"
+          android:hint="@string/write_the_name_as_mentioned_in_bank_account" />
 
-                <com.framework.views.customViews.CustomTextView
-                    style="@style/AppointmentSetting_Text_Heading"
-                    android:layout_marginStart="@dimen/size_1"
-                    android:text="@string/name_of_the_account_holder" />
+        <com.framework.views.customViews.CustomTextView
+          style="@style/AppointmentSetting_Text_Heading"
+          android:layout_marginStart="@dimen/size_1"
+          android:layout_marginTop="@dimen/size_10"
+          android:text="@string/account_number_" />
 
-                <com.framework.views.customViews.CustomEditText
-                    android:id="@+id/edt_account_name"
-                    style="@style/Appointment_Text_Field"
-                    android:layout_marginTop="@dimen/size_2"
-                    android:hint="@string/write_the_name_as_mentioned_in_bank_account"
-                   />
-
-                <com.framework.views.customViews.CustomTextView
-                    style="@style/AppointmentSetting_Text_Heading"
-                    android:layout_marginStart="@dimen/size_1"
-                    android:layout_marginTop="@dimen/size_10"
-                    android:text="@string/account_number_" />
-
-                <com.framework.views.customViews.CustomEditText
-                    android:id="@+id/edt_account_number"
-                    style="@style/Appointment_Text_Field"
-                    android:layout_marginTop="@dimen/size_2"
-                    android:hint="@string/xxxxxxxxxxxxxxxxxx"
-                    android:inputType="number" />
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/edt_account_number"
+          style="@style/Appointment_Text_Field"
+          android:layout_marginTop="@dimen/size_2"
+          android:hint="@string/xxxxxxxxxxxxxxxxxx"
+          android:inputType="number" />
 
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/title_confirm_account"
-                    style="@style/AppointmentSetting_Text_Heading"
-                    android:layout_marginStart="@dimen/size_1"
-                    android:layout_marginTop="@dimen/size_10"
-                    android:text="@string/confirm_account_number" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/title_confirm_account"
+          style="@style/AppointmentSetting_Text_Heading"
+          android:layout_marginStart="@dimen/size_1"
+          android:layout_marginTop="@dimen/size_10"
+          android:text="@string/confirm_account_number" />
 
-                <com.framework.views.customViews.CustomEditText
-                    android:id="@+id/edt_confirm_number"
-                    style="@style/Appointment_Text_Field"
-                    android:layout_marginTop="@dimen/size_2"
-                    android:hint="@string/xxxxxxxxxxxxxxxxxx"
-                    android:inputType="numberPassword" />
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/edt_confirm_number"
+          style="@style/Appointment_Text_Field"
+          android:layout_marginTop="@dimen/size_2"
+          android:hint="@string/xxxxxxxxxxxxxxxxxx"
+          android:inputType="numberPassword" />
 
-                <com.framework.views.customViews.CustomTextView
-                    style="@style/AppointmentSetting_Text_Heading"
-                    android:layout_marginStart="@dimen/size_1"
-                    android:layout_marginTop="@dimen/size_10"
-                    android:text="@string/bank_name" />
+        <com.framework.views.customViews.CustomTextView
+          style="@style/AppointmentSetting_Text_Heading"
+          android:layout_marginStart="@dimen/size_1"
+          android:layout_marginTop="@dimen/size_10"
+          android:text="@string/bank_name" />
 
-                <com.framework.views.customViews.CustomEditText
-                    android:id="@+id/edt_bank_name"
-                    style="@style/Appointment_Text_Field"
-                    android:layout_marginTop="@dimen/size_2"
-                    android:hint="@string/write_the_name_of_your_bank"
-                    android:inputType="text"
-                  />
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/edt_bank_name"
+          style="@style/Appointment_Text_Field"
+          android:layout_marginTop="@dimen/size_2"
+          android:hint="@string/write_the_name_of_your_bank"
+          android:inputType="text" />
 
-                <com.framework.views.customViews.CustomTextView
-                    style="@style/AppointmentSetting_Text_Heading"
-                    android:layout_marginStart="@dimen/size_1"
-                    android:layout_marginTop="@dimen/size_10"
-                    android:text="@string/account_alias" />
+        <com.framework.views.customViews.CustomTextView
+          style="@style/AppointmentSetting_Text_Heading"
+          android:layout_marginStart="@dimen/size_1"
+          android:layout_marginTop="@dimen/size_10"
+          android:text="@string/account_alias" />
 
-                <com.framework.views.customViews.CustomEditText
-                    android:id="@+id/edt_alias"
-                    style="@style/Appointment_Text_Field"
-                    android:layout_marginTop="@dimen/size_2"
-                    android:hint="@string/write_account_alias"
-                    android:inputType="text"
-                   />
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/edt_alias"
+          style="@style/Appointment_Text_Field"
+          android:layout_marginTop="@dimen/size_2"
+          android:hint="@string/write_account_alias"
+          android:inputType="text" />
 
-                <com.framework.views.customViews.CustomTextView
-                    style="@style/AppointmentSetting_Text_Heading"
-                    android:layout_marginStart="@dimen/size_1"
-                    android:layout_marginTop="@dimen/size_10"
-                    android:text="@string/bank_ifsc_code" />
+        <com.framework.views.customViews.CustomTextView
+          style="@style/AppointmentSetting_Text_Heading"
+          android:layout_marginStart="@dimen/size_1"
+          android:layout_marginTop="@dimen/size_10"
+          android:text="@string/bank_ifsc_code" />
 
-                <com.framework.views.customViews.CustomEditText
-                    android:id="@+id/edt_ifsc"
-                    style="@style/Appointment_Text_Field"
-                    android:layout_marginTop="@dimen/size_2"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-                    android:hint="@string/type_ifsc_code"
-                    android:inputType="textCapCharacters"
-                    android:maxLength="11" />
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/edt_ifsc"
+          style="@style/Appointment_Text_Field"
+          android:layout_marginTop="@dimen/size_2"
+          android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+          android:hint="@string/type_ifsc_code"
+          android:inputType="textCapCharacters"
+          android:maxLength="11" />
 
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/txt_branch"
-                    style="@style/AppointmentSetting_Text_Heading"
-                    android:layout_marginStart="@dimen/size_1"
-                    android:layout_marginTop="@dimen/size_10"
-                    android:text="@string/bank_branch_"
-                    android:visibility="gone" />
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_branch"
+          style="@style/AppointmentSetting_Text_Heading"
+          android:layout_marginStart="@dimen/size_1"
+          android:layout_marginTop="@dimen/size_10"
+          android:text="@string/bank_branch_"
+          android:visibility="gone" />
 
-                <com.framework.views.customViews.CustomEditText
-                    android:id="@+id/edt_bank_branch"
-                    style="@style/Appointment_Text_Field"
-                    android:layout_marginTop="@dimen/size_2"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:hint="@string/write_the_name_of_your_bank"
-                    android:inputType="text"
-                    android:visibility="gone" />
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/edt_bank_branch"
+          style="@style/Appointment_Text_Field"
+          android:layout_marginTop="@dimen/size_2"
+          android:focusable="false"
+          android:focusableInTouchMode="false"
+          android:hint="@string/write_the_name_of_your_bank"
+          android:inputType="text"
+          android:visibility="gone" />
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        </androidx.core.widget.NestedScrollView>
-
-
-        <com.framework.views.customViews.CustomButton
-            android:id="@+id/submit_btn"
-            style="@style/Appointment.ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="@dimen/size_20"
-            android:text="@string/submit_for_verification"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nestedScrollView2"
-            app:layout_constraintVertical_bias="0.851" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/submit_btn"
+      style="@style/Appointment.ButtonStyle"
+      android:layout_width="match_parent"
+      android:layout_marginHorizontal="@dimen/size_20"
+      android:text="@string/submit_for_verification"
+      android:textAllCaps="false"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/nestedScrollView2"
+      app:layout_constraintVertical_bias="0.851" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

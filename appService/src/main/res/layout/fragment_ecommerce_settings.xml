@@ -37,6 +37,7 @@
         android:id="@+id/catalog_setup"
         style="@style/match_wrap"
         android:clickable="true"
+        android:visibility="gone"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
         android:paddingBottom="@dimen/size_20">

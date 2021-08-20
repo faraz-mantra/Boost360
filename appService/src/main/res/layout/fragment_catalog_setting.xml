@@ -3,7 +3,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        style="@style/match_match">
+        style="@style/match_match_root">
 
         <com.framework.views.customViews.CustomCardView
             android:id="@+id/customCardView3"
@@ -29,7 +29,7 @@
                 <com.framework.views.customViews.CustomTextView
                     style="@style/wrap_wrap"
                     android:includeFontPadding="true"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/regular"
                     android:textFontWeight="400"
                     android:textColor="@color/black_4a4a4a"
                     android:text="@string/decide_what_you_want_to_call_the_catalog_tab_on_your_website_and_the_default_tax_for_your_all_services"
@@ -42,7 +42,7 @@
             style="@style/match_wrap"
             android:paddingHorizontal="@dimen/size_8"
             android:layout_height="@dimen/size_0"
-            android:background="#f8f8f8"
+            android:background="@color/white_smoke_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
                             android:layout_weight="1"
                             android:textSize="14sp"
                             android:text="@string/services"
-                            android:fontFamily="@font/open_sans_semibold"
+                            android:fontFamily="@font/semi_bold"
                             android:textAllCaps="true"
                             android:textColor="@color/black_4a4a4a" />
 

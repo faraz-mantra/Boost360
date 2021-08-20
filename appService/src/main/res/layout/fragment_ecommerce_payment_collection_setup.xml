@@ -52,10 +52,12 @@
 
                 <com.framework.views.customViews.CustomTextView
                     style="@style/AppointmentSetting_Text_Heading"
+                  android:visibility="gone"
                     android:text="@string/payment_gateway" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     style="@style/match_wrap"
+                  android:visibility="gone"
                     android:layout_marginTop="@dimen/size_5"
                     android:background="@drawable/bg_rect_white_rounded_4"
                     android:orientation="vertical"

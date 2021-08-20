@@ -43,7 +43,7 @@
         app:fontFamily="@font/regular"
         app:textType="CAPTION" />
 
-    <com.framework.views.customViews.CustomTextView
+    <com.framework.views.customViews.CustomButton
         android:id="@+id/verification_btn"
         style="@style/ButtonStyle.Rounded.Solid"
         android:layout_width="match_parent"
@@ -54,7 +54,6 @@
         android:gravity="center"
         android:text="@string/i_understood"
         android:textAlignment="gravity"
-        android:textAllCaps="true"
         android:textColor="@color/white"
         app:fontFamily="@font/semi_bold" />
 </LinearLayout>

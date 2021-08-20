@@ -39,11 +39,13 @@ class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommerc
         super.onCreateView()
         sessionLocal= UserSessionManager(requireActivity())
         setOnClickListener(binding?.boostPaymentGateway, binding?.btnAddAccount)
-        getDeliveryStatus()
         getAccountDetails()
         grayScaleImage()
         binding?.toggleCod?.setOnToggledListener { toggleableView, isOn ->
-            updateDeliveryStatus(isOn)
+            updateHomeStoreStatus(isStore = isOn)
+        }
+        binding?.toggleHome?.setOnToggledListener { toggleableView, isOn ->
+            updateHomeStoreStatus(isHome = isOn)
         }
     }
 
@@ -55,15 +57,18 @@ class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommerc
     }
 
     private fun getAccountDetails() {
+        showProgress()
         hitApi(viewModel?.getPaymentProfileDetails(sessionLocal.fPID,clientId), (R.string.error_getting_bank_details))
     }
 
     private fun getDeliveryStatus() {
+        showProgress()
         hitApi(viewModel?.getDeliveryDetails(sessionLocal.fPID,clientId), R.string.error_getting_delivery_details)
     }
 
-    private fun updateDeliveryStatus(isOn: Boolean) {
-        hitApi(liveData = viewModel?.setupDelivery(DeliverySetup(isPickupAllowed = false, isBusinessLocationPickupAllowed = isOn, isWarehousePickupAllowed = false, isHomeDeliveryAllowed = false, flatDeliveryCharge = "0", clientId = clientId, floatingPointId = sessionLocal.fPID)), errorStringId = R.string.error_getting_delivery_details)
+    private fun updateHomeStoreStatus(isHome: Boolean?= binding?.toggleHome?.isOn,isStore: Boolean?= binding?.toggleCod?.isOn) {
+        showProgress()
+        hitApi(liveData = viewModel?.setupDelivery(DeliverySetup(isPickupAllowed = isStore, isBusinessLocationPickupAllowed = false, isWarehousePickupAllowed = false, isHomeDeliveryAllowed = isHome, flatDeliveryCharge = "0", clientId = clientId, floatingPointId = sessionLocal.fPID)), errorStringId = R.string.error_getting_delivery_details)
     }
 
     override fun onClick(v: View) {
@@ -87,6 +92,7 @@ class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommerc
     }
 
     private fun onReceivedBankDetails(it: BaseResponse) {
+        getDeliveryStatus()
         val paymentProfileResponse = it as PaymentProfileResponse
         isEdit = paymentProfileResponse.result?.bankAccountDetails != null
         if (isEdit) {
@@ -109,6 +115,7 @@ class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommerc
 
     override fun onSuccess(it: BaseResponse) {
         super.onSuccess(it)
+        hideProgress()
         when (it.taskcode) {
             TaskCode.GET_DELIVERY_DETAILS.ordinal -> onDeliveryDetailsReceived(it)
             TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> onReceivedBankDetails(it)
@@ -117,6 +124,7 @@ class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommerc
     }
 
     override fun onFailure(it: BaseResponse) {
+        hideProgress()
         super.onFailure(it)
         when (it.taskcode) {
             TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> setUpBankDetails()
@@ -133,7 +141,8 @@ class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommerc
 
     private fun onDeliveryDetailsReceived(it: BaseResponse) {
         val data = it as? DeliveryDetailsResponse
-        binding?.toggleCod?.isOn = data?.result?.isBusinessLocationPickupAllowed ?: false
+        binding?.toggleCod?.isOn = data?.result?.isPickupAllowed ?: false
+        binding?.toggleHome?.isOn = data?.result?.isHomeDeliveryAllowed ?: false
 
 
     }

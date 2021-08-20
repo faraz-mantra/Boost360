@@ -43,7 +43,7 @@ class BottomSheetAddWareHouse : BaseBottomSheetDialog<BottomSheetAddWarehouseBin
     private fun isValid(): Boolean {
         val phoneNumber = binding?.petContactNo?.text
         val address = binding?.cetWarehouseAddress?.text
-        val name = binding?.ctvWarehouseName?.text
+        val name = binding?.cetWarehouseNameHint?.text
         when {
             name.isNullOrEmpty() -> {
                 showShortToast(getString(R.string.warehouse_name_cannot_empty))
