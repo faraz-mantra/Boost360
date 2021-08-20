@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.nowfloats.ProductGallery.Product_Detail_Activity;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import java.io.DataOutputStream;
@@ -148,6 +149,7 @@ public class MultipleImageUploadService extends IntentService {
             connection.setRequestMethod("PUT");
 
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
 
             outputStream = new DataOutputStream(connection.getOutputStream());
 

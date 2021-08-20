@@ -11,6 +11,9 @@ import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
+import com.framework.rest.ServiceInterceptor
 import com.framework.webengageconstant.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -20,6 +23,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import com.google.gson.Gson
+import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okio.Buffer
 import okio.BufferedSource
@@ -65,6 +69,8 @@ class CustomFirebaseAuthHelpers constructor(
       .build()
     retrofit = Retrofit.Builder()
       .baseUrl("https://api2.withfloats.com")
+      .client(OkHttpClient.Builder().addInterceptor(
+        ServiceInterceptor(false,UserSessionManager(activity).getAccessTokenAuth()?.token)).build())
       .addConverterFactory(GsonConverterFactory.create())
       .build()
     this.currentActivity = activity

@@ -17,6 +17,9 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
 
+import com.framework.BaseApplication;
+import com.framework.pref.TokenResultKt;
+import com.framework.rest.ServiceInterceptor;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import jp.wasabeef.richeditor.RichEditor;
+import okhttp3.OkHttpClient;
+import retrofit.RequestInterceptor;
 
 import static com.framework.webengageconstant.EventLabelKt.BUSINESS_PROFILE_CREATION_SUCCESS;
 import static com.framework.webengageconstant.EventLabelKt.CLICK;
@@ -442,5 +447,28 @@ public class Utils {
         edit.requestFocus();
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(edit, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    public static String getAuthToken(){
+     return   "Bearer "+ TokenResultKt.getAccessTokenAuth(new
+                com.framework.pref.UserSessionManager(BaseApplication.Companion.getInstance())).getToken();
+    }
+
+    public static OkHttpClient getAuthClient(){
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new ServiceInterceptor(false,getAuthToken()))
+                .build();
+        return client;
+    }
+
+    public static RequestInterceptor getAuthRequestInterceptor(){
+        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("Authorization", Utils.getAuthToken());
+            }
+        };
+
+        return requestInterceptor;
     }
 }
