@@ -43,7 +43,7 @@
         app:fontFamily="@font/regular"
         app:textType="CAPTION" />
 
-    <com.framework.views.customViews.CustomButton
+    <com.framework.views.customViews.CustomTextView
         android:id="@+id/verification_btn"
         style="@style/ButtonStyle.Rounded.Solid"
         android:layout_width="match_parent"
