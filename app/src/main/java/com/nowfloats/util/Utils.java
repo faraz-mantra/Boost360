@@ -27,18 +27,25 @@ import com.google.firebase.auth.UserInfo;
 import com.nowfloats.Login.UserSessionManager;
 import com.thinksity.R;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import jp.wasabeef.richeditor.RichEditor;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit.RequestInterceptor;
 
 import static com.framework.webengageconstant.EventLabelKt.BUSINESS_PROFILE_CREATION_SUCCESS;
 import static com.framework.webengageconstant.EventLabelKt.CLICK;
 import static com.framework.webengageconstant.EventNameKt.ADDON_MARKETPLACE_PAGE_CLICK;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_PROFILE_CREATION_SUCCESSFUL;
+
+import androidx.annotation.NonNull;
 
 
 public class Utils {
@@ -455,8 +462,31 @@ public class Utils {
     }
 
     public static OkHttpClient getAuthClient(){
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new ServiceInterceptor(false,getAuthToken()))
+                .addInterceptor(new Interceptor() {
+                    @NonNull
+                    @Override
+                    public Response intercept(@NonNull Chain chain) throws IOException {
+                        Request original = chain.request();
+
+                        if (chain.request().headers().get("Authorization")==null){
+
+
+                            Request request= original.newBuilder()
+                                    .header("Authorization", getAuthToken())
+                            .method(original.method(), original.body())
+                                    .build();
+
+                            return chain.proceed(request);
+                        }
+
+                        return chain.proceed(original.newBuilder().build());
+
+
+                    }
+                }).addInterceptor(loggingInterceptor)
                 .build();
         return client;
     }
