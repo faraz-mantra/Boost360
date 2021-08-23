@@ -15,7 +15,11 @@ import com.framework.pref.getAccessTokenAuth
 import com.framework.rest.ServiceInterceptor
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -34,15 +38,37 @@ object Utils {
   fun getRetrofit(): Retrofit {
     return Retrofit.Builder()
       .baseUrl(BASE_URL)
-      .client(
-        OkHttpClient.Builder().addInterceptor(
-        ServiceInterceptor(false, UserSessionManager(AppDashboardApplication.instance)
-          .getAccessTokenAuth()?.token)
-        ).build())
+      .client(getAuthClient())
       .addConverterFactory(ScalarsConverterFactory.create())
       .addConverterFactory(GsonConverterFactory.create())
       .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
       .build()
+  }
+
+  fun getAuthClient(): OkHttpClient {
+    return OkHttpClient.Builder().addInterceptor(
+      object : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+          val original: Request = chain.request()
+          if (chain.request().headers["Authorization"]==null){
+            val token = UserSessionManager(AppDashboardApplication.instance)
+              .getAccessTokenAuth()?.token
+
+            val request= original.newBuilder()
+              .header("Authorization", token?:"")
+              .method(original.method, original.body)
+              .build()
+
+            return chain.proceed(request)
+          }
+
+          return chain.proceed(original.newBuilder().build())
+        }
+
+      }
+    ).addInterceptor(HttpLoggingInterceptor().apply {
+      setLevel(HttpLoggingInterceptor.Level.BODY)
+    }).build()
   }
 
   fun hideSoftKeyboard(activity: Activity) {
