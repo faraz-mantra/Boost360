@@ -3,6 +3,7 @@ package com.nowfloats.NavigationDrawer;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -223,6 +224,9 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        SharedPreferences nowfloatsPrefs = getActivity()
+                                .getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE);
+                        nowfloatsPrefs.edit().clear().apply();
                         sessionManager.logoutUser();
 //                        dialog.dismiss();
 //                        WebEngageController.logout();
