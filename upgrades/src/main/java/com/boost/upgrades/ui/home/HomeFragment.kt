@@ -6,9 +6,11 @@ import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
+import android.text.Layout
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -74,6 +76,15 @@ import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
 import java.util.*
 import kotlin.collections.ArrayList
+import android.text.style.StyleSpan
+
+import android.view.ViewTreeObserver
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
+
+import android.widget.TextView
+
+
+
 
 class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
@@ -447,6 +458,9 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         mp_review_cart_close_iv.setOnClickListener{
             mp_view_cart_rl.visibility = View.GONE
         }
+        mp_review_cart_tv.setOnClickListener {
+            (activity as UpgradeActivity).addFragment(CartFragment.newInstance(), CART_FRAGMENT)
+        }
 
     }
 
@@ -673,25 +687,33 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
+                mp_view_cart_rl.visibility = View.VISIBLE
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
                 badge.setText(badgeNumber.toString())
-                mp_no_of_cart_items_tv.setText(badgeNumber.toString() +" items waiting in cart")
+                if(badgeNumber == 1){
+                    mp_no_of_cart_items_tv.text = badgeNumber.toString() + " item waiting in cart"
+                }else{
+                    mp_no_of_cart_items_tv.text = badgeNumber.toString() + " items waiting in cart"
+                }
+                itemsArrayList?.clear()
                 it.forEach {
                     itemsArrayList?.add(it.item_name.toString())
                 }
                 var cartItems = " "
                 if(itemsArrayList!= null && itemsArrayList!!.size > 0){
                      for (items in itemsArrayList!!){
-                         cartItems += items
+                         cartItems += items + ","
                      }
                     mp_items_name_tv.text = cartItems
+
                 }
 
                 Constants.CART_VALUE = badgeNumber
             } else {
                 badgeNumber = 0
                 badge.visibility = View.GONE
+                mp_view_cart_rl.visibility = View.GONE
             }
             //refresh FeatureDeals adaptor when cart is updated
             if (viewModel.allFeatureDealsResult.value != null) {
@@ -746,24 +768,32 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         viewModel.cartResultBack().observe(this, androidx.lifecycle.Observer {
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
+                mp_view_cart_rl.visibility = View.VISIBLE
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
                 badge.setText(badgeNumber.toString())
-                mp_no_of_cart_items_tv.setText(badgeNumber.toString() + " items waiting in cart")
+                if(badgeNumber == 1){
+                    mp_no_of_cart_items_tv.text = badgeNumber.toString() + " item waiting in cart"
+                }else{
+                    mp_no_of_cart_items_tv.text = badgeNumber.toString() + " items waiting in cart"
+                }
+                itemsArrayList?.clear()
                 it.forEach {
                     itemsArrayList?.add(it.item_name.toString())
                 }
                 var cartItems = ""
               if(itemsArrayList!= null && itemsArrayList!!.size > 0){
                 for (items in itemsArrayList!!){
-                  cartItems += items
+                  cartItems += items + ","
                 }
-                  mp_items_name_tv.setText(cartItems)
+                  mp_items_name_tv.text = cartItems
+
               }
                 Constants.CART_VALUE = badgeNumber
             } else {
                 badgeNumber = 0
                 badge.visibility = View.GONE
+                mp_view_cart_rl.visibility = View.GONE
             }
             //refresh FeatureDeals adaptor when cart is updated
             if (viewModel.allFeatureDealsResult.value != null) {
@@ -837,6 +867,14 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     val callIntent = Intent(Intent.ACTION_DIAL)
                     callIntent.data = Uri.parse("tel:" + expertConnectDetails.contact_number)
                     startActivity(Intent.createChooser(callIntent, "Call by:"))
+                }
+                mp_talk_expert_tv.setOnClickListener {
+                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_EXPERT_SPEAK,
+                        CLICK,
+                        NO_EVENT_VALUE)
+                    val callExpertIntent = Intent(Intent.ACTION_DIAL)
+                    callExpertIntent.data = Uri.parse("tel:" + expertConnectDetails.contact_number)
+                    startActivity(Intent.createChooser(callExpertIntent,"Call by:"))
                 }
             } else {
                 callnow_layout.visibility = View.GONE
