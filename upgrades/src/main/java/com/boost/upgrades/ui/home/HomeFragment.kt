@@ -107,6 +107,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     var featuresList: List<FeaturesModel>? = null
     private var session: UserSessionManager? = null
     private var deepLinkUtil: DeepLinkUtil? = null
+    private var itemsArrayList : ArrayList<String>? = ArrayList()
 
 
     companion object {
@@ -443,6 +444,9 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 COMPARE_FRAGMENT, args
             )
         }
+        mp_review_cart_close_iv.setOnClickListener{
+            mp_view_cart_rl.visibility = View.GONE
+        }
 
     }
 
@@ -672,6 +676,18 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
                 badge.setText(badgeNumber.toString())
+                mp_no_of_cart_items_tv.setText(badgeNumber.toString() +" items waiting in cart")
+                it.forEach {
+                    itemsArrayList?.add(it.item_name.toString())
+                }
+                var cartItems = " "
+                if(itemsArrayList!= null && itemsArrayList!!.size > 0){
+                     for (items in itemsArrayList!!){
+                         cartItems += items
+                     }
+                    mp_items_name_tv.text = cartItems
+                }
+
                 Constants.CART_VALUE = badgeNumber
             } else {
                 badgeNumber = 0
@@ -733,6 +749,17 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
                 badge.setText(badgeNumber.toString())
+                mp_no_of_cart_items_tv.setText(badgeNumber.toString() + " items waiting in cart")
+                it.forEach {
+                    itemsArrayList?.add(it.item_name.toString())
+                }
+                var cartItems = ""
+              if(itemsArrayList!= null && itemsArrayList!!.size > 0){
+                for (items in itemsArrayList!!){
+                  cartItems += items
+                }
+                  mp_items_name_tv.setText(cartItems)
+              }
                 Constants.CART_VALUE = badgeNumber
             } else {
                 badgeNumber = 0
