@@ -24,6 +24,7 @@ object EndPoints {
   const val GET_DOCTORS_API = "Home/GetDoctorData"
   const val GET_PRODUCT_DETAILS = "Home/GetProductDetails"
   const val SEND_MAIL = "Home/SendEmail"
+  const val GET_STAFF_LISTING = "staff/v1/GetStaffListing"
 
   // NFX APIs
   const val ASSURED_PURCHASE_BASE_URL = "https://assuredpurchase.withfloats.com/"

@@ -1,5 +1,6 @@
 package com.inventoryorder.viewmodel
 
+import GetStaffListingRequest
 import androidx.lifecycle.LiveData
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
@@ -17,6 +18,7 @@ import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.rest.repositories.*
+import retrofit2.http.Body
 
 class OrderCreateViewModel : BaseViewModel() {
 
@@ -192,5 +194,9 @@ class OrderCreateViewModel : BaseViewModel() {
 
   fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest): LiveData<BaseResponse> {
     return NowFloatsRepository.getBookingSlots(bookingSlotsRequest).toLiveData()
+  }
+
+  fun getDoctorsListing(@Body request: GetStaffListingRequest?): LiveData<BaseResponse> {
+    return NowFloatsRepository.getDoctorsListing(request = request).toLiveData()
   }
 }
