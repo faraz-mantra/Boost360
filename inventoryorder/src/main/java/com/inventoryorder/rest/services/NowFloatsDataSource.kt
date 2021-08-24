@@ -1,5 +1,7 @@
 package com.inventoryorder.rest.services
 
+import GetStaffListingRequest
+import com.inventoryorder.model.doctorsData.GetStaffListingResponse
 import com.inventoryorder.model.spaAppointment.GetServiceListingResponse
 import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.model.spaAppointment.bookingslot.response.BookingSlotResponse
@@ -24,4 +26,7 @@ interface NowFloatsDataSource {
 
   @POST(EndPoints.GET_BOOKING_SLOTS)
   fun getBookingSlots(@Body request: BookingSlotsRequest?): Observable<Response<BookingSlotResponse>>
+
+  @POST(EndPoints.GET_STAFF_LISTING)
+  fun fetchStaffList(@Body request: GetStaffListingRequest?): Observable<Response<GetStaffListingResponse>>
 }
