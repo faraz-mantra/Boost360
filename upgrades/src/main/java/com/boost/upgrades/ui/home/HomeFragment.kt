@@ -705,6 +705,9 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                      for (items in itemsArrayList!!){
                          cartItems += items + ","
                      }
+                    if(isTooLarge(mp_items_name_tv,cartItems)){
+
+                    }
                     mp_items_name_tv.text = cartItems
 
                 }
@@ -2432,6 +2435,11 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 override fun onAnimationRepeat(animation: Animator) {}
             }).startAnimation()
 
+    }
+
+    private fun isTooLarge(text: TextView, newText: String): Boolean {
+        val textWidth = text.paint.measureText(newText)
+        return textWidth >= text.measuredWidth
     }
 
     fun callBundleCart(item: Bundles, imageView: ImageView){
