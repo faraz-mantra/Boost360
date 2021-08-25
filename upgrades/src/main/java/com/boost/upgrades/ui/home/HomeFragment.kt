@@ -402,11 +402,11 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
         //chat bot view button clicked
         view_chat.setOnClickListener {
-            val details = DetailsFragment.newInstance()
-            val args = Bundle()
-            args.putString("itemId", "CHATBOT")
-            details.arguments = args
-            (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
+//            val details = DetailsFragment.newInstance()
+//            val args = Bundle()
+//            args.putString("itemId", "CHATBOT")
+//            details.arguments = args
+//            (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
         }
 
         //share feed back button
