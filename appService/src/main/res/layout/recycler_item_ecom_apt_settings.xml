@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    style="@style/wrap_wrap"
+    android:layout_marginTop="1dp"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/catalog_setup"
+      style="@style/match_wrap"
+      android:clickable="true"
+      android:focusable="true"
+      android:foreground="?attr/selectableItemBackground"
+      android:paddingBottom="@dimen/size_20"
+      android:visibility="visible">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/civ_catalog_setup"
+        style="@style/AppointmentSettings_Image"
+        android:src="@drawable/ic_business_services_pro"
+        app:layout_constraintBottom_toBottomOf="@+id/ctv_catalog_setup_subheading"
+        app:layout_constraintTop_toTopOf="@+id/ctv_catalog_setup_heading" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_catalog_setup_heading"
+        style="@style/AppointmentSetting_Text_Heading"
+        android:text="@string/catalog_setup"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.073"
+        app:layout_constraintStart_toEndOf="@+id/civ_catalog_setup"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_catalog_setup_subheading"
+        style="@style/AppointmentSetting_Text_Content"
+        android:layout_marginTop="@dimen/size_5"
+        android:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ctv_catalog_setup_heading"
+        app:layout_constraintTop_toBottomOf="@id/ctv_catalog_setup_heading" />
+
+      <com.framework.views.customViews.CustomImageView
+        style="@style/wrap_wrap"
+        android:layout_marginEnd="@dimen/size_10"
+        android:src="@drawable/ic_arrow_right_grey"
+        android:tint="@color/yellow_ffb900"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/ctv_catalog_setup_subheading"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View style="@style/AppointmentHorizontalDivider"
+      android:layout_marginTop="@dimen/size_1"/>
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
