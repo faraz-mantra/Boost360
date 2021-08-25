@@ -44,10 +44,14 @@ public class ImageGalleryActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_image_gallery);
         Log.i(TAG, "onCreate: ");
         MixPanelController.track(MixPanelController.IMAGE_GALLERY, null);
-        if (Constants.storeSecondaryImages!=null&&Constants.storeSecondaryImages.isEmpty()){
+        if (Constants.storeSecondaryImages==null||Constants.storeSecondaryImages.isEmpty()){
             binding.btnAdd.setVisibility(View.GONE);
+            binding.footer.setVisibility(View.GONE);
+
         }else {
             binding.btnAdd.setVisibility(View.VISIBLE);
+            binding.footer.setVisibility(View.VISIBLE);
+
         }
         setSupportActionBar(binding.appBar.toolbar);
         Methods.isOnline(ImageGalleryActivity.this);
@@ -104,8 +108,11 @@ public class ImageGalleryActivity extends AppCompatActivity {
         if (requestCode==202){
             if (Constants.storeSecondaryImages.isEmpty()){
                 binding.btnAdd.setVisibility(View.GONE);
+                binding.footer.setVisibility(View.GONE);
             }else {
                 binding.btnAdd.setVisibility(View.VISIBLE);
+                binding.footer.setVisibility(View.VISIBLE);
+
             }
         }
     }

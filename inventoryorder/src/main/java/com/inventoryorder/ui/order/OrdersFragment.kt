@@ -242,7 +242,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
         }else{
           nonEmptyView()
         }
-        setToolbarTitle(resources.getString(R.string.orders) + " (${response?.Data?.TotalOrders ?: 0})")
+        setToolbarTitle(resources.getString(R.string.orders))
         typeList = response?.Data?.getOrderType()
         typeList?.let { it1 -> setAdapterSellerSummary(it1) } ?: errorOnSummary(null)
       } else errorOnSummary(it?.message)
