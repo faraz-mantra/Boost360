@@ -224,10 +224,10 @@ public class Image_Gallery_Fragment extends Fragment implements
             otherImagesAdapter.notifyDataSetChanged();
 
 
-        if (Constants.storeSecondaryImages!=null&&Constants.storeSecondaryImages.size()>0){
-            nonEmptyView();
-        }else {
+        if (Constants.storeSecondaryImages==null||Constants.storeSecondaryImages.isEmpty()){
             emptyView();
+        }else {
+            nonEmptyView();
         }
 
     }

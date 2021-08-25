@@ -45,7 +45,7 @@
   <string name="appointment_description">Once a patient schedules a consultation on your website, they will appear here. You can also create a booking on behalf of any patient by clicking the button below.</string>
   <string name="no_appointment_yet">No appointments yet.</string>
   <string name="tool_bar_appointment_title">Appointments</string>
-  <string name="image_gallery_description">Make an impact and stand out with beautiful images.</string>
+  <string name="image_gallery_description">Make your business stand out with beautiful images.</string>
   <string name="image_gallery_footer">Supported format: JPEG, PNG Recommended dimension: Square (min. 800*800px) Max file size: 800kb</string>
   <string name="tool_bar_image_gallery">Image Gallery</string>
   <string name="book_an_appointment">Book an appointment</string>
