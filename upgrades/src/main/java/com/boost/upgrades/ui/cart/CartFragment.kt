@@ -260,6 +260,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             }
 
 
+
 //            }
 
 /*            renewPopUpFragment.show(
@@ -313,6 +314,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             } else {
                 Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
             }*/
+
+
         }
 
         back_button12.setOnClickListener {
@@ -803,6 +806,19 @@ Log.v("package_validity_months", " "+ package_validity_months)
 
                     var validity_days = 30
                     var net_quantity = 1
+//                    if(outputExtendedProps.isNullOrEmpty().not()){
+//                        val actualQuantity = outputExtendedProps.find { it.Key =="LIMIT" }?.Value
+//                        if (actualQuantity.isNullOrEmpty().not()){
+//                            net_quantity = actualQuantity?.toInt()!!
+//                        }
+//                        else{
+//                            net_quantity = 1
+//                        }
+//                    }
+//                    else{
+//                        net_quantity = 1
+//                    }
+
 
                     if (!bundles_in_cart && default_validity_months > 1) {
                         validity_days = 30 * default_validity_months
@@ -1054,6 +1070,18 @@ Log.v("package_validity_months", " "+ package_validity_months)
 
                     var validity_days = 30
                     var net_quantity = 1
+//                    if(outputExtendedProps.isNullOrEmpty().not()){
+//                        val actualQuantity = outputExtendedProps.find { it.Key =="LIMIT" }?.Value
+//                        if (actualQuantity.isNullOrEmpty().not()){
+//                            net_quantity = actualQuantity?.toInt()!!
+//                        }
+//                        else{
+//                            net_quantity = 1
+//                        }
+//                    }
+//                    else{
+//                        net_quantity = 1
+//                    }
 
                     totalValidityDays = 30 * default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)

@@ -53,7 +53,7 @@ class PackageViewPagerAdapter(
             )
 
             holder.getNowButton.setTextColor(Color.parseColor("#bbbbbb"))
-            holder.getNowButton.setText("Added To Cart")
+            holder.getNowButton.setText("Added to cart")
 
             homeListener.onPackageAddToCart(list.get(position),holder.primaryImageCopy)
 
