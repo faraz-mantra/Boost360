@@ -1,4 +1,4 @@
-package com.dashboard.model.live.caplimit_feature
+package com.framework.models.caplimit_feature
 
 import com.framework.base.BaseResponse
 import com.framework.utils.*
