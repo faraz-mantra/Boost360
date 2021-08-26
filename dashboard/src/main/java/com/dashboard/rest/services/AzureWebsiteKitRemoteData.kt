@@ -1,6 +1,6 @@
 package com.dashboard.rest.services
 
-import com.dashboard.model.live.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
 import com.dashboard.rest.EndPoints
 import io.reactivex.Observable
 import retrofit2.Response

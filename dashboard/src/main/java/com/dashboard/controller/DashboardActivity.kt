@@ -23,7 +23,7 @@ import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
 import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
-import com.dashboard.model.live.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
 import com.dashboard.model.live.drawerData.DrawerHomeData
 import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.model.live.welcomeData.WelcomeDashboardResponse
@@ -116,7 +116,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun reloadCapLimitData() {
-    viewModel.getCapLimitFeatureDetails(session?.fPID, clientId).observeOnce(this, {
+    viewModel.getCapLimitFeatureDetails("5f72ef546516d00001fecd60", clientId).observeOnce(this, {
       if (it.isSuccess()) {
         val capLimitList = it as? Array<CapLimitFeatureResponseItem>
         val item = capLimitList?.firstOrNull { it1 -> (it1.featureKey == CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name) } ?: CapLimitFeatureResponseItem()
