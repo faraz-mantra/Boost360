@@ -264,7 +264,7 @@ dependencies {
 
 
 //    implementation 'com.apxor.android:apxor-android-sdk-core:2.5.1@aar'
-    implementation project(':keyboard')
+    implementation project(':florisboard')
     implementation project(':imagepicker')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.github.angads25:toggle:1.1.0'
