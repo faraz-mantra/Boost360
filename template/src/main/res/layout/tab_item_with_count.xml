@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/customTextView"
+        style="@style/GreyRegularM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Browse All"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.framework.views.customViews.CustomCardView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="2dp"
+        app:cardBackgroundColor="#FEEFD1"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/customTextView"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.framework.views.customViews.CustomTextView
+            style="@style/WhiteRegularSS"
+            android:textColor="#FCAF17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="4" />
+    </com.framework.views.customViews.CustomCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

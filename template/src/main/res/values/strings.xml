@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">template</string>
+    <string name="update_creation">Update creation</string>
+    <string name="todays_pick">Today\'s Pick</string>
+    <string name="browser_all">Browse All</string>
+    <string name="create_post">Create Post</string>
+    <string name="share">Share</string>
+    <string name="post">Post</string>
+</resources>

@@ -188,6 +188,8 @@ dependencies {
     //presignup library new flow
     implementation project(path: ':presignin')
     api project(path: ':dashboard')
+    api project(path: ':template')
+
 
     //upgrade library
     implementation project(path: ':upgrades')

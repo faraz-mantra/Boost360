@@ -127,4 +127,6 @@
     <item name="fontFamily">@font/regular</item>
     <item name="editTextColor">@color/black_4a4a4a</item>
   </style>
+
+
 </resources>
