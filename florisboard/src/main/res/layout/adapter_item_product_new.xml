@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/size_4"
+    android:layout_marginTop="@dimen/size_12"
+    android:layout_marginEnd="@dimen/size_4"
+    android:layout_marginBottom="@dimen/size_12"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/size_6"
+    app:cardElevation="0dp"
+    app:contentPadding="0dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:gravity="bottom">
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_duration"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:drawableStart="@drawable/ic_timer"
+              android:drawablePadding="4dp"
+              android:gravity="center_vertical"
+              android:paddingTop="4dp"
+              android:text="@string/_90_min"
+              android:textColor="@color/black_4a4a4a" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/ctv_duration"
+              android:ellipsize="end"
+              android:maxLines="2"
+              android:paddingBottom="4dp"
+              android:text="@string/product_name"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="17sp"
+              android:textStyle="bold" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_price"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/tv_name"
+              android:layout_gravity="center_vertical"
+              android:includeFontPadding="false"
+              android:text="@string/_0_0"
+              android:textColor="@color/black_4a4a4a"
+              app:textType="BODY_1" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_discount"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/tv_name"
+              android:layout_toEndOf="@+id/tv_price"
+              android:ellipsize="end"
+              android:gravity="center_vertical"
+              android:includeFontPadding="false"
+              android:maxLines="1"
+              android:paddingStart="10dp"
+              android:paddingEnd="0dp"
+              android:text="@string/_0_0"
+              android:textColor="@color/pinkish_grey"
+              app:textType="BODY_1" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_off_percent"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/tv_name"
+              android:layout_toEndOf="@+id/tv_discount"
+              android:ellipsize="end"
+              android:gravity="center_vertical"
+              android:includeFontPadding="false"
+              android:maxLines="1"
+              android:paddingStart="@dimen/size_10"
+              android:paddingEnd="0dp"
+              android:text="@string/_0_0"
+              android:textColor="@color/light_green"
+              app:textType="BODY_1" />
+
+          </RelativeLayout>
+
+
+          <com.framework.views.customViews.CustomCardView
+            android:id="@+id/card_thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/size_12"
+            app:cardCornerRadius="@dimen/size_6"
+            app:cardElevation="0dp">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/imageView"
+              android:layout_width="@dimen/size_60"
+              android:layout_height="@dimen/size_60"
+              android:background="@color/gray_10"
+              android:scaleType="centerCrop"
+              android:src="@drawable/placeholder_image_n" />
+
+          </com.framework.views.customViews.CustomCardView>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_description"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_12"
+          android:layout_marginTop="@dimen/size_6"
+          android:layout_marginEnd="@dimen/size_12"
+          android:ellipsize="end"
+          android:maxLines="3"
+          android:text="@string/this_is_product_description"
+          android:textColor="@color/pinkish_grey"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/dotted_line"
+          app:textType="CAPTION" />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+
+        <Button
+          android:id="@+id/buttonMakeOffer"
+          android:layout_width="match_parent"
+          android:layout_height="35dp"
+          android:layout_gravity="center"
+          android:layout_weight="1"
+          android:background="@drawable/rounded_button_stroke_white"
+          android:text="@string/create_offer"
+          android:textAllCaps="true"
+          android:textColor="@color/accent_blue"
+          android:textSize="12sp"
+          android:visibility="gone" />
+
+        <Button
+          android:id="@+id/btn_share"
+          android:layout_width="match_parent"
+          android:layout_height="35dp"
+          android:layout_weight="1"
+          android:background="@color/blue_accent_10"
+          android:text="@string/share"
+          android:textColor="@color/accent_blue"
+          android:textSize="12sp"
+          android:textStyle="bold" />
+
+      </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <include
+      layout="@layout/adapter_item_product_offer_v1"
+      android:visibility="gone" />
+
+    <include
+      layout="@layout/adapter_item_product_keyboard"
+      android:visibility="gone" />
+
+  </androidx.cardview.widget.CardView>
+</layout>

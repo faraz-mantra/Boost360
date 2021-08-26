@@ -37,6 +37,8 @@ import com.webengage.sdk.android.WebEngageConfig;
 import java.io.File;
 import java.lang.reflect.Method;
 
+import dev.patrickgold.florisboard.ime.core.FlorisApplication;
+
 public class AppController extends MultiDexApplication/* implements IAviaryClientCredentials*/ {
 
     public static final String TAG = AppController.class.getSimpleName();
@@ -118,6 +120,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         AppDashboardApplication.initModule(this);
         AppPreSignInApplication.instance = this;
         AppPreSignInApplication.initModule(this);
+        FlorisApplication.instance = this;
+        FlorisApplication.initModule(this);
         SharedPreferences pref = BaseOrderApplication.instance.getSharedPreferences(Constants.PREF_NAME_REFERRAL, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         initWebEngage();
