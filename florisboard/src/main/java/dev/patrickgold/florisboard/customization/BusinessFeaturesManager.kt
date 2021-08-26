@@ -320,7 +320,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
     binding.msgBtn.setOnClickListener {
 
-    /*  try {
+      try {
         mContext.startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS)
           .apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -329,7 +329,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       }catch (e:Exception){
         Toast.makeText(mContext, "Unable to find network settings. Please do it manually from phone's settings", Toast.LENGTH_LONG).show()
         Log.e(TAG, "updateUiInternetNotAvailable: "+e.localizedMessage)
-      }*/
+      }
 
       loadDataBasesOnTab()
     }
@@ -373,7 +373,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     binding.msgBtn.icon = mContext.getDrawable(R.drawable.ic_lockkey)
 
     binding.msgBtn.setOnClickListener {
-      MethodUtils.startStaffActivity(mContext)
+      MethodUtils.startBoostActivity(mContext)
 
     }
   }
