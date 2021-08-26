@@ -68,7 +68,7 @@ class SplashFragment : DialogFragment() {
       if (validateAgreement()) {
         if (!customerInfoState) { //no customer available
           //create customer payment profile
-          viewModel.createCustomerInfo(
+          viewModel.createCustomerInfo((activity as? UpgradeActivity)?.getAccessToken()?:"",
             CreateCustomerInfoRequest(
               AddressDetails(
                 if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
@@ -101,7 +101,7 @@ class SplashFragment : DialogFragment() {
           )
         } else {
           //update customer payment profile
-          viewModel.updateCustomerInfo(
+          viewModel.updateCustomerInfo((activity as? UpgradeActivity)?.getAccessToken()?:"",
             CreateCustomerInfoRequest(
               AddressDetails(
                 if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
@@ -217,6 +217,7 @@ class SplashFragment : DialogFragment() {
 
   private fun loadCustomerInfo() {
     viewModel.getCustomerInfo(
+      (activity as? UpgradeActivity)?.getAccessToken()?:"",
       (activity as UpgradeActivity).fpid!!,
       (activity as UpgradeActivity).clientid
     )

@@ -62,6 +62,7 @@ class HistoryFragment : BaseFragment(), HistoryFragmentListener {
 
   private fun loadData() {
     viewModel.loadPurchasedItems(
+      (activity as? UpgradeActivity)?.getAccessToken()?:"",
       (activity as UpgradeActivity).fpid!!,
       (activity as UpgradeActivity).clientid
     )

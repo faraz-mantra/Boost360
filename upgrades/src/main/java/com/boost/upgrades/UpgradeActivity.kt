@@ -43,6 +43,9 @@ import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import com.framework.webengageconstant.*
 import com.boost.upgrades.utils.NetworkConnectivitySpeed.checkNetworkType
+import com.framework.pref.TokenResult
+import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -184,6 +187,9 @@ class UpgradeActivity : AppCompatActivity() {
     } catch (e: Exception) {
       e.printStackTrace()
     }
+  }
+  fun getAccessToken(): String {
+   return UserSessionManager(this).getAccessTokenAuth()?.barrierToken()?:""
   }
 
   private fun performBackPressed() {
