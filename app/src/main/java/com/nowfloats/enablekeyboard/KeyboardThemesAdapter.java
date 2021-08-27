@@ -1,5 +1,6 @@
 package com.nowfloats.enablekeyboard;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -21,7 +22,6 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 
-import nfkeyboard.util.MixPanelUtils;
 
 /**
  * Created by Shimona on 22-06-2018.
@@ -55,7 +55,7 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
         holder.ivKeyboardTheme.setImageDrawable(context.getResources().getDrawable(keyboardDrawables.get(position)));
 
@@ -79,11 +79,11 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
                         selected = position;
                         switch (position) {
                             case 0:
-                                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_THEME_CHANGE_TO_LXX_DARK, null);
+//                                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_THEME_CHANGE_TO_LXX_DARK, null);
                                 editor.putString("keyboard_theme", Themes.LXX_DARK.toString());
                                 break;
                             case 1:
-                                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_THEME_CHANGE_TO_LXX_DARK_UNBORDERED, null);
+//                                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_THEME_CHANGE_TO_LXX_DARK_UNBORDERED, null);
                                 editor.putString("keyboard_theme", Themes.LXX_DARK_UNBORDERED.toString());
                                 break;
                             default:
