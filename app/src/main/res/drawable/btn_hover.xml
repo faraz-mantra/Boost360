@@ -9,7 +9,7 @@
     android:angle="270"
     android:centerColor="#1a000000"
     android:endColor="#1a000000"
-    android:startColor="@android:color/transparent"></gradient>
+    android:startColor="@android:color/transparent" />
 
   <corners android:radius="5dp" />btn
 

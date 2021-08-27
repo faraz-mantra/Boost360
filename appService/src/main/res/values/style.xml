@@ -384,7 +384,7 @@
     <item name="textSize">14sp</item>
     <item name="android:drawablePadding">8dp</item>
     <item name="android:layout_gravity">center_horizontal</item>
-    <item name="android:textColor">@color/error_red</item>
+    <item name="android:textColor">@color/colorAccentLight</item>
     <item name="android:background">@drawable/rounded_stroke_grey_4_solid_error</item>
   </style>
 

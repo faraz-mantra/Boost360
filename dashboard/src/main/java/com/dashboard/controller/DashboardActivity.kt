@@ -1,6 +1,7 @@
 package com.dashboard.controller
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -34,16 +35,14 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.analytics.SentryController
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.firestore.FirestoreManager
 import com.framework.models.firestore.FirestoreManager.initData
 import com.framework.pref.*
-import com.framework.utils.AppsFlyerUtils
-import com.framework.utils.ConversionUtils
-import com.framework.utils.fromHtml
-import com.framework.utils.roundToFloat
+import com.framework.utils.*
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
 import com.framework.webengageconstant.*
@@ -306,6 +305,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       0 -> openDashboard(false)
       1 -> checkWelcomeShowScreen(pos)
       2 -> checkWelcomeShowScreen(pos)
+      4 -> checkWelcomeShowScreen(pos)
       else -> {
         mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
         toolbarPropertySet(0)
@@ -342,7 +342,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           showWelcomeDialog(it)
         }
         else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
-
+      }
+      4 -> {
+        mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
+        toolbarPropertySet(pos)
       }
     }
   }
@@ -372,6 +375,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when (pos) {
       1 -> showToolbar(getString(R.string.my_website))
       2 -> showToolbar(getString(R.string.my_enquiry))
+      4 -> showToolbar(getString(R.string.more))
       else -> {
         changeTheme(R.color.colorPrimary, R.color.colorPrimary)
         getToolbar()?.apply { visibility = View.GONE }
@@ -394,8 +398,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when (pos) {
       3 -> checkWelcomeShowScreen(pos)
       4 -> {
-        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
-        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
+//        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
+//        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
       }
     }
   }

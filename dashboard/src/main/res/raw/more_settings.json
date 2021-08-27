@@ -1,0 +1,146 @@
+{
+
+  "useful_links": [
+    {
+      "icon": "ria_digital_assistant",
+      "isActionButtonEnabled": false,
+      "subtitle": "FAQs, help & support, notifications etc.",
+      "title": "Help and support"
+    },
+    {
+      "icon": "business_kyc",
+      "actionBtn": {
+        "color": "#EB5757",
+        "title": "Need action",
+        "text_color": "#FFFFFF"
+      },
+      "isActionButtonEnabled": true,
+      "subtitle": "Govt mandated process to help you etc.",
+      "title": "My business KYC"
+    },
+    {
+      "icon": "boost_keyboard",
+      "isActionButtonEnabled": false,
+      "subtitle": "Start business chat on any instant messaging app.",
+      "title": "360 keyboard"
+    },
+    {
+      "icon": "refer_and_earn",
+      "actionBtn": {
+        "color": "#7ED321",
+        "title": "New",
+        "text_color": "#FFFFFF"
+      },
+      "isActionButtonEnabled": true,
+      "subtitle": "Share",
+      "title": "Refer & earn"
+    },
+    {
+      "icon": "my_bank_acccount",
+      "actionBtn": {
+        "color": "#F2FBE9",
+        "title": "Verified",
+        "text_color": "#7ED321"
+      },
+      "isActionButtonEnabled": true,
+      "subtitle": "Add and manage your bank account.",
+      "title": "My bank account"
+    },
+//    {
+//      "icon": "boost_academy",
+//      "actionBtn": {
+//        "color": "#FFFFFF",
+//        "title": "New"
+//      },
+//      "isActionButtonEnabled": false,
+//      "subtitle": "Great courses to help you learn and grow more.",
+//      "title": "Boost 360 academy"
+//    },
+    {
+      "icon": "training_and_certification",
+      "actionBtn": {
+        "color": "#FFFFFF",
+        "title": "New"
+      },
+      "isActionButtonEnabled": false,
+      "subtitle": "Add and manage your bank account.",
+      "title": "Boost 360 training\n& certification"
+    },
+    {
+      "icon": "boost_extension",
+      "actionBtn": {
+        "color": "#FFFFFF",
+        "title": "New"
+      },
+      "isActionButtonEnabled": false,
+      "subtitle": "Integrate this website to your wordpress website.",
+      "title": "Boost 360\nextensions"
+    }
+  ],
+"about_app_section":[
+//  {
+//    "icon": "whats_new_version",
+//    "subtitle": "Run Boost 360 account on your wordpress website.",
+//    "title": "What’s new in latest version",
+//    "actionBtn": {
+//      "color": "#FFB900",
+//      "text_color":"#FFFFFF",
+//      "title": "V16.4"
+//    }
+//  },
+  {
+    "icon": "frequently_asked_question",
+    "subtitle": "Run Boost 360 account on your wordpress website.",
+    "title": "Frequently asked questions"
+  },
+  {
+    "icon": "like_us_on_facebook",
+    "subtitle": "Run Boost 360 account on your wordpress website.",
+    "title": "Like us on facebook"
+  },
+  {
+    "icon": "follow_us_on_twitter",
+    "subtitle": "Run Boost 360 account on your wordpress website.",
+    "title": "Follow us on twitter"
+  },
+  {
+    "icon": "rate_us_on_google_play",
+    "subtitle": "Run Boost 360 account on your wordpress website.",
+    "title": "Rate us on playstore"
+  },
+//  {
+//    "icon": "rate_us_on_app_store",
+//    "subtitle": "Run Boost 360 account on your wordpress website.",
+//    "title": "Rate us on Appstore"
+//  },
+  {
+    "icon": "terms_of_usages",
+    "subtitle": "Last updated on",
+    "title": "Terms of use"
+  },
+
+  {
+    "icon": "privacy_policy",
+    "subtitle": "Run Boost 360 account on your wordpress website.",
+    "title": "Privacy policy"
+  },
+
+  {
+    "view_type_2": "We’re listening :)"
+
+  },
+  {
+    "icon": "logout",
+    "subtitle": "Logout your current session from Boost 360.",
+    "title": "Logout"
+  }
+//,
+//,
+//  {
+//    "icon": "help_us_make_boost_better",
+//    "subtitle": "Suggest a feature or share a your feedback.",
+//    "title": "Help us make Boost 360 better"
+//  }
+]
+
+}
