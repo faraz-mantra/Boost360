@@ -116,10 +116,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun reloadCapLimitData() {
-    viewModel.getCapLimitFeatureDetails("5f72ef546516d00001fecd60", clientId).observeOnce(this, {
+    viewModel.getCapLimitFeatureDetails(session?.fPID?:"", clientId).observeOnce(this, {
       if (it.isSuccess()) {
         val capLimitList = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
-        val item = capLimitList?.firstOrNull { it1 -> (it1.featureKey == CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name) } ?: CapLimitFeatureResponseItem()
+        val item = capLimitList?.firstOrNull { it1 -> (it1.featureKey == CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name && it1.properties.isNullOrEmpty().not()) }?: CapLimitFeatureResponseItem()
         item.saveCapData()
       }
     })
