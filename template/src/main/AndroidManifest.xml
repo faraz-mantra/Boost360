@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.template">
 
-    <application>
+    <application
+        >
         <activity
             android:name=".views.UpdateCreationActivity"
             android:exported="true">

@@ -5,17 +5,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:layout_marginHorizontal="16dp">
+        >
 
         <com.framework.views.customViews.CustomCardView
-            android:elevation="4dp"
             android:id="@+id/customCardView9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
             app:cardCornerRadius="15dp"
-            app:cardElevation="-1dp"
+            app:cardUseCompatPadding="true"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,7 +82,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:padding="8dp"
+                    android:paddingVertical="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_template_desc"
                     app:layout_constraintWidth_percent="0.5">
@@ -100,12 +98,12 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <com.framework.views.customViews.CustomImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/ic_whatsapp" />
 
                         <com.framework.views.customViews.CustomTextView
-                            style="@style/BlackMediumL"
+                            style="@style/BlackMediumS"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -119,7 +117,7 @@
                     android:id="@+id/btn_post"
                     android:layout_height="wrap_content"
                     android:background="@color/colorPrimary"
-                    android:padding="8dp"
+                    android:paddingVertical="16dp"
                     app:layout_constraintStart_toEndOf="@+id/btn_share"
                     app:layout_constraintTop_toTopOf="@+id/btn_share"
                     app:layout_constraintWidth_percent="0.5">
@@ -135,12 +133,12 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <com.framework.views.customViews.CustomImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@drawable/ic_telegram" />
 
                         <com.framework.views.customViews.CustomTextView
-                            style="@style/WhiteMediumL"
+                            style="@style/WhiteBoldS"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -156,8 +154,10 @@
         <com.framework.views.customViews.CustomImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="40dp"
             android:src="@drawable/ic_new"
+            android:elevation="8dp"
+            android:translationX="-6dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
