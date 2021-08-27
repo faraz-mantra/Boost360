@@ -1,4 +1,4 @@
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
 <com.framework.views.customViews.CustomCardView
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
@@ -51,9 +51,11 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/size_8"
       android:maxLines="2"
+      android:lines="2"
+      android:gravity="center_vertical"
       android:textFontWeight="600"
       android:fontFamily="@font/semi_bold"
-      android:text="@string/my_business_kyc"
+      tools:text="dasjdasjkdnasjkdnajkdnsakjdnakjdnaskdnakjdnaskjsdadhaskjdaskhdkjsahddjahskdhaskd"
       android:textColor="@color/black_4a4a4a"
       android:textSize="14sp"
       app:layout_constraintBottom_toBottomOf="parent"
@@ -71,7 +73,9 @@
       android:textFontWeight="400"
       app:layout_constraintHorizontal_bias="0"
       android:fontFamily="@font/regular"
-      android:text="@string/govt_mandated_process_to_help_you_etc"
+      tools:text="@string/govt_mandated_process_to_help_you_etc"
+      android:lines="2"
+      android:gravity="center_vertical"
       android:textColor="@color/warm_grey"
       android:textSize="11sp"
       app:layout_constraintBottom_toBottomOf="parent"
