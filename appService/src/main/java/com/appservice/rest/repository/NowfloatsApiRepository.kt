@@ -1,6 +1,6 @@
 package com.appservice.rest.repository
 
-import com.appservice.base.rest.AppBaseLocalService
+import android.content.Context
 import com.appservice.base.rest.AppBaseRepository
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
@@ -18,10 +18,14 @@ import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.Retrofit
 
-object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, AppBaseLocalService>() {
+object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, CatalogLocalDataSource>() {
 
   fun createService(request: ServiceModelV1?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.createService(request), TaskCode.POST_CREATE_SERVICE)
+  }
+
+  fun getSettingsTiles(context: Context): Observable<BaseResponse> {
+    return makeLocalRequest(localDataSource.getSettingsTiles(context =context ),TaskCode.GET_CATALOG_SETTINGS_TILES)
   }
 
   fun updateService(request: ServiceModelV1?): Observable<BaseResponse> {
@@ -81,8 +85,8 @@ object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, AppBaseLo
     return NowfloatsRemoteData::class.java
   }
 
-  override fun getLocalDataSourceInstance(): AppBaseLocalService {
-    return AppBaseLocalService()
+  override fun getLocalDataSourceInstance(): CatalogLocalDataSource{
+    return CatalogLocalDataSource
   }
 
   override fun getApiClient(): Retrofit {

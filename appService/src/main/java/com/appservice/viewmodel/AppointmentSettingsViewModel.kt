@@ -1,5 +1,6 @@
 package com.appservice.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.appservice.appointment.model.*
 import com.appservice.rest.repository.NowfloatsApiRepository
@@ -10,46 +11,50 @@ import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 
 class AppointmentSettingsViewModel : BaseViewModel() {
-//    fun updateCODPreferences(request: RequestCODPreference?) {
+  //    fun updateCODPreferences(request: RequestCODPreference?) {
 //
 //    }
+  fun getAppointmentSettingsTiles(context: Context): LiveData<BaseResponse> {
+    return NowfloatsApiRepository.getSettingsTiles(context).toLiveData()
+  }
 
-    fun getServiceListing(request: ServiceListingRequest): LiveData<BaseResponse> {
-        return NowfloatsApiRepository.getServiceListing(request).toLiveData()
-    }
+  fun getServiceListing(request: ServiceListingRequest): LiveData<BaseResponse> {
+    return NowfloatsApiRepository.getServiceListing(request).toLiveData()
+  }
 
-    fun getDeliveryDetails(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.getDeliveryDetails(floatingPointId, clientId).toLiveData()
-    }
+  fun getDeliveryDetails(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getDeliveryDetails(floatingPointId, clientId).toLiveData()
+  }
 
-    fun invoiceSetup(request: InvoiceSetupRequest): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.invoiceSetup(request).toLiveData()
-    }
-    fun getPaymentProfileDetails(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.getPaymentProfileDetails(floatingPointId, clientId).toLiveData()
-    }
+  fun invoiceSetup(request: InvoiceSetupRequest): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.invoiceSetup(request).toLiveData()
+  }
 
-    fun setupDelivery(request: DeliverySetup): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.setupDelivery(request).toLiveData()
-    }
+  fun getPaymentProfileDetails(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getPaymentProfileDetails(floatingPointId, clientId).toLiveData()
+  }
 
-    fun addMerchantUPI(request: UpdateUPIRequest): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.addMerchantUPI(request).toLiveData()
-    }
+  fun setupDelivery(request: DeliverySetup): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.setupDelivery(request).toLiveData()
+  }
 
-    fun addBankAccount(floatingPointId: String?, clientId: String?, request: AddBankAccountRequest): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.addBankAccount(floatingPointId, clientId, request).toLiveData()
-    }
+  fun addMerchantUPI(request: UpdateUPIRequest): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.addMerchantUPI(request).toLiveData()
+  }
 
-    fun uploadSignature(request: UploadMerchantSignature): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.addMerchantSignature(request = request).toLiveData()
-    }
+  fun addBankAccount(floatingPointId: String?, clientId: String?, request: AddBankAccountRequest): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.addBankAccount(floatingPointId, clientId, request).toLiveData()
+  }
 
-    fun getWareHouseAddress(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.getWareHouseAddress(floatingPointId, clientId).toLiveData()
-    }
+  fun uploadSignature(request: UploadMerchantSignature): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.addMerchantSignature(request = request).toLiveData()
+  }
 
-    fun addWareHouseAddress(request: RequestAddWareHouseAddress): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.addWareHouseAddress(request = request).toLiveData()
-    }
+  fun getWareHouseAddress(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getWareHouseAddress(floatingPointId, clientId).toLiveData()
+  }
+
+  fun addWareHouseAddress(request: RequestAddWareHouseAddress): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.addWareHouseAddress(request = request).toLiveData()
+  }
 }
