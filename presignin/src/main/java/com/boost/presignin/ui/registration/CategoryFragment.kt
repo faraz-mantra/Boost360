@@ -1,15 +1,16 @@
 package com.boost.presignin.ui.registration
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.databinding.FragmentCategoryBinding
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.BusinessInfoModel
-import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
+import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
@@ -52,23 +53,29 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
     WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     baseAdapter = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(), this)
     binding?.civBack?.setOnClickListener { baseActivity.onNavPressed() }
+    activity?.onBackPressedDispatcher?.addCallback(object : OnBackPressedCallback(true) {
+      override fun handleOnBackPressed() {
+        CategoryDataModel.clearSelection()
+        baseActivity.finishAfterTransition()
+      }
+    })
     binding?.recyclerView?.adapter = baseAdapter
     viewModel?.getCategories(requireContext())?.observeOnce(viewLifecycleOwner) {
       if (it.error != null) return@observeOnce
       val categoryResponse = it as ResponseDataCategory
       baseAdapter.addItems(categoryList.apply {
         clear()
-        if (CategoryDataModel.getSavedStateCategory()!=null){
+        if (CategoryDataModel.getSavedStateCategory() != null) {
           val data = categoryResponse.data!!
           for ((index, categoryDataModel) in data.withIndex()) {
-            if (categoryDataModel.category_Name==CategoryDataModel.getSavedStateCategory()?.category_Name) {
-              data[index].isSelected= true
+            if (categoryDataModel.category_Name == CategoryDataModel.getSavedStateCategory()?.category_Name) {
+              data[index].isSelected = true
             }
           }
           binding?.confirmButton?.visible()
           addAll(data)
-        }else
-        addAll(categoryResponse.data!!)
+        } else
+          addAll(categoryResponse.data!!)
       })
     }
 
@@ -90,10 +97,11 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal -> {
+        CategoryDataModel.clearSelection()
         category = item as? CategoryDataModel
         for (listItem in categoryList) {
           (listItem as? CategoryDataModel)?.let {
-            it.isSelected = (it.category_key == (item as? CategoryDataModel)?.category_key) && it.isSelected!=false
+            it.isSelected = (it.category_key == (item as? CategoryDataModel)?.category_key) && it.isSelected != false
           }
         }
         binding?.recyclerView?.post { baseAdapter.notifyDataSetChanged() }
@@ -101,4 +109,5 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
       }
     }
   }
+
 }
