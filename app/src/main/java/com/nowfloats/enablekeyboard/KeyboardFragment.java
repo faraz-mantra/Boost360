@@ -50,9 +50,9 @@ import com.thinksity.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.patrickgold.florisboard.ime.core.FlorisBoard;
 import io.codetail.animation.ViewAnimationUtils;
 import io.codetail.widget.RevealFrameLayout;
-import io.separ.neural.inputmethod.indic.LatinIME;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
@@ -255,7 +255,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
 
   private boolean isInputMethodActivated() {
     List<InputMethodInfo> list = imeManager.getEnabledInputMethodList();
-    ComponentName myInputMethod = new ComponentName(mContext, LatinIME.class);
+    ComponentName myInputMethod = new ComponentName(mContext, FlorisBoard.class);
     for (InputMethodInfo info : list) {
       if (myInputMethod.equals(info.getComponent())) {
         return true;
@@ -269,7 +269,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
 
     ComponentName defaultInputMethod = ComponentName.unflattenFromString(id);
 
-    ComponentName myInputMethod = new ComponentName(mContext, LatinIME.class);
+    ComponentName myInputMethod = new ComponentName(mContext, FlorisBoard.class);
 
     return myInputMethod.equals(defaultInputMethod);
   }

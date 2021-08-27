@@ -29,6 +29,7 @@ object DateUtils {
   const val FORMAT_HH_MMA = "hh:mma"
   const val FORMAT_H_MM_A = "h:mm a"
   const val SPA_DISPLAY_DATE = "EEE',' dd MMMM yyyy"
+  const val KEYBOARD_DISPLAY_DATE = "EEE, MMMM dd, yyyy • hh:mm a"
   const val SPA_REVIEW_DATE_FORMAT = "EEE',' MMM dd, yyyy"
   private val dateFormater = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
   private val dateFormaterToday = SimpleDateFormat("HH:mm", Locale.getDefault())
@@ -42,14 +43,14 @@ object DateUtils {
     }
     return ""
   }
+  fun getDate(milliSeconds: Long, dateFormat: String): String {
+    val formatter = SimpleDateFormat(dateFormat)
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = milliSeconds
+    return formatter.format(calendar.time)
+  }
 
-  fun parseDate(
-    time: String?,
-    format: String?,
-    required: String?,
-    locale: Locale = Locale.getDefault(),
-    timeZone: TimeZone? = TimeZone.getDefault()
-  ): String? {
+  fun parseDate(time: String?, format: String?, required: String?, locale: Locale = Locale.getDefault(), timeZone: TimeZone? = TimeZone.getDefault()): String? {
     try {
       val timeFormat: DateFormat = SimpleDateFormat(format, locale)
       timeZone?.let { timeFormat.timeZone = it }
@@ -61,21 +62,13 @@ object DateUtils {
     return ""
   }
 
-  fun Date.parseDate(
-    format: String,
-    locale: Locale = Locale.getDefault(),
-    timeZone: TimeZone? = TimeZone.getDefault()
-  ): String? {
+  fun Date.parseDate(format: String, locale: Locale = Locale.getDefault(), timeZone: TimeZone? = TimeZone.getDefault()): String? {
     val timeFormat: DateFormat = SimpleDateFormat(format, locale)
     timeZone?.let { timeFormat.timeZone = it }
     return timeFormat.format(this)
   }
 
-  fun String.parseDate(
-    format: String,
-    locale: Locale = Locale.getDefault(),
-    timeZone: TimeZone? = TimeZone.getDefault()
-  ): Date? {
+  fun String.parseDate(format: String, locale: Locale = Locale.getDefault(), timeZone: TimeZone? = TimeZone.getDefault()): Date? {
     return try {
       val timeFormat: DateFormat = SimpleDateFormat(format, locale)
       timeZone?.let { timeFormat.timeZone = it }
