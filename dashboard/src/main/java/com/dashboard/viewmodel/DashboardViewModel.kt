@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.appservice.rest.repository.KitWebActionRepository
 import com.appservice.rest.repository.WithFloatTwoRepository
+import com.dashboard.rest.repository.AzureWebsiteNewRepository
 import com.dashboard.rest.repository.DevBoostKitRepository
 import com.dashboard.rest.repository.PluginFloatRepository
 import com.dashboard.rest.repository.WithFloatRepository
@@ -39,6 +40,10 @@ class DashboardViewModel : BaseViewModel() {
 
   fun getChannelsAccessTokenStatus(nowfloatsId: String?): LiveData<BaseResponse> {
     return ChannelRepository.getChannelsStatus(nowfloatsId).toLiveData()
+  }
+
+  fun getCapLimitFeatureDetails(fpId: String?, clientId: String?): LiveData<BaseResponse> {
+    return AzureWebsiteNewRepository.getCapLimitFeatureDetails(fpId,clientId).toLiveData()
   }
 
   fun getChannelsInsight(nowfloatsId: String?, identifier: String?): LiveData<BaseResponse> {

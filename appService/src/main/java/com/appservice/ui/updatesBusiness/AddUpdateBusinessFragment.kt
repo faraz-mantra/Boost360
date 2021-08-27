@@ -16,8 +16,10 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.AddUpdateBusinessFragmentBinding
+import com.appservice.model.updateBusiness.BusinessUpdateResponse
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.model.updateBusiness.UpdateFloat
+import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
@@ -26,14 +28,16 @@ import com.appservice.viewmodel.UpdatesViewModel
 import com.framework.extensions.*
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.models.caplimit_feature.PropertiesItem
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
 import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
 import com.framework.utils.hasHTMLTags
+import com.framework.utils.hideKeyBoard
 import com.framework.utils.showKeyBoard
 import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -100,13 +104,26 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
       viewLifecycleOwner,
       object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-          if (isUpdate.not() && binding?.edtDesc?.text.isNullOrEmpty()
-              .not() || postImage != null
+          if (isUpdate.not() && binding?.edtDesc?.text.isNullOrEmpty().not() || postImage != null
           ) onBackPress() else baseActivity.finish()
         }
       })
     initializeSocial()
     binding?.edtDesc?.post { baseActivity.showKeyBoard(binding?.edtDesc) }
+    capLimitCheck()
+  }
+
+  private fun capLimitCheck() {
+    val capLimitUpdate = CapLimitFeatureResponseItem().getCapData()?.filterProperty(PropertiesItem.KeyType.LATESTUPDATES)
+    if (isUpdate.not() && capLimitUpdate != null) {
+      viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(PaginationScrollListener.PAGE_START))?.observeOnce(viewLifecycleOwner, {
+        val data = it as? BusinessUpdateResponse
+        if (data?.totalCount != null && capLimitUpdate.getValueN() != null && data.totalCount!! >= capLimitUpdate.getValueN()!!) {
+          baseActivity.hideKeyBoard()
+          showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.")
+        }
+      })
+    }
   }
 
   private fun localDataView() {

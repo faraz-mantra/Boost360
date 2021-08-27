@@ -76,6 +76,10 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     )
   }
 
+  fun getAllProducts(map: Map<String, String>): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getAllProducts(map), TaskCode.GET_ALL_PRODUCT)
+  }
+
   fun updateProduct(request: ProductUpdate?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateProduct(request), TaskCode.POST_UPDATE_PRODUCT)
   }

@@ -8,13 +8,8 @@ import com.dashboard.rest.services.WithFloatTwoRemoteData
 import com.dashboard.rest.services.local.DashboardLocalDataSource
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.ResponseBody
-import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.http.Body
-import java.io.File
 
 object WithFloatTwoRepository :
   AppBaseRepository<WithFloatTwoRemoteData, DashboardLocalDataSource>() {
@@ -41,7 +36,7 @@ object WithFloatTwoRepository :
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.updateBusinessProfile(profileUpdateRequest = profileUpdateRequest),
-      TaskCode.UPADTE_BUSINESS_PROFILE
+      TaskCode.UPDATE_BUSINESS_PROFILE
     )
   }
 

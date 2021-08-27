@@ -23,6 +23,7 @@ import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
 import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
 import com.dashboard.model.live.drawerData.DrawerHomeData
 import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.model.live.welcomeData.WelcomeDashboardResponse
@@ -111,6 +112,17 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
     registerFirebaseToken()
+    reloadCapLimitData()
+  }
+
+  private fun reloadCapLimitData() {
+    viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this, {
+      if (it.isSuccess()) {
+        val capLimitList = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
+        val item = capLimitList?.firstOrNull { it1 -> (it1.featureKey == CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name && it1.properties.isNullOrEmpty().not()) } ?: CapLimitFeatureResponseItem()
+        item.saveCapData()
+      }
+    })
   }
 
   private fun registerFirebaseToken() {
@@ -556,7 +568,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun getWelcomeData() {
-    viewModel.getWelcomeDashboardData(this).observeOnce(this, androidx.lifecycle.Observer {
+    viewModel.getWelcomeDashboardData(this).observeOnce(this, {
       val response = it as? WelcomeDashboardResponse
       val data = response?.data?.firstOrNull { it1 ->
         it1.type.equals(

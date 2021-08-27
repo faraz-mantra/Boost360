@@ -20,10 +20,10 @@ import com.appservice.extension.afterTextChanged
 import com.appservice.model.FileModel
 import com.appservice.model.accountDetails.AccountDetailsResponse
 import com.appservice.model.accountDetails.BankAccountDetails
-import com.appservice.model.auth_3
 import com.appservice.model.deviceId
 import com.appservice.model.pickUpAddress.PickUpAddressResponse
 import com.appservice.model.pickUpAddress.PickUpData
+import com.appservice.model.product.ProductItemsResponseItem
 import com.appservice.model.serviceProduct.BuyOnlineLink
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.addProductImage.ActionDataI
@@ -53,6 +53,11 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.models.caplimit_feature.PropertiesItem
+import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
+import com.framework.pref.clientId
+import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
@@ -79,7 +84,6 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private var currencyType: String? = null
   private var fpId: String? = null
   private var fpTag: String? = null
-  private var clientId: String? = null
   private var externalSourceId: String? = null
   private var applicationId: String? = null
   private var userProfileId: String? = null
@@ -118,43 +122,42 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     setOnClickListener(
-      binding?.vwChangeDeliverConfig,
-      binding?.vwChangeDeliverLocation,
-      binding?.vwPaymentConfig,
-      binding?.vwSavePublish,
-      binding?.imageAddBtn,
-      binding?.clearImage,
-      binding?.btnOtherInfo,
-      binding?.bankAccountView
+      binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation,
+      binding?.vwPaymentConfig, binding?.vwSavePublish, binding?.imageAddBtn,
+      binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView
     )
     binding?.toggleProduct?.isOn = product?.isPriceToggleOn()!!
     binding?.payProductView?.visibility = View.GONE
-    binding?.toggleProduct?.setOnToggledListener { _, _ ->
-      initProductToggleView()
-    }
+    binding?.toggleProduct?.setOnToggledListener { _, _ -> initProductToggleView() }
     initProductToggleView()
     listenerEditText()
+    capLimitCheck()
+  }
+
+  private fun capLimitCheck() {
+    val capLimitProduct = CapLimitFeatureResponseItem().getCapData()?.filterProperty(PropertiesItem.KeyType.PRODUCT_CATALOUGE)
+    if (isEdit?.not() == true && capLimitProduct != null && capLimitProduct.getValueN() != null) {
+      viewModel?.getAllProducts(getRequestProduct(capLimitProduct.getValueN()!!))?.observeOnce(viewLifecycleOwner, {
+        val data = it.arrayResponse as? Array<ProductItemsResponseItem>
+        if (data.isNullOrEmpty().not()) {
+          baseActivity.hideKeyBoard()
+          showAlertCapLimit("Can't add the product catalogue, please activate your premium Add-ons plan.")
+        }
+      })
+    }
   }
 
   private fun initProductToggleView() {
-    binding?.payProductView?.visibility =
-      if (binding?.toggleProduct?.isOn!!) View.VISIBLE else View.GONE
-    binding?.freeProductView?.visibility =
-      if (binding?.toggleProduct?.isOn!!) View.GONE else View.VISIBLE
+    binding?.payProductView?.visibility = if (binding?.toggleProduct?.isOn!!) View.VISIBLE else View.GONE
+    binding?.freeProductView?.visibility = if (binding?.toggleProduct?.isOn!!) View.GONE else View.VISIBLE
   }
 
   private fun listenerEditText() {
     binding?.amountEdt?.afterTextChanged {
-      calculate(
-        binding?.amountEdt?.text.toString(),
-        binding?.discountEdt?.text.toString()
-      )
+      calculate(binding?.amountEdt?.text.toString(), binding?.discountEdt?.text.toString())
     }
     binding?.discountEdt?.afterTextChanged {
-      calculate(
-        binding?.amountEdt?.text.toString(),
-        binding?.discountEdt?.text.toString()
-      )
+      calculate(binding?.amountEdt?.text.toString(), binding?.discountEdt?.text.toString())
     }
   }
 
@@ -331,7 +334,6 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name)
     fpId = arguments?.getString(IntentConstant.FP_ID.name)
     fpTag = arguments?.getString(IntentConstant.FP_TAG.name)
-    clientId = arguments?.getString(IntentConstant.CLIENT_ID.name)
     externalSourceId = arguments?.getString(IntentConstant.EXTERNAL_SOURCE_ID.name)
     applicationId = arguments?.getString(IntentConstant.APPLICATION_ID.name)
     userProfileId = arguments?.getString(IntentConstant.USER_PROFILE_ID.name)
@@ -832,6 +834,14 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       }
       else -> super.onOptionsItemSelected(item)
     }
+  }
+
+  private fun getRequestProduct(value: Int): HashMap<String, String> {
+    val values = HashMap<String, String>()
+    values["clientId"] = clientId
+    values["skipBy"] = "$value"
+    values["fpTag"] = sessionLocal.getFPDetails(GET_FP_DETAILS_TAG) ?: ""
+    return values
   }
 
   fun onNavPressed() {
