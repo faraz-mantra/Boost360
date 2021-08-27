@@ -22,6 +22,7 @@ import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 
@@ -96,7 +97,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     builder.setCancelable(false)
     builder.setTitle("You have exceeded limit!").setMessage(msg).setPositiveButton("Explore Add-ons") { dialog, which ->
       dialog.dismiss()
-      startStorePage()
+      startStorePage(CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name)
       baseActivity.finish()
     }
     builder.create().show()
