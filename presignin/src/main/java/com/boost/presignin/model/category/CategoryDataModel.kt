@@ -32,8 +32,13 @@ class CategoryDataModel(
     fun saveCategoryState(category: CategoryDataModel?) {
       saveeCategory = category
     }
+
     fun getSavedStateCategory(): CategoryDataModel? {
       return saveeCategory
+    }
+
+    fun clearSelection() {
+      saveeCategory = null
     }
   }
 
