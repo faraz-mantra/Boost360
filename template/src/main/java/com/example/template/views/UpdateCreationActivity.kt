@@ -1,12 +1,12 @@
 package com.example.template.views
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
 import com.dashboard.base.AppBaseActivity
 import com.example.template.R
 import com.example.template.databinding.ActivityUpdateCreationBinding
 import com.framework.models.BaseViewModel
+import com.google.android.material.shape.CornerFamily
 import com.google.android.material.tabs.TabLayoutMediator
 
 class UpdateCreationActivity : AppBaseActivity<ActivityUpdateCreationBinding, BaseViewModel>() {
@@ -24,7 +24,12 @@ class UpdateCreationActivity : AppBaseActivity<ActivityUpdateCreationBinding, Ba
 
     override fun onCreateView() {
         super.onCreateView()
+        setupView()
         setupViewPager()
+    }
+
+    private fun setupView() {
+
     }
 
     private fun setupViewPager() {
@@ -36,6 +41,7 @@ class UpdateCreationActivity : AppBaseActivity<ActivityUpdateCreationBinding, Ba
         )
         val viewPagerAdapter = TabAdapter(fragmentList, this)
         binding?.viewPager?.apply {
+            isUserInputEnabled = false
             adapter = viewPagerAdapter
             offscreenPageLimit = 3
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {

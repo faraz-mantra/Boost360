@@ -7,6 +7,7 @@
         <item name="tabTextColor">@color/textGrey</item>
         <item name="fontFamily">@font/regular</item>
     </style>
+
     <style name="TextSizeSS">
         <item name="android:textSize">12sp</item>
     </style>

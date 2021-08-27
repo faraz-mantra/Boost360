@@ -1,11 +1,15 @@
 package com.example.template.views
 
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dashboard.base.AppBaseFragment
 import com.example.template.R
-import com.example.template.databinding.ActivityUpdateCreationBinding
 import com.example.template.databinding.FragmentTodaysPickBinding
+import com.example.template.models.TemplateModel
 import com.example.template.models.TodaysPickModel
+import com.example.template.views.recyclerView.AppBaseRecyclerViewAdapter
+import com.framework.base.BaseActivity
+import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
 
 class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, BaseViewModel>() {
@@ -27,13 +31,18 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, BaseViewMod
     }
 
     override fun onCreateView() {
-        super.onCreateView()
-        val datList = arrayListOf(
-            TodaysPickModel(),
-            TodaysPickModel(),
-            TodaysPickModel(),
+        val dataList = arrayListOf(
+            TodaysPickModel(cat_title = "Discounts and Offers",cat_desc="Discounts and Offers sajbd jadb basjfb ab cf",
+                templateList = arrayListOf(TemplateModel(desc="50% off get the offfer asd wsdf qawf wqjwj qwsd "),TemplateModel(),TemplateModel(),TemplateModel())),
+            TodaysPickModel(cat_title = "Discounts and Offers",cat_desc="Discounts and Offers sajbd jadb basjfb ab cf",
+                templateList = arrayListOf(TemplateModel(desc="50% off get the offfer asd wsdf qawf wqjwj qwsd "),TemplateModel(),TemplateModel(),TemplateModel())),
+            TodaysPickModel(cat_title = "Discounts and Offers",cat_desc="Discounts and Offers sajbd jadb basjfb ab cf",
+                templateList = arrayListOf(TemplateModel(desc="50% off get the offfer asd wsdf qawf wqjwj qwsd "),TemplateModel(),TemplateModel(),TemplateModel())),
+        )
 
-            )
+        val adapter =AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList)
+        binding?.rvTemplates?.adapter = adapter
+        binding?.rvTemplates?.layoutManager = LinearLayoutManager(requireActivity())
 
     }
 }

@@ -7,7 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="white_op1">#03FFFFFF</color>
+    <color name="toolbar_bg">#F5F8FD</color>
+    <color name="social_conn_bg">#E8F8FE</color>
     <color name="textGrey">#B3B3B3</color>
     <color name="textBlack">#4A4A4A</color>
 
