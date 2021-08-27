@@ -33,6 +33,7 @@ import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.models.firestore.FirestoreManager.getDrScoreData
 import com.framework.models.firestore.FirestoreManager.updateDocument
+import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing.Companion.shareUpdates
 import com.framework.utils.showKeyBoard
@@ -111,7 +112,7 @@ open class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBi
 
   private fun listUpdateApi(offSet: Int) {
     binding?.emptyView?.gone()
-    hitApi(viewModel?.getMessageUpdates(getRequestUpdate(offSet)), R.string.latest_update_data_not_found)
+    hitApi(viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(offSet)), R.string.latest_update_data_not_found)
   }
 
   override fun onSuccess(it: BaseResponse) {
@@ -137,14 +138,6 @@ open class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBi
     binding?.emptyView?.visible()
     hideProgress()
     removeLoader()
-  }
-
-  private fun getRequestUpdate(skipBy: Int = 0): HashMap<String?, String?> {
-    val map = HashMap<String?, String?>()
-    map["clientId"] = clientId
-    map["skipBy"] = skipBy.toString()
-    map["fpId"] = sessionLocal.fPID ?: ""
-    return map
   }
 
   private fun removeLoader() {
@@ -277,4 +270,12 @@ fun showDialog(mContext: Context?, title: String?, msg: String?, listener: Dialo
     listener.onClick(dialog, which)
   }
   builder.create().show()
+}
+
+fun UserSessionManager.getRequestUpdate(skipBy: Int = 0): HashMap<String?, String?> {
+  val map = HashMap<String?, String?>()
+  map["clientId"] = clientId
+  map["skipBy"] = skipBy.toString()
+  map["fpId"] = this.fPID ?: ""
+  return map
 }

@@ -14,4 +14,7 @@ data class PropertiesItem(
     LATESTUPDATES, PRODUCT_CATALOUGE, CUSTOM_PAGE, IMAGE
   }
 
+  fun getValueN(): Int? {
+    return value?.toIntOrNull()
+  }
 }

@@ -31,6 +31,10 @@ class ProductViewModel : BaseViewModel() {
     return WithFloatTwoRepository.deleteProduct(request).toLiveData()
   }
 
+  fun getAllProducts(map: Map<String, String>): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getAllProducts(map).toLiveData()
+  }
+
   fun addUpdateProductImage(
     clientId: String?,
     requestType: String?,

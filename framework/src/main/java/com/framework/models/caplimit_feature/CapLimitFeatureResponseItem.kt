@@ -35,4 +35,8 @@ data class CapLimitFeatureResponseItem(
   fun getCapData(): CapLimitFeatureResponseItem? {
     return convertStringToObj(PreferencesUtils.instance.getData(CAP_LIMIT_PROPERTIES, "") ?: "")
   }
+
+  fun filterProperty(type: PropertiesItem.KeyType): PropertiesItem {
+    return properties?.firstOrNull { it1 -> (it1.key == type.name) } ?: PropertiesItem()
+  }
 }

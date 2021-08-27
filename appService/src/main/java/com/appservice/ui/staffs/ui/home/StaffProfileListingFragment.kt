@@ -328,7 +328,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
           isResult = true
         )
       }
-      binding?.staffLock?.btnStaffAddOns -> startStorePage()
+      binding?.staffLock?.btnStaffAddOns -> startStorePage("${StatusKyc.STAFFPROFILE.name}15")
       binding?.staffEmpty?.btnHowWork -> openHelpBottomSheet()
     }
   }
@@ -379,35 +379,6 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     binding?.staffListSwipeRefresh?.isRefreshing = false
     binding?.progress?.gone()
   }
-
-
-  private fun startStorePage() {
-    try {
-      showProgress("Loading. Please wait...")
-      val intent = Intent(baseActivity, Class.forName("com.boost.upgrades.UpgradeActivity"))
-      intent.putExtra("expCode", sessionLocal.fP_AppExperienceCode)
-      intent.putExtra("fpName", sessionLocal.fpTag)
-      intent.putExtra("fpid", sessionLocal.fPID)
-      intent.putExtra("fpTag", sessionLocal.fpTag)
-      intent.putExtra(
-        "accountType",
-        sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)
-      )
-      intent.putStringArrayListExtra(
-        "userPurchsedWidgets",
-        ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList())
-      )
-      intent.putExtra("email", sessionLocal.userProfileEmail ?: "ria@nowfloats.com")
-      intent.putExtra("mobileNo", sessionLocal.userPrimaryMobile ?: "9160004303")
-      intent.putExtra("profileUrl", sessionLocal.fPLogo)
-      intent.putExtra("buyItemKey", "${StatusKyc.STAFFPROFILE.name}15")// feature key
-      baseActivity.startActivity(intent)
-      Handler().postDelayed({ hideProgress() }, 1000)
-    } catch (e: Exception) {
-      showLongToast("Unable to start upgrade activity.")
-    }
-  }
-
 }
 
 fun getFilterRequest(offSet: Int, limit: Int): GetStaffListingRequest {

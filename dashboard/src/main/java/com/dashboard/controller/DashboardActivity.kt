@@ -118,7 +118,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun reloadCapLimitData() {
     viewModel.getCapLimitFeatureDetails("5f72ef546516d00001fecd60", clientId).observeOnce(this, {
       if (it.isSuccess()) {
-        val capLimitList = it as? Array<CapLimitFeatureResponseItem>
+        val capLimitList = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
         val item = capLimitList?.firstOrNull { it1 -> (it1.featureKey == CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name) } ?: CapLimitFeatureResponseItem()
         item.saveCapData()
       }
