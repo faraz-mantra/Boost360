@@ -10,8 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_marginTop="@dimen/size_16">
+      android:layout_height="match_parent">
 
       <com.framework.views.viewgroups.BaseRecyclerView
         android:id="@+id/rv_website"
@@ -21,6 +20,7 @@
         android:clipToPadding="false"
         android:orientation="vertical"
         android:paddingBottom="@dimen/size_10"
+        android:paddingTop="@dimen/size_10"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

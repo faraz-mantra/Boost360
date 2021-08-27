@@ -1,103 +1,109 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
-<androidx.appcompat.widget.LinearLayoutCompat
-  android:layout_height="wrap_content"
-  android:foreground="?attr/selectableItemBackgroundBorderless"
-  android:orientation="vertical"
-  android:layout_width="match_parent">
-  <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:id="@+id/recycler_item_about"
-    android:padding="@dimen/size_16">
 
-    <com.framework.views.customViews.CustomImageView
-      android:id="@+id/civ_image"
-      android:layout_width="30dp"
-      android:layout_height="@dimen/size_30"
-      android:src="@drawable/follow_us_on_twitter"
-      app:layout_constraintBottom_toBottomOf="parent"
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/recycler_item_about"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:padding="@dimen/size_16">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/civ_image"
+        android:layout_width="@dimen/size_30"
+        android:layout_height="@dimen/size_30"
+        android:padding="@dimen/size_1"
+        android:layout_marginStart="@dimen/size_2"
+        android:src="@drawable/follow_us_on_twitter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_needs_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_stroke_3"
+        android:backgroundTint="@color/colorAccent"
+        android:fontFamily="@font/barlow_regular"
+        android:gravity="center"
+        android:includeFontPadding="true"
+        android:paddingHorizontal="@dimen/size_8"
+        android:paddingVertical="2dp"
+        android:text="@string/need_action"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textFontWeight="700"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@+id/ctv_subtitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toEndOf="@+id/ctv_heading"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_16"
+        android:fontFamily="@font/regular"
+        android:maxLines="1"
+        android:text="@string/what_s_new_in_latest_version"
+        android:textColor="@color/black_4a4a4a"
+        android:textFontWeight="600"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/civ_image"
+        app:layout_constraintStart_toEndOf="@+id/civ_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_16"
+        android:fontFamily="@font/regular"
+        android:maxLines="2"
+        android:text="@string/run_boost_360_account_on_your_wordpress_website"
+        android:textColor="@color/gray_828282"
+        android:textFontWeight="400"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/civ_image"
+        app:layout_constraintTop_toBottomOf="@+id/ctv_heading"
+        app:layout_constraintVertical_bias="0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/view_background_1"
+      app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+      app:layout_constraintVertical_bias="0" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/ctv_view_type_2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/size_16"
+      android:fontFamily="@font/bold"
+      android:gravity="start"
+      android:includeFontPadding="true"
+      android:text="@string/we_re_listening"
+      android:textAllCaps="false"
+      android:textColor="@color/black_4a4a4a"
+      android:textSize="16sp"
+      android:visibility="gone"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
-
-    <com.framework.views.customViews.CustomTextView
-      android:id="@+id/ctv_needs_action"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:background="@drawable/rounded_stroke_3"
-      android:backgroundTint="@color/colorAccent"
-      android:fontFamily="@font/barlow_regular"
-      android:gravity="center"
-      android:textFontWeight="700"
-      android:includeFontPadding="true"
-      android:paddingHorizontal="@dimen/size_8"
-      android:paddingVertical="2dp"
-      android:text="@string/need_action"
-      android:textAllCaps="true"
-      android:textColor="@color/white"
-      android:textSize="11sp"
-      app:layout_constraintBottom_toTopOf="@+id/ctv_subtitle"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.1"
-      app:layout_constraintStart_toEndOf="@+id/ctv_heading"
-      app:layout_constraintTop_toTopOf="parent" />
-
-    <com.framework.views.customViews.CustomTextView
-      android:id="@+id/ctv_heading"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/size_16"
-      android:maxLines="1"
-      android:textFontWeight="600"
-      android:fontFamily="@font/regular"
-      android:text="@string/what_s_new_in_latest_version"
-      android:textColor="@color/black_4a4a4a"
-      android:textSize="14sp"
-      app:layout_constraintBottom_toBottomOf="@+id/civ_image"
-      app:layout_constraintStart_toEndOf="@+id/civ_image"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0" />
-
-    <com.framework.views.customViews.CustomTextView
-      android:id="@+id/ctv_subtitle"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/size_16"
-      android:fontFamily="@font/regular"
-      android:textFontWeight="400"
-      android:text="@string/run_boost_360_account_on_your_wordpress_website"
-      android:textColor="@color/gray_828282"
-      android:textSize="11sp"
-      android:maxLines="2"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toEndOf="@+id/civ_image"
-      app:layout_constraintTop_toBottomOf="@+id/ctv_heading"
-      app:layout_constraintVertical_bias="0" />
-  </androidx.constraintlayout.widget.ConstraintLayout>
-
-  <View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="@color/view_background_1"
-    app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
-    app:layout_constraintVertical_bias="0" />
-  <com.framework.views.customViews.CustomTextView
-    android:id="@+id/ctv_view_type_2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:fontFamily="@font/bold"
-    android:visibility="gone"
-    android:layout_margin="@dimen/size_16"
-    android:gravity="start"
-    android:includeFontPadding="true"
-    android:text="@string/we_re_listening"
-    android:textAllCaps="false"
-    android:textColor="@color/black_4a4a4a"
-    android:textSize="16sp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-</androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

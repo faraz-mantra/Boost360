@@ -24,7 +24,7 @@ class FloatUpdateViewHolder(binding: AdapterItemUpdateBinding, val listener: OnI
     }
     binding.tvDescription.textColor = ContextCompat.getColor(binding.root.context, R.color.black_4a4a4a)
     binding.tvDescription.setTextSize(28F)
-    binding.tvDescription.text = float.getMessageLength()+"sdddddddddddddddddddddddddddddddddjklgfvbfffffffffffffffffffffffffffffdghkkkkkkkkkkkkkkkkkkkkkkkkksdddddddddddddddddddd"
+    binding.tvDescription.text = float.getMessageLength()
     val timeString = (float.createdOn?.subSequence(float.createdOn?.indexOf("(")!! + 1, float.createdOn?.length!! - 2) as String).toLong()
     binding.ctvDateTime.text = getDate(timeString, KEYBOARD_DISPLAY_DATE)
     binding.btnShare.setOnClickListener { listener?.onItemClick(position, float) }

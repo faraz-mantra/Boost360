@@ -49,7 +49,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   override fun onCreateView() {
     this.session = UserSessionManager(baseActivity)
     setData()
-    setOnClickListener(binding?.rivUsersImage, binding?.rivBusinessImage, binding?.civProfile, binding?.boostSubscription)
+    setOnClickListener(binding?.rivUsersImage, binding?.rivBusinessImage, binding?.civProfile, binding?.ctvContent, binding?.ctvName, binding?.boostSubscription)
   }
 
   private fun setData() {
@@ -230,7 +230,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       binding?.rivBusinessImage -> {
         baseActivity.startBusinessLogo(session)
       }
-      binding?.civProfile -> {
+      binding?.civProfile, binding?.ctvContent, binding?.ctvName -> {
         baseActivity.startBusinessProfileDetailEdit(session)
       }
       binding?.boostSubscription -> {
