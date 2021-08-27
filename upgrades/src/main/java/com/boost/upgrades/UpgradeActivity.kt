@@ -51,6 +51,7 @@ import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.lang.IllegalStateException
 
 
 class UpgradeActivity : AppCompatActivity() {
@@ -298,7 +299,11 @@ class UpgradeActivity : AppCompatActivity() {
   }
 
   fun popFragmentFromBackStack() {
-    fragmentManager!!.popBackStack()
+    try {
+      fragmentManager!!.popBackStack()
+    } catch (e: IllegalStateException){
+      //ignore
+    }
   }
 
   fun goToHomeFragment() {
