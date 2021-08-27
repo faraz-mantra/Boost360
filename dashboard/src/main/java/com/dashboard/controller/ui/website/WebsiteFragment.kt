@@ -2,10 +2,14 @@ package com.dashboard.controller.ui.website
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Typeface
+import android.graphics.Typeface.BOLD
+import android.graphics.Typeface.NORMAL
 import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
@@ -42,6 +46,7 @@ import com.framework.utils.fromHtml
 import com.framework.views.customViews.CustomImageView
 import com.framework.webengageconstant.DASHBOARD_WEBSITE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
+import com.google.android.material.tabs.TabLayout
 import java.util.*
 
 private val TAB_TITLES = arrayOf(
@@ -81,7 +86,38 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   private fun setupViewPager() {
     binding?.pager?.adapter = CategoriesPagerAdapter(baseActivity, childFragmentManager)
     binding?.tabLayout?.setupWithViewPager(binding?.pager)
+    for (i in 0..binding?.tabLayout?.tabCount!!){
+      val tab:TabLayout.Tab? = binding?.tabLayout?.getTabAt(i)
+      if (tab != null){
+        val tabTextView:TextView = TextView(baseActivity)
+        tab.customView = tabTextView
+        tabTextView.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+        tabTextView.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        tabTextView.text = tab.text
 
+        if (i == 0){
+          // This set the font style of the first tab
+          tabTextView.setTypeface(null,BOLD)
+        }
+        if (i == 1){
+          // This set the font style of the first tab
+          tabTextView.setTypeface(null,NORMAL)
+
+        }
+      }
+    }
+    binding?.tabLayout!!.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+      override fun onTabSelected(tab: TabLayout.Tab?) {
+        val text: TextView = tab?.customView as TextView
+        text.setTypeface(null, BOLD)
+      }
+      override fun onTabUnselected(tab: TabLayout.Tab?) {
+        val text: TextView = tab?.customView as TextView
+        text.setTypeface(null, NORMAL)
+      }
+      override fun onTabReselected(tab: TabLayout.Tab?) {
+      }
+  })
   }
 
   override fun onResume() {
