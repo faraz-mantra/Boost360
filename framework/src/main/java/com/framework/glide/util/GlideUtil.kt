@@ -82,7 +82,10 @@ fun Context.glideLoad(
   isCrop: Boolean = false
 ) {
   try {
-    if (url.isNullOrEmpty()) return
+    if (url.isNullOrEmpty()) {
+      Glide.with(this).load(placeholder).into(mImageView)
+      return
+    }
     val glide = Glide.with(this).load(url).skipMemoryCache(true)
       .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
     placeholder?.let { glide.placeholder(it) }

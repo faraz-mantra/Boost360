@@ -62,6 +62,19 @@ object WithFloatRepository : AppBaseRepository<WithFloatRemoteData, DashboardLoc
       TaskCode.GET_NAV_DASHBOARD_DATA
     )
   }
+  fun getMoreSettings(context: Context): Observable<BaseResponse> {
+    return makeLocalRequest(
+      DashboardLocalDataSource.getMoreSettings(context),
+      TaskCode.MORE_SETTINGS
+    )
+  }
+  fun getWebsiteNavData(context: Context): Observable<BaseResponse> {
+    return makeLocalRequest(
+      DashboardLocalDataSource.getWebsiteNavData(context),
+      TaskCode.WEBSITE_NAV_DATA
+    )
+  }
+
 
   fun getDrScoreUi(context: Context): Observable<BaseResponse> {
     return makeLocalRequest(

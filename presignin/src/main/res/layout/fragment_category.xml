@@ -8,16 +8,50 @@
     android:layout_height="match_parent"
     tools:context=".ui.registration.CategoryFragment">
 
-    <com.boost.presignin.views.PsnCustomToolbar
-      android:id="@+id/toolbar"
-      style="@style/psn_toolbar_style"
-      tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/linearLayoutCompat"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:orientation="horizontal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/civ_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:padding="6dp"
+        android:src="@drawable/ic_back_arrow_left_grey" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:fontFamily="@font/semi_bold"
+        android:includeFontPadding="true"
+        android:text="@string/select_your_business_type"
+        android:textColor="@color/black_3C3C3C"
+        android:textSize="16sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:id="@+id/view"
+      android:background="@color/view_background_1"
+      app:layout_constraintBottom_toBottomOf="@+id/linearLayoutCompat" />
 
     <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="0dp"
       android:fillViewport="true"
-      app:layout_constraintTop_toBottomOf="@id/toolbar">
+      app:layout_constraintBottom_toTopOf="@+id/confirm_button"
+      app:layout_constraintTop_toBottomOf="@+id/view">
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -34,48 +68,54 @@
           style="@style/psn_heading_style"
           android:layout_marginTop="0dp"
           android:text="@string/select_business_category"
+          android:visibility="gone"
           tools:ignore="MissingConstraints" />
-
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/sub_heading_tv"
           style="@style/psn_subheading_style"
           android:layout_marginTop="@dimen/size_4"
           android:text="@string/let_me_know_which_of_the_following_describes_the_business_you_are_running"
+          android:visibility="gone"
           app:layout_constraintTop_toBottomOf="@id/title"
           tools:ignore="MissingConstraints" />
 
-        <com.framework.views.GridRecyclerView
+        <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/recyclerView"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="0dp"
           android:clipToPadding="false"
           android:orientation="vertical"
           android:overScrollMode="never"
-          android:paddingStart="@dimen/size_12"
-          android:paddingTop="@dimen/size_12"
-          android:paddingEnd="@dimen/size_12"
-          android:paddingBottom="@dimen/_120sdp"
-          app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+          android:paddingBottom="@dimen/_5sdp"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintTop_toBottomOf="@id/sub_heading_tv"
-          tools:itemCount="15"
-          tools:listitem="@layout/item_category_layout"
-          tools:spanCount="2" />
+          tools:itemCount="2"
+          tools:listitem="@layout/item_category_layout" />
+
 
       </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
 
+    </androidx.core.widget.NestedScrollView>
 
     <com.framework.views.customViews.CustomButton
       android:id="@+id/confirm_button"
       style="@style/psn_button_style"
       android:layout_width="match_parent"
-      android:layout_marginHorizontal="@dimen/_20sdp"
-      android:layout_marginBottom="@dimen/_14sdp"
+      android:height="@dimen/_80sdp"
+      android:background="@color/colorAccent"
+      android:drawableEnd="@null"
       android:enabled="true"
-      android:text="@string/confirm_business_category"
-      android:visibility="invisible"
+      android:gravity="center"
+      android:text="@string/confirm_proceed"
+      android:visibility="visible"
       app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
       tools:ignore="MissingConstraints,UnknownId" />
+
+
+
   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
