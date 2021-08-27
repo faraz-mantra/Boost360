@@ -27,9 +27,23 @@ class CategoryDataModel(
     return experience_code ?: ""
   }
 
+  companion object {
+    var saveeCategory: CategoryDataModel? = null
+    fun saveCategoryState(category: CategoryDataModel?) {
+      saveeCategory = category
+    }
+    fun getSavedStateCategory(): CategoryDataModel? {
+      return saveeCategory
+    }
+  }
+
   override fun getViewType(): Int {
 //    return if (sectionType) RecyclerViewItemType.SECTION_HEADER_ITEM.getLayout() else
-    return  RecyclerViewItemType.CATEGORY_ITEM.getLayout()
+    return RecyclerViewItemType.CATEGORY_ITEM.getLayout()
+  }
+
+  fun getSelectedItem() {
+    return
   }
 
 
@@ -53,21 +67,22 @@ class CategoryDataModel(
 
     return ContextCompat.getDrawable(context, resId)
   }
-  fun getCategoryImage(context: Context?,selected:Boolean?=false): Drawable? {
+
+  fun getCategoryImage(context: Context?, selected: Boolean? = false): Drawable? {
 
     if (context == null) return null
 
     val resId = when (icon?.let { CategoryType.from(it) }) {
-      CategoryType.DOCTORS ->if (selected==false) R.drawable.doctors else R.drawable.doctors_dark
-      CategoryType.CLINICS_HOSPITALS -> if (selected==false ) R.drawable.clinics_hospital else R.drawable.clinics_hospital_dark
-      CategoryType.EDUCATION_COACHING ->if(selected==false) R.drawable.education else R.drawable.education_dark
-      CategoryType.HOTELS_MOTELS ->if (selected==false)R.drawable.category_hotel else R.drawable.category_hotel_dark
-      CategoryType.MANUFACTURING_EQUIPMENT ->if (selected==false) R.drawable.manufacturing else R.drawable.manufacturing_dark
-      CategoryType.SPAS_WELLNESS -> if (selected==false)R.drawable.spa_bathrobe else R.drawable.spa_bathrobe_dark
-      CategoryType.SALON -> if (selected==false)R.drawable.beauty_salons else R.drawable.beauty_salons_dark
-      CategoryType.RESTAURANT_CAFES -> if (selected==false)R.drawable.resturants_cafe else R.drawable.resturants_cafe_dark
-      CategoryType.RETAIL_BUSINESS ->if (selected==false) R.drawable.retail_business else R.drawable.retail_business_dark
-      CategoryType.SERVICES_BUSINESS -> if(selected==false) R.drawable.service_providers else R.drawable.service_providers_dark
+      CategoryType.DOCTORS -> if (selected == false) R.drawable.doctors else R.drawable.doctors_dark
+      CategoryType.CLINICS_HOSPITALS -> if (selected == false) R.drawable.clinics_hospital else R.drawable.clinics_hospital_dark
+      CategoryType.EDUCATION_COACHING -> if (selected == false) R.drawable.education else R.drawable.education_dark
+      CategoryType.HOTELS_MOTELS -> if (selected == false) R.drawable.category_hotel else R.drawable.category_hotel_dark
+      CategoryType.MANUFACTURING_EQUIPMENT -> if (selected == false) R.drawable.manufacturing else R.drawable.manufacturing_dark
+      CategoryType.SPAS_WELLNESS -> if (selected == false) R.drawable.spa_bathrobe else R.drawable.spa_bathrobe_dark
+      CategoryType.SALON -> if (selected == false) R.drawable.beauty_salons else R.drawable.beauty_salons_dark
+      CategoryType.RESTAURANT_CAFES -> if (selected == false) R.drawable.resturants_cafe else R.drawable.resturants_cafe_dark
+      CategoryType.RETAIL_BUSINESS -> if (selected == false) R.drawable.retail_business else R.drawable.retail_business_dark
+      CategoryType.SERVICES_BUSINESS -> if (selected == false) R.drawable.service_providers else R.drawable.service_providers_dark
       else -> null
     } ?: return null
 

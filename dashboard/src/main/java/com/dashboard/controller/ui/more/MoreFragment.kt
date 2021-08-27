@@ -6,11 +6,9 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.appservice.ui.updatesBusiness.showDialog
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -28,7 +26,6 @@ import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.pref.*
-import com.framework.pref.Key_Preferences.GET_FP_DETAILS_ADDRESS
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_DESCRIPTION
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
@@ -52,7 +49,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   override fun onCreateView() {
     this.session = UserSessionManager(baseActivity)
     setData()
-    setOnClickListener(binding?.rivUsersImage, binding?.rivBusinessImage,binding?.civProfile,binding?.boostSubscription)
+    setOnClickListener(binding?.rivUsersImage, binding?.rivBusinessImage, binding?.civProfile, binding?.boostSubscription)
   }
 
   private fun setData() {
@@ -65,13 +62,13 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       businessLogoUrl = BASE_IMAGE_URL + businessLogoUrl
     }
     binding?.rivUsersImage?.apply {
-        baseActivity.glideLoad(this, url = featureImageUrl, placeholder = R.drawable.ic_placeholder, isCrop = true)
+      baseActivity.glideLoad(this, url = featureImageUrl, placeholder = R.drawable.ic_placeholder, isCrop = true)
     }
     binding?.rivBusinessImage?.apply {
-        baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.ic_placeholder, isCrop = true)
+      baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.ic_placeholder, isCrop = true)
     }
     binding?.rivCurrentlyManage?.apply {
-        baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.ic_placeholder, isCrop = true)
+      baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.ic_placeholder, isCrop = true)
     }
     binding?.ctvName?.text = (session?.userProfileName ?: session?.fpTag)?.capitalizeUtil()
 //    val content = StringBuilder()
@@ -205,26 +202,38 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
           intent.putExtra("WEBSITE_NAME", url)
         }
       }
-      logout -> logout()
+      logout -> logoutUser()
     }
     if (intent != null) {
       startActivity(intent)
     }
   }
 
+  private fun logoutUser() {
+    AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
+      .setCancelable(false)
+      .setMessage(R.string.are_you_sure)
+      .setPositiveButton(R.string.logout) { dialog: DialogInterface, _: Int ->
+        dialog.dismiss()
+        logout()
+      }.setNegativeButton(R.string.cancel) { dialog: DialogInterface, _: Int ->
+        dialog.dismiss()
+      }.show()
+  }
+
   override fun onClick(v: View) {
     super.onClick(v)
-    when(v){
-      binding?.rivUsersImage->{
+    when (v) {
+      binding?.rivUsersImage -> {
         baseActivity.startFeatureLogo(session)
       }
-      binding?.rivBusinessImage->{
+      binding?.rivBusinessImage -> {
         baseActivity.startBusinessLogo(session)
       }
-      binding?.civProfile->{
+      binding?.civProfile -> {
         baseActivity.startBusinessProfileDetailEdit(session)
       }
-      binding?.boostSubscription->{
+      binding?.boostSubscription -> {
         baseActivity.initiateAddonMarketplace(session!!, false, "", "")
       }
     }
@@ -232,7 +241,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_more,menu)
+    inflater.inflate(R.menu.menu_more, menu)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -246,6 +255,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     }
     return super.onOptionsItemSelected(item)
   }
+
   private fun likeUsFacebook(context: Context, review: String) {
     val facebookIntent: Intent = try {
       context.packageManager.getPackageInfo(context.getString(R.string.facebook_package), 0)
