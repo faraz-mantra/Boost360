@@ -4,7 +4,7 @@
       "type": "DOC",
       "action_item": [
         {
-          "title": "Service Catalogue",
+          "title": "Service catalogue",
           "count": 432,
           "isFeature": false,
           "desc": "Add and manage services you will be providing to your patients & customers. This will make it easier for patients to schedule an appointment.",
@@ -13,7 +13,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Updates & Health Tips",
+          "title": "Updates & health tips",
           "count": 12,
           "isFeature": false,
           "desc": "Add updates like health tips, procedure details, offers, news etc. This is the information patients search online.",
@@ -22,7 +22,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Image Gallery",
+          "title": "All images",
           "count": 432,
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
@@ -40,7 +40,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Website Style Customisation",
+          "title": "Website style customisation",
           "desc": "Description of this asset Description of this assetDescription of this asset",
           "type": "website_theme",
           "isLock": false,
@@ -48,7 +48,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "count": 432,
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
@@ -62,7 +62,7 @@
       "type": "HOS",
       "action_item": [
         {
-          "title": "Service Catalogue",
+          "title": "Service catalogue",
           "count": 432,
           "isFeature": false,
           "desc": "Add and manage services you will be providing to your patients & customers. This will make it easier for patients to schedule an appointment.",
@@ -70,16 +70,16 @@
           "isLock": false,
           "premiumCode": ""
         },
-      {
-                  "title": "Website Style Customisation",
-                  "desc": "Description of this asset Description of this assetDescription of this asset",
-                  "type": "website_theme",
-                  "isLock": false,
-                  "isFeature": true,
-                  "premiumCode": ""
-                },
         {
-          "title": "Updates & Health Tips",
+          "title": "Website style customisation",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "website_theme",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Updates & health tips",
           "count": 432,
           "isFeature": false,
           "desc": "Add updates like health tips, procedure details, offers, news etc. This is the information patients search online.",
@@ -88,7 +88,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Image Gallery",
+          "title": "All images",
           "count": 432,
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
@@ -106,7 +106,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "count": 432,
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
@@ -120,7 +120,7 @@
       "type": "RTL",
       "action_item": [
         {
-          "title": "Product Catalogue",
+          "title": "Product catalogue",
           "count": 432,
           "isFeature": false,
           "desc": "Add and manage products on your website catalogue. This will make it easier for customers to browse and order online.",
@@ -128,16 +128,16 @@
           "isLock": false,
           "premiumCode": ""
         },
-      {
-                  "title": "Website Style Customisation",
-                  "desc": "Description of this asset Description of this assetDescription of this asset",
-                  "type": "website_theme",
-                  "isLock": false,
-                  "isFeature": true,
-                  "premiumCode": ""
-                },
         {
-          "title": "Updates & News",
+          "title": "Website style customisation",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "website_theme",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Updates & news",
           "count": 432,
           "isFeature": false,
           "desc": "Add updates like product launches, new trends, offers etc. This is the information customers search online.",
@@ -146,7 +146,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Image Gallery",
+          "title": "All images",
           "count": 432,
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
@@ -164,7 +164,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "count": 432,
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
@@ -178,7 +178,7 @@
       "type": "EDU",
       "action_item": [
         {
-          "title": "Course Catalogue",
+          "title": "Course catalogue",
           "count": 432,
           "isFeature": false,
           "desc": "Add and manage courses on your website catalogue. This will make it easier for students to browse and request admission online.",
@@ -186,17 +186,16 @@
           "isLock": false,
           "premiumCode": ""
         },
-                {
-                  "title": "Website Style Customisation",
-                  "desc": "Description of this asset Description of this assetDescription of this asset",
-                  "type": "website_theme",
-                  "isLock": false,
-                  "isFeature": true,
-
-                  "premiumCode": ""
-                },
         {
-          "title": "Updates & Tips",
+          "title": "Website style customisation",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "website_theme",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Updates & tips",
           "count": 432,
           "isFeature": false,
           "desc": "Add updates like new courses, admission updates, student achievements, events etc. This is the information students and parents search online.",
@@ -205,7 +204,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Image Gallery",
+          "title": "All images",
           "count": 432,
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
@@ -223,7 +222,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Toppers of Institute",
+          "title": "Toppers of institute",
           "count": 432,
           "isFeature": false,
           "desc": "Showcase your top students with their testimonials on your website.",
@@ -232,7 +231,7 @@
           "premiumCode": "OUR-TOPPERS"
         },
         {
-          "title": "Upcoming Batches",
+          "title": "Upcoming batches",
           "count": 432,
           "isFeature": false,
           "desc": "Add all upcoming courses and classes in advance. This will help get admissions in advance.",
@@ -241,7 +240,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Faculty & Management",
+          "title": "Faculty & management",
           "count": 432,
           "isFeature": false,
           "desc": "Highlight profiles and credentials of faculty members and institute management.",
@@ -250,7 +249,7 @@
           "premiumCode": "FACULTY"
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "count": 432,
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
@@ -264,7 +263,7 @@
       "type": "HOT",
       "action_item": [
         {
-          "title": "Room Catalogue",
+          "title": "Room catalogue",
           "count": 432,
           "isFeature": false,
           "desc": "Add your different room types to enable customers to book online.",
@@ -272,16 +271,16 @@
           "isLock": false,
           "premiumCode": ""
         },
-                {
-                  "title": "Website Style Customisation",
-                  "desc": "Description of this asset Description of this assetDescription of this asset",
-                  "type": "website_theme",
-                  "isLock": false,
-                  "isFeature": true,
-                  "premiumCode": ""
-                },
         {
-          "title": "Updates, News & Events",
+          "title": "Website style customisation",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "website_theme",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Updates, news & events",
           "count": 432,
           "isFeature": false,
           "desc": "Regularly add updates like offers, festival updates, events etc to your website.",
@@ -290,7 +289,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Image Gallery",
+          "title": "All images",
           "count": 432,
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place. Improve engagement on your website by adding images regularly.",
@@ -308,7 +307,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Page",
+          "title": "Custom page",
           "count": 432,
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
@@ -326,7 +325,7 @@
           "premiumCode": "PLACES-TO-LOOK-AROUND"
         },
         {
-          "title": "Tripadviser Ratings",
+          "title": "Tripadviser ratings",
           "count": 432,
           "isFeature": false,
           "desc": "Add your Tripadvisor reviews on your website to improve trust.",
@@ -335,7 +334,7 @@
           "premiumCode": "TRIPADVISOR-REVIEWS"
         },
         {
-          "title": "Seasonal Offers",
+          "title": "Seasonal offers",
           "count": 432,
           "isFeature": false,
           "desc": "Add seasonal offers to increase your room booking rates.",
@@ -349,7 +348,7 @@
       "type": "MFG",
       "action_item": [
         {
-          "title": "Product Catalogue",
+          "title": "Product catalogue",
           "count": 432,
           "isFeature": false,
           "desc": "Add and manage products on your website catalogue. This will make it easier for customers to browse and order online.",
@@ -358,7 +357,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Website Style Customisation",
+          "title": "Website style customisation",
           "desc": "Description of this asset Description of this assetDescription of this asset",
           "type": "website_theme",
           "isLock": false,
@@ -366,7 +365,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Updates & News",
+          "title": "Updates & news",
           "count": 432,
           "isFeature": false,
           "desc": "Add updates like new product launches, new trends, offers etc. This is the information customers search online.",
@@ -375,7 +374,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Image Gallery",
+          "title": "All images",
           "count": 432,
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
@@ -384,7 +383,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Project & Teams",
+          "title": "Project & teams",
           "count": 432,
           "isFeature": false,
           "desc": "Add and manage details of projects executed. Or use this section to tell customers about your team and their qualification.",
@@ -402,7 +401,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Unlimited Digital Brochures",
+          "title": "Unlimited digital brochures",
           "count": 432,
           "isFeature": false,
           "desc": "Upload and share brochures, product specifications or other downloadable documents with your customers.",
@@ -411,7 +410,7 @@
           "premiumCode": "BROCHURE"
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "count": 432,
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
@@ -427,7 +426,7 @@
       "type": "CAF",
       "action_item": [
         {
-          "title": "Food & Beverages Menu",
+          "title": "Food & beverages menu",
           "count": 432,
           "isFeature": false,
           "desc": "Add and manage items on your digital menu. This will allow customers to browse and order online.",
@@ -436,7 +435,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Website Style Customisation",
+          "title": "Website style customisation",
           "desc": "Description of this asset Description of this assetDescription of this asset",
           "type": "website_theme",
           "isLock": false,
@@ -444,7 +443,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Updates & Tips",
+          "title": "Updates & tips",
           "count": 432,
           "isFeature": false,
           "desc": "Add updates like recipes, food pairings, offers, events etc. This is the information customers search online.",
@@ -453,7 +452,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Image Gallery",
+          "title": "All images",
           "count": 432,
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
@@ -471,7 +470,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "count": 432,
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
@@ -485,7 +484,7 @@
       "type": "SVC",
       "action_item": [
         {
-          "title": "Service Catalogue",
+          "title": "Service catalogue",
           "count": 432,
           "isFeature": false,
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
@@ -494,7 +493,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Website Style Customisation",
+          "title": "Website style customisation",
           "desc": "Description of this asset Description of this assetDescription of this asset",
           "type": "website_theme",
           "isLock": false,
@@ -502,7 +501,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Updates & Tips",
+          "title": "Updates & tips",
           "desc": "Add updates like new services, DIY tips, offers, events etc. This is the information customers search online.",
           "type": "latest_update_tips",
           "count": 432,
@@ -511,7 +510,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Image Gallery",
+          "title": "All images",
           "count": 432,
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
@@ -529,7 +528,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "count": 432,
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
@@ -543,7 +542,7 @@
       "type": "SAL",
       "action_item": [
         {
-          "title": "Service Catalogue",
+          "title": "Service catalogue",
           "count": 432,
           "isFeature": false,
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
@@ -552,7 +551,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Website Style Customisation",
+          "title": "Website style customisation",
           "desc": "Description of this asset Description of this assetDescription of this asset",
           "type": "website_theme",
           "isLock": false,
@@ -560,7 +559,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Updates & Tips",
+          "title": "Updates & tips",
           "count": 432,
           "isFeature": false,
           "desc": "Add updates like new services, DIY tips, offers, events etc. This is the information customers search online.",
@@ -569,7 +568,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Image Gallery",
+          "title": "All images",
           "count": 432,
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
@@ -587,7 +586,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "count": 432,
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
@@ -601,7 +600,7 @@
       "type": "SPA",
       "action_item": [
         {
-          "title": "Service Catalogue",
+          "title": "Service catalogue",
           "count": 432,
           "isFeature": false,
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
@@ -610,7 +609,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Website Style Customisation",
+          "title": "Website style customisation",
           "desc": "Description of this asset Description of this assetDescription of this asset",
           "type": "website_theme",
           "isLock": false,
@@ -618,7 +617,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Latest Updates & Offers",
+          "title": "Latest updates & offers",
           "count": 432,
           "isFeature": false,
           "desc": "Add updates like new services, health & beauty tips, offers, events etc. This is the information customers search online.",
@@ -627,7 +626,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Image Gallery",
+          "title": "All images",
           "count": 432,
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
@@ -645,7 +644,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Custom Pages",
+          "title": "Custom pages",
           "count": 432,
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
