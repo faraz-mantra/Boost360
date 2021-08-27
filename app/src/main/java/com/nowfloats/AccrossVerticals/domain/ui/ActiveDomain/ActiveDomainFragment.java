@@ -33,6 +33,7 @@ import com.nowfloats.AccrossVerticals.domain.ui.Popup.EditEmailPopUpFragment;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import java.text.SimpleDateFormat;
@@ -150,6 +151,7 @@ public class ActiveDomainFragment extends Fragment implements ActiveDomainListen
             showProgress();
             APIInterfaces APICalls = new RestAdapter.Builder()
                     .setEndpoint("http://plugin.withfloats.com")
+                    .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setLog(new AndroidLog("ggg"))
                     .build()
