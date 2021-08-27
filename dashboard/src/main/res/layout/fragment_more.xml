@@ -62,7 +62,8 @@
           app:riv_border_width="2dp"
           app:riv_corner_radius="@dimen/size_10"
           app:riv_mutate_background="true"
-          app:riv_oval="false" />
+          app:riv_oval="false"
+          tools:ignore="MissingClass" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_type"
@@ -120,7 +121,6 @@
           android:id="@+id/civ_profile"
           android:layout_width="@dimen/size_32"
           android:layout_height="@dimen/size_32"
-          android:foreground="?attr/selectableItemBackgroundBorderless"
           android:padding="@dimen/size_8"
           android:src="@drawable/ic_arrow_right_7_white_d"
           app:layout_constraintBottom_toBottomOf="@+id/ctv_content"
@@ -177,7 +177,8 @@
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent"
               app:riv_corner_radius="@dimen/size_10"
-              app:riv_mutate_background="true" />
+              app:riv_mutate_background="true"
+              tools:ignore="MissingClass" />
             <androidx.constraintlayout.widget.ConstraintLayout
               android:id="@+id/constraintLayout6"
               android:layout_width="match_parent"
@@ -211,7 +212,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:riv_corner_radius="@dimen/size_8"
                 app:riv_mutate_background="true"
-                app:riv_oval="false" />
+                app:riv_oval="false"
+                tools:ignore="MissingClass" />
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/ctv_business_name"

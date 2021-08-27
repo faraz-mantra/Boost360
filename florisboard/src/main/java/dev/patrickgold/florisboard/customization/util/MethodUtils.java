@@ -70,8 +70,9 @@ public class MethodUtils {
       }
       Intent intent = new Intent(mContext, Class.forName("com.nowfloats.helper.AppFragmentContainerActivity"));
       intent.putExtra("FRAGMENT_TYPE", "ACCOUNT_KEYBOARD");
+      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       mContext.startActivity(intent);
-    } catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
@@ -82,10 +83,11 @@ public class MethodUtils {
       if (!isPackageInstalled(mContext.getPackageName(), packageManager)) {
         Toast.makeText(mContext, "App is not installed", Toast.LENGTH_SHORT).show();
       }
-      Intent intent = new Intent(mContext, Class.forName("com.appservice.staffs.ui.StaffFragmentContainerActivity"));
+      Intent intent = new Intent(mContext, Class.forName("com.appservice.ui.staffs.ui.StaffFragmentContainerActivity"));
       intent.putExtra("FRAGMENT_TYPE", "STAFF_PROFILE_LISTING_FRAGMENT");
+      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       mContext.startActivity(intent);
-    } catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
@@ -122,7 +124,7 @@ public class MethodUtils {
     return status;
   }
 
-  public static long getDaysDiff(Long startTime, Long endTime){
-    return TimeUnit.MILLISECONDS.toDays(startTime-endTime);
+  public static long getDaysDiff(Long startTime, Long endTime) {
+    return TimeUnit.MILLISECONDS.toDays(startTime - endTime);
   }
 }

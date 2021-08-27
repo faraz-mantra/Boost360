@@ -74,9 +74,9 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
   private val TAG = "BusinessFeaturesManager"
   private lateinit var binding: BusinessFeaturesLayoutBinding
-  private lateinit var sharedPref:SharedPrefUtil
+  private lateinit var sharedPref: SharedPrefUtil
   private lateinit var viewModel: BusinessFeaturesViewModel
-  private var businessFeatureEnum:BusinessFeatureEnum?=null
+  private var businessFeatureEnum: BusinessFeatureEnum? = null
   private val photosSet = mutableSetOf<Photo>()
   private lateinit var mContext: Context
   private var florisBoard: FlorisBoard? = null
@@ -210,12 +210,11 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     Log.i(TAG, "showSelectedBusinessFeature: ")
     val lastSyncTime = sharedPref.lastSyncTime
     if (session?.isUserLoggedIn == false) {
-        updateUiNotLoginned()
-    } else if (lastSyncTime==null||MethodUtils
-        .getDaysDiff(System.currentTimeMillis(),lastSyncTime)>=1){
-      Log.i(TAG, "last sync is greater than 24 hour: "+lastSyncTime)
+      updateUiNotLoginned()
+    } else if (lastSyncTime == null || MethodUtils.getDaysDiff(System.currentTimeMillis(), lastSyncTime) >= 1) {
+      Log.i(TAG, "last sync is greater than 24 hour: " + lastSyncTime)
       viewModel.getDetails(session?.fpTag, clientId)
-    }else{
+    } else {
       loadDataBasesOnTab()
     }
   }
@@ -223,59 +222,55 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private fun loadDataBasesOnTab() {
     resetAdapters()
     binding.msgLayout.gone()
-
-
     if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") == true) {
-
-        binding.businessFeatureProgress.visible()
-        when (businessFeatureEnum) {
-          BusinessFeatureEnum.INVENTORY_SERVICE -> {
-            SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(tagPosition)?.text = getProductType(session?.fP_AppExperienceCode ?: "")
-            visibleSelectType(isI = true)
+      binding.businessFeatureProgress.visible()
+      when (businessFeatureEnum) {
+        BusinessFeatureEnum.INVENTORY_SERVICE -> {
+          SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(tagPosition)?.text = getProductType(session?.fP_AppExperienceCode ?: "")
+          visibleSelectType(isI = true)
+          initializePaging()
+          this.adapterProductService.clearList()
+          binding.productShareRvList.removeAllViewsInLayout()
+          viewModel.getProducts(session?.fpTag, clientId, offSet, "SINGLE")
+        }
+        BusinessFeatureEnum.UPDATES -> {
+          visibleSelectType(isII = true)
+          initializePaging()
+          this.adapterUpdates.clearList()
+          binding.updateRvList.removeAllViewsInLayout()
+          viewModel.getUpdates(session?.fPID, clientId, offSet, limit)
+        }
+        BusinessFeatureEnum.PHOTOS -> {
+          visibleSelectType(isIII = true)
+          this.photosSet.clear()
+          this.adapterPhoto.clearList()
+          viewModel.getPhotos(session?.fPID ?: "")
+        }
+        BusinessFeatureEnum.BUSINESS_CARD -> {
+          visibleSelectType(isIV = true)
+          this.adapterBusinessCard.clearList()
+          if (messageBusiness.isEmpty() && _connectedChannels.isEmpty()) getChannelAccessToken(true)
+          businessCardDataLoad()
+        }
+        BusinessFeatureEnum.STAFF -> {
+          visibleSelectType(isV = true)
+          if (session?.getStoreWidgets()?.contains("STAFFPROFILE") == true) {
             initializePaging()
-            this.adapterProductService.clearList()
-            binding.productShareRvList.removeAllViewsInLayout()
-            viewModel.getProducts(session?.fpTag, clientId, offSet, "SINGLE")
-          }
-          BusinessFeatureEnum.UPDATES -> {
-            visibleSelectType(isII = true)
-            initializePaging()
-            this.adapterUpdates.clearList()
-            binding.updateRvList.removeAllViewsInLayout()
-            viewModel.getUpdates(session?.fPID, clientId, offSet, limit)
-          }
-          BusinessFeatureEnum.PHOTOS -> {
-            visibleSelectType(isIII = true)
-            this.photosSet.clear()
-            this.adapterPhoto.clearList()
-            viewModel.getPhotos(session?.fPID ?: "")
-          }
-          BusinessFeatureEnum.BUSINESS_CARD -> {
-            visibleSelectType(isIV = true)
-            this.adapterBusinessCard.clearList()
-            if (messageBusiness.isEmpty() && _connectedChannels.isEmpty()) getChannelAccessToken(true)
-            businessCardDataLoad()
-          }
-          BusinessFeatureEnum.STAFF -> {
-            visibleSelectType(isV = true)
-            if (session?.getStoreWidgets()?.contains("STAFFPROFILE") == true) {
-              initializePaging()
-              this.adapterStaff.clearList()
-              binding.staffRvList.removeAllViewsInLayout()
-              viewModel.getStaffList(getFilterRequest(offSet, limit))
-            } else {
-              binding.businessFeatureProgress.gone()
-              updateUiStaffNotRenewd()
-            }
-          }
-          else -> {
+            this.adapterStaff.clearList()
+            binding.staffRvList.removeAllViewsInLayout()
+            viewModel.getStaffList(getFilterRequest(offSet, limit))
+          } else {
+            binding.businessFeatureProgress.gone()
+            updateUiStaffNotRenewd()
           }
         }
+        else -> {
+        }
+      }
 
     } else {
       Timber.i("Please add boost keyboard in your current plan.")
-    updateUiFeatureNotRenewed()
-
+      updateUiFeatureNotRenewed()
     }
   }
 
@@ -287,35 +282,32 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     adapterUpdates.clearList()
     SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = "${getProductType(session?.fP_AppExperienceCode ?: "")}"
     SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = mContext.getString(R.string.photos_cap)
-    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text =  mContext.getString(R.string.staff_cap)
-    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text =   mContext.getString(R.string.updates_cap)
-
-
+    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = mContext.getString(R.string.staff_cap)
+    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = mContext.getString(R.string.updates_cap)
   }
 
 
-
-  private fun updateUiErrorFetchingInformation(){
+  private fun updateUiErrorFetchingInformation() {
     binding.msgLayout.visible()
     binding.msgIcon.setImageResource(R.drawable.ic_linkbreak)
-    binding.msgTitle.text =mContext.getString(R.string.error_while_fetching_your_business)
+    binding.msgTitle.text = mContext.getString(R.string.error_while_fetching_your_business)
     binding.msgDesc.text = mContext.getString(R.string.please_click_on_retry_btn_below)
-    binding.msgBtn.text= mContext.getString(R.string.retry)
-    binding.msgBtn.icon =mContext.getDrawable(R.drawable.ic_arrowscounterclockwise)
+    binding.msgBtn.text = mContext.getString(R.string.retry)
+    binding.msgBtn.icon = mContext.getDrawable(R.drawable.ic_arrowscounterclockwise)
 
     binding.msgBtn.setOnClickListener {
       loadDataBasesOnTab()
     }
   }
 
-  private fun updateUiInternetNotAvailable(){
+  private fun updateUiInternetNotAvailable() {
     binding.msgLayout.visible()
 
     binding.msgIcon.setImageResource(R.drawable.ic_wifislash)
-    binding.msgTitle.text =mContext.getString(R.string.internet_not_available)
+    binding.msgTitle.text = mContext.getString(R.string.internet_not_available)
     binding.msgDesc.text = mContext.getString(R.string.a_wifi_or_cellular)
-    binding.msgBtn.text= mContext.getString(R.string.open_settings)
-    binding.msgBtn.icon =mContext.getDrawable(R.drawable.ic_settings_white)
+    binding.msgBtn.text = mContext.getString(R.string.open_settings)
+    binding.msgBtn.icon = mContext.getDrawable(R.drawable.ic_settings_white)
 
 
     binding.msgBtn.setOnClickListener {
@@ -326,54 +318,54 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
             flags = Intent.FLAG_ACTIVITY_NEW_TASK;
           })
 
-      }catch (e:Exception){
+      } catch (e: Exception) {
         Toast.makeText(mContext, "Unable to find network settings. Please do it manually from phone's settings", Toast.LENGTH_LONG).show()
-        Log.e(TAG, "updateUiInternetNotAvailable: "+e.localizedMessage)
+        Log.e(TAG, "updateUiInternetNotAvailable: " + e.localizedMessage)
       }
 
       loadDataBasesOnTab()
     }
   }
 
-  private fun updateUiNotLoginned(){
+  private fun updateUiNotLoginned() {
     binding.msgLayout.visible()
 
     binding.msgIcon.setImageResource(R.drawable.ic_storefront)
-    binding.msgTitle.text =mContext.getString(R.string.login_to_start_sharing)
+    binding.msgTitle.text = mContext.getString(R.string.login_to_start_sharing)
     binding.msgDesc.text = mContext.getString(R.string.with_business_keyboard)
-    binding.msgBtn.text= mContext.getString(R.string.login_to_boost)
+    binding.msgBtn.text = mContext.getString(R.string.login_to_boost)
     binding.msgBtn.icon = mContext.getDrawable(R.drawable.ic_key)
-    
-    binding.msgBtn.setOnClickListener {
-      MethodUtils.startBoostActivity(mContext)
-    }
-  }
-
-  private fun updateUiFeatureNotRenewed(){
-    binding.msgLayout.visible()
-
-    binding.msgIcon.setImageResource(R.drawable.ic_keyboard_renew)
-    binding.msgTitle.text =mContext.getString(R.string.feature_not_renewed)
-    binding.msgDesc.text = mContext.getString(R.string.with_business_keyboard)
-    binding.msgBtn.text= mContext.getString(R.string.renew_feature)
-    binding.msgBtn.icon = mContext.getDrawable(R.drawable.ic_lockkey)
 
     binding.msgBtn.setOnClickListener {
       MethodUtils.startBoostActivity(mContext)
     }
   }
 
-  private fun updateUiStaffNotRenewd(){
+  private fun updateUiFeatureNotRenewed() {
     binding.msgLayout.visible()
 
     binding.msgIcon.setImageResource(R.drawable.ic_keyboard_renew)
-    binding.msgTitle.text =mContext.getString(R.string.staff_not_added_plan)
+    binding.msgTitle.text = mContext.getString(R.string.feature_not_renewed)
     binding.msgDesc.text = mContext.getString(R.string.with_business_keyboard)
-    binding.msgBtn.text= mContext.getString(R.string.renew_feature)
+    binding.msgBtn.text = mContext.getString(R.string.renew_feature)
     binding.msgBtn.icon = mContext.getDrawable(R.drawable.ic_lockkey)
 
     binding.msgBtn.setOnClickListener {
-      MethodUtils.startBoostActivity(mContext)
+      MethodUtils.startKeyboardActivity(mContext)
+    }
+  }
+
+  private fun updateUiStaffNotRenewd() {
+    binding.msgLayout.visible()
+
+    binding.msgIcon.setImageResource(R.drawable.ic_keyboard_renew)
+    binding.msgTitle.text = mContext.getString(R.string.staff_not_added_plan)
+    binding.msgDesc.text = mContext.getString(R.string.with_business_keyboard)
+    binding.msgBtn.text = mContext.getString(R.string.renew_feature)
+    binding.msgBtn.icon = mContext.getDrawable(R.drawable.ic_lockkey)
+
+    binding.msgBtn.setOnClickListener {
+      MethodUtils.startStaffActivity(mContext)
 
     }
   }
@@ -389,24 +381,24 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
   private fun errorObserveListener() {
     viewModel.error.observeForever {
-      Log.e(TAG, "errorObserveListener: "+it )
+      Log.e(TAG, "errorObserveListener: " + it)
 
       binding.businessFeatureProgress.gone()
-      if (it==Constants.TOKEN_EXPIRED_MESSAGE){
+      if (it == Constants.TOKEN_EXPIRED_MESSAGE) {
         updateUiNotLoginned()
-      }else if (it.contains("failed to connect",ignoreCase = true)||it.contains("Unable to resolve host",ignoreCase = true)){
+      } else if (it.contains("failed to connect", ignoreCase = true) || it.contains("Unable to resolve host", ignoreCase = true)) {
         updateUiInternetNotAvailable()
-      }else{
+      } else {
         updateUiErrorFetchingInformation()
       }
       //Toast.makeText(mContext, it, Toast.LENGTH_SHORT).show()
     }
   }
 
-  private fun apiObserveUserDetails(){
-    viewModel.details.observeForever{
-      Log.i(TAG, "apiObserveUserDetails: "+Gson().toJson(it.FPWebWidgets))
-      it.FPWebWidgets?.let { list->
+  private fun apiObserveUserDetails() {
+    viewModel.details.observeForever {
+      Log.i(TAG, "apiObserveUserDetails: " + Gson().toJson(it.FPWebWidgets))
+      it.FPWebWidgets?.let { list ->
         session?.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(list))
         SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).lastSyncTime = System.currentTimeMillis()
         loadDataBasesOnTab()
@@ -425,7 +417,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         this.photosSet.map { it1 -> it1.gridType = this.gridType }
         binding.rvListPhotos.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
         this.adapterPhoto.notifyNewList(this.photosSet.toList())
-        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = mContext.getString(R.string.photos_cap)+ " (${photosSet.size})"
+        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = mContext.getString(R.string.photos_cap) + " (${photosSet.size})"
       } else Timber.i("List from api came empty")
       clickListenerPhoto()
     }
@@ -459,7 +451,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         if (isFirstPage) this.adapterStaff.notifyNewList(it.data!!)
         else this.adapterStaff.addItems(it.data!!)
         isLastPageD = (this.adapterStaff.getListData().size == TOTAL_ELEMENTS)
-        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text =  mContext.getString(R.string.staff_cap)+" (${it.paging?.count})"
+        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = mContext.getString(R.string.staff_cap) + " (${it.paging?.count})"
       } else Timber.i("List from api came empty")
     }
   }
@@ -474,7 +466,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         if (isFirstPage) this.adapterUpdates.notifyNewList(it.floats!!)
         else this.adapterUpdates.addItems(it.floats!!)
         isLastPageD = (this.adapterUpdates.getListData().size == TOTAL_ELEMENTS)
-        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = mContext.getString(R.string.updates_cap)+ " (${it.totalCount})"
+        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = mContext.getString(R.string.updates_cap) + " (${it.totalCount})"
       } else Timber.i("List from api came empty")
     }
   }
@@ -734,7 +726,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       } else {
         mContext.grantUriPermission(packageNames[0], contentUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
       }
-      if (it.currentInputConnection != null){
+      if (it.currentInputConnection != null) {
         it.currentInputConnection.commitText(shareText, 1)
       }
       Log.i(TAG, "commitImageWithText: ")
