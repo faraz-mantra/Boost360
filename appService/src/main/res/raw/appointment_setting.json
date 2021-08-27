@@ -1,25 +1,25 @@
 {
   "Tiles": [
     {
-      "icon": "civ_catalog_setup",
+      "icon": "catalog_setup",
       "title": "Catalog Setup",
       "description": "Service categories, Catalog display text,applicable tax slabs",
       "isEnabled":true
     },
     {
-      "icon": "civ_payment_collection",
+      "icon": "payment_collection",
       "title": "Payment collection setup",
       "description": "Preferred payment gateway",
       "isEnabled":true
     },
     {
-      "icon": "civ_customer_invoice_setup",
+      "icon": "customer_invoice_setup",
       "title": "Customer invoice setup",
       "description": "GST declaration, Bank UPI for offline appointments,signature",
       "isEnabled":true
     },
     {
-      "icon": "civ_policies",
+      "icon": "policies",
       "title": "Policies for customers",
       "description": "Refund, cancellation, privacy policies for your customers",
       "isEnabled":false
