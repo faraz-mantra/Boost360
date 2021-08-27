@@ -1,12 +1,9 @@
 package com.boost.presignin.ui.registration
 
 import android.os.Bundle
-import android.widget.ImageView
-import androidx.recyclerview.widget.GridLayoutManager
 import com.boost.presignin.R
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.constant.RecyclerViewActionType
-import com.boost.presignin.constant.RecyclerViewItemType
 import com.boost.presignin.databinding.FragmentCategoryBinding
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.BusinessInfoModel
@@ -61,12 +58,23 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
       val categoryResponse = it as ResponseDataCategory
       baseAdapter.addItems(categoryList.apply {
         clear()
+        if (CategoryDataModel.getSavedStateCategory()!=null){
+          val data = categoryResponse.data!!
+          for ((index, categoryDataModel) in data.withIndex()) {
+            if (categoryDataModel.category_Name==CategoryDataModel.getSavedStateCategory()?.category_Name) {
+              data[index].isSelected= true
+            }
+          }
+          binding?.confirmButton?.visible()
+          addAll(data)
+        }else
         addAll(categoryResponse.data!!)
       })
     }
 
     binding?.confirmButton?.setOnClickListener {
       WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_CLICK, CATEGORY, NO_EVENT_VALUE)
+      CategoryDataModel.saveCategoryState(category)
       addFragmentReplace(
         com.framework.R.id.container,
         BusinessDetailsFragment.newInstance(
