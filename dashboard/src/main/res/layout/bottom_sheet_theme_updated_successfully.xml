@@ -91,7 +91,7 @@
         android:drawablePadding="@dimen/size_8"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"
-        android:paddingHorizontal="@dimen/size_90"
+        android:paddingHorizontal="85dp"
         android:stateListAnimator="@null"
         android:text="@string/share_on_whatsapp"
         android:textAllCaps="false"
