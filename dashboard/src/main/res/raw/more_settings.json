@@ -5,7 +5,7 @@
       "icon": "ria_digital_assistant",
       "isActionButtonEnabled": false,
       "subtitle": "FAQs, help & support, notifications etc.",
-      "title": "Help and Support"
+      "title": "Help and support"
     },
     {
       "icon": "business_kyc",
@@ -64,7 +64,7 @@
       },
       "isActionButtonEnabled": false,
       "subtitle": "Add and manage your bank account.",
-      "title": "Boost 360 Training\n& certification"
+      "title": "Boost 360 training\n& certification"
     },
     {
       "icon": "boost_extension",
@@ -96,17 +96,17 @@
   {
     "icon": "like_us_on_facebook",
     "subtitle": "Run Boost 360 account on your wordpress website.",
-    "title": "Like us on Facebook"
+    "title": "Like us on facebook"
   },
   {
     "icon": "follow_us_on_twitter",
     "subtitle": "Run Boost 360 account on your wordpress website.",
-    "title": "Follow us on Twitter"
+    "title": "Follow us on twitter"
   },
   {
     "icon": "rate_us_on_google_play",
     "subtitle": "Run Boost 360 account on your wordpress website.",
-    "title": "Rate us on Playstore"
+    "title": "Rate us on playstore"
   },
 //  {
 //    "icon": "rate_us_on_app_store",

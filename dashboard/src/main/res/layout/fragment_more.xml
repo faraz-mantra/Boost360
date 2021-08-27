@@ -957,7 +957,7 @@
             <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:textFontWeight="400"
+              android:textFontWeight="600"
               android:layout_gravity="center"
               android:text="@string/boost_360_is_proudly_made_in_india"
               android:textColor="@color/gray_828282"
