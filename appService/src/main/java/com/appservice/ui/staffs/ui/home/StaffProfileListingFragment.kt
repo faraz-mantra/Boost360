@@ -3,7 +3,6 @@ package com.appservice.ui.staffs.ui.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -33,7 +32,6 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
-import com.framework.pref.Key_Preferences
 import com.framework.webengageconstant.*
 import com.inventoryorder.ui.tutorials.LearnHowItWorkBottomSheet
 import kotlinx.android.synthetic.main.fragment_staff_listing.*
@@ -340,7 +338,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     bundle.putString(IntentConstant.FP_ID.name, UserSession.fpId)
     bundle.putString(IntentConstant.FP_TAG.name, UserSession.fpTag)
     bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
-    bundle.putString(IntentConstant.CLIENT_ID.name, UserSession.clientId)
+    bundle.putString(IntentConstant.CLIENT_ID.name, UserSession.clientIdN)
     bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name, externalSourceId)
     bundle.putString(IntentConstant.APPLICATION_ID.name, applicationId)
     return bundle
