@@ -148,7 +148,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
       intent.putExtra("mobileNo", "9160004303");
     }
     intent.putExtra("profileUrl", session.getFPLogo());
-    intent.putExtra("buyItemKey", "");
+    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name());
     startActivity(intent);
     new Handler().postDelayed(() -> progressDialog.dismiss(), 1000);
   }

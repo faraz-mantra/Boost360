@@ -116,10 +116,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun reloadCapLimitData() {
-    viewModel.getCapLimitFeatureDetails(session?.fPID?:"", clientId).observeOnce(this, {
+    viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this, {
       if (it.isSuccess()) {
         val capLimitList = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
-        val item = capLimitList?.firstOrNull { it1 -> (it1.featureKey == CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name && it1.properties.isNullOrEmpty().not()) }?: CapLimitFeatureResponseItem()
+        val item = capLimitList?.firstOrNull { it1 -> (it1.featureKey == CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name && it1.properties.isNullOrEmpty().not()) } ?: CapLimitFeatureResponseItem()
         item.saveCapData()
       }
     })
@@ -568,7 +568,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun getWelcomeData() {
-    viewModel.getWelcomeDashboardData(this).observeOnce(this, androidx.lifecycle.Observer {
+    viewModel.getWelcomeDashboardData(this).observeOnce(this, {
       val response = it as? WelcomeDashboardResponse
       val data = response?.data?.firstOrNull { it1 ->
         it1.type.equals(
