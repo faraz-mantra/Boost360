@@ -262,6 +262,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_16"
+            android:layout_marginBottom="@dimen/size_8"
             android:background="@drawable/rounded_stroke_grey"
             android:backgroundTint="@color/white"
             android:foreground="?attr/selectableItemBackgroundBorderless"
