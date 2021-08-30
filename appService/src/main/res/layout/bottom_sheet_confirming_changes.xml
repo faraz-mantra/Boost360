@@ -50,6 +50,7 @@
       <com.framework.views.customViews.CustomTextView
         style="@style/wrap_wrap"
         android:layout_marginHorizontal="@dimen/size_20"
+        android:id="@+id/ctv_new_display_text"
         android:layout_marginTop="@dimen/size_20"
         android:includeFontPadding="false"
         android:text="@string/new_display_text_packages"
@@ -59,6 +60,7 @@
 
       <com.framework.views.customViews.CustomTextView
         style="@style/wrap_wrap"
+        android:id="@+id/ctv_new_page_url"
         android:layout_marginHorizontal="@dimen/size_20"
         android:layout_marginTop="@dimen/size_20"
         android:includeFontPadding="false"

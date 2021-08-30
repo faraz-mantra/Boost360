@@ -182,5 +182,7 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   fun addWareHouseAddress(request: RequestAddWareHouseAddress): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.addWareHouse(request), TaskCode.ADD_WARE_HOUSE_ADDRESS)
   }
-
+  fun getFpDetails(fpId: String, map: Map<String, String>): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getFpDetails(fpId, map), TaskCode.GET_FP_DETAILS_BY_ID)
+  }
 }

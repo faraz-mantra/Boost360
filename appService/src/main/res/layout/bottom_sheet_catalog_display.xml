@@ -61,6 +61,7 @@
                     android:id="@+id/radio_custom_text"
                     style="@style/RadioAppointment"
                     android:text="@string/custom_text" />
+
             </RadioGroup>
 
             <com.framework.views.customViews.CustomTextField

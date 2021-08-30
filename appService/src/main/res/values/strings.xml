@@ -962,6 +962,7 @@
     <string name="for_store_pickup">For store pickup</string>
     <string name="return_policy">Return policy</string>
   <string name="please_enter_valid_account_number">please enter valid account number</string>
+  <string name="confirm_and_save_details">Confirm and Save details</string>
 
 
 </resources>
