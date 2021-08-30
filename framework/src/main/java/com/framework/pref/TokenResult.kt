@@ -17,6 +17,9 @@ data class TokenResult(
   var createDate: String = "",
 ) {
 
+  fun barrierToken(): String {
+    return "Bearer $token"
+  }
   fun isExpiredToken(): Boolean {
     val diffInMilliSec = getCurrentDate().time - (getCreateDate()?.time ?: 0L)
     val diffInDays = TimeUnit.MILLISECONDS.toDays(diffInMilliSec)

@@ -213,7 +213,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
   }
 
-  fun InitiatePurchaseOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
+  fun InitiatePurchaseOrder(auth: String,createPurchaseOrderV2: CreatePurchaseOrderV2) {
     Log.d("InitiatePurchaseOld", " " + createPurchaseOrderV2)
     if (Utils.isConnectedToInternet(getApplication())) {
 //            var sample = Gson().toJson(createPurchaseOrderV2)
@@ -221,7 +221,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
       updatesLoader.postValue(true)
       APIRequestStatus = "Order registration in progress..."
       compositeDisposable.add(
-        ApiService.CreatePurchaseOrder(createPurchaseOrderV2)
+        ApiService.CreatePurchaseOrder(auth,createPurchaseOrderV2)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(
@@ -244,13 +244,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
   }
 
-  fun InitiatePurchaseAutoRenewOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
+  fun InitiatePurchaseAutoRenewOrder(auth: String,createPurchaseOrderV2: CreatePurchaseOrderV2) {
     Log.d("InitiatePurchaseAuto", " " + createPurchaseOrderV2)
     if (Utils.isConnectedToInternet(getApplication())) {
       updatesLoader.postValue(true)
       APIRequestStatus = "Order registration in progress..."
       compositeDisposable.add(
-        ApiService.CreatePurchaseAutoRenewOrder(createPurchaseOrderV2)
+        ApiService.CreatePurchaseAutoRenewOrder(auth,createPurchaseOrderV2)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(
@@ -273,12 +273,12 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
   }
 
-  fun allPurchasedWidgets(req: RenewalPurchasedRequest) {
+  fun allPurchasedWidgets(auth: String,req: RenewalPurchasedRequest) {
     if (Utils.isConnectedToInternet(getApplication())) {
       updatesLoader.postValue(true)
       APIRequestStatus = "Please wait..."
       compositeDisposable.add(
-        ApiService.allPurchasedWidgets(
+        ApiService.allPurchasedWidgets(auth,
           req.floatingPointId,
           req.clientId,
           req.widgetStatus,
@@ -306,12 +306,12 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
   }
 
-  fun createCartStateRenewal(request: CreateCartStateRequest) {
+  fun createCartStateRenewal(auth: String,request: CreateCartStateRequest) {
     if (Utils.isConnectedToInternet(getApplication())) {
       updatesLoader.postValue(true)
       APIRequestStatus = "Order registration in progress..."
       compositeDisposable.add(
-        ApiService.createCartStateRenewal(request).subscribeOn(Schedulers.io())
+        ApiService.createCartStateRenewal(auth,request).subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread()).subscribe({
             if (it?.result != null && it.result?.cartStateId.isNullOrEmpty().not()) {
               createCartResult.postValue(it.result)
@@ -336,57 +336,57 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
   }
 
-  fun requestCustomerId(customerInfoRequest: CreateCustomerInfoRequest) {
-    if (Utils.isConnectedToInternet(getApplication())) {
-      updatesLoader.postValue(true)
-      APIRequestStatus = "Retrieving your payment profile..."
-      compositeDisposable.add(
-        ApiService.getCustomerId(
-          customerInfoRequest.InternalSourceId!!,
-          customerInfoRequest.ClientId!!
-        )
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(
-            {
-              Log.i("getCustomerId>>", it.toString())
-              customerId.postValue(it.Result.ExternalSourceId)
-              updatesLoader.postValue(false)
-            },
-            {
-              val temp = (it as HttpException).response()!!.errorBody()!!.string()
-              val errorBody: CreateCustomerIDResponse = Gson().fromJson(
-                temp, object : TypeToken<CreateCustomerIDResponse>() {}.type
-              )
-              if (errorBody != null && errorBody.Error.ErrorCode.equals("INVALID CUSTOMER") && errorBody.StatusCode == 400) {
-                APIRequestStatus = "Creating a new payment profile..."
-                compositeDisposable.add(
-                  ApiService.createCustomerId(customerInfoRequest)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                      {
-                        Log.i("CreateCustomerId>>", it.toString())
-                        customerId.postValue(it.Result.CustomerId)
-                        updatesLoader.postValue(false)
-                      },
-                      {
-                        Toasty.error(
-                          getApplication(),
-                          "Failed to create new payment profile for your account - " + it.message,
-                          Toast.LENGTH_LONG
-                        ).show()
-                        updatesError.postValue(it.message)
-                        updatesLoader.postValue(false)
-                      }
-                    )
-                )
-              }
-            }
-          )
-      )
-    }
-  }
+//  fun requestCustomerId(customerInfoRequest: CreateCustomerInfoRequest) {
+//    if (Utils.isConnectedToInternet(getApplication())) {
+//      updatesLoader.postValue(true)
+//      APIRequestStatus = "Retrieving your payment profile..."
+//      compositeDisposable.add(
+//        ApiService.getCustomerId(
+//          customerInfoRequest.InternalSourceId!!,
+//          customerInfoRequest.ClientId!!
+//        )
+//          .subscribeOn(Schedulers.io())
+//          .observeOn(AndroidSchedulers.mainThread())
+//          .subscribe(
+//            {
+//              Log.i("getCustomerId>>", it.toString())
+//              customerId.postValue(it.Result.ExternalSourceId)
+//              updatesLoader.postValue(false)
+//            },
+//            {
+//              val temp = (it as HttpException).response()!!.errorBody()!!.string()
+//              val errorBody: CreateCustomerIDResponse = Gson().fromJson(
+//                temp, object : TypeToken<CreateCustomerIDResponse>() {}.type
+//              )
+//              if (errorBody != null && errorBody.Error.ErrorCode.equals("INVALID CUSTOMER") && errorBody.StatusCode == 400) {
+//                APIRequestStatus = "Creating a new payment profile..."
+//                compositeDisposable.add(
+//                  ApiService.createCustomerId(customerInfoRequest)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(
+//                      {
+//                        Log.i("CreateCustomerId>>", it.toString())
+//                        customerId.postValue(it.Result.CustomerId)
+//                        updatesLoader.postValue(false)
+//                      },
+//                      {
+//                        Toasty.error(
+//                          getApplication(),
+//                          "Failed to create new payment profile for your account - " + it.message,
+//                          Toast.LENGTH_LONG
+//                        ).show()
+//                        updatesError.postValue(it.message)
+//                        updatesLoader.postValue(false)
+//                      }
+//                    )
+//                )
+//              }
+//            }
+//          )
+//      )
+//    }
+//  }
 
   fun addItemToCart(cartItem: CartModel) {
     Completable.fromAction {
@@ -555,12 +555,12 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     return updateCustomerInfo
   }
 
-  fun getCustomerInfo(InternalSourceId: String, clientId: String) {
+  fun getCustomerInfo(auth:String,InternalSourceId: String, clientId: String) {
     if (Utils.isConnectedToInternet(getApplication())) {
       updatesLoader.postValue(true)
       APIRequestStatus = "Retrieving your payment profile..."
       CompositeDisposable().add(
-        ApiService.getCustomerId(InternalSourceId, clientId)
+        ApiService.getCustomerId(auth,InternalSourceId, clientId)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(
@@ -586,10 +586,10 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
   }
 
-  fun createCustomerInfo(createCustomerInfoRequest: CreateCustomerInfoRequest) {
+  fun createCustomerInfo(auth:String,createCustomerInfoRequest: CreateCustomerInfoRequest) {
     APIRequestStatus = "Creating a new payment profile..."
     CompositeDisposable().add(
-      ApiService.createCustomerId(createCustomerInfoRequest)
+      ApiService.createCustomerId(auth,createCustomerInfoRequest)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
@@ -611,10 +611,10 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     )
   }
 
-  fun updateCustomerInfo(createCustomerInfoRequest: CreateCustomerInfoRequest) {
+  fun updateCustomerInfo(auth: String,createCustomerInfoRequest: CreateCustomerInfoRequest) {
     APIRequestStatus = "Creating a new payment profile..."
     CompositeDisposable().add(
-      ApiService.updateCustomerId(createCustomerInfoRequest)
+      ApiService.updateCustomerId(auth,createCustomerInfoRequest)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(

@@ -149,7 +149,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    fun loadUpdates(fpid: String, clientId: String, expCode: String?, fpTag: String?) {
+    fun loadUpdates(auth:String,fpid: String, clientId: String, expCode: String?, fpTag: String?) {
         Log.v("loadUpdates ", " " + expCode + " " + fpTag)
         updatesLoader.postValue(true)
 
@@ -228,7 +228,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                                         updatesLoader.postValue(false)
 
                                                                         compositeDisposable.add(
-                                                                                ApiService.GetFloatingPointWebWidgets(fpid, clientId)
+                                                                                ApiService.GetFloatingPointWebWidgets(auth,fpid, clientId)
                                                                                         .subscribeOn(Schedulers.io())
                                                                                         .observeOn(AndroidSchedulers.mainThread())
                                                                                         .subscribe(
