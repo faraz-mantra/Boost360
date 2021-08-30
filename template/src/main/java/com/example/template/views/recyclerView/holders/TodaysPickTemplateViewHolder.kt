@@ -1,11 +1,10 @@
 package com.example.template.views.recyclerView.holders
 
-import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
-import com.dashboard.recyclerView.BaseRecyclerViewItem
-import com.example.template.R
+import com.example.template.recyclerView.AppBaseRecyclerViewHolder
+import com.example.template.recyclerView.BaseRecyclerViewItem
 import com.example.template.databinding.ListItemTodaysPickTemplateBinding
 import com.example.template.models.TodaysPickModel
-import com.example.template.views.recyclerView.AppBaseRecyclerViewAdapter
+import com.example.template.recyclerView.AppBaseRecyclerViewAdapter
 import com.framework.base.BaseActivity
 import com.google.android.material.tabs.TabLayoutMediator
 

@@ -1,6 +1,6 @@
 package com.example.template.models
 
-import com.dashboard.recyclerView.AppBaseRecyclerViewItem
+import com.example.template.recyclerView.AppBaseRecyclerViewItem
 import com.example.template.R
 
 data class TemplateModel(

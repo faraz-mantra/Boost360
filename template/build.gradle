@@ -39,6 +39,6 @@ android {
 dependencies {
 
     api project(path: ':resources')
-    api project(path: ':dashboard')
+    api project(path: ':appService')
 
 }

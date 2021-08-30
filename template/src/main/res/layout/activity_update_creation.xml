@@ -43,7 +43,7 @@
                 android:id="@+id/iv_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_search"
+                android:src="@drawable/ic_mtemplate_search"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -115,12 +115,13 @@
 
             <com.framework.views.customViews.CustomImageView
                 android:layout_width="10dp"
+                android:id="@+id/iv_left_arrow"
                 android:src="@drawable/ic_left_arrow_grey"
                 android:layout_height="10dp"/>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <androidx.viewpager2.widget.ViewPager2
                 android:layout_marginStart="8dp"
-                android:id="@+id/rv_social_conn"
+                android:id="@+id/vp_social_conn"
                 android:layout_width="0dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="0.96"
@@ -132,6 +133,7 @@
             <com.framework.views.customViews.CustomImageView
                 android:layout_width="10dp"
                 android:rotation="180"
+                android:id="@+id/iv_right_arrow"
                 android:src="@drawable/ic_left_arrow_grey"
                 android:layout_height="10dp"/>
         </LinearLayout>

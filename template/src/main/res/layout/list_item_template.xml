@@ -37,11 +37,43 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@color/colorPrimary" />
+
+
                 </com.framework.views.customViews.CustomCardView>
 
+                <LinearLayout
+                    android:id="@+id/btn_edit"
+                    android:gravity="center"
+                    android:paddingVertical="8dp"
+                    android:paddingHorizontal="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/ic_pencil_edit_bg"
+                    android:elevation="4dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/customCardView6"
+                    app:layout_constraintTop_toTopOf="@+id/customCardView6">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="wrap_content"
+                        android:src="@drawable/ic_pencil_edit"
+                        android:layout_height="wrap_content"/>
+
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:text="@string/edit"
+                        android:layout_marginStart="8dp"
+                        android:textAllCaps="true"
+                        style="@style/WhiteSemiBoldS"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
 
                 <com.framework.views.customViews.CustomCardView
-                    android:id="@+id/customCardView8"
+                    android:id="@+id/card_love"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginEnd="32dp"
@@ -68,14 +100,14 @@
                     android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/customCardView8"
+                    app:layout_constraintTop_toBottomOf="@+id/card_love"
                     tools:text="Black friday sale upto 50% discount on our post selected merchandise, only " />
 
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.2dp"
-                    android:background="@color/grey"
+                    android:background="@color/textGrey"
                     app:layout_constraintBottom_toTopOf="@+id/btn_share" />
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btn_share"

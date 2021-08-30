@@ -1,18 +1,14 @@
-package com.example.template.views.recyclerView
+package com.example.template.recyclerView
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import androidx.recyclerview.widget.RecyclerView
-import com.dashboard.databinding.*
-import com.dashboard.recyclerView.AppBaseRecyclerViewItem
-import com.dashboard.recyclerView.BaseRecyclerViewHolder
-import com.dashboard.recyclerView.RecyclerItemClickListener
+import com.example.template.constant.RecyclerViewItemType
 import com.framework.base.BaseActivity
-import com.example.template.constants.RecyclerViewItemType.*
+import com.example.template.constant.RecyclerViewItemType.*
+import com.example.template.databinding.ListItemSocialConnBinding
 import com.example.template.databinding.ListItemTemplateBinding
 import com.example.template.databinding.ListItemTodaysPickTemplateBinding
-import com.example.template.models.TemplateModel
+import com.example.template.views.recyclerView.holders.SoicalConnViewHolder
 import com.example.template.views.recyclerView.holders.TemplateViewHolder
 import com.example.template.views.recyclerView.holders.TodaysPickTemplateViewHolder
 import java.util.*
@@ -26,11 +22,12 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
 
   override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*> {
     val inflater = LayoutInflater.from(parent.context)
-    val recyclerViewItemType = values().first { it.getLayout() == viewType }
+    val recyclerViewItemType = RecyclerViewItemType.values().first { it.getLayout() == viewType }
     val binding = getViewDataBinding(inflater, recyclerViewItemType, parent)
     return when (recyclerViewItemType) {
       TODAYS_PICK_TEMPLATE_VIEW->TodaysPickTemplateViewHolder(binding as ListItemTodaysPickTemplateBinding)
       TEMPLATE_VIEW->TemplateViewHolder(binding as ListItemTemplateBinding)
+      SOCIAL_CONN->SoicalConnViewHolder(binding as ListItemSocialConnBinding)
 
     }
   }

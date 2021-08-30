@@ -2,14 +2,14 @@ package com.example.template.views
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dashboard.base.AppBaseFragment
+import com.example.template.base.AppBaseFragment
 import com.example.template.R
 import com.example.template.databinding.FragmentTodaysPickBinding
+import com.example.template.models.SocialConnModel
 import com.example.template.models.TemplateModel
 import com.example.template.models.TodaysPickModel
-import com.example.template.views.recyclerView.AppBaseRecyclerViewAdapter
+import com.example.template.recyclerView.AppBaseRecyclerViewAdapter
 import com.framework.base.BaseActivity
-import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
 
 class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, BaseViewModel>() {
@@ -40,9 +40,11 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, BaseViewMod
                 templateList = arrayListOf(TemplateModel(desc="50% off get the offfer asd wsdf qawf wqjwj qwsd "),TemplateModel(),TemplateModel(),TemplateModel())),
         )
 
-        val adapter =AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList)
+        val adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList)
         binding?.rvTemplates?.adapter = adapter
         binding?.rvTemplates?.layoutManager = LinearLayoutManager(requireActivity())
+
+
 
     }
 }

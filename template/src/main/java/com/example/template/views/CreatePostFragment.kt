@@ -1,7 +1,7 @@
 package com.example.template.views
 
 import android.os.Bundle
-import com.dashboard.base.AppBaseFragment
+import com.example.template.base.AppBaseFragment
 import com.example.template.R
 import com.example.template.databinding.FragmentTodaysPickBinding
 import com.framework.models.BaseViewModel

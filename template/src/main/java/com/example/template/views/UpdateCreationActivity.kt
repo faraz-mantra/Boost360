@@ -1,13 +1,19 @@
 package com.example.template.views
 
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.dashboard.base.AppBaseActivity
+import com.example.template.base.AppBaseActivity
 import com.example.template.R
 import com.example.template.databinding.ActivityUpdateCreationBinding
+import com.example.template.models.SocialConnModel
+import com.example.template.recyclerView.AppBaseRecyclerViewAdapter
+import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
-import com.google.android.material.shape.CornerFamily
 import com.google.android.material.tabs.TabLayoutMediator
+
+
+
 
 class UpdateCreationActivity : AppBaseActivity<ActivityUpdateCreationBinding, BaseViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +35,29 @@ class UpdateCreationActivity : AppBaseActivity<ActivityUpdateCreationBinding, Ba
     }
 
     private fun setupView() {
+
+        val soicalConnList = arrayListOf(
+            SocialConnModel(
+            content = "1000+ people are on twitter"
+        ), SocialConnModel(
+            content = "1000+ people are on facebook"
+        )
+        )
+
+        val socialconnadapter = AppBaseRecyclerViewAdapter(this,soicalConnList)
+        binding?.vpSocialConn?.adapter = socialconnadapter
+        binding?.ivLeftArrow?.setOnClickListener {
+            binding?.vpSocialConn?.postDelayed(Runnable {
+                binding?.vpSocialConn?.currentItem = binding?.vpSocialConn?.currentItem?:1 - 1;
+
+            }, 100)
+        }
+        binding?.ivRightArrow?.setOnClickListener {
+            binding?.vpSocialConn?.postDelayed(Runnable {
+                binding?.vpSocialConn?.currentItem = binding?.vpSocialConn?.currentItem?:0 + 1;
+
+            }, 100)
+        }
 
     }
 

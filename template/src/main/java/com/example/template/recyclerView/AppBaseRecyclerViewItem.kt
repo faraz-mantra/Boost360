@@ -1,0 +1,3 @@
+package com.example.template.recyclerView
+
+interface AppBaseRecyclerViewItem : BaseRecyclerViewItem
