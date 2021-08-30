@@ -304,7 +304,18 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
   }
 
   override fun primaryButtonClicked() {
-    initiateBuyFromMarketplace()
+    if (isPremium()) {
+      val bookATableDetailsFragment = BookATableDetailsFragment.newInstance()
+      val arg = Bundle()
+      arg.putString("ScreenState", "new")
+      bookATableDetailsFragment.arguments = arg
+      (activity as BookATableActivity).addFragment(
+        bookATableDetailsFragment,
+        "BOOK_A_TABLE_DETAILS_FRAGMENT"
+      )
+    } else {
+      initiateBuyFromMarketplace()
+    }
   }
 
   override fun secondaryButtonClicked() {

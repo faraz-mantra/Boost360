@@ -1,6 +1,7 @@
 package com.appservice.ui.testimonial
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -29,7 +30,7 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
   private var headerToken = "59c89bbb5d64370a04c9aea1"
   private var testimonialType = "testimonials"
   private val allTestimonialType = listOf("testimonials", "testimonial", "guestreviews")
-
+  private val TAG = "TestimonialListFragment"
   companion object {
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): TestimonialListFragment {
@@ -41,6 +42,7 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
 
   override fun onCreateView() {
     super.onCreateView()
+    Log.i(TAG, "onCreateView: ")
     hitApi(viewModel?.getWebActionList(webTemplateId, fpTag), R.string.error_getting_web_action)
   }
 
@@ -75,8 +77,7 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
         } else {
           binding?.rvTestimonial?.gone()
 //          binding?.emptyLayout?.visible()
-          addFragmentReplace(containerID = R.id.container, AppRequestZeroCaseBuilder(AppZeroCases.TESTIMONIAL,
-            this, baseActivity).getRequest().build(), true)
+         
 
         }
       }

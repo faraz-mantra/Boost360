@@ -1,5 +1,6 @@
 package com.nowfloats.manufacturing.projectandteams.ui.project;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.boost.upgrades.UpgradeActivity;
 import com.framework.views.fabButton.FloatingActionButton;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
@@ -57,17 +60,25 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
     private ProjectAdapter adapter;
     private AppFragmentZeroCase appFragmentZeroCase;
     private ActivityProjectCategoryBinding binding;
-
+    private UserSessionManager userSessionManager;
+    private String WIDGET_KEY="PROJECTTEAM";
+    private static final String TAG = "TeamsActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userSessionManager = new UserSessionManager(this,this);;
+
         binding = DataBindingUtil.setContentView(this,R.layout.activity_project_category);
-        appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.PROJECTS,this,this).getRequest().build();
+        appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.PROJECTS,this,this,isPremium()).getRequest().build();
         getSupportFragmentManager().beginTransaction().replace(binding.childContainer.getId(),appFragmentZeroCase).commit();
 
         initView();
     }
+    private Boolean isPremium(){
+        return userSessionManager.getStoreWidgets().contains(WIDGET_KEY);
+    }
+
 
     public void initView() {
 
@@ -129,7 +140,11 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
     protected void onResume() {
         super.onResume();
         if (Utils.isNetworkConnected(this)) {
-            loadData();
+            if (isPremium()) {
+                nonEmptyView();
+                loadData();
+            }else {
+                emptyView();            }
         } else {
             Methods.showSnackBarNegative(ProjectActivity.this, getString(R.string.no_internet_connection));
         }
@@ -237,7 +252,11 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
     }
     @Override
     public void primaryButtonClicked() {
-        addProject();
+        if (isPremium()) {
+            addProject();
+        }else {
+            initiateBuyFromMarketplace();
+        }
     }
 
     @Override
@@ -266,4 +285,40 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
 
     }
 
+    private void initiateBuyFromMarketplace() {
+
+        ProgressDialog progressDialog = new android.app.ProgressDialog((this));
+        String status = "Loading. Please wait...";
+        progressDialog.setMessage(status);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Intent intent =new Intent(this, UpgradeActivity.class);
+        intent.putExtra("expCode", userSessionManager.getFP_AppExperienceCode());
+        intent.putExtra("fpName", userSessionManager.getFPName());
+        intent.putExtra("fpid", userSessionManager.getFPID());
+        intent.putExtra("loginid", userSessionManager.getUserProfileId());
+        intent.putStringArrayListExtra("userPurchsedWidgets", com.nowfloats.util.Constants.StoreWidgets);
+        intent.putExtra("fpTag", userSessionManager.getFpTag());
+        if (userSessionManager.getUserProfileEmail() != null) {
+            intent.putExtra("email", userSessionManager.getUserProfileEmail());
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com");
+        }
+        if (userSessionManager.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", userSessionManager.getUserPrimaryMobile());
+        } else {
+            intent.putExtra("mobileNo", "9160004303");
+        }
+        intent.putExtra("profileUrl", userSessionManager.getFPLogo());
+        intent.putExtra("buyItemKey", WIDGET_KEY);
+        startActivity(intent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+                finish();
+            }
+        }, 1000);
+
+    }
 }
