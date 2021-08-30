@@ -56,6 +56,8 @@ class ToppersActivity : BaseActivity<ActivityToppersBinding, BaseViewModel>() {
 
     }
 
+
+
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     if (item.itemId == android.R.id.home) {
       onBackPressed()

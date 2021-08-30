@@ -3,6 +3,7 @@ package com.nowfloats.AccrossVerticals.Testimonials;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -13,10 +14,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.boost.upgrades.UpgradeActivity;
 import com.dashboard.utils.CodeUtilsKt;
 import com.framework.utils.ContentSharing;
 import com.framework.views.fabButton.FloatingActionButton;
@@ -36,9 +39,11 @@ import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.GetTestimonialDa
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.TestimonialData;
 import com.nowfloats.AccrossVerticals.API.model.GetToken.GetTokenData;
 import com.nowfloats.AccrossVerticals.API.model.GetToken.WebActionsItem;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
+import com.thinksity.databinding.ActivityTestimonialsBinding;
 
 import org.json.JSONObject;
 
@@ -65,25 +70,43 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     TextView title;
     private String headerToken = "59c89bbb5d64370a04c9aea1";
     private String testimonialType = "testimonials";
-    private LinearLayout mainLayout;
-    private com.framework.pref.UserSessionManager session;
+    private UserSessionManager session;
     private TestimonialsAdapter testimonialsAdapter;
     private RecyclerView recyclerView;
     private boolean isLoad = false;
-    private FrameLayout fragmentContainer = null;
     private AppFragmentZeroCase appFragmentZeroCase;
+    private String WIDGET_KEY="TESTIMONIALS";
+    private static final String TAG = "TestimonialsActivity";
+    private ActivityTestimonialsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_testimonials);
-        session = new com.framework.pref.UserSessionManager(this);
+        Log.i(TAG, "onCreate: ");
+        session = new UserSessionManager(this,this);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_testimonials);
+        appFragmentZeroCase = new AppRequestZeroCaseBuilder(AppZeroCases.TESTIMONIAL,
+                TestimonialsActivity.this  , getApplicationContext(),isPremium()).getRequest().build();
+        getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(),appFragmentZeroCase).commit();
         setHeader();
         initialization();
         checkIsAdd();
         Log.v("experincecode", " themeID: " + session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID) + " FpTag: " + session.getFpTag() + " exp: " + session.getFPDetails(Key_Preferences.GET_FP_EXPERIENCE_CODE));
     }
 
+
+
+    private void nonEmptyView() {
+        binding.mainlayout.setVisibility(View.VISIBLE);
+        binding.childContainer.setVisibility(View.GONE);
+    }
+
+
+    private void emptyView() {
+        binding.mainlayout.setVisibility(View.GONE);
+        binding.childContainer.setVisibility(View.VISIBLE);
+
+    }
     private void checkIsAdd() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -99,29 +122,29 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     @Override
     protected void onResume() {
         super.onResume();
-        getHeaderAuthToken();
+        if (isPremium()) {
+            nonEmptyView();
+            getHeaderAuthToken();
+        }else {
+            emptyView();
+        }
     }
 
     void initialization() {
-        appFragmentZeroCase = new AppRequestZeroCaseBuilder(AppZeroCases.TESTIMONIAL,TestimonialsActivity.this  , getApplicationContext()).getRequest().build();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_testimonial,
-                appFragmentZeroCase, AppFragmentZeroCase.class.getName())
-                .commit();
+
         vmnProgressBar = new ProgressDialog(this);
         vmnProgressBar.setIndeterminate(true);
         vmnProgressBar.setMessage(getString(R.string.please_wait));
         vmnProgressBar.setCancelable(false);
-        fragmentContainer = findViewById(R.id.fragment_container_testimonial);
 //        addTestimonialsButton = findViewById(R.id.add_testimonials);
         recyclerView = findViewById(R.id.testimonials_recycler);
         testimonialsAdapter = new TestimonialsAdapter(new ArrayList(), this, session, this);
         initialiseRecycler();
 
         //show or hide if feature is available to user
-        mainLayout = (LinearLayout) findViewById(R.id.main_layout);
 //        secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
 
-        mainLayout.setOnClickListener(v -> updateRecyclerMenuOption(-1, false));
+        binding.mainlayout.setOnClickListener(v -> updateRecyclerMenuOption(-1, false));
 
 //        addTestimonialsButton.setOnClickListener(v -> {
 //            Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
@@ -130,6 +153,9 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
 //        });
     }
 
+    private Boolean isPremium(){
+        return session.getStoreWidgets().contains(WIDGET_KEY);
+    }
     public void setHeader() {
         title = findViewById(R.id.title);
         backButton = findViewById(R.id.back_button);
@@ -175,14 +201,10 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                         isLoad = true;
                         dataList = testimonialModel.getData();
                         updateRecyclerView();
-                        mainLayout.setVisibility(View.VISIBLE);
                         rightButton.setVisibility(View.VISIBLE);
-                        fragmentContainer.setVisibility(View.GONE);
-
+                        nonEmptyView();
                     } else {
-                        mainLayout.setVisibility(View.GONE);
-                        fragmentContainer.setVisibility(View.VISIBLE);
-
+                        emptyView();
                         rightButton.setVisibility(View.INVISIBLE);
                     }
                 }
@@ -348,9 +370,13 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
 
     @Override
     public void primaryButtonClicked() {
-        Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
-        intent.putExtra("ScreenState", "new");
-        startActivity(intent);
+        if (isPremium()) {
+            Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
+            intent.putExtra("ScreenState", "new");
+            startActivity(intent);
+        }else {
+            initiateBuyFromMarketplace();
+        }
     }
 
     @Override
@@ -366,5 +392,42 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     @Override
     public void appOnBackPressed() {
         finishAfterTransition();
+    }
+
+    private void initiateBuyFromMarketplace() {
+
+        ProgressDialog progressDialog = new android.app.ProgressDialog((this));
+        String status = "Loading. Please wait...";
+        progressDialog.setMessage(status);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Intent intent =new Intent(this, UpgradeActivity.class);
+        intent.putExtra("expCode", session.getFP_AppExperienceCode());
+        intent.putExtra("fpName", session.getFPName());
+        intent.putExtra("fpid", session.getFPID());
+        intent.putExtra("loginid", session.getUserProfileId());
+        intent.putStringArrayListExtra("userPurchsedWidgets", com.nowfloats.util.Constants.StoreWidgets);
+        intent.putExtra("fpTag", session.getFpTag());
+        if (session.getUserProfileEmail() != null) {
+            intent.putExtra("email", session.getUserProfileEmail());
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com");
+        }
+        if (session.getUserPrimaryMobile() != null) {
+            intent.putExtra("mobileNo", session.getUserPrimaryMobile());
+        } else {
+            intent.putExtra("mobileNo", "9160004303");
+        }
+        intent.putExtra("profileUrl", session.getFPLogo());
+        intent.putExtra("buyItemKey", WIDGET_KEY);
+        startActivity(intent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+                finish();
+            }
+        }, 1000);
+
     }
 }

@@ -200,7 +200,7 @@ enum class AppZeroCases {
 
 class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
                                 private var onZeroCaseClicked: AppOnZeroCaseClicked,
-                                private var context: Context,private var isPremium: Boolean=false) {
+                                private var context: Context,private var isPremium: Boolean=true) {
 
   var title:String=""
   var desc:String=""
@@ -209,7 +209,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
 
   constructor(AppZeroCases: AppZeroCases,
               onZeroCaseClicked: AppOnZeroCaseClicked,
-              context: Context) : this(AppZeroCases,onZeroCaseClicked,context,false) {
+              context: Context) : this(AppZeroCases,onZeroCaseClicked,context,true) {
 
   }
   fun getRequest(): AppFragmentZeroCase.Companion.AppZeroCaseBuilder {
@@ -491,7 +491,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(
           title)
           .setDescription(context.getString(R.string.business_calls_description))
-          .setIcon(R.drawable.ic_phoneincoming)
+          .setIcon(R.drawable.ic_call_zero)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
           .setListener(onZeroCaseClicked)
           .isPremium(isPremium)
@@ -616,7 +616,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
         }
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(title)
           .setDescription(context.getString(R.string.projects_zero_case_desc))
-          .setIcon(R.drawable.ic_phoneincoming)
+          .setIcon(R.drawable.ic_notebook)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
           .isPremium(isPremium)
           .setListener(onZeroCaseClicked)

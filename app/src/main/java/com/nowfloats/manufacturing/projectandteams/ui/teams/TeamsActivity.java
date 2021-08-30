@@ -2,6 +2,7 @@ package com.nowfloats.manufacturing.projectandteams.ui.teams;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.boost.upgrades.UpgradeActivity;
 import com.framework.views.fabButton.FloatingActionButton;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
@@ -26,6 +29,7 @@ import com.framework.views.zero.old.AppZeroCases;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.education.helper.Constants;
 import com.nowfloats.manufacturing.API.ManufacturingAPIInterfaces;
 import com.nowfloats.manufacturing.API.model.DeleteTeams.DeleteTeamsData;
 import com.nowfloats.manufacturing.API.model.GetTeams.Data;
@@ -58,14 +62,22 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
     private TeamAdapter adapter;
     private AppFragmentZeroCase appFragmentZeroCase;
     private ActivityTeamCategoryBinding binding;
+    private UserSessionManager userSessionManager;
+    private String WIDGET_KEY="PROJECTTEAM";
+    private static final String TAG = "TeamsActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userSessionManager = new UserSessionManager(this,this);;
         binding = DataBindingUtil.setContentView(this,R.layout.activity_team_category);
-        appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.TEAM_MEMBERS,this,this,true).getRequest().build();
+        appFragmentZeroCase =new AppRequestZeroCaseBuilder(AppZeroCases.TEAM_MEMBERS,this,this,isPremium()).getRequest().build();
         getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(),appFragmentZeroCase).commit();
         initView();
+    }
+
+    private Boolean isPremium(){
+        return userSessionManager.getStoreWidgets().contains(WIDGET_KEY);
     }
 
     private void nonEmptyView() {
@@ -95,10 +107,20 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
         setHeader();
 
         if (Utils.isNetworkConnected(this)) {
-            loadData();
+            chkPremiumNdGetData();
         } else {
             Methods.showSnackBarNegative(TeamsActivity.this, getString(R.string.no_internet_connection));
         }
+    }
+
+    private void chkPremiumNdGetData() {
+        if (isPremium()){
+            nonEmptyView();
+            loadData();
+        }else {
+            emptyView();
+        }
+        Log.i(TAG, "initView: "+isPremium());
     }
 
     void loadData() {
@@ -146,11 +168,7 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
     @Override
     public void onResume() {
         super.onResume();
-        if (Utils.isNetworkConnected(this)) {
-            loadData();
-        } else {
-            Methods.showSnackBarNegative(TeamsActivity.this, getString(R.string.no_internet_connection));
-        }
+       chkPremiumNdGetData();
     }
 
     private void updateRecyclerView() {
@@ -249,7 +267,12 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
 
     @Override
     public void primaryButtonClicked() {
-        addMember();
+        if (isPremium()){
+            addMember();
+        }else {
+            initiateBuyFromMarketplace();
+        }
+
     }
 
     @Override
@@ -264,6 +287,43 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
 
     @Override
     public void appOnBackPressed() {
+
+    }
+
+    private void initiateBuyFromMarketplace() {
+
+           ProgressDialog progressDialog = new android.app.ProgressDialog((this));
+            String status = "Loading. Please wait...";
+            progressDialog.setMessage(status);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            Intent intent =new Intent(this, UpgradeActivity.class);
+            intent.putExtra("expCode", userSessionManager.getFP_AppExperienceCode());
+            intent.putExtra("fpName", userSessionManager.getFPName());
+            intent.putExtra("fpid", userSessionManager.getFPID());
+            intent.putExtra("loginid", userSessionManager.getUserProfileId());
+            intent.putStringArrayListExtra("userPurchsedWidgets", com.nowfloats.util.Constants.StoreWidgets);
+            intent.putExtra("fpTag", userSessionManager.getFpTag());
+            if (userSessionManager.getUserProfileEmail() != null) {
+                intent.putExtra("email", userSessionManager.getUserProfileEmail());
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com");
+            }
+            if (userSessionManager.getUserPrimaryMobile() != null) {
+                intent.putExtra("mobileNo", userSessionManager.getUserPrimaryMobile());
+            } else {
+                intent.putExtra("mobileNo", "9160004303");
+            }
+            intent.putExtra("profileUrl", userSessionManager.getFPLogo());
+            intent.putExtra("buyItemKey", WIDGET_KEY);
+            startActivity(intent);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.dismiss();
+                    finish();
+                }
+            }, 1000);
 
     }
 }
