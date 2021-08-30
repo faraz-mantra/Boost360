@@ -210,11 +210,12 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     private void onProductServiceAddedOrUpdated(int count) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
         String type = Utils.getProductType(session.getFP_AppExperienceCode());
-        if (instance.getDrScoreData()==null || instance.getDrScoreData().getMetricdetail() == null) return;
-        if (type.toUpperCase().equals("SERVICES")) {
-            instance.getDrScoreData().getMetricdetail().setNumber_services_added(count);
-        } else instance.getDrScoreData().getMetricdetail().setNumber_products_added(count);
-        instance.updateDocument();
+        if (instance.getDrScoreData() != null && instance.getDrScoreData().getMetricdetail() != null) {
+            if (type.toUpperCase().equals("SERVICES")) {
+                instance.getDrScoreData().getMetricdetail().setNumber_services_added(count);
+            } else instance.getDrScoreData().getMetricdetail().setNumber_products_added(count);
+            instance.updateDocument();
+        }
     }
 
     /**

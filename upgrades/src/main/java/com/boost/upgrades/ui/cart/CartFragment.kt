@@ -147,17 +147,16 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   private var cartFullItems = ArrayList<String>()
 
+  private var event_attributes: HashMap<String, Any> = HashMap()
+
+
   companion object {
     fun newInstance() = CartFragment()
   }
 
   private lateinit var viewModel: CartViewModel
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     root = inflater.inflate(R.layout.cart_fragment, container, false)
     localStorage = LocalStorage.getInstance(requireContext())!!
 
@@ -227,6 +226,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //            totalCalculation()
       couponCode = ""
       couponServiceModel = null
+
       totalCalculationAfterCoupon()
     }
 
@@ -246,9 +246,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       if (TextUtils.isEmpty(months_validity.text.toString())) {
         months_validity.setBackgroundResource(R.drawable.et_validity_error)
         Toasty.error(requireContext(), "Validity is empty", Toast.LENGTH_SHORT).show()
-      } else if (bundles_in_cart && months_validity.text.toString()
-          .toInt() < package_validity_months
-      ) {
+      } else if (bundles_in_cart && months_validity.text.toString().toInt() < package_validity_months) {
         months_validity.setBackgroundResource(R.drawable.et_validity_error)
         Toasty.error(requireContext(), "Validity is not valid", Toast.LENGTH_SHORT).show()
       } else {
@@ -261,11 +259,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             createCartStateRenewal(renewalItems)
           } else createPurchaseOrder(null)
         } else {
-          Toasty.error(
-            requireContext(),
-            "Invalid items found in the cart. Please re-launch the Marketplace.",
-            Toast.LENGTH_SHORT
-          ).show()
+          Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
         }
       }
 
@@ -323,6 +317,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       } else {
           Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
       }*/
+
+
     }
 
     back_button12.setOnClickListener {
@@ -353,26 +349,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     cart_apply_coupon.setOnClickListener {
       if (couponDiwaliRedundant.contains("WILDFIRE_FB_LEAD_ADS")) {
-        Toasty.error(
-          requireContext(),
-          "In order to apply coupon remove the item " + couponDiwaliRedundant.get("WILDFIRE_FB_LEAD_ADS"),
-          Toast.LENGTH_SHORT,
-          true
-        ).show()
+        Toasty.error(requireContext(), "In order to apply coupon remove the item " + couponDiwaliRedundant.get("WILDFIRE_FB_LEAD_ADS"), Toast.LENGTH_SHORT, true).show()
       } else if (couponDiwaliRedundant.contains("WILDFIRE")) {
-        Toasty.error(
-          requireContext(),
-          "In order to apply coupon remove the item " + couponDiwaliRedundant.get("WILDFIRE"),
-          Toast.LENGTH_SHORT,
-          true
-        ).show()
+        Toasty.error(requireContext(), "In order to apply coupon remove the item " + couponDiwaliRedundant.get("WILDFIRE"), Toast.LENGTH_SHORT, true).show()
       } else if (couponDiwaliRedundant.contains("DICTATE")) {
-        Toasty.error(
-          requireContext(),
-          "In order to apply coupon remove the item " + couponDiwaliRedundant.get("DICTATE"),
-          Toast.LENGTH_SHORT,
-          true
-        ).show()
+        Toasty.error(requireContext(), "In order to apply coupon remove the item " + couponDiwaliRedundant.get("DICTATE"), Toast.LENGTH_SHORT, true).show()
       } else {
         /*couponPopUpFragment.show(
                 (activity as UpgradeActivity).supportFragmentManager,
@@ -458,8 +439,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           if (default_validity_months % 12 == 0) {
             default_validity_months = default_validity_months + 12
           } else {
-            default_validity_months =
-              default_validity_months + ((12 - default_validity_months % 12))
+            default_validity_months = default_validity_months + ((12 - default_validity_months % 12))
           }
 //        default_validity_months = default_validity_months+ 12
         } else {
@@ -483,13 +463,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         totalCalculationAfterCoupon()
         Log.v("cart_amount_value1", " " + total)
         if (couponCode.isNotEmpty())
-          viewModel.getCouponRedeem(
-            RedeemCouponRequest(
-              coupontotal,
-              couponCode,
-              (activity as UpgradeActivity).fpid!!
-            ), couponCode
-          )
+          viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
         else
           totalCalculationAfterCoupon()
 //                Toasty.success(requireContext(), "Validity increased by 1 month.", Toast.LENGTH_SHORT, true).show()
@@ -504,8 +478,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             default_validity_months = default_validity_months + 12
           } else {
 //            Log.v("validity_calculator", " "+ (default_validity_months - default_validity_months % 12)  + " "+default_validity_months + " "+ (default_validity_months % 12) )
-            default_validity_months =
-              default_validity_months + ((12 - default_validity_months % 12))
+            default_validity_months = default_validity_months + ((12 - default_validity_months % 12))
           }
 //        default_validity_months = default_validity_months+ 12
         } else {
@@ -532,13 +505,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         totalCalculationAfterCoupon()
         Log.v("cart_amount_value1", " " + total)
         if (couponCode.isNotEmpty())
-          viewModel.getCouponRedeem(
-            RedeemCouponRequest(
-              coupontotal,
-              couponCode,
-              (activity as UpgradeActivity).fpid!!
-            ), couponCode
-          )
+          viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
         else
           totalCalculationAfterCoupon()
 //            Toasty.success(requireContext(), "Validity increased by 3 month(s).", Toast.LENGTH_SHORT, true).show()
@@ -580,13 +547,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                    totalCalculation()
           totalCalculationAfterCoupon()
           if (couponCode.isNotEmpty())
-            viewModel.getCouponRedeem(
-              RedeemCouponRequest(
-                coupontotal,
-                couponCode,
-                (activity as UpgradeActivity).fpid!!
-              ), couponCode
-            )
+            viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
 //                    Toasty.warning(requireContext(), "Validity reduced by 1 month.", Toast.LENGTH_SHORT, true).show()
         }
         if (default_validity_months > 1)
@@ -627,13 +588,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                    totalCalculation()
           totalCalculationAfterCoupon()
           if (couponCode.isNotEmpty())
-            viewModel.getCouponRedeem(
-              RedeemCouponRequest(
-                coupontotal,
-                couponCode,
-                (activity as UpgradeActivity).fpid!!
-              ), couponCode
-            )
+            viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
 //                Toasty.warning(requireContext(), "Validity reduced by 3 month(s).", Toast.LENGTH_SHORT, true).show()
         }
         if (default_validity_months > 1)
@@ -678,13 +633,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             prefs.storeCartOrderInfo(null)
             totalCalculationAfterCoupon()
             if (couponCode.isNotEmpty())
-              viewModel.getCouponRedeem(
-                RedeemCouponRequest(
-                  coupontotal,
-                  couponCode,
-                  (activity as UpgradeActivity).fpid!!
-                ), couponCode
-              )
+              viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
             else
               totalCalculationAfterCoupon()
           } else if (bundles_in_cart) {
@@ -694,13 +643,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             prefs.storeCartOrderInfo(null)
             totalCalculationAfterCoupon()
             if (couponCode.isNotEmpty())
-              viewModel.getCouponRedeem(
-                RedeemCouponRequest(
-                  coupontotal,
-                  couponCode,
-                  (activity as UpgradeActivity).fpid!!
-                ), couponCode
-              )
+              viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
             else
               totalCalculationAfterCoupon()
 
@@ -728,37 +671,19 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   private fun createCartStateRenewal(renewalItems: List<CartModel>?) {
     Log.v("createPurchaseOrder2", " " + renewalItems.toString())
     val widgetList = arrayListOf<com.boost.upgrades.data.renewalcart.Widget>()
-    renewalItems?.forEach {
-      widgetList.add(
-        com.boost.upgrades.data.renewalcart.Widget(
-          it.item_id,
-          it.boost_widget_key
-        )
-      )
-    }
+    renewalItems?.forEach { widgetList.add(com.boost.upgrades.data.renewalcart.Widget(it.item_id, it.boost_widget_key)) }
 
-    val request = CreateCartStateRequest(
-      (activity as UpgradeActivity).clientid,
-      (activity as UpgradeActivity).fpid,
-      "RENEWAL",
-      widgetList
-    )
-    viewModel.createCartStateRenewal(request)
-    viewModel.createCartRenewalResult()
-      .observeOnce(Observer { createPurchaseOrder(it.cartStateId) })
+    val request = CreateCartStateRequest((activity as UpgradeActivity).clientid, (activity as UpgradeActivity).fpid, "RENEWAL", widgetList)
+    viewModel.createCartStateRenewal((activity as? UpgradeActivity)?.getAccessToken()?:"",request)
+    viewModel.createCartRenewalResult().observeOnce(Observer { createPurchaseOrder(it.cartStateId) })
   }
 
   private fun checkRenewalItemDeepLinkClick() {
     val request1 =
       RenewalPurchasedRequest(
-        floatingPointId = (activity as UpgradeActivity).fpid,
-        clientId = (activity as UpgradeActivity).clientid,
-        widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name,
-        nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
-        dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name,
-        startDate = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_MM_DD_YYYY),
-        endDate = DateUtils.getAmountDate((activity as UpgradeActivity).deepLinkDay)
-          .parseDate(DateUtils.FORMAT_MM_DD_YYYY)
+        floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
+        widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
+        dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_MM_DD_YYYY), endDate = DateUtils.getAmountDate((activity as UpgradeActivity).deepLinkDay).parseDate(DateUtils.FORMAT_MM_DD_YYYY)
       )
     Log.v("allPurchasedWidgets", " " + request1)
     val ac = (activity as UpgradeActivity)
@@ -768,30 +693,22 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       val dateAmount = DateUtils.getAmountDate(deepLinkDay).parseDate(DateUtils.FORMAT_MM_DD_YYYY)
       val request = if (deepLinkDay <= -1) {
         RenewalPurchasedRequest(
-          floatingPointId = (activity as UpgradeActivity).fpid,
-          clientId = (activity as UpgradeActivity).clientid,
-          widgetStatus = RenewalPurchasedRequest.WidgetStatus.EXPIRED.name,
-          dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name,
-          startDate = dateAmount,
-          endDate = currentDate
+          floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
+          widgetStatus = RenewalPurchasedRequest.WidgetStatus.EXPIRED.name, dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name,
+          startDate = dateAmount, endDate = currentDate
         )
       } else {
         RenewalPurchasedRequest(
-          floatingPointId = (activity as UpgradeActivity).fpid,
-          clientId = (activity as UpgradeActivity).clientid,
-          widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name,
-          nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
-          dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name,
-          startDate = currentDate,
-          endDate = dateAmount
+          floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
+          widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
+          dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = currentDate, endDate = dateAmount
         )
       }
 
-      viewModel.allPurchasedWidgets(request)
+      viewModel.allPurchasedWidgets((activity as? UpgradeActivity)?.getAccessToken()?:"",request)
       viewModel.renewalResult().observeOnce(Observer { result ->
-        renewalList =
-          result?.filter { it.renewalStatus() == RenewalResult.RenewalStatus.PENDING.name }
-            ?: ArrayList()
+        renewalList = result?.filter { it.renewalStatus() == RenewalResult.RenewalStatus.PENDING.name }
+          ?: ArrayList()
         if (renewalList.isNotEmpty()) {
           val list = arrayListOf<CartModel>()
           renewalList.forEach { renewal -> list.add(saveRenewalData(renewal)) }
@@ -852,22 +769,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         val widget = Widget(
           data?.category
             ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
-          item.discount, Expiry("DAYS", 30), listOf(), true, true, item.item_name
+          item.discount, Expiry("MONTHS", default_validity_months), listOf(), true, true, item.item_name
             ?: "",
           item.price, item.MRPPrice, null, 1, "MONTHLY", item.boost_widget_key
             ?: "", item.item_id
         )
         widgetList.add(widget)
       }
-      purchaseOrders.add(
-        PurchaseOrder(
-          couponCode,
-          couponDiscountPercentage,
-          null,
-          netAmount,
-          widgetList
-        )
-      )
+      purchaseOrders.add(PurchaseOrder(couponCode, couponDiscountPercentage, null, netAmount, widgetList))
     } else {
       val featureWidgetList = ArrayList<Widget>()
       var featureNetPrice = 0.0
@@ -883,8 +792,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         if (item.extended_properties != null && item.extended_properties!!.length > 0) {
           try {
             val objectType = object : TypeToken<List<ExtendedProperty>>() {}.type
-            extendProps =
-              Gson().fromJson<List<ExtendedProperty>>(item.extended_properties, objectType)
+            extendProps = Gson().fromJson<List<ExtendedProperty>>(item.extended_properties, objectType)
 
             if (extendProps != null) {
               for (prop in extendProps) {
@@ -913,6 +821,19 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
           var validity_days = 30
           var net_quantity = 1
+//                    if(outputExtendedProps.isNullOrEmpty().not()){
+//                        val actualQuantity = outputExtendedProps.find { it.Key =="LIMIT" }?.Value
+//                        if (actualQuantity.isNullOrEmpty().not()){
+//                            net_quantity = actualQuantity?.toInt()!!
+//                        }
+//                        else{
+//                            net_quantity = 1
+//                        }
+//                    }
+//                    else{
+//                        net_quantity = 1
+//                    }
+
 
           if (!bundles_in_cart && default_validity_months > 1) {
             validity_days = 30 * default_validity_months
@@ -937,8 +858,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
               item.description_title,
               item.discount,
               Expiry(
-                "DAYS",
-                validity_days
+                "MONTHS",
+                default_validity_months
               ),
               listOf(),
               true,
@@ -971,29 +892,22 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                   outputBundleProps
                 )
                 bundleDiscount = singleBundle.overall_discount_percent
-                val includedFeatures = Gson().fromJson<List<IncludedFeature>>(
-                  singleBundle.included_features,
-                  object : TypeToken<List<IncludedFeature>>() {}.type
-                )
+                val includedFeatures = Gson().fromJson<List<IncludedFeature>>(singleBundle.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
                 for (singleIndludedFeature in includedFeatures) {
                   for (singleFeature in featuresList) {
                     if (singleIndludedFeature.feature_code.equals(singleFeature.feature_code)) {
 
-                      val netPrice =
-                        (singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100))
+                      val netPrice = (singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100))
 
                       //adding bundle netPrice
 //                      bundleNetPrice += netPrice * singleBundle.min_purchase_months
 
                       var singleWidgetNetPrice = 0.0
-                      singleWidgetNetPrice =
-                        (netPrice * singleBundle.min_purchase_months).toDouble()
+                      singleWidgetNetPrice = (netPrice * singleBundle.min_purchase_months).toDouble()
 
                       //-----------------------//discount implementation
                       if (bundleDiscount > 0) {
-                        singleWidgetNetPrice =
-                          Math.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100))
-                            .toDouble()
+                        singleWidgetNetPrice = Math.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100)).toDouble()
                       }
                       featureNetPrice += singleWidgetNetPrice
 
@@ -1009,8 +923,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                           singleFeature.description_title,
                           singleIndludedFeature.feature_price_discount_percent,
                           Expiry(
-                            "DAYS",
-                            30 * singleBundle.min_purchase_months
+                            "MONTHS", default_validity_months
                           ),
                           listOf(),
                           true,
@@ -1088,7 +1001,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     prefs.storeFeatureKeysInLastOrder(keysToBeActivated.toMutableSet())
     prefs.storeFeaturesCountInLastOrder(purchaseOrders.count())
 
-    viewModel.InitiatePurchaseOrder(
+    viewModel.InitiatePurchaseOrder((activity as? UpgradeActivity)?.getAccessToken()?:"",
       CreatePurchaseOrderV2(
         (activity as UpgradeActivity).clientid,
         (activity as UpgradeActivity).fpid!!,
@@ -1134,22 +1047,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         val widget = Widget(
           data?.category
             ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
-          item.discount, Expiry("DAYS", 30), listOf(), true, true, item.item_name
+          item.discount, Expiry("MONTHS", default_validity_months), listOf(), true, true, item.item_name
             ?: "",
           item.price, item.MRPPrice, null, 1, "MONTHLY", item.boost_widget_key
             ?: "", item.item_id
         )
         widgetList.add(widget)
       }
-      purchaseOrders.add(
-        PurchaseOrder(
-          couponCode,
-          couponDiscountPercentage,
-          null,
-          netAmount,
-          widgetList
-        )
-      )
+      purchaseOrders.add(PurchaseOrder(couponCode, couponDiscountPercentage, null, netAmount, widgetList))
     } else {
       val featureWidgetList = ArrayList<Widget>()
       var featureNetPrice = 0.0
@@ -1165,8 +1070,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         if (item.extended_properties != null && item.extended_properties!!.length > 0) {
           try {
             val objectType = object : TypeToken<List<ExtendedProperty>>() {}.type
-            extendProps =
-              Gson().fromJson<List<ExtendedProperty>>(item.extended_properties, objectType)
+            extendProps = Gson().fromJson<List<ExtendedProperty>>(item.extended_properties, objectType)
 
             if (extendProps != null) {
               for (prop in extendProps) {
@@ -1194,6 +1098,18 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
           var validity_days = 30
           var net_quantity = 1
+//                    if(outputExtendedProps.isNullOrEmpty().not()){
+//                        val actualQuantity = outputExtendedProps.find { it.Key =="LIMIT" }?.Value
+//                        if (actualQuantity.isNullOrEmpty().not()){
+//                            net_quantity = actualQuantity?.toInt()!!
+//                        }
+//                        else{
+//                            net_quantity = 1
+//                        }
+//                    }
+//                    else{
+//                        net_quantity = 1
+//                    }
 
           totalValidityDays = 30 * default_validity_months
           prefs.storeMonthsValidity(totalValidityDays)
@@ -1220,8 +1136,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
               item.description_title,
               item.discount,
               Expiry(
-                "DAYS",
-                validity_days
+                "MONTHS",
+                default_validity_months
               ),
               listOf(),
               true,
@@ -1254,29 +1170,22 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                   outputBundleProps
                 )
                 bundleDiscount = singleBundle.overall_discount_percent
-                val includedFeatures = Gson().fromJson<List<IncludedFeature>>(
-                  singleBundle.included_features,
-                  object : TypeToken<List<IncludedFeature>>() {}.type
-                )
+                val includedFeatures = Gson().fromJson<List<IncludedFeature>>(singleBundle.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
                 for (singleIndludedFeature in includedFeatures) {
                   for (singleFeature in featuresList) {
                     if (singleIndludedFeature.feature_code.equals(singleFeature.feature_code)) {
 
-                      val netPrice =
-                        (singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100))
+                      val netPrice = (singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100))
 
                       //adding bundle netPrice
 //                      bundleNetPrice += netPrice * singleBundle.min_purchase_months
 
                       var singleWidgetNetPrice = 0.0
-                      singleWidgetNetPrice =
-                        (netPrice * singleBundle.min_purchase_months).toDouble()
+                      singleWidgetNetPrice = (netPrice * singleBundle.min_purchase_months).toDouble()
 
                       //-----------------------//discount implementation
                       if (bundleDiscount > 0) {
-                        singleWidgetNetPrice =
-                          Math.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100))
-                            .toDouble()
+                        singleWidgetNetPrice = Math.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100)).toDouble()
                       }
                       featureNetPrice += singleWidgetNetPrice
 
@@ -1292,8 +1201,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                           singleFeature.description_title,
                           singleIndludedFeature.feature_price_discount_percent,
                           Expiry(
-                            "DAYS",
-                            30 * singleBundle.min_purchase_months
+                            "MONTHS", default_validity_months
                           ),
                           listOf(),
                           true,
@@ -1371,7 +1279,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     prefs.storeFeatureKeysInLastOrder(keysToBeActivated.toMutableSet())
     prefs.storeFeaturesCountInLastOrder(purchaseOrders.count())
 
-    viewModel.InitiatePurchaseAutoRenewOrder(
+    viewModel.InitiatePurchaseAutoRenewOrder((activity as? UpgradeActivity)?.getAccessToken()?:"",
       CreatePurchaseOrderV2(
         (activity as UpgradeActivity).clientid,
         (activity as UpgradeActivity).fpid!!,
@@ -1442,10 +1350,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         for (items in it) {
           if (items.item_type.equals("features")) {
             couponDiwaliRedundant.clear()
-            if (items.feature_code.equals("WILDFIRE_FB_LEAD_ADS") || items.feature_code.equals("WILDFIRE") || items.feature_code.equals(
-                "DICTATE"
-              )
-            ) {
+            if (items.feature_code.equals("WILDFIRE_FB_LEAD_ADS") || items.feature_code.equals("WILDFIRE") || items.feature_code.equals("DICTATE")) {
               Log.v("couponDiwaliRedundant", " " + items.item_id)
 //                            couponDiwaliRedundant.add(items.feature_code)
               couponDiwaliRedundant.put(items.feature_code, items.item_name)
@@ -1494,11 +1399,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                totalCalculation()
         totalCalculationAfterCoupon()
 //                var event_attributes: HashMap<String, Double> = HashMap()
-        var event_attributes: HashMap<String, Any> = HashMap()
 
-        val revenue = Math.round(grandTotal * 100).toInt() / 100
-        event_attributes.put("total amount", revenue)
         event_attributes.put("cart size", it.size.toDouble())
+        cartFullItems.clear()
         it.forEach {
           if (it.boost_widget_key != null) {
             cartFullItems!!.add(it.item_name!!)
@@ -1508,19 +1411,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         }
         event_attributes.put("cart ids", Utils.filterBraces(cartFullItems.toString()))
+        Log.v("events", event_attributes.toString())
 //                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
-        WebEngageController.trackEvent(
-          event_name = EVENT_NAME_ADDONS_MARKETPLACE_FULL_CART_LOADED,
-          EVENT_LABEL_ADDONS_MARKETPLACE_FULL_CART_LOADED,
-          event_attributes
-        )
+        WebEngageController.trackEvent(event_name = EVENT_NAME_ADDONS_MARKETPLACE_FULL_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_FULL_CART_LOADED, event_attributes)
 
       } else {
-        WebEngageController.trackEvent(
-          EVENT_NAME_ADDONS_MARKETPLACE_EMPTY_CART_LOADED,
-          EVENT_LABEL_ADDONS_MARKETPLACE_EMPTY_CART_LOADED,
-          NO_EVENT_VALUE
-        )
+        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE_EMPTY_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_EMPTY_CART_LOADED, NO_EVENT_VALUE)
         empty_cart.visibility = View.VISIBLE
         cart_main_layout.visibility = View.GONE
         Constants.COMPARE_CART_COUNT = 0
@@ -1620,11 +1516,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
               createCartStateRenewal(renewalItems)
             } else createPurchaseOrder(null)
           } else {
-            Toasty.error(
-              requireContext(),
-              "Invalid items found in the cart. Please re-launch the Marketplace.",
-              Toast.LENGTH_SHORT
-            ).show()
+            Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
           }
         } else if (it.equals("AUTO_RENEW")) {
 //                }else if(it.equals("AUTO_RENEW") && proceedRenewPopup!!){
@@ -1652,11 +1544,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
               Log.i("getRenewValue3 >> ", it)
             }
           } else {
-            Toasty.error(
-              requireContext(),
-              "Invalid items found in the cart. Please re-launch the Marketplace.",
-              Toast.LENGTH_SHORT
-            ).show()
+            Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
           }
         }
       }
@@ -1799,8 +1687,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   }
 
   private fun initializeErrorObserver() {
-    viewModel.updatesError()
-      .observeOnce(Observer { Toasty.error(requireContext(), it, Toast.LENGTH_SHORT).show() })
+    viewModel.updatesError().observeOnce(Observer { Toasty.error(requireContext(), it, Toast.LENGTH_SHORT).show() })
   }
 
 
@@ -1824,18 +1711,15 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         cart_amount_title.text = "Cart total (" + cartList.size + " items)"
         cart_amount_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total)
         couponDiscountAmount = total * couponDisount / 100
-        coupon_discount_value.text =
-          "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
+        coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
         total -= couponDiscountAmount
         val temp = (total * 18) / 100
         taxValue = Math.round(temp * 100) / 100.0
         grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
         igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
 //                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
-        cart_grand_total.text =
-          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
-        footer_grand_total.text =
-          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+        cart_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+        footer_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
       }
     }
   }
@@ -1868,8 +1752,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           couponServiceModel = null
 //                couponDiscountAmount = total * couponDisount / 100
 //                couponDiscountAmount = couponServiceModel!!.couponDiscountAmt!!
-        coupon_discount_value.text =
-          "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
+        coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
         total -= couponDiscountAmount
         Log.v("cart_amount_value", " " + total)
         val temp = (total * 18) / 100
@@ -1877,10 +1760,17 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
         igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
 //                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
-        cart_grand_total.text =
-          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
-        footer_grand_total.text =
-          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+        cart_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+        footer_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+
+        val revenue = Math.round(grandTotal * 100).toInt() / 100
+        event_attributes.put("total amount", revenue)
+        event_attributes.put("cart validity months",default_validity_months)
+
+        WebEngageController.trackEvent(event_name = EVENT_NAME_ADDONS_MARKETPLACE_FULL_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_FULL_CART_LOADED, event_attributes)
+
+
+
       }
     }
   }
@@ -1896,10 +1786,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     var selectedBundle: Bundles? = null
     for (item in bundlesList) {
       if (item.bundle_id == itemID) {
-        val temp = Gson().fromJson<List<IncludedFeature>>(
-          item.included_features,
-          object : TypeToken<List<IncludedFeature>>() {}.type
-        )
+        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
         selectedBundle = Bundles(
           item.bundle_id,
           temp,
@@ -1908,10 +1795,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           item.overall_discount_percent,
           PrimaryImage(item.primary_image),
           item.target_business_usecase,
-          Gson().fromJson<List<String>>(
-            item.exclusive_to_categories,
-            object : TypeToken<List<String>>() {}.type
-          ),
+          Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
           null,
           item.desc
         )
@@ -1966,10 +1850,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     val paymentFragment = PaymentFragment.newInstance()
     val args = Bundle()
     args.putString("customerId", customerId)
-    args.putDouble(
-      "amount",
-      result.Result.TotalPrice
-    )// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
+    args.putDouble("amount", result.Result.TotalPrice)// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
     args.putString("order_id", result.Result.OrderId)
     args.putString("transaction_id", result.Result.TransactionId)
     args.putString("email", (activity as UpgradeActivity).email)
@@ -1977,6 +1858,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     args.putString("contact", (activity as UpgradeActivity).mobileNo)
     prefs.storeCardIds(cartItems)
     prefs.storeCouponIds(couponCode)
+    prefs.storeValidityMonths(default_validity_months.toString())
     paymentFragment.arguments = args
     (activity as UpgradeActivity).addFragment(
       paymentFragment,

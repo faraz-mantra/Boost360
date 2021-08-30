@@ -1,6 +1,7 @@
 package com.boost.upgrades.ui.details
 
 //import com.devs.readmoreoption.ReadMoreOption
+import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.graphics.Color
@@ -12,6 +13,7 @@ import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -34,14 +36,11 @@ import com.boost.upgrades.interfaces.DetailsFragmentListener
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.popup.ImagePreviewPopUpFragement
 import com.boost.upgrades.ui.webview.WebViewFragment
-import com.boost.upgrades.utils.Constants
+import com.boost.upgrades.utils.*
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.WEB_VIEW_FRAGMENT
-import com.boost.upgrades.utils.HorizontalMarginItemDecoration
-import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils.longToast
-import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.framework.webengageconstant.*
@@ -50,6 +49,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.details_fragment.*
+import kotlinx.android.synthetic.main.details_fragment.app_bar_layout
+import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
 import java.text.NumberFormat
 import java.util.*
@@ -101,8 +102,8 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     progressDialog = ProgressDialog(requireContext())
     secondaryImagesAdapter = SecondaryImagesAdapter(ArrayList(), this)
     reviewAdaptor = ReviewViewPagerAdapter(ArrayList())
-    localStorage = LocalStorage.getInstance(context!!)!!
-    singleWidgetKey = arguments!!.getString("itemId")
+    localStorage = LocalStorage.getInstance(requireContext())!!
+    singleWidgetKey = requireArguments().getString("itemId")
     prefs = SharedPrefs(activity as UpgradeActivity)
 
 //        addons_list = localStorage.getInitialLoad()
@@ -163,37 +164,23 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
           //clear cartOrderInfo from SharedPref to requestAPI again
           prefs.storeCartOrderInfo(null)
 
-          viewModel.addItemToCart(addonDetails!!)
+          makeFlyAnimation(image1222Copy)
+
+          viewModel.addItemToCart1(addonDetails!!)
           val event_attributes: HashMap<String, Any> = HashMap()
           addonDetails!!.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
           event_attributes.put("Addon Price", addonDetails!!.price)
-          event_attributes.put(
-            "Addon Discounted Price",
-            getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
-          )
+          event_attributes.put("Addon Discounted Price", getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent))
           event_attributes.put("Addon Discount %", addonDetails!!.discount_percent)
           event_attributes.put("Addon Validity", 1)
           event_attributes.put("Addon Feature Key", addonDetails!!.boost_widget_key)
-          addonDetails!!.target_business_usecase?.let { it1 ->
-            event_attributes.put(
-              "Addon Tag",
-              it1
-            )
-          }
-          WebEngageController.trackEvent(
-            ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
-            ADDONS_MARKETPLACE,
-            event_attributes
-          )
+          addonDetails!!.target_business_usecase?.let { it1 -> event_attributes.put("Addon Tag", it1) }
+          WebEngageController.trackEvent(ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART, ADDONS_MARKETPLACE, event_attributes)
           if (addonDetails!!.feature_code == "CUSTOM_PAYMENTGATEWAY")
-            WebEngageController.trackEvent(
-              SELF_BRANDED_PAYMENT_GATEWAY_REQUESTED,
-              SELF_BRANDED_PAYMENT_GATEWAY,
-              NO_EVENT_VALUE
-            )
+            WebEngageController.trackEvent(SELF_BRANDED_PAYMENT_GATEWAY_REQUESTED, SELF_BRANDED_PAYMENT_GATEWAY, NO_EVENT_VALUE)
           badgeNumber = badgeNumber + 1
-          badge121.setText(badgeNumber.toString())
-          badge121.visibility = View.VISIBLE
+//                    badge121.setText(badgeNumber.toString())
+//                    badge121.visibility = View.VISIBLE
           Constants.CART_VALUE = badgeNumber
 
 //                    localStorage.addCartItem(addons_list!!.get(itemId))
@@ -243,27 +230,31 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
 
   override fun onResume() {
     super.onResume()
-    val pos = 2
-    reviewViewpager.postDelayed(Runnable { reviewViewpager.currentItem = pos }, 100)
-    getLineCount()
+    root.post {
+      val pos = 2
+      reviewViewpager.postDelayed(Runnable { reviewViewpager.currentItem = pos }, 100)
+      getLineCount()
+    }
+
   }
 
   fun getLineCount() {
-
-    abcText.postDelayed({
-      val count = abcText.lineCount
-      if (count < 11) {
-        readmore.visibility = View.INVISIBLE
-        description_gradient1.visibility = View.GONE
-      }
-    }, 300)
+    if (abcText != null) {
+      abcText.postDelayed({
+        val count = abcText.lineCount
+        if (count < 11) {
+          readmore.visibility = View.INVISIBLE
+          description_gradient1.visibility = View.GONE
+        }
+      }, 300)
+    }
   }
 
   fun loadCostToButtons() {
     try {
 
       //if the View is opened from package then hide button, price, discount and Cart icon
-      if (arguments!!.containsKey("packageView")) {
+      if (requireArguments().containsKey("packageView")) {
         imageViewCart121.visibility = View.INVISIBLE
         money.visibility = View.GONE
         orig_cost.visibility = View.GONE
@@ -288,8 +279,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         add_item_to_cart.setTextColor(Color.WHITE)
         val discount = 100 - addonDetails!!.discount_percent
         val paymentPrice = (discount * addonDetails!!.price) / 100
-        money.text =
-          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/month"
+        money.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/month"
 
         //hide or show MRP price
         if (paymentPrice != addonDetails!!.price) {
@@ -299,8 +289,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
           orig_cost.visibility = View.INVISIBLE
         }
 
-        add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-          .format(paymentPrice) + "/Month"
+        add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Month"
         havent_bought_the_feature.visibility = View.VISIBLE
       } else {
         add_item_to_cart.visibility = View.GONE
@@ -313,9 +302,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
   }
 
   fun spannableString(value: Int) {
-    val origCost = SpannableString(
-      "Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month"
-    )
+    val origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
 
     origCost.setSpan(
       StrikethroughSpan(),
@@ -335,19 +322,17 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     viewModel.addonsResult().observe(this, Observer {
 
       //if the View is from PackageView then No need to call getCartItems method
-      if (!arguments!!.containsKey("packageView")) {
+      if (!requireArguments().containsKey("packageView")) {
         viewModel.getCartItems()
       }
       addonDetails = it
       if (addonDetails != null) {
         val learnMoreLinkType = object : TypeToken<LearnMoreLink>() {}.type
-        val learnMoreLink: LearnMoreLink? =
-          if (addonDetails!!.learn_more_link == null) null else Gson().fromJson(
-            addonDetails!!.learn_more_link,
-            learnMoreLinkType
-          )
+        val learnMoreLink: LearnMoreLink? = if (addonDetails!!.learn_more_link == null) null else Gson().fromJson(addonDetails!!.learn_more_link, learnMoreLinkType)
         Glide.with(this).load(addonDetails!!.primary_image)
           .into(image1222)
+        Glide.with(this).load(addonDetails!!.primary_image)
+          .into(image1222Copy)
 
         Glide.with(this).load(addonDetails!!.primary_image)
           .fitCenter()
@@ -363,8 +348,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
           secondary_images_panel.visibility = View.GONE
         else {
           val objectType = object : TypeToken<ArrayList<String>>() {}.type
-          var secondaryImages =
-            Gson().fromJson<ArrayList<String>>(addonDetails!!.secondary_images, objectType)
+          var secondaryImages = Gson().fromJson<ArrayList<String>>(addonDetails!!.secondary_images, objectType)
           if (secondaryImages != null && secondaryImages.count() > 0) {
             addUpdateSecondaryImage(secondaryImages)
 //                        val imgSize: Int = 70 * requireContext().getResources().getDisplayMetrics().density.toInt()
@@ -408,7 +392,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
           val totalInstall = addonDetails!!.total_installs + " businesses have added this"
           val businessUses = SpannableString(totalInstall)
           businessUses.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.light_blue)),
+            ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.light_blue)),
             0,
             addonDetails!!.total_installs!!.length,
             0
@@ -432,12 +416,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         event_attributes.put("Feature details", addonDetails!!.description!!)
         event_attributes.put("Feature Name", addonDetails!!.name!!)
         event_attributes.put("Feature Key", addonDetails!!.boost_widget_key)
-        WebEngageController.trackEvent(
-          ADDONS_MARKETPLACE_FEATURE_DETAILS_LOADED,
-          Feature_Details,
-          event_attributes,
-          ""
-        )
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_FEATURE_DETAILS_LOADED, Feature_Details, event_attributes, "")
 //                WebEngageController.trackEvent(ADDONS_MARKETPLACE_FEATURE_DETAILS + addonDetails!!.boost_widget_key + " Loaded", Feature_Details, event_attributes)
 
       }
@@ -533,7 +512,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
   override fun onBackPressed() {
     if (::viewModel.isInitialized) {
       //if the View is from PackageView then No need to call getCartItems method
-      if (!arguments!!.containsKey("packageView")) {
+      if (!requireArguments().containsKey("packageView")) {
         viewModel.getCartItems()
       }
     }
@@ -544,10 +523,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     args.putInt("position", pos)
     args.putStringArrayList("list", list)
     imagePreviewPopUpFragement.arguments = args
-    imagePreviewPopUpFragement.show(
-      (activity as UpgradeActivity).supportFragmentManager,
-      IMAGE_PREVIEW_POPUP_FRAGMENT
-    )
+    imagePreviewPopUpFragement.show((activity as UpgradeActivity).supportFragmentManager, IMAGE_PREVIEW_POPUP_FRAGMENT)
   }
 
   private fun getDiscountedPrice(price: Int, discountPercent: Int): Int {
@@ -557,6 +533,22 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
   override fun onDestroy() {
     super.onDestroy()
     requireActivity().viewModelStore.clear()
+  }
+
+  private fun makeFlyAnimation(targetView: ImageView) {
+
+    CircleAnimationUtil().attachActivity(activity).setTargetView(targetView).setMoveDuration(600)
+      .setDestView(featureDetailsCartIcon).setAnimationListener(object : Animator.AnimatorListener {
+        override fun onAnimationStart(animation: Animator) {}
+        override fun onAnimationEnd(animation: Animator) {
+          viewModel.getCartItems()
+        }
+
+
+        override fun onAnimationCancel(animation: Animator) {}
+        override fun onAnimationRepeat(animation: Animator) {}
+      }).startAnimation()
+
   }
 
 }

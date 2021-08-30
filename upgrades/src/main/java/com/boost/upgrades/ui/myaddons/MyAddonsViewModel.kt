@@ -42,10 +42,10 @@ class MyAddonsViewModel(application: Application) : BaseViewModel(application) {
     return activePremiumWidgetList
   }
 
-  fun loadUpdates(fpid: String, clientId: String) {
+  fun loadUpdates(auth:String,fpid: String, clientId: String) {
     updatesLoader.postValue(true)
     compositeDisposable.add(
-      ApiService.GetFloatingPointWebWidgets(fpid, clientId)
+      ApiService.GetFloatingPointWebWidgets(auth,fpid, clientId)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(

@@ -10,6 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightest_grey"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
@@ -105,76 +106,81 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <View
-      android:id="@+id/view"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/size_1"
-      android:background="@color/primary_grey"
-      app:layout_constraintBottom_toTopOf="@+id/linear_view"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintEnd_toStartOf="parent" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-      android:id="@+id/linear_view"
       android:layout_width="match_parent"
       android:layout_height="@dimen/size_44"
-      android:background="@color/white"
       android:gravity="center_vertical"
-      android:orientation="horizontal"
+      android:orientation="vertical"
+      android:id="@+id/view"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintEnd_toStartOf="parent">
-
-      <com.framework.views.customViews.CustomImageView
-        android:id="@+id/btn_camera"
-        android:layout_width="@dimen/size_40"
-        android:layout_height="@dimen/size_40"
-        android:layout_marginHorizontal="@dimen/size_10"
-        android:padding="@dimen/size_5"
-        app:srcCompat="@drawable/create_message_camera_inactive" />
-
       <View
-        android:layout_width="@dimen/size_1"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="@dimen/size_2"
-        android:background="@color/light_grey" />
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/primary_grey" />
 
-      <com.framework.views.customViews.CustomTextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/size_10"
-        android:layout_weight="1"
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linear_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_44"
+        android:background="@color/white"
         android:gravity="center_vertical"
-        android:text="Share"
-        android:textColor="@color/grey_A1A1A1"
-        app:textType="CAPTION" />
+        android:orientation="horizontal">
 
-      <com.framework.views.customViews.CustomImageView
-        android:id="@+id/btn_subscription"
-        android:layout_width="@dimen/size_40"
-        android:layout_height="@dimen/size_40"
-        app:srcCompat="@drawable/subscribe_icon" />
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_camera"
+          android:layout_width="@dimen/size_40"
+          android:layout_height="@dimen/size_40"
+          android:layout_marginHorizontal="@dimen/size_10"
+          android:padding="@dimen/size_5"
+          app:srcCompat="@drawable/create_message_camera_inactive" />
 
-      <com.framework.views.customViews.CustomImageView
-        android:id="@+id/btn_fp_page_status"
-        android:layout_width="@dimen/size_40"
-        android:layout_height="@dimen/size_40"
-        android:layout_marginStart="@dimen/size_6"
-        app:srcCompat="@drawable/facebook_icon_inactive" />
+        <View
+          android:layout_width="@dimen/size_1"
+          android:layout_height="match_parent"
+          android:layout_marginVertical="@dimen/size_2"
+          android:background="@color/light_grey" />
 
-      <com.framework.views.customViews.CustomImageView
-        android:id="@+id/btn_fp_status"
-        android:layout_width="@dimen/size_40"
-        android:layout_height="@dimen/size_40"
-        android:layout_marginStart="@dimen/size_6"
-        app:srcCompat="@drawable/facebookpage_icon_inactive" />
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_marginHorizontal="@dimen/size_10"
+          android:layout_weight="1"
+          android:gravity="center_vertical"
+          android:text="Share"
+          android:textColor="@color/grey_A1A1A1"
+          app:textType="CAPTION" />
 
-      <com.framework.views.customViews.CustomImageView
-        android:id="@+id/btn_twitter"
-        android:layout_width="@dimen/size_40"
-        android:layout_height="@dimen/size_40"
-        android:layout_marginHorizontal="@dimen/size_6"
-        app:srcCompat="@drawable/twitter_icon_inactive" />
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_subscription"
+          android:layout_width="@dimen/size_40"
+          android:layout_height="@dimen/size_40"
+          app:srcCompat="@drawable/subscribe_icon" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_fp_page_status"
+          android:layout_width="@dimen/size_40"
+          android:layout_height="@dimen/size_40"
+          android:layout_marginStart="@dimen/size_6"
+          app:srcCompat="@drawable/facebook_icon_inactive" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_fp_status"
+          android:layout_width="@dimen/size_40"
+          android:layout_height="@dimen/size_40"
+          android:layout_marginStart="@dimen/size_6"
+          app:srcCompat="@drawable/facebookpage_icon_inactive" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/btn_twitter"
+          android:layout_width="@dimen/size_40"
+          android:layout_height="@dimen/size_40"
+          android:layout_marginHorizontal="@dimen/size_6"
+          app:srcCompat="@drawable/twitter_icon_inactive" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
+
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

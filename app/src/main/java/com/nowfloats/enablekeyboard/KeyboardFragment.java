@@ -112,7 +112,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     //show or hide if feature is available to user
 
     List<String> storeKeys = session.getStoreWidgets();
-    if ((storeKeys != null && !storeKeys.contains("BOOSTKEYBOARD")) || (Constants.currentActivePackageId != null &&
+    if ((storeKeys != null && storeKeys.contains("BOOSTKEYBOARD")) || (Constants.currentActivePackageId != null &&
         Constants.currentActivePackageId.contains("59ce2ae56431a80b009cb1fa"))) {
       binding.mainLayout.setVisibility(View.VISIBLE);
       binding.childContainer.setVisibility(View.GONE);

@@ -241,25 +241,33 @@
               app:fontFamily="@font/regular"
               tools:text="@string/summy_amount" />
 
-            <com.framework.views.customViews.CustomImageView
-              android:layout_width="@dimen/size_18"
-              android:layout_height="@dimen/size_16"
-              android:layout_gravity="center"
-              android:src="@drawable/ic_billing_address"
-              app:tint="@color/orange" />
+            <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/invoice_view"
+              android:orientation="horizontal">
 
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_invoice"
-              style="@style/wrap_wrap"
-              android:layout_gravity="center"
-              android:layout_marginStart="@dimen/size_4"
-              android:layout_weight="0"
-              android:gravity="end"
-              android:text="@string/invoice"
-              android:textAllCaps="false"
-              android:textColor="@color/orange"
-              app:fontFamily="@font/semi_bold"
-              app:textType="BODY_1" />
+              <com.framework.views.customViews.CustomImageView
+                android:layout_width="@dimen/size_18"
+                android:layout_height="@dimen/size_16"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_billing_address"
+                app:tint="@color/colorAccentLight" />
+
+              <com.framework.views.customViews.CustomTextView
+                android:id="@+id/text_invoice"
+                style="@style/wrap_wrap"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/size_4"
+                android:layout_weight="0"
+                android:gravity="end"
+                android:text="@string/invoice"
+                android:textAllCaps="false"
+                android:textColor="@color/colorAccentLight"
+                app:fontFamily="@font/semi_bold"
+                app:textType="BODY_1" />
+            </LinearLayout>
+
           </LinearLayout>
 
           <View

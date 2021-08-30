@@ -75,13 +75,15 @@ class WebViewDialog : DialogFragment() {
     webSettings.cacheMode = WebSettings.LOAD_DEFAULT
     webSettings.domStorageEnabled = true
 
-    binding.webview.webChromeClient = object :WebChromeClient(){
+    binding.webview.webChromeClient = object : WebChromeClient() {
       override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
         val result = view!!.hitTestResult
         val data = result.extra
-        val context= view.context
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data))
-        context.startActivity(browserIntent)
+        val context = view.context
+        if (data != null) {
+          val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data))
+          context.startActivity(browserIntent)
+        }
         return false
       }
     }

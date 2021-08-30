@@ -28,15 +28,15 @@ object NFWebEngageController {
   fun trackEvent(event_name: String, event_label: String, event_value: String? = NO_EVENT_VALUE) {
     val trackEvent: MutableMap<String, Any> = HashMap()
     trackEvent["event_name"] = event_name
-    trackEvent["fptag/event_value"] = event_value!!
+    trackEvent["fptag/event_value"] = event_value?:""
     trackEvent["event_label"] = event_label
-    if (event_label.equals("rev")) {
-      trackEvent["revenue"] = event_value
+    if (event_label == "rev") {
+      trackEvent["revenue"] = event_value?:""
     }
     weAnalytics.track(event_name, trackEvent)
     weAnalytics.screenNavigated(event_name)
     //Firebase Analytics Event...
-    FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value)
+    FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value?:"")
 
     //AppsFlyerEvent...
     try {

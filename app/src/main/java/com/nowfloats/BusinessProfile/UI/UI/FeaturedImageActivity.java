@@ -80,9 +80,10 @@ public class FeaturedImageActivity extends AppCompatActivity {
 
     private void onFeatureLogoAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData().getMetricdetail() == null) return;
-        instance.getDrScoreData().getMetricdetail().setBoolean_add_featured_image_video(isAdded);
-        instance.updateDocument();
+        if (instance.getDrScoreData() != null && instance.getDrScoreData().getMetricdetail() != null) {
+            instance.getDrScoreData().getMetricdetail().setBoolean_add_featured_image_video(isAdded);
+            instance.updateDocument();
+        }
     }
 
     @Override
@@ -132,7 +133,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
                 } else {
                     Picasso.get().load(R.drawable.featured_photo_default).into(logoimageView);
                     onFeatureLogoAddedOrUpdated(false);
-                    uploadButton.setText(getResources().getString(R.string.add_logo));
+                    uploadButton.setText(getResources().getString(R.string.add_featured_image));
                 }
             }
 

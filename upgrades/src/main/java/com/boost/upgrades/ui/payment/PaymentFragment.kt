@@ -127,6 +127,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
     razorpay = (activity as UpgradeActivity).getRazorpayObject()
 
+    upiAdapter = UPIAdapter(ArrayList())
+
     netbankingList = ArrayList<SingleNetBankData>()
     netbankingList.add(SingleNetBankData("UTIB", "Axis", razorpay.getBankLogoUrl("UTIB")))
     netbankingList.add(SingleNetBankData("ICIC", "ICICI", razorpay.getBankLogoUrl("ICIC")))
@@ -135,7 +137,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     netbankingList.add(SingleNetBankData("SBIN", "SBI", razorpay.getBankLogoUrl("SBIN")))
 
     cardPaymentAdapter = CardPaymentAdapter(requireActivity(), ArrayList())
-    upiAdapter = UPIAdapter(ArrayList())
+
     walletAdapter = WalletAdapter(razorpay, ArrayList(), this)
 
     return root
@@ -153,9 +155,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     loadCustomerInfo()
     initMvvm()
 
-    initializeCardRecycler()
-    initializeNetBankingSelector()
     initializeUPIRecycler()
+    initializeNetBankingSelector()
+    initializeCardRecycler()
     initializeWalletRecycler()
     updateSubscriptionDetails()
 
@@ -858,6 +860,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                       0
               ))*/
       viewModel.loadPaymentLinkPriority(
+        (activity as? UpgradeActivity)?.getAccessToken()?:"",
         (activity as UpgradeActivity).clientid,
         PaymentPriorityEmailRequestBody(
           (activity as UpgradeActivity).clientid,
@@ -1111,6 +1114,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
   private fun loadCustomerInfo() {
     viewModel.getCustomerInfo(
+      (activity as? UpgradeActivity)?.getAccessToken()?:"",
       (activity as UpgradeActivity).fpid!!,
       (activity as UpgradeActivity).clientid
     )

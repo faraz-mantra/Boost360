@@ -211,7 +211,6 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun onServiceAddedOrUpdated(count: Int) {
     val instance = FirestoreManager
-    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.number_services_added = count
     instance.updateDocument()
   }

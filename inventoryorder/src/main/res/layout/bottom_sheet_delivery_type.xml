@@ -88,6 +88,7 @@
               android:id="@+id/radio_store"
               style="@style/RadioButtonStyle"
               android:layout_width="wrap_content"
+              android:buttonTint="@color/colorAccent"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent" />
@@ -134,6 +135,7 @@
               android:id="@+id/radio_home"
               style="@style/RadioButtonStyle"
               android:layout_width="wrap_content"
+              android:buttonTint="@color/colorAccent"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent" />
@@ -168,7 +170,8 @@
         style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
         android:layout_marginEnd="@dimen/size_20"
         android:text="@string/go_back"
-        android:textColor="@color/white" />
+        android:background="@drawable/bg_rounded_yellow_light"
+        android:textColor="@color/colorAccentLight" />
 
       <com.framework.views.customViews.CustomButton
         android:id="@+id/buttonDone"

@@ -78,7 +78,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     if (ifsc.length == 11) {
       viewModel?.ifscDetail(ifsc)?.observeOnce(viewLifecycleOwner, Observer {
         val data = it as? RazorDataResponse
-        if ((it.status == 200 || it.status == 201 || it.status == 202) && data != null) {
+        if ((it.isSuccess()) && data != null) {
           isValidIfsc = true
           binding?.edtBankName?.setText(data.bANK ?: "")
           binding?.edtBankName?.isFocusable = false
@@ -141,30 +141,20 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       menuClose?.isVisible = true
       setEditTextAll(result.bankAccountDetails)
       if ((result.bankAccountDetails?.kYCDetails?.verificationStatus == KYCDetails.Status.PENDING.name).not()) {
-        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(
-          resources.getString(
-            R.string.link_bank_account
-          ), resources.getDimensionPixelSize(R.dimen.size_10)
-        )
+        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.link_bank_account), resources.getDimensionPixelSize(R.dimen.size_10))
         binding?.verificationBtn?.text = resources.getString(R.string.change_bank_detail)
-        var buttonDrawable: Drawable =
-          (binding?.verificationBtn?.background ?: ContextCompat.getDrawable(
-            baseActivity,
-            R.drawable.bg_button_rounded_orange
-          )) as Drawable
-        buttonDrawable = DrawableCompat.wrap(buttonDrawable)
-        DrawableCompat.setTint(buttonDrawable, ContextCompat.getColor(baseActivity, R.color.pinkish_grey))
-        binding?.verificationBtn?.background = buttonDrawable
+//        var buttonDrawable: Drawable = (binding?.verificationBtn?.background ?: ContextCompat.getDrawable(baseActivity, R.drawable.bg_button_rounded_orange)) as Drawable
+//        buttonDrawable = DrawableCompat.wrap(buttonDrawable)
+//        DrawableCompat.setTint(buttonDrawable, ContextCompat.getColor(baseActivity, R.color.pinkish_grey))
+//        binding?.verificationBtn?.background = buttonDrawable
         binding?.textVerification?.text = resources.getString(R.string.how_it_works)
         binding?.textDesc?.text = resources.getString(R.string.verify_desc_account)
         (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimaryDark)
       } else {
         if (isPendingToastShow) showLongToast(resources.getString(R.string.account_verification_pending))
-        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(
-          resources.getString(
+        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(
             R.string.my_bank_account
-          ), resources.getDimensionPixelSize(R.dimen.size_10)
-        )
+          ), resources.getDimensionPixelSize(R.dimen.size_10))
       }
       onBankAccountAddedOrUpdated(true)
     } else {
@@ -177,7 +167,6 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   private fun onBankAccountAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
-    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_add_bank_account = isAdded
     instance.updateDocument()
   }
@@ -216,19 +205,11 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
 
   private fun uiUpdate(isEditable: Boolean) {
-    val views = arrayListOf(
-      binding?.edtAccountName,
-      binding?.edtAccountNumber,
-      binding?.edtAlias,
-      binding?.edtIfsc
-    )
+    val views = arrayListOf(binding?.edtAccountName, binding?.edtAccountNumber, binding?.edtAlias, binding?.edtIfsc)
     if (!isValidIfsc) views.add(binding?.edtBankName)
-    else binding?.edtBankName?.background = ContextCompat.getDrawable(
-      baseActivity,
-      if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill
-    )
+    else binding?.edtBankName?.background = ContextCompat.getDrawable(baseActivity, if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill)
 
-    binding?.verificationUi?.visibility = if (isEditable) View.GONE else View.VISIBLE
+//    binding?.verificationUi?.visibility = if (isEditable) View.GONE else View.VISIBLE
     binding?.createUi?.visibility = if (isEditable) View.VISIBLE else View.GONE
     binding?.edtConfirmNumber?.visibility = if (isEditable) View.VISIBLE else View.GONE
     binding?.titleConfirmAccount?.visibility = if (isEditable) View.VISIBLE else View.GONE

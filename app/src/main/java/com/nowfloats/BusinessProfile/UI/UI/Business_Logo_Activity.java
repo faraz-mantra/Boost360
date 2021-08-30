@@ -52,7 +52,8 @@ import com.thinksity.databinding.ActivityBusinessLogoBinding;
 import java.io.File;
 import java.io.InputStream;
 
-import static com.framework.webengageconstant.EventLabelKt.BUSINESS_PROFILE;
+import static com.framework.webengageconstant.EventLabelKt.ADDED;
+import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
 import static com.framework.webengageconstant.EventLabelKt.UPDATED_BUINSESS_LOGO;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_LOGO_ADDED;
 import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_BUSINESS_PROFILE;
@@ -107,7 +108,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getResources().getString(R.string.business_logo));*/
         session = new UserSessionManager(getApplicationContext(), Business_Logo_Activity.this);
-        WebEngageController.trackEvent(EVENT_NAME_BUSINESS_PROFILE, BUSINESS_PROFILE, session.getFpTag());
+        WebEngageController.trackEvent(EVENT_NAME_BUSINESS_PROFILE, PAGE_VIEW, session.getFpTag());
         logoimageView = (ImageView) findViewById(R.id.logoimageView);
         uploadButton = (Button) findViewById(R.id.addLogoButton);
 
@@ -343,9 +344,10 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
     private void onBusinessLogoAddedOrUpdated(Boolean isAdded) {
         FirestoreManager instance = FirestoreManager.INSTANCE;
-        if (instance.getDrScoreData().getMetricdetail() == null) return;
-        instance.getDrScoreData().getMetricdetail().setBoolean_add_clinic_logo(isAdded);
-        instance.updateDocument();
+        if (instance.getDrScoreData() != null && instance.getDrScoreData().getMetricdetail() != null) {
+            instance.getDrScoreData().getMetricdetail().setBoolean_add_clinic_logo(isAdded);
+            instance.updateDocument();
+        }
     }
 
     @Override
@@ -388,7 +390,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                 String path = data.getStringExtra("edit_image");
                 if (!TextUtils.isEmpty(path)) {
                     this.path = path;
-                    WebEngageController.trackEvent(BUSINESS_LOGO_ADDED, BUSINESS_PROFILE, session.getFpTag());
+                    WebEngageController.trackEvent(BUSINESS_LOGO_ADDED, ADDED, session.getFpTag());
                     uploadPrimaryPicture(path);
                 }
             }

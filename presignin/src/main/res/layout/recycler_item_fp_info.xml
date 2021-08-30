@@ -41,6 +41,7 @@
         android:layout_marginStart="@dimen/_12sdp"
         android:includeFontPadding="false"
         android:maxLines="1"
+        app:fontFamily="@font/semi_bold"
         android:textColor="@color/black_4a4a4a"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/customRadioButton"
@@ -52,7 +53,7 @@
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_web_link"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
         android:drawableStart="@drawable/ic_business_card_selection"
@@ -61,9 +62,9 @@
         android:includeFontPadding="false"
         android:textColor="@color/blue_4A90E2"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_icon"
         app:layout_constraintTop_toBottomOf="@+id/ctv_business_name"
-        app:layout_constraintVertical_bias="0.1"
         app:textType="BODY_1"
         tools:text="www.google.com" />
 

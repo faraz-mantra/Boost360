@@ -86,7 +86,6 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
   fun setToolbarTitleNew(title: String, marginEnd: Int = 0) {
     binding?.title?.text = title
     getToolbarTitleColor()?.let { binding?.title?.setTextColor(it) }
-    binding?.title?.setPadding(0, 0, marginEnd, 0)
   }
 
   override fun isHideToolbar(): Boolean {
