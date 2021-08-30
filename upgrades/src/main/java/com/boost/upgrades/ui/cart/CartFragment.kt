@@ -674,7 +674,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     renewalItems?.forEach { widgetList.add(com.boost.upgrades.data.renewalcart.Widget(it.item_id, it.boost_widget_key)) }
 
     val request = CreateCartStateRequest((activity as UpgradeActivity).clientid, (activity as UpgradeActivity).fpid, "RENEWAL", widgetList)
-    viewModel.createCartStateRenewal(request)
+    viewModel.createCartStateRenewal((activity as? UpgradeActivity)?.getAccessToken()?:"",request)
     viewModel.createCartRenewalResult().observeOnce(Observer { createPurchaseOrder(it.cartStateId) })
   }
 
@@ -705,7 +705,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         )
       }
 
-      viewModel.allPurchasedWidgets(request)
+      viewModel.allPurchasedWidgets((activity as? UpgradeActivity)?.getAccessToken()?:"",request)
       viewModel.renewalResult().observeOnce(Observer { result ->
         renewalList = result?.filter { it.renewalStatus() == RenewalResult.RenewalStatus.PENDING.name }
           ?: ArrayList()
@@ -1001,7 +1001,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     prefs.storeFeatureKeysInLastOrder(keysToBeActivated.toMutableSet())
     prefs.storeFeaturesCountInLastOrder(purchaseOrders.count())
 
-    viewModel.InitiatePurchaseOrder(
+    viewModel.InitiatePurchaseOrder((activity as? UpgradeActivity)?.getAccessToken()?:"",
       CreatePurchaseOrderV2(
         (activity as UpgradeActivity).clientid,
         (activity as UpgradeActivity).fpid!!,
@@ -1279,7 +1279,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     prefs.storeFeatureKeysInLastOrder(keysToBeActivated.toMutableSet())
     prefs.storeFeaturesCountInLastOrder(purchaseOrders.count())
 
-    viewModel.InitiatePurchaseAutoRenewOrder(
+    viewModel.InitiatePurchaseAutoRenewOrder((activity as? UpgradeActivity)?.getAccessToken()?:"",
       CreatePurchaseOrderV2(
         (activity as UpgradeActivity).clientid,
         (activity as UpgradeActivity).fpid!!,
@@ -1401,6 +1401,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                var event_attributes: HashMap<String, Double> = HashMap()
 
         event_attributes.put("cart size", it.size.toDouble())
+        cartFullItems.clear()
         it.forEach {
           if (it.boost_widget_key != null) {
             cartFullItems!!.add(it.item_name!!)
