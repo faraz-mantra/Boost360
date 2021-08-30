@@ -96,12 +96,13 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
       Map<String, String> mapResult = remoteMessage.getData();
       BoostLog.d("onMessageReceived: ", "onMessageReceived");
       if (mapResult != null) {
-        if (mapResult.containsKey("source") && "webengage".equals(mapResult.get("source"))) {
+        Boolean isWebEnagage = mapResult.containsKey("source") && "webengage".equals(mapResult.get("source"));
+        if (isWebEnagage) {
           WebEngage.get().receive(mapResult);
         }
         if (mapResult.containsKey("payload")) {
           AnaCore.handlePush(this, mapResult.get("payload"));
-        } else {
+        } else if (!isWebEnagage){
           String deepLinkUrl = mapResult.get("url");
           String title = mapResult.get("title");
           String message = mapResult.get("mp_message");

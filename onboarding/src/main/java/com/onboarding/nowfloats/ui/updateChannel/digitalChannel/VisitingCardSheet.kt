@@ -298,7 +298,6 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
 
   private fun onBusinessCardAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
-    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_share_business_card = isAdded
     instance.updateDocument()
   }

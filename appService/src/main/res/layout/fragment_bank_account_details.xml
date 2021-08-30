@@ -205,17 +205,16 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/why_btn"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_10"
-          android:clickable="true"
-          android:focusable="true"
+          style="@style/ButtonStyle.Rounded"
+          android:layout_width="match_parent"
           android:gravity="center"
-          android:padding="@dimen/size_6"
+          android:background="@drawable/bg_transparent_orange"
           android:text="@string/why_do_we_need_your_bank_account_required"
           android:textAlignment="gravity"
-          android:textColor="@color/greyish_brown"
-          app:fontFamily="@font/regular" />
+          android:textAllCaps="false"
+          android:layout_marginTop="@dimen/size_10"
+          android:textColor="@color/colorAccentLight"
+          app:fontFamily="@font/semi_bold" />
       </LinearLayout>
 
       <LinearLayout
@@ -228,8 +227,7 @@
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="@dimen/size_4"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:visibility="gone">
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/text_verification"

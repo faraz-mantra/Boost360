@@ -233,9 +233,9 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     )
   }
 
-  fun loadPamentUsingExternalLink(clientId: String, data: PaymentThroughEmailRequestBody) {
+  fun loadPamentUsingExternalLink(auth: String,clientId: String, data: PaymentThroughEmailRequestBody) {
     CompositeDisposable().add(
-      ApiService.createPaymentThroughEmail(clientId, data)
+      ApiService.createPaymentThroughEmail(auth,clientId, data)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
@@ -246,9 +246,9 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     )
   }
 
-  fun loadPaymentLinkPriority(clientId: String, data: PaymentPriorityEmailRequestBody) {
+  fun loadPaymentLinkPriority(auth: String,clientId: String, data: PaymentPriorityEmailRequestBody) {
     CompositeDisposable().add(
-      ApiService.createPaymentThroughEmailPriority(data)
+      ApiService.createPaymentThroughEmailPriority(auth,data)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
@@ -259,10 +259,10 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     )
   }
 
-  fun getCustomerInfo(InternalSourceId: String, clientId: String) {
+  fun getCustomerInfo(auth:String,InternalSourceId: String, clientId: String) {
     if (Utils.isConnectedToInternet(getApplication())) {
       CompositeDisposable().add(
-        ApiService.getCustomerId(InternalSourceId, clientId)
+        ApiService.getCustomerId(auth,InternalSourceId, clientId)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(
@@ -365,10 +365,10 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     }
   }
 
-  fun createCustomerInfo(createCustomerInfoRequest: CreateCustomerInfoRequest) {
+  fun createCustomerInfo(auth:String,createCustomerInfoRequest: CreateCustomerInfoRequest) {
     APIRequestStatus = "Creating a new payment profile..."
     CompositeDisposable().add(
-      ApiService.createCustomerId(createCustomerInfoRequest)
+      ApiService.createCustomerId(auth,createCustomerInfoRequest)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
@@ -390,12 +390,12 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     )
   }
 
-  fun updateCustomerInfo(createCustomerInfoRequest: CreateCustomerInfoRequest) {
+  fun updateCustomerInfo(auth: String,createCustomerInfoRequest: CreateCustomerInfoRequest) {
 //                    var sample = Gson().toJson(createCustomerInfoRequest)
 //            writeStringAsFile(sample, "updateCustomer.txt")
     APIRequestStatus = "Creating a new payment profile..."
     CompositeDisposable().add(
-      ApiService.updateCustomerId(createCustomerInfoRequest)
+      ApiService.updateCustomerId(auth,createCustomerInfoRequest)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(

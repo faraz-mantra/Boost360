@@ -132,9 +132,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   override fun onCreateView() {
-    if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(
-      true
-    )
+    if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
     session?.let { deepLinkUtil = DeepLinkUtil(baseActivity, it) }
     setOnClickListener(

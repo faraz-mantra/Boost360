@@ -238,7 +238,7 @@ private fun loadData(res: Resources): ArrayList<SiteMeterModel> {
     SiteMeterModel(
       businessHoursV,
       "Business Hours",
-      "Display business timings",
+      "Display business hours",
       "+5%",
       false,
       7

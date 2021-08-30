@@ -402,7 +402,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     }
 
     private boolean messageInpute() {
-        Toast.makeText(getApplicationContext(), "Fields are Empty...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Fields are empty...", Toast.LENGTH_SHORT).show();
         hideLoader();
         return false;
     }

@@ -442,8 +442,8 @@
               style="@style/match_match"
               android:layout_gravity="center"
               android:layout_weight="1"
-              android:gravity="center"
               android:fontFamily="@font/semi_bold"
+              android:gravity="center"
               android:textAllCaps="false"
               android:textColor="@color/white"
               app:textType="HEADING_6"
@@ -565,70 +565,48 @@
             app:layout_constraintTop_toBottomOf="@id/text_customer_phone"
             tools:text="tester@gmail.com" />
 
-          <com.framework.views.customViews.CustomImageView
-            android:id="@+id/image_email"
-            android:layout_width="@dimen/size_15"
-            android:layout_height="@dimen/size_15"
-            android:layout_marginTop="@dimen/size_20"
-            android:src="@drawable/ic_email"
-            app:layout_constraintStart_toStartOf="@id/text_customer_email"
-            app:layout_constraintTop_toBottomOf="@id/text_customer_email"
-            app:tint="@color/colorAccentLight" />
-
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_email"
             style="@style/wrap_match"
-            android:layout_marginEnd="@dimen/size_2"
-            android:layout_weight="0"
+            android:drawableStart="@drawable/ic_email"
             android:ellipsize="end"
             android:fontFamily="@font/semi_bold"
             android:gravity="end|center_vertical"
             android:maxLines="1"
+            android:layout_marginTop="@dimen/size_10"
             android:text="@string/send_email"
             android:textAlignment="gravity"
-            android:textAllCaps="false"
             android:textColor="@color/colorAccentLight"
             android:textSize="14sp"
+            android:paddingEnd="@dimen/size_20"
             app:autoSizeMaxTextSize="12sp"
             app:autoSizeMinTextSize="8sp"
             app:autoSizeStepGranularity="1sp"
             app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toBottomOf="@id/image_email"
-            app:layout_constraintStart_toEndOf="@id/image_email"
-            app:layout_constraintTop_toTopOf="@id/image_email" />
+            app:layout_constraintStart_toStartOf="@id/text_customer_email"
+            app:layout_constraintTop_toBottomOf="@id/text_customer_email" />
 
-          <com.framework.views.customViews.CustomImageView
-            android:id="@+id/image_phone"
-            android:layout_width="@dimen/size_15"
-            android:layout_height="@dimen/size_15"
-            android:layout_marginStart="@dimen/size_20"
-            android:src="@drawable/ic_phone"
-            app:layout_constraintBottom_toBottomOf="@id/text_email"
-            app:layout_constraintStart_toEndOf="@id/text_email"
-            app:layout_constraintTop_toTopOf="@id/text_email"
-            app:tint="@color/colorAccentLight" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/text_phone"
             style="@style/wrap_match"
-            android:layout_marginEnd="@dimen/size_2"
             android:layout_weight="0"
+            android:drawableStart="@drawable/ic_phone"
+            android:drawablePadding="@dimen/size_6"
             android:fontFamily="@font/semi_bold"
             android:gravity="start|center_vertical"
             android:maxLines="1"
-            android:paddingStart="@dimen/size_8"
+            android:layout_marginTop="@dimen/size_10"
             android:text="@string/call_customer"
             android:textAlignment="gravity"
-            android:textAllCaps="false"
             android:textColor="@color/colorAccentLight"
             android:textSize="14sp"
             app:autoSizeMaxTextSize="12sp"
             app:autoSizeMinTextSize="8sp"
             app:autoSizeStepGranularity="1sp"
             app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toBottomOf="@id/image_phone"
-            app:layout_constraintStart_toEndOf="@id/image_phone"
-            app:layout_constraintTop_toTopOf="@id/image_phone" />
+            app:layout_constraintStart_toEndOf="@id/text_email"
+            app:layout_constraintTop_toBottomOf="@id/text_customer_email" />
 
           <androidx.constraintlayout.widget.Group
             android:id="@+id/group_customer_address"
@@ -643,7 +621,7 @@
             android:background="@color/grey_dark_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_email" />
+            app:layout_constraintTop_toBottomOf="@id/text_phone" />
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/image_location_pointer"
