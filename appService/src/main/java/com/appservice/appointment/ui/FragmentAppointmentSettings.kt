@@ -17,7 +17,10 @@ import com.framework.extensions.observeOnce
 import java.util.*
 
 class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsBinding, AppointmentSettingsViewModel>(), RecyclerItemClickListener {
-  private var copyList: ArrayList<TilesItem>? = null
+  private var adapter: AppBaseRecyclerViewAdapter<TilesItem>? = null
+  private var copyList: ArrayList<TilesItem>? = arrayListOf()
+  private var finalList: ArrayList<TilesItem>? = arrayListOf()
+  var filteredList: ArrayList<TilesItem>? = arrayListOf()
 
   override fun getLayout(): Int {
     return R.layout.fragment_appointment_settings
@@ -36,13 +39,11 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
   override fun onCreateView() {
     super.onCreateView()
     setUpRecyclerView()
-//        setOnClickListener(binding?.catalogSetup, binding?.paymentCollectionSetup, binding?.customerInvoiceSetup, binding?.policiesForCustomer)
     clearSearchFocus()
     binding?.svSettings?.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
       override fun onQueryTextSubmit(query: String?): Boolean {
         return false
       }
-
       override fun onQueryTextChange(newText: String?): Boolean {
         filterList(newText)
         return false
@@ -52,7 +53,18 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
   }
 
   private fun filterList(newText: String?) {
+    filteredList?.clear()
+    if (newText?.isNotEmpty() == true) {
+      copyList?.forEach {
+        if (it.title?.toLowerCase(Locale.ROOT)?.contains(newText.toLowerCase(Locale.ROOT)) == true) {
+          filteredList?.add(it)
+        }
+      }
+      adapter?.updateList(filteredList ?: arrayListOf())
+    } else {
+      adapter?.updateList(finalList ?: arrayListOf())
 
+    }
   }
 
   private fun setUpRecyclerView() {
@@ -60,8 +72,9 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
       val data = it as? CatalogTileModel
       when (data != null) {
         true -> {
-          this.copyList = data.tiles
-          val adapter = AppBaseRecyclerViewAdapter(baseActivity, data.tiles as ArrayList<TilesItem>, this@FragmentAppointmentSettings)
+          this.copyList?.addAll(data.tiles!!)
+          this.finalList?.addAll(data.tiles!!)
+          this.adapter = AppBaseRecyclerViewAdapter(baseActivity, data.tiles as ArrayList<TilesItem>, this@FragmentAppointmentSettings)
           binding?.rvTiles?.setHasFixedSize(true)
           binding?.rvTiles?.adapter = adapter
         }
