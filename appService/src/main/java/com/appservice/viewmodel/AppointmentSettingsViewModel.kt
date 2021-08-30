@@ -3,6 +3,7 @@ package com.appservice.viewmodel
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.appservice.appointment.model.*
+import com.appservice.rest.repository.BoostNowFloatsRepository
 import com.appservice.rest.repository.NowfloatsApiRepository
 import com.appservice.rest.repository.WithFloatTwoRepository
 import com.appservice.ui.model.ServiceListingRequest
@@ -20,6 +21,13 @@ class AppointmentSettingsViewModel : BaseViewModel() {
 
   fun getServiceListing(request: ServiceListingRequest): LiveData<BaseResponse> {
     return NowfloatsApiRepository.getServiceListing(request).toLiveData()
+  }
+
+  fun getFpDetails(fpId: String, map: Map<String, String>): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getFpDetails(fpId, map).toLiveData()
+  }
+  fun updateCategoryInfo(request: UpdateInfoRequest): LiveData<BaseResponse> {
+    return BoostNowFloatsRepository.updateInfo(request).toLiveData()
   }
 
   fun getDeliveryDetails(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {

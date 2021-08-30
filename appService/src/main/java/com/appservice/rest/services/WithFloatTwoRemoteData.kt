@@ -72,7 +72,11 @@ interface WithFloatTwoRemoteData {
     @Query("productId") productId: String?,
     @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
-
+  @GET(EndPoints.GET_FP_DETAILS)
+  fun getFpDetails(
+    @Path("fpid") fpid: String,
+    @QueryMap map: Map<String, String>,
+  ): Observable<Response<UserFpDetailsResponse>>
   @PUT(EndPoints.PUT_BIZ_MESSAGE)
   fun putBizMessageUpdate(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
 

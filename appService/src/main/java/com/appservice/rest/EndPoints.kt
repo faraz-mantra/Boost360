@@ -1,6 +1,10 @@
 package com.appservice.rest
 
 object EndPoints {
+  //TODO BOOST NOW FLOATS API
+  const val  BOOST_NOW_FLOATS_BASE = "https://boost.nowfloats.com/"
+  const val  UPDATE_INFO_POST = "Home/updateInfo"
+  const val  FP_DETAILS_BY_ID = "Home/GetFloatingPointDetailsById"
 
   //TODO NFX API WITH FLOAT
   const val WITH_FLOATS_BASE = "https://api.withfloats.com/"
@@ -61,8 +65,9 @@ object EndPoints {
   const val PUT_BIZ_IMAGE = "discover/v1/FloatingPoint/createBizImage"
   const val GET_BIZ_WEB_UPDATE_BY_ID = "discover/v1/bizFloatForWeb/{id}"
   const val DELETE_BIZ_MESSAGE_UPDATE = "discover/v1/floatingpoint/archiveMessage"
+  const val GET_FP_DETAILS = "/Discover/v3/floatingPoint/nf-app/{fpid}"
 
-    //TODO PRODUCT API 2 WITH FLOAT
+  //TODO PRODUCT API 2 WITH FLOAT
     const val CREATE_PRODUCT = "Product/v1/Create"
     const val GET_LISTING_INVENTORY_SYNC = "Product/v1/GetListingsWithInventorySync"
     const val UPDATE_PRODUCT = "Product/v1/Update"
