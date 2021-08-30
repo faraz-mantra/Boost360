@@ -33,10 +33,10 @@ class HistoryViewModel : ViewModel() {
     return purchaseResult
   }
 
-  fun loadPurchasedItems(fpid: String, clientId: String) {
+  fun loadPurchasedItems(auth:String,fpid: String, clientId: String) {
     updatesLoader.postValue(true)
     compositeDisposable.add(
-      ApiService.getPurchasedOrders(fpid, clientId)
+      ApiService.getPurchasedOrders(auth,fpid, clientId)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
