@@ -16,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.nowfloats.education.koindi.KoinBaseApplication;
 import com.thinksity.R;
@@ -72,9 +73,15 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
         holder.clKeyboardTheme.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (position!=1)
                     holder.clKeyboardTheme.setAlpha(0.5f);
                 } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    if (position==1){
+                        Toast.makeText(context,"Coming Soon",Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
                     if (selected != position) {
                         selected = position;
                         switch (position) {
