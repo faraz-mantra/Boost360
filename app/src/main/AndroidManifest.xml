@@ -1375,11 +1375,6 @@
       android:theme="@style/Theme.Transparent.AppCompact" />
 
     <activity
-      android:name="com.nowfloats.helper.ApiReLoadActivity"
-      android:screenOrientation="portrait"
-      android:theme="@style/Theme.Transparent.AppCompact" />
-
-    <activity
       android:name="com.nowfloats.helper.LogoutActivity"
       android:screenOrientation="portrait"
       android:theme="@style/Theme.Transparent.AppCompact" />

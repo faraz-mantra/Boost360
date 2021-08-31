@@ -70,29 +70,12 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
       val result = it as? AccessTokenResponse
       if (it?.isSuccess() == true && result?.result != null) {
         session.saveAccessTokenAuth(result.result!!)
-        this.aliInitializeActivity()
+        this.storeFpDetails()
       } else {
         hideProgress()
         showLongToast(getString(R.string.access_token_create_error))
       }
     })
-  }
-
-  private fun AuthTokenDataItem.aliInitializeActivity() {
-    try {
-      val webIntent = Intent(baseActivity, Class.forName("com.nowfloats.helper.ApiReLoadActivity"))
-      startActivityForResult(webIntent, 101)
-      baseActivity.overridePendingTransition(0, 0)
-    } catch (e: ClassNotFoundException) {
-      this.storeFpDetails()
-    }
-  }
-
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-    if (resultCode == Activity.RESULT_OK && requestCode == 101) {
-      authTokenData()?.storeFpDetails()
-    }
   }
 
   private fun AuthTokenDataItem.storeFpDetails() {
