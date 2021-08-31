@@ -58,14 +58,14 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="@color/white_50"
-                app:cardCornerRadius="@dimen/size_4">
+                app:cardCornerRadius="@dimen/size_6">
 
                 <com.framework.views.customViews.CustomCardView
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:layout_margin="@dimen/size_2"
                   app:cardBackgroundColor="@color/white_one"
-                  app:cardCornerRadius="@dimen/size_4"
+                  app:cardCornerRadius="@dimen/size_6"
                   app:cardElevation="@dimen/size_0">
 
                   <com.framework.views.customViews.CustomImageView
@@ -96,7 +96,7 @@
                   android:maxLines="2"
                   android:textColor="@color/white"
                   app:fontFamily="@font/semi_bold"
-                  app:textType="HEADING_6"
+                  app:textType="HEADING_7"
                   tools:text="PLASTO INDIA AND POLYMERS" />
 
                 <com.framework.views.customViews.CustomTextView
