@@ -550,6 +550,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         }
 
         viewModel.loadUpdates(
+            (activity as? UpgradeActivity)?.getAccessToken()?:"",
             (activity as UpgradeActivity).fpid!!,
             (activity as UpgradeActivity).clientid,
             (activity as UpgradeActivity).experienceCode,
@@ -703,12 +704,44 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 var cartItems = " "
                 if(itemsArrayList!= null && itemsArrayList!!.size > 0){
                      for (items in itemsArrayList!!){
-                         cartItems += items + ","
+                         cartItems += items + ", "
                      }
-                    if(isTooLarge(mp_items_name_tv,cartItems)){
-
+                    var cartUpdatedItems = ""
+                    if(mp_items_name_tv.paint.measureText(cartItems) > 2*(mp_items_name_tv.measuredWidth)){
+                        val index = itemsArrayList!!.size - 1
+                        itemsArrayList!!.removeAt(index)
+                        for (updatedItems in itemsArrayList!!){
+                            cartUpdatedItems += updatedItems + ", "
+                        }
+                        val displayString = cartUpdatedItems + "+ " + (it.size - itemsArrayList!!.size) + " more"
+                        var cartUpdatedItems1 = ""
+                        if(mp_items_name_tv.paint.measureText(displayString) > 2*(mp_items_name_tv.measuredWidth)){
+                            val index1 = itemsArrayList!!.size - 1
+                            itemsArrayList!!.removeAt(index1)
+                            for (updatedItems1 in itemsArrayList!!){
+                                cartUpdatedItems1 += updatedItems1 + ", "
+                            }
+                            val displayString1 = cartUpdatedItems1 + "+ " +(it.size - itemsArrayList!!.size) + " more"
+                            var cartLatestItems = ""
+                            if(mp_items_name_tv.paint.measureText(displayString1) > 2*(mp_items_name_tv.measuredWidth)){
+                                val latestIndex = itemsArrayList!!.size - 1
+                                itemsArrayList!!.removeAt(latestIndex)
+                                for (latestItems in itemsArrayList!!){
+                                    cartLatestItems += latestItems + ", "
+                                }
+                                val displayString2 = cartLatestItems + "+ " + (it.size - itemsArrayList!!.size) + " more"
+                                mp_items_name_tv.text = displayString2.replace(" ", "\u00A0")
+                            }else{
+                                mp_items_name_tv.text = displayString1.replace(" ", "\u00A0")
+                            }
+                        }
+                        else{
+                            mp_items_name_tv.text = displayString.replace(" ", "\u00A0")
+                        }
                     }
-                    mp_items_name_tv.text = cartItems
+                    else{
+                        mp_items_name_tv.text = cartItems.replace(" ", "\u00A0")
+                    }
 
                 }
 
@@ -787,9 +820,45 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 var cartItems = ""
               if(itemsArrayList!= null && itemsArrayList!!.size > 0){
                 for (items in itemsArrayList!!){
-                  cartItems += items + ","
+                  cartItems += items + ", "
                 }
-                  mp_items_name_tv.text = cartItems
+                  var cartUpdatedItems = ""
+                  if(mp_items_name_tv.paint.measureText(cartItems) > 2*(mp_items_name_tv.measuredWidth)){
+                      val index = itemsArrayList!!.size - 1
+                      itemsArrayList!!.removeAt(index)
+                      for (updatedItems in itemsArrayList!!){
+                          cartUpdatedItems += updatedItems + ", "
+                      }
+                      val displayString = cartUpdatedItems + "+ " + (it.size - itemsArrayList!!.size) + " more"
+                      var cartUpdatedItems1 = ""
+                      if(mp_items_name_tv.paint.measureText(displayString) > 2*(mp_items_name_tv.measuredWidth)){
+                          val index1 = itemsArrayList!!.size - 1
+                          itemsArrayList!!.removeAt(index1)
+                          for (updatedItems1 in itemsArrayList!!){
+                              cartUpdatedItems1 += updatedItems1 + ", "
+                          }
+                          val displayString1 = cartUpdatedItems1 + "+ " +(it.size - itemsArrayList!!.size) + " more"
+                          var cartLatestItems = ""
+                          if(mp_items_name_tv.paint.measureText(displayString1) > 2*(mp_items_name_tv.measuredWidth)){
+                              val latestIndex = itemsArrayList!!.size - 1
+                              itemsArrayList!!.removeAt(latestIndex)
+                              for (latestItems in itemsArrayList!!){
+                                  cartLatestItems += latestItems + ", "
+                              }
+                              val displayString2 = cartLatestItems + "+ " + (it.size - itemsArrayList!!.size) + " more"
+                              mp_items_name_tv.text = displayString2.replace(" ", "\u00A0")
+                          }else{
+                              mp_items_name_tv.text = displayString1.replace(" ", "\u00A0")
+                          }                      }
+                      else{
+                          mp_items_name_tv.text = displayString.replace(" ", "\u00A0")
+                      }
+                  }
+                  else{
+                      mp_items_name_tv.text = cartItems.replace(" ", "\u00A0")
+                  }
+
+
 
               }
                 Constants.CART_VALUE = badgeNumber
@@ -2439,7 +2508,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     private fun isTooLarge(text: TextView, newText: String): Boolean {
         val textWidth = text.paint.measureText(newText)
-        return textWidth >= text.measuredWidth
+        return textWidth >= (text.measuredWidth)*2
     }
 
     fun callBundleCart(item: Bundles, imageView: ImageView){
