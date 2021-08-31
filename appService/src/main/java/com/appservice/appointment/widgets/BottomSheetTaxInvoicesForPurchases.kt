@@ -116,9 +116,12 @@ class BottomSheetTaxInvoicesForPurchases : BaseBottomSheetDialog<BottomSheetSetu
          if (binding?.btnClickPhoto?.isVisible()==true){
              showLongToast(getString(R.string.please_choose_signature))
              return false
-         }else if (validateUPI(binding?.cetUpiId?.text.toString()).not()){
-             showLongToast(getString(R.string.please_enter_valid_upi_id))
-             return false
+         }else {
+              if (binding?.checkboxUpiId?.isChecked == true)
+             if (validateUPI(binding?.cetUpiId?.text.toString()).not()){
+                 showLongToast(getString(R.string.please_enter_valid_upi_id))
+                 return false
+             }
          }
          return true
      }
