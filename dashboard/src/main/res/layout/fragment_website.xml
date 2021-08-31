@@ -359,7 +359,7 @@
           android:layout_height="wrap_content"
           app:tabIndicatorColor="@color/colorAccent"
           app:tabIndicatorFullWidth="false"
-          app:tabSelectedTextColor="@color/colorAccent"
+          app:tabIndicator="@drawable/custom_tab_indicator"
           app:tabTextColor="@color/black_4a4a4a" />
       </androidx.viewpager.widget.ViewPager>
     </androidx.constraintlayout.widget.ConstraintLayout>
