@@ -57,13 +57,13 @@
                 android:layout_height="@dimen/size_67"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="@color/snow_white"
+                app:cardBackgroundColor="@color/white_50"
                 app:cardCornerRadius="@dimen/size_4">
 
                 <com.framework.views.customViews.CustomCardView
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
-                  android:layout_margin="@dimen/size_3"
+                  android:layout_margin="@dimen/size_2"
                   app:cardBackgroundColor="@color/white_one"
                   app:cardCornerRadius="@dimen/size_4"
                   app:cardElevation="@dimen/size_0">
@@ -80,7 +80,7 @@
 
               <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/size_8"
                 android:layout_weight="1"
                 android:gravity="center_vertical"

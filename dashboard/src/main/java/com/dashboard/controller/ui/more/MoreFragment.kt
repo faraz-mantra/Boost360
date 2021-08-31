@@ -62,13 +62,13 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       businessLogoUrl = BASE_IMAGE_URL + businessLogoUrl
     }
     binding?.rivUsersImage?.apply {
-      baseActivity.glideLoad(this, url = featureImageUrl, placeholder = R.drawable.ic_placeholder, isCrop = true)
+      baseActivity.glideLoad(this, url = featureImageUrl, placeholder = R.drawable.placeholder_image, isCrop = true)
     }
     binding?.rivBusinessImage?.apply {
-      baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.ic_placeholder, isCrop = true)
+      baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.placeholder_image, isCrop = true)
     }
     binding?.rivCurrentlyManage?.apply {
-      baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.ic_placeholder, isCrop = true)
+      baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.placeholder_image, isCrop = true)
     }
     binding?.ctvName?.text = (session?.userProfileName ?: session?.fpTag)?.capitalizeUtil()
 //    val content = StringBuilder()
