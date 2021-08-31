@@ -36,12 +36,15 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.analytics.SentryController
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.firestore.FirestoreManager
 import com.framework.models.firestore.FirestoreManager.initData
 import com.framework.pref.*
+import com.framework.pref.Key_Preferences.KEY_FP_CART_COUNT
 import com.framework.utils.*
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
@@ -105,6 +108,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     setDrawerHome()
     val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
     binding?.drawerView?.txtVersion?.text = "Version $versionName"
+    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage, binding?.drawerView?.txtDomainName, binding?.viewCartCount)
     intentDataCheckAndDeepLink(intent)
     getWelcomeData()
     session?.initializeWebEngageLogin()
@@ -213,12 +217,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onResume() {
     super.onResume()
     setUserData()
-    setOnClickListener(
-      binding?.drawerView?.btnSiteMeter,
-      binding?.drawerView?.imgBusinessLogo,
-      binding?.drawerView?.backgroundImage,
-      binding?.drawerView?.txtDomainName
-    )
   }
 
   override fun getToolbar(): CustomToolbar? {
@@ -238,6 +236,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun setUserData() {
+    val cartCount = session?.getIntDetails(KEY_FP_CART_COUNT) ?: 0
+    if (cartCount > 0) binding?.viewCartCount?.visible() else binding?.viewCartCount?.gone()
+    binding?.cartCountTxt?.text = "$cartCount ${if (cartCount > 1) "items" else "item"} waiting in cart"
     binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
     setPercentageData(FirestoreManager.getDrScoreData()?.getDrsTotal() ?: 0)
@@ -257,6 +258,13 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         it, bgImageUri ?: "", R.drawable.general_services_background_img_d
       )
     }
+  }
+
+  private fun cartDataLoad(pos: Int) {
+    val cartCount = session?.getIntDetails(KEY_FP_CART_COUNT) ?: 0
+    if (pos == 0 && cartCount > 0) {
+      binding?.viewCartCount?.visible()
+    } else binding?.viewCartCount?.gone()
   }
 
   private fun setDrawerHome() {
@@ -318,9 +326,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when (pos) {
       1 -> {
         val dataWebsite = welcomeData?.get(0)
-        if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let {
-          showWelcomeDialog(it)
-        }
+        if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let { showWelcomeDialog(it) }
         else {
           mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
           toolbarPropertySet(pos)
@@ -328,9 +334,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       }
       2 -> {
         val dataCustomer = welcomeData?.get(1)
-        if (dataCustomer?.welcomeType?.let { getIsShowWelcome(it) } != true) dataCustomer?.let {
-          showWelcomeDialog(it)
-        }
+        if (dataCustomer?.welcomeType?.let { getIsShowWelcome(it) } != true) dataCustomer?.let { showWelcomeDialog(it) }
         else {
           mNavController.navigate(R.id.navigation_enquiries, Bundle(), getNavOptions())
           toolbarPropertySet(pos)
@@ -372,6 +376,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun toolbarPropertySet(pos: Int) {
+    cartDataLoad(pos)
     when (pos) {
       1 -> showToolbar(getString(R.string.my_website))
       2 -> showToolbar(getString(R.string.my_enquiry))
@@ -470,6 +475,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
       binding?.drawerView?.backgroundImage -> openImagePicker(true)
+      binding?.viewCartCount -> session?.let { this.initiateAddonMarketplace(it, true, "", "") }
     }
   }
 
