@@ -9,11 +9,11 @@
 
   <com.framework.views.customViews.CustomCardView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/size_170"
     android:elevation="@dimen/size_4"
     app:cardCornerRadius="@dimen/size_10"
     app:cardUseCompatPadding="true"
-    app:contentPaddingBottom="@dimen/size_8"
+    app:contentPaddingBottom="@dimen/size_16"
     app:contentPaddingTop="@dimen/size_8">
 
     <androidx.constraintlayout.widget.ConstraintLayout
