@@ -289,7 +289,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
         } else {
             Log.d(TAG, "startFilter else: " + newText);
-            adapter.setData(productList, true);
+            adapter.setData(productList, false);
         }
     }
 
