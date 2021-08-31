@@ -456,9 +456,11 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             )
         }
         mp_review_cart_close_iv.setOnClickListener{
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_CROSS_CLICKED,EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_CROSS_CLICKED,NO_EVENT_VALUE)
             mp_view_cart_rl.visibility = View.GONE
         }
         mp_review_cart_tv.setOnClickListener {
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,NO_EVENT_VALUE)
             (activity as UpgradeActivity).addFragment(CartFragment.newInstance(), CART_FRAGMENT)
         }
 
@@ -941,8 +943,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     startActivity(Intent.createChooser(callIntent, "Call by:"))
                 }
                 mp_talk_expert_tv.setOnClickListener {
-                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_EXPERT_SPEAK,
-                        CLICK,
+                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_EXPERT_CALL_CLICKED,
+                        EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_CALL_CLICKED,
                         NO_EVENT_VALUE)
                     val callExpertIntent = Intent(Intent.ACTION_DIAL)
                     callExpertIntent.data = Uri.parse("tel:" + expertConnectDetails.contact_number)
