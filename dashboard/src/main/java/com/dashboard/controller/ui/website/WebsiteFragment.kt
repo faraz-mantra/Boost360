@@ -3,8 +3,7 @@ package com.dashboard.controller.ui.website
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
-import android.graphics.Typeface.BOLD
-import android.graphics.Typeface.NORMAL
+import android.graphics.Typeface.*
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -94,15 +93,15 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
         tabTextView.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
         tabTextView.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
         tabTextView.text = tab.text
-
         if (i == 0){
           // This set the font style of the first tab
-          tabTextView.setTypeface(null,BOLD)
+          tabTextView.setTypeface(SANS_SERIF,BOLD)
+          tabTextView.setTextColor(getColor(R.color.colorAccent))
+
         }
         if (i == 1){
           // This set the font style of the first tab
           tabTextView.setTypeface(null,NORMAL)
-
         }
       }
     }
@@ -110,10 +109,14 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       override fun onTabSelected(tab: TabLayout.Tab?) {
         val text: TextView = tab?.customView as TextView
         text.setTypeface(null, BOLD)
+        text.setTextColor(getColor(R.color.colorAccent))
+
       }
       override fun onTabUnselected(tab: TabLayout.Tab?) {
         val text: TextView = tab?.customView as TextView
         text.setTypeface(null, NORMAL)
+        text.setTextColor(getColor(R.color.black_4a4a4a                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ))
+
       }
       override fun onTabReselected(tab: TabLayout.Tab?) {
       }
