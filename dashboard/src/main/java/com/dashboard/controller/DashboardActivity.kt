@@ -237,6 +237,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   private fun setUserData() {
     val cartCount = session?.getIntDetails(KEY_FP_CART_COUNT) ?: 0
+    if (cartCount > 0) binding?.viewCartCount?.visible() else binding?.viewCartCount?.gone()
     binding?.cartCountTxt?.text = "$cartCount ${if (cartCount > 1) "items" else "item"} waiting in cart"
     binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")

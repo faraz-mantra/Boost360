@@ -686,12 +686,12 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         })
 
         viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
+            UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,it.size?:0)
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
                 mp_view_cart_rl.visibility = View.VISIBLE
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
-                UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,badgeNumber)
                 badge.setText(badgeNumber.toString())
                 if(badgeNumber == 1){
                     mp_no_of_cart_items_tv.text = badgeNumber.toString() + " item waiting in cart"
@@ -803,12 +803,12 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         })
 
         viewModel.cartResultBack().observe(this, androidx.lifecycle.Observer {
+            UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,it.size?:0)
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
                 mp_view_cart_rl.visibility = View.VISIBLE
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
-                UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,badgeNumber)
                 badge.setText(badgeNumber.toString())
                 if(badgeNumber == 1){
                     mp_no_of_cart_items_tv.text = badgeNumber.toString() + " item waiting in cart"
