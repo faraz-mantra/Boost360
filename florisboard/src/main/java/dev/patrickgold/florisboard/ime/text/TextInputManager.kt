@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.text
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.util.Log
 import android.view.KeyEvent
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -141,6 +142,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
   }
 
   override fun onCreateInputView() {
+
     keyboardViews.clear()
   }
 
@@ -228,12 +230,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     instance = null
   }
 
+
   /**
    * Evaluates the [activeKeyboardMode], [keyVariation] and [EditorInstance.isComposingEnabled]
    * property values when starting to interact with a input editor. Also resets the composing
    * texts and sets the initial caps mode accordingly.
    */
   override fun onStartInputView(instance: EditorInstance, restarting: Boolean) {
+
     var keyboardMode = when (instance.inputAttributes.type) {
       InputAttributes.Type.NUMBER -> {
         keyVariation = KeyVariation.NORMAL
@@ -291,6 +295,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     if (keyboardMode == KeyboardMode.BUSINESS_FEATURES) {
       val tabPos = SmartbarView.getSmartViewBinding().businessFeatureTabLayout.selectedTabPosition
       businessFeaturesManager?.showSelectedBusinessFeature(tabPos, BusinessFeatureEnum.values()[tabPos])
+      smartbarView?.isBusinessFeatureVisible=true
     }
   }
 
@@ -822,9 +827,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
   }
 
   override fun onTabSelected(tab: TabLayout.Tab?) {
+    SharedPrefUtil.fromBoostPref().getsBoostPref(FlorisApplication.instance).tabPosition = tab?.position?:0
     if (showFeatureUI) setActiveKeyboardMode(KeyboardMode.BUSINESS_FEATURES) else setActiveKeyboardMode(KeyboardMode.CHARACTERS)
     val tabPosition = tab?.position
-    tabPosition?.let { BusinessFeatureEnum.values()[it] }?.let { businessFeaturesManager?.showSelectedBusinessFeature(tabPosition, it) }
+    tabPosition?.let {
+
+      BusinessFeatureEnum.values()[it] }?.let { businessFeaturesManager?.showSelectedBusinessFeature(tabPosition, it) }
+
   }
 
   override fun onTabUnselected(tab: TabLayout.Tab?) {

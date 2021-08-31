@@ -56,6 +56,7 @@ import dev.patrickgold.florisboard.customization.util.MethodUtils.getImageUri
 import dev.patrickgold.florisboard.customization.util.PaginationScrollListener.Companion.PAGE_SIZE
 import dev.patrickgold.florisboard.customization.util.PaginationScrollListener.Companion.PAGE_START
 import dev.patrickgold.florisboard.databinding.BusinessFeaturesLayoutBinding
+import dev.patrickgold.florisboard.ime.core.FlorisApplication
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
@@ -73,7 +74,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
   private val TAG = "BusinessFeaturesManager"
   private lateinit var binding: BusinessFeaturesLayoutBinding
-  private lateinit var sharedPref: SharedPrefUtil
+  private var sharedPref: SharedPrefUtil = SharedPrefUtil.fromBoostPref().getsBoostPref(FlorisApplication.instance)
   private lateinit var viewModel: BusinessFeaturesViewModel
   private var businessFeatureEnum: BusinessFeatureEnum? = null
   private val photosSet = mutableSetOf<Photo>()
@@ -116,7 +117,6 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
   private fun onRegisterInputView(inputView: InputView, florisBoard: FlorisBoard) {
     this.mContext = inputView.context
-    this.sharedPref = SharedPrefUtil.fromBoostPref().getsBoostPref(mContext)
     this.session = UserSessionManager(this.mContext)
     this.florisBoard = florisBoard
     this.viewModel = BusinessFeaturesViewModel(mContext)
@@ -196,6 +196,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   fun showSelectedBusinessFeature(tagPosition: Int, businessFeatureEnum: BusinessFeatureEnum) {
+
     this.session = UserSessionManager(this.mContext)
     this.businessFeatureEnum = businessFeatureEnum
     this.tagPosition = tagPosition
@@ -259,6 +260,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
           }
         }
         else -> {
+
         }
       }
 
@@ -315,7 +317,6 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         Toast.makeText(mContext, "Unable to find network settings. Please do it manually from phone's settings", Toast.LENGTH_LONG).show()
         Log.e(TAG, "updateUiInternetNotAvailable: " + e.localizedMessage)
       }
-      loadDataBasesOnTab()
     }
   }
 
