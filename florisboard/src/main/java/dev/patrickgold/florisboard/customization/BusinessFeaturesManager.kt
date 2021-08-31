@@ -63,7 +63,6 @@ import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
 
-
 // keyborad ImePresenterImpl
 
 class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : OnItemClickListener {
@@ -198,15 +197,10 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
   fun showSelectedBusinessFeature(tagPosition: Int, businessFeatureEnum: BusinessFeatureEnum) {
     this.session = UserSessionManager(this.mContext)
-
     this.businessFeatureEnum = businessFeatureEnum
     this.tagPosition = tagPosition
     this.currentSelectedFeature = businessFeatureEnum
     this.listenerRequest = null
-    SmartbarView.getSmartViewBinding().businessFeatureTabLayout
-    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.view?.apply {
-      if (isStaffVisible(session?.fP_AppExperienceCode ?: "")) visible() else gone()
-    }
     Log.i(TAG, "showSelectedBusinessFeature: ")
     val lastSyncTime = sharedPref.lastSyncTime
     if (session?.isUserLoggedIn == false) {
@@ -281,9 +275,12 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     adapterStaff.clearList()
     adapterUpdates.clearList()
     SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = "${getProductType(session?.fP_AppExperienceCode ?: "")}"
-    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = mContext.getString(R.string.photos_cap)
-    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = mContext.getString(R.string.staff_cap)
-    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = mContext.getString(R.string.updates_cap)
+    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = BusinessFeatureEnum.UPDATES.name
+    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = BusinessFeatureEnum.PHOTOS.name
+    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = BusinessFeatureEnum.STAFF.name
+    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.view?.apply {
+      visibility = if (isStaffVisible(session?.fP_AppExperienceCode ?: "")) View.VISIBLE else View.GONE
+    }
   }
 
 
@@ -294,7 +291,6 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     binding.msgDesc.text = mContext.getString(R.string.please_click_on_retry_btn_below)
     binding.msgBtn.text = mContext.getString(R.string.retry)
     binding.msgBtn.icon = mContext.getDrawable(R.drawable.ic_arrowscounterclockwise)
-
     binding.msgBtn.setOnClickListener {
       loadDataBasesOnTab()
     }
@@ -311,18 +307,14 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
 
     binding.msgBtn.setOnClickListener {
-
       try {
-        mContext.startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS)
-          .apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK;
-          })
-
+        mContext.startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS).apply {
+          flags = Intent.FLAG_ACTIVITY_NEW_TASK;
+        })
       } catch (e: Exception) {
         Toast.makeText(mContext, "Unable to find network settings. Please do it manually from phone's settings", Toast.LENGTH_LONG).show()
         Log.e(TAG, "updateUiInternetNotAvailable: " + e.localizedMessage)
       }
-
       loadDataBasesOnTab()
     }
   }
@@ -357,7 +349,6 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
   private fun updateUiStaffNotRenewd() {
     binding.msgLayout.visible()
-
     binding.msgIcon.setImageResource(R.drawable.ic_keyboard_renew)
     binding.msgTitle.text = mContext.getString(R.string.staff_not_added_plan)
     binding.msgDesc.text = mContext.getString(R.string.with_business_keyboard)
@@ -382,7 +373,6 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private fun errorObserveListener() {
     viewModel.error.observeForever {
       Log.e(TAG, "errorObserveListener: " + it)
-
       binding.businessFeatureProgress.gone()
       if (it == Constants.TOKEN_EXPIRED_MESSAGE) {
         updateUiNotLoginned()
@@ -391,7 +381,6 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       } else {
         updateUiErrorFetchingInformation()
       }
-      //Toast.makeText(mContext, it, Toast.LENGTH_SHORT).show()
     }
   }
 
@@ -403,7 +392,6 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).lastSyncTime = System.currentTimeMillis()
         loadDataBasesOnTab()
       }
-
     }
   }
 
@@ -417,18 +405,20 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         this.photosSet.map { it1 -> it1.gridType = this.gridType }
         binding.rvListPhotos.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
         this.adapterPhoto.notifyNewList(this.photosSet.toList())
-        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = mContext.getString(R.string.photos_cap) + " (${photosSet.size})"
-      } else Timber.i("List from api came empty")
+        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = BusinessFeatureEnum.PHOTOS.name + " (${photosSet.size})"
+      } else {
+        if (businessFeatureEnum==BusinessFeatureEnum.INVENTORY_SERVICE) {
+          this.adapterPhoto.notifyNewList(arrayListOf())
+          Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
+        }
+      }
       clickListenerPhoto()
     }
   }
 
   private fun apiObserveServiceProduct() {
-    Log.i(TAG, "apiObserveServiceProduct: ")
-
     viewModel.products.observeForever {
       Log.i(TAG, "apiObserveServiceProduct: observer")
-
       Timber.i("products - $it.")
       binding.businessFeatureProgress.gone()
       this.adapterProductService.removeLoaderN()
@@ -437,7 +427,12 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         else this.adapterProductService.addItems(it)
         TOTAL_ELEMENTS = this.adapterProductService.getListData().size
         SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = "${getProductType(session?.fP_AppExperienceCode ?: "")} (${this.adapterProductService.getListData().size})"
-      } else Timber.i("List from api came empty")
+      } else{
+        if (businessFeatureEnum==BusinessFeatureEnum.INVENTORY_SERVICE) {
+          this.adapterProductService.notifyNewList(arrayListOf())
+          Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
+        }
+      }
     }
   }
 
@@ -451,8 +446,13 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         if (isFirstPage) this.adapterStaff.notifyNewList(it.data!!)
         else this.adapterStaff.addItems(it.data!!)
         isLastPageD = (this.adapterStaff.getListData().size == TOTAL_ELEMENTS)
-        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = mContext.getString(R.string.staff_cap) + " (${it.paging?.count})"
-      } else Timber.i("List from api came empty")
+        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = BusinessFeatureEnum.STAFF.name + " (${it.paging?.count})"
+      } else {
+        if (businessFeatureEnum==BusinessFeatureEnum.STAFF) {
+          this.adapterStaff.notifyNewList(arrayListOf())
+          Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
+        }
+      }
     }
   }
 
@@ -466,8 +466,13 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         if (isFirstPage) this.adapterUpdates.notifyNewList(it.floats!!)
         else this.adapterUpdates.addItems(it.floats!!)
         isLastPageD = (this.adapterUpdates.getListData().size == TOTAL_ELEMENTS)
-        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = mContext.getString(R.string.updates_cap) + " (${it.totalCount})"
-      } else Timber.i("List from api came empty")
+        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = BusinessFeatureEnum.UPDATES.name + " (${it.totalCount})"
+      } else{
+        if (businessFeatureEnum==BusinessFeatureEnum.UPDATES) {
+          this.adapterUpdates.notifyNewList(arrayListOf())
+          Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
+        }
+      }
     }
   }
 

@@ -151,7 +151,6 @@ class BusinessFeaturesViewModel(context: Context) {
 
   fun getChannelsAccessTokenStatus(fpId: String?) {
     Log.i(TAG, "getChannelAccessTokenStatus: called")
-
     if (NetworkUtils.isNetworkConnected()){
       job = CoroutineScope(Dispatchers.IO).launch {
         try {
@@ -172,7 +171,6 @@ class BusinessFeaturesViewModel(context: Context) {
         catch (e:Exception){
           _error.postValue(e.localizedMessage)
         }
-
       }
     }
 
