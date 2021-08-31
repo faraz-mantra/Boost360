@@ -510,7 +510,7 @@
                   android:maxLines="2"
                   android:textColor="@color/white"
                   app:fontFamily="@font/bold"
-                  app:textType="HEADING_5"
+                  app:textType="HEADING_7"
                   tools:text="PLASTO INDIA AND POLYMERS" />
 
                 <FrameLayout
