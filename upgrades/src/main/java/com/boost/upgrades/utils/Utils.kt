@@ -28,25 +28,21 @@ import kotlin.collections.ArrayList
 
 object Utils {
 
-
   //getting retrofit instance
-  fun getRetrofit(token: String? = null): Retrofit {
+  fun getRetrofit(): Retrofit {
     val client = Retrofit.Builder()
     client.baseUrl(BASE_URL)
     client.addConverterFactory(ScalarsConverterFactory.create())
     client.addConverterFactory(GsonConverterFactory.create())
     client.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-    client.client(httpClient(token))
+    client.client(httpClient())
     return client.build()
   }
-  fun httpClient(token: String? = null): OkHttpClient {
-
-    val authInterceptor = ServiceInterceptor(false, token)
+  fun httpClient(): OkHttpClient {
     val httpClient = OkHttpClient.Builder()
     httpClient.readTimeout(2, TimeUnit.MINUTES)
       .connectTimeout(2, TimeUnit.MINUTES)
       .writeTimeout(2, TimeUnit.MINUTES)
-    httpClient.addInterceptor(authInterceptor)
     return httpClient.build()
   }
 

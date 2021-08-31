@@ -104,10 +104,7 @@ class SignUpActivity : AppCompatActivity() {
     enableFormInput()
     retrofit = Retrofit.Builder()
       .baseUrl("https://api2.withfloats.com")
-      .client(
-        OkHttpClient.Builder().addInterceptor(
-        ServiceInterceptor(false, UserSessionManager(this).getAccessTokenAuth()?.token)
-        ).build())
+      .client(OkHttpClient.Builder().addInterceptor(ServiceInterceptor(false)).build())
       .addConverterFactory(GsonConverterFactory.create())
       .build()
     ApiService = retrofit.create(Apis::class.java)
