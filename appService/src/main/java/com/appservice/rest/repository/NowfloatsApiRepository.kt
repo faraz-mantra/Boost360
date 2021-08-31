@@ -27,6 +27,9 @@ object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, CatalogLo
   fun getSettingsTiles(context: Context): Observable<BaseResponse> {
     return makeLocalRequest(localDataSource.getSettingsTiles(context =context ),TaskCode.GET_CATALOG_SETTINGS_TILES)
   }
+  fun getEcommerceSettingsTiles(context: Context): Observable<BaseResponse> {
+    return makeLocalRequest(localDataSource.getSettingsTiles(context =context ),TaskCode.GET_CATALOG_SETTINGS_TILES)
+  }
 
   fun updateService(request: ServiceModelV1?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateService(request), TaskCode.POST_UPDATE_SERVICE)

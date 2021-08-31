@@ -18,7 +18,9 @@ class AppointmentSettingsViewModel : BaseViewModel() {
   fun getAppointmentSettingsTiles(context: Context): LiveData<BaseResponse> {
     return NowfloatsApiRepository.getSettingsTiles(context).toLiveData()
   }
-
+  fun getEcommerceSettingsTiles(context: Context): LiveData<BaseResponse> {
+    return NowfloatsApiRepository.getSettingsTiles(context).toLiveData()
+  }
   fun getServiceListing(request: ServiceListingRequest): LiveData<BaseResponse> {
     return NowfloatsApiRepository.getServiceListing(request).toLiveData()
   }
