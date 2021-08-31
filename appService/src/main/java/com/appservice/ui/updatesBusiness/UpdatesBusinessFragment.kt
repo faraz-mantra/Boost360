@@ -242,8 +242,8 @@ open class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBi
 
   open fun onBusinessUpdateAddedOrUpdated(count: Int) {
     val instance = FirestoreManager
-    if (instance.getDrScoreData() != null && instance.getDrScoreData()!!.metricdetail != null) {
-      instance.getDrScoreData()!!.metricdetail!!.number_updates_posted = count
+    if (instance.getDrScoreData() != null && instance.getDrScoreData()?.metricdetail != null) {
+      instance.getDrScoreData()?.metricdetail?.number_updates_posted = count
       instance.updateDocument()
     }
   }
