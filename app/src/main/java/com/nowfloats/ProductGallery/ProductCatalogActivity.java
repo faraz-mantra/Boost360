@@ -279,21 +279,16 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     private void startFilter(String newText) {
         copyProductList.clear();
         if (!newText.equals("")) {
-            Log.d(TAG, "startFilter if "+newText);
+            Log.d(TAG, "startFilter if " + newText);
             for (Product productListModel : productList) {
                 if (productListModel.Name.toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT))) {
                     copyProductList.add(productListModel);
                 }
             }
-            if (copyProductList.isEmpty()){
-                adapter.setData(new ArrayList<>(),false);
-                adapter.notifyDataSetChanged();
-            }else {
-                Log.d(TAG, "startFilter copylist: " + copyProductList);
-                adapter.setData(copyProductList, true);
-            }
+            adapter.setData(copyProductList, true);
+
         } else {
-            Log.d(TAG, "startFilter else: "+newText);
+            Log.d(TAG, "startFilter else: " + newText);
             adapter.setData(productList, true);
         }
     }
