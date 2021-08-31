@@ -161,4 +161,8 @@
     <item name="android:colorAccent">@color/colorAccentLight</item>
     <item name="android:backgroundTint">@color/colorAccentLight</item>
   </style>
+
+  <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <item name="colorAccent">@color/colorAccent</item>
+  </style>
 </resources>
