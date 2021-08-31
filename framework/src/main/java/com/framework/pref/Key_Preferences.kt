@@ -124,4 +124,5 @@ object Key_Preferences {
   const val STORE_WIDGETS = "StoreWidgets"
 
   const val ACCESS_TOKEN_AUTH = "access_token_auth"
+  val KEY_FP_CART_COUNT = "fbCartCount"
 }
