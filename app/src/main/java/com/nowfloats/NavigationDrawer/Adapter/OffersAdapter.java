@@ -25,6 +25,8 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
+import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
@@ -89,7 +91,9 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
                         } else {
                             url = imageShare;
                         }
-                        Picasso.get()
+                        new Picasso.Builder(v.getContext())
+                                .downloader(new OkHttp3Downloader(Utils.getAuthClient()))
+                                .build()
                                 .load(url)
                                 .into(new Target() {
                                     @Override
@@ -175,7 +179,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
     }
 
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -185,12 +189,12 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.MyViewHold
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            ivMainOffer = (ImageView) itemView.findViewById(R.id.imageView);
-            ivShareOffer = (ImageView) itemView.findViewById(R.id.shareData);
-            tvOfferTitle = (TextView) itemView.findViewById(R.id.tv_title);
-            tvOfferContent = (TextView) itemView.findViewById(R.id.tv_offer_message);
-            tvOfferTimeLine = (TextView) itemView.findViewById(R.id.tv_offer_date);
-            tvOfferCreatedOn = (TextView) itemView.findViewById(R.id.textViewEmail);
+            ivMainOffer = itemView.findViewById(R.id.imageView);
+            ivShareOffer = itemView.findViewById(R.id.shareData);
+            tvOfferTitle = itemView.findViewById(R.id.tv_title);
+            tvOfferContent = itemView.findViewById(R.id.tv_offer_message);
+            tvOfferTimeLine = itemView.findViewById(R.id.tv_offer_date);
+            tvOfferCreatedOn = itemView.findViewById(R.id.textViewEmail);
         }
 
     }

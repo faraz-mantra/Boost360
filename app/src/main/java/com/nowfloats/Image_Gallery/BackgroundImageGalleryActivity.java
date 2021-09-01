@@ -255,7 +255,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
      *
      * @param requestCode
      */
-    private void startCamera(int requestCode) {
+    private void  startCamera(int requestCode) {
         File mediaStorageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "boost");
 
         if (!mediaStorageDir.exists()) {
@@ -284,7 +284,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == CAMERA_IMAGE_REQUEST_CODE) {
+        if (resultCode == RESULT_OK && requestCode == CAMERA_IMAGE_REQUEST_CODE&&primaryUri!=null) {
             try {
                 Bitmap CameraBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), primaryUri);
                 String imageUrl = Methods.getRealPathFromURI(this, primaryUri);

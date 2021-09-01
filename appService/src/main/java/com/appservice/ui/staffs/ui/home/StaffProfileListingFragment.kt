@@ -3,7 +3,6 @@ package com.appservice.ui.staffs.ui.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -33,7 +32,6 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
-import com.framework.pref.Key_Preferences
 import com.framework.webengageconstant.*
 import com.inventoryorder.ui.tutorials.LearnHowItWorkBottomSheet
 import kotlinx.android.synthetic.main.fragment_staff_listing.*
@@ -328,7 +326,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
           isResult = true
         )
       }
-      binding?.staffLock?.btnStaffAddOns -> startStorePage()
+      binding?.staffLock?.btnStaffAddOns -> startStorePage("${StatusKyc.STAFFPROFILE.name}15")
       binding?.staffEmpty?.btnHowWork -> openHelpBottomSheet()
     }
   }
@@ -340,7 +338,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     bundle.putString(IntentConstant.FP_ID.name, UserSession.fpId)
     bundle.putString(IntentConstant.FP_TAG.name, UserSession.fpTag)
     bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
-    bundle.putString(IntentConstant.CLIENT_ID.name, UserSession.clientId)
+    bundle.putString(IntentConstant.CLIENT_ID.name, UserSession.clientIdN)
     bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name, externalSourceId)
     bundle.putString(IntentConstant.APPLICATION_ID.name, applicationId)
     return bundle
@@ -379,35 +377,6 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     binding?.staffListSwipeRefresh?.isRefreshing = false
     binding?.progress?.gone()
   }
-
-
-  private fun startStorePage() {
-    try {
-      showProgress("Loading. Please wait...")
-      val intent = Intent(baseActivity, Class.forName("com.boost.upgrades.UpgradeActivity"))
-      intent.putExtra("expCode", sessionLocal.fP_AppExperienceCode)
-      intent.putExtra("fpName", sessionLocal.fpTag)
-      intent.putExtra("fpid", sessionLocal.fPID)
-      intent.putExtra("fpTag", sessionLocal.fpTag)
-      intent.putExtra(
-        "accountType",
-        sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)
-      )
-      intent.putStringArrayListExtra(
-        "userPurchsedWidgets",
-        ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList())
-      )
-      intent.putExtra("email", sessionLocal.userProfileEmail ?: "ria@nowfloats.com")
-      intent.putExtra("mobileNo", sessionLocal.userPrimaryMobile ?: "9160004303")
-      intent.putExtra("profileUrl", sessionLocal.fPLogo)
-      intent.putExtra("buyItemKey", "${StatusKyc.STAFFPROFILE.name}15")// feature key
-      baseActivity.startActivity(intent)
-      Handler().postDelayed({ hideProgress() }, 1000)
-    } catch (e: Exception) {
-      showLongToast("Unable to start upgrade activity.")
-    }
-  }
-
 }
 
 fun getFilterRequest(offSet: Int, limit: Int): GetStaffListingRequest {

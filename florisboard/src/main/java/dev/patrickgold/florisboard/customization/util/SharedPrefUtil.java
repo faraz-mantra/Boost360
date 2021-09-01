@@ -10,6 +10,7 @@ import com.onboarding.nowfloats.model.profile.MerchantProfileResponse;
 
 import java.util.List;
 
+import dev.patrickgold.florisboard.customization.BusinessFeatureEnum;
 import dev.patrickgold.florisboard.customization.model.response.DigitalCardDataKeyboard;
 import dev.patrickgold.florisboard.customization.model.response.Photo;
 import dev.patrickgold.florisboard.customization.model.response.Product;
@@ -248,6 +249,32 @@ public class SharedPrefUtil {
       return new Gson().fromJson(sBoostPref.getString(PrefConstants.INSTANCE.getPREF_STAFF(),null),new TypeToken<StaffResult>(){}.getType());
     }else {
       return null;
+    }
+  }
+  public Boolean isBusinessFeatureSelected(){
+    if (sBoostPref != null) {
+      return sBoostPref.getBoolean(PrefConstants.INSTANCE.getBUSINESS_FEATURE(),false);
+    }
+    return false;
+  }
+
+  public void setBusinessFeatureSelected(Boolean status){
+    if (sBoostPref != null) {
+      sBoostPref.edit().putBoolean(PrefConstants.INSTANCE.getBUSINESS_FEATURE(),status).apply();
+    }
+  }
+
+  public int getTabPosition(){
+    if (sBoostPref != null) {
+      return sBoostPref.getInt(PrefConstants.INSTANCE.getTAB_POSITION(),0);
+
+    }
+    return 0;
+  }
+
+  public void setTabPosition(int value){
+    if (sBoostPref != null) {
+      sBoostPref.edit().putInt(PrefConstants.INSTANCE.getTAB_POSITION(),value).apply();
     }
   }
 }

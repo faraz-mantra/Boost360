@@ -686,6 +686,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         })
 
         viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
+            UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,it.size?:0)
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
                 mp_view_cart_rl.visibility = View.VISIBLE
@@ -802,6 +803,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         })
 
         viewModel.cartResultBack().observe(this, androidx.lifecycle.Observer {
+            UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,it.size?:0)
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
                 mp_view_cart_rl.visibility = View.VISIBLE

@@ -20,12 +20,7 @@ import java.util.HashMap
 object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBaseLocalService>() {
 
   fun isMobileIsRegistered(number: Long?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.checkIfMobileNumberIsRegistered(
-        number,
-        clientId = clientId
-      ), TaskCode.CHECK_MOBILE_IS_REGISTERED
-    )
+    return makeRemoteRequest(remoteDataSource.checkIfMobileNumberIsRegistered(number, clientId = clientId), TaskCode.CHECK_MOBILE_IS_REGISTERED)
   }
 
   fun connectUserProfile(userProfileRequest: CreateProfileRequest): Observable<BaseResponse> {
@@ -57,41 +52,26 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   }
 
   fun verifyOtp(number: String?, otp: String?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.verifyOtp(number, otp, clientId = clientId),
-      TaskCode.VERIFY_OTP
-    )
+    return makeRemoteRequest(remoteDataSource.verifyOtp(number, otp, clientId = clientId), TaskCode.VERIFY_OTP)
   }
 
   fun verifyLoginOtp(number: String?, otp: String?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.verifyLoginOtp(number, otp, clientId = clientId),
-      TaskCode.VERIFY_LOGIN_OTP
-    )
+    return makeRemoteRequest(remoteDataSource.verifyLoginOtp(number, otp, clientId = clientId), TaskCode.VERIFY_LOGIN_OTP)
   }
 
   fun createAccessToken(request: AccessTokenRequest?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.createAccessToken(request),
-      TaskCode.ACCESS_TOKEN_CREATE
-    )
+    return makeRemoteRequest(remoteDataSource.createAccessToken(request), TaskCode.ACCESS_TOKEN_CREATE)
   }
 
 
   fun getFpListForRegisteredNumber(number: String?, clientId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.getFpListForRegisteredMobile(
-        number,
-        clientId = clientId
-      ), TaskCode.GET_FP_LIST_FOR_REGISTERED_NUMBER
+      remoteDataSource.getFpListForRegisteredMobile(number, clientId = clientId), TaskCode.GET_FP_LIST_FOR_REGISTERED_NUMBER
     )
   }
 
   fun verifyUserProfile(request: UserProfileVerificationRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.verifyUserProfile(request),
-      TaskCode.VERIFY_USER_PROFILE
-    )
+    return makeRemoteRequest(remoteDataSource.verifyUserProfile(request), TaskCode.VERIFY_USER_PROFILE)
   }
 
   fun forgotPassword(request: ForgotPassRequest): Observable<BaseResponse> {
@@ -117,6 +97,4 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   override fun getApiClient(): Retrofit {
     return WithFloatsApiTwoClient.shared.retrofit
   }
-
-
 }

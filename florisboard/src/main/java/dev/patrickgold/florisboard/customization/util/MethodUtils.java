@@ -43,7 +43,7 @@ public class MethodUtils {
       if (TextUtils.isEmpty(path)) return null;
       return Uri.parse(path);
     } catch (Exception e) {
-      Log.e(MethodUtils.class.getName(), e.getLocalizedMessage());
+      e.printStackTrace();
       return null;
     }
   }
@@ -54,6 +54,7 @@ public class MethodUtils {
       PackageManager packageManager = mContext.getPackageManager();
       if (!isPackageInstalled(mContext.getPackageName(), packageManager)) {
         Toast.makeText(mContext, "App is not installed", Toast.LENGTH_SHORT).show();
+        return;
       }
       Intent LaunchIntent = packageManager.getLaunchIntentForPackage(mContext.getPackageName());
       mContext.startActivity(LaunchIntent);
@@ -67,12 +68,15 @@ public class MethodUtils {
       PackageManager packageManager = mContext.getPackageManager();
       if (!isPackageInstalled(mContext.getPackageName(), packageManager)) {
         Toast.makeText(mContext, "App is not installed", Toast.LENGTH_SHORT).show();
+        return;
       }
       Intent intent = new Intent(mContext, Class.forName("com.nowfloats.helper.AppFragmentContainerActivity"));
       intent.putExtra("FRAGMENT_TYPE", "ACCOUNT_KEYBOARD");
+      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       mContext.startActivity(intent);
-    } catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
+      startBoostActivity(mContext);
     }
   }
 
@@ -81,12 +85,15 @@ public class MethodUtils {
       PackageManager packageManager = mContext.getPackageManager();
       if (!isPackageInstalled(mContext.getPackageName(), packageManager)) {
         Toast.makeText(mContext, "App is not installed", Toast.LENGTH_SHORT).show();
+        return;
       }
-      Intent intent = new Intent(mContext, Class.forName("com.appservice.staffs.ui.StaffFragmentContainerActivity"));
+      Intent intent = new Intent(mContext, Class.forName("com.appservice.ui.staffs.ui.StaffFragmentContainerActivity"));
       intent.putExtra("FRAGMENT_TYPE", "STAFF_PROFILE_LISTING_FRAGMENT");
+      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       mContext.startActivity(intent);
-    } catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
+      startBoostActivity(mContext);
     }
   }
 
@@ -102,19 +109,14 @@ public class MethodUtils {
   public static boolean isOnline(Context context) {
     boolean status = false;
     try {
-      ConnectivityManager connectivityManager = (ConnectivityManager) context
-          .getSystemService(Context.CONNECTIVITY_SERVICE);
+      ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
       NetworkInfo netInfo = connectivityManager.getNetworkInfo(0);
-      if (netInfo != null
-          && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+      if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
         status = true;
       } else {
         netInfo = connectivityManager.getNetworkInfo(1);
-        if (netInfo != null
-            && netInfo.getState() == NetworkInfo.State.CONNECTED)
-          status = true;
+        if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) status = true;
       }
-
     } catch (Exception e) {
       e.printStackTrace();
       return false;
@@ -122,7 +124,7 @@ public class MethodUtils {
     return status;
   }
 
-  public static long getDaysDiff(Long startTime, Long endTime){
-    return TimeUnit.MILLISECONDS.toDays(startTime-endTime);
+  public static long getDaysDiff(Long startTime, Long endTime) {
+    return TimeUnit.MILLISECONDS.toDays(startTime - endTime);
   }
 }
