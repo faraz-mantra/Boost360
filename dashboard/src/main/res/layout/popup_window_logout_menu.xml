@@ -13,30 +13,23 @@
     app:cardUseCompatPadding="true">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-      android:id="@+id/ll_share"
-      android:layout_width="wrap_content"
+      android:id="@+id/ll_logout"
+      android:layout_width="@dimen/size_100"
       android:layout_height="wrap_content"
+      android:gravity="center"
       android:orientation="horizontal"
       android:padding="@dimen/size_10">
 
-      <com.framework.views.customViews.CustomImageView
-        android:layout_width="@dimen/size_24"
-        android:layout_height="@dimen/size_24"
-        android:padding="1dp"
-        android:src="@drawable/ic_share_gray" />
-
       <com.framework.views.customViews.CustomTextView
-        android:id="@+id/share_text"
+        android:id="@+id/logout_text"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/size_6"
-        android:layout_marginEnd="@dimen/size_4"
         android:background="?android:selectableItemBackground"
         android:clickable="false"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"
-        android:text="@string/share_on_more_website"
+        android:text="@string/logout"
         android:textColor="@color/gray_4e4e4e"
         app:textType="HEADING_6" />
 

@@ -224,7 +224,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   override fun getToolbarTitleSize(): Float {
-    return ConversionUtils.dp2px(20f).toFloat()
+    return ConversionUtils.dp2px(22f).toFloat()
   }
 
   fun setPercentageData(score: Int) {
