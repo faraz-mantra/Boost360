@@ -377,9 +377,9 @@ fun AppCompatActivity.startReferralView(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startMobileSite(session: UserSessionManager?, website: String) {
+fun AppCompatActivity.startMobileSite(session: UserSessionManager?, website: String,eventname:String=MOBILE_SITE_PAGE) {
   try {
-    WebEngageController.trackEvent(MOBILE_SITE_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(eventname, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
     webIntent.putExtra("WEBSITE_NAME", website)
     startActivity(webIntent)

@@ -42,10 +42,8 @@ data class AboutAppSectionItem(
     like_us_on_facebook(R.drawable.like_us_on_facebook),
     follow_us_on_twitter(R.drawable.follow_us_on_twitter),
     rate_us_on_google_play(R.drawable.rate_us_on_google_play),
-    rate_us_on_app_store(R.drawable.rate_us_on_app_store),
     terms_of_usages(R.drawable.terms_of_usages),
     privacy_policy(R.drawable.privacy_policy),
-    logout(R.drawable.logout),
     help_us_make_boost_better(R.drawable.help_us_make_boost_better);
 
     companion object {

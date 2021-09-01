@@ -7,8 +7,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.*
+import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.LinearLayoutCompat
 import com.appservice.ui.updatesBusiness.showDialog
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -67,15 +69,14 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     binding?.rivBusinessImage?.apply {
       baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.placeholder_image, isCrop = true)
     }
+    var bgImageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)
+    if (bgImageUri.isNullOrEmpty().not() && bgImageUri!!.contains("http").not()) {
+      bgImageUri = BASE_IMAGE_URL + bgImageUri
+    }
     binding?.rivCurrentlyManage?.apply {
-      baseActivity.glideLoad(this, url = businessLogoUrl, placeholder = R.drawable.placeholder_image, isCrop = true)
+      baseActivity.glideLoad(this, url = bgImageUri, placeholder = R.drawable.general_services_background_img_d, isCrop = true)
     }
     binding?.ctvName?.text = (session?.userProfileName ?: session?.fpTag)?.capitalizeUtil()
-//    val content = StringBuilder()
-//    if (session?.fPEmail != null) content.append(session?.fPEmail).append(",")
-//    if (session?.userPrimaryMobile != null) content.append(session?.userPrimaryMobile).append(",")
-//    if (session?.userProfileName != null) content.append(session?.userProfileName)
-//    binding?.ctvContent?.text = content ?: ""
     val city = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
     val country = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
     val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
@@ -107,7 +108,6 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   }
 
   private fun clickUsefulButton(type: UsefulLinksItem.IconType) {
-    var intent: Intent? = null
     when (type) {
       UsefulLinksItem.IconType.business_kyc -> baseActivity.startBusinessKycBoost(session)
       UsefulLinksItem.IconType.boost_extension -> baseActivity.startBoostExtension(session)
@@ -117,95 +117,87 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       UsefulLinksItem.IconType.refer_and_earn -> baseActivity.startReferralView(session!!)
       UsefulLinksItem.IconType.ria_digital_assistant -> baseActivity.startHelpAndSupportActivity(session!!)
       UsefulLinksItem.IconType.training_and_certification -> {
-        WebEngageController.trackEvent(ABOUT_BOOST_TRAINING, EVENT_LABEL_NULL, NULL)
-        if (session!!.getStoreWidgets()!!.contains("MERCHANT_TRAINING")) {
-          intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
-          intent.putExtra("WEBSITE_NAME", getString(R.string.product_training_link))
-          startActivity(intent)
-        } else {
-          showDialog(baseActivity, getString(R.string.restricted_access), getString(R.string.you_need_to_buy_the_one_time_pack_for_boost), object : DialogInterface.OnClickListener {
-            override fun onClick(dialog: DialogInterface?, which: Int) {
-              dialog?.dismiss()
-            }
-          })
-        }
+        trainingCertification()
       }
-    }
-    if (intent != null) {
-      startActivity(intent)
     }
   }
 
   private fun clickAppActionButton(type: AboutAppSectionItem.IconType) {
-    var intent: Intent? = null
     when (type) {
       whats_new_version -> showShortToast("Coming soon")
       frequently_asked_question -> {
-        WebEngageController.trackEvent(ABOUT_BOOST_FAQS, NO_EVENT_LABLE, NULL)
-        intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
-        intent.putExtra("WEBSITE_NAME", getString(R.string.setting_faq_url))
+        baseActivity.startMobileSite(session, getString(R.string.setting_faq_url), ABOUT_BOOST_FAQS)
       }
       terms_of_usages -> {
         WebEngageController.trackEvent(ABOUT_BOOST_TNC, NO_EVENT_LABLE, NULL)
-        intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
-        intent.putExtra("WEBSITE_NAME", resources.getString(R.string.settings_tou_url))
+        baseActivity.startMobileSite(session, resources.getString(R.string.settings_tou_url), ABOUT_BOOST_TNC)
       }
       follow_us_on_twitter -> {
-        WebEngageController.trackEvent(ABOUT_BOOST_TWITTER_LIKE, NO_EVENT_LABLE, NULL)
-        intent = Intent(Intent.ACTION_VIEW)
-        try {
-          requireActivity().packageManager.getPackageInfo(getString(R.string.twitter_package), 0)
-          intent.data = Uri.parse(TWITTER_ID_URL)
-        } catch (e1: PackageManager.NameNotFoundException) {
-          intent.data = Uri.parse(TWITTER_URL)
-          e1.printStackTrace()
-        }
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
+        followUsTwitter()
       }
       help_us_make_boost_better -> {
-        showShortToast("Coming soon.")
+        businessGoogleForm()
       }
       privacy_policy -> {
         WebEngageController.trackEvent(ABOUT_BOOST_PRIVACY, NO_EVENT_LABLE, NULL)
-        intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
-        intent.putExtra("WEBSITE_NAME", resources.getString(R.string.settings_privacy_url))
+        baseActivity.startMobileSite(session, resources.getString(R.string.settings_privacy_url), ABOUT_BOOST_PRIVACY)
       }
       like_us_on_facebook -> {
         WebEngageController.trackEvent(ABOUT_BOOST_FB_LIKE, NO_EVENT_LABLE, NULL)
         likeUsFacebook(baseActivity, "")
       }
-      rate_us_on_app_store -> {
-        WebEngageController.trackEvent(ABOUT_BOOST_PLAY_STORE_RATING, NO_EVENT_LABLE, NULL)
-        val uri = Uri.parse("market://details?id=" + baseActivity?.applicationContext?.packageName)
-        val goToMarket = Intent(Intent.ACTION_VIEW, uri)
-        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        try {
-          startActivity(goToMarket)
-          return
-        } catch (e: ActivityNotFoundException) {
-          val url = resources.getString(R.string.settings_rate_us_link)
-          intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
-          intent.putExtra("WEBSITE_NAME", url)
-        }
-      }
       rate_us_on_google_play -> {
-        WebEngageController.trackEvent(ABOUT_BOOST_PLAY_STORE_RATING, NO_EVENT_LABLE, NULL)
-        val uri = Uri.parse("market://details?id=" + baseActivity?.applicationContext?.packageName)
-        val goToMarket = Intent(Intent.ACTION_VIEW, uri)
-        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        try {
-          startActivity(goToMarket)
-          return
-        } catch (e: ActivityNotFoundException) {
-          val url = resources.getString(R.string.settings_rate_us_link)
-          intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
-          intent.putExtra("WEBSITE_NAME", url)
-        }
+        rateGooglePlayStore()
       }
-      logout -> logoutUser()
+      else -> {
+      }
     }
-    if (intent != null) {
-      startActivity(intent)
+  }
+
+  private fun trainingCertification() {
+    if (session?.getStoreWidgets()?.contains("MERCHANT_TRAINING") == true) {
+      baseActivity.startMobileSite(session, getString(R.string.product_training_link), ABOUT_BOOST_TRAINING)
+    } else {
+      WebEngageController.trackEvent(ABOUT_BOOST_TRAINING, CLICK, TO_BE_ADDED)
+      showDialog(baseActivity, getString(R.string.restricted_access), getString(R.string.you_need_to_buy_the_one_time_pack_for_boost)) { dialog, _ -> dialog?.dismiss() }
+    }
+  }
+
+  private fun followUsTwitter() {
+    WebEngageController.trackEvent(ABOUT_BOOST_TWITTER_LIKE, NO_EVENT_LABLE, NULL)
+    val intent = Intent(Intent.ACTION_VIEW)
+    try {
+      requireActivity().packageManager.getPackageInfo(getString(R.string.twitter_package), 0)
+      intent.data = Uri.parse(TWITTER_ID_URL)
+    } catch (e1: PackageManager.NameNotFoundException) {
+      intent.data = Uri.parse(TWITTER_URL)
+      e1.printStackTrace()
+    }
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
+    startActivity(intent)
+  }
+
+  private fun rateGooglePlayStore() {
+    val uri = Uri.parse("market://details?id=" + baseActivity.applicationContext?.packageName)
+    val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+    goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    try {
+      startActivity(goToMarket)
+      WebEngageController.trackEvent(ABOUT_BOOST_PLAY_STORE_RATING, NO_EVENT_LABLE, NULL)
+    } catch (e: ActivityNotFoundException) {
+      val url = resources.getString(R.string.settings_rate_us_link)
+      baseActivity.startMobileSite(session, url, ABOUT_BOOST_PLAY_STORE_RATING)
+    }
+  }
+
+  private fun businessGoogleForm() {
+    try {
+      val i = Intent(Intent.ACTION_VIEW)
+      i.data = Uri.parse(getString(R.string.google_form_help_business_boost))
+      startActivity(i)
+    } catch (e: Exception) {
+      e.printStackTrace()
+      showShortToast("Feedback Google form loading error, please try again!.")
     }
   }
 
@@ -246,14 +238,27 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
-      R.id.menu_help -> {
-        needHelp()
+      R.id.menu_more -> {
+        val view: View? = baseActivity.findViewById(item.itemId)
+        view?.let { showPopupWindow(it) }
         return true
       }
       else -> {
       }
     }
     return super.onOptionsItemSelected(item)
+  }
+
+  private fun showPopupWindow(anchor: View) {
+    val view = LayoutInflater.from(baseActivity).inflate(R.layout.popup_window_logout_menu, null)
+    val popupWindow = PopupWindow(view, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
+    val more = popupWindow.contentView?.findViewById<LinearLayoutCompat>(R.id.ll_logout)
+    more?.setOnClickListener {
+      logoutUser()
+      popupWindow.dismiss()
+    }
+    popupWindow.elevation = 5.0F
+    popupWindow.showAsDropDown(anchor, 0, 10)
   }
 
   private fun likeUsFacebook(context: Context, review: String) {
@@ -263,7 +268,6 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     } catch (e: Exception) {
       Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK_URL + review))
     }
-    /* }else{facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));}*/
     facebookIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
     try {
       context.startActivity(facebookIntent)
