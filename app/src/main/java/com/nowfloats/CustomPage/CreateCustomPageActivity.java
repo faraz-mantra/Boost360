@@ -2,6 +2,7 @@ package com.nowfloats.CustomPage;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -15,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -23,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -42,6 +45,7 @@ import com.boost.upgrades.UpgradeActivity;
 import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem;
 import com.framework.models.caplimit_feature.PropertiesItem;
 import com.framework.models.firestore.FirestoreManager;
+import com.google.firebase.FirebaseApp;
 import com.nowfloats.CustomPage.Model.CreatePageModel;
 import com.nowfloats.CustomPage.Model.CustomPageLink;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
@@ -112,9 +116,30 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
 
+  private String getProcessName(Context context) {
+    if (context == null) return null;
+    ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+    for (ActivityManager.RunningAppProcessInfo processInfo : manager.getRunningAppProcesses()) {
+      if (processInfo.pid == android.os.Process.myPid()) {
+        return processInfo.processName;
+      }
+    }
+    return null;
+  }
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    FirebaseApp.initializeApp(CreateCustomPageActivity.this);
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P&&!Constants.webViewInit) {
+      String process = getProcessName(this);
+      String packageName = this.getPackageName();
+      if (!packageName.equals(process)){
+        WebView.setDataDirectorySuffix(process);
+        Constants.webViewInit = true;
+      }
+    }
     setContentView(R.layout.create_custom_page);
 
     curPos = getIntent().getIntExtra("position", -1);

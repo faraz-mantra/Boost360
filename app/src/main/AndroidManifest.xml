@@ -929,7 +929,7 @@
           android:scheme="http" />
       </intent-filter>
     </activity>
-    <activity
+    <activity android:process=":createcustompageprocessboost"
       android:name="com.nowfloats.CustomPage.CreateCustomPageActivity"
       android:launchMode="singleTask"
       android:screenOrientation="portrait">

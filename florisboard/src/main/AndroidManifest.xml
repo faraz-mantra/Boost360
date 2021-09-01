@@ -26,7 +26,6 @@
 
         <!-- IME service -->
         <service
-            android:process=":boostkeyobardprocess"
             android:name="dev.patrickgold.florisboard.ime.core.FlorisBoard"
             android:label="Boost"
             android:permission="android.permission.BIND_INPUT_METHOD">
