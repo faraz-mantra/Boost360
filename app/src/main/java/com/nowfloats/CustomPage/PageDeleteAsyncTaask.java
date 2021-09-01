@@ -9,6 +9,7 @@ import com.nowfloats.CustomWidget.HttpDeleteWithBody;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
@@ -98,6 +99,7 @@ public class PageDeleteAsyncTaask extends AsyncTask<String, String, String> {
         flag = false;
         HttpClient httpclient = new DefaultHttpClient();
         HttpDeleteWithBody del = new HttpDeleteWithBody(url);
+        del.addHeader("Authorization", Utils.getAuthToken());
         StringEntity se;
         try {
             se = new StringEntity(values, HTTP.UTF_8);

@@ -644,7 +644,7 @@ fun AppCompatActivity.startBusinessInfoEmail(session: UserSessionManager?) {
 fun AppCompatActivity.startAllImage(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(IMAGE_MENU_PAGE, CLICK, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.ImageMenuActivity"))
+    val webIntent = Intent(this, Class.forName("com.nowfloats.Image_Gallery.ImageGalleryActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -905,6 +905,20 @@ fun AppCompatActivity.startWebsiteTheme(session: UserSessionManager?) {
     WebEngageController.trackEvent(WEBSITE_STYLE, CLICK, TO_BE_ADDED)
     session?.getBundleDataKyc()?.let {
       startFragmentDashboardActivity(com.dashboard.constant.FragmentType.FRAGMENT_WEBSITE_THEME, it, false)
+    }
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+fun AppCompatActivity.startWebsiteNav(session: UserSessionManager?) {
+  try {
+    WebEngageController.trackEvent(WEBSITE_NAV, CLICK, TO_BE_ADDED)
+    session?.getBundleDataKyc()?.let {
+      startFragmentDashboardActivity(
+        com.dashboard.constant.FragmentType.FRAGMENT_WEBSITE_NAV,
+        it,
+        false
+      )
     }
   } catch (e: Exception) {
     e.printStackTrace()

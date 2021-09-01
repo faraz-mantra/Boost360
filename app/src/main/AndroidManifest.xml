@@ -538,6 +538,7 @@
       </intent-filter>
     </activity>
     <activity
+        android:screenOrientation="portrait"
       android:name="com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"
       android:label="@string/title_activity_background_image_gallery"
       android:launchMode="singleTask"
@@ -1371,11 +1372,6 @@
 
     <activity
       android:name="com.nowfloats.helper.ReferralTransActivity"
-      android:screenOrientation="portrait"
-      android:theme="@style/Theme.Transparent.AppCompact" />
-
-    <activity
-      android:name="com.nowfloats.helper.ApiReLoadActivity"
       android:screenOrientation="portrait"
       android:theme="@style/Theme.Transparent.AppCompact" />
 

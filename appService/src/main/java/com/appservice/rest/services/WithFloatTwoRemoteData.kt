@@ -1,5 +1,6 @@
 package com.appservice.rest.services
 
+import com.appservice.model.product.ProductItemsResponseItem
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
@@ -98,4 +99,7 @@ interface WithFloatTwoRemoteData {
     @Query("sendToSubscribers") sendToSubscribers: Boolean?,
     @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
+
+  @GET(EndPoints.GET_PRODUCT_LIST)
+  fun getAllProducts(@QueryMap map: Map<String, String>): Observable<Response<Array<ProductItemsResponseItem>>>
 }

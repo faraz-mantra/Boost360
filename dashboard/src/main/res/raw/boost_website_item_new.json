@@ -1,0 +1,659 @@
+{
+  "data": [
+    {
+      "type": "DOC",
+      "action_item": [
+        {
+          "title": "Service catalogue",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add and manage services you will be providing to your patients & customers. This will make it easier for patients to schedule an appointment.",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Updates & health tips",
+          "count": 12,
+          "isFeature": false,
+          "desc": "Add updates like health tips, procedure details, offers, news etc. This is the information patients search online.",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All images",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Upload and manage all your website images in one place.",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add patient reviews and testimonials to improve trust.",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Website style customisation",
+          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "type": "website_theme",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom pages",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "HOS",
+      "action_item": [
+        {
+          "title": "Service catalogue",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add and manage services you will be providing to your patients & customers. This will make it easier for patients to schedule an appointment.",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Website style customisation",
+          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "type": "website_theme",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Updates & health tips",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add updates like health tips, procedure details, offers, news etc. This is the information patients search online.",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All images",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Upload and manage all your website images in one place.",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add patient reviews and testimonials to improve trust.",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom pages",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "RTL",
+      "action_item": [
+        {
+          "title": "Product catalogue",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add and manage products on your website catalogue. This will make it easier for customers to browse and order online.",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Website style customisation",
+          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "type": "website_theme",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Updates & news",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add updates like product launches, new trends, offers etc. This is the information customers search online.",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All images",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Upload and manage all your website images in one place.",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add customer reviews and testimonials to improve trust.",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom pages",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "EDU",
+      "action_item": [
+        {
+          "title": "Course catalogue",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add and manage courses on your website catalogue. This will make it easier for students to browse and request admission online.",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Website style customisation",
+          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "type": "website_theme",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Updates & tips",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add updates like new courses, admission updates, student achievements, events etc. This is the information students and parents search online.",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All images",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Upload and manage all your website images in one place.",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add student and parent testimonials to improve trust.",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Toppers of institute",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Showcase your top students with their testimonials on your website.",
+          "type": "toppers_institute",
+          "isLock": false,
+          "premiumCode": "OUR-TOPPERS"
+        },
+        {
+          "title": "Upcoming batches",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add all upcoming courses and classes in advance. This will help get admissions in advance.",
+          "type": "upcoming_batches",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Faculty & management",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Highlight profiles and credentials of faculty members and institute management.",
+          "type": "faculty_management",
+          "isLock": false,
+          "premiumCode": "FACULTY"
+        },
+        {
+          "title": "Custom pages",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "HOT",
+      "action_item": [
+        {
+          "title": "Room catalogue",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add your different room types to enable customers to book online.",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Website style customisation",
+          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "type": "website_theme",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Updates, news & events",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Regularly add updates like offers, festival updates, events etc to your website.",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All images",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Upload and manage all your website images in one place. Improve engagement on your website by adding images regularly.",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add customer reviews and testimonials to your website to improve trust.",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom page",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Places to look around",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add local attractions to engage potential customers and increase room booking rates.",
+          "type": "places_look_around",
+          "isLock": false,
+          "premiumCode": "PLACES-TO-LOOK-AROUND"
+        },
+        {
+          "title": "Tripadviser ratings",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add your Tripadvisor reviews on your website to improve trust.",
+          "type": "trip_adviser_ratings",
+          "isLock": false,
+          "premiumCode": "TRIPADVISOR-REVIEWS"
+        },
+        {
+          "title": "Seasonal offers",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add seasonal offers to increase your room booking rates.",
+          "type": "seasonal_offers",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "MFG",
+      "action_item": [
+        {
+          "title": "Product catalogue",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add and manage products on your website catalogue. This will make it easier for customers to browse and order online.",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Website style customisation",
+          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "type": "website_theme",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Updates & news",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add updates like new product launches, new trends, offers etc. This is the information customers search online.",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All images",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Upload and manage all your website images in one place.",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Project & teams",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add and manage details of projects executed. Or use this section to tell customers about your team and their qualification.",
+          "type": "project_teams",
+          "isLock": false,
+          "premiumCode": "PROJECTTEAM"
+        },
+        {
+          "title": "Testimonials",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add customer reviews and testimonials to improve trust.",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Unlimited digital brochures",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Upload and share brochures, product specifications or other downloadable documents with your customers.",
+          "type": "unlimited_digital_brochures",
+          "isLock": false,
+          "premiumCode": "BROCHURE"
+        },
+        {
+          "title": "Custom pages",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "type": "custom_page",
+          "isLock": false,
+          "count": 432,
+          "isFeature": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "CAF",
+      "action_item": [
+        {
+          "title": "Food & beverages menu",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add and manage items on your digital menu. This will allow customers to browse and order online.",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Website style customisation",
+          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "type": "website_theme",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Updates & tips",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add updates like recipes, food pairings, offers, events etc. This is the information customers search online.",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All images",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Upload and manage all your website images in one place.",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add customer reviews and testimonials to improve trust.",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom pages",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "SVC",
+      "action_item": [
+        {
+          "title": "Service catalogue",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Website style customisation",
+          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "type": "website_theme",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Updates & tips",
+          "desc": "Add updates like new services, DIY tips, offers, events etc. This is the information customers search online.",
+          "type": "latest_update_tips",
+          "count": 432,
+          "isFeature": false,
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All images",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Upload and manage all your website images in one place.",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add customer reviews and testimonials to improve trust.",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom pages",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "SAL",
+      "action_item": [
+        {
+          "title": "Service catalogue",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Website style customisation",
+          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "type": "website_theme",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Updates & tips",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add updates like new services, DIY tips, offers, events etc. This is the information customers search online.",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All images",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Upload and manage all your website images in one place.",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add customer reviews and testimonials to improve trust.",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom pages",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "SPA",
+      "action_item": [
+        {
+          "title": "Service catalogue",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Website style customisation",
+          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "type": "website_theme",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Latest updates & offers",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add updates like new services, health & beauty tips, offers, events etc. This is the information customers search online.",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All images",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Upload and manage all your website images in one place.",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add customer reviews and testimonials to improve trust.",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom pages",
+          "count": 432,
+          "isFeature": false,
+          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    }
+  ]
+}
+

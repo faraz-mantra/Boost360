@@ -1,12 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
-// for data binding
 apply plugin: 'kotlin-kapt'
-
-
 apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
@@ -108,9 +105,4 @@ dependencies {
     api project(path: ':onboarding')
 }
 
-
-//kotlin_version = '1.3.61'
-//version_navigation = '1.0.0'
-//lifecycle_version = "2.1.0"
-//lottieVersion = '3.3.1'
 

@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Utils;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -160,7 +161,7 @@ public class uploadFeaturedImage_Facebook extends AsyncTask<Void, String, String
             // Enable PUT method
             connection.setRequestMethod(Constants.HTTP_PUT);
             connection.setRequestProperty("Connection", "Keep-Alive");
-
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
 
             connection.setRequestProperty("Content-Type",
                     Constants.BG_SERVICE_CONTENT_TYPE_OCTET_STREAM);

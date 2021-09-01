@@ -63,6 +63,6 @@ data class FloatUpdate(
   }
 
   fun getMessageLength(): String? {
-    return if (this.message?.length ?: 0 > 200) this.message?.substring(0, 200) else this.message
+    return if (this.message?.length ?: 0 > 180) "${this.message?.substring(0, 180)}..." else this.message
   }
 }

@@ -78,123 +78,37 @@
         android:tag="0"
         android:visibility="gone" />
 
-
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:tag="1"
-        android:text="SERVICES" />
+        android:text="Services" />
 
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:tag="2"
-        android:text="UPDATES" />
+        android:text="Updates" />
 
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:tag="3"
-        android:text="PHOTOS" />
+        android:text="Photos" />
 
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:tag="4"
-        android:text="STAFF" />
+        android:text="Staff"
+        android:visibility="gone"/>
 
       <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:tag="5"
-        android:text="BUSINESS CARD" />
+        android:text="Business card" />
     </com.google.android.material.tabs.TabLayout>
-
-    <!--<LinearLayout
-        android:id="@+id/business_quick_actions_container"
-        style="@style/SmartbarContainer"
-        android:gravity="top">
-
-        <HorizontalScrollView
-            android:id="@+id/horizontal_scroll_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="top"
-            android:scrollbarAlwaysDrawHorizontalTrack="true"
-            android:scrollbarSize="2dp"
-            android:scrollbarThumbHorizontal="@color/light_grey_2"
-            android:scrollbars="horizontal">
-
-            <LinearLayout
-                android:id="@+id/business_quick_actions"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/tv_updates"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingStart="28dp"
-                    android:paddingEnd="28dp"
-                    android:paddingTop="5dp"
-                    android:text="UPDATES"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_products"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingStart="28dp"
-                    android:paddingEnd="28dp"
-                    android:paddingTop="5dp"
-                    android:text="INVENTORY"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_photos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingStart="28dp"
-                    android:paddingEnd="28dp"
-                    android:paddingTop="5dp"
-                    android:text="PHOTOS"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingStart="28dp"
-                    android:paddingEnd="28dp"
-                    android:paddingTop="5dp"
-                    android:text="DETAILS"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-        </HorizontalScrollView>
-
-        <View
-            android:id="@+id/tab_horizontal"
-            android:layout_width="70dp"
-            android:layout_height="0dp"
-            android:layout_gravity="bottom"
-            android:background="@color/white"
-            android:visibility="invisible" />
-
-    </LinearLayout>-->
 
     <LinearLayout
       android:id="@+id/candidates"

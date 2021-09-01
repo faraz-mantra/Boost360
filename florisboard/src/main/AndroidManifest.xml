@@ -21,10 +21,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE"/>
 
-    <application>
+    <application
+        android:name=".ime.core.FlorisApplication">
 
         <!-- IME service -->
         <service
+            android:process=":boostkeyobardprocess"
             android:name="dev.patrickgold.florisboard.ime.core.FlorisBoard"
             android:label="Boost"
             android:permission="android.permission.BIND_INPUT_METHOD">

@@ -168,8 +168,8 @@
     <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android vaatii, että jokainen erikseen asennettu näppäimistösovellus otetaan käyttöön manuaalisesti. Klikkaa allaolevaa painiketta avataksesi <i>Kielet ja syöttötapa</i>-asetukset ja varmista, että olet valinnut \'<i>FlorisBoardin</i>\'.</string>
     <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard on otettu onnistuneesti käyttöön. Klikkaa <i>SEURAAVA</i> jatkaaksesi!</string>
     <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Avaa Kielet ja syöttötapa-asetukset</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Käytä FlorisBoardia oletuksena</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">Florisboard on nyt otettu järjestelmän käyttöön. Käyttääksesi sitä aktiivisesti, valitse FlorisBoard syöttötavaksi valintaikkunassa!</string>
+    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Use Boost keyboard by default</string>
+    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">Boost keyboard has now been introduced into the system. To use it actively, select Boost keyboard as the input method in the dialog!</string>
     <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Oletusnäppäimistö muutettu FlorisBoardiksi!</string>
     <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Vaihda näppäimistö</string>
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Asennus valmis!</string>

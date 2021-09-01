@@ -8,6 +8,7 @@ import com.nowfloats.ProductGallery.Product_Detail_Activity_V45;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import java.io.BufferedReader;
@@ -115,7 +116,7 @@ public class ProductImageUploadV45 extends AsyncTask<String, String, String> {
             connection.setRequestMethod(Constants.HTTP_PUT);
             connection.setRequestProperty("Connection", "Keep-Alive");
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
             if (imageData != null) {
                 outputStream = new DataOutputStream(connection.getOutputStream());
                 outputStream.write(imageData, 0, imageData.length);
