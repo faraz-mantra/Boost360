@@ -51,8 +51,11 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   override fun onCreateView() {
     this.session = UserSessionManager(baseActivity)
     WebEngageController.trackEvent(DASHBOARD_MORE_PAGE, PAGE_VIEW, session?.fpTag)
+    setOnClickListener(
+      binding?.rivUsersImage, binding?.rivBusinessImage, binding?.civProfile,
+      binding?.ctvContent, binding?.businessProfile, binding?.ctvName, binding?.boostSubscription
+    )
     setData()
-    setOnClickListener(binding?.rivUsersImage, binding?.rivBusinessImage, binding?.civProfile, binding?.ctvContent, binding?.ctvName, binding?.boostSubscription)
   }
 
   private fun setData() {
@@ -226,6 +229,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       binding?.boostSubscription -> {
         baseActivity.initiateAddonMarketplace(session!!, false, "", "")
       }
+      binding?.businessProfile -> baseActivity.startBusinessProfileDetailEdit(session)
     }
   }
 
