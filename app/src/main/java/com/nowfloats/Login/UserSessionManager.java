@@ -14,6 +14,7 @@ import com.appservice.AppServiceApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignin.ui.intro.IntroActivity;
 import com.dashboard.AppDashboardApplication;
+import com.framework.utils.PreferencesUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.inventoryorder.BaseOrderApplication;
@@ -46,6 +47,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.utils.PreferencesUtilsKt.deleteAllData;
 import static com.nowfloats.util.Key_Preferences.MAIN_PRIMARY_CONTACT_NUM;
 
 /**
@@ -986,9 +988,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
       DataBase db = new DataBase(activity);
       DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
       db.deleteLoginStatus();
-      pref.edit().clear().apply();
+      activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE).edit().clear().apply();
       activity.getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE).edit().clear().apply();
-      activity.getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().clear().apply();
+      deleteAllData(PreferencesUtils.Companion.getInstance());
 
       AppController.getInstance().clearApplicationData();
       Date date = new Date(System.currentTimeMillis());
