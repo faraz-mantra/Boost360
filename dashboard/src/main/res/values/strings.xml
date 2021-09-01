@@ -207,7 +207,7 @@
   <string name="currently_managing">Currently managing</string>
   <string name="new_offers">New offers</string>
   <string name="my_boost_360_subscription">My Boost 360 subscription</string>
-  <string name="useful_links">Useful links</string>
+  <string name="useful_links">Helpful resources</string>
   <string name="help_and_support">Help and support</string>
   <string name="faqs_help_support_notifications_etc"><![CDATA[FAQs, help & support, notifications etc.]]></string>
   <string name="my_business_kyc">My business KYC</string>
@@ -248,6 +248,6 @@
   <string name="super_admin">Super admin</string>
   <string name="boost_360_is_proudly_made_in_india">Boost 360 is Proudly made in INDIA</string>
   <string name="fonts_and_color_styles">Font &amp; Color Styles</string>
-  <string name="manage_your_current_plan_or_upgrade_to_a_recommended_plan_with_better_features">Manage your current plan or upgrade to a recommended plan with better features.</string>
+  <string name="manage_your_current_plan_or_upgrade_to_a_recommended_plan_with_better_features">Upgrade website with great features, offers for you, current plan, purchase history, invoice and more.</string>
   <string name="google_form_help_business_boost">https://forms.gle/F1tj5tETRHBdR2AaA</string>
 </resources>

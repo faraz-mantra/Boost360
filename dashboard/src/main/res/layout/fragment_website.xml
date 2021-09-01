@@ -16,8 +16,7 @@
       android:id="@+id/main_content"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/white_smoke_1"
-      >
+      android:background="@color/white_smoke_1">
 
       <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearLayoutCompat6"
@@ -83,7 +82,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/size_8"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomTextView
@@ -92,7 +90,7 @@
                   android:layout_height="wrap_content"
                   android:ellipsize="end"
                   android:includeFontPadding="false"
-                  android:lineSpacingExtra="-6dp"
+                  android:lineSpacingExtra="-4dp"
                   android:maxLines="2"
                   android:textColor="@color/white"
                   app:fontFamily="@font/semi_bold"
@@ -257,6 +255,7 @@
             android:layout_marginEnd="@dimen/size_2"
             android:textColor="@color/white_green_light"
             android:textFontWeight="400"
+            app:fontFamily="@font/barlow_regular"
             app:textType="CAPTION"
             tools:targetApi="p" />
 

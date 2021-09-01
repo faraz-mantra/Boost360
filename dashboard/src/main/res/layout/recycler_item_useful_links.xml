@@ -28,7 +28,6 @@
         android:paddingHorizontal="@dimen/size_8"
         android:paddingVertical="2dp"
         android:text="@string/need_action"
-        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textFontWeight="700"
         android:textSize="11sp"

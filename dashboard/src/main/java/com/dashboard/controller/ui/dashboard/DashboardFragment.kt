@@ -136,20 +136,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     session = UserSessionManager(baseActivity)
     session?.let { deepLinkUtil = DeepLinkUtil(baseActivity, it) }
     setOnClickListener(
-      binding?.btnBusinessLogo,
-      binding?.btnNotofication,
-      binding?.filterBusinessReport,
-      binding?.filterWebsiteReport,
-      binding?.btnVisitingCard,
-      binding?.txtDomainName,
-      binding?.btnShowDigitalScore,
-      binding?.retryDrScore,
-      binding?.viewEmptyEnquiries?.btnWhatsappEnquiries,
-      binding?.viewEmptyEnquiries?.btnInstagramEnquiries,
-      binding?.viewEmptyEnquiries?.btnTelegramEnquiries,
-      binding?.viewEmptyEnquiries?.btnMessangerEnquiries,
-      binding?.viewEmptyEnquiries?.btnEmailEnquiries,
-      binding?.viewEmptyEnquiries?.btnOtherShareEnquiries
+      binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport, binding?.retryDrScore,
+      binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.viewEmptyEnquiries?.btnWhatsappEnquiries,
+      binding?.viewEmptyEnquiries?.btnInstagramEnquiries, binding?.viewEmptyEnquiries?.btnTelegramEnquiries, binding?.viewEmptyEnquiries?.btnMessangerEnquiries,
+      binding?.viewEmptyEnquiries?.btnEmailEnquiries, binding?.viewEmptyEnquiries?.btnOtherShareEnquiries
     )
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion1?.text = "Version $versionName"
@@ -187,8 +177,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         mainView.visible()
         if (adapterSocialMedia == null) {
           rvMediaChannel.apply {
-            adapterSocialMedia =
-              AppBaseRecyclerViewAdapter(baseActivity, channels, this@DashboardFragment)
+            adapterSocialMedia = AppBaseRecyclerViewAdapter(baseActivity, channels, this@DashboardFragment)
             adapter = adapterSocialMedia
           }
         } else adapterSocialMedia?.notify(channels)
@@ -1175,11 +1164,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-  override fun onRequestPermissionsResult(
-    requestCode: Int,
-    permissions: Array<out String>,
-    grantResults: IntArray
-  ) {
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
     when (requestCode) {
       100 -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -1232,8 +1217,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         val response = it as? ChannelAccessStatusResponse
         connectedChannels.clear()
         if (response?.channels?.facebookpage?.status == CHANNEL_STATUS_SUCCESS) {
-          urlString =
-            "\n⚡ *Facebook: https://www.facebook.com/${response.channels?.facebookpage?.account?.accountId}*"
+          urlString = "\n⚡ *Facebook: https://www.facebook.com/${response.channels?.facebookpage?.account?.accountId}*"
           connectedChannels.add(ChannelsType.AccountType.facebookpage.name)
         }
         if (response?.channels?.twitter?.status == CHANNEL_STATUS_SUCCESS) {

@@ -3,8 +3,8 @@
     {
       "icon": "ria_digital_assistant",
       "isActionButtonEnabled": false,
-      "subtitle": "Got a question? The answer’s here.",
-      "title": "Help & support"
+      "subtitle": "FAQs, help & support, notifications etc.",
+      "title": "Help and support"
     },
     {
       "icon": "business_kyc",
@@ -20,8 +20,8 @@
     {
       "icon": "boost_keyboard",
       "isActionButtonEnabled": false,
-      "subtitle": "Your all-in-one keyboard for online promotion.",
-      "title": "360 keyboard"
+      "subtitle": "Share business details with customers.",
+      "title": "Business keyboard"
     },
     {
       "icon": "refer_and_earn",
@@ -31,7 +31,7 @@
         "text_color": "#FFFFFF"
       },
       "isActionButtonEnabled": true,
-      "subtitle": "Help your friends, receive a gift!",
+      "subtitle": "Help your friends grow along.",
       "title": "Refer & earn"
     },
     {
@@ -42,7 +42,7 @@
         "text_color": "#7ED321"
       },
       "isActionButtonEnabled": true,
-      "subtitle": "Add & manage your bank account.",
+      "subtitle": "Connect & manage your bank account.",
       "title": "My bank account"
     },
     //    {
@@ -52,7 +52,7 @@
     //        "title": "New"
     //      },
     //      "isActionButtonEnabled": false,
-    //      "subtitle": "Great courses to help you learn and grow more.",
+    //      "subtitle": "Learn to make the most of your business website.",
     //      "title": "Boost 360 academy"
     //    },
     {
@@ -62,7 +62,7 @@
         "title": "New"
       },
       "isActionButtonEnabled": false,
-      "subtitle": "Become an expert at marketing your business online.",
+      "subtitle": "Become an expert at marketing.",
       "title": "Boost 360 training\n& certification"
     },
     {
@@ -72,15 +72,15 @@
         "title": "New"
       },
       "isActionButtonEnabled": false,
-      "subtitle": "Integrate your website with WordPress website.",
+      "subtitle": "Already have a website? Connect with Boost 360.",
       "title": "Boost 360\nextensions"
     }
   ],
   "about_app_section": [
     //  {
     //    "icon": "whats_new_version",
-    //    "subtitle": "WordPress integration, bug fixes & additional features.",
-    //    "title": "What’s new in this version?",
+    //    "subtitle": "<data would change dynamically based on features>",
+    //    "title": "What’s new in latest version",
     //    "actionBtn": {
     //      "color": "#FFB900",
     //      "text_color":"#FFFFFF",
@@ -94,27 +94,27 @@
     },
     {
       "icon": "like_us_on_facebook",
-      "subtitle": "Stay connected with us for new updates & offers.",
+      "subtitle": "Become a part of the Boost 360 community.",
       "title": "Like us on Facebook"
     },
     {
       "icon": "follow_us_on_twitter",
-      "subtitle": "Get a quick update on our latest updates & offers.",
+      "subtitle": "Discover more about Boost 360 on Twitter.",
       "title": "Follow us on Twitter"
     },
     {
       "icon": "rate_us_on_google_play",
-      "subtitle": "Review us on Playstore and help recommend Boost 360 to other businesses.",
+      "subtitle": "Help us improve further with your positive reviews.",
       "title": "Rate us on Playstore"
     },
     {
       "icon": "terms_of_usages",
-      "subtitle": "Learn about the",
+      "subtitle": "Last updated on Nov 22, 2020.",
       "title": "Terms of use"
     },
     {
       "icon": "privacy_policy",
-      "subtitle": "Read about our privacy policy",
+      "subtitle": "Last updated on Nov 22, 2020.",
       "title": "Privacy policy"
     },
     {

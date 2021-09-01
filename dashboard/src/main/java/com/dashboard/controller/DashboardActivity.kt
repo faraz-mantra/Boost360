@@ -9,6 +9,7 @@ import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavArgument
@@ -221,6 +222,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun getToolbar(): CustomToolbar? {
     return binding?.toolbar
+  }
+
+  override fun getToolbarTitleTypeface(): Typeface? {
+    return ResourcesCompat.getFont(this, R.font.bold)
   }
 
   override fun getToolbarTitleSize(): Float {
