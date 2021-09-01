@@ -302,8 +302,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   }
 
   private fun showPopupWindow(anchor: View) {
-    val view =
-      LayoutInflater.from(baseActivity).inflate(R.layout.popup_window_website_menu, null)
+    val view = LayoutInflater.from(baseActivity).inflate(R.layout.popup_window_website_menu, null)
     this.popupWindow = PopupWindow(view, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
     val needHelp = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.need_help)
     val resetDefault = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.reset_default)
@@ -314,8 +313,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
       openResetDialog()
       this.popupWindow?.dismiss()
     }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) this.popupWindow?.elevation =
-      5.0F
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) this.popupWindow?.elevation = 5.0F
     this.popupWindow?.showAsDropDown(anchor, 0, 0)
   }
 

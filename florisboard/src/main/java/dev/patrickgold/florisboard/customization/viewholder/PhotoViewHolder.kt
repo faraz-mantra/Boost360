@@ -1,6 +1,7 @@
 package dev.patrickgold.florisboard.customization.viewholder
 
 import android.widget.LinearLayout
+import com.bumptech.glide.Glide
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.squareup.picasso.Picasso
@@ -10,6 +11,7 @@ import dev.patrickgold.florisboard.customization.adapter.BaseRecyclerViewHolder
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.model.response.Photo
 import dev.patrickgold.florisboard.databinding.AdapterItemPhotosBinding
+import dev.patrickgold.florisboard.ime.core.FlorisApplication
 
 class PhotoViewHolder(binding: AdapterItemPhotosBinding, val listener: OnItemClickListener?) : BaseRecyclerViewHolder<AdapterItemPhotosBinding>(binding) {
 
@@ -18,7 +20,7 @@ class PhotoViewHolder(binding: AdapterItemPhotosBinding, val listener: OnItemCli
     val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, photo.gridType.width)
     params.setMargins(8, 14, 8, 4)
     binding.maimView.layoutParams = params
-    Picasso.get().load(photo.imageUri).placeholder(R.drawable.placeholder_ic_image_padded).fit().centerCrop().into(binding.imageView)
+    Glide.with(FlorisApplication.instance).load(photo.imageUri).placeholder(R.drawable.placeholder_ic_image_padded).centerCrop().into(binding.imageView)
     if (photo.selected) {
       binding.overlay.visible()
       binding.ivChecked.visible()

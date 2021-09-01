@@ -2,11 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
   <item
-    android:id="@+id/menu_help"
-    android:title="@string/share"
-    android:icon="@drawable/ic_help_white"
+    android:id="@+id/menu_more"
+    android:icon="@drawable/ic_baseline_more_vert_24"
+    android:title="@string/more"
     app:showAsAction="always" />
-
 </menu>
