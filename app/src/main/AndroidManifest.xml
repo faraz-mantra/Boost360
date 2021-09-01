@@ -538,6 +538,7 @@
       </intent-filter>
     </activity>
     <activity
+        android:screenOrientation="portrait"
       android:name="com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"
       android:label="@string/title_activity_background_image_gallery"
       android:launchMode="singleTask"
