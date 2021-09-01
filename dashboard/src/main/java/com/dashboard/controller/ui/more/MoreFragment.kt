@@ -50,6 +50,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
 
   override fun onCreateView() {
     this.session = UserSessionManager(baseActivity)
+    WebEngageController.trackEvent(DASHBOARD_MORE_PAGE, PAGE_VIEW, session?.fpTag)
     setData()
     setOnClickListener(binding?.rivUsersImage, binding?.rivBusinessImage, binding?.civProfile, binding?.ctvContent, binding?.ctvName, binding?.boostSubscription)
   }
@@ -116,9 +117,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       UsefulLinksItem.IconType.my_bank_acccount -> baseActivity.startMyBankAccount(session!!)
       UsefulLinksItem.IconType.refer_and_earn -> baseActivity.startReferralView(session!!)
       UsefulLinksItem.IconType.ria_digital_assistant -> baseActivity.startHelpAndSupportActivity(session!!)
-      UsefulLinksItem.IconType.training_and_certification -> {
-        trainingCertification()
-      }
+      UsefulLinksItem.IconType.training_and_certification -> trainingCertification()
     }
   }
 
@@ -129,7 +128,6 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
         baseActivity.startMobileSite(session, getString(R.string.setting_faq_url), ABOUT_BOOST_FAQS)
       }
       terms_of_usages -> {
-        WebEngageController.trackEvent(ABOUT_BOOST_TNC, NO_EVENT_LABLE, NULL)
         baseActivity.startMobileSite(session, resources.getString(R.string.settings_tou_url), ABOUT_BOOST_TNC)
       }
       follow_us_on_twitter -> {
@@ -139,11 +137,9 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
         businessGoogleForm()
       }
       privacy_policy -> {
-        WebEngageController.trackEvent(ABOUT_BOOST_PRIVACY, NO_EVENT_LABLE, NULL)
         baseActivity.startMobileSite(session, resources.getString(R.string.settings_privacy_url), ABOUT_BOOST_PRIVACY)
       }
       like_us_on_facebook -> {
-        WebEngageController.trackEvent(ABOUT_BOOST_FB_LIKE, NO_EVENT_LABLE, NULL)
         likeUsFacebook(baseActivity, "")
       }
       rate_us_on_google_play -> {
@@ -158,13 +154,13 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     if (session?.getStoreWidgets()?.contains("MERCHANT_TRAINING") == true) {
       baseActivity.startMobileSite(session, getString(R.string.product_training_link), ABOUT_BOOST_TRAINING)
     } else {
-      WebEngageController.trackEvent(ABOUT_BOOST_TRAINING, CLICK, TO_BE_ADDED)
+      WebEngageController.trackEvent(ABOUT_BOOST_TRAINING, CLICK, NO_EVENT_VALUE)
       showDialog(baseActivity, getString(R.string.restricted_access), getString(R.string.you_need_to_buy_the_one_time_pack_for_boost)) { dialog, _ -> dialog?.dismiss() }
     }
   }
 
   private fun followUsTwitter() {
-    WebEngageController.trackEvent(ABOUT_BOOST_TWITTER_LIKE, NO_EVENT_LABLE, NULL)
+    WebEngageController.trackEvent(ABOUT_BOOST_TWITTER_LIKE, CLICK, NO_EVENT_VALUE)
     val intent = Intent(Intent.ACTION_VIEW)
     try {
       requireActivity().packageManager.getPackageInfo(getString(R.string.twitter_package), 0)
@@ -183,7 +179,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     try {
       startActivity(goToMarket)
-      WebEngageController.trackEvent(ABOUT_BOOST_PLAY_STORE_RATING, NO_EVENT_LABLE, NULL)
+      WebEngageController.trackEvent(ABOUT_BOOST_PLAY_STORE_RATING, CLICK, NO_EVENT_VALUE)
     } catch (e: ActivityNotFoundException) {
       val url = resources.getString(R.string.settings_rate_us_link)
       baseActivity.startMobileSite(session, url, ABOUT_BOOST_PLAY_STORE_RATING)
@@ -191,6 +187,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   }
 
   private fun businessGoogleForm() {
+    WebEngageController.trackEvent(BOOST_FEEDBACK_GOOGLE_FORM, CLICK, NO_EVENT_VALUE)
     try {
       val i = Intent(Intent.ACTION_VIEW)
       i.data = Uri.parse(getString(R.string.google_form_help_business_boost))
@@ -206,8 +203,9 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       .setCancelable(false)
       .setMessage(R.string.are_you_sure)
       .setPositiveButton(R.string.logout) { dialog: DialogInterface, _: Int ->
-        dialog.dismiss()
+        WebEngageController.trackEvent(BOOST_LOGOUT_CLICK, CLICK, NO_EVENT_VALUE)
         logout()
+        dialog.dismiss()
       }.setNegativeButton(R.string.cancel) { dialog: DialogInterface, _: Int ->
         dialog.dismiss()
       }.show()
@@ -262,6 +260,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
   }
 
   private fun likeUsFacebook(context: Context, review: String) {
+    WebEngageController.trackEvent(ABOUT_BOOST_FB_LIKE, CLICK, NO_EVENT_VALUE)
     val facebookIntent: Intent = try {
       context.packageManager.getPackageInfo(context.getString(R.string.facebook_package), 0)
       Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK_PAGE_WITH_ID))
