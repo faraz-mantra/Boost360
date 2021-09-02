@@ -16,6 +16,7 @@ import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
+import com.framework.utils.RootUtil
 import com.framework.utils.makeLinks
 import com.framework.webengageconstant.*
 
@@ -104,15 +105,16 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     }
 //    binding?.introViewpager?.setPageTransformer(ViewPager2Transformation())
     binding?.btnCreate?.setOnClickListener {
+      if (RootUtil.isDeviceRooted.not()) {
 //    navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "8097789896") })
-      WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
-      if (packageName.equals("com.jio.online", ignoreCase = true)) {
-        startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
-      } else {
-        startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
-      }
+        WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
+        if (packageName.equals("com.jio.online", ignoreCase = true)) {
+          startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
+        } else {
+          startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
+        }
+      }else showLongToast("JioOnline app will not work on your phone, because your phone is rooted!")
     }
-
   }
 
   private fun setNextPage() {
