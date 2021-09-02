@@ -227,13 +227,13 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           updateUiConsult()
         }
 //        getWeeklyScheduleList(doctorData?.id ?: "")
-        when (serviceData!=null) {
+        when (serviceList?.firstOrNull()!=null) {
           true -> {
             val startDate = getDateTime()
             val endDate = getDateTime()
             val bookingSlotsRequest = BookingSlotsRequest(
               BatchType = "WEEKLY",
-              ServiceId = serviceData?.id?:"",
+              ServiceId = serviceList?.firstOrNull()?.id?:"",
               DateRange = DateRange(StartDate = startDate, EndDate = endDate)
             )
             getBookingSlots(bookingSlotsRequest)
@@ -907,7 +907,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 //        binding?.groupTiming?.visibility = View.VISIBLE
 //        binding?.layoutShowSelectedSlot?.visibility = View.GONE
       } else {
-        showLongToast(getString(R.string.doctor_weekly_schedule_not_available))
+        errorUi(getString(R.string.doctor_weekly_schedule_not_available))
 //        binding?.groupTiming?.visibility = View.GONE
       }
     })
