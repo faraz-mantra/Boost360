@@ -143,4 +143,7 @@ dependencies {
     //smartlook heat map generator
     implementation 'com.smartlook.recording:app:1.8.3-native'
 
+    //userexperior for tracking
+    implementation 'com.userexperior:userexperior-android:6.0.9'
+
 }
