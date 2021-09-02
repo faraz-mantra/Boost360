@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import com.nowfloats.hotel.Interfaces.SeasonalOffersDetailsListener;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;

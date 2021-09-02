@@ -18,6 +18,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import retrofit.Callback;
@@ -55,6 +56,7 @@ public class FacebookFeedPullRegistrationAsyncTask {
                 .setLog(new AndroidLog("ggg"))
                 .setLogLevel(RestAdapter.LogLevel.FULL)*/
                 .setEndpoint(Constants.NOW_FLOATS_API_URL)
+                .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                 .build();
         pullRegistration reg = adapter.create(pullRegistration.class);
         reg.autoRegistration(obj, new Callback<String>() {
@@ -100,6 +102,7 @@ public class FacebookFeedPullRegistrationAsyncTask {
                 .setLog(new AndroidLog("ggg"))
                 .setLogLevel(RestAdapter.LogLevel.FULL)*/
                 .setEndpoint(Constants.NOW_FLOATS_API_URL)
+                .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                 .build();
         pullRegistration reg = adapter.create(pullRegistration.class);
         reg.autoUpdate(obj, new Callback<String>() {

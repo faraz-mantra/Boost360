@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
 import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
@@ -118,6 +119,7 @@ public class NewDomainFragment extends Fragment {
             showProgress();
             APIInterfaces APICalls = new RestAdapter.Builder()
                     .setEndpoint("http://plugin.withfloats.com")
+                    .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setLog(new AndroidLog("ggg"))
                     .build()
