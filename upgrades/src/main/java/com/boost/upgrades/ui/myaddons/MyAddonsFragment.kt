@@ -77,7 +77,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
       .get(MyAddonsViewModel::class.java)
 
     progressDialog = ProgressDialog(requireContext())
-    var purchasedPack = arguments!!.getStringArrayList("userPurchsedWidgets")
+    var purchasedPack = requireArguments().getStringArrayList("userPurchsedWidgets")
     if (purchasedPack != null) {
       purchasedPackages = purchasedPack
     }
@@ -251,6 +251,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 
   private fun loadData() {
     viewModel.loadUpdates(
+      (activity as? UpgradeActivity)?.getAccessToken()?:"",
       (activity as UpgradeActivity).fpid!!,
       (activity as UpgradeActivity).clientid
     )

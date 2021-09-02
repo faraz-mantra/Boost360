@@ -12,6 +12,7 @@ import com.nowfloats.BusinessProfile.UI.UI.ListenerRepose;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import org.json.JSONObject;
@@ -71,6 +72,7 @@ public class UploadProfileAsyncTask extends AsyncTask<Void, String, String> {
             // Enable PUT method
             connection.setRequestMethod(requestMethod);
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
 
             connection.setRequestProperty("Content-Type", contentType);
 

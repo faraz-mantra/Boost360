@@ -3,6 +3,8 @@ package com.nowfloats.NavigationDrawer.API;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.nowfloats.util.Utils;
+
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -60,6 +62,7 @@ public class OfferImageUploadService extends AsyncTask<String, Void, String> {
             connection.setRequestMethod("PUT");
 
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
 
             outputStream = new DataOutputStream(connection.getOutputStream());
 

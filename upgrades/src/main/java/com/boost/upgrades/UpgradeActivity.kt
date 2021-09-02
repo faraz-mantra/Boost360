@@ -43,11 +43,15 @@ import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import com.framework.webengageconstant.*
 import com.boost.upgrades.utils.NetworkConnectivitySpeed.checkNetworkType
+import com.framework.pref.TokenResult
+import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.lang.IllegalStateException
 
 
 class UpgradeActivity : AppCompatActivity() {
@@ -189,6 +193,9 @@ class UpgradeActivity : AppCompatActivity() {
       e.printStackTrace()
     }
   }
+  fun getAccessToken(): String {
+   return UserSessionManager(this).getAccessTokenAuth()?.barrierToken()?:""
+  }
 
   private fun performBackPressed() {
     try {
@@ -296,7 +303,11 @@ class UpgradeActivity : AppCompatActivity() {
   }
 
   fun popFragmentFromBackStack() {
-    fragmentManager!!.popBackStack()
+    try {
+      fragmentManager!!.popBackStack()
+    } catch (e: IllegalStateException){
+      //ignore
+    }
   }
 
   fun goToHomeFragment() {
