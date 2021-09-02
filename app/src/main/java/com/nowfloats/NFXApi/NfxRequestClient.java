@@ -14,6 +14,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -183,6 +184,7 @@ public class NfxRequestClient {
                 map.put("key", "78234i249123102398");
                 map.put("pwd", "JYUYTJH*(*&BKJ787686876bbbhl");
                 map.put("Content-Type", "application/json");
+                map.put("Authorization", Utils.getAuthToken());
                 return map;
             }
 
@@ -229,6 +231,7 @@ public class NfxRequestClient {
                 map.put("key", "78234i249123102398");
                 map.put("pwd", "JYUYTJH*(*&BKJ787686876bbbhl");
                 map.put("Content-Type", "application/json");
+                map.put("Authorization", Utils.getAuthToken());
                 return map;
             }
         };
@@ -283,6 +286,7 @@ public class NfxRequestClient {
                 map.put("key", "78234i249123102398");
                 map.put("pwd", "JYUYTJH*(*&BKJ787686876bbbhl");
                 map.put("Content-Type", "application/json");
+                map.put("Authorization", Utils.getAuthToken());
                 return map;
             }
 

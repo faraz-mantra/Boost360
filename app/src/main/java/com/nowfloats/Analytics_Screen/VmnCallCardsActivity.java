@@ -30,6 +30,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
@@ -499,6 +500,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 //        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
         CallTrackerApis trackerApis = new RestAdapter.Builder()
                 .setEndpoint("https://riamemory.withfloats.com")
+                .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(new AndroidLog("ggg"))
                 .build()
@@ -536,6 +538,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 //        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
         CallTrackerApis trackerApis = new RestAdapter.Builder()
                 .setEndpoint("https://riamemory.withfloats.com")
+                .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(new AndroidLog("ggg"))
                 .build()
