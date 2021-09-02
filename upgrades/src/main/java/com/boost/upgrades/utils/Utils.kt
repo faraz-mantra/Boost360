@@ -40,13 +40,12 @@ object Utils {
     return client.build()
   }
   fun httpClient(token: String? = null): OkHttpClient {
-
-    val authInterceptor = ServiceInterceptor(false, token)
+//    val authInterceptor = ServiceInterceptor(false, token)
     val httpClient = OkHttpClient.Builder()
     httpClient.readTimeout(2, TimeUnit.MINUTES)
       .connectTimeout(2, TimeUnit.MINUTES)
       .writeTimeout(2, TimeUnit.MINUTES)
-    httpClient.addInterceptor(authInterceptor)
+//    httpClient.addInterceptor(authInterceptor)
     return httpClient.build()
   }
 
