@@ -9,8 +9,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.boost.upgrades.data.api_model.GetAllWidgets.GetAllWidgets
 import com.boost.upgrades.utils.Constants.Companion.BASE_URL
+import com.framework.rest.ServiceInterceptor
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,20 +21,32 @@ import java.io.IOException
 import java.io.InputStream
 import java.lang.Integer.parseInt
 import java.util.*
+import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 object Utils {
 
+
   //getting retrofit instance
-  fun getRetrofit(): Retrofit {
-    return Retrofit.Builder()
-      .baseUrl(BASE_URL)
-      .addConverterFactory(ScalarsConverterFactory.create())
-      .addConverterFactory(GsonConverterFactory.create())
-      .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-      .build()
+  fun getRetrofit(token: String? = null): Retrofit {
+    val client = Retrofit.Builder()
+    client.baseUrl(BASE_URL)
+    client.addConverterFactory(ScalarsConverterFactory.create())
+    client.addConverterFactory(GsonConverterFactory.create())
+    client.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+    client.client(httpClient(token))
+    return client.build()
+  }
+  fun httpClient(token: String? = null): OkHttpClient {
+//    val authInterceptor = ServiceInterceptor(false, token)
+    val httpClient = OkHttpClient.Builder()
+    httpClient.readTimeout(2, TimeUnit.MINUTES)
+      .connectTimeout(2, TimeUnit.MINUTES)
+      .writeTimeout(2, TimeUnit.MINUTES)
+//    httpClient.addInterceptor(authInterceptor)
+    return httpClient.build()
   }
 
   fun hideSoftKeyboard(activity: Activity) {

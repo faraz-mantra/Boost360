@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
@@ -21,11 +22,15 @@ import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
 import static com.framework.webengageconstant.EventNameKt.PS_FORGOT_PASSWORD_PAGE_LOAD;
@@ -131,6 +136,17 @@ public class ForgotPassword extends Activity {
                     isUpdatedOnServer = false;
                 }
                 return null;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // Basic Authentication
+                //String auth = "Basic " + Base64.encodeToString(CONSUMER_KEY_AND_SECRET.getBytes(), Base64.NO_WRAP);
+
+                headers.put("Authorization",Utils.getAuthToken());
+                return headers;
+
             }
         };
         queue.add(req);

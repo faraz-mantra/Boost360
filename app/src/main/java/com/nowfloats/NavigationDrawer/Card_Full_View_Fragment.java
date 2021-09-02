@@ -36,6 +36,8 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
+import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
@@ -223,7 +225,9 @@ public class Card_Full_View_Fragment extends Fragment {
                     }
                 };
 
-                Picasso.get()
+                new Picasso.Builder(getActivity())
+                        .downloader(new OkHttp3Downloader(Utils.getAuthClient()))
+                        .build()
                         .load(url)
                         .into(target);
 
@@ -295,7 +299,9 @@ public class Card_Full_View_Fragment extends Fragment {
                         } else {
                             url = imageUri;
                         }
-                        Picasso.get()
+                        new Picasso.Builder(getActivity())
+                                .downloader(new OkHttp3Downloader(Utils.getAuthClient()))
+                                .build()
                                 .load(url)
                                 .into(new Target() {
                                     @Override

@@ -90,6 +90,7 @@ public final class GetStoreFrontImageAsyncTask extends AsyncTask<Void, String, S
             Bitmap response = null;
             DefaultHttpClient client = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(serverUri);
+            httpGet.setHeader("Authorization", Utils.getAuthToken());
             HttpResponse execute = client.execute(httpGet);
             InputStream content = execute.getEntity().getContent();
             response = BitmapFactory.decodeStream(content);

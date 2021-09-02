@@ -16,6 +16,7 @@ import com.nowfloats.NavigationDrawer.Home_Main_Fragment;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 
 import org.apache.http.HttpResponse;
@@ -152,10 +153,12 @@ public class Home_View_Card_Delete extends AsyncTask<Void, String, String> {
 
         HttpClient httpclient = new DefaultHttpClient();
         HttpDeleteWithBody del = new HttpDeleteWithBody(url);
+        del.setHeader("Authorization", Utils.getAuthToken());
         StringEntity se;
         try {
             se = new StringEntity(values.toString(), HTTP.UTF_8);
             se.setContentType("application/json");
+
 
             del.setEntity(se);
 

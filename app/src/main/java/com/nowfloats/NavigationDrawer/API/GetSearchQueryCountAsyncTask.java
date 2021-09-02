@@ -9,6 +9,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Analytics_Fragment;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Utils;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -70,6 +71,8 @@ public class GetSearchQueryCountAsyncTask extends AsyncTask<Void, String, String
 
             HttpGet httpRequest = new HttpGet();
             httpRequest.setURI(website);
+            httpRequest.addHeader("Authorization", Utils.getAuthToken());
+            ;
             HttpResponse responseOfSite = client.execute(httpRequest);
             HttpEntity entity = responseOfSite.getEntity();
 

@@ -2,6 +2,7 @@ package com.nowfloats.BusinessProfile.UI.API;
 
 import com.nowfloats.NavigationDrawer.API.GetAutoPull;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Utils;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -18,6 +19,7 @@ public class Facebook_Auto_Publish_API {
                 /*.setLog(new AndroidLog("ggg"))
                 .setLogLevel(RestAdapter.LogLevel.FULL)*/
                 .setEndpoint(Constants.NOW_FLOATS_API_URL)
+                .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                 .build();
         return adapter.create(autoPullApi.class);
     }

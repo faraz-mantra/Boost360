@@ -160,8 +160,8 @@
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingEnd="@dimen/_15sdp"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:text="add to cart"
-                        android:textAllCaps="true"
+                        android:text="Add to cart"
+                        android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textFontWeight="800"
                         android:textSize="@dimen/txt_10sp" />
@@ -181,8 +181,8 @@
                         android:paddingEnd="@dimen/_15sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:text="Details"
-                        android:textAllCaps="true"
-                        android:textColor="@color/addons_text_color"
+                        android:textAllCaps="false"
+                        android:textColor="#FFB900"
                         android:textFontWeight="800"
                         android:textSize="@dimen/txt_10sp" />
                 </LinearLayout>

@@ -17,6 +17,7 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.UploadLargeImage;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import org.json.JSONObject;
@@ -180,6 +181,7 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
             // Enable PUT method
             connection.setRequestMethod(Constants.HTTP_PUT);
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
             if (!url.toLowerCase().contains("createbizimage"))
                 connection.setRequestProperty("Content-Type",
                         "application/x-www-form-urlencoded");

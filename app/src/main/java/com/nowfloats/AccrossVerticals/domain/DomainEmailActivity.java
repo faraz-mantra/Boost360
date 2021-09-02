@@ -19,6 +19,7 @@ import com.nowfloats.AccrossVerticals.domain.ui.DomainPurchased.DomainPurchasedF
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import retrofit.Callback;
@@ -136,6 +137,7 @@ public class DomainEmailActivity extends AppCompatActivity {
             showProgress();
             APIInterfaces APICalls = new RestAdapter.Builder()
                     .setEndpoint("http://plugin.withfloats.com")
+                    .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setLog(new AndroidLog("ggg"))
                     .build()

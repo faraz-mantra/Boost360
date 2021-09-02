@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Utils;
 
 import java.io.DataOutputStream;
 import java.net.HttpURLConnection;
@@ -44,7 +45,7 @@ public class UploadImage extends AsyncTask<String, String, String> {
             connection.setRequestMethod(Constants.HTTP_PUT);
             connection.setRequestProperty("Connection", "Keep-Alive");
             connection.setRequestProperty("Content-Type", "application/octet-stream");
-
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
             if (imageData != null) {
                 outputStream = new DataOutputStream(connection.getOutputStream());
                 outputStream.write(imageData, 0, imageData.length);

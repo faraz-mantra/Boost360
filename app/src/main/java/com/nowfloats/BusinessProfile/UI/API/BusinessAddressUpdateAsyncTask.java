@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import org.json.JSONArray;
@@ -251,7 +252,7 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void, String, Stri
             // Enable PUT method
             connection.setRequestMethod(requestMethod);
             connection.setRequestProperty("Connection", "Keep-Alive");
-
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
             connection.setRequestProperty("Content-Type",
                     Constants.BG_SERVICE_CONTENT_TYPE_JSON);
             outputStream = new DataOutputStream(connection.getOutputStream());

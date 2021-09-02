@@ -17,6 +17,8 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
@@ -24,6 +26,8 @@ import com.bumptech.glide.request.target.DrawableImageViewTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.framework.R
+import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.framework.views.CircularImageView
 import com.framework.views.customViews.CustomImageView
 import com.framework.views.roundedimageview.RoundedImageView
@@ -102,6 +106,11 @@ fun Context.loadGifGlide(mImageView: CustomImageView, gif_file: Int?, placeholde
 fun Activity.glideLoad(mImageView: CustomImageView, url: String, placeholder: Int, isCenterCrop: Boolean = false, isLoadBitmap: Boolean = false) {
   try {
     val options: RequestOptions = mImageView.getRequestOptionImage(placeholder)
+    val url = GlideUrl(
+      url, LazyHeaders.Builder()
+        .addHeader("Authorization",UserSessionManager(this).getAccessTokenAuth()?.token?:"")
+        .build()
+    )
     val glideImage = Glide.with(this).load(url).apply(options)
     if (isCenterCrop) glideImage.centerCrop()
     if (isLoadBitmap) {

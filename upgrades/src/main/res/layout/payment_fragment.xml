@@ -535,7 +535,7 @@
       </androidx.constraintlayout.widget.ConstraintLayout>
 
       <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/saved_cards_layout"
+        android:id="@+id/upi_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_2sdp"
@@ -551,7 +551,7 @@
         tools:visibility="visible">
 
         <TextView
-          android:id="@+id/payment_payment_title"
+          android:id="@+id/upi_payment_title"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/_5sdp"
@@ -560,22 +560,23 @@
           android:paddingTop="@dimen/_3sdp"
           android:paddingEnd="@dimen/_5sdp"
           android:paddingBottom="@dimen/_5sdp"
-          android:text="Pay using saved cards"
+          android:text="UPI"
           android:textAllCaps="true"
           android:textColor="@color/common_text_color"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent" />
 
         <View
+          android:id="@+id/upi_view_dummy"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/_1sdp"
+          android:layout_height="1dp"
           android:background="@color/material_grey_400"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/payment_payment_title" />
+          app:layout_constraintTop_toBottomOf="@id/upi_payment_title" />
 
         <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/card_recycler"
+          android:id="@+id/upi_recycler"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_2sdp"
@@ -583,19 +584,19 @@
           android:nestedScrollingEnabled="false"
           android:visibility="gone"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/payment_payment_title" />
+          app:layout_constraintTop_toBottomOf="@id/upi_payment_title" />
 
         <View
-          android:id="@+id/card_view_dummy2"
+          android:id="@+id/upi_view_dummy2"
           android:layout_width="match_parent"
-          android:layout_height="1dp"
+          android:layout_height="@dimen/_1sdp"
           android:background="@color/material_grey_400"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/card_recycler" />
+          app:layout_constraintTop_toBottomOf="@id/upi_recycler" />
 
         <LinearLayout
-          android:id="@+id/add_new_card"
+          android:id="@+id/add_upi_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:foreground="?android:attr/selectableItemBackground"
@@ -604,7 +605,7 @@
           android:paddingTop="@dimen/_10sdp"
           android:paddingEnd="@dimen/_10sdp"
           android:paddingBottom="@dimen/_5sdp"
-          app:layout_constraintTop_toBottomOf="@id/card_view_dummy2">
+          app:layout_constraintTop_toBottomOf="@id/upi_view_dummy2">
 
           <ImageView
             android:layout_width="wrap_content"
@@ -616,10 +617,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Add new debit/credit/corporate card"
+            android:text="Add new UPI id"
             android:textColor="@color/common_text_color" />
 
         </LinearLayout>
+
 
       </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -627,7 +629,7 @@
         android:id="@+id/netbanking_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/saved_cards_layout"
+        android:layout_below="@id/upi_layout"
         android:layout_marginStart="@dimen/_2sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_2sdp"
@@ -637,7 +639,7 @@
         android:paddingBottom="@dimen/_4sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/saved_cards_layout"
+        app:layout_constraintTop_toBottomOf="@id/upi_layout"
         tools:visibility="visible">
 
         <TextView
@@ -844,7 +846,7 @@
       </androidx.constraintlayout.widget.ConstraintLayout>
 
       <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/upi_layout"
+        android:id="@+id/saved_cards_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_2sdp"
@@ -860,7 +862,7 @@
         tools:visibility="visible">
 
         <TextView
-          android:id="@+id/upi_payment_title"
+          android:id="@+id/payment_payment_title"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/_5sdp"
@@ -869,23 +871,22 @@
           android:paddingTop="@dimen/_3sdp"
           android:paddingEnd="@dimen/_5sdp"
           android:paddingBottom="@dimen/_5sdp"
-          android:text="UPI"
+          android:text="Pay using saved cards"
           android:textAllCaps="true"
           android:textColor="@color/common_text_color"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent" />
 
         <View
-          android:id="@+id/upi_view_dummy"
           android:layout_width="match_parent"
-          android:layout_height="1dp"
+          android:layout_height="@dimen/_1sdp"
           android:background="@color/material_grey_400"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/upi_payment_title" />
+          app:layout_constraintTop_toBottomOf="@id/payment_payment_title" />
 
         <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/upi_recycler"
+          android:id="@+id/card_recycler"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/_2sdp"
@@ -893,19 +894,19 @@
           android:nestedScrollingEnabled="false"
           android:visibility="gone"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/upi_payment_title" />
+          app:layout_constraintTop_toBottomOf="@id/payment_payment_title" />
 
         <View
-          android:id="@+id/upi_view_dummy2"
+          android:id="@+id/card_view_dummy2"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/_1sdp"
+          android:layout_height="1dp"
           android:background="@color/material_grey_400"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/upi_recycler" />
+          app:layout_constraintTop_toBottomOf="@id/card_recycler" />
 
         <LinearLayout
-          android:id="@+id/add_upi_layout"
+          android:id="@+id/add_new_card"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:foreground="?android:attr/selectableItemBackground"
@@ -914,7 +915,7 @@
           android:paddingTop="@dimen/_10sdp"
           android:paddingEnd="@dimen/_10sdp"
           android:paddingBottom="@dimen/_5sdp"
-          app:layout_constraintTop_toBottomOf="@id/upi_view_dummy2">
+          app:layout_constraintTop_toBottomOf="@id/card_view_dummy2">
 
           <ImageView
             android:layout_width="wrap_content"
@@ -926,11 +927,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Add new UPI id"
+            android:text="Add new debit/credit/corporate card"
             android:textColor="@color/common_text_color" />
 
         </LinearLayout>
-
 
       </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -947,7 +947,7 @@
         android:paddingBottom="@dimen/_4sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/upi_layout">
+        app:layout_constraintTop_toBottomOf="@id/saved_cards_layout">
 
         <TextView
           android:id="@+id/wallet_title"

@@ -15,6 +15,7 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import org.apache.http.HttpEntity;
@@ -435,6 +436,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
             Thread.sleep(5000);
             HttpClient client = new DefaultHttpClient();
             HttpGet httpRequest = new HttpGet(serverUri);
+            httpRequest.setHeader("Authorization", Utils.getAuthToken());
             org.apache.http.HttpResponse responseOfSite = client.execute(httpRequest);
             HttpEntity entity = (HttpEntity) ((org.apache.http.HttpResponse) responseOfSite).getEntity();
             if (entity != null) {
@@ -523,7 +525,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
             connection.setChunkedStreamingMode(1024);
             connection.setRequestMethod("PUT");
             connection.setRequestProperty("Content-Type", "application/octet-stream");
-
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
             connection.setRequestProperty("Connection", "Keep-Alive");
 
             outputStream = new DataOutputStream(connection.getOutputStream());
