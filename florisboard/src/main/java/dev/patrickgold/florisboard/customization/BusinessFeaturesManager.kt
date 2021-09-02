@@ -32,6 +32,7 @@ import com.framework.pref.*
 import com.framework.utils.*
 import com.framework.views.customViews.CustomImageView
 import com.framework.views.dotsindicator.OffsetPageTransformer
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.onboarding.nowfloats.extensions.capitalizeWords
 import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCCESS
@@ -144,6 +145,9 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       it.setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
     }
 
+    TabLayoutMediator(binding.businessCardTabDot,binding.viewPagerProfile){
+        tab,position->
+    }.attach()
     binding.staffRvList.also {
       it.layoutManager = GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false)
       it.adapter = this.adapterStaff

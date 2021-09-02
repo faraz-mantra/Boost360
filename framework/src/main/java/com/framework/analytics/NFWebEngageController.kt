@@ -37,7 +37,7 @@ object NFWebEngageController {
     weAnalytics.screenNavigated(event_name)
     //Firebase Analytics Event...
     FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value?:"")
-
+    UserExperiorController.trackEvent(event_name, HashMap(trackEvent))
     //AppsFlyerEvent...
     try {
       if (weAnalytics.activity!=null){
@@ -54,6 +54,7 @@ object NFWebEngageController {
     if (event_value.size > 0) {
       weAnalytics.track(event_name, event_value)
       weAnalytics.screenNavigated(event_name)
+      UserExperiorController.trackEvent(event_name, event_value)
 
       //Firebase Analytics Event...
       FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, "")
@@ -70,6 +71,8 @@ object NFWebEngageController {
     } else {
       weAnalytics.track(event_name)
       weAnalytics.screenNavigated(event_name)
+      UserExperiorController.trackEvent(event_name)
+
     }
   }
 
@@ -84,6 +87,7 @@ object NFWebEngageController {
       event_value["event_label"] = event_label
       weAnalytics.track(event_name, event_value)
       weAnalytics.screenNavigated(event_name)
+      UserExperiorController.trackEvent(event_name, event_value)
 
       //Firebase Analytics Event...
       FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, "")
@@ -100,6 +104,8 @@ object NFWebEngageController {
     } else {
       weAnalytics.track(event_name)
       weAnalytics.screenNavigated(event_name)
+      UserExperiorController.trackEvent(event_name)
+
     }
   }
 
@@ -141,6 +147,8 @@ object NFWebEngageController {
       }
       if (params.isNotEmpty())
         AppsFlyerLib.getInstance().setAdditionalData(params)
+
+      UserExperiorController.setUserattr(email,mobile,name,clientId)
     }
   }
 
@@ -158,7 +166,9 @@ object NFWebEngageController {
         AppsFlyerLib.getInstance().logSession(weAnalytics.activity.get()?.applicationContext)
       }
       AppsFlyerLib.getInstance().setCustomerUserId(userId)
+      UserExperiorController.setUserIdentifier(userId)
       isUserLoggedIn = true
+
     }
   }
 
@@ -194,6 +204,7 @@ object NFWebEngageController {
       }
       Log.d(TAG, "Setting FP Tag" + fpTag)
       weUser.setAttribute("fpTag", fpTag)
+      UserExperiorController.setFpTag(fpTag)
 
       //Firebase Analytics User Property.
       FirebaseAnalyticsUtilsHelper.setUserProperty("fpTag", fpTag)
@@ -210,6 +221,7 @@ object NFWebEngageController {
   fun logout() {
     Log.d(TAG, "Loggind user out from analytics")
     weUser.logout()
+    UserExperiorController.logout()
 
     //Reset Firebase Analytics User Session Event.
     FirebaseAnalyticsUtilsHelper.resetIdentifyUser()
