@@ -1,10 +1,13 @@
 package com.boost.presignin.ui.intro
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.viewpager2.widget.ViewPager2
 import com.boost.presignin.R
 import com.boost.presignin.adapter.IntroAdapter
@@ -113,8 +116,20 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         } else {
           startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
         }
-      }else showLongToast("JioOnline app will not work on your phone, because your phone is rooted!")
+      }else {
+        dialogRootError()
+      }
     }
+  }
+
+  private fun dialogRootError() {
+    AlertDialog.Builder(ContextThemeWrapper(this, R.style.CustomAlertDialogTheme))
+      .setCancelable(false)
+      .setTitle("JiOnline can't be used on this device!")
+      .setMessage("Sorry, your device isn't passing JioOnline security checks. This may be because your device is rooted or is running an uncertified or custom OS build.")
+      .setPositiveButton("Close") { dialog: DialogInterface, _: Int ->
+        dialog.dismiss()
+      }.show()
   }
 
   private fun setNextPage() {
