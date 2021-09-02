@@ -366,21 +366,21 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
       binding?.edtDuration?.setText(it.shipmentDuration?.toString()?:"0")
       binding?.edtFees?.setText(it.discountedPrice().toString())
     }
-//    when (serviceData!=null) {
-//      true -> {
-//        val startDate = getDateTime()
-//        val endDate = getDateTime()
-//        val bookingSlotsRequest = BookingSlotsRequest(
-//          BatchType = "WEEKLY",
-//          ServiceId = serviceData?.id?:"",
-//          DateRange = DateRange(StartDate = startDate, EndDate = endDate)
-//        )
-//        getBookingSlots(bookingSlotsRequest)
-//      }
-//      else -> {
-//        hideProgress()
-//      }
-//    }
+    when (serviceData!=null) {
+      true -> {
+        val startDate = getDateTime()
+        val endDate = getDateTime()
+        val bookingSlotsRequest = BookingSlotsRequest(
+          BatchType = "WEEKLY",
+          ServiceId = serviceData?.id?:"",
+          DateRange = DateRange(StartDate = startDate, EndDate = endDate)
+        )
+        getBookingSlots(bookingSlotsRequest)
+      }
+      else -> {
+        hideProgress()
+      }
+    }
 
   }
 
