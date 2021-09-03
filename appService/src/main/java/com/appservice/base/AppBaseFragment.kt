@@ -1,6 +1,7 @@
 package com.appservice.base
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -92,12 +93,15 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     showLongToast(string)
   }
 
-  fun showAlertCapLimit(msg: String) {
+  fun showAlertCapLimit(msg: String,buyItemKey: String = "") {
     val builder = AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme))
     builder.setCancelable(false)
     builder.setTitle("You have exceeded limit!").setMessage(msg).setPositiveButton("Explore Add-ons") { dialog, which ->
       dialog.dismiss()
       startStorePage(CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name)
+      baseActivity.finish()
+    }.setNegativeButton("Close") { dialog, _ ->
+      dialog.dismiss()
       baseActivity.finish()
     }
     builder.create().show()

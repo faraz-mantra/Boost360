@@ -76,6 +76,8 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
+import static com.framework.models.caplimit_feature.CapLimitFeatureResponseItemKt.filterFeature;
+import static com.framework.models.caplimit_feature.CapLimitFeatureResponseItemKt.getCapData;
 import static com.framework.utils.UtilKt.hideKeyBoard;
 import static com.framework.webengageconstant.EventLabelKt.ENTER_DIFFERENT_TITLE_AND_TRY_AGAIN;
 import static com.framework.webengageconstant.EventLabelKt.FAILED_TO_UPDATE_CUSTOMPAGE;
@@ -525,10 +527,10 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     pageInterface2.getPageUrl(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), 0, 10, 1, new Callback<CustomPageLink>() {
       @Override
       public void success(CustomPageLink pageDetail, Response response) {
-        CapLimitFeatureResponseItem data = new CapLimitFeatureResponseItem().getCapData();
+        CapLimitFeatureResponseItem data = filterFeature(getCapData(), CapLimitFeatureResponseItem.FeatureType.CUSTOMPAGES);
         if (data != null && pageDetail != null) {
-          PropertiesItem capLimitImage = data.filterProperty(PropertiesItem.KeyType.CUSTOM_PAGE);
-          if (pageDetail.getTotal() != null && capLimitImage.getValueN() != null && pageDetail.getTotal() >= capLimitImage.getValueN()) {
+          PropertiesItem capLimitCustomPage = data.filterProperty(PropertiesItem.KeyType.LIMIT);
+          if (pageDetail.getTotal() != null && capLimitCustomPage.getValueN() != null && pageDetail.getTotal() >= capLimitCustomPage.getValueN()) {
             hideKeyBoard(activity);
             showAlertCapLimit("Can't add the custom page, please activate your premium Add-ons plan.");
           }
@@ -548,6 +550,10 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     builder.setPositiveButton("Explore Add-ons", (dialog, which) -> {
       dialog.dismiss();
       initiateBuyFromMarketplace();
+      activity.finish();
+    });
+    builder.setNegativeButton("Close", (dialog, which) -> {
+      dialog.dismiss();
       activity.finish();
     });
     builder.create().show();
@@ -898,7 +904,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
       intent.putExtra("mobileNo", "9160004303");
     }
     intent.putExtra("profileUrl", session.getFPLogo());
-    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name());
+    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.CUSTOMPAGES.name());
     startActivity(intent);
     new Handler().postDelayed(() -> progressDialog.dismiss(), 1000);
   }
