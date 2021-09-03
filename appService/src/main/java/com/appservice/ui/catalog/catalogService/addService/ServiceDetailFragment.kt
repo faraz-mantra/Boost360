@@ -39,6 +39,8 @@ import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.models.caplimit_feature.PropertiesItem
+import com.framework.models.caplimit_feature.filterFeature
+import com.framework.models.caplimit_feature.getCapData
 import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -96,13 +98,14 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun capLimitCheck() {
-    val capLimitService = CapLimitFeatureResponseItem().getCapData()?.filterProperty(PropertiesItem.KeyType.PRODUCT_CATALOUGE)
+    val featureService = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE)
+    val capLimitService = featureService?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (isEdit.not() && capLimitService != null) {
       viewModel?.getSearchListings(sessionLocal.fpTag, sessionLocal.fPID, "", 0, 5)?.observeOnce(viewLifecycleOwner, {
         val data = (it as? ServiceSearchListingResponse)?.result?.paging
         if (data?.count != null && capLimitService.getValueN() != null && data.count >= capLimitService.getValueN()!!) {
           baseActivity.hideKeyBoard()
-          showAlertCapLimit("Can't add the service catalogue, please activate your premium Add-ons plan.")
+          showAlertCapLimit("Can't add the service catalogue, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE.name)
         }
       })
     }

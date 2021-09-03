@@ -1,5 +1,7 @@
 package com.nowfloats.Image_Gallery;
 
+import static com.framework.models.caplimit_feature.CapLimitFeatureResponseItemKt.filterFeature;
+import static com.framework.models.caplimit_feature.CapLimitFeatureResponseItemKt.getCapData;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 import android.annotation.SuppressLint;
@@ -81,9 +83,9 @@ public class ImageGalleryActivity extends AppCompatActivity {
       }
     }
     binding.btnAdd.setOnClickListener(view -> {
-      CapLimitFeatureResponseItem data = new CapLimitFeatureResponseItem().getCapData();
+      CapLimitFeatureResponseItem data = filterFeature(getCapData(), CapLimitFeatureResponseItem.FeatureType.IMAGEGALLERY);
       if (data != null) {
-        PropertiesItem capLimitImage = data.filterProperty(PropertiesItem.KeyType.IMAGE);
+        PropertiesItem capLimitImage = data.filterProperty(PropertiesItem.KeyType.LIMIT);
         if (capLimitImage.getValueN() != null && Constants.storeSecondaryImages.size() >= capLimitImage.getValueN()) {
           showAlertCapLimit("Can't add the image, please activate your premium Add-ons plan.");
           return;
@@ -100,6 +102,9 @@ public class ImageGalleryActivity extends AppCompatActivity {
     builder.setPositiveButton("Explore Add-ons", (dialog, which) -> {
       dialog.dismiss();
       initiateBuyFromMarketplace();
+    });
+    builder.setNegativeButton("Close", (dialog, which) -> {
+      dialog.dismiss();
     });
     builder.create().show();
   }
@@ -148,7 +153,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
       intent.putExtra("mobileNo", "9160004303");
     }
     intent.putExtra("profileUrl", session.getFPLogo());
-    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name());
+    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.IMAGEGALLERY.name());
     startActivity(intent);
     new Handler().postDelayed(() -> progressDialog.dismiss(), 1000);
   }
