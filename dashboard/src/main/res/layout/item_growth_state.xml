@@ -22,8 +22,8 @@
 
     <com.framework.views.customViews.CustomImageView
       android:id="@+id/img_icon"
-      android:layout_width="@dimen/size_40"
-                    android:layout_height="@dimen/size_40"
+      android:layout_width="25dp"
+        android:layout_height="25dp"
       android:layout_marginStart="@dimen/size_10"
       android:padding="@dimen/size_2"
       tools:srcCompat="@drawable/ic_search_queries_d" />
