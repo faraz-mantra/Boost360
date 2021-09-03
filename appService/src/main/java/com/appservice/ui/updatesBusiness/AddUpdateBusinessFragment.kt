@@ -30,6 +30,8 @@ import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.models.caplimit_feature.PropertiesItem
+import com.framework.models.caplimit_feature.filterFeature
+import com.framework.models.caplimit_feature.getCapData
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
 import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
@@ -114,13 +116,14 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
   }
 
   private fun capLimitCheck() {
-    val capLimitUpdate = CapLimitFeatureResponseItem().getCapData()?.filterProperty(PropertiesItem.KeyType.LATESTUPDATES)
+    val featureUpdate = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES)
+    val capLimitUpdate = featureUpdate?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (isUpdate.not() && capLimitUpdate != null) {
       viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(PaginationScrollListener.PAGE_START))?.observeOnce(viewLifecycleOwner, {
         val data = it as? BusinessUpdateResponse
         if (data?.totalCount != null && capLimitUpdate.getValueN() != null && data.totalCount!! >= capLimitUpdate.getValueN()!!) {
           baseActivity.hideKeyBoard()
-          showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.")
+          showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES.name)
         }
       })
     }

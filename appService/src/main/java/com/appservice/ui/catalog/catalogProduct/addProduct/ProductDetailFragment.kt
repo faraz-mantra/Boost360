@@ -55,6 +55,8 @@ import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.models.caplimit_feature.PropertiesItem
+import com.framework.models.caplimit_feature.filterFeature
+import com.framework.models.caplimit_feature.getCapData
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.framework.pref.clientId
 import com.framework.utils.hideKeyBoard
@@ -135,13 +137,14 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun capLimitCheck() {
-    val capLimitProduct = CapLimitFeatureResponseItem().getCapData()?.filterProperty(PropertiesItem.KeyType.PRODUCT_CATALOUGE)
+    val featureProduct = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE)
+    val capLimitProduct = featureProduct?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (isEdit?.not() == true && capLimitProduct != null && capLimitProduct.getValueN() != null) {
       viewModel?.getAllProducts(getRequestProduct(capLimitProduct.getValueN()!!))?.observeOnce(viewLifecycleOwner, {
         val data = it.arrayResponse as? Array<ProductItemsResponseItem>
         if (data.isNullOrEmpty().not()) {
           baseActivity.hideKeyBoard()
-          showAlertCapLimit("Can't add the product catalogue, please activate your premium Add-ons plan.")
+          showAlertCapLimit("Can't add the product catalogue, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE.name)
         }
       })
     }
