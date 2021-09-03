@@ -154,7 +154,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     }
 
     private Boolean isPremium(){
-        return session.getStoreWidgets().contains(WIDGET_KEY);
+        return /*session.getStoreWidgets().contains(WIDGET_KEY);*/ true;
     }
     public void setHeader() {
         title = findViewById(R.id.title);

@@ -46,7 +46,7 @@
   <string name="no_appointment_yet">No appointments yet.</string>
   <string name="tool_bar_appointment_title">Appointments</string>
   <string name="image_gallery_description">Make your business stand out with beautiful images.</string>
-  <string name="image_gallery_footer">Supported format: JPEG, PNG Recommended dimension: Square (min. 800*800px) Max file size: 800kb</string>
+  <string name="image_gallery_footer">Supported format: JPEG, PNG\nRecommended dimension: Square (min. 800*800px)\nMax file size: 800kb</string>
   <string name="tool_bar_image_gallery">Image Gallery</string>
   <string name="book_an_appointment">Book an appointment</string>
   <string name="orders_title">No orders so far.</string>

@@ -387,7 +387,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
-              primaryButtonIconLeft = R.drawable.ic_email,
+              primaryButtonIconLeft = R.drawable.ic_newsletter_cta,
               primaryButtonTitle = context.getString(R.string.send_subscription_invite),
               primaryButtonBackground = R.color.colorAccent,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,

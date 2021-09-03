@@ -1,5 +1,6 @@
 package com.nowfloats.Analytics_Screen;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -84,6 +85,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     private int itemClicked = -1;
     private AppFragmentZeroCase appFragmentZeroCase;
     private ActivitySubscribersBinding binding;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +137,8 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         }
 
         mProgressBar = (ProgressBar) findViewById(R.id.pb_subscriber);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.loading));
         mRecyclerView = (RecyclerView) findViewById(R.id.lv_subscribers);
 
         mRecyclerView.setHasFixedSize(true);
@@ -221,7 +225,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 if (newItems >= 10) {
                     stop = false;
                 }
-                if (true) {
+                if (mSubscriberList.isEmpty()) {
                     emptyView();
                 }else {
                     nonEmptyView();
@@ -244,11 +248,13 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         model.setFpTag(mSessionManager.getFpTag());
         model.setUserContact(email);
         mProgressBar.setVisibility(View.VISIBLE);
+        progressDialog.show();
         SubscriberApis mSubscriberApis = Constants.restAdapter.create(SubscriberApis.class);
         mSubscriberApis.addSubscriber(model, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
                 mProgressBar.setVisibility(View.GONE);
+                progressDialog.dismiss();
                 if (response.getStatus() == 200 || response.getStatus() == 201 || response.getStatus() == 202) {
                     WebEngageController.trackEvent(ADD_SUBSCRIBER, ADDED, TO_BE_ADDED);
                     mSubscriberList.clear();
@@ -267,6 +273,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
             public void failure(RetrofitError error) {
                 Log.v("ggg", error.getMessage());
                 mProgressBar.setVisibility(View.GONE);
+                progressDialog.dismiss();
                 Methods.showSnackBarNegative(SubscribersActivity.this, getString(R.string.something_went_wrong_try_again));
                 WebEngageController.trackEvent(ADD_SUBSCRIBER_FAILED, ERROR_SUBSCRIBER, mSessionManager.getFpTag());
             }
