@@ -42,6 +42,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.models.caplimit_feature.saveCapData
 import com.framework.models.firestore.FirestoreManager
 import com.framework.models.firestore.FirestoreManager.initData
 import com.framework.pref.*
@@ -123,8 +124,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this, {
       if (it.isSuccess()) {
         val capLimitList = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
-        val item = capLimitList?.firstOrNull { it1 -> (it1.featureKey == CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name && it1.properties.isNullOrEmpty().not()) } ?: CapLimitFeatureResponseItem()
-        item.saveCapData()
+        capLimitList?.toCollection(ArrayList())?.saveCapData()
       }
     })
   }
