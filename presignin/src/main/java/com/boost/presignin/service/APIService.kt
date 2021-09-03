@@ -71,7 +71,7 @@ class APIService : Service() {
   }
 
   private fun hitSelfBrandedKycAPI() {
-    WebActionBoostKitRepository.getSelfBrandedKyc(getQuery()).toLiveData().observeForever {
+    WebActionBoostKitRepository.getSelfBrandedKyc(query = getQuery()).toLiveData().observeForever {
       val paymentKycDataResponse = it as? PaymentKycDataResponse
       paymentKycDataResponse?.data
       if (it.isSuccess()) {
