@@ -766,12 +766,38 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       renewalItems?.forEach { item ->
         val data = renewalList.firstOrNull { it.widgetId == item.item_id }
         netAmount += item.price
+
+        var extendPropsRenew: List<ExtendedProperty>? = null
+        var outputExtendedPropsRenew = ArrayList<Property>()
+
+        if (item.extended_properties != null && item.extended_properties!!.length > 0) {
+          try {
+            val objectType = object : TypeToken<List<ExtendedProperty>>() {}.type
+            extendPropsRenew = Gson().fromJson<List<ExtendedProperty>>(item.extended_properties, objectType)
+
+            if (extendPropsRenew != null) {
+              for (prop in extendPropsRenew) {
+                if (prop.key != null && prop.value != null) {
+                  outputExtendedPropsRenew.add(
+                    Property(
+                      Key = prop.key,
+                      Value = prop.value
+                    )
+                  )
+                }
+              }
+
+            }
+          } catch (ex: Exception) {
+            ex.printStackTrace()
+          }
+        }
         val widget = Widget(
           data?.category
             ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
           item.discount, Expiry("MONTHS", default_validity_months), listOf(), true, true, item.item_name
             ?: "",
-          item.price, item.MRPPrice, null, 1, "MONTHLY", item.boost_widget_key
+          item.price, item.MRPPrice,if (outputExtendedPropsRenew.size > 0) outputExtendedPropsRenew else null , 1, "MONTHLY", item.boost_widget_key
             ?: "", item.item_id
         )
         widgetList.add(widget)
@@ -1044,12 +1070,39 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       renewalItems?.forEach { item ->
         val data = renewalList.firstOrNull { it.widgetId == item.item_id }
         netAmount += item.price
+
+        var extendProps1: List<ExtendedProperty>? = null
+        var outputExtendedProps1 = ArrayList<Property>()
+
+        if (item.extended_properties != null && item.extended_properties!!.length > 0) {
+          try {
+            val objectType = object : TypeToken<List<ExtendedProperty>>() {}.type
+            extendProps1 = Gson().fromJson<List<ExtendedProperty>>(item.extended_properties, objectType)
+
+            if (extendProps1 != null) {
+              for (prop in extendProps1) {
+                if (prop.key != null && prop.value != null) {
+                  outputExtendedProps1.add(
+                    Property(
+                      Key = prop.key,
+                      Value = prop.value
+                    )
+                  )
+                }
+              }
+
+            }
+          } catch (ex: Exception) {
+            ex.printStackTrace()
+          }
+        }
+
         val widget = Widget(
           data?.category
             ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
           item.discount, Expiry("MONTHS", default_validity_months), listOf(), true, true, item.item_name
             ?: "",
-          item.price, item.MRPPrice, null, 1, "MONTHLY", item.boost_widget_key
+          item.price, item.MRPPrice,  if (outputExtendedProps1.size > 0) outputExtendedProps1 else null, 1, "MONTHLY", item.boost_widget_key
             ?: "", item.item_id
         )
         widgetList.add(widget)
