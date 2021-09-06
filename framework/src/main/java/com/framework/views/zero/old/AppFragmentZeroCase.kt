@@ -455,7 +455,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           .setButton(
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
-              primaryButtonTitle = context.getString(R.string.activate_this_feature),
+              primaryButtonTitle = "Add Offer",
               primaryButtonBackground = R.color.colorAccent,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(

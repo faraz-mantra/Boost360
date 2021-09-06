@@ -68,6 +68,12 @@ public class Image_Gallery_Fragment extends Fragment implements
         DeleteGalleryImages.DeleteGalleryInterface,
         GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface, AppOnZeroCaseClicked {
 
+
+    public interface ImageChangeListener{
+        void onImagePicked();
+    }
+
+    public ImageChangeListener imageChangeListener;
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_GALLERY = 2;
     public static String path = "";
@@ -302,6 +308,7 @@ public class Image_Gallery_Fragment extends Fragment implements
             instance.getDrScoreData().getMetricdetail().setBoolean_image_uploaded_to_gallery(isAdded);
             instance.updateDocument();
         }
+        imageChangeListener.onImagePicked();
     }
 
     @Override

@@ -203,6 +203,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                         updateRecyclerView();
                         rightButton.setVisibility(View.VISIBLE);
                         nonEmptyView();
+                        Log.i(TAG, "success api testimonial: ");
                     } else {
                         emptyView();
                         rightButton.setVisibility(View.INVISIBLE);
