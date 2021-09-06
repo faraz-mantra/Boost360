@@ -4,6 +4,7 @@ import GetStaffListingRequest
 import com.framework.base.BaseResponse
 import com.inventoryorder.base.rest.AppBaseLocalService
 import com.inventoryorder.base.rest.AppBaseRepository
+import com.inventoryorder.model.services.ServiceListingRequest
 import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.rest.TaskCode
 import com.inventoryorder.rest.apiClients.NowFloatClient
@@ -43,6 +44,12 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsDataSource, AppBaseLocal
     )
   }
 
+  fun getServiceListing(request: ServiceListingRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getServiceListing(request),
+      TaskCode.GET_SERVICE_LISTING
+    )
+  }
   fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.getBookingSlots(bookingSlotsRequest),

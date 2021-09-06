@@ -16,6 +16,7 @@ import com.inventoryorder.model.orderRequest.paymentRequest.PaymentReceivedReque
 import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
+import com.inventoryorder.model.services.ServiceListingRequest
 import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.rest.repositories.*
 import retrofit2.http.Body
@@ -112,6 +113,9 @@ class OrderCreateViewModel : BaseViewModel() {
   ): LiveData<BaseResponse> {
     return ApiTwoWithFloatRepository.getAllServiceList(clientId, skipBy, fpTag, identifierType)
       .toLiveData()
+  }
+  fun getServiceListing(request: ServiceListingRequest): LiveData<BaseResponse> {
+    return NowFloatsRepository.getServiceListing(request).toLiveData()
   }
 
   fun getDoctorData(fpTag: String?): LiveData<BaseResponse> {
