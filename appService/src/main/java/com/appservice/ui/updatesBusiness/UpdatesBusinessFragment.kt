@@ -138,10 +138,8 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
 
   private fun listUpdateApi(offSet: Int) {
     nonEmptyView()
-    hitApi(
-      viewModel?.getMessageUpdates(getRequestUpdate(offSet)),
-      R.string.latest_update_data_not_found
-    )
+    hitApi(viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(offSet)), R.string.latest_update_data_not_found)
+
   }
 
   override fun onSuccess(it: BaseResponse) {
