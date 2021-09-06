@@ -184,6 +184,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
           if (isRefresh) orderListFinalList.clear()
           if (response != null && response.Items.isNullOrEmpty().not()) {
+            binding?.tvNoOrder?.gone()
+
             orderList.clear()
             removeLoader()
             val list = response.Items ?: ArrayList()
@@ -192,16 +194,25 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
             orderList.addAll(orderListFinalList)
             isLastPageD = (orderListFinalList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
+          }else{
+            binding?.tvNoOrder?.visible()
           }
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
+            binding?.tvNoOrder?.gone()
+
             orderList.clear()
             orderList.addAll(response.Items!!)
             setAdapterNotify(orderList)
           } else if (orderListFinalList.isNullOrEmpty().not()) {
+            binding?.tvNoOrder?.gone()
+
             orderList.clear()
             orderList.addAll(orderListFinalList)
             setAdapterNotify(orderList)
+          }else{
+            binding?.tvNoOrder?.visible()
+
           }
         }
       } else showLongToast(it.message())
@@ -241,10 +252,11 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
           emptyView()
         }else{
           nonEmptyView()
+          setToolbarTitle(resources.getString(R.string.orders))
+          typeList = response?.Data?.getOrderType()
+          typeList?.let { it1 -> setAdapterSellerSummary(it1) } ?: errorOnSummary(null)
         }
-        setToolbarTitle(resources.getString(R.string.orders))
-        typeList = response?.Data?.getOrderType()
-        typeList?.let { it1 -> setAdapterSellerSummary(it1) } ?: errorOnSummary(null)
+
       } else errorOnSummary(it?.message)
     })
   }

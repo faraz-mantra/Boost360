@@ -256,7 +256,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.no_appointment_yet))
           .setDescription(
             context.getString(R.string.appointment_description)
-          ).setIcon(R.drawable.ic_calendarx)
+          ).setIcon(R.drawable.ic_no_appointment)
           .setToolBarTitle(context.getString(R.string.tool_bar_appointment_title))
           .isPremium(isPremium)
           .setButton(
