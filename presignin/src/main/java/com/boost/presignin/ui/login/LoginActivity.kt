@@ -1,10 +1,6 @@
 package com.boost.presignin.ui.login
 
 import android.content.Intent
-import com.boost.presignin.ui.mobileVerification.*
-import com.boost.presignin.ui.registration.CategoryFragment
-import com.boost.presignin.ui.registration.RegistrationSuccessFragment
-import com.boost.presignin.ui.registration.SUCCESS_FRAGMENT
 import com.framework.base.BaseFragment
 import com.framework.base.FragmentContainerActivity
 import com.framework.models.BaseViewModel

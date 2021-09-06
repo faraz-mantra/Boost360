@@ -25,6 +25,7 @@ import com.nowfloats.AccrossVerticals.API.model.ExistingDomain.ExistingDomainReq
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import retrofit.Callback;
@@ -166,6 +167,7 @@ public class ExistingDomainFragment extends Fragment {
 
                 APIInterfaces APICalls = new RestAdapter.Builder()
                         .setEndpoint("https://ria.withfloats.com")
+                        .setRequestInterceptor(Utils.getAuthRequestInterceptor())
                         .setLogLevel(RestAdapter.LogLevel.FULL)
                         .setLog(new AndroidLog("ggg"))
                         .build()

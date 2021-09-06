@@ -9,16 +9,15 @@
   <com.framework.views.customViews.CustomCardView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/size_6"
+    app:cardCornerRadius="@dimen/size_10"
     app:cardUseCompatPadding="true">
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/ll_share"
-      android:layout_width="@dimen/size_140"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-      android:paddingHorizontal="@dimen/size_4"
-      android:paddingVertical="@dimen/size_6">
+      android:padding="@dimen/size_10">
 
       <com.framework.views.customViews.CustomImageView
         android:layout_width="@dimen/size_24"
@@ -31,14 +30,15 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/size_4"
+        android:layout_marginStart="@dimen/size_6"
+        android:layout_marginEnd="@dimen/size_4"
         android:background="?android:selectableItemBackground"
         android:clickable="false"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:text="@string/share_on_more_website"
         android:textColor="@color/gray_4e4e4e"
-        android:textSize="14sp" />
+        app:textType="HEADING_6" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -375,7 +375,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     bundle.putString(IntentConstant.FP_ID.name, UserSession.fpId)
     bundle.putString(IntentConstant.FP_TAG.name, UserSession.fpTag)
     bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
-    bundle.putString(IntentConstant.CLIENT_ID.name, UserSession.clientId)
+    bundle.putString(IntentConstant.CLIENT_ID.name, UserSession.clientIdN)
     bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name, externalSourceId)
     bundle.putString(IntentConstant.APPLICATION_ID.name, applicationId)
     return bundle

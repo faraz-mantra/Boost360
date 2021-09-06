@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/view_background_1"
+      android:orientation="vertical">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black_4a4a4a"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/size_16"
+        android:paddingBottom="@dimen/size_16"
+        android:visibility="gone">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/customTextView8"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/bold"
+          android:text="@string/menu"
+          android:textColor="@color/white"
+          android:textSize="24sp"
+          android:visibility="gone"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/customImageView7"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_help_white"
+          android:visibility="gone"
+          app:layout_constraintBottom_toBottomOf="@+id/customTextView8"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.roundedimageview.RoundedImageView
+          android:id="@+id/riv_users_image"
+          android:layout_width="64dp"
+          android:layout_height="@dimen/size_64"
+          android:layout_marginTop="@dimen/size_4"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/customTextView8"
+          app:riv_border_color="@color/white"
+          app:riv_border_width="2dp"
+          app:riv_corner_radius="@dimen/size_10"
+          app:riv_mutate_background="true"
+          app:riv_oval="false"
+          tools:ignore="MissingClass"
+          tools:src="@drawable/dummy_staff_img" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_type"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_16"
+          android:background="@drawable/rounded_stroke_3"
+          android:backgroundTint="@color/dark_gray"
+          android:fontFamily="@font/barlow_semi_bold"
+          android:gravity="center"
+          android:includeFontPadding="true"
+          android:paddingHorizontal="@dimen/size_8"
+          android:paddingVertical="2dp"
+          android:text="@string/super_admin"
+          android:textColor="@color/white"
+          android:textSize="12sp"
+          android:visibility="gone"
+          app:layout_constraintStart_toEndOf="@+id/riv_users_image"
+          app:layout_constraintTop_toTopOf="@+id/riv_users_image" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_16"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:includeFontPadding="true"
+          android:paddingVertical="2dp"
+          android:textColor="@color/white"
+          app:layout_constraintStart_toEndOf="@+id/riv_users_image"
+          app:layout_constraintTop_toBottomOf="@+id/ctv_type"
+          app:textType="HEADING_6"
+          tools:text="Santosh Kamat" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_content"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_16"
+          android:ellipsize="end"
+          android:fontFamily="@font/regular"
+          android:gravity="start"
+          android:includeFontPadding="true"
+          android:maxLines="2"
+          android:textColor="@color/gray_text_hint"
+          android:textFontWeight="400"
+          android:textSize="11sp"
+          app:layout_constraintEnd_toStartOf="@+id/civ_profile"
+          app:layout_constraintStart_toEndOf="@+id/riv_users_image"
+          app:layout_constraintTop_toBottomOf="@+id/ctv_name"
+          tools:text="@string/your_email_mobile_no_username_password_payment_info_etc" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/civ_profile"
+          android:layout_width="@dimen/size_32"
+          android:layout_height="@dimen/size_32"
+          android:padding="@dimen/size_8"
+          android:src="@drawable/ic_arrow_right_7_white_d"
+          app:layout_constraintBottom_toBottomOf="@+id/ctv_content"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/customTextView8" />
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_5c5c5c"
+        android:visibility="gone" />
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/linearLayoutCompat5"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/ic_bg_rounded_dark_grey_bottom"
+          android:orientation="vertical"
+          android:paddingHorizontal="16dp"
+          android:paddingBottom="16dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_manage_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:text="@string/currently_managing"
+            android:textColor="@color/white"
+            android:textFontWeight="400"
+            android:visibility="gone"
+            app:textType="BODY_1"
+            tools:targetApi="p" />
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_8"
+            android:id="@+id/business_profile"
+            android:background="@drawable/white_stroke_10dp">
+
+            <com.framework.views.roundedimageview.RoundedImageView
+              android:id="@+id/riv_currently_manage"
+              android:layout_width="0dp"
+              android:layout_height="0dp"
+              android:alpha=".20"
+              android:scaleType="centerCrop"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              app:riv_corner_radius="@dimen/size_10"
+              app:riv_mutate_background="true"
+              tools:ignore="MissingClass" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+              android:id="@+id/constraintLayout6"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="@dimen/size_14"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent">
+
+              <com.framework.views.customViews.CustomImageView
+                android:id="@+id/arrow_bottom"
+                android:layout_width="@dimen/size_16"
+                android:layout_height="@dimen/size_16"
+                android:src="@drawable/ic_arrow_down_grey_staff"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0" />
+
+              <com.framework.views.roundedimageview.RoundedImageView
+                android:id="@+id/riv_business_image"
+                android:layout_width="@dimen/size_42"
+                android:layout_height="@dimen/size_42"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_border_color="@color/white"
+                app:riv_border_width="1dp"
+                app:riv_corner_radius="@dimen/size_8"
+                android:clickable="true"
+                android:focusable="true"
+                app:riv_mutate_background="true"
+                app:riv_oval="false"
+                tools:ignore="MissingClass"
+                tools:src="@drawable/dummy_staff_img" />
+
+              <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_business_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_12"
+                android:ellipsize="end"
+                android:fontFamily="@font/semi_bold"
+                android:gravity="start"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textFontWeight="700"
+                app:layout_constraintEnd_toStartOf="@+id/arrow_bottom"
+                app:layout_constraintStart_toEndOf="@+id/riv_business_image"
+                app:layout_constraintTop_toTopOf="@+id/riv_business_image"
+                app:textType="HEADING_6"
+                tools:text="@string/business_name" />
+
+              <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_business_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_12"
+                android:ellipsize="end"
+                android:fontFamily="@font/regular"
+                android:gravity="start"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textColor="@color/gray_eeee"
+                app:layout_constraintBottom_toBottomOf="@+id/riv_business_image"
+                app:layout_constraintEnd_toStartOf="@+id/arrow_bottom"
+                app:layout_constraintStart_toEndOf="@+id/riv_business_image"
+                app:layout_constraintTop_toBottomOf="@+id/ctv_business_name"
+                app:layout_constraintVertical_bias="1"
+                app:textType="CAPTION"
+                tools:text="Delhi, India" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/boost_subscription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginBottom="@dimen/size_4"
+            android:background="@drawable/rounded_stroke_grey"
+            android:backgroundTint="@color/white"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:padding="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/customImageView5"
+              android:layout_width="@dimen/size_30"
+              android:layout_height="@dimen/size_30"
+              android:src="@drawable/ic_crown"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintVertical_bias="0" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_offer"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/rounded_stroke_3"
+              android:backgroundTint="@color/green_more_settings"
+              android:fontFamily="@font/barlow_regular"
+              android:gravity="center"
+              android:includeFontPadding="true"
+              android:paddingHorizontal="@dimen/size_8"
+              android:paddingVertical="2dp"
+              android:text="@string/new_offers"
+              android:textAllCaps="false"
+              android:textColor="@color/white"
+              android:textFontWeight="700"
+              android:textSize="11sp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_subscription_heading"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_4"
+              android:fontFamily="@font/semi_bold"
+              android:gravity="start"
+              android:includeFontPadding="true"
+              android:text="@string/my_boost_360_subscription"
+              android:textAllCaps="false"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="16sp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/customImageView5" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_subscription_content"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_4"
+              android:fontFamily="@font/regular"
+              android:gravity="start"
+              android:includeFontPadding="true"
+              android:text="@string/manage_your_current_plan_or_upgrade_to_a_recommended_plan_with_better_features"
+              android:textAllCaps="false"
+              android:textColor="@color/gray_828282"
+              android:textFontWeight="400"
+              android:textSize="11sp"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/ctv_subscription_heading" />
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/constraintLayout5"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:padding="@dimen/size_14"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat5"
+          app:layout_constraintVertical_bias="0">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_useful_links_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:fontFamily="@font/bold"
+            android:gravity="start"
+            android:includeFontPadding="true"
+            android:text="@string/useful_links"
+            android:textAllCaps="false"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+          <com.framework.views.viewgroups.BaseRecyclerView
+            android:id="@+id/rv_useful_links"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/size_8"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_useful_links_heading"
+            app:spanCount="2"
+            tools:itemCount="4"
+            tools:listitem="@layout/recycler_item_useful_links" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_about_boost"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_16"
+          android:layout_marginTop="8dp"
+          android:fontFamily="@font/bold"
+          android:gravity="start"
+          android:includeFontPadding="true"
+          android:text="@string/about_boost_360"
+          android:textAllCaps="false"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="16sp"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_14"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/ctv_about_boost"
+          app:layout_constraintVertical_bias="0">
+
+          <com.framework.views.viewgroups.BaseRecyclerView
+            android:id="@+id/rv_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="6"
+            tools:listitem="@layout/recycler_item_about_app" />
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/size_30"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <View
+              android:layout_width="@dimen/size_70"
+              android:layout_height="@dimen/size_1"
+              android:background="@color/color_orange_more" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_marginVertical="@dimen/size_1"
+              android:includeFontPadding="false"
+              android:text="@string/boost_360_is_proudly_made_in_india"
+              android:textColor="@color/gray_828282"
+              android:textFontWeight="600"
+              app:textType="OVERLINE"
+              tools:targetApi="p" />
+
+            <View
+              android:layout_width="@dimen/size_70"
+              android:layout_height="@dimen/size_1"
+              android:layout_marginTop="@dimen/size_1"
+              android:background="@color/green_more" />
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.core.widget.NestedScrollView>
+</layout>

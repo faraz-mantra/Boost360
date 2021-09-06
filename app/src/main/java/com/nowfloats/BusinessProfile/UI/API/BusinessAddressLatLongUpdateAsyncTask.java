@@ -16,6 +16,7 @@ import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -69,6 +70,7 @@ public class BusinessAddressLatLongUpdateAsyncTask extends AsyncTask<Void, Strin
             // Enable PUT method
             connection.setRequestMethod(requestMethod);
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Authorization", Utils.getAuthToken());
 
             connection.setRequestProperty("Content-Type", contentType);
 

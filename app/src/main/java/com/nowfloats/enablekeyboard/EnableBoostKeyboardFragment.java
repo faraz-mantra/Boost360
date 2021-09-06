@@ -36,9 +36,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import io.separ.neural.inputmethod.indic.LatinIME;
-
 import static android.content.Context.INPUT_METHOD_SERVICE;
+
+import dev.patrickgold.florisboard.ime.core.FlorisBoard;
 
 public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouchListener {
     private static final int STORAGE_CODE = 100, MICROPHONE_CODE = 101;
@@ -247,7 +247,7 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
 
     private boolean isInputMethodActivated() {
         List<InputMethodInfo> list = imeManager.getEnabledInputMethodList();
-        ComponentName myInputMethod = new ComponentName(mContext, LatinIME.class);
+        ComponentName myInputMethod = new ComponentName(mContext, FlorisBoard.class);
         for (InputMethodInfo info : list) {
             if (myInputMethod.equals(info.getComponent())) {
                 return true;
@@ -261,7 +261,7 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
 
         ComponentName defaultInputMethod = ComponentName.unflattenFromString(id);
 
-        ComponentName myInputMethod = new ComponentName(mContext, LatinIME.class);
+        ComponentName myInputMethod = new ComponentName(mContext, FlorisBoard.class);
 
         return myInputMethod.equals(defaultInputMethod);
     }

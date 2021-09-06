@@ -3,6 +3,7 @@ package com.nowfloats.NavigationDrawer.API;
 import com.nowfloats.NavigationDrawer.model.FacebookWildFireDataModel;
 import com.nowfloats.NavigationDrawer.model.WildFireDataModel;
 import com.nowfloats.NavigationDrawer.model.WildFireKeyStatsModel;
+import com.nowfloats.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -20,7 +21,9 @@ import retrofit.http.QueryMap;
 
 public interface WildFireApis {
     String WILD_FIRE_END_POINT = "http://wmt.withfloats.com/wildfire/api";
-    RestAdapter adapter = new RestAdapter.Builder().setEndpoint(WILD_FIRE_END_POINT)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
+    RestAdapter adapter = new RestAdapter.Builder()
+            .setRequestInterceptor(Utils.getAuthRequestInterceptor())
+            .setEndpoint(WILD_FIRE_END_POINT)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
 
     @GET("/v1/account/keywordstats")
 // google keywords data

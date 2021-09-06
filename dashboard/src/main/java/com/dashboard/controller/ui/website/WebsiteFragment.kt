@@ -1,19 +1,31 @@
 package com.dashboard.controller.ui.website
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.Typeface
+import android.graphics.Typeface.*
 import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat.getColor
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
+import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
 import com.dashboard.databinding.FragmentWebsiteBinding
+import com.dashboard.databinding.FragmentWebsitePagerBinding
 import com.dashboard.model.live.websiteItem.WebsiteActionItem
+import com.dashboard.model.live.websiteItem.WebsiteData
 import com.dashboard.model.live.websiteItem.WebsiteDataResponse
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
@@ -30,22 +42,17 @@ import com.framework.pref.UserSessionManager
 import com.framework.utils.ContentSharing
 import com.framework.utils.changeLayersColor
 import com.framework.utils.fromHtml
-import com.framework.views.customViews.CustomButton
+import com.framework.views.customViews.CustomImageView
 import com.framework.webengageconstant.DASHBOARD_WEBSITE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
-import com.inventoryorder.constant.FragmentType
-import com.inventoryorder.ui.order.INVOICE_URL
-import com.inventoryorder.ui.startFragmentOrderActivity
+import com.google.android.material.tabs.TabLayout
 import java.util.*
-import android.widget.ImageButton
-import android.widget.ImageView
-import androidx.core.view.marginEnd
-import com.framework.views.customViews.CustomImageView
 
-class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>(), RecyclerItemClickListener {
+private val TAB_TITLES = arrayOf("Content", "Features")
+
+class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>() {
 
   private var session: UserSessionManager? = null
-  private var adapterWebsite: AppBaseRecyclerViewAdapter<WebsiteActionItem>? = null
   private var websiteLink: String? = null
   private var businessName: String? = null
   private var businessContact: String? = null
@@ -67,10 +74,51 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       binding?.websiteThemeCustomization, binding?.businessTiming
     )
     WebEngageController.trackEvent(DASHBOARD_WEBSITE_PAGE, PAGE_VIEW, session?.fpTag)
-    getWebsiteData()
+    setupViewPager()
     this.websiteLink = fromHtml("<u>${session?.getDomainName()}</u>").toString()
     businessName = session?.fPName!!
     businessContact = session?.fPPrimaryContactNumber ?: ""
+  }
+
+  private fun setupViewPager() {
+    binding?.pager?.adapter = CategoriesPagerAdapter(baseActivity, childFragmentManager)
+    binding?.tabLayout?.setupWithViewPager(binding?.pager)
+    for (i in 0..binding?.tabLayout?.tabCount!!){
+      val tab:TabLayout.Tab? = binding?.tabLayout?.getTabAt(i)
+      if (tab != null){
+        val tabTextView:TextView = TextView(baseActivity)
+        tab.customView = tabTextView
+        tabTextView.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+        tabTextView.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        tabTextView.text = tab.text
+        if (i == 0){
+          // This set the font style of the first tab
+          tabTextView.setTypeface(SANS_SERIF,BOLD)
+          tabTextView.setTextColor(getColor(R.color.colorAccent))
+
+        }
+        if (i == 1){
+          // This set the font style of the first tab
+          tabTextView.setTypeface(null,NORMAL)
+        }
+      }
+    }
+    binding?.tabLayout!!.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+      override fun onTabSelected(tab: TabLayout.Tab?) {
+        val text: TextView = tab?.customView as TextView
+        text.setTypeface(null, BOLD)
+        text.setTextColor(getColor(R.color.colorAccent))
+
+      }
+      override fun onTabUnselected(tab: TabLayout.Tab?) {
+        val text: TextView = tab?.customView as TextView
+        text.setTypeface(null, NORMAL)
+        text.setTextColor(getColor(R.color.black_4a4a4a                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ))
+
+      }
+      override fun onTabReselected(tab: TabLayout.Tab?) {
+      }
+  })
   }
 
   override fun onResume() {
@@ -98,57 +146,12 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     updateTimings()
   }
 
-  private fun getWebsiteData() {
-    viewModel?.getBoostWebsiteItem(baseActivity)
-      ?.observeOnce(viewLifecycleOwner, { it0 ->
-        val response = it0 as? WebsiteDataResponse
-        if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-          val data = response.data?.firstOrNull {
-            it.type.equals(session?.fP_AppExperienceCode, ignoreCase = true)
-          }
-          if (data != null && data.actionItem.isNullOrEmpty().not()) {
-            data.actionItem!!.map { it2 ->
-              if (it2.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it2.premiumCode).not()) it2.isLock = true
-            }
-            binding?.mainContent?.setBackgroundColor(
-              getColor(baseActivity, if (data.actionItem!!.size % 2 != 0) R.color.white_smoke_1 else R.color.white)
-            )
-            setAdapterCustomer(data.actionItem!!)
-          }
-        }
-      })
-  }
-
-  private fun setAdapterCustomer(actionItem: ArrayList<WebsiteActionItem>) {
-    actionItem.map {
-      it.recyclerViewItemType = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout()
-    }
-    if (adapterWebsite == null) {
-      binding?.rvEnquiries?.apply {
-        adapterWebsite = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@WebsiteFragment)
-        adapter = adapterWebsite
-      }
-    } else adapterWebsite?.notify(actionItem)
-  }
-
-  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-    when (actionType) {
-      RecyclerViewActionType.WEBSITE_ITEM_CLICK.ordinal -> {
-        val data = item as? WebsiteActionItem ?: return
-        data.type?.let { WebsiteActionItem.IconType.fromName(it) }?.let { clickActionButton(it) }
-      }
-    }
-  }
-
   private fun clickActionButton(type: WebsiteActionItem.IconType) {
     when (type) {
       WebsiteActionItem.IconType.service_product_catalogue -> baseActivity.startListServiceProduct(session)
       WebsiteActionItem.IconType.latest_update_tips -> session?.let { baseActivity.startUpdateLatestStory(it) }
-      WebsiteActionItem.IconType.all_images -> baseActivity.startAllImage(session)
-      WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(
-        session,
-        fragmentType = "Business_Profile_Fragment_V2"
-      )
+      WebsiteActionItem.IconType.all_images -> baseActivity.startBackgroundImageGallery(session)
+      WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
       WebsiteActionItem.IconType.testimonials -> baseActivity.startTestimonial(session)
       WebsiteActionItem.IconType.custom_page -> baseActivity.startCustomPage(session)
       WebsiteActionItem.IconType.project_teams -> baseActivity.startListProjectAndTeams(session)
@@ -211,7 +214,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.btnProfileLogo -> baseActivity.startBusinessLogo(session)
       binding?.editProfile -> baseActivity.startBusinessProfileDetailEdit(session)
-      binding?.websiteThemeCustomization -> baseActivity.startWebsiteTheme(session)
+      binding?.websiteThemeCustomization -> baseActivity.startWebsiteNav(session)
 //      binding?.contactDetail -> baseActivity.startBusinessInfoEmail(session)
       binding?.businessTiming -> baseActivity.startBusinessHours(session)
     }
@@ -243,11 +246,28 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       shareMore()
       this.popupWindow?.dismiss()
     }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) this.popupWindow?.elevation = 5.0F
+    this.popupWindow?.elevation = 5.0F
     this.popupWindow?.showAsDropDown(anchor, 0, 20)
   }
 
   private fun shareMore() {
     ContentSharing.shareWebsiteTheme(requireActivity(), businessName!!, websiteLink!!, businessContact!!)
+  }
+}
+
+
+@SuppressLint("WrongConstant")
+class CategoriesPagerAdapter(private var context: Context, fm: FragmentManager) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+  override fun getItem(position: Int): Fragment {
+    return FragmentCategory.newInstance(position)
+  }
+
+  override fun getPageTitle(position: Int): CharSequence {
+    return TAB_TITLES[position]
+  }
+
+  override fun getCount(): Int {
+    return 2
   }
 }

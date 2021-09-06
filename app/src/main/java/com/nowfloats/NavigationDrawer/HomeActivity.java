@@ -51,7 +51,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.anachat.chatsdk.AnaChatBuilder;
 import com.anachat.chatsdk.AnaCore;
 import com.anachat.chatsdk.internal.database.PreferencesManager;
-import com.android.inputmethod.latin.utils.JniUtils;
+//import com.android.inputmethod.latin.utils.JniUtils;
 import com.appservice.ui.bankaccount.BankAccountFragment;
 import com.boost.presignin.ui.intro.IntroActivity;
 import com.boost.presignup.utils.DynamicLinkParams;
@@ -402,7 +402,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        JniUtils.loadNativeLibrary();
+//        JniUtils.loadNativeLibrary();
         pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         BoostLog.d("HomeActivity onCreate", "onCreate");
         bus = BusProvider.getInstance().getBus();

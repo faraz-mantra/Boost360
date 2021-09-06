@@ -22,10 +22,7 @@ class LoginSignUpViewModel : BaseViewModel() {
     return WithFloatTwoRepository.isMobileIsRegistered(number, clientId = clientId).toLiveData()
   }
 
-  fun postActivatePurchasedOrder(
-    clientId: String?,
-    request: ActivatePurchasedOrderRequest
-  ): LiveData<BaseResponse> {
+  fun postActivatePurchasedOrder(clientId: String?, request: ActivatePurchasedOrderRequest): LiveData<BaseResponse> {
     return BusinessCreateRepository.postActivatePurchasedOrder(clientId, request).toLiveData()
   }
 
@@ -33,17 +30,11 @@ class LoginSignUpViewModel : BaseViewModel() {
     return WithFloatTwoRepository.getFpDetailsByPhone(number, clientId).toLiveData()
   }
 
-  fun putCreateBusinessV5(
-    profileId: String?,
-    request: BusinessCreateRequest
-  ): LiveData<BaseResponse> {
+  fun putCreateBusinessV5(profileId: String?, request: BusinessCreateRequest): LiveData<BaseResponse> {
     return BusinessCreateRepository.putCreateBusinessV5(profileId, request).toLiveData()
   }
 
-  fun putCreateBusinessV6(
-    profileId: String?,
-    request: BusinessCreateRequest
-  ): LiveData<BaseResponse> {
+  fun putCreateBusinessV6(profileId: String?, request: BusinessCreateRequest): LiveData<BaseResponse> {
     return BusinessCreateRepository.putCreateBusinessV6(profileId, request).toLiveData()
   }
 
@@ -72,8 +63,7 @@ class LoginSignUpViewModel : BaseViewModel() {
   }
 
   fun getFpListByMobile(number: String?, clientId: String?): LiveData<BaseResponse> {
-    return WithFloatTwoRepository.getFpListForRegisteredNumber(number, clientId = clientId)
-      .toLiveData()
+    return WithFloatTwoRepository.getFpListForRegisteredNumber(number, clientId = clientId).toLiveData()
   }
 
   fun getFpDetails(fpId: String, map: Map<String, String>): LiveData<BaseResponse> {
@@ -89,13 +79,11 @@ class LoginSignUpViewModel : BaseViewModel() {
   }
 
   fun validateUsersEmail(requestValidateEmail: RequestValidateEmail?): LiveData<BaseResponse> {
-    return WithFloatRepository.validateUsersEmail(requestValidateEmail = requestValidateEmail)
-      .toLiveData()
+    return WithFloatRepository.validateUsersEmail(requestValidateEmail = requestValidateEmail).toLiveData()
   }
 
   fun validateUsersPhone(requestValidatePhone: RequestValidatePhone?): LiveData<BaseResponse> {
-    return WithFloatRepository.validateUsersPhone(requestValidatePhone = requestValidatePhone)
-      .toLiveData()
+    return WithFloatRepository.validateUsersPhone(requestValidatePhone = requestValidatePhone).toLiveData()
   }
 
 

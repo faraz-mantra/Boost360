@@ -1,6 +1,7 @@
 package com.dashboard.controller
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,6 +9,7 @@ import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavArgument
@@ -23,6 +25,7 @@ import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
 import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
 import com.dashboard.model.live.drawerData.DrawerHomeData
 import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.model.live.welcomeData.WelcomeDashboardResponse
@@ -33,16 +36,18 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.analytics.SentryController
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.models.caplimit_feature.saveCapData
 import com.framework.models.firestore.FirestoreManager
 import com.framework.models.firestore.FirestoreManager.initData
 import com.framework.pref.*
-import com.framework.utils.AppsFlyerUtils
-import com.framework.utils.ConversionUtils
-import com.framework.utils.fromHtml
-import com.framework.utils.roundToFloat
+import com.framework.pref.Key_Preferences.KEY_FP_CART_COUNT
+import com.framework.utils.*
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
 import com.framework.webengageconstant.*
@@ -105,12 +110,23 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     setDrawerHome()
     val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
     binding?.drawerView?.txtVersion?.text = "Version $versionName"
+    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage, binding?.drawerView?.txtDomainName, binding?.viewCartCount)
     intentDataCheckAndDeepLink(intent)
     getWelcomeData()
     session?.initializeWebEngageLogin()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
     registerFirebaseToken()
+    reloadCapLimitData()
+  }
+
+  private fun reloadCapLimitData() {
+    viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this, {
+      if (it.isSuccess()) {
+        val capLimitList = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
+        capLimitList?.toCollection(ArrayList())?.saveCapData()
+      }
+    })
   }
 
   private fun registerFirebaseToken() {
@@ -202,20 +218,18 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onResume() {
     super.onResume()
     setUserData()
-    setOnClickListener(
-      binding?.drawerView?.btnSiteMeter,
-      binding?.drawerView?.imgBusinessLogo,
-      binding?.drawerView?.backgroundImage,
-      binding?.drawerView?.txtDomainName
-    )
   }
 
   override fun getToolbar(): CustomToolbar? {
     return binding?.toolbar
   }
 
+  override fun getToolbarTitleTypeface(): Typeface? {
+    return ResourcesCompat.getFont(this, R.font.bold)
+  }
+
   override fun getToolbarTitleSize(): Float {
-    return ConversionUtils.dp2px(18f).toFloat()
+    return ConversionUtils.dp2px(22f).toFloat()
   }
 
   fun setPercentageData(score: Int) {
@@ -227,6 +241,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun setUserData() {
+    val cartCount = session?.getIntDetails(KEY_FP_CART_COUNT) ?: 0
+    if ((getFragment(DashboardFragment::class.java) != null) && cartCount > 0) binding?.viewCartCount?.visible() else binding?.viewCartCount?.gone()
+    binding?.cartCountTxt?.text = "$cartCount ${if (cartCount > 1) "items" else "item"} waiting in cart"
     binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
     setPercentageData(FirestoreManager.getDrScoreData()?.getDrsTotal() ?: 0)
@@ -246,6 +263,13 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         it, bgImageUri ?: "", R.drawable.general_services_background_img_d
       )
     }
+  }
+
+  private fun cartDataLoad(pos: Int) {
+    val cartCount = session?.getIntDetails(KEY_FP_CART_COUNT) ?: 0
+    if (pos == 0 && cartCount > 0) {
+      binding?.viewCartCount?.visible()
+    } else binding?.viewCartCount?.gone()
   }
 
   private fun setDrawerHome() {
@@ -294,6 +318,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       0 -> openDashboard(false)
       1 -> checkWelcomeShowScreen(pos)
       2 -> checkWelcomeShowScreen(pos)
+      4 -> checkWelcomeShowScreen(pos)
       else -> {
         mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
         toolbarPropertySet(0)
@@ -306,9 +331,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when (pos) {
       1 -> {
         val dataWebsite = welcomeData?.get(0)
-        if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let {
-          showWelcomeDialog(it)
-        }
+        if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let { showWelcomeDialog(it) }
         else {
           mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
           toolbarPropertySet(pos)
@@ -316,9 +339,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       }
       2 -> {
         val dataCustomer = welcomeData?.get(1)
-        if (dataCustomer?.welcomeType?.let { getIsShowWelcome(it) } != true) dataCustomer?.let {
-          showWelcomeDialog(it)
-        }
+        if (dataCustomer?.welcomeType?.let { getIsShowWelcome(it) } != true) dataCustomer?.let { showWelcomeDialog(it) }
         else {
           mNavController.navigate(R.id.navigation_enquiries, Bundle(), getNavOptions())
           toolbarPropertySet(pos)
@@ -330,7 +351,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           showWelcomeDialog(it)
         }
         else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
-
+      }
+      4 -> {
+        mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
+        toolbarPropertySet(pos)
       }
     }
   }
@@ -357,9 +381,11 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun toolbarPropertySet(pos: Int) {
+    cartDataLoad(pos)
     when (pos) {
       1 -> showToolbar(getString(R.string.my_website))
       2 -> showToolbar(getString(R.string.my_enquiry))
+      4 -> showToolbar(getString(R.string.more))
       else -> {
         changeTheme(R.color.colorPrimary, R.color.colorPrimary)
         getToolbar()?.apply { visibility = View.GONE }
@@ -382,8 +408,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when (pos) {
       3 -> checkWelcomeShowScreen(pos)
       4 -> {
-        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
-        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
+//        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
+//        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
       }
     }
   }
@@ -454,6 +480,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
       binding?.drawerView?.backgroundImage -> openImagePicker(true)
+      binding?.viewCartCount -> session?.let { this.initiateAddonMarketplace(it, true, "", "") }
     }
   }
 
@@ -556,7 +583,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun getWelcomeData() {
-    viewModel.getWelcomeDashboardData(this).observeOnce(this, androidx.lifecycle.Observer {
+    viewModel.getWelcomeDashboardData(this).observeOnce(this, {
       val response = it as? WelcomeDashboardResponse
       val data = response?.data?.firstOrNull { it1 ->
         it1.type.equals(

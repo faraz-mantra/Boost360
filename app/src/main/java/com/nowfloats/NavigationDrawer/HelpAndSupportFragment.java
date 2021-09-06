@@ -24,6 +24,7 @@ import com.nowfloats.network.MyOkHttpClient;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.rd.PageIndicatorView;
 import com.thinksity.R;
@@ -230,6 +231,7 @@ public class HelpAndSupportFragment extends Fragment {
             List<RiaSupportModel> models = new ArrayList<>();
 
             okhttp3.Request.Builder builder = new okhttp3.Request.Builder();
+            builder.addHeader("Authorization", Utils.getAuthToken());
             builder.url(url);
             builder.get();
 

@@ -9,18 +9,26 @@ import java.io.Serializable
 data class WebsiteActionItem(
   @SerializedName("isLock")
   var isLock: Boolean? = false,
+  @SerializedName("isFeature")
+  var isFeature: Boolean? = null,
   @SerializedName("premiumCode")
   var premiumCode: String? = "",
   @SerializedName("title")
   var title: String? = "",
   @SerializedName("desc")
   var desc: String? = "",
+  @SerializedName("count")
+  var count: Int? = null,
   @SerializedName("type")
   var type: String? = "",
 ) : Serializable, AppBaseRecyclerViewItem {
 
+
+
   var recyclerViewItemType: Int = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout()
   override fun getViewType(): Int {
+    if (this.isFeature==true)
+      return RecyclerViewItemType.BOOST_WEBSITE_ITEM_FEATURE_VIEW.getLayout()
     return recyclerViewItemType
   }
 
