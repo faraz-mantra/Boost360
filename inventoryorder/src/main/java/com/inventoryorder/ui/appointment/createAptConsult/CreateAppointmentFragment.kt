@@ -56,6 +56,8 @@ import com.inventoryorder.model.ordersdetails.ProductN
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.model.services.InventoryServicesResponse
 import com.inventoryorder.model.services.InventoryServicesResponseItem
+import com.inventoryorder.model.services.ServiceListingRequest
+import com.inventoryorder.model.services.ServiceListingResponse
 import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.model.spaAppointment.bookingslot.request.DateRange
 import com.inventoryorder.model.spaAppointment.bookingslot.response.BookingSlotResponse
@@ -102,8 +104,8 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
   private var selectPositionService: Int = -1
   private var selectPositionDoctor: Int = 0
-  private var serviceList: ArrayList<InventoryServicesResponseItem>? = null
-  private var serviceData: InventoryServicesResponseItem? = null
+  private var serviceList: ArrayList<com.inventoryorder.model.services.ItemsItem?>? = null
+  private var serviceData: com.inventoryorder.model.services.ItemsItem? = null
   private var scheduledDateTime: String = ""
   private var orderInitiateRequest = OrderInitiateRequest()
   private val calendar = Calendar.getInstance()
@@ -206,23 +208,19 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   }
 
   private fun getServiceList() {
-    viewModel?.getAllServiceList(
-      AppConstant.CLIENT_ID,
-      0,
-      session?.fpTag,
-      InventoryServicesResponse.IdentifierType.SINGLE.name
-    )?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-      if (it.error is NoNetworkException) {
+    viewModel?.getServiceListing(
+      ServiceListingRequest( floatingPointTag = session?.fpTag)
+    )?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { response ->
+      if (response.error is NoNetworkException) {
         errorUi(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val resp = (it.arrayResponse as? Array<InventoryServicesResponseItem>)
-        serviceList =
-          if (resp.isNullOrEmpty().not()) resp?.toCollection(ArrayList()) else ArrayList()
-        serviceList?.add(InventoryServicesResponseItem().getGeneralData())
+      if (response.status == 200 || response.status == 201 || response.status == 202) {
+        val resp = (response as ServiceListingResponse).result?.flatMap { resultItem -> resultItem?.services?.items!! }
+        serviceList = if (resp.isNullOrEmpty().not()) resp?.toCollection(arrayListOf()) else ArrayList()
+//        serviceList?.add(InventoryServicesResponseItem().getGeneralData())
         if (isUpdate) {
-          serviceData = this.serviceList?.firstOrNull { service -> service.id == product?._id }
+          serviceData = this.serviceList?.firstOrNull { service -> service?.id == product?._id }
           selectDatServiceDataSet()
           updateUiConsult()
         }
@@ -243,7 +241,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           }
         }
 
-      } else errorUi(it.message())
+      } else errorUi(response.message())
     })
   }
 
@@ -346,11 +344,11 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   }
 
   private fun consultingOnService() {
-    val singleItems = this.serviceList?.map { it.name }?.toTypedArray()
+    val singleItems = this.serviceList?.map { it?.name }?.toTypedArray()
     MaterialAlertDialogBuilder(baseActivity).setTitle(getString(R.string.consult_service))
       .setPositiveButton(getString(R.string.ok)) { d, _ ->
         serviceData =
-          this.serviceList?.firstOrNull { it.name == singleItems?.get(selectPositionService) }
+          this.serviceList?.firstOrNull { it?.name == singleItems?.get(selectPositionService) }
         selectDatServiceDataSet()
         d.dismiss()
       }.setNeutralButton(getString(R.string.cancel)) { d, _ ->
@@ -363,8 +361,8 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   private fun selectDatServiceDataSet() {
     serviceData?.let {
       binding?.edtConsultingService?.setText(it.name)
-      binding?.edtDuration?.setText(it.shipmentDuration?.toString()?:"0")
-      binding?.edtFees?.setText(it.discountedPrice().toString())
+      binding?.edtDuration?.setText(it.duration?.toString()?:"0")
+      binding?.edtFees?.setText(it.discountedPrice?.toString())
     }
     when (serviceData!=null) {
       true -> {
@@ -527,7 +525,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           duration = duration?.toIntOrNull() ?: 0,
           businessLicense = doctorData?.businessLicence ?: "",
 //          doctorSignature = doctorData?.signature?.url ?: "",
-          referenceId = serviceData?.pickupAddressReferenceId() ?: "",
+          referenceId = serviceData?.id ?: "",
           businessLogo = ""
         )
 
@@ -539,7 +537,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           )
         } else {
           val method =
-            if (serviceData?.discountedPrice() == 0.0) PaymentDetailsN.METHOD.FREE.type else PaymentDetailsN.METHOD.COD.type
+            if (serviceData?.discountedPrice == 0.0) PaymentDetailsN.METHOD.FREE.type else PaymentDetailsN.METHOD.COD.type
           val paymentDetails = PaymentDetails(method)
           val buyerDetail = BuyerDetails(
             address = Address(),
@@ -567,17 +565,17 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
             name = serviceData?.name ?: "NO_ITEM",
             description = serviceData?.description ?: "NO_ITEM",
             currencyCode = "INR",
-            isAvailable = serviceData?.isAvailable(),
-            price = serviceData?.discountedPrice(),
+//            isAvailable = serviceData?.(),
+            price = serviceData?.discountedPrice,
             shippingCost = 0.0,
-            discountAmount = serviceData?.discountAmount(),
+            discountAmount = serviceData?.discountAmount,
             extraProperties = extra,
-            imageUri = serviceData?.imageUri ?: ""
+            imageUri = serviceData?.image ?: ""
           )
 
           items.add(
             ItemsItem(
-              type = serviceData?.getType() ?: "NO_ITEM",
+              type = serviceData?.getCategoryValue() ?: "NO_ITEM",
               productOrOfferId = serviceData?.id ?: "NO_ITEM",
               quantity = 1,
               productDetails = productDetails

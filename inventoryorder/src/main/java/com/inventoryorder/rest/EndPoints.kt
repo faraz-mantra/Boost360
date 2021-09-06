@@ -10,6 +10,7 @@ object EndPoints {
   const val SEND_SMS = "discover/v1/floatingpoint/CreateSMSHighPriorityIndia"
   const val GET_BIZ_FLOATS_MESSAGE = "/Discover/v1/floatingPoint/bizFloats"
   const val GET_PRODUCT_LIST = "Product/v1/GetListings"
+  const val GET_SERVICE_LISTING = "product/v13/GetAllServiceListings"
 
   // API with float
   const val BOOST_API_WITH_FLOAT = "https://api.withfloats.com"
