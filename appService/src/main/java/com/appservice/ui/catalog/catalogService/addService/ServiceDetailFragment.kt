@@ -26,6 +26,7 @@ import com.appservice.ui.catalog.catalogService.listing.TypeSuccess
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
 import com.appservice.ui.model.ItemsItem
+import com.appservice.ui.model.ServiceSearchListingResponse
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.ServiceViewModelV1
@@ -36,6 +37,11 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.models.caplimit_feature.PropertiesItem
+import com.framework.models.caplimit_feature.filterFeature
+import com.framework.models.caplimit_feature.getCapData
+import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
@@ -88,6 +94,21 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     binding?.toggleService?.setOnToggledListener { _, _ -> initServiceToggle() }
     initServiceToggle()
     listenerEditText()
+    capLimitCheck()
+  }
+
+  private fun capLimitCheck() {
+    val featureService = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE)
+    val capLimitService = featureService?.filterProperty(PropertiesItem.KeyType.LIMIT)
+    if (isEdit.not() && capLimitService != null) {
+      viewModel?.getSearchListings(sessionLocal.fpTag, sessionLocal.fPID, "", 0, 5)?.observeOnce(viewLifecycleOwner, {
+        val data = (it as? ServiceSearchListingResponse)?.result?.paging
+        if (data?.count != null && capLimitService.getValueN() != null && data.count >= capLimitService.getValueN()!!) {
+          baseActivity.hideKeyBoard()
+          showAlertCapLimit("Can't add the service catalogue, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.PRODUCTCATALOGUE.name)
+        }
+      })
+    }
   }
 
   private fun initServiceToggle() {

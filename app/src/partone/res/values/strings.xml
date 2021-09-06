@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="website_domain_name">.nowfloats.com</string>
-  <string name="app_name">Boost</string>
+  <string name="app_name">Boost 360</string>
   <string name="action_settings">Settings</string>
   <string name="allow_boost_to_read_your">Please allow Boost to read your Facebook Page insights.</string>
   <string name="title_activity_web_site_address">Website Address</string>

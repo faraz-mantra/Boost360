@@ -17,6 +17,10 @@
     <item name="colorPrimary">@color/primary_grey_dark</item>
     <item name="colorPrimaryDark">@color/primary_grey</item>
   </style>
+  <style name="AppTheme.Registration" parent="AppTheme.Pre.Signin">
+    <!-- Customize your theme here. -->
+   <item name="android:statusBarColor">@color/gray_f0f0f0</item>
+  </style>
 
   <style name="FullScreenDialog" parent="Theme.AppCompat.Light.Dialog">
     <item name="android:backgroundDimEnabled">false</item>

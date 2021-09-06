@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -13,7 +12,6 @@ import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
-import com.appservice.constant.IntentConstant
 import com.appservice.ui.staffs.ui.breaks.ScheduledBreaksFragmnt
 import com.appservice.ui.staffs.ui.breaks.StaffBreakConfirmFragment
 import com.appservice.ui.staffs.ui.details.StaffDetailsFragment
@@ -28,6 +26,8 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.views.customViews.CustomToolbar
 
 class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
@@ -54,17 +54,15 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
   override fun onCreateView() {
     super.onCreateView()
-    getBundle()
+    getBundle(UserSessionManager(this))
     setFragment()
   }
 
-  private fun getBundle() {
-    intent.getStringExtra(IntentConstant.FP_TAG.name)?.let {
-      UserSession.apply {
-        fpTag = intent.getStringExtra(IntentConstant.FP_TAG.name)
-        fpId = intent.getStringExtra(IntentConstant.FP_ID.name)
-        clientId = intent.getStringExtra(IntentConstant.CLIENT_ID.name)
-      }
+  private fun getBundle(sessionManager: UserSessionManager) {
+    UserSession.apply {
+      fpTag = sessionManager.fpTag
+      fpId = sessionManager.fPID
+      clientIdN = clientId
     }
   }
 
@@ -80,8 +78,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
   override fun onCreate(savedInstanceState: Bundle?) {
     when (intent.extras) {
       null -> fragmentType = FragmentType.STAFF_HOME_FRAGMENT
-      else -> intent?.extras?.getInt(FRAGMENT_TYPE)
-        ?.let { fragmentType = FragmentType.values()[it] }
+      else -> intent?.extras?.getInt(FRAGMENT_TYPE)?.let { fragmentType = FragmentType.values()[it] }
     }
     super.onCreate(savedInstanceState)
   }
@@ -89,7 +86,6 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
   override fun getToolbar(): CustomToolbar? {
     return binding?.appBarLayout?.toolbar
   }
-
 
 
   override fun customTheme(): Int? {
@@ -212,12 +208,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 }
 
 
-fun Fragment.startStaffFragmentActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false,
-  isResult: Boolean = false
-) {
+fun Fragment.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
   val intent = Intent(activity, StaffFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -225,14 +216,7 @@ fun Fragment.startStaffFragmentActivity(
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startStaffFragmentActivity(
-  activity: Activity,
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean,
-  isResult: Boolean = false,
-  requestCode: Int = Constants.REQUEST_CODE
-) {
+fun startStaffFragmentActivity(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false, requestCode: Int = Constants.REQUEST_CODE) {
   val intent = Intent(activity, StaffFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -243,11 +227,7 @@ fun startStaffFragmentActivity(
   )
 }
 
-fun AppCompatActivity.startStaffFragmentActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false
-) {
+fun AppCompatActivity.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(this, StaffFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

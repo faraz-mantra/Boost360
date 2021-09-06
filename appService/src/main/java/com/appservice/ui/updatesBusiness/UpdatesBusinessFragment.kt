@@ -32,6 +32,9 @@ import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.models.firestore.FirestoreManager.getDrScoreData
+import com.framework.models.firestore.FirestoreManager.updateDocument
+import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing.Companion.shareUpdates
 import com.framework.utils.showKeyBoard
@@ -169,14 +172,6 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
     removeLoader()
   }
 
-  private fun getRequestUpdate(skipBy: Int = 0): HashMap<String?, String?> {
-    val map = HashMap<String?, String?>()
-    map["clientId"] = clientId
-    map["skipBy"] = skipBy.toString()
-    map["fpId"] = sessionLocal.fPID ?: ""
-    return map
-  }
-
   private fun removeLoader() {
     if (isLoadingD) {
       isLoadingD = false
@@ -293,8 +288,8 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
 
   open fun onBusinessUpdateAddedOrUpdated(count: Int) {
     val instance = FirestoreManager
-    if (instance.getDrScoreData() != null && instance.getDrScoreData()!!.metricdetail != null) {
-      instance.getDrScoreData()!!.metricdetail!!.number_updates_posted = count
+    if (instance.getDrScoreData() != null && instance.getDrScoreData()?.metricdetail != null) {
+      instance.getDrScoreData()?.metricdetail?.number_updates_posted = count
       instance.updateDocument()
     }
   }
@@ -323,3 +318,12 @@ fun showDialog(mContext: Context?, title: String?, msg: String?, listener: Dialo
   builder.create().show()
 }
 
+
+
+fun UserSessionManager.getRequestUpdate(skipBy: Int = 0): HashMap<String?, String?> {
+  val map = HashMap<String?, String?>()
+  map["clientId"] = clientId
+  map["skipBy"] = skipBy.toString()
+  map["fpId"] = this.fPID ?: ""
+  return map
+}

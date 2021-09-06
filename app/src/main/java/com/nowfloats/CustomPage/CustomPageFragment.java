@@ -142,8 +142,7 @@ public class CustomPageFragment extends Fragment {
         final FloatingActionButton addProduct = view.findViewById(R.id.fab_custom_page);
 
         addProduct.setOnClickListener(v -> addProduct());
-        if ((activity instanceof CustomPageActivity) && ((CustomPageActivity) activity).isAdd)
-            addProduct();
+        if ((activity instanceof CustomPageActivity) && ((CustomPageActivity) activity).isAdd) addProduct();
     }
 
     @Override
@@ -438,25 +437,25 @@ public class CustomPageFragment extends Fragment {
      * Revamped Widget Logic
      */
     private void addProduct() {
-        /**
-         * If not new pricing plan
-         */
-        if (!WidgetKey.isNewPricingPlan) {
-            if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-                Methods.showFeatureNotAvailDialog(getContext());
-            } else {
+//        /**
+//         * If not new pricing plan
+//         */
+//        if (!WidgetKey.isNewPricingPlan) {
+//            if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+//                Methods.showFeatureNotAvailDialog(getContext());
+//            } else {
+//                openAddCustomPageActivity();
+//            }
+//        } else {
+//            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_CUSTOM_PAGES, WidgetKey.WIDGET_PROPERTY_MAX);
+//
+//            if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
+//                Methods.showFeatureNotAvailDialog(getContext());
+//            } else if (!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && dataModel.size() >= Integer.parseInt(value)) {
+//                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_custom_page_limit)), Toast.LENGTH_LONG).show();
+//            } else {
                 openAddCustomPageActivity();
-            }
-        } else {
-            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_CUSTOM_PAGES, WidgetKey.WIDGET_PROPERTY_MAX);
-
-            if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
-                Methods.showFeatureNotAvailDialog(getContext());
-            } else if (!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && dataModel.size() >= Integer.parseInt(value)) {
-                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_custom_page_limit)), Toast.LENGTH_LONG).show();
-            } else {
-                openAddCustomPageActivity();
-            }
-        }
+//            }
+//        }
     }
 }

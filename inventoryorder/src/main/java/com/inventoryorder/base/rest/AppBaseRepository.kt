@@ -46,6 +46,7 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
       BaseOrderApplication.instance.apply {
         try {
           val i = Intent(this, Class.forName("com.nowfloats.helper.LogoutActivity"))
+          i.putExtra("isAuthErrorToast",true)
           startActivity(i)
         } catch (e: Exception) {
           e.printStackTrace()

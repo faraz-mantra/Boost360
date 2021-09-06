@@ -15,6 +15,7 @@ import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.FragmentType
 import com.dashboard.controller.ui.allAddOns.AllBoostAddonsFragment
 import com.dashboard.controller.ui.business.BusinessProfileFragment
+import com.dashboard.controller.ui.customisationnav.CustomisationNavFragment
 import com.dashboard.controller.ui.drScore.DigitalReadinessScoreFragment
 import com.dashboard.controller.ui.website_theme.FragmentWebsiteTheme
 import com.framework.base.BaseFragment
@@ -31,6 +32,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   private var allBoostAddonsFragment: AllBoostAddonsFragment? = null
   private var websiteThemeFragment: FragmentWebsiteTheme? = null
   private var businessProfileFragment: BusinessProfileFragment? = null
+  private var customisationNavFragment: CustomisationNavFragment? = null
 
   override fun getLayout(): Int {
     return R.layout.activity_fragment_container
@@ -59,7 +61,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNew
-      FragmentType.FRAGMENT_WEBSITE_THEME -> R.style.DashboardThemeNew
+      FragmentType.FRAGMENT_WEBSITE_THEME,FragmentType.FRAGMENT_WEBSITE_NAV -> R.style.DashboardThemeNew
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> R.style.BusinessProfileTheme
       else -> super.customTheme()
     }
@@ -68,7 +70,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getColor(this, R.color.colorPrimary)
-      FragmentType.FRAGMENT_WEBSITE_THEME -> ContextCompat.getColor(this, R.color.gray_4e4e4e)
+      FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_WEBSITE_NAV -> ContextCompat.getColor(this, R.color.gray_4e4e4e)
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getColor(this, R.color.gray_4e4e4e)
       else -> super.getToolbarBackgroundColor()
     }
@@ -84,7 +86,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.ALL_BOOST_ADD_ONS -> resources.getString(R.string.all_boost_add_ons)
-      FragmentType.FRAGMENT_WEBSITE_THEME -> getString(R.string.website_style_customisation)
+      FragmentType.FRAGMENT_WEBSITE_NAV -> getString(R.string.website_style_customisation)
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> getString(R.string.business_profile_)
       else -> super.getToolbarTitle()
     }
@@ -92,7 +94,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.ALL_BOOST_ADD_ONS, FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_toolbar_d)
+      FragmentType.ALL_BOOST_ADD_ONS, FragmentType.FRAGMENT_WEBSITE_THEME,FragmentType.FRAGMENT_WEBSITE_NAV , FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_toolbar_d)
       else -> super.getNavigationIcon()
     }
   }
@@ -148,6 +150,10 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
         businessProfileFragment = BusinessProfileFragment.newInstance()
         businessProfileFragment
       }
+      FragmentType.FRAGMENT_WEBSITE_NAV -> {
+        customisationNavFragment = CustomisationNavFragment.newInstance()
+        customisationNavFragment
+      }
       else -> throw IllegalFragmentTypeException()
     }
   }
@@ -157,6 +163,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     digitalReadinessScoreFragment?.onActivityResult(requestCode, resultCode, data)
     allBoostAddonsFragment?.onActivityResult(requestCode, resultCode, data)
     businessProfileFragment?.onActivityResult(requestCode, resultCode, data)
+    customisationNavFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -171,13 +178,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
 
 }
 
-fun Fragment.startFragmentDashboardActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false,
-  isResult: Boolean = false,
-  requestCode: Int = 101
-) {
+fun Fragment.startFragmentDashboardActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false, requestCode: Int = 101) {
   val intent = Intent(activity, DashboardFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -185,12 +186,7 @@ fun Fragment.startFragmentDashboardActivity(
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, requestCode)
 }
 
-fun startFragmentAccountDashboardNew(
-  activity: Activity,
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean
-) {
+fun startFragmentAccountDashboardNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
   val intent = Intent(activity, DashboardFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -198,11 +194,7 @@ fun startFragmentAccountDashboardNew(
   activity.startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentDashboardActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false
-) {
+fun AppCompatActivity.startFragmentDashboardActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(this, DashboardFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

@@ -14,6 +14,7 @@ import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NotificationCenter.NotificationInterface;
 import com.nowfloats.Store.iapUtils.Purchase;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.thinksity.Specific;
 
 import org.json.JSONArray;
@@ -47,6 +48,7 @@ public class Constants {
             " </script> ";
 
     public static final boolean APK_MODE_RELEASE = false;
+    public static boolean webViewInit = false;
     public static final String APP_TAG = "Boost App";
     public static final String RIA_NODE_DATA = "riaNodeDatas";
     public static final int VISITS_TABLE = 0;
@@ -97,9 +99,17 @@ public class Constants {
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
-    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
-    public static final RestAdapter restAdapterV2 = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL_V2)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("gggv2")).build();
-    public static final RestAdapter restAdapterWithFloat = new RestAdapter.Builder().setEndpoint(Constants.WITH_FLOATS_API_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("with float")).build();
+    public static final RestAdapter restAdapter = new RestAdapter.Builder()
+            .setEndpoint(Constants.NOW_FLOATS_API_URL)
+            .setRequestInterceptor(Utils.getAuthRequestInterceptor())
+            .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter restAdapterV2 = new RestAdapter.Builder()
+            .setEndpoint(Constants.NOW_FLOATS_API_URL_V2)
+            .setRequestInterceptor(Utils.getAuthRequestInterceptor())
+            .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("gggv2")).build();
+    public static final RestAdapter restAdapterWithFloat = new RestAdapter.Builder()
+            .setRequestInterceptor(Utils.getAuthRequestInterceptor())
+            .setEndpoint(Constants.WITH_FLOATS_API_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("with float")).build();
     public static final RestAdapter restAdapterBoostKit = new RestAdapter.Builder().setEndpoint(Constants.WEB_ACTION_BOOST_KIT_API_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Boost Kit")).build();
     public static final RestAdapter restAdapterSalesman = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL_SALESMAN)/*.setClient(getClient())*//*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
     public static final RestAdapter movingFloatsDevAdapter = new RestAdapter.Builder().setEndpoint("http://movingfloats_nds.nowfloatsdev.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
@@ -161,8 +171,14 @@ public class Constants {
     /**
      * Dev Adapter
      */
-    public static final RestAdapter restAdapterDev = new RestAdapter.Builder().setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com/"*/ "https://api2.withfloats.com/")/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
-    public static final RestAdapter restAdapterDev1 = new RestAdapter.Builder().setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com"*/ "https://api2.withfloats.com")/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter restAdapterDev = new RestAdapter.Builder().setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com/"*/ "https://api2.withfloats.com/")/*.setClient(getClient())*/
+            .setRequestInterceptor(Utils.getAuthRequestInterceptor())
+            .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter restAdapterDev1 = new RestAdapter.Builder()
+            .setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com"*/ "https://api2.withfloats.com")/*.setClient(getClient())*/
+            .setLogLevel(RestAdapter.LogLevel.FULL)
+            .setRequestInterceptor(Utils.getAuthRequestInterceptor())
+            .setLog(new AndroidLog("ggg")).build();
     public static boolean LOGOUPLOADED = false;
     public static boolean IS_SUNDAY_CHECKED = false;
     public static boolean IS_MONDAY_CHECKED = false;

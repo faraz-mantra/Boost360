@@ -1,5 +1,6 @@
 package com.nowfloats.enablekeyboard;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -15,13 +16,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.nowfloats.education.koindi.KoinBaseApplication;
 import com.thinksity.R;
 
 import java.util.ArrayList;
 
-import nfkeyboard.util.MixPanelUtils;
 
 /**
  * Created by Shimona on 22-06-2018.
@@ -55,7 +56,7 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
         holder.ivKeyboardTheme.setImageDrawable(context.getResources().getDrawable(keyboardDrawables.get(position)));
 
@@ -72,18 +73,24 @@ public class KeyboardThemesAdapter extends RecyclerView.Adapter<KeyboardThemesAd
         holder.clKeyboardTheme.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (position!=1)
                     holder.clKeyboardTheme.setAlpha(0.5f);
                 } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    if (position==1){
+                        Toast.makeText(context,"Coming Soon",Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
                     if (selected != position) {
                         selected = position;
                         switch (position) {
                             case 0:
-                                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_THEME_CHANGE_TO_LXX_DARK, null);
+//                                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_THEME_CHANGE_TO_LXX_DARK, null);
                                 editor.putString("keyboard_theme", Themes.LXX_DARK.toString());
                                 break;
                             case 1:
-                                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_THEME_CHANGE_TO_LXX_DARK_UNBORDERED, null);
+//                                MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_THEME_CHANGE_TO_LXX_DARK_UNBORDERED, null);
                                 editor.putString("keyboard_theme", Themes.LXX_DARK_UNBORDERED.toString());
                                 break;
                             default:
