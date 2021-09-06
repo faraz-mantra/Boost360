@@ -75,7 +75,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
     }
 
     private Boolean isPremium(){
-        return session.getStoreWidgets().contains(WIDGET_KEY);
+        return /*session.getStoreWidgets().contains(WIDGET_KEY);*/ true;
     }
 
     private void nonEmptyView() {

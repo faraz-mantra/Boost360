@@ -66,6 +66,12 @@ public class ImageGalleryActivity extends AppCompatActivity {
         binding.appBar.toolbarTitle.setText(getResources().getString(R.string.image_gallery));
 
         image_gallery_fragment = new Image_Gallery_Fragment();
+        image_gallery_fragment.imageChangeListener = new Image_Gallery_Fragment.ImageChangeListener() {
+            @Override
+            public void onImagePicked() {
+                handleZerothCase();
+            }
+        };
         findViewById(R.id.fm_site_appearance).setVisibility(View.VISIBLE);
         getSupportFragmentManager().beginTransaction().replace(R.id.fm_site_appearance, image_gallery_fragment, TAG_IMAGE).
                 commit();
@@ -104,16 +110,20 @@ public class ImageGalleryActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "onActivityResult: ");
+        Log.i(TAG, "onActivityResult: "+Constants.storeSecondaryImages.size());
         if (requestCode==202){
-            if (Constants.storeSecondaryImages.isEmpty()){
-                binding.btnAdd.setVisibility(View.GONE);
-                binding.footer.setVisibility(View.GONE);
-            }else {
-                binding.btnAdd.setVisibility(View.VISIBLE);
-                binding.footer.setVisibility(View.VISIBLE);
+            handleZerothCase();
+        }
+    }
 
-            }
+    private void handleZerothCase(){
+        if (Constants.storeSecondaryImages.isEmpty()){
+            binding.btnAdd.setVisibility(View.GONE);
+            binding.footer.setVisibility(View.GONE);
+        }else {
+            binding.btnAdd.setVisibility(View.VISIBLE);
+            binding.footer.setVisibility(View.VISIBLE);
+
         }
     }
 }

@@ -340,10 +340,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       R.id.app_bar_search -> {
         true
       }
-      R.id.menu_help -> {
+     /* R.id.menu_help -> {
         openHelpBottomSheet()
         true
-      }
+      }*/
       else -> super.onOptionsItemSelected(item)
     }
   }
