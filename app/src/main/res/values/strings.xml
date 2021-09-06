@@ -3068,8 +3068,9 @@ With this feature, students and their parents can browse and learn about the upc
   <string name="domain_is_a_great_first_step_towards_building_your_brand_on_web_n">Domain is a great first step towards building your brand on web.</string>
   <string name="boost_keyboard_themes_n">Boost keyboard themes</string>
   <string name="seasional_offer_n">Seasonal Offers</string>
+    <string name="not_for_sale">Not for sale</string>
 
-  <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
+    <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
   <!--    <string name="ir_statusBarColor">#ffb900</string>-->
 
 </resources>
