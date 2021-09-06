@@ -16,12 +16,14 @@ import io.reactivex.Observable
 import okhttp3.MultipartBody
 import retrofit2.Retrofit
 
+const val WA_KEY = "58ede4d4ee786c1604f6c535"
+
 object KitWebActionRepository : AppBaseRepository<KitWebActionRemoteData, AppBaseLocalService>() {
 
   fun addProductGstDetail(request: ProductGstDetailRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.addProductGstDetail(
-        "58ede4d4ee786c1604f6c535",
+        WA_KEY,
         request
       ), TaskCode.ADD_PRODUCT_GST_DETAIL
     )
@@ -30,7 +32,7 @@ object KitWebActionRepository : AppBaseRepository<KitWebActionRemoteData, AppBas
   fun updateProductGstDetail(request: ProductUpdateRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.updateProductGstDetail(
-        "58ede4d4ee786c1604f6c535",
+        WA_KEY,
         request
       ), TaskCode.UPDATE_PRODUCT_GST_DETAIL
     )
@@ -39,7 +41,7 @@ object KitWebActionRepository : AppBaseRepository<KitWebActionRemoteData, AppBas
   fun getProductGstDetail(query: String?): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.getProductGstDetail(
-        "58ede4d4ee786c1604f6c535",
+        WA_KEY,
         query
       ), TaskCode.GET_PRODUCT_GST_DETAIL
     )
@@ -51,7 +53,7 @@ object KitWebActionRepository : AppBaseRepository<KitWebActionRemoteData, AppBas
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.uploadImageProfile(
-        "58ede4d4ee786c1604f6c535",
+        WA_KEY,
         assetFileName,
         file
       ), TaskCode.UPLOAD_FILE_PRODUCT_IMAGE
@@ -60,7 +62,7 @@ object KitWebActionRepository : AppBaseRepository<KitWebActionRemoteData, AppBas
 
   fun addProductImage(request: ProductImageRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.addProductImage("58ede4d4ee786c1604f6c535", request),
+      remoteDataSource.addProductImage(WA_KEY, request),
       TaskCode.ADD_PRODUCT_IMAGE
     )
   }
@@ -68,7 +70,7 @@ object KitWebActionRepository : AppBaseRepository<KitWebActionRemoteData, AppBas
   fun deleteProductImage(request: ProductImageDeleteRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.deleteProductImage(
-        "58ede4d4ee786c1604f6c535",
+        WA_KEY,
         request
       ), TaskCode.DELETE_PRODUCT_IMAGE
     )
@@ -76,7 +78,7 @@ object KitWebActionRepository : AppBaseRepository<KitWebActionRemoteData, AppBas
 
   fun getProductImage(query: String?): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.getProductImage("58ede4d4ee786c1604f6c535", query),
+      remoteDataSource.getProductImage(WA_KEY, query),
       TaskCode.GET_PRODUCT_IMAGE
     )
   }
