@@ -88,7 +88,7 @@ class NiceBottomBar : View {
 
   private val paintBadge = Paint().apply {
     isAntiAlias = true
-    style = Paint.Style.FILL
+    style = Paint.Style.FILL_AND_STROKE
     color = itemBadgeColor
     strokeWidth = 4f
   }
@@ -236,20 +236,16 @@ class NiceBottomBar : View {
     paintBadge.style = Paint.Style.FILL
     paintBadge.color = Color.RED
 
-//    canvas.drawRoundRect(item.rect.apply { right=100f; left=100f;top=100f;bottom=100f },item.rect.centerX() + itemIconSize / 2 - 4,
-//      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10,paintBadge)
-
     canvas.drawCircle(
       item.rect.centerX() + itemIconSize / 2 - 4,
-      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 10, 18f, paintBadge
+      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 24, 18F, paintBadge
     )
-
-//    canvas.drawRoundRect(item.rect.apply {top=100f;bottom=100f;right=100f;left=100f },200f,200f,paintBadge)
     paintBadge.style = Paint.Style.STROKE
     paintBadge.color = barBackgroundColor
+
     canvas.drawText(
       badgeText ?: "", item.rect.centerX() + itemIconSize / 2 - 4,
-      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 16,
+      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 30,
       paintText.apply { color = Color.WHITE;textSize = 20f }
     )
   }
@@ -257,7 +253,6 @@ class NiceBottomBar : View {
   // Add item badge
   fun setBadge(pos: Int, count: String) {
     if (pos >= 0 && pos < items.size && items[pos].badgeSize == 0f) {
-//      drawBadge(Canvas(),items[pos],count)
       items[pos].badgeText = count
       val animator = ValueAnimator.ofFloat(0f, 15f)
       animator.duration = 100
