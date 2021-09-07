@@ -118,6 +118,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
     registerFirebaseToken()
     reloadCapLimitData()
+    binding?.navView?.setBadge(0,"4+")
   }
 
   private fun reloadCapLimitData() {
