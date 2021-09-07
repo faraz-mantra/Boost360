@@ -82,7 +82,7 @@ data class ItemsItem(
 //  }
 
   fun getCategoryValue(): String {
-    return if (category.isNullOrEmpty()) "No category" else category
+    return  "SERVICE"
   }
 }
 
