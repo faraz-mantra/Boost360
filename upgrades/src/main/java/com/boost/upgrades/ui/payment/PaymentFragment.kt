@@ -1120,6 +1120,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     )
   }
 
+
   override fun backListener(flag: Boolean) {
     Log.v("backListener", " " + flag)
     loadCustomerInfo()

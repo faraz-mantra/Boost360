@@ -2,7 +2,9 @@ package com.boost.upgrades.ui.checkoutkyc
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -10,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -20,6 +23,7 @@ import com.boost.upgrades.data.api_model.customerId.customerInfo.BusinessDetails
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.customerInfo.TaxDetails
 import com.boost.upgrades.data.api_model.customerId.get.Result
+import com.boost.upgrades.data.api_model.gst.GSTApiResponse
 import com.boost.upgrades.interfaces.BusinessDetailListener
 import com.boost.upgrades.ui.payment.PaymentViewModel
 import com.boost.upgrades.ui.popup.StateListPopFragment
@@ -53,6 +57,7 @@ class BusinessDetailsFragment : DialogFragment() {
   val stateFragment = StateListPopFragment()
   lateinit var prefs: SharedPrefs
   private var session: UserSessionManager? = null
+  private var gstInfoResult : com.boost.upgrades.data.api_model.gst.Result? = null
 
 
   companion object {
@@ -94,6 +99,30 @@ class BusinessDetailsFragment : DialogFragment() {
     viewModel.getCitiesFromAssetJson(requireActivity())
     viewModel.getStatesFromAssetJson(requireActivity())
 //        business_gst_number.setFilters(business_gst_number.filters + InputFilter.AllCaps())
+
+    business_gstin_number.addTextChangedListener (object : TextWatcher{
+      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+      }
+
+      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        var enteredText : String = s.toString()
+        if(enteredText.length == 15){
+          if(isValidGSTIN(s.toString())){
+            loadGSTInfo(s.toString())
+            viewModel.getGstApiResult().observe(viewLifecycleOwner, Observer {
+              gstInfoResult = it.result
+              if(gstInfoResult!=null){
+
+              }
+            })
+          }
+        }
+      }
+
+      override fun afterTextChanged(s: Editable?) {
+
+      }
+    })
 
     confirm_btn.setOnClickListener {
       if (validateAgreement()) {
@@ -503,6 +532,13 @@ class BusinessDetailsFragment : DialogFragment() {
 
     })
 
+  }
+  private fun loadGSTInfo(gstIn:String) {
+    viewModel.getGstApiInfo(
+      (activity as? UpgradeActivity)?.getAccessToken()?:"",
+      gstIn,
+      (activity as UpgradeActivity).clientid
+    )
   }
 
   private fun loadCustomerInfo() {
