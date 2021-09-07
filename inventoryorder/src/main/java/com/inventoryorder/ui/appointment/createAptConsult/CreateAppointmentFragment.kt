@@ -107,7 +107,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   private var serviceList: ArrayList<com.inventoryorder.model.services.ItemsItem?>? = null
   private var serviceData: com.inventoryorder.model.services.ItemsItem? = null
   private var scheduledDateTime: String = ""
-  private var orderInitiateRequest = OrderInitiateRequest()
+  private var orderInitiateRequest = OrderInitiateRequestNew()
   private val calendar = Calendar.getInstance()
   private var currentMonth = 0
 
@@ -477,6 +477,10 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         showLongToast(getString(R.string.patient_phone_number_field_must_not_be_empty))
         return false
       }
+      !isMobileNumberValid(patientMobile.toString()) -> {
+        showLongToast(getString(R.string.phone_number_invalid))
+        return false
+      }
       checkStringContainsDigits(patientName!!) -> {
         showLongToast(getString(R.string.please_enter_valid_patient_name))
         return false
@@ -508,10 +512,10 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         } catch (e: Exception) {
           e.printStackTrace()
         }
-        val extra = ExtraProperties(
+        val extra = ExtraPropertieN(
           patientName = patientName!!,
           gender = gender,
-          age = age,
+          age = age.toIntOrNull()?:0,
           patientMobileNumber = patientMobile!!,
           patientEmailId = patientEmail!!,
           startTime = startTime24,
@@ -524,7 +528,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           doctorSpeciality = doctorData?.speciality ?: "",
           duration = duration?.toIntOrNull() ?: 0,
           businessLicense = doctorData?.businessLicence ?: "",
-//          doctorSignature = doctorData?.signature?.url ?: "",
+          doctorSignature = doctorData?.signature?.toString()?: "",
           referenceId = serviceData?.id ?: "",
           businessLogo = ""
         )
@@ -538,10 +542,10 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         } else {
           val method =
             if (serviceData?.discountedPrice == 0.0) PaymentDetailsN.METHOD.FREE.type else PaymentDetailsN.METHOD.COD.type
-          val paymentDetails = PaymentDetails(method)
-          val buyerDetail = BuyerDetails(
-            address = Address(),
-            contactDetails = ContactDetails(
+          val paymentDetails = com.inventoryorder.model.orderRequest.PaymentDetailsN(method)
+          val buyerDetail = BuyerDetailsN(
+            address = AddressN(),
+            contactDetails = ContactDetailsN(
               emailId = patientEmail!!,
               fullName = patientName!!,
               primaryContactNumber = patientMobile!!
@@ -551,30 +555,29 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
             if (isVideoConsult) OrderItem.DeliveryMode.ONLINE.name else OrderSummaryRequest.DeliveryMode.OFFLINE.name
           val delProvider =
             if (isVideoConsult) ShippingDetails.DeliveryProvider.NF_VIDEO_CONSULATION.name else ""
-          val shippingDetails = ShippingDetails(
+          val shippingDetails = ShippingDetailsN(
             shippedBy = ShippingDetails.ShippedBy.SELLER.name,
             deliveryMode = delMode,
-            deliveryProvider = delProvider,
-            shippingCost = 0.0,
+            shippingCost = 0,
             currencyCode = "INR"
           )
-          val items = ArrayList<ItemsItem>()
+          val items = ArrayList<ItemsItemNew>()
 
-          val productDetails = ProductDetails(
-            id = serviceData?.id ?: "NO_ITEM",
-            name = serviceData?.name ?: "NO_ITEM",
-            description = serviceData?.description ?: "NO_ITEM",
-            currencyCode = "INR",
-//            isAvailable = serviceData?.(),
-            price = serviceData?.discountedPrice,
-            shippingCost = 0.0,
-            discountAmount = serviceData?.discountAmount,
-            extraProperties = extra,
-            imageUri = serviceData?.image ?: ""
+          val productDetails = ProductDetailsN(
+//            id = serviceData?.id ?: "NO_ITEM",
+//            name = serviceData?.name ?: "NO_ITEM",
+//            description = serviceData?.description ?: "NO_ITEM",
+//            currencyCode = "INR",
+////            isAvailable = serviceData?.,
+//            price = serviceData?.discountedPrice,
+//            shippingCost = 0.0,
+//            discountAmount = serviceData?.discountAmount,
+            extraProperties = extra
+//            imageUri = serviceData?.image ?: ""
           )
 
           items.add(
-            ItemsItem(
+            ItemsItemNew(
               type = serviceData?.getCategoryValue() ?: "NO_ITEM",
               productOrOfferId = serviceData?.id ?: "NO_ITEM",
               quantity = 1,
@@ -587,8 +590,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           orderInitiateRequest.buyerDetails = buyerDetail
           orderInitiateRequest.mode = OrderItem.OrderMode.APPOINTMENT.name
           orderInitiateRequest.shippingDetails = shippingDetails
-          orderInitiateRequest.transactionCharges = 0.0
-          orderInitiateRequest.gstCharges = 0.0
+          orderInitiateRequest.transactionCharges = 0
           orderInitiateRequest.items = items
           orderInitiateRequest.isVideoConsult = isVideoConsult
         }
@@ -626,7 +628,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     })
   }
 
-  private fun hitApiUpdateAptConsult(updateExtra: ExtraProperties?) {
+  private fun hitApiUpdateAptConsult(updateExtra: ExtraPropertieN?) {
     val request = UpdateConsultRequest()
     request.setQueryData(aptData?.id)
     val dateTimeSlot =

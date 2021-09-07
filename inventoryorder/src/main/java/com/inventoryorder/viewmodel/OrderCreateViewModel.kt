@@ -10,6 +10,7 @@ import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.apointmentData.addRequest.AddAptConsultRequest
 import com.inventoryorder.model.apointmentData.updateRequest.UpdateConsultRequest
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
+import com.inventoryorder.model.orderRequest.OrderInitiateRequestNew
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.model.orderRequest.feedback.FeedbackRequest
 import com.inventoryorder.model.orderRequest.paymentRequest.PaymentReceivedRequest
@@ -122,7 +123,7 @@ class OrderCreateViewModel : BaseViewModel() {
     return ProductOrderRepository.getDoctorData(fpTag).toLiveData()
   }
 
-  fun postOrderInitiate(clientId: String?, request: OrderInitiateRequest?): LiveData<BaseResponse> {
+  fun postOrderInitiate(clientId: String?, request: OrderInitiateRequestNew?): LiveData<BaseResponse> {
     return AssuredPurchaseRepository.postOrderInitiate(clientId, request).toLiveData()
   }
 
