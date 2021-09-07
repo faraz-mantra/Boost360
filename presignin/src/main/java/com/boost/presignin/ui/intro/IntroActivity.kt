@@ -90,16 +90,18 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
         lifecycle,
         items,
         { setNextPage() },
-        { isVideoPlaying = it;
-          Log.i(TAG, "is video playing changed: "+it)})
+        {
+          isVideoPlaying = it;
+          Log.i(TAG, "is video playing changed: " + it)
+        })
       orientation = ViewPager2.ORIENTATION_HORIZONTAL
       binding?.introIndicator?.setViewPager2(binding!!.introViewpager)
       binding?.introViewpager?.offscreenPageLimit = items.size
-      binding?.introViewpager?.registerOnPageChangeCallback(object :CircularViewPagerHandler(this){
+      binding?.introViewpager?.registerOnPageChangeCallback(object : CircularViewPagerHandler(this) {
         override fun onPageSelected(position: Int) {
           super.onPageSelected(position)
           Log.i(TAG, "onPageSelected: ")
-          if(position!=0&&isVideoPlaying){
+          if (position != 0 && isVideoPlaying) {
             isVideoPlaying = false
             nextPageTimer()
           }
@@ -108,24 +110,24 @@ class IntroActivity : BaseActivity<ActivityIntroBinding, BaseViewModel>() {
     }
 //    binding?.introViewpager?.setPageTransformer(ViewPager2Transformation())
     binding?.btnCreate?.setOnClickListener {
-      if (RootUtil.isDeviceRooted.not()) {
+//      if (RootUtil.isDeviceRooted.not()) {
 //    navigator?.startActivity(AccountNotFoundActivity::class.java, args = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "8097789896") })
-        WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
-        if (packageName.equals("com.jio.online", ignoreCase = true)) {
-          startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
-        } else {
-          startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
-        }
-      }else {
-        dialogRootError()
+      WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
+      if (packageName.equals("com.jio.online", ignoreCase = true)) {
+        startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
+      } else {
+        startActivity(Intent(this@IntroActivity, MobileVerificationActivity::class.java))
       }
+//      }else {
+//        dialogRootError()
+//      }
     }
   }
 
   private fun dialogRootError() {
     AlertDialog.Builder(ContextThemeWrapper(this, R.style.CustomAlertDialogTheme))
       .setCancelable(false)
-      .setTitle("JiOnline can't be used on this device!")
+      .setTitle("JioOnline can't be used on this device!")
       .setMessage("Sorry, your device isn't passing JioOnline security checks. This may be because your device is rooted or is running an uncertified or custom OS build.")
       .setPositiveButton("Close") { dialog: DialogInterface, _: Int ->
         dialog.dismiss()
