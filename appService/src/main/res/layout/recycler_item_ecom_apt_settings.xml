@@ -36,17 +36,18 @@
           android:layout_gravity="center"
           android:layout_marginStart="@dimen/size_0"
           android:layout_marginBottom="@dimen/size_10"
-          android:src="@drawable/ic_business_services_pro" />
+          android:src="@drawable/ic_ecom_catalog_setup" />
 
         <com.framework.views.customViews.CustomTextView
           android:layout_width="match_parent"
           android:layout_height="@dimen/size_18"
           android:layout_gravity="bottom"
+          android:id="@+id/ctv_pending"
           android:background="@drawable/rounded_stroke_grey_4"
           android:backgroundTint="@color/red_apt"
           android:gravity="center"
           android:paddingHorizontal="@dimen/size_8"
-          android:text="Pending"
+          android:text="@string/pending"
           android:textColor="@color/white"
           android:textSize="@dimen/size_10" />
 
@@ -54,7 +55,7 @@
       </FrameLayout>
 
       <com.framework.views.customViews.CustomImageView
-        android:id="@+id/civ_setup_done"
+        android:id="@+id/civ_setup_check"
         android:layout_width="@dimen/size_24"
         android:layout_height="@dimen/size_24"
         android:src="@drawable/ic_checkcircle"
