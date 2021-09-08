@@ -21,12 +21,16 @@ class CatalogTileViewHolder(binding: RecyclerItemEcomAptSettingsBinding) : AppBa
         when (catalogSetup?.isPending) {true -> { binding.civSetupCheck.gone();binding.ctvPending.visible()} else -> { binding.civSetupCheck.visible();binding.ctvPending.invisible() } }
         binding.ctvCatalogSetupSubheading.text = catalogSetup?.getTitle()
         binding.ctvCatalogSetupSubheading2.text = catalogSetup?.getSubtitle()
+        binding?.ctvCatalogSetupSubheading2.visible()
+
       }
       is PaymentCollectionSetup -> {
         val paymentCollectionSetup = tilesItem.tile as? PaymentCollectionSetup
         when (paymentCollectionSetup?.isPending) {true -> { binding.civSetupCheck.gone();binding.ctvPending.visible()} else -> { binding.civSetupCheck.visible();binding.ctvPending.invisible() } }
         binding.ctvCatalogSetupSubheading.text = paymentCollectionSetup?.getTitle()
         binding.ctvCatalogSetupSubheading2.text = paymentCollectionSetup?.getSubtitle()
+        binding?.ctvCatalogSetupSubheading2.visible()
+
 
       }
       is CustomerInvoicesSetup -> {
@@ -34,6 +38,7 @@ class CatalogTileViewHolder(binding: RecyclerItemEcomAptSettingsBinding) : AppBa
         binding.ctvCatalogSetupSubheading.text = customerInvoicesSetup?.getTitle()
         binding.ctvCatalogSetupSubheading2.text = customerInvoicesSetup?.getSubtitle()
         when (customerInvoicesSetup?.isTaxInvoiceSetupComplete==false) {true -> { binding.civSetupCheck.gone();binding.ctvPending.visible()} else -> { binding.civSetupCheck.visible();binding.ctvPending.invisible() } }
+        binding?.ctvCatalogSetupSubheading2.visible()
 
 
       }
@@ -44,9 +49,12 @@ class CatalogTileViewHolder(binding: RecyclerItemEcomAptSettingsBinding) : AppBa
       }
       is PoliciesSetup -> {
         val policiesSetup = tilesItem.tile as? PoliciesSetup
-        binding?.ctvCatalogSetupSubheading.text = tilesItem?.description
-        binding.ctvCatalogSetupTitle.text = tilesItem?.title
 
+      }
+      is DeliverySetupTile -> {
+        val policiesSetup = tilesItem.tile as? DeliverySetupTile
+        binding?.ctvCatalogSetupSubheading.text = policiesSetup?.getTitle()
+        binding?.ctvCatalogSetupSubheading2.gone()
       }
     }
 //    binding.civCatalogSetupIcon.setImageIcon(tilesItem)

@@ -34,12 +34,13 @@ data class AppointmentStatusResponse(
 
 
 }
-
 enum class IconType(var icon: Int) {
   policies(R.drawable.ic_policies_for_customer),
   customer_invoice_setup(R.drawable.ic_customer_invoice),
   payment_collection(R.drawable.ic_payment_collection),
-  catalog_setup(R.drawable.ic_business_services_pro);
+  delivery_setup(R.drawable.ic_delivery_ecomm_setup),
+  catalog_setup(R.drawable.ic_business_services_pro),
+  catalog_setup_ecommerce(R.drawable.ic_ecom_catalog_setup);
 
   companion object {
     fun fromName(name: String?): IconType? =
@@ -50,8 +51,12 @@ enum class IconType(var icon: Int) {
 
 data class ResultS(
 
+
   @field:SerializedName("CustomerInvoicesSetup")
   var customerInvoicesSetup: CustomerInvoicesSetup? = null,
+
+  @field:SerializedName("DeliverySetup")
+  var deliverySetup: DeliverySetupTile? = null,
 
   @field:SerializedName("PoliciesSetup")
   var policiesSetup: PoliciesSetup? = null,
@@ -66,7 +71,7 @@ data class ResultS(
   var paymentCollectionSetup: PaymentCollectionSetup? = null
 ) {
 
-  fun getTilesArray(): ArrayList<AppointmentStatusResponse.TilesModel> {
+  fun getAppointmentTilesArray(): ArrayList<AppointmentStatusResponse.TilesModel> {
     return arrayListOf(
       AppointmentStatusResponse.TilesModel("catalog_setup", "Service categories, Catalog display text,applicable tax slabs", "Catalog Setup", this.catalogSetup),
       AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", this.paymentCollectionSetup),
@@ -74,6 +79,36 @@ data class ResultS(
 //      ,
 //      AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", this.policiesSetup)
     )
+  }
+
+  fun getEcommerceTilesArray(): ArrayList<AppointmentStatusResponse.TilesModel> {
+    return arrayListOf(
+      AppointmentStatusResponse.TilesModel("catalog_setup_ecommerce", "Service categories, Catalog display text,applicable tax slabs", "Catalog Setup", this.catalogSetup),
+      AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", this.paymentCollectionSetup),
+      AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", this.customerInvoicesSetup),
+      AppointmentStatusResponse.TilesModel("delivery_setup", "GST declaration, Bank UPI for offline appointments,signature", "Delivery setup", this.deliverySetup)
+//      ,
+//      AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", this.policiesSetup)
+    )
+  }
+}
+
+data class DeliverySetupTile(
+//  "DeliverySetup": {
+//  "IsHomeDeliveryAllowed": boolean,
+//  "IsPickupAllowed": boolean,
+//  "IsPending": boolean
+//},
+  @field:SerializedName("IsHomeDeliveryAllowed")
+  var isHomeDeliveryAllowed: Boolean? = null,
+  @field:SerializedName("IsPickupAllowed")
+  var isPickUpAllowed: Boolean? = null,
+  @field:SerializedName("IsPending")
+  var isPending: Boolean? = null
+) {
+
+  fun getTitle(): Spanned? {
+    return fromHtml(if (this.isPending == true || this.isHomeDeliveryAllowed == false || isPickUpAllowed == false) "<pre> Mode: <span style=\"color: #EB5757;\"><em>not selected</em></span></pre>" else  if (isHomeDeliveryAllowed==true&&isPickUpAllowed==true)"Mode:<b> Home delivery, Self pickup</b>" else  if (isHomeDeliveryAllowed==true)"Mode:<b> Home delivery</b>" else "Mode:<b> Self Pickup</b>")
   }
 }
 
@@ -90,12 +125,13 @@ data class PaymentCollectionSetup(
 
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
-){
+) {
   fun getTitle(): Spanned? {
     return fromHtml("Payment gateway: <b>$paymentGateway</b>")
   }
+
   fun getSubtitle(): Spanned? {
-    return fromHtml(if (this.bankAccountNumber==null||this.bankAccountNumber==""||isBankAccountConnected==false) "<pre> Bank account: <span style=\"color: #EB5757;\"><em>not connected</em></span></pre>" else "Bank account: <b>$bankAccountNumber</b>")
+    return fromHtml(if (this.bankAccountNumber == null || this.bankAccountNumber == "" || isBankAccountConnected == false) "<pre> Bank account: <span style=\"color: #EB5757;\"><em>not connected</em></span></pre>" else "Bank account: <b>$bankAccountNumber</b>")
   }
 }
 
@@ -135,8 +171,9 @@ data class CatalogSetup(
   fun getTitle(): Spanned? {
     return fromHtml("Display text: <b>$productCategoryVerb</b>")
   }
+
   fun getSubtitle(): Spanned? {
-    return fromHtml(if (this.isDefaultGSTSlabSelected==false&&this.defaultGSTSlab==0.0) "<pre>Applicable tax slabs: <span style=\"color: #EB5757;\"><em>not selected</em></span></pre>" else "Applicable tax slabs: <b>${this.defaultGSTSlab}</b>")
+    return fromHtml(if (this.isDefaultGSTSlabSelected == false && this.defaultGSTSlab == 0.0) "<pre>Applicable tax slabs: <span style=\"color: #EB5757;\"><em>not selected</em></span></pre>" else "Applicable tax slabs: <b>${this.defaultGSTSlab}</b>")
   }
 }
 
@@ -154,13 +191,14 @@ data class CustomerInvoicesSetup(
 
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
-){
+) {
   fun getTitle(): Spanned? {
-    return if (isGSTDeclarationComplete==false) fromHtml("<pre>GST declaration: <span style=\"color: #EB5757;\"><em>incomplete</em></span></pre>")
+    return if (isGSTDeclarationComplete == false) fromHtml("<pre>GST declaration: <span style=\"color: #EB5757;\"><em>incomplete</em></span></pre>")
     else fromHtml("<pre>GST declaration: <strong>$gSTIN</strong>&nbsp;</pre>")
   }
+
   fun getSubtitle(): Spanned? {
-    return fromHtml(" ${if (this.isTaxInvoiceSetupComplete==false) "<pre>Tax invoice: <span style=\"color: #EB5757;\"><em>Setup incomplete</em></span></pre>" else "Tax invoice: <b>Setup completed</b>"}")
+    return fromHtml(" ${if (this.isTaxInvoiceSetupComplete == false) "<pre>Tax invoice: <span style=\"color: #EB5757;\"><em>Setup incomplete</em></span></pre>" else "Tax invoice: <b>Setup completed</b>"}")
   }
 }
 
