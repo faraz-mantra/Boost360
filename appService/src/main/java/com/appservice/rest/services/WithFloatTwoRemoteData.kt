@@ -8,6 +8,7 @@ import com.appservice.model.updateBusiness.BusinessUpdateResponse
 import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.EndPoints
+import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -19,14 +20,14 @@ interface WithFloatTwoRemoteData {
   @POST(EndPoints.CREATE_SERVICE)
   fun createService(@Body request: CatalogProduct?): Observable<Response<String>>
 
-    @PUT(EndPoints.UPDATE_SERVICE)
-    fun updateService(@Body request: ProductUpdate?): Observable<Response<ResponseBody>>
+  @PUT(EndPoints.UPDATE_SERVICE)
+  fun updateService(@Body request: ProductUpdate?): Observable<Response<ResponseBody>>
 
-    @HTTP(method = "DELETE", path = EndPoints.DELETE_SERVICE, hasBody = true)
-    fun deleteService(@Body request: DeleteProductRequest?): Observable<Response<String>>
+  @HTTP(method = "DELETE", path = EndPoints.DELETE_SERVICE, hasBody = true)
+  fun deleteService(@Body request: DeleteProductRequest?): Observable<Response<String>>
 
-    @GET(EndPoints.GET_TAGS)
-    fun getTags(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?): Observable<Response<List<String>>>
+  @GET(EndPoints.GET_TAGS)
+  fun getTags(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?): Observable<Response<List<String>>>
 
   @Headers("Accept: application/json", "Content-Type: application/octet-stream")
   @PUT(EndPoints.ADD_IMAGE)
@@ -39,8 +40,9 @@ interface WithFloatTwoRemoteData {
     @Query("productId") productId: String?,
     @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
-    @GET(EndPoints.GET_PRODUCT_LISTING)
-    fun getProductListing(@Query("fpTag") fpTag: String?, @Query("clientId") clientId: String?, @Query("skipBy") skipBy: Int?): Observable<Response<List<CatalogProduct>>>
+
+  @GET(EndPoints.GET_PRODUCT_LISTING)
+  fun getProductListing(@Query("fpTag") fpTag: String?, @Query("clientId") clientId: String?, @Query("skipBy") skipBy: Int?): Observable<Response<List<CatalogProduct>>>
 
   @GET(EndPoints.GET_NOTIFICATION)
   fun getNotificationCount(
@@ -54,6 +56,9 @@ interface WithFloatTwoRemoteData {
 
   @POST(EndPoints.CREATE_PRODUCT)
   fun createProduct(@Body request: CatalogProduct?): Observable<Response<String>>
+
+  @POST(EndPoints.POST_PRODUCT_CATEGORY_VERB)
+  fun updateProductCategoryVerb(@Body request: ProductCategoryVerbRequest?): Observable<Response<ResponseBody>>
 
   @PUT(EndPoints.UPDATE_PRODUCT)
   fun updateProduct(@Body request: ProductUpdate?): Observable<Response<ResponseBody>>
@@ -72,18 +77,22 @@ interface WithFloatTwoRemoteData {
     @Query("productId") productId: String?,
     @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
+
   @GET(EndPoints.GET_FP_DETAILS)
   fun getFpDetails(
     @Path("fpid") fpid: String,
     @QueryMap map: Map<String, String>,
   ): Observable<Response<UserFpDetailsResponse>>
+
   @PUT(EndPoints.PUT_BIZ_MESSAGE)
   fun putBizMessageUpdate(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
+
   @GET(EndPoints.GET_CATALOG_STATUS)
   fun getCatalogStatus(
     @Path("fpid") fpid: String,
     @Query("clientId") clientId: String?,
   ): Observable<Response<AppointmentStatusResponse>>
+
   @GET(EndPoints.GET_BIZ_WEB_UPDATE_BY_ID)
   fun getBizWebMessage(
     @Path("id") id: String?,

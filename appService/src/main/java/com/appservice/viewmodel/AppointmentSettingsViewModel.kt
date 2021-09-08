@@ -1,6 +1,5 @@
 package com.appservice.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import com.appservice.appointment.model.*
 import com.appservice.rest.repository.BoostNowFloatsRepository
@@ -73,5 +72,9 @@ class AppointmentSettingsViewModel : BaseViewModel() {
 
   fun getAppointmentCatalogStatus(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getAppointmentCatalogStatus(floatingPointId, clientId).toLiveData()
+  }
+
+  fun updateProductCategoryVerb(request: ProductCategoryVerbRequest): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.updateProductCategoryVerb(request).toLiveData()
   }
 }

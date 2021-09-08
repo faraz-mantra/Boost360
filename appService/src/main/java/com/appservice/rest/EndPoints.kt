@@ -2,9 +2,9 @@ package com.appservice.rest
 
 object EndPoints {
   //TODO BOOST NOW FLOATS API
-  const val  BOOST_NOW_FLOATS_BASE = "https://boost.nowfloats.com/"
-  const val  UPDATE_INFO_POST = "Home/updateInfo"
-  const val  FP_DETAILS_BY_ID = "Home/GetFloatingPointDetailsById"
+  const val BOOST_NOW_FLOATS_BASE = "https://boost.nowfloats.com/"
+  const val UPDATE_INFO_POST = "Home/updateInfo"
+  const val FP_DETAILS_BY_ID = "Home/GetFloatingPointDetailsById"
 
   //TODO NFX API WITH FLOAT
   const val WITH_FLOATS_BASE = "https://api.withfloats.com/"
@@ -67,23 +67,25 @@ object EndPoints {
   const val DELETE_BIZ_MESSAGE_UPDATE = "discover/v1/floatingpoint/archiveMessage"
   const val GET_FP_DETAILS = "/Discover/v3/floatingPoint/nf-app/{fpid}"
   const val GET_CATALOG_STATUS = "discover/v9/business/settings/status/{fpid}"
+  const val POST_PRODUCT_CATEGORY_VERB = "Discover/v1/FloatingPoint/update/"
+
 
   //TODO PRODUCT API 2 WITH FLOAT
-    const val CREATE_PRODUCT = "Product/v1/Create"
-    const val GET_LISTING_INVENTORY_SYNC = "Product/v1/GetListingsWithInventorySync"
-    const val UPDATE_PRODUCT = "Product/v1/Update"
-    const val DELETE_PRODUCT = "Product/v1/Delete"
-    const val GET_PRODUCT_LISTING = "Product/v1/GetListings"
+  const val CREATE_PRODUCT = "Product/v1/Create"
+  const val GET_LISTING_INVENTORY_SYNC = "Product/v1/GetListingsWithInventorySync"
+  const val UPDATE_PRODUCT = "Product/v1/Update"
+  const val DELETE_PRODUCT = "Product/v1/Delete"
+  const val GET_PRODUCT_LISTING = "Product/v1/GetListings"
 
 
-    //TODO Appointment Settings API 2 WITH FLOAT
-    const val ACCEPT_COD = "discover/v9/business/paymentProfile/acceptCod/update"
-    const val ADD_BANK_ACCOUNT = "discover/v9/business/paymentProfile/bankDetails/update"
-    const val DELIVERY_SETUP = "discover/v9/business/deliveryDetails/update"
-    const val GET_DELIVERY_CONFIG = "discover/v9/business/deliveryDetails"
-    const val ADD_WARE_HOUSE = "discover/v9/business/warehouse/add"
-    const val GET_WARE_HOUSE = "discover/v9/business/warehouse/"
-    const val INVOICE_SETUP = "discover/v9/business/paymentProfile/taxDetails/update"
+  //TODO Appointment Settings API 2 WITH FLOAT
+  const val ACCEPT_COD = "discover/v9/business/paymentProfile/acceptCod/update"
+  const val ADD_BANK_ACCOUNT = "discover/v9/business/paymentProfile/bankDetails/update"
+  const val DELIVERY_SETUP = "discover/v9/business/deliveryDetails/update"
+  const val GET_DELIVERY_CONFIG = "discover/v9/business/deliveryDetails"
+  const val ADD_WARE_HOUSE = "discover/v9/business/warehouse/add"
+  const val GET_WARE_HOUSE = "discover/v9/business/warehouse/"
+  const val INVOICE_SETUP = "discover/v9/business/paymentProfile/taxDetails/update"
   const val UPLOAD_MERCHANT_SIGNATURE = "discover/v9/business/paymentProfile/uploadSignature"
   const val ADD_MERCHANT_UPI = "discover/v9/business/paymentProfile/upiid/update"
   const val GET_PAYMENT_PROFILE_DETAILS = "discover/v9/business/paymentProfile"

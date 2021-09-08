@@ -16,11 +16,9 @@ class BottomSheetSuccessfullyUpdated : BaseBottomSheetDialog<BottomSheetSuccessf
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_successfully_published
   }
-
   override fun getViewModelClass(): Class<BaseViewModel> {
     return BaseViewModel::class.java
   }
-
   override fun onCreateView() {
     dialog.setCancelable(false)
     sessionManager = UserSessionManager(baseActivity)
@@ -34,6 +32,7 @@ class BottomSheetSuccessfullyUpdated : BaseBottomSheetDialog<BottomSheetSuccessf
     super.onClick(v)
     when (v) {
       binding?.civCancel -> {
+        baseActivity.onBackPressed()
         dismiss()
       }
     }
