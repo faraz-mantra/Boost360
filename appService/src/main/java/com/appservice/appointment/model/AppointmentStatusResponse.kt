@@ -69,9 +69,7 @@ data class ResultS(
   fun getTilesArray(): ArrayList<AppointmentStatusResponse.TilesModel> {
     return arrayListOf(
       AppointmentStatusResponse.TilesModel("catalog_setup", "Service categories, Catalog display text,applicable tax slabs", "Catalog Setup", this.catalogSetup),
-      AppointmentStatusResponse.TilesModel(
-        "payment_collection", "Preferred payment gateway", "Payment collection setup", this.paymentCollectionSetup
-      ),
+      AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", this.paymentCollectionSetup),
       AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", this.customerInvoicesSetup),
       AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", this.policiesSetup)
     )
@@ -127,10 +125,10 @@ data class CatalogSetup(
   var isPending: Boolean? = null
 ) {
   fun getTitle(): Spanned? {
-    return fromHtml("<b>Display text</b>: $productCategoryVerb")
+    return fromHtml("Display text: <b>$productCategoryVerb</b>")
   }
   fun getSubtitle(): Spanned? {
-    return fromHtml(" Applicable tax slabs: ${if (this.isDefaultGSTSlabSelected==true) "<p><span style=\"color: #ff00ff;\"><em>not selected</em></span></p>" else "${this.defaultGSTSlab}"}")
+    return fromHtml(if (this.isDefaultGSTSlabSelected==false&&this.defaultGSTSlab==0.0) "<pre>Applicable tax slabs: <span style=\"color: #EB5757;\"><em>not selected</em></span></pre>" else "Applicable tax slabs: <b>${this.defaultGSTSlab}</b>")
   }
 }
 
