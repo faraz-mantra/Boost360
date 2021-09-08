@@ -12,7 +12,7 @@ data class Slots(
   var _id: String? = null,
   var isSelected: Boolean = false
 ) : Serializable, AppBaseRecyclerViewItem {
-  var recyclerViewType = RecyclerViewItemType.SLOTS_ITEM.getLayout()
+  var recyclerViewType = RecyclerViewItemType.SLOTS_ITEM_NEW.getLayout()
   override fun getViewType(): Int {
     return recyclerViewType
   }

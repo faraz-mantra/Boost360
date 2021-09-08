@@ -55,7 +55,7 @@
   <string name="aug_sep_2020">Aug - Sep, 2020</string>
   <string name="go_to_current_week">Go to current week</string>
   <string name="consultation_type_camel_case">Consultation type</string>
-  <string name="new_apppointment_camel_case">New appointment</string>
+  <string name="new_apppointment_camel_case">New Appointment</string>
   <string name="appointment_new_title">New Appointment</string>
   <string name="update_apt_consult" tools:ignore="ExtraTranslation">Update Appointment</string>
   <string name="in_clinic">In-Clinic</string>
