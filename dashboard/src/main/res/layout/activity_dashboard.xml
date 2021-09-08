@@ -102,7 +102,7 @@
         <com.framework.views.bottombar.NiceBottomBar
           android:id="@+id/nav_view"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/size_50"
+          android:layout_height="@dimen/size_52"
           android:background="?android:attr/windowBackground"
           app:activeMenu="@menu/bottom_nav_active_menu"
           app:clickPosition="3"
