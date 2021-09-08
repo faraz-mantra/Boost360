@@ -23,31 +23,35 @@ class CatalogTileViewHolder(binding: RecyclerItemEcomAptSettingsBinding) : AppBa
         binding.ctvCatalogSetupSubheading.text = catalogSetup?.getTitle()
         binding.ctvCatalogSetupSubheading2.text = catalogSetup?.getSubtitle()
         val icon = tilesItem.icon?.let { IconType.fromName(name = it) }
-        tilesItem.icon.let { binding?.civSetupIcon.setImageResource(icon?.icon!!) }
+        tilesItem.icon.let { binding.civSetupIcon.setImageResource(icon?.icon!!) }
       }
       is PaymentCollectionSetup -> {
         val paymentCollectionSetup = tilesItem.tile as? PaymentCollectionSetup
-        binding.ctvCatalogSetupSubheading2.visible()
-        val icon = tilesItem?.icon?.let { IconType.fromName(name = it) }
-        tilesItem?.icon.let { binding?.civSetupIcon.setImageResource(icon?.icon!!) }
-        binding?.ctvCatalogSetupSubheading.text = tilesItem?.description
-        binding.ctvCatalogSetupTitle.text = tilesItem?.title
+        val icon = tilesItem.icon?.let { IconType.fromName(name = it) }
+        when (paymentCollectionSetup?.isPending) {true -> { binding.civSetupCheck.gone();binding.ctvPending.visible()} else -> { binding.civSetupCheck.visible();binding.ctvPending.gone() } }
+        tilesItem.icon.let { binding.civSetupIcon.setImageResource(icon?.icon!!) }
+        binding.ctvCatalogSetupTitle.text = tilesItem.title
+        binding.ctvCatalogSetupSubheading.text = paymentCollectionSetup?.getTitle()
+        binding.ctvCatalogSetupSubheading2.text = paymentCollectionSetup?.getSubtitle()
 
       }
       is CustomerInvoicesSetup -> {
         val customerInvoicesSetup = tilesItem.tile as? CustomerInvoicesSetup
-        val icon = tilesItem?.icon?.let { IconType.fromName(name = it) }
-        tilesItem?.icon.let { binding?.civSetupIcon.setImageResource(icon?.icon!!) }
-        binding?.ctvCatalogSetupSubheading.text = tilesItem?.description
-        binding.ctvCatalogSetupTitle.text = tilesItem?.title
+        val icon = tilesItem.icon?.let { IconType.fromName(name = it) }
+        tilesItem.icon.let { binding.civSetupIcon.setImageResource(icon?.icon!!) }
+        binding.ctvCatalogSetupTitle.text = tilesItem.title
+        binding.ctvCatalogSetupSubheading.text = customerInvoicesSetup?.getTitle()
+        binding.ctvCatalogSetupSubheading2.text = customerInvoicesSetup?.getSubtitle()
+        when (customerInvoicesSetup?.isTaxInvoiceSetupComplete) {true -> { binding.civSetupCheck.gone();binding.ctvPending.visible()} else -> { binding.civSetupCheck.visible();binding.ctvPending.gone() } }
+
 
       }
       is ConsultationSetup -> {
         val consultationSetup = tilesItem.tile as? ConsultationSetup
         val icon = tilesItem?.icon?.let { IconType.fromName(name = it) }
         tilesItem?.icon.let { binding?.civSetupIcon.setImageResource(icon?.icon!!) }
-        binding?.ctvCatalogSetupSubheading.text = tilesItem?.description
         binding.ctvCatalogSetupTitle.text = tilesItem?.title
+
 
       }
       is PoliciesSetup -> {
