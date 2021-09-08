@@ -156,11 +156,11 @@ data class CustomerInvoicesSetup(
   var isPending: Boolean? = null
 ){
   fun getTitle(): Spanned? {
-    return if (isGSTDeclarationComplete==true) fromHtml("<pre>GST declaration: <span style=\"color: #EB5757;\"><em>incomplete</em></span></pre>")
+    return if (isGSTDeclarationComplete==false) fromHtml("<pre>GST declaration: <span style=\"color: #EB5757;\"><em>incomplete</em></span></pre>")
     else fromHtml("<pre>GST declaration: <strong>$gSTIN</strong>&nbsp;</pre>")
   }
   fun getSubtitle(): Spanned? {
-    return fromHtml(" ${if (this.isTaxInvoiceSetupComplete==true) "<pre>Tax invoice: <span style=\"color: #EB5757;\"><em>Setup incomplete</em></span></pre>" else "Tax invoice: <b>Setup completed</b>"}")
+    return fromHtml(" ${if (this.isTaxInvoiceSetupComplete==false) "<pre>Tax invoice: <span style=\"color: #EB5757;\"><em>Setup incomplete</em></span></pre>" else "Tax invoice: <b>Setup completed</b>"}")
   }
 }
 
