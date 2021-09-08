@@ -164,7 +164,7 @@ class NiceBottomBar : View {
     val textHeight = (paintText.descent() + paintText.ascent()) / 2
     // Push the item components from the top a bit if the indicator is at the top
     var additionalTopMargin = if (barIndicatorGravity == 1) 0f else 10f
-    additionalTopMargin = if (itemTextVisible) additionalTopMargin else 20f
+    additionalTopMargin = if (itemTextVisible) additionalTopMargin else 22f
     for ((i, item) in items.withIndex()) {
       if (itemsActive.isNullOrEmpty().not() && (itemsActive.size == items.size)) {
         item.icon = if (i == activeItem) itemsActive[i].icon else itemsInActive[i].icon
