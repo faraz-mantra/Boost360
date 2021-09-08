@@ -35,7 +35,7 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
 
   override fun onCreateView() {
     super.onCreateView()
-    setUpRecyclerView()
+//    setUpRecyclerView()
     clearSearchFocus()
     binding?.svSettings?.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
       override fun onQueryTextSubmit(query: String?): Boolean {
@@ -70,21 +70,21 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
     }
   }
 
-  private fun setUpRecyclerView() {
-    viewModel?.getAppointmentSettingsTiles(baseActivity.baseContext)?.observeOnce(viewLifecycleOwner, {
-      val data = it as? EcommerceCatalogTileModel
-      when (data != null) {
-        true -> {
-          this.copyList?.addAll(data.tiles!!)
-          this.finalList?.addAll(data.tiles!!)
-          this.adapter = AppBaseRecyclerViewAdapter(baseActivity, data.tiles as ArrayList<EcommerceTilesItem>, this@FragmentEcommerceSettings)
-          binding?.rvTiles?.setHasFixedSize(true)
-          binding?.rvTiles?.adapter = adapter
-        }
-      }
-    })
-
-  }
+//  private fun setUpRecyclerView() {
+//    viewModel?.getAppointmentSettingsTiles(baseActivity.baseContext)?.observeOnce(viewLifecycleOwner, {
+//      val data = it as? EcommerceCatalogTileModel
+//      when (data != null) {
+//        true -> {
+//          this.copyList?.addAll(data.tiles!!)
+//          this.finalList?.addAll(data.tiles!!)
+//          this.adapter = AppBaseRecyclerViewAdapter(baseActivity, data.tiles as ArrayList<EcommerceTilesItem>, this@FragmentEcommerceSettings)
+//          binding?.rvTiles?.setHasFixedSize(true)
+//          binding?.rvTiles?.adapter = adapter
+//        }
+//      }
+//    })
+//
+//  }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     val data = item as? EcommerceTilesItem

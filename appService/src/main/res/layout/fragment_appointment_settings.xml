@@ -23,6 +23,7 @@
         app:iconifiedByDefault="false"
         app:queryHint="@string/search_in_the_appointment_settings" />
     </LinearLayout>
+
     <com.framework.views.viewgroups.BaseRecyclerView
       android:id="@+id/rv_tiles"
       android:layout_width="match_parent"
