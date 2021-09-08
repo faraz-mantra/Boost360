@@ -58,19 +58,19 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.getMessageUpdates(map), TaskCode.GET_LATEST_UPDATE)
   }
 
-    fun getProductListing(fptag: String?, clientId: String?, skipBy: Int?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.getProductListing(fptag, clientId, skipBy), TaskCode.GET_PRODUCT_LISTING)
-    }
+  fun getProductListing(fptag: String?, clientId: String?, skipBy: Int?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getProductListing(fptag, clientId, skipBy), TaskCode.GET_PRODUCT_LISTING)
+  }
 
-    override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
-        return WithFloatTwoRemoteData::class.java
-    }
+  override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {
+    return WithFloatTwoRemoteData::class.java
+  }
 
-    override fun getLocalDataSourceInstance(): AppBaseLocalService {
-        return AppBaseLocalService()
-    }
+  override fun getLocalDataSourceInstance(): AppBaseLocalService {
+    return AppBaseLocalService()
+  }
 
-    override fun getApiClient(): Retrofit {
+  override fun getApiClient(): Retrofit {
     return WithFloatsApiTwoClient.shared.retrofit
   }
 
@@ -182,10 +182,16 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   fun addWareHouseAddress(request: RequestAddWareHouseAddress): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.addWareHouse(request), TaskCode.ADD_WARE_HOUSE_ADDRESS)
   }
+
   fun getFpDetails(fpId: String, map: Map<String, String>): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getFpDetails(fpId, map), TaskCode.GET_FP_DETAILS_BY_ID)
   }
+
   fun getAppointmentCatalogStatus(fpId: String?, clientId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getCatalogStatus(fpId!!, clientId), TaskCode.GET_APPOINTMENT_CATALOG_SETUP)
+  }
+
+  fun updateProductCategoryVerb(request: ProductCategoryVerbRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.updateProductCategoryVerb(request), TaskCode.UPDATE_PRODUCT_CATEGORY_VERB)
   }
 }

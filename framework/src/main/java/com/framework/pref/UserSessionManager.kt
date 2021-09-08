@@ -240,7 +240,10 @@ class UserSessionManager(var activity: Context) {
     editor.putString(KEY_sourceClientId, `val`)
     editor.apply()
   }
-
+  fun storeProductVerb(`val`: String?) {
+    editor.putString(KEY_sourceClientId, `val`)
+    editor.apply()
+  }
   fun getStoreWidgets(): List<String>? {
     val str = pref.getString(Key_Preferences.STORE_WIDGETS, "")
     return if (str.isNullOrEmpty()) ArrayList<String>() else convertStringToList(str)

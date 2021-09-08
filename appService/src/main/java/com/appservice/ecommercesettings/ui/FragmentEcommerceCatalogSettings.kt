@@ -1,10 +1,12 @@
 package com.appservice.ecommercesettings.ui
 
+import android.os.Bundle
 import android.view.View
 import com.appservice.R
 import com.appservice.appointment.model.UserFpDetailsResponse
 import com.appservice.appointment.widgets.BottomSheetCatalogDisplayName
 import com.appservice.base.AppBaseFragment
+import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentEcomCatalogSettingBinding
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.extensions.observeOnce
@@ -68,6 +70,9 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
 
   private fun showCatalogDisplayName() {
     val bottomSheetCatalogDisplayName = BottomSheetCatalogDisplayName()
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.CATALOG_DATA.name, response)
+    bottomSheetCatalogDisplayName.arguments = bundle
     bottomSheetCatalogDisplayName.show(this.parentFragmentManager, BottomSheetCatalogDisplayName::class.java.name)
   }
 }

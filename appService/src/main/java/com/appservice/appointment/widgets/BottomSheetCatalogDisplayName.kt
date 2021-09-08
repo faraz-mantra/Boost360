@@ -10,6 +10,7 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
 
 class BottomSheetCatalogDisplayName : BaseBottomSheetDialog<BottomSheetCatalogDisplayBinding, BaseViewModel>() {
   private var fpDetails: UserFpDetailsResponse? = null
@@ -24,6 +25,8 @@ class BottomSheetCatalogDisplayName : BaseBottomSheetDialog<BottomSheetCatalogDi
   }
 
   override fun onCreateView() {
+    sessionManager = UserSessionManager(baseActivity)
+    binding?.radioService?.text = getProductType(sessionManager?.fP_AppExperienceCode)
     dialog.setCancelable(false)
     this.fpDetails = arguments?.getSerializable(IntentConstant.CATALOG_DATA.name) as? UserFpDetailsResponse
     if (fpDetails != null) {
@@ -74,11 +77,18 @@ class BottomSheetCatalogDisplayName : BaseBottomSheetDialog<BottomSheetCatalogDi
         customText = if (binding?.radioGroup?.checkedRadioButtonId != R.id.radio_service) {
           binding?.ctvCustomDisplayHint?.text.toString()
         } else {
-          "SERVICES"
+          getProductType(sessionManager?.fP_AppExperienceCode)
         }
         showConfirmingChange()
         dismiss()
       }
+    }
+  }
+
+  fun getProductType(category_code: String?): String {
+    return when (category_code) {
+      "SVC", "DOC", "HOS", "SPA", "SAL" -> "Services"
+      else -> "Products"
     }
   }
 

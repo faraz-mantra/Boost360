@@ -3,7 +3,9 @@ package com.appservice.appointment.widgets
 import android.os.Bundle
 import android.view.View
 import com.appservice.R
+import com.appservice.appointment.model.ProductCategoryVerbRequest
 import com.appservice.appointment.model.UpdateInfoRequest
+import com.appservice.appointment.model.UpdatesItem
 import com.appservice.appointment.model.UserFpDetailsResponse
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomSheetConfirmingChangesBinding
@@ -13,6 +15,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 
 class BottomSheetConfirmingChange : BaseBottomSheetDialog<BottomSheetConfirmingChangesBinding, AppointmentSettingsViewModel>() {
   private var catalogName: String? = null
@@ -56,7 +59,7 @@ class BottomSheetConfirmingChange : BaseBottomSheetDialog<BottomSheetConfirmingC
   }
 
   private fun updateServiceCategoryVerb() {
-    viewModel?.updateCategoryInfo(getRequest())?.observeOnce(viewLifecycleOwner,{
+    viewModel?.updateProductCategoryVerb(getRequest())?.observeOnce(viewLifecycleOwner,{
       when (it.isSuccess()) {
         true -> {
           showSuccessfullyUpdated()
@@ -69,11 +72,14 @@ class BottomSheetConfirmingChange : BaseBottomSheetDialog<BottomSheetConfirmingC
     })
   }
 
-  private fun getRequest(): UpdateInfoRequest {
-    val updateRequest = UpdateInfoRequest()
+  private fun getRequest(): ProductCategoryVerbRequest {
+    val updateRequest = ProductCategoryVerbRequest()
     return updateRequest.apply {
-      tag = sessionManager?.fpTag
-      productCategoryVerb = catalogName
+      fpTag = sessionManager?.fpTag
+      updates = arrayListOf(UpdatesItem(catalogName,"PRODUCTCATEGORYVERB"))
+      clientID = clientId
+
+
     }
   }
 

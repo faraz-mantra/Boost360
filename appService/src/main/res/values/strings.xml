@@ -966,6 +966,8 @@
   <string name="what_is_rcm">What is RCM?</string>
   <string name="rcm_text"><b>RCM (Reverse Charge Mechanism)</b> means the liability to pay tax is on the recipient of goods or services instead of the supplier of such goods or services in respect of notified categories of supply. If you are providing any service or supplying any goods which are covered in the notification issued by the government to be covered in RCM, then you need not charge GST on your invoice instead your customer will have to pay GST on those services/goods and claim input tax credit)</string>
   <string name="pending">Pending</string>
+  <string name="rcm_applies_to_my_sales">RCM applies to my sales</string>
+  <string name="what_s_this">(what’s this?)</string>
 
 
 </resources>
