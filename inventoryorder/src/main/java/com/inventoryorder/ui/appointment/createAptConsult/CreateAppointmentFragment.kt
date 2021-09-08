@@ -173,13 +173,10 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           val response = (it.anyResponse as? GetStaffListingResponse?)?.result?.data
           if (response.isNullOrEmpty().not()) {
             doctorDataList = response
-            doctorData =
-              if (isUpdate) response?.firstOrNull { data -> data.id == extraItemConsult?.doctorId } else response?.get(
-                0
-              )
+            doctorData = if (isUpdate) response?.firstOrNull { data -> data.id == extraItemConsult?.doctorId } else response?.get(0)
             setDatDoctor()
             getServiceList()
-          } else errorUi(getErrorMessage())
+          } else errorUi(getString(R.string.doctor_weekly_schedule_not_available))
         } else errorUi(getErrorMessage())
       })
   }
@@ -907,7 +904,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 //        binding?.groupTiming?.visibility = View.VISIBLE
 //        binding?.layoutShowSelectedSlot?.visibility = View.GONE
       } else {
-        errorUi(getString(R.string.doctor_weekly_schedule_not_available))
+        showShortToast(getString(R.string.doctor_weekly_schedule_not_available))
 //        binding?.groupTiming?.visibility = View.GONE
       }
     })
