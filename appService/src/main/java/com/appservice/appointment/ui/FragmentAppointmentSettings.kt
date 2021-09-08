@@ -63,7 +63,7 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
         true -> {
           val dataItem = it as? AppointmentStatusResponse
           if (dataItem != null) {
-            setUpRecyclerView(dataItem.result?.getTilesArray()!!)
+            setUpRecyclerView(dataItem.result?.getAppointmentTilesArray()!!)
           }
         }
         else -> {
