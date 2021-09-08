@@ -72,7 +72,7 @@ class NiceBottomBar : View {
   private val paintIndicator = Paint().apply {
     isAntiAlias = true
     style = Paint.Style.STROKE
-    strokeWidth = 10f
+    strokeWidth = d2p(10f)
     color = barIndicatorColor
     strokeCap = Paint.Cap.ROUND
   }
@@ -90,7 +90,7 @@ class NiceBottomBar : View {
     isAntiAlias = true
     style = Paint.Style.FILL_AND_STROKE
     color = itemBadgeColor
-    strokeWidth = 4f
+    strokeWidth = d2p(1f)
   }
 
   constructor(context: Context) : super(context)
@@ -163,8 +163,8 @@ class NiceBottomBar : View {
     this.canvas = canvas
     val textHeight = (paintText.descent() + paintText.ascent()) / 2
     // Push the item components from the top a bit if the indicator is at the top
-    var additionalTopMargin = if (barIndicatorGravity == 1) 0f else 10f
-    additionalTopMargin = if (itemTextVisible) additionalTopMargin else 22f
+    var additionalTopMargin = if (barIndicatorGravity == 1) d2p(0f) else d2p(10f)
+    additionalTopMargin = if (itemTextVisible) additionalTopMargin else d2p(12f)
     for ((i, item) in items.withIndex()) {
       if (itemsActive.isNullOrEmpty().not() && (itemsActive.size == items.size)) {
         item.icon = if (i == activeItem) itemsActive[i].icon else itemsInActive[i].icon
@@ -238,15 +238,15 @@ class NiceBottomBar : View {
 
     canvas.drawCircle(
       item.rect.centerX() + itemIconSize / 2 - 4,
-      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 24, 18F, paintBadge
+      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + d2p(14f), d2p(8f), paintBadge
     )
     paintBadge.style = Paint.Style.STROKE
     paintBadge.color = barBackgroundColor
 
     canvas.drawText(
       badgeText ?: "", item.rect.centerX() + itemIconSize / 2 - 4,
-      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + 30,
-      paintText.apply { color = Color.WHITE;textSize = 20f }
+      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + d2p(17f),
+      paintText.apply { color = Color.WHITE;textSize = d2p(10f) }
     )
   }
 
