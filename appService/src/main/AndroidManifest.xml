@@ -16,6 +16,11 @@
     android:requestLegacyExternalStorage="true"
     tools:ignore="UnusedAttribute">
     <activity
+        android:name=".ui.domainbooking.SearchDomainActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme.cataloge"
+        android:windowSoftInputMode="adjustPan" />
+    <activity
       android:name=".ui.catalog.CatalogServiceContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.cataloge"
