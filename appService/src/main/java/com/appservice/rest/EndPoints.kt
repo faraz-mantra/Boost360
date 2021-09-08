@@ -66,6 +66,7 @@ object EndPoints {
   const val GET_BIZ_WEB_UPDATE_BY_ID = "discover/v1/bizFloatForWeb/{id}"
   const val DELETE_BIZ_MESSAGE_UPDATE = "discover/v1/floatingpoint/archiveMessage"
   const val GET_FP_DETAILS = "/Discover/v3/floatingPoint/nf-app/{fpid}"
+  const val GET_CATALOG_STATUS = "discover/v9/business/settings/status/{fpid}"
 
   //TODO PRODUCT API 2 WITH FLOAT
     const val CREATE_PRODUCT = "Product/v1/Create"

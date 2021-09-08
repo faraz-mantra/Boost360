@@ -24,12 +24,12 @@ object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, CatalogLo
     return makeRemoteRequest(remoteDataSource.createService(request), TaskCode.POST_CREATE_SERVICE)
   }
 
-  fun getSettingsTiles(context: Context): Observable<BaseResponse> {
-    return makeLocalRequest(localDataSource.getSettingsTiles(context =context ),TaskCode.GET_CATALOG_SETTINGS_TILES)
-  }
-  fun getEcommerceSettingsTiles(context: Context): Observable<BaseResponse> {
-    return makeLocalRequest(localDataSource.getSettingsTiles(context =context ),TaskCode.GET_CATALOG_SETTINGS_TILES)
-  }
+//  fun getSettingsTiles(context: Context): Observable<BaseResponse> {
+//    return makeLocalRequest(localDataSource.getSettingsTiles(context =context ),TaskCode.GET_CATALOG_SETTINGS_TILES)
+//  }
+//  fun getEcommerceSettingsTiles(context: Context): Observable<BaseResponse> {
+//    return makeLocalRequest(localDataSource.getSettingsTiles(context =context ),TaskCode.GET_CATALOG_SETTINGS_TILES)
+//  }
 
   fun updateService(request: ServiceModelV1?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateService(request), TaskCode.POST_UPDATE_SERVICE)

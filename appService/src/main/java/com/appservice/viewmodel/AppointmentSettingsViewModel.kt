@@ -15,12 +15,14 @@ class AppointmentSettingsViewModel : BaseViewModel() {
   //    fun updateCODPreferences(request: RequestCODPreference?) {
 //
 //    }
-  fun getAppointmentSettingsTiles(context: Context): LiveData<BaseResponse> {
-    return NowfloatsApiRepository.getSettingsTiles(context).toLiveData()
-  }
-  fun getEcommerceSettingsTiles(context: Context): LiveData<BaseResponse> {
-    return NowfloatsApiRepository.getSettingsTiles(context).toLiveData()
-  }
+//  fun getAppointmentSettingsTiles(context: Context): LiveData<BaseResponse> {
+//    return NowfloatsApiRepository.getSettingsTiles(context).toLiveData()
+//  }
+//
+//  fun getEcommerceSettingsTiles(context: Context): LiveData<BaseResponse> {
+//    return NowfloatsApiRepository.getSettingsTiles(context).toLiveData()
+//  }
+
   fun getServiceListing(request: ServiceListingRequest): LiveData<BaseResponse> {
     return NowfloatsApiRepository.getServiceListing(request).toLiveData()
   }
@@ -28,6 +30,7 @@ class AppointmentSettingsViewModel : BaseViewModel() {
   fun getFpDetails(fpId: String, map: Map<String, String>): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getFpDetails(fpId, map).toLiveData()
   }
+
   fun updateCategoryInfo(request: UpdateInfoRequest): LiveData<BaseResponse> {
     return BoostNowFloatsRepository.updateInfo(request).toLiveData()
   }
@@ -66,5 +69,9 @@ class AppointmentSettingsViewModel : BaseViewModel() {
 
   fun addWareHouseAddress(request: RequestAddWareHouseAddress): LiveData<BaseResponse> {
     return WithFloatTwoRepository.addWareHouseAddress(request = request).toLiveData()
+  }
+
+  fun getAppointmentCatalogStatus(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getAppointmentCatalogStatus(floatingPointId, clientId).toLiveData()
   }
 }
