@@ -602,6 +602,11 @@
   <string name="money_refund_till_date">Money refund till date</string>
   <string name="years_of_experience_n">Years of experience</string>
   <string name="select_years_of_experience_this_staff_member_has">Select, years of experience this staff member has.</string>
+    <string name="search_a_new_domain">Search a new domain</string>
+  <string name="write_a_domain_name">Write a domain name...</string>
+    <string name="select_amp_continue"><![CDATA[Select & Continue]]></string>
+  <string name="domain_confirm_msg">Once confirmed, this domain will replace your website address (URL) samplestorewebsite.nowfloats.com. Don’t worry, anyone clicking on old URL will still be able to see your website on this new domain.</string>
+  <string name="confirm_amp_apply_domain"><![CDATA[Confirm & apply domain]]></string>
 
 
   <array name="stock_availbility">
