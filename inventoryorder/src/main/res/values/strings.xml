@@ -58,7 +58,7 @@
   <string name="new_apppointment_camel_case">New Appointment</string>
   <string name="appointment_new_title">New Appointment</string>
   <string name="update_apt_consult" tools:ignore="ExtraTranslation">Update Appointment</string>
-  <string name="in_clinic">In-Clinic</string>
+  <string name="in_clinic">In-clinic</string>
   <string name="consulting_service">Consulting service</string>
   <string name="start_time_camel_case">Start time</string>
   <string name="fees_incl_gst">Fees (Incl. GST)</string>
@@ -79,7 +79,7 @@
   <string name="dentist">Dentist</string>
   <string name="select_later_time_toast_string">Please select a time after the current time.</string>
   <string name="booking_created">Booking Created!</string>
-  <string name="video_consultation_camel_case">Video Consultation</string>
+  <string name="video_consultation_camel_case">Video consultation</string>
   <string name="please_select_time_slot">Please select time slot</string>
   <string name="confirm_appointment">Confirm appointment</string>
   <string name="cancel_video_consultation">Cancel video consultation</string>
