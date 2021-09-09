@@ -17,7 +17,8 @@ enum class RecyclerViewItemType {
   STAFF_LISTING_VIEW,
   EXPERIENCE_RECYCLER_ITEM,
   SERVICE_LISTING_VIEW,
-  STAFF_FILTER_VIEW;
+  STAFF_FILTER_VIEW,
+  DOMAIN_STEPS;
 
 
   @LayoutRes
@@ -37,6 +38,7 @@ enum class RecyclerViewItemType {
       EXPERIENCE_RECYCLER_ITEM -> R.layout.item_experience_details
       SERVICE_LISTING_VIEW -> R.layout.recycler_item_service_listing
       STAFF_FILTER_VIEW -> R.layout.recycler_item_staff_filter
+      DOMAIN_STEPS->R.layout.list_item_steps_domain
     }
   }
 }
