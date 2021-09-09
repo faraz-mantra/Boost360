@@ -9,7 +9,7 @@
 
   <com.framework.views.customViews.CustomCardView
     android:layout_width="match_parent"
-    android:layout_height="@dimen/size_170"
+    android:layout_height="wrap_content"
     android:elevation="@dimen/size_4"
     app:cardCornerRadius="@dimen/size_10"
     app:cardUseCompatPadding="true"
@@ -86,9 +86,7 @@
         android:id="@+id/txt_desc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
         android:includeFontPadding="false"
-        android:maxLines="2"
         android:textColor="@color/grey_dark_2"
         app:fontFamily="@font/regular"
         app:layout_constraintBottom_toBottomOf="parent"

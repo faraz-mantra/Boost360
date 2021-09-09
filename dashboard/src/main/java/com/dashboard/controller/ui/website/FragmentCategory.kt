@@ -79,8 +79,10 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
     actionItem as ArrayList<WebsiteActionItem>
     actionItem.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout() }
     binding?.rvWebsite?.apply {
+      setHasFixedSize(false)
       adapterWebsite = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@FragmentCategory)
       adapter = adapterWebsite
+
     }
   }
 

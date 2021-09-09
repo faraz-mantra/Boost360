@@ -21,7 +21,7 @@
         android:orientation="vertical"
         android:paddingBottom="@dimen/size_10"
         android:paddingTop="@dimen/size_10"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
