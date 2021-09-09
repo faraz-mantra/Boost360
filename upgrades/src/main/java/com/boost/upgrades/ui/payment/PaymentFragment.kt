@@ -98,6 +98,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
   val stateFragment = StateListPopFragment()
   var gstFlag = false
   lateinit var prefs: SharedPrefs
+  private var gstResult : com.boost.upgrades.data.api_model.gst.Result? = null
 
   companion object {
     fun newInstance() = PaymentFragment()
@@ -304,6 +305,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         BUSINESS_DETAILS_FRAGMENT
       )
 
+
     }
 
     all_business_button.setOnClickListener {
@@ -334,6 +336,18 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
       PAYMENT_SCREEN,
       NO_EVENT_VALUE
     )
+  }
+
+  private fun loadGstDetails() {
+    Log.v("loadGstDetails","3")
+    if (prefs.getGstApiResponse() != null) {
+      gstResult = prefs.getGstApiResponse()
+      val address = gstResult!!.address
+      business_name_value.text = gstResult!!.legalName
+      business_gstin_value.text = gstResult!!.gSTIN
+      business_supply_place_value.text = gstResult!!.address!!.state
+      business_address_value.text = address!!.addressLine1 +", "+ address!!.addressLine2 +", " + address!!.city +", "+ address!!.state +", "+ address!!.pincode
+    }
   }
 
   fun loadData() {
@@ -835,6 +849,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         fragmentManager?.beginTransaction()?.remove(businessFragment)
       }
     })
+
+
   }
 
   fun payViaPaymentLink() {
@@ -1127,6 +1143,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 //       loadData()
   }
 
+
   override fun moreBankSelected(data: JSONObject) {
     paymentData = data
     payThroughRazorPay()
@@ -1147,5 +1164,6 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     paymentData = data
     payThroughRazorPay()
   }
+
 
 }
