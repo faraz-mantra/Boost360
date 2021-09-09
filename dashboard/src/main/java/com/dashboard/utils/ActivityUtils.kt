@@ -173,7 +173,7 @@ fun AppCompatActivity.startDomainDetail(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(DOMAIN_EMAIL_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val queries =
-      Intent(this, Class.forName("com.nowfloats.AccrossVerticals.domain.DomainEmailActivity"))
+      Intent(this, Class.forName("com.appservice.ui.domainbooking.DomainBookingActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
