@@ -6,9 +6,11 @@ import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
+import android.text.Layout
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -74,6 +76,15 @@ import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
 import java.util.*
 import kotlin.collections.ArrayList
+import android.text.style.StyleSpan
+
+import android.view.ViewTreeObserver
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
+
+import android.widget.TextView
+
+
+
 
 class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
@@ -107,6 +118,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     var featuresList: List<FeaturesModel>? = null
     private var session: UserSessionManager? = null
     private var deepLinkUtil: DeepLinkUtil? = null
+    private var itemsArrayList : ArrayList<String>? = ArrayList()
 
 
     companion object {
@@ -402,11 +414,11 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
         //chat bot view button clicked
         view_chat.setOnClickListener {
-            val details = DetailsFragment.newInstance()
-            val args = Bundle()
-            args.putString("itemId", "CHATBOT")
-            details.arguments = args
-            (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
+//            val details = DetailsFragment.newInstance()
+//            val args = Bundle()
+//            args.putString("itemId", "CHATBOT")
+//            details.arguments = args
+//            (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
         }
 
         //share feed back button
@@ -442,6 +454,12 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 ComparePackageFragment.newInstance(),
                 COMPARE_FRAGMENT, args
             )
+        }
+        mp_review_cart_close_iv.setOnClickListener{
+            mp_view_cart_rl.visibility = View.GONE
+        }
+        mp_review_cart_tv.setOnClickListener {
+            (activity as UpgradeActivity).addFragment(CartFragment.newInstance(), CART_FRAGMENT)
         }
 
     }
@@ -532,6 +550,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         }
 
         viewModel.loadUpdates(
+            (activity as? UpgradeActivity)?.getAccessToken()?:"",
             (activity as UpgradeActivity).fpid!!,
             (activity as UpgradeActivity).clientid,
             (activity as UpgradeActivity).experienceCode,
@@ -669,13 +688,68 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
+                mp_view_cart_rl.visibility = View.VISIBLE
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
                 badge.setText(badgeNumber.toString())
+                if(badgeNumber == 1){
+                    mp_no_of_cart_items_tv.text = badgeNumber.toString() + " item waiting in cart"
+                }else{
+                    mp_no_of_cart_items_tv.text = badgeNumber.toString() + " items waiting in cart"
+                }
+                itemsArrayList?.clear()
+                it.forEach {
+                    itemsArrayList?.add(it.item_name.toString())
+                }
+                var cartItems = " "
+                if(itemsArrayList!= null && itemsArrayList!!.size > 0){
+                     for (items in itemsArrayList!!){
+                         cartItems += items + ", "
+                     }
+                    var cartUpdatedItems = ""
+                    if(mp_items_name_tv.paint.measureText(cartItems) > 2*(mp_items_name_tv.measuredWidth)){
+                        val index = itemsArrayList!!.size - 1
+                        itemsArrayList!!.removeAt(index)
+                        for (updatedItems in itemsArrayList!!){
+                            cartUpdatedItems += updatedItems + ", "
+                        }
+                        val displayString = cartUpdatedItems + "+ " + (it.size - itemsArrayList!!.size) + " more"
+                        var cartUpdatedItems1 = ""
+                        if(mp_items_name_tv.paint.measureText(displayString) > 2*(mp_items_name_tv.measuredWidth)){
+                            val index1 = itemsArrayList!!.size - 1
+                            itemsArrayList!!.removeAt(index1)
+                            for (updatedItems1 in itemsArrayList!!){
+                                cartUpdatedItems1 += updatedItems1 + ", "
+                            }
+                            val displayString1 = cartUpdatedItems1 + "+ " +(it.size - itemsArrayList!!.size) + " more"
+                            var cartLatestItems = ""
+                            if(mp_items_name_tv.paint.measureText(displayString1) > 2*(mp_items_name_tv.measuredWidth)){
+                                val latestIndex = itemsArrayList!!.size - 1
+                                itemsArrayList!!.removeAt(latestIndex)
+                                for (latestItems in itemsArrayList!!){
+                                    cartLatestItems += latestItems + ", "
+                                }
+                                val displayString2 = cartLatestItems + "+ " + (it.size - itemsArrayList!!.size) + " more"
+                                mp_items_name_tv.text = displayString2.replace(" ", "\u00A0")
+                            }else{
+                                mp_items_name_tv.text = displayString1.replace(" ", "\u00A0")
+                            }
+                        }
+                        else{
+                            mp_items_name_tv.text = displayString.replace(" ", "\u00A0")
+                        }
+                    }
+                    else{
+                        mp_items_name_tv.text = cartItems.replace(" ", "\u00A0")
+                    }
+
+                }
+
                 Constants.CART_VALUE = badgeNumber
             } else {
                 badgeNumber = 0
                 badge.visibility = View.GONE
+                mp_view_cart_rl.visibility = View.GONE
             }
             //refresh FeatureDeals adaptor when cart is updated
             if (viewModel.allFeatureDealsResult.value != null) {
@@ -730,13 +804,68 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         viewModel.cartResultBack().observe(this, androidx.lifecycle.Observer {
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
+                mp_view_cart_rl.visibility = View.VISIBLE
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
                 badge.setText(badgeNumber.toString())
+                if(badgeNumber == 1){
+                    mp_no_of_cart_items_tv.text = badgeNumber.toString() + " item waiting in cart"
+                }else{
+                    mp_no_of_cart_items_tv.text = badgeNumber.toString() + " items waiting in cart"
+                }
+                itemsArrayList?.clear()
+                it.forEach {
+                    itemsArrayList?.add(it.item_name.toString())
+                }
+                var cartItems = ""
+              if(itemsArrayList!= null && itemsArrayList!!.size > 0){
+                for (items in itemsArrayList!!){
+                  cartItems += items + ", "
+                }
+                  var cartUpdatedItems = ""
+                  if(mp_items_name_tv.paint.measureText(cartItems) > 2*(mp_items_name_tv.measuredWidth)){
+                      val index = itemsArrayList!!.size - 1
+                      itemsArrayList!!.removeAt(index)
+                      for (updatedItems in itemsArrayList!!){
+                          cartUpdatedItems += updatedItems + ", "
+                      }
+                      val displayString = cartUpdatedItems + "+ " + (it.size - itemsArrayList!!.size) + " more"
+                      var cartUpdatedItems1 = ""
+                      if(mp_items_name_tv.paint.measureText(displayString) > 2*(mp_items_name_tv.measuredWidth)){
+                          val index1 = itemsArrayList!!.size - 1
+                          itemsArrayList!!.removeAt(index1)
+                          for (updatedItems1 in itemsArrayList!!){
+                              cartUpdatedItems1 += updatedItems1 + ", "
+                          }
+                          val displayString1 = cartUpdatedItems1 + "+ " +(it.size - itemsArrayList!!.size) + " more"
+                          var cartLatestItems = ""
+                          if(mp_items_name_tv.paint.measureText(displayString1) > 2*(mp_items_name_tv.measuredWidth)){
+                              val latestIndex = itemsArrayList!!.size - 1
+                              itemsArrayList!!.removeAt(latestIndex)
+                              for (latestItems in itemsArrayList!!){
+                                  cartLatestItems += latestItems + ", "
+                              }
+                              val displayString2 = cartLatestItems + "+ " + (it.size - itemsArrayList!!.size) + " more"
+                              mp_items_name_tv.text = displayString2.replace(" ", "\u00A0")
+                          }else{
+                              mp_items_name_tv.text = displayString1.replace(" ", "\u00A0")
+                          }                      }
+                      else{
+                          mp_items_name_tv.text = displayString.replace(" ", "\u00A0")
+                      }
+                  }
+                  else{
+                      mp_items_name_tv.text = cartItems.replace(" ", "\u00A0")
+                  }
+
+
+
+              }
                 Constants.CART_VALUE = badgeNumber
             } else {
                 badgeNumber = 0
                 badge.visibility = View.GONE
+                mp_view_cart_rl.visibility = View.GONE
             }
             //refresh FeatureDeals adaptor when cart is updated
             if (viewModel.allFeatureDealsResult.value != null) {
@@ -810,6 +939,14 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     val callIntent = Intent(Intent.ACTION_DIAL)
                     callIntent.data = Uri.parse("tel:" + expertConnectDetails.contact_number)
                     startActivity(Intent.createChooser(callIntent, "Call by:"))
+                }
+                mp_talk_expert_tv.setOnClickListener {
+                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_EXPERT_SPEAK,
+                        CLICK,
+                        NO_EVENT_VALUE)
+                    val callExpertIntent = Intent(Intent.ACTION_DIAL)
+                    callExpertIntent.data = Uri.parse("tel:" + expertConnectDetails.contact_number)
+                    startActivity(Intent.createChooser(callExpertIntent,"Call by:"))
                 }
             } else {
                 callnow_layout.visibility = View.GONE
@@ -2367,6 +2504,11 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 override fun onAnimationRepeat(animation: Animator) {}
             }).startAnimation()
 
+    }
+
+    private fun isTooLarge(text: TextView, newText: String): Boolean {
+        val textWidth = text.paint.measureText(newText)
+        return textWidth >= (text.measuredWidth)*2
     }
 
     fun callBundleCart(item: Bundles, imageView: ImageView){
