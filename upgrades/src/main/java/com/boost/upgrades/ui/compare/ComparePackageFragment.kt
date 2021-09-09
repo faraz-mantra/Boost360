@@ -475,6 +475,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
     override fun onPackageClicked(item: Bundles?,imageView: ImageView) {
         if (!packageInCartStatus) {
             if (item != null) {
+              prefs.storeAddedPackageDesc(item.desc!!)
 
                 val itemIds = arrayListOf<String>()
                 for(i in item.included_features){

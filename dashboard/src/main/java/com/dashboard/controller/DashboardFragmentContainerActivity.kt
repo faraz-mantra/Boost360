@@ -87,7 +87,6 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     return when (type) {
       FragmentType.ALL_BOOST_ADD_ONS -> resources.getString(R.string.all_boost_add_ons)
       FragmentType.FRAGMENT_WEBSITE_NAV -> getString(R.string.website_style_customisation)
-//      FragmentType.FRAGMENT_WEBSITE_THEME  -> getString(R.string.fonts_and_color_styles)
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> getString(R.string.business_profile_)
       else -> super.getToolbarTitle()
     }
@@ -179,13 +178,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
 
 }
 
-fun Fragment.startFragmentDashboardActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false,
-  isResult: Boolean = false,
-  requestCode: Int = 101
-) {
+fun Fragment.startFragmentDashboardActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false, requestCode: Int = 101) {
   val intent = Intent(activity, DashboardFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -193,12 +186,7 @@ fun Fragment.startFragmentDashboardActivity(
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, requestCode)
 }
 
-fun startFragmentAccountDashboardNew(
-  activity: Activity,
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean
-) {
+fun startFragmentAccountDashboardNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
   val intent = Intent(activity, DashboardFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -206,11 +194,7 @@ fun startFragmentAccountDashboardNew(
   activity.startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentDashboardActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false
-) {
+fun AppCompatActivity.startFragmentDashboardActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(this, DashboardFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

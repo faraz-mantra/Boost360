@@ -4,7 +4,7 @@ import com.framework.rest.BaseApiClient
 
 class WebActionBoostKitClient : BaseApiClient(true) {
   companion object {
-    val shared = NfxFacebookAnalyticsClient()
+    val shared = WebActionBoostKitClient()
   }
 
 }

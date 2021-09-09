@@ -2,6 +2,7 @@ package com.nowfloats.CustomPage;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -15,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -23,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -42,6 +45,7 @@ import com.boost.upgrades.UpgradeActivity;
 import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem;
 import com.framework.models.caplimit_feature.PropertiesItem;
 import com.framework.models.firestore.FirestoreManager;
+import com.google.firebase.FirebaseApp;
 import com.nowfloats.CustomPage.Model.CreatePageModel;
 import com.nowfloats.CustomPage.Model.CustomPageLink;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
@@ -72,6 +76,8 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
+import static com.framework.models.caplimit_feature.CapLimitFeatureResponseItemKt.filterFeature;
+import static com.framework.models.caplimit_feature.CapLimitFeatureResponseItemKt.getCapData;
 import static com.framework.utils.UtilKt.hideKeyBoard;
 import static com.framework.webengageconstant.EventLabelKt.ENTER_DIFFERENT_TITLE_AND_TRY_AGAIN;
 import static com.framework.webengageconstant.EventLabelKt.FAILED_TO_UPDATE_CUSTOMPAGE;
@@ -112,9 +118,30 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
   }
 
+  private String getProcessName(Context context) {
+    if (context == null) return null;
+    ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+    for (ActivityManager.RunningAppProcessInfo processInfo : manager.getRunningAppProcesses()) {
+      if (processInfo.pid == android.os.Process.myPid()) {
+        return processInfo.processName;
+      }
+    }
+    return null;
+  }
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    FirebaseApp.initializeApp(CreateCustomPageActivity.this);
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P&&!Constants.webViewInit) {
+      String process = getProcessName(this);
+      String packageName = this.getPackageName();
+      if (!packageName.equals(process)){
+        WebView.setDataDirectorySuffix(process);
+        Constants.webViewInit = true;
+      }
+    }
     setContentView(R.layout.create_custom_page);
 
     curPos = getIntent().getIntExtra("position", -1);
@@ -500,10 +527,10 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     pageInterface2.getPageUrl(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), 0, 10, 1, new Callback<CustomPageLink>() {
       @Override
       public void success(CustomPageLink pageDetail, Response response) {
-        CapLimitFeatureResponseItem data = new CapLimitFeatureResponseItem().getCapData();
+        CapLimitFeatureResponseItem data = filterFeature(getCapData(), CapLimitFeatureResponseItem.FeatureType.CUSTOMPAGES);
         if (data != null && pageDetail != null) {
-          PropertiesItem capLimitImage = data.filterProperty(PropertiesItem.KeyType.CUSTOM_PAGE);
-          if (pageDetail.getTotal() != null && capLimitImage.getValueN() != null && pageDetail.getTotal() >= capLimitImage.getValueN()) {
+          PropertiesItem capLimitCustomPage = data.filterProperty(PropertiesItem.KeyType.LIMIT);
+          if (pageDetail.getTotal() != null && capLimitCustomPage.getValueN() != null && pageDetail.getTotal() >= capLimitCustomPage.getValueN()) {
             hideKeyBoard(activity);
             showAlertCapLimit("Can't add the custom page, please activate your premium Add-ons plan.");
           }
@@ -523,6 +550,10 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     builder.setPositiveButton("Explore Add-ons", (dialog, which) -> {
       dialog.dismiss();
       initiateBuyFromMarketplace();
+      activity.finish();
+    });
+    builder.setNegativeButton("Close", (dialog, which) -> {
+      dialog.dismiss();
       activity.finish();
     });
     builder.create().show();
@@ -873,7 +904,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
       intent.putExtra("mobileNo", "9160004303");
     }
     intent.putExtra("profileUrl", session.getFPLogo());
-    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name());
+    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.CUSTOMPAGES.name());
     startActivity(intent);
     new Handler().postDelayed(() -> progressDialog.dismiss(), 1000);
   }

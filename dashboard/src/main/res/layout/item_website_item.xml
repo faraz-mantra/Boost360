@@ -13,7 +13,7 @@
     android:elevation="@dimen/size_4"
     app:cardCornerRadius="@dimen/size_10"
     app:cardUseCompatPadding="true"
-    app:contentPaddingBottom="@dimen/size_16"
+    app:contentPaddingBottom="@dimen/size_8"
     app:contentPaddingTop="@dimen/size_8">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +46,8 @@
         android:layout_margin="@dimen/size_2"
         android:padding="@dimen/size_8"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/ic_custom_page_add" />
 
@@ -55,7 +57,7 @@
         android:id="@+id/tv_count"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="324"
+        tools:text="324"
         android:textColor="@color/black_4a4a4a"
         android:visibility="gone"
         app:fontFamily="@font/barlow_regular"
@@ -102,6 +104,7 @@
         android:layout_width="@dimen/size_14"
         android:layout_height="@dimen/size_14"
         android:tint="@color/pinkish_grey_ten_alpha"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_arrow_right_d" />

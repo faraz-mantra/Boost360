@@ -61,12 +61,6 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
         data = response.data?.firstOrNull { it.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
         if (data != null && data?.actionItem.isNullOrEmpty().not()) {
           data?.actionItem?.map { it2 -> if (it2.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it2.premiumCode).not()) it2.isLock = true }
-//            binding?.mainContent?.setBackgroundColor(
-//              getColor(
-//                baseActivity,
-//                if (data.actionItem!!.size % 2 != 0) R.color.white_smoke_1 else R.color.white
-//              )
-//            )
           val position = arguments?.getInt(IntentConstant.POSITION.name)
           setAdapterCustomer(if (position == 0) data?.actionItem!!.filter { it.isFeature == false } else data?.actionItem!!.filter { it.isFeature == true })
         }
@@ -95,7 +89,7 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
     }
   }
 
-  fun clickActionButton(type: WebsiteActionItem.IconType) {
+  private fun clickActionButton(type: WebsiteActionItem.IconType) {
     when (type) {
       WebsiteActionItem.IconType.service_product_catalogue -> baseActivity.startListServiceProduct(session)
       WebsiteActionItem.IconType.latest_update_tips -> session?.let { baseActivity.startUpdateLatestStory(it) }
@@ -111,7 +105,7 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
       WebsiteActionItem.IconType.places_look_around -> baseActivity.startNearByView(session)
       WebsiteActionItem.IconType.trip_adviser_ratings -> baseActivity.startListTripAdvisor(session)
       WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
-      WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteTheme(session)
+      WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteNav(session)// baseActivity.startWebsiteTheme(session)
     }
   }
 }
