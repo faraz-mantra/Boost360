@@ -72,7 +72,7 @@ class ManageBusinessData(
     ic_digital_brochures("ic_digital_brochures", R.drawable.ic_digital_brochures_d),
     ic_product_cataloge_d("ic_product_cataloge_d", R.drawable.ic_product_cataloge_d),
     project_portfolio_d("project_portfolio_d", R.drawable.ic_project_teams_d),
-    team_page_d("team_page_d", R.drawable.ic_project_teams_d),
+    team_page_d("team_page_d", R.drawable.ic_teams_d),
     ic_my_business_faqs("ic_my_business_faqs", R.drawable.ic_faqs_d),
     membership_plans("membership_plans", R.drawable.ic_memberships_d),
     upcoming_batches_d("upcoming_batches_d", R.drawable.ic_upcoming_batch_d),

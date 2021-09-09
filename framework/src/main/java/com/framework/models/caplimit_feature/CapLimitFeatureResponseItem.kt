@@ -25,18 +25,23 @@ data class CapLimitFeatureResponseItem(
 ) : BaseResponse(), Serializable {
 
   enum class FeatureType {
-    UNLIMITED_CONTENT
-  }
-
-  fun saveCapData() {
-    PreferencesUtils.instance.saveData(CAP_LIMIT_PROPERTIES, convertObjToString(this))
-  }
-
-  fun getCapData(): CapLimitFeatureResponseItem? {
-    return convertStringToObj(PreferencesUtils.instance.getData(CAP_LIMIT_PROPERTIES, "") ?: "")
+    UNLIMITED_CONTENT, LATESTUPDATES, PRODUCTCATALOGUE, CUSTOMPAGES, IMAGEGALLERY, TESTIMONIALS, SUBSCRIBERCOUNT, BROCHURE, OURTOPPERS, UPCOMING_BATCHES, FACULTY
   }
 
   fun filterProperty(type: PropertiesItem.KeyType): PropertiesItem {
-    return properties?.firstOrNull { it1 -> (it1.key == type.name) } ?: PropertiesItem()
+    return properties?.firstOrNull { it.key == type.name }?:PropertiesItem()
   }
+}
+
+
+fun getCapData(): List<CapLimitFeatureResponseItem> {
+  return convertStringToList(PreferencesUtils.instance.getData(CAP_LIMIT_PROPERTIES, "") ?: "") ?: arrayListOf()
+}
+
+fun List<CapLimitFeatureResponseItem>.saveCapData() {
+  PreferencesUtils.instance.saveData(CAP_LIMIT_PROPERTIES, convertListObjToString(this))
+}
+
+fun List<CapLimitFeatureResponseItem>.filterFeature(type: CapLimitFeatureResponseItem.FeatureType): CapLimitFeatureResponseItem? {
+  return this.firstOrNull { it.featureKey == type.name }
 }

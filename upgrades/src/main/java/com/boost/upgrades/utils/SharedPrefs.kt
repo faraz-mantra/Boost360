@@ -36,6 +36,7 @@ class SharedPrefs(activity: Activity) {
     private val compareStatus = "compareStatus"
     private val gstRegistered = "gstRegistered"
     private val expertContact = "expertContact"
+    private val ADDED_PACK_DESC = "ADDED_PACK_DESC"
 
     private var editor: SharedPreferences.Editor? = null
 
@@ -191,6 +192,14 @@ class SharedPrefs(activity: Activity) {
 
     fun getStoreMonthsValidity(): Int{
         return pref!!.getInt(temp_monthsValidity, 0)
+    }
+
+    fun storeAddedPackageDesc(description: String){
+        editor!!.putString(ADDED_PACK_DESC,description).apply()
+    }
+
+    fun getStoreAddedPackageDesc():String?{
+        return pref!!.getString(ADDED_PACK_DESC,null)
     }
 
     fun storeCompareState(value: Int){

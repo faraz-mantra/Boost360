@@ -30,6 +30,11 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
     return R.layout.activity_web_view_n
   }
 
+  companion object{
+    val IK_ORDER_ID="order_id"
+    val IK_CLIENT_ID="client_id"
+    val IK_RC=500
+  }
   override fun getViewModelClass(): Class<BaseViewModel> {
     return BaseViewModel::class.java
   }
@@ -74,6 +79,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
     binding?.webview?.webViewClient = object : WebViewClient() {
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         Log.i(TAG, "shouldOverrideUrlLoading: " + url)
+        handleOrderSuccess(url)
         binding?.progressBar?.visible()
         return if (
           url.startsWith("mailto:") || url.startsWith("tel:") || url.startsWith("geo:")
@@ -115,6 +121,20 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
       }
     }
     binding?.webview?.loadUrl(urlData.getWebViewUrl())
+  }
+
+  private fun handleOrderSuccess(url: String) {
+    if (url.contains("boost_order=success")){
+      val orderId =url.substring(url.indexOf("order_id=")+9,url.indexOf("&",url.indexOf("order_id=")))
+      val client_id =url.substring(url.indexOf("client_id=")+10,url.indexOf("&",url.indexOf("client_id=")))
+
+      val intent = Intent()
+      intent.putExtra(IK_ORDER_ID,orderId)
+      intent.putExtra(IK_CLIENT_ID,client_id)
+      setResult(IK_RC,intent)
+      finish()
+
+    }
   }
 
 

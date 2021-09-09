@@ -48,9 +48,7 @@ import com.framework.webengageconstant.PAGE_VIEW
 import com.google.android.material.tabs.TabLayout
 import java.util.*
 
-private val TAB_TITLES = arrayOf(
-  "Content", "Features"
-)
+private val TAB_TITLES = arrayOf("Content", "Features")
 
 class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewModel>() {
 

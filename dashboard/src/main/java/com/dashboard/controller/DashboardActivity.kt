@@ -9,6 +9,7 @@ import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavArgument
@@ -41,6 +42,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.models.caplimit_feature.saveCapData
 import com.framework.models.firestore.FirestoreManager
 import com.framework.models.firestore.FirestoreManager.initData
 import com.framework.pref.*
@@ -122,8 +124,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this, {
       if (it.isSuccess()) {
         val capLimitList = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
-        val item = capLimitList?.firstOrNull { it1 -> (it1.featureKey == CapLimitFeatureResponseItem.FeatureType.UNLIMITED_CONTENT.name && it1.properties.isNullOrEmpty().not()) } ?: CapLimitFeatureResponseItem()
-        item.saveCapData()
+        capLimitList?.toCollection(ArrayList())?.saveCapData()
       }
     })
   }
@@ -223,8 +224,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     return binding?.toolbar
   }
 
+  override fun getToolbarTitleTypeface(): Typeface? {
+    return ResourcesCompat.getFont(this, R.font.bold)
+  }
+
   override fun getToolbarTitleSize(): Float {
-    return ConversionUtils.dp2px(18f).toFloat()
+    return ConversionUtils.dp2px(22f).toFloat()
   }
 
   fun setPercentageData(score: Int) {
@@ -237,7 +242,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   private fun setUserData() {
     val cartCount = session?.getIntDetails(KEY_FP_CART_COUNT) ?: 0
-    if (cartCount > 0) binding?.viewCartCount?.visible() else binding?.viewCartCount?.gone()
+    if ((getFragment(DashboardFragment::class.java) != null) && cartCount > 0) binding?.viewCartCount?.visible() else binding?.viewCartCount?.gone()
     binding?.cartCountTxt?.text = "$cartCount ${if (cartCount > 1) "items" else "item"} waiting in cart"
     binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
