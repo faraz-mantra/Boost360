@@ -37,7 +37,7 @@
                 app:cornerRadius="@dimen/size_15"
                 android:layout_width="match_parent"
                 android:textAllCaps="false"
-                android:background="@color/colorPrimary"
+                android:backgroundTint="@color/colorPrimary"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:layout_marginTop="16dp"

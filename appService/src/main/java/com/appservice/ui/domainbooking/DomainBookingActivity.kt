@@ -51,7 +51,7 @@ class DomainBookingActivity: BaseActivity<ActivityDomainBookingBinding, BaseView
 
         }
 
-        binding?.existdomainBtnProceed?.setOnClickListener {
+        binding?.btnBookOldDomain?.setOnClickListener {
             val bSheet = BottomSheetDialog(this,R.style.BottomSheetDialogTheme)
             val sheetBinding = DataBindingUtil.inflate<BsheetInputOwnDomainBinding>(layoutInflater,R.layout.bsheet_input_own_domain,null,false)
             bSheet.setContentView(sheetBinding.root)
