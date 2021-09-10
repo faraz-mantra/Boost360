@@ -2,7 +2,6 @@ package com.boost.upgrades.ui.checkoutkyc
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.InputFilter
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -33,7 +32,6 @@ import com.boost.upgrades.utils.observeOnce
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
-import com.framework.webengageconstant.ADDONS_MARKETPLACE_BUSINESS_DETAILS_LOAD
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.businessdetails_fragment.*
 import kotlinx.android.synthetic.main.businessdetails_fragment.business_address
@@ -41,7 +39,6 @@ import kotlinx.android.synthetic.main.businessdetails_fragment.business_name_val
 import kotlinx.android.synthetic.main.payment_fragment.*
 import java.io.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class BusinessDetailsFragment : DialogFragment() {
@@ -53,6 +50,7 @@ class BusinessDetailsFragment : DialogFragment() {
   val stateFragment = StateListPopFragment()
   lateinit var prefs: SharedPrefs
   private var session: UserSessionManager? = null
+  private var gstInfoResult : com.boost.upgrades.data.api_model.gst.Result? = null
 
 
   companion object {
@@ -95,7 +93,10 @@ class BusinessDetailsFragment : DialogFragment() {
     viewModel.getStatesFromAssetJson(requireActivity())
 //        business_gst_number.setFilters(business_gst_number.filters + InputFilter.AllCaps())
 
+
+
     confirm_btn.setOnClickListener {
+      saveGstResponse()
       if (validateAgreement()) {
         if (!customerInfoState) { //no customer available
           //create customer payment profile
@@ -165,6 +166,8 @@ class BusinessDetailsFragment : DialogFragment() {
           )
         }
       }
+
+
     }
 //        prefs.storeGstRegistered(true)
     if (!prefs.getGstRegistered()) {
@@ -216,6 +219,24 @@ class BusinessDetailsFragment : DialogFragment() {
       )
     }
     WebEngageController.trackEvent(ADDONS_MARKETPLACE_BUSINESS_DETAILS_LOAD, GSTIN, NO_EVENT_VALUE)
+  }
+
+  private fun saveGstResponse() {
+    if (business_gstin_number.text.isNullOrEmpty().not()) {
+      if (isValidGSTIN(business_gstin_number.text.toString())) {
+        loadGSTInfo(business_gstin_number.text.toString())
+        viewModel.getGstApiResult().observe(viewLifecycleOwner, Observer {
+          gstInfoResult = it.result
+          if (gstInfoResult != null) {
+            prefs.storeGstApiResponse(gstInfoResult)
+          } else {
+            Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
+          }
+        })
+      } else {
+        Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
+      }
+    }
   }
 
   private fun validateAgreement(): Boolean {
@@ -504,6 +525,13 @@ class BusinessDetailsFragment : DialogFragment() {
     })
 
   }
+  private fun loadGSTInfo(gstIn:String) {
+    viewModel.getGstApiInfo(
+      (activity as? UpgradeActivity)?.getAccessToken()?:"",
+      gstIn,
+      (activity as UpgradeActivity).clientid
+    )
+  }
 
   private fun loadCustomerInfo() {
     viewModel.getCustomerInfo(
@@ -513,10 +541,15 @@ class BusinessDetailsFragment : DialogFragment() {
     )
   }
 
+
+
+
+
   override fun onDestroy() {
     super.onDestroy()
     requireActivity().viewModelStore.clear()
 //        this.viewModelStore.clear()
     listener.backListener(true)
+
   }
 }

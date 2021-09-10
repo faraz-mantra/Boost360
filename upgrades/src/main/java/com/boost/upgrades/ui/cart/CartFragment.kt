@@ -67,12 +67,17 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import android.R.attr.editable
+import android.content.Intent
+import android.net.Uri
 import java.lang.NumberFormatException
 import android.text.InputFilter
 import android.text.TextUtils
+import com.boost.upgrades.ui.compare.ComparePackageFragment
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_value
 import kotlinx.android.synthetic.main.cart_fragment.igst_value
+import kotlinx.android.synthetic.main.cart_fragment.package_layout
+import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.payment_fragment.*
 
 
@@ -318,11 +323,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
       }*/
 
+      WebEngageController.trackEvent(event_name = EVENT_NAME_ADDONS_MARKETPLACE_CART_CONTINUE, NO_EVENT_LABLE, event_attributes)
 
     }
 
     back_button12.setOnClickListener {
-      WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART_BACK, NO_EVENT_LABLE, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART_BACK, NO_EVENT_LABLE, event_attributes)
       (activity as UpgradeActivity).onBackPressed()
     }
 
@@ -372,6 +378,21 @@ class CartFragment : BaseFragment(), CartFragmentListener {
               (activity as UpgradeActivity).supportFragmentManager,
               COUPON_POPUP_FRAGEMENT
       )*/
+    }
+
+    mp_cart_compare_packs.setOnClickListener {
+      val args = Bundle()
+      args.putStringArrayList(
+        "userPurchsedWidgets",
+        arguments?.getStringArrayList("userPurchsedWidgets")
+      )
+      (activity as UpgradeActivity).addFragmentHome(
+        ComparePackageFragment.newInstance(),
+        Constants.COMPARE_FRAGMENT, args
+      )
+    }
+    cart_spk_to_expert.setOnClickListener {
+      speakToExpert(prefs.getExpertContact())
     }
     enter_gst_number.setOnClickListener {
       gstinPopUpFragment.show(
@@ -423,9 +444,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       )
     }
 
-    all_recommended_addons.setOnClickListener {
-      (activity as UpgradeActivity).goBackToRecommentedScreen()
-    }
+//    all_recommended_addons.setOnClickListener {
+//      (activity as UpgradeActivity).goBackToRecommentedScreen()
+//    }
 
     totalValidityDays = 30 * 1
     prefs.storeMonthsValidity(totalValidityDays)
@@ -646,7 +667,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
               viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as UpgradeActivity).fpid!!), couponCode)
             else
               totalCalculationAfterCoupon()
-
           }
 
         } catch (nfe: NumberFormatException) {
@@ -656,6 +676,21 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       }
     })
 
+  }
+
+  fun speakToExpert(phone: String?) {
+    Log.d("callExpertContact", " " + phone)
+    if (phone != null) {
+      val callIntent = Intent(Intent.ACTION_DIAL)
+      callIntent.data = Uri.parse("tel:" + phone)
+      startActivity(Intent.createChooser(callIntent, "Call by:"))
+    } else {
+      Toasty.error(
+        requireContext(),
+        "Expert will be available tomorrow from 10AM",
+        Toast.LENGTH_LONG
+      ).show()
+    }
   }
 
   fun showpopup() {
@@ -1819,9 +1854,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         val revenue = Math.round(grandTotal * 100).toInt() / 100
         event_attributes.put("total amount", revenue)
         event_attributes.put("cart validity months",default_validity_months)
-
-        WebEngageController.trackEvent(event_name = EVENT_NAME_ADDONS_MARKETPLACE_FULL_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_FULL_CART_LOADED, event_attributes)
-
 
 
       }
