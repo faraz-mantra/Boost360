@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
-import com.appservice.ui.staffs.ui.startStaffFragmentActivity
+import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
@@ -448,9 +448,11 @@ fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
       }
     } else {
       WebEngageController.trackEvent(PRODUCT_INVENTORY, CLICK, TO_BE_ADDED)
-      val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
-      startActivity(webIntent)
-      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+      session.let {
+        startFragmentActivity(com.appservice.constant.FragmentType.FRAGMENT_PRODUCT_LISTING, bundle = getBundleData(it))
+
+      }
+
     }
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
@@ -460,6 +462,13 @@ fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
 fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(LIST_STAFF_DASHBOARD, CLICK, TO_BE_ADDED)
+    startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session))
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+fun AppCompatActivity.startListDoctors(session: UserSessionManager?) {
+  try {
     startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session))
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()

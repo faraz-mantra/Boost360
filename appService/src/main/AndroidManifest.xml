@@ -2,9 +2,8 @@
   xmlns:tools="http://schemas.android.com/tools"
   package="com.appservice">
 
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-  <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
   <uses-feature
     android:name="android.hardware.camera"
     android:required="false" />
@@ -34,13 +33,12 @@
       android:windowSoftInputMode="adjustPan" />
 
     <activity
-      android:name="com.appservice.ui.staffs.ui.StaffFragmentContainerActivity"
+      android:name=".staffs.ui.StaffFragmentContainerActivity"
       android:configChanges="keyboardHidden|orientation|screenSize"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme_staff_home"
       android:windowSoftInputMode="adjustPan" />
-
-
+     <activity android:name=".offers.FragmentOffersContainerActivity" />
     <activity
       android:name=".ui.testimonial.TestimonialContainerActivity"
       android:screenOrientation="portrait"
@@ -52,9 +50,9 @@
       android:theme="@style/UpdateTheme"
       android:windowSoftInputMode="adjustResize" />
 
-    <meta-data
-      android:name="preloaded_fonts"
-      android:resource="@array/preloaded_fonts" />
+      <meta-data
+        android:name="preloaded_fonts"
+        android:resource="@array/preloaded_fonts" />
 
     <meta-data
       android:name="preloaded_fonts"

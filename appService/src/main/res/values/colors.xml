@@ -16,4 +16,9 @@
   <color name="green_6bc95c">#6BC95C</color>
   <color name="error_red">#E39595</color>
   <color name="red_dark">#D03F3F</color>
+  <color name="snackbar_negative_color">#E02200</color>
+  <color name="gray707070">#707070</color>
+  <color name="we_are_currently_">#898989</color>
+  <color name="black_3333">#333333</color>
+  <color name="red_apt">#EB5757</color>
 </resources>

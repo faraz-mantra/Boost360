@@ -11,9 +11,9 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.model.staffModel.*
-import com.appservice.ui.staffs.ui.UserSession
 import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
 import com.framework.extensions.observeOnce
+import com.framework.pref.UserSessionManager
 import kotlinx.android.synthetic.main.fragment_kyc_details.*
 import java.util.*
 
@@ -40,6 +40,7 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
   }
 
   override fun onCreateView() {
+    sessionLocal = UserSessionManager(requireActivity())
     init()
     getBundleData()
 
@@ -55,7 +56,7 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
   private fun fetchServices() {
     showProgress("Loading...")
     val request =
-      ServiceListRequest(FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpTag)
+      ServiceListRequest(FilterBy("ALL", 0, 0), "", floatingPointTag = sessionLocal.fpTag)
     viewModel?.getServiceListing(request)?.observeOnce(viewLifecycleOwner, {
       hideProgress()
       data = (it as? ServiceListResponse)?.result?.data ?: return@observeOnce

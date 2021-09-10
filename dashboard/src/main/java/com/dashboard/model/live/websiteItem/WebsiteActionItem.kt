@@ -47,7 +47,8 @@ data class WebsiteActionItem(
     places_look_around(R.drawable.places_look_around_d),
     trip_adviser_ratings(R.drawable.trip_advisor_reviews_d),
     seasonal_offers(R.drawable.ic_offer_d),
-    website_theme(R.drawable.ic_website_theme);
+    website_theme(R.drawable.ic_website_theme),
+    doctor_e_profile_listing(R.drawable.ic_doctors_e_profile);
 
     companion object {
       fun fromName(name: String?): IconType? =

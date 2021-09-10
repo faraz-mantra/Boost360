@@ -11,6 +11,7 @@ import android.text.SpannableString
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
@@ -31,6 +32,7 @@ import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_SIZE
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.appservice.recyclerView.RecyclerItemClickListener
+import com.appservice.ui.catalog.catalogService.ServiceCatalogHomeFragment
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.ui.model.*
@@ -274,6 +276,17 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
       else -> setEmptyView(View.VISIBLE)
     }
   }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.action_service_configuration -> {
+        startFragmentActivity(FragmentType.APPOINTMENT_SETTINGS)
+        return true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
+  }
+
 
   private fun setEmptyView(visibility: Int) {
     Log.i(TAG, "setEmptyView: ")

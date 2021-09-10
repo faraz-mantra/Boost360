@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/match_wrap"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/match_wrap"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/size_10">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/match_wrap"
+                android:layout_marginStart="@dimen/size_10"
+                android:layout_marginBottom="@dimen/size_6"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/match_wrap"
+                    android:includeFontPadding="false"
+                    android:text="@string/catalog_display_name"
+                    android:textColor="@color/white"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="HEADING_4"
+                    tools:textColor="@color/black_4a4a4a" />
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/match_wrap"
+                    android:includeFontPadding="false"
+                    android:text="@string/this_is_a_text_that_appears_on_your_catalog_menu_on_your_website_and_its_url"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    tools:textColor="@color/warm_grey" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/match_wrap"
+            android:background="@drawable/bg_rounded_top_white_2"
+            android:orientation="vertical">
+
+            <RadioGroup
+                style="@style/match_wrap"
+                android:id="@+id/radio_group"
+                android:layout_marginHorizontal="@dimen/size_20"
+                android:layout_marginTop="@dimen/size_20">
+
+                <RadioButton
+                    android:id="@+id/radio_service"
+                 style="@style/RadioAppointment"
+                    android:text="@string/services" />
+
+                <RadioButton
+                    android:id="@+id/radio_custom_text"
+                    style="@style/RadioAppointment"
+                    android:text="@string/custom_text" />
+
+            </RadioGroup>
+
+            <com.framework.views.customViews.CustomTextField
+                android:id="@+id/ctv_custom_display_hint"
+                style="@style/Appointment_Text_Field"
+                android:layout_marginHorizontal="@dimen/size_20"
+                android:hint="@string/enter_custom_display_text"
+                android:visibility="gone" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                style="@style/match_wrap"
+                android:layout_marginTop="@dimen/size_20"
+                android:layout_marginBottom="@dimen/size_20"
+                android:paddingStart="@dimen/size_10"
+                android:paddingEnd="@dimen/size_10">
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_proceed"
+                    style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+                    android:text="@string/proceed"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_cancel"
+                    style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+                    android:layout_marginEnd="@dimen/size_20"
+                    android:background="@color/white"
+                    android:text="@string/cancel"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_proceed"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_match_root">
+
+    <LinearLayout
+      android:id="@+id/linearLayout"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_70"
+      android:background="@color/yellow_ffb900"
+      android:visibility="visible"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.appcompat.widget.SearchView
+        android:id="@+id/sv_settings"
+        style="@style/SearchView.WhiteBackground"
+        android:layout_height="@dimen/size_40"
+        android:gravity="center_vertical"
+        app:iconifiedByDefault="false"
+        android:textSize="12sp"
+        app:queryHint="@string/search_in_the_ecommerce_settings" />
+    </LinearLayout>
+    <com.framework.views.viewgroups.BaseRecyclerView
+      android:id="@+id/rv_tiles"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:orientation="vertical"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+      tools:itemCount="4"
+      tools:listitem="@layout/recycler_item_ecom_apt_settings" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
