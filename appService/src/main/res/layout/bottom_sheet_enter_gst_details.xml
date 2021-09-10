@@ -131,7 +131,7 @@
           android:layout_height="wrap_content">
 
           <com.framework.views.customViews.CustomCheckBox
-            android:id="@+id/ccb_declearation"
+            android:id="@+id/ccb_rcm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -139,13 +139,15 @@
             android:text="@string/rcm_applies_to_my_sales"
             android:textColor="@color/gray_828282"
             android:visibility="visible" />
+
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_alignParentEnd="true"
             android:id="@+id/whats_this"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:text="@string/what_s_this"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/black_4a4a4a"
+            android:text="@string/what_s_this" />
 
         </RelativeLayout>
 

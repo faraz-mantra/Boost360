@@ -21,7 +21,8 @@
         android:layout_height="@dimen/size_40"
         android:gravity="center_vertical"
         app:iconifiedByDefault="false"
-        app:queryHint="@string/search_in_the_appointment_settings" />
+        android:textSize="12sp"
+        app:queryHint="@string/search_in_the_ecommerce_settings" />
     </LinearLayout>
     <com.framework.views.viewgroups.BaseRecyclerView
       android:id="@+id/rv_tiles"

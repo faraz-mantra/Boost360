@@ -19,13 +19,14 @@ import com.framework.pref.clientId
 import kotlinx.android.synthetic.main.fragment_product_details.*
 import java.io.Serializable
 import java.util.*
+import kotlin.collections.HashSet
 
 class FragmentProductCategory : AppBaseFragment<FragmentProductCategoryListingBinding, ProductViewModel>(), RecyclerItemClickListener {
     override fun getLayout(): Int {
         return R.layout.fragment_product_category_listing
     }
 
-    private var categoryList: ArrayList<CategoryProduct> = arrayListOf()
+    private var categoryList: HashSet<CategoryProduct> = hashSetOf()
     private var adapterN: AppBaseRecyclerViewAdapter<CategoryProduct>? = null
     override fun getViewModelClass(): Class<ProductViewModel> {
         return ProductViewModel::class.java
@@ -65,6 +66,7 @@ class FragmentProductCategory : AppBaseFragment<FragmentProductCategoryListingBi
     private fun onProductListingReceived(it: BaseResponse) {
         if (it.isSuccess()) {
             val productListing = it.anyResponse as? ArrayList<CatalogProduct>
+            if (productListing.isNullOrEmpty().not())
             filterCategories(productListing)
         }
 
@@ -75,10 +77,10 @@ class FragmentProductCategory : AppBaseFragment<FragmentProductCategoryListingBi
         productListing?.forEach { catalogProduct -> if (catalogProduct.category != null) categories.add(catalogProduct.category!!) }
         categories.forEach { cat -> categoryList.add(CategoryProduct(cat, Collections.frequency(categories, cat))) }
         binding?.rvProductCategory?.apply {
-            adapterN = AppBaseRecyclerViewAdapter(baseActivity, categoryList, this@FragmentProductCategory)
+            adapterN = AppBaseRecyclerViewAdapter(baseActivity, categoryList.toList() as ArrayList<CategoryProduct>, this@FragmentProductCategory)
             adapter = adapterN
         }
-        (parentFragment as FragmentProductHome).setTabTitle("${resources.getString(R.string.categories)} (${categoryList.size})", 1)
+        (parentFragment as FragmentProductHome).setTabTitle("Categories (${categoryList.size})", 1)
     }
 
 

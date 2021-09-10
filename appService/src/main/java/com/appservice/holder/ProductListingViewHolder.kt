@@ -1,6 +1,7 @@
 package com.appservice.holder
 
 import android.graphics.Paint
+import androidx.core.content.ContextCompat
 import com.appservice.R
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.RecyclerItemProductListingBinding
@@ -17,6 +18,14 @@ class ProductListingViewHolder(binding: RecyclerItemProductListingBinding) : App
         val data = (item as? CatalogProduct) ?: return
         binding.labelName.text = data.brandName
         binding.labelCategory.text = data.category
+        when {
+          data.availableUnits == -1 -> {binding.ctvStock.text="Stock"}
+          data.availableUnits > 0 -> { binding.ctvStock.setCompoundDrawables(null,null,ContextCompat.getDrawable(binding.root.context,R.drawable.ic_dot_green),null);
+              binding.ctvStock.text="${data.availableUnits} In stock"}
+          else -> {
+              binding.ctvStock.setCompoundDrawables(null,null,ContextCompat.getDrawable(binding.root.context,R.drawable.ic_dot_red),null)
+              binding.ctvStock.text = "Out of stock" }
+        }
         binding.ctvStock.text = "${data.availableUnits ?: 0}"
         if (data.Price ?: 0.0 <= data.DiscountAmount ?: 0.0) binding.labelBasePrice.gone() else binding.labelBasePrice.visible()
         binding.labelPrice.text = "${data.CurrencyCode ?: "INR"} ${data.DiscountAmount}"
