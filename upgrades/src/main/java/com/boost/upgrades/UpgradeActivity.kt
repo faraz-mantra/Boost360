@@ -38,13 +38,20 @@ import com.boost.upgrades.utils.Constants.Companion.ORDER_CONFIRMATION_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PAYMENT_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
-import com.boost.upgrades.utils.NetworkConnectivitySpeed.checkNetworkType
+import com.boost.upgrades.utils.SharedPrefs
+import com.boost.upgrades.utils.Utils
+import com.boost.upgrades.utils.WebEngageController
 import com.framework.webengageconstant.*
+import com.boost.upgrades.utils.NetworkConnectivitySpeed.checkNetworkType
+import com.framework.pref.TokenResult
+import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.lang.IllegalStateException
 
 
 class UpgradeActivity : AppCompatActivity() {
@@ -90,6 +97,7 @@ class UpgradeActivity : AppCompatActivity() {
     isDeepLink = intent.getBooleanExtra("isDeepLink", false)
     deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
     deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
+
     experienceCode = intent.getStringExtra("expCode")
     fpName = intent.getStringExtra("fpName")
     fpid = intent.getStringExtra("fpid")
@@ -181,6 +189,9 @@ class UpgradeActivity : AppCompatActivity() {
       e.printStackTrace()
     }
   }
+  fun getAccessToken(): String {
+   return UserSessionManager(this).getAccessTokenAuth()?.barrierToken()?:""
+  }
 
   private fun performBackPressed() {
     try {
@@ -266,7 +277,7 @@ class UpgradeActivity : AppCompatActivity() {
   }
 
   fun addFragmentHome(fragment: Fragment, fragmentTag: String?, args: Bundle?) {
-      fragment.arguments = args
+    fragment.setArguments(args)
     currentFragment = fragment
     fragmentManager = supportFragmentManager
     fragmentTransaction = fragmentManager!!.beginTransaction()
@@ -288,7 +299,11 @@ class UpgradeActivity : AppCompatActivity() {
   }
 
   fun popFragmentFromBackStack() {
-    fragmentManager!!.popBackStack()
+    try {
+      fragmentManager!!.popBackStack()
+    } catch (e: IllegalStateException){
+      //ignore
+    }
   }
 
   fun goToHomeFragment() {

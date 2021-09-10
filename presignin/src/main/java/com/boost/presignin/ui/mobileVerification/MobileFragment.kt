@@ -92,7 +92,7 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
       navigator?.startActivity(LoginActivity::class.java)
     }
     binding?.helpTv?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-    binding?.helpTv?.text = getString(R.string.need_help)
+    binding?.helpTv?.text = getString(R.string.need_help_u)
     val constraint = binding?.root as? ConstraintLayout
     binding?.phoneEt?.setOnFocusChangeListener { v, hasFocus ->
       if (hasFocus) {

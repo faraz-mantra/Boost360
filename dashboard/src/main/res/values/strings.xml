@@ -154,7 +154,7 @@
   <string name="select_secondary_font">Select secondary font</string>
   <string name="website_updated">Website updated</string>
   <string name="your_changes_are_saved_successfully_published_and_live_on_your_website_click_on_below_button_to_see_it_live_or_share_with_in_your_connections">Your changes are saved successfully published and live on your website. Click on below button to see it live or share with in your connections.</string>
-  <string name="view_changes_live">View changes live</string>
+  <string name="view_changes_live">View on website</string>
   <string name="reset_website_style">Reset website style</string>
   <string name="this_will_change_the_fonts_and_color_of_your_website_to_default_ones_shown_below">This will change the fonts and color of your website to default ones (shown below).</string>
   <string name="default_font">Default font</string>

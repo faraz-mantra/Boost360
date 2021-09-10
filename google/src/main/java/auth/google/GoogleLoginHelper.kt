@@ -26,8 +26,7 @@ interface GoogleLoginHelper {
 
   fun googleLoginCallback(activity: Activity, type: String) {
     if (type == GMB_SIGN_IN && validClientID().not()) return
-    val mGoogleSignInClient =
-      GoogleGraphManager.getClient(activity, GoogleGraphPath.SERVER_CLIENT_ID, type)
+    val mGoogleSignInClient = GoogleGraphManager.getClient(activity, GoogleGraphPath.SERVER_CLIENT_ID, type)
     val signInIntent = mGoogleSignInClient.signInIntent
     activity.startActivityForResult(signInIntent, RC_SIGN_IN)
   }

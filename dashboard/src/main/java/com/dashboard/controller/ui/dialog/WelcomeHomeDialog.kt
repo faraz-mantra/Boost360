@@ -41,17 +41,23 @@ class WelcomeHomeDialog : BaseDialogFragment<DialogWelcomeHomeBinding, BaseViewM
   override fun onCreateView() {
     isCancelable = false
     if (welcomeData != null) {
-      binding?.title?.text = welcomeData!!.title
-      binding?.desc?.text = welcomeData!!.desc
-      binding?.btnManage?.text = welcomeData!!.btnTitle
-      val type = WelcomeData.WelcomeType.fromName(welcomeData!!.welcomeType)
+      binding?.title?.text = welcomeData?.title
+      binding?.desc?.text = welcomeData?.desc
+      binding?.btnManage?.text = welcomeData?.btnTitle
+      val type = WelcomeData.WelcomeType.fromName(welcomeData?.welcomeType)
       type?.icon?.let { binding?.image?.setImageResource(it) }
       binding?.btnManage?.setOnClickListener {
         onClicked(type?.name)
-        hideProgress()
+        hideDismiss()
       }
-      welcomeData!!.welcomeType?.let { saveWelcomeData(it, true) }
-    } else hideProgress()
+      welcomeData?.welcomeType?.let { saveWelcomeData(it, true) }
+    } else hideDismiss()
+
+    binding?.closeBtn?.setOnClickListener {
+      val type = WelcomeData.WelcomeType.fromName(welcomeData?.welcomeType)
+      onClicked(type?.name)
+      hideDismiss()
+    }
   }
 
   fun showProgress(manager: FragmentManager) {
@@ -62,7 +68,7 @@ class WelcomeHomeDialog : BaseDialogFragment<DialogWelcomeHomeBinding, BaseViewM
     }
   }
 
-  fun hideProgress() {
+  private fun hideDismiss() {
     try {
       if (isRemoving.not()) dismiss()
     } catch (e: Exception) {

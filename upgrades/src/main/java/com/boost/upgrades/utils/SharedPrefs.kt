@@ -143,13 +143,12 @@ class SharedPrefs(activity: Activity) {
     }
 
     fun storeValidityMonths(orderDetails: String?){
-        val orderInfo = Gson().toJson(orderDetails)
-        editor!!.putString(VALIDITY_MONTHS, orderInfo).apply()
+        editor!!.putString(VALIDITY_MONTHS, orderDetails).apply()
     }
 
-    fun getValidityMonths(): List<String?>? {
+    fun getValidityMonths(): String? {
         val str = pref!!.getString(VALIDITY_MONTHS, "")
-        return if (TextUtils.isEmpty(str)) ArrayList() else Gson().fromJson(str, object : TypeToken<List<String?>?>() {}.type)
+        return str
     }
 
     fun storeCouponIds(couponCode: String?){

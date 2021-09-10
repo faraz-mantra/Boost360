@@ -233,13 +233,16 @@
         android:id="@+id/review_description"
         style="@style/EditTextCustomeStyle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
+        android:layout_height="wrap_content"
         android:background="@drawable/edittext_bg_elevated"
         android:elevation="@dimen/_2sdp"
-        android:gravity="top"
+        android:lines="8"
+        android:minLines="6"
+        android:maxLines="10"
+        android:gravity="top|left"
         android:hint="@string/enter_description"
-        android:imeOptions="actionDone"
-        android:inputType="textCapWords|textMultiLine"
+        android:scrollbars="vertical"
+        android:inputType="textMultiLine"
         android:maxLength="200" />
 
 

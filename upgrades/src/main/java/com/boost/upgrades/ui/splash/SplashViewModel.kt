@@ -44,12 +44,12 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
     return updateCustomerInfo
   }
 
-  fun getCustomerInfo(InternalSourceId: String, clientId: String) {
+  fun getCustomerInfo(auth:String,InternalSourceId: String, clientId: String) {
     if (Utils.isConnectedToInternet(getApplication())) {
       updatesLoader.postValue(true)
       APIRequestStatus = "Retrieving your payment profile..."
       CompositeDisposable().add(
-        ApiService.getCustomerId(InternalSourceId, clientId)
+        ApiService.getCustomerId(auth,InternalSourceId, clientId)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(
@@ -75,10 +75,10 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
     }
   }
 
-  fun createCustomerInfo(createCustomerInfoRequest: CreateCustomerInfoRequest) {
+  fun createCustomerInfo(auth: String,createCustomerInfoRequest: CreateCustomerInfoRequest) {
     APIRequestStatus = "Creating a new payment profile..."
     CompositeDisposable().add(
-      ApiService.createCustomerId(createCustomerInfoRequest)
+      ApiService.createCustomerId(auth,createCustomerInfoRequest)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
@@ -100,10 +100,10 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
     )
   }
 
-  fun updateCustomerInfo(createCustomerInfoRequest: CreateCustomerInfoRequest) {
+  fun updateCustomerInfo(auth: String,createCustomerInfoRequest: CreateCustomerInfoRequest) {
     APIRequestStatus = "Creating a new payment profile..."
     CompositeDisposable().add(
-      ApiService.updateCustomerId(createCustomerInfoRequest)
+      ApiService.updateCustomerId(auth,createCustomerInfoRequest)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
