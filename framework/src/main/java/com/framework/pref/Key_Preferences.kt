@@ -124,4 +124,5 @@ object Key_Preferences {
   const val STORE_WIDGETS = "StoreWidgets"
 
   const val ACCESS_TOKEN_AUTH = "access_token_auth"
+  const val PRODUCT_CATEGORY_VERB = "product_category_verb"
 }
