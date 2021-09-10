@@ -3,6 +3,9 @@ package com.appservice.ui.staffs.ui.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -32,6 +35,15 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.pref.Key_Preferences
+import com.framework.views.zero.FragmentZeroCase
+import com.framework.views.zero.OnZeroCaseClicked
+import com.framework.views.zero.RequestZeroCaseBuilder
+import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.*
 import com.inventoryorder.ui.tutorials.LearnHowItWorkBottomSheet
 import kotlinx.android.synthetic.main.fragment_staff_listing.*
@@ -39,8 +51,10 @@ import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
 import java.util.*
 
 class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffViewModel>(),
-  RecyclerItemClickListener, SearchView.OnQueryTextListener {
+  RecyclerItemClickListener, SearchView.OnQueryTextListener, AppOnZeroCaseClicked {
 
+  private val TAG = "StaffProfileListingFrag"
+  private var fragmentZeroCase: AppFragmentZeroCase?=null
   private val list: ArrayList<DataItem> = arrayListOf()
   private val finalList: ArrayList<DataItem> = arrayListOf()
   private var adapterStaff: AppBaseRecyclerViewAdapter<DataItem>? = null
@@ -77,6 +91,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   override fun onCreateView() {
     super.onCreateView()
+    Log.i(TAG, "onCreateView: ")
+    this.fragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.STAFF_LISTING, this, baseActivity,!isLockStaff()).getRequest().build()
+    addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase,false)
+
     getBundleData()
     if (isLockStaff().not()) {
       layoutManagerN = LinearLayoutManager(baseActivity)
@@ -85,22 +103,21 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       layoutManagerN?.let { scrollPagingListener(it) }
       swipeRefreshListener()
       setOnClickListener(
-        binding?.staffEmpty?.btnAddStaff,
-        binding?.serviceEmpty?.cbAddService,
-        binding?.staffEmpty?.btnHowWork
+        binding?.serviceEmpty?.cbAddService
       )
+    }else{
+      emptyView()
     }
+
+
   }
 
   private fun isLockStaff(): Boolean {
     return if (sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE.name) == true) {
-      binding?.staffListSwipeRefresh?.visible()
-      binding?.staffLock?.root?.gone()
+     nonEmptyView()
       false
     } else {
-      binding?.staffListSwipeRefresh?.gone()
-      binding?.staffLock?.root?.visible()
-      binding?.staffLock?.btnStaffAddOns?.setOnClickListener(this)
+     emptyView()
       true
     }
   }
@@ -129,7 +146,9 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     showProgressN()
     viewModel?.getSearchListings(UserSession.fpTag, UserSession.fpId, "", 0, 1)
       ?.observeOnce(viewLifecycleOwner, {
-        if ((it as? ServiceSearchListingResponse)?.result?.data.isNullOrEmpty().not()) {
+        val data = (it as? ServiceSearchListingResponse)?.result?.data
+        Log.i(TAG, "getListServiceFilterApi: "+data?.size)
+        if (data.isNullOrEmpty().not()) {
           checkIsAddNewStaff()
           fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
           isServiceEmpty = false
@@ -142,13 +161,13 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun swipeRefreshListener() {
-    binding?.staffListSwipeRefresh?.setOnRefreshListener {
+    binding?.mainlayout?.setOnRefreshListener {
       if (isServiceEmpty.not()) {
-        binding?.staffListSwipeRefresh?.isRefreshing = true
+        binding?.mainlayout?.isRefreshing = true
         this.offSet = PAGE_START
         this.limit = PAGE_SIZE
         fetchStaffListing(isProgress = false, isFirst = true, offSet = offSet, limit = limit)
-      } else binding?.staffListSwipeRefresh?.isRefreshing = false
+      } else binding?.mainlayout?.isRefreshing = false
     }
   }
 
@@ -198,6 +217,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     isFirstLoad: Boolean
   ) {
     val listStaff = resultStaff?.data
+    Log.i(TAG, "setStaffDataItems: "+listStaff?.size)
+
     if (isSearchString.not()) {
       if (isFirstLoad) finalList.clear()
       onStaffAddedOrUpdated(listStaff.isNullOrEmpty().not())
@@ -237,13 +258,34 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun setEmptyView(isStaffEmpty: Boolean, isServiceEmpty: Boolean = false) {
-    binding?.serviceEmpty?.root?.visibility = if (isServiceEmpty) View.VISIBLE else View.GONE
-    binding?.staffEmpty?.root?.visibility =
-      if (isStaffEmpty && isServiceEmpty.not()) View.VISIBLE else View.GONE
+    Log.i(TAG, "setEmptyView: "+isStaffEmpty+" "+isServiceEmpty)
+    if (isStaffEmpty){
+      setHasOptionsMenu(false)
+      emptyView()
+    }
+    else {
+      setHasOptionsMenu(true)
+      nonEmptyView()
+    }
     binding?.rvStaffList?.visibility =
       if (isStaffEmpty || isServiceEmpty) View.GONE else View.VISIBLE
     if (this::menuAdd.isInitialized) menuAdd.isVisible = isServiceEmpty.not()
   }
+
+  private fun nonEmptyView() {
+    setHasOptionsMenu(true)
+    binding?.mainlayout?.visible()
+    binding?.childContainer?.gone()
+  }
+
+  private fun emptyView() {
+    Log.i(TAG, "emptyView: ")
+    setHasOptionsMenu(false)
+    binding?.mainlayout?.gone()
+    binding?.childContainer?.visible()
+
+  }
+
 
   private fun removeLoader() {
     if (isLoadingD) {
@@ -298,10 +340,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       R.id.app_bar_search -> {
         true
       }
-      R.id.menu_help -> {
+     /* R.id.menu_help -> {
         openHelpBottomSheet()
         true
-      }
+      }*/
       else -> super.onOptionsItemSelected(item)
     }
   }
@@ -313,11 +355,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.staffEmpty?.btnAddStaff -> startStaffFragmentActivity(
-        FragmentType.STAFF_DETAILS_FRAGMENT,
-        clearTop = false,
-        isResult = true
-      )
+
       binding?.serviceEmpty?.cbAddService -> {
         isServiceAdd = true
         startFragmentActivity(
@@ -326,8 +364,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
           isResult = true
         )
       }
-      binding?.staffLock?.btnStaffAddOns -> startStorePage("${StatusKyc.STAFFPROFILE.name}15")
-      binding?.staffEmpty?.btnHowWork -> openHelpBottomSheet()
+//      binding?.staffLock?.btnStaffAddOns -> startStorePage()
     }
   }
 
@@ -363,8 +400,13 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       if (isRefresh) {
         this.offSet = PAGE_START
         this.limit = PAGE_SIZE
-        if (isServiceAdd) getListServiceFilterApi()
-        else fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
+        Log.i(TAG, "onActivityResult: "+isServiceAdd)
+        if (isServiceAdd){
+          getListServiceFilterApi()
+        }
+        else{
+          fetchStaffListing(isFirst = true, offSet = offSet, limit = limit)
+        }
       }
     }
   }
@@ -374,11 +416,63 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   fun hideProgressN() {
-    binding?.staffListSwipeRefresh?.isRefreshing = false
+    binding?.mainlayout?.isRefreshing = false
     binding?.progress?.gone()
   }
+
+
+  private fun startStorePage() {
+    try {
+      showProgress("Loading. Please wait...")
+      val intent = Intent(baseActivity, Class.forName("com.boost.upgrades.UpgradeActivity"))
+      intent.putExtra("expCode", sessionLocal.fP_AppExperienceCode)
+      intent.putExtra("fpName", sessionLocal.fpTag)
+      intent.putExtra("fpid", sessionLocal.fPID)
+      intent.putExtra("fpTag", sessionLocal.fpTag)
+      intent.putExtra(
+        "accountType",
+        sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)
+      )
+      intent.putStringArrayListExtra(
+        "userPurchsedWidgets",
+        ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList())
+      )
+      intent.putExtra("email", sessionLocal.userProfileEmail ?: "ria@nowfloats.com")
+      intent.putExtra("mobileNo", sessionLocal.userPrimaryMobile ?: "9160004303")
+      intent.putExtra("profileUrl", sessionLocal.fPLogo)
+      intent.putExtra("buyItemKey", "${StatusKyc.STAFFPROFILE.name}15")// feature key
+      baseActivity.startActivity(intent)
+      Handler(Looper.getMainLooper()).postDelayed({ hideProgress() }, 1000)
+    } catch (e: Exception) {
+      showLongToast("Unable to start upgrade activity.")
+    }
+  }
+
+  override fun primaryButtonClicked() {
+    if (isLockStaff())
+      startStorePage()
+    else
+    startStaffFragmentActivity(
+      FragmentType.STAFF_DETAILS_FRAGMENT,
+      clearTop = false,
+      isResult = true)
+  }
+
+  override fun secondaryButtonClicked() {
+    openHelpBottomSheet()
+  }
+
+  override fun ternaryButtonClicked() {
+  }
+
+  override fun appOnBackPressed() {
+
+  }
+
+
 }
 
 fun getFilterRequest(offSet: Int, limit: Int): GetStaffListingRequest {
   return GetStaffListingRequest(FilterBy(offset = offSet, limit = limit), UserSession.fpTag, "")
 }
+

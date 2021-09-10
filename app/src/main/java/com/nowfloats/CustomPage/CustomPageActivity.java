@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import static com.framework.webengageconstant.EventValueKt.NULL;
  */
 public class CustomPageActivity extends AppCompatActivity implements CustomPageDeleteInterface {
 
+    private static final String TAG = "CustomPageActivity";
     Toolbar toolbar;
     TextView headerText;
     boolean isAdd = false;
@@ -71,6 +73,7 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "onActivityResult: ");
         if (resultCode == RESULT_OK && requestCode == 202) {
             if (!(data != null && data.getBooleanExtra("IS_REFRESH", false))) onBackPressed();
             else if (customPageFragment != null) customPageFragment.isRefreshList();

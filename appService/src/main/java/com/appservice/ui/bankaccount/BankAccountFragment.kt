@@ -44,6 +44,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
   private var requestAccount: BankAccountDetailsN? = null
   private var isValidIfsc: Boolean = false
   private var isServiceCreation: Boolean = false
+  private val TAG = "BankAccountFragment"
 
   companion object {
     @JvmStatic

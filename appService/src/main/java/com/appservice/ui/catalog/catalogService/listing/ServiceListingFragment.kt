@@ -8,11 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.SpannableString
-import android.text.TextPaint
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
-import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -47,6 +43,11 @@ import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getDomainName
 import com.framework.utils.ContentSharing
+import com.framework.views.zero.*
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.*
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Target
@@ -55,8 +56,11 @@ import kotlinx.android.synthetic.main.fragment_service_detail.*
 import kotlinx.android.synthetic.main.recycler_item_service_timing.*
 import java.util.*
 
-class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(), RecyclerItemClickListener {
+class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(),
+  RecyclerItemClickListener, AppOnZeroCaseClicked {
 
+  private val TAG = "ServiceListingFragment"
+  private  var fragmentZeroCase: AppFragmentZeroCase?=null
   private lateinit var domainName: String
   private var session: UserSessionManager? = null
   private val list: ArrayList<ItemsItem> = arrayListOf()
@@ -101,14 +105,18 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   override fun onCreateView() {
     super.onCreateView()
+    Log.i(TAG, "onCreateView: ")
     getBundleData()
     layoutManagerN = LinearLayoutManager(baseActivity)
     getListServiceFilterApi(isFirst = true, offSet = offSet, limit = limit)
     WebEngageController.trackEvent(SERVICE_CATALOGUE_LIST, PAGE_VIEW, NO_EVENT_VALUE)
     layoutManagerN?.let { scrollPagingListener(it) }
-    setOnClickListener(binding?.cbAddService, binding?.serviceListingEmpty?.cbAddService)
+    setOnClickListener(binding?.cbAddService)
     this.session = UserSessionManager(requireContext())
     this.domainName = session?.getDomainName()!!
+
+    this.fragmentZeroCase =AppRequestZeroCaseBuilder(AppZeroCases.SERVICES, this, baseActivity).getRequest().build()
+    addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase,false)
 
   }
 
@@ -153,7 +161,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   ) {
     if (isFirst || searchString.isNotEmpty()) showProgress()
     viewModel?.getSearchListings(fpTag, fpId, searchString, offSet, limit)
-      ?.observeOnce(viewLifecycleOwner, {
+      ?.observeOnce(baseActivity, {
         if (it.isSuccess()) {
           setServiceDataItems(
             (it as? ServiceSearchListingResponse)?.result,
@@ -171,10 +179,15 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     isFirstLoad: Boolean
   ) {
     val listService = resultService?.data as? ArrayList<ItemsItem>
+
     if (isSearchString.not()) {
+      Log.i(TAG, "setServiceDataItems: "+listService?.size+" "+isFirstLoad+" ")
+
       onServiceAddedOrUpdated(listService?.size ?: 0)
       if (isFirstLoad) finalList.clear()
       if (listService.isNullOrEmpty().not()) {
+        Log.i(TAG, "setServiceDataItems: list is null or empty not")
+       // removeZeroCaseFragment()
         removeLoader()
         setEmptyView(View.GONE)
         TOTAL_ELEMENTS = resultService?.paging?.count ?: 0
@@ -193,6 +206,8 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
       }
     }
   }
+
+
 
   private fun onServiceAddedOrUpdated(count: Int) {
     val instance = FirestoreManager
@@ -261,9 +276,22 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   }
 
   private fun setEmptyView(visibility: Int) {
-    binding?.serviceListingEmpty?.root?.visibility = visibility
+    Log.i(TAG, "setEmptyView: ")
+    when (visibility) {
+      View.GONE -> {
+        setHasOptionsMenu(true)
+        binding?.mainlayout?.visible()
+        binding?.childContainer?.gone()
+      }
+      View.VISIBLE -> {
+        setHasOptionsMenu(false)
+        binding?.mainlayout?.gone()
+        binding?.childContainer?.visible()
+      }
+    }
+
     if (visibility == View.VISIBLE) setListingView(View.GONE) else setListingView(View.VISIBLE)
-    setEmptyView()
+//    setEmptyView()
   }
 
   private fun setListingView(visibility: Int) {
@@ -303,11 +331,11 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 //      spannableString.length,
 //      0
 //    )
-    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.text = spannableString
-    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.movementMethod =
-      LinkMovementMethod.getInstance()
-    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.highlightColor =
-      resources.getColor(android.R.color.transparent)
+//    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.text = spannableString
+//    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.movementMethod =
+//      LinkMovementMethod.getInstance()
+//    binding?.serviceListingEmpty?.ctvAddServiceSubheading?.highlightColor =
+//      resources.getColor(android.R.color.transparent)
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -415,14 +443,18 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.cbAddService, binding?.serviceListingEmpty?.cbAddService -> {
-        startFragmentActivity(
-          FragmentType.SERVICE_DETAIL_VIEW,
-          bundle = sendBundleData(null),
-          isResult = true
-        )
+      binding?.cbAddService -> {
+        addService()
       }
     }
+  }
+
+  private fun addService() {
+    startFragmentActivity(
+      FragmentType.SERVICE_DETAIL_VIEW,
+      bundle = sendBundleData(null),
+      isResult = true
+    )
   }
 
   private fun openSortingBottomSheet() {
@@ -468,6 +500,24 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun hideProgress() {
     binding?.progress?.gone()
   }
+
+
+  override fun primaryButtonClicked() {
+    addService()
+  }
+
+  override fun secondaryButtonClicked() {
+
+  }
+
+  override fun ternaryButtonClicked() {
+
+  }
+
+  override fun appOnBackPressed() {
+
+  }
+
 }
 
 

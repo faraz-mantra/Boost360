@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.PopupWindow
@@ -16,6 +17,14 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
+import com.framework.views.zero.FragmentZeroCase
+import com.framework.views.zero.OnZeroCaseClicked
+import com.framework.views.zero.RequestZeroCaseBuilder
+import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.ORDER_PAGE_LOAD
 import com.framework.webengageconstant.PAGE_VIEW
@@ -61,8 +70,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
-open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener {
-
+open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener, AppOnZeroCaseClicked {
+  private var totalOrders: Int=0
+  private lateinit var zeroCaseFragment: AppFragmentZeroCase
   lateinit var mPopupWindow: PopupWindow
   private lateinit var requestFilter: OrderFilterRequest
   private var typeAdapter: AppBaseRecyclerViewAdapter<OrderSummaryModel>? = null
@@ -81,7 +91,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private var currentPage = PAGE_START
   private var isLastPageD = false
   private var orderItemType = OrderSummaryModel.OrderSummaryType.TOTAL.type
-
+  private  val TAG = "OrdersFragment"
   companion object {
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): OrdersFragment {
@@ -93,8 +103,9 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   override fun onCreateView() {
     super.onCreateView()
+    Log.i(TAG, "onCreateView: ")
     WebEngageController.trackEvent(ORDER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    setOnClickListener(binding?.btnAdd, binding?.buttonAddApt)
+    setOnClickListener(binding?.btnAdd)
     apiSellerSummary()
     layoutManagerN = LinearLayoutManager(baseActivity)
     layoutManagerN?.let { scrollPagingListener(it) }
@@ -102,24 +113,32 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     binding?.swipeRefresh?.setOnRefreshListener {
       if (typeList.isNullOrEmpty()) apiSellerSummary() else loadNewData()
     }
+    this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.ORDERS, this, baseActivity).getRequest().build()
+
+    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
+
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnAdd, binding?.buttonAddApt -> {
-        val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
-        if (!PreferencesUtils.instance.getData(
-            PreferenceConstant.SHOW_CREATE_ORDER_WELCOME,
-            false
-          )
-        ) {
-          startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, bundle, isResult = true)
-        } else {
-          startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle, isResult = true)
-        }
+      binding?.btnAdd -> {
+        addOrders()
       }
+    }
+  }
+
+  private fun addOrders() {
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
+    if (!PreferencesUtils.instance.getData(
+        PreferenceConstant.SHOW_CREATE_ORDER_WELCOME,
+        false
+      )
+    ) {
+      startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, bundle, isResult = true)
+    } else {
+      startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle, isResult = true)
     }
   }
 
@@ -162,8 +181,11 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
         if (isSearch.not()) {
+
           if (isRefresh) orderListFinalList.clear()
           if (response != null && response.Items.isNullOrEmpty().not()) {
+            binding?.tvNoOrder?.gone()
+
             orderList.clear()
             removeLoader()
             val list = response.Items ?: ArrayList()
@@ -172,17 +194,26 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
             orderList.addAll(orderListFinalList)
             isLastPageD = (orderListFinalList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
-          } else emptyView()
+          }else{
+            binding?.tvNoOrder?.visible()
+          }
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
+            binding?.tvNoOrder?.gone()
+
             orderList.clear()
             orderList.addAll(response.Items!!)
             setAdapterNotify(orderList)
           } else if (orderListFinalList.isNullOrEmpty().not()) {
+            binding?.tvNoOrder?.gone()
+
             orderList.clear()
             orderList.addAll(orderListFinalList)
             setAdapterNotify(orderList)
-          } else emptyView()
+          }else{
+            binding?.tvNoOrder?.visible()
+
+          }
         }
       } else showLongToast(it.message())
     })
@@ -197,7 +228,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
     binding?.orderRecycler?.visible()
-    binding?.errorView?.gone()
+//    binding?.errorView?.gone()
+    nonEmptyView()
     if (orderAdapter != null) {
       orderAdapter?.notify(getNewList(items))
     } else setAdapterOrderList(getNewList(items))
@@ -215,9 +247,16 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     viewModel?.getSellerSummary(clientId, fpTag)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.isSuccess()) {
         val response = it as? OrderSummaryResponse
-        setToolbarTitle(resources.getString(R.string.orders) + " (${response?.Data?.TotalOrders ?: 0})")
-        typeList = response?.Data?.getOrderType()
-        typeList?.let { it1 -> setAdapterSellerSummary(it1) } ?: errorOnSummary(null)
+        totalOrders = response?.Data?.TotalOrders?:0
+        if (totalOrders==0){
+          emptyView()
+        }else{
+          nonEmptyView()
+          setToolbarTitle(resources.getString(R.string.orders))
+          typeList = response?.Data?.getOrderType()
+          typeList?.let { it1 -> setAdapterSellerSummary(it1) } ?: errorOnSummary(null)
+        }
+
       } else errorOnSummary(it?.message)
     })
   }
@@ -646,13 +685,28 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     }
   }
 
+  //  private fun emptyView() {
+////    binding?.orderRecycler?.gone()
+////    binding?.errorView?.visible()
+//
+////    binding?.btnActionTutorials?.setOnClickListener {
+////      val sheet = LearnHowItWorkBottomSheet()
+////      sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
+////    }
+////    addFragmentReplace(containerID = R.id.container, RequestZeroCaseBuilder(ZeroCases.ORDERS, this, baseActivity).getRequest().build(), true)
+//
+//  }
   private fun emptyView() {
-    binding?.orderRecycler?.gone()
-    binding?.errorView?.visible()
-    binding?.btnActionTutorials?.setOnClickListener {
-      val sheet = LearnHowItWorkBottomSheet()
-      sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
-    }
+    Log.i(TAG, "emptyView: ")
+    setHasOptionsMenu(false)
+    binding?.mainlayout?.gone()
+    binding?.childContainer?.visible()
+  }
+
+  private fun nonEmptyView() {
+    setHasOptionsMenu(true)
+    binding?.mainlayout?.visible()
+    binding?.childContainer?.gone()
   }
 
   private fun getRequestFilterData(
@@ -747,4 +801,21 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     }
     return queryList
   }
+
+  override fun primaryButtonClicked() {
+    addOrders()
+  }
+
+  override fun secondaryButtonClicked() {
+    val sheet = LearnHowItWorkBottomSheet()
+    sheet.show(parentFragmentManager, LearnHowItWorkBottomSheet::class.java.name)
+  }
+
+  override fun ternaryButtonClicked() {
+  }
+
+  override fun appOnBackPressed() {
+
+  }
+
 }
