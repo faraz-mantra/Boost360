@@ -673,4 +673,6 @@
   <string name="www_example_com">www.example.com</string>
   <string name="add_a_domain_you_own">Add a domain you own</string>
   <string name="book_a_new_domain">Book a new domain</string>
+    <string name="use_it_as_my_business_website_address">Use it as my business website address</string>
+    <string name="continue_txt">Continue</string>
 </resources>

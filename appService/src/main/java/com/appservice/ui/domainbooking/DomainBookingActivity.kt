@@ -10,10 +10,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
-import com.appservice.databinding.ActivityDomainBookingBinding
-import com.appservice.databinding.ActivitySearchDomainBinding
-import com.appservice.databinding.BsheetConfirmDomainBinding
-import com.appservice.databinding.BsheetInputOwnDomainBinding
+import com.appservice.databinding.*
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
@@ -52,11 +49,27 @@ class DomainBookingActivity: BaseActivity<ActivityDomainBookingBinding, BaseView
         }
 
         binding?.btnBookOldDomain?.setOnClickListener {
-            val bSheet = BottomSheetDialog(this,R.style.BottomSheetDialogTheme)
-            val sheetBinding = DataBindingUtil.inflate<BsheetInputOwnDomainBinding>(layoutInflater,R.layout.bsheet_input_own_domain,null,false)
-            bSheet.setContentView(sheetBinding.root)
-            bSheet.show()
+           showBsheetInputOwnDomain()
         }
+    }
+
+    private fun showBsheetInputOwnDomain() {
+        val bSheet = BottomSheetDialog(this,R.style.BottomSheetDialogTheme)
+        val sheetBinding = DataBindingUtil.inflate<BsheetInputOwnDomainBinding>(layoutInflater,R.layout.bsheet_input_own_domain,null,false)
+        bSheet.setContentView(sheetBinding.root)
+        bSheet.show()
+        sheetBinding.btnContinue.setOnClickListener {
+            showBsheetIntegrationOption()
+        }
+    }
+
+    private fun showBsheetIntegrationOption() {
+        val bSheet = BottomSheetDialog(this,R.style.BottomSheetDialogTheme)
+        val sheetBinding = DataBindingUtil.inflate<BsheetDomainIntegrationOptionsBinding>(layoutInflater,
+            R.layout.bsheet_domain_integration_options,null,false)
+        bSheet.setContentView(sheetBinding.root)
+        bSheet.show()
+
     }
 
     private fun setupUI() {

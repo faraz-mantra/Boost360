@@ -21,7 +21,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.framework.views.customViews.CustomEditText
-                android:id="@+id/customEditText"
+                android:id="@+id/et_domain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -35,6 +35,7 @@
 
             <com.framework.views.customViews.CustomMaterialButton
                 app:cornerRadius="@dimen/size_15"
+                android:id="@+id/btn_continue"
                 android:layout_width="match_parent"
                 android:textAllCaps="false"
                 android:backgroundTint="@color/colorPrimary"
@@ -42,7 +43,7 @@
                 android:textColor="@color/white"
                 android:layout_marginTop="16dp"
                 android:text="@string/get_started"
-                app:layout_constraintTop_toBottomOf="@+id/customEditText"
+                app:layout_constraintTop_toBottomOf="@+id/et_domain"
                 tools:layout_editor_absoluteX="24dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
