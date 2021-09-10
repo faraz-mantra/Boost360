@@ -40,11 +40,8 @@ object NFWebEngageController {
 
     //AppsFlyerEvent...
     try {
-      if (weAnalytics.activity!=null){
-        AppsFlyerLib.getInstance()
-          .logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
-      }
-
+      AppsFlyerLib.getInstance()
+        .logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
     } catch (e: Exception) {
       e.printStackTrace()
     }
@@ -61,7 +58,7 @@ object NFWebEngageController {
       //AppsFlyerEvent...
       try {
         AppsFlyerLib.getInstance().logEvent(
-          weAnalytics.activity?.get()?.applicationContext,
+          weAnalytics.activity.get()?.applicationContext,
           event_name, event_value.toMap()
         )
       } catch (e: Exception) {
@@ -91,7 +88,7 @@ object NFWebEngageController {
       //AppsFlyerEvent...
       try {
         AppsFlyerLib.getInstance().logEvent(
-          weAnalytics.activity?.get()?.applicationContext,
+          weAnalytics.activity.get()?.applicationContext,
           event_name, event_value.toMap()
         )
       } catch (e: Exception) {
@@ -165,7 +162,7 @@ object NFWebEngageController {
   fun setCategory(userCategory: String?) {
     try {
       if (!userCategory.isNullOrEmpty()) {
-        val activity = weAnalytics.activity?.get()
+        val activity = weAnalytics.activity.get()
         val version = activity?.packageManager?.getPackageInfo(activity.packageName, 0)?.versionName
         weUser.setAttribute("Category", userCategory)
         weUser.setAttribute("Version", version ?: "")

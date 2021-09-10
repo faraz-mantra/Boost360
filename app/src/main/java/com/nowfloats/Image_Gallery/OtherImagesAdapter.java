@@ -118,7 +118,7 @@ public class OtherImagesAdapter extends BaseAdapter {
 
             Intent fullImage = new Intent(mContext, FullScreen_Gallery_Image.class);
             fullImage.putExtra("currentPositon", (int) v.getTag());
-            mContext.startActivity(fullImage);
+            mContext.startActivityForResult(fullImage,202);
             mContext.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
 

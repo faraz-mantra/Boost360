@@ -603,7 +603,6 @@
   <string name="years_of_experience_n">Years of experience</string>
   <string name="select_years_of_experience_this_staff_member_has">Select, years of experience this staff member has.</string>
 
-
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>

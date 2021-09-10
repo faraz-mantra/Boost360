@@ -193,7 +193,7 @@ fun getLatestUpdatesTaxonomyFromServiceCode(category_code: String?): String? {
     "DOC", "HOS" -> "Latest Updates & Health Tips"
     "SPA", "SAL" -> "Latest Updates & Offers"
     "HOT" -> "Latest Updates, News & Events"
-    "MFG" -> "Latest Updates & News"
+    "MFG" -> "Latest News & Update"
     "CAF", "EDU" -> "Latest Updates & Tips"
     else -> "Latest Updates"
   }

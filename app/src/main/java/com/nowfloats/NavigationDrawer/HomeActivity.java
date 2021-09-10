@@ -1723,7 +1723,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     @Subscribe
     public void post_getFPDetails(Get_FP_Details_Event response) {
-        Log.i(TAG, "post_getFPDetails: ");
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null && bundle.containsKey("Username")) {

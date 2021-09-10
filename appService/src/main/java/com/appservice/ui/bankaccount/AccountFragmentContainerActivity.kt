@@ -51,7 +51,7 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
 
   override fun customTheme(): Int? {
     return when (type) {
-      FragmentType.ADD_BANK_ACCOUNT_START -> R.style.AppTheme_add_account
+      FragmentType.ADD_BANK_ACCOUNT_START -> R.style.CatalogTheme
       else -> super.customTheme()
     }
   }
@@ -59,6 +59,7 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.BANK_ACCOUNT_DETAILS -> ContextCompat.getColor(this, R.color.color_primary)
+      FragmentType.ADD_BANK_ACCOUNT_START->ContextCompat.getColor(this,R.color.colorAccent)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -66,13 +67,14 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
       FragmentType.BANK_ACCOUNT_DETAILS -> ContextCompat.getColor(this, R.color.white)
+      FragmentType.ADD_BANK_ACCOUNT_START -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
   }
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.BANK_ACCOUNT_DETAILS -> ContextCompat.getDrawable(
+      FragmentType.BANK_ACCOUNT_DETAILS,FragmentType.ADD_BANK_ACCOUNT_START -> ContextCompat.getDrawable(
         this,
         R.drawable.ic_back_arrow_new
       )
@@ -88,7 +90,6 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
 
   override fun isHideToolbar(): Boolean {
     return when (type) {
-      FragmentType.ADD_BANK_ACCOUNT_START -> true
       else -> super.isHideToolbar()
     }
   }
@@ -105,6 +106,14 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
     return when (type) {
       else -> null
     }
+  }
+
+  override fun getToolbarTitle(): String? {
+   return when (type){
+     FragmentType.ADD_BANK_ACCOUNT_START->getString(R.string.my_bank_account)
+     else -> super.getToolbarTitle()
+   }
+
   }
 
   private fun shouldAddToBackStack(): Boolean {

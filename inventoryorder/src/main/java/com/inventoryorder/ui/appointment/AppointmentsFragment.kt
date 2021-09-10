@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.PopupWindow
@@ -15,6 +16,14 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.views.zero.FragmentZeroCase
+import com.framework.views.zero.OnZeroCaseClicked
+import com.framework.views.zero.RequestZeroCaseBuilder
+import com.framework.views.zero.ZeroCases
+import com.framework.views.zero.old.AppFragmentZeroCase
+import com.framework.views.zero.old.AppOnZeroCaseClicked
+import com.framework.views.zero.old.AppRequestZeroCaseBuilder
+import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.*
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
@@ -57,8 +66,8 @@ import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 
-class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(), RecyclerItemClickListener {
-
+class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(), RecyclerItemClickListener, AppOnZeroCaseClicked {
+  private lateinit var zeroCaseFragment: AppFragmentZeroCase
   private lateinit var requestFilter: OrderFilterRequest
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
   private var orderList = ArrayList<OrderItem>()
@@ -70,7 +79,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   lateinit var mPopupWindow: PopupWindow
   private var orderItem: OrderItem? = null
   private var position: Int? = null
-
+  private  val TAG = "AppointmentsFragment"
   /* Paging */
   private var isLoadingD = false
   private var isSearchItem = false
@@ -90,27 +99,35 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun onCreateView() {
     super.onCreateView()
+    Log.i(TAG, "onCreateView: ")
     WebEngageController.trackEvent(APPOINTMENT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
-    setOnClickListener(binding?.btnAdd, binding?.buttonAddApt)
+    setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
     requestFilter = getRequestFilterData(arrayListOf())
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
     binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
+    this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
+    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
+
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnAdd, binding?.buttonAddApt -> {
-        val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
-        bundle.putBoolean(IntentConstant.IS_VIDEO.name, false)
-        startFragmentOrderActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
+      binding?.btnAdd -> {
+        addAppointment()
       }
     }
+  }
+
+  private fun addAppointment() {
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+    bundle.putBoolean(IntentConstant.IS_VIDEO.name, false)
+    startFragmentOrderActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
   }
 
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
@@ -147,15 +164,18 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     isSearch: Boolean = false
   ) {
     if (isFirst || isSearch) showProgressLoad()
+
     viewModel?.getSellerOrdersFilter(request)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgressLoad()
       if (it.isSuccess()) {
         val response = (it as? InventoryOrderListResponse)?.Data
+        Log.i(TAG, "getSellerOrdersFilterApi: "+response?.Items?.size)
         if (isSearch.not()) {
           if (isRefresh) orderListFinalList.clear()
           val isDataNotEmpty = (response != null && response.Items.isNullOrEmpty().not())
           onInClinicAptAddedOrUpdated(isDataNotEmpty)//Dr score
           if (isDataNotEmpty) {
+            nonEmptyView()
             orderList.clear()
             removeLoader()
             val list = response!!.Items?.map { item ->
@@ -170,6 +190,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
           } else emptyView()
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
+            nonEmptyView()
             val list = response.Items?.map { item ->
               item.recyclerViewType = RecyclerViewItemType.APPOINTMENT_ITEM_TYPE.getLayout();item
             } as ArrayList<OrderItem>
@@ -184,6 +205,20 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         }
       } else showLongToast(it.message())
     })
+  }
+
+  private fun nonEmptyView() {
+    setHasOptionsMenu(true)
+    binding?.mainlayout?.visible()
+    binding?.childContainer?.gone()
+  }
+
+  private fun emptyView() {
+    Log.i(TAG, "emptyView: ")
+    setHasOptionsMenu(false)
+    binding?.mainlayout?.gone()
+    binding?.childContainer?.visible()
+
   }
 
   private fun showProgressLoad() {
@@ -210,16 +245,14 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
     binding?.bookingRecycler?.visible()
-    binding?.errorView?.gone()
+    nonEmptyView()
     if (orderAdapter != null) {
       orderAdapter?.notify(getDateWiseFilter(items))
     } else setAdapterAppointmentList(getDateWiseFilter(items))
   }
 
-  private fun emptyView() {
-    binding?.bookingRecycler?.gone()
-    binding?.errorView?.visible()
-  }
+
+
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {
     val list = ArrayList<OrderItem>()
@@ -298,7 +331,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     val searchItem = menu.findItem(R.id.menu_item_search)
     if (searchItem != null) {
       searchView = searchItem.actionView as? SearchView
-      val searchEditText:EditText? = searchView?.findViewById(androidx.appcompat.R.id.search_src_text)
+      val searchEditText: EditText? = searchView?.findViewById(androidx.appcompat.R.id.search_src_text)
       searchEditText?.setTextColor(Color.WHITE)
       searchEditText?.setHintTextColor(getColor(R.color.white_50))
       searchView?.queryHint = resources.getString(R.string.queryHintAppointment)
@@ -740,6 +773,22 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     orderList.clear()
     clickFilterItem(filterItem)
   }
+
+  override fun primaryButtonClicked() {
+    addAppointment()
+  }
+
+  override fun secondaryButtonClicked() {
+  }
+
+  override fun ternaryButtonClicked() {
+  }
+
+  override fun appOnBackPressed() {
+
+  }
+
+
 
 //  private fun apiOrderListCall() {
 //    when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {
