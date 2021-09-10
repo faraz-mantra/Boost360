@@ -171,6 +171,7 @@
             android:imeOptions="actionNext"
             android:inputType="textCapCharacters"
             android:textAllCaps="true"
+            android:maxLength="15"
             android:textColor="@color/common_bold_text_color"
             android:textColorHint="@color/globaLightSuperText"
             android:textFontWeight="400"
