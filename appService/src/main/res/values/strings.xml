@@ -970,6 +970,8 @@
   <string name="pending">Pending</string>
   <string name="rcm_applies_to_my_sales">RCM applies to my sales</string>
   <string name="what_s_this">(what’s this?)</string>
+  <string name="out_of_stock">Out of stock</string>
+  <string name="stock">Stock</string>
 
 
 </resources>
