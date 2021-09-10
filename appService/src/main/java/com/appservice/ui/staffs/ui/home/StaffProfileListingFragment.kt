@@ -104,7 +104,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       getListServiceFilterApi()
       layoutManagerN?.let { scrollPagingListener(it) }
       swipeRefreshListener()
-      setOnClickListener(binding?.staffEmpty?.btnAddStaff, binding?.serviceEmpty?.cbAddService, binding?.staffEmpty?.btnHowWork, binding?.doctorEmpty?.btnAddDoctor)
+      setOnClickListener( binding?.serviceEmpty?.cbAddService)
     }else{
       emptyView()
     }
@@ -160,13 +160,13 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun swipeRefreshListener() {
-    binding?.staffListSwipeRefresh?.setOnRefreshListener {
+    binding?.mainlayout?.setOnRefreshListener {
       if (isServiceEmpty.not()) {
-        binding?.staffListSwipeRefresh?.isRefreshing = true
+        binding?.mainlayout?.isRefreshing = true
         this.offSet = PAGE_START
         this.limit = PAGE_SIZE
         fetchStaffListing(isProgress = false, isFirst = true, offSet = offSet, limit = limit)
-      } else binding?.staffListSwipeRefresh?.isRefreshing = false
+      } else binding?.mainlayout?.isRefreshing = false
     }
   }
 
@@ -267,7 +267,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   private fun setEmptyDoctorView(isDoctorEmpty: Boolean, isServiceEmpty: Boolean = false) {
     binding?.serviceEmpty?.root?.visibility = if (isServiceEmpty) View.VISIBLE else View.GONE
-    binding?.doctorEmpty?.root?.visibility = if (isDoctorEmpty && isServiceEmpty.not()) View.VISIBLE else View.GONE
+//    binding?.doctorEmpty?.root?.visibility = if (isDoctorEmpty && isServiceEmpty.not()) View.VISIBLE else View.GONE
     binding?.rvStaffList?.visibility = if (isDoctorEmpty || isServiceEmpty) View.GONE else View.VISIBLE
     if (this::menuAdd.isInitialized) menuAdd.isVisible = isServiceEmpty.not()
   }
@@ -349,20 +349,20 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.staffEmpty?.btnAddStaff -> startStaffFragmentActivity(
-        if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT,
-        clearTop = false,
-        isResult = true
-      )
+//      binding?.staffEmpty?.btnAddStaff -> startStaffFragmentActivity(
+//        if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT,
+//        clearTop = false,
+//        isResult = true
+//      )
       binding?.serviceEmpty?.cbAddService -> {
         isServiceAdd = true
         startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle = sendBundleData(), isResult = true)
       }
-      binding?.staffLock?.btnStaffAddOns -> startStorePage()
-      binding?.staffEmpty?.btnHowWork -> openHelpBottomSheet()
-      binding?.doctorEmpty?.btnAddDoctor -> {
-        startStaffFragmentActivity(FragmentType.DOCTOR_ADD_EDIT_FRAGMENT)
-      }
+//      binding?.staffLock?.btnStaffAddOns -> startStorePage()
+//      binding?.staffEmpty?.btnHowWork -> openHelpBottomSheet()
+//      binding?.doctorEmpty?.btnAddDoctor -> {
+//        startStaffFragmentActivity(FragmentType.DOCTOR_ADD_EDIT_FRAGMENT)
+//      }
     }
   }
 
@@ -409,7 +409,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   fun hideProgressN() {
-    binding?.staffListSwipeRefresh?.isRefreshing = false
+    binding?.mainlayout?.isRefreshing = false
     binding?.progress?.gone()
   }
 
@@ -442,10 +442,11 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     if (isLockStaff())
       startStorePage()
     else
-    startStaffFragmentActivity(
-      FragmentType.STAFF_DETAILS_FRAGMENT,
-      clearTop = false,
-      isResult = true)
+      startStaffFragmentActivity(
+        if (isDoctorProfile(sessionLocal.fP_AppExperienceCode)) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT,
+        clearTop = false,
+        isResult = true
+      )
   }
 
   override fun secondaryButtonClicked() {

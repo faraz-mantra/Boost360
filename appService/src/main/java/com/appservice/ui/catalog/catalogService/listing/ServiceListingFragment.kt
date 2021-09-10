@@ -179,8 +179,9 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
     override fun onResume() {
       super.onResume()
-      setToolbarTitle("${sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)} (${TOTAL_ELEMENTS})")
-    }
+      var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
+      if (fpDetails.isNullOrEmpty()) fpDetails = "Services"
+      setToolbarTitle("$fpDetails (${TOTAL_ELEMENTS})")    }
 
   private fun setServiceDataItems(
     resultService: Result?,
@@ -205,8 +206,10 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         list.addAll(finalList)
         isLastPageD = (finalList.size == TOTAL_ELEMENTS)
         setAdapterNotify()
-        setToolbarTitle("${sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)} (${TOTAL_ELEMENTS})")
-      } else if (isFirstLoad) setEmptyView(View.VISIBLE)
+        var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
+        if (fpDetails.isNullOrEmpty()) fpDetails = "Services"
+        setToolbarTitle("$fpDetails (${TOTAL_ELEMENTS})")
+    } else if (isFirstLoad) setEmptyView(View.VISIBLE)
     } else {
       if (listService.isNullOrEmpty().not()) {
         list.clear()

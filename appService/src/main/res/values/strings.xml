@@ -942,7 +942,7 @@
     <string name="allow_order_pickup">Allow order pickup</string>
     <string name="from_your_warehouse_s">From your warehouse(s)</string>
     <string name="allow_home_delivery">Allow home delivery</string>
-    <string name="boost_360_does_not_handle_shipping_to_deliver_the_orders_to_customers_location_you_need_to_arrange_for_home_home_delivery_via_a_local_delivery_partner_or_any_trusted_shipping_company">Boost 360 does not handle shipping. To deliver the orders to customers’ location, you need to arrange for home home delivery via a local delivery partner or any trusted shipping company.</string>
+    <string name="boost_360_does_not_handle_shipping_to_deliver_the_orders_to_customers_location_you_need_to_arrange_for_home_home_delivery_via_a_local_delivery_partner_or_any_trusted_shipping_company">Boost 360 does not handle shipping. To deliver the orders to customers’ location, you need to arrange for home delivery via a local delivery partner or any trusted shipping company.</string>
     <string name="delivery_charges_setup">Delivery charges setup</string>
     <string name="set_the_default_delivery_fee_inclusive_of_taxes_that_you_want_to_charge_for_all_orders_requiring_home_delivery_please_note_that_the_shipping_charges_will_be_taxed_with_the_rate_of_that_item_which_has_the_highest_rate_of_tax_in_the_order">Set the default delivery fee (inclusive of taxes) that you want to charge for all orders requiring home delivery. Please note that the shipping charges will be taxed with the rate of that item which has the highest rate of tax in the order.</string>
     <string name="flat_charges">Flat charges</string>

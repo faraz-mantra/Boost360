@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ScrollView style="@style/match_match_root">
@@ -123,7 +124,7 @@
                       android:gravity="center"
                       android:text="@string/add"
                       android:layout_marginEnd="@dimen/size_20"
-                      android:textAllCaps="true"
+                      android:textAllCaps="false"
                       android:textColor="@color/orange"
                       app:layout_constraintBottom_toBottomOf="@+id/ccb_warehouse_address"
                       app:layout_constraintEnd_toEndOf="parent"
@@ -188,15 +189,16 @@
                             app:layout_constraintTop_toBottomOf="@+id/toggle_home_delivery" />
 
                         <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/customTextView7"
-                            style="@style/Appointment_Text_Subheading"
-                            android:layout_width="match_parent"
-                            android:layout_marginHorizontal="@dimen/size_20"
-                            android:layout_marginTop="@dimen/size_10"
-                            android:fontFamily="@font/regular"
-                            android:gravity="top|start"
-                            android:text="@string/boost_360_does_not_handle_shipping_to_deliver_the_orders_to_customers_location_you_need_to_arrange_for_home_home_delivery_via_a_local_delivery_partner_or_any_trusted_shipping_company"
-                            app:layout_constraintTop_toBottomOf="@id/toggle_home_delivery" />
+                          android:id="@+id/customTextView7"
+                          style="@style/Appointment_Text_Subheading"
+                          android:layout_width="match_parent"
+                          android:layout_marginHorizontal="@dimen/size_20"
+                          android:layout_marginTop="8dp"
+                          android:fontFamily="@font/regular"
+                          android:gravity="top|start"
+                          android:text="@string/boost_360_does_not_handle_shipping_to_deliver_the_orders_to_customers_location_you_need_to_arrange_for_home_home_delivery_via_a_local_delivery_partner_or_any_trusted_shipping_company"
+                          app:layout_constraintTop_toBottomOf="@id/toggle_home_delivery"
+                          tools:layout_editor_absoluteX="40dp" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <com.framework.views.customViews.CustomTextView
@@ -341,7 +343,7 @@
                             app:layout_constraintBottom_toBottomOf="@id/etd_flat_charges"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="@id/etd_flat_charges"
-                            app:textAllCaps="true"
+                            app:textAllCaps="false"
                             app:textType="BODY_1" />
 
 
