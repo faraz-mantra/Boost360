@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.SharedPreferences
 import android.text.TextUtils
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.upgrades.data.api_model.gst.Result
 import com.boost.upgrades.data.model.CouponsModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -37,6 +38,7 @@ class SharedPrefs(activity: Activity) {
     private val gstRegistered = "gstRegistered"
     private val expertContact = "expertContact"
     private val ADDED_PACK_DESC = "ADDED_PACK_DESC"
+    private val GST_API_RESULT = "GST API RESULT"
 
     private var editor: SharedPreferences.Editor? = null
 
@@ -128,6 +130,19 @@ class SharedPrefs(activity: Activity) {
         val jsonString = pref!!.getString(CART_ORDER_INFO, null)
         if(jsonString!=null) {
             return Gson().fromJson<CreatePurchaseOrderResponse>(jsonString, object : TypeToken<CreatePurchaseOrderResponse>() {}.type)
+        }else{
+            return null
+        }
+    }
+    fun storeGstApiResponse(result: Result?){
+        val gstResult = Gson().toJson(result)
+        editor!!.putString(GST_API_RESULT,gstResult).apply()
+    }
+
+    fun getGstApiResponse(): Result?{
+        val jsonString = pref!!.getString(GST_API_RESULT,null)
+        if(jsonString!=null) {
+            return Gson().fromJson<Result>(jsonString, object : TypeToken<Result>() {}.type)
         }else{
             return null
         }
