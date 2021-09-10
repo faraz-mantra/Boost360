@@ -182,7 +182,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       -> getString(R.string.hash_xxxxxxxx)
       FragmentType.CREATE_NEW_BOOKING -> resources.getString(R.string.new_booking_n)
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> resources.getString(R.string.new_booking_n)
-      FragmentType.CREATE_APPOINTMENT_VIEW -> getString(R.string.new_appointment_n)
+      FragmentType.CREATE_APPOINTMENT_VIEW -> getString(R.string.appointment_new_title)
       FragmentType.ADD_CUSTOMER -> getString(R.string.add_a_customer_n)
       FragmentType.ADD_PRODUCT -> getString(R.string.add_product)
       FragmentType.BILLING_DETAIL -> getString(R.string.review_confirm)
