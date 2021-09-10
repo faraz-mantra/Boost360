@@ -234,7 +234,7 @@ class NiceBottomBar : View {
     Log.i(TAG, "drawBadge: $badgeText")
     Log.i(TAG, "drawBadge33:" + item.badgeText)
     paintBadge.style = Paint.Style.FILL
-    paintBadge.color = Color.RED
+    paintBadge.color = Color.parseColor("EF4B39")
 
     canvas.drawCircle(
       item.rect.centerX() + itemIconSize / 2 - 4,
