@@ -178,8 +178,10 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
               isLastPageD = (finalList.size == TOTAL_ELEMENTS)
               Log.i(TAG, "islastpage: " + isLastPageD)
               setAdapterNotify()
-              setToolbarTitle("${sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)} (${limit})")
-      //            (parentFragment as FragmentProductHome).setTabTitle("Products (${limit})", 0)
+                var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
+                if (fpDetails.isNullOrEmpty()) fpDetails = "Products"
+                setToolbarTitle("$fpDetails (${limit})")
+            //            (parentFragment as FragmentProductHome).setTabTitle("Products (${limit})", 0)
 
           }
           isFirstLoad -> setEmptyView(View.VISIBLE)
@@ -307,7 +309,9 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
 
     override fun onResume() {
         super.onResume()
-        setToolbarTitle("${sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)} (${limit})")
+        var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
+        if (fpDetails.isNullOrEmpty()) fpDetails = "Products"
+        setToolbarTitle("$fpDetails (${limit})")
     }
     override fun showProgress(title: String?, cancelable: Boolean?) {
         binding?.progress?.visible()

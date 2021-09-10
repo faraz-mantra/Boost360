@@ -367,8 +367,8 @@
         <item name="colorBorder">@color/transparent</item>
         <item name="colorOff">@color/gray_bbb</item>
         <item name="colorOn">@color/light_green_1</item>
-        <item name="textOff">NO</item>
-        <item name="textOn">YES</item>
+        <item name="textOff">No</item>
+        <item name="textOn">Yes</item>
         <item name="txtColorOff">@color/white</item>
         <item name="txtColorOn">@color/white</item>
     </style>
