@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="@dimen/size_12">
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fillViewport="true"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/size_60"
+        android:paddingTop="@dimen/size_12"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomCardView
+          android:layout_width="@dimen/size_140"
+          android:layout_height="@dimen/size_140"
+          android:layout_margin="@dimen/size_2"
+          app:cardBackgroundColor="@color/white"
+          app:cardCornerRadius="@dimen/size_10"
+          app:cardElevation="@dimen/size_2">
+
+          <com.framework.views.customViews.CustomCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/size_2"
+            app:cardBackgroundColor="@color/grey_bg"
+            app:cardCornerRadius="@dimen/size_10"
+            app:cardElevation="0dp">
+
+            <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+              <FrameLayout
+                android:id="@+id/view_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.framework.views.customViews.CustomImageView
+                  android:id="@+id/img_profile"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:scaleType="centerCrop"
+                  app:srcCompat="@drawable/placeholder_image_n" />
+
+                <com.framework.views.customViews.CustomImageView
+                  android:id="@+id/img_edit"
+                  android:layout_width="@dimen/size_30"
+                  android:layout_height="@dimen/size_30"
+                  android:layout_gravity="end|bottom"
+                  android:background="@drawable/ic_round_top_left"
+                  app:srcCompat="@drawable/ic_pencil_d" />
+
+              </FrameLayout>
+
+              <FrameLayout
+                android:id="@+id/view_empty_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <com.framework.views.customViews.CustomImageView
+                  android:layout_width="@dimen/size_70"
+                  android:layout_height="@dimen/size_70"
+                  android:layout_gravity="center"
+                  android:scaleType="centerCrop"
+                  app:srcCompat="@drawable/ic_user_circle_plus_d" />
+
+                <com.framework.views.customViews.CustomTextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="bottom|center_horizontal"
+                  android:layout_marginBottom="@dimen/size_6"
+                  android:text="@string/click_a_selfie"
+                  android:textColor="@color/colorAccentLight"
+                  app:fontFamily="@font/semi_bold"
+                  app:textType="BODY_1" />
+              </FrameLayout>
+            </FrameLayout>
+
+          </com.framework.views.customViews.CustomCardView>
+        </com.framework.views.customViews.CustomCardView>
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_2"
+          android:layout_marginTop="@dimen/size_20"
+          android:text="@string/full_name"
+          android:textColor="@color/black_4a4a4a"
+          app:textType="BODY_1" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/view_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_2"
+          android:layout_marginTop="@dimen/size_6"
+          android:background="@drawable/rounded_view_stroke_grey"
+          android:gravity="center_vertical">
+
+          <com.framework.views.customViews.CustomEditText
+            android:id="@+id/txt_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/size_10"
+            android:layout_marginStart="@dimen/size_10"
+            android:layout_weight="1"
+            android:background="@null"
+            android:enabled="false"
+            android:focusable="false"
+            android:hint="@string/enter_your_full_name"
+            android:textColor="@color/black_4a4a4a"
+            app:textType="HEADING_6" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/edt_name"
+            android:layout_width="@dimen/size_30"
+            android:layout_height="@dimen/size_30"
+            android:layout_marginEnd="@dimen/size_6"
+            app:srcCompat="@drawable/ic_pencil_d" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_2"
+          android:layout_marginTop="@dimen/size_14"
+          android:text="@string/registered_email"
+          android:textColor="@color/black_4a4a4a"
+          app:textType="BODY_1" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/view_email"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_2"
+          android:layout_marginTop="@dimen/size_6"
+          android:background="@drawable/rounded_view_stroke_grey"
+          android:gravity="center_vertical">
+
+          <com.framework.views.customViews.CustomEditText
+            android:id="@+id/txt_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/size_10"
+            android:layout_marginStart="@dimen/size_10"
+            android:layout_weight="1"
+            android:background="@null"
+            android:enabled="false"
+            android:focusable="false"
+            android:hint="@string/enter_your_email_id"
+            android:textColor="@color/black_4a4a4a"
+            app:textType="HEADING_6" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/edt_email"
+            android:layout_width="@dimen/size_30"
+            android:layout_height="@dimen/size_30"
+            android:layout_marginEnd="@dimen/size_6"
+            app:srcCompat="@drawable/ic_pencil_d" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/verify_email"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_rounded_left_verify"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="@dimen/size_10"
+            android:text="@string/verify"
+            android:textColor="@color/colorAccentLight"
+            app:fontFamily="@font/semi_bold"
+            app:textType="CAPTION" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_2"
+          android:layout_marginTop="@dimen/size_14"
+          android:text="@string/registered_mobile_number"
+          android:textColor="@color/black_4a4a4a"
+          app:textType="BODY_1" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/view_mobile_number"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_2"
+          android:layout_marginTop="@dimen/size_6"
+          android:background="@drawable/rounded_view_stroke_grey"
+          android:gravity="center_vertical">
+
+          <com.framework.views.customViews.CustomEditText
+            android:id="@+id/txt_mobile_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/size_10"
+            android:layout_marginStart="@dimen/size_10"
+            android:layout_weight="1"
+            android:background="@null"
+            android:enabled="false"
+            android:focusable="false"
+            android:hint="@string/enter_your_mobile_number"
+            android:textColor="@color/black_4a4a4a"
+            app:textType="HEADING_6" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/verify_mobile_number"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableEnd="@drawable/ic_check_circle_d"
+            android:drawablePadding="@dimen/size_6"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="@dimen/size_10"
+            android:text="@string/verified"
+            android:textColor="@color/green_6FCF97"
+            app:fontFamily="@font/semi_bold"
+            app:textType="CAPTION" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_2"
+          android:layout_marginTop="@dimen/size_14"
+          android:text="@string/whatsapp_no_for_important_updates"
+          android:textColor="@color/black_4a4a4a"
+          app:textType="BODY_1" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/view_whatsapp_no"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_2"
+          android:layout_marginTop="@dimen/size_6"
+          android:background="@drawable/rounded_view_stroke_grey"
+          android:gravity="center_vertical">
+
+          <com.framework.views.customViews.CustomEditText
+            android:id="@+id/txt_whatsapp_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/size_10"
+            android:layout_marginStart="@dimen/size_10"
+            android:layout_weight="1"
+            android:background="@null"
+            android:enabled="false"
+            android:focusable="false"
+            android:hint="@string/enter_whatsapp_no"
+            android:textColor="@color/black_4a4a4a"
+            app:textType="HEADING_6" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/verify_whatsapp_no"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_rounded_left_verify"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="@dimen/size_10"
+            android:text="@string/not_opted_d"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="@color/colorAccentLight"
+            app:fontFamily="@font/semi_bold"
+            app:textType="CAPTION" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_logout"
+      style="@style/ButtonStyle.Red"
+      android:layout_width="match_parent"
+      android:layout_gravity="center"
+      android:background="@drawable/rounded_stroke_btn_red"
+      android:enabled="true"
+      android:gravity="center"
+      android:text="@string/logout"
+      android:layout_marginBottom="@dimen/size_12"
+      android:layout_marginHorizontal="@dimen/size_2"
+      android:textAllCaps="false"
+      android:textColor="@color/red_button"
+      app:layout_constraintBottom_toBottomOf="parent" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

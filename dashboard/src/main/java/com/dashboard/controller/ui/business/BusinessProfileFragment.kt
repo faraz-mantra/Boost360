@@ -1,9 +1,7 @@
 package com.dashboard.controller.ui.business
 
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.*
-import android.graphics.drawable.Drawable
 import android.media.ThumbnailUtils
 import android.os.Bundle
 import android.view.View
@@ -46,11 +44,8 @@ import com.framework.views.customViews.CustomImageView
 import com.framework.webengageconstant.*
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.getConnectedChannel
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.visibleChannels
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.*
 
@@ -133,7 +128,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
         binding?.ctvActive?.setTextColor(getColor(R.color.green_27AE60))
       } else {
         binding?.ctvActive?.text = getString(R.string.inactive)
-        binding?.ctvActive?.setTextColor(getColor(R.color.red_F40000))
+        binding?.ctvActive?.setTextColor(getColor(R.color.red_E39595))
       }
       binding?.ctvActive?.gone()
     } else {
