@@ -49,6 +49,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RECYCLER_ABOUT_APP -> AboutViewHolder(binding as RecyclerItemAboutAppBinding)
       BOOST_WEBSITE_ITEM_FEATURE_VIEW -> WebsiteItemFeatureViewHolder(binding  as WebsiteItemFeatureBinding)
       RECYCLER_WEBSITE_NAV -> WebsiteNavHolder(binding = binding as RecyclerItemWebsiteNavBinding)
+      CONSULTATION_VIEW -> ConsultationViewHolder(binding as RecyclerItemConsultationBinding)
+
     }
   }
 

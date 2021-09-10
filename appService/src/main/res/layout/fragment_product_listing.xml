@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/root"
+        style="@style/match_match">
+
+        <com.framework.views.viewgroups.BaseRecyclerView
+            android:id="@+id/baseRecyclerView"
+            style="@style/match_wrap"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/size_80"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:itemCount="10"
+            tools:listitem="@layout/recycler_item_product_listing" />
+
+        <include
+            android:id="@+id/product_listing_empty"
+            layout="@layout/fragment_product_listing_empty"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ll_action_buttons"
+            style="@style/match_wrap"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/size_14"
+            android:visibility="visible">
+
+            <com.framework.views.customViews.CustomButton
+                android:id="@+id/cb_add_service"
+                style="@style/ButtonStyle.Rounded.Solid"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_44"
+              android:background="@drawable/bg_button_proceed"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="@string/add_a_product" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/wrap_wrap"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:theme="@style/progressBar" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

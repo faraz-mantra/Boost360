@@ -1,8 +1,6 @@
 package com.appservice.ui.catalog.catalogProduct.addProduct.information
 
 import android.content.Intent
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
@@ -44,7 +42,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
   private var secondaryImage: ArrayList<FileModel> = ArrayList()
   private var adapterSpec: AppBaseRecyclerViewAdapter<KeySpecification>? = null
   private var adapterImage: AppBaseRecyclerViewAdapter<FileModel>? = null
-  private var availableStock = 0;
+  private var availableStock = 0
 //  private var maxOrder = 0;
 
   private var secondaryDataImage: ArrayList<DataImage>? = null
@@ -489,12 +487,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
     dialogLogout()
   }
 
-  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    super.onCreateOptionsMenu(menu, inflater)
-//    inflater.inflate(R.menu.menu_product_info, menu)
-  }
-
-  private fun dialogLogout() {
+    private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
       .setTitle(resources.getString(R.string.information_not_saved))
       .setMessage(resources.getString(R.string.you_have_unsaved_info))

@@ -5,7 +5,7 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
-import com.inventoryorder.databinding.*
+import com.inventoryorder.databinding.BottomSheetAddDeliveryFeeBinding
 
 class AddDeliveryFeeBottomSheetDialog(val deliveryFee: Double = 0.0, val type: String = "") : BaseBottomSheetDialog<BottomSheetAddDeliveryFeeBinding, BaseViewModel>() {
 

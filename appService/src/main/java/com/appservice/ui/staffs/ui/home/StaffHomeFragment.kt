@@ -9,7 +9,7 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentStaffHomeBinding
-import com.appservice.ui.staffs.ui.startStaffFragmentActivity
+import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.framework.models.BaseViewModel
 
 class StaffHomeFragment : AppBaseFragment<FragmentStaffHomeBinding, BaseViewModel>() {

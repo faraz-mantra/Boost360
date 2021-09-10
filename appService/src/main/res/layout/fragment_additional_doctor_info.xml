@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_snow"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/match_wrap"
+                android:layout_marginStart="@dimen/size_20"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/size_20">
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:layout_marginStart="@dimen/size_3"
+                    android:layout_marginTop="@dimen/size_36"
+                    android:text="@string/education"
+                    android:textColor="@color/black_4a4a4a"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="BODY_3" />
+
+                <com.framework.views.customViews.CustomTextField
+                    android:id="@+id/ctf_education"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/bg_rect_edit_txt"
+                    android:hint="@string/e_g_m_b_b_s_m_d_etc"
+                    android:inputType="textCapWords"
+                    android:padding="@dimen/size_12"
+                    android:singleLine="true"
+                    android:textColor="@color/warm_grey_10"
+                    android:textColorHint="@color/primary_grey"
+                    tools:ignore="UnusedAttribute" />
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_3"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:text="@string/year_of_experience_doctor"
+                    android:textColor="@color/black_4a4a4a"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="BODY_3" />
+
+                <com.framework.views.customViews.CustomTextField
+                    android:id="@+id/ctf_experiencer"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/bg_rect_edit_txt"
+                    android:gravity="top|start"
+                    android:hint="e.g 26"
+                    android:inputType="number"
+                    android:padding="@dimen/size_12"
+                    android:textColor="@color/warm_grey_10"
+                    android:textColorHint="@color/primary_grey"
+                    tools:ignore="UnusedAttribute" />
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:drawablePadding="@dimen/size_4"
+                    android:includeFontPadding="false"
+                    android:text="@string/doctor_mobile_number"
+                    android:textColor="@color/black_4a4a4a"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="BODY_3" />
+
+
+                <com.framework.views.customViews.PrefixEditText
+                    android:id="@+id/ctf_mobile_number"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/bg_rect_edit_txt"
+                    android:hint="@string/xxxxx_xxxxx"
+                    android:inputType="number"
+                    android:padding="@dimen/size_12"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:tag="@string/_91"
+                    android:textColor="@color/warm_grey_10"
+                    android:textColorHint="@color/primary_grey"
+                    tools:ignore="UnusedAttribute" />
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:layout_marginStart="@dimen/size_3"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:text="@string/memberships"
+                    android:textColor="@color/black_4a4a4a"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="BODY_3" />
+
+                <com.framework.views.customViews.CustomTextField
+                    android:id="@+id/ctf_membership"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/bg_rect_edit_txt"
+                    android:hint="@string/hyderabad_medical_board"
+                    android:inputType="textCapWords"
+                    android:padding="@dimen/size_12"
+                    android:singleLine="true"
+                    android:textColor="@color/warm_grey_10"
+                    android:textColorHint="@color/primary_grey"
+                    tools:ignore="UnusedAttribute" />
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:layout_marginStart="@dimen/size_3"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:text="@string/registration"
+                    android:textColor="@color/black_4a4a4a"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="BODY_3" />
+
+                <com.framework.views.customViews.CustomTextField
+                    android:id="@+id/ctf_registration"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/bg_rect_edit_txt"
+                    android:hint="@string/mci"
+                    android:inputType="textCapWords"
+                    android:padding="@dimen/size_12"
+                    android:singleLine="true"
+                    android:textColor="@color/warm_grey_10"
+                    android:textColorHint="@color/primary_grey"
+                    tools:ignore="UnusedAttribute" />
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/wrap_wrap"
+                    android:layout_marginStart="@dimen/size_3"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:text="@string/consultation_type"
+                    android:textColor="@color/black_4a4a4a"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="BODY_3" />
+
+                <com.framework.views.customViews.CustomTextField
+                    android:id="@+id/ctf_consultation_type"
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:background="@drawable/bg_rect_edit_txt"
+                    android:drawableEnd="@drawable/ic_arrow_down_grey_staff"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:hint="@string/select_consultation_type"
+                    android:inputType="textCapWords"
+                    android:padding="@dimen/size_12"
+                    android:singleLine="true"
+                    android:textColor="@color/warm_grey_10"
+                    android:textColorHint="@color/primary_grey"
+                    tools:ignore="UnusedAttribute" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_150" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+        <com.framework.views.customViews.CustomButton
+            style="@style/ButtonStyle.Rounded.Solid"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/size_20"
+            android:layout_marginEnd="@dimen/size_20"
+            android:layout_marginBottom="@dimen/size_14"
+            android:text="@string/confirm"
+            android:id="@+id/confirm_btn"
+            app:layout_constraintVertical_bias="1"
+            android:textAllCaps="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:textType="HEADING_6" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

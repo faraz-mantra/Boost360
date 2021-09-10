@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/verification_ui"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_top_stroke_gray"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/size_4">
+
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/text_verification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_16"
+        android:clickable="true"
+        android:focusable="true"
+        android:drawablePadding="@dimen/size_8"
+        android:drawableStart="@drawable/ic_clock_filled"
+        android:gravity="center"
+        android:text="@string/verification_underway"
+        android:textAlignment="gravity"
+        android:textColor="@color/gray_bbb"
+        app:textType="HEADING_5" />
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/text_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_10"
+        android:layout_marginEnd="@dimen/size_20"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/we_re_currently_verifying_your_bank_account_this_process_usually_takes_1_working_day_once_verified_we_will_notify_you_if_you_want_to_make_any_change_to_above_account_details_please_write_to_ria_nowfloats_com_with_this_screenshot_attached"
+        android:textAlignment="gravity"
+        android:textColor="@color/we_are_currently_"
+        app:fontFamily="@font/regular"
+        app:textType="CAPTION" />
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/verification_btn"
+        style="@style/ButtonStyle.Rounded.Solid"
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/size_30"
+        android:layout_marginTop="@dimen/size_16"
+        android:layout_marginEnd="@dimen/size_30"
+        android:layout_marginBottom="@dimen/size_16"
+        android:gravity="center"
+        android:text="@string/i_understood"
+        android:textAlignment="gravity"
+        android:textColor="@color/white"
+        app:fontFamily="@font/semi_bold" />
+</LinearLayout>
+</layout>

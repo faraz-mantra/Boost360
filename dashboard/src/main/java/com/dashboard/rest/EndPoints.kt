@@ -38,6 +38,15 @@ object EndPoints {
 
   //TODO FP UPADTE API
   const val FLOATING_POINT_UPDATE = "Discover/v1/FloatingPoint/update/"
+  //TODO WEBACTION API
+  const val WEB_ACTION_API_BASE = "https://webaction.api.boostkit.dev/api/v1/"
+  const val OWNER_INFO_DATA = "about_us/get-data"
+  const val OWNER_INFO_ADD_DATA = "about_us/add-data"
+  const val OWNER_INFO_UPDATE_DATA = "about_us/update-data"
+
+  // TODO WEBACTIONS KITSUNE TOOLS
+  const val WEB_ACTION_KITSUNE_BASE = "https://webactions.kitsune.tools/api/v1/"
+  const val WEB_ACTION_KITSUNE_UPLOAD_FILE = "about_us/upload-file"
 
 }
 

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/match_wrap"
+        android:background="@drawable/bottoms_sheet_top20dp_white"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/match_wrap"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_header"
+                style="@style/match_wrap"
+                android:layout_marginHorizontal="@dimen/size_20"
+                android:layout_marginTop="@dimen/size_20"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/Offers_Text_Heading.Bottom_Sheet"
+                    android:text="@string/sort_offers_by"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/Offers_Text_Title"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/ctv_reset"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:text="@string/reset"
+                    android:textAllCaps="true"
+                    android:textColor="@color/yellow_ffb900"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+           style="@style/match_wrap"
+            android:orientation="vertical">
+
+            <RadioGroup
+                style="@style/match_wrap"
+                android:id="@+id/radio_group_sorting"
+                android:layout_marginTop="@dimen/size_10"
+                android:orientation="vertical">
+
+
+                <com.framework.views.customViews.CustomRadioButton
+                    style="@style/RadioButtonOffers"
+                    android:layout_marginHorizontal="@dimen/size_20"
+                    android:paddingHorizontal="@dimen/size_10"
+                    android:id="@+id/rb_latest_on_top"
+                    android:text="@string/latest_on_top" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_5"
+                    android:background="@drawable/shape_grey_dotted_line" />
+
+                <com.framework.views.customViews.CustomRadioButton
+                    style="@style/RadioButtonOffers"
+                    android:layout_marginHorizontal="@dimen/size_20"
+                    android:paddingHorizontal="@dimen/size_10"
+                    android:text="@string/oldest_on_top" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_5"
+                    android:background="@drawable/shape_grey_dotted_line" />
+
+                <com.framework.views.customViews.CustomRadioButton
+                    style="@style/RadioButtonOffers"
+                    android:layout_marginHorizontal="@dimen/size_20"
+                    android:paddingHorizontal="@dimen/size_10"
+                    android:text="@string/active_first" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_5"
+                    android:background="@drawable/shape_grey_dotted_line" />
+
+                <com.framework.views.customViews.CustomRadioButton
+                    style="@style/RadioButtonOffers"
+                    android:layout_marginHorizontal="@dimen/size_20"
+                    android:paddingHorizontal="@dimen/size_10"
+                    android:text="@string/deactive_first" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_5"
+                    android:background="@drawable/shape_grey_dotted_line" />
+
+            </RadioGroup>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                style="@style/match_wrap"
+                android:layout_marginTop="@dimen/size_20"
+                android:layout_marginBottom="@dimen/size_20"
+                android:padding="@dimen/size_10">
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_apply"
+                    style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+                    android:text="@string/apply"
+                    android:textColor="@color/white"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.framework.views.customViews.CustomButton
+                    style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
+                    android:layout_marginEnd="@dimen/size_20"
+                    android:text="@string/cancel"
+                    android:id="@+id/btn_cancel"
+                    android:background="@null"
+                    app:layout_constraintRight_toLeftOf="@id/btn_apply"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

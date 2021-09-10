@@ -43,7 +43,12 @@
     <activity
       android:name=".controller.DashboardFragmentContainerActivity"
       android:screenOrientation="portrait"
-      android:theme="@style/DashboardTheme"
-      android:windowSoftInputMode="adjustPan" />
+      android:windowSoftInputMode="adjustPan"
+      android:theme="@style/DashboardTheme" />
+    <activity
+        android:name=".controller.ui.ownerinfo.OwnersInfoContainerActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/DashboardTheme"
+        android:windowSoftInputMode="adjustPan" />
   </application>
 </manifest>

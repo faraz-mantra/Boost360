@@ -26,6 +26,7 @@ import com.framework.models.BaseViewModel
 import com.framework.models.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.onboarding.nowfloats.ui.webview.WebViewTNCDialog
 
 abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseFragment<Binding, ViewModel>() {
 
@@ -58,7 +59,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   protected fun isResponseSuccessful(it: BaseResponse, errorMessage: String?): Boolean {
     if ((it.error is NoNetworkException).not()) {
       if ((it.isSuccess())) {
-        return true;
+        return true
       } else {
         Log.d("API_ERROR", it.message())
         Log.d("BaseResponseData", it.message())
@@ -67,7 +68,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     } else {
       showErrorMessage(resources.getString(R.string.internet_connection_not_available))
     }
-    return false;
+    return false
   }
 
   protected fun hitApi(liveData: LiveData<BaseResponse>?, errorStringId: Int) {
@@ -81,7 +82,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 
   open fun onSuccess(it: BaseResponse) {
-    Log.d("TAG", "onSuccess");
+    Log.d("TAG", "onSuccess")
   }
 
   open fun onFailure(it: BaseResponse) {
@@ -125,6 +126,20 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
       Handler().postDelayed({ hideProgress() }, 1000)
     } catch (e: Exception) {
       showLongToast("Unable to start upgrade activity.")
+    }
+  }
+
+
+  fun getStaffType(category_code:String?):String{
+    return when(category_code){
+      "DOC", "HOS"->"DOCTORS"
+      else ->"STAFF"
+    }
+  }
+  fun isDoctorProfile(category_code:String?): Boolean {
+    return when(category_code){
+      "DOC", "HOS"-> true
+      else ->false
     }
   }
 }

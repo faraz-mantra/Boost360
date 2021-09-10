@@ -7,7 +7,6 @@ import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
 import com.inventoryorder.databinding.BottomSheetDeliveredOrderBinding
-import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.ordersdetails.OrderItem
 
 class DeliveredBottomSheetDialog :

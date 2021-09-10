@@ -13,6 +13,14 @@
           "premiumCode": ""
         },
         {
+          "title": "Doctor List",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "doctor_e_profile_listing",
+          "isFeature": false,
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
           "title": "Updates & health tips",
           "count": 12,
           "isFeature": false,
@@ -68,6 +76,14 @@
           "desc": "Add and manage services you will be providing to your patients & customers. This will make it easier for patients to schedule an appointment.",
           "type": "service_product_catalogue",
           "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Doctor List",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "doctor_e_profile_listing",
+          "isLock": false,
+          "isFeature": true,
           "premiumCode": ""
         },
         {
@@ -606,6 +622,14 @@
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
           "type": "service_product_catalogue",
           "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Owner’s info",
+          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "type": "owners_information",
+          "isLock": false,
+          "isFeature": true,
           "premiumCode": ""
         },
         {

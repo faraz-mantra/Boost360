@@ -21,13 +21,13 @@ import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.ui.appointment.AppointmentDetailsFragment
 import com.inventoryorder.ui.appointment.AppointmentsFragment
+import com.inventoryorder.ui.appointment.createAptConsult.CreateAppointmentFragment
 import com.inventoryorder.ui.appointmentSpa.create.ReviewAndConfirmFragment
 import com.inventoryorder.ui.appointmentSpa.create.SpaAppointmentFragment
-import com.inventoryorder.ui.consultation.VideoConsultDetailsFragment
-import com.inventoryorder.ui.consultation.VideoConsultFragment
-import com.inventoryorder.ui.appointment.createAptConsult.CreateAppointmentFragment
 import com.inventoryorder.ui.appointmentSpa.list.AppointmentSpaDetailsFragment
 import com.inventoryorder.ui.appointmentSpa.list.AppointmentSpaFragment
+import com.inventoryorder.ui.consultation.VideoConsultDetailsFragment
+import com.inventoryorder.ui.consultation.VideoConsultFragment
 import com.inventoryorder.ui.createAptOld.BookingSuccessfulFragment
 import com.inventoryorder.ui.createAptOld.NewBookingFragmentOne
 import com.inventoryorder.ui.createAptOld.NewBookingFragmentTwo

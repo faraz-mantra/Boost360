@@ -62,7 +62,6 @@ import static com.framework.webengageconstant.EventLabelKt.CLICK;
 import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
 import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW;
 import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ITEM;
-import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventNameKt.PRODUCT_CATALOGUE_LIST;
 import static com.framework.webengageconstant.EventValueKt.EVENT_VALUE_MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
