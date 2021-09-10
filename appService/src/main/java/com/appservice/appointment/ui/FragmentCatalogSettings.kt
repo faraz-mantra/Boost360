@@ -10,6 +10,7 @@ import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentCatalogSettingBinding
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.extensions.observeOnce
+import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import java.util.*
@@ -49,6 +50,7 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
         if (it.isSuccess() && response != null) {
           binding?.ctvService?.text = response?.productCategoryVerb
           binding?.ctvWebsiteUrl?.text = "${sessionLocal.rootAliasURI}/${response?.productCategoryVerb}"
+          sessionLocal.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB,response?.productCategoryVerb)
         } else {
         }
       })

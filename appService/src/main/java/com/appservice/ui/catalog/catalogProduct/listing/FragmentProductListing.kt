@@ -39,6 +39,7 @@ import com.appservice.viewmodel.ProductViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing.Companion.shareProduct
@@ -177,7 +178,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
               isLastPageD = (finalList.size == TOTAL_ELEMENTS)
               Log.i(TAG, "islastpage: " + isLastPageD)
               setAdapterNotify()
-              setToolbarTitle("Products (${limit})")
+              setToolbarTitle("${sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)} (${limit})")
       //            (parentFragment as FragmentProductHome).setTabTitle("Products (${limit})", 0)
 
           }
@@ -304,6 +305,10 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        setToolbarTitle("${sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)} (${limit})")
+    }
     override fun showProgress(title: String?, cancelable: Boolean?) {
         binding?.progress?.visible()
     }

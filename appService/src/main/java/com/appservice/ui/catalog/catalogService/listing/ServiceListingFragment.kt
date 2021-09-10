@@ -46,6 +46,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getDomainName
 import com.framework.utils.ContentSharing
@@ -167,6 +168,12 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
       })
   }
 
+
+    override fun onResume() {
+      super.onResume()
+      setToolbarTitle("${sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)} (${TOTAL_ELEMENTS})")
+    }
+
   private fun setServiceDataItems(
     resultService: Result?,
     isSearchString: Boolean,
@@ -185,7 +192,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         list.addAll(finalList)
         isLastPageD = (finalList.size == TOTAL_ELEMENTS)
         setAdapterNotify()
-        setToolbarTitle("${resources.getString(R.string.services)} (${TOTAL_ELEMENTS})")
+        setToolbarTitle("${sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)} (${TOTAL_ELEMENTS})")
       } else if (isFirstLoad) setEmptyView(View.VISIBLE)
     } else {
       if (listService.isNullOrEmpty().not()) {
