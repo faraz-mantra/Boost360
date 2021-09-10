@@ -39,12 +39,12 @@
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_confirm_gst"
+          android:id="@+id/ctv_rcm_text"
           style="@style/match_wrap"
           android:layout_marginHorizontal="@dimen/size_16"
           android:textColor="@color/black_3333"
           app:textType="HEADING_6"
-          tools:text="@string/rcm_text" />
+          android:text="@string/rcm_text" />
 
 
       </androidx.appcompat.widget.LinearLayoutCompat>

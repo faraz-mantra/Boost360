@@ -37,19 +37,19 @@
                 app:srcCompat="@drawable/placeholder_image_n" />
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_stock"
-                style="@style/wrap_wrap"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/size_8"
-                android:layout_toStartOf="@id/card_thumbnail"
-                android:drawableEnd="@drawable/ic_infinite"
-                android:drawablePadding="@dimen/size_5"
-                android:fontFamily="@font/open_sans"
-                android:textColor="@color/secondary_text"
-                android:textFontWeight="600"
-                android:textSize="12sp"
-                tools:text="30min" />
+              android:id="@+id/ctv_stock"
+              style="@style/wrap_wrap"
+              android:layout_alignParentEnd="true"
+              android:layout_gravity="end"
+              android:layout_marginEnd="@dimen/size_8"
+              android:layout_toStartOf="@id/card_thumbnail"
+              android:drawableEnd="@drawable/ic_infinite"
+              android:drawablePadding="@dimen/size_5"
+              android:fontFamily="@font/regular"
+              android:textColor="@color/secondary_text"
+              android:textFontWeight="600"
+              android:textSize="12sp"
+              tools:text="30min" />
 
             <LinearLayout
                 android:id="@+id/ll_service_details"
@@ -63,7 +63,7 @@
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/label_category"
                     style="@style/wrap_wrap"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/regular"
                     android:maxLines="2"
                     android:paddingBottom="3dp"
                     android:textColor="#828282"
@@ -76,7 +76,7 @@
                     android:id="@+id/label_name"
                     style="@style/wrap_wrap"
                     android:layout_below="@+id/label_brand"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/regular"
                     android:maxLines="2"
                     android:textColor="@color/primary_text"
                     android:textFontWeight="400"
@@ -139,7 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:fontFamily="@font/open_sans"
+                        android:fontFamily="@font/regular"
                         android:gravity="center_vertical"
                         android:paddingEnd="8dp"
                         android:textColor="#828282"
@@ -176,7 +176,7 @@
                         android:layout_height="30dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:background="@drawable/bg_button_proceed_4"
+                        android:background="@drawable/bg_button_proceed"
                         android:backgroundTint="#6BC95C"
                         android:drawableStart="@drawable/ic_whatsapp_for_business_active"
                         android:drawablePadding="@dimen/size_2"

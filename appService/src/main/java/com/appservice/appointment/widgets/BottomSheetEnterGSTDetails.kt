@@ -78,7 +78,7 @@ class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDeta
 
   private fun gstNotRegistered(isChecked: Boolean) {
     if (isChecked) {
-      binding?.ccbDeclearation?.visible()
+//      binding?.ccbDeclearation?.visible()
       binding?.cetBusinessName?.gone()
       binding?.cetGst?.gone()
       binding?.ctvBusinessName?.gone()
@@ -88,7 +88,7 @@ class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDeta
 
   private fun gstRegistered(isChecked: Boolean) {
     if (isChecked) {
-      binding?.ccbDeclearation?.gone()
+//      binding?.ccbDeclearation?.gone()
       binding?.cetBusinessName?.visible()
       binding?.cetGst?.visible()
       binding?.ctvBusinessName?.visible()

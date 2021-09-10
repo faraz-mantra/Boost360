@@ -78,8 +78,8 @@ class ServiceCatalogHomeFragment : AppBaseFragment<FragmentServiceHomeContainerB
         }
         override fun getPageTitle(position: Int): CharSequence {
             return when (position) {
-                0 -> "SERVICES"
-                1 -> "CATEGORIES"
+                0 -> "Services"
+                1 -> "Categories"
                 else -> {
                     return ""
                 }

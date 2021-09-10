@@ -14,6 +14,9 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -38,7 +41,6 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
-import com.framework.utils.ContentSharing
 import com.framework.utils.ContentSharing.Companion.shareProduct
 import com.squareup.picasso.Target
 import java.util.*
@@ -147,29 +149,46 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
             if (isFirst) hideProgress()
         })
     }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_product_listing, menu)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_product_configuration -> {
+                startFragmentActivity(FragmentType.ECOMMERCE_SETTINGS)
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
     private fun setProductDataItems(resultProduct: ArrayList<CatalogProduct>?, isFirstLoad: Boolean) {
-        val listProduct = resultProduct
         if (isFirstLoad) finalList.clear()
-        if (listProduct.isNullOrEmpty().not()) {
-            removeLoader()
-            setEmptyView(View.GONE)
-            Log.i(TAG, "response size: " + resultProduct?.size)
-            finalList.addAll(listProduct!!)
-            limit = finalList.size
-            list.clear()
-            list.addAll(finalList)
-            isLastPageD = (finalList.size == TOTAL_ELEMENTS)
-            Log.i(TAG, "islastpage: " + isLastPageD)
-            setAdapterNotify()
-            (parentFragment as FragmentProductHome).setTabTitle("${getString(R.string.products)} (${limit})", 0)
+        when {
+            resultProduct.isNullOrEmpty().not() -> {
+              removeLoader()
+              setEmptyView(View.GONE)
+              Log.i(TAG, "response size: " + resultProduct?.size)
+              finalList.addAll(resultProduct!!)
+              limit = finalList.size
+              list.clear()
+              list.addAll(finalList)
+              isLastPageD = (finalList.size == TOTAL_ELEMENTS)
+              Log.i(TAG, "islastpage: " + isLastPageD)
+              setAdapterNotify()
+              setToolbarTitle("Products (${limit})")
+      //            (parentFragment as FragmentProductHome).setTabTitle("Products (${limit})", 0)
 
-        } else if (isFirstLoad) setEmptyView(View.VISIBLE)
-        else if (listProduct.isNullOrEmpty().not()) {
-            list.clear()
-            list.addAll(listProduct!!)
-            setAdapterNotify()
-        } else removeLoader()
+          }
+          isFirstLoad -> setEmptyView(View.VISIBLE)
+            resultProduct.isNullOrEmpty().not() -> {
+              list.clear()
+              list.addAll(resultProduct!!)
+              setAdapterNotify()
+          }
+          else -> removeLoader()
+        }
     }
 
 

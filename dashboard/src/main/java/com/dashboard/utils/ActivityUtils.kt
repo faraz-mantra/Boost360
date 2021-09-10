@@ -449,7 +449,7 @@ fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
     } else {
       WebEngageController.trackEvent(PRODUCT_INVENTORY, CLICK, TO_BE_ADDED)
       session.let {
-        startFragmentActivity(com.appservice.constant.FragmentType.FRAGMENT_PRODUCT_HOME, bundle = getBundleData(it))
+        startFragmentActivity(com.appservice.constant.FragmentType.FRAGMENT_PRODUCT_LISTING, bundle = getBundleData(it))
 
       }
 

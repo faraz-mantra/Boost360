@@ -15,7 +15,8 @@
       android:clickable="true"
       android:focusable="true"
       android:foreground="?attr/selectableItemBackground"
-      android:paddingBottom="@dimen/size_20"
+      android:paddingBottom="@dimen/size_10"
+      android:paddingTop="@dimen/size_10"
       android:visibility="visible">
 
       <FrameLayout
@@ -23,9 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/size_8"
-        app:layout_constraintBottom_toBottomOf="@+id/ctv_catalog_setup_subheading2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ctv_catalog_setup_title">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <com.framework.views.customViews.CustomImageView
@@ -39,10 +40,10 @@
           android:src="@drawable/ic_ecom_catalog_setup" />
 
         <com.framework.views.customViews.CustomTextView
+          android:id="@+id/ctv_pending"
           android:layout_width="match_parent"
           android:layout_height="@dimen/size_18"
           android:layout_gravity="bottom"
-          android:id="@+id/ctv_pending"
           android:background="@drawable/rounded_stroke_grey_4"
           android:backgroundTint="@color/red_apt"
           android:gravity="center"
@@ -79,6 +80,7 @@
         android:id="@+id/ctv_catalog_setup_subheading"
         style="@style/AppointmentSetting_Text_Content"
         android:layout_marginTop="@dimen/size_5"
+        android:visibility="visible"
         android:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs"
         app:layout_constraintStart_toStartOf="@+id/ctv_catalog_setup_title"
         app:layout_constraintTop_toBottomOf="@id/ctv_catalog_setup_title"
@@ -87,6 +89,7 @@
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_catalog_setup_subheading2"
         style="@style/AppointmentSetting_Text_Content"
+        android:visibility="visible"
         android:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs"
         app:layout_constraintStart_toStartOf="@+id/ctv_catalog_setup_title"
         app:layout_constraintTop_toBottomOf="@+id/ctv_catalog_setup_subheading" />

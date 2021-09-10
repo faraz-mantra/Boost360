@@ -66,7 +66,7 @@ class CreateCategoryFragment : AppBaseFragment<FragmentCreateCategoryBinding, Ap
             adapterN = AppBaseRecyclerViewAdapter(baseActivity, categoryList, this@CreateCategoryFragment)
             adapter = adapterN
         }
-        ( parentFragment as ServiceCatalogHomeFragment).setTabTitle("${resources.getString(R.string.categories)} (${categoryList.size})",1)
+        ( parentFragment as ServiceCatalogHomeFragment).setTabTitle("Categories (${categoryList.size})",1)
 
     }
 

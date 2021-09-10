@@ -52,9 +52,11 @@ class CatalogTileViewHolder(binding: RecyclerItemEcomAptSettingsBinding) : AppBa
 
       }
       is DeliverySetupTile -> {
-        val policiesSetup = tilesItem.tile as? DeliverySetupTile
-        binding?.ctvCatalogSetupSubheading.text = policiesSetup?.getTitle()
+        val deliverySetupTile = tilesItem.tile as? DeliverySetupTile
+        binding?.ctvCatalogSetupSubheading.text = deliverySetupTile?.getTitle()
         binding?.ctvCatalogSetupSubheading2.gone()
+        when (deliverySetupTile?.isPending==true) {true -> { binding.civSetupCheck.gone();binding.ctvPending.visible()} else -> { binding.civSetupCheck.visible();binding.ctvPending.invisible() } }
+
       }
     }
 //    binding.civCatalogSetupIcon.setImageIcon(tilesItem)

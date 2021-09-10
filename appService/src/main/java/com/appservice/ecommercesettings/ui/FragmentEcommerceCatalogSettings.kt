@@ -35,7 +35,7 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
   override fun onCreateView() {
     super.onCreateView()
     sessionLocal = UserSessionManager(requireActivity())
-    setOnClickListener(binding?.ctvChangeServices)
+    setOnClickListener(binding?.ctvChangeServices,binding?.ctvProductVerbUrl)
     getProductVerb()
   }
 

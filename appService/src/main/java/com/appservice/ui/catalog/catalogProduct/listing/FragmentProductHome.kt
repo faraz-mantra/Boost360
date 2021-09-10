@@ -81,8 +81,8 @@ class FragmentProductHome : AppBaseFragment<FragmentServiceHomeContainerBinding,
 
         override fun getPageTitle(position: Int): CharSequence {
             return when (position) {
-                0 -> "PRODUCTS"
-                1 -> "CATEGORIES"
+                0 -> "Products"
+                1 -> "Categories"
                 else -> {
                     return ""
                 }
