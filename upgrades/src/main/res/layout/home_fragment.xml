@@ -83,8 +83,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato"
-            android:text="Add-ons store"
-            android:textAllCaps="true"
+            android:text="Add-ons Store"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textFontWeight="700"
             android:textSize="@dimen/txt_15sp"
@@ -324,10 +324,137 @@
       </RelativeLayout>
 
       <RelativeLayout
+        android:id="@+id/mp_view_cart_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/banner_rl_layout"
+        android:layout_marginTop="5dp"
+        android:visibility="visible"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp"
+          app:cardElevation="0dp"
+          android:foreground="@drawable/mp_review_cart_yellow_border"
+          app:cardCornerRadius="15dp">
+
+          <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:src="@drawable/ic_review_cart" />
+
+                <RelativeLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="14dp">
+
+                  <TextView
+                    android:id="@+id/mp_no_of_cart_items_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    tools:text="6 items waiting in cart"
+                    android:textColor="#333333"
+                    android:textSize="18sp" />
+
+                  <TextView
+                    android:id="@+id/mp_items_name_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mp_no_of_cart_items_tv"
+                    android:fontFamily="@font/regular"
+                    android:lines="2"
+                    android:textAlignment="viewStart"
+                    android:textSize="14sp"
+                    tools:text="unlimited content, IVR, call\ntracker and staff profiles +1 more" />
+
+                </RelativeLayout>
+
+
+              </LinearLayout>
+
+              <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/yellow" />
+
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                  android:id="@+id/mp_talk_expert_tv"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="14dp"
+                  android:layout_weight="1"
+                  android:fontFamily="@font/semi_bold"
+                  android:gravity="center"
+                  android:text="Talk to expert"
+                  android:textColor="@color/orange"
+                  android:textSize="14sp" />
+
+                <View
+                  android:layout_width="1dp"
+                  android:layout_height="match_parent"
+                  android:layout_gravity="center"
+                  android:background="@color/yellow" />
+
+                <TextView
+                  android:id="@+id/mp_review_cart_tv"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_margin="14dp"
+                  android:layout_weight="1"
+                  android:fontFamily="@font/bold"
+                  android:gravity="center"
+                  android:text="Review cart"
+                  android:textColor="@color/orange"
+                  android:textSize="14sp" />
+
+              </LinearLayout>
+
+
+            </LinearLayout>
+
+            <ImageView
+              android:id="@+id/mp_review_cart_close_iv"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:layout_margin="10dp"
+              android:src="@drawable/ic_review_cart_close" />
+          </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+      </RelativeLayout>
+
+      <RelativeLayout
         android:id="@+id/package_rl_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/banner_rl_layout">
+        android:layout_below="@+id/mp_view_cart_rl">
 
         <com.facebook.shimmer.ShimmerFrameLayout
           android:id="@+id/shimmer_view_package"
@@ -387,7 +514,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_15sdp"
             android:fontFamily="@font/open_sans"
-            android:text="Featured Packs"
+            android:text="Featured packs"
             android:textColor="@color/common_text_color"
             android:textFontWeight="600"
             android:textSize="@dimen/txt_16sp"
@@ -418,7 +545,7 @@
               android:layout_marginEnd="@dimen/_10sdp"
               android:fontFamily="@font/bold"
               android:text="Compare"
-              android:textAllCaps="true"
+              android:textAllCaps="false"
               android:textColor="#FFB900"
               android:textFontWeight="600"
               android:textSize="@dimen/txt_12sp" />
@@ -532,8 +659,7 @@
             android:textAllCaps="false"
             android:textColor="#FFB900"
             android:textFontWeight="600"
-            android:textSize="@dimen/txt_16sp"
-            />
+            android:textSize="@dimen/txt_16sp" />
         </LinearLayout>
       </RelativeLayout>
 
@@ -623,8 +749,8 @@
             android:paddingTop="@dimen/_10sdp"
             android:paddingEnd="@dimen/_20sdp"
             android:paddingBottom="@dimen/_10sdp"
-            android:text="View All"
-            android:textAllCaps="true"
+            android:text="View all"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -776,11 +902,10 @@
           android:paddingTop="@dimen/_5sdp"
           android:paddingEnd="@dimen/_10sdp"
           android:paddingBottom="@dimen/_5sdp"
-          android:text="EXPERT GUIDENCE"
+          android:text="Expert guidance"
           android:textColor="@color/white"
           android:textFontWeight="600"
-          android:textSize="@dimen/txt_10sp"
-          />
+          android:textSize="@dimen/txt_10sp" />
 
         <LinearLayout
           android:id="@+id/callnow_layout"
@@ -831,8 +956,8 @@
             android:paddingTop="@dimen/_5sdp"
             android:paddingEnd="@dimen/_20sdp"
             android:paddingBottom="@dimen/_5sdp"
-            android:text="Call Now"
-            android:textAllCaps="true"
+            android:text="Call now"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textFontWeight="800"
             android:textSize="@dimen/txt_10sp"
@@ -1061,7 +1186,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:fontFamily="@font/open_sans"
-              android:text="Website Chatbot"
+              android:text="Website chatbot"
               android:textColor="#FFB900"
               android:textSize="@dimen/txt_9sp"
               android:textStyle="bold" />
@@ -1099,7 +1224,8 @@
             android:paddingBottom="@dimen/_5sdp"
             android:text="View"
             android:textAllCaps="true"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -1323,8 +1449,8 @@
             android:paddingTop="@dimen/_10sdp"
             android:paddingEnd="@dimen/_20sdp"
             android:paddingBottom="@dimen/_10sdp"
-            android:text="Refer Now"
-            android:textAllCaps="true"
+            android:text="Refer now"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
