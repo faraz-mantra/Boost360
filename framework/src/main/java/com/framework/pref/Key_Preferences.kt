@@ -125,4 +125,5 @@ object Key_Preferences {
 
   const val ACCESS_TOKEN_AUTH = "access_token_auth"
   val KEY_FP_CART_COUNT = "fbCartCount"
+  const val PRODUCT_CATEGORY_VERB = "product_category_verb"
 }
