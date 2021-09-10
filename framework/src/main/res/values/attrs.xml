@@ -266,6 +266,7 @@
     <attr name="indicatorWidth" format="dimension" />
     <attr name="indicatorEnabled" format="boolean" />
     <attr name="textColor" format="color" />
+    <attr name="textVisible" format="boolean" />
     <attr name="itemFontActive" format="reference" />
     <attr name="itemFontInActive" format="reference" />
     <attr name="textColorActive" format="color" />
