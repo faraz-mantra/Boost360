@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.core.view.OneShotPreDrawListener.add
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,8 @@ import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmail
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
+import com.boost.upgrades.data.api_model.gst.Error
+import com.boost.upgrades.data.api_model.gst.GSTApiResponse
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_SECREAT
@@ -24,6 +27,7 @@ import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.internal.util.BackpressureHelper.add
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Credentials
 import org.json.JSONArray
@@ -57,6 +61,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   var selectedState: String? = null
   var selectedStateResult: MutableLiveData<String> = MutableLiveData()
   private var APIRequestStatus: String? = null
+  private var gstApiInfo : MutableLiveData<GSTApiResponse> = MutableLiveData()
 
   var updatesError: MutableLiveData<String> = MutableLiveData()
   var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
@@ -131,6 +136,9 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
 
   fun getCustomerInfoResult(): LiveData<GetCustomerIDResponse> {
     return updateCustomerInfo
+  }
+  fun getGstApiResult(): LiveData<GSTApiResponse>{
+    return gstApiInfo
   }
 
   fun cityResult(): LiveData<List<String>> {
@@ -280,6 +288,25 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
               if (errorBody != null && errorBody.Error.ErrorCode.equals("INVALID CUSTOMER") && errorBody.StatusCode == 400) {
                 customerInfoState.postValue(false)
               }
+            }
+          )
+      )
+    }
+  }
+  fun getGstApiInfo(auth: String,gstIn:String,clientId: String){
+    if(Utils.isConnectedToInternet(getApplication())){
+      CompositeDisposable().add(
+        ApiService.getGSTDetails(auth,gstIn,clientId)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(
+            {
+              Log.i("getGstDetails",it.toString())
+              gstApiInfo.postValue(it)
+            },
+            {
+              val temp = (it as HttpException).response()!!.errorBody()!!.string()
+              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<Error>() {}.type)
             }
           )
       )
