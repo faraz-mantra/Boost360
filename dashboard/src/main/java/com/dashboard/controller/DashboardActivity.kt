@@ -441,12 +441,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK && isSecondaryImage) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
       if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
-    } else childFragments?.forEach { fragment ->
-      fragment.onActivityResult(
-        requestCode,
-        resultCode,
-        data
-      )
+    } else childFragments?.forEach { fragment -> fragment.onActivityResult(requestCode, resultCode, data)
     }
   }
 

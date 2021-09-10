@@ -2,38 +2,22 @@ package com.dashboard.controller.ui.website
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Typeface
 import android.graphics.Typeface.*
-import android.os.Build
-import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
-import com.dashboard.constant.IntentConstant
-import com.dashboard.constant.RecyclerViewActionType
-import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.getDomainName
-import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
 import com.dashboard.databinding.FragmentWebsiteBinding
-import com.dashboard.databinding.FragmentWebsitePagerBinding
 import com.dashboard.model.live.websiteItem.WebsiteActionItem
-import com.dashboard.model.live.websiteItem.WebsiteData
-import com.dashboard.model.live.websiteItem.WebsiteDataResponse
-import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
-import com.dashboard.recyclerView.BaseRecyclerViewItem
-import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
-import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.pref.BASE_IMAGE_URL
@@ -202,8 +186,8 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       }
     }
     binding?.txtOpenClose?.text = resources.getString(if (isOpen) R.string.open_now else R.string.close_now)
-    binding?.txtOpenClose?.setTextColor(if (isOpen) getColor(R.color.green_light) else getColor(R.color.red_F40000))
-    binding?.ellipseOpenClose?.changeLayersColor(if (isOpen) R.color.green_light else R.color.red_F40000)
+    binding?.txtOpenClose?.setTextColor(if (isOpen) getColor(R.color.green_light) else getColor(R.color.red_E39595))
+    binding?.ellipseOpenClose?.changeLayersColor(if (isOpen) R.color.green_light else R.color.red_E39595)
 
   }
 

@@ -661,6 +661,15 @@ fun AppCompatActivity.startBusinessProfileDetailEdit(session: UserSessionManager
   }
 }
 
+fun AppCompatActivity.startUserProfileDetail(session: UserSessionManager?) {
+  try {
+    WebEngageController.trackEvent(USER_PROFILE_PAGE, CLICK, TO_BE_ADDED)
+    startFragmentDashboardActivity(com.dashboard.constant.FragmentType.FRAGMENT_USER_PROFILE)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
 
 fun AppCompatActivity.startBusinessContactInfo(session: UserSessionManager?) {
   try {

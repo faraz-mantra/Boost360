@@ -179,6 +179,7 @@
   <string name="connected">Connected</string>
   <string name="not_connected">Not connected</string>
   <string name="business_profile_">Business Profile</string>
+  <string name="my_profile_d">My Profile</string>
   <string name="save_business_name">Save business name</string>
   <string name="business_description_">Business description</string>
   <string name="save_description">Save description</string>
@@ -250,4 +251,20 @@
   <string name="fonts_and_color_styles">Font &amp; Color Styles</string>
   <string name="manage_your_current_plan_or_upgrade_to_a_recommended_plan_with_better_features">Upgrade website with great features, offers for you, current plan, purchase history, invoice and more.</string>
   <string name="google_form_help_business_boost">https://forms.gle/F1tj5tETRHBdR2AaA</string>
+  <string name="click_a_selfie">Click a selfie</string>
+  <string name="enter_your_full_name">Enter your full name</string>
+  <string name="full_name">Full name*</string>
+  <string name="registered_email">Registered email</string>
+  <string name="enter_your_email_id">Enter your email ID</string>
+  <string name="enter_your_mobile_number">Enter your mobile number</string>
+  <string name="registered_mobile_number">Registered mobile number*</string>
+  <string name="whatsapp_no_for_important_updates">WhatsApp no. for important updates</string>
+  <string name="not_opted_d">Not opted</string>
+  <string name="enter_whatsapp_no">Enter Whatsapp no.</string>
+  <string name="take_photo">Take photo</string>
+  <string name="upload_from_gallery">Upload from gallery</string>
+  <string name="choose_profile_photo">Choose profile photo</string>
+  <string name="dummy_text_verified">Your mobile number\n<b>+91 9876543210</b> is verified</string>
+  <string name="hello_worldBlue">Your mobile number +91 9876543210 is verified</string>
+
 </resources>
