@@ -7,6 +7,7 @@ import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomSheetConfirmGstBinding
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseBottomSheetDialog
+import com.framework.utils.fromHtml
 
 class BottomSheetConfirmGST : BaseBottomSheetDialog<BottomSheetConfirmGstBinding, AppointmentSettingsViewModel>() {
     override fun getLayout(): Int {
@@ -28,7 +29,7 @@ class BottomSheetConfirmGST : BaseBottomSheetDialog<BottomSheetConfirmGstBinding
         val gstIn = arguments?.getString(IntentConstant.GSTIN.name)
         val businessName = arguments?.getString(IntentConstant.BUSINESSNAME.name)
         val gstConfirm = "Your GSTIN no. <b>$gstIn</b> is registered with the company name <b>$businessName.</b>"
-        binding?.ctvConfirmGst?.text = Html.fromHtml(gstConfirm)
+        binding?.ctvConfirmGst?.text = fromHtml(gstConfirm)
 
     }
 

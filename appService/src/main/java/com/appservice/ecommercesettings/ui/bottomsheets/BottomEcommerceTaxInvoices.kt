@@ -3,6 +3,7 @@ package com.appservice.ecommercesettings.ui.bottomsheets
 import android.view.View
 import com.appservice.R
 import com.appservice.appointment.model.PaymentResult
+import com.appservice.appointment.ui.FragmentCustomerInvoiceSetup
 import com.appservice.appointment.widgets.BottomSheetTaxInvoicesForPurchases
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomSheetSetupTaxInvoicesForCustomerPurchaseBinding
@@ -41,7 +42,7 @@ class BottomEcommerceTaxInvoices : BaseBottomSheetDialog<BottomSheetSetupTaxInvo
     setOnClickListener(binding?.btnSaveChanges, binding?.btnCancel, binding?.btnClickPhoto)
     val parent = (requireParentFragment() as? FragmentEcommerceCustomerInvoiceSetup)
     this.paymentProfileDetails = arguments?.getSerializable(IntentConstant.PAYMENT_PROFILE_DETAILS.name) as? PaymentResult
-    if (paymentProfileDetails == null) isEdit = false
+    isEdit = paymentProfileDetails != null
     binding?.cetUpiId?.setText(paymentProfileDetails?.uPIId)
     val images = arguments?.getSerializable(IntentConstant.IMAGE_SIGNATURE.name) as ArrayList<FileModel>
     if (images.isNullOrEmpty().not()) setImage(images, parent = parent) else setImage(parent!!)
@@ -60,12 +61,17 @@ class BottomEcommerceTaxInvoices : BaseBottomSheetDialog<BottomSheetSetupTaxInvo
   }
 
   fun setImage(parent: FragmentEcommerceCustomerInvoiceSetup) {
-    binding?.btnClickPhoto?.gone()
-    binding?.layoutImagePreview?.root?.visible()
-    binding?.layoutImagePreview?.ctvSize?.text = if (paymentProfileDetails?.taxDetails?.gSTDetails?.documentName.isNullOrEmpty() == true) paymentProfileDetails?.merchantSignature?.split("/")
-      ?.last() else paymentProfileDetails?.taxDetails?.gSTDetails?.documentName
-    activity?.glideLoad(binding?.layoutImagePreview?.image, paymentProfileDetails?.merchantSignature)
-    imageClickListners(parent)
+    if (paymentProfileDetails?.merchantSignature == null) {
+      binding?.btnClickPhoto?.visible()
+      binding?.layoutImagePreview?.root?.gone()
+    } else {
+      binding?.btnClickPhoto?.gone()
+      binding?.layoutImagePreview?.root?.visible()
+      binding?.layoutImagePreview?.ctvSize?.text = if (paymentProfileDetails?.taxDetails?.gSTDetails?.documentName.isNullOrEmpty()) paymentProfileDetails?.merchantSignature?.split("/")
+        ?.last() else paymentProfileDetails?.taxDetails?.gSTDetails?.documentName
+      activity?.glideLoad(binding?.layoutImagePreview?.image, paymentProfileDetails?.merchantSignature)
+    }
+    imageClickListeners(parent)
   }
 
   private fun setImage(it: ArrayList<FileModel>, path: String? = it[0].path, parent: FragmentEcommerceCustomerInvoiceSetup? = null) {
@@ -73,10 +79,10 @@ class BottomEcommerceTaxInvoices : BaseBottomSheetDialog<BottomSheetSetupTaxInvo
     binding?.layoutImagePreview?.root?.visible()
     binding?.layoutImagePreview?.ctvSize?.text = it[0].getFileName()
     activity?.glideLoad(binding?.layoutImagePreview?.image, path)
-    imageClickListners(parent)
+    imageClickListeners(parent)
   }
 
-  private fun imageClickListners(parent: FragmentEcommerceCustomerInvoiceSetup?) {
+  private fun imageClickListeners(parent: FragmentEcommerceCustomerInvoiceSetup?) {
     binding?.layoutImagePreview?.crossIcon?.setOnClickListener {
       binding?.layoutImagePreview?.root?.gone()
       binding?.btnClickPhoto?.visible()
@@ -85,6 +91,9 @@ class BottomEcommerceTaxInvoices : BaseBottomSheetDialog<BottomSheetSetupTaxInvo
     binding?.layoutImagePreview?.cbChange?.setOnClickListener {
       parent?.clearImage()
       parent?.openImagePicker()
+      paymentProfileDetails?.taxDetails?.gSTDetails?.documentName = null
+      paymentProfileDetails?.merchantSignature = null
+
     }
   }
 
@@ -122,8 +131,8 @@ class BottomEcommerceTaxInvoices : BaseBottomSheetDialog<BottomSheetSetupTaxInvo
 
   private fun setDataAndGoBack() {
     val upi = binding?.cetUpiId?.text.toString()
-    paymentProfileDetails?.uPIId = upi
-    upiId(upi)
+    paymentProfileDetails?.uPIId = if (binding?.checkboxUpiId?.isChecked==true) upi else null
+    upiId(if(binding?.checkboxUpiId?.isChecked==true) upi else null)
     clickType(ClickType.SAVECHANGES)
     dismiss()
   }
