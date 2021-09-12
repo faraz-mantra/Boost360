@@ -224,7 +224,7 @@
     </style>
 
     <style name="Appointment.ButtonStyle" parent="ButtonStyle.Rounded">
-        <item name="android:background">@drawable/bg_button_proceed_4</item>
+        <item name="android:background">@drawable/bg_button_proceed</item>
         <item name="android:paddingStart">@dimen/size_60</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">true</item>

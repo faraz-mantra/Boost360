@@ -106,21 +106,22 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
 
   private fun onReceivedBankDetails(it: BaseResponse) {
     hideProgress()
-    val paymentProfileResponse = it as PaymentProfileResponse
-    isEdit = paymentProfileResponse.result?.bankAccountDetails != null
-    if (isEdit) {
-      binding?.btnAddAccount?.gone()
-      binding?.llBankStatus?.visible()
-      binding?.ctvAccountText?.gone()
-      binding?.arrowRight?.visible()
-      binding?.edtBankAccount?.setOnClickListener { startFragmentActivity(FragmentType.EDIT_ACCOUNT_DETAILS) }
-      binding?.llDisclaimer?.visible()
-      binding?.bankAddedStatus?.text = "Bank Account Added (${(paymentProfileResponse.result?.bankAccountDetails?.getVerifyText())})"
-      binding?.bankNameAccountNumber?.text = "${paymentProfileResponse.result?.bankAccountDetails?.bankName} - ${paymentProfileResponse.result?.bankAccountDetails?.accountNumber}"
-    } else {
-      setUpBankDetails()
+    val paymentProfileResponse = it as? PaymentProfileResponse
+    if (paymentProfileResponse!=null) {
+      isEdit = paymentProfileResponse?.result?.bankAccountDetails != null
+      if (isEdit) {
+        binding?.btnAddAccount?.gone()
+        binding?.llBankStatus?.visible()
+        binding?.ctvAccountText?.gone()
+        binding?.arrowRight?.visible()
+        binding?.edtBankAccount?.setOnClickListener { startFragmentActivity(FragmentType.EDIT_ACCOUNT_DETAILS) }
+        binding?.llDisclaimer?.visible()
+        binding?.bankAddedStatus?.text = "Bank Account Added (${(paymentProfileResponse.result?.bankAccountDetails?.getVerifyText())})"
+        binding?.bankNameAccountNumber?.text = "${paymentProfileResponse.result?.bankAccountDetails?.bankName} - ${paymentProfileResponse.result?.bankAccountDetails?.accountNumber}"
+      } else {
+        setUpBankDetails()
+      }
     }
-
   }
 
   override fun onSuccess(it: BaseResponse) {
@@ -156,8 +157,11 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
 
   private fun onDeliveryDetailsReceived(it: BaseResponse) {
     hideProgress()
-    val data = it as DeliveryDetailsResponse
-    binding?.toggleCod?.isOn = data.result?.isBusinessLocationPickupAllowed ?: false
+    val data = it as? DeliveryDetailsResponse
+    if (data != null) {
+      binding?.toggleCod?.isOn = data?.result?.isBusinessLocationPickupAllowed ?: false
+    }
     getAccountDetails()
+    showLongToast("Delivery details not available")
   }
 }

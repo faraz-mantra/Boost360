@@ -170,7 +170,6 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
     bottomSheetTaxInvoicesForPurchases.upiId = { binding?.upiId?.text = it.toString() }
     bottomSheetTaxInvoicesForPurchases.clickType = {
       if (it == BottomSheetTaxInvoicesForPurchases.ClickType.SAVECHANGES) {
-        showProgress()
 //                hitApi(viewModel?.invoiceSetup(InvoiceSetupRequest(panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails, tanDetails = null, clientId = UserSession.clientId, floatingPointId = UserSession.fpId)), (R.string.error_updating_gst_details))
         hitApi(viewModel?.addMerchantUPI(UpdateUPIRequest(clientId, uPIId = binding?.upiId?.text.toString(), sessionLocal.fPID)), (R.string.error_updating_upi_id))
         if (imageList.isNotEmpty()) {
