@@ -92,9 +92,10 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
   private fun clickActionButton(type: WebsiteActionItem.IconType) {
     when (type) {
       WebsiteActionItem.IconType.service_product_catalogue -> baseActivity.startListServiceProduct(session)
+      WebsiteActionItem.IconType.doctor_e_profile_listing -> baseActivity.startListDoctors(session)
       WebsiteActionItem.IconType.latest_update_tips -> session?.let { baseActivity.startUpdateLatestStory(it) }
       WebsiteActionItem.IconType.all_images -> baseActivity.startAllImage(session)
-      WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
+      WebsiteActionItem.IconType.business_profile -> baseActivity.startBusinessProfileDetailEdit(session)
       WebsiteActionItem.IconType.testimonials -> baseActivity.startTestimonial(session)
       WebsiteActionItem.IconType.custom_page -> baseActivity.startCustomPage(session)
       WebsiteActionItem.IconType.project_teams -> baseActivity.startListProjectAndTeams(session)
