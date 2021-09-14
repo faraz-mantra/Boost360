@@ -8,19 +8,20 @@ import com.appservice.databinding.FragmentEcommercePoliciesForCustomersBinding
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 
-class FragmentEcommeceCustomerPolicies : AppBaseFragment<FragmentEcommercePoliciesForCustomersBinding, BaseViewModel>() {
-  override fun getViewModelClass(): Class<BaseViewModel> {
-    return BaseViewModel::class.java
+class FragmentEcommerceCustomerPolicies : AppBaseFragment<FragmentEcommercePoliciesForCustomersBinding, BaseViewModel>() {
+
+  companion object {
+    fun newInstance(): FragmentEcommerceCustomerPolicies {
+      return FragmentEcommerceCustomerPolicies()
+    }
   }
 
   override fun getLayout(): Int {
     return R.layout.fragment_ecommerce_policies_for_customers
   }
 
-  companion object {
-    fun newInstance(): FragmentEcommeceCustomerPolicies {
-      return FragmentEcommeceCustomerPolicies()
-    }
+  override fun getViewModelClass(): Class<BaseViewModel> {
+    return BaseViewModel::class.java
   }
 
   override fun onCreateView() {

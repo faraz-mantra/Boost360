@@ -14,7 +14,7 @@ import com.appservice.constant.IntentConstant
 import com.appservice.offers.additionalinfo.AdditionalInfoFragment
 import com.appservice.offers.details.AddNewOfferFragment
 import com.appservice.offers.offerlisting.OfferListingFragment
-import com.appservice.staffs.ui.setFragmentType
+import com.appservice.ui.staffs.ui.setFragmentType
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding

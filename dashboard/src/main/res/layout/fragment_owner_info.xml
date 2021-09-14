@@ -1,177 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-    </data>
+  <data></data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_view"
-        style="@style/match_match"
-        android:background="@color/white">
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/main_view"
+    style="@style/match_match">
 
-        <View
-            android:id="@+id/shadow1"
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fillViewport="true"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_top"
+        style="@style/match_wrap"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/size_40">
+
+        <FrameLayout
+          style="@style/match_wrap"
+          android:background="@drawable/rectangle_smoked">
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/civ_owner_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_1"
-            android:background="@drawable/down_shadow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="@dimen/size_180"
+            android:layout_marginBottom="@dimen/size_1"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:srcCompat="@color/placeholder_bg" />
 
-        <androidx.core.widget.NestedScrollView
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/clear_image"
+            style="@style/wrap_wrap"
+            android:layout_gravity="end"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/size_14"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_close_round" />
+
+          <LinearLayout
+            android:id="@+id/image_add_btn"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_save_details"
-            app:layout_constraintTop_toBottomOf="@+id/shadow1">
+            android:layout_height="@dimen/size_180"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
+            <com.framework.views.customViews.CustomImageView
+              style="@style/wrap_wrap"
+              app:srcCompat="@drawable/ic_add_image" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/ll_top"
-                style="@style/match_wrap"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/shadow1">
+            <com.framework.views.customViews.CustomTextView
+              style="@style/DashBoard_Text_Title"
+              android:layout_marginTop="@dimen/size_5"
+              android:includeFontPadding="false"
+              android:text="@string/jpeg_png"
+              android:textColor="@color/warm_grey"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
 
-                <FrameLayout
-                    style="@style/match_wrap"
-                    android:background="@drawable/rectangle_smoked">
+            <com.framework.views.customViews.CustomTextView
+              style="@style/DashBoard_Text_Title"
+              android:includeFontPadding="false"
+              android:text="@string/_800x800px"
+              android:textColor="@color/warm_grey"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_180"
-                        android:id="@+id/civ_owner_image"
-                        android:layout_marginBottom="@dimen/size_1"
-                        android:scaleType="centerCrop"
-                        android:visibility="gone"
-                        app:srcCompat="@color/placeholder_bg" />
+            <com.framework.views.customViews.CustomTextView
+              style="@style/DashBoard_Text_Title"
+              android:layout_marginTop="@dimen/size_20"
+              android:text="@string/add_profile_image"
+              android:textColor="@color/yellow_ffb900"
+              app:textType="BODY_1" />
+          </LinearLayout>
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/clear_image"
-                        style="@style/wrap_wrap"
-                        android:layout_gravity="end"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="@dimen/size_14"
-                        android:visibility="gone"
-                        app:srcCompat="@drawable/ic_close_round" />
-
-                    <LinearLayout
-                        android:id="@+id/image_add_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_180"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <com.framework.views.customViews.CustomImageView
-                            style="@style/wrap_wrap"
-                            app:srcCompat="@drawable/ic_add_image" />
-
-                        <com.framework.views.customViews.CustomTextView
-                            style="@style/DashBoard_Text_Title"
-                            android:layout_marginTop="@dimen/size_5"
-                            android:includeFontPadding="false"
-                            android:text="@string/jpeg_png"
-                            android:textColor="@color/warm_grey"
-                            app:fontFamily="@font/regular"
-                            app:textType="BODY_1" />
-
-                        <com.framework.views.customViews.CustomTextView
-                            style="@style/DashBoard_Text_Title"
-                            android:includeFontPadding="false"
-                            android:text="@string/_800x800px"
-                            android:textColor="@color/warm_grey"
-                            app:fontFamily="@font/regular"
-                            app:textType="BODY_1" />
-
-                        <com.framework.views.customViews.CustomTextView
-                            style="@style/DashBoard_Text_Title"
-                            android:layout_marginTop="@dimen/size_20"
-                            android:text="@string/add_profile_image"
-                            android:textColor="@color/yellow_ffb900"
-                            app:textAllCaps="true"
-                            app:textType="BODY_1" />
-                    </LinearLayout>
-
-                </FrameLayout>
-
-                <com.framework.views.customViews.CustomButton
-                    android:id="@+id/btn_change_image"
-                    android:visibility="gone"
-                    style="@style/ButtonStyle.Rounded.Solid.Stroke.ChangeImage"
-                    android:text="@string/change_image" />
-
-                <LinearLayout
-                    style="@style/match_wrap"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="@dimen/size_30">
-
-                    <com.framework.views.customViews.CustomTextView
-                        style="@style/DashBoard_Text_Title"
-                        android:text="@string/owner_s_name" />
-
-                    <com.framework.views.customViews.CustomTextField
-                        android:id="@+id/ctf_owner_name"
-                        style="@style/DashBoard_Text_Field"
-                        android:textCursorDrawable="@null"
-                        android:hint="@string/type_the_owner_s_name" />
-
-
-                    <com.framework.views.customViews.CustomTextView
-                        style="@style/DashBoard_Text_Title"
-                        android:layout_marginTop="@dimen/size_26"
-                        android:text="@string/owner_s_designation" />
-
-
-                    <com.framework.views.customViews.CustomTextField
-                        android:id="@+id/ctf_designation"
-                        android:textCursorDrawable="@null"
-                        style="@style/DashBoard_Text_Field"
-                        android:hint="@string/type_owner_s_designation_e_g_founder" />
-
-                    <com.framework.views.customViews.CustomTextView
-                        style="@style/DashBoard_Text_Title"
-                        android:layout_marginTop="@dimen/size_26"
-
-                        android:text="@string/owner_s_description" />
-
-                    <com.framework.views.customViews.CustomTextField
-                        android:id="@+id/ctf_description"
-                        style="@style/DashBoard_Text_Field"
-                        android:inputType="textMultiLine"
-                        android:singleLine="false"
-                        android:hint="@string/type_owner_s_description_in_around_2000_characters_at_max"
-                        android:textCursorDrawable="@null" />
-                </LinearLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_50" />
-
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        </androidx.core.widget.NestedScrollView>
-
+        </FrameLayout>
 
         <com.framework.views.customViews.CustomButton
-            android:id="@+id/btn_save_details"
-            style="@style/DashBoard.ButtonStyle"
-            android:layout_marginHorizontal="@dimen/size_16"
-            android:layout_marginBottom="@dimen/size_15"
-            android:text="@string/save_details"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+          android:id="@+id/btn_change_image"
+          style="@style/ButtonStyle.Rounded.Solid.Stroke.ChangeImage"
+          android:text="@string/change_image"
+          android:visibility="gone" />
+
+        <LinearLayout
+          style="@style/match_wrap"
+          android:orientation="vertical"
+          android:paddingHorizontal="16dp"
+          android:paddingVertical="@dimen/size_30">
+
+          <com.framework.views.customViews.CustomTextView
+            style="@style/DashBoard_Text_Title"
+            android:text="@string/owner_s_name" />
+
+          <com.framework.views.customViews.CustomTextField
+            android:id="@+id/ctf_owner_name"
+            style="@style/DashBoard_Text_Field"
+            android:hint="@string/type_the_owner_s_name"
+            android:textCursorDrawable="@null" />
+
+
+          <com.framework.views.customViews.CustomTextView
+            style="@style/DashBoard_Text_Title"
+            android:layout_marginTop="@dimen/size_26"
+            android:text="@string/owner_s_designation" />
+
+
+          <com.framework.views.customViews.CustomTextField
+            android:id="@+id/ctf_designation"
+            style="@style/DashBoard_Text_Field"
+            android:hint="@string/type_owner_s_designation_e_g_founder"
+            android:textCursorDrawable="@null" />
+
+          <com.framework.views.customViews.CustomTextView
+            style="@style/DashBoard_Text_Title"
+            android:layout_marginTop="@dimen/size_26"
+
+            android:text="@string/owner_s_description" />
+
+          <com.framework.views.customViews.CustomTextField
+            android:id="@+id/ctf_description"
+            style="@style/DashBoard_Text_Field"
+            android:hint="@string/type_owner_s_description_in_around_2000_characters_at_max"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            android:textCursorDrawable="@null" />
+        </LinearLayout>
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_50" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_save_details"
+      style="@style/DashBoard.ButtonStyle"
+      android:layout_marginHorizontal="@dimen/size_16"
+      android:layout_marginBottom="@dimen/size_15"
+      android:text="@string/save_details"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

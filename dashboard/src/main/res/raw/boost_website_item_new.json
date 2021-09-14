@@ -626,7 +626,7 @@
         },
         {
           "title": "Owner’s info",
-          "desc": "Description of this asset Description of this assetDescription of this asset",
+          "desc": "Add owner's info",
           "type": "owners_information",
           "isLock": false,
           "isFeature": true,

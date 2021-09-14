@@ -18,8 +18,8 @@ import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentEditDoctorInfoBinding
 import com.appservice.model.staffModel.*
 import com.appservice.ui.staffs.doctors.bottomsheet.AppointmentBookingBottomSheet
-import com.appservice.staffs.ui.StaffFragmentContainerActivity
-import com.appservice.staffs.ui.startStaffFragmentActivity
+import com.appservice.ui.staffs.ui.StaffFragmentContainerActivity
+import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.catalog.common.AppointmentModel
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet

@@ -9,6 +9,7 @@ import com.framework.utils.fromHtml
 import com.google.common.io.Files.append
 
 class BottomSheetRCM : BaseBottomSheetDialog<BottomSheetRcmBinding, BaseViewModel>() {
+
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_rcm
   }
@@ -19,13 +20,11 @@ class BottomSheetRCM : BaseBottomSheetDialog<BottomSheetRcmBinding, BaseViewMode
 
   override fun onCreateView() {
     setOnClickListener(binding?.understoodBtn)
-    val s = SpannableStringBuilder()
-      .bold { append(getString(R.string.rcm_bold_text)) }
-      .append(" ")
-      .append(getString(R.string.rcm_text))
+    val s = SpannableStringBuilder().apply {
+      bold { append(getString(R.string.rcm_bold_text)) }.append(" ")
+        .append(getString(R.string.rcm_text))
+    }
     binding?.ctvRcmText?.text = (s)
-
-
   }
 
   override fun onClick(v: View) {

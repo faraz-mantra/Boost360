@@ -3,7 +3,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -28,7 +27,7 @@ import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_SIZE
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.staffs.ui.startStaffFragmentActivity
+import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.model.ServiceSearchListingResponse
 import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
@@ -39,10 +38,6 @@ import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.clientId
-import com.framework.views.zero.FragmentZeroCase
-import com.framework.views.zero.OnZeroCaseClicked
-import com.framework.views.zero.RequestZeroCaseBuilder
-import com.framework.views.zero.ZeroCases
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder

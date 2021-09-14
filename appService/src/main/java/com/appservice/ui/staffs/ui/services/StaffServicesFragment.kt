@@ -54,7 +54,7 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
 
 
   private fun fetchServices() {
-    showProgress("Loading...")
+    showProgress(getString(R.string.loading_))
     val request =
       ServiceListRequest(FilterBy("ALL", 0, 0), "", floatingPointTag = sessionLocal.fpTag)
     viewModel?.getServiceListing(request)?.observeOnce(viewLifecycleOwner, {

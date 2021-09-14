@@ -54,6 +54,7 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
       else ->"STAFF"
     }
   }
+
   fun changeTheme(color: Int, taskBarColor: Int) {
     getToolbar()?.setBackgroundColor(ContextCompat.getColor(this, color))
     window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)

@@ -106,7 +106,8 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
       WebsiteActionItem.IconType.places_look_around -> baseActivity.startNearByView(session)
       WebsiteActionItem.IconType.trip_adviser_ratings -> baseActivity.startListTripAdvisor(session)
       WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
-      WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteNav(session)// baseActivity.startWebsiteTheme(session)
+      WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteNav(session)
+      WebsiteActionItem.IconType.owners_information -> baseActivity.startOwnersInfo(session)
     }
   }
 }

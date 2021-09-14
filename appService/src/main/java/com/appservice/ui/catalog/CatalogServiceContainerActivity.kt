@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.appointment.ui.*
 import com.appservice.base.AppBaseActivity
-import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.ecommercesettings.ui.*
 import com.appservice.ui.catalog.catalogProduct.addProduct.ProductDetailFragment
@@ -60,7 +59,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   private var fragmentEcommerceSettings: FragmentEcommerceSettings? = null
   private var fragmentEcommerceCatalogSettings: FragmentEcommerceCatalogSettings? = null
   private var fragmentEcommerceCustomerInvoiceSetup: FragmentEcommerceCustomerInvoiceSetup? = null
-  private var fragmentEcommerceCustomerPolicies: FragmentEcommeceCustomerPolicies? = null
+  private var fragmentEcommerceCustomerPolicies: FragmentEcommerceCustomerPolicies? = null
   private var fragmentEcommercePaymentCollectionSetup: FragmentEcommercePaymentCollectionSetup? = null
   private var fragmentEcomDeliveryConfig: FragmentEcomDeliveryConfig? = null
 
@@ -303,7 +302,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
         fragmentEcommercePaymentCollectionSetup
       }
       FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES -> {
-        fragmentEcommerceCustomerPolicies = FragmentEcommeceCustomerPolicies.newInstance()
+        fragmentEcommerceCustomerPolicies = FragmentEcommerceCustomerPolicies.newInstance()
         fragmentEcommerceCustomerPolicies
       }
       FragmentType.ECOMMERCE_SETTINGS -> {

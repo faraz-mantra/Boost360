@@ -1,4 +1,4 @@
-package com.dashboard.controller.ui.website_theme.dialog
+package com.dashboard.controller.ui.websiteTheme.dialog
 
 
 import android.annotation.SuppressLint

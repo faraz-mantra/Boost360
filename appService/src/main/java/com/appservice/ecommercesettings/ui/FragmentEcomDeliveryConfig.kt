@@ -20,7 +20,14 @@ import com.framework.utils.fromHtml
 import com.framework.views.customViews.CustomTextView
 
 class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigurationBinding, AppointmentSettingsViewModel>() {
+
   private var wareHouseAddress: GetWareHouseResponse? = null
+
+  companion object {
+    fun newInstance(): FragmentEcomDeliveryConfig {
+      return FragmentEcomDeliveryConfig()
+    }
+  }
 
   override fun getLayout(): Int {
     return R.layout.fragment_delivery_configuration
@@ -30,35 +37,21 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
     return AppointmentSettingsViewModel::class.java
   }
 
-  companion object {
-    fun newInstance(): FragmentEcomDeliveryConfig {
-      return FragmentEcomDeliveryConfig()
-    }
-  }
-
   override fun onCreateView() {
     super.onCreateView()
     sessionLocal = UserSessionManager(requireActivity())
     setupView()
     getWareHouseAddress()
-    binding?.toggleHomeDelivery?.setOnToggledListener { toggleableView, isOn ->
-      updateDeliveryStatus(
-        binding?.toggleAllowPickup?.isOn
-          ?: true, isOn
-          ?: true, binding?.etdFlatCharges?.text.toString()
-      )
+    binding?.toggleHomeDelivery?.setOnToggledListener { _, isOn ->
+      updateDeliveryStatus(binding?.toggleAllowPickup?.isOn ?: true, isOn, binding?.etdFlatCharges?.text.toString())
     }
-      binding?.toggleAllowPickup?.setOnToggledListener { toggleableView, isOn ->
-          updateDeliveryStatus(
-              isOn
-                  ?: true,binding?.toggleHomeDelivery?.isOn
-                  ?: true, binding?.etdFlatCharges?.text.toString()
-          )
-      }
+    binding?.toggleAllowPickup?.setOnToggledListener { _, isOn ->
+      updateDeliveryStatus(isOn, binding?.toggleHomeDelivery?.isOn ?: true, binding?.etdFlatCharges?.text.toString())
+    }
   }
 
   private fun getDeliveryDetails() {
-    showProgress("loading...")
+    showProgress(getString(R.string.loading_))
     viewModel?.getDeliveryDetails(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, {
       hideProgress()
       if (it.isSuccess()) {
@@ -72,7 +65,7 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
   }
 
   private fun getWareHouseAddress() {
-    showProgress("loading...")
+    showProgress(getString(R.string.loading_))
     viewModel?.getWareHouseAddress(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, { baseResponse ->
       hideProgress()
       getDeliveryDetails()
@@ -89,10 +82,7 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
             binding?.containerWareHouseAddress?.addView(inflateWareHouseView(index, dataItem?.name, dataItem?.fullAddress, dataItem?.contactNumber))
           }
         }
-
       }
-
-
     })
   }
 

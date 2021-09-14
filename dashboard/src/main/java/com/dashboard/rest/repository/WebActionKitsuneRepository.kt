@@ -3,7 +3,7 @@ package com.dashboard.rest.repository
 import com.dashboard.base.rest.AppBaseLocalService
 import com.dashboard.base.rest.AppBaseRepository
 import com.dashboard.rest.TaskCode.UPLOAD_OWNERS_PROFILE
-import com.dashboard.rest.apiClients.WebActionKitsuneClient
+import com.dashboard.rest.apiClients.WebActionKitSuneClientN
 import com.dashboard.rest.services.WebActionKitsuneRemoteData
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
@@ -24,6 +24,6 @@ object WebActionKitsuneRepository : AppBaseRepository<WebActionKitsuneRemoteData
     }
 
     override fun getApiClient(): Retrofit {
-        return WebActionKitsuneClient.shared.retrofit
+        return WebActionKitSuneClientN.shared.retrofit
     }
 }

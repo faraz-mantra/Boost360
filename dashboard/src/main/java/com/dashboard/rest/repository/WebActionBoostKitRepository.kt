@@ -5,13 +5,14 @@ import com.dashboard.base.rest.AppBaseRepository
 import com.dashboard.model.RequestAddOwnersInfo
 import com.dashboard.model.UpdateOwnersDataRequest
 import com.dashboard.rest.TaskCode
-import com.dashboard.rest.apiClients.WebActionApiBoostkitClient
+import com.dashboard.rest.apiClients.WebActionApiBoostKitClientN
 import com.dashboard.rest.services.WebActionBoostKitRemoteData
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
 object WebActionBoostKitRepository : AppBaseRepository<WebActionBoostKitRemoteData, AppBaseLocalService>() {
+
     override fun getRemoteDataSourceClass(): Class<WebActionBoostKitRemoteData> {
         return WebActionBoostKitRemoteData::class.java
     }
@@ -36,6 +37,6 @@ object WebActionBoostKitRepository : AppBaseRepository<WebActionBoostKitRemoteDa
     }
 
     override fun getApiClient(): Retrofit {
-        return WebActionApiBoostkitClient.shared.retrofit
+        return WebActionApiBoostKitClientN.shared.retrofit
     }
 }

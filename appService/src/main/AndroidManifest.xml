@@ -33,7 +33,7 @@
       android:windowSoftInputMode="adjustPan" />
 
     <activity
-      android:name=".staffs.ui.StaffFragmentContainerActivity"
+      android:name=".ui.staffs.ui.StaffFragmentContainerActivity"
       android:configChanges="keyboardHidden|orientation|screenSize"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme_staff_home"
