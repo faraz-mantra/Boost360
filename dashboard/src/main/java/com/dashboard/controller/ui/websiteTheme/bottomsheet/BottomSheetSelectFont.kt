@@ -1,4 +1,4 @@
-package com.dashboard.controller.ui.website_theme.bottomsheet
+package com.dashboard.controller.ui.websiteTheme.bottomsheet
 
 import android.view.View
 import com.dashboard.R

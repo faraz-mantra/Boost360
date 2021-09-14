@@ -1,4 +1,4 @@
-package com.dashboard.controller.ui.website_theme
+package com.dashboard.controller.ui.websiteTheme
 
 import android.graphics.Color
 import android.os.Build
@@ -11,8 +11,8 @@ import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.getDomainName
-import com.dashboard.controller.ui.website_theme.bottomsheet.*
-import com.dashboard.controller.ui.website_theme.dialog.WebViewDialog
+import com.dashboard.controller.ui.websiteTheme.bottomsheet.*
+import com.dashboard.controller.ui.websiteTheme.dialog.WebViewDialog
 import com.dashboard.databinding.FragmentWebsiteThemeBinding
 import com.dashboard.model.websitetheme.*
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
@@ -25,7 +25,6 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
-import com.framework.utils.fromHtml
 import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 import kotlinx.android.synthetic.main.activity_dashboard.view.*

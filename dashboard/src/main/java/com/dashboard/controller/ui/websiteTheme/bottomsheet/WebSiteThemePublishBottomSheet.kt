@@ -1,11 +1,8 @@
-package com.dashboard.controller.ui.website_theme.bottomsheet
+package com.dashboard.controller.ui.websiteTheme.bottomsheet
 
 import android.view.View
-import com.appservice.databinding.BottomSheetServiceCreatedSuccessfullyBinding
 import com.dashboard.R
 import com.dashboard.databinding.BottomSheetPublishChangesBinding
-import com.dashboard.databinding.BottomSheetResetWebsiteBinding
-import com.dashboard.databinding.BottomSheetThemeUpdatedSuccessfullyBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 

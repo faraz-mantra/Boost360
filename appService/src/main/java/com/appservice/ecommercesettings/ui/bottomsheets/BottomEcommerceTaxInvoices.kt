@@ -20,20 +20,20 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class BottomEcommerceTaxInvoices : BaseBottomSheetDialog<BottomSheetSetupTaxInvoicesForCustomerPurchaseBinding, BaseViewModel>() {
-  override fun getLayout(): Int {
-    return R.layout.bottom_sheet_setup_tax_invoices_for_customer_purchase
-  }
 
   var clickType: (name: ClickType?) -> Unit = { }
+  private var isEdit = false
+  private var paymentProfileDetails: PaymentResult? = null
+  var upiId: (name: String?) -> Unit = { }
 
   enum class ClickType {
     SAVECHANGES, CANCEL
   }
 
-  var isEdit = false
-  private var paymentProfileDetails: PaymentResult? = null
+  override fun getLayout(): Int {
+    return R.layout.bottom_sheet_setup_tax_invoices_for_customer_purchase
+  }
 
-  var upiId: (name: String?) -> Unit = { }
   override fun getViewModelClass(): Class<BaseViewModel> {
     return BaseViewModel::class.java
   }
@@ -131,8 +131,8 @@ class BottomEcommerceTaxInvoices : BaseBottomSheetDialog<BottomSheetSetupTaxInvo
 
   private fun setDataAndGoBack() {
     val upi = binding?.cetUpiId?.text.toString()
-    paymentProfileDetails?.uPIId = if (binding?.checkboxUpiId?.isChecked==true) upi else null
-    upiId(if(binding?.checkboxUpiId?.isChecked==true) upi else null)
+    paymentProfileDetails?.uPIId = if (binding?.checkboxUpiId?.isChecked == true) upi else null
+    upiId(if (binding?.checkboxUpiId?.isChecked == true) upi else null)
     clickType(ClickType.SAVECHANGES)
     dismiss()
   }

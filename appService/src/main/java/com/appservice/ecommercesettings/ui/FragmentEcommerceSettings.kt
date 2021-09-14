@@ -20,6 +20,7 @@ import com.framework.pref.clientId
 import java.util.*
 
 class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBinding, AppointmentSettingsViewModel>(), RecyclerItemClickListener {
+
   private var adapter: AppBaseRecyclerViewAdapter<AppointmentStatusResponse.TilesModel>? = null
   private var copyList: ArrayList<AppointmentStatusResponse.TilesModel>? = arrayListOf()
   private var finalList: ArrayList<AppointmentStatusResponse.TilesModel>? = arrayListOf()

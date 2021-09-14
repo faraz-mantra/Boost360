@@ -23,13 +23,10 @@ data class WebsiteActionItem(
   var type: String? = "",
 ) : Serializable, AppBaseRecyclerViewItem {
 
-
-
   var recyclerViewItemType: Int = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout()
+
   override fun getViewType(): Int {
-    if (this.isFeature==true)
-      return RecyclerViewItemType.BOOST_WEBSITE_ITEM_FEATURE_VIEW.getLayout()
-    return recyclerViewItemType
+    return if (this.isFeature==true) RecyclerViewItemType.BOOST_WEBSITE_ITEM_FEATURE_VIEW.getLayout() else recyclerViewItemType
   }
 
   enum class IconType(var icon: Int) {
@@ -48,6 +45,7 @@ data class WebsiteActionItem(
     trip_adviser_ratings(R.drawable.trip_advisor_reviews_d),
     seasonal_offers(R.drawable.ic_offer_d),
     website_theme(R.drawable.ic_website_theme),
+    owners_information(R.drawable.ic_owner),
     doctor_e_profile_listing(R.drawable.ic_doctors_e_profile);
 
     companion object {

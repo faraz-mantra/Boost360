@@ -112,14 +112,6 @@
         <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
     </style>
 
-    <style name="CustomBottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
-
-    <style name="BottomSheetTheme" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
-    </style>
-
     <style name="SearchView" parent="Widget.AppCompat.Light.SearchView">
         <item name="submitBackground">@android:color/transparent</item>
         <item name="queryBackground">@android:color/transparent</item>

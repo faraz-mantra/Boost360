@@ -2,9 +2,9 @@ package com.dashboard.rest.apiClients
 
 import com.framework.rest.BaseApiClient
 
-class WebActionKitsuneClient : BaseApiClient() {
+class WebActionKitSuneClientN : BaseApiClient(true) {
 
     companion object {
-        val shared = WebActionKitsuneClient()
+        val shared = WebActionKitSuneClientN()
     }
 }

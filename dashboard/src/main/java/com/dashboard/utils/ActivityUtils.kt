@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
-import com.appservice.staffs.ui.startStaffFragmentActivity
+import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
@@ -21,6 +21,7 @@ import com.appservice.ui.updatesBusiness.startUpdateFragmentActivity
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
+import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
 import com.framework.pref.*
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.IntentConstant
@@ -467,6 +468,7 @@ fun AppCompatActivity.startListStaff(session: UserSessionManager?) {
     e.printStackTrace()
   }
 }
+
 fun AppCompatActivity.startListDoctors(session: UserSessionManager?) {
   try {
     startStaffFragmentActivity(com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle = getBundleData(session))
@@ -873,6 +875,12 @@ fun AppCompatActivity.startWebsiteTheme(session: UserSessionManager?) {
     e.printStackTrace()
   }
 }
+
+fun AppCompatActivity.startOwnersInfo(session: UserSessionManager?) {
+  WebEngageController.trackEvent(OWNER_INFO_CLICK, CLICK, TO_BE_ADDED)
+  startOwnersInfoNewActivity(com.dashboard.constant.FragmentType.OWNER_INFO)
+}
+
 
 fun AppCompatActivity.startWebsiteNav(session: UserSessionManager?) {
   try {

@@ -16,16 +16,8 @@ import com.framework.pref.clientId
 import java.util.*
 
 class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSettingBinding, AppointmentSettingsViewModel>() {
-  override fun getLayout(): Int {
-    return R.layout.fragment_ecom_catalog_setting
-  }
 
   private var response: UserFpDetailsResponse? = null
-
-
-  override fun getViewModelClass(): Class<AppointmentSettingsViewModel> {
-    return AppointmentSettingsViewModel::class.java
-  }
 
   companion object {
     fun newInstance(): FragmentEcommerceCatalogSettings {
@@ -33,15 +25,23 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
     }
   }
 
+  override fun getViewModelClass(): Class<AppointmentSettingsViewModel> {
+    return AppointmentSettingsViewModel::class.java
+  }
+
+  override fun getLayout(): Int {
+    return R.layout.fragment_ecom_catalog_setting
+  }
+
   override fun onCreateView() {
     super.onCreateView()
     sessionLocal = UserSessionManager(requireActivity())
-    setOnClickListener(binding?.ctvChangeServices,binding?.ctvProductVerbUrl)
+    setOnClickListener(binding?.ctvChangeServices, binding?.ctvProductVerbUrl)
     getProductVerb()
   }
 
   private fun getProductVerb() {
-      getFpDetails()
+    getFpDetails()
   }
 
   private fun getFpDetails() {
@@ -55,7 +55,7 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
         if (it.isSuccess() && response != null) {
           binding?.ctvProductVerb?.text = response?.productCategoryVerb
           binding?.ctvProductVerbUrl?.text = "${sessionLocal.rootAliasURI}/${response?.productCategoryVerb}"
-          sessionLocal.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB,response?.productCategoryVerb)
+          sessionLocal.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB, response?.productCategoryVerb)
         } else {
         }
       })
