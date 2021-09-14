@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -99,6 +101,12 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
   var gstFlag = false
   lateinit var prefs: SharedPrefs
   private var gstResult : com.boost.upgrades.data.api_model.gst.Result? = null
+  private lateinit var paymentLL :LinearLayout
+  private lateinit var upiLayout: ConstraintLayout
+  private lateinit var netBankingLayout: ConstraintLayout
+  private lateinit var walletLayout: ConstraintLayout
+  private lateinit var savedCardsLayout: ConstraintLayout
+  private lateinit var payLinkLayout: ConstraintLayout
 
   companion object {
     fun newInstance() = PaymentFragment()
@@ -109,6 +117,13 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     savedInstanceState: Bundle?
   ): View? {
     root = inflater.inflate(R.layout.payment_fragment, container, false)
+    paymentLL = root.findViewById(R.id.payment_mode_ll)
+    upiLayout = root.findViewById(R.id.upi_layout)
+    netBankingLayout = root.findViewById(R.id.netbanking_layout)
+    walletLayout = root.findViewById(R.id.wallet_layout)
+    savedCardsLayout = root.findViewById(R.id.saved_cards_layout)
+    payLinkLayout = root.findViewById(R.id.pay_by_link_section)
+
 
     totalAmount = requireArguments().getDouble("amount")
     session = UserSessionManager(requireActivity())
@@ -123,6 +138,14 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     cartCheckoutData.put("currency", requireArguments().getString("currency"));
     cartCheckoutData.put("contact", requireArguments().getString("contact"))
     prefs = SharedPrefs(activity as UpgradeActivity)
+
+    paymentLL.removeAllViews()
+
+    paymentLL.addView(walletLayout)
+    paymentLL.addView(upiLayout)
+    paymentLL.addView(netBankingLayout)
+    paymentLL.addView(savedCardsLayout)
+    paymentLL.addView(payLinkLayout)
 //        //this is a offer created from admin dashboard.
 //        cartCheckoutData.put("offer_id", arguments!!.getString("offer_F5hUaalR9tpSzn"))
 
