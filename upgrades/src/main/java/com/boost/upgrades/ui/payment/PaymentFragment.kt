@@ -141,10 +141,10 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
     paymentLL.removeAllViews()
 
-    paymentLL.addView(walletLayout)
     paymentLL.addView(upiLayout)
     paymentLL.addView(netBankingLayout)
     paymentLL.addView(savedCardsLayout)
+    paymentLL.addView(walletLayout)
     paymentLL.addView(payLinkLayout)
 //        //this is a offer created from admin dashboard.
 //        cartCheckoutData.put("offer_id", arguments!!.getString("offer_F5hUaalR9tpSzn"))
