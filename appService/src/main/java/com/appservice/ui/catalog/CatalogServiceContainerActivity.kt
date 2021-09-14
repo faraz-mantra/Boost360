@@ -12,7 +12,6 @@ import com.appservice.R
 import com.appservice.appointment.ui.*
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
-import com.appservice.ecommercesettings.ui.*
 import com.appservice.ui.catalog.catalogProduct.addProduct.ProductDetailFragment
 import com.appservice.ui.catalog.catalogProduct.addProduct.information.ProductInformationFragment
 import com.appservice.ui.catalog.catalogProduct.listing.FragmentProductCategory
@@ -24,6 +23,7 @@ import com.appservice.ui.catalog.catalogService.addService.information.ServiceIn
 import com.appservice.ui.catalog.catalogService.addService.weeklyTime.ServiceTimingFragment
 import com.appservice.ui.catalog.catalogService.listing.ServiceListingFragment
 import com.appservice.ui.catalog.common.WeeklyAppointmentFragment
+import com.appservice.ui.ecomAptSetting.*
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding

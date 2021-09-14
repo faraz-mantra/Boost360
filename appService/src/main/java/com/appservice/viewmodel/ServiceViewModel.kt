@@ -9,7 +9,7 @@ import com.appservice.model.serviceProduct.gstProduct.ProductGstDetailRequest
 import com.appservice.model.serviceProduct.gstProduct.update.ProductUpdateRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.rest.repository.*
-import com.appservice.ui.model.ServiceListingRequest
+import com.appservice.model.serviceProduct.service.ServiceListingRequest
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData

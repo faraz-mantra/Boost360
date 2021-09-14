@@ -1,4 +1,4 @@
-package com.appservice.ui.model
+package com.appservice.model.serviceProduct.service
 
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.recyclerView.AppBaseRecyclerViewItem

@@ -1,13 +1,11 @@
-package com.appservice.ecommercesettings.ui.bottomsheets
+package com.appservice.ui.ecomAptSetting.bottomsheets
 
 import android.view.View
 import com.appservice.R
 import com.appservice.appointment.model.PaymentResult
-import com.appservice.appointment.ui.FragmentCustomerInvoiceSetup
-import com.appservice.appointment.widgets.BottomSheetTaxInvoicesForPurchases
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomSheetSetupTaxInvoicesForCustomerPurchaseBinding
-import com.appservice.ecommercesettings.ui.FragmentEcommerceCustomerInvoiceSetup
+import com.appservice.ui.ecomAptSetting.FragmentEcommerceCustomerInvoiceSetup
 import com.appservice.model.FileModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone

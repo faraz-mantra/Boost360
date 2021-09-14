@@ -7,18 +7,21 @@ import com.dashboard.databinding.FragmentAddDoctorBinding
 import com.dashboard.viewmodel.DashboardViewModel
 
 class FragmentCreateDoctorProfile : AppBaseFragment<FragmentAddDoctorBinding, DashboardViewModel>() {
-    override fun getLayout(): Int {
-        return R.layout.fragment_add_doctor
+
+  override fun getLayout(): Int {
+    return R.layout.fragment_add_doctor
+  }
+
+  companion object {
+    @JvmStatic
+    fun newInstance(bundle: Bundle? = null): FragmentCreateDoctorProfile {
+      val fragment = FragmentCreateDoctorProfile()
+      fragment.arguments = bundle
+      return fragment
     }
-    companion object {
-        @JvmStatic
-        fun newInstance(bundle: Bundle? = null): FragmentCreateDoctorProfile {
-            val fragment = FragmentCreateDoctorProfile()
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
-    override fun getViewModelClass(): Class<DashboardViewModel> {
-        return DashboardViewModel::class.java
-    }
+  }
+
+  override fun getViewModelClass(): Class<DashboardViewModel> {
+    return DashboardViewModel::class.java
+  }
 }

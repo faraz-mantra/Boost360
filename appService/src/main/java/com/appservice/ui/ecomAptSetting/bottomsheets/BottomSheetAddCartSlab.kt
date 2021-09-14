@@ -1,4 +1,4 @@
-package com.appservice.ecommercesettings.ui.bottomsheets
+package com.appservice.ui.ecomAptSetting.bottomsheets
 
 import android.view.View
 import com.appservice.R

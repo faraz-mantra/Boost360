@@ -1,4 +1,4 @@
-package com.appservice.ui.staffs.ui.viewmodel
+package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
 import com.appservice.rest.repository.NowfloatsApiRepository

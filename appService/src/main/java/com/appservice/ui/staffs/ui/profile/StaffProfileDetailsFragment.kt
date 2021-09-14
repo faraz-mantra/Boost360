@@ -22,7 +22,7 @@ import com.appservice.ui.staffs.ui.Constants
 import com.appservice.ui.staffs.ui.bottomsheets.InActiveBottomSheet
 import com.appservice.ui.staffs.ui.bottomsheets.InActiveStaffConfirmationBottomSheet
 import com.appservice.ui.staffs.ui.bottomsheets.RemoveStaffConfirmationBottomSheet
-import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.viewmodel.StaffViewModel
 import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce

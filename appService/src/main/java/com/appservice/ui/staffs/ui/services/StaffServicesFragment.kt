@@ -11,7 +11,7 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.model.staffModel.*
-import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.viewmodel.StaffViewModel
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import kotlinx.android.synthetic.main.fragment_kyc_details.*

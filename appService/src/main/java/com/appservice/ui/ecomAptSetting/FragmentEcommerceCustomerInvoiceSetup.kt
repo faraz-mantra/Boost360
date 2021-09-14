@@ -1,4 +1,4 @@
-package com.appservice.ecommercesettings.ui
+package com.appservice.ui.ecomAptSetting
 
 import android.content.Intent
 import android.graphics.Paint
@@ -16,7 +16,7 @@ import com.appservice.appointment.widgets.BottomSheetEnterGSTDetails
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentEcommerceCustomerInvoiceSetupBinding
-import com.appservice.ecommercesettings.ui.bottomsheets.BottomEcommerceTaxInvoices
+import com.appservice.ui.ecomAptSetting.bottomsheets.BottomEcommerceTaxInvoices
 import com.appservice.model.FileModel
 import com.appservice.rest.TaskCode
 import com.appservice.ui.catalog.widgets.ClickType

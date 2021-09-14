@@ -1,6 +1,5 @@
 package com.appservice.rest.repository
 
-import android.content.Context
 import com.appservice.base.rest.AppBaseRepository
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
@@ -12,7 +11,7 @@ import com.appservice.model.servicev1.UploadImageRequest
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.NowfloatsApiClient
 import com.appservice.rest.services.NowfloatsRemoteData
-import com.appservice.ui.model.ServiceListingRequest
+import com.appservice.model.serviceProduct.service.ServiceListingRequest
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import okhttp3.RequestBody
