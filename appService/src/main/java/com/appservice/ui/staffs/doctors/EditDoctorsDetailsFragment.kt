@@ -24,7 +24,7 @@ import com.appservice.ui.catalog.common.AppointmentModel
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.ui.staffs.ui.Constants
-import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.viewmodel.StaffViewModel
 import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce

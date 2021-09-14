@@ -1,10 +1,9 @@
-package com.appservice.ecommercesettings.ui
+package com.appservice.ui.ecomAptSetting
 
 import android.widget.SearchView
 import com.appservice.R
 import com.appservice.appointment.model.AppointmentStatusResponse
 import com.appservice.appointment.model.IconType
-import com.appservice.appointment.ui.FragmentAppointmentSettings
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentEcommerceSettingsBinding

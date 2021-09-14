@@ -12,7 +12,7 @@ import com.appservice.model.staffModel.AppointmentType
 import com.appservice.model.staffModel.StaffDetailsResult
 import com.appservice.ui.staffs.doctors.bottomsheet.AppointmentTypeBottomSheet
 
-import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.viewmodel.StaffViewModel
 import com.framework.utils.ValidationUtils
 
 class AdditionalDoctorsInfoFragment :

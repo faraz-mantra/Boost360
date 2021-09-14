@@ -6,7 +6,7 @@ import com.appservice.R
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomSheetAppointmentBookingBinding
 import com.appservice.model.staffModel.StaffDetailsResult
-import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.viewmodel.StaffViewModel
 
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.views.customViews.CustomRadioButton

@@ -1,4 +1,4 @@
-package com.appservice.ui.model
+package com.appservice.model.serviceProduct.service
 
 import com.google.gson.annotations.SerializedName
 

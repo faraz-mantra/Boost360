@@ -5,9 +5,9 @@ import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.servicev1.*
 import com.appservice.rest.EndPoints
-import com.appservice.ui.model.ServiceListingRequest
-import com.appservice.ui.model.ServiceListingResponse
-import com.appservice.ui.model.ServiceSearchListingResponse
+import com.appservice.model.serviceProduct.service.ServiceListingRequest
+import com.appservice.model.serviceProduct.service.ServiceListingResponse
+import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody

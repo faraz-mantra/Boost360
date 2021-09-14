@@ -1,4 +1,4 @@
-package com.dashboard.controller.ui.ownerinfo.viewmodel
+package com.dashboard.viewmodel
 
 import androidx.lifecycle.LiveData
 import com.dashboard.model.RequestAddOwnersInfo

@@ -1,4 +1,4 @@
-package com.appservice.ecommercesettings.ui
+package com.appservice.ui.ecomAptSetting
 
 import android.view.View
 import com.appservice.R

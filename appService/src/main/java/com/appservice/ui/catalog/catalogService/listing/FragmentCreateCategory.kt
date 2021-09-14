@@ -17,8 +17,8 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.rest.TaskCode
 import com.appservice.ui.catalog.catalogService.ServiceCatalogHomeFragment
 import com.appservice.ui.catalog.startFragmentActivity
-import com.appservice.ui.model.ServiceListingRequest
-import com.appservice.ui.model.ServiceListingResponse
+import com.appservice.model.serviceProduct.service.ServiceListingRequest
+import com.appservice.model.serviceProduct.service.ServiceListingResponse
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 import kotlinx.android.synthetic.main.fragment_create_category.*

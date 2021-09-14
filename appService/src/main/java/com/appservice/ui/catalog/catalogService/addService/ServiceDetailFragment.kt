@@ -25,8 +25,8 @@ import com.appservice.ui.catalog.catalogService.listing.CreateServiceSuccessBott
 import com.appservice.ui.catalog.catalogService.listing.TypeSuccess
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
-import com.appservice.ui.model.ItemsItem
-import com.appservice.ui.model.ServiceSearchListingResponse
+import com.appservice.model.serviceProduct.service.ItemsItem
+import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.ServiceViewModelV1

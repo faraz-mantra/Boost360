@@ -1,4 +1,4 @@
-package com.appservice.ecommercesettings.ui
+package com.appservice.ui.ecomAptSetting
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +8,8 @@ import com.appservice.appointment.model.DeliverySetup
 import com.appservice.appointment.model.GetWareHouseResponse
 import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentDeliveryConfigurationBinding
-import com.appservice.ecommercesettings.ui.bottomsheets.BottomSheetAddCartSlab
-import com.appservice.ecommercesettings.ui.bottomsheets.BottomSheetAddWareHouse
+import com.appservice.ui.ecomAptSetting.bottomsheets.BottomSheetAddCartSlab
+import com.appservice.ui.ecomAptSetting.bottomsheets.BottomSheetAddWareHouse
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce

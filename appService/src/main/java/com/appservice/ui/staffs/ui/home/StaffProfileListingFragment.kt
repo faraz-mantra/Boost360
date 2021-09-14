@@ -29,8 +29,8 @@ import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.catalog.startFragmentActivity
-import com.appservice.ui.model.ServiceSearchListingResponse
-import com.appservice.ui.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse
+import com.appservice.viewmodel.StaffViewModel
 import com.appservice.utils.WebEngageController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce

@@ -9,8 +9,7 @@ import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
-import com.dashboard.constant.IntentConstant
-import com.dashboard.controller.ui.ownerinfo.viewmodel.OwnersViewModel
+import com.dashboard.viewmodel.OwnersViewModel
 import com.dashboard.databinding.FragmentOwnerInfoBinding
 import com.dashboard.model.*
 import com.framework.extensions.gone
@@ -22,11 +21,7 @@ import com.framework.pref.UserSessionManager
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.ResponseBody
-import okio.Buffer
-import okio.BufferedSource
 import java.io.File
-import java.nio.charset.Charset
 import java.util.*
 
 class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewModel>() {

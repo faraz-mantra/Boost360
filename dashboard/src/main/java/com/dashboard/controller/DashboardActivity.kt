@@ -388,8 +388,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun toolbarPropertySet(pos: Int) {
     cartDataLoad(pos)
     when (pos) {
-      1 -> showToolbar(getString(R.string.my_website))
-      2 -> showToolbar(getString(R.string.my_enquiry))
+      1 -> showToolbar(getString(R.string.website))
+      2 -> showToolbar(getString(R.string.enquiry))
       4 -> showToolbar(getString(R.string.more))
       else -> {
         changeTheme(R.color.colorPrimary, R.color.colorPrimary)

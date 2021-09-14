@@ -26,13 +26,15 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentServiceListingBinding
+import com.appservice.model.serviceProduct.service.ItemsItem
+import com.appservice.model.serviceProduct.service.Result
+import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_SIZE
 import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.catalog.catalogService.ServiceCatalogHomeFragment
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.ui.model.*

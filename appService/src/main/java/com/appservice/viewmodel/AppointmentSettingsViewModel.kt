@@ -5,7 +5,7 @@ import com.appservice.appointment.model.*
 import com.appservice.rest.repository.BoostNowFloatsRepository
 import com.appservice.rest.repository.NowfloatsApiRepository
 import com.appservice.rest.repository.WithFloatTwoRepository
-import com.appservice.ui.model.ServiceListingRequest
+import com.appservice.model.serviceProduct.service.ServiceListingRequest
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData

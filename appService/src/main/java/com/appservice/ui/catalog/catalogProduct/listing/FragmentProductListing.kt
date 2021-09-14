@@ -34,7 +34,7 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catalog.startFragmentActivity
-import com.appservice.ui.model.ItemsItem
+import com.appservice.model.serviceProduct.service.ItemsItem
 import com.appservice.viewmodel.ProductViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
