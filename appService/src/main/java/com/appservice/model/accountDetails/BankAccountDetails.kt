@@ -21,8 +21,7 @@ data class BankAccountDetails(
   var bankBranch: String? = null
 
   fun isValidAccount(): Boolean {
-    return bankName.isNullOrEmpty().not() && iFSC.isNullOrEmpty()
-      .not() && accountNumber.isNullOrEmpty().not() && bankName.isNullOrEmpty().not()
+    return  iFSC.isNullOrEmpty().not() && accountNumber.isNullOrEmpty().not() && bankName.isNullOrEmpty().not()
   }
 
   fun getVerifyText(): String {

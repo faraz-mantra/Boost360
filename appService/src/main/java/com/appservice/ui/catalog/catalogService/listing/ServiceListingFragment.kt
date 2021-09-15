@@ -107,7 +107,6 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   override fun onCreateView() {
     super.onCreateView()
-    Log.i(TAG, "onCreateView: ")
     getBundleData()
     layoutManagerN = LinearLayoutManager(baseActivity)
     getListServiceFilterApi(isFirst = true, offSet = offSet, limit = limit)
@@ -115,11 +114,9 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     layoutManagerN?.let { scrollPagingListener(it) }
     setOnClickListener(binding?.cbAddService)
     this.session = UserSessionManager(requireContext())
-    this.domainName = session?.getDomainName()!!
-
+    this.domainName = session?.getDomainName() ?: ""
     this.fragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.SERVICES, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase, false)
-
   }
 
   private fun getBundleData() {
@@ -155,24 +152,18 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     })
   }
 
-  private fun getListServiceFilterApi(
-    searchString: String = "",
-    isFirst: Boolean = false,
-    offSet: Int? = null,
-    limit: Int? = null
-  ) {
+  private fun getListServiceFilterApi(searchString: String = "", isFirst: Boolean = false, offSet: Int? = null, limit: Int? = null) {
     if (isFirst || searchString.isNotEmpty()) showProgress()
-    viewModel?.getSearchListings(fpTag, fpId, searchString, offSet, limit)
-      ?.observeOnce(baseActivity, {
-        if (it.isSuccess()) {
-          setServiceDataItems(
-            (it as? ServiceSearchListingResponse)?.result,
-            searchString.isNotEmpty(),
-            isFirst
-          )
-        } else if (isFirst) showShortToast(it.message())
-        if (isFirst || searchString.isNotEmpty()) hideProgress()
-      })
+    viewModel?.getSearchListings(fpTag, fpId, searchString, offSet, limit)?.observeOnce(baseActivity, {
+      if (it.isSuccess()) {
+        setServiceDataItems(
+          (it as? ServiceSearchListingResponse)?.result,
+          searchString.isNotEmpty(),
+          isFirst
+        )
+      } else if (isFirst) showShortToast(it.message())
+      if (isFirst || searchString.isNotEmpty()) hideProgress()
+    })
   }
 
 
@@ -183,21 +174,14 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     setToolbarTitle("$fpDetails (${TOTAL_ELEMENTS})")
   }
 
-  private fun setServiceDataItems(
-    resultService: Result?,
-    isSearchString: Boolean,
-    isFirstLoad: Boolean
-  ) {
+  private fun setServiceDataItems(resultService: Result?, isSearchString: Boolean, isFirstLoad: Boolean) {
     val listService = resultService?.data as? ArrayList<ItemsItem>
-
     if (isSearchString.not()) {
       Log.i(TAG, "setServiceDataItems: " + listService?.size + " " + isFirstLoad + " ")
-
       onServiceAddedOrUpdated(listService?.size ?: 0)
       if (isFirstLoad) finalList.clear()
       if (listService.isNullOrEmpty().not()) {
         Log.i(TAG, "setServiceDataItems: list is null or empty not")
-        // removeZeroCaseFragment()
         removeLoader()
         setEmptyView(View.GONE)
         TOTAL_ELEMENTS = resultService?.paging?.count ?: 0
@@ -228,8 +212,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun setAdapterNotify() {
     if (adapterService == null) {
-      adapterService =
-        AppBaseRecyclerViewAdapter(baseActivity, list, this@ServiceListingFragment)
+      adapterService = AppBaseRecyclerViewAdapter(baseActivity, list, this@ServiceListingFragment)
       binding?.baseRecyclerView?.layoutManager = layoutManagerN
       binding?.baseRecyclerView?.adapter = adapterService
       adapterService?.runLayoutAnimation(binding?.baseRecyclerView)
@@ -248,14 +231,9 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     inflater.inflate(R.menu.menu_service_listing, menu)
     val searchItem = menu.findItem(R.id.action_search)
     val searchView = searchItem.actionView as? SearchView
-    val searchAutoComplete =
-      searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
-    val searchCloseIcon =
-      searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
-    searchCloseIcon?.setColorFilter(
-      resources.getColor(R.color.white),
-      android.graphics.PorterDuff.Mode.SRC_IN
-    )
+    val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
+    val searchCloseIcon = searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
+    searchCloseIcon?.setColorFilter(resources.getColor(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
     searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
     searchAutoComplete?.setTextColor(getColor(R.color.white))
     searchView?.setIconifiedByDefault(true)
@@ -274,9 +252,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   private fun startFilter(query: String?) {
     when {
-      query.isNullOrEmpty().not() && query!!.length > 2 -> getListServiceFilterApi(
-        searchString = query
-      )
+      query.isNullOrEmpty().not() && query!!.length > 2 -> getListServiceFilterApi(searchString = query)
       finalList.isNullOrEmpty().not() -> {
         list.clear()
         list.addAll(finalList)
@@ -321,40 +297,23 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     if (actionType == RecyclerViewActionType.SERVICE_ITEM_CLICK.ordinal) {
-      startFragmentActivity(
-        FragmentType.SERVICE_DETAIL_VIEW,
-        sendBundleData(item as? ItemsItem),
-        false,
-        isResult = true
-      )
+      startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, sendBundleData(item as? ItemsItem), false, isResult = true)
     }
     if (actionType == RecyclerViewActionType.SERVICE_WHATS_APP_SHARE.ordinal) {
       shareProduct = item as? ItemsItem
       shareType = true
-      if (checkStoragePermission()) ContentSharing.shareProduct(
-
-        shareProduct?.name,
-        shareProduct?.price.toString(),
-        "${domainName}/all-services",
-        session?.fPPrimaryContactNumber,
-        shareProduct?.image,
-        true,
-        isService = true,
-        activity = requireActivity()
-      )
+      if (checkStoragePermission())
+        ContentSharing.shareProduct(
+          shareProduct?.name, shareProduct?.price.toString(), "${domainName}/all-services", session?.fPPrimaryContactNumber,
+          shareProduct?.image, true, isService = true, activity = requireActivity()
+        )
     }
     if (actionType == RecyclerViewActionType.SERVICE_DATA_SHARE_CLICK.ordinal) {
       shareProduct = item as? ItemsItem
       shareType = false
       if (checkStoragePermission()) ContentSharing.shareProduct(
-        shareProduct?.name,
-        shareProduct?.price.toString(),
-        "${domainName}/all-services",
-        session?.fPPrimaryContactNumber,
-        shareProduct?.image,
-        isService = true,
-        activity = requireActivity()
-
+        shareProduct?.name, shareProduct?.price.toString(), "${domainName}/all-services", session?.fPPrimaryContactNumber,
+        shareProduct?.image, isService = true, activity = requireActivity()
       )
     }
   }
@@ -362,10 +321,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   private fun sendBundleData(itemsItem: ItemsItem?): Bundle {
     val bundle = Bundle()
     bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, itemsItem)
-    bundle.putBoolean(
-      IntentConstant.NON_PHYSICAL_EXP_CODE.name,
-      isNonPhysicalExperience ?: false
-    )
+    bundle.putBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name, isNonPhysicalExperience ?: false)
     bundle.putString(IntentConstant.CURRENCY_TYPE.name, currencyType)
     bundle.putString(IntentConstant.FP_ID.name, fpId)
     bundle.putString(IntentConstant.FP_TAG.name, fpTag)
@@ -398,7 +354,6 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         imageUri = shareProduct?.image,
         isWhatsApp = shareType,
         activity = requireActivity()
-
       )
     }
   }
@@ -416,34 +371,23 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.cbAddService -> {
-        addService()
-      }
+      binding?.cbAddService -> addService()
     }
   }
 
   private fun addService() {
-    startFragmentActivity(
-      FragmentType.SERVICE_DETAIL_VIEW,
-      bundle = sendBundleData(null),
-      isResult = true
-    )
+    startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle = sendBundleData(null), isResult = true)
   }
 
   private fun openSortingBottomSheet() {
     val sortSheet = SortAndFilterBottomSheet()
     sortSheet.onClicked = { }
-    sortSheet.show(
-      this@ServiceListingFragment.parentFragmentManager,
-      ImagePickerBottomSheet::class.java.name
-    )
+    sortSheet.show(this@ServiceListingFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   private fun sandbarNoInternet(context: Activity) {
     val snackBar = Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), Snackbar.LENGTH_LONG)
-    snackBar.view.setBackgroundColor(
-      ContextCompat.getColor(context, R.color.snackbar_negative_color)
-    )
+    snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color))
     snackBar.show()
   }
 
