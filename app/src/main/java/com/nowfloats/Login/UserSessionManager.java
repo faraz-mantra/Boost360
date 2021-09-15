@@ -14,6 +14,7 @@ import com.appservice.AppServiceApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignin.ui.intro.IntroActivity;
 import com.dashboard.AppDashboardApplication;
+import com.framework.models.firestore.FirestoreManager;
 import com.framework.utils.PreferencesUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -982,6 +983,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
   private void processUserSessionDataClear() {
     try {
+      FirestoreManager.INSTANCE.reset();
+      
       WebEngageController.logout();
       AnaCore.logoutUser(activity);
       setUserLogin(false);

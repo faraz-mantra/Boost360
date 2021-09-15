@@ -265,7 +265,7 @@ class BusinessFeaturesViewModel(context: Context) {
       try {
         BusinessFeatureRepository.getAllImageList(object : GetGalleryImagesAsyncTask.GetGalleryImagesInterface {
           override fun imagesReceived(listImage: ArrayList<String>) {
-            Timber.i("Images Received")
+            Timber.i("Images Received: $fpId")
             CoroutineScope(Dispatchers.Main).launch {
               val response = listImage.map { url -> Photo().apply { imageUri = url } }
               _photo.value = response
