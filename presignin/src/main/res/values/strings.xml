@@ -146,5 +146,6 @@
   <string name="need_help_title">We\'re here to help.</string>
   <string name="select_your_business_type">Select Your Business Type</string>
   <string name="confirm_proceed">Confirm category</string>
+    <string name="can_t_find_your_category_speak_to_our_expert">Can’t find your category? speak to our expert</string>
 
 </resources>

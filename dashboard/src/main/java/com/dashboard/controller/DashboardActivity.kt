@@ -99,6 +99,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(this)
+    Log.i(TAG, "Fp Details: "+session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID)+" fptag: "+session?.fpTag)
     session?.let { deepLinkUtil = DeepLinkUtil(this, it) }
     mNavController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
     val graph = mNavController.graph

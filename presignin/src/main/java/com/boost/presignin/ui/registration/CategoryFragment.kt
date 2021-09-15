@@ -1,8 +1,15 @@
 package com.boost.presignin.ui.registration
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.util.Log
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import com.boost.presignin.R
+import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.databinding.FragmentCategoryBinding
@@ -22,7 +29,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.webengageconstant.*
 
-class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoModel>(), RecyclerItemClickListener {
+class CategoryFragment : AppBaseFragment<FragmentCategoryBinding, CategoryVideoModel>(), RecyclerItemClickListener {
 
   private val TAG = "CategoryFragment"
   private lateinit var baseAdapter: AppBaseRecyclerViewAdapter<CategoryDataModel>
@@ -92,6 +99,21 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryVideoMode
         ), true
       )
     }
+
+    val str_no_category_found = "Can’t find your category? speak to our expert"
+    binding?.tvNoCategoryFound?.movementMethod  =LinkMovementMethod.getInstance()
+    val clickableStr = "our expert"
+    val spannableString = SpannableString(str_no_category_found)
+    val clickableSpan = object :ClickableSpan(){
+      override fun onClick(p0: View) {
+        Log.i(TAG, "onClick: ")
+        needHelp()
+      }
+
+    }
+    spannableString.setSpan(clickableSpan,str_no_category_found.indexOf(clickableStr),
+      str_no_category_found.indexOf(clickableStr)+clickableStr.length,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    binding?.tvNoCategoryFound?.text = spannableString
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
