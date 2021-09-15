@@ -109,6 +109,7 @@
             android:buttonTint="@color/gray_bbb"
             android:checked="true"
             android:enabled="false"
+            android:includeFontPadding="false"
             android:text="@string/my_bank_account_details"
             android:textColor="@color/black_4a4a4a"
             app:textType="HEADING_6" />
@@ -117,10 +118,10 @@
             android:id="@+id/checkbox_upi_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/gray_bbb"
+            android:includeFontPadding="false"
+            app:buttonTint="@color/material_check_tin_state"
             android:text="@string/my_upi_id"
             android:textColor="@color/black_4a4a4a"
-            app:buttonTint="@color/gray_bbb"
             app:textType="HEADING_6" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
