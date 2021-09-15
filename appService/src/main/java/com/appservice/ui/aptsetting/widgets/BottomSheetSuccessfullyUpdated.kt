@@ -22,6 +22,7 @@ class BottomSheetSuccessfullyUpdated : BaseBottomSheetDialog<BottomSheetSuccessf
 
   private var catalogName: String? = null
   private var fpDetails: UserFpDetailsResponse? = null
+  var onSuccessClicked: () -> Unit = {}
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_successfully_published
@@ -44,7 +45,7 @@ class BottomSheetSuccessfullyUpdated : BaseBottomSheetDialog<BottomSheetSuccessf
     super.onClick(v)
     when (v) {
       binding?.civCancel -> {
-        baseActivity.onBackPressed()
+        onSuccessClicked()
         dismiss()
       }
       binding?.visitWebsite -> {

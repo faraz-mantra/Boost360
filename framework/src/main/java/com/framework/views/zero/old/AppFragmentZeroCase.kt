@@ -315,7 +315,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
       }
       PRODUCT -> {
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.lets_add_product_to))
-          .setDescription(context.getString(R.string.product_description))
+          .setDescription(context.getString(R.string.product_description_))
           .setIcon(R.drawable.ic_resource_package)
           .isPremium(isPremium)
           .setToolBarTitle(context.getString(R.string.product))

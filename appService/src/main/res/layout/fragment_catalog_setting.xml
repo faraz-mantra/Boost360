@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_match_root">
 
@@ -120,14 +121,16 @@
           <com.framework.views.customViews.CustomTextView
             style="@style/AppointmentCatalogSettingText2"
             android:paddingStart="@dimen/size_0"
-            android:text="@string/it_is_not_advised_to_change_it_very_often_with_every_such_change_the_url_of_catalog_page_changes_which_may_cause_search_related_issues_and_a_drop_in_search_rank_leading_to_less_traffic" />
+            android:text="@string/it_is_not_advised_to_change_it_very_often_with_every_such_change_the_url_of_catalog_page_changes_which_may_cause_search_related_issues_and_a_drop_in_search_rank_leading_to_less_traffic"
+            tools:ignore="RtlSymmetry" />
 
         </LinearLayout>
 
         <com.framework.views.customViews.CustomTextView
           style="@style/AppointmentSetting_Text_Heading"
           android:layout_marginTop="@dimen/size_30"
-          android:text="@string/default_tax_rate_for_services" />
+          android:text="@string/default_tax_rate_for_services"
+          android:visibility="gone" />
 
         <com.framework.views.customViews.CustomTextField
           style="@style/Appointment_Text_Field"
@@ -136,28 +139,31 @@
           android:focusable="false"
           android:hint="18%"
           android:padding="@dimen/_14dp"
-          android:singleLine="true" />
+          android:singleLine="true"
+          android:visibility="gone" />
 
         <com.framework.views.customViews.CustomTextView
           style="@style/Appointment_Text_Catalog_Heading"
           android:layout_marginTop="@dimen/size_10"
           android:text="@string/what_are_text_rates"
           android:textColor="@color/warm_grey"
-          />
+          android:visibility="gone" />
 
         <com.framework.views.customViews.CustomTextView
           style="@style/AppointmentCatalogSettingText2"
           android:text="@string/tax_slabs_are_a_rate_at_which_any_service_is_taxable_determined_by_gst_council_of_india_this_is_used_to_"
-          />
+          android:visibility="gone" />
 
         <com.framework.views.customViews.CustomTextView
           style="@style/Appointment_Text_Catalog_Heading"
           android:text="@string/how_does_default_rate_work"
-          android:textColor="@color/warm_grey" />
+          android:textColor="@color/warm_grey"
+          android:visibility="gone" />
 
         <com.framework.views.customViews.CustomTextView
           style="@style/AppointmentCatalogSettingText2"
-          android:text="@string/this_will_be_used_as_defau" />
+          android:text="@string/this_will_be_used_as_defau"
+          android:visibility="gone" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>

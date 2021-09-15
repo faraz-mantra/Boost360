@@ -22,7 +22,8 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
   private var adapter: AppBaseRecyclerViewAdapter<AppointmentStatusResponse.TilesModel>? = null
   private var copyList: ArrayList<AppointmentStatusResponse.TilesModel>? = arrayListOf()
   private var finalList: ArrayList<AppointmentStatusResponse.TilesModel>? = arrayListOf()
-  var filteredList: ArrayList<AppointmentStatusResponse.TilesModel>? = arrayListOf()
+  private var filteredList: ArrayList<AppointmentStatusResponse.TilesModel>? = arrayListOf()
+  private var isFirst: Boolean = true
 
   override fun getLayout(): Int {
     return R.layout.fragment_appointment_settings
@@ -53,23 +54,22 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
       }
 
     })
+  }
+
+  override fun onResume() {
+    super.onResume()
     getStatusData()
   }
 
   private fun getStatusData() {
-    showProgress()
+    if (isFirst) showProgress()
     viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, {
+      val dataItem = it as? AppointmentStatusResponse
+      if (dataItem?.isSuccess() == true && dataItem.result != null) {
+        setUpRecyclerView(dataItem.result!!.getAppointmentTilesArray())
+      } else showShortToast("Appointment setting data getting error!")
+      isFirst = false
       hideProgress()
-      when (it.isSuccess()) {
-        true -> {
-          val dataItem = it as? AppointmentStatusResponse
-          if (dataItem != null) {
-            setUpRecyclerView(dataItem.result?.getAppointmentTilesArray()!!)
-          }
-        }
-        else -> {
-        }
-      }
     })
   }
 

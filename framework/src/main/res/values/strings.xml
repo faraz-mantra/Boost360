@@ -62,7 +62,7 @@
   <string name="product">Products</string>
   <string name="product_footer">In order to add products in bulk, please log into boost.nowfloats.com on a desktop computer.</string>
   <string name="lets_add_product_to">Let\'s add products to your catalogue.</string>
-  <string name="product_description">You can easily add detailed information about your products and their prices to enable online sales.</string>
+  <string name="product_description_">You can easily add detailed information about your products and their prices to enable online sales.</string>
   <string name="this_is_premium_feature">This is a premium feature.</string>
   <string name="business_calls_description">Get a Virtual Mobile Number (VMN) that helps you track, record and analyse customer conversations. Keep track of leads and listen to call recordings to avoid missing sales opportunities.</string>
   <string name="business_calls_tool_bar_title">Business Calls</string>

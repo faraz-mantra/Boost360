@@ -187,18 +187,11 @@ class FragmentEcomDeliveryConfig : AppBaseFragment<FragmentDeliveryConfiguration
   private fun updateDeliveryStatus(isPickup: Boolean, isHomePickup: Boolean, flatDeliverCharge: String) {
     viewModel?.setupDelivery(
       DeliverySetup(
-        isPickupAllowed = isPickup,
-        isBusinessLocationPickupAllowed = false,
-        isWarehousePickupAllowed = false,
-        isHomeDeliveryAllowed = isHomePickup,
-        flatDeliveryCharge = flatDeliverCharge,
-        clientId = clientId,
-        floatingPointId = sessionLocal.fPID
+        isPickupAllowed = isPickup, isBusinessLocationPickupAllowed = false, isWarehousePickupAllowed = false,
+        isHomeDeliveryAllowed = isHomePickup, flatDeliveryCharge = flatDeliverCharge, clientId = clientId, floatingPointId = sessionLocal.fPID
       )
     )?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        showShortToast(getString(R.string.updated))
-      }
+      if (it.isSuccess()) showShortToast(getString(R.string.updated))
     })
   }
 }

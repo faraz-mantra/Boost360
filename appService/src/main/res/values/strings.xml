@@ -391,9 +391,9 @@
   <string name="weekly_schedule">Weekly schedule</string>
   <string name="staff_will_available_for_clients">Time the staff will be available for the clients.</string>
   <string name="staff_timing">Staff Timing</string>
-  <string name="updated">Updated successfully</string>
-  <string name="staff_timings_updated">Staff timings updated</string>
-  <string name="staff_timings_unable_to_update">Staff timings unable to update</string>
+  <string name="updated">Updated successfully!</string>
+  <string name="staff_timings_updated">Staff timings updated!</string>
+  <string name="staff_timings_unable_to_update">Staff timings unable to update!</string>
   <string name="staff_timings_updating">Updating staff timings...</string>
   <string name="weekly_appointment">Weekly Appointment Schedule</string>
   <string name="categories">Categories</string>

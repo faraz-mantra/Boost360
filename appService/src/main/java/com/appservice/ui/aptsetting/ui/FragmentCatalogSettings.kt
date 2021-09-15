@@ -8,6 +8,9 @@ import com.appservice.ui.aptsetting.widgets.BottomSheetCatalogDisplayName
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentCatalogSettingBinding
+import com.appservice.ui.aptsetting.widgets.BottomSheetConfirmingChange
+import com.appservice.ui.aptsetting.widgets.BottomSheetSuccessfullyUpdated
+import com.appservice.utils.capitalizeUtil
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.extensions.observeOnce
 import com.framework.pref.Key_Preferences
@@ -50,10 +53,9 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
       hideProgress()
       this.response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
-        binding?.ctvService?.text = response?.productCategoryVerb
+        binding?.ctvService?.text = response?.productCategoryVerb(baseActivity)?.capitalizeUtil()
         binding?.ctvWebsiteUrl?.text = fromHtml("<pre>URL: <span style=\"color: #4a4a4a;\"><u>${sessionLocal.getDomainName()}<b>/${response?.productCategoryVerb(baseActivity)}</b></u></span></pre>")
         sessionLocal.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB, response?.productCategoryVerb)
-      } else {
       }
     })
   }
@@ -66,9 +68,30 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
   }
 
   private fun showCatalogDisplayName() {
-    val bottomSheetCatalogDisplayName = BottomSheetCatalogDisplayName()
-    bottomSheetCatalogDisplayName.arguments = Bundle().apply { putSerializable(IntentConstant.CATALOG_DATA.name, response) }
-    bottomSheetCatalogDisplayName.show(this.parentFragmentManager, BottomSheetCatalogDisplayName::class.java.name)
+    BottomSheetCatalogDisplayName().apply {
+      arguments = Bundle().apply { putSerializable(IntentConstant.CATALOG_DATA.name, response) }
+      onClicked = { customText, fpDetails ->
+        BottomSheetConfirmingChange().apply {
+          arguments = Bundle().apply {
+            putString(IntentConstant.CATALOG_CUSTOM_NAME.name, customText)
+            putSerializable(IntentConstant.CATALOG_DATA.name, fpDetails)
+          }
+          onClicked = { catalogName, fpDetails ->
+            BottomSheetSuccessfullyUpdated().apply {
+              arguments = Bundle().apply {
+                putString(IntentConstant.CATALOG_CUSTOM_NAME.name, catalogName)
+                putSerializable(IntentConstant.CATALOG_DATA.name, fpDetails)
+              }
+              onSuccessClicked = {
+                getFpDetails()
+              }
+              show(this@FragmentCatalogSettings.parentFragmentManager, BottomSheetSuccessfullyUpdated::class.java.name)
+            }
+          }
+          show(this@FragmentCatalogSettings.parentFragmentManager, BottomSheetConfirmingChange::class.java.name)
+        }
+      }
+      show(this@FragmentCatalogSettings.parentFragmentManager, BottomSheetCatalogDisplayName::class.java.name)
+    }
   }
-
 }
