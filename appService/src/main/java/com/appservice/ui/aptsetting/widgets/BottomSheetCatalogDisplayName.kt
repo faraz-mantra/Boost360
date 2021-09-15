@@ -1,11 +1,10 @@
 package com.appservice.ui.aptsetting.widgets
 
-import android.os.Bundle
 import android.view.View
 import com.appservice.R
-import com.appservice.model.aptsetting.UserFpDetailsResponse
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomSheetCatalogDisplayBinding
+import com.appservice.model.aptsetting.UserFpDetailsResponse
 import com.appservice.ui.aptsetting.ui.getProductType
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
@@ -17,7 +16,7 @@ class BottomSheetCatalogDisplayName : BaseBottomSheetDialog<BottomSheetCatalogDi
 
   private var fpDetails: UserFpDetailsResponse? = null
   var customText: String? = null
-  var onDoneClicked: () -> Unit = {}
+  var onClicked: (customText: String?,fpDetails: UserFpDetailsResponse?) -> Unit = { _: String?, _: UserFpDetailsResponse? -> }
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_catalog_display
@@ -76,18 +75,9 @@ class BottomSheetCatalogDisplayName : BaseBottomSheetDialog<BottomSheetCatalogDi
         customText = if (binding?.radioGroup?.checkedRadioButtonId != R.id.radio_service) {
           binding?.ctvCustomDisplayHint?.text.toString()
         } else getProductType(sessionManager?.fP_AppExperienceCode)
-        if (binding?.btnProceed?.text?.equals(getString(R.string.proceed)) == true) showConfirmingChange()
+        if (binding?.btnProceed?.text?.equals(getString(R.string.proceed)) == true) onClicked(customText,fpDetails)
         dismiss()
       }
     }
-  }
-
-  private fun showConfirmingChange() {
-    val bottomSheetCatalogDisplayName = BottomSheetConfirmingChange()
-    val bundle = Bundle()
-    bundle.putString(IntentConstant.CATALOG_CUSTOM_NAME.name, customText)
-    bundle.putSerializable(IntentConstant.CATALOG_DATA.name, fpDetails)
-    bottomSheetCatalogDisplayName.arguments = bundle
-    bottomSheetCatalogDisplayName.show(this.parentFragmentManager, BottomSheetConfirmingChange::class.java.name)
   }
 }

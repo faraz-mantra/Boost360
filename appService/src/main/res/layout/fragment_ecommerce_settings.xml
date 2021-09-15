@@ -9,7 +9,7 @@
       android:id="@+id/linearLayout"
       android:layout_width="match_parent"
       android:layout_height="@dimen/size_70"
-      android:background="@color/yellow_ffb900"
+      android:background="@color/colorAccent"
       android:visibility="visible"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,8 @@
         android:gravity="center_vertical"
         android:textSize="12sp"
         app:iconifiedByDefault="false"
-        app:queryHint="@string/search_in_the_ecommerce_settings" />
+        app:queryHint="@string/search_in_the_ecommerce_settings"
+        app:searchIcon="@null" />
     </LinearLayout>
 
     <com.framework.views.viewgroups.BaseRecyclerView

@@ -37,6 +37,7 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
+import com.appservice.utils.capitalizeUtil
 import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -171,7 +172,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     super.onResume()
     var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
     if (fpDetails.isNullOrEmpty()) fpDetails = "Services"
-    setToolbarTitle("$fpDetails (${TOTAL_ELEMENTS})")
+    setToolbarTitle("$fpDetails (${TOTAL_ELEMENTS})".capitalizeUtil())
   }
 
   private fun setServiceDataItems(resultService: Result?, isSearchString: Boolean, isFirstLoad: Boolean) {
@@ -192,7 +193,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         setAdapterNotify()
         var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
         if (fpDetails.isNullOrEmpty()) fpDetails = "Services"
-        setToolbarTitle("$fpDetails (${TOTAL_ELEMENTS})")
+        setToolbarTitle("$fpDetails (${TOTAL_ELEMENTS})".capitalizeUtil())
       } else if (isFirstLoad) setEmptyView(View.VISIBLE)
     } else {
       if (listService.isNullOrEmpty().not()) {

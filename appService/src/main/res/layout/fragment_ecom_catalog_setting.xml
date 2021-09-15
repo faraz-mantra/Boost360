@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -14,8 +14,7 @@
 
       <LinearLayout
         style="@style/match_wrap"
-        android:layout_marginVertical="@dimen/size_16"
-
+        android:layout_marginVertical="@dimen/size_10"
         android:drawablePadding="@dimen/size_12"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/size_16">
@@ -32,7 +31,7 @@
           android:includeFontPadding="true"
           android:text="@string/decide_what_you_want_to_call_the_catalog_tab_on_your_website_and_the_default_tax_for_your_all_products"
           android:textColor="@color/black_4a4a4a"
-          android:textFontWeight="400" />
+          app:textType="CAPTION"  />
       </LinearLayout>
 
     </com.framework.views.customViews.CustomCardView>
@@ -60,7 +59,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
           style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_5"
-          android:background="@drawable/bg_rect_edit_txt"
+          android:background="@drawable/bg_rect_grey_rounded"
           android:orientation="vertical">
 
           <androidx.appcompat.widget.LinearLayoutCompat
@@ -83,7 +82,7 @@
               android:fontFamily="@font/semi_bold"
               android:text="Products"
               android:textColor="@color/black_4a4a4a"
-              android:textSize="14sp" />
+              app:textType="BODY_1"/>
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_change_services"
@@ -92,9 +91,8 @@
               android:drawablePadding="@dimen/size_8"
               android:gravity="center_vertical"
               android:text="@string/change"
-              android:textAllCaps="true"
               android:textColor="@color/black_4a4a4a"
-              android:textSize="12sp" />
+              app:textType="BODY_1" />
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <com.framework.views.customViews.CustomTextView
@@ -121,7 +119,8 @@
           <com.framework.views.customViews.CustomTextView
             style="@style/AppointmentCatalogSettingText2"
             android:paddingStart="@dimen/size_0"
-            android:text="@string/it_is_not_advised_to_change_it_very_often_with_every_such_change_the_url_of_catalog_page_changes_which_may_cause_search_related_issues_and_a_drop_in_search_rank_leading_to_less_traffic" />
+            android:text="@string/it_is_not_advised_to_change_it_very_often_with_every_such_change_the_url_of_catalog_page_changes_which_may_cause_search_related_issues_and_a_drop_in_search_rank_leading_to_less_traffic"
+            tools:ignore="RtlSymmetry" />
 
         </LinearLayout>
 

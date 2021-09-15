@@ -35,6 +35,7 @@ import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.model.serviceProduct.service.ItemsItem
+import com.appservice.utils.capitalizeUtil
 import com.appservice.viewmodel.ProductViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -171,7 +172,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
         setAdapterNotify()
         var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
         if (fpDetails.isNullOrEmpty()) fpDetails = "Products"
-        setToolbarTitle("$fpDetails (${limit})")
+        setToolbarTitle("$fpDetails (${limit})".capitalizeUtil())
       }
       isFirstLoad -> setEmptyView(View.VISIBLE)
       resultProduct.isNullOrEmpty().not() -> {
@@ -290,7 +291,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     super.onResume()
     var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
     if (fpDetails.isNullOrEmpty()) fpDetails = "Products"
-    setToolbarTitle("$fpDetails (${limit})")
+    setToolbarTitle("$fpDetails (${limit})".capitalizeUtil())
   }
 
   override fun showProgress(title: String?, cancelable: Boolean?) {

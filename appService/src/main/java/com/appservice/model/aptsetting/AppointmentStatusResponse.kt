@@ -6,6 +6,7 @@ import com.appservice.AppServiceApplication
 import com.appservice.R
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.ui.aptsetting.ui.getProductType
+import com.appservice.utils.capitalizeUtil
 import com.framework.base.BaseResponse
 import com.framework.pref.UserSessionManager
 import com.framework.utils.fromHtml
@@ -14,10 +15,8 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
 data class AppointmentStatusResponse(
-
   @field:SerializedName("StatusCode")
   var statusCode: Int? = null,
-
   @field:SerializedName("Result")
   var result: ResultS? = null
 ) : BaseResponse(), Serializable {
@@ -28,14 +27,12 @@ data class AppointmentStatusResponse(
     var title: String? = null,
     var tile: Any? = null,
     var isEnabled: Boolean? = false,
-    var recyclerViewItem: Int = RecyclerViewItemType.CATALOG_SETTING_TILES.getLayout()
   ) : Serializable, AppBaseRecyclerViewItem, com.appservice.recyclerView.AppBaseRecyclerViewItem {
+
     override fun getViewType(): Int {
-      return recyclerViewItem
+      return RecyclerViewItemType.CATALOG_SETTING_TILES.getLayout()
     }
   }
-
-
 }
 
 enum class IconType(var icon: Int) {
@@ -110,21 +107,17 @@ data class DeliverySetupTile(
 }
 
 data class PaymentCollectionSetup(
-
   @field:SerializedName("IsBankAccountConnected")
   var isBankAccountConnected: Boolean? = null,
-
   @field:SerializedName("PaymentGateway")
   var paymentGateway: String? = null,
-
   @field:SerializedName("BankAccountNumber")
   var bankAccountNumber: String? = null,
-
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
 ) {
-  fun getTitle(): Spanned? {
 
+  fun getTitle(): Spanned? {
     return fromHtml("Payment gateway: <b>${if (paymentGateway.isNullOrEmpty()) "Pending" else "$paymentGateway"}</b>")
   }
 
@@ -153,22 +146,18 @@ data class PoliciesSetup(
 
 
 data class CatalogSetup(
-
   @field:SerializedName("DefaultGSTSlab")
   var defaultGSTSlab: Double? = null,
-
   @field:SerializedName("ProductCategoryVerb")
   var productCategoryVerb: String? = null,
-
   @field:SerializedName("IsDefaultGSTSlabSelected")
   var isDefaultGSTSlabSelected: Boolean? = null,
-
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
 ) {
   fun getTitle(activity: Activity?): Spanned? {
     val s = UserSessionManager(activity ?: AppServiceApplication.instance)
-    return fromHtml("Display text: <b>${if (productCategoryVerb.isNullOrEmpty()) getProductType(s.fP_AppExperienceCode) else "$productCategoryVerb"}</b>")
+    return fromHtml("Display text: <b>${if (productCategoryVerb.isNullOrEmpty()) getProductType(s.fP_AppExperienceCode) else "${productCategoryVerb?.capitalizeUtil()}"}</b>")
   }
 
   fun getSubtitle(): Spanned? {
@@ -178,16 +167,12 @@ data class CatalogSetup(
 
 
 data class CustomerInvoicesSetup(
-
   @field:SerializedName("IsGSTDeclarationComplete")
   var isGSTDeclarationComplete: Boolean? = null,
-
   @field:SerializedName("GSTIN")
   var gSTIN: String? = null,
-
   @field:SerializedName("IsTaxInvoiceSetupComplete")
   var isTaxInvoiceSetupComplete: Boolean? = null,
-
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
 ) {
@@ -203,10 +188,8 @@ data class CustomerInvoicesSetup(
 
 
 data class ConsultationSetup(
-
   @field:SerializedName("IsGeneralAppointmentEnabled")
   var isGeneralAppointmentEnabled: Boolean? = null,
-
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
 )

@@ -23,7 +23,8 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
   private var adapter: AppBaseRecyclerViewAdapter<AppointmentStatusResponse.TilesModel>? = null
   private var copyList: ArrayList<AppointmentStatusResponse.TilesModel>? = arrayListOf()
   private var finalList: ArrayList<AppointmentStatusResponse.TilesModel>? = arrayListOf()
-  var filteredList: ArrayList<AppointmentStatusResponse.TilesModel>? = arrayListOf()
+  private var filteredList: ArrayList<AppointmentStatusResponse.TilesModel>? = arrayListOf()
+  private var isFirst: Boolean = true
 
   override fun getLayout(): Int {
     return R.layout.fragment_ecommerce_settings
@@ -52,25 +53,23 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
         filterList(newText)
         return false
       }
-
     })
+  }
+
+  override fun onResume() {
+    super.onResume()
     getStatusData()
   }
 
   private fun getStatusData() {
-    showProgress()
+    if (isFirst) showProgress()
     viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, {
+      val dataItem = it as? AppointmentStatusResponse
+      if (dataItem?.isSuccess() == true && dataItem.result != null) {
+        setUpRecyclerView(dataItem.result!!.getEcommerceTilesArray())
+      } else showShortToast("E-commerce setting data getting error!")
+      isFirst = false
       hideProgress()
-      when (it.isSuccess()) {
-        true -> {
-          val dataItem = it as? AppointmentStatusResponse
-          if (dataItem != null) {
-            setUpRecyclerView(dataItem.result?.getEcommerceTilesArray()!!)
-          }
-        }
-        else -> {
-        }
-      }
     })
   }
 
@@ -103,7 +102,6 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
   }
 
   private fun clearSearchFocus() {
-    // closes the soft keyboard when this fragment loafds
     binding?.svSettings?.clearFocus()
   }
 
@@ -114,6 +112,8 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
       IconType.customer_invoice_setup -> startFragmentActivity(FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE)
       IconType.payment_collection -> startFragmentActivity(FragmentType.ECOMMERCE_PAYMENT_SETTINGS)
       IconType.policies -> startFragmentActivity(FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES)
+      else -> {
+      }
     }
   }
 }

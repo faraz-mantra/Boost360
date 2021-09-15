@@ -1,13 +1,12 @@
 package com.appservice.ui.aptsetting.widgets
 
-import android.os.Bundle
 import android.view.View
 import com.appservice.R
+import com.appservice.constant.IntentConstant
+import com.appservice.databinding.BottomSheetConfirmingChangesBinding
 import com.appservice.model.aptsetting.ProductCategoryVerbRequest
 import com.appservice.model.aptsetting.UpdatesItem
 import com.appservice.model.aptsetting.UserFpDetailsResponse
-import com.appservice.constant.IntentConstant
-import com.appservice.databinding.BottomSheetConfirmingChangesBinding
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
@@ -22,6 +21,7 @@ class BottomSheetConfirmingChange : BaseBottomSheetDialog<BottomSheetConfirmingC
 
   private var catalogName: String? = null
   private var fpDetails: UserFpDetailsResponse? = null
+  var onClicked: (catalogName: String?, fpDetails: UserFpDetailsResponse?) -> Unit = { _: String?, _: UserFpDetailsResponse? -> }
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_confirming_changes
@@ -64,7 +64,7 @@ class BottomSheetConfirmingChange : BaseBottomSheetDialog<BottomSheetConfirmingC
     binding?.btnYesChange?.isEnabled = false
     viewModel?.updateProductCategoryVerb(getRequest())?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        showSuccessfullyUpdated()
+        onClicked(catalogName,fpDetails)
         dismiss()
       } else showShortToast("Error updating catalog!")
       binding?.btnYesChange?.isEnabled = true
@@ -78,14 +78,5 @@ class BottomSheetConfirmingChange : BaseBottomSheetDialog<BottomSheetConfirmingC
       updates = arrayListOf(UpdatesItem(catalogName, "PRODUCTCATEGORYVERB"))
       clientID = clientId
     }
-  }
-
-  private fun showSuccessfullyUpdated() {
-    val bottomSheetCatalogDisplayName = BottomSheetSuccessfullyUpdated()
-    val bundle = Bundle()
-    bundle.putString(IntentConstant.CATALOG_CUSTOM_NAME.name, catalogName)
-    bundle.putSerializable(IntentConstant.CATALOG_DATA.name, fpDetails)
-    bottomSheetCatalogDisplayName.arguments = bundle
-    bottomSheetCatalogDisplayName.show(this.parentFragmentManager, BottomSheetSuccessfullyUpdated::class.java.name)
   }
 }
