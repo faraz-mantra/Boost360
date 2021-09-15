@@ -11,16 +11,19 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.utils.SharedPrefs
+import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import com.framework.webengageconstant.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.order_confirmation_fragment.*
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
 class OrderConfirmationFragment : BaseFragment() {
 
   lateinit var prefs: SharedPrefs
+  var data = JSONObject()
 
   companion object {
     fun newInstance() = OrderConfirmationFragment()
@@ -32,12 +35,29 @@ class OrderConfirmationFragment : BaseFragment() {
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
+    val jsonString = requireArguments().getString("data")
+    data = JSONObject(jsonString!!)
     prefs = SharedPrefs(activity as UpgradeActivity)
     return inflater.inflate(R.layout.order_confirmation_fragment, container, false)
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
+
+    val revenue = data["amount"] as Int
+
+    val event_attributes: HashMap<String, Any> = HashMap()
+    event_attributes.put("revenue",(revenue / 100))
+    event_attributes.put("rev",(revenue / 100))
+    event_attributes.put("cartIds", Utils.filterBraces(prefs.getCardIds().toString()))
+    event_attributes.put("couponIds", Utils.filterQuotes(prefs.getCouponIds().toString()))
+    event_attributes.put("validity",prefs.getValidityMonths().toString())
+
+    WebEngageController.trackEvent(
+      EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM,
+      PAGE_VIEW,
+      event_attributes
+    )
     viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
     viewModel.emptyCurrentCart((activity as UpgradeActivity).application);
 
@@ -87,11 +107,7 @@ class OrderConfirmationFragment : BaseFragment() {
       ).show()
     }
 
-    WebEngageController.trackEvent(
-      EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM,
-      PAGE_VIEW,
-      ADDONS_MARKETPLACE_ORDER_CONFIRMATION
-    )
+
 
   }
 
