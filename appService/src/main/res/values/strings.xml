@@ -549,6 +549,7 @@
   <string name="upload_signature_to_print_on_invoice"><b>Upload signature</b> (to print on invoice)</string>
   <string name="print_payment_info_on_post_paid_invoices"><b>Print payment info</b> (on post paid invoices)</string>
   <string name="save_changes">Save changes</string>
+  <string name="continue_">Continue</string>
   <string name="gst_details">GST Details</string>
   <string name="my_business_is_registered_with_gst">My business is registered with GST</string>
   <string name="not_registered_with_gst">Not registered with GST</string>
@@ -556,7 +557,6 @@
   <string name="enter_business_name">Enter business name</string>
   <string name="enter_your_business_gstin">Enter your business GSTIN</string>
   <string name="note_your_gstin_and_business_name_will_be_verified"><b>Note:</b> Your GSTIN and business name will be verified.</string>
-  <string name="i_hereby_declare_that_i_ve_not_yet_registered_my_business_for_gst">I hereby declare that I’ve not yet registered my business for GST.</string>
   <string name="brajmadhav_okhdfcbank">brajmadhav@okhdfcbank</string>
   <string name="yes_change">Yes, change</string>
   <string name="gstin">GSTIN</string>
@@ -567,7 +567,7 @@
   <string name="please_confirm_account_number">please confirm account number</string>
   <string name="account_number_is_not_same">account number and confirm account number must be same</string>
   <string name="enter_bank_ifcs">enter bank ifcs code</string>
-  <string name="company_name">Company Name</string>
+  <string name="company_name_">Company Name</string>
   <string name="nowfloats_technologies_pvt_ltd">Nowfloats Technologies Pvt Ltd.</string>
   <string name="upi_id">UPI ID</string>
   <string name="brajmadhav1234_oksbi">brajmadhav1234@oksbi</string>
@@ -973,4 +973,5 @@
   <string name="what_s_this">(what’s this?)</string>
   <string name="out_of_stock">Out of stock</string>
   <string name="stock">Stock</string>
+  <string name="i_hereby_declare_that_i_ve_not_yet_registered_my_business_for_gst">I hereby declare that I’ve not yet registered my business for GST.</string>
 </resources>

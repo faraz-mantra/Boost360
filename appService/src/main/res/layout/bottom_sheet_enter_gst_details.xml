@@ -40,7 +40,7 @@
       <RadioGroup
         android:id="@+id/radio_group"
         style="@style/match_wrap"
-        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginHorizontal="@dimen/size_18"
         android:layout_marginTop="@dimen/size_20">
 
         <RadioButton
@@ -55,80 +55,102 @@
           tools:buttonTint="@color/gray_bbb" />
       </RadioGroup>
 
-      <com.framework.views.customViews.CustomCheckBox
-        style="@style/match_wrap"
-        android:layout_gravity="top"
-        android:layout_marginHorizontal="@dimen/size_20"
-        android:layout_marginTop="@dimen/size_10"
-        android:paddingTop="@dimen/size_8"
-        android:text="@string/i_hereby_declare_that_i_ve_not_yet_registered_my_business_for_gst"
-        android:textColor="@color/black_4a4a4a"
-        android:textSize="14sp"
-        android:visibility="gone" />
-
       <androidx.appcompat.widget.LinearLayoutCompat
         style="@style/match_wrap"
-        android:layout_marginTop="@dimen/size_15"
+        android:layout_marginTop="@dimen/size_14"
         android:orientation="vertical">
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_gst_title"
-          style="@style/AppointmentSetting_Text_Heading"
-          android:layout_marginStart="@dimen/size_20"
-          android:text="@string/enter_your_business_gstin"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/edt_view"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_gst_title"
+            style="@style/AppointmentSetting_Text_Heading"
+            android:layout_marginStart="@dimen/size_20"
+            android:text="@string/enter_your_business_gstin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-        <com.framework.views.customViews.CustomEditText
-          android:id="@+id/cet_gst"
-          style="@style/Appointment_Text_Field"
-          android:layout_marginHorizontal="@dimen/size_20"
-          android:hint="@string/enter_business_gstin"
-          android:inputType="textCapCharacters"
-          android:maxLength="15" />
+          <com.framework.views.customViews.CustomEditText
+            android:id="@+id/cet_gst"
+            style="@style/Appointment_Text_Field"
+            android:layout_marginHorizontal="@dimen/size_20"
+            android:hint="@string/enter_business_gstin"
+            android:inputType="textCapCharacters"
+            android:maxLength="15" />
 
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_invalid_gstin"
-          style="@style/Appointment_Text_Subheading"
-          android:layout_marginHorizontal="@dimen/size_20"
-          android:layout_marginTop="@dimen/size_5"
-          android:text="@string/invalid_gstin_number"
-          android:textColor="#E39595"
-          android:visibility="gone" />
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_invalid_gstin"
+            style="@style/Appointment_Text_Subheading"
+            android:layout_marginHorizontal="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_5"
+            android:text="@string/invalid_gstin_number"
+            android:textColor="#E39595"
+            android:visibility="gone" />
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_business_name"
-          style="@style/AppointmentSetting_Text_Heading"
-          android:layout_marginStart="@dimen/size_20"
-          android:layout_marginTop="@dimen/size_16"
-          android:layout_marginEnd="@dimen/size_20"
-          android:drawablePadding="@dimen/size_10"
-          android:text="@string/enter_business_name" />
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_business_name"
+            style="@style/AppointmentSetting_Text_Heading"
+            android:layout_marginStart="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginEnd="@dimen/size_20"
+            android:drawablePadding="@dimen/size_10"
+            android:text="@string/enter_business_name" />
 
-        <com.framework.views.customViews.CustomEditText
-          android:id="@+id/cet_business_name"
-          style="@style/Appointment_Text_Field"
-          android:layout_marginHorizontal="@dimen/size_20"
-          android:hint="@string/enter_business_name" />
+          <com.framework.views.customViews.CustomEditText
+            android:id="@+id/cet_business_name"
+            style="@style/Appointment_Text_Field"
+            android:layout_marginHorizontal="@dimen/size_20"
+            android:hint="@string/enter_business_name" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <com.framework.views.customViews.CustomTextView
-          style="@style/wrap_wrap"
-          android:layout_gravity="start"
-          android:layout_marginHorizontal="@dimen/size_20"
-          android:layout_marginTop="@dimen/size_10"
-          android:drawableStart="@drawable/ic_info"
-          android:drawablePadding="@dimen/size_8"
-          android:drawableTint="@color/gray_bbb"
-          android:text="@string/note_your_gstin_and_business_name_will_be_verified"
-          android:textColor="@color/gray_828282" />
+
+        <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_marginHorizontal="@dimen/size_20">
+
+          <com.framework.views.customViews.CustomCheckBox
+            android:id="@+id/gst_register_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/material_check_tin_state"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/size_6"
+            android:checked="true"
+            android:text="@string/i_hereby_declare_that_i_ve_not_yet_registered_my_business_for_gst"
+            android:textColor="@color/black_4a4a4a"
+            android:visibility="gone"
+            app:textType="BODY_1"
+            tools:ignore="RtlSymmetry" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/txt_note"
+            style="@style/wrap_wrap"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/size_10"
+            android:drawableStart="@drawable/ic_info"
+            android:drawablePadding="@dimen/size_8"
+            android:drawableTint="@color/gray_bbb"
+            android:text="@string/note_your_gstin_and_business_name_will_be_verified"
+            android:textColor="@color/gray_828282"
+            app:textType="BODY_1"
+            tools:ignore="UnusedAttribute" />
+        </FrameLayout>
+
         <RelativeLayout
           android:layout_width="match_parent"
-          android:layout_marginTop="@dimen/size_15"
+          android:layout_height="wrap_content"
           android:layout_marginHorizontal="@dimen/size_20"
-          android:layout_height="wrap_content">
+          android:layout_marginTop="@dimen/size_15"
+          android:visibility="gone">
 
           <com.framework.views.customViews.CustomCheckBox
             android:id="@+id/ccb_rcm"
@@ -146,8 +168,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:textColor="@color/black_4a4a4a"
-            android:text="@string/what_s_this" />
+            android:text="@string/what_s_this"
+            android:textColor="@color/black_4a4a4a" />
 
         </RelativeLayout>
 
@@ -195,9 +217,10 @@
           android:id="@+id/btn_save_changes"
           style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
           android:layout_width="wrap_content"
-          android:layout_height="@dimen/size_36"
+          android:layout_height="@dimen/size_38"
           android:paddingStart="@dimen/size_28"
           android:paddingEnd="@dimen/size_28"
+          android:backgroundTint="@color/material_button_background_state"
           android:text="@string/save_changes"
           android:textAllCaps="false"
           android:textColor="@color/white"

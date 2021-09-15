@@ -3,6 +3,7 @@ package com.appservice.ui.aptsetting.widgets
 import BottomSheetRCM
 import android.graphics.Paint
 import android.view.View
+import android.widget.CompoundButton
 import androidx.core.content.ContextCompat
 import com.appservice.R
 import com.appservice.model.aptsetting.GSTDetails
@@ -18,21 +19,23 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDetailsBinding, AppointmentSettingsViewModel>() {
+
+  var isEdit = false
+  private var paymentProfileDetails: PaymentResult? = null
+  var gstIn: (gst: String?) -> Unit = { }
+  var businessName: (name: String?) -> Unit = { }
+  var clickType: (name: ClickType?) -> Unit = { }
+
   enum class ClickType {
     SAVECHANGES, CANCEL, NO_GST
   }
 
-  var isEdit = false
-  override fun getLayout(): Int {
-    return R.layout.bottom_sheet_enter_gst_details
-  }
 
   companion object {
     fun isValidGSTNo(str: String?): Boolean {
       val regex = ("^[0-9]{2}[A-Z]{5}[0-9]{4}"
           + "[A-Z]{1}[1-9A-Z]{1}"
           + "Z[0-9A-Z]{1}$")
-
       val p = Pattern.compile(regex)
       if (str == null) {
         return false
@@ -43,10 +46,9 @@ class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDeta
     }
   }
 
-  private var paymentProfileDetails: PaymentResult? = null
-  var gstIn: (gst: String?) -> Unit = { }
-  var businessName: (name: String?) -> Unit = { }
-  var clickType: (name: ClickType?) -> Unit = { }
+  override fun getLayout(): Int {
+    return R.layout.bottom_sheet_enter_gst_details
+  }
 
   override fun getViewModelClass(): Class<AppointmentSettingsViewModel> {
     return AppointmentSettingsViewModel::class.java
@@ -74,34 +76,35 @@ class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDeta
     }
     binding?.whatsThis?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.whatsThis?.text = getString(R.string.what_s_this)
+    binding?.gstRegisterCheck?.setOnCheckedChangeListener { _, isChecked ->
+      binding?.btnSaveChanges?.isEnabled = isChecked
+    }
   }
 
   private fun gstNotRegistered(isChecked: Boolean) {
     if (isChecked) {
-//      binding?.ccbDeclearation?.visible()
-      binding?.cetBusinessName?.gone()
-      binding?.cetGst?.gone()
-      binding?.ctvBusinessName?.gone()
-      binding?.ctvGstTitle?.gone()
+      binding?.edtView?.gone()
+      binding?.txtNote?.gone()
+      binding?.btnSaveChanges?.isEnabled = true
+      binding?.gstRegisterCheck?.visible()
+      binding?.btnSaveChanges?.text = getString(R.string.continue_)
     }
   }
 
   private fun gstRegistered(isChecked: Boolean) {
     if (isChecked) {
-//      binding?.ccbDeclearation?.gone()
-      binding?.cetBusinessName?.visible()
-      binding?.cetGst?.visible()
-      binding?.ctvBusinessName?.visible()
-      binding?.ctvGstTitle?.visible()
+      binding?.edtView?.visible()
+      binding?.txtNote?.visible()
+      binding?.btnSaveChanges?.isEnabled = true
+      binding?.gstRegisterCheck?.gone()
+      binding?.btnSaveChanges?.text = getString(R.string.save_changes)
     }
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnCancel -> {
-        dismiss()
-      }
+      binding?.btnCancel -> dismiss()
       binding?.btnSaveChanges -> {
         if (binding?.radioNotRegistered?.isChecked == false) {
           if (isValidGSTNo(binding?.cetGst?.text.toString())) {
@@ -114,10 +117,7 @@ class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDeta
             binding?.cetGst?.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_error_gstin)
             binding?.cetGst?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_error_appointment_settings, 0)
           }
-        } else {
-          goback()
-        }
-
+        } else goback()
       }
       binding?.whatsThis -> {
         openRcmBottomSheet()
@@ -127,7 +127,7 @@ class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDeta
 
   private fun openRcmBottomSheet() {
     val bottomSheetRCM = BottomSheetRCM()
-      bottomSheetRCM.show(parentFragmentManager, BottomSheetRCM::javaClass.name)
+    bottomSheetRCM.show(parentFragmentManager, BottomSheetRCM::javaClass.name)
   }
 
   private fun goback() {
@@ -147,5 +147,4 @@ class BottomSheetEnterGSTDetails : BaseBottomSheetDialog<BottomSheetEnterGstDeta
     clickType(ClickType.SAVECHANGES)
     dismiss()
   }
-
 }
