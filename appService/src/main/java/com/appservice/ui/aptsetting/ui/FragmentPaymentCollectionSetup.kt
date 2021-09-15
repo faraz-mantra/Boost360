@@ -19,6 +19,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 
 class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollectionSetupBinding, AppointmentSettingsViewModel>() {
+
   var isEdit: Boolean = false
 
   override fun getLayout(): Int {
@@ -68,13 +69,9 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
     hitApi(
       liveData = viewModel?.setupDelivery(
         DeliverySetup(
-          isPickupAllowed = false,
-          isBusinessLocationPickupAllowed = binding?.toggleCod?.isOn,
-          isWarehousePickupAllowed = false,
-          isHomeDeliveryAllowed = false,
-          flatDeliveryCharge = "0",
-          clientId = clientId,
-          sessionLocal.fPID
+          isPickupAllowed = false, isBusinessLocationPickupAllowed = binding?.toggleCod?.isOn,
+          isWarehousePickupAllowed = false, isHomeDeliveryAllowed = false, flatDeliveryCharge = "0",
+          clientId = clientId, sessionLocal.fPID
         )
       ), errorStringId = R.string.error_getting_delivery_details
     )
@@ -89,11 +86,9 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
       binding?.btnAddAccount -> {
         if (!isEdit)
           startFragmentActivity(FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME)
-
       }
       binding?.btnConfirm -> {
         updateDeliveryStatus()
-
       }
     }
   }
@@ -101,14 +96,13 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
   private fun showBootPaymentBottomSheet() {
     val bottomSheetBoostPaymentConfig = BottomSheetBoostPaymentConfig()
     bottomSheetBoostPaymentConfig.show(parentFragmentManager, BottomSheetBoostPaymentConfig::class.java.name)
-
   }
 
   private fun onReceivedBankDetails(it: BaseResponse) {
     hideProgress()
     val paymentProfileResponse = it as? PaymentProfileResponse
-    if (paymentProfileResponse!=null) {
-      isEdit = paymentProfileResponse?.result?.bankAccountDetails != null
+    if (paymentProfileResponse != null) {
+      isEdit = paymentProfileResponse.result?.bankAccountDetails != null
       if (isEdit) {
         binding?.btnAddAccount?.gone()
         binding?.llBankStatus?.visible()
@@ -131,7 +125,6 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
       TaskCode.GET_DELIVERY_DETAILS.ordinal -> onDeliveryDetailsReceived(it)
       TaskCode.GET_PAYMENT_PROFILE_DETAILS.ordinal -> onReceivedBankDetails(it)
     }
-
   }
 
 
@@ -158,10 +151,7 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
   private fun onDeliveryDetailsReceived(it: BaseResponse) {
     hideProgress()
     val data = it as? DeliveryDetailsResponse
-    if (data != null) {
-      binding?.toggleCod?.isOn = data?.result?.isBusinessLocationPickupAllowed ?: false
-    }
+    binding?.toggleCod?.isOn = data?.result?.isBusinessLocationPickupAllowed ?: false
     getAccountDetails()
-    showLongToast("Delivery details not available")
   }
 }

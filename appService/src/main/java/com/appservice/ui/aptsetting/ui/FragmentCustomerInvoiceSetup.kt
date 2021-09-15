@@ -30,9 +30,6 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 
 class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetupBinding, AppointmentSettingsViewModel>() {
-  override fun getLayout(): Int {
-    return R.layout.fragment_customer_invoice_setup
-  }
 
   private var data: PaymentProfileResponse? = null
   var setGstData: (gstin: String) -> Unit = {}
@@ -42,15 +39,18 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
   private lateinit var bottomSheetTaxInvoicesForPurchases: BottomSheetTaxInvoicesForPurchases
   var imageList: ArrayList<FileModel> = ArrayList()
 
-
-  override fun getViewModelClass(): Class<AppointmentSettingsViewModel> {
-    return AppointmentSettingsViewModel::class.java
-  }
-
   companion object {
     fun newInstance(): FragmentCustomerInvoiceSetup {
       return FragmentCustomerInvoiceSetup()
     }
+  }
+
+  override fun getLayout(): Int {
+    return R.layout.fragment_customer_invoice_setup
+  }
+
+  override fun getViewModelClass(): Class<AppointmentSettingsViewModel> {
+    return AppointmentSettingsViewModel::class.java
   }
 
   override fun onCreateView() {
@@ -143,8 +143,6 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
       binding?.signatureHeading?.gone()
       binding?.signature?.gone()
     }
-
-
   }
 
   override fun onClick(v: View) {
@@ -157,10 +155,8 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
         showTaxInvoicesForPurchases()
       }
       binding?.viewSampleInvoice -> {
-
       }
       binding?.btnSaveDetails -> {
-
       }
     }
   }
@@ -177,19 +173,14 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
           hitApi(
             liveData = viewModel?.uploadSignature(
               UploadMerchantSignature(
-                "png",
-                Base64.encodeToString(imageList[0].getFile()?.readBytes(), Base64.DEFAULT),
-                clientId = clientId,
-                sessionLocal.fPID,
-                imageList[0].getFileName()
+                "png", Base64.encodeToString(imageList[0].getFile()?.readBytes(), Base64.DEFAULT),
+                clientId = clientId, sessionLocal.fPID, imageList[0].getFileName()
               )
             ), errorStringId = (R.string.error_updating_upi_id)
           )
-
         }
       }
       if (it == BottomSheetTaxInvoicesForPurchases.ClickType.CANCEL) {
-
       }
     }
     val bundle = Bundle()
@@ -236,11 +227,8 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
         hitApi(
           viewModel?.invoiceSetup(
             InvoiceSetupRequest(
-              panDetails = null,
-              gSTDetails = data?.result?.taxDetails?.gSTDetails,
-              tanDetails = null,
-              clientId = clientId,
-              floatingPointId = sessionLocal.fPID
+              panDetails = null, gSTDetails = data?.result?.taxDetails?.gSTDetails,
+              tanDetails = null, clientId = clientId, floatingPointId = sessionLocal.fPID
             )
           ), (R.string.error_updating_gst_details)
         )
@@ -277,7 +265,6 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
       .enableDebuggingMode(true).build()
   }
 
-
   private fun secondaryImage(mPaths: ArrayList<String>) {
     if (imageList.size < 1) {
       if (mPaths.size + imageList.size > 1) showLongToast(resources.getString(R.string.only_one_file_is_allowed))
@@ -291,11 +278,8 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
     } else showLongToast(getString(R.string.only_one_file_is_allowed))
   }
 
-
   fun clearImage() {
     imageList.clear()
-
   }
-
 }
 
