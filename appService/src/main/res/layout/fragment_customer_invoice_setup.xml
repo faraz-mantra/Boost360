@@ -86,8 +86,6 @@
           android:text="@string/nowfloats_technologies_pvt_ltd"
           android:visibility="gone" />
       </LinearLayout>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

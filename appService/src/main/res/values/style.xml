@@ -219,12 +219,11 @@
         <item name="android:background">@drawable/bg_button_proceed</item>
         <item name="android:paddingStart">@dimen/size_60</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textAllCaps">true</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingTop">@dimen/size_8</item>
         <item name="android:paddingBottom">@dimen/size_8</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/size_36</item>
+        <item name="android:layout_height">@dimen/size_38</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="android:paddingEnd">@dimen/size_60</item>
     </style>

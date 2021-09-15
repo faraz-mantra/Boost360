@@ -14,8 +14,7 @@
 
       <LinearLayout
         style="@style/match_wrap"
-        android:layout_marginVertical="@dimen/size_16"
-
+        android:layout_marginVertical="@dimen/size_10"
         android:drawablePadding="@dimen/size_12"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/size_16">
@@ -29,10 +28,9 @@
         <com.framework.views.customViews.CustomTextView
           style="@style/wrap_wrap"
           android:fontFamily="@font/regular"
-          android:includeFontPadding="true"
+          app:textType="CAPTION"
           android:text="@string/select_how_you_want_to_recieve_money_for_all_your_online_appointments"
-          android:textColor="@color/black_4a4a4a"
-          android:textFontWeight="400" />
+          android:textColor="@color/black_4a4a4a" />
       </LinearLayout>
     </com.framework.views.customViews.CustomCardView>
 
@@ -88,19 +86,20 @@
           <LinearLayout
             style="@style/wrap_wrap"
             android:layout_gravity="center"
-            android:layout_marginVertical="16dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <com.framework.views.customViews.CustomImageView
               android:id="@+id/ncpi"
               android:layout_width="@dimen/size_50"
-              android:layout_height="@dimen/size_20"
+              android:layout_height="@dimen/size_25"
               android:src="@drawable/ic_npci" />
 
             <com.framework.views.customViews.CustomImageView
               android:id="@+id/visa"
               android:layout_width="@dimen/size_50"
-              android:layout_height="@dimen/size_20"
+              android:layout_height="@dimen/size_28"
               android:src="@drawable/ic_visa" />
 
             <com.framework.views.customViews.CustomImageView
