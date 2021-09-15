@@ -410,7 +410,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       } else {
         if (businessFeatureEnum==BusinessFeatureEnum.INVENTORY_SERVICE) {
           this.adapterPhoto.notifyNewList(arrayListOf())
-          Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
+        //  Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
         }
       }
       clickListenerPhoto()
@@ -431,7 +431,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       } else{
         if (businessFeatureEnum==BusinessFeatureEnum.INVENTORY_SERVICE) {
           this.adapterProductService.notifyNewList(arrayListOf())
-          Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
+        //  Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
         }
       }
     }
@@ -451,7 +451,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       } else {
         if (businessFeatureEnum==BusinessFeatureEnum.STAFF) {
           this.adapterStaff.notifyNewList(arrayListOf())
-          Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
+        //  Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
         }
       }
     }
@@ -471,7 +471,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       } else{
         if (businessFeatureEnum==BusinessFeatureEnum.UPDATES) {
           this.adapterUpdates.notifyNewList(arrayListOf())
-          Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
+        //  Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
         }
       }
     }
