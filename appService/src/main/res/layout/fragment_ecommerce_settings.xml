@@ -20,10 +20,11 @@
         style="@style/SearchView.WhiteBackground"
         android:layout_height="@dimen/size_40"
         android:gravity="center_vertical"
-        app:iconifiedByDefault="false"
         android:textSize="12sp"
+        app:iconifiedByDefault="false"
         app:queryHint="@string/search_in_the_ecommerce_settings" />
     </LinearLayout>
+
     <com.framework.views.viewgroups.BaseRecyclerView
       android:id="@+id/rv_tiles"
       android:layout_width="match_parent"
