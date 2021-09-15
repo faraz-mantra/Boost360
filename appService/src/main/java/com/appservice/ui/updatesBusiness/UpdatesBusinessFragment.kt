@@ -7,7 +7,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
@@ -32,16 +31,10 @@ import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
-import com.framework.models.firestore.FirestoreManager.getDrScoreData
-import com.framework.models.firestore.FirestoreManager.updateDocument
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.pref.getDomainName
 import com.framework.utils.ContentSharing.Companion.shareUpdates
-import com.framework.utils.showKeyBoard
-import com.framework.views.zero.FragmentZeroCase
-import com.framework.views.zero.OnZeroCaseClicked
-import com.framework.views.zero.RequestZeroCaseBuilder
-import com.framework.views.zero.ZeroCases
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
@@ -50,8 +43,7 @@ import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
-class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(),
-  RecyclerItemClickListener,AppOnZeroCaseClicked {
+class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener,AppOnZeroCaseClicked {
 
   private val STORAGE_CODE = 120
 

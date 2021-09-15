@@ -9,9 +9,8 @@ import com.framework.extensions.gone
 import com.framework.extensions.invisible
 import com.framework.extensions.visible
 
-class CatalogTileViewHolder(binding: RecyclerItemEcomAptSettingsBinding) : AppBaseRecyclerViewHolder<RecyclerItemEcomAptSettingsBinding>(
-  binding = binding
-) {
+class CatalogTileViewHolder(binding: RecyclerItemEcomAptSettingsBinding) : AppBaseRecyclerViewHolder<RecyclerItemEcomAptSettingsBinding>(binding = binding) {
+
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val tilesItem = item as? AppointmentStatusResponse.TilesModel
@@ -19,9 +18,9 @@ class CatalogTileViewHolder(binding: RecyclerItemEcomAptSettingsBinding) : AppBa
       is CatalogSetup -> {
         val catalogSetup = tilesItem.tile as? CatalogSetup
         when (catalogSetup?.isPending) {true -> { binding.civSetupCheck.gone();binding.ctvPending.visible()} else -> { binding.civSetupCheck.visible();binding.ctvPending.invisible() } }
-        binding.ctvCatalogSetupSubheading.text = catalogSetup?.getTitle()
+        binding.ctvCatalogSetupSubheading.text = catalogSetup?.getTitle(activity)
         binding.ctvCatalogSetupSubheading2.text = catalogSetup?.getSubtitle()
-        binding?.ctvCatalogSetupSubheading2.visible()
+        binding.ctvCatalogSetupSubheading2.visible()
 
       }
       is PaymentCollectionSetup -> {
@@ -29,7 +28,7 @@ class CatalogTileViewHolder(binding: RecyclerItemEcomAptSettingsBinding) : AppBa
         when (paymentCollectionSetup?.isPending) {true -> { binding.civSetupCheck.gone();binding.ctvPending.visible()} else -> { binding.civSetupCheck.visible();binding.ctvPending.invisible() } }
         binding.ctvCatalogSetupSubheading.text = paymentCollectionSetup?.getTitle()
         binding.ctvCatalogSetupSubheading2.text = paymentCollectionSetup?.getSubtitle()
-        binding?.ctvCatalogSetupSubheading2.visible()
+        binding.ctvCatalogSetupSubheading2.visible()
 
 
       }
@@ -38,7 +37,7 @@ class CatalogTileViewHolder(binding: RecyclerItemEcomAptSettingsBinding) : AppBa
         binding.ctvCatalogSetupSubheading.text = customerInvoicesSetup?.getTitle()
         binding.ctvCatalogSetupSubheading2.text = customerInvoicesSetup?.getSubtitle()
         when (customerInvoicesSetup?.isTaxInvoiceSetupComplete==false) {true -> { binding.civSetupCheck.gone();binding.ctvPending.visible()} else -> { binding.civSetupCheck.visible();binding.ctvPending.invisible() } }
-        binding?.ctvCatalogSetupSubheading2.visible()
+        binding.ctvCatalogSetupSubheading2.visible()
 
 
       }
@@ -53,17 +52,16 @@ class CatalogTileViewHolder(binding: RecyclerItemEcomAptSettingsBinding) : AppBa
       }
       is DeliverySetupTile -> {
         val deliverySetupTile = tilesItem.tile as? DeliverySetupTile
-        binding?.ctvCatalogSetupSubheading.text = deliverySetupTile?.getTitle()
-        binding?.ctvCatalogSetupSubheading2.gone()
+        binding.ctvCatalogSetupSubheading.text = deliverySetupTile?.getTitle()
+        binding.ctvCatalogSetupSubheading2.gone()
         when (deliverySetupTile?.isPending==true) {true -> { binding.civSetupCheck.gone();binding.ctvPending.visible()} else -> { binding.civSetupCheck.visible();binding.ctvPending.invisible() } }
 
       }
     }
-//    binding.civCatalogSetupIcon.setImageIcon(tilesItem)
     val icon = tilesItem?.icon?.let { IconType.fromName(name = it) }
     binding.ctvCatalogSetupTitle.text = tilesItem?.title
     tilesItem?.icon.let { binding.civSetupIcon.setImageResource(icon?.icon!!) }
-    binding?.catalogSetup.setOnClickListener { listener?.onItemClick(position, item, RecyclerViewActionType.ON_CLICK_CATALOG_ITEM.ordinal) }
+    binding.catalogSetup.setOnClickListener { listener?.onItemClick(position, item, RecyclerViewActionType.ON_CLICK_CATALOG_ITEM.ordinal) }
 
   }
 }

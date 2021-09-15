@@ -256,17 +256,13 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
     }
-    binding?.drawerView?.imgBusinessLogo?.let {
-      glideLoad(it, imageUri ?: "", R.drawable.business_edit_profile_icon_d)
-    }
+    binding?.drawerView?.imgBusinessLogo?.let { glideLoad(it, imageUri ?: "", R.drawable.business_edit_profile_icon_d) }
     var bgImageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)
     if (bgImageUri.isNullOrEmpty().not() && bgImageUri!!.contains("http").not()) {
       bgImageUri = BASE_IMAGE_URL + bgImageUri
     }
     binding?.drawerView?.bgImage?.let {
-      glideLoad(
-        it, bgImageUri ?: "", R.drawable.general_services_background_img_d
-      )
+      glideLoad(it, bgImageUri ?: "", R.drawable.general_services_background_img_d)
     }
   }
 
@@ -505,16 +501,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       DrawerHomeData.NavType.NAV_MANAGE_CONTENT -> session?.let { this.startManageContentActivity(it) }
       DrawerHomeData.NavType.NAV_CALLS -> this.startVmnCallCard(session)
       DrawerHomeData.NavType.NAV_ENQUIRY -> this.startBusinessEnquiry(session)
-      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let {
-        this.startManageInventoryActivity(
-          it
-        )
-      }
+      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let { this.startManageInventoryActivity(it) }
       DrawerHomeData.NavType.NAV_NEWS_LETTER_SUB -> this.startSubscriber(session)
       DrawerHomeData.NavType.NAV_BOOST_KEYBOARD -> session?.let { this.startKeyboardActivity(it) }
-      DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let {
-        this.initiateAddonMarketplace(it, false, "", "")
-      }
+      DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let { this.initiateAddonMarketplace(it, false, "", "") }
       DrawerHomeData.NavType.NAV_SETTING -> session?.let { this.startSettingActivity(it) }
       DrawerHomeData.NavType.NAV_HELP_SUPPORT -> session?.let { this.startHelpAndSupportActivity(it) }
       DrawerHomeData.NavType.NAV_ABOUT_BOOST -> session?.let { this.startAboutBoostActivity(it) }

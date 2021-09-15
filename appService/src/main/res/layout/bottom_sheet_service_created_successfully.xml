@@ -12,12 +12,12 @@
 
     <com.framework.views.customViews.CustomImageView
       android:id="@+id/civ_cancel"
-      android:layout_width="@dimen/size_40"
-      android:layout_height="@dimen/size_40"
+      android:layout_width="@dimen/size_38"
+      android:layout_height="@dimen/size_38"
       android:layout_alignParentEnd="true"
       android:layout_gravity="end"
-      android:layout_marginTop="@dimen/size_10"
-      android:layout_marginEnd="@dimen/size_10"
+      android:layout_marginTop="@dimen/size_6"
+      android:layout_marginEnd="@dimen/size_6"
       android:background="?attr/selectableItemBackgroundBorderless"
       android:clickable="true"
       android:focusable="true"

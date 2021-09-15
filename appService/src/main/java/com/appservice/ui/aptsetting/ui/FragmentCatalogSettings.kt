@@ -13,9 +13,12 @@ import com.framework.extensions.observeOnce
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.pref.getDomainName
+import com.framework.utils.fromHtml
 import java.util.*
 
 class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, AppointmentSettingsViewModel>() {
+
   private var response: UserFpDetailsResponse? = null
 
   override fun getLayout(): Int {
@@ -43,31 +46,28 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
     showProgress()
     val map = HashMap<String, String>()
     map["clientId"] = clientId
-    viewModel?.getFpDetails(sessionLocal?.fPID ?: "", map)
-      ?.observeOnce(viewLifecycleOwner, {
-        hideProgress()
-        this.response = it as? UserFpDetailsResponse
-        if (it.isSuccess() && response != null) {
-          binding?.ctvService?.text = response?.productCategoryVerb
-          binding?.ctvWebsiteUrl?.text = "${sessionLocal.rootAliasURI}/${response?.productCategoryVerb}"
-          sessionLocal.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB,response?.productCategoryVerb)
-        } else {
-        }
-      })
+    viewModel?.getFpDetails(sessionLocal.fPID ?: "", map)?.observeOnce(viewLifecycleOwner, {
+      hideProgress()
+      this.response = it as? UserFpDetailsResponse
+      if (it.isSuccess() && response != null) {
+        binding?.ctvService?.text = response?.productCategoryVerb
+        binding?.ctvWebsiteUrl?.text = fromHtml("<pre>URL: <span style=\"color: #4a4a4a;\"><u>${sessionLocal.getDomainName()}<b>/${response?.productCategoryVerb(baseActivity)}</b></u></span></pre>")
+        sessionLocal.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB, response?.productCategoryVerb)
+      } else {
+      }
+    })
   }
+
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.ctvChangeServices -> {
-        showCatalogDisplayName()
-      }
+      binding?.ctvChangeServices -> showCatalogDisplayName()
     }
   }
+
   private fun showCatalogDisplayName() {
     val bottomSheetCatalogDisplayName = BottomSheetCatalogDisplayName()
-    val bundle = Bundle()
-    bundle.putSerializable(IntentConstant.CATALOG_DATA.name, response)
-    bottomSheetCatalogDisplayName.arguments = bundle
+    bottomSheetCatalogDisplayName.arguments = Bundle().apply { putSerializable(IntentConstant.CATALOG_DATA.name, response) }
     bottomSheetCatalogDisplayName.show(this.parentFragmentManager, BottomSheetCatalogDisplayName::class.java.name)
   }
 

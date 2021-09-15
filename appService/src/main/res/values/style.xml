@@ -320,7 +320,7 @@
         <item name="android:padding">@dimen/size_12</item>
         <item name="android:inputType">textCapWords</item>
         <item name="singleLine">true</item>
-        <item name="android:textSize">12sp</item>
+        <item name="textType">BODY_1</item>
         <item name="android:background">@drawable/bg_rect_edit_txt</item>
         <item name="android:textColor">@color/warm_grey_10</item>
         <item name="android:textColorHint">@color/primary_grey</item>
@@ -634,7 +634,7 @@
             <item name="textColor">@color/gray_828282</item>
             <item name="android:layout_marginEnd">@dimen/size_20</item>
             <item name="editTextColor">@color/gray_828282</item>
-            <item name="android:textColorHint">@color/gray_light_3</item>
+            <item name="android:textColorHint">@color/black_two</item>
             <item name="android:layout_gravity">center</item>
         </style>
 

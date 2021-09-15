@@ -1,16 +1,19 @@
 package com.appservice.model.aptsetting
 
+import android.app.Activity
 import android.text.Spanned
+import com.appservice.AppServiceApplication
 import com.appservice.R
 import com.appservice.constant.RecyclerViewItemType
+import com.appservice.ui.aptsetting.ui.getProductType
 import com.framework.base.BaseResponse
+import com.framework.pref.UserSessionManager
 import com.framework.utils.fromHtml
 import com.google.gson.annotations.SerializedName
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
 data class AppointmentStatusResponse(
-
 
   @field:SerializedName("StatusCode")
   var statusCode: Int? = null,
@@ -34,6 +37,7 @@ data class AppointmentStatusResponse(
 
 
 }
+
 enum class IconType(var icon: Int) {
   policies(R.drawable.ic_policies_for_customer),
   customer_invoice_setup(R.drawable.ic_customer_invoice),
@@ -76,7 +80,6 @@ data class ResultS(
       AppointmentStatusResponse.TilesModel("catalog_setup", "Service categories, Catalog display text,applicable tax slabs", "Catalog Setup", this.catalogSetup),
       AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", this.paymentCollectionSetup),
       AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", this.customerInvoicesSetup)
-//      ,
 //      AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", this.policiesSetup)
     )
   }
@@ -87,18 +90,12 @@ data class ResultS(
       AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", this.paymentCollectionSetup),
       AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", this.customerInvoicesSetup),
       AppointmentStatusResponse.TilesModel("delivery_setup", "GST declaration, Bank UPI for offline appointments,signature", "Delivery setup", this.deliverySetup)
-//      ,
 //      AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", this.policiesSetup)
     )
   }
 }
 
 data class DeliverySetupTile(
-//  "DeliverySetup": {
-//  "IsHomeDeliveryAllowed": boolean,
-//  "IsPickupAllowed": boolean,
-//  "IsPending": boolean
-//},
   @field:SerializedName("IsHomeDeliveryAllowed")
   var isHomeDeliveryAllowed: Boolean? = null,
   @field:SerializedName("IsPickupAllowed")
@@ -108,7 +105,7 @@ data class DeliverySetupTile(
 ) {
 
   fun getTitle(): Spanned? {
-    return fromHtml(if (this.isPending == true || this.isHomeDeliveryAllowed == false || isPickUpAllowed == false) "<pre> Mode: <span style=\"color: #EB5757;\"><em>not selected</em></span></pre>" else  if (isHomeDeliveryAllowed==true&&isPickUpAllowed==true)"Mode:<b> Home delivery, Self pickup</b>" else  if (isHomeDeliveryAllowed==true)"Mode:<b> Home delivery</b>" else "Mode:<b> Self Pickup</b>")
+    return fromHtml(if (this.isPending == true || this.isHomeDeliveryAllowed == false || isPickUpAllowed == false) "<pre> Mode: <span style=\"color: #EB5757;\"><em>not selected</em></span></pre>" else if (isHomeDeliveryAllowed == true && isPickUpAllowed == true) "Mode:<b> Home delivery, Self pickup</b>" else if (isHomeDeliveryAllowed == true) "Mode:<b> Home delivery</b>" else "Mode:<b> Self Pickup</b>")
   }
 }
 
@@ -127,7 +124,8 @@ data class PaymentCollectionSetup(
   var isPending: Boolean? = null
 ) {
   fun getTitle(): Spanned? {
-    return fromHtml("Payment gateway: <b>$paymentGateway</b>")
+
+    return fromHtml("Payment gateway: <b>${if (paymentGateway.isNullOrEmpty()) "Pending" else "$paymentGateway"}</b>")
   }
 
   fun getSubtitle(): Spanned? {
@@ -168,8 +166,9 @@ data class CatalogSetup(
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
 ) {
-  fun getTitle(): Spanned? {
-    return fromHtml("Display text: <b>$productCategoryVerb</b>")
+  fun getTitle(activity: Activity?): Spanned? {
+    val s = UserSessionManager(activity ?: AppServiceApplication.instance)
+    return fromHtml("Display text: <b>${if (productCategoryVerb.isNullOrEmpty()) getProductType(s.fP_AppExperienceCode) else "$productCategoryVerb"}</b>")
   }
 
   fun getSubtitle(): Spanned? {

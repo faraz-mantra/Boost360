@@ -136,6 +136,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
       else ->"STAFF"
     }
   }
+
   fun isDoctorProfile(category_code:String?): Boolean {
     return when(category_code){
       "DOC", "HOS"-> true

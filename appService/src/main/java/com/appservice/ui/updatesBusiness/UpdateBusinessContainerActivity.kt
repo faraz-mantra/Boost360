@@ -155,16 +155,6 @@ fun Intent.setFragmentType(type: FragmentType): Intent {
 }
 
 
-fun UserSessionManager.getDomainName(isRemoveHttp: Boolean = false): String? {
-  val rootAliasUri = getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
-  val normalUri = "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
-  return if (rootAliasUri.isNullOrEmpty().not() && rootAliasUri != "null") {
-    return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace("http://", "")
-    else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace("https://", "") else rootAliasUri
-  } else normalUri
-}
-
-
 fun getLatestUpdatesTaxonomyFromServiceCode(category_code: String?): String? {
   return when (category_code) {
     "DOC", "HOS" -> "Latest Updates & Health Tips"
