@@ -681,10 +681,8 @@
             <item name="android:paddingStart">8dp</item>
             <item name="android:fontFamily">@font/regular</item>
             <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
-            <item name="android:buttonTint">@color/yellow_ffb900</item>
+            <item name="android:buttonTint">@color/material_check_tin_state</item>
             <item name="android:gravity">center_vertical</item>
-            <item name="android:layout_marginTop">@dimen/size_4</item>
-            <item name="android:layout_marginBottom">@dimen/size_4</item>
             <item name="android:textSize">16sp</item>
         </style>
 

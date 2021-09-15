@@ -75,7 +75,7 @@
           android:id="@+id/ctv_company_name_heading"
           style="@style/AppointmentSetting_Text_Heading"
           android:layout_marginTop="@dimen/size_5"
-          android:text="@string/company_name"
+          android:text="@string/company_name_"
           android:textSize="12sp"
           android:visibility="gone" />
 

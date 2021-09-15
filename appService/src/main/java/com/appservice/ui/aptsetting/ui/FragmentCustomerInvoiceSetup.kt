@@ -108,7 +108,7 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
       binding?.ctvGstinHeading?.text = getString(R.string.gstin_)
 
     } else {
-      binding?.ctvGstinHeading?.text = getString(R.string.gstin)
+      binding?.ctvGstinHeading?.text = getString(R.string.gstin_)
       binding?.ctvGstNum?.text = data?.result?.taxDetails?.gSTDetails?.gSTIN
       binding?.icDone?.visible()
       binding?.hintEnterGst?.gone()

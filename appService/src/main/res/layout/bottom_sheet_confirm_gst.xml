@@ -53,14 +53,13 @@
           android:layout_marginStart="@dimen/size_20"
           android:drawablePadding="@dimen/size_10"
           android:text="@string/is_this_correct"
-          android:fontFamily="@font/bold"
           android:textColor="@color/black_3333"
           app:textType="HEADING_6" />
 
 
         <LinearLayout
           style="@style/match_wrap"
-          android:background="@color/view_background_1"
+          android:background="@color/yellow_orange_22"
           android:orientation="horizontal"
           android:paddingHorizontal="@dimen/size_20"
           android:paddingVertical="@dimen/size_15">
@@ -69,8 +68,7 @@
             style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_12"
             android:layout_marginEnd="@dimen/size_8"
-            android:src="@drawable/ic_info"
-            app:tint="@color/gray_bbb" />
+            android:src="@drawable/ic_info" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/content"
