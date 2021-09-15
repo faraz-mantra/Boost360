@@ -1,9 +1,9 @@
-package com.appservice.appointment.ui
+package com.appservice.ui.aptsetting.ui
 
 import android.os.Bundle
 import android.view.*
 import com.appservice.R
-import com.appservice.appointment.widgets.BottomSheetCreateCategory
+import com.appservice.ui.aptsetting.widgets.BottomSheetCreateCategory
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant

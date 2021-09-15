@@ -1,7 +1,7 @@
 package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
-import com.appservice.appointment.model.*
+import com.appservice.model.aptsetting.*
 import com.appservice.rest.repository.BoostNowFloatsRepository
 import com.appservice.rest.repository.NowfloatsApiRepository
 import com.appservice.rest.repository.WithFloatTwoRepository

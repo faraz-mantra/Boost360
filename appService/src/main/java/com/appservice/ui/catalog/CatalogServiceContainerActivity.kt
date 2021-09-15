@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.appservice.R
-import com.appservice.appointment.ui.*
+import com.appservice.ui.aptsetting.ui.*
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
 import com.appservice.ui.catalog.catalogProduct.addProduct.ProductDetailFragment
@@ -22,8 +22,7 @@ import com.appservice.ui.catalog.catalogService.addService.ServiceDetailFragment
 import com.appservice.ui.catalog.catalogService.addService.information.ServiceInformationFragment
 import com.appservice.ui.catalog.catalogService.addService.weeklyTime.ServiceTimingFragment
 import com.appservice.ui.catalog.catalogService.listing.ServiceListingFragment
-import com.appservice.ui.catalog.common.WeeklyAppointmentFragment
-import com.appservice.ui.ecomAptSetting.*
+import com.appservice.ui.ecommerce.*
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
@@ -31,37 +30,9 @@ import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
-
 open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
-  private var serviceInformationFragment: ServiceInformationFragment? = null
-  private var productDetailFragment: ProductDetailFragment? = null
-  private var productInformationFragment: ProductInformationFragment? = null
-  private var weeklyAppointmentFragment: WeeklyAppointmentFragment? = null
-  private var serviceTimingFragment: ServiceTimingFragment? = null
-  private var createCategoryFragment: CreateCategoryFragment? = null
-  private var serviceListingFragment: ServiceListingFragment? = null
-  private var serviceCatalogHomeFragment: ServiceCatalogHomeFragment? = null
-  private var fragmentAppointmentSettings: FragmentAppointmentSettings? = null
-  private var fragmentCatalogSettings: FragmentCatalogSettings? = null
-  private var fragmentCustomerInvoiceSetup: FragmentCustomerInvoiceSetup? = null
-  private var fragmentCustomerPolicies: FragmentCustomerPolicies? = null
-  private var fragmentAccountAddHome: FragmentAccountAddHome? = null
-  private var fragmentAddAccountDetails: FragmentAddAccountDetails? = null
-  private var fragmentEditAccountDetails: FragmentEditBankDetails? = null
   private var type: FragmentType? = null
-  private var serviceDetailFragment: ServiceDetailFragment? = null
-  private var fragmentPaymentCollectionSetup: FragmentPaymentCollectionSetup? = null
-  private var fragmentProductCategory: FragmentProductCategory? = null
-  private var fragmentProductHome: FragmentProductHome? = null
-  private var fragmentProductListing: FragmentProductListing? = null
-
-  private var fragmentEcommerceSettings: FragmentEcommerceSettings? = null
-  private var fragmentEcommerceCatalogSettings: FragmentEcommerceCatalogSettings? = null
-  private var fragmentEcommerceCustomerInvoiceSetup: FragmentEcommerceCustomerInvoiceSetup? = null
-  private var fragmentEcommerceCustomerPolicies: FragmentEcommerceCustomerPolicies? = null
-  private var fragmentEcommercePaymentCollectionSetup: FragmentEcommercePaymentCollectionSetup? = null
-  private var fragmentEcomDeliveryConfig: FragmentEcomDeliveryConfig? = null
 
   override fun getLayout(): Int {
     return com.framework.R.layout.activity_fragment_container
@@ -86,14 +57,13 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     return when (type) {
       FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_LISTING -> R.style.CatalogTheme
       FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION -> R.style.AddCatalogTheme
-       FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
+      FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
       FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS,
       FragmentType.EDIT_ACCOUNT_DETAILS, FragmentType.FRAGMENT_PRODUCT_LISTING, FragmentType.FRAGMENT_PRODUCT_HOME, FragmentType.FRAGMENT_PRODUCT_CATEGORY,
       -> R.style.CatalogTheme
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> R.style.CatalogTheme_Information
       FragmentType.SERVICE_CATALOG_HOME_FRAGMENT -> R.style.OffersThemeBase
-      FragmentType.APPOINTMENT_SETTINGS,
-      -> R.style.CatalogTheme_FragmentAppointment
+      FragmentType.APPOINTMENT_SETTINGS -> R.style.CatalogTheme_FragmentAppointment
       FragmentType.ECOMMERCE_SETTINGS,
       FragmentType.ECOMMERCE_DELIVERY_CONFIG,
       FragmentType.ECOMMERCE_PAYMENT_SETTINGS,
@@ -101,9 +71,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE,
       FragmentType.ECOMMERCE_CATALOG_SETTINGS,
       FragmentType.ECOMMERCE_ADD_ACCOUNT_DETAILS,
-      -> {
-        R.style.EcommerceSettings
-      }
+      -> R.style.EcommerceSettings
       else -> super.customTheme()
     }
   }
@@ -225,101 +193,79 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
     return when (type) {
       FragmentType.ECOMMERCE_CATALOG_SETTINGS -> {
-        fragmentEcommerceCatalogSettings = FragmentEcommerceCatalogSettings.newInstance()
-        fragmentEcommerceCatalogSettings
+        FragmentEcommerceCatalogSettings.newInstance()
       }
       FragmentType.SERVICE_TIMING_FRAGMENT -> {
-        serviceTimingFragment = ServiceTimingFragment.newInstance()
-        serviceTimingFragment
+        ServiceTimingFragment.newInstance()
       }
       FragmentType.ECOMMERCE_DELIVERY_CONFIG -> {
-        fragmentEcomDeliveryConfig = FragmentEcomDeliveryConfig.newInstance()
-        fragmentEcomDeliveryConfig
+        FragmentEcomDeliveryConfig.newInstance()
+
       }
 
       FragmentType.SERVICE_DETAIL_VIEW -> {
-        serviceDetailFragment = ServiceDetailFragment.newInstance()
-        serviceDetailFragment
+        ServiceDetailFragment.newInstance()
       }
       FragmentType.SERVICE_INFORMATION -> {
-        serviceInformationFragment = ServiceInformationFragment.newInstance()
-        serviceInformationFragment
+        ServiceInformationFragment.newInstance()
       }
       FragmentType.PRODUCT_DETAIL_VIEW -> {
-        productDetailFragment = ProductDetailFragment.newInstance()
-        productDetailFragment
+        ProductDetailFragment.newInstance()
       }
       FragmentType.PRODUCT_INFORMATION -> {
-        productInformationFragment = ProductInformationFragment.newInstance()
-        productInformationFragment
+        ProductInformationFragment.newInstance()
       }
       FragmentType.SERVICE_LISTING -> {
-        serviceListingFragment = ServiceListingFragment.newInstance()
-        serviceListingFragment
+        ServiceListingFragment.newInstance()
       }
       FragmentType.SERVICE_CATALOG_HOME_FRAGMENT -> {
-        serviceCatalogHomeFragment = ServiceCatalogHomeFragment.newInstance()
-        serviceCatalogHomeFragment
+        ServiceCatalogHomeFragment.newInstance()
       }
       FragmentType.FRAGMENT_PRODUCT_HOME -> {
-        fragmentProductHome = FragmentProductHome.newInstance()
-        fragmentProductHome
+        FragmentProductHome.newInstance()
       }
       FragmentType.FRAGMENT_PRODUCT_LISTING -> {
-        fragmentProductListing = FragmentProductListing.newInstance()
-        fragmentProductListing
+        FragmentProductListing.newInstance()
       }
       FragmentType.FRAGMENT_PRODUCT_CATEGORY -> {
-        fragmentProductCategory = FragmentProductCategory.newInstance()
-        fragmentProductCategory
+        FragmentProductCategory.newInstance()
       }
       FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE -> {
-        fragmentCustomerInvoiceSetup = FragmentCustomerInvoiceSetup.newInstance()
-        fragmentCustomerInvoiceSetup
+        FragmentCustomerInvoiceSetup.newInstance()
       }
       FragmentType.APPOINTMENT_PAYMENT_SETTINGS -> {
-        fragmentPaymentCollectionSetup = FragmentPaymentCollectionSetup.newInstance()
-        fragmentPaymentCollectionSetup
+        FragmentPaymentCollectionSetup.newInstance()
       }
       FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES -> {
-        fragmentCustomerPolicies = FragmentCustomerPolicies.newInstance()
-        fragmentCustomerPolicies
+        FragmentCustomerPolicies.newInstance()
       }
       FragmentType.APPOINTMENT_SETTINGS -> {
-        fragmentAppointmentSettings = FragmentAppointmentSettings.newInstance()
-        fragmentAppointmentSettings
+        FragmentAppointmentSettings.newInstance()
       }
       FragmentType.APPOINTMENT_CATALOG_SETTINGS -> {
-        fragmentCatalogSettings = FragmentCatalogSettings.newInstance()
-        fragmentCatalogSettings
+        FragmentCatalogSettings.newInstance()
+
       }
       FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE -> {
-        fragmentEcommerceCustomerInvoiceSetup = FragmentEcommerceCustomerInvoiceSetup.newInstance()
-        fragmentEcommerceCustomerInvoiceSetup
+        FragmentEcommerceCustomerInvoiceSetup.newInstance()
       }
       FragmentType.ECOMMERCE_PAYMENT_SETTINGS -> {
-        fragmentEcommercePaymentCollectionSetup = FragmentEcommercePaymentCollectionSetup.newInstance()
-        fragmentEcommercePaymentCollectionSetup
+        FragmentEcommercePaymentCollectionSetup.newInstance()
       }
       FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES -> {
-        fragmentEcommerceCustomerPolicies = FragmentEcommerceCustomerPolicies.newInstance()
-        fragmentEcommerceCustomerPolicies
+        FragmentEcommerceCustomerPolicies.newInstance()
       }
       FragmentType.ECOMMERCE_SETTINGS -> {
-        fragmentEcommerceSettings = FragmentEcommerceSettings.newInstance()
-        fragmentEcommerceSettings
+        FragmentEcommerceSettings.newInstance()
       }
       FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME -> {
-        fragmentAccountAddHome = FragmentAccountAddHome.newInstance()
-        fragmentAccountAddHome
+        FragmentAccountAddHome.newInstance()
       }
       FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS -> {
-        fragmentAddAccountDetails = FragmentAddAccountDetails.newInstance()
-        fragmentAddAccountDetails
+        FragmentAddAccountDetails.newInstance()
       }
       FragmentType.EDIT_ACCOUNT_DETAILS -> {
-        fragmentEditAccountDetails = FragmentEditBankDetails.newInstance()
-        fragmentEditAccountDetails
+        FragmentEditBankDetails.newInstance()
       }
       else -> throw IllegalFragmentTypeException()
     }
@@ -328,32 +274,13 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    serviceListingFragment?.onActivityResult(requestCode, resultCode, data)
-    serviceDetailFragment?.onActivityResult(requestCode, resultCode, data)
-    serviceInformationFragment?.onActivityResult(requestCode, resultCode, data)
-    productInformationFragment?.onActivityResult(requestCode, resultCode, data)
-    fragmentProductListing?.onActivityResult(requestCode, resultCode, data)
-    productDetailFragment?.onActivityResult(requestCode, resultCode, data)
-    weeklyAppointmentFragment?.onActivityResult(requestCode, resultCode, data)
-    createCategoryFragment?.onActivityResult(requestCode, resultCode, data)
-    serviceCatalogHomeFragment?.onActivityResult(requestCode, resultCode, data)
-    fragmentEcommerceSettings?.onActivityResult(requestCode, resultCode, data)
-    fragmentCustomerPolicies?.onActivityResult(requestCode, resultCode, data)
-    fragmentPaymentCollectionSetup?.onActivityResult(requestCode, resultCode, data)
-    fragmentCustomerInvoiceSetup?.onActivityResult(requestCode, resultCode, data)
-    serviceCatalogHomeFragment?.onActivityResult(requestCode, resultCode, data)
-    fragmentEditAccountDetails?.onActivityResult(requestCode, resultCode, data)
-    fragmentEcomDeliveryConfig?.onActivityResult(requestCode, resultCode, data)
-    fragmentEcommerceCustomerInvoiceSetup?.onActivityResult(requestCode, resultCode, data)
+    for (fragment in supportFragmentManager.fragments) {
+      fragment.onActivityResult(requestCode, resultCode, data)
+    }
   }
 }
 
-fun Fragment.startFragmentActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false,
-  isResult: Boolean = false
-) {
+fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
   val intent = Intent(activity, CatalogServiceContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -361,28 +288,15 @@ fun Fragment.startFragmentActivity(
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startFragmentActivityNew(
-  activity: Activity,
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean,
-  isResult: Boolean = false
-) {
+fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false) {
   val intent = Intent(activity, CatalogServiceContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-  if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(
-    intent,
-    300
-  )
+  if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(intent, 300)
 }
 
-fun AppCompatActivity.startFragmentActivity(
-  type: FragmentType,
-  bundle: Bundle = Bundle(),
-  clearTop: Boolean = false
-) {
+fun AppCompatActivity.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
   val intent = Intent(this, CatalogServiceContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

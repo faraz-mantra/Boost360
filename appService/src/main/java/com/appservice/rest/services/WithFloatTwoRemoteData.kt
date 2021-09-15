@@ -1,6 +1,6 @@
 package com.appservice.rest.services
 
-import com.appservice.appointment.model.*
+import com.appservice.model.aptsetting.*
 import com.appservice.model.product.ProductItemsResponseItem
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
@@ -9,7 +9,6 @@ import com.appservice.model.updateBusiness.BusinessUpdateResponse
 import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.EndPoints
-import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody

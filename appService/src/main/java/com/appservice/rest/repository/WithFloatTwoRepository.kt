@@ -1,8 +1,8 @@
 package com.appservice.rest.repository
 
-import com.appservice.appointment.model.*
 import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
+import com.appservice.model.aptsetting.*
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate

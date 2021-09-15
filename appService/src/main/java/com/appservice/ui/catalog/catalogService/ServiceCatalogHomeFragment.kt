@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.appservice.R
-import com.appservice.appointment.ui.CreateCategoryFragment
+import com.appservice.ui.aptsetting.ui.CreateCategoryFragment
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentServiceHomeContainerBinding

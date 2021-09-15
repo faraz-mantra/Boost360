@@ -7,7 +7,7 @@ import android.view.WindowManager
 import android.widget.PopupWindow
 import com.appservice.AppServiceApplication
 import com.appservice.R
-import com.appservice.appointment.ui.Category
+import com.appservice.ui.aptsetting.ui.Category
 import com.appservice.databinding.RecyclerItemServiceCategoryBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
