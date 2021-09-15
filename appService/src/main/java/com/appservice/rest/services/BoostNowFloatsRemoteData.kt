@@ -1,6 +1,6 @@
 package com.appservice.rest.services
 
-import com.appservice.appointment.model.UpdateInfoRequest
+import com.appservice.model.aptsetting.UpdateInfoRequest
 import com.appservice.rest.EndPoints
 import io.reactivex.Observable
 import retrofit2.Response

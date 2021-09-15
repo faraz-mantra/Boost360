@@ -1,8 +1,8 @@
 package com.appservice.holder
 
-import com.appservice.appointment.model.*
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.RecyclerItemEcomAptSettingsBinding
+import com.appservice.model.aptsetting.*
 import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.gone
