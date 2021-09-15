@@ -18,6 +18,8 @@ import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.pref.UserSessionManager
+import com.framework.utils.convertObjToString
+import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -73,9 +75,11 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
 
   private fun updateOwnersInfo() {
     showProgress(getString(R.string.updating))
-    val query = "{_id : '${ownersDataResponse?.data?.get(0)?.id}'}"
-    val updateValue = "{\$set : {'title' : '${binding?.ctfDesignation?.text.toString()}','profileimage' : {'url' : '${imageUrl ?: ""}','description':''},'name' : '${binding?.ctfOwnerName?.text.toString()}', 'ourStory':'${binding?.ctfDescription?.text.toString()}'}}"
-    viewModel?.updateOwnersData(request = UpdateOwnersDataRequest(query = query, updateValue = updateValue))?.observeOnce(viewLifecycleOwner, Observer {
+    val query = "{_id:'" + ownersDataResponse?.data?.get(0)?.id + "'}"
+    val actionData = ActionData(binding?.ctfDescription?.text.toString(), binding?.ctfOwnerName?.text.toString(), binding?.ctfDesignation?.text.toString(), Profileimage(imageUrl ?: "", ""))
+    val updateValue = "{\$set :" + convertObjToString(actionData) + "}"
+    val request = UpdateOwnersDataRequest(query = query, updateValue = updateValue)
+    viewModel?.updateOwnersData(request = request)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       if (it.isSuccess()) {
         showShortToast(getString(R.string.updated_owners_data))
@@ -123,7 +127,7 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
     viewModel?.getOwnersData(query = session?.fpTag)?.observeOnce(viewLifecycleOwner, {
       hideProgress()
       if (it.isSuccess()) {
-        this.ownersDataResponse = (it as? OwnersDataResponse)?:OwnersDataResponse()
+        this.ownersDataResponse = (it as? OwnersDataResponse) ?: OwnersDataResponse()
         updatePreviousData(ownersDataResponse!!)
       } else {
         showShortToast(getString(R.string.error_getting_owners_info))
