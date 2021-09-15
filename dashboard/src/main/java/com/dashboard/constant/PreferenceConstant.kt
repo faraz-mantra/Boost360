@@ -7,4 +7,6 @@ object PreferenceConstant {
   const val AUTHORIZATION = "Authorization"
   const val KEY_FP_ID = "fpid"
   const val CHANNEL_SHARE_URL = "channel_share_url"
+  const val MERCHANT_SUMMARY_RESPONSE = "MERCHANT_SUMMARY_RESPONSE"
+
 }

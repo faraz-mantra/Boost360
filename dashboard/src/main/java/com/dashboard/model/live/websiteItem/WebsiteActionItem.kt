@@ -17,8 +17,9 @@ data class WebsiteActionItem(
   var title: String? = "",
   @SerializedName("desc")
   var desc: String? = "",
-  @SerializedName("count")
-  var count: Int? = null,
+  @SerializedName("countType")
+  var countType: String? = null,
+  var count:Int?=null,
   @SerializedName("type")
   var type: String? = "",
 ) : Serializable, AppBaseRecyclerViewItem {
