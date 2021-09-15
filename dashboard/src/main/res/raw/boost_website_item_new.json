@@ -5,7 +5,7 @@
       "action_item": [
         {
           "title": "Service catalogue",
-          "count": "NoOfServices",
+          "countType": "NoOfServices",
           "isFeature": false,
           "desc": "Add and manage services you will be providing to your patients & customers. This will make it easier for patients to schedule an appointment.",
           "type": "service_product_catalogue",
@@ -14,7 +14,7 @@
         },
         {
           "title": "Updates & health tips",
-          "count": "NoOfUpdates",
+          "countType": "NoOfUpdates",
           "isFeature": false,
           "desc": "Add updates like health tips, procedure details, offers, news etc. This is the information patients search online.",
           "type": "latest_update_tips",
@@ -23,7 +23,7 @@
         },
         {
           "title": "Image gallery",
-          "count": "NoOfImages",
+          "countType": "NoOfImages",
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
@@ -32,7 +32,7 @@
         },
         {
           "title": "Testimonials",
-          "count": "NoOfTestimonials",
+          "countType": "NoOfTestimonials",
           "isFeature": false,
           "desc": "Add patient reviews and testimonials to improve trust.",
           "type": "testimonials",
@@ -49,7 +49,7 @@
         },
         {
           "title": "Custom pages",
-          "count": "NoOfCustomPages",
+          "countType": "NoOfCustomPages",
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
@@ -63,7 +63,7 @@
       "action_item": [
         {
           "title": "Service catalogue",
-          "count": "NoOfServices",
+          "countType": "NoOfServices",
           "isFeature": false,
           "desc": "Add and manage services you will be providing to your patients & customers. This will make it easier for patients to schedule an appointment.",
           "type": "service_product_catalogue",
@@ -80,7 +80,7 @@
         },
         {
           "title": "Updates & health tips",
-          "count": "NoOfUpdates",
+          "countType": "NoOfUpdates",
           "isFeature": false,
           "desc": "Add updates like health tips, procedure details, offers, news etc. This is the information patients search online.",
           "type": "latest_update_tips",
@@ -89,7 +89,7 @@
         },
         {
           "title": "Image gallery",
-          "count": "NoOfImages",
+          "countType": "NoOfImages",
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
@@ -98,7 +98,7 @@
         },
         {
           "title": "Testimonials",
-          "count": "NoOfTestimonials",
+          "countType": "NoOfTestimonials",
           "isFeature": false,
           "desc": "Add patient reviews and testimonials to improve trust.",
           "type": "testimonials",
@@ -107,7 +107,7 @@
         },
         {
           "title": "Custom pages",
-          "count": "NoOfCustomPages",
+          "countType": "NoOfCustomPages",
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
@@ -121,7 +121,7 @@
       "action_item": [
         {
           "title": "Product catalogue",
-          "count": "NoOfProducts",
+          "countType": "NoOfProducts",
           "isFeature": false,
           "desc": "Add and manage products on your website catalogue. This will make it easier for customers to browse and order online.",
           "type": "service_product_catalogue",
@@ -138,7 +138,7 @@
         },
         {
           "title": "Updates & news",
-          "count": "NoOfUpdates",
+          "countType": "NoOfUpdates",
           "isFeature": false,
           "desc": "Add updates like product launches, new trends, offers etc. This is the information customers search online.",
           "type": "latest_update_tips",
@@ -147,7 +147,7 @@
         },
         {
           "title": "Image gallery",
-          "count": "NoOfImages",
+          "countType": "NoOfImages",
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
@@ -156,7 +156,7 @@
         },
         {
           "title": "Testimonials",
-          "count": "NoOfTestimonials",
+          "countType": "NoOfTestimonials",
           "isFeature": false,
           "desc": "Add customer reviews and testimonials to improve trust.",
           "type": "testimonials",
@@ -165,7 +165,7 @@
         },
         {
           "title": "Custom pages",
-          "count": "NoOfCustomPages",
+          "countType": "NoOfCustomPages",
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
@@ -179,7 +179,7 @@
       "action_item": [
         {
           "title": "Course catalogue",
-          "count": 432,
+          "countType":  "NoOfProducts",
           "isFeature": false,
           "desc": "Add and manage courses on your website catalogue. This will make it easier for students to browse and request admission online.",
           "type": "service_product_catalogue",
@@ -196,7 +196,7 @@
         },
         {
           "title": "Updates & tips",
-          "count": "NoOfUpdates",
+          "countType": "NoOfUpdates",
           "isFeature": false,
           "desc": "Add updates like new courses, admission updates, student achievements, events etc. This is the information students and parents search online.",
           "type": "latest_update_tips",
@@ -205,7 +205,7 @@
         },
         {
           "title": "Image gallery",
-          "count": "NoOfImages",
+          "countType": "NoOfImages",
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
@@ -214,7 +214,7 @@
         },
         {
           "title": "Testimonials",
-          "count": "NoOfTestimonials",
+          "countType": "NoOfTestimonials",
           "isFeature": false,
           "desc": "Add student and parent testimonials to improve trust.",
           "type": "testimonials",
@@ -223,7 +223,7 @@
         },
         {
           "title": "Toppers of institute",
-          "count": "NoOfToppers",
+          "countType": "NoOfToppers",
           "isFeature": false,
           "desc": "Showcase your top students with their testimonials on your website.",
           "type": "toppers_institute",
@@ -232,7 +232,7 @@
         },
         {
           "title": "Upcoming batches",
-          "count": "NoOfupcomingBatches",
+          "countType": "NoOfupcomingBatches",
           "isFeature": false,
           "desc": "Add all upcoming courses and classes in advance. This will help get admissions in advance.",
           "type": "upcoming_batches",
@@ -241,7 +241,7 @@
         },
         {
           "title": "Faculty & management",
-          "count": "NoOfFaculty",
+          "countType": "NoOfFaculty",
           "isFeature": false,
           "desc": "Highlight profiles and credentials of faculty members and institute management.",
           "type": "faculty_management",
@@ -250,7 +250,7 @@
         },
         {
           "title": "Custom pages",
-          "count": "NoOfCustomPages",
+          "countType": "NoOfCustomPages",
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
@@ -264,7 +264,7 @@
       "action_item": [
         {
           "title": "Room catalogue",
-          "count": 432,
+          "countType":  "NoOfProducts",
           "isFeature": false,
           "desc": "Add your different room types to enable customers to book online.",
           "type": "service_product_catalogue",
@@ -281,7 +281,7 @@
         },
         {
           "title": "Updates, news & events",
-          "count": "NoOfUpdates",
+          "countType": "NoOfUpdates",
           "isFeature": false,
           "desc": "Regularly add updates like offers, festival updates, events etc to your website.",
           "type": "latest_update_tips",
@@ -290,7 +290,7 @@
         },
         {
           "title": "Image gallery",
-          "count": "NoOfImages",
+          "countType": "NoOfImages",
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place. Improve engagement on your website by adding images regularly.",
           "type": "all_images",
@@ -299,7 +299,7 @@
         },
         {
           "title": "Testimonials",
-          "count": "NoOfTestimonials",
+          "countType": "NoOfTestimonials",
           "isFeature": false,
           "desc": "Add customer reviews and testimonials to your website to improve trust.",
           "type": "testimonials",
@@ -308,7 +308,7 @@
         },
         {
           "title": "Custom page",
-          "count": 432,
+          "countType":  "NoOfCustomPages",
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
@@ -317,7 +317,7 @@
         },
         {
           "title": "Places to look around",
-          "count": "NoOfPlacesAround",
+          "countType": "NoOfPlacesAround",
           "isFeature": false,
           "desc": "Add local attractions to engage potential customers and increase room booking rates.",
           "type": "places_look_around",
@@ -326,7 +326,7 @@
         },
         {
           "title": "Tripadviser ratings",
-          "count": "NoOfTripAdvisor",
+          "countType": "NoOfTripAdvisor",
           "isFeature": false,
           "desc": "Add your Tripadvisor reviews on your website to improve trust.",
           "type": "trip_adviser_ratings",
@@ -335,7 +335,7 @@
         },
         {
           "title": "Seasonal offers",
-          "count": "NoOfSeasonalOffers",
+          "countType": "NoOfSeasonalOffers",
           "isFeature": false,
           "desc": "Add seasonal offers to increase your room booking rates.",
           "type": "seasonal_offers",
@@ -349,7 +349,7 @@
       "action_item": [
         {
           "title": "Product catalogue",
-          "count": "NoOfProducts",
+          "countType": "NoOfProducts",
           "isFeature": false,
           "desc": "Add and manage products on your website catalogue. This will make it easier for customers to browse and order online.",
           "type": "service_product_catalogue",
@@ -366,7 +366,7 @@
         },
         {
           "title": "Updates & news",
-          "count": "NoOfUpdates",
+          "countType": "NoOfUpdates",
           "isFeature": false,
           "desc": "Add updates like new product launches, new trends, offers etc. This is the information customers search online.",
           "type": "latest_update_tips",
@@ -375,7 +375,7 @@
         },
         {
           "title": "Image gallery",
-          "count": "NoOfImages",
+          "countType": "NoOfImages",
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
@@ -384,7 +384,7 @@
         },
         {
           "title": "Project & teams",
-          "count": "NoOfProjects",
+          "countType": "NoOfProjects",
           "isFeature": false,
           "desc": "Add and manage details of projects executed. Or use this section to tell customers about your team and their qualification.",
           "type": "project_teams",
@@ -393,7 +393,7 @@
         },
         {
           "title": "Testimonials",
-          "count": "NoOfTestimonials",
+          "countType": "NoOfTestimonials",
           "isFeature": false,
           "desc": "Add customer reviews and testimonials to improve trust.",
           "type": "testimonials",
@@ -402,7 +402,7 @@
         },
         {
           "title": "Unlimited digital brochures",
-          "count": "NoOfBrochures",
+          "countType": "NoOfBrochures",
           "isFeature": false,
           "desc": "Upload and share brochures, product specifications or other downloadable documents with your customers.",
           "type": "unlimited_digital_brochures",
@@ -411,7 +411,7 @@
         },
         {
           "title": "Custom pages",
-          "count": "NoOfCustomPages",
+          "countType": "NoOfCustomPages",
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
@@ -426,7 +426,7 @@
       "action_item": [
         {
           "title": "Food & beverages menu",
-          "count": 432,
+          "countType":  "NoOfProducts",
           "isFeature": false,
           "desc": "Add and manage items on your digital menu. This will allow customers to browse and order online.",
           "type": "service_product_catalogue",
@@ -443,7 +443,7 @@
         },
         {
           "title": "Updates & tips",
-          "count": "NoOfUpdates",
+          "countType": "NoOfUpdates",
           "isFeature": false,
           "desc": "Add updates like recipes, food pairings, offers, events etc. This is the information customers search online.",
           "type": "latest_update_tips",
@@ -452,7 +452,7 @@
         },
         {
           "title": "Image gallery",
-          "count": "NoOfImages",
+          "countType": "NoOfImages",
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
@@ -461,7 +461,7 @@
         },
         {
           "title": "Testimonials",
-          "count": "NoOfTestimonials",
+          "countType": "NoOfTestimonials",
           "isFeature": false,
           "desc": "Add customer reviews and testimonials to improve trust.",
           "type": "testimonials",
@@ -470,7 +470,7 @@
         },
         {
           "title": "Custom pages",
-          "count": "NoOfCustomPages",
+          "countType": "NoOfCustomPages",
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
@@ -484,7 +484,7 @@
       "action_item": [
         {
           "title": "Service catalogue",
-          "count": "NoOfServices",
+          "countType": "NoOfServices",
           "isFeature": false,
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
           "type": "service_product_catalogue",
@@ -503,14 +503,14 @@
           "title": "Updates & tips",
           "desc": "Add updates like new services, DIY tips, offers, events etc. This is the information customers search online.",
           "type": "latest_update_tips",
-          "count": "NoOfUpdates",
+          "countType": "NoOfUpdates",
           "isFeature": false,
           "isLock": false,
           "premiumCode": ""
         },
         {
           "title": "Image gallery",
-          "count": "NoOfImages",
+          "countType": "NoOfImages",
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
@@ -519,7 +519,7 @@
         },
         {
           "title": "Testimonials",
-          "count": "NoOfTestimonials",
+          "countType": "NoOfTestimonials",
           "isFeature": false,
           "desc": "Add customer reviews and testimonials to improve trust.",
           "type": "testimonials",
@@ -528,7 +528,7 @@
         },
         {
           "title": "Custom pages",
-          "count": "NoOfCustomPages",
+          "countType": "NoOfCustomPages",
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
@@ -542,7 +542,7 @@
       "action_item": [
         {
           "title": "Service catalogue",
-          "count": "NoOfServices",
+          "countType": "NoOfServices",
           "isFeature": false,
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
           "type": "service_product_catalogue",
@@ -559,7 +559,7 @@
         },
         {
           "title": "Updates & tips",
-          "count": "NoOfUpdates",
+          "countType": "NoOfUpdates",
           "isFeature": false,
           "desc": "Add updates like new services, DIY tips, offers, events etc. This is the information customers search online.",
           "type": "latest_update_tips",
@@ -568,7 +568,7 @@
         },
         {
           "title": "Image gallery",
-          "count": "NoOfImages",
+          "countType": "NoOfImages",
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
@@ -577,7 +577,7 @@
         },
         {
           "title": "Testimonials",
-          "count": "NoOfTestimonials",
+          "countType": "NoOfTestimonials",
           "isFeature": false,
           "desc": "Add customer reviews and testimonials to improve trust.",
           "type": "testimonials",
@@ -586,7 +586,7 @@
         },
         {
           "title": "Custom pages",
-          "count": "NoOfCustomPages",
+          "countType": "NoOfCustomPages",
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
@@ -600,7 +600,7 @@
       "action_item": [
         {
           "title": "Service catalogue",
-          "count": "NoOfServices",
+          "countType": "NoOfServices",
           "isFeature": false,
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
           "type": "service_product_catalogue",
@@ -617,7 +617,7 @@
         },
         {
           "title": "Latest updates & offers",
-          "count": "NoOfUpdates",
+          "countType": "NoOfUpdates",
           "isFeature": false,
           "desc": "Add updates like new services, health & beauty tips, offers, events etc. This is the information customers search online.",
           "type": "latest_update_tips",
@@ -626,7 +626,7 @@
         },
         {
           "title": "Image gallery",
-          "count": "NoOfImages",
+          "countType": "NoOfImages",
           "isFeature": false,
           "desc": "Upload and manage all your website images in one place.",
           "type": "all_images",
@@ -635,7 +635,7 @@
         },
         {
           "title": "Testimonials",
-          "count": "NoOfTestimonials",
+          "countTypeType": "NoOfTestimonials",
           "isFeature": false,
           "desc": "Add customer reviews and testimonials to improve trust.",
           "type": "testimonials",
@@ -644,7 +644,7 @@
         },
         {
           "title": "Custom pages",
-          "count": "NoOfCustomPages",
+          "countTypeType": "NoOfCustomPages",
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
