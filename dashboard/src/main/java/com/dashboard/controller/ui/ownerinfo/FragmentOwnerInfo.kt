@@ -147,7 +147,7 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
       binding?.clearImage?.visible()
       binding?.civOwnerImage?.visible()
       binding?.btnChangeImage?.visible()
-      binding?.civOwnerImage?.let { activity?.glideLoad(it, data.profileimage?.url ?: "", R.drawable.placeholder_image_n) }
+      binding?.civOwnerImage?.let { activity?.glideLoad(it, data.profileimage?.url ?: "", R.drawable.placeholder_image_n,isCrop=false) }
     }
     if (isEdit == true) binding?.btnSaveDetails?.text = getString(R.string.update_details)
   }
