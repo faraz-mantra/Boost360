@@ -18,20 +18,20 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class BottomSheetTaxInvoicesForPurchases : BaseBottomSheetDialog<BottomSheetSetupTaxInvoicesForCustomerPurchaseBinding, BaseViewModel>() {
-  override fun getLayout(): Int {
-    return R.layout.bottom_sheet_setup_tax_invoices_for_customer_purchase
-  }
 
   var clickType: (name: ClickType?) -> Unit = { }
+  var isEdit = false
+  private var paymentProfileDetails: PaymentResult? = null
+  var upiId: (name: String?) -> Unit = { }
 
   enum class ClickType {
     SAVECHANGES, CANCEL
   }
 
-  var isEdit = false
-  private var paymentProfileDetails: PaymentResult? = null
+  override fun getLayout(): Int {
+    return R.layout.bottom_sheet_setup_tax_invoices_for_customer_purchase
+  }
 
-  var upiId: (name: String?) -> Unit = { }
   override fun getViewModelClass(): Class<BaseViewModel> {
     return BaseViewModel::class.java
   }

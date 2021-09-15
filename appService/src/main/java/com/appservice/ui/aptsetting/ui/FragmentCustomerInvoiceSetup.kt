@@ -35,7 +35,6 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
   var setGstData: (gstin: String) -> Unit = {}
   var setBusinessName: (businessName: String) -> Unit = {}
   var onImageClick: (Image: ArrayList<FileModel>) -> Unit = { }
-
   private lateinit var bottomSheetTaxInvoicesForPurchases: BottomSheetTaxInvoicesForPurchases
   var imageList: ArrayList<FileModel> = ArrayList()
 
@@ -112,13 +111,11 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
       binding?.ctvGstNum?.text = data?.result?.taxDetails?.gSTDetails?.gSTIN
       binding?.icDone?.visible()
       binding?.hintEnterGst?.gone()
-
     }
-    if (data?.result?.uPIId.isNullOrEmpty()) {
+    if (data?.result?.uPIId.isNullOrEmpty() || data?.result?.uPIId == "null") {
       binding?.upiIdHeading?.gone()
       binding?.upiId?.gone()
       binding?.divider3?.gone()
-
     } else {
       binding?.upiIdHeading?.visible()
       binding?.upiId?.visible()

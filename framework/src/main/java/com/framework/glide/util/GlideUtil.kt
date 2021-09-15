@@ -107,9 +107,8 @@ fun Context.loadGifGlide(mImageView: CustomImageView, gif_file: Int?, placeholde
 fun Activity.glideLoad(mImageView: CustomImageView, url: String, placeholder: Int, isCenterCrop: Boolean = false, isLoadBitmap: Boolean = false) {
   try {
     val options: RequestOptions = mImageView.getRequestOptionImage(placeholder)
-    val url = GlideUrl(
-      url, LazyHeaders.Builder().addHeader("Authorization",UserSessionManager(this).getAccessTokenAuth()?.token?:"").build()
-    )
+    val token = if (url.contains("withfloats.com") || url.contains("nowfloats.com")) UserSessionManager(this).getAccessTokenAuth()?.token ?: "" else ""
+    val url = GlideUrl(url, LazyHeaders.Builder().addHeader("Authorization",token).build())
     val glideImage = Glide.with(this).load(url).apply(options)
     if (isCenterCrop) glideImage.centerCrop()
     if (isLoadBitmap) {
@@ -143,12 +142,12 @@ fun Context.glideLoadColor(mImageView: CustomImageView, url: String, view: View)
     .asBitmap().load(url)
     .diskCacheStrategy(DiskCacheStrategy.ALL)
     .listener(object : RequestListener<Bitmap> {
-      override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean, ): Boolean {
+      override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
         return false
       }
 
       @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-      override fun onResourceReady(resource: Bitmap?, model: Any, target: Target<Bitmap>, dataSource: DataSource, isFirstResource: Boolean, ): Boolean {
+      override fun onResourceReady(resource: Bitmap?, model: Any, target: Target<Bitmap>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
         if (resource != null) {
           val p = Palette.from(resource).generate()
           // Use generated instance

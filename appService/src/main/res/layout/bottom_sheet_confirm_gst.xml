@@ -68,7 +68,7 @@
             style="@style/wrap_wrap"
             android:layout_marginTop="@dimen/size_12"
             android:layout_marginEnd="@dimen/size_8"
-            android:src="@drawable/ic_info" />
+            android:src="@drawable/ic_info_s" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/content"

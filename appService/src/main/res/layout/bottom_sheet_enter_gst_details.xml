@@ -51,8 +51,7 @@
         <RadioButton
           android:id="@+id/radio_not_registered"
           style="@style/RadioAppointment"
-          android:text="@string/not_registered_with_gst"
-          tools:buttonTint="@color/gray_bbb" />
+          android:text="@string/not_registered_with_gst" />
       </RadioGroup>
 
       <androidx.appcompat.widget.LinearLayoutCompat
@@ -136,7 +135,7 @@
             style="@style/wrap_wrap"
             android:layout_gravity="start"
             android:layout_marginTop="@dimen/size_10"
-            android:drawableStart="@drawable/ic_info"
+            android:drawableStart="@drawable/ic_info_s"
             android:drawablePadding="@dimen/size_8"
             android:drawableTint="@color/gray_bbb"
             android:text="@string/note_your_gstin_and_business_name_will_be_verified"
