@@ -22,6 +22,7 @@ import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import com.framework.webengageconstant.*
+import com.google.android.material.circularreveal.CircularRevealHelper
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
@@ -35,6 +36,7 @@ import kotlinx.android.synthetic.main.razor_pay_web_view_fragment.*
 import org.json.JSONObject
 import java.lang.IllegalStateException
 import java.util.*
+import kotlin.collections.HashMap
 
 
 class RazorPayWebView : androidx.fragment.app.DialogFragment() {
@@ -129,11 +131,21 @@ class RazorPayWebView : androidx.fragment.app.DialogFragment() {
         try {
             dialog!!.dismiss()
             Log.e("onPaymentError", "p1 >>>" + paymentFailure)
+
+            val rev = data["amount"] as Int
+            val eventAttributes: HashMap<String,Any> = HashMap()
+
+            eventAttributes.put("revenue",(rev / 100))
+            eventAttributes.put("rev",(rev / 100))
+            eventAttributes.put("cartIds", Utils.filterBraces(prefs.getCardIds().toString()))
+            eventAttributes.put("couponIds",Utils.filterQuotes(prefs.getCouponIds().toString()))
+            eventAttributes.put("validity",prefs.getValidityMonths().toString())
+
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_FAILED_PAYMENT_TRANSACTION_LOAD, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
             val listPersonType = object : TypeToken<PaymentErrorModule>() {}.type
             val errorBody: PaymentErrorModule = Gson().fromJson(paymentFailure, listPersonType)
             Toasty.error(requireContext(), errorBody.error.description, Toast.LENGTH_LONG).show()
-            WebEngageController.trackEvent(ADDONS_MARKETPLACE_PAYMENT_FAILED, NO_EVENT_LABLE, NO_EVENT_VALUE)
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_PAYMENT_FAILED, NO_EVENT_LABLE, eventAttributes)
             redirectTransactionFailure(data.toString())
         } catch (e: Exception) {
             Log.e("onPayError",paymentFailure.toString())
