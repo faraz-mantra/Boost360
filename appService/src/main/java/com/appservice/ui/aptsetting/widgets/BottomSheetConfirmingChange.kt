@@ -15,8 +15,11 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.pref.getDomainName
+import com.framework.utils.fromHtml
 
 class BottomSheetConfirmingChange : BaseBottomSheetDialog<BottomSheetConfirmingChangesBinding, AppointmentSettingsViewModel>() {
+
   private var catalogName: String? = null
   private var fpDetails: UserFpDetailsResponse? = null
 
@@ -34,8 +37,8 @@ class BottomSheetConfirmingChange : BaseBottomSheetDialog<BottomSheetConfirmingC
     setOnClickListener(binding?.btnGoBack, binding?.btnYesChange)
     this.fpDetails = arguments?.getSerializable(IntentConstant.CATALOG_DATA.name) as? UserFpDetailsResponse
     this.catalogName = arguments?.getString(IntentConstant.CATALOG_CUSTOM_NAME.name)
-    binding?.ctvNewDisplayText?.text = catalogName
-    binding?.ctvNewPageUrl?.text = "${sessionManager?.rootAliasURI}/${catalogName}"
+    binding?.ctvNewDisplayText?.text = fromHtml("<b>New display text:</b> $catalogName")
+    binding?.ctvNewPageUrl?.text = fromHtml("<b>New page URL:</b><br /><u>${sessionManager?.getDomainName()}/$catalogName</u>")
     binding?.ccbAgree?.setOnCheckedChangeListener { _, isChecked ->
       when (isChecked) {
         true -> binding?.btnYesChange?.visible()
@@ -58,16 +61,13 @@ class BottomSheetConfirmingChange : BaseBottomSheetDialog<BottomSheetConfirmingC
   }
 
   private fun updateServiceCategoryVerb() {
-    viewModel?.updateProductCategoryVerb(getRequest())?.observeOnce(viewLifecycleOwner,{
-      when (it.isSuccess()) {
-        true -> {
-          showSuccessfullyUpdated()
-          dismiss()
-        }
-        else -> {
-
-        }
-      }
+    binding?.btnYesChange?.isEnabled = false
+    viewModel?.updateProductCategoryVerb(getRequest())?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        showSuccessfullyUpdated()
+        dismiss()
+      } else showShortToast("Error updating catalog!")
+      binding?.btnYesChange?.isEnabled = true
     })
   }
 
@@ -75,10 +75,8 @@ class BottomSheetConfirmingChange : BaseBottomSheetDialog<BottomSheetConfirmingC
     val updateRequest = ProductCategoryVerbRequest()
     return updateRequest.apply {
       fpTag = sessionManager?.fpTag
-      updates = arrayListOf(UpdatesItem(catalogName,"PRODUCTCATEGORYVERB"))
+      updates = arrayListOf(UpdatesItem(catalogName, "PRODUCTCATEGORYVERB"))
       clientID = clientId
-
-
     }
   }
 

@@ -1,6 +1,10 @@
 package com.appservice.model.aptsetting
 
+import android.app.Activity
+import com.appservice.AppServiceApplication
+import com.appservice.ui.aptsetting.ui.getProductType
 import com.framework.base.BaseResponse
+import com.framework.pref.UserSessionManager
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -209,7 +213,12 @@ data class UserFpDetailsResponse(
 
   @field:SerializedName("GADomain")
   val gADomain: String? = null,
-) : BaseResponse(), Serializable
+) : BaseResponse(), Serializable {
+
+  fun productCategoryVerb(activity: Activity): String {
+    return if (productCategoryVerb.isNullOrEmpty()) getProductType(UserSessionManager(activity).fP_AppExperienceCode) else productCategoryVerb
+  }
+}
 
 data class Contact(
 

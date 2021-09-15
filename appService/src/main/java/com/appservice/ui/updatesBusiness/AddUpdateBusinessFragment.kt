@@ -12,7 +12,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import com.appservice.R
 import com.appservice.base.AppBaseFragment

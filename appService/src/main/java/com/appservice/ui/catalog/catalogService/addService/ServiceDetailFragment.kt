@@ -240,8 +240,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     showLongToast(getString(R.string.service_removed_successfully))
     val data = Intent()
     data.putExtra(IntentConstant.IS_UPDATED.name, true)
-    baseActivity?.setResult(Activity.RESULT_OK, data)
-    baseActivity?.finish()
+    baseActivity.setResult(Activity.RESULT_OK, data)
+    baseActivity.finish()
   }
 
   private fun onServiceDetailResponseReceived(it: BaseResponse) {
@@ -308,9 +308,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         viewModel?.addSecondaryImage(request)?.observeOnce(viewLifecycleOwner, Observer {
           checkPosition += 1
           if ((it.error is NoNetworkException).not()) {
-            if (it.isSuccess()
-                .not()
-            ) showError(resources.getString(R.string.secondary_service_image_upload_error))
+            if (it.isSuccess().not()) showError(resources.getString(R.string.secondary_service_image_upload_error))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == images.size) addUpdateServiceTiming()
         })
@@ -319,15 +317,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun addUpdateServiceTiming() {
-    val request = AddServiceTimingRequest(
-      product?.productId,
-      product?.Duration,
-      getTimingRequest(this.serviceTimingList)
-    )
-    val requestApi =
-      if (isEdit.not()) viewModel?.addServiceTiming(request) else viewModel?.updateServiceTiming(
-        request
-      )
+    val request = AddServiceTimingRequest(product?.productId, product?.Duration, getTimingRequest(this.serviceTimingList))
+    val requestApi = if (isEdit.not()) viewModel?.addServiceTiming(request) else viewModel?.updateServiceTiming(request)
     requestApi?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         isRefresh = true
@@ -419,20 +410,14 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     val filterSheet = ImagePickerBottomSheet()
     filterSheet.isHidePdf(true)
     filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(
-      this@ServiceDetailFragment.parentFragmentManager,
-      ImagePickerBottomSheet::class.java.name
-    )
+    filterSheet.show(this@ServiceDetailFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   private fun openSuccessBottomSheet() {
     val createdSuccess = CreateServiceSuccessBottomSheet()
     createdSuccess.setData(isEdit)
     createdSuccess.onClicked = { clickSuccessCreate(it) }
-    createdSuccess.show(
-      this@ServiceDetailFragment.parentFragmentManager,
-      CreateServiceSuccessBottomSheet::class.java.name
-    )
+    createdSuccess.show(this@ServiceDetailFragment.parentFragmentManager, CreateServiceSuccessBottomSheet::class.java.name)
   }
 
   private fun clickSuccessCreate(it: String) {
@@ -440,8 +425,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       TypeSuccess.CLOSE.name -> {
         val data = Intent()
         data.putExtra(IntentConstant.IS_UPDATED.name, isRefresh)
-        baseActivity?.setResult(Activity.RESULT_OK, data)
-        baseActivity?.finish()
+        baseActivity.setResult(Activity.RESULT_OK, data)
+        baseActivity.finish()
       }
       TypeSuccess.VISIT_WEBSITE.name -> {
       }

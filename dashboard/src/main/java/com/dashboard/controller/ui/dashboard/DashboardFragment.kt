@@ -783,14 +783,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     super.onClick(v)
     // Track the share_business_card_initiated even in Firebase & Webengage
     when (v) {
-      binding?.filterBusinessReport -> bottomSheetFilter(
-        BUSINESS_REPORT,
-        FilterDateModel().getDateFilter(FILTER_BUSINESS_REPORT)
-      )
-      binding?.filterWebsiteReport -> bottomSheetFilter(
-        WEBSITE_REPORT,
-        FilterDateModel().getDateFilter(FILTER_WEBSITE_REPORT)
-      )
+      binding?.filterBusinessReport -> bottomSheetFilter(BUSINESS_REPORT, FilterDateModel().getDateFilter(FILTER_BUSINESS_REPORT))
+      binding?.filterWebsiteReport -> bottomSheetFilter(WEBSITE_REPORT, FilterDateModel().getDateFilter(FILTER_WEBSITE_REPORT))
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
       binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)//openDialogPicker()
       binding?.btnShowDigitalScore -> baseActivity.startReadinessScoreView(session, 0)
@@ -802,10 +796,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         else getChannelAccessToken(true)
       }
       binding?.retryDrScore -> setSummaryAndDrScore(true)
-      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(
-        session,
-        session!!.getDomainName(false)
-      )
+      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.scrollDownBtn -> {
         binding?.nestedScrollView?.scrollToTopBottom(binding?.arrowBtn!!)
         WebEngageController.trackEvent(

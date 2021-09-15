@@ -48,9 +48,9 @@
       android:orientation="vertical">
 
       <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_new_display_text"
         style="@style/wrap_wrap"
         android:layout_marginHorizontal="@dimen/size_20"
-        android:id="@+id/ctv_new_display_text"
         android:layout_marginTop="@dimen/size_20"
         android:includeFontPadding="false"
         android:text="@string/new_display_text_packages"
@@ -59,8 +59,8 @@
         app:fontFamily="@font/regular" />
 
       <com.framework.views.customViews.CustomTextView
-        style="@style/wrap_wrap"
         android:id="@+id/ctv_new_page_url"
+        style="@style/wrap_wrap"
         android:layout_marginHorizontal="@dimen/size_20"
         android:layout_marginTop="@dimen/size_20"
         android:includeFontPadding="false"
@@ -80,12 +80,11 @@
         android:gravity="start"
         android:paddingStart="@dimen/size_8"
         android:paddingTop="@dimen/size_4"
+        android:textSize="10sp"
         android:text="@string/i_understand_that_url_change_may_have_a_negative_impact_on_the_search"
         android:textColor="@color/black_4a4a4a"
-        android:textFontWeight="400"
-        android:textSize="12sp"
-        android:textStyle="normal"
-        app:buttonTint="@color/yellow_ffb900" />
+        app:buttonTint="@color/yellow_ffb900"
+        tools:ignore="RtlSymmetry,SmallSp" />
 
       <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/match_wrap"
@@ -100,6 +99,7 @@
           android:layout_marginEnd="@dimen/size_20"
           android:text="@string/yes_change"
           android:textAllCaps="false"
+          android:backgroundTint="@color/material_button_background_state"
           android:textColor="@color/white"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
@@ -109,7 +109,7 @@
           android:id="@+id/btn_go_back"
           style="@style/ButtonStyle.Rounded.Solid.BottomSheet"
           android:layout_width="wrap_content"
-          android:layout_marginEnd="@dimen/size_30"
+          android:layout_marginEnd="@dimen/size_16"
           android:background="@color/white"
           android:text="@string/go_back"
           android:textAllCaps="false"

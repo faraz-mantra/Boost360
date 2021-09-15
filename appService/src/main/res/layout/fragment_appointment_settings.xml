@@ -3,7 +3,8 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools">
 
-  <androidx.constraintlayout.widget.ConstraintLayout style="@style/match_match_root">
+  <androidx.constraintlayout.widget.ConstraintLayout
+    style="@style/match_match_root">
 
     <LinearLayout
       android:id="@+id/linearLayout"
@@ -22,7 +23,8 @@
         android:gravity="center_vertical"
         android:textSize="12sp"
         app:iconifiedByDefault="false"
-        app:queryHint="@string/search_in_the_appointment_settings" />
+        app:queryHint="@string/search_in_the_appointment_settings"
+        app:searchIcon="@null" />
     </LinearLayout>
 
     <com.framework.views.viewgroups.BaseRecyclerView
@@ -30,6 +32,8 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:orientation="vertical"
+      android:clipToPadding="false"
+      android:paddingBottom="@dimen/size_20"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/linearLayout"
