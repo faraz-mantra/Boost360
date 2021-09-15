@@ -88,12 +88,29 @@
           android:overScrollMode="never"
           android:paddingBottom="@dimen/_5sdp"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintBottom_toBottomOf="@id/divider"
           app:layout_constraintTop_toBottomOf="@id/sub_heading_tv"
           tools:itemCount="2"
           tools:listitem="@layout/item_category_layout" />
 
 
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            app:layout_constraintBottom_toTopOf="@id/tv_no_category_found" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_no_category_found"
+            android:layout_width="match_parent"
+            android:padding="8dp"
+            android:autoLink="web"
+            android:textColorLink="@color/colorPrimary"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="@string/can_t_find_your_category_speak_to_our_expert"
+            app:layout_constraintBottom_toBottomOf="parent" />
       </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
