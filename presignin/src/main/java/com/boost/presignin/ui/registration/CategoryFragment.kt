@@ -28,6 +28,9 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.webengageconstant.*
+import android.content.Intent
+import android.net.Uri
+
 
 class CategoryFragment : AppBaseFragment<FragmentCategoryBinding, CategoryVideoModel>(), RecyclerItemClickListener {
 
@@ -107,7 +110,8 @@ class CategoryFragment : AppBaseFragment<FragmentCategoryBinding, CategoryVideoM
     val clickableSpan = object :ClickableSpan(){
       override fun onClick(p0: View) {
         Log.i(TAG, "onClick: ")
-        needHelp()
+        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "+91 63669 37299"))
+        startActivity(intent)
       }
 
     }
