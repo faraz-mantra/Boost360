@@ -31,7 +31,7 @@ class NiceBottomBar : View {
   private var barIndicatorWidth = d2p(50f)
   private var itemTextVisible = true
   private var barIndicatorEnabled = true
-  private var barIndicatorGravity = 1
+  private var barIndicatorGravity = 0
   private var itemIconSize = d2p(18f)
   private var itemIconMargin = d2p(3f)
   private var itemTextColor = Color.parseColor(DEFAULT_TEXT_COLOR)
@@ -72,7 +72,7 @@ class NiceBottomBar : View {
   private val paintIndicator = Paint().apply {
     isAntiAlias = true
     style = Paint.Style.STROKE
-    strokeWidth = d2p(10f)
+    strokeWidth = d2p(6f)
     color = barIndicatorColor
     strokeCap = Paint.Cap.ROUND
   }
@@ -105,8 +105,6 @@ class NiceBottomBar : View {
     itemTextVisible = typedArray.getBoolean(R.styleable.NiceBottomBar_textVisible, this.itemTextVisible)
     itemTextColorActive = typedArray.getColor(R.styleable.NiceBottomBar_textColorActive, this.itemTextColorActive)
     itemTextSize = typedArray.getDimension(R.styleable.NiceBottomBar_textSize, this.itemTextSize)
-    itemIconSize = typedArray.getDimension(R.styleable.NiceBottomBar_iconSize, this.itemIconSize)
-    itemIconMargin = typedArray.getDimension(R.styleable.NiceBottomBar_iconMargin, this.itemIconMargin)
     activeItem = typedArray.getInt(R.styleable.NiceBottomBar_activeItem, this.activeItem)
     barIndicatorInterpolator = typedArray.getInt(R.styleable.NiceBottomBar_indicatorInterpolator, this.barIndicatorInterpolator)
     barIndicatorGravity = typedArray.getInt(R.styleable.NiceBottomBar_indicatorGravity, this.barIndicatorGravity)
@@ -121,10 +119,12 @@ class NiceBottomBar : View {
     clickPosition = ArrayList()
     clickPositionValue?.split(",")?.forEach { it.toIntOrNull()?.let { it1 -> clickPosition!!.add(it1) } }
     typedArray.recycle()
-
     setBackgroundColor(barBackgroundColor)
 
     // Update default attribute values
+    itemIconSize = if (itemTextVisible.not()) d2p(24f) else itemIconSize
+    itemIconMargin =if (itemTextVisible.not()) d2p(0f) else itemIconMargin
+
     paintIndicator.color = barIndicatorColor
     paintText.color = itemTextColor
     paintText.textSize = itemTextSize
@@ -163,7 +163,7 @@ class NiceBottomBar : View {
     this.canvas = canvas
     val textHeight = (paintText.descent() + paintText.ascent()) / 2
     // Push the item components from the top a bit if the indicator is at the top
-    var additionalTopMargin = if (barIndicatorGravity == 1) d2p(0f) else d2p(10f)
+    var additionalTopMargin = if (barIndicatorEnabled) if (barIndicatorGravity == 1) d2p(0f) else d2p(4f) else d2p(4f)
     additionalTopMargin = if (itemTextVisible) additionalTopMargin else d2p(12f)
     for ((i, item) in items.withIndex()) {
       if (itemsActive.isNullOrEmpty().not() && (itemsActive.size == items.size)) {
@@ -197,7 +197,6 @@ class NiceBottomBar : View {
   }
 
   // Handle item clicks
-  @SuppressLint("ClickableViewAccessibility")
   override fun onTouchEvent(event: MotionEvent): Boolean {
     if (event.action == MotionEvent.ACTION_UP && abs(event.downTime - event.eventTime) < longPressTime)
       for ((i, item) in items.withIndex())
@@ -232,20 +231,21 @@ class NiceBottomBar : View {
   // Draw item badge
   private fun drawBadge(canvas: Canvas, item: BottomBarItem, badgeText: String?) {
     Log.i(TAG, "drawBadge: $badgeText")
-    Log.i(TAG, "drawBadge33:" + item.badgeText)
     paintBadge.style = Paint.Style.FILL
-    paintBadge.color = Color.RED
+    paintBadge.color = Color.parseColor("#EF4B39")
+    val additionalTopMargin = if (itemTextVisible) 6f else 14f
+    val additionalStartMargin = if (itemTextVisible) 0f else 4f
 
     canvas.drawCircle(
-      item.rect.centerX() + itemIconSize / 2 - 4,
-      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + d2p(14f), d2p(8f), paintBadge
+      item.rect.centerX() + itemIconSize / 2 - additionalStartMargin,
+      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + d2p(additionalTopMargin), d2p(8f), paintBadge
     )
     paintBadge.style = Paint.Style.STROKE
     paintBadge.color = barBackgroundColor
 
     canvas.drawText(
-      badgeText ?: "", item.rect.centerX() + itemIconSize / 2 - 4,
-      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + d2p(17f),
+      badgeText ?: "", item.rect.centerX() + itemIconSize / 2 - additionalStartMargin,
+      (height / 2).toFloat() - itemIconSize - itemIconMargin / 2 + d2p(additionalTopMargin + 3F),
       paintText.apply { color = Color.WHITE;textSize = d2p(10f) }
     )
   }
