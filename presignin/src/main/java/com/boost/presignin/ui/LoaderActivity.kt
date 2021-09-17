@@ -31,259 +31,238 @@ import com.google.android.material.snackbar.Snackbar
 import java.lang.Exception
 import java.util.HashMap
 
-class LoaderActivity: AppBaseActivity<ActivityLoaderBinding,LoginSignUpViewModel>() {
+class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewModel>() {
 
-    lateinit var session:UserSessionManager
-    var deepLink:String?=null
-    var deepLinkViewType:String?=null
-    var deepLinkFpId:String?=null
-    var deepLinkFpTag:String?=null
-    var deepLinkDay:String?=null
+  private lateinit var session: UserSessionManager
+  private var deepLink: String? = null
+  private var deepLinkViewType: String? = null
+  private var deepLinkFpId: String? = null
+  private var deepLinkFpTag: String? = null
+  private var deepLinkDay: String? = null
 
-    override fun getLayout(): Int {
-        return R.layout.activity_loader
-    }
+  override fun getLayout(): Int {
+    return R.layout.activity_loader
+  }
 
-    override fun getViewModelClass(): Class<LoginSignUpViewModel> {
-        return LoginSignUpViewModel::class.java
-    }
+  override fun getViewModelClass(): Class<LoginSignUpViewModel> {
+    return LoginSignUpViewModel::class.java
+  }
 
-    override fun onCreateView() {
-        super.onCreateView()
-        session = UserSessionManager(this)
-       handleApis()
+  override fun onCreateView() {
+    super.onCreateView()
+    session = UserSessionManager(this)
+  }
 
-    }
+  override fun onResume() {
+    super.onResume()
+    handleApis()
+  }
 
-    private fun handleApis() {
-        if (isOnline()){
-            if (!session.isLoginCheck){
-                signUpStart()
-            }else{
-                val bundle = intent.extras
-                if (intent != null && intent.getStringExtra("from") != null) {
-                    deepLink = intent.getStringExtra("url")
-                }
-                if (bundle != null) {
-                    deepLinkViewType = bundle.getString("deepLinkViewType")
-                    deepLinkFpId = bundle.getString("deepLinkFpId")
-                    deepLinkFpTag = bundle.getString("deepLinkFpTag")
-                    deepLinkDay = bundle.getString("deepLinkDay")
-                }
-
-                initLottieAnimation()
-                val tokenResult = getAccessTokenAuth1(session)
-                if (tokenResult != null && tokenResult.isExpiredToken()) {
-                    createAccessToken(
-                        tokenResult.refreshToken!!,
-                        clientId2,
-                        session.fPID!!
-                    )
-                } else {
-                    storeFpDetails()
-                }
-            }
-        }else{
-            snackbarNoInternet()
+  private fun handleApis() {
+    if (isOnline()) {
+      if (!session.isLoginCheck) {
+        signUpStart()
+      } else {
+        val bundle = intent.extras
+        if (intent != null && intent.getStringExtra("from") != null) {
+          deepLink = intent.getStringExtra("url")
         }
-    }
-
-    private fun storeFpDetails() {
-
-        val map = HashMap<String, String>()
-        map["clientId"] = clientId
-        viewModel.getFpDetails(session.fPID ?: "", map)?.observeOnce(this, {
-            val response = it as? UserFpDetailsResponse
-            if (it.isSuccess() && response != null) {
-                ProcessFPDetails(session).storeFPDetails(response)
-                startService()
-                if (deepLinkViewType != null && deepLinkViewType.equals(
-                        "CART_FRAGMENT",
-                        ignoreCase = true
-                    )
-                    && deepLinkFpId != null && deepLinkFpId!!.trim { it <= ' ' } == session.fPID
-                        ?.trim { it <= ' ' }
-                ) {
-                    initiateAddonMarketplace()
-                } else {
-                    if (deepLinkViewType != null && deepLinkViewType.equals(
-                            "CART_FRAGMENT",
-                            ignoreCase = true
-                        )
-                    ) showAlertDialog() else goHomePage()
-                }
-            } else {
-                snackBarUnableToGetFp()
-            }
-        })
-    }
-
-    private fun snackBarUnableToGetFp() {
-        val view = findViewById<View>(android.R.id.content)
-
-        val snackbar = Snackbar
-            .make(view, getString(R.string.error_getting_fp_detail), Snackbar.LENGTH_LONG)
-            .setAction(getString(R.string.retry), object : View.OnClickListener {
-                override fun onClick(view: View?) {
-                   handleApis()
-                }
-            })
-
-        snackbar.show()
-    }
-
-    private fun showAlertDialog() {
-        val str = String.format(resources.getString(R.string.error_right_fptag), deepLinkFpTag)
-        AlertDialog.Builder(ContextThemeWrapper(this, R.style.CustomAlertDialogTheme))
-            .setMessage(str)
-            .setCancelable(false)
-            .setPositiveButton(R.string.ok) { dialog, i ->
-                dialog.dismiss()
-                goHomePage()
-            }.show()
-    }
-
-
-    private fun initiateAddonMarketplace() {
-        val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
-        intent.putExtra("expCode", session.fP_AppExperienceCode)
-        intent.putExtra("fpName", session.fPName)
-        intent.putExtra("fpid", session.fPID?.trim { it <= ' ' })
-        intent.putExtra("isDeepLink", true)
-        intent.putExtra("deepLinkViewType", deepLinkViewType)
-        intent.putExtra("deepLinkDay", deepLinkDay)
-        intent.putExtra("fpTag", session.fpTag)
-        intent.putExtra(
-            "accountType",
-            session.getFPDetails("GET_FP_DETAILS_CATEGORY")
-        )
-       /* intent.putStringArrayListExtra(
-            "userPurchsedWidgets",
-            com.nowfloats.util.Constants.StoreWidgets
-        )*/
-        if (session.userProfileEmail != null) {
-            intent.putExtra("email", session.userProfileEmail)
+        if (bundle != null) {
+          deepLinkViewType = bundle.getString("deepLinkViewType")
+          deepLinkFpId = bundle.getString("deepLinkFpId")
+          deepLinkFpTag = bundle.getString("deepLinkFpTag")
+          deepLinkDay = bundle.getString("deepLinkDay")
+        }
+        initLottieAnimation()
+        val tokenResult = getAccessTokenAuth1(session)
+        if (tokenResult != null && tokenResult.isExpiredToken()) {
+          createAccessToken(tokenResult.refreshToken!!, clientId2, session.fPID!!)
         } else {
-            intent.putExtra("email", "ria@nowfloats.com")
+          storeFpDetails()
         }
-        if (session.userPrimaryMobile != null) {
-            intent.putExtra("mobileNo", session.userPrimaryMobile)
+      }
+    } else {
+      binding?.preDashboardAnimation?.pauseAnimation()
+      snackbarNoInternet()
+    }
+  }
+
+  private fun storeFpDetails() {
+    val map = HashMap<String, String>()
+    map["clientId"] = clientId
+    viewModel.getFpDetails(session.fPID ?: "", map).observeOnce(this, { it1 ->
+      val response = it1 as? UserFpDetailsResponse
+      if (it1.isSuccess() && response != null) {
+        ProcessFPDetails(session).storeFPDetails(response)
+        startService()
+        if (
+          deepLinkViewType != null && deepLinkViewType.equals("CART_FRAGMENT", ignoreCase = true)
+          && deepLinkFpId != null && deepLinkFpId!!.trim { it <= ' ' } == session.fPID?.trim { it <= ' ' }
+        ) {
+          initiateAddonMarketplace()
         } else {
-            intent.putExtra("mobileNo", "9160004303")
+          if (deepLinkViewType != null && deepLinkViewType.equals("CART_FRAGMENT", ignoreCase = true)
+          ) showAlertDialog() else goHomePage()
         }
-        intent.putExtra("profileUrl", session.fPLogo)
-        startActivity(intent)
-        overridePendingTransition(0, 0)
-        finish()
-    }
+      } else {
+        binding?.preDashboardAnimation?.pauseAnimation()
+        snackBarUnableToGetFp()
+      }
+    })
+  }
 
-    private fun goHomePage() {
-        try {
-            val i = Intent(
-                this,
-                Class.forName("com.dashboard.controller.DashboardActivity")
-            )
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            if (deepLink != null) {
-                if (!deepLink!!.contains("logout")) {
-                    i.putExtras(intent)
-                    startActivity(i)
-                    finish()
-                } else session.logoutUser()
-            } else {
-                startActivity(i)
-                finish()
-            }
-        } catch (e: ClassNotFoundException) {
-            Log.e("Home Page", e.localizedMessage)
-            session.logoutUser()
+  private fun snackBarUnableToGetFp() {
+    val view = findViewById<View>(android.R.id.content)
+    val snackbar = Snackbar
+      .make(view, getString(R.string.error_getting_fp_detail), Snackbar.LENGTH_INDEFINITE)
+      .setAction(getString(R.string.retry)) {
+        handleApis()
+      }
+    snackbar.show()
+  }
+
+  private fun showAlertDialog() {
+    val str = String.format(resources.getString(R.string.error_right_fptag), deepLinkFpTag)
+    AlertDialog.Builder(ContextThemeWrapper(this, R.style.CustomAlertDialogTheme))
+      .setMessage(str)
+      .setCancelable(false)
+      .setPositiveButton(R.string.ok) { dialog, i ->
+        dialog.dismiss()
+        goHomePage()
+      }.show()
+  }
+
+
+  private fun initiateAddonMarketplace() {
+    val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
+    intent.putExtra("expCode", session.fP_AppExperienceCode)
+    intent.putExtra("fpName", session.fPName)
+    intent.putExtra("fpid", session.fPID?.trim { it <= ' ' })
+    intent.putExtra("isDeepLink", true)
+    intent.putExtra("deepLinkViewType", deepLinkViewType)
+    intent.putExtra("deepLinkDay", deepLinkDay)
+    intent.putExtra("fpTag", session.fpTag)
+    intent.putExtra("accountType", session.getFPDetails("GET_FP_DETAILS_CATEGORY"))
+    val storeList = ArrayList(session.getStoreWidgets() ?: arrayListOf())
+    intent.putStringArrayListExtra("userPurchsedWidgets", storeList)
+    if (session.userProfileEmail != null) {
+      intent.putExtra("email", session.userProfileEmail)
+    } else {
+      intent.putExtra("email", "ria@nowfloats.com")
+    }
+    if (session.userPrimaryMobile != null) {
+      intent.putExtra("mobileNo", session.userPrimaryMobile)
+    } else {
+      intent.putExtra("mobileNo", "9160004303")
+    }
+    intent.putExtra("profileUrl", session.fPLogo)
+    startActivity(intent)
+    overridePendingTransition(0, 0)
+    finish()
+  }
+
+  private fun goHomePage() {
+    try {
+      val i = Intent(this, Class.forName("com.dashboard.controller.DashboardActivity"))
+      i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+      if (deepLink != null) {
+        if (!deepLink!!.contains("logout")) {
+          i.putExtras(intent)
+          startActivity(i)
+          finish()
+        } else session.logoutUser()
+      } else {
+        startActivity(i)
+        finish()
+      }
+    } catch (e: ClassNotFoundException) {
+      Log.e("Home Page", e.localizedMessage)
+      session.logoutUser()
+    }
+  }
+
+  private fun startService() {
+    startService(Intent(this, APIService::class.java))
+  }
+
+  private fun createAccessToken(refreshToken: String, clientID: String, fpId: String) {
+    val request = AccessTokenRequest()
+    request.authToken = refreshToken
+    request.clientId = clientID
+    request.fpId = fpId
+    viewModel.createAccessToken(request).observe(this, {
+      val data = it as AccessTokenResponse
+      if (it.isSuccess() && data != null) {
+        val res = data.result
+        if (res != null && (res.refreshToken == null || res.refreshToken!!.isEmpty())) {
+          res.refreshToken = refreshToken
         }
+        saveAccessTokenAuth1(session, res)
+        storeFpDetails()
+      } else {
+        session.logoutUser()
+      }
+    })
+  }
+
+  private fun initLottieAnimation() {
+    binding?.preDashboardAnimation?.setAnimation(R.raw.pre_dashboard_lottie)
+    binding?.preDashboardAnimation?.repeatCount = LottieDrawable.INFINITE
+    binding?.preDashboardAnimation?.playAnimation()
+  }
+
+
+  private fun signUpStart() {
+    val webIntent = Intent(this, IntroActivity::class.java)
+    webIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    startActivity(webIntent)
+    overridePendingTransition(0, 0)
+    finish()
+  }
+
+  fun isOnline(): Boolean {
+    var status = false
+    try {
+      val connectivityManager =
+        getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+      var netInfo = connectivityManager.getNetworkInfo(0)
+      if (netInfo != null
+        && netInfo.state == NetworkInfo.State.CONNECTED
+      ) {
+        status = true
+      } else {
+        netInfo = connectivityManager.getNetworkInfo(1)
+        if (netInfo != null
+          && netInfo.state == NetworkInfo.State.CONNECTED
+        ) status = true
+      }
+
+    } catch (e: Exception) {
+      e.printStackTrace()
+      return false
     }
+    return status
+  }
 
-    private fun startService() {
-        startService(Intent(this, APIService::class.java))
-    }
-    private fun createAccessToken(refreshToken: String, clientID: String, fpId: String) {
-        val request = AccessTokenRequest()
-        request.authToken = refreshToken
-        request.clientId = clientID
-        request.fpId = fpId
-        viewModel.createAccessToken(request).observe(this,{
-            val data = it as AccessTokenResponse
-            if (it.isSuccess()&&data!=null){
-                val res = data.result
-                if (res != null && (res.refreshToken == null || res.refreshToken!!.isEmpty())) {
-                    res.refreshToken = refreshToken
-                }
-                saveAccessTokenAuth1(session, res)
-
-                storeFpDetails()
-            }else{
-                session.logoutUser()
-            }
-        })
-    }
-
-    private fun initLottieAnimation() {
-        binding?.preDashboardAnimation?.setAnimation(R.raw.pre_dashboard_lottie)
-        binding?.preDashboardAnimation?.repeatCount = LottieDrawable.INFINITE
-        binding?.preDashboardAnimation?.playAnimation()
-    }
-
-
-    private fun signUpStart() {
-        val webIntent = Intent(this, IntroActivity::class.java)
-        webIntent.flags =
-            Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(webIntent)
-        overridePendingTransition(0, 0)
-        finish()
-    }
-
-    fun isOnline(): Boolean {
-        var status = false
+  private fun snackbarNoInternet() {
+    val view = findViewById<View>(android.R.id.content)
+    val snackbar = Snackbar
+      .make(view, getString(R.string.no_internet_connection), Snackbar.LENGTH_INDEFINITE)
+      .setAction(getString(R.string.settings)) {
         try {
-            val connectivityManager =
-                getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-            var netInfo = connectivityManager.getNetworkInfo(0)
-            if (netInfo != null
-                && netInfo.state == NetworkInfo.State.CONNECTED
-            ) {
-                status = true
-            } else {
-                netInfo = connectivityManager.getNetworkInfo(1)
-                if (netInfo != null
-                    && netInfo.state == NetworkInfo.State.CONNECTED
-                ) status = true
-            }
-
+          startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK;
+          })
         } catch (e: Exception) {
-            e.printStackTrace()
-            return false
+          Toast.makeText(this@LoaderActivity, "Unable to find network settings. Please do it manually from phone's settings", Toast.LENGTH_LONG).show()
+          Log.e(TAG, "updateUiInternetNotAvailable: " + e.localizedMessage)
         }
-        return status
-    }
+      }
+    snackbar.show()
+  }
 
-    private fun snackbarNoInternet() {
-        val view = findViewById<View>(android.R.id.content)
-
-        val snackbar = Snackbar
-            .make(view, getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG)
-            .setAction(getString(R.string.settings), object : View.OnClickListener {
-                override fun onClick(view: View?) {
-                    try {
-                        startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS).apply {
-                            flags = Intent.FLAG_ACTIVITY_NEW_TASK;
-                        })
-                    } catch (e: Exception) {
-                        Toast.makeText(this@LoaderActivity, "Unable to find network settings. Please do it manually from phone's settings", Toast.LENGTH_LONG).show()
-                        Log.e(TAG, "updateUiInternetNotAvailable: " + e.localizedMessage)
-                    }
-                }
-            })
-
-        snackbar.show()
-    }
-
-
+  override fun onDestroy() {
+    super.onDestroy()
+    binding?.preDashboardAnimation?.cancelAnimation()
+  }
 }
