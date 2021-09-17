@@ -476,6 +476,6 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
 }
 
-data class SpinnerImageModel(var state: Pair<String, Boolean>, var resId: Int) {
+data class SpinnerImageModel(var state: Pair<String, Boolean>, var resId: Int, var disable: Boolean = false) {
 
 }

@@ -66,15 +66,12 @@ class CatalogProduct(
 
   @SerializedName("isCodAvailable")
   var codAvailable: Boolean = false,
-
   @SerializedName("maxCodOrders")
-  var maxCodOrders: Int = 10,
-
+  var maxCodOrders: Int = 1,
   @SerializedName("isPrepaidOnlineAvailable")
-  var prepaidOnlineAvailable: Boolean = true,
-
+  var prepaidOnlineAvailable: Boolean = false,
   @SerializedName("maxPrepaidOnlineOrders")
-  var maxPrepaidOnlineAvailable: Int = 10,
+  var maxPrepaidOnlineAvailable: Int = 1,
 
   @SerializedName("uniquePaymentUrl")
   var BuyOnlineLink: BuyOnlineLink? = null,

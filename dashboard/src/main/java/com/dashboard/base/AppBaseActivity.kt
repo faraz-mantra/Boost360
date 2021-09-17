@@ -2,7 +2,6 @@ package com.dashboard.base
 
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
 import android.view.MenuItem
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
