@@ -596,7 +596,6 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
           val long = session?.getFPDetails(Key_Preferences.LONGITUDE)
           var location = ""
           val address = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
-
           if (lat != null && long != null) location = "${if (messageBusiness.isNotEmpty()) "\n\n" else ""}\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"+"Address: "+address+"\n\n"
           finalShareMessage = String.format(messageDetail!!, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "", session?.getDomainName(false), messageBusiness, location)
         }
