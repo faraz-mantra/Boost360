@@ -11,7 +11,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
     android:layout_marginStart="@dimen/size_8"
-    tools:drawable="@drawable/ic_infinite" />
+    tools:drawable="@drawable/ic_dot_green" />
 
   <com.framework.views.customViews.CustomTextView
     android:id="@+id/ctv_option"
@@ -20,7 +20,8 @@
     android:layout_gravity="center"
     android:layout_marginStart="@dimen/size_8"
     android:layout_weight="0.7"
+    android:text="Limited stock"
     android:gravity="start|center_vertical"
-    android:textColor="@color/gray_text_hint_product"
+    android:textColor="@color/black_4a4a4a"
     android:textSize="14sp" />
 </LinearLayout>
