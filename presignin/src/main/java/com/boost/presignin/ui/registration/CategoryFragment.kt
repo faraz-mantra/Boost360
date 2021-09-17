@@ -31,7 +31,6 @@ import com.framework.webengageconstant.*
 import android.content.Intent
 import android.net.Uri
 
-
 class CategoryFragment : AppBaseFragment<FragmentCategoryBinding, CategoryVideoModel>(), RecyclerItemClickListener {
 
   private val TAG = "CategoryFragment"
@@ -103,17 +102,19 @@ class CategoryFragment : AppBaseFragment<FragmentCategoryBinding, CategoryVideoM
       )
     }
 
-    val str_no_category_found = "Can’t find your category? speak to our expert"
+    val str_no_category_found = getString(R.string.can_not_find_category_speak_expert)
     binding?.tvNoCategoryFound?.movementMethod  =LinkMovementMethod.getInstance()
     val clickableStr = "our expert"
     val spannableString = SpannableString(str_no_category_found)
     val clickableSpan = object :ClickableSpan(){
       override fun onClick(p0: View) {
-        Log.i(TAG, "onClick: ")
-        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "+91 63669 37299"))
-        startActivity(intent)
+        try {
+          val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + getString(R.string.expert_contact_number)))
+          startActivity(intent)
+        }catch (e:Exception){
+          e.printStackTrace()
+        }
       }
-
     }
     spannableString.setSpan(clickableSpan,str_no_category_found.indexOf(clickableStr),
       str_no_category_found.indexOf(clickableStr)+clickableStr.length,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
