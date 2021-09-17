@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true">
+
+        <include
+            android:id="@+id/app_bar_book_domain"
+            layout="@layout/toolbar_domain"
+            title="@{@string/book_a_domain_ssl}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar_book_domain">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/layout_suggest_domain_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/size_22"
+                    app:cardBackgroundColor="@color/view_background_1"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:id="@+id/secondary_layout_book_domain"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/all_side_curve_bg"
+                            android:elevation="8dp"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:padding="@dimen/size_16"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:layout_width="@dimen/size_65"
+                                android:layout_height="@dimen/size_65"
+                                android:layout_marginTop="@dimen/size_16"
+                                app:srcCompat="@drawable/ic_globe_www" />
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:id="@+id/tv_suggested_domain_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/size_10"
+                                android:gravity="center"
+                                android:text="@string/suggested_domain"
+                                android:textSize="@dimen/text_12"
+                                android:textColor="@color/black_4a4a4a"/>
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:id="@+id/tv_suggested_domain_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/size_4"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/barlow_regular"
+                                android:text="samplestorewebsite.com"
+                                android:textSize="@dimen/text_28"
+                                android:textColor="@color/black_4a4a4a" />
+
+                            <com.framework.views.customViews.CustomMaterialButton
+                                android:id="@+id/btn_book_old_domain"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_38"
+                                android:layout_marginStart="14dp"
+                                android:layout_marginEnd="14dp"
+                                android:layout_marginTop="16dp"
+                                android:backgroundTint="@color/colorPrimary"
+                                android:text="@string/add_a_domain_you_own"
+                                android:textAllCaps="false"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                app:cornerRadius="@dimen/size_15"/>
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:id="@+id/tv_suggested_domain_instruction"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/size_16"
+                                android:gravity="center"
+                                android:text="@string/suggestions_instructions"
+                                android:textSize="@dimen/text_12"
+                                android:textColor="@color/black_4a4a4a"/>
+                        </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_other_suggestions_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/other_suggestions"
+                    android:textSize="@dimen/size_15"
+                    android:textColor="@color/black_4a4a4a"
+                    app:layout_constraintStart_toStartOf="@+id/layout_suggest_domain_select"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_suggest_domain_select" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_suggested_domains"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    tools:listitem="@layout/item_domain_suggestions"
+                    tools:itemCount="5"
+                    app:layout_constraintEnd_toEndOf="@+id/layout_suggest_domain_select"
+                    app:layout_constraintStart_toStartOf="@+id/tv_other_suggestions_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_other_suggestions_title" />
+
+                <com.framework.views.customViews.CustomMaterialButton
+                    android:id="@+id/btn_book_new_domain"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/size_40"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/search_a_new_domain"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    app:cornerRadius="@dimen/size_15"
+                    app:layout_constraintEnd_toEndOf="@+id/rv_suggested_domains"
+                    app:layout_constraintStart_toStartOf="@+id/rv_suggested_domains"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_suggested_domains"
+                    app:strokeColor="@color/colorPrimary" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -51,6 +51,10 @@ class DomainBookingActivity: BaseActivity<ActivityDomainBookingBinding, BaseView
         binding?.btnBookOldDomain?.setOnClickListener {
            showBsheetInputOwnDomain()
         }
+
+        binding?.btnBookNewDomain?.setOnClickListener{
+
+        }
     }
 
     private fun showBsheetInputOwnDomain() {
@@ -100,7 +104,7 @@ class DomainBookingActivity: BaseActivity<ActivityDomainBookingBinding, BaseView
 
 
     private fun isPremium(): Boolean {
-       return session?.getStoreWidgets()?.contains("DOMAINPURCHASE")?:false
+       return true //session?.getStoreWidgets()?.contains("DOMAINPURCHASE")?:false
     }
 
     private fun setupSteps() {
