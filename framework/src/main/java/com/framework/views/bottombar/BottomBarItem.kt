@@ -6,6 +6,6 @@ import android.graphics.drawable.Drawable
 data class BottomBarItem(
   var title: String, var icon: Drawable,
   var rect: RectF = RectF(), var badgeSize: Float = 0f,
-  var badgeText:String?=null
+  var badgeText: String? = null
 
 )
