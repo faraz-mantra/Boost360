@@ -145,6 +145,7 @@
             style="@style/wrap_wrap"
             android:checked="true"
             android:text="@string/in_clinic"
+            android:textAllCaps="false"
             android:textColor="@drawable/radio_selected"
             android:textSize="16sp"
             app:buttonTint="@drawable/radio_selected" />
@@ -155,6 +156,7 @@
             android:layout_marginStart="@dimen/size_20"
             android:checked="false"
             android:text="@string/video_consultation_camel_case"
+            android:textAllCaps="false"
             android:textColor="@drawable/radio_selected"
             android:textSize="16sp"
             android:visibility="gone"
@@ -453,6 +455,7 @@
             android:gravity="center"
             android:padding="@dimen/size_16"
             android:text="@string/confirm"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
 
