@@ -10,6 +10,8 @@ import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
 import com.dashboard.databinding.FragmentWebsitePagerBinding
 import com.appservice.model.MerchantSummaryResponse
+import com.appservice.model.getMerchantSummaryWebsite
+import com.appservice.model.saveMerchantSummary
 import com.dashboard.constant.PreferenceConstant
 import com.dashboard.model.live.websiteItem.WebsiteActionItem
 import com.dashboard.model.live.websiteItem.WebsiteData
@@ -35,7 +37,8 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
 
   private var session: UserSessionManager? = null
   private var adapterWebsite: AppBaseRecyclerViewAdapter<WebsiteActionItem>? = null
-  private  val TAG = "FragmentCategory"
+  private val TAG = "FragmentCategory"
+
   companion object {
     fun newInstance(position: Int): FragmentCategory {
       val bundle = Bundle()
@@ -69,17 +72,16 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
   private fun getWebsiteData() {
     viewModel?.getBoostWebsiteItem(baseActivity)?.observeOnce(viewLifecycleOwner, { it0 ->
       val response = it0 as? WebsiteDataResponse
-      Log.i(TAG, "getWebsiteData: error"+Gson().toJson(response?.data))
-
+      Log.i(TAG, "getWebsiteData: error" + Gson().toJson(response?.data))
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-
         data = response.data?.firstOrNull { it.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
         if (data != null && data?.actionItem.isNullOrEmpty().not()) {
           data?.actionItem?.map { it2 -> if (it2.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it2.premiumCode).not()) it2.isLock = true }
           val position = arguments?.getInt(IntentConstant.POSITION.name)
           setAdapterCustomer(if (position == 0) data?.actionItem!!.filter { it.isFeature == false } else data?.actionItem!!.filter { it.isFeature == true })
         }
-      }
+      } else showShortToast(getString(R.string.something_went_wrong_camel_case))
+      binding?.progressBar?.gone()
     })
   }
 
@@ -87,41 +89,32 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
   private fun setAdapterCustomer(actionItem: List<WebsiteActionItem>) {
     actionItem as ArrayList<WebsiteActionItem>
     Log.i(TAG, "setAdapterCustomer: ")
-    val merchantSummary = Gson().fromJson<MerchantSummaryResponse>(
-      PreferencesUtils.instance.getData(PreferenceConstant.MERCHANT_SUMMARY_RESPONSE,null),
-      genericType<MerchantSummaryResponse>()
-    )
-    if (merchantSummary!=null){
-        setupList(merchantSummary,actionItem)
-    }
-    viewModel?.getMerchantSummary(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID),
-      session?.fpTag)?.observeOnce(viewLifecycleOwner,{
+    val merchantSummary = getMerchantSummaryWebsite()
+    if (merchantSummary != null) setupList(merchantSummary, actionItem)
+    viewModel?.getMerchantSummary(
+      session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID),
+      session?.fpTag
+    )?.observeOnce(viewLifecycleOwner, {
       Log.i(TAG, "merchantsummary: ")
-        val response = it as MerchantSummaryResponse
-
-      PreferencesUtils.instance.saveData(PreferenceConstant.MERCHANT_SUMMARY_RESPONSE,Gson().toJson(response))
-
-      setupList(response,actionItem)
-
+      val response = it as MerchantSummaryResponse
+      response.saveMerchantSummary()
+      setupList(response, actionItem)
     })
-
   }
 
   private fun setupList(response: MerchantSummaryResponse, actionItem: ArrayList<WebsiteActionItem>) {
-    binding?.progressBar?.gone()
-
-    actionItem.forEach { item->
-      response.Entity.forEach { entityItem->
-        if(item.type=="project_teams"){
-          item.count = entityItem[item.countType]?.plus(entityItem["NoOfTeamMembers"]?:0)
-        }else{
+    actionItem.forEach { item ->
+      response.Entity.forEach { entityItem ->
+        if (item.type == "project_teams") {
+          item.count = entityItem[item.countType]?.plus(entityItem["NoOfTeamMembers"] ?: 0)
+        } else {
           item.count = entityItem[item.countType]
         }
       }
     }
-
     actionItem.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout() }
     binding?.rvWebsite?.apply {
+      setHasFixedSize(false)
       adapterWebsite = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@FragmentCategory)
       adapter = adapterWebsite
     }
