@@ -36,15 +36,18 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
-import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.caplimit_feature.saveCapData
+import com.framework.models.firestore.badges.BadgesFirestoreManager
+import com.framework.models.firestore.badges.BadgesFirestoreManager.getBadgesData
 import com.framework.models.firestore.FirestoreManager
 import com.framework.models.firestore.FirestoreManager.initData
+import com.framework.models.firestore.badges.BadgesFirestoreManager.initDataBadges
+import com.framework.models.firestore.badges.BadgesModel
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.KEY_FP_CART_COUNT
 import com.framework.utils.*
@@ -66,6 +69,7 @@ import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
@@ -117,6 +121,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     session?.initializeWebEngageLogin()
     initialize()
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
+    session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
     registerFirebaseToken()
     reloadCapLimitData()
   }
@@ -596,6 +601,48 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         this.welcomeData = data
       }
     })
+  }
+
+  override fun onStop() {
+    super.onStop()
+    BadgesFirestoreManager.listenerBadges = null
+  }
+
+  override fun onStart() {
+    super.onStart()
+    BadgesFirestoreManager.listenerBadges = {
+      val dataBadges = getBadgesData()
+      setBadgesData(dataBadges)
+    }
+  }
+
+  private fun setBadgesData(dataBadges: ArrayList<BadgesModel>?) {
+    binding?.navView?.post {
+      dataBadges?.forEach {
+        when (it.badgesType) {
+          BadgesModel.BadgesType.HOMEBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(0, it.getMessageText())
+            else binding?.navView?.removeBadge(0)
+          }
+          BadgesModel.BadgesType.WEBSITEBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(1, it.getMessageText())
+            else binding?.navView?.removeBadge(1)
+          }
+          BadgesModel.BadgesType.ENQUIRYBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(2, it.getMessageText())
+            else binding?.navView?.removeBadge(2)
+          }
+          BadgesModel.BadgesType.MARKETPLACEBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(3, it.getMessageText())
+            else binding?.navView?.removeBadge(3)
+          }
+          BadgesModel.BadgesType.MENUBADGE.name -> {
+            if (it.getMessageN() > 0) binding?.navView?.setBadge(4, it.getMessageText())
+            else binding?.navView?.removeBadge(4)
+          }
+        }
+      }
+    }
   }
 }
 
