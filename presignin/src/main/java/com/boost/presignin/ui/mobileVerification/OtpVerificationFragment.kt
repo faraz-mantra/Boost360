@@ -106,7 +106,7 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
 
 
   private fun onCodeSent() {
-    countDown = object : com.boost.presignin.timer.CountDownTimer(50 * 1000, 1000) {
+    countDown = object : com.boost.presignin.timer.CountDownTimer(30 * 1000, 1000) {
       override fun onTick(p0: Long) {
         val resendIn = getString(R.string.psn_resend_in);
         binding?.resendTv?.text = String.format(resendIn, (p0 / 1000).toInt());
