@@ -174,11 +174,13 @@ class BusinessDetailsFragment : DialogFragment() {
       gstFlag = false
       gstin_on.visibility = View.GONE
       gstin_off.visibility = View.VISIBLE
+      gst_info_tv.visibility = View.GONE
       business_gstin_number.visibility = View.GONE
     } else {
       gstFlag = true
       gstin_on.visibility = View.VISIBLE
       gstin_off.visibility = View.GONE
+      gst_info_tv.visibility = View.VISIBLE
       business_gstin_number.visibility = View.VISIBLE
     }
     close.setOnClickListener {
@@ -192,6 +194,7 @@ class BusinessDetailsFragment : DialogFragment() {
       business_gstin_number.visibility = View.GONE
       gstin_on.visibility = View.GONE
       gstin_off.visibility = View.VISIBLE
+      gst_info_tv.visibility = View.GONE
     }
 
     gstin_off.setOnClickListener {
@@ -200,6 +203,7 @@ class BusinessDetailsFragment : DialogFragment() {
       business_gstin_number.visibility = View.VISIBLE
       gstin_off.visibility = View.GONE
       gstin_on.visibility = View.VISIBLE
+      gst_info_tv.visibility = View.VISIBLE
     }
 
     dialog!!.setOnKeyListener { dialog, keyCode, event ->
