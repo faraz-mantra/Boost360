@@ -3,7 +3,7 @@ package com.appservice.ui.domainbooking
 import androidx.databinding.DataBindingUtil
 import com.appservice.R
 import com.appservice.databinding.ActivitySearchDomainBinding
-import com.appservice.databinding.BsheetConfirmDomainBinding
+import com.appservice.databinding.BsheetConfirmDomainSearchBinding
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -20,7 +20,7 @@ class SearchDomainActivity: BaseActivity<ActivitySearchDomainBinding, BaseViewMo
     override fun onCreateView() {
         binding?.btnContinue?.setOnClickListener {
             val bSheet = BottomSheetDialog(this,R.style.BottomSheetDialogTheme)
-            val sheetBinding = DataBindingUtil.inflate<BsheetConfirmDomainBinding>(layoutInflater,R.layout.bsheet_confirm_domain,null,false)
+            val sheetBinding = DataBindingUtil.inflate<BsheetConfirmDomainSearchBinding>(layoutInflater,R.layout.bsheet_confirm_domain_search,null,false)
             bSheet.setContentView(sheetBinding.root)
             bSheet.show()
 
