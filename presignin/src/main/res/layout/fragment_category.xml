@@ -50,6 +50,7 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:fillViewport="true"
+      android:background="@color/view_background_1"
       app:layout_constraintBottom_toTopOf="@+id/confirm_button"
       app:layout_constraintTop_toBottomOf="@+id/view">
 
@@ -62,10 +63,8 @@
           android:id="@+id/recyclerView"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:clipToPadding="false"
           android:orientation="vertical"
           android:overScrollMode="never"
-          android:paddingBottom="@dimen/_5sdp"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
           tools:itemCount="2"
           tools:listitem="@layout/item_category_layout" />
@@ -76,7 +75,11 @@
           android:layout_height="wrap_content"
           android:autoLink="web"
           android:gravity="center"
-          android:padding="8dp"
+          android:background="@color/white"
+          android:layout_marginTop="@dimen/_2sdp"
+          android:layout_marginBottom="@dimen/_4sdp"
+          android:paddingVertical="@dimen/_12sdp"
+          android:paddingHorizontal="@dimen/_8sdp"
           android:text="@string/can_t_find_your_category_speak_to_our_expert"
           android:textColorLink="@color/colorPrimary"
           app:layout_constraintBottom_toBottomOf="parent" />
@@ -88,7 +91,7 @@
       android:id="@+id/confirm_button"
       style="@style/psn_button_style"
       android:layout_width="match_parent"
-      android:height="@dimen/_80sdp"
+      android:layout_height="@dimen/_50sdp"
       android:background="@color/colorAccent"
       android:drawableEnd="@null"
       android:enabled="true"
