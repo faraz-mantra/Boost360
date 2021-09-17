@@ -602,6 +602,7 @@
   <string name="select_years_of_experience_this_staff_member_has">Select, years of experience this staff member has.</string>
   <string name="allow_cod">Allow COD</string>
   <string name="allow_online_pre_pay">Allow Online Pre-Pay</string>
+  <string name="account_less_than_nine">Bank account number can\'t less than 9.</string>
 
 
   <array name="stock_availbility">
