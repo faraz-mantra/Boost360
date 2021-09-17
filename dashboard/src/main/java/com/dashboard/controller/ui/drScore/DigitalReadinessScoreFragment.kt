@@ -143,7 +143,8 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
           val long = session?.getFPDetails(Key_Preferences.LONGITUDE)
           var location = ""
           val address = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
-          if (lat != null && long != null) location = "${if (shareChannelText.isNullOrEmpty().not()) "\n\n" else ""}\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"+"Address: "+address+"\n\n"
+          if (lat != null && long != null) location = "${if (shareChannelText.isNullOrEmpty().not()) "\n\n" else ""}\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"
+          if (address.isNullOrEmpty().not()) location = "$location Address: $address\n\n"
           val txt = String.format(messageDetail!!, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), shareChannelText, location)
           visitingCard(txt)
         }
