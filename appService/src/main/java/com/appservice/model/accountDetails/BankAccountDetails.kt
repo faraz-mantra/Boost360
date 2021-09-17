@@ -25,6 +25,10 @@ data class BankAccountDetails(
       .not() && accountNumber.isNullOrEmpty().not() && bankName.isNullOrEmpty().not()
   }
 
+  fun getAccountNumberN():String{
+    return if (accountNumber.isNullOrEmpty() ||  accountNumber=="null") "" else accountNumber!!
+  }
+
   fun getVerifyText(): String {
     return if (kYCDetails?.verificationStatus == KYCDetails.Status.PENDING.name) "unverified" else "verified"
   }

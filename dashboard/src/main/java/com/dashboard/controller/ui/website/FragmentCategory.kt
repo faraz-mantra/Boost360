@@ -81,7 +81,6 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
           setAdapterCustomer(if (position == 0) data?.actionItem!!.filter { it.isFeature == false } else data?.actionItem!!.filter { it.isFeature == true })
         }
       } else showShortToast(getString(R.string.something_went_wrong_camel_case))
-      binding?.progressBar?.gone()
     })
   }
 
@@ -90,22 +89,19 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
     actionItem as ArrayList<WebsiteActionItem>
     Log.i(TAG, "setAdapterCustomer: ")
     val merchantSummary = getMerchantSummaryWebsite()
-    if (merchantSummary != null) setupList(merchantSummary, actionItem)
-    viewModel?.getMerchantSummary(
-      session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID),
-      session?.fpTag
-    )?.observeOnce(viewLifecycleOwner, {
+    setupList(merchantSummary, actionItem)
+    viewModel?.getMerchantSummary(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session?.fpTag)?.observeOnce(viewLifecycleOwner, {
       Log.i(TAG, "merchantsummary: ")
-      val response = it as MerchantSummaryResponse
-      response.saveMerchantSummary()
+      val response = it as? MerchantSummaryResponse
+      response?.saveMerchantSummary()
       setupList(response, actionItem)
     })
   }
 
-  private fun setupList(response: MerchantSummaryResponse, actionItem: ArrayList<WebsiteActionItem>) {
+  private fun setupList(response: MerchantSummaryResponse?, actionItem: ArrayList<WebsiteActionItem>) {
     actionItem.forEach { item ->
-      response.Entity.forEach { entityItem ->
-        if (item.type == "project_teams") {
+      response?.Entity?.forEach { entityItem ->
+        if (item.type == WebsiteActionItem.IconType.project_teams.name) {
           item.count = entityItem[item.countType]?.plus(entityItem["NoOfTeamMembers"] ?: 0)
         } else {
           item.count = entityItem[item.countType]
@@ -118,6 +114,7 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
       adapterWebsite = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@FragmentCategory)
       adapter = adapterWebsite
     }
+    binding?.progressBar?.gone()
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
