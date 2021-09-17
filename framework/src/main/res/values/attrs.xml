@@ -275,8 +275,6 @@
     <attr name="textBadgeColor" format="color" />
 
     <attr name="textSize" format="dimension" />
-    <attr name="iconSize" format="dimension" />
-    <attr name="iconMargin" format="dimension" />
     <attr name="activeItem" format="integer" />
     <attr name="indicatorInterpolator" format="enum">
       <enum name="accelerate" value="0" />

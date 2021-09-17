@@ -1,9 +1,8 @@
 package com.framework.models.firestore.badges
 
 import android.util.Log
+import com.framework.models.firestore.FirestoreManager.toDataClass
 import com.framework.models.firestore.badges.BadgesModel.BadgesType.Companion.fromUrlCheck
-import com.framework.models.firestore.serializeToMap
-import com.framework.models.firestore.toDataClass
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
