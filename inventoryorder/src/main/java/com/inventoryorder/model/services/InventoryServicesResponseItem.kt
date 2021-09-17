@@ -86,7 +86,7 @@ data class InventoryServicesResponseItem(
   @SerializedName("sharedPlatforms")
   var sharedPlatforms: List<Any>? = null,
   @SerializedName("ShipmentDuration")
-  var shipmentDuration: Int? = null,
+  var shipmentDuration: Int? = 0,
   @SerializedName("tags")
   var tags: List<String>? = null,
   @SerializedName("TileImageUri")

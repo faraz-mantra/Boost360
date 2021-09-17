@@ -8,6 +8,7 @@ import com.inventoryorder.R
 import com.inventoryorder.databinding.BottomSheetFilterBinding
 import com.inventoryorder.databinding.BottomSheetTimeSlotBinding
 import com.inventoryorder.model.bottomsheet.FilterModel
+import com.inventoryorder.model.spaAppointment.bookingslot.response.Slots
 import com.inventoryorder.model.timeSlot.TimeSlotData
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
@@ -16,9 +17,9 @@ import com.inventoryorder.recyclerView.RecyclerItemClickListener
 class TimeSlotBottomSheetDialog :
   BaseBottomSheetDialog<BottomSheetTimeSlotBinding, BaseViewModel>(), RecyclerItemClickListener {
 
-  private var list = ArrayList<TimeSlotData>()
-  private var adapter: AppBaseRecyclerViewAdapter<TimeSlotData>? = null
-  var onDoneClicked: (location: TimeSlotData?) -> Unit = { }
+  private var list = ArrayList<Slots>()
+  private var adapter: AppBaseRecyclerViewAdapter<Slots>? = null
+  var onDoneClicked: (location: Slots?) -> Unit = { }
 
 
   override fun getLayout(): Int {
@@ -30,7 +31,7 @@ class TimeSlotBottomSheetDialog :
   }
 
 
-  fun setList(list: ArrayList<TimeSlotData>) {
+  fun setList(list: ArrayList<Slots>) {
     this.list.clear()
     this.list.addAll(list)
   }
@@ -45,7 +46,7 @@ class TimeSlotBottomSheetDialog :
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-    val filterItem = item as? TimeSlotData
+    val filterItem = item as? Slots
     list.forEach { it.isSelected = (it.getTimeSlotText() == filterItem?.getTimeSlotText()) }
     adapter?.notifyDataSetChanged()
     onDoneClicked(filterItem)
