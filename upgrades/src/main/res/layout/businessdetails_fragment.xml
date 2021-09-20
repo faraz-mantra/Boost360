@@ -231,6 +231,7 @@
             android:drawablePadding="5dp"/>
 
           <TextView
+            android:id="@+id/business_name_actual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/_5sdp"
@@ -259,6 +260,7 @@
             android:textSize="@dimen/txt_14sp" />
 
           <TextView
+            android:id="@+id/complete_business_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/_5sdp"
@@ -287,6 +289,7 @@
             android:textSize="@dimen/txt_14sp" />
 
           <TextView
+            android:id="@+id/state_of_supply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/_5sdp"
