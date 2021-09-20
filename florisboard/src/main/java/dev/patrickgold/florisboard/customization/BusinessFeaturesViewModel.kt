@@ -43,7 +43,7 @@ class BusinessFeaturesViewModel(context: Context) {
 
   fun getUpdates(fpId: String?, clientId: String, skipBy: Int, limit: Int) {
     val prefUpdates = sharedPref.updateList
-    if (prefUpdates!=null){
+    if (prefUpdates!=null&&skipBy==0){
       _updates.postValue(prefUpdates)
     }
 
@@ -79,8 +79,9 @@ class BusinessFeaturesViewModel(context: Context) {
     get() = _products
 
   fun getProducts(fpTag: String?, clientId: String, skipBy: Int, identifierType: String) {
+    Log.i(TAG, "getProducts skipby: "+skipBy)
     val prefProducts = sharedPref.productList
-    if (prefProducts!=null){
+    if (prefProducts!=null&&skipBy==0){
       _products.postValue(prefProducts)
     }
     job = CoroutineScope(Dispatchers.IO).launch {
@@ -298,7 +299,7 @@ class BusinessFeaturesViewModel(context: Context) {
 
   fun getStaffList(request: GetStaffListingRequest?) {
     val prefStaff= sharedPref.staffList
-    if (prefStaff!=null){
+    if (prefStaff!=null&&request?.filterBy?.offset==0){
       _staff.postValue(prefStaff)
     }
     job = CoroutineScope(Dispatchers.IO).launch {
