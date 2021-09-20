@@ -408,9 +408,9 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         this.adapterPhoto.notifyNewList(this.photosSet.toList())
         SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = BusinessFeatureEnum.PHOTOS.name + " (${photosSet.size})"
       } else {
-        if (businessFeatureEnum==BusinessFeatureEnum.INVENTORY_SERVICE) {
+        if (businessFeatureEnum == BusinessFeatureEnum.INVENTORY_SERVICE) {
           this.adapterPhoto.notifyNewList(arrayListOf())
-          Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
+          //  Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
         }
       }
       clickListenerPhoto()
@@ -424,14 +424,18 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       binding.businessFeatureProgress.gone()
       this.adapterProductService.removeLoaderN()
       if (it.isNullOrEmpty().not()) {
-        if (isFirstPage) this.adapterProductService.notifyNewList(it)
-        else this.adapterProductService.addItems(it)
+        if (isFirstPage) {
+          this.adapterProductService.notifyNewList(it)
+        }
+        else{
+          this.adapterProductService.addItems(it)
+        }
         TOTAL_ELEMENTS = this.adapterProductService.getListData().size
         SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = "${getProductType(session?.fP_AppExperienceCode ?: "")} (${this.adapterProductService.getListData().size})"
-      } else{
-        if (businessFeatureEnum==BusinessFeatureEnum.INVENTORY_SERVICE) {
+      } else {
+        if (businessFeatureEnum == BusinessFeatureEnum.INVENTORY_SERVICE&&isFirstPage) {
           this.adapterProductService.notifyNewList(arrayListOf())
-          Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
+          //  Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
         }
       }
     }
@@ -449,9 +453,9 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         isLastPageD = (this.adapterStaff.getListData().size == TOTAL_ELEMENTS)
         SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = BusinessFeatureEnum.STAFF.name + " (${it.paging?.count})"
       } else {
-        if (businessFeatureEnum==BusinessFeatureEnum.STAFF) {
+        if (businessFeatureEnum == BusinessFeatureEnum.STAFF&&isFirstPage) {
           this.adapterStaff.notifyNewList(arrayListOf())
-          Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
+          //  Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
         }
       }
     }
@@ -468,10 +472,10 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         else this.adapterUpdates.addItems(it.floats!!)
         isLastPageD = (this.adapterUpdates.getListData().size == TOTAL_ELEMENTS)
         SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = BusinessFeatureEnum.UPDATES.name + " (${it.totalCount})"
-      } else{
-        if (businessFeatureEnum==BusinessFeatureEnum.UPDATES) {
+      } else {
+        if (businessFeatureEnum == BusinessFeatureEnum.UPDATES&&isFirstPage) {
           this.adapterUpdates.notifyNewList(arrayListOf())
-          Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
+          //  Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
         }
       }
     }
@@ -596,8 +600,8 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
           val long = session?.getFPDetails(Key_Preferences.LONGITUDE)
           var location = ""
           val address = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
-
-          if (lat != null && long != null) location = "${if (messageBusiness.isNotEmpty()) "\n\n" else ""}\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"+"Address: "+address+"\n\n"
+          if (lat != null && long != null) location = "${if (messageBusiness.isNotEmpty()) "\n\n" else ""}\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"
+          if (address.isNullOrEmpty().not()) location = "$location Address: $address\n\n"
           finalShareMessage = String.format(messageDetail!!, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "", session?.getDomainName(false), messageBusiness, location)
         }
       }

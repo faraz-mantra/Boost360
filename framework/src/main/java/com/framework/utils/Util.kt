@@ -22,11 +22,14 @@ import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import com.framework.views.customViews.CustomTextView
+import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+
+inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
 
 fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis: Long = 1000) {
   var lastClickTime: Long = 0

@@ -647,6 +647,7 @@
   <string name="product_saved_successfully">Product saved successfully.</string>
   <string name="you_have_unsaved_information_do_you_still_want_to_close">You have unsaved information. Do you still want to close?</string>
   <string name="service_image_uploading_error">Service image uploading error, please try again.</string>
+  <string name="name_of_the_account_holder">Name of the account holder*</string>
   <string name="account_number_required">Account number*</string>
   <string name="confirm_account_number">Confirm account number*</string>
   <string name="bank_ifsc_code_required">Bank IFSC code*</string>
@@ -655,6 +656,7 @@
   <string name="bank_branch_required">Bank branch*</string>
   <string name="service_duration">Please provide a valid duration of service</string>
   <string name="why_do_we_need_your_bank_account_required">Why do we need your bank account?</string>
+  <string name="storage_permission" translatable="false">Storage Permission</string>
   <string name="please_provide_the_storage_permissions_to_proceed" translatable="false">Please provide the storage permissions to proceed</string>
   <string name="please_provide_the_camera_permission_to_proceed" translatable="false">Please provide the camera permission to proceed</string>
   <string name="no">No</string>
@@ -754,10 +756,12 @@
   <string name="send_your_clients_to_an_external_url_to_make_payment">Send your clients to an external URL to make payment</string>
   <string name="both_online_and_in_person">Both online and in-person</string>
   <string name="the_service_can_be_offered_both_ways_online_and_in_person">The service can be offered both ways (online and in person)</string>
+  <string name="cancel">Cancel</string>
   <string name="payment_configuration">Payment configuration</string>
   <string name="select_how_you_want_to_receive_money_for_your_bookings">Select, how you want to receive money for your bookings.</string>
   <string name="my_custom_payment_gateway">My custom payment gateway</string>
   <string name="get_direct_payment_in_your_bank_account_instantly">Get direct payment in your bank account instantly</string>
+  <string name="done">Done</string>
   <string name="done_caps">Done</string>
   <string name="create_a_product_category">Create a product category</string>
   <string name="product_description">Product description*</string>
@@ -790,14 +794,16 @@
   <string name="package_weight">Package weight</string>
   <string name="package_length">Package length</string>
   <string name="kgs">KGS</string>
-  <string name="_0_12">0.12</string>
-  <string name="_9">9</string>
   <string name="package_height">Package height</string>
   <string name="package_thickness">Package thickness</string>
   <string name="inch">INCH</string>
+  <string name="_00">0.0</string>
+  <string name="external_url">External URL</string>
   <string name="_5">5</string>
   <string name="paste_your_url_here_product">Paste your URL here…</string>
   <string name="type_a_tag_and_press_add_s_info">Type a tag and press \'Add\'</string>
+  <string name="current_selection">Current selection</string>
+  <string name="_4_products_under_this_category">4 products under this category</string>
   <string name="latest_update_data_not_found">Latest update data not found!</string>
   <string name="update_regularly_keep_customers_informed_brand">Update regularly to keep your customers informed about your brand ....</string>
   <string name="post_an_update_n">Post an Update</string>
@@ -827,6 +833,9 @@
   <string name="money_refund_till_date">Money refund till date</string>
   <string name="years_of_experience_n">Years of experience</string>
   <string name="select_years_of_experience_this_staff_member_has">Select, years of experience this staff member has.</string>
+  <string name="allow_cod">Allow COD</string>
+  <string name="allow_online_pre_pay">Allow Online Pre-Pay</string>
+  <string name="account_less_than_nine">Bank account number can\'t less than 9.</string>
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>

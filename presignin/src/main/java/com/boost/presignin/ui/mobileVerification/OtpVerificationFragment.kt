@@ -20,6 +20,7 @@ import com.boost.presignin.model.authToken.AuthTokenDataItem
 import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.model.login.VerifyOtpResponse
 import com.boost.presignin.ui.AccountNotFoundActivity
+import com.boost.presignin.ui.registration.RegistrationActivity
 import com.boost.presignin.views.otptextview.OTPListener
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.observeOnce
@@ -105,7 +106,7 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
 
 
   private fun onCodeSent() {
-    countDown = object : com.boost.presignin.timer.CountDownTimer(50 * 1000, 1000) {
+    countDown = object : com.boost.presignin.timer.CountDownTimer(30 * 1000, 1000) {
       override fun onTick(p0: Long) {
         val resendIn = getString(R.string.psn_resend_in);
         binding?.resendTv?.text = String.format(resendIn, (p0 / 1000).toInt());
@@ -193,7 +194,7 @@ class OtpVerificationFragment : AuthBaseFragment<FragmentOtpVerificationBinding>
             }
           } else {
             navigator?.startActivityFinish(
-              AccountNotFoundActivity::class.java,
+              RegistrationActivity::class.java,
               args = Bundle().apply {
                 putString(
                   IntentConstant.EXTRA_PHONE_NUMBER.name,

@@ -30,6 +30,10 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.deleteService(request), TaskCode.POST_UPDATE_SERVICE)
   }
 
+  fun getMerchantSummary(clientId: String?,fpTag:String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getMerchantSummary(clientId,fpTag), TaskCode.GET_MERCHANT_SUMMARY)
+  }
+
   fun addUpdateImageProductService(
     clientId: String?,
     requestType: String?,

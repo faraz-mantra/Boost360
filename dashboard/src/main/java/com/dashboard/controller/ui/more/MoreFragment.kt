@@ -122,6 +122,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       UsefulLinksItem.IconType.refer_and_earn -> baseActivity.startReferralView(session!!)
       UsefulLinksItem.IconType.ria_digital_assistant -> baseActivity.startHelpAndSupportActivity(session!!)
       UsefulLinksItem.IconType.training_and_certification -> trainingCertification()
+      UsefulLinksItem.IconType.custom_website_domain->baseActivity.startDomainDetail(session)
     }
   }
 

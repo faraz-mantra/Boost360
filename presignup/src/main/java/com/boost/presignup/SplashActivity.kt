@@ -68,7 +68,7 @@ class SplashActivity : AppCompatActivity() {
   private fun onCreateView() {
     if (session?.isUserLoggedIn == true && deepLinkViewType.isNotEmpty()) {
       try {
-        val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
+        val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.LoaderActivity"))
         intent.putExtra("deepLinkViewType", deepLinkViewType)
         intent.putExtra("deepLinkFpId", deepLinkFpId)
         intent.putExtra("deepLinkFpTag", deepLinkFpTag)
@@ -110,7 +110,7 @@ class SplashActivity : AppCompatActivity() {
 
   private fun splashLoader() {
     try {
-      val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
+      val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.LoaderActivity"))
       startActivity(intent)
       finish()
     } catch (e: Exception) {

@@ -74,7 +74,7 @@ data class ItemsItemNew(
 	var imageUri: String? = null,
 
 	@field:SerializedName("DiscountAmount")
-	var discountAmount: Int? = null,
+	var discountAmount: Double? = null,
 
 	@field:SerializedName("Name")
 	var name: String? = null,
@@ -86,7 +86,7 @@ data class ItemsItemNew(
 	var type: String? = null,
 
 	@field:SerializedName("Price")
-	var price: Int? = null,
+	var price: Double? = null,
 
 	@field:SerializedName("ProductDetails")
 	var productDetails: ProductDetailsN? = null,
@@ -95,7 +95,7 @@ data class ItemsItemNew(
 	var isAvailable: Boolean? = null,
 
 	@field:SerializedName("ShippingCost")
-	var shippingCost: Int? = null,
+	var shippingCost: Double? = null,
 
 	@field:SerializedName("_id")
 	var id: String? = null,
@@ -269,7 +269,7 @@ data class ShippingDetailsN(
 	var currencyCode: String? = null,
 
 	@field:SerializedName("ShippingCost")
-	var shippingCost: Int? = null,
+	var shippingCost: Double? = null,
 
 	@field:SerializedName("DeliveryMode")
 	var deliveryMode: String? = null,
