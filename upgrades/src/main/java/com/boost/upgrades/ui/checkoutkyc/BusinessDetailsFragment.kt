@@ -2,6 +2,8 @@ package com.boost.upgrades.ui.checkoutkyc
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -50,7 +52,7 @@ class BusinessDetailsFragment : DialogFragment() {
   val stateFragment = StateListPopFragment()
   lateinit var prefs: SharedPrefs
   private var session: UserSessionManager? = null
-  private var gstInfoResult : com.boost.upgrades.data.api_model.gst.Result? = null
+  private var gstInfoResult: com.boost.upgrades.data.api_model.gst.Result? = null
 
 
   companion object {
@@ -93,14 +95,29 @@ class BusinessDetailsFragment : DialogFragment() {
     viewModel.getStatesFromAssetJson(requireActivity())
 //        business_gst_number.setFilters(business_gst_number.filters + InputFilter.AllCaps())
 
+    business_gstin_number.addTextChangedListener(object : TextWatcher {
+      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+      }
+
+      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        var enteredText: String = s.toString()
+        if (enteredText.length == 15) {
+          callGSTApi(enteredText)
+        }
+      }
+
+      override fun afterTextChanged(s: Editable?) {
+      }
+
+    })
 
 
     confirm_btn.setOnClickListener {
-      saveGstResponse()
       if (validateAgreement()) {
         if (!customerInfoState) { //no customer available
           //create customer payment profile
-          viewModel.createCustomerInfo((activity as? UpgradeActivity)?.getAccessToken()?:"",
+          viewModel.createCustomerInfo(
+            (activity as? UpgradeActivity)?.getAccessToken() ?: "",
             CreateCustomerInfoRequest(
               AddressDetails(
                 if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
@@ -133,7 +150,8 @@ class BusinessDetailsFragment : DialogFragment() {
           )
         } else {
           //update customer payment profile
-          viewModel.updateCustomerInfo((activity as? UpgradeActivity)?.getAccessToken()?:"",
+          viewModel.updateCustomerInfo(
+            (activity as? UpgradeActivity)?.getAccessToken() ?: "",
             CreateCustomerInfoRequest(
               AddressDetails(
                 if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
@@ -240,6 +258,33 @@ class BusinessDetailsFragment : DialogFragment() {
       } else {
         Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
       }
+    }
+  }
+
+  private fun callGSTApi(gstNo:String){
+    if(isValidGSTIN(gstNo)){
+      loadGSTInfo(gstNo)
+      viewModel.getGstApiResult().observe(viewLifecycleOwner,{
+        gstInfoResult = it.result
+        if(gstInfoResult!=null){
+          business_name_actual.visibility = View.GONE
+          business_name_value.visibility = View.GONE
+          complete_business_address.visibility = View.GONE
+          business_address.visibility = View.GONE
+          state_of_supply.visibility = View.GONE
+          business_city_name.visibility = View.GONE
+          gst_business_name_tv.visibility = View.VISIBLE
+          gst_business_name_value.visibility = View.VISIBLE
+          gst_business_address_tv.visibility = View.VISIBLE
+          gst_business_address_value.visibility = View.VISIBLE
+          gst_business_name_value.text = gstInfoResult!!.legalName
+          gst_business_address_value.text = gstInfoResult!!.address!!.addressLine1 + gstInfoResult!!.address!!.addressLine2 + gstInfoResult!!.address!!.city + gstInfoResult!!.address!!.pincode + gstInfoResult!!.address!!.district + gstInfoResult!!.address!!.state
+        } else {
+          Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
+        }
+      })
+    }else {
+      Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
     }
   }
 
@@ -529,9 +574,10 @@ class BusinessDetailsFragment : DialogFragment() {
     })
 
   }
-  private fun loadGSTInfo(gstIn:String) {
+
+  private fun loadGSTInfo(gstIn: String) {
     viewModel.getGstApiInfo(
-      (activity as? UpgradeActivity)?.getAccessToken()?:"",
+      (activity as? UpgradeActivity)?.getAccessToken() ?: "",
       gstIn,
       (activity as UpgradeActivity).clientid
     )
@@ -539,14 +585,11 @@ class BusinessDetailsFragment : DialogFragment() {
 
   private fun loadCustomerInfo() {
     viewModel.getCustomerInfo(
-      (activity as? UpgradeActivity)?.getAccessToken()?:"",
+      (activity as? UpgradeActivity)?.getAccessToken() ?: "",
       (activity as UpgradeActivity).fpid!!,
       (activity as UpgradeActivity).clientid
     )
   }
-
-
-
 
 
   override fun onDestroy() {
