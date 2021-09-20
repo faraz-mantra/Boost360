@@ -24,7 +24,7 @@
       android:name=".ui.registration.RegistrationActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.Registration"
-      android:windowSoftInputMode="adjustPan" />
+      android:windowSoftInputMode="adjustResize" />
 
     <activity
       android:name=".ui.login.LoginActivity"
@@ -44,7 +44,7 @@
       android:name=".ui.mobileVerification.MobileVerificationActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.Pre.Signin"
-      android:windowSoftInputMode="adjustPan|stateVisible" />
+      android:windowSoftInputMode="adjustResize" />
 
     <activity
       android:name=".ui.intro.IntroActivity"
