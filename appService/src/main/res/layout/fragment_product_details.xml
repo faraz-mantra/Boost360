@@ -273,7 +273,8 @@
                   app:textOff="NO"
                   app:textOn="YES"
                   app:txtColorOff="@color/white"
-                  app:txtColorOn="@color/white" />
+                  app:txtColorOn="@color/white"
+                  tools:ignore="MissingClass" />
 
 
               </androidx.constraintlayout.widget.ConstraintLayout>

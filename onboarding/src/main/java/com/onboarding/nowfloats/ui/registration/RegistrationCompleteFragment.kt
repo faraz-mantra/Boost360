@@ -202,7 +202,7 @@ class RegistrationCompleteFragment :
         try {
           setDataLogin()
           val intent =
-            Intent(baseActivity, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
+            Intent(baseActivity, Class.forName("com.boost.presignin.ui.LoaderActivity"))
           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
           val loginBundle = Bundle()
           loginBundle.putBoolean("fromLogin", true)

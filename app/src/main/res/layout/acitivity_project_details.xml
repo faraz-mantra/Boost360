@@ -51,15 +51,30 @@
         android:layout_marginEnd="@dimen/_15sdp"
         android:text="@string/about_company" />
 
-      <EditText
-        android:id="@+id/company_description"
-        style="@style/EditTextCustomeStyle"
+      <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_70sdp"
-        android:elevation="@dimen/_2sdp"
-        android:gravity="top"
-        android:hint="@string/enter_company_description_100_characters_max"
-        android:inputType="textMultiLine" />
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginVertical="@dimen/size_5"
+        app:counterEnabled="true"
+        app:counterMaxLength="100"
+        app:hintEnabled="false">
+
+        <androidx.appcompat.widget.AppCompatEditText
+          android:id="@+id/company_description"
+          style="@style/EditTextCustomeStyle"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/_56sdp"
+          android:layout_marginStart="0dp"
+          android:layout_marginTop="0dp"
+          android:layout_marginEnd="0dp"
+          android:layout_marginBottom="0dp"
+          android:elevation="@dimen/_2sdp"
+          android:gravity="top"
+          android:hint="@string/enter_company_description_100_characters_max"
+          android:inputType="textMultiLine"
+          android:maxLength="100" />
+      </com.google.android.material.textfield.TextInputLayout>
 
       <View
         android:id="@+id/dummy_view1"
@@ -108,15 +123,29 @@
         android:layout_marginEnd="@dimen/_15sdp"
         android:text="@string/project_client_requirement" />
 
-
-      <EditText
-        android:id="@+id/project_client_requirement"
-        style="@style/EditTextCustomeStyle"
+      <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_70sdp"
-        android:elevation="@dimen/_2sdp"
-        android:gravity="top"
-        android:hint="@string/enter_description_200_characters_max" />
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginVertical="@dimen/size_5"
+        app:counterEnabled="true"
+        app:counterMaxLength="200"
+        app:hintEnabled="false">
+
+        <androidx.appcompat.widget.AppCompatEditText
+          android:id="@+id/project_client_requirement"
+          style="@style/EditTextCustomeStyle"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/_90sdp"
+          android:layout_marginStart="0dp"
+          android:layout_marginTop="0dp"
+          android:layout_marginEnd="0dp"
+          android:layout_marginBottom="0dp"
+          android:elevation="@dimen/_2sdp"
+          android:gravity="top"
+          android:hint="@string/enter_description_200_characters_max"
+          android:maxLength="200" />
+      </com.google.android.material.textfield.TextInputLayout>
 
       <TextView
         android:layout_width="wrap_content"
@@ -126,15 +155,29 @@
         android:layout_marginEnd="@dimen/_15sdp"
         android:text="@string/our_approach" />
 
-
-      <EditText
-        android:id="@+id/our_approach"
-        style="@style/EditTextCustomeStyle"
+      <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_70sdp"
-        android:elevation="@dimen/_2sdp"
-        android:gravity="top"
-        android:hint="@string/enter_description_200_characters_max" />
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginVertical="@dimen/size_5"
+        app:counterEnabled="true"
+        app:counterMaxLength="200"
+        app:hintEnabled="false">
+
+        <androidx.appcompat.widget.AppCompatEditText
+          android:id="@+id/our_approach"
+          style="@style/EditTextCustomeStyle"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/_90sdp"
+          android:layout_marginStart="0dp"
+          android:layout_marginTop="0dp"
+          android:layout_marginEnd="0dp"
+          android:layout_marginBottom="0dp"
+          android:elevation="@dimen/_2sdp"
+          android:gravity="top"
+          android:hint="@string/enter_description_200_characters_max"
+          android:maxLength="200" />
+      </com.google.android.material.textfield.TextInputLayout>
 
       <LinearLayout
         android:layout_width="match_parent"

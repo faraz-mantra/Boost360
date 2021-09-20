@@ -1,20 +1,21 @@
 package com.framework.models.firestore
 
+import android.annotation.SuppressLint
 import android.text.TextUtils
 import android.util.Log
-import com.framework.base.BaseResponse
-import com.framework.models.firestore.restApi.model.CreateDrRequest
-import com.framework.models.firestore.restApi.model.UpdateDrRequest
-import com.framework.models.firestore.restApi.repository.DrScoreRepository
-import com.framework.models.toLiveData
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.MetadataChanges
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.framework.base.BaseResponse
+import com.framework.models.firestore.restApi.model.CreateDrRequest
+import com.framework.models.firestore.restApi.model.UpdateDrRequest
+import com.framework.models.firestore.restApi.repository.DrScoreRepository
+import com.framework.models.toLiveData
 import io.reactivex.Observable
+import com.google.gson.reflect.TypeToken
 
 object FirestoreManager {
 
@@ -25,35 +26,47 @@ object FirestoreManager {
   var fpId: String = ""
   var clientId: String = ""
   var TAG = "FirestoreManager"
-  private const val COLLECTION_NAME = "drsMerchants"
+  const val COLLECTION_NAME = "drsMerchants"
   var listener: (() -> Unit)? = null
 
   fun initData(fpTag: String, fpId: String, clientId: String) {
-    FirestoreManager.fpTag = fpTag
-    FirestoreManager.fpId = fpId
-    FirestoreManager.clientId = clientId
-    db = Firebase.firestore
-    if (model == null) {
-      model = DrScoreModel()
+    this.fpTag = fpTag
+    this.fpId = fpId
+    this.clientId = clientId
+    this.db = Firebase.firestore
+    if (this.model == null) {
+      this.model = DrScoreModel()
     }
     readDrScoreDocument()
   }
 
-//  fun readCollection() {
-//    this.db?.collection("drsMerchants")?.get()?.addOnSuccessListener { result ->
-//      for (document in result) {
-//        Log.d("FirestoreManager", "${document.id} => ${document.data}")
-//      }
+  fun reset(){
+    Log.i(TAG, "reset called: ")
+    this.fpTag = ""
+    this.fpId = ""
+    this.clientId = ""
+    this.db = null
+    this.model = null
+    readDrScoreDocument()
+
+  }
+//    fun readCollection() {
+//        this.db?.collection("drsMerchants")?.get()?.addOnSuccessListener { result ->
+//            for (document in result) {
+//
+//                Log.d("FirestoreManager", "${document.id} => ${document.data}")
+//            }
+//        }
+//                ?.addOnFailureListener { exception ->
+//                    Log.w("FirestoreManager", "Error getting documents.", exception)
+//                }
 //    }
-//      ?.addOnFailureListener { exception ->
-//        Log.w("FirestoreManager", "Error getting documents.", exception)
-//      }
-//  }
 
   fun readDrScoreDocument() {
     Log.e("readDrScoreDocument ", "readDrScoreDocument")
     getDocumentReference()?.addSnapshotListener(MetadataChanges.INCLUDE) { snapshot, e ->
       if (e == null) {
+        Log.d(TAG, "No Exception")
         Log.d(TAG, "Document Data is : " + snapshot?.data)
         model = snapshot?.data?.toDataClass<DrScoreModel>()
         updateDrScoreIfNull()
@@ -64,9 +77,9 @@ object FirestoreManager {
     }
   }
 
-  private fun getDocumentReference(): DocumentReference? {
+  fun getDocumentReference(): DocumentReference? {
     try {
-      return db?.collection(COLLECTION_NAME)?.document(fpTag)
+      return db?.collection(COLLECTION_NAME)?.document(this.fpTag)
     } catch (e: Exception) {
       e.printStackTrace()
       Log.e(TAG, "Firestore document reference")
@@ -74,12 +87,13 @@ object FirestoreManager {
     return null
   }
 
-  private fun updateDrScoreIfNull() {
-    if (model == null) {
-      model = DrScoreModel()
+  fun updateDrScoreIfNull() {
+    if (this.model == null) {
+      this.model = DrScoreModel()
 //      val docRef = getDocumentReference()
 //      updateDocument(docRef, this.model.serializeToMap())
-      if (fpTag.isNotEmpty()) DrScoreRepository.createDrScoreData(CreateDrRequest(fpTag = fpTag)).apiCreateUpdate()
+      if (this.fpTag.isNotEmpty()) DrScoreRepository.createDrScoreData(CreateDrRequest(fpTag = this.fpTag))
+        .apiCreateUpdate()
     }
   }
 
@@ -90,29 +104,46 @@ object FirestoreManager {
   }
 
   fun getDrScoreData(): DrScoreModel? {
-    return model
+    return this.model
   }
 
   fun updateDrScoreData(model: DrScoreModel) {
-    FirestoreManager.model = model
-    updateDocument(getDocumentReference(), FirestoreManager.model.serializeToMap())
+    this.model = model
+    updateDocument(getDocumentReference(), this.model.serializeToMap())
   }
 
   fun updateDocument() {
-    if (model != null && !TextUtils.isEmpty(model?.client_id) && model?.metricdetail?.currentValueUpdate != null) {
+    if (this.model != null && !TextUtils.isEmpty(this.model?.client_id) && this.model?.metricdetail?.currentValueUpdate != null) {
 //      updateDocument(getDocumentReference(), this.model.serializeToMap())
       DrScoreRepository.updateDrScoreData(
         UpdateDrRequest(
-          model?.client_id,
-          model?.fp_tag,
-          model?.metricdetail?.currentValueUpdate?.key,
-          model?.metricdetail?.currentValueUpdate?.value
+          this.model?.client_id,
+          this.model?.fp_tag,
+          this.model?.metricdetail?.currentValueUpdate?.key,
+          this.model?.metricdetail?.currentValueUpdate?.value
         )
       ).apiCreateUpdate()
     }
   }
 
-  private fun Observable<BaseResponse>.apiCreateUpdate() {
+
+  //convert a map to a data class
+  inline fun <reified T> Map<String, Any>.toDataClass(): T {
+    return convert()
+  }
+
+  //convert a data class to a map
+  fun <T> T.serializeToMap(): Map<String, Any> {
+    return convert()
+  }
+
+  //convert an object of type I to type O
+  inline fun <I, reified O> I.convert(): O {
+    val json = gson.toJson(this)
+    return gson.fromJson(json, object : TypeToken<O>() {}.type)
+  }
+
+  fun Observable<BaseResponse>.apiCreateUpdate() {
     this.toLiveData().observeForever {
       if (it.isSuccess()) {
         readDrScoreDocument()
@@ -120,20 +151,4 @@ object FirestoreManager {
       } else Log.d("apiCreateUpdate", "error: ${it.message()}")
     }
   }
-}
-
-//convert a map to a data class
-inline fun <reified T> Map<String, Any>.toDataClass(): T {
-  return convert()
-}
-
-//convert a data class to a map
-fun <T> T.serializeToMap(): Map<String, Any> {
-  return convert()
-}
-
-//convert an object of type I to type O
-inline fun <I, reified O> I.convert(): O {
-  val json = FirestoreManager.gson.toJson(this)
-  return FirestoreManager.gson.fromJson(json, object : TypeToken<O>() {}.type)
 }

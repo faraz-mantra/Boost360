@@ -220,7 +220,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       binding?.externalUrlView?.gone()
       binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
       binding?.bankAccountName?.visible()
-      binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
+      binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.getAccountNumberN()?:""}"
       binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
       binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
     }
@@ -258,7 +258,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null || !bankAccountDetail?.iFSC.isNullOrEmpty() || !bankAccountDetail?.accountNumber.isNullOrEmpty() -> {
         binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
         binding?.bankAccountName?.visible()
-        binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
+        binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.getAccountNumberN()?:""}"
         binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
         binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
       }

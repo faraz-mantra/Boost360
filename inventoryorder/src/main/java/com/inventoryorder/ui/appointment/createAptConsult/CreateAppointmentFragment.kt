@@ -81,8 +81,7 @@ import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
-class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBinding>(),
-  PopupMenu.OnMenuItemClickListener {
+class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBinding>(), PopupMenu.OnMenuItemClickListener {
 
   private var timeSlots: ArrayList<Slots>?=null
 
@@ -555,7 +554,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           val shippingDetails = ShippingDetailsN(
             shippedBy = ShippingDetails.ShippedBy.SELLER.name,
             deliveryMode = delMode,
-            shippingCost = 0,
+            shippingCost = 0.0,
             currencyCode = "INR"
           )
           val items = ArrayList<ItemsItemNew>()

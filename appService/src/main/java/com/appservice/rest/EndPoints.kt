@@ -69,7 +69,7 @@ object EndPoints {
   const val GET_FP_DETAILS = "/Discover/v3/floatingPoint/nf-app/{fpid}"
   const val GET_CATALOG_STATUS = "discover/v9/business/settings/status/{fpid}"
   const val POST_PRODUCT_CATEGORY_VERB = "Discover/v1/FloatingPoint/update/"
-
+  const val GET_MERCHANT_SUMMARY = "/Support/v1/dashboard/GetMerchantSummary"
 
   //TODO PRODUCT API 2 WITH FLOAT
   const val CREATE_PRODUCT = "Product/v1/Create"
