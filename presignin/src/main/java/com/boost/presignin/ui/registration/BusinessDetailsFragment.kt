@@ -22,6 +22,16 @@ import com.framework.webengageconstant.*
 import okio.Buffer
 import okio.BufferedSource
 import java.nio.charset.Charset
+import android.graphics.PorterDuff
+
+import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import android.graphics.PorterDuffColorFilter
+
+
+
+
 
 class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, LoginSignUpViewModel>() {
 
@@ -68,6 +78,54 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
         else -> binding?.civPhone?.setTintColor(getColor(R.color.et_unselected_color))
       }
     }
+    binding?.nametEt?.setOnFocusChangeListener { v, hasFocus ->
+      var drawable: Drawable? = ContextCompat.getDrawable(requireActivity(),R.drawable.ic_business_detail_user)
+      when (hasFocus) {
+        true ->{
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.orange), PorterDuff.Mode.SRC_IN)
+        }
+        else -> {
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.et_unselected_color), PorterDuff.Mode.SRC_IN)
+        }
+
+      }
+      binding?.nametEt?.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable,null,null,null)
+    }
+
+    binding?.businessNameEt?.setOnFocusChangeListener { v, hasFocus ->
+      var drawable: Drawable? = ContextCompat.getDrawable(requireActivity(),R.drawable.ic_business_detail_catelog)
+      when (hasFocus) {
+        true ->{
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.orange), PorterDuff.Mode.SRC_IN)
+        }
+        else -> {
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.et_unselected_color), PorterDuff.Mode.SRC_IN)
+        }
+
+      }
+      binding?.businessNameEt?.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable,null,null,null)
+    }
+
+    binding?.emailEt?.setOnFocusChangeListener { v, hasFocus ->
+      var drawable: Drawable? = ContextCompat.getDrawable(requireActivity(),R.drawable.ic_business_detail_email)
+      when (hasFocus) {
+        true ->{
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.orange), PorterDuff.Mode.SRC_IN)
+        }
+        else -> {
+          drawable?.colorFilter =
+            PorterDuffColorFilter(resources.getColor(R.color.et_unselected_color), PorterDuff.Mode.SRC_IN)
+        }
+
+      }
+      binding?.emailEt?.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable,null,null,null)
+    }
+
     binding?.confirmButton?.setOnClickListener {
       val name = binding?.nametEt?.text?.toString()
       val businessName = binding?.businessNameEt?.text?.toString();
