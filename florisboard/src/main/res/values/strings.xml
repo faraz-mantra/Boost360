@@ -350,12 +350,12 @@
   <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Setup finished!</string>
 
   <!-- Crash Dialog strings -->
-  <string name="crash_dialog__title" comment="Title of crash dialog">Boost keyboard error report</string>
-  <string name="crash_dialog__description" comment="Description of crash dialog">Sorry for the inconvenience, but Boost keyboard has crashed due to an unexpected error.\n\nIf you wish to report this error, click on "Copy to clipboard", then on the "Open bug report" button. Fill out the bug report and paste the log. This helps in making Boost keyboard better and more stable for everyone. Thank you!</string>
+  <string name="crash_dialog__title" comment="Title of crash dialog">Boost 360 Error Report</string>
+  <string name="crash_dialog__description" comment="Description of crash dialog">Sorry for the inconvenience, but Boost has crashed due to an unexpected error.\n\nIf you wish to report this error, click on "Copy to clipboard", then on the "Open bug report" button. Fill out the bug report and paste the log. This helps in making Boost better and more stable for everyone. Thank you!</string>
   <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copy to clipboard</string>
   <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Open bug report form (github.com)</string>
   <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Close</string>
-  <string name="crash_notification_channel__title" comment="Title of crash notification channel">Boost keyboard error reports</string>
+  <string name="crash_notification_channel__title" comment="Title of crash notification channel">Boost 360 Error Reports</string>
   <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Boost keyboard has stopped working…</string>
   <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Tap to view error details</string>
   <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Boost keyboard seems to stop working repeatedly…</string>
