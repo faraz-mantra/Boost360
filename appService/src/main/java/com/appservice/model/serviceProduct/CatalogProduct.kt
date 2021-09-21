@@ -3,6 +3,7 @@ package com.appservice.model.serviceProduct
 import android.net.Uri
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.model.KeySpecification
+import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -84,7 +85,7 @@ class CatalogProduct(
   var otherSpecification: ArrayList<KeySpecification>? = null,
   var pickupAddressReferenceId: String? = null,
   var recyclerViewItem: Int = RecyclerViewItemType.PRODUCT_LISTING.getLayout(),
-  ) : BaseResponse(), AppBaseRecyclerViewItem,Serializable {
+) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
 
   override fun getViewType(): Int {
     return recyclerViewItem
@@ -94,19 +95,16 @@ class CatalogProduct(
     this.recyclerViewItem = RecyclerViewItemType.PAGINATION_LOADER.getLayout()
     return this
   }
+
   fun isPriceToggleOn(): Boolean {
     return this.Price > 0
   }
 
   enum class PaymentType(val value: String) {
-    ASSURED_PURCHASE("AssuredPurchase"), MY_PAYMENT_GATEWAY("MyPaymentGateWay"), UNIQUE_PAYMENT_URL(
-      "UniquePaymentUrl"
-    ),
-    DONT_WANT_TO_SELL("None");
+    ASSURED_PURCHASE("AssuredPurchase"), MY_PAYMENT_GATEWAY("MyPaymentGateWay"), UNIQUE_PAYMENT_URL("UniquePaymentUrl"), DONT_WANT_TO_SELL("None");
 
     companion object {
-      fun fromValue(value: String): PaymentType? =
-        values().firstOrNull { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+      fun fromValue(value: String): PaymentType? = values().firstOrNull { it.value.equals(value, ignoreCase = true) }
     }
   }
 }
