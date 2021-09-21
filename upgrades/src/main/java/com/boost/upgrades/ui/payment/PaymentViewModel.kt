@@ -15,6 +15,7 @@ import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerI
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
 import com.boost.upgrades.data.api_model.gst.Error
 import com.boost.upgrades.data.api_model.gst.GSTApiResponse
+import com.boost.upgrades.data.api_model.stateCode.GetStates
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_SECREAT
@@ -62,6 +63,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   var selectedStateResult: MutableLiveData<String> = MutableLiveData()
   private var APIRequestStatus: String? = null
   private var gstApiInfo : MutableLiveData<GSTApiResponse> = MutableLiveData()
+  private var statesInfo :MutableLiveData<GetStates> = MutableLiveData()
 
   var updatesError: MutableLiveData<String> = MutableLiveData()
   var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
@@ -139,6 +141,9 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   }
   fun getGstApiResult(): LiveData<GSTApiResponse>{
     return gstApiInfo
+  }
+  fun getStatesResult(): LiveData<GetStates>{
+    return statesInfo
   }
 
   fun cityResult(): LiveData<List<String>> {
@@ -307,6 +312,26 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
             {
               val temp = (it as HttpException).response()!!.errorBody()!!.string()
               val errorBody : Error = Gson().fromJson(temp,object : TypeToken<Error>() {}.type)
+            }
+          )
+      )
+    }
+  }
+
+  fun getStatesWithCodes(auth: String,clientId: String){
+    if(Utils.isConnectedToInternet(getApplication())){
+      CompositeDisposable().add(
+        ApiService.getStates(auth,clientId)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(
+            {
+              Log.i("getStates",it.toString())
+              statesInfo.postValue(it)
+            },
+            {
+              val temp = (it as HttpException).response()!!.errorBody()!!.string()
+              val errorBody : Error = Gson().fromJson(temp,object : TypeToken<com.boost.upgrades.data.api_model.stateCode.Error>() {}.type)
             }
           )
       )

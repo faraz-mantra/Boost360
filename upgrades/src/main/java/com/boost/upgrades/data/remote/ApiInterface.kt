@@ -14,6 +14,7 @@ import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDRespo
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
 import com.boost.upgrades.data.api_model.gst.GSTApiResponse
+import com.boost.upgrades.data.api_model.stateCode.GetStates
 import com.boost.upgrades.data.renewalcart.CreateCartResponse
 import com.boost.upgrades.data.renewalcart.CreateCartStateRequest
 import com.boost.upgrades.data.renewalcart.RenewalPurchasedResponse
@@ -119,6 +120,15 @@ interface ApiInterface {
   fun getGSTDetails(
     @Header("Authorization") auth: String,
     @Query("gstin") gstIN: String?,
-    @Query("clientId") clientId: String?,
+    @Query("clientId") clientId: String?
   ): Observable<GSTApiResponse>
+
+  @Headers("Content-Type: application/json")
+  @GET("https://api2.withfloats.com/api/v1/Business/GetStateCode")
+  fun getStates(
+    @Header("Authorization") auth: String,
+    @Query("clientId") clientId: String?
+  ): Observable<GetStates>
+
+
 }
