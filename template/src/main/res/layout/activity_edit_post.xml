@@ -45,7 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp">
 
-                    <com.framework.views.customViews.CustomImageView
+                    <com.caverock.androidsvg.SVGImageView
                         android:id="@+id/iv_template"
                         android:src="@color/colorPrimary"
                         android:layout_width="match_parent"
@@ -78,7 +78,7 @@
                 </com.framework.views.customViews.CustomEditText>
 
 
-                <com.framework.views.customViews.CustomButton
+                <com.framework.views.customViews.CustomMaterialButton
                     android:layout_width="match_parent"
                     android:textColor="@color/white"
                     android:backgroundTint="@color/colorPrimary"

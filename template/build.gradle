@@ -41,4 +41,8 @@ dependencies {
     api project(path: ':resources')
     api project(path: ':appService')
 
+    //svg image view
+    implementation 'com.caverock:androidsvg-aar:1.4'
+
+
 }

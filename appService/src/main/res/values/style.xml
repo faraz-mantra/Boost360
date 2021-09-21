@@ -153,6 +153,7 @@
     <item name="android:windowNoTitle">true</item>
     <item name="android:statusBarColor">@android:color/transparent</item>
     <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
+    <item name="android:windowSoftInputMode">adjustResize</item>
   </style>
 
   <style name="SearchView" parent="Widget.AppCompat.Light.SearchView">

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.template">
 
     <application
-        android:theme="@style/BaseTheme"
         >
         <activity
             android:screenOrientation="portrait"
@@ -17,6 +17,7 @@
         </activity>
 
         <activity
+            android:theme="@style/TemplateTheme"
             android:windowSoftInputMode="stateHidden|adjustPan"
             android:name=".views.edit_post.EditPostActivity"
             android:screenOrientation="portrait"/>
