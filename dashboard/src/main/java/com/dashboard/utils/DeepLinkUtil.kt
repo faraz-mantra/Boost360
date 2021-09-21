@@ -99,6 +99,10 @@ const val deeplink_create_order = "create_order"
 const val deeplink_create_appointment = "create_appointment"
 const val deeplink_create_consultation = "create_consultation"
 const val deeplink_website_theme = "website_customization"
+const val deeplink_dashboard_tab = "dashboard_tab"
+const val deeplink_website_tab = "website_tab"
+const val deeplink_enquiries_tab = "enquiries_tab"
+const val deeplink_more_tab = "more_tab"
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
 
@@ -109,7 +113,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
 
   private val TAG = "DeepLinkUtil"
   fun deepLinkPage(url: String, buyItemKey: String, isFromRia: Boolean) {
-    Log.i(TAG, "deepLinkPage: "+url)
+    Log.i(TAG, "deepLinkPage: " + url)
     try {
       if (url.isNotEmpty()) {
         if (url.contains(keyboard) || url.contains(keyboardSettings)) {
@@ -368,5 +372,13 @@ fun AppCompatActivity.shareWebsite(session: UserSessionManager) {
     session.websiteshare = true
   } catch (e: Exception) {
     e.printStackTrace()
+  }
+}
+
+enum class DashboardTabs(var title: String, var position: Int) {
+  dashboard_tab(deeplink_dashboard_tab, 0), website_tab(deeplink_website_tab, 1), enquiries_tab(deeplink_enquiries_tab, 2), more_tab(deeplink_more_tab, 4);
+
+  companion object {
+    fun fromUrl(url: String?): DashboardTabs? = values().firstOrNull { url?.contains(it.title) == true }
   }
 }

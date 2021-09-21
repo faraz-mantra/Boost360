@@ -635,7 +635,7 @@
         },
         {
           "title": "Testimonials",
-          "countTypeType": "NoOfTestimonials",
+          "countType": "NoOfTestimonials",
           "isFeature": false,
           "desc": "Add customer reviews and testimonials to improve trust.",
           "type": "testimonials",
@@ -644,7 +644,7 @@
         },
         {
           "title": "Custom pages",
-          "countTypeType": "NoOfCustomPages",
+          "countType": "NoOfCustomPages",
           "isFeature": false,
           "desc": "Add unique content to your website with the Boost WYSWIG editor.",
           "type": "custom_page",
