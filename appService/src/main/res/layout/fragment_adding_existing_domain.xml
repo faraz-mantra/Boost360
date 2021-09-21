@@ -2,165 +2,324 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <ScrollView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="@color/white_3">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white_3"
-            android:fillViewport="true">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_step_identity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_42"
+                android:text="@string/step_1_4"
+                android:textColor="@color/colorLightBlack"
+                android:textSize="@dimen/text_12"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/size_10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/card_step_1"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_step_1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_22"
+                android:layout_marginEnd="@dimen/size_22"
+                app:cardBackgroundColor="@color/view_background_1"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_step_1">
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_step_identity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginStart="@dimen/size_42"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/step_1_4"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/text_12"
-                    android:textColor="@color/colorLightBlack"/>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_step_1"
+                <LinearLayout
+                    android:id="@+id/linear_step_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_10"
-                    android:layout_marginStart="@dimen/size_22"
-                    android:layout_marginEnd="@dimen/size_22"
-                    app:cardBackgroundColor="@color/view_background_1"
-                    app:cardCornerRadius="20dp"
+                    android:background="@drawable/all_side_curve_bg"
+                    android:elevation="8dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="@dimen/size_16"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_step_identity">
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
-                        android:id="@+id/linear_step_1"
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/tv_suggested_domain_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/all_side_curve_bg"
-                        android:elevation="8dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical"
-                        android:padding="@dimen/size_16"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_24"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:gravity="start"
+                        android:text="@string/login_to_your_provider"
+                        android:textAlignment="gravity"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_24"
+                        app:fontFamily="@font/regular" />
 
-                        <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/tv_suggested_domain_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/size_24"
-                            android:layout_marginStart="@dimen/size_22"
-                            android:layout_marginEnd="@dimen/size_22"
-                            android:gravity="start"
-                            app:fontFamily="@font/regular"
-                            android:textAlignment="gravity"
-                            android:text="@string/login_to_your_provider"
-                            android:textSize="@dimen/text_24"
-                            android:textColor="@color/colorPrimary"/>
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/tv_suggested_domain_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_16"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:fontFamily="@font/barlow_regular"
+                        android:gravity="start"
+                        android:text="@string/step_1_instructions"
+                        android:textAlignment="gravity"
+                        android:textColor="@color/colorLightBlack"
+                        android:textSize="@dimen/text_14"
+                        app:fontFamily="@font/regular" />
 
-                        <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/tv_suggested_domain_value"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/size_16"
-                            android:layout_marginStart="@dimen/size_22"
-                            android:layout_marginEnd="@dimen/size_22"
-                            android:gravity="start"
-                            app:fontFamily="@font/regular"
-                            android:textAlignment="gravity"
-                            android:fontFamily="@font/barlow_regular"
-                            android:text="@string/step_1_instructions"
-                            android:textSize="@dimen/text_14"
-                            android:textColor="@color/colorLightBlack" />
+                </LinearLayout>
 
-                    </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_step_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_22"
+                android:layout_marginTop="@dimen/size_10"
+                android:visibility="gone"
+                android:layout_marginEnd="@dimen/size_22"
+                app:cardBackgroundColor="@color/view_background_1"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_step_identity">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_step_2"
+                <LinearLayout
+                    android:id="@+id/linear_step_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_10"
-                    android:layout_marginStart="@dimen/size_22"
-                    android:layout_marginEnd="@dimen/size_22"
-                    app:cardBackgroundColor="@color/view_background_1"
-                    app:cardCornerRadius="20dp"
+                    android:background="@drawable/all_side_curve_bg"
+                    android:elevation="8dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="@dimen/size_16"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_step_identity">
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
-                        android:id="@+id/linear_step_2"
+                    <com.framework.views.customViews.CustomTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/all_side_curve_bg"
-                        android:elevation="8dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical"
-                        android:padding="@dimen/size_16"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_24"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:gravity="start"
+                        android:text="@string/find_your_domain_settings_page"
+                        android:textAlignment="gravity"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_24"
+                        app:fontFamily="@font/regular" />
 
-                        <com.framework.views.customViews.CustomTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/size_24"
-                            android:layout_marginStart="@dimen/size_22"
-                            android:layout_marginEnd="@dimen/size_22"
-                            android:gravity="start"
-                            app:fontFamily="@font/regular"
-                            android:textAlignment="gravity"
-                            android:text="@string/login_to_your_provider"
-                            android:textSize="@dimen/text_24"
-                            android:textColor="@color/colorPrimary"/>
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_16"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:fontFamily="@font/barlow_regular"
+                        android:gravity="start"
+                        android:text="@string/step_2_instructions"
+                        android:textAlignment="gravity"
+                        android:textColor="@color/colorLightBlack"
+                        android:textSize="@dimen/text_14"
+                        app:fontFamily="@font/regular" />
 
-                        <com.framework.views.customViews.CustomTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/size_16"
-                            android:layout_marginStart="@dimen/size_22"
-                            android:layout_marginEnd="@dimen/size_22"
-                            android:gravity="start"
-                            app:fontFamily="@font/regular"
-                            android:textAlignment="gravity"
-                            android:fontFamily="@font/barlow_regular"
-                            android:text="@string/step_2_instructions"
-                            android:textSize="@dimen/text_14"
-                            android:textColor="@color/colorLightBlack" />
+                </LinearLayout>
 
-                    </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_step_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_22"
+                android:layout_marginTop="@dimen/size_10"
+                android:visibility="gone"
+                android:layout_marginEnd="@dimen/size_22"
+                app:cardBackgroundColor="@color/view_background_1"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_step_identity">
 
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/barrier_cards"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/linear_step_3"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="card_step_1, card_step_2"/>
-
-                <com.framework.views.customViews.CustomMaterialButton
-                    android:id="@+id/btn_book_old_domain"
-                    style="@style/ButtonStyleRoundedColorPrimary"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginTop="@dimen/size_42"
-                    android:text="@string/add_a_domain_you_own"
+                    android:background="@drawable/all_side_curve_bg"
+                    android:elevation="8dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="@dimen/size_16"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/barrier_cards"/>
+                    app:layout_constraintTop_toTopOf="parent">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_24"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:gravity="start"
+                        android:text="@string/find_your_nameservers"
+                        android:textAlignment="gravity"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_24"
+                        app:fontFamily="@font/regular" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_16"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:fontFamily="@font/barlow_regular"
+                        android:gravity="start"
+                        android:text="@string/step_3_instructions"
+                        android:textAlignment="gravity"
+                        android:textColor="@color/colorLightBlack"
+                        android:textSize="@dimen/text_14"
+                        app:fontFamily="@font/regular" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_step_final"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_22"
+                android:layout_marginTop="@dimen/size_10"
+                android:visibility="gone"
+                android:layout_marginEnd="@dimen/size_22"
+                app:cardBackgroundColor="@color/view_background_1"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_step_identity">
+
+                <LinearLayout
+                    android:id="@+id/linear_step_final"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/all_side_curve_bg"
+                    android:elevation="8dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="@dimen/size_16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_24"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:gravity="start"
+                        android:text="@string/replace_your_nameserver"
+                        android:textAlignment="gravity"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_24"
+                        app:fontFamily="@font/regular" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_16"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:fontFamily="@font/barlow_regular"
+                        android:gravity="start"
+                        android:text="@string/step_final_instructions_part_one"
+                        android:textAlignment="gravity"
+                        android:textColor="@color/colorLightBlack"
+                        android:textSize="@dimen/text_14"
+                        app:fontFamily="@font/regular" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_22"
+                        android:layout_marginTop="@dimen/size_8"
+                        android:layout_marginEnd="@dimen/size_22"
+                        android:fontFamily="@font/barlow_regular"
+                        android:gravity="start"
+                        android:text="@string/step_final_instructions_part_two"
+                        android:textAlignment="gravity"
+                        android:textColor="@color/colorLightBlack"
+                        android:textSize="@dimen/text_14"
+                        app:fontFamily="@font/regular" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_step_1"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/size_32"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:elevation="@dimen/size_12"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_domain_final_step"/>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_cards"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="card_step_1, card_step_2, card_step_3, card_step_final" />
+
+            <com.framework.views.customViews.CustomMaterialButton
+                android:id="@+id/btn_next_step"
+                style="@style/ButtonStyleRoundedColorPrimary"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="@dimen/size_42"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/add_a_domain_you_own"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barrier_cards" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_info_color_primary"
+                android:drawablePadding="@dimen/size_12"
+                android:gravity="center"
+                app:fontFamily="@font/regular"
+                android:text="@string/not_sure_provide_is"
+                android:layout_marginTop="@dimen/size_32"
+                android:textAlignment="gravity"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_next_step" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </layout>

@@ -289,7 +289,7 @@
     <item name="backgroundTint">@color/colorPrimary</item>
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">@dimen/size_46</item>
-    <item name="cornerRadius">@dimen/size_15</item>
+    <item name="cornerRadius">@dimen/size_10</item>
     <item name="android:textAlignment">gravity</item>
     <item name="android:gravity">center</item>
     <item name="android:textAllCaps">false</item>
