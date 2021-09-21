@@ -17,9 +17,10 @@
       android:layout_height="0dp"
       android:checkable="true"
       android:clickable="true"
+      android:layout_marginBottom="@dimen/_2sdp"
       android:focusable="true"
       android:orientation="vertical"
-      app:cardElevation="@dimen/size_4"
+      app:cardElevation="0dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintDimensionRatio="w,1:2"
       app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +46,6 @@
           android:ellipsize="end"
           android:gravity="start"
           android:fontFamily="@font/bold"
-          android:maxLines="2"
           android:textColor="@color/black_4a4a4a"
           app:layout_constraintEnd_toStartOf="@+id/category_image"
           app:layout_constraintStart_toStartOf="@+id/image"
@@ -91,14 +91,6 @@
         android:visibility="visible" />
 
     </com.framework.views.customViews.CustomCardView>
-
-    <View
-      android:id="@+id/view"
-      android:layout_width="match_parent"
-      android:layout_height="1dp"
-      android:background="@color/view_background_1"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/card" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

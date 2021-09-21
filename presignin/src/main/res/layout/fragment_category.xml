@@ -22,9 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/size_16"
         android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:padding="6dp"
+        android:padding="@dimen/size_6"
         android:src="@drawable/ic_back_arrow_left_grey" />
 
       <com.framework.views.customViews.CustomTextView
@@ -36,13 +36,13 @@
         android:includeFontPadding="true"
         android:text="@string/select_your_business_type"
         android:textColor="@color/black_3C3C3C"
-        android:textSize="16sp" />
+        app:textType="HEADING_6" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <View
+      android:id="@+id/view"
       android:layout_width="match_parent"
       android:layout_height="1dp"
-      android:id="@+id/view"
       android:background="@color/view_background_1"
       app:layout_constraintBottom_toBottomOf="@+id/linearLayoutCompat" />
 
@@ -50,51 +50,40 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:fillViewport="true"
+      android:background="@color/view_background_1"
       app:layout_constraintBottom_toTopOf="@+id/confirm_button"
       app:layout_constraintTop_toBottomOf="@+id/view">
 
-      <androidx.constraintlayout.widget.ConstraintLayout
+      <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.constraintlayout.widget.Guideline style="@style/start_guide_style" />
-
-        <androidx.constraintlayout.widget.Guideline style="@style/end_guide_style" />
-
-        <androidx.constraintlayout.widget.Guideline style="@style/bottom_guide_style" />
-
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/title"
-          style="@style/psn_heading_style"
-          android:layout_marginTop="0dp"
-          android:text="@string/select_business_category"
-          android:visibility="gone"
-          tools:ignore="MissingConstraints" />
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/sub_heading_tv"
-          style="@style/psn_subheading_style"
-          android:layout_marginTop="@dimen/size_4"
-          android:text="@string/let_me_know_which_of_the_following_describes_the_business_you_are_running"
-          android:visibility="gone"
-          app:layout_constraintTop_toBottomOf="@id/title"
-          tools:ignore="MissingConstraints" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/recyclerView"
           android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:clipToPadding="false"
+          android:layout_height="wrap_content"
           android:orientation="vertical"
           android:overScrollMode="never"
-          android:paddingBottom="@dimen/_5sdp"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/sub_heading_tv"
           tools:itemCount="2"
           tools:listitem="@layout/item_category_layout" />
 
-
-      </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_no_category_found"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:autoLink="web"
+          android:gravity="center"
+          android:background="@color/white"
+          android:layout_marginTop="@dimen/_2sdp"
+          android:layout_marginBottom="@dimen/_4sdp"
+          android:paddingVertical="@dimen/_12sdp"
+          android:paddingHorizontal="@dimen/_8sdp"
+          android:text="@string/can_t_find_your_category_speak_to_our_expert"
+          android:textColorLink="@color/colorPrimary"
+          app:layout_constraintBottom_toBottomOf="parent" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>
 
@@ -102,7 +91,7 @@
       android:id="@+id/confirm_button"
       style="@style/psn_button_style"
       android:layout_width="match_parent"
-      android:height="@dimen/_80sdp"
+      android:layout_height="@dimen/_50sdp"
       android:background="@color/colorAccent"
       android:drawableEnd="@null"
       android:enabled="true"
@@ -113,9 +102,6 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       tools:ignore="MissingConstraints,UnknownId" />
-
-
-
   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

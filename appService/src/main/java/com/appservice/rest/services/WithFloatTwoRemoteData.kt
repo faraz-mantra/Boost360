@@ -1,5 +1,6 @@
 package com.appservice.rest.services
 
+import com.appservice.model.MerchantSummaryResponse
 import com.appservice.model.product.ProductItemsResponseItem
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
@@ -102,4 +103,12 @@ interface WithFloatTwoRemoteData {
 
   @GET(EndPoints.GET_PRODUCT_LIST)
   fun getAllProducts(@QueryMap map: Map<String, String>): Observable<Response<Array<ProductItemsResponseItem>>>
+
+
+  @GET(EndPoints.GET_MERCHANT_SUMMARY)
+    fun getMerchantSummary(
+      @Query("clientId") clientId:String?,
+      @Query("fpTag") fpTag:String?
+  ): Observable<Response<MerchantSummaryResponse>>
+
 }

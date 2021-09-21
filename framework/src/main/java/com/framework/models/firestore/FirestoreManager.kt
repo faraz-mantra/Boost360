@@ -40,6 +40,16 @@ object FirestoreManager {
     readDrScoreDocument()
   }
 
+  fun reset(){
+    Log.i(TAG, "reset called: ")
+    this.fpTag = ""
+    this.fpId = ""
+    this.clientId = ""
+    this.db = null
+    this.model = null
+    readDrScoreDocument()
+
+  }
 //    fun readCollection() {
 //        this.db?.collection("drsMerchants")?.get()?.addOnSuccessListener { result ->
 //            for (document in result) {

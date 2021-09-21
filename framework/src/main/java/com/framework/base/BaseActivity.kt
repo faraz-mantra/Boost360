@@ -44,12 +44,12 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     binding?.lifecycleOwner = this
     viewModel = ViewModelProviders.of(this).get(getViewModelClass())
     navigator = Navigator(this)
+    setToolbar()
     val observables = getObservables()
     for (observable in observables) {
       observable?.let { compositeDisposable.add(it) }
     }
     onCreateView()
-    setToolbar()
   }
 
   protected open fun getObservables(): List<Disposable?> {
@@ -142,9 +142,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   private fun setToolbar() {
     val toolbar = getToolbar() ?: return
     if (!isHideToolbar()) {
-      toolbar.setNavigationOnClickListener {
-        onBackPressed()
-      }
+      toolbar.setNavigationOnClickListener { onBackPressed() }
       setToolbarTitle(getToolbarTitle())
       getToolbarSubTitle()?.let { setToolbarSubTitle(it) }
       toolbar.getNavImageButton()?.let {
