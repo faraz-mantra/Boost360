@@ -33,6 +33,14 @@ class AddingExistingDomainFragment :
         }
     }
 
+    override fun getLayout(): Int {
+        return R.layout.fragment_adding_existing_domain
+    }
+
+    override fun getViewModelClass(): Class<BaseViewModel> {
+        return BaseViewModel::class.java
+    }
+
     override fun onCreateView() {
         (baseActivity as? DomainBookingContainerActivity)?.setToolbarTitleNew(
             resources.getString(
@@ -45,9 +53,17 @@ class AddingExistingDomainFragment :
 
     private fun setOnClickListeners() {
         binding?.btnNextStep?.setOnClickListener {
-            addingExistingDomainStepStatus =
-                if (addingExistingDomainStepStatus < 3) ++addingExistingDomainStepStatus else addingExistingDomainStepStatus
-            setUiStepStatus()
+            if (addingExistingDomainStepStatus < 3) {
+                ++addingExistingDomainStepStatus
+                setUiStepStatus()
+            } else {
+                startFragmentDomainBookingActivity(
+                    activity = requireActivity(),
+                    type = com.appservice.constant.FragmentType.ACTIVE_DOMAIN_FRAGMENT,
+                    bundle = Bundle(),
+                    clearTop = false
+                )
+            }
         }
     }
 
@@ -63,9 +79,14 @@ class AddingExistingDomainFragment :
                 binding?.cardStepFinal?.gone()
                 binding?.ivStep1?.setImageDrawable(
                     ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.ic_domain_step_1
-                ))
+                        requireContext(),
+                        R.drawable.ic_domain_step_1
+                    )
+                )
+                binding?.ivStep1?.visible()
+                binding?.ivStep2?.gone()
+                binding?.ivStep3?.gone()
+                binding?.ivStepFinal?.gone()
             }
             1 -> {
                 binding?.tvStepIdentity?.text = getString(R.string.step_2_4)
@@ -79,7 +100,12 @@ class AddingExistingDomainFragment :
                     ContextCompat.getDrawable(
                         requireContext(),
                         R.drawable.ic_domain_step_2
-                    ))
+                    )
+                )
+                binding?.ivStep1?.gone()
+                binding?.ivStep2?.visible()
+                binding?.ivStep3?.gone()
+                binding?.ivStepFinal?.gone()
             }
             2 -> {
                 binding?.tvStepIdentity?.text = getString(R.string.step_3_4)
@@ -93,7 +119,12 @@ class AddingExistingDomainFragment :
                     ContextCompat.getDrawable(
                         requireContext(),
                         R.drawable.ic_domain_step_3
-                    ))
+                    )
+                )
+                binding?.ivStep1?.gone()
+                binding?.ivStep2?.gone()
+                binding?.ivStep3?.visible()
+                binding?.ivStepFinal?.gone()
             }
             3 -> {
                 binding?.tvStepIdentity?.text = getString(R.string.step_final)
@@ -107,16 +138,13 @@ class AddingExistingDomainFragment :
                     ContextCompat.getDrawable(
                         requireContext(),
                         R.drawable.ic_domain_final_step
-                    ))
+                    )
+                )
+                binding?.ivStep1?.gone()
+                binding?.ivStep2?.gone()
+                binding?.ivStep3?.gone()
+                binding?.ivStepFinal?.visible()
             }
         }
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.fragment_adding_existing_domain
-    }
-
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
     }
 }
