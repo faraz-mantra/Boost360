@@ -119,6 +119,7 @@
 
     <include
       android:id="@+id/drawer_view"
+      android:visibility="gone"
       layout="@layout/view_drawer_home" />
   </androidx.drawerlayout.widget.DrawerLayout>
 </layout>
