@@ -562,12 +562,10 @@
   <string name="package_weight">Package weight</string>
   <string name="package_length">Package length</string>
   <string name="kgs">KGS</string>
-  <string name="_0_12">0.12</string>
-  <string name="_9">9</string>
   <string name="package_height">Package height</string>
   <string name="package_thickness">Package thickness</string>
   <string name="inch">INCH</string>
-  <string name="_5">5</string>
+  <string name="_00">0.0</string>
   <string name="external_url">External URL</string>
   <string name="paste_your_url_here_product">Paste your URL here…</string>
   <string name="type_a_tag_and_press_add_s_info">Type a tag and press \'Add\'</string>
@@ -602,6 +600,9 @@
   <string name="money_refund_till_date">Money refund till date</string>
   <string name="years_of_experience_n">Years of experience</string>
   <string name="select_years_of_experience_this_staff_member_has">Select, years of experience this staff member has.</string>
+  <string name="allow_cod">Allow COD</string>
+  <string name="allow_online_pre_pay">Allow Online Pre-Pay</string>
+  <string name="account_less_than_nine">Bank account number can\'t less than 9.</string>
 
 
   <array name="stock_availbility">

@@ -1904,7 +1904,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
   <string name="button_change"><u>Change</u></string>
   <string name="button_edit"><u>Edit</u></string>
   <string name="button_add"><u>Add</u></string>
-  <string name="null_string_exception">Don\'t enter empy updates</string>
+  <string name="null_string_exception">Don\'t enter empty updates</string>
   <string name="html_tags_exception">Sorry, you can\'t enter HTML tags</string>
   <string name="uh_oh">Uh-Oh!</string>
   <string name="not_auth">not authorized.</string>
