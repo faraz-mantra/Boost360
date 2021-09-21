@@ -49,6 +49,7 @@
                 tools:layout_editor_absoluteX="24dp">
 
                 <com.framework.views.customViews.CustomRadioButton
+                    android:id="@+id/radioAsBusinessWebsite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_border_black"
@@ -60,6 +61,7 @@
                     android:text="@string/use_it_as_my_business_website_address" />
 
                 <com.framework.views.customViews.CustomRadioButton
+                    android:id="@+id/radioCreateASubdomain"
                     android:layout_width="match_parent"
                     android:layout_marginVertical="8dp"
                     android:layout_height="wrap_content"
@@ -67,7 +69,7 @@
                     android:button="@drawable/check_selector_domain_booking"
                     android:fontFamily="@font/regular"
                     android:padding="5dp"
-                    android:text="@string/use_it_as_my_business_website_address" />
+                    android:text="@string/create_a_sub_domain_and_map_my" />
             </RadioGroup>
 
             <com.framework.views.customViews.CustomMaterialButton

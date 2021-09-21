@@ -2,11 +2,13 @@ package com.appservice.ui.domainbooking
 
 import android.app.ProgressDialog
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ClickableSpan
 import android.view.View
+import android.widget.RadioGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
@@ -24,9 +26,18 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.getDomainName
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-class DomainBookingActivity: BaseActivity<ActivityDomainBookingBinding, BaseViewModel>(),RecyclerItemClickListener {
+class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseViewModel>(),
+    RecyclerItemClickListener {
 
-    var session:UserSessionManager?=null
+    var session: UserSessionManager? = null
+    private lateinit var baseActivity: BaseActivity<*, *>
+
+    /**
+     * Bottom Sheet : function "showBsheetIntegrationOption"
+     * 0: sheetBinding.radioAsBusinessWebsite is selected
+     * 1: sheetBinding.radioCreateASubdomain is selected
+     * */
+    var domainIntegrationUserSelection:Int = 0
 
     override fun getLayout(): Int {
         return R.layout.activity_domain_booking
@@ -37,6 +48,7 @@ class DomainBookingActivity: BaseActivity<ActivityDomainBookingBinding, BaseView
     }
 
     override fun onCreateView() {
+        baseActivity = this
         session = UserSessionManager(this)
         binding?.tvDomain?.text = session?.getDomainName(true)
         setupUI()
@@ -45,21 +57,31 @@ class DomainBookingActivity: BaseActivity<ActivityDomainBookingBinding, BaseView
 
     private fun onClickListeners() {
         binding?.btnBuyAddon?.setOnClickListener {
-
+            premiumMode()
         }
 
         binding?.btnBookOldDomain?.setOnClickListener {
-           showBsheetInputOwnDomain()
+            showBsheetInputOwnDomain()
         }
 
-        binding?.btnBookNewDomain?.setOnClickListener{
-
+        binding?.btnBookNewDomain?.setOnClickListener {
+            startFragmentDomainBookingActivity(
+                activity = this,
+                type = com.appservice.constant.FragmentType.BOOK_A_DOMAIN_SSL_FRAGMENT,
+                bundle = Bundle(),
+                clearTop = false
+            )
         }
     }
 
     private fun showBsheetInputOwnDomain() {
-        val bSheet = BottomSheetDialog(this,R.style.BottomSheetDialogTheme)
-        val sheetBinding = DataBindingUtil.inflate<BsheetInputOwnDomainBinding>(layoutInflater,R.layout.bsheet_input_own_domain,null,false)
+        val bSheet = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val sheetBinding = DataBindingUtil.inflate<BsheetInputOwnDomainBinding>(
+            layoutInflater,
+            R.layout.bsheet_input_own_domain,
+            null,
+            false
+        )
         bSheet.setContentView(sheetBinding.root)
         bSheet.show()
         sheetBinding.btnContinue.setOnClickListener {
@@ -68,18 +90,43 @@ class DomainBookingActivity: BaseActivity<ActivityDomainBookingBinding, BaseView
     }
 
     private fun showBsheetIntegrationOption() {
-        val bSheet = BottomSheetDialog(this,R.style.BottomSheetDialogTheme)
-        val sheetBinding = DataBindingUtil.inflate<BsheetDomainIntegrationOptionsBinding>(layoutInflater,
-            R.layout.bsheet_domain_integration_options,null,false)
+        val bSheet = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val sheetBinding = DataBindingUtil.inflate<BsheetDomainIntegrationOptionsBinding>(
+            layoutInflater,
+            R.layout.bsheet_domain_integration_options, null, false
+        )
         bSheet.setContentView(sheetBinding.root)
+        domainIntegrationUserSelection = 0
+        sheetBinding.radioAsBusinessWebsite.isChecked = true
+        sheetBinding.radioGroup2.setOnCheckedChangeListener { group, checkedId ->
+                when (checkedId) {
+                    sheetBinding.radioAsBusinessWebsite.id -> {
+                        domainIntegrationUserSelection = 0
+                    }
+                    sheetBinding.radioCreateASubdomain.id -> {
+                        domainIntegrationUserSelection = 1
+                    }
+                }
+        }
+
+        sheetBinding.btnContinue.setOnClickListener{
+            if(domainIntegrationUserSelection == 0)
+                startFragmentDomainBookingActivity(
+                    activity = this,
+                    type = com.appservice.constant.FragmentType.ADDING_EXISTING_DOMAIN_FRAGMENT,
+                    bundle = Bundle(),
+                    clearTop = false
+                )
+
+        }
         bSheet.show()
 
     }
 
     private fun setupUI() {
-        if (isPremium()){
+        if (isPremium()) {
             premiumMode()
-        }else{
+        } else {
             nonPremiumMode()
         }
     }
@@ -104,30 +151,36 @@ class DomainBookingActivity: BaseActivity<ActivityDomainBookingBinding, BaseView
 
 
     private fun isPremium(): Boolean {
-       return true //session?.getStoreWidgets()?.contains("DOMAINPURCHASE")?:false
+        return session?.getStoreWidgets()?.contains("DOMAINPURCHASE") ?: false
     }
 
     private fun setupSteps() {
-        val secondStep = "In case you have a different website (for same business) connected to the domain that you own, you can integrate this website also as a sub-domain on that domain. (what’s subdomain?)"
-        val whatsSubdomain ="(what’s subdomain?)"
+        val secondStep =
+            "In case you have a different website (for same business) connected to the domain that you own, you can integrate this website also as a sub-domain on that domain. (what’s subdomain?)"
+        val whatsSubdomain = "(what’s subdomain?)"
         val whatsSubdomainIndex = secondStep.indexOf(whatsSubdomain)
 
         val stepsList = arrayListOf(
             DomainStepsModel(SpannableString("Since search engines recognize a domain that’s already in use, we recommend integrating any relatable domain name that you currently own")),
             DomainStepsModel(SpannableString(secondStep)
                 .apply {
-                    setSpan(object : ClickableSpan() {
-                        override fun onClick(widget: View) {
+                    setSpan(
+                        object : ClickableSpan() {
+                            override fun onClick(widget: View) {
 
-                        }
+                            }
 
-                    },whatsSubdomainIndex,whatsSubdomainIndex+whatsSubdomain.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        },
+                        whatsSubdomainIndex,
+                        whatsSubdomainIndex + whatsSubdomain.length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
                 }),
             DomainStepsModel(SpannableString("If you don’t have any other domain, click on ‘book a new domain’ and choose a domain you like for your business website."))
-            )
+        )
 
-        val adapter = AppBaseRecyclerViewAdapter(this,stepsList,this)
-        binding?.rvSteps?.adapter= adapter
+        val adapter = AppBaseRecyclerViewAdapter(this, stepsList, this)
+        binding?.rvSteps?.adapter = adapter
         binding?.rvSteps?.layoutManager = LinearLayoutManager(this)
     }
 
@@ -135,33 +188,33 @@ class DomainBookingActivity: BaseActivity<ActivityDomainBookingBinding, BaseView
 
     }
 
-   /* private fun initiateBuyFromMarketplace() {
+    /* private fun initiateBuyFromMarketplace() {
 
-        val progressDialog = ProgressDialog(this)
-        val status = getString(R.string.please_wait)
-        progressDialog.setMessage(status)
-        progressDialog.setCancelable(false)
-        progressDialog.show()
-        val intent = Intent(this, UpgradeActivity::class.java)
-        intent.putExtra("expCode", session.getFP_AppExperienceCode())
-        intent.putExtra("fpName", session.getFPName())
-        intent.putExtra("fpid", session.getFPID())
-        intent.putExtra("fpTag", session.getFpTag())
-        intent.putExtra("accountType", session!!.getFPDetails(GET_FP_DETAILS_CATEGORY))
-        intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets)
-        if (session.getUserProfileEmail() != null) {
-            intent.putExtra("email", session.getUserProfileEmail())
-        } else {
-            intent.putExtra("email", "ria@nowfloats.com")
-        }
-        if (session.getUserPrimaryMobile() != null) {
-            intent.putExtra("mobileNo", session.getUserPrimaryMobile())
-        } else {
-            intent.putExtra("mobileNo", "9160004303")
-        }
-        intent.putExtra("profileUrl", session.getFPLogo())
-        intent.putExtra("buyItemKey", "DOMAINPURCHASE")
-        startActivity(intent)
-        Handler().postDelayed({ progressDialog.dismiss() }, 1000)
-    }*/
+         val progressDialog = ProgressDialog(this)
+         val status = getString(R.string.please_wait)
+         progressDialog.setMessage(status)
+         progressDialog.setCancelable(false)
+         progressDialog.show()
+         val intent = Intent(this, UpgradeActivity::class.java)
+         intent.putExtra("expCode", session.getFP_AppExperienceCode())
+         intent.putExtra("fpName", session.getFPName())
+         intent.putExtra("fpid", session.getFPID())
+         intent.putExtra("fpTag", session.getFpTag())
+         intent.putExtra("accountType", session!!.getFPDetails(GET_FP_DETAILS_CATEGORY))
+         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets)
+         if (session.getUserProfileEmail() != null) {
+             intent.putExtra("email", session.getUserProfileEmail())
+         } else {
+             intent.putExtra("email", "ria@nowfloats.com")
+         }
+         if (session.getUserPrimaryMobile() != null) {
+             intent.putExtra("mobileNo", session.getUserPrimaryMobile())
+         } else {
+             intent.putExtra("mobileNo", "9160004303")
+         }
+         intent.putExtra("profileUrl", session.getFPLogo())
+         intent.putExtra("buyItemKey", "DOMAINPURCHASE")
+         startActivity(intent)
+         Handler().postDelayed({ progressDialog.dismiss() }, 1000)
+     }*/
 }

@@ -45,6 +45,11 @@
             android:theme="@style/AppTheme.account"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".ui.domainbooking.DomainBookingContainerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.cataloge"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".ui.paymentgateway.PaymentGatewayContainerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.payment"

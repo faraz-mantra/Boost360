@@ -19,7 +19,8 @@ import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
 
-open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerAccountBinding, BaseViewModel>() {
+open class AccountFragmentContainerActivity :
+  AppBaseActivity<ActivityFragmentContainerAccountBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
 
