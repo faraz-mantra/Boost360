@@ -198,24 +198,43 @@
               app:srcCompat="@drawable/ic_switchoff" />
           </RelativeLayout>
 
-          <EditText
-            android:id="@+id/business_gstin_number"
+          <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_selector"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:fontFamily="@font/open_sans"
-            android:gravity="bottom"
-            android:hint="@string/enter_gstin_number"
-            android:imeOptions="actionNext"
-            android:inputType="textCapCharacters"
-            android:textAllCaps="true"
-            android:maxLength="15"
-            android:textColor="@color/common_bold_text_color"
-            android:textColorHint="@color/globaLightSuperText"
-            android:textFontWeight="400"
-            android:textSize="@dimen/txt_14sp" />
+            android:layout_height="wrap_content">
+            <EditText
+              android:id="@+id/business_gstin_number"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/edittext_selector"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:fontFamily="@font/open_sans"
+              android:gravity="bottom"
+              android:hint="@string/enter_gstin_number"
+              android:imeOptions="actionNext"
+              android:inputType="textCapCharacters"
+              android:textAllCaps="true"
+              android:maxLength="15"
+              android:textColor="@color/common_bold_text_color"
+              android:textColorHint="@color/globaLightSuperText"
+              android:textFontWeight="400"
+              android:textSize="@dimen/txt_14sp" />
+
+            <ProgressBar
+              android:id="@+id/progress_bar"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="10dp"
+              style="?android:attr/progressBarStyleSmall"
+              android:layout_gravity="end|center_vertical"
+              android:indeterminate="true"
+              android:visibility="gone"
+              tools:visibility="visible"
+              android:indeterminateTintMode="src_atop"
+              android:indeterminateTint="@color/colorAccentLight"/>
+          </FrameLayout>
+
+
 
           <TextView
             android:id="@+id/gst_info_tv"

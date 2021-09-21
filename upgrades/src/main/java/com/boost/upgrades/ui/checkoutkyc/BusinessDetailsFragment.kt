@@ -1,6 +1,7 @@
 package com.boost.upgrades.ui.checkoutkyc
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,7 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -31,6 +34,7 @@ import com.boost.upgrades.utils.Utils.isValidMail
 import com.boost.upgrades.utils.Utils.isValidMobile
 import com.boost.upgrades.utils.WebEngageController
 import com.boost.upgrades.utils.observeOnce
+import com.framework.extensions.isVisible
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
@@ -93,6 +97,12 @@ class BusinessDetailsFragment : DialogFragment() {
     initMvvm()
     viewModel.getCitiesFromAssetJson(requireActivity())
     viewModel.getStatesFromAssetJson(requireActivity())
+
+    if(gstin_on.visibility == View.VISIBLE){
+      updateVisibility()
+    }else if(gstin_off.visibility == View.VISIBLE){
+      reverseVisibility()
+    }
 //        business_gst_number.setFilters(business_gst_number.filters + InputFilter.AllCaps())
 
     business_gstin_number.addTextChangedListener(object : TextWatcher {
@@ -100,12 +110,14 @@ class BusinessDetailsFragment : DialogFragment() {
       }
 
       override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        var enteredText: String = s.toString()
-        if (enteredText.length == 15) {
-          callGSTApi(enteredText)
+        if(business_gstin_number.hasFocus()){
+          var enteredText: String = s.toString()
+          if (enteredText.length == 15) {
+            showProgress()
+            callGSTApi(enteredText)
+          }
         }
       }
-
       override fun afterTextChanged(s: Editable?) {
       }
 
@@ -113,79 +125,117 @@ class BusinessDetailsFragment : DialogFragment() {
 
 
     confirm_btn.setOnClickListener {
-      if (validateAgreement()) {
-        if (!customerInfoState) { //no customer available
-          //create customer payment profile
-          viewModel.createCustomerInfo(
-            (activity as? UpgradeActivity)?.getAccessToken() ?: "",
-            CreateCustomerInfoRequest(
-              AddressDetails(
-                if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
-                "india",
-                if (business_address.text.isEmpty()) null else business_address.text.toString(),
-                null,
-                if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
-                null
-              ),
-              BusinessDetails(
+      if(progress_bar.visibility == View.GONE){
+        if (validateAgreement()) {
+          if (!customerInfoState) { //no customer available
+            //create customer payment profile
+            viewModel.createCustomerInfo(
+              (activity as? UpgradeActivity)?.getAccessToken() ?: "",
+              CreateCustomerInfoRequest(
+                AddressDetails(
+                  if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
+                  "india",
+                  if (business_address.text.isEmpty()) null else business_address.text.toString(),
+                  null,
+                  if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
+                  null
+                ),
+                BusinessDetails(
+                  "+91",
+                  if (business_email_address.text.isEmpty()) null else business_email_address.text.toString(),
+                  if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString()
+                ),
+                (activity as UpgradeActivity).clientid,
                 "+91",
-                if (business_email_address.text.isEmpty()) null else business_email_address.text.toString(),
-                if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString()
-              ),
-              (activity as UpgradeActivity).clientid,
-              "+91",
-              "ANDROID",
-              "",
-              (activity as UpgradeActivity).fpid!!,
-              if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString(),
-              if (business_name_value.text.isEmpty()) null else business_name_value.text.toString(),
-              TaxDetails(
-                if (business_gstin_number.text.isEmpty()) null else business_gstin_number.text.toString(),
-                null,
-                null,
-                null
-              )
+                "ANDROID",
+                "",
+                (activity as UpgradeActivity).fpid!!,
+                if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString(),
+                if (business_name_value.text.isEmpty()) null else business_name_value.text.toString(),
+                TaxDetails(
+                  if (business_gstin_number.text.isEmpty()) null else business_gstin_number.text.toString(),
+                  null,
+                  null,
+                  null
+                )
 
-            )
-          )
-        } else {
-          //update customer payment profile
-          viewModel.updateCustomerInfo(
-            (activity as? UpgradeActivity)?.getAccessToken() ?: "",
-            CreateCustomerInfoRequest(
-              AddressDetails(
-                if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
-                "india",
-                if (business_address.text.isEmpty()) null else business_address.text.toString(),
-                null,
-                if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
-                null
-              ),
-              BusinessDetails(
-                "+91",
-                if (business_email_address.text.isEmpty()) null else business_email_address.text.toString(),
-                if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString()
-              ),
-              (activity as UpgradeActivity).clientid,
-              "+91",
-              "ANDROID",
-              "",
-              (activity as UpgradeActivity).fpid,
-              if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString(),
-              if (business_name_value.text.isEmpty()) null else business_name_value.text.toString(),
-              TaxDetails(
-                if (business_gstin_number.text.isEmpty()) null else business_gstin_number.text.toString(),
-                null,
-                null,
-                null
               )
-
             )
-          )
+          } else {
+            //update customer payment profile
+            if(gst_business_name_value.text.isEmpty() && gst_business_address_value.text.isEmpty()){
+              viewModel.updateCustomerInfo(
+                (activity as? UpgradeActivity)?.getAccessToken() ?: "",
+                CreateCustomerInfoRequest(
+                  AddressDetails(
+                    if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
+                    "india",
+                    if (business_address.text.isEmpty()) null else business_address.text.toString(),
+                    null,
+                    if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
+                    null
+                  ),
+                  BusinessDetails(
+                    "+91",
+                    if (business_email_address.text.isEmpty()) null else business_email_address.text.toString(),
+                    if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString()
+                  ),
+                  (activity as UpgradeActivity).clientid,
+                  "+91",
+                  "ANDROID",
+                  "",
+                  (activity as UpgradeActivity).fpid,
+                  if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString(),
+                  if (business_name_value.text.isEmpty()) null else business_name_value.text.toString(),
+                  TaxDetails(
+                    if (business_gstin_number.text.isEmpty()) null else business_gstin_number.text.toString(),
+                    null,
+                    null,
+                    null
+                  )
+
+                )
+              )
+            }else{
+              viewModel.updateCustomerInfo(
+                (activity as? UpgradeActivity)?.getAccessToken() ?: "",
+                CreateCustomerInfoRequest(
+                  AddressDetails(
+                    gstInfoResult!!.address!!.city,
+                    "india",
+                    gst_business_address_value.text.toString(),
+                    null,
+                    gstInfoResult!!.address!!.state,
+                    null
+                  ),
+                  BusinessDetails(
+                    "+91",
+                    if (business_email_address.text.isEmpty()) null else business_email_address.text.toString(),
+                    if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString()
+                  ),
+                  (activity as UpgradeActivity).clientid,
+                  "+91",
+                  "ANDROID",
+                  "",
+                  (activity as UpgradeActivity).fpid,
+                  if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString(),
+                  gst_business_name_value.text.toString(),
+                  TaxDetails(
+                    if (business_gstin_number.text.isEmpty()) null else business_gstin_number.text.toString(),
+                    null,
+                    null,
+                    null
+                  )
+
+                )
+              )
+            }
+
+          }
         }
+      }else{
+        Toast.makeText(requireActivity(),"Please wait while data is loading",Toast.LENGTH_SHORT).show()
       }
-
-
     }
 //        prefs.storeGstRegistered(true)
     if (!prefs.getGstRegistered()) {
@@ -194,12 +244,14 @@ class BusinessDetailsFragment : DialogFragment() {
       gstin_off.visibility = View.VISIBLE
       gst_info_tv.visibility = View.GONE
       business_gstin_number.visibility = View.GONE
+      reverseVisibility()
     } else {
       gstFlag = true
       gstin_on.visibility = View.VISIBLE
       gstin_off.visibility = View.GONE
       gst_info_tv.visibility = View.VISIBLE
       business_gstin_number.visibility = View.VISIBLE
+      updateVisibility()
     }
     close.setOnClickListener {
       dismiss()
@@ -213,6 +265,7 @@ class BusinessDetailsFragment : DialogFragment() {
       gstin_on.visibility = View.GONE
       gstin_off.visibility = View.VISIBLE
       gst_info_tv.visibility = View.GONE
+      reverseVisibility()
     }
 
     gstin_off.setOnClickListener {
@@ -222,6 +275,7 @@ class BusinessDetailsFragment : DialogFragment() {
       gstin_off.visibility = View.GONE
       gstin_on.visibility = View.VISIBLE
       gst_info_tv.visibility = View.VISIBLE
+      updateVisibility()
     }
 
     dialog!!.setOnKeyListener { dialog, keyCode, event ->
@@ -267,25 +321,50 @@ class BusinessDetailsFragment : DialogFragment() {
       viewModel.getGstApiResult().observe(viewLifecycleOwner,{
         gstInfoResult = it.result
         if(gstInfoResult!=null){
-          business_name_actual.visibility = View.GONE
-          business_name_value.visibility = View.GONE
-          complete_business_address.visibility = View.GONE
-          business_address.visibility = View.GONE
-          state_of_supply.visibility = View.GONE
-          business_city_name.visibility = View.GONE
-          gst_business_name_tv.visibility = View.VISIBLE
-          gst_business_name_value.visibility = View.VISIBLE
-          gst_business_address_tv.visibility = View.VISIBLE
-          gst_business_address_value.visibility = View.VISIBLE
           gst_business_name_value.text = gstInfoResult!!.legalName
           gst_business_address_value.text = gstInfoResult!!.address!!.addressLine1 + gstInfoResult!!.address!!.addressLine2 + gstInfoResult!!.address!!.city + gstInfoResult!!.address!!.pincode + gstInfoResult!!.address!!.district + gstInfoResult!!.address!!.state
         } else {
           Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
         }
+        hideProgress()
       })
     }else {
       Toasty.error(requireContext(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
+      hideProgress()
     }
+  }
+
+  private fun showProgress() {
+   progress_bar.visibility = View.VISIBLE
+  }
+
+  private fun hideProgress() {
+    progress_bar.visibility = View.GONE
+  }
+
+  private fun updateVisibility() {
+    business_name_actual.visibility = View.GONE
+    business_name_value.visibility = View.GONE
+    complete_business_address.visibility = View.GONE
+    business_address.visibility = View.GONE
+    state_of_supply.visibility = View.GONE
+    business_city_name.visibility = View.GONE
+    gst_business_name_tv.visibility = View.VISIBLE
+    gst_business_name_value.visibility = View.VISIBLE
+    gst_business_address_tv.visibility = View.VISIBLE
+    gst_business_address_value.visibility = View.VISIBLE
+  }
+  private fun reverseVisibility(){
+    business_name_actual.visibility = View.VISIBLE
+    business_name_value.visibility = View.VISIBLE
+    complete_business_address.visibility = View.VISIBLE
+    business_address.visibility = View.VISIBLE
+    state_of_supply.visibility = View.VISIBLE
+    business_city_name.visibility = View.VISIBLE
+    gst_business_name_tv.visibility = View.GONE
+    gst_business_name_value.visibility = View.GONE
+    gst_business_address_tv.visibility = View.GONE
+    gst_business_address_value.visibility = View.GONE
   }
 
   private fun validateAgreement(): Boolean {
@@ -415,6 +494,7 @@ class BusinessDetailsFragment : DialogFragment() {
           }
           if (createCustomerInfoRequest!!.AddressDetails.Line1 != null) {
             business_address.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
+            gst_business_address_value.text = createCustomerInfoRequest!!.AddressDetails.Line1.toString()
           }
         }
         if (createCustomerInfoRequest!!.TaxDetails != null) {
@@ -448,11 +528,13 @@ class BusinessDetailsFragment : DialogFragment() {
 
         if (createCustomerInfoRequest!!.Name != null) {
           business_name_value.setText(createCustomerInfoRequest!!.Name)
+          gst_business_name_value.text = createCustomerInfoRequest!!.Name
         } else {
           if (session?.fPName == null || session?.fPName.equals("")) {
 
           } else {
             business_name_value.setText(session?.fPName)
+            gst_business_name_value.text = session?.fPName
           }
         }
 
@@ -462,6 +544,7 @@ class BusinessDetailsFragment : DialogFragment() {
 
           if (createCustomerInfoRequest!!.AddressDetails.Line1 != null) {
             business_address.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
+            gst_business_address_value.text = createCustomerInfoRequest!!.AddressDetails.Line1.toString()
           } else {
             if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null || session?.getFPDetails(
                 Key_Preferences.GET_FP_DETAILS_ADDRESS
@@ -470,6 +553,7 @@ class BusinessDetailsFragment : DialogFragment() {
 
             } else {
               business_address.setText(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))
+              gst_business_address_value.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
             }
           }
         }
