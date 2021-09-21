@@ -100,6 +100,7 @@
                     android:layout_height="100dp"
                     android:layout_marginTop="24dp"
                     android:src="@drawable/ria_domain_steps"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/layout_current_domain" />
 
 
@@ -110,6 +111,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="24dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/iv_ria_steps" />
@@ -121,7 +123,7 @@
                     android:layout_marginHorizontal="24dp"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -161,10 +163,10 @@
                         android:text="@string/buy_domain_addon_desc" />
 
                     <com.framework.views.customViews.CustomMaterialButton
+                        android:id="@+id/btn_buy_addon"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/size_60"
                         android:layout_marginTop="16dp"
-                        android:id="@+id/btn_buy_addon"
                         android:backgroundTint="@color/colorPrimary"
                         android:text="@string/buy_add_on"
                         android:textAllCaps="false"
@@ -188,6 +190,7 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textStyle="bold"
+            android:visibility="gone"
             app:cornerRadius="@dimen/size_15"
             app:layout_constraintBottom_toTopOf="@+id/btn_book_new_domain"
             app:layout_constraintEnd_toEndOf="parent"
@@ -204,6 +207,7 @@
             android:text="@string/book_a_new_domain"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"
+            android:visibility="gone"
             app:cornerRadius="@dimen/size_15"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

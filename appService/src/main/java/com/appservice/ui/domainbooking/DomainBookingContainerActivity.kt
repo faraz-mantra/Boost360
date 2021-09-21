@@ -22,6 +22,7 @@ open class DomainBookingContainerActivity :
 
     private var bookDomainSslFragment: BookDomainSslFragment? = null
     private var addingExistingDomainFragment: AddingExistingDomainFragment? = null
+    private var activeDomainFragment: ActiveDomainFragment? = null
 
     override fun getLayout(): Int {
         return R.layout.activity_fragment_container_domain_booking
@@ -60,6 +61,10 @@ open class DomainBookingContainerActivity :
     override fun getToolbarBackgroundColor(): Int? {
         return when (type) {
             /*FragmentType.BANK_ACCOUNT_DETAILS -> ContextCompat.getColor(this, R.color.color_primary)*/
+            FragmentType.ACTIVE_DOMAIN_FRAGMENT -> ContextCompat.getColor(
+                this,
+                R.color.colorPrimary
+            )
             else -> ContextCompat.getColor(this, R.color.black_4a4a4a)
         }
     }
@@ -100,14 +105,10 @@ open class DomainBookingContainerActivity :
                 addingExistingDomainFragment = AddingExistingDomainFragment.newInstance()
                 addingExistingDomainFragment
             }
-            /*FragmentType.BANK_ACCOUNT_DETAILS -> {
-                bankAccountFragment = BankAccountFragment.newInstance()
-                bankAccountFragment
+            FragmentType.ACTIVE_DOMAIN_FRAGMENT -> {
+                activeDomainFragment = ActiveDomainFragment.newInstance()
+                activeDomainFragment
             }
-            FragmentType.ADD_BANK_ACCOUNT_START -> {
-                addAccountStartFragment = AddAccountStartFragment.newInstance()
-                addAccountStartFragment
-            }*/
             else -> throw IllegalFragmentTypeException()
         }
     }
@@ -122,6 +123,7 @@ open class DomainBookingContainerActivity :
         super.onActivityResult(requestCode, resultCode, data)
         bookDomainSslFragment?.onActivityResult(requestCode, resultCode, data)
         addingExistingDomainFragment?.onActivityResult(requestCode, resultCode, data)
+        activeDomainFragment?.onActivityResult(requestCode, resultCode, data)
     }
 }
 

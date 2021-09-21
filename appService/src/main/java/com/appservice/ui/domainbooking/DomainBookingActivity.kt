@@ -1,20 +1,15 @@
 package com.appservice.ui.domainbooking
 
-import android.app.ProgressDialog
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ClickableSpan
 import android.view.View
-import android.widget.RadioGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
 import com.appservice.databinding.*
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
-import com.appservice.recyclerView.BaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.domainbooking.model.DomainStepsModel
@@ -37,7 +32,7 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
      * 0: sheetBinding.radioAsBusinessWebsite is selected
      * 1: sheetBinding.radioCreateASubdomain is selected
      * */
-    var domainIntegrationUserSelection:Int = 0
+    var domainIntegrationUserSelection: Int = 0
 
     override fun getLayout(): Int {
         return R.layout.activity_domain_booking
@@ -99,18 +94,18 @@ class DomainBookingActivity : BaseActivity<ActivityDomainBookingBinding, BaseVie
         domainIntegrationUserSelection = 0
         sheetBinding.radioAsBusinessWebsite.isChecked = true
         sheetBinding.radioGroup2.setOnCheckedChangeListener { group, checkedId ->
-                when (checkedId) {
-                    sheetBinding.radioAsBusinessWebsite.id -> {
-                        domainIntegrationUserSelection = 0
-                    }
-                    sheetBinding.radioCreateASubdomain.id -> {
-                        domainIntegrationUserSelection = 1
-                    }
+            when (checkedId) {
+                sheetBinding.radioAsBusinessWebsite.id -> {
+                    domainIntegrationUserSelection = 0
                 }
+                sheetBinding.radioCreateASubdomain.id -> {
+                    domainIntegrationUserSelection = 1
+                }
+            }
         }
 
-        sheetBinding.btnContinue.setOnClickListener{
-            if(domainIntegrationUserSelection == 0)
+        sheetBinding.btnContinue.setOnClickListener {
+            if (domainIntegrationUserSelection == 0)
                 startFragmentDomainBookingActivity(
                     activity = this,
                     type = com.appservice.constant.FragmentType.ADDING_EXISTING_DOMAIN_FRAGMENT,
