@@ -45,5 +45,6 @@
   <color name="colorFabIcon">#F5F5F5</color>
   <color name="colorShadowStart">#5e5e5e</color>
   <color name="colorShadowEnd">#c7c7c7</color>
+  <color name="colorLightBlack">#333333</color>
 
 </resources>

@@ -9,20 +9,21 @@
         android:clickable="true"
         android:focusable="true">
 
-        <include
+        <!--<include
             android:id="@+id/app_bar_book_domain"
             layout="@layout/toolbar_domain"
             title="@{@string/book_a_domain_ssl}"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="16dp"
+            android:background="@color/white_3"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/app_bar_book_domain">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -83,16 +84,16 @@
                             <com.framework.views.customViews.CustomMaterialButton
                                 android:id="@+id/btn_book_old_domain"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/size_38"
-                                android:layout_marginStart="14dp"
-                                android:layout_marginEnd="14dp"
+                                android:layout_height="@dimen/size_46"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginEnd="8dp"
                                 android:layout_marginTop="16dp"
                                 android:backgroundTint="@color/colorPrimary"
-                                android:text="@string/add_a_domain_you_own"
+                                android:text="@string/select_amp_continue"
                                 android:textAllCaps="false"
+                                android:textSize="@dimen/text_14"
                                 android:textColor="@color/white"
-                                android:textStyle="bold"
-                                app:cornerRadius="@dimen/size_15"/>
+                                app:cornerRadius="@dimen/size_8"/>
 
                             <com.framework.views.customViews.CustomTextView
                                 android:id="@+id/tv_suggested_domain_instruction"
@@ -111,12 +112,11 @@
                     android:id="@+id/tv_other_suggestions_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_10"
+                    android:layout_marginTop="@dimen/size_32"
                     android:gravity="center"
-                    android:textStyle="bold"
                     android:fontFamily="@font/bold"
                     android:text="@string/other_suggestions"
-                    android:textSize="@dimen/size_15"
+                    android:textSize="@dimen/text_14"
                     android:textColor="@color/black_4a4a4a"
                     app:layout_constraintStart_toStartOf="@+id/layout_suggest_domain_select"
                     app:layout_constraintTop_toBottomOf="@+id/layout_suggest_domain_select" />
@@ -133,15 +133,17 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_other_suggestions_title" />
 
                 <com.framework.views.customViews.CustomMaterialButton
-                    android:id="@+id/btn_book_new_domain"
+                    android:id="@+id/btn_search_a_new_domain"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/size_40"
+                    android:layout_height="@dimen/size_46"
                     android:layout_marginTop="24dp"
                     android:text="@string/search_a_new_domain"
                     android:textAllCaps="false"
+                    android:backgroundTint="@color/white"
+                    android:textSize="@dimen/text_14"
                     android:textColor="@color/colorPrimary"
-                    app:cornerRadius="@dimen/size_15"
+                    app:cornerRadius="@dimen/size_8"
                     app:layout_constraintEnd_toEndOf="@+id/rv_suggested_domains"
                     app:layout_constraintStart_toStartOf="@+id/rv_suggested_domains"
                     app:layout_constraintTop_toBottomOf="@+id/rv_suggested_domains"
