@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
+import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -133,15 +134,21 @@ fun Activity.glideLoad(
 ) {
   try {
     val options: RequestOptions = mImageView.getRequestOptionImage(placeholder)
-    val url = GlideUrl(
-      url, LazyHeaders.Builder()
-        .addHeader("Authorization",UserSessionManager(this).getAccessTokenAuth()?.token?:"")
-        .build()
-    )
-    val glideImage = Glide.with(this).load(url).apply(options)
-    if (isCenterCrop) glideImage.centerCrop()
+    var glideImage:RequestBuilder<Drawable> ?=null
+    glideImage = if (url.contains("nowfloats.com")||url.contains("withfloats.com")){
+      val gurl = GlideUrl(
+        url, LazyHeaders.Builder()
+            .addHeader("Authorization",UserSessionManager(this).getAccessTokenAuth()?.token?:"")
+          .build()
+      )
+      Glide.with(this).load(gurl).apply(options)
+    }else{
+      Glide.with(this).load(url).apply(options)
+    }
+
+    if (isCenterCrop) glideImage?.centerCrop()
     if (isLoadBitmap) {
-      glideImage.into(object : CustomTarget<Drawable>() {
+      glideImage?.into(object : CustomTarget<Drawable>() {
         override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
           mImageView.setImageDrawable(resource)
         }
@@ -149,7 +156,7 @@ fun Activity.glideLoad(
         override fun onLoadCleared(placeholder: Drawable?) {
         }
       })
-    } else glideImage.into(mImageView)
+    } else glideImage?.into(mImageView)
   } catch (e: Exception) {
     Log.e("GlideUtil", "Error: ${e.localizedMessage}")
   }
