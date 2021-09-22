@@ -3,6 +3,7 @@ package com.framework.appreview
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
@@ -19,6 +20,7 @@ object NFAppReviewManager {
                 launchFlow(manager, activity, reviewInfo)
             } else {
                 task.exception?.message?.let { Log.e(TAG, it) }
+                Toast.makeText(activity, "review error "+task.exception?.message, Toast.LENGTH_SHORT).show()
                 // There was some problem, log or handle the error code.
             }
         }

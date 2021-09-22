@@ -34,6 +34,8 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.utils.DashboardTabs.Companion.fromUrl
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.appreview.NFAppReviewManager
+import com.framework.autoupdate.NFAutoUpdateManager
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -126,6 +128,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
     registerFirebaseToken()
     reloadCapLimitData()
+    NFAutoUpdateManager.checkUpdate(this)
+    NFAppReviewManager.requestReview(this)
   }
 
   private fun reloadCapLimitData() {
@@ -460,8 +464,16 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK && isSecondaryImage) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
 //      if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
-    } else childFragments?.forEach { fragment ->
-      fragment.onActivityResult(requestCode, resultCode, data)
+    } else if (requestCode==NFAutoUpdateManager.AUTO_UPDATE_REQUEST_CODE){
+      if (resultCode== RESULT_OK){
+        showLongToast("Done")
+      }else{
+        showLongToast("Cancel")
+      }
+    }else{
+       childFragments?.forEach { fragment ->
+        fragment.onActivityResult(requestCode, resultCode, data)
+      }
     }
   }
 
