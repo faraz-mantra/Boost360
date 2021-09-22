@@ -8,15 +8,15 @@ import android.view.ViewGroup
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentActiveDomainBinding
-import com.appservice.databinding.FragmentAddingExistingDomainBinding
+import com.appservice.databinding.FragmentActiveNewDomainBinding
 import com.framework.models.BaseViewModel
 
-class ActiveDomainFragment : AppBaseFragment<FragmentActiveDomainBinding, BaseViewModel>() {
+class ActiveNewDomainFragment : AppBaseFragment<FragmentActiveNewDomainBinding, BaseViewModel>() {
 
     companion object {
         @JvmStatic
-        fun newInstance(bundle: Bundle? = null): ActiveDomainFragment {
-            val fragment = ActiveDomainFragment()
+        fun newInstance(bundle: Bundle? = null): ActiveNewDomainFragment {
+            val fragment = ActiveNewDomainFragment()
             fragment.arguments = bundle
             return fragment
         }
@@ -30,7 +30,7 @@ class ActiveDomainFragment : AppBaseFragment<FragmentActiveDomainBinding, BaseVi
     }
 
     override fun getLayout(): Int {
-        return  R.layout.fragment_active_domain
+        return  R.layout.fragment_active_new_domain
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {

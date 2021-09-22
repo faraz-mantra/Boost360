@@ -666,6 +666,7 @@
     </string-array>
     <string name="this_is_your_current_website_address">This is your current website address.</string>
     <string name="website_domain">Website Domain</string>
+    <string name="confirming_domain">Confirming Domain</string>
     <string name="book_a_domain_ssl">Book a domain + SSL</string>
     <string name="adding_existing_domain">Adding existing domain</string>
     <string name="other_suggestions">Other suggestions</string>
@@ -703,7 +704,10 @@
     <string name="step_3_4" tools:ignore="TypographyFractions">Step 3/4</string>
     <string name="step_final">Final step</string>
     <string name="continue_txt">Continue</string>
-  <string name="business_emails">Business Emails</string>
-  <string name="looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it">Looks like this add-on is not added to your\ncurrent plan. Add it now to start using it.</string>
-  <string name="active_domain_note">*Business emails can be booked only if your domain is not more than 6 months old.</string>
+    <string name="business_emails">Business Emails</string>
+    <string name="looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it">Looks like this add-on is not added to your\ncurrent plan. Add it now to start using it.</string>
+    <string name="active_domain_note">*Business emails can be booked only if your domain is not more than 6 months old.</string>
+    <string name="confirming_domain_instructions">Once confirmed, above domain will replace your website address (URL) samplestorewebsite.nowfloats.com. Don’t worry, anyone clicking on old URL will still be able to see your website on this new domain.</string>
+    <string name="confirm_and_apply_domain"><![CDATA[Confirm & apply domain]]></string>
+    <string name="domain_renewal_info">Your domain will be automatically renewed based\non your active BOOST package</string>
 </resources>

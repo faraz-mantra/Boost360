@@ -15,6 +15,7 @@
         app:cardCornerRadius="20dp">
 
     <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_domain_name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_40"
         android:background="@color/white"
