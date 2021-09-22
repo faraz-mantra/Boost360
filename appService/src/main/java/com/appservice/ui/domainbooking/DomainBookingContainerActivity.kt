@@ -22,7 +22,9 @@ open class DomainBookingContainerActivity :
 
     private var bookDomainSslFragment: BookDomainSslFragment? = null
     private var addingExistingDomainFragment: AddingExistingDomainFragment? = null
-    private var activeDomainFragment: ActiveDomainFragment? = null
+    private var activeExistingDomainFragment: ActiveExistingDomainFragment? = null
+    private var confirmingDomainFragment: ConfirmingDomainFragment? = null
+    private var activeNewDomainFragment: ActiveNewDomainFragment? = null
 
     override fun getLayout(): Int {
         return R.layout.activity_fragment_container_domain_booking
@@ -106,8 +108,16 @@ open class DomainBookingContainerActivity :
                 addingExistingDomainFragment
             }
             FragmentType.ACTIVE_DOMAIN_FRAGMENT -> {
-                activeDomainFragment = ActiveDomainFragment.newInstance()
-                activeDomainFragment
+                activeExistingDomainFragment = ActiveExistingDomainFragment.newInstance()
+                activeExistingDomainFragment
+            }
+            FragmentType.CONFIRMING_DOMAIN_FRAGMENT -> {
+                confirmingDomainFragment = ConfirmingDomainFragment.newInstance()
+                confirmingDomainFragment
+            }
+            FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT -> {
+                activeNewDomainFragment = ActiveNewDomainFragment.newInstance()
+                activeNewDomainFragment
             }
             else -> throw IllegalFragmentTypeException()
         }
@@ -123,7 +133,9 @@ open class DomainBookingContainerActivity :
         super.onActivityResult(requestCode, resultCode, data)
         bookDomainSslFragment?.onActivityResult(requestCode, resultCode, data)
         addingExistingDomainFragment?.onActivityResult(requestCode, resultCode, data)
-        activeDomainFragment?.onActivityResult(requestCode, resultCode, data)
+        activeExistingDomainFragment?.onActivityResult(requestCode, resultCode, data)
+        confirmingDomainFragment?.onActivityResult(requestCode, resultCode, data)
+        activeNewDomainFragment?.onActivityResult(requestCode, resultCode, data)
     }
 }
 
